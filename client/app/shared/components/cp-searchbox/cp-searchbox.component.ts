@@ -29,8 +29,10 @@ export class CPSearchBoxComponent implements AfterViewInit, OnInit {
 
     this
       .stream$
+      .debounceTime(300)
       .map((res: any) => res.target.value)
-      .subscribe(res => console.log(res));
+      .distinctUntilChanged()
+      .subscribe(query => this.query.emit(query));
   }
 
   ngOnInit() { }

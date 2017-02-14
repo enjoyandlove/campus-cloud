@@ -24,7 +24,6 @@ export class CPStarComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.data.filled);
     this.star = this.data.filled ? this.star_full : this.star_empty;
     this.STAR_SIZE = STAR_SIZE.DEFAULT;
   }

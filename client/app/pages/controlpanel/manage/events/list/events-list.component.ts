@@ -11,6 +11,7 @@ import { BaseComponent } from '../../../../../base/base.component';
 })
 export class EventsListComponent extends BaseComponent implements OnInit {
   events;
+  query;
   loading = true;
   dateFormat = FORMAT.LONG;
 
@@ -19,7 +20,10 @@ export class EventsListComponent extends BaseComponent implements OnInit {
   ) {
     super();
     this.fetch();
-    this.service.getEvents().subscribe(res => console.log(res));
+  }
+
+  onQueryChange(query) {
+    console.log(query);
   }
 
   private fetch() {

@@ -4,7 +4,8 @@
   <div *ngSwitchCase="false">
     <div class="row actions">
       <cp-searchbox
-        class="col-xs-12 col-sm-3">
+        class="col-xs-12 col-sm-3"
+        (query)="query = $event">
       </cp-searchbox>
       <cp-searchbox
         class="col-xs-12 col-sm-3">
@@ -28,7 +29,7 @@
         <span class="col-xs-1"></span>
       </li>
       <li
-        *ngFor="let event of events"
+        *ngFor="let event of events | cpFilterPipe:{ query: query , filterBy: ['title', 'description' ] }"
         class="events__item col-xs-12">
         <span class="col-xs-2 text-truncate events__thumbnail">
           <img [src]="event.poster_thumb_url" class="img-circle">

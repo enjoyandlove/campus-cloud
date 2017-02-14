@@ -8,14 +8,18 @@ import { CPMapsComponent, CPModalComponent, CPTopBarComponent, CPAvatarComponent
   CPPlaceAutoCompleteComponent, CPPageHeaderComponent, CPSearchBoxComponent, CPStarComponent
 } from './components';
 
-import { CPDatePipe } from './pipes';
+import {
+  CPDatePipe,
+  CPFilterPipe
+} from './pipes';
 
 @NgModule({
   declarations: [ CPTopBarComponent, CPMapsComponent,
   CPAvatarComponent, CPMobileMenuComponent, CPModalComponent,
   CPPlaceAutoCompleteComponent, CPImageUploadComponent,
   CPSpinnerComponent, CPDropdownComponent,  CPCheckboxComponent,
-  CPPageHeaderComponent, CPHamburgerComponent, CPSearchBoxComponent, CPDatePipe, CPStarComponent ],
+  CPPageHeaderComponent, CPHamburgerComponent, CPSearchBoxComponent,
+  CPDatePipe, CPStarComponent, CPFilterPipe ],
 
   imports: [ CommonModule, RouterModule ],
 
@@ -25,6 +29,7 @@ import { CPDatePipe } from './pipes';
   CPAvatarComponent, CPMobileMenuComponent, CPModalComponent,
   CPPlaceAutoCompleteComponent, CPImageUploadComponent,
   CPSpinnerComponent, CPDropdownComponent, CPCheckboxComponent,
-  CPPageHeaderComponent, CPHamburgerComponent, CPSearchBoxComponent, CPDatePipe, CPStarComponent ]
+  CPPageHeaderComponent, CPHamburgerComponent, CPSearchBoxComponent,
+  CPDatePipe, CPStarComponent, CPFilterPipe ]
 })
 export class SharedModule { }
