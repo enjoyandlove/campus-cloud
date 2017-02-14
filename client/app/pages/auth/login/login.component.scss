@@ -1,0 +1,19 @@
+@import '../../../../style/core/colors';
+
+:host {
+  height: 100%;
+  display: block;
+}
+
+form {
+  position: relative;
+  transform: translateY(120%);
+}
+
+input.isError {
+  border-left: 3px solid $color-error;
+}
+
+input.isOk {
+  border-left: 3px solid $color-success;
+}

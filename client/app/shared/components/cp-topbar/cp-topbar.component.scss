@@ -1,0 +1,74 @@
+@import '~styles/core/colors';
+@import "~bootstrap/variables";
+
+nav {
+  background: $color-light-grey;
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    margin-right: 25px;
+    display: inline-block;
+    vertical-align: middle;
+    border-bottom: 2px solid transparent;
+
+    &.active {
+      border-bottom: 2px solid $color-grey;
+    }
+
+    a,
+    &.user__name {
+      padding: 27px 0;
+      font-size: 1.2em;
+      color: $color-grey;
+    }
+
+    a {
+      display: block;
+
+      &:focus,
+      &:hover,
+      &:active {
+        text-decoration: none;
+      }
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  .user__name span {
+    border-bottom: 1px solid;
+  }
+}
+
+// nav {
+//   padding: 10px 0;
+//   background: $color-light-grey;
+
+//   .showOnMobile {
+//     visibility: hidden;
+//   }
+
+//   .user {
+//     &__name,
+//     &__avatar {
+//       display: inline-block;
+//     }
+
+//     &__name {
+//       margin-right: 5px;
+//       vertical-align: 13px;
+//     }
+//   }
+//   @media all and (max-width: $screen-md) {
+//     .showOnMobile {
+//       visibility: visible;
+//     }
+//   }
+// }

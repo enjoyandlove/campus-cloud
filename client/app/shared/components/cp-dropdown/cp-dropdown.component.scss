@@ -1,0 +1,57 @@
+.dropdown {
+  width: 100%;
+  background: #f2f2f2;
+  display: inline-block;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &__wrapper {
+    &.disabled {
+      opacity: 0.8;
+    }
+  }
+
+  span {
+    padding: 10px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  &__icon {
+    float: right;
+    background: red;
+    border-left: 2px solid white;
+  }
+
+  &__button {
+    min-width: 140px;
+  }
+
+  ul {
+    padding: 0;
+    margin: 8px 0 0;
+    border-radius: 0;
+    min-width: 140px;
+    max-height: 160px;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  li {
+    padding: 10px;
+    transition: background 300ms ease-in-out;
+
+    &:nth-child(odd) {
+      background: #f6f6f6;
+    }
+
+    &:hover {
+      background: #f2f2f2;
+    }
+  }
+}

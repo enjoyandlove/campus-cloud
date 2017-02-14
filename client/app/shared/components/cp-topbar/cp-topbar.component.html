@@ -1,0 +1,19 @@
+<nav>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <!--<cp-hamburger class="showOnMobile"></cp-hamburger>-->
+        <ul class="nav__links pull-left">
+          <li routerLinkActive="active"><a [routerLink]="['/dashboard']">Dashboard</a></li>
+          <li routerLinkActive="active"><a [routerLink]="['/manage']">Manage</a></li>
+          <li routerLinkActive="active"><a [routerLink]="['/assess']">Assess</a></li>
+        </ul>
+        <ul class="nav__default pull-right">
+          <li class="user__name">Hello, <span>Username</span></li>
+          <li><a [routerLink]="['#']">Help</a></li>
+          <li><a [routerLink]="['/logout']">Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>

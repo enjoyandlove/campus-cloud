@@ -1,0 +1,60 @@
+@import '~styles/core/colors';
+@import "~bootstrap/variables";
+
+$topbar_height: 60px;
+$sidebar_width: 200px;
+
+.cp-content,
+.cp-sidebar {
+  height: 100%;
+}
+
+.cp-topbar {
+  top: 0;
+  z-index: 1;
+  height: 60px;
+  display: block;
+  position: fixed;
+  left: $sidebar_width;
+  width: calc(100% - 200px);
+}
+
+.cp-sidebar {
+  top: 0;
+  left: 0;
+  z-index: 1;
+  height: 100%;
+  position: fixed;
+  width: $sidebar_width;
+  transform: translateX(0%);
+  transition: transform 300ms ease-in-out;
+
+  &.isOpen {
+    transform: translateX(0%);
+  }
+}
+
+.cp-content {
+  margin-top: $topbar_height;
+  margin-left: $sidebar_width;
+
+  &.isOpen {
+    overflow: hidden;
+    background: rgba(0,0,0,0.5);
+  }
+}
+
+@media all and (max-width: $screen-md) {
+  .cp-sidebar {
+    transform: translateX(-100%);
+  }
+
+  .cp-content {
+    margin-left: 0;
+  }
+
+  .cp-topbar {
+    left: 0;
+    width: 100%;
+  }
+}

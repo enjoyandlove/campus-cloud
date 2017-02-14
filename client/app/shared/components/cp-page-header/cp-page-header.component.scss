@@ -1,0 +1,40 @@
+@import '~styles/core/colors';
+
+.header {
+  padding-top: 45px;
+
+  &__title {
+    font-size: 2.5em;
+  }
+
+  &__sub-title {
+    font-size: 1.5em;
+  }
+
+  &__nav {
+    padding: 0;
+    margin-top: 40px;
+    list-style: none;
+    border-bottom: 2px solid $color-light-grey;
+
+    li {
+      line-height: 1;
+      margin-right: 20px;
+      display: inline-block;
+
+      &.last-child {
+        margin-right: 0;
+      }
+
+      a {
+        padding: 10px 0;
+        display: inline-block;
+        border-bottom: 2px solid transparent;
+
+        &.active {
+          border-bottom: 2px solid $color-grey;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,70 @@
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div *ngSwitchCase="false">
+    <div class="row actions">
+      <cp-searchbox
+        class="col-xs-12 col-sm-3">
+      </cp-searchbox>
+      <cp-searchbox
+        class="col-xs-12 col-sm-3">
+      </cp-searchbox>
+      <cp-dropdown
+        class="col-xs-12 col-sm-3">
+      </cp-dropdown>
+      <cp-dropdown
+        class="col-xs-12 col-sm-3">
+      </cp-dropdown>
+    </div>
+
+    <ul class="events">
+      <li class="events__header col-xs-12">
+        <span class="col-xs-2" i18n>Name</span>
+        <span class="col-xs-2" i18n>Host</span>
+        <span class="col-xs-2" i18n>Date</span>
+        <span class="col-xs-1" i18n>Response</span>
+        <span class="col-xs-1" i18n>Attendance</span>
+        <span class="col-xs-3" i18n>Rating</span>
+        <span class="col-xs-1"></span>
+      </li>
+      <li
+        *ngFor="let event of events"
+        class="events__item col-xs-12">
+        <span class="col-xs-2 text-truncate events__thumbnail">
+          <img [src]="event.poster_thumb_url" class="img-circle">
+          <strong>{{ event.title }}</strong>
+          <br>
+          {{ event.description }}
+        </span>
+        <span
+          class="col-xs-2 text-truncate">
+          {{ event.city }}
+        </span>
+        <span
+          class="col-xs-2 text-truncate">
+          {{ event.start | cpDatePipe:dateFormat }}
+        </span>
+        <span
+          class="col-xs-1 text-truncate">
+          {{ event.avg_rating_percent === -1 ? '--' :  event.avg_rating_percent + '%'}}
+        </span>
+        <span
+          class="col-xs-1 text-truncate">
+          {{ event.attends }}
+        </span>
+        <span class="col-xs-3 text-truncate">
+          <span *ngIf="event.rating_scale_maximum > -1">
+            <cp-star
+              [data]="star"
+              *ngFor="let star of buildStars(event)">
+            </cp-star>
+          </span>
+          <span *ngIf="event.rating_scale_maximum === -1">
+            --
+          </span>
+        </span>
+        <span class="col-xs-1 text-truncate">x</span>
+      </li>
+    </ul>
+  </div>
+</div>

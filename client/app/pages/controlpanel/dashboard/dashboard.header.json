@@ -1,0 +1,14 @@
+{
+  "heading": "Good Afternoon, Username",
+  "subheading": "Welcome back to your account dashboard",
+  "children": [
+    {
+      "label": "Overview",
+      "url": "/dashboard"
+    },
+    {
+      "label": "Activity",
+      "url": "activity"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+<input
+  id="file"
+  name="file"
+  type="file"
+  class="inputfile"
+  (change)="onFileChange($event)" />
+<label for="file">{{ fileName ? fileName : 'Upload Image' }}</label>

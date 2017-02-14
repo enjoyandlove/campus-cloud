@@ -1,0 +1,36 @@
+@import '~styles/core/_colors';
+
+.actions {
+  padding: 25px 0;
+}
+
+.events {
+  padding: 0;
+  list-style: none;
+  padding-bottom: 20px;
+
+  &__thumbnail {
+    img {
+      float: left;
+      width: 30px;
+      height: 30px;
+      margin-top: 5px;
+      margin-right: 10px;
+    }
+  }
+
+  &__header {
+    padding: 15px 0;
+    background: $color-light-grey;
+    border-bottom: 1px solid $color-grey;
+  }
+
+  &__item {
+    padding: 25px 0;
+    border-bottom: 1px solid $color-grey;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}

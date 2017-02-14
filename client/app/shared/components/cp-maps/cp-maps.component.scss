@@ -1,0 +1,18 @@
+:host {
+  width: 100%;
+  display: inline-block;
+}
+
+#map {
+  &.tall {
+    height: 400px;
+  }
+
+  &.short {
+    height: 200px;
+  }
+
+  &.default {
+    height: 300px;
+  }
+}

@@ -1,0 +1,21 @@
+<!--<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div *ngSwitchCase="false">
+    <cp-sidebar
+      class="cp-sidebar"
+      [privileges]="privileges"
+      [class.isOpen]="(status | async)?.isOpen">
+    </cp-sidebar>
+  </div>
+</div>
+
+<div
+  class="cp-content"
+  [class.isOpen]="(status | async)?.isOpen">
+  <cp-topbar class="cp-topbar"></cp-topbar>
+  <router-outlet></router-outlet>
+</div>
+-->
+<cp-topbar></cp-topbar>
+<router-outlet></router-outlet>

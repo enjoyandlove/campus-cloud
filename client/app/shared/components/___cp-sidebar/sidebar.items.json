@@ -1,0 +1,112 @@
+[
+  {
+    "group": "My Account",
+    "children": [
+      {
+        "type": 1,
+        "label": "Profile",
+        "url": "profile"
+      }
+    ]
+  },
+  {
+    "group": "Campus",
+    "children": [
+      {
+        "type": 1,
+        "label": "Profile",
+        "url": "profile"
+      },
+      {
+        "type": 9,
+        "label": "Campaign",
+        "url": "campaign"
+      },
+      {
+        "type": 11,
+        "label": "Dashboard",
+        "url": "dashboard"
+      },
+      {
+        "type": 12,
+        "label": "Announcements",
+        "url": "announcements"
+      },
+      {
+        "type": 13,
+        "label": "Customization",
+        "url": "customization"
+      },
+      {
+        "type": 14,
+        "label": "Promotions",
+        "url": "promotions"
+      }
+    ]
+  },
+  {
+    "group": "Event Management",
+    "children": [
+      {
+        "type": 16,
+        "label": "Academic Calendar",
+        "url": "calendar"
+      },
+      {
+        "type": 17,
+        "label": "Orientation Schedule",
+        "url": "orientation"
+      },
+      {
+        "type": 18,
+        "label": "Events",
+        "url": "events"
+      },
+      {
+        "type": 19,
+        "label": "Campus Game",
+        "url": "campus-game"
+      }
+    ]
+  },
+  {
+    "group": "Directory",
+    "children": [
+      {
+        "type": 20,
+        "label": "Campus Tour",
+        "url": "campus-tour"
+      },
+      {
+        "type": 21,
+        "label": "Campus Map",
+        "url": "campus-map"
+      },
+      {
+        "type": 22,
+        "label": "Clubs",
+        "url": "clubs"
+      },
+      {
+        "type": 23,
+        "label": "Links",
+        "url": "links"
+      },
+      {
+        "type": 24,
+        "label": "Services",
+        "url": "services"
+      },
+      {
+        "type": 25,
+        "label": "Jobs",
+        "url": "jobs"
+      },
+      {
+        "type": 26,
+        "label": "Deals",
+        "url": "deals"
+      }
+    ]
+  }
+]

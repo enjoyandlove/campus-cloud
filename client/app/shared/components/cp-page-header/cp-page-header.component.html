@@ -1,0 +1,22 @@
+<div class="header">
+  <div class="row">
+    <div class="col-xs-12">
+      <p class="header__title">{{ data.heading }}</p>
+      <p class="header__sub-title" *ngIf="data.subheading">{{ data.subheading }}</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <ul class="header__nav">
+        <li *ngFor="let page of data.children">
+          <a
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            [routerLink]="[page.url]">{{ page.label }}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
