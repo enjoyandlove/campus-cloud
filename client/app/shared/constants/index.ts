@@ -1,2 +1,2 @@
 export * from './google';
-export * from './error-codes';
+export * from './status';

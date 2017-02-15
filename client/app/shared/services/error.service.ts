@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { ERROR_CODES } from '../constants';
+import { STATUS } from '../constants';
 import { ALERT_DEFAULT, ALERT_PUSH } from '../../reducers/alert.reducer';
 
 @Injectable()
 export class ErrorService {
-  ERROR_CODES = ERROR_CODES;
+  REASON;
 
   constructor(
     private store: Store<any>
-  ) { }
+  ) {
+    this.REASON = STATUS;
+  }
 
   // public handleResponse(data) {
   //   if (data.isError) {
@@ -24,20 +26,18 @@ export class ErrorService {
     this.store.dispatch({
       type: ALERT_PUSH,
       payload: {
-        class: 'alert-success',
+        class: 'success',
         body: res.body || 'All good! Your request was processed successfully.'
       }
     });
   }
 
   handleError(err) {
-    const message = `#${err.code} ${ERROR_CODES[err.code]}` || `No message for error #${err.code}`;
-
     this.store.dispatch({
       type: ALERT_PUSH,
       payload: {
-        class: 'alert-danger',
-        body: message
+        class: 'danger',
+        body: err.reason
       }
     });
   }

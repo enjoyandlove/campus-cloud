@@ -1,15 +1,11 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
 
 import { AuthService } from '../auth.service';
 import { appStorage } from '../../../shared/utils';
-
-import {
-  ALERT_PUSH,
-  ALERT_CLASS
-} from '../../../reducers/alert.reducer';
+import { STATUS } from '../../../shared/constants';
+import { ErrorService } from '../../../shared/services';
 
 @Component({
   selector: 'cp-login',
@@ -22,23 +18,13 @@ export class LoginComponent implements OnInit {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private store: Store<any>,
+    private error: ErrorService,
     private service: AuthService
   ) {
     this.form = this.fb.group({
       'username': ['', [Validators.required]],
       'password': ['', [Validators.required]],
     });
-
-    setTimeout(() => {
-      this.store.dispatch({
-        type: ALERT_PUSH,
-        payload: {
-          class: ALERT_CLASS.WARNING,
-          body: 'Hello There'
-        }
-      });
-    }, 1000);
   }
 
   onSubmit(data) {
@@ -59,6 +45,7 @@ export class LoginComponent implements OnInit {
         },
         err => {
           if (err.status === 401) {
+            this.error.handleError({ reason: STATUS.NO_ACCOUNT_FOUND });
             console.warn('Not Authorized');
             return;
           }
