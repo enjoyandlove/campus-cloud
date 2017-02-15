@@ -5,7 +5,8 @@ import { CommonModule } from '@angular/common';
 import { CPMapsComponent, CPModalComponent, CPTopBarComponent, CPAvatarComponent,
   CPSpinnerComponent, CPDropdownComponent,
   CPCheckboxComponent, CPHamburgerComponent, CPMobileMenuComponent, CPImageUploadComponent,
-  CPPlaceAutoCompleteComponent, CPPageHeaderComponent, CPSearchBoxComponent, CPStarComponent
+  CPPlaceAutoCompleteComponent, CPPageHeaderComponent, CPSearchBoxComponent, CPStarComponent,
+  CPAlertComponent,
 } from './components';
 
 import {
@@ -19,7 +20,7 @@ import {
   CPPlaceAutoCompleteComponent, CPImageUploadComponent,
   CPSpinnerComponent, CPDropdownComponent,  CPCheckboxComponent,
   CPPageHeaderComponent, CPHamburgerComponent, CPSearchBoxComponent,
-  CPDatePipe, CPStarComponent, CPFilterPipe ],
+  CPDatePipe, CPStarComponent, CPFilterPipe, CPAlertComponent ],
 
   imports: [ CommonModule, RouterModule ],
 
@@ -30,6 +31,6 @@ import {
   CPPlaceAutoCompleteComponent, CPImageUploadComponent,
   CPSpinnerComponent, CPDropdownComponent, CPCheckboxComponent,
   CPPageHeaderComponent, CPHamburgerComponent, CPSearchBoxComponent,
-  CPDatePipe, CPStarComponent, CPFilterPipe ]
+  CPDatePipe, CPStarComponent, CPFilterPipe, CPAlertComponent ]
 })
 export class SharedModule { }

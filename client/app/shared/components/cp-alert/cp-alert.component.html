@@ -1,3 +1,14 @@
-<div [class]="['alert alert-' + data.class]" role="alert">
-  {{ data.message }}
+<!--<div class="row">
+  <div class="col-xs-12">
+    <div class="alerts text-center">
+      <p [class]="['alert alert-' + message.class]">{{ message.body }}</p>
+    </div>
+  </div>
+</div>-->
+<div class="alerts text-center" *ngIf="message.isShow">
+  <p
+    [class]="['alert alert-' + message.class]">
+    {{ message.body }}
+    <span class="pull-right" (click)="onClose()">&#10006;</span>
+  </p>
 </div>

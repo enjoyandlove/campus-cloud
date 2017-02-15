@@ -1,36 +1,29 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 
-export interface IAlert {
-  class: string;
-  message: string;
-}
+import {
+  IAlert,
+  ALERT_DEFAULT
+} from '../../../reducers/alert.reducer';
 
 @Component({
   selector: 'cp-alert',
   templateUrl: './cp-alert.component.html',
-  styleUrls: ['./cp-alert.component.css']
+  styleUrls: ['./cp-alert.component.scss']
 })
 export class CPAlertComponent implements OnInit {
-  @Input() data: IAlert;
+  message: IAlert;
 
-  constructor() { }
+  constructor(private store: Store<any>) {
+    this.store.select('ALERT')
+      .subscribe((res: IAlert) => {
+        this.message = res;
+      });
+  }
+
+  onClose() {
+    this.store.dispatch({ type: ALERT_DEFAULT });
+  }
 
   ngOnInit() { }
-
-  handleResponse(res) {
-    switch (res.code) {
-      case 400:
-        return 'The request could not be processed due to an error in the request';
-      case 401:
-        return 'The request failed to authenticate';
-      case 403:
-        return 'The requested action is now allowed';
-      case 405:
-        return 'The request method is not allowed on the resource';
-      case 500:
-        return 'The request could not be processed due to an unexpected server error';
-      case 503:
-        return 'The request was denied processing';
-    }
-  }
 }
