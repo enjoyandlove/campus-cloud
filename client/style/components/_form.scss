@@ -1,0 +1,18 @@
+@import '../core/_typography';
+
+.cp-form {
+  margin-top: 25px;
+  border-radius: 4px;
+  border: 1px solid #CCCCCC;
+  background-color: $color-white;
+  box-shadow: 0 0 2px 0 rgba(0,0,0,0.16);
+
+  &__header {
+    @include font-bold();
+  }
+
+  li,
+  &__header {
+    padding: 20px 0;
+  }
+}

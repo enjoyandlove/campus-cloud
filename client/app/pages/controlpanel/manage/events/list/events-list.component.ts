@@ -22,10 +22,6 @@ export class EventsListComponent extends BaseComponent implements OnInit {
     this.fetch();
   }
 
-  onQueryChange(query) {
-    console.log(query);
-  }
-
   private fetch() {
     super.isLoading().subscribe(res => this.loading = res);
 

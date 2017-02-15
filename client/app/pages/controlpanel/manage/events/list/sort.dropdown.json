@@ -1,0 +1,14 @@
+[
+  {
+    "label": "Name",
+    "value": "name"
+  },
+  {
+    "label": "Date",
+    "value": "start"
+  },
+  {
+    "label": "Attendance",
+    "value": "attends"
+  }
+]

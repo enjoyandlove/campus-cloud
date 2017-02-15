@@ -1,4 +1,6 @@
 @import '~styles/core/_colors';
+@import '~styles/components/_card';
+@import '~styles/components/_form';
 
 .actions {
   padding: 25px 0;
@@ -8,6 +10,10 @@
   padding: 0;
   list-style: none;
   padding-bottom: 20px;
+
+  .no-content {
+    padding: 15px 0;
+  }
 
   &__thumbnail {
     img {

@@ -1,8 +1,10 @@
 @import '~styles/core/colors';
 @import "~bootstrap/variables";
+@import "~styles/core/typography";
 
 nav {
-  background: $color-light-grey;
+  background: $color-white;
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,0.16);
 
   ul {
     margin: 0;
@@ -10,21 +12,48 @@ nav {
     list-style: none;
   }
 
-  li {
-    margin-right: 25px;
+  .nav__default {
+    a,
+    li {
+      color: $color-black;
+    }
+    .user__name--dropdown {
+      top: 35px;
+      border-radius: 0;
+
+      li {
+        display: block;
+        a {
+          margin: 0;
+          padding: 10px;
+        }
+      }
+    }
+  }
+  .nav__links li a {
+    color: $color-grey;
+  }
+
+  .nav__links li,
+  .nav__default li {
     display: inline-block;
     vertical-align: middle;
-    border-bottom: 2px solid transparent;
+    transition: background-color 300ms ease-in-out;
 
     &.active {
-      border-bottom: 2px solid $color-grey;
+      @include font-bold();
+      color: $color-black;
+      background-color: $color-light-grey;
+    }
+
+    &:hover {
+      background-color: $color-light-grey;
     }
 
     a,
     &.user__name {
-      padding: 27px 0;
-      font-size: 1.2em;
-      color: $color-grey;
+      font-size: 1em;
+      padding: 15px 10px;
     }
 
     a {
@@ -41,34 +70,4 @@ nav {
       margin-right: 0;
     }
   }
-
-  .user__name span {
-    border-bottom: 1px solid;
-  }
 }
-
-// nav {
-//   padding: 10px 0;
-//   background: $color-light-grey;
-
-//   .showOnMobile {
-//     visibility: hidden;
-//   }
-
-//   .user {
-//     &__name,
-//     &__avatar {
-//       display: inline-block;
-//     }
-
-//     &__name {
-//       margin-right: 5px;
-//       vertical-align: 13px;
-//     }
-//   }
-//   @media all and (max-width: $screen-md) {
-//     .showOnMobile {
-//       visibility: visible;
-//     }
-//   }
-// }

@@ -1,9 +1,12 @@
 @import '~styles/core/colors';
+@import '~styles/core/typography';
 
 .header {
-  padding-top: 45px;
+  padding-top: 60px;
 
   &__title {
+    @include font-bold();
+
     font-size: 2.5em;
   }
 
@@ -13,13 +16,15 @@
 
   &__nav {
     padding: 0;
-    margin-top: 40px;
+    margin-top: 60px;
     list-style: none;
-    border-bottom: 2px solid $color-light-grey;
+    margin-bottom: 25px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #CCCCCC;
 
     li {
       line-height: 1;
-      margin-right: 20px;
+      margin-right: 45px;
       display: inline-block;
 
       &.last-child {
@@ -29,10 +34,12 @@
       a {
         padding: 10px 0;
         display: inline-block;
-        border-bottom: 2px solid transparent;
+        color: $color-med-grey;
 
         &.active {
-          border-bottom: 2px solid $color-grey;
+          @include font-bold();
+
+          color: $color-black;
         }
       }
     }
