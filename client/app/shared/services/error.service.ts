@@ -1,32 +1,52 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { STATUS } from '../constants';
-import { ALERT_DEFAULT, ALERT_PUSH } from '../../reducers/alert.reducer';
+import {
+  ALERT_PUSH,
+  ALERT_CLASS,
+  ALERT_DEFAULT
+} from '../../reducers/alert.reducer';
 
 @Injectable()
 export class ErrorService {
-  REASON;
 
   constructor(
     private store: Store<any>
-  ) {
-    this.REASON = STATUS;
+  ) { }
+
+  public handleResponse(res) {
+    if (res.code.startsWith(4)) {
+      this.handleError(res);
+    } else {
+      this.handleSuccess(res);
+    }
   }
 
-  // public handleResponse(data) {
-  //   if (data.isError) {
-  //     this.handleError(data);
-  //   } else {
-  //     this.handleSuccess(data);
-  //   }
-  // }
+  handleWarning(res) {
+     this.store.dispatch({
+      type: ALERT_PUSH,
+      payload: {
+        body: res.reason,
+        class: ALERT_CLASS.WARNING,
+      }
+    });
+  }
+
+  handleInfo(res) {
+     this.store.dispatch({
+      type: ALERT_PUSH,
+      payload: {
+        body: res.reason,
+        class: ALERT_CLASS.INFO,
+      }
+    });
+  }
 
   handleSuccess(res) {
     this.store.dispatch({
       type: ALERT_PUSH,
       payload: {
-        class: 'success',
+        class: ALERT_CLASS.SUCCESS,
         body: res.body || 'All good! Your request was processed successfully.'
       }
     });
@@ -36,8 +56,8 @@ export class ErrorService {
     this.store.dispatch({
       type: ALERT_PUSH,
       payload: {
-        class: 'danger',
-        body: err.reason
+        body: err.reason,
+        class: ALERT_CLASS.DANGER,
       }
     });
   }
