@@ -1,0 +1,91 @@
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div *ngSwitchCase="false">
+    <div class="row header">
+      <div class="col-xs-4 text-center">
+        <div class="cp-card">
+          <p class="header__digit">{{ event.attends }}</p>
+          <p i18n>Attendance</p>
+        </div>
+      </div>
+      <div class="col-xs-4 text-center">
+        <div class="cp-card">
+          <p class="header__digit">{{ event.num_ratings }}</p>
+          <p i18n>Responses</p>
+        </div>
+      </div>
+      <div class="col-xs-4 text-center">
+        <div class="cp-card">
+          <p class="header__digit">
+            {{ event.avg_rating_percent / event.rating_scale_maximum }}
+          </p>
+          <p i18n>Average Rating</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="cp-card actions">
+          <div class="row">
+            <div class="col-xs-4">
+              <cp-searchbox></cp-searchbox>
+            </div>
+            <div class="col-xs-4 col-xs-offset-4 text-right">
+              <button class="cpbtn cpbtn-primary">
+                Download Excel File
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="cp-table">
+          <div class="cp-table__header">
+            <div class="row">
+              <div class="col-xs-2">
+                <span i18n>Attendant</span>
+              </div>
+              <div class="col-xs-1">
+                <span i18n>RSVP</span>
+              </div>
+              <div class="col-xs-1">
+                <span i18n>Check-in Method</span>
+              </div>
+              <div class="col-xs-4">
+                <span i18n>User Feedback</span>
+              </div>
+              <div class="col-xs-3">
+                <span i18n>Rating</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="cp-table__item">
+            <div class="row">
+              <div class="col-xs-2">
+                <span><strong>John Smith</strong> <br> john@smith.com</span>
+              </div>
+              <div class="col-xs-1">
+                <span>&#10003;</span>
+              </div>
+              <div class="col-xs-1">
+                <span>&#10003;</span>
+              </div>
+              <div class="col-xs-4">
+                <span></span>
+              </div>
+              <div class="col-xs-3">
+                <cp-star></cp-star>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -45,7 +45,7 @@
 
           <span class="col-xs-2 text-truncate events__thumbnail">
           <img [src]="event.poster_thumb_url" class="img-circle">
-          <strong>{{ event.title }}</strong>
+          <strong><a [routerLink]="[event.id]">{{ event.title }}</a></strong>
           <br>
           {{ event.description }}
         </span>

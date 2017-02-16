@@ -16,4 +16,10 @@ export class EventsService extends BaseService {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT}`;
     return super.get(url).map(res => res.json());
   }
+
+  getEventById(id: number) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT}${id}`;
+
+    return super.get(url).map(res => res.json());
+  }
 }
