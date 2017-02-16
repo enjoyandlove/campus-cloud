@@ -16,6 +16,12 @@
   touch-action: manipulation;
   border: 1px solid transparent;
 
+  &:hover,
+  &:focus,
+  &:active, {
+    outline: none;
+  }
+
   &--primary {
     background: $color-brand;
   }

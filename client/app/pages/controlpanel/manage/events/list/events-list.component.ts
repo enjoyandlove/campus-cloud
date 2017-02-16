@@ -3,6 +3,8 @@ import { EventsService } from '../events.service';
 import { FORMAT } from '../../../../../shared/pipes';
 import { BaseComponent } from '../../../../../base/base.component';
 
+import { BUTTON_ALIGN } from '../../../../../shared/components/cp-button-dropdown';
+
 @Component({
   selector: 'cp-events-list',
   templateUrl: './events-list.component.html',
@@ -11,12 +13,15 @@ import { BaseComponent } from '../../../../../base/base.component';
 export class EventsListComponent extends BaseComponent implements OnInit {
   events;
   query;
+  buttonDropdown;
   loading = true;
   dateFormat = FORMAT.LONG;
+  BUTTON_ALIGN = BUTTON_ALIGN.RIGHT;
 
   constructor(private service: EventsService) {
     super();
     this.fetch();
+    this.buttonDropdown = require('./button-dropdown.json');
   }
 
   private fetch() {

@@ -6,3 +6,11 @@
 .actions {
   @include card-margin();
 }
+
+.header {
+  &__digit {
+    @include font-bold();
+
+    font-size: 2.4em;
+  }
+}

@@ -1,0 +1,38 @@
+@import '~styles/core/colors';
+@import '~styles/components/button';
+
+.button {
+  & > * {
+    display: inline-block;
+  }
+
+  > div {
+    position: relative;
+  }
+
+  ul {
+    padding: 10px;
+    min-width: 230px;
+    border: 1px solid $border-color;
+
+    li {
+      padding-bottom: 10px;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+    }
+
+    &.right {
+      right: 0;
+      left: auto;
+      text-align: right;
+    }
+    &.left {
+      left: 0;
+      right: auto;
+      text-align: left;
+    }
+  }
+}

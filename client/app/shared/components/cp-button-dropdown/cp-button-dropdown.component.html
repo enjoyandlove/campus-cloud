@@ -1,0 +1,21 @@
+<div class="button">
+  <a
+    class="cpbtn cpbtn--primary"
+    [routerLink]="[data.button.url]">
+    {{ data.button.label }}
+  </a>
+  <div>
+    <button
+      data-toggle="dropdown"
+      class="cpbtn cpbtn--primary">
+      &#709;
+    </button>
+    <ul [class]="['dropdown-menu ' + align ]">
+      <li
+        (click)="onClick(child)"
+        *ngFor="let child of data.children">
+        {{ child.label }}
+      </li>
+    </ul>
+  </div>
+</div>
