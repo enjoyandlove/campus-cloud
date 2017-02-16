@@ -4,11 +4,11 @@
   "children": [
     {
       "label": "Events",
-      "url": "/manage"
+      "url": "/manage/events"
     },
     {
       "label": "Services",
-      "url": "services"
+      "url": "/manage/services"
     },
     {
       "label": "Clubs & Groups",

@@ -10,6 +10,23 @@ body {
   text-overflow: ellipsis;
 }
 
+a {
+  color: $color-black;
+  display: inline-block;
+
+  &:focus,
+  &:hover,
+  &:active {
+    text-decoration: none;
+  }
+
+  &:focus,
+  &:active {
+    outline: none;
+    outline-offset: 0;
+  }
+}
+
 @mixin font-bold() {
   font-weight: 600;
 }

@@ -12,7 +12,6 @@
         <li *ngFor="let page of data.children">
           <a
             routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }"
             [routerLink]="[page.url]">{{ page.label }}
           </a>
         </li>

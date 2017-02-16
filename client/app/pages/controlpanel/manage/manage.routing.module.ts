@@ -8,12 +8,14 @@ import { ManageServiceComponent } from './services';
 
 
 const appRoutes: Routes = [
+  { path: '', redirectTo: 'events', pathMatch: 'full' },
+
   {
     path: '',
     component: ManageComponent,
     canActivate: [ AuthGuard ],
     children: [
-      { path: '', loadChildren: './events/events.module#EventsModule' },
+      { path: 'events', loadChildren: './events/events.module#EventsModule' },
       { path: 'services', component: ManageServiceComponent  },
     ]
   }
