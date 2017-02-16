@@ -24,19 +24,4 @@
       margin-right: 10px;
     }
   }
-
-  &__header {
-    padding: 15px 0;
-    background: $color-light-grey;
-    border-bottom: 1px solid $color-grey;
-  }
-
-  &__item {
-    padding: 25px 0;
-    border-bottom: 1px solid $color-grey;
-
-    &:last-child {
-      border-bottom: none;
-    }
-  }
 }

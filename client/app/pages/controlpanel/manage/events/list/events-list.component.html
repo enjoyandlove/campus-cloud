@@ -4,77 +4,87 @@
   <div *ngSwitchCase="false">
     <div class="cp-card col-xs-12">
       <div class="row">
+
         <cp-searchbox
-          class="col-xs-12 col-sm-3"
-          (query)="query = $event">
+          (query)="query = $event"
+          class="col-xs-12 col-sm-3">
         </cp-searchbox>
-        <div class="col-xs-12 col-sm-3">
+
+        <div
+          class="col-xs-12 col-sm-3">
           Date Picker
         </div>
+
         <cp-dropdown
           class="col-xs-12 col-sm-3">
         </cp-dropdown>
+
         <div class="col-xs-12 col-sm-3">
           <cp-button-dropdown
-            [data]="buttonDropdown"
+            class="text-right"
             [align]="BUTTON_ALIGN"
-            class="text-right">
+            [data]="buttonDropdown">
           </cp-button-dropdown>
         </div>
+
       </div>
     </div>
 
-    <ul class="events cp-form">
-      <li class="events__header col-xs-12">
-        <span class="col-xs-2" i18n>Name</span>
-        <span class="col-xs-2" i18n>Host</span>
-        <span class="col-xs-2" i18n>Date</span>
-        <span class="col-xs-1" i18n>Response</span>
-        <span class="col-xs-1" i18n>Attendance</span>
-        <span class="col-xs-3" i18n>Rating</span>
-        <span class="col-xs-1"></span>
-      </li>
-
-      <li
-        class="text-center no-content col-xs-12"
-        *ngIf="(events | cpFilterPipe:{ query: query ,
-        filterBy: ['title', 'description' ] }).length === 0">
-        <strong>No Events...</strong>
-      </li>
+    <ul class="col-xs-12 cp-form">
+      <div class="events">
+        <li class="cp-form__header col-xs-12">
+          <span class="col-xs-2" i18n>Name</span>
+          <span class="col-xs-2" i18n>Host</span>
+          <span class="col-xs-2" i18n>Date</span>
+          <span class="col-xs-1" i18n>Response</span>
+          <span class="col-xs-1" i18n>Attendance</span>
+          <span class="col-xs-3" i18n>Rating</span>
+          <span class="col-xs-1"></span>
+        </li>
 
         <li
-          class="events__item col-xs-12"
+          class="text-center no-content col-xs-12"
+          *ngIf="(events | cpFilterPipe:{ query: query ,
+          filterBy: ['title', 'description' ] }).length === 0">
+          <strong>No Events...</strong>
+        </li>
+
+        <li
+          class="cp-form__item col-xs-12"
           *ngFor="let event of events |
           cpFilterPipe:{ query: query , filterBy: ['title', 'description' ] }">
 
           <span class="col-xs-2 text-truncate events__thumbnail">
-          <img [src]="event.poster_thumb_url" class="img-circle">
-          <strong><a [routerLink]="[event.id]">{{ event.title }}</a></strong>
-          <br>
-          {{ event.description }}
-        </span>
-          <span class="col-xs-2 text-truncate">
-          {{ event.store_id }}
-        </span>
-          <span class="col-xs-2 text-truncate">
-          {{ event.start | cpDatePipe:dateFormat }}
-        </span>
-          <span class="col-xs-1 text-truncate">
-          {{ event.avg_rating_percent === -1 ? '' :  event.avg_rating_percent + '%'}}
-        </span>
-          <span class="col-xs-1 text-truncate">
-          {{ event.attends }}
-        </span>
+            <img [src]="event.poster_thumb_url" class="img-circle">
+            <strong><a [routerLink]="[event.id]">{{ event.title }}</a></strong>
+            <br>
+            {{ event.description }}
+          </span>
+            <span class="col-xs-2 text-truncate">
+            {{ event.store_id }}
+          </span>
+            <span class="col-xs-2 text-truncate">
+            {{ event.start | cpDatePipe:dateFormat }}
+          </span>
+            <span class="col-xs-1 text-truncate">
+            {{ event.avg_rating_percent === -1 ? '' :  event.avg_rating_percent + '%'}}
+          </span>
+            <span class="col-xs-1 text-truncate">
+            {{ event.attends }}
+          </span>
+
           <span class="col-xs-3 text-truncate">
-          <span *ngIf="event.rating_scale_maximum > -1">
-            <cp-star
-              [data]="star"
-              *ngFor="let star of buildStars(event)">
-            </cp-star>
+            <span *ngIf="event.rating_scale_maximum > -1">
+              <cp-star
+                [data]="star"
+                *ngFor="let star of buildStars(event)">
+              </cp-star>
+            </span>
           </span>
-          </span>
-          <span class="col-xs-1 text-truncate">x</span>
-          </li>
+
+          <span class="col-xs-1 text-truncate hover">&#10006;</span>
+        </li>
+      </div>
     </ul>
   </div>
 </div>

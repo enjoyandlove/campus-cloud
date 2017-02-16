@@ -13,7 +13,12 @@
 
   li,
   &__header {
-    padding: 20px 0;
+    padding: 15px 0;
+    border-bottom: 1px solid $color-grey;
+
+    &:last-child {
+      border-bottom: 0;
+    }
   }
 }
 

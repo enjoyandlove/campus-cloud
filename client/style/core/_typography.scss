@@ -10,6 +10,10 @@ body {
   text-overflow: ellipsis;
 }
 
+.hover {
+  cursor: pointer;
+}
+
 a {
   color: $color-black;
   display: inline-block;
