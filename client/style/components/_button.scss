@@ -1,0 +1,22 @@
+@import '../core/colors';
+
+.cpbtn {
+  cursor: pointer;
+  font-size: 1em;
+  margin-bottom: 0;
+  user-select: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  text-align: center;
+  color: $color-white;
+  white-space: nowrap;
+  display: inline-block;
+  vertical-align: middle;
+  background-image: none;
+  touch-action: manipulation;
+  border: 1px solid transparent;
+
+  &--primary {
+    background: $color-brand;
+  }
+}
