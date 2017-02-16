@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { CPMapsComponent, CPModalComponent, CPTopBarComponent, CPAvatarComponent,
   CPSpinnerComponent, CPDropdownComponent,
   CPCheckboxComponent, CPHamburgerComponent, CPMobileMenuComponent, CPImageUploadComponent,
   CPPlaceAutoCompleteComponent, CPPageHeaderComponent, CPSearchBoxComponent, CPStarComponent,
-  CPAlertComponent,
+  CPAlertComponent, CPAnimatedButtonComponent
 } from './components';
 
 import {
@@ -14,23 +15,29 @@ import {
   CPFilterPipe
 } from './pipes';
 
+import {
+  StoreService
+} from './services';
+
 @NgModule({
   declarations: [ CPTopBarComponent, CPMapsComponent,
   CPAvatarComponent, CPMobileMenuComponent, CPModalComponent,
   CPPlaceAutoCompleteComponent, CPImageUploadComponent,
   CPSpinnerComponent, CPDropdownComponent,  CPCheckboxComponent,
   CPPageHeaderComponent, CPHamburgerComponent, CPSearchBoxComponent,
-  CPDatePipe, CPStarComponent, CPFilterPipe, CPAlertComponent ],
+  CPDatePipe, CPStarComponent, CPFilterPipe, CPAlertComponent,
+  CPAnimatedButtonComponent ],
 
-  imports: [ CommonModule, RouterModule ],
+  imports: [ CommonModule, RouterModule, ReactiveFormsModule ],
 
-  providers: [ ],
+  providers: [ StoreService ],
 
   exports: [ CPTopBarComponent, CPMapsComponent,
   CPAvatarComponent, CPMobileMenuComponent, CPModalComponent,
   CPPlaceAutoCompleteComponent, CPImageUploadComponent,
   CPSpinnerComponent, CPDropdownComponent, CPCheckboxComponent,
   CPPageHeaderComponent, CPHamburgerComponent, CPSearchBoxComponent,
-  CPDatePipe, CPStarComponent, CPFilterPipe, CPAlertComponent ]
+  CPDatePipe, CPStarComponent, CPFilterPipe, CPAlertComponent,
+  CPAnimatedButtonComponent ]
 })
 export class SharedModule { }

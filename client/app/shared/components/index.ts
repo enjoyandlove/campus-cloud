@@ -12,5 +12,6 @@ export * from './cp-hamburger';
 export * from './cp-mobile-menu';
 export * from './cp-page-header';
 export * from './cp-image-upload';
+export * from './cp-animated-button';
 export * from './cp-place-autocomplete';
 

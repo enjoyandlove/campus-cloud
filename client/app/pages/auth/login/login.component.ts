@@ -28,7 +28,10 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(data) {
-    if (!this.form.valid) { return; }
+    if (!this.form.valid) {
+      this.error.handleWarning({ reason: STATUS.ALL_FIELDS_ARE_REQUIRED });
+      return;
+    }
 
     this
       .service
@@ -46,7 +49,6 @@ export class LoginComponent implements OnInit {
         err => {
           if (err.status === 401) {
             this.error.handleError({ reason: STATUS.NO_ACCOUNT_FOUND });
-            console.warn('Not Authorized');
             return;
           }
           console.error(err.json());

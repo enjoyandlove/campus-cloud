@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
 import { EventsService } from '../events.service';
 import { FORMAT } from '../../../../../shared/pipes';
 import { BaseComponent } from '../../../../../base/base.component';
@@ -15,9 +14,7 @@ export class EventsListComponent extends BaseComponent implements OnInit {
   loading = true;
   dateFormat = FORMAT.LONG;
 
-  constructor(
-    private service: EventsService
-  ) {
+  constructor(private service: EventsService) {
     super();
     this.fetch();
   }

@@ -50,13 +50,13 @@
           {{ event.description }}
         </span>
           <span class="col-xs-2 text-truncate">
-          {{ event.city }}
+          {{ event.store_id }}
         </span>
           <span class="col-xs-2 text-truncate">
           {{ event.start | cpDatePipe:dateFormat }}
         </span>
           <span class="col-xs-1 text-truncate">
-          {{ event.avg_rating_percent === -1 ? '--' :  event.avg_rating_percent + '%'}}
+          {{ event.avg_rating_percent === -1 ? '' :  event.avg_rating_percent + '%'}}
         </span>
           <span class="col-xs-1 text-truncate">
           {{ event.attends }}
@@ -67,9 +67,6 @@
               [data]="star"
               *ngFor="let star of buildStars(event)">
             </cp-star>
-          </span>
-          <span *ngIf="event.rating_scale_maximum === -1">
-            --
           </span>
           </span>
           <span class="col-xs-1 text-truncate">x</span>
