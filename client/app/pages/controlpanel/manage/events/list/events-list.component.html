@@ -82,9 +82,19 @@
             </span>
           </span>
 
-          <span class="col-xs-1 text-truncate hover">&#10006;</span>
+          <button
+            class="col-xs-1 text-truncate"
+            (click)="deleteEvent = event.title"
+            data-toggle="modal" data-target="#cpModal">
+            &#10006;
+          </button>
+
         </li>
       </div>
     </ul>
   </div>
 </div>
+
+<cp-modal>
+  <cp-events-delete [name]="deleteEvent"></cp-events-delete>
+</cp-modal>

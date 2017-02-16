@@ -1,1 +1,121 @@
-Create
+<div class="row">
+  <form [formGroup]="form">
+    <div class="col-xs-12 col-sm-6">
+      <div class="cp-card">
+        <div class="row">
+          <div class="col-xs-12">
+            <em i18n>Event Photo</em>
+            <div class="row">
+              <div class="col-xs-3">
+                <input type="file">
+              </div>
+              <div class="col-xs-9">
+                <small i18n><strong>Upload your photo</strong></small>
+                <p class="text-muted" i18n>Photo should be at least 300px x 300px</p>
+                <button type="button" class="cpbtn cpbtn--dark" i18n>Upload Photo</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <em i18n>Event Details</em>
+            <div class="form-group">
+              <label i18n>Event Name</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="title"
+                placeholder="Add a short, clear name">
+            </div>
+
+            <div class="form-group">
+              <label i18n>Select Host</label>
+              <select
+                class="form-control"
+                formControlName="store_id">
+                <option value="" i18n>ABC Host</option>
+              </select>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12">
+                <label i18n>Location</label>
+                <div class="row">
+                  <div class="col-xs-12 col-sm-4">
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Building"
+                        formControlName="location">
+                    </div>
+                  </div>
+
+                  <div class="col-xs-12 col-sm-4">
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Room"
+                        formControlName="room_data">
+                    </div>
+                  </div>
+
+                  <div class="col-xs-12 col-sm-4">
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Address"
+                        formControlName="address">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12">
+                <cp-maps></cp-maps>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12">
+                <label i18n>Start</label>
+                <div class="row">
+                  <div class="col-xs-6 col-sm-3">
+                    <input type="date">
+                  </div>
+                  <div class="col-xs-6 col-sm-3">
+                    <input type="date">
+                  </div>
+
+                  <div class="col-xs-6 col-sm-3">
+                    <input type="date">
+                  </div>
+                  <div class="col-xs-6 col-sm-3">
+                    <input type="date">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label i18n>Description</label>
+              <textarea placeholder="Tell people more about the event"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-6">
+      <div class="cp-card">
+        Right
+      </div>
+    </div>
+  </form>
+</div>

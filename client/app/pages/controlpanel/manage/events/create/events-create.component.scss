@@ -1,0 +1,15 @@
+@import '~styles/components/card';
+@import '~styles/components/form';
+
+form {
+  em {
+    margin-top: 10px;
+  }
+  label {
+    margin-top: 10px;
+  }
+
+  .text-muted {
+    font-size: 0.8em;
+  }
+}
