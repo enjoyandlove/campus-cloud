@@ -14,6 +14,8 @@ const routes: Routes = [
 
   { path: 'password-reset', component: PasswordResetComponent },
 
+  { path: 'cb', loadChildren: './pages/callback/callback.module#CallbackModule' },
+
   { path: 'logout', component: LogoutComponent },
 ];
 
