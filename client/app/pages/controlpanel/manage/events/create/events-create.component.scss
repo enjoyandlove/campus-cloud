@@ -3,13 +3,22 @@
 
 form {
   em {
-    margin-top: 10px;
+    margin: 10px 0;
+    display: inline-block;
   }
   label {
     margin-top: 10px;
+    display: inline-block;
   }
 
   .text-muted {
     font-size: 0.8em;
   }
+}
+
+.placeholder {
+  width: 108px;
+  height: 108px;
+  border-radius: 4px;
+  background-color: #D8D8D8;
 }

@@ -3,8 +3,11 @@
 @import "~styles/core/typography";
 
 nav {
-  background: $color-white;
-  box-shadow: 0 1px 2px 0 rgba(0,0,0,0.16);
+  top: 0;
+  z-index: 1;
+  width: 100%;
+  position: fixed;
+  background: $color-black;
 
   ul {
     margin: 0;
@@ -15,7 +18,7 @@ nav {
   .nav__default {
     a,
     li {
-      color: $color-black;
+      color: $color-med-grey;
     }
     .user__name--dropdown {
       top: 35px;
@@ -31,29 +34,24 @@ nav {
     }
   }
   .nav__links li a {
-    color: $color-grey;
+    color: $color-med-grey;
   }
 
   .nav__links li,
   .nav__default li {
     display: inline-block;
     vertical-align: middle;
-    transition: background-color 300ms ease-in-out;
 
     &.active {
-      @include font-bold();
-      color: $color-black;
-      background-color: $color-light-grey;
-    }
-
-    &:hover {
-      background-color: $color-light-grey;
+      a {
+        color: $color-white;
+      }
     }
 
     a,
     &.user__name {
       font-size: 1em;
-      padding: 15px 10px;
+      padding: 25px 10px;
     }
 
     a {

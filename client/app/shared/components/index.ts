@@ -9,6 +9,7 @@ export * from './cp-dropdown';
 export * from './cp-checkbox';
 export * from './cp-searchbox';
 export * from './cp-hamburger';
+export * from './cp-datepicker';
 export * from './cp-mobile-menu';
 export * from './cp-page-header';
 export * from './cp-image-upload';

@@ -9,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EventsCreateComponent implements OnInit {
   form: FormGroup;
+  datePickerOpts;
 
   constructor(
     private fb: FormBuilder
@@ -24,6 +25,18 @@ export class EventsCreateComponent implements OnInit {
       'description': ['', Validators.required],
       'attend_verification_methods': ['']
     });
+
+    this.datePickerOpts = {
+      utc: true,
+      altInput: true,
+      enableTime: false,
+      altFormat: 'F j, Y h:i K',
+      onClose: function(selectedDates, dateStr, instance) {
+        console.log(selectedDates);
+        console.log(dateStr);
+        console.log(instance);
+      }
+    };
   }
 
   ngOnInit() { }
