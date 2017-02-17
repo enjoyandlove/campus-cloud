@@ -5,9 +5,7 @@
   padding-top: 60px;
 
   &__title {
-    @include font-bold();
-
-    font-size: 2.5em;
+    @include font-heading();
   }
 
   &__sub-title {
