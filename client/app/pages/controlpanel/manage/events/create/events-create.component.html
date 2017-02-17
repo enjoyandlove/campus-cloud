@@ -1,5 +1,5 @@
 <div class="row">
-  <form [formGroup]="form">
+  <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
     <div class="col-xs-12 col-sm-6">
       <div class="cp-card">
         <div class="row">
@@ -110,14 +110,16 @@
         <div class="row">
           <div class="col-xs-12">
             <em i18n>Event Attendance</em>
-            <span class="pull-right">switch</span>
+            <span class="pull-right">
+              <cp-switch></cp-switch>
+            </span>
           </div>
         </div>
 
         <div class="row">
           <div class="col-xs-6">
             <div class="form-group">
-              <label i18n>Event Manager <span>&#63;</span></label>
+              <label i18n>Event Manager <span class="tooltip">&#63;</span></label>
               <select class="form-control">
                 <option value="">---</option>
               </select>
@@ -125,7 +127,7 @@
           </div>
           <div class="col-xs-6">
             <div class="form-group">
-              <label i18n>Attendance Manager <span>&#63;</span></label>
+              <label i18n>Attendance Manager <span class="tooltip">&#63;</span></label>
               <select class="form-control">
                 <option value="">---</option>
               </select>
@@ -147,6 +149,19 @@
             <label i18n>QR Code</label>
             <div class="placeholder"></div>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <hr>
+        <div class="text-right">
+          <button
+            type="submit"
+            class="cpbtn cpbtn--primary" i18n>
+            Create Event
+          </button>
         </div>
       </div>
     </div>

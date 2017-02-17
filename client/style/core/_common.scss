@@ -3,6 +3,10 @@ body {
   height: 100%;
 }
 
+hr {
+  border-top: 1px solid $border-color;
+}
+
 body {
   background: $color-light-grey;
 }

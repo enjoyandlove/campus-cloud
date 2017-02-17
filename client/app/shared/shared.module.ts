@@ -6,8 +6,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CPMapsComponent, CPModalComponent, CPTopBarComponent, CPAvatarComponent,
   CPSpinnerComponent, CPDropdownComponent,
   CPCheckboxComponent, CPHamburgerComponent, CPMobileMenuComponent, CPImageUploadComponent,
-  CPPlaceAutoCompleteComponent, CPPageHeaderComponent, CPSearchBoxComponent, CPStarComponent,
-  CPAlertComponent, CPAnimatedButtonComponent, CPButtonDropdownComponent, CPDatePickerComponent
+  CPPlaceAutoCompleteComponent, CPPageHeaderComponent, CPSearchBoxComponent,
+  CPStarComponent, CPAlertComponent, CPAnimatedButtonComponent,
+  CPButtonDropdownComponent, CPDatePickerComponent, CPSwitchComponent
 } from './components';
 
 import {
@@ -26,7 +27,9 @@ import {
   CPSpinnerComponent, CPDropdownComponent,  CPCheckboxComponent,
   CPPageHeaderComponent, CPHamburgerComponent, CPSearchBoxComponent,
   CPDatePipe, CPStarComponent, CPFilterPipe, CPAlertComponent,
-  CPAnimatedButtonComponent, CPButtonDropdownComponent, CPDatePickerComponent ],
+  CPAlertComponent, CPAnimatedButtonComponent,
+  CPButtonDropdownComponent, CPDatePickerComponent, CPSwitchComponent,
+  CPAnimatedButtonComponent, CPButtonDropdownComponent, CPDatePickerComponent,  ],
 
   imports: [ CommonModule, RouterModule, ReactiveFormsModule ],
 
@@ -38,6 +41,8 @@ import {
   CPSpinnerComponent, CPDropdownComponent, CPCheckboxComponent,
   CPPageHeaderComponent, CPHamburgerComponent, CPSearchBoxComponent,
   CPDatePipe, CPStarComponent, CPFilterPipe, CPAlertComponent,
-  CPAnimatedButtonComponent, CPButtonDropdownComponent, CPDatePickerComponent ]
+  CPAlertComponent, CPAnimatedButtonComponent,
+  CPButtonDropdownComponent, CPDatePickerComponent, CPSwitchComponent,
+  CPAnimatedButtonComponent, CPButtonDropdownComponent, CPDatePickerComponent,  ]
 })
 export class SharedModule { }

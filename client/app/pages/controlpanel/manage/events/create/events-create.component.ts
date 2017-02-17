@@ -39,5 +39,9 @@ export class EventsCreateComponent implements OnInit {
     };
   }
 
+  onSubmit(data) {
+    console.log(data);
+  }
+
   ngOnInit() { }
 }
