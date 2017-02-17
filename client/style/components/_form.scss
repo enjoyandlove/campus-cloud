@@ -41,13 +41,30 @@ textarea {
   transition: border 300ms ease-in-out;
 
   &:active {
-    border: 1px solid $color-brand;
+    border: 1px solid $color-black;
   }
 
   &:focus,
   &:active {
     outline: none;
     box-shadow: none;
+  }
+
+  &::-webkit-input-placeholder {
+    font-size: 0.9em;
+    color: $color-black;
+  }
+  &::-moz-placeholder {
+    font-size: 0.9em;
+    color: $color-black;
+  }
+  &:-ms-input-placeholder {
+    font-size: 0.9em;
+    color: $color-black;
+  }
+  &:-moz-placeholder {
+    font-size: 0.9em;
+    color: $color-black;
   }
 }
 

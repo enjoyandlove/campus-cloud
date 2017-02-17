@@ -1,18 +1,32 @@
 @import '~styles/core/colors';
+@import '~styles/components/form';
+@import '~styles/components/button';
 
 :host {
   height: 100%;
   display: block;
 }
 
+.footer {
+  margin-top: 30px;
+}
+
 form {
   margin-top: 180px;
-}
+  padding: 30px;
+  background: $color-white;
+  border: 1px solid $border-color;
 
-input.isError {
-  border-left: 3px solid $color-danger;
-}
+  button {
+    width: 100%;
+  }
 
-input.isOk {
-  border-left: 3px solid $color-success;
+  .heading {
+    p {
+      font-size: 1.8em;
+      color: $color-black;
+      text-transform: uppercase;
+      margin: 10px auto 40px auto;
+    }
+  }
 }
