@@ -1,31 +1,98 @@
-<div class="row">
-  <div class="event">
-    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+<div class="__row">
+  <div class="cpmodal">
+    <div class="cpmodal__header">
       <div class="row">
-        <div class="col-xs-12">
-          <div class="event__header">
-            <span i18n>Are you sure?</span>
-            <span class="pull-right" (click)="close()">&#10006;</span>
-          </div>
+        <div class="col-xs-12 text-center">
+          <span i18n><strong>Are you sure?</strong></span>
+
+          <span
+            data-dismiss="modal"
+            class="pull-right hover cpmodal__header__close">
+            &times;
+          </span>
         </div>
       </div>
+    </div>
 
-      <div class="row">
-        <p i18n>Are you sure you want to delete {{ name }}?</p>
-      </div>
-
+    <div class="cpmodal__body">
       <div class="row">
         <div class="col-xs-12">
-          <div class="event__footer">
-            <div class="col-xs-4 col-xs-offset-4">
-              <button type="button" i18n>Cancel</button>
+          <p class="text-center" i18n>
+            Are you sure you want to delete {{ name }}?
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cpmodal__footer">
+      <div class="row">
+        <div class="col-xs-6 col-xs-offset-6 text-right">
+          <button
+            type="button"
+            class="cpbtn cpbtn--white"
+            data-dismiss="modal" i18n>
+            Cancel
+          </button>
+
+          <button
+            type="button"
+            (click)="onDelete()"
+            class="cpbtn cpbtn--danger"i18n>
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--
+      <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <div class="row">
+          <div class="col-xs-12 text-center">
+            <div class="__cpmodal__header">
+              <span i18n><strong>Are you sure?</strong></span>
+
+              <span
+                data-dismiss="modal"
+                class="pull-right cpmodal__header__close">
+                &times;
+              </span>
             </div>
-            <div class="col-xs-4">
-              <button type="button" i18n>Delete</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="cpmodal__body">
+              <p class="text-center" i18n>
+                Are you sure you want to delete {{ name }}?
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="cpmodal__footer">
+              <div class="col-xs-4 col-xs-offset-4">
+                <button
+                  type="button"
+                  class="cpbtn cpbtn--white"
+                  data-dismiss="modal" i18n>
+                  Cancel
+                </button>
+              </div>
+              <div class="col-xs-4">
+                <button
+                  type="button"
+                  class="cpbtn cpbtn--danger"i18n>
+                  Delete
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</div>-->

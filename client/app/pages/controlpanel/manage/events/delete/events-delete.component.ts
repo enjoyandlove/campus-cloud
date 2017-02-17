@@ -10,8 +10,8 @@ export class EventsDeleteComponent implements OnInit {
 
   constructor() { }
 
-  close() {
-    console.log('closing');
+  onDelete() {
+    console.log('delete');
   }
 
   ngOnInit() { }

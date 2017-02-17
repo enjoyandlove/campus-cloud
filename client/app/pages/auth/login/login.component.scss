@@ -1,4 +1,4 @@
-@import '../../../../style/core/colors';
+@import '~styles/core/colors';
 
 :host {
   height: 100%;
@@ -10,7 +10,7 @@ form {
 }
 
 input.isError {
-  border-left: 3px solid $color-error;
+  border-left: 3px solid $color-danger;
 }
 
 input.isOk {

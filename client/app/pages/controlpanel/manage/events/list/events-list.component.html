@@ -82,12 +82,12 @@
             </span>
           </span>
 
-          <button
-            class="col-xs-1 text-truncate"
+          <span
             (click)="deleteEvent = event.title"
-            data-toggle="modal" data-target="#cpModal">
-            &#10006;
-          </button>
+            data-toggle="modal" data-target="#cpModal"
+            class="col-xs-1 hover text-truncate delete-event">
+            &times;
+          </span>
 
         </li>
       </div>
