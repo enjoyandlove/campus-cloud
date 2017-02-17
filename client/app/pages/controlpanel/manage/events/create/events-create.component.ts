@@ -29,7 +29,7 @@ export class EventsCreateComponent implements OnInit {
     this.datePickerOpts = {
       utc: true,
       altInput: true,
-      enableTime: false,
+      enableTime: true,
       altFormat: 'F j, Y h:i K',
       onClose: function(selectedDates, dateStr, instance) {
         console.log(selectedDates);
