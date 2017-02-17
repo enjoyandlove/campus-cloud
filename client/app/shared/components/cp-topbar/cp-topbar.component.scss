@@ -33,8 +33,16 @@ nav {
       }
     }
   }
-  .nav__links li a {
-    color: $color-med-grey;
+  .nav__links li {
+    a {
+      color: $color-med-grey;
+    }
+
+    &:first-child {
+      a {
+        padding-left: 0;
+      }
+    }
   }
 
   .nav__links li,
