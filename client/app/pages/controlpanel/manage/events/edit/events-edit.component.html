@@ -35,7 +35,7 @@
               <select
                 class="form-control"
                 formControlName="store_id">
-                <option value="" i18n>ABC Host</option>
+                <option value="abc" i18n>ABC Host</option>
               </select>
             </div>
 
@@ -52,10 +52,10 @@
                 <label i18n>Start</label>
                 <div class="row">
                   <div class="col-xs-6 col-sm-6">
-                    <cp-datepicker [options]="datePickerOpts"></cp-datepicker>
+                    <cp-datepicker [options]="startDatePicker"></cp-datepicker>
                   </div>
                   <div class="col-xs-6 col-sm-6">
-                    <cp-datepicker [options]="datePickerOpts"></cp-datepicker>
+                    <cp-datepicker [options]="endDatePicker"></cp-datepicker>
                   </div>
                 </div>
               </div>
@@ -87,11 +87,14 @@
 
                   <div class="col-xs-12 col-sm-4">
                     <div class="form-group">
-                      <input
+                      <cp-place-autocomplete
+                        (placeChange)="onPlaceChanged($event)">
+                      </cp-place-autocomplete>
+                      <!--<input
                         type="text"
                         class="form-control"
                         placeholder="Address"
-                        formControlName="address">
+                        formControlName="address">-->
                     </div>
                   </div>
                 </div>

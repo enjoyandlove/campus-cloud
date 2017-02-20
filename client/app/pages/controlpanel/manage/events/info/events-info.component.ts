@@ -42,6 +42,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
       .then(res => {
         this.event = res;
         this.buildHeader(res);
+        console.log(res);
         this.mapCenter = { lat: res.latitude, lng: res.longitude };
       })
       .catch(err => console.error(err));

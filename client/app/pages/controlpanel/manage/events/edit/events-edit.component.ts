@@ -11,6 +11,8 @@ import { EventsService } from '../events.service';
 import { FORMAT } from '../../../../../shared/pipes/date.pipe';
 import { BaseComponent } from '../../../../../base/base.component';
 
+import * as moment from 'moment';
+
 @Component({
   selector: 'cp-events-edit',
   templateUrl: './events-edit.component.html',
@@ -21,9 +23,10 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   event;
   mapCenter;
   dateFormat;
-  datePickerOpts;
+  endDatePicker;
   loading = true;
   eventId: number;
+  startDatePicker;
   attendance = false;
   isFormReady = false;
 
@@ -38,13 +41,6 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.eventId = this.route.snapshot.params['eventId'];
 
     this.fetch();
-
-    this.datePickerOpts = {
-      utc: true,
-      altInput: true,
-      enableTime: true,
-      altFormat: 'F j, Y h:i K',
-    };
   }
 
   onSubmit(data) {
@@ -52,6 +48,8 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   private buildForm(res) {
+    let _self = this;
+
     this.form = this.fb.group({
       'title': [res.title, Validators.required],
       'store_id': [res.store_id, Validators.required],
@@ -63,7 +61,37 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       'description': [res.description, Validators.required],
       'attend_verification_methods': [res.attend_verification_methods]
     });
+
+    this.startDatePicker = {
+      utc: true,
+      defaultDate: new Date(res.start * 1000),
+      altInput: true,
+      enableTime: true,
+      altFormat: 'F j, Y h:i K',
+      onChange: function(_, dateStr) {
+        _self.form.controls['start'].setValue(moment(dateStr).valueOf());
+      }
+    };
+
+    this.endDatePicker = {
+      utc: true,
+      defaultDate: new Date(res.end * 1000),
+      altInput: true,
+      enableTime: true,
+      altFormat: 'F j, Y h:i K',
+      onChange: function(_, dateStr) {
+        _self.form.controls['end'].setValue(moment(dateStr).valueOf());
+      }
+    };
     this.isFormReady = true;
+  }
+
+  onPlaceChanged(data) {
+    this.form.controls['address'].setValue(data.name);
+    this.mapCenter = {
+      lat: data.geometry.location.lat(),
+      lng: data.geometry.location.lng()
+    };
   }
 
   private fetch() {
