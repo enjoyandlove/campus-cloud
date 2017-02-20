@@ -1,21 +1,23 @@
-<div class="button">
-  <a
-    class="cpbtn cpbtn--primary"
-    [routerLink]="[data.button.url]">
+<div class="cpbtn-group">
+  <button
+    type="button"
+    class="cpbtn cpbtn--primary">
     {{ data.button.label }}
-  </a>
-  <div>
-    <button
-      data-toggle="dropdown"
-      class="cpbtn cpbtn--primary">
-      &#709;
-    </button>
-    <ul [class]="['dropdown-menu ' + align ]">
-      <li
-        (click)="onClick(child)"
-        *ngFor="let child of data.children">
-        {{ child.label }}
-      </li>
-    </ul>
-  </div>
+  </button>
+
+  <button
+    type="button"
+    aria-haspopup="true"
+    aria-expanded="false"
+    data-toggle="dropdown"
+    class="cpbtn cpbtn--primary dropdown-toggle">
+    <span class="rotate">&#10094;</span>
+  </button>
+  <ul class="dropdown-menu">
+    <li
+      (click)="onClick(child)"
+      *ngFor="let child of data.children">
+      {{ child.label }}
+    </li>
+  </ul>
 </div>

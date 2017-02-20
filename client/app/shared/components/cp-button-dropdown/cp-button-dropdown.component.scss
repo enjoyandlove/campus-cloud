@@ -1,38 +1,49 @@
 @import '~styles/core/colors';
 @import '~styles/components/button';
 
-.button {
-  & > * {
+:host {
+  height: 40px;
+  display: inline-block;
+}
+
+.cpbtn-group {
+  height: 100%;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+
+  button {
+    height: 100%;
+  }
+
+  &.open {
+    span.rotate {
+      transform: rotate(-90deg);
+    }
+  }
+
+  .rotate {
+    line-height: 1;
+    font-size: 17px;
+    vertical-align: -2px;
     display: inline-block;
+    transition: transform 200ms ease-in-out;
   }
 
-  > div {
-    position: relative;
-  }
-
-  ul {
-    padding: 10px;
-    min-width: 230px;
-    border: 1px solid $border-color;
+  .dropdown-menu {
+    top: 110%;
+    padding: 0;
 
     li {
-      padding-bottom: 10px;
+      padding: 10px;
+      width: 200px;
+      text-align: left;
+      transition: background 300ms ease-in-out;
 
       &:hover {
         cursor: pointer;
+        background: #eaeaea;
       }
-
-    }
-
-    &.right {
-      right: 0;
-      left: auto;
-      text-align: right;
-    }
-    &.left {
-      left: 0;
-      right: auto;
-      text-align: left;
     }
   }
 }
