@@ -11,7 +11,7 @@
               </div>
               <div class="col-xs-9">
                 <small i18n><strong>Upload your photo</strong></small>
-                <p class="text-muted" i18n>Photo should be at least 300px x 300px</p>
+                <p class="text-muted" i18n>.png, .gif, .jpg with maximum file size of 5MB</p>
                 <button type="button" class="cpbtn cpbtn--dark" i18n>Upload Photo</button>
               </div>
             </div>
@@ -40,6 +40,25 @@
             </div>
 
             <div class="row">
+              <div class="col-xs-12">
+                <label i18n>Start</label>
+                <div class="row">
+                  <div class="col-xs-6 col-sm-6">
+                    <cp-datepicker [options]="datePickerOpts"></cp-datepicker>
+                  </div>
+                  <div class="col-xs-6 col-sm-6">
+                    <cp-datepicker [options]="datePickerOpts"></cp-datepicker>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label i18n>Description</label>
+              <textarea placeholder="Tell people more about the event"></textarea>
+            </div>
+
+                        <div class="row">
               <div class="col-xs-12">
                 <label i18n>Location</label>
                 <div class="row">
@@ -81,25 +100,6 @@
                 <cp-maps></cp-maps>
               </div>
             </div>
-
-            <div class="row">
-              <div class="col-xs-12">
-                <label i18n>Start</label>
-                <div class="row">
-                  <div class="col-xs-6 col-sm-6">
-                    <cp-datepicker [options]="datePickerOpts"></cp-datepicker>
-                  </div>
-                  <div class="col-xs-6 col-sm-6">
-                    <cp-datepicker [options]="datePickerOpts"></cp-datepicker>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label i18n>Description</label>
-              <textarea placeholder="Tell people more about the event"></textarea>
-            </div>
           </div>
         </div>
       </div>
@@ -111,43 +111,47 @@
           <div class="col-xs-12">
             <em i18n>Event Attendance</em>
             <span class="pull-right">
-              <cp-switch></cp-switch>
+              <cp-switch (toggle)="attendance = !attendance"></cp-switch>
             </span>
           </div>
         </div>
 
-        <div class="row">
-          <div class="col-xs-6">
-            <div class="form-group">
-              <label i18n>Event Manager <span class="tooltip">&#63;</span></label>
-              <select class="form-control">
-                <option value="">---</option>
-              </select>
+        <div *ngIf="attendance">
+          <div class="row">
+            <div class="col-xs-6">
+              <div class="form-group">
+                <label i18n>Event Manager <span class="tooltip">&#63;</span></label>
+                <select class="form-control">
+                  <option value="">---</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-xs-6">
+              <div class="form-group">
+                <label i18n>
+                  Attendance Manager (optional)
+                  <span class="tooltip">&#63;</span>
+                </label>
+                <input type="text" class="form-control" placeholder="example@mail.com">
+              </div>
             </div>
           </div>
-          <div class="col-xs-6">
-            <div class="form-group">
-              <label i18n>Attendance Manager <span class="tooltip">&#63;</span></label>
+
+          <div class="row">
+            <div class="col-xs-6">
+              <label i18n>Attendance Feedback</label>
               <select class="form-control">
-                <option value="">---</option>
-              </select>
+                  <option value="" i18n>Enabled</option>
+                  <option value="" i18n>Disabled</option>
+                </select>
             </div>
           </div>
-        </div>
 
-        <div class="row">
-          <div class="col-xs-6">
-            <label i18n>Attendance Feedback</label>
-            <select class="form-control">
-                <option value="">---</option>
-              </select>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-xs-6">
-            <label i18n>QR Code</label>
-            <div class="placeholder"></div>
+          <div class="row">
+            <div class="col-xs-6">
+              <label i18n>QR Code</label>
+              <div class="placeholder"></div>
+            </div>
           </div>
         </div>
       </div>

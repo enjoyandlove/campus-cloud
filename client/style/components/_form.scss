@@ -52,23 +52,24 @@ textarea {
 
   &::-webkit-input-placeholder {
     font-size: 0.9em;
-    color: $color-black;
+    color: $color-med-grey;
   }
   &::-moz-placeholder {
     font-size: 0.9em;
-    color: $color-black;
+    color: $color-med-grey;
   }
   &:-ms-input-placeholder {
     font-size: 0.9em;
-    color: $color-black;
+    color: $color-med-grey;
   }
   &:-moz-placeholder {
     font-size: 0.9em;
-    color: $color-black;
+    color: $color-med-grey;
   }
 }
 
 textarea {
   resize: none;
+  line-height: 1.6;
   min-height: 120px;
 }

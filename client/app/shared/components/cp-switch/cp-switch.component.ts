@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'cp-switch',
@@ -6,12 +6,18 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./cp-switch.component.scss']
 })
 export class CPSwitchComponent implements OnInit {
-  @Output() change: EventEmitter<boolean> = new EventEmitter();
+  @Input() checked: boolean;
+  @Output() toggle: EventEmitter<boolean> = new EventEmitter();
+  isChecked = false;
+
   constructor() { }
 
   onChange(evt) {
-    this.change.emit(evt.target.checked);
+    this.isChecked = !this.isChecked;
+    this.toggle.emit(evt.target.checked);
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.isChecked = this.checked;
+  }
 }

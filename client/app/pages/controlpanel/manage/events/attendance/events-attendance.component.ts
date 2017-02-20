@@ -11,11 +11,11 @@ import { BaseComponent } from '../../../../../base/base.component';
 
 
 @Component({
-  selector: 'cp-events-details',
-  templateUrl: './events-details.component.html',
-  styleUrls: ['./events-details.component.scss']
+  selector: 'cp-events-attendance',
+  templateUrl: './events-attendance.component.html',
+  styleUrls: ['./events-attendance.component.scss']
 })
-export class EventsDetailsComponent extends BaseComponent implements OnInit {
+export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   event;
   loading = true;
   eventId: number;

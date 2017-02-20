@@ -19,10 +19,13 @@ import { BaseComponent } from '../../../../../base/base.component';
 export class EventsEditComponent extends BaseComponent implements OnInit {
   form: FormGroup;
   event;
-  dateFormat;
   mapCenter;
+  dateFormat;
+  datePickerOpts;
   loading = true;
   eventId: number;
+  attendance = false;
+  isFormReady = false;
 
   constructor(
     private fb: FormBuilder,
@@ -34,23 +37,33 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.dateFormat = FORMAT.DATETIME;
     this.eventId = this.route.snapshot.params['eventId'];
 
-    this.form = this.fb.group({
-      'title': ['', Validators.required],
-      'store_id': ['', Validators.required],
-      'location': ['', Validators.required],
-      'room_data': ['', Validators.required],
-      'address': ['', Validators.required],
-      'start': ['', Validators.required],
-      'end': ['', Validators.required],
-      'description': ['', Validators.required],
-      'attend_verification_methods': ['']
-    });
-
     this.fetch();
+
+    this.datePickerOpts = {
+      utc: true,
+      altInput: true,
+      enableTime: true,
+      altFormat: 'F j, Y h:i K',
+    };
   }
 
   onSubmit(data) {
     console.log(data);
+  }
+
+  private buildForm(res) {
+    this.form = this.fb.group({
+      'title': [res.title, Validators.required],
+      'store_id': [res.store_id, Validators.required],
+      'location': [res.location, Validators.required],
+      'room_data': [res.room_data, Validators.required],
+      'address': [res.address, Validators.required],
+      'start': [res.start, Validators.required],
+      'end': [res.end, Validators.required],
+      'description': [res.description, Validators.required],
+      'attend_verification_methods': [res.attend_verification_methods]
+    });
+    this.isFormReady = true;
   }
 
   private fetch() {
@@ -61,6 +74,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       .then(res => {
         this.event = res;
         this.buildHeader();
+        this.buildForm(res);
         this.mapCenter = { lat: res.latitude, lng: res.longitude };
       })
       .catch(err => console.error(err));

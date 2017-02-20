@@ -55,7 +55,7 @@
           cpFilterPipe:{ query: query , filterBy: ['title', 'description' ] }">
 
           <span class="col-xs-2 text-truncate events__thumbnail">
-            <img [src]="event.poster_thumb_url" class="img-circle">
+            <img [src]="event.poster_thumb_url" class="img-rounded">
             <strong><a [routerLink]="[event.id]">{{ event.title }}</a></strong>
             <br>
             {{ event.description }}

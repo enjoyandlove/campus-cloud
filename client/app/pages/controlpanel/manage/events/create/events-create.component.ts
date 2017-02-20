@@ -10,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
 export class EventsCreateComponent implements OnInit {
   form: FormGroup;
   datePickerOpts;
+  attendance = false;
 
   constructor(
     private fb: FormBuilder
