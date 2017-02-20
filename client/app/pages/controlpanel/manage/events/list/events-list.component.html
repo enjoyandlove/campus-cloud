@@ -2,26 +2,51 @@
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
   <div *ngSwitchCase="false">
-    <div class="cp-card col-xs-12">
+    <div class="cp-card actions col-xs-12">
       <div class="row">
 
         <cp-searchbox
           (query)="query = $event"
-          class="col-xs-12 col-sm-3">
+          class="col-xs-12 col-sm-2">
         </cp-searchbox>
 
-        <cp-dropdown
-          [items]="eventFilter"
-          class="col-xs-12 col-sm-3">
-        </cp-dropdown>
-
-        <!--<cp-dropdown
-          class="col-xs-12 col-sm-3">
-        </cp-dropdown>-->
-
         <div class="col-xs-12 col-sm-3">
+          <div class="row">
+            <div class="col-xs-10">
+              <cp-dropdown [items]="eventFilter"></cp-dropdown>
+            </div>
+            <div class="col-xs-2 text-left">
+              <button class="calendar cpbtn cpbtn--default">&#9778;</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-5">
+          <div class="row">
+            <div class="col-xs-8">
+              <div class="row">
+                <div class="col-xs-12 col-sm-4 text-truncate text-right">
+                  <label i18n>Filter By</label>
+                </div>
+                <div class="col-xs-12 col-sm-8">
+                  <cp-dropdown [items]="eventFilter"></cp-dropdown>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-4">
+              <div class="col-xs-12 col-sm-9 text-truncate text-right">
+                  <label i18n>Attendance</label>
+                </div>
+                <div class="col-xs-12 col-sm-3">
+                  <cp-checkbox class="checkbox"></cp-checkbox>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-2">
           <cp-button-dropdown
-            class="text-right"
+            class="pull-right"
             [align]="BUTTON_ALIGN"
             [data]="buttonDropdown">
           </cp-button-dropdown>

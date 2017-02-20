@@ -1,3 +1,5 @@
+@import '~styles/core/colors';
+
 .control {
   font-size: 18px;
   position: relative;
@@ -30,13 +32,13 @@
 
 /* Checked state */
 .control input:checked ~ .control__indicator {
-  background: mediumblue;
+  background: $color-grey;
 }
 
 /* Hover state whilst checked */
 .control:hover input:not([disabled]):checked ~ .control__indicator,
 .control input:checked:focus ~ .control__indicator {
-  background: purple;
+  background: $color-med-grey;
 }
 
 /* Disabled state */

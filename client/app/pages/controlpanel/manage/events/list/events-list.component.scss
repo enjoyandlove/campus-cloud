@@ -1,9 +1,21 @@
-@import '~styles/core/_colors';
-@import '~styles/components/_card';
-@import '~styles/components/_form';
+@import '~styles/core/colors';
+@import '~styles/core/typography';
+@import '~styles/components/card';
+@import '~styles/components/form';
+@import '~styles/components/button';
 
 .actions {
-  padding: 25px 0;
+  label {
+    @include font-normal();
+
+    margin-right: 8px;
+    display: inline-block;
+    vertical-align: -12px;
+  }
+
+  .calendar {
+    height: 40px;
+  }
 }
 
 .delete-event {
