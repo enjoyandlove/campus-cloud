@@ -1,57 +1,44 @@
-.dropdown {
-  width: 100%;
-  background: #f2f2f2;
+@import '~styles/core/colors';
+@import '~styles/components/button';
+
+.cpbtn-group {
+  position: relative;
   display: inline-block;
+  vertical-align: middle;
 
-  &:hover {
-    cursor: pointer;
-  }
-
-  &__wrapper {
-    &.disabled {
-      opacity: 0.8;
+  &.open {
+    button span {
+      transform: rotate(-90deg);
     }
   }
 
-  span {
-    padding: 10px;
-    display: inline-block;
-    vertical-align: middle;
+  button {
+    height: 42px;
+    text-align: left;
+    min-width: 180px;
+    position: relative;
+    span {
+      top: 8px;
+      right: 12px;
+      font-size: 17px;
+      position: absolute;
+      transition: transform 200ms ease-in-out;
+    }
   }
 
-  &__icon {
-    float: right;
-    background: #ccc;
-    border-left: 2px solid white;
-  }
-
-  &__button {
-    min-width: 140px;
-  }
-
-  ul {
+  .dropdown-menu {
+    top: 110%;
     padding: 0;
-    margin: 8px 0 0;
-    border-radius: 0;
-    min-width: 140px;
-    max-height: 160px;
-    overflow-y: scroll;
 
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
+    li {
+      padding: 10px;
+      text-align: left;
+      transition: background 300ms ease-in-out;
 
-  li {
-    padding: 10px;
-    transition: background 300ms ease-in-out;
-
-    &:nth-child(odd) {
-      background: #f6f6f6;
-    }
-
-    &:hover {
-      background: #f2f2f2;
+      &:hover {
+        cursor: pointer;
+        background: #eaeaea;
+      }
     }
   }
 }

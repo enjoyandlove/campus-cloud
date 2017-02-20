@@ -19,8 +19,8 @@ export class CPStarComponent implements OnInit {
   star;
 
   constructor() {
-    this.star_empty = require('../../../../public/svg/star-empty.svg');
-    this.star_full = require('../../../../public/svg/star-full.svg');
+    this.star_empty = '&star;';
+    this.star_full = '&starf;';
   }
 
   ngOnInit() {

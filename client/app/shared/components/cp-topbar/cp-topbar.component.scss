@@ -22,13 +22,14 @@ nav {
     }
     .user__name--dropdown {
       top: 35px;
-      border-radius: 0;
+      border-radius: 4px;
 
       li {
         display: block;
         a {
           margin: 0;
           padding: 10px;
+          border-radius: 4px;
         }
       }
     }

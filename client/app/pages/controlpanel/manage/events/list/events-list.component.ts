@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 
 import { EventsService } from '../events.service';
 import { FORMAT } from '../../../../../shared/pipes';
+import { BUTTON_DROPDOWN, DATE_FILTER } from './events-filters';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 import { BaseComponent } from '../../../../../base/base.component';
 import { BUTTON_ALIGN } from '../../../../../shared/components/cp-button-dropdown';
@@ -15,6 +16,7 @@ import { BUTTON_ALIGN } from '../../../../../shared/components/cp-button-dropdow
 export class EventsListComponent extends BaseComponent implements OnInit {
   events;
   query;
+  eventFilter;
   buttonDropdown;
   loading = true;
   deleteEvent = '';
@@ -27,7 +29,8 @@ export class EventsListComponent extends BaseComponent implements OnInit {
   ) {
     super();
     this.fetch();
-    this.buttonDropdown = require('./button-dropdown.json');
+    this.buttonDropdown = BUTTON_DROPDOWN;
+    this.eventFilter = DATE_FILTER;
   }
 
   private fetch() {

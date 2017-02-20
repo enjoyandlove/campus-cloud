@@ -1,4 +1,9 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+
+interface IItems {
+  'label': string;
+  'action': string;
+}
 
 @Component({
   selector: 'cp-dropdown',
@@ -6,6 +11,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./cp-dropdown.component.scss']
 })
 export class CPDropdownComponent implements OnInit {
+  @Input() items: IItems[];
   @Output() itemSelected: EventEmitter<any> = new EventEmitter();
   selected: any;
   dummyContent = [];
@@ -13,27 +19,6 @@ export class CPDropdownComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.dummyContent = [
-      {
-        id: 1,
-        label: 'Events'
-      },
-      {
-        id: 2,
-        label: 'Services'
-      },
-      {
-        id: 3,
-        label: 'Deals'
-      },
-      {
-        id: 4,
-        label: 'Announcements'
-      },
-      {
-        id: 5,
-        label: 'Social'
-      }
-    ];
+    console.log(this);
   }
 }

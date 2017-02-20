@@ -44,6 +44,8 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       .catch(err => console.error(err));
   }
 
+
+
   private buildHeader(res) {
     this.store.dispatch({
       type: HEADER_UPDATE,

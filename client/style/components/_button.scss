@@ -2,8 +2,8 @@
 
 .cpbtn,
 a.cpbtn, {
-  cursor: pointer;
   font-size: 1em;
+  cursor: pointer;
   margin-bottom: 0;
   user-select: none;
   padding: 6px 12px;
@@ -38,10 +38,10 @@ a.cpbtn, {
     border-color: transparent;
   }
 
-  &--white {
+  &--default {
     color: $color-black;
     background: $color-white;
-    border: 1px solid $color-black;
+    border: 1px solid $border-color;
   }
 
   &--danger {
