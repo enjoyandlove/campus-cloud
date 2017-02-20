@@ -4,7 +4,9 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../../shared/shared.module';
 
+import { EventsInfoComponent }  from './info';
 import { EventsListComponent }  from './list';
+import { EventsEditComponent }  from './edit';
 import { EventsCreateComponent } from './create';
 import { EventsDeleteComponent }  from './delete';
 import { EventsDetailsComponent }  from './details';
@@ -14,7 +16,7 @@ import { EventsRoutingModule } from './events.routing.module';
 
 @NgModule({
   declarations: [ EventsListComponent, EventsCreateComponent, EventsDetailsComponent,
-  EventsDeleteComponent ],
+  EventsDeleteComponent, EventsInfoComponent, EventsEditComponent ],
 
   imports: [ CommonModule, SharedModule, EventsRoutingModule, RouterModule, ReactiveFormsModule ],
 

@@ -1,0 +1,52 @@
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div *ngSwitchCase="false">
+    <div class="row">
+      <div class="col-xs-12 col-sm-6">
+        <div class="cp-card event">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="event__banner placeholder" style="width: 100%"></div>
+
+              <div class="row">
+                <div class="col-xs-12">
+                  <p class="event__title pull-left">{{ event.title }}</p>
+                  <a
+                    [routerLink]="['../edit']"
+                    class="cpbtn cpbtn--primary pull-right" i18n>
+                    Edit
+                  </a>
+                </div>
+              </div>
+              <p class="text-muted"><span i18n>Hosted by </span> {{ event.store_id }}</p>
+
+              <div class="event__meta">
+                <p>{{ event.start | cpDatePipe:dateFormat }}</p>
+                <p>
+                  {{ event.address }},
+                  {{ event.city }},
+                  {{ event.province }},
+                  {{ event.postal_code }}
+                </p>
+              </div>
+
+              <hr>
+
+              <p>{{ event.description }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="cp-card">
+          <div class="row">
+            <div class="col-xs-12">
+              <cp-maps [center]="mapCenter"></cp-maps>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

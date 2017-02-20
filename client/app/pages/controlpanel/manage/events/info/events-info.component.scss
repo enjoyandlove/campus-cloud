@@ -1,0 +1,23 @@
+@import '~styles/components/card';
+@import '~styles/components/button';
+@import '~styles/core/typography';
+
+.event {
+  &__banner {
+    margin-bottom: 10px;
+  }
+
+  &__meta {
+    margin-top: 25px;
+    p {
+      margin-bottom: 10px;
+    }
+  }
+
+  &__title {
+    @include font-bold();
+
+    font-size: 1.6em;
+    margin-bottom: 3px;
+  }
+}
