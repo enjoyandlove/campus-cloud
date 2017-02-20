@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+
 import { EventsService } from '../events.service';
 import { FORMAT } from '../../../../../shared/pipes';
+import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 import { BaseComponent } from '../../../../../base/base.component';
-
 import { BUTTON_ALIGN } from '../../../../../shared/components/cp-button-dropdown';
 
 @Component({
@@ -19,7 +21,10 @@ export class EventsListComponent extends BaseComponent implements OnInit {
   dateFormat = FORMAT.LONG;
   BUTTON_ALIGN = BUTTON_ALIGN.RIGHT;
 
-  constructor(private service: EventsService) {
+  constructor(
+    private store: Store<IHeader>,
+    private service: EventsService
+  ) {
     super();
     this.fetch();
     this.buttonDropdown = require('./button-dropdown.json');
@@ -30,8 +35,18 @@ export class EventsListComponent extends BaseComponent implements OnInit {
 
     super
       .fetchData(this.service.getEvents())
-      .then(res => this.events = res)
+      .then(res => {
+        this.events = res;
+        this.buildHeader();
+      })
       .catch(err => console.error(err));
+  }
+
+  private buildHeader() {
+    this.store.dispatch({
+      type: HEADER_UPDATE,
+      payload: require('../../manage.header.json')
+    });
   }
 
   shouldBeFilled(rating: number, index: number) {

@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
 
+import {
+  IHeader,
+  HEADER_UPDATE
+} from '../../../../../reducers/header.reducer';
 import { EventsService } from '../events.service';
 import { BaseComponent } from '../../../../../base/base.component';
 
@@ -16,13 +21,14 @@ export class EventsDetailsComponent extends BaseComponent implements OnInit {
   eventId: number;
 
   constructor(
+    private store: Store<IHeader>,
     private route: ActivatedRoute,
     private service: EventsService
   ) {
     super();
     this.eventId = this.route.snapshot.params['eventId'];
+
     this.fetch();
-    this.service.getEventById(this.eventId).subscribe(res => console.log(res));
   }
 
   private fetch() {
@@ -30,8 +36,31 @@ export class EventsDetailsComponent extends BaseComponent implements OnInit {
 
     super
       .fetchData(this.service.getEventById(this.eventId))
-      .then(res => this.event = res)
+      .then(res => {
+        this.event = res;
+        this.buildHeader(res);
+      })
       .catch(err => console.error(err));
+  }
+
+  private buildHeader(res) {
+    this.store.dispatch({
+      type: HEADER_UPDATE,
+      payload: {
+        'heading': res.title,
+        'subheading': '',
+        'children': [
+          {
+            'label': 'Attendance',
+            'url': `/manage/events/${this.eventId}`
+          },
+          {
+            'label': 'Info',
+            'url': `/manage/events/${this.eventId}/info`
+          }
+        ]
+      }
+    });
   }
 
   shouldBeFilled(rating: number, index: number) {

@@ -1,5 +1,6 @@
 export { reducer as mobileReducer } from './mobile.reducer';
 export { reducer as alertReducer } from './alert.reducer';
+export { reducer as headerReducer } from './header.reducer';
 
 // /**
 //  * combineReducers is another useful metareducer that takes a map of reducer

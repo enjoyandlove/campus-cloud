@@ -1,4 +1,4 @@
-<cp-page-header [data]="headerData"></cp-page-header>
+<cp-page-header [data]="headerData$ | async"></cp-page-header>
 <div class="container">
   <router-outlet></router-outlet>
 </div>
