@@ -15,9 +15,9 @@ import { BUTTON_ALIGN } from '../../../../../shared/components/cp-button-dropdow
 export class EventsListComponent extends BaseComponent implements OnInit {
   events;
   query;
-  deleteEvent;
   buttonDropdown;
   loading = true;
+  deleteEvent = '';
   dateFormat = FORMAT.LONG;
   BUTTON_ALIGN = BUTTON_ALIGN.RIGHT;
 

@@ -6,12 +6,12 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./events-delete.component.scss']
 })
 export class EventsDeleteComponent implements OnInit {
-  @Input() name: string;
+  @Input() event: any;
 
   constructor() { }
 
   onDelete() {
-    console.log('delete');
+    console.log(`Deleteing ${this.event}`);
   }
 
   ngOnInit() { }
