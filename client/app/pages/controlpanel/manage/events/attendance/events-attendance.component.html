@@ -4,19 +4,19 @@
   <div *ngSwitchCase="false">
     <div class="row">
       <div class="header">
-        <div class="col-xs-4 text-center">
+        <div class="col-xs-6 col-sm-4 text-center">
           <div class="cp-card">
             <p class="header__digit">{{ event.attends }}</p>
             <p i18n>Attendance</p>
           </div>
         </div>
-        <div class="col-xs-4 text-center">
+        <div class="col-xs-6 col-sm-4 text-center">
           <div class="cp-card">
             <p class="header__digit">{{ event.num_ratings }}</p>
             <p i18n>Responses</p>
           </div>
         </div>
-        <div class="col-xs-4 text-center">
+        <div class="col-xs-12 col-sm-4 text-center">
           <div class="cp-card">
             <p class="header__digit">
               {{ event.avg_rating_percent / event.rating_scale_maximum }}
@@ -31,10 +31,10 @@
       <div class="col-xs-12">
         <div class="cp-card actions">
           <div class="row">
-            <div class="col-xs-4">
+            <div class="col-xs-12 col-sm-4">
               <cp-searchbox placeholder="Search Attendee..."></cp-searchbox>
             </div>
-            <div class="col-xs-4 col-xs-offset-4 text-right">
+            <div class="col-xs-12 col-xs-offset-0 col-sm-4 col-sm-offset-4">
               <button class="cpbtn cpbtn--secondary" i18n>
                 Web Check-in
               </button>

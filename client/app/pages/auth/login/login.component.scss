@@ -1,6 +1,7 @@
 @import '~styles/core/colors';
 @import '~styles/components/form';
 @import '~styles/components/button';
+@import '~bootstrap/variables';
 
 :host {
   height: 100%;
@@ -12,11 +13,15 @@
 }
 
 form {
-  margin-top: 180px;
   padding: 30px;
+  margin-top: 180px;
   background: $color-white;
   border: 1px solid $border-color;
   box-shadow: 0 0 2px 0 rgba(0,0,0,0.16);
+
+  @media all and (max-width: $screen-sm) {
+    margin-top: 80px;
+  }
 
   button {
     width: 100%;

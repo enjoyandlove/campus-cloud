@@ -49,12 +49,13 @@
 
             <div class="row">
               <div class="col-xs-12">
-                <label i18n>Start</label>
                 <div class="row">
-                  <div class="col-xs-6 col-sm-6">
+                  <div class="col-xs-12 col-sm-6">
+                    <label i18n>Start</label>
                     <cp-datepicker [options]="startDatePicker"></cp-datepicker>
                   </div>
-                  <div class="col-xs-6 col-sm-6">
+                  <div class="col-xs-12 col-sm-6">
+                    <label i18n>End</label>
                     <cp-datepicker [options]="endDatePicker"></cp-datepicker>
                   </div>
                 </div>
@@ -65,7 +66,7 @@
               <div class="col-xs-12">
                 <label i18n>Location</label>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-4">
+                  <div class="col-xs-6 col-sm-4">
                     <div class="form-group">
                       <input
                         type="text"
@@ -75,7 +76,7 @@
                     </div>
                   </div>
 
-                  <div class="col-xs-12 col-sm-4">
+                  <div class="col-xs-6 col-sm-4">
                     <div class="form-group">
                       <input
                         type="text"
@@ -85,7 +86,7 @@
                     </div>
                   </div>
 
-                  <div class="col-xs-12 col-sm-4">
+                  <div class="col-xs-6 col-sm-4">
                     <div class="form-group">
                       <cp-place-autocomplete
                         (placeChange)="onPlaceChanged($event)">
@@ -123,7 +124,7 @@
 
         <div *ngIf="attendance">
           <div class="row">
-            <div class="col-xs-6">
+            <div class="col-xs-12 col-sm-6">
               <div class="form-group">
                 <label i18n>Event Manager <span class="tooltip">&#63;</span></label>
                 <select class="form-control">
@@ -131,7 +132,7 @@
                 </select>
               </div>
             </div>
-            <div class="col-xs-6">
+            <div class="col-xs-12 col-sm-6">
               <div class="form-group">
                 <label i18n>Attendance Manager <span class="tooltip">&#63;</span></label>
                 <input type="text" class="form-control" placeholder="example@mail.com">
@@ -140,7 +141,7 @@
           </div>
 
           <div class="row">
-            <div class="col-xs-6">
+            <div class="col-xs-12 col-sm-6">
               <label i18n>Attendance Feedback</label>
               <select class="form-control">
                   <option value="">---</option>

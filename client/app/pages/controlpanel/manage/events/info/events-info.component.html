@@ -13,8 +13,10 @@
               </div>
 
               <div class="row">
-                <div class="col-xs-12">
-                  <p class="event__title pull-left">{{ event.title }}</p>
+                <div class="col-xs-10">
+                  <p class="event__title">{{ event.title }}</p>
+                </div>
+                <div class="col-xs-2">
                   <a
                     [routerLink]="['../edit']"
                     class="cpbtn cpbtn--primary pull-right" i18n>
@@ -22,10 +24,15 @@
                   </a>
                 </div>
               </div>
-              <p class="text-muted"><span i18n>Hosted by </span> {{ event.store_id }}</p>
+              <p class="text-muted">
+                <span i18n>Hosted by </span> {{ event.store_name }}
+              </p>
 
               <div class="event__meta">
-                <p>{{ event.start | cpDatePipe:dateFormat }}</p>
+                <p>
+                  <strong i18n>Starts:</strong> {{ event.start | cpDatePipe:dateFormat }}
+                  <br>
+                  <strong i18n>Ends:</strong> {{ event.end | cpDatePipe:dateFormat }}</p>
                 <p>
                   {{ event.address }},
                   {{ event.city }},

@@ -12,6 +12,7 @@ const API_KEY = 'Fw4e6T7QTVa2Yj6Fcez5OGmnXryRbIFt';
 
 const API_ENDPOINTS = {
   STORE: 'store/',
+  ADMIN: 'admin/',
   EVENT: 'event/',
   SESSION: 'session/',
   PRIVILEGE: 'privilege/',
