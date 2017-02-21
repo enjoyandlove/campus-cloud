@@ -1,4 +1,4 @@
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
@@ -23,13 +23,34 @@ export class EventsFacebookComponent implements OnInit {
     this.buildHeader();
 
     this.form = this.fb.group({
-      'link': ['', Validators.required]
+      'links': this.fb.array([
+        this.createLinkControl()
+      ])
     });
   }
 
-  onSubmit(data) {
-    console.log(data);
+  createLinkControl() {
+    return this.fb.group({
+      'link': ['', Validators.required],
+    });
   }
+
+  addLinkControl() {
+    console.log(this.form.controls['links']);
+    const control = <FormArray>this.form.controls['links'];
+    control.push(this.createLinkControl());
+  }
+
+  removeService(index) {
+    const control = <FormArray>this.form.controls['links'];
+    control.removeAt(index);
+  }
+
+  onDeleteControl(index) {
+    this.removeService(index);
+    console.log(index);
+  }
+
 
   private buildHeader() {
     this.store.dispatch({
@@ -40,6 +61,10 @@ export class EventsFacebookComponent implements OnInit {
         'children': []
       }
     });
+  }
+
+  doSubmit() {
+    console.log('submitting');
   }
 
   ngOnInit() { }
