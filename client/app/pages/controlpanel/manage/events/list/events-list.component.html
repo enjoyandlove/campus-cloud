@@ -13,7 +13,10 @@
         <div class="col-xs-12 col-md-3">
           <div class="row">
             <div class="col-xs-9">
-              <cp-dropdown [items]="eventFilter"></cp-dropdown>
+              <cp-dropdown
+                [items]="eventFilter"
+                (selected)="onFilterByEvent($event.action)">
+              </cp-dropdown>
             </div>
             <div class="col-xs-3 text-left no-left-padding">
               <cp-datepicker
@@ -90,7 +93,8 @@
             {{ event.description }}
           </span>
             <span class="col-xs-2 text-truncate">
-            {{ event.store_id }}
+            {{ event.store_name }}
+
           </span>
             <span class="col-xs-2 text-truncate">
             {{ event.start | cpDatePipe:dateFormat }}

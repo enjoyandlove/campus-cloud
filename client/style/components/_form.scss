@@ -26,6 +26,22 @@
 label {
   display: block;
   margin-bottom: 5px;
+
+  &.error {
+    @include font-thin();
+
+    height: 35px;
+    margin-bottom: 0;
+    padding: 5px 15px;
+    color: $color-danger;
+    margin-top: 0 !important;
+    border: 1px solid $color-danger;
+    background: lighten($color-danger, 20%);
+
+    span {
+      font-size: 1.1em;
+    }
+  }
 }
 
 input,
@@ -42,6 +58,24 @@ textarea {
 
   &:active {
     border: 1px solid $color-black;
+  }
+
+  &.error {
+    border: 1px solid $color-danger;
+    background: lighten($color-danger, 20%);
+
+    &::-webkit-input-placeholder {
+      color: $color-danger;
+    }
+    &::-moz-placeholder {
+      color: $color-danger;
+    }
+    &:-ms-input-placeholder {
+      color: $color-danger;
+    }
+    &:-moz-placeholder {
+      color: $color-danger;
+    }
   }
 
   &:focus,

@@ -49,6 +49,10 @@ export class EventsListComponent extends BaseComponent implements OnInit {
     };
   }
 
+  onFilterByEvent(action) {
+    console.log(action);
+  }
+
   private fetch() {
     const stores$ = this.storeService.getStores().map(res => {
       const stores = [

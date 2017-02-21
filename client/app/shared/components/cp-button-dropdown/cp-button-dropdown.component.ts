@@ -34,7 +34,6 @@ export class CPButtonDropdownComponent implements OnInit {
   ) { }
 
   onClick(item) {
-    console.log(item);
     this.selected.emit(item);
   }
 

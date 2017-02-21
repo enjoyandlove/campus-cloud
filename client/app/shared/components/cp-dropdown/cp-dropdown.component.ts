@@ -12,11 +12,14 @@ interface IItems {
 })
 export class CPDropdownComponent implements OnInit {
   @Input() items: IItems[];
-  @Output() itemSelected: EventEmitter<any> = new EventEmitter();
-  selected: any;
-  dummyContent = [];
+  @Output() selected: EventEmitter<{'label': string, 'event': string}> = new EventEmitter();
+  selectedItem: any;
 
   constructor() { }
+
+  onClick(item) {
+    this.selected.emit(item);
+  }
 
   ngOnInit() { }
 }

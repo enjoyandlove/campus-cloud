@@ -10,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
 export class EventsCreateComponent implements OnInit {
   form: FormGroup;
   datePickerOpts;
+  formError = false;
   attendance = false;
 
   constructor(
@@ -40,8 +41,13 @@ export class EventsCreateComponent implements OnInit {
     };
   }
 
-  onSubmit(data) {
-    console.log(data);
+  onSubmit() {
+    this.formError = false;
+
+    if (!this.form.valid) {
+      this.formError = true;
+      return;
+    }
   }
 
   ngOnInit() { }

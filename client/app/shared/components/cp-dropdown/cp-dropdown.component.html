@@ -5,13 +5,13 @@
     aria-expanded="false"
     data-toggle="dropdown"
     class="cpbtn cpbtn--default dropdown-toggle">
-    {{ selected ? selected.label : items[0].label }} <span>&#10094;</span>
+    {{ selectedItem ? selectedItem.label : items[0].label }} <span>&#10094;</span>
   </button>
   <ul class="dropdown-menu">
     <li
-      (click)="selected = item"
+      (click)="selectedItem = item"
       *ngFor="let item of items"
-      (click)="itemSelected.emit(item)">
+      (click)="onClick(item)">
       {{ item.label }}
     </li>
   </ul>
