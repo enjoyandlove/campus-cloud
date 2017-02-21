@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 
 export const BUTTON_ALIGN = {
   LEFT: 'left',
@@ -27,11 +28,18 @@ export class CPButtonDropdownComponent implements OnInit {
   @Input() data: IButtonDropdown;
   @Input() align: string;
   @Output() selected: EventEmitter<{'label': string, 'event': string}> = new EventEmitter();
-  constructor() { }
+
+  constructor(
+    private router: Router
+  ) { }
 
   onClick(item) {
     console.log(item);
     this.selected.emit(item);
+  }
+
+  onNavigate(url) {
+    this.router.navigate([url]);
   }
 
   ngOnInit() { }

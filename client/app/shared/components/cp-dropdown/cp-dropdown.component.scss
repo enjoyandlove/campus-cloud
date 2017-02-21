@@ -19,13 +19,13 @@
   }
 
   button {
-    height: 42px;
+    height: 36px;
     min-width: 100%;
     text-align: left;
     position: relative;
 
     span {
-      top: 8px;
+      top: 6px;
       right: 12px;
       font-size: 17px;
       position: absolute;
@@ -36,6 +36,8 @@
   .dropdown-menu {
     top: 110%;
     padding: 0;
+    max-height: 200px;
+    overflow-y: scroll;
 
     li {
       padding: 10px;

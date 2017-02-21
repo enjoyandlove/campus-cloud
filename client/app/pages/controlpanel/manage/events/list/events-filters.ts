@@ -12,7 +12,7 @@ export const DATE_FILTER = [
 export const BUTTON_DROPDOWN = {
   'button': {
     'label': 'Create Event',
-    'url': 'create'
+    'url': '/manage/events/create'
   },
   'children': [
     {

@@ -19,6 +19,7 @@
     left: 0;
     width: 20px;
     height: 20px;
+    border-radius: 4px;
     position: absolute;
     background: #e6e6e6;
   }
@@ -27,25 +28,25 @@
 /* Hover and focus states */
 .control:hover input ~ .control__indicator,
 .control input:focus ~ .control__indicator {
-  background: #ccc;
+  // background: #ccc;
 }
 
 /* Checked state */
 .control input:checked ~ .control__indicator {
-  background: $color-grey;
+  background: #526270;
 }
 
 /* Hover state whilst checked */
 .control:hover input:not([disabled]):checked ~ .control__indicator,
 .control input:checked:focus ~ .control__indicator {
-  background: $color-med-grey;
+  // background: $color-med-grey;
 }
 
 /* Disabled state */
 .control input:disabled ~ .control__indicator {
   pointer-events: none;
   opacity: .6;
-  background: #e6e6e6;
+  // background: #e6e6e6;
 }
 
 /* Check mark */

@@ -3,19 +3,37 @@
 @import '~styles/components/card';
 @import '~styles/components/form';
 @import '~styles/components/button';
+@import '~bootstrap/variables';
 
 .actions {
   label {
     @include font-normal();
 
-    margin-right: 8px;
     display: inline-block;
-    vertical-align: -12px;
+    vertical-align: -8px;
   }
 
   .calendar {
     height: 40px;
   }
+
+  .checkbox {
+    margin-top: 5px;
+  }
+
+  & > div > * {
+    @media all and (max-width: $screen-md) {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.no-left-padding {
+  padding-left: 0;
+}
+
+.no-right-padding {
+  padding-right: 0;
 }
 
 .delete-event {
