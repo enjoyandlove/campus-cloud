@@ -117,7 +117,10 @@
           <div class="col-xs-12">
             <em i18n>Event Attendance</em>
             <span class="pull-right">
-              <cp-switch (toggle)="attendance = !attendance"></cp-switch>
+              <cp-switch
+                [id]="attendance"
+                (toggle)="attendance = !attendance">
+              </cp-switch>
             </span>
           </div>
         </div>

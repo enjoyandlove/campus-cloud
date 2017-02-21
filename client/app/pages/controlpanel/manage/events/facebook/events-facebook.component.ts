@@ -14,6 +14,7 @@ import {
   styleUrls: ['./events-facebook.component.scss']
 })
 export class EventsFacebookComponent implements OnInit {
+  isAttendance;
   form: FormGroup;
   constructor(
     private fb: FormBuilder,
@@ -32,11 +33,15 @@ export class EventsFacebookComponent implements OnInit {
   createLinkControl() {
     return this.fb.group({
       'link': ['', Validators.required],
+      'store_id': ['', Validators.required],
+      'feedback': [false, Validators.required],
+      'attendance': [false, Validators.required],
+      'event_manager': ['', Validators.required],
+      'attendance_manager': [''],
     });
   }
 
   addLinkControl() {
-    console.log(this.form.controls['links']);
     const control = <FormArray>this.form.controls['links'];
     control.push(this.createLinkControl());
   }
@@ -48,9 +53,7 @@ export class EventsFacebookComponent implements OnInit {
 
   onDeleteControl(index) {
     this.removeService(index);
-    console.log(index);
   }
-
 
   private buildHeader() {
     this.store.dispatch({
@@ -64,7 +67,21 @@ export class EventsFacebookComponent implements OnInit {
   }
 
   doSubmit() {
-    console.log('submitting');
+    console.log(this.form.value);
+  }
+
+  toogleFeedback(index, status) {
+    const control = <FormArray>this.form.controls['links'];
+    const group = <FormGroup>control.controls[index];
+
+    group.controls['feedback'].setValue(status);
+  }
+
+  toggleIsAttendance(index, status) {
+    const control = <FormArray>this.form.controls['links'];
+    const group = <FormGroup>control.controls[index];
+
+    group.controls['attendance'].setValue(status);
   }
 
   ngOnInit() { }

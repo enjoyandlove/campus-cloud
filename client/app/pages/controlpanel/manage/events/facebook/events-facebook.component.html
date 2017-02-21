@@ -29,9 +29,9 @@
                   <label>&nbsp;</label>
                   <button
                     type="button"
-                    [disabled]="!link.valid"
                     (click)="addLinkControl(i)"
                     (click)="link.isOpen = true"
+                    [disabled]="!link.controls['link'].valid"
                     class="cpbtn cpbtn--secondary text-right" i18n>
                     Add Link
                   </button>
@@ -39,36 +39,46 @@
                 <div *ngIf="link.isOpen">
                   <div class="col-xs-2">
                     <label i18n>Host</label>
-                    <select>
+                    <select formControlName="store_id">
                       <option value="">Host Name</option>
                     </select>
                   </div>
-                  <div class="col-xs-2">
-                    <label i18n>Event Attendance</label>
+                  <div class="col-xs-1">
+                    <label i18n>Attendance</label>
                     <cp-switch
+                      [id]="i + 1"
                       class="switch"
-                      (toggle)="isAttendance = $event">
+                      (toggle)="toggleIsAttendance(i, $event)">
                     </cp-switch>
                   </div>
-                  <div *ngIf="isAttendance">
+                  <div class="col-xs-1">
+                    <label i18n>Feedback</label>
+                    <cp-switch
+                      [id]="'feed' + i + 1"
+                      class="switch"
+                      (toggle)="toogleFeedback(i, $event)">
+                    </cp-switch>
+                  </div>
+                  <div *ngIf="link.controls['attendance'].value">
                     <div class="col-xs-2">
                       <label i18n>Event Manager</label>
-                      <select>
+                      <select formControlName="event_manager">
                         <option value="">John Smith</option>
                       </select>
                     </div>
                     <div class="col-xs-2">
                       <label i18n>Attendance Manager</label>
                       <input
-                        type="text"
+                        type="email"
                         class="form-control"
-                        placeholder="email@example.com">
+                        placeholder="email@example.com"
+                        formControlName="attendance_manager">
                     </div>
                   </div>
                   <div
                     (click)="onDeleteControl(i)"
                     class="delete hover"
-                    [ngClass]="[isAttendance
+                    [ngClass]="[link.controls['attendance'].value
                               ? 'col-xs-1'
                               : 'col-xs-1 col-xs-offset-4']">
                     &times;
@@ -94,3 +104,4 @@
     </button>
   </div>
 </div>
+
