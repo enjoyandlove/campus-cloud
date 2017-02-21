@@ -70,7 +70,7 @@ export class EventsFacebookComponent implements OnInit {
     console.log(this.form.value);
   }
 
-  toogleFeedback(index, status) {
+  toogleIsFeedback(index, status) {
     const control = <FormArray>this.form.controls['links'];
     const group = <FormGroup>control.controls[index];
 

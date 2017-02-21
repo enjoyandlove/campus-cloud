@@ -25,7 +25,6 @@ export class CPSwitchComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this);
     this.isChecked = this.checked;
   }
 }

@@ -56,7 +56,7 @@
                     <cp-switch
                       [id]="'feed' + i + 1"
                       class="switch"
-                      (toggle)="toogleFeedback(i, $event)">
+                      (toggle)="toogleIsFeedback(i, $event)">
                     </cp-switch>
                   </div>
                   <div *ngIf="link.controls['attendance'].value">
@@ -104,4 +104,5 @@
     </button>
   </div>
 </div>
+
 
