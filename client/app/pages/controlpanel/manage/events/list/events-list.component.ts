@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { EventsService } from '../events.service';
@@ -30,6 +31,7 @@ export class EventsListComponent extends BaseComponent implements OnInit {
   INPUT_THEME = INPUT_THEME.SMALL;
 
   constructor(
+    private router: Router,
     private store: Store<IHeader>,
     private service: EventsService,
     private storeService: StoreService
@@ -51,6 +53,10 @@ export class EventsListComponent extends BaseComponent implements OnInit {
 
   onFilterByEvent(action) {
     console.log(action);
+  }
+
+  onButtonDropdown(location) {
+    this.router.navigate([location]);
   }
 
   private fetch() {

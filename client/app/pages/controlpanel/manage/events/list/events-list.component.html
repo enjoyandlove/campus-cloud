@@ -55,7 +55,8 @@
           <cp-button-dropdown
             class="pull-right"
             [align]="BUTTON_ALIGN"
-            [data]="buttonDropdown">
+            [data]="buttonDropdown"
+            (selected)="onButtonDropdown($event.event)">
           </cp-button-dropdown>
         </div>
 

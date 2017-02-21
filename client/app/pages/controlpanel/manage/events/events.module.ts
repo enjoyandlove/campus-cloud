@@ -9,6 +9,8 @@ import { EventsListComponent }  from './list';
 import { EventsEditComponent }  from './edit';
 import { EventsCreateComponent } from './create';
 import { EventsDeleteComponent }  from './delete';
+import { EventsExcelComponent }  from './excel';
+import { EventsFacebookComponent }  from './facebook';
 import { EventsAttendanceComponent }  from './attendance';
 
 import { EventsService } from './events.service';
@@ -16,7 +18,8 @@ import { EventsRoutingModule } from './events.routing.module';
 
 @NgModule({
   declarations: [ EventsListComponent, EventsCreateComponent, EventsAttendanceComponent,
-  EventsDeleteComponent, EventsInfoComponent, EventsEditComponent ],
+  EventsDeleteComponent, EventsInfoComponent, EventsEditComponent, EventsExcelComponent,
+   EventsFacebookComponent ],
 
   imports: [ CommonModule, SharedModule, EventsRoutingModule, RouterModule, ReactiveFormsModule ],
 
