@@ -1,0 +1,13 @@
+@import '~styles/components/form';
+@import '~styles/components/card';
+@import '~styles/components/button';
+
+@import '~styles/core/typography';
+
+.header {
+  p {
+    @include font-bold();
+
+    margin-bottom: 30px;
+  }
+}

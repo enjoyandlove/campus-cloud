@@ -6,6 +6,7 @@ const API_VERSION = {
 };
 
 const API_BASE_URL = `https://api.studentlifemobile.com/cc`;
+// const API_BASE_URL = 'http://ec2-54-234-212-53.compute-1.amazonaws.com:5002/cc';
 
 const API_KEY = 'Fw4e6T7QTVa2Yj6Fcez5OGmnXryRbIFt';
 
