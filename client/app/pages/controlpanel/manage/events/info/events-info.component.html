@@ -7,8 +7,9 @@
         <div class="cp-card event">
           <div class="row">
             <div class="col-xs-12">
-              <div class="event__banner placeholder">
-                <img [src]="event.poster_thumb_url" class="img-responsive img-rounded">
+              <div
+                class="event__banner placeholder img-responsive img-rounded"
+                [ngStyle]="{ 'background-image' : 'url(' + event.poster_url + ')' }">
               </div>
 
               <div class="row">
@@ -43,7 +44,7 @@
       <div class="col-xs-12 col-sm-6">
         <div class="cp-card">
           <div class="row">
-            <div class="col-xs-12">
+            <div class="col-xs-12 event__map">
               <cp-maps [center]="mapCenter"></cp-maps>
             </div>
           </div>

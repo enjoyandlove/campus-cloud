@@ -7,12 +7,6 @@ import {
   AfterViewInit
 } from '@angular/core';
 
-export const MAP_HEIGHT = {
-  'TALL': 'tall',
-  'SHORT': 'short',
-  'DEFAULT': 'default'
-};
-
 declare var google: any;
 
 @Component({

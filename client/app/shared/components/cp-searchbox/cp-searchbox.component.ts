@@ -1,4 +1,5 @@
 import {
+  Input,
   OnInit,
   Output,
   ViewChild,
@@ -16,6 +17,7 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./cp-searchbox.component.scss']
 })
 export class CPSearchBoxComponent implements AfterViewInit, OnInit {
+  @Input() placeholder: string;
   @Output() query: EventEmitter<string> = new EventEmitter();
   @ViewChild('q') q: ElementRef;
 
