@@ -11,6 +11,11 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
+
+export const INPUT_THEME = {
+  'SMALL': 'small'
+};
+
 declare var $: any;
 
 @Component({
@@ -22,6 +27,7 @@ declare var $: any;
 export class CPDatePickerComponent implements AfterViewInit, OnInit {
   @ViewChild('input') input: ElementRef;
   @Input() options: any;
+  @Input() theme: string;
   flatPicker;
 
   constructor() {

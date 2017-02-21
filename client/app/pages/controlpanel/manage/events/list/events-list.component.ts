@@ -9,6 +9,7 @@ import { BUTTON_DROPDOWN, DATE_FILTER } from './events-filters';
 import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 import { BUTTON_ALIGN } from '../../../../../shared/components/cp-button-dropdown';
+import { INPUT_THEME } from '../../../../../shared/components/cp-datepicker';
 
 @Component({
   selector: 'cp-events-list',
@@ -26,6 +27,7 @@ export class EventsListComponent extends BaseComponent implements OnInit {
   deleteEvent = '';
   dateFormat = FORMAT.LONG;
   BUTTON_ALIGN = BUTTON_ALIGN.RIGHT;
+  INPUT_THEME = INPUT_THEME.SMALL;
 
   constructor(
     private store: Store<IHeader>,
@@ -44,7 +46,7 @@ export class EventsListComponent extends BaseComponent implements OnInit {
         console.log(dateStr);
         console.log(instance);
       }
-    }
+    };
   }
 
   private fetch() {
