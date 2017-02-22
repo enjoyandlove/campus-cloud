@@ -62,7 +62,6 @@ export class EventsListComponent extends BaseComponent implements OnInit {
             maxDate: null
           });
     }
-    console.log(action);
   }
 
   onFilterByHost(host) {
