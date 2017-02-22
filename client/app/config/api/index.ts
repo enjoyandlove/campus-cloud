@@ -11,10 +11,11 @@ const API_BASE_URL = `https://api.studentlifemobile.com/cc`;
 const API_KEY = 'Fw4e6T7QTVa2Yj6Fcez5OGmnXryRbIFt';
 
 const API_ENDPOINTS = {
+  ME: 'admin/',
   STORE: 'store/',
-  ADMIN: 'admin/',
   EVENT: 'event/',
   SESSION: 'session/',
+  P_RESET: 'ns_admin/',
   PRIVILEGE: 'privilege/',
 };
 
@@ -27,7 +28,7 @@ const BUILD_COMMON_HEADERS = function buildCommonHeaders() {
   const auth = `${API_AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
 
   return new Headers({
-    'Content-Type': 'application/x-www-form-urlencoded',
+    'Content-Type': 'application/json',
     'Authorization': auth
   });
 };

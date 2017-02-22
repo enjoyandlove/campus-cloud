@@ -10,20 +10,20 @@
         </div>
       </div>
       <div class="form-group">
+        <label i18n>Email</label>
         <input
           autofocus
           type="email"
           name="username"
-          placeholder="Email"
           class="form-control"
           formControlName="username">
       </div>
       <div class="form-group">
+        <label i18n>Password</label>
         <input
           type="password"
           name="password"
           class="form-control"
-          placeholder="Password"
           formControlName="password">
       </div>
 
@@ -36,6 +36,11 @@
           </button>
         </div>
       </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <cp-alert></cp-alert>
+        </div>
+      </div>
     </form>
   </div>
 </div>
@@ -44,10 +49,7 @@
   <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4">
     <div class="row">
       <div class="col-xs-12">
-        <a [routerLink]="['/password-reset']" i18n>Forgot your password?</a>
-      </div>
-      <div class="col-xs-12">
-        <cp-alert></cp-alert>
+        <a [routerLink]="['/password-reset']" i18n>Lost your password?</a>
       </div>
     </div>
   </div>
