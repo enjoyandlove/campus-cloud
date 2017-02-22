@@ -66,7 +66,7 @@ export class CallbackPasswordResetComponent implements OnDestroy, OnInit {
   }
 
   handleSuccess() {
-    this.error.handleSuccess({ reason: STATUS.PASSWORD_RESET_OK });
+    this.isSubmitted = true;
     setTimeout(() => { this.router.navigate(['/login']); }, 1500);
   }
 

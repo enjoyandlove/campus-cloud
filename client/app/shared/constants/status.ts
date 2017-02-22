@@ -26,8 +26,6 @@ export const STATUS = {
   /**
    * GENERAL
    */
-  SOMETHING_WENT_WRONG: 'Something went wrong',
-
-  PASSWORD_RESET_OK: 'Password saved, redirecting you to the login page'
+  SOMETHING_WENT_WRONG: 'Something went wrong'
 };
 

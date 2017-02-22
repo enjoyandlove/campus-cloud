@@ -5,7 +5,7 @@
  */
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Http } from '@angular/http';
+import { Http, RequestOptionsArgs } from '@angular/http';
 import { Router } from '@angular/router';
 
 import { API } from '../config/api';
@@ -18,12 +18,12 @@ export class BaseService {
     private router?: Router
   ) { }
 
-  get(url: string) {
+  get(url: string, opts?: RequestOptionsArgs) {
     const headers = API.BUILD_COMMON_HEADERS();
 
     return this
             .http
-            .get(url, { headers })
+            .get(url, { headers, ...opts })
             .retry(3)
             .catch(err => this.catchError(err));
   }

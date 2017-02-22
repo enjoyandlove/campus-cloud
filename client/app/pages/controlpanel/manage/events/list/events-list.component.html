@@ -36,7 +36,10 @@
                   <label i18n>Filter By</label>
                 </div>
                 <div class="col-xs-12 col-sm-8">
-                  <cp-dropdown [items]="hosts"></cp-dropdown>
+                  <cp-dropdown
+                    [items]="hosts"
+                    (selected)="onFilterByHost($event.action)">
+                  </cp-dropdown>
                 </div>
               </div>
             </div>

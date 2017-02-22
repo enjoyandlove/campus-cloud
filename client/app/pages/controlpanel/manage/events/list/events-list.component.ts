@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+// import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
@@ -37,17 +37,17 @@ export class EventsListComponent extends BaseComponent implements OnInit {
     private storeService: StoreService
   ) {
     super();
-    this.fetch();
+    this.buildActionComponent();
     this.buttonDropdown = BUTTON_DROPDOWN;
     this.eventFilter = DATE_FILTER;
     this.dateFilterOpts = {
       utc: true,
       mode: 'range',
-      onClose: function(selectedDates, dateStr, instance) {
-        console.log(selectedDates);
-        console.log(dateStr);
-        console.log(instance);
-      }
+      // onClose: function(selectedDates, dateStr, instance) {
+      //   console.log(selectedDates);
+      //   console.log(dateStr);
+      //   console.log(instance);
+      // }
     };
   }
 
@@ -55,16 +55,20 @@ export class EventsListComponent extends BaseComponent implements OnInit {
     console.log(action);
   }
 
-  onButtonDropdown(location) {
-    this.router.navigate([location]);
+  onFilterByHost(host) {
+    if (host) {
+      this.fetch(this.service.getEventsByHostId(host));
+      return;
+    }
+    this.fetch(this.service.getEvents());
   }
 
-  private fetch() {
+  buildActionComponent() {
     const stores$ = this.storeService.getStores().map(res => {
       const stores = [
         {
           'label': 'All Host',
-          'action': 'all'
+          'action': null
         }
       ];
       res.forEach(store => {
@@ -75,16 +79,45 @@ export class EventsListComponent extends BaseComponent implements OnInit {
       });
       return stores;
     });
-    const events$ = this.service.getEvents();
-    const stream$ = Observable.combineLatest(events$, stores$);
+
+    super
+      .fetchData(stores$)
+      .then(res => {
+        this.hosts = res;
+        this.fetch(this.service.getEvents());
+      })
+      .catch(err => console.error(err));
+  }
+
+  onButtonDropdown(location) {
+    this.router.navigate([location]);
+  }
+
+  private fetch(stream$) {
+    // const stores$ = this.storeService.getStores().map(res => {
+    //   const stores = [
+    //     {
+    //       'label': 'All Host',
+    //       'action': null
+    //     }
+    //   ];
+    //   res.forEach(store => {
+    //     stores.push({
+    //       'label': store.name,
+    //       'action': store.id
+    //     });
+    //   });
+    //   return stores;
+    // });
+    // const events$ = this.service.getEvents();
+    // const stream$ = Observable.combineLatest(events$, stores$);
 
     super.isLoading().subscribe(res => this.loading = res);
 
     super
       .fetchData(stream$)
       .then(res => {
-        this.events = res[0];
-        this.hosts = res[1];
+        this.events = res;
         this.buildHeader();
       })
       .catch(err => console.error(err));

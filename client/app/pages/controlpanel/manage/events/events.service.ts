@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, URLSearchParams } from '@angular/http';
 
 import { API } from '../../../../config/api';
 import { BaseService } from '../../../../base/base.service';
@@ -21,5 +21,14 @@ export class EventsService extends BaseService {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT}${id}`;
 
     return super.get(url).map(res => res.json());
+  }
+
+  getEventsByHostId(hostId: string) {
+    const search = new URLSearchParams();
+    search.append('store_id', hostId);
+
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT}`;
+
+    return super.get(url, { search }).map(res => res.json());
   }
 }
