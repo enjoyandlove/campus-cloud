@@ -1,0 +1,7 @@
+<div
+  class="smallcalendar"
+  [class.open]="isOpen"
+  [class.isActive]="isActive">
+  <i class="material-icons hover" (click)="isOpen = !isOpen">date_range</i>
+  <input #input class="flatpickr" type="text">
+</div>

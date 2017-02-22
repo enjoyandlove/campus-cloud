@@ -8,7 +8,7 @@ import { CPMapsComponent, CPModalComponent, CPTopBarComponent, CPAvatarComponent
   CPCheckboxComponent, CPHamburgerComponent, CPMobileMenuComponent, CPImageUploadComponent,
   CPPlaceAutoCompleteComponent, CPPageHeaderComponent, CPSearchBoxComponent,
   CPStarComponent, CPAlertComponent, CPAnimatedButtonComponent,
-  CPButtonDropdownComponent, CPDatePickerComponent, CPSwitchComponent
+  CPButtonDropdownComponent, CPDatePickerComponent, CPSwitchComponent, CPSmallDatePickerComponent
 } from './components';
 
 import {
@@ -29,7 +29,8 @@ import {
   CPDatePipe, CPStarComponent, CPFilterPipe, CPAlertComponent,
   CPAlertComponent, CPAnimatedButtonComponent,
   CPButtonDropdownComponent, CPDatePickerComponent, CPSwitchComponent,
-  CPAnimatedButtonComponent, CPButtonDropdownComponent, CPDatePickerComponent,  ],
+  CPAnimatedButtonComponent, CPButtonDropdownComponent, CPDatePickerComponent,
+  CPSmallDatePickerComponent ],
 
   imports: [ CommonModule, RouterModule, ReactiveFormsModule ],
 
@@ -43,6 +44,7 @@ import {
   CPDatePipe, CPStarComponent, CPFilterPipe, CPAlertComponent,
   CPAlertComponent, CPAnimatedButtonComponent,
   CPButtonDropdownComponent, CPDatePickerComponent, CPSwitchComponent,
-  CPAnimatedButtonComponent, CPButtonDropdownComponent, CPDatePickerComponent,  ]
+  CPAnimatedButtonComponent, CPButtonDropdownComponent, CPDatePickerComponent,
+  CPSmallDatePickerComponent  ]
 })
 export class SharedModule { }

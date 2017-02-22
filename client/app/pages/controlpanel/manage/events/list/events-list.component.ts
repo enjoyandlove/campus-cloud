@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-// import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
@@ -10,7 +9,6 @@ import { BUTTON_DROPDOWN, DATE_FILTER } from './events-filters';
 import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 import { BUTTON_ALIGN } from '../../../../../shared/components/cp-button-dropdown';
-import { INPUT_THEME } from '../../../../../shared/components/cp-datepicker';
 
 @Component({
   selector: 'cp-events-list',
@@ -28,7 +26,6 @@ export class EventsListComponent extends BaseComponent implements OnInit {
   deleteEvent = '';
   dateFormat = FORMAT.LONG;
   BUTTON_ALIGN = BUTTON_ALIGN.RIGHT;
-  INPUT_THEME = INPUT_THEME.SMALL;
 
   constructor(
     private router: Router,
@@ -42,16 +39,29 @@ export class EventsListComponent extends BaseComponent implements OnInit {
     this.eventFilter = DATE_FILTER;
     this.dateFilterOpts = {
       utc: true,
+      inline: true,
       mode: 'range',
-      // onClose: function(selectedDates, dateStr, instance) {
-      //   console.log(selectedDates);
-      //   console.log(dateStr);
-      //   console.log(instance);
-      // }
+      minDate: new Date,
+      maxDate: null
     };
   }
 
   onFilterByEvent(action) {
+    switch (action) {
+      case 'past':
+        this.dateFilterOpts = Object.assign({},
+          this.dateFilterOpts, {
+            maxDate: new Date(),
+            minDate: null
+          });
+        break;
+      case 'upcoming':
+        this.dateFilterOpts = Object.assign({},
+          this.dateFilterOpts, {
+            minDate: new Date(),
+            maxDate: null
+          });
+    }
     console.log(action);
   }
 
@@ -94,24 +104,6 @@ export class EventsListComponent extends BaseComponent implements OnInit {
   }
 
   private fetch(stream$) {
-    // const stores$ = this.storeService.getStores().map(res => {
-    //   const stores = [
-    //     {
-    //       'label': 'All Host',
-    //       'action': null
-    //     }
-    //   ];
-    //   res.forEach(store => {
-    //     stores.push({
-    //       'label': store.name,
-    //       'action': store.id
-    //     });
-    //   });
-    //   return stores;
-    // });
-    // const events$ = this.service.getEvents();
-    // const stream$ = Observable.combineLatest(events$, stores$);
-
     super.isLoading().subscribe(res => this.loading = res);
 
     super

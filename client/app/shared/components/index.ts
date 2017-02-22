@@ -16,5 +16,6 @@ export * from './cp-page-header';
 export * from './cp-image-upload';
 export * from './cp-button-dropdown';
 export * from './cp-animated-button';
+export * from './cp-small-datepicker';
 export * from './cp-place-autocomplete';
 
