@@ -17,7 +17,8 @@ import {
 } from './pipes';
 
 import {
-  StoreService
+  StoreService,
+  FileUploadService
 } from './services';
 
 @NgModule({
@@ -34,7 +35,7 @@ import {
 
   imports: [ CommonModule, RouterModule, ReactiveFormsModule ],
 
-  providers: [ StoreService ],
+  providers: [ StoreService, FileUploadService ],
 
   exports: [ CPTopBarComponent, CPMapsComponent,
   CPAvatarComponent, CPMobileMenuComponent, CPModalComponent,

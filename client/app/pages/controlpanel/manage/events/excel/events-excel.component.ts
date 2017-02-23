@@ -2,6 +2,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
+import { FileUploadService } from '../../../../../shared/services';
+
 import {
   IHeader,
   HEADER_UPDATE
@@ -18,6 +20,7 @@ export class EventsExcelComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private store: Store<IHeader>,
+    private fileService: FileUploadService,
     // private service: EventsService
   ) {
     this.buildHeader();
@@ -29,6 +32,16 @@ export class EventsExcelComponent implements OnInit {
 
   onSubmit(data) {
     console.log(data);
+  }
+
+  onChange(data) {
+    this
+      .fileService
+      .uploadFile(data.target.files[0], 'http://localhost:8000/events/excel')
+      .subscribe(
+        res => console.log(res),
+        err => console.log(err)
+      );
   }
 
   private buildHeader() {
