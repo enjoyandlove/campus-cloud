@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+import json
 
 '''
 Shell to serve angular app,
@@ -28,22 +29,24 @@ def event_invite(request):
 
     ws = wb.get_active_sheet()
 
-    for item in range(1,7):
-        if not ws.cell(row=1, column=item).value:
-            ws.cell(row=1, column=item).value = "some text"
+    event_dict = []
 
-    cols = ws.columns
+    for row in ws.rows:
+        event_info = []
+        for col in row:
+            if col.value is not None:
+                event_info.append(col.value)
+        if len(event_info):
+            event_dict.append(event_info)
 
-    for i in cols:
-        print(i)
+    events = event_dict[1:]
+    column_titles = event_dict[:1]
 
-    # col_title    = cols[1]            #event title
-    # col_desc     = cols[2]            #event description
-    # col_start    = cols[3]            #event start
-    # col_end      = cols[4]            #event end
-    # col_location = cols[5]            #event location
-    # col_room     = cols[6]            #event room
-    print(cols)
-    # print(request.body)
-    return JsonResponse({'foo': 'bar'})
+    event_dict = []
+
+    for i in events:
+        event_dict.append(dict(zip(column_titles[0], i)))
+
+    return JsonResponse(json.dumps(event_dict), safe=False)
+
 
