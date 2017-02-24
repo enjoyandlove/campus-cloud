@@ -1,1 +1,1 @@
-export * from './excel-submit.component';
+export * from './events-excel-submit.component';

@@ -15,5 +15,11 @@ body {
   width: 108px;
   height: 108px;
   border-radius: 4px;
+  display: inline-block;
   background-color: #D8D8D8;
+
+  &--small {
+    width: 35px;
+    height: 35px;
+  }
 }
