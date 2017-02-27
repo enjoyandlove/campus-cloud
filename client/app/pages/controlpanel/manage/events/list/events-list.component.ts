@@ -106,6 +106,7 @@ export class EventsListComponent extends BaseComponent implements OnInit {
         this.router.navigate(['/manage/events/import/facebook']);
         break;
       case 'excel':
+        // TODO Avoid this...
         $('#excelModal').modal();
         break;
     }
