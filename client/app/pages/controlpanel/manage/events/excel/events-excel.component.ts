@@ -40,6 +40,7 @@ export class EventsExcelComponent implements OnInit, OnDestroy {
       .subscribe(
         res => {
           this.events = res;
+          console.log(res);
 
           if (this.events.length) {
             this.buildForm();
@@ -68,8 +69,8 @@ export class EventsExcelComponent implements OnInit, OnDestroy {
 
   buildEventControl(event) {
     return this.fb.group({
-      'title': [event.Title, Validators.required],
-      'description': [event.Description, Validators.required],
+      'title': [event.title, Validators.required],
+      'description': [event.description, Validators.required],
       'store_id': ['', Validators.required],
       'event_manager': ['', Validators.required],
       'attendance_manager': [''],

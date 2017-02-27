@@ -37,8 +37,29 @@ export class EventsExcelModalComponent implements OnInit {
     console.log(data);
   }
 
+  fileIsValid(file) {
+    let validation = {};
+
+    const ext = file.name.split('.').pop();
+    const size = file.size;
+    validation['isExt'] = {
+      error: 'Make sure you are uploading an excel file',
+      isValid: ext === 'xlsx'
+    };
+
+    validation['isSize'] = {
+      error: 'File to big',
+      isValid: size < 50000
+    };
+
+    return validation;
+  }
+
   onFileUpload(file) {
-    this
+    const validation = this.fileIsValid(file);
+
+    if (validation['isExt'].isValid && validation['isSize'].isValid) {
+      this
       .fileService
       .uploadFile(file, 'http://localhost:8000/events/excel')
       .subscribe(
@@ -48,6 +69,8 @@ export class EventsExcelModalComponent implements OnInit {
         },
         err => console.log(err)
       );
+    }
+    return;
   }
 
   onNavigate() {
