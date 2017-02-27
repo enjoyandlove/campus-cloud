@@ -10,6 +10,8 @@ import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 import { BUTTON_ALIGN } from '../../../../../shared/components/cp-button-dropdown';
 
+declare var $: any;
+
 @Component({
   selector: 'cp-events-list',
   templateUrl: './events-list.component.html',
@@ -98,8 +100,15 @@ export class EventsListComponent extends BaseComponent implements OnInit {
       .catch(err => console.error(err));
   }
 
-  onButtonDropdown(location) {
-    this.router.navigate([location]);
+  onButtonDropdown(event) {
+    switch (event) {
+      case 'facebook':
+        this.router.navigate(['/manage/events/import/facebook']);
+        break;
+      case 'excel':
+        $('#excelModal').modal();
+        break;
+    }
   }
 
   private fetch(stream$) {

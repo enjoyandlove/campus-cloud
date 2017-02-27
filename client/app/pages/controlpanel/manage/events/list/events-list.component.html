@@ -120,7 +120,7 @@
 
           <span
             (click)="deleteEvent = event"
-            data-toggle="modal" data-target="#cpModal"
+            data-toggle="modal" data-target="#deleteModal"
             class="col-xs-12 col-md-1 hover text-truncate delete-event">
             &times;
           </span>
@@ -131,6 +131,10 @@
   </div>
 </div>
 
-<cp-modal>
+<cp-modal modalId="deleteModal">
   <cp-events-delete [event]="deleteEvent"></cp-events-delete>
+</cp-modal>
+
+<cp-modal modalId="excelModal">
+  <cp-events-excel></cp-events-excel>
 </cp-modal>

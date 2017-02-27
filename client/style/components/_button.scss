@@ -23,6 +23,10 @@ a.cpbtn, {
     outline: none;
   }
 
+  &--tall {
+    padding: 14px 16px;
+  }
+
   &--primary {
     background: $color-brand;
     box-shadow: 0 2px 0 0 #299AE6;
@@ -35,12 +39,20 @@ a.cpbtn, {
 
   &--link {
     border: none;
+    color: $color-brand;
+    background: transparent;
     border-color: transparent;
   }
 
   &--default {
+    color: $color-brand;
+    background: transparent;
+    border: 1px solid $color-brand;
+  }
+
+  &--default-alt {
     color: $color-black;
-    background: $color-white;
+    background: transparent;
     border: 1px solid $border-color;
   }
 

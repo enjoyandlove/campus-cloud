@@ -17,11 +17,11 @@ export const BUTTON_DROPDOWN = {
   'children': [
     {
       'label': 'Import Events from Facebook',
-      'event': '/manage/events/import/facebook'
+      'event': 'facebook'
     },
     {
       'label': 'Import Events from Excel',
-      'event': '/manage/events/import/excel'
+      'event': 'excel'
     }
   ]
 };

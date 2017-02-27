@@ -48,41 +48,62 @@
 
       <ul class="list__body">
         <li
-          class="list__item row event"
+          class="list__item event"
           *ngFor="let event of events; let i = index">
-          <div class="col-xs-12 col-sm-5">
-            <div class="row">
-              <div class="col-xs-1">
-                <cp-checkbox class="checkbox"></cp-checkbox>
-              </div>
-              <div class="col-xs-11 text-truncate">
-                <div class="row">
-                  <div class="col-xs-2">
-                    <div class="event__avatar placeholder placeholder--small"></div>
-                  </div>
-                  <div class="col-xs-10">
-                    <span class="event__title">{{ event.title }}</span>
-                    <br>
-                    <span class="event__description">
-                      {{ event.description }}
-                    </span>
+          <div class="row">
+            <div class="col-xs-12 col-sm-5">
+              <div class="row">
+                <div class="col-xs-1">
+                  <cp-checkbox class="checkbox"></cp-checkbox>
+                </div>
+                <div class="col-xs-11 text-truncate">
+                  <div class="row">
+                    <div class="col-xs-2">
+                      <div class="event__avatar placeholder placeholder--small"></div>
+                    </div>
+                    <div class="col-xs-10">
+                      <span class="event__title">{{ event.title }}</span>
+                      <br>
+                      <span class="event__description">
+                        {{ event.description }}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="col-xs-12 col-sm-7">
-            <div class="row">
-              <div class="col-xs-3">
-                <cp-dropdown [items]="mockDropdown"></cp-dropdown>
-              </div>
-              <div class="col-xs-4">
-                <cp-switch [id]="i"></cp-switch>
+            <div class="col-xs-12 col-sm-7">
+              <div class="row">
+                <div class="col-xs-3">
+                  <cp-dropdown [items]="mockDropdown"></cp-dropdown>
+                </div>
+                <div class="col-xs-4">
+                  <cp-switch [id]="i"></cp-switch>
+                </div>
               </div>
             </div>
           </div>
         </li>
       </ul>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <div class="footer">
+      <div class="pull-right">
+        <button
+          type="button"
+          class="cpbtn cpbtn--tall cpbtn--default-alt" i18n>
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="cpbtn cpbtn--tall cpbtn--primary" i18n>
+          Import Event
+        </button>
+      </div>
     </div>
   </div>
 </div>
