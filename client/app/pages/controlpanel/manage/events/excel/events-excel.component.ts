@@ -1,21 +1,24 @@
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Store } from '@ngrx/store';
+
+// import { EventsService } from '../events.service';
+import { EVENTS_MODAL_RESET } from '../../../../../reducers/events-modal.reducer';
 
 @Component({
   selector: 'cp-events-excel',
   templateUrl: './events-excel.component.html',
   styleUrls: ['./events-excel.component.scss']
 })
-export class EventsExcelComponent implements OnInit {
+export class EventsExcelComponent implements OnInit, OnDestroy {
   events;
   mockDropdown;
   form: FormGroup;
-  isFormReady = false;
 
   constructor(
-    private route: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private store: Store<any>,
+    // private service: EventsService
   ) {
     this.fetch();
     this.mockDropdown = [
@@ -31,8 +34,21 @@ export class EventsExcelComponent implements OnInit {
   }
 
   private fetch() {
-    this.events = require('./mock.json');
-    this.buildForm();
+    this
+      .store
+      .select('EVENTS_MODAL')
+      .subscribe(
+        res => {
+          this.events = res;
+
+          if (this.events.length) {
+            this.buildForm();
+          }
+        },
+        err => {
+          console.log(err);
+        }
+    );
   }
 
   private buildForm() {
@@ -48,14 +64,12 @@ export class EventsExcelComponent implements OnInit {
     this.events.map(event => {
       control.push(this.buildEventControl(event));
     });
-
-    this.isFormReady = true;
   }
 
   buildEventControl(event) {
     return this.fb.group({
-      'title': [event.title, Validators.required],
-      'description': [event.description, Validators.required],
+      'title': [event.Title, Validators.required],
+      'description': [event.Description, Validators.required],
       'store_id': ['', Validators.required],
       'event_manager': ['', Validators.required],
       'attendance_manager': [''],
@@ -63,14 +77,18 @@ export class EventsExcelComponent implements OnInit {
       'end': [event.end_date, Validators.required],
       'location': [event.location, Validators.required],
       'room': [event.room, Validators.required],
-      'event_attendnace': [true, Validators.required],
-      'event_attendnace_feedback': [true, Validators.required],
+      'event_attendance': [true, Validators.required],
+      'event_attendance_feedback': [true, Validators.required],
       'event_poster': ['default', Validators.required],
     });
   }
 
+  ngOnDestroy() {
+    this.store.dispatch({ type: EVENTS_MODAL_RESET });
+  }
 
   ngOnInit() {
-    console.log(this.route.snapshot.data['events']);
+    // this.store.select('EVENTS_MODAL').subscribe(res => console.log(res));
+    // console.log(this.service.getModalEvents());
   }
 }

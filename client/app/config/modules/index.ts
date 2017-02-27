@@ -12,13 +12,15 @@ import { ControlPanelModule } from '../../pages/controlpanel/controlpanel.module
 import {
   alertReducer,
   mobileReducer,
-  headerReducer
+  headerReducer,
+  eventsModalReducer
 } from '../../reducers';
 
 const APP_STATE_MODULE = StoreModule.provideStore({
   ALERT: alertReducer,
   HEADER: headerReducer,
   MOBILE: mobileReducer,
+  EVENTS_MODAL: eventsModalReducer
 });
 
 export const APP_MODULES = [ APP_STATE_MODULE, HttpModule, FormsModule, BrowserModule,

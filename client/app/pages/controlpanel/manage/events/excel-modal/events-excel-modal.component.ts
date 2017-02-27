@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
+import { EventsService } from '../events.service';
 import { FileUploadService } from '../../../../../shared/services';
 
 import {
@@ -22,6 +23,7 @@ export class EventsExcelModalComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private store: Store<IHeader>,
+    private service: EventsService,
     private fileService: FileUploadService,
   ) {
     this.buildHeader();
@@ -40,7 +42,10 @@ export class EventsExcelModalComponent implements OnInit {
       .fileService
       .uploadFile(file, 'http://localhost:8000/events/excel')
       .subscribe(
-        () => this.uploaded = true,
+        (res) => {
+          this.uploaded = true;
+          this.service.setModalEvents(JSON.parse(res));
+        },
         err => console.log(err)
       );
   }
