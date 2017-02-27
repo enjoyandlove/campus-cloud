@@ -1,5 +1,6 @@
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'cp-events-excel',
@@ -13,6 +14,7 @@ export class EventsExcelComponent implements OnInit {
   isFormReady = false;
 
   constructor(
+    private route: ActivatedRoute,
     private fb: FormBuilder
   ) {
     this.fetch();
@@ -68,5 +70,7 @@ export class EventsExcelComponent implements OnInit {
   }
 
 
-  ngOnInit() { }
+  ngOnInit() {
+    console.log(this.route.snapshot.data['events']);
+  }
 }

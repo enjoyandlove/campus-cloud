@@ -1,5 +1,6 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { FileUploadService } from '../../../../../shared/services';
@@ -15,8 +16,10 @@ import {
   styleUrls: ['./events-excel-modal.component.scss']
 })
 export class EventsExcelModalComponent implements OnInit {
+  uploaded;
   form: FormGroup;
   constructor(
+    private router: Router,
     private fb: FormBuilder,
     private store: Store<IHeader>,
     private fileService: FileUploadService,
@@ -32,18 +35,18 @@ export class EventsExcelModalComponent implements OnInit {
     console.log(data);
   }
 
-  onUploadFile() {
-    console.log('file upload');
-  }
-
-  onChange(data) {
+  onFileUpload(file) {
     this
       .fileService
-      .uploadFile(data.target.files[0], 'http://localhost:8000/events/excel')
+      .uploadFile(file, 'http://localhost:8000/events/excel')
       .subscribe(
-        res => console.log(res),
+        () => this.uploaded = true,
         err => console.log(err)
       );
+  }
+
+  onNavigate() {
+    this.router.navigate(['/manage/events/import/excel']);
   }
 
   private buildHeader() {
@@ -57,5 +60,7 @@ export class EventsExcelModalComponent implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    // console.log($('#excelModal'));
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
@@ -17,7 +17,7 @@ declare var $: any;
   templateUrl: './events-list.component.html',
   styleUrls: ['./events-list.component.scss']
 })
-export class EventsListComponent extends BaseComponent implements OnInit {
+export class EventsListComponent extends BaseComponent implements OnInit, OnDestroy {
   events;
   query;
   hosts = [];
@@ -147,6 +147,11 @@ export class EventsListComponent extends BaseComponent implements OnInit {
       });
     }
     return stars;
+  }
+
+  ngOnDestroy() {
+    // console.log('destroy');
+
   }
 
   ngOnInit() { }

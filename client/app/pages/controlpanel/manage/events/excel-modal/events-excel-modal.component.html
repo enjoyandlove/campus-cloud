@@ -40,11 +40,19 @@
           Cancel
         </button>
 
+        <cp-upload-button
+          *ngIf="!uploaded"
+          buttonClass="primary"
+          (fileUpload)="onFileUpload($event)">
+        </cp-upload-button>
+
         <button
+          *ngIf="uploaded"
           type="button"
-          (click)="onUploadFile()"
-          class="cpbtn cpbtn--primary"i18n>
-          Upload Excel File
+          (click)="onNavigate()"
+          class="cpbtn cpbtn--primary"
+          data-dismiss="modal" i18n>
+          Next
         </button>
       </div>
     </div>

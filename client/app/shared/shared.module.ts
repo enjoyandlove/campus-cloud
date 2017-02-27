@@ -4,11 +4,11 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { CPMapsComponent, CPModalComponent, CPTopBarComponent, CPAvatarComponent,
-  CPSpinnerComponent, CPDropdownComponent,
-  CPCheckboxComponent, CPHamburgerComponent, CPMobileMenuComponent, CPImageUploadComponent,
-  CPPlaceAutoCompleteComponent, CPPageHeaderComponent, CPSearchBoxComponent,
-  CPStarComponent, CPAlertComponent, CPAnimatedButtonComponent,
-  CPButtonDropdownComponent, CPDatePickerComponent, CPSwitchComponent, CPSmallDatePickerComponent
+  CPSpinnerComponent, CPDropdownComponent, CPCheckboxComponent,
+  CPHamburgerComponent, CPMobileMenuComponent, CPPlaceAutoCompleteComponent,
+  CPPageHeaderComponent, CPSearchBoxComponent, CPStarComponent,
+  CPAlertComponent, CPAnimatedButtonComponent, CPButtonDropdownComponent,
+  CPDatePickerComponent, CPSwitchComponent, CPSmallDatePickerComponent, CPUploadButtonComponent
 } from './components';
 
 import {
@@ -24,7 +24,7 @@ import {
 @NgModule({
   declarations: [ CPTopBarComponent, CPMapsComponent,
   CPAvatarComponent, CPMobileMenuComponent, CPModalComponent,
-  CPPlaceAutoCompleteComponent, CPImageUploadComponent,
+  CPPlaceAutoCompleteComponent, CPUploadButtonComponent,
   CPSpinnerComponent, CPDropdownComponent,  CPCheckboxComponent,
   CPPageHeaderComponent, CPHamburgerComponent, CPSearchBoxComponent,
   CPDatePipe, CPStarComponent, CPFilterPipe, CPAlertComponent,
@@ -39,7 +39,7 @@ import {
 
   exports: [ CPTopBarComponent, CPMapsComponent,
   CPAvatarComponent, CPMobileMenuComponent, CPModalComponent,
-  CPPlaceAutoCompleteComponent, CPImageUploadComponent,
+  CPPlaceAutoCompleteComponent, CPUploadButtonComponent,
   CPSpinnerComponent, CPDropdownComponent, CPCheckboxComponent,
   CPPageHeaderComponent, CPHamburgerComponent, CPSearchBoxComponent,
   CPDatePipe, CPStarComponent, CPFilterPipe, CPAlertComponent,
