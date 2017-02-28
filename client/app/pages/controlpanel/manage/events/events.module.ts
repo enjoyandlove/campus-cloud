@@ -12,19 +12,21 @@ import { EventsCreateComponent } from './create';
 import { EventsDeleteComponent }  from './delete';
 import { EventsFacebookComponent }  from './facebook';
 import { EventsAttendanceComponent }  from './attendance';
-import { EventsExcelModalComponent }  from './excel-modal';
 
 import { EventsService } from './events.service';
 import { EventsRoutingModule } from './events.routing.module';
 
 import {
-  ExcelImportActionDropdownComponent
+  EventsExcelModalComponent,
+  EventsImportTopBarComponent,
+  EventsImportActionDropdownComponent
 } from './excel/components';
 
 @NgModule({
   declarations: [ EventsListComponent, EventsCreateComponent, EventsAttendanceComponent,
   EventsDeleteComponent, EventsInfoComponent, EventsEditComponent, EventsExcelModalComponent,
-  EventsFacebookComponent, EventsExcelComponent, ExcelImportActionDropdownComponent ],
+  EventsFacebookComponent, EventsExcelComponent, EventsImportActionDropdownComponent,
+  EventsImportTopBarComponent ],
 
   imports: [ CommonModule, SharedModule, EventsRoutingModule, RouterModule, ReactiveFormsModule ],
 

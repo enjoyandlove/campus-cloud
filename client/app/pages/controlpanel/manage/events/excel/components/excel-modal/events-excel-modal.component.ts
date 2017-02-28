@@ -3,13 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { EventsService } from '../events.service';
-import { FileUploadService } from '../../../../../shared/services';
+import { EventsService } from '../../../events.service';
+import { FileUploadService } from '../../../../../../../shared/services';
 
 import {
   IHeader,
   HEADER_UPDATE
-} from '../../../../../reducers/header.reducer';
+} from '../../../../../../../reducers/header.reducer';
 
 @Component({
   selector: 'cp-events-excel-modal',

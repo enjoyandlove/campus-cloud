@@ -1,0 +1,37 @@
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div class="header" *ngSwitchCase="false">
+    <div class="col-xs-2 no-left-padding">
+      <cp-checkbox
+        class="checkbox pull-left">
+      </cp-checkbox>
+      <button
+        type="button"
+        class="cpbtn cpbtn--default-alt" i18n>
+        Upload Photo
+      </button>
+    </div>
+
+    <div class="col-xs-2">
+      <cp-dropdown [items]="stores"></cp-dropdown>
+    </div>
+    <div class="col-xs-2">
+      <cp-import-action-dropdown
+        (bulkAction)="onBulkAction($event)">
+      </cp-import-action-dropdown>
+    </div>
+    <div class="col-xs-2">
+      <button
+        type="button"
+        class="cpbtn cpbtn--danger" i18n>
+        Delete
+      </button>
+    </div>
+    <div class="pull-right">
+      <button type="button" class="cpbtn cpbtn--default" i18n>
+        Upload Another Excel File
+      </button>
+    </div>
+  </div>
+</div>

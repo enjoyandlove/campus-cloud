@@ -19,7 +19,7 @@ const actionState = {
   templateUrl: './import-action-dropdown.component.html',
   styleUrls: ['./import-action-dropdown.component.scss']
 })
-export class ExcelImportActionDropdownComponent implements OnInit {
+export class EventsImportActionDropdownComponent implements OnInit {
   @Output() bulkAction: EventEmitter<IState> = new EventEmitter();
   isOpen = false;
   id1 = 'id1';

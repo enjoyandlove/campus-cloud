@@ -2,7 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 
 interface IData {
   'heading': string;
-  'subheading': string;
+  'subheading'?: string;
+  'em'?: string;
   'children': [
     {
       'label': string

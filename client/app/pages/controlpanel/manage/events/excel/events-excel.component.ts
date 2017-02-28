@@ -7,7 +7,6 @@ import { StoreService } from '../../../../../shared/services';
 import { BaseComponent }  from '../../../../../base/base.component';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { EVENTS_MODAL_RESET } from '../../../../../reducers/events-modal.reducer';
-// import { BUTTON_ALIGN, BUTTON_THEME } from '../../../../../shared/components/cp-button-dropdown';
 
 @Component({
   selector: 'cp-events-excel',
@@ -101,7 +100,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
       type: HEADER_UPDATE,
       payload: {
         'heading': 'Import Events from Excel',
-        'subheading': `${this.events.length} calendar event(s) data information in the file`,
+        'em': `${this.events.length} calendar event(s) data information in the file`,
         'children': []
       }
     });

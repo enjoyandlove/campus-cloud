@@ -2,8 +2,16 @@
   <div class="container">
     <div class="row">
       <div class="col-xs-12">
-        <p class="header__title">{{ data.heading }}</p>
-        <p class="header__sub-title" *ngIf="data.subheading">{{ data.subheading }}</p>
+        <p
+          class="header__title">
+          {{ data.heading }}
+        </p>
+        <p
+          class="header__sub-title"
+          *ngIf="data.subheading">
+          {{ data.subheading }}
+        </p>
+        <em *ngIf="data.em" class="text-muted">{{ data.em }}</em>
       </div>
     </div>
 
