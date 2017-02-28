@@ -17,10 +17,14 @@ import { EventsExcelModalComponent }  from './excel-modal';
 import { EventsService } from './events.service';
 import { EventsRoutingModule } from './events.routing.module';
 
+import {
+  ExcelImportActionDropdownComponent
+} from './excel/components';
+
 @NgModule({
   declarations: [ EventsListComponent, EventsCreateComponent, EventsAttendanceComponent,
   EventsDeleteComponent, EventsInfoComponent, EventsEditComponent, EventsExcelModalComponent,
-   EventsFacebookComponent, EventsExcelComponent ],
+  EventsFacebookComponent, EventsExcelComponent, ExcelImportActionDropdownComponent ],
 
   imports: [ CommonModule, SharedModule, EventsRoutingModule, RouterModule, ReactiveFormsModule ],
 

@@ -4,22 +4,22 @@ interface IState {
   event_manager: number;
   event_attendance: boolean;
   attendance_manager: string;
-  attendance_feedback: boolean;
+  event_attendance_feedback: boolean;
 }
 
 const actionState = {
   event_attendance: false,
   event_manager: null,
   attendance_manager: null,
-  attendance_feedback: false
+  event_attendance_feedback: false
 };
 
 @Component({
-  selector: 'cp-action-dropdown',
-  templateUrl: './cp-action-dropdown.component.html',
-  styleUrls: ['./cp-action-dropdown.component.scss']
+  selector: 'cp-import-action-dropdown',
+  templateUrl: './import-action-dropdown.component.html',
+  styleUrls: ['./import-action-dropdown.component.scss']
 })
-export class CPActionDropdownComponent implements OnInit {
+export class ExcelImportActionDropdownComponent implements OnInit {
   @Output() bulkAction: EventEmitter<IState> = new EventEmitter();
   isOpen = false;
   id1 = 'id1';
@@ -48,7 +48,7 @@ export class CPActionDropdownComponent implements OnInit {
 
   toggleAttendanceFeedback() {
     this.state = Object.assign({}, this.state,
-    { attendance_feedback: !this.state.attendance_feedback });
+    { event_attendance_feedback: !this.state.event_attendance_feedback });
     return;
   }
 

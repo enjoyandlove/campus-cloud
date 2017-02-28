@@ -8,7 +8,9 @@
       <cp-dropdown [items]="stores"></cp-dropdown>
     </div>
     <div class="col-xs-2">
-      <cp-action-dropdown (bulkAction)="onBulkAction($event)"></cp-action-dropdown>
+      <cp-import-action-dropdown
+        (bulkAction)="onBulkAction($event)">
+      </cp-import-action-dropdown>
     </div>
     <div class="col-xs-2">
       <button

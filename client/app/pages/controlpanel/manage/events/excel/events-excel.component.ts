@@ -81,8 +81,19 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     // );
   }
 
-  onBulkAction(action) {
-    console.log(action);
+  onBulkAction(actions) {
+    this.doBulkUpdate(actions);
+  }
+
+
+  doBulkUpdate(actions) {
+    const control = <FormArray>this.form.controls['events'];
+    control.controls.forEach((ctrl: FormGroup) => {
+
+      Object.keys(actions).forEach((controlName) => {
+        ctrl.controls[controlName].setValue(actions[controlName]);
+      });
+    });
   }
 
   private buildHeader() {
@@ -109,6 +120,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     this.events.map(event => {
       control.push(this.buildEventControl(event));
     });
+
     this.isFormReady = true;
   }
 
