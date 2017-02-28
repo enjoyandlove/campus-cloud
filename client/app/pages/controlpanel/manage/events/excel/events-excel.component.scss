@@ -2,46 +2,27 @@
 @import '~styles/components/button';
 @import '~styles/core/typography';
 
-.header {
-  em {
-    line-height: 2.7;
-  }
+
+.checkbox {
+  margin: 0 auto;
+  margin-top: 6px;
 }
 
+.header {
+  padding: 0 8px;
+}
 
-.list {
-  &__header {
-    padding: 10px;
-    border-bottom: 1px solid $border-color;
-
-    label {
-      line-height: 2.7;
-    }
+.form {
+  label {
+    margin-bottom: 8px;
   }
 
-  &__body {
-    padding: 0;
-    list-style: none;
+  &__item {
+    padding: 10px 8px;
 
-    .event {
-      padding: 10px;
-      border-bottom: 1px solid $border-color;
-
-      &:last-child {
-        padding-bottom: 0;
-        border-bottom: none;
-      }
-
-      &__avatar {
-
-      }
-
-      &__title {
-        @include font-bold();
-      }
-
-      &__description {
-
+    > div {
+       > div:first-child {
+        margin-top: 15px;
       }
     }
   }
@@ -55,4 +36,3 @@
     padding-top: 25px;
   }
 }
-

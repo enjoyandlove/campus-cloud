@@ -18,6 +18,7 @@ import {
 })
 export class EventsExcelModalComponent implements OnInit {
   uploaded;
+  error;
   form: FormGroup;
   constructor(
     private router: Router,
@@ -38,27 +39,35 @@ export class EventsExcelModalComponent implements OnInit {
   }
 
   fileIsValid(file) {
-    let validation = {};
+    let result = [];
+    let validators = [
+      {
+        'exp': file.name.split('.').pop() === 'xlsx',
+        'error': 'Wrong Extension',
+        'isError': false
+      },
+      {
+        'exp': file.size > 5000,
+        'error': 'File to big',
+        'isError': false
+      }
+    ];
 
-    const ext = file.name.split('.').pop();
-    const size = file.size;
-    validation['isExt'] = {
-      error: 'Make sure you are uploading an excel file',
-      isValid: ext === 'xlsx'
-    };
-
-    validation['isSize'] = {
-      error: 'File to big',
-      isValid: size < 50000
-    };
-
-    return validation;
+    validators.map(validator => {
+      if (!validator.exp) {
+        validator.isError = true;
+        result.push(validator);
+      }
+      return validator;
+    });
+    return result;
   }
 
   onFileUpload(file) {
     const validation = this.fileIsValid(file);
+    this.error = '';
 
-    if (validation['isExt'].isValid && validation['isSize'].isValid) {
+    if (!validation.length) {
       this
       .fileService
       .uploadFile(file, 'http://localhost:8000/events/excel')
@@ -67,13 +76,16 @@ export class EventsExcelModalComponent implements OnInit {
           this.uploaded = true;
           this.service.setModalEvents(JSON.parse(res));
         },
-        err => console.log(err)
+        err => this.error = err.json().error
       );
+      return;
     }
-    return;
+
+    this.error = validation[0].error;
   }
 
   onNavigate() {
+    this.doReset();
     this.router.navigate(['/manage/events/import/excel']);
   }
 
@@ -86,6 +98,11 @@ export class EventsExcelModalComponent implements OnInit {
         'children': []
       }
     });
+  }
+
+  doReset() {
+    this.error = '';
+    this.uploaded = false;
   }
 
   ngOnInit() {

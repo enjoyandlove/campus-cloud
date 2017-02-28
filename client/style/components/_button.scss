@@ -29,7 +29,7 @@ a.cpbtn, {
 
   &--primary {
     background: $color-brand;
-    box-shadow: 0 2px 0 0 #299AE6;
+    // box-shadow: 0 2px 0 0 #299AE6;
   }
 
   &--secondary {
@@ -46,13 +46,13 @@ a.cpbtn, {
 
   &--default {
     color: $color-brand;
-    background: transparent;
+    background: $color-white;
     border: 1px solid $color-brand;
   }
 
   &--default-alt {
     color: $color-black;
-    background: transparent;
+    background: $color-white;
     border: 1px solid $border-color;
   }
 

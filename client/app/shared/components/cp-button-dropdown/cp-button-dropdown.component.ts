@@ -6,6 +6,16 @@ export const BUTTON_ALIGN = {
   RIGHT: 'right'
 };
 
+export const BUTTON_THEME = {
+  'PRIMARY': 'primary',
+  'DEFAULT': 'default-alt',
+};
+
+export interface IButtonDropdownOptions {
+  align: string;
+  theme: string;
+}
+
 export interface IButtonDropdown {
   button: {
     'label': string;
@@ -26,7 +36,7 @@ export interface IButtonDropdown {
 })
 export class CPButtonDropdownComponent implements OnInit {
   @Input() data: IButtonDropdown;
-  @Input() align: string;
+  @Input() options: IButtonDropdownOptions;
   @Output() selected: EventEmitter<{'label': string, 'event': string}> = new EventEmitter();
 
   constructor(
@@ -41,5 +51,5 @@ export class CPButtonDropdownComponent implements OnInit {
     this.router.navigate([url]);
   }
 
-  ngOnInit() { }
+  ngOnInit() { console.log(this); }
 }

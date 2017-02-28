@@ -3,53 +3,97 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 // import { EventsService } from '../events.service';
+import { StoreService } from '../../../../../shared/services';
+import { BaseComponent }  from '../../../../../base/base.component';
+import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { EVENTS_MODAL_RESET } from '../../../../../reducers/events-modal.reducer';
+// import { BUTTON_ALIGN, BUTTON_THEME } from '../../../../../shared/components/cp-button-dropdown';
 
 @Component({
   selector: 'cp-events-excel',
   templateUrl: './events-excel.component.html',
   styleUrls: ['./events-excel.component.scss']
 })
-export class EventsExcelComponent implements OnInit, OnDestroy {
+export class EventsExcelComponent extends BaseComponent implements OnInit, OnDestroy {
   events;
+  stores;
   mockDropdown;
+  loading = false;
   form: FormGroup;
+  isFormReady = false;
+  buttonDropdownOptions;
 
   constructor(
     private fb: FormBuilder,
     private store: Store<any>,
+    private storeService: StoreService
     // private service: EventsService
   ) {
+    super();
     this.fetch();
-    this.mockDropdown = [
-      {
-        'label': 'Lorem',
-        'action': 'lorem'
-      },
-      {
-        'label': 'Lorem',
-        'action': 'lorem'
-      }
-    ];
   }
 
-  private fetch() {
-    this
-      .store
-      .select('EVENTS_MODAL')
-      .subscribe(
-        res => {
-          this.events = res;
-          console.log(res);
+    private fetch() {
+      super.isLoading().subscribe(res => this.loading = res);
 
-          if (this.events.length) {
-            this.buildForm();
-          }
-        },
-        err => {
-          console.log(err);
+      const stores$ = this.storeService.getStores().map(res => {
+      const stores = [
+        {
+          'label': 'Host Name',
+          'action': null
         }
-    );
+      ];
+
+      res.forEach(store => {
+        stores.push({
+          'label': store.name,
+          'action': store.id
+        });
+      });
+      return stores;
+    });
+
+      super
+        .fetchData(stores$)
+        .then(res => {
+          this.events = require('./mock.json');
+          this.stores = res;
+          this.buildForm();
+          this.buildHeader();
+        })
+        .catch(err => console.error(err));
+
+    // this
+    //   .store
+    //   .select('EVENTS_MODAL')
+    //   .subscribe(
+    //     res => {
+    //       this.events = res;
+    //       console.log(res);
+
+    //       if (this.events.length) {
+    //         this.buildForm();
+    //       }
+    //     },
+    //     err => {
+    //       console.log(err);
+    //     }
+    // );
+  }
+
+  onBulkAction(action) {
+    console.log(action);
+  }
+
+  private buildHeader() {
+    this.store.dispatch({
+      type: HEADER_UPDATE,
+      payload: {
+        'heading': 'Import Events from Excel',
+        'subheading': `${this.events.length} calendar event(s) data information in the file`,
+        'children': []
+      }
+    });
   }
 
   private buildForm() {
@@ -65,6 +109,7 @@ export class EventsExcelComponent implements OnInit, OnDestroy {
     this.events.map(event => {
       control.push(this.buildEventControl(event));
     });
+    this.isFormReady = true;
   }
 
   buildEventControl(event) {
@@ -88,7 +133,12 @@ export class EventsExcelComponent implements OnInit, OnDestroy {
     this.store.dispatch({ type: EVENTS_MODAL_RESET });
   }
 
+  onSubmit() {
+    console.log(this.form.value);
+  }
+
   ngOnInit() {
+
     // this.store.select('EVENTS_MODAL').subscribe(res => console.log(res));
     // console.log(this.service.getModalEvents());
   }

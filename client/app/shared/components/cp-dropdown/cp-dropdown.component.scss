@@ -19,15 +19,14 @@
   }
 
   button {
-    height: 36px;
     min-width: 100%;
     text-align: left;
     position: relative;
 
     span {
-      top: 6px;
+      top: 7px;
       right: 12px;
-      font-size: 17px;
+      font-size: 15px;
       position: absolute;
       transition: transform 200ms ease-in-out;
     }

@@ -8,7 +8,7 @@ hr {
 }
 
 body {
-  background: $color-light-grey;
+  background: #F9F9F9;
 }
 
 .placeholder {
@@ -22,4 +22,12 @@ body {
     width: 35px;
     height: 35px;
   }
+}
+
+.no-left-padding {
+  padding-left: 0;
+}
+
+.no-right-padding {
+  padding-left: 0;
 }

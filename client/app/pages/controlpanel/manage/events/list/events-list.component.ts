@@ -8,7 +8,7 @@ import { StoreService } from '../../../../../shared/services';
 import { BUTTON_DROPDOWN, DATE_FILTER } from './events-filters';
 import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
-import { BUTTON_ALIGN } from '../../../../../shared/components/cp-button-dropdown';
+import { BUTTON_ALIGN, BUTTON_THEME } from '../../../../../shared/components/cp-button-dropdown';
 
 declare var $: any;
 
@@ -26,8 +26,8 @@ export class EventsListComponent extends BaseComponent implements OnInit, OnDest
   buttonDropdown;
   loading = true;
   deleteEvent = '';
+  buttonDropdownOptions;
   dateFormat = FORMAT.LONG;
-  BUTTON_ALIGN = BUTTON_ALIGN.RIGHT;
 
   constructor(
     private router: Router,
@@ -154,5 +154,10 @@ export class EventsListComponent extends BaseComponent implements OnInit, OnDest
 
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.buttonDropdownOptions = {
+      align: BUTTON_ALIGN.RIGHT,
+      theme: BUTTON_THEME.PRIMARY
+    };
+  }
 }
