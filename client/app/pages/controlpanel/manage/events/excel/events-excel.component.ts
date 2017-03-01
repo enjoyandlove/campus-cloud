@@ -32,7 +32,16 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     // private service: EventsService
   ) {
     super();
-    this.fetch();
+    this
+      .store
+      .select('EVENTS_MODAL')
+      .subscribe(
+        res => {
+          this.events = res;
+          this.fetch();
+        },
+        err => console.log(err)
+    );
   }
 
   private fetch() {
@@ -59,23 +68,11 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
       .fetchData(stores$)
       .then(res => {
         // this.events = require('./mock.json');
+        this.buildForm();
+        this.buildHeader();
         this.stores = res;
       })
       .catch(err => console.error(err));
-
-    this
-      .store
-      .select('EVENTS_MODAL')
-      .subscribe(
-        res => {
-          this.events = res;
-          this.buildForm();
-          this.buildHeader();
-        },
-        err => {
-          console.log(err);
-        }
-    );
   }
 
   private buildHeader() {
