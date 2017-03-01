@@ -4,7 +4,8 @@
   <div class="header" *ngSwitchCase="false">
     <div class="col-xs-2 no-left-padding">
       <cp-checkbox
-        class="checkbox pull-left">
+        class="checkbox pull-left"
+        (toggle)="this.checkAll.emit($event)">
       </cp-checkbox>
       <button
         type="button"
@@ -14,16 +15,20 @@
     </div>
 
     <div class="col-xs-2">
-      <cp-dropdown [items]="stores"></cp-dropdown>
+      <cp-dropdown
+        [items]="stores"
+        (selected)="hostChange.emit($event.action)">
+      </cp-dropdown>
     </div>
     <div class="col-xs-2">
       <cp-import-action-dropdown
-        (bulkAction)="onBulkAction($event)">
+        (bulkAction)="bulkChange.emit($event)">
       </cp-import-action-dropdown>
     </div>
     <div class="col-xs-2">
       <button
         type="button"
+        (click)="deleteEvent.emit()"
         class="cpbtn cpbtn--danger" i18n>
         Delete
       </button>

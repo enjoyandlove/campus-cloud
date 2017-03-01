@@ -1,6 +1,12 @@
 <div *ngIf="isFormReady">
   <div class="row">
-    <cp-import-top-bar></cp-import-top-bar>
+    <cp-import-top-bar
+      (deleteEvent)="onDeleteEvent()"
+      (bulkChange)="onBulkChange($event)"
+      (checkAll)="onCheckAll($event)"
+      (hostChange)="onHostChange($event)"
+      (imageChange)="onImageChange($event)">
+    </cp-import-top-bar>
   </div>
   <!--<div class="row header">
     <div class="col-xs-2 no-left-padding">
@@ -41,13 +47,17 @@
             <div [formGroupName]="i" class="col-xs-12">
               <div class="row form__item">
                 <div class="col-xs-3 text-truncate">
-                  <div class="row">
+                  <div class="row margin-top">
                     <div class="col-xs-4 no-left-padding">
-                      <cp-checkbox class="checkbox pull-left"></cp-checkbox>
+                      <cp-checkbox
+                        class="checkbox pull-left"
+                        [isChecked]="isChecked[i].checked"
+                        (toggle)="onCheckSingle($event, i)">
+                      </cp-checkbox>
 
                       <div class="event__avatar placeholder placeholder--small"></div>
                     </div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-8 no-left-padding">
                       <span class="event__title">
                         <strong>{{ event.controls.title.value }}</strong>
                       </span>
@@ -58,13 +68,36 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-xs-3">
+                <div class="col-xs-2">
                   <label i18n>Host</label>
                   <cp-dropdown [items]="stores"></cp-dropdown>
                 </div>
                 <div class="col-xs-2">
                   <label i18n>Event Attendance</label>
-                  <cp-switch [id]="i"></cp-switch>
+                  <cp-switch
+                  [id]="i"
+                  (toggle)="event.isAttendance = !event.isAttendance"></cp-switch>
+                </div>
+                <div class="col-xs-5 no-left-padding" *ngIf="event.isAttendance">
+                  <div class="row">
+                    <div class="col-xs-4 no-left-padding">
+                      <label i18n>Attd Feedback</label>
+                      <select class="form-control">
+                        <option value="true" i18n>Enabled</option>
+                        <option value="false" i18n>Disabled</option>
+                      </select>
+                    </div>
+                    <div class="col-xs-4">
+                      <label i18n>Manager</label>
+                      <select class="form-control">
+                        <option value="" i18n>Manager</option>
+                      </select>
+                    </div>
+                    <div class="col-xs-4">
+                      <label i18n>Attd Manager</label>
+                      <input type="email" class="form-control">
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 // import { EventsService } from '../events.service';
 import { StoreService } from '../../../../../shared/services';
 import { BaseComponent }  from '../../../../../base/base.component';
-import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { HEADER_UPDATE, HEADER_DEFAULT } from '../../../../../reducers/header.reducer';
 import { EVENTS_MODAL_RESET } from '../../../../../reducers/events-modal.reducer';
 
 @Component({
@@ -17,6 +17,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
   events;
   stores;
   mockDropdown;
+  isChecked = [];
   loading = false;
   form: FormGroup;
   isFormReady = false;
@@ -116,8 +117,9 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
   private buildGroup() {
     const control = <FormArray>this.form.controls['events'];
 
-    this.events.map(event => {
+    this.events.forEach((event, index) => {
       control.push(this.buildEventControl(event));
+      this.isChecked.push({ index, checked: false });
     });
 
     this.isFormReady = true;
@@ -141,7 +143,46 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
   }
 
   ngOnDestroy() {
+    this.store.dispatch({ type: HEADER_DEFAULT });
     this.store.dispatch({ type: EVENTS_MODAL_RESET });
+  }
+
+  onDeleteEvent() {
+    console.log('should Delete');
+  }
+
+  onBulkChange(actions) {
+    console.log(actions);
+  }
+
+  onCheckSingle(checked, index) {
+    let _isChecked;
+
+    _isChecked = this.isChecked.map(item => {
+      if (item.index === index) {
+        item = Object.assign({}, item, { checked: checked });
+      }
+      return item;
+    });
+    this.isChecked = [ ..._isChecked ];
+  }
+
+  onCheckAll(checked) {
+    let _isChecked = [];
+
+    this.isChecked.map((item) => {
+      _isChecked.push(Object.assign({}, item, { checked: checked }));
+    });
+
+    this.isChecked = [ ..._isChecked ];
+  }
+
+  onHostChange(host) {
+    console.log(host);
+  }
+
+  onImageChange(image) {
+    console.log(image);
   }
 
   onSubmit() {
