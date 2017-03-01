@@ -52,7 +52,7 @@ def event_invite(request):
         if len(i) is not len(column_titles):
             return JsonResponse({ "error": "All fields are required" }, safe=False, status=500)
 
-        # check date format (2/26/2009 3:00 PM)
+        # check date format (2016-03-12 13:00:00)
         # try:
         #     datetime.datetime.strptime(i[2], '%m/%d/%Y %I:%M %p')
         #     datetime.datetime.strptime(i[3], '%m/%d/%Y %I:%M %p')

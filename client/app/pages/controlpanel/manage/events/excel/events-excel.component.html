@@ -8,34 +8,6 @@
       (imageChange)="onImageChange($event)">
     </cp-import-top-bar>
   </div>
-  <!--<div class="row header">
-    <div class="col-xs-2 no-left-padding">
-      <cp-checkbox class="checkbox pull-left"></cp-checkbox>
-      <button class="cpbtn cpbtn--default-alt" type="button" i18n>Upload Photo</button>
-    </div>
-    <div class="col-xs-2">
-      <cp-dropdown [items]="stores"></cp-dropdown>
-    </div>
-    <div class="col-xs-2">
-      <cp-import-action-dropdown
-        (bulkAction)="onBulkAction($event)">
-      </cp-import-action-dropdown>
-    </div>
-    <div class="col-xs-2">
-      <button
-        type="button"
-        class="cpbtn cpbtn--danger" i18n>
-        Delete
-      </button>
-    </div>
-    <div class="pull-right">
-      <button
-        type="button"
-        class="cpbtn cpbtn--default" i18n>
-        Upload Another Excel File
-      </button>
-    </div>
-  </div>-->
 
   <div class="row">
     <div class="col-xs-12">
@@ -70,19 +42,26 @@
                 </div>
                 <div class="col-xs-2">
                   <label i18n>Host</label>
-                  <cp-dropdown [items]="stores"></cp-dropdown>
+                  <cp-dropdown
+                    [items]="stores"
+                    (selected)="onSingleHostSelected($event, i)">
+                  </cp-dropdown>
                 </div>
                 <div class="col-xs-2">
                   <label i18n>Event Attendance</label>
                   <cp-switch
-                  [id]="i"
-                  (toggle)="event.isAttendance = !event.isAttendance"></cp-switch>
+                    [id]="i"
+                    [checked]="event.controls.event_attendance.value"
+                    (toggle)="toggleSingleEventAttendance($event, i)">
+                  </cp-switch>
                 </div>
-                <div class="col-xs-5 no-left-padding" *ngIf="event.isAttendance">
+                <div
+                  class="col-xs-5 no-left-padding" *ngIf="event.controls.event_attendance.value">
                   <div class="row">
                     <div class="col-xs-4 no-left-padding">
                       <label i18n>Attd Feedback</label>
-                      <select class="form-control">
+                      <select
+                        class="form-control">
                         <option value="true" i18n>Enabled</option>
                         <option value="false" i18n>Disabled</option>
                       </select>
@@ -95,7 +74,12 @@
                     </div>
                     <div class="col-xs-4">
                       <label i18n>Attd Manager</label>
-                      <input type="email" class="form-control">
+                      <input
+                        type="email"
+                        class="form-control"
+                        placeholder="john@example.com"
+                        formControlName="attendance_manager"
+                        ([value])="event.controls['attendance_manager'].value">
                     </div>
                   </div>
                 </div>

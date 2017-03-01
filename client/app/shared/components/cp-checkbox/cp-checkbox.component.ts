@@ -16,7 +16,7 @@ export class CPCheckboxComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('init check');
+    // console.log('init check');
   }
 
   onChange(evt) {

@@ -13,7 +13,7 @@
             (toggle)="toggleEventAttendance()">
           </cp-switch>
         </div>
-        <div>
+        <div *ngIf="state.event_attendance">
           <div class="menu__item">
             <div class="row">
               <div class="col-xs-6">
