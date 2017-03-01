@@ -11,6 +11,8 @@ import {
   HEADER_UPDATE
 } from '../../../../../../../reducers/header.reducer';
 
+declare var $: any;
+
 @Component({
   selector: 'cp-events-excel-modal',
   templateUrl: './events-excel-modal.component.html',
@@ -103,6 +105,7 @@ export class EventsExcelModalComponent implements OnInit {
   doReset() {
     this.error = '';
     this.uploaded = false;
+    $('#excelModal').modal('hide');
   }
 
   ngOnInit() {

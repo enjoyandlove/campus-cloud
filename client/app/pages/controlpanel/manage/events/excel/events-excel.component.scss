@@ -26,6 +26,11 @@
   }
 }
 
+.margin-bottom {
+  // to account for the fixed footer
+  padding-bottom: 90px;
+}
+
 .footer {
   left: 0;
   bottom: 0;

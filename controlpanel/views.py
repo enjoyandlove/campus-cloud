@@ -52,14 +52,24 @@ def event_invite(request):
         if len(i) is not len(column_titles):
             return JsonResponse({ "error": "All fields are required" }, safe=False, status=500)
 
-        # check date format (2016-03-12 13:00:00)
-        # try:
-        #     datetime.datetime.strptime(i[2], '%m/%d/%Y %I:%M %p')
-        #     datetime.datetime.strptime(i[3], '%m/%d/%Y %I:%M %p')
-        #     i[2].strftime('%m/%d/%Y %I:%M %p')
-        #     i[3].strftime('%m/%d/%Y %I:%M %p')
-        # except ValueError:
-        #     return JsonResponse({ "error": "Incorrect data format" }, safe=False, status=500)
+        # end date is not greater than start date
+        if i[3] < i[2]:
+          return JsonResponse({ "error": "Start date can not be greater than end date" }, safe=False, status=500)
+
+        # start date is not in the past
+        if i[2] < datetime.datetime.now():
+          return JsonResponse({ "error": "Start date can not be in the past" }, safe=False, status=500)
+
+        # check date time format (2017-05-12 09:00:00)
+        try:
+          datetime.datetime.strptime(str(i[2]), "%Y-%m-%d %H:%M:%S")
+          datetime.datetime.strptime(str(i[3]), "%Y-%m-%d %H:%M:%S")
+        except ValueError:
+          return JsonResponse({ "error": "Invalid date format" }, safe=False, status=500)
+
+        i[2] = str(i[2])
+        i[3] = str(i[3])
+
         event_dict.append(dict(zip(column_titles, i)))
 
     return JsonResponse(json.dumps(event_dict), safe=False)

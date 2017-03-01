@@ -58,29 +58,24 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     super
       .fetchData(stores$)
       .then(res => {
-        this.events = require('./mock.json');
+        // this.events = require('./mock.json');
         this.stores = res;
-        this.buildForm();
-        this.buildHeader();
       })
       .catch(err => console.error(err));
 
-    // this
-    //   .store
-    //   .select('EVENTS_MODAL')
-    //   .subscribe(
-    //     res => {
-    //       this.events = res;
-    //       console.log(res);
-
-    //       if (this.events.length) {
-    //         this.buildForm();
-    //       }
-    //     },
-    //     err => {
-    //       console.log(err);
-    //     }
-    // );
+    this
+      .store
+      .select('EVENTS_MODAL')
+      .subscribe(
+        res => {
+          this.events = res;
+          this.buildForm();
+          this.buildHeader();
+        },
+        err => {
+          console.log(err);
+        }
+    );
   }
 
   private buildHeader() {
