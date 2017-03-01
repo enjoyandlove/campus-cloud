@@ -36,8 +36,9 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
       .store
       .select('EVENTS_MODAL')
       .subscribe(
-        res => {
-          this.events = res;
+        (_) => {
+          // this.events = res;
+          this.events = require('./mock.json');
           this.fetch();
         },
         err => console.log(err)
@@ -67,7 +68,6 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     super
       .fetchData(stores$)
       .then(res => {
-        // this.events = require('./mock.json');
         this.buildForm();
         this.buildHeader();
         this.stores = res;
@@ -111,24 +111,20 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
 
   buildEventControl(event) {
     return this.fb.group({
-      'title': [event.title, Validators.required],
-      'description': [event.description, Validators.required],
       'store_id': ['', Validators.required],
-      'event_manager': ['', Validators.required],
-      'attendance_manager': [''],
-      'start': [CPDate.toEpoch(event.start_date), Validators.required],
-      'end': [CPDate.toEpoch(event.end_date), Validators.required],
-      'location': [event.location, Validators.required],
       'room': [event.room, Validators.required],
-      'event_attendance': [true, Validators.required],
-      'event_attendance_feedback': [1, Validators.required],
+      'title': [event.title, Validators.required],
       'event_poster': ['default', Validators.required],
+      'location': [event.location, Validators.required],
+      'description': [event.description, Validators.required],
+      'end': [CPDate.toEpoch(event.end_date), Validators.required],
+      'start': [CPDate.toEpoch(event.start_date), Validators.required],
+      // these controls are only required when event attendance is true
+      'event_manager': [null],
+      'attendance_manager': [null],
+      'event_attendance_feedback': [1],
+      'event_attendance': [true, Validators.required],
     });
-  }
-
-  ngOnDestroy() {
-    this.store.dispatch({ type: HEADER_DEFAULT });
-    this.store.dispatch({ type: EVENTS_MODAL_RESET });
   }
 
   onBulkDelete() {
@@ -172,7 +168,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     control.controls['store_id'].setValue(host.action);
   }
 
-  onCheckSingle(checked, index) {
+  onSingleCheck(checked, index) {
     let _isChecked;
 
     _isChecked = this.isChecked.map(item => {
@@ -203,7 +199,9 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
   }
 
   onSubmit() {
-    console.log(this.form.value);
+    console.log(this.form);
+    console.log(this.form.valid);
+    // console.log(this.form.value);
   }
 
   toggleSingleEventAttendance(checked, index) {
@@ -211,6 +209,11 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     const control = <FormGroup>controls.controls[index];
 
     control.controls['event_attendance'].setValue(checked);
+  }
+
+  ngOnDestroy() {
+    this.store.dispatch({ type: HEADER_DEFAULT });
+    this.store.dispatch({ type: EVENTS_MODAL_RESET });
   }
 
   ngOnInit() { }

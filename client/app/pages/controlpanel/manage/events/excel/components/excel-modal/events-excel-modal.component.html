@@ -33,8 +33,10 @@
 
   <div class="cpmodal__footer">
     <div class="row">
-      <div class="col-xs-6 col-xs-offset-6 text-right">
-        {{ error }}
+      <div class="col-xs-6">
+        <label class="error" i18n *ngIf="error"><span>&#x26A0;</span>{{ error }}</label>
+      </div>
+      <div class="col-xs-6 text-right">
         <button
           type="button"
           (click)="doReset()"

@@ -25,14 +25,6 @@ export class EventsImportTopBarComponent extends BaseComponent implements OnInit
     this.fetch();
   }
 
-  // onCheckBoxToggle(checked) {
-  //   this.checkAll.emit(checked);
-  // }
-
-  // onHostChange(host) {
-  //   this.hostChange.emit(host.action);
-  // }
-
   private fetch() {
     super.isLoading().subscribe(res => this.loading = res);
 
@@ -58,10 +50,6 @@ export class EventsImportTopBarComponent extends BaseComponent implements OnInit
       .then(res => this.stores = res)
       .catch(err => console.error(err));
   }
-
-  // onBulkAction(actions) {
-  //   this.bulkChange.emit(actions);
-  // }
 
   ngOnInit() { }
 }

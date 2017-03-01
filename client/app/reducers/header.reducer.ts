@@ -6,6 +6,7 @@ export const HEADER_DEFAULT = 'HEADER_DEFAULT';
 export interface IHeader {
   heading: string;
   subheading?: string;
+  em?: string;
   children: [
     {
       url: string;
@@ -17,6 +18,7 @@ export interface IHeader {
 const initialState: IHeader = {
   heading: '',
   subheading: '',
+  em: '',
   children: [
     {
       url: '',

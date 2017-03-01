@@ -52,7 +52,15 @@ export class EventsImportActionDropdownComponent implements OnInit {
     return;
   }
 
+  defaultState() {
+    this.state = Object.assign({}, this.state, actionState);
+  }
+
   doSubmit() {
+    if (!this.state.event_attendance) {
+      this.defaultState();
+    }
+
     this.bulkAction.emit(this.state);
     this.isOpen = false;
   }
