@@ -199,7 +199,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
   }
 
   onSubmit() {
-    console.log(this.form);
+    console.log(this.form.value);
     console.log(this.form.valid);
     // console.log(this.form.value);
   }

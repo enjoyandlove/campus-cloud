@@ -70,9 +70,11 @@ export class EventsExcelModalComponent implements OnInit {
     this.error = '';
 
     if (!validation.length) {
+      let isDev = true;
+      const url = isDev ? 'http://localhost:8000/events/excel' : '/events/excel';
       this
       .fileService
-      .uploadFile(file, 'http://localhost:8000/events/excel')
+      .uploadFile(file, url)
       .subscribe(
         (res) => {
           this.uploaded = true;
