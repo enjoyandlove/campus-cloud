@@ -17,6 +17,15 @@ a.cpbtn, {
   touch-action: manipulation;
   border: 1px solid transparent;
 
+  &:disabled {
+    color: $color-white;
+    background: $color-med-grey;
+
+    &:hover {
+      cursor: not-allowed;
+    }
+  }
+
   &:hover,
   &:focus,
   &:active, {

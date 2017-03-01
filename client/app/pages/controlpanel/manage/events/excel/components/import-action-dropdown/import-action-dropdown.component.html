@@ -17,46 +17,50 @@
           <div class="menu__item">
             <div class="row">
               <div class="col-xs-6">
-                <label i18n>Event Manager</label>
-                <!--<cp-dropdown></cp-dropdown>-->
-                dropdown
-              </div>
-               <div class="col-xs-6">
-                <label i18n>Attendance Manager</label>
-                <input
-                  type="email"
-                  (keyup)="updateAttendanceManager($event.target.value)">
+                <label i18n>Attendance Feedback</label>
+                <select
+                  class="form-control"
+                  (change)="updateAttendanceFeedback($event.target.value)">
+                  <option value=1 i18n>Enabled</option>
+                  <option value=2 i18n>Disabled</option>
+                </select>
               </div>
             </div>
           </div>
 
           <div class="menu__item">
-            <label i18n>Attendance Feedback</label>
-            <cp-switch
-              [id]="id2"
-              (toggle)="toggleAttendanceFeedback()">
-            </cp-switch>
+            <div class="row">
+              <div class="col-xs-6">
+                <label i18n>Event Manager</label>
+                manager
+              </div>
+            </div>
+          </div>
+
+          <div class="menu__item">
+            <label i18n>Attendance Manager</label>
+            <input
+              type="email"
+              (keyup)="updateAttendanceManager($event.target.value)">
           </div>
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row menu__content--footer">
       <div class="col-xs-12">
-        <div class="menu__content--footer">
-          <div class="pull-right">
-            <button
-              type="button"
-              (click)="isOpen = false"
-              class="cpbtn cpbtn--default-alt" i18n>
-              Cancel
-            </button>
-            <button
-              type="button"
-              (click)="doSubmit()"
-              class="cpbtn cpbtn--primary" i18n>
-              Apply
-            </button>
-          </div>
+        <div class="pull-right">
+          <button
+            type="button"
+            (click)="isOpen = false"
+            class="cpbtn cpbtn--default-alt" i18n>
+            Cancel
+          </button>
+          <button
+            type="button"
+            (click)="doSubmit()"
+            class="cpbtn cpbtn--primary" i18n>
+            Apply
+          </button>
         </div>
       </div>
     </div>

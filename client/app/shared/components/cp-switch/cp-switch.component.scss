@@ -42,9 +42,9 @@ input.cmn-toggle-round + label:after {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   transition: margin 0.4s;
 }
-input.cmn-toggle-round:checked + label:before {
+input.cmn-toggle-round.isChecked + label:before {
   background-color: $color-success;
 }
-input.cmn-toggle-round:checked + label:after {
+input.cmn-toggle-round.isChecked + label:after {
   margin-left: 28px;
 }

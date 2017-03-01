@@ -12,8 +12,8 @@ interface IItems {
 })
 export class CPDropdownComponent implements OnInit {
   @Input() items: IItems[];
+  @Input() selectedItem: any;
   @Output() selected: EventEmitter<{'label': string, 'event': string}> = new EventEmitter();
-  selectedItem: any;
 
   constructor() { }
 

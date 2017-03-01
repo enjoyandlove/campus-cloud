@@ -12,19 +12,16 @@ import {
   styleUrls: ['./cp-switch.component.scss']
 })
 export class CPSwitchComponent implements OnInit {
-  @Input() checked: boolean;
   @Input() id: string;
+  @Input() isChecked: boolean;
   @Output() toggle: EventEmitter<boolean> = new EventEmitter();
-  isChecked = false;
 
   constructor() { }
 
-  onChange(evt) {
+  onChange() {
     this.isChecked = !this.isChecked;
-    this.toggle.emit(evt.target.checked);
+    this.toggle.emit(this.isChecked);
   }
 
-  ngOnInit() {
-    this.isChecked = this.checked;
-  }
+  ngOnInit() { }
 }

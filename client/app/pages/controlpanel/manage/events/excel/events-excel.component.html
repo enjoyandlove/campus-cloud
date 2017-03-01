@@ -1,11 +1,11 @@
 <div *ngIf="isFormReady">
   <div class="row">
     <cp-import-top-bar
-      (deleteEvent)="onDeleteEvent()"
+      (deleteEvent)="onBulkDelete()"
       (bulkChange)="onBulkChange($event)"
       (checkAll)="onCheckAll($event)"
-      (hostChange)="onHostChange($event)"
-      (imageChange)="onImageChange($event)">
+      (hostChange)="onHostBulkChange($event)"
+      (imageChange)="onImageBulkChange($event)">
     </cp-import-top-bar>
   </div>
 
@@ -13,6 +13,11 @@
     <div class="col-xs-12">
       <form [formGroup]="form" class="form">
         <div formArrayName="events">
+          <div
+            *ngIf="!form.controls.events.controls.length">
+            <br>
+            <p class="text-center"><strong i18n>No Events to Add</strong></p>
+          </div>
           <div
             class="row cp-form"
             *ngFor="let event of form.controls.events.controls; let i=index">
@@ -51,9 +56,10 @@
                   <label i18n>Event Attendance</label>
                   <cp-switch
                     [id]="i"
-                    [checked]="event.controls.event_attendance.value"
+                    [isChecked]="event.controls['event_attendance'].value"
                     (toggle)="toggleSingleEventAttendance($event, i)">
                   </cp-switch>
+
                 </div>
                 <div
                   class="col-xs-5 no-left-padding" *ngIf="event.controls.event_attendance.value">
@@ -61,9 +67,16 @@
                     <div class="col-xs-4 no-left-padding">
                       <label i18n>Attd Feedback</label>
                       <select
-                        class="form-control">
-                        <option value="true" i18n>Enabled</option>
-                        <option value="false" i18n>Disabled</option>
+                        class="form-control"
+                        formControlName="event_attendance_feedback">
+                        <option
+                          value=1
+                          [selected]="event.controls['event_attendance_feedback'].value == 1"
+                          i18n>Enabled</option>
+                        <option
+                          value=2
+                          [selected]="event.controls['event_attendance_feedback'].value == 2"
+                          i18n>Disabled</option>
                       </select>
                     </div>
                     <div class="col-xs-4">
@@ -91,23 +104,28 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-xs-12">
-      <div class="footer">
-        <div class="pull-right">
-          <button
-            type="button"
-            class="cpbtn cpbtn--tall cpbtn--default-alt" i18n>
-            Cancel
-          </button>
-          <button
-            type="button"
-            (click)="onSubmit()"
-            class="cpbtn cpbtn--tall cpbtn--primary" i18n>
-            Import Event
-          </button>
+  <div class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="pull-right">
+            <button
+              type="button"
+              class="cpbtn cpbtn--tall cpbtn--default-alt" i18n>
+              Cancel
+            </button>
+            <button
+              type="button"
+              (click)="onSubmit()"
+              class="cpbtn cpbtn--tall cpbtn--primary" i18n
+              [disabled]="!form.controls.events.controls.length">
+              Import Event
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
+
+
 </div>

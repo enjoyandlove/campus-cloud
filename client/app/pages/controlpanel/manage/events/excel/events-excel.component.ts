@@ -83,21 +83,6 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     // );
   }
 
-  onBulkAction(actions) {
-    this.doBulkUpdate(actions);
-  }
-
-
-  doBulkUpdate(actions) {
-    const control = <FormArray>this.form.controls['events'];
-    control.controls.forEach((ctrl: FormGroup) => {
-
-      Object.keys(actions).forEach((controlName) => {
-        ctrl.controls[controlName].setValue(actions[controlName]);
-      });
-    });
-  }
-
   private buildHeader() {
     this.store.dispatch({
       type: HEADER_UPDATE,
@@ -144,7 +129,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
       'location': [event.location, Validators.required],
       'room': [event.room, Validators.required],
       'event_attendance': [true, Validators.required],
-      'event_attendance_feedback': [true, Validators.required],
+      'event_attendance_feedback': [1, Validators.required],
       'event_poster': ['default', Validators.required],
     });
   }
@@ -154,7 +139,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     this.store.dispatch({ type: EVENTS_MODAL_RESET });
   }
 
-  onDeleteEvent() {
+  onBulkDelete() {
     let _isChecked = [];
 
     this.isChecked.reverse().forEach(item => {
@@ -185,6 +170,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
 
       return item;
     });
+    console.log(actions);
   }
 
   onSingleHostSelected(host, index) {
@@ -216,11 +202,11 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     this.isChecked = [..._isChecked];
   }
 
-  onHostChange(host) {
-    console.log(host);
+  onHostBulkChange(store_id) {
+    this.onBulkChange({ store_id });
   }
 
-  onImageChange(image) {
+  onImageBulkChange(image) {
     console.log(image);
   }
 

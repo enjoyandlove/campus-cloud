@@ -4,14 +4,14 @@ interface IState {
   event_manager: number;
   event_attendance: boolean;
   attendance_manager: string;
-  event_attendance_feedback: boolean;
+  event_attendance_feedback: number;
 }
 
 const actionState = {
   event_attendance: false,
   event_manager: null,
   attendance_manager: null,
-  event_attendance_feedback: false
+  event_attendance_feedback: 2
 };
 
 @Component({
@@ -46,9 +46,9 @@ export class EventsImportActionDropdownComponent implements OnInit {
     return;
   }
 
-  toggleAttendanceFeedback() {
+  updateAttendanceFeedback(feedback) {
     this.state = Object.assign({}, this.state,
-    { event_attendance_feedback: !this.state.event_attendance_feedback });
+    { event_attendance_feedback: feedback });
     return;
   }
 
