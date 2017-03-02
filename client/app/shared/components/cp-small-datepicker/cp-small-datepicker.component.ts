@@ -9,10 +9,12 @@
 import {
   Input,
   OnInit,
+  Output,
   Component,
   ViewChild,
   OnChanges,
   ElementRef,
+  EventEmitter,
   AfterViewInit,
   ViewEncapsulation
 } from '@angular/core';
@@ -26,6 +28,7 @@ declare var $: any;
   encapsulation: ViewEncapsulation.None
 })
 export class CPSmallDatePickerComponent implements AfterViewInit, OnInit, OnChanges {
+  @Output() rangeChange: EventEmitter<string[]> = new EventEmitter();
   @ViewChild('input') input: ElementRef;
   @Input() options: any;
   isOpen;
@@ -49,8 +52,14 @@ export class CPSmallDatePickerComponent implements AfterViewInit, OnInit, OnChan
       this.options,
       {
         onChange: function(dates) {
-          self.isActive = dates.length === 2 ? true : false;
-          self.isOpen = dates.length === 2 ? false : true;
+          if (dates.length === 2) {
+            self.isActive = true;
+            self.isOpen = false;
+            self.rangeChange.emit(dates);
+            return;
+          }
+          self.isActive = false;
+          self.isOpen = true;
         }
       }
     );

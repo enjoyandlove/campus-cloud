@@ -1,11 +1,11 @@
 export const DATE_FILTER = [
   {
     'label': 'Upcoming Event',
-    'action': 'upcoming'
+    'action': true
   },
   {
     'label': 'Past Event',
-    'action': 'past'
+    'action': false
   }
 ];
 

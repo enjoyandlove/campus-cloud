@@ -17,6 +17,12 @@ import { EventsService } from './events.service';
 import { EventsRoutingModule } from './events.routing.module';
 
 import {
+  ListPastComponent,
+  ListUpcomingComponent,
+  ListActionBoxComponent
+} from './list/components';
+
+import {
   EventsExcelModalComponent,
   EventsImportTopBarComponent,
   EventsImportActionDropdownComponent
@@ -26,7 +32,7 @@ import {
   declarations: [ EventsListComponent, EventsCreateComponent, EventsAttendanceComponent,
   EventsDeleteComponent, EventsInfoComponent, EventsEditComponent, EventsExcelModalComponent,
   EventsFacebookComponent, EventsExcelComponent, EventsImportActionDropdownComponent,
-  EventsImportTopBarComponent ],
+  EventsImportTopBarComponent, ListActionBoxComponent, ListPastComponent, ListUpcomingComponent ],
 
   imports: [ CommonModule, SharedModule, EventsRoutingModule, RouterModule, ReactiveFormsModule ],
 

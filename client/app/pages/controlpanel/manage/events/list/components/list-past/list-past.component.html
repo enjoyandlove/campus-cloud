@@ -1,0 +1,56 @@
+<ul class="col-xs-12 cp-form">
+  <div class="events">
+    <li class="cp-form__header col-xs-12">
+      <span class="col-xs-2" i18n>Name</span>
+      <span class="col-xs-2" i18n>Host</span>
+      <span class="col-xs-2" i18n>Date</span>
+      <span class="col-xs-1" i18n>Response</span>
+      <span class="col-xs-1" i18n>Attendance</span>
+      <span class="col-xs-3" i18n>Rating</span>
+      <span class="col-xs-1"></span>
+    </li>
+
+    <li class="cp-form__item col-xs-12" *ngFor="let event of events">
+
+      <span class="col-xs-12 col-md-2 text-truncate events__thumbnail">
+        <img
+          class="img-rounded"
+          [src]="event.poster_thumb_url ?
+                 event.poster_thumb_url :
+                 event.store_logo_url">
+        <strong><a [routerLink]="[event.id]">{{ event.title }}</a></strong>
+        <br>
+        {{ event.description }}
+      </span>
+        <span class="col-xs-12 col-md-2 text-truncate">
+        {{ event.store_name }}
+      </span>
+        <span class="col-xs-12 col-md-2 text-truncate">
+        {{ event.start | cpDatePipe:dateFormat }}
+      </span>
+        <span class="col-xs-12 col-md-1 text-truncate">
+        {{ event.avg_rating_percent + '%'}}
+      </span>
+        <span class="col-xs-12 col-md-1 text-truncate">
+        {{ event.attends }}
+      </span>
+
+      <span class="col-xs-12 col-md-3 text-truncate">
+        <!--<span *ngIf="event.rating_scale_maximum > -1">
+          <cp-star
+            [data]="star"
+            *ngFor="let star of buildStars(event)">
+          </cp-star>
+        </span>-->
+      </span>
+
+      <span
+        (click)="onDelete(event)"
+        data-toggle="modal" data-target="#deleteModal"
+        class="col-xs-12 col-md-1 hover text-truncate delete-event">
+        &times;
+      </span>
+
+    </li>
+  </div>
+</ul>

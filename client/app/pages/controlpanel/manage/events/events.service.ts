@@ -15,9 +15,9 @@ export class EventsService extends BaseService {
     Object.setPrototypeOf(this, EventsService.prototype);
   }
 
-  getEvents() {
+  getEvents(search?: URLSearchParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT}`;
-    return super.get(url).map(res => res.json());
+    return super.get(url, { search }).map(res => res.json());
   }
 
   getEventById(id: number) {
