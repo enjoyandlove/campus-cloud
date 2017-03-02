@@ -24,7 +24,9 @@ export class EventsImportActionDropdownComponent implements OnInit {
   isOpen = false;
   id1 = 'id1';
   id2 = 'id2';
+  eventManagers;
   state = actionState;
+  eventAttendanceFeedback;
 
   constructor() { }
 
@@ -65,5 +67,27 @@ export class EventsImportActionDropdownComponent implements OnInit {
     this.isOpen = false;
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.eventAttendanceFeedback = [
+      {
+        'label': 'Enabled',
+        'event': 1
+      },
+      {
+        'label': 'Disabled',
+        'event': 2
+      }
+    ];
+
+    this.eventManagers = [
+      {
+        'label': 'Dummy',
+        'event': 16776
+      },
+      {
+        'label': 'Hello',
+        'event': 16776
+      }
+    ];
+  }
 }

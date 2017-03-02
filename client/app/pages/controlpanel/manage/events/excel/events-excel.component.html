@@ -67,24 +67,19 @@
                   <div class="row">
                     <div class="col-xs-4 no-left-padding">
                       <label i18n>Attd Feedback</label>
-                      <select
-                        class="form-control"
-                        formControlName="event_attendance_feedback">
-                        <option
-                          value=1
-                          [selected]="event.controls['event_attendance_feedback'].value == 1"
-                          i18n>Enabled</option>
-                        <option
-                          value=2
-                          [selected]="event.controls['event_attendance_feedback'].value == 2"
-                          i18n>Disabled</option>
-                      </select>
+                      <cp-dropdown
+                        [items]="eventAttendanceFeedback"
+                        (selected)="updateEventManager($event)"
+                        [selectedItem]="event.controls['event_attendance_feedback'].value">
+                      </cp-dropdown>
                     </div>
                     <div class="col-xs-4">
                       <label i18n>Manager</label>
-                      <select class="form-control">
-                        <option value="" i18n>Manager</option>
-                      </select>
+                      <cp-dropdown
+                        [items]="eventManagers"
+                        (selected)="updateEventManager($event)"
+                        [selectedItem]="event.controls['event_manager'].value">
+                      </cp-dropdown>
                     </div>
                     <div class="col-xs-4">
                       <label i18n>Attd Manager</label>

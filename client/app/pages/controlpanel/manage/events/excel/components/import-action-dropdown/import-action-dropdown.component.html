@@ -18,12 +18,10 @@
             <div class="row">
               <div class="col-xs-6">
                 <label i18n>Attendance Feedback</label>
-                <select
-                  class="form-control"
-                  (change)="updateAttendanceFeedback($event.target.value)">
-                  <option value=1 i18n>Enabled</option>
-                  <option value=2 i18n>Disabled</option>
-                </select>
+                <cp-dropdown
+                  [items]="eventAttendanceFeedback"
+                  (selected)="updateAttendanceFeedback($event)">
+                </cp-dropdown>
               </div>
             </div>
           </div>
@@ -32,7 +30,10 @@
             <div class="row">
               <div class="col-xs-6">
                 <label i18n>Event Manager</label>
-                manager
+                <cp-dropdown
+                  [items]="eventManagers"
+                  (selected)="updateEventManager($event)">
+                </cp-dropdown>
               </div>
             </div>
           </div>

@@ -51,5 +51,7 @@ export class CPButtonDropdownComponent implements OnInit {
     this.router.navigate([url]);
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    // console.log(this);
+  }
 }

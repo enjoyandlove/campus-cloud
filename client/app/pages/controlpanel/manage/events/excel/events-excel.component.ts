@@ -19,11 +19,13 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
   events;
   stores;
   mockDropdown;
+  eventManagers;
   isChecked = [];
   loading = false;
   form: FormGroup;
   isFormReady = false;
   buttonDropdownOptions;
+  eventAttendanceFeedback;
 
   constructor(
     private fb: FormBuilder,
@@ -120,11 +122,15 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
       'end': [CPDate.toEpoch(event.end_date), Validators.required],
       'start': [CPDate.toEpoch(event.start_date), Validators.required],
       // these controls are only required when event attendance is true
-      'event_manager': [null],
       'attendance_manager': [null],
-      'event_attendance_feedback': [1],
+      'event_manager': [this.eventManagers[0]],
       'event_attendance': [true, Validators.required],
+      'event_attendance_feedback': [this.eventAttendanceFeedback[1]],
     });
+  }
+
+  updateEventManager(manager) {
+    console.log(manager);
   }
 
   onBulkDelete() {
@@ -216,5 +222,27 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     this.store.dispatch({ type: EVENTS_MODAL_RESET });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.eventAttendanceFeedback = [
+      {
+        'label': 'Enabled',
+        'event': 1
+      },
+      {
+        'label': 'Disabled',
+        'event': 2
+      }
+    ];
+
+    this.eventManagers = [
+      {
+        'label': 'Dummy',
+        'event': 16776
+      },
+      {
+        'label': 'Hello',
+        'event': 16776
+      }
+    ];
+  }
 }

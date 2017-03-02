@@ -70,8 +70,8 @@ export class EventsExcelModalComponent implements OnInit {
     this.error = '';
 
     if (!validation.length) {
-      let isDev = true;
-      const url = isDev ? 'http://localhost:8000/events/excel' : '/events/excel';
+      const ENV = process.env.ENV;
+      const url = ENV === 'production' ? '/events/excel' : 'http://localhost:8000/events/excel';
       this
       .fileService
       .uploadFile(file, url)
