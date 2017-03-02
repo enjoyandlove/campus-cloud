@@ -2,7 +2,6 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { FORMAT } from '../../../../../../../shared/pipes';
 
-
 @Component({
   selector: 'cp-list-past',
   templateUrl: './list-past.component.html',
@@ -16,8 +15,8 @@ export class ListPastComponent implements OnInit {
 
   constructor() { }
 
-  onDelete() {
-    console.log('deleting');
+  onDelete(event) {
+    this.deleteEvent.emit(event);
   }
 
   ngOnInit() {

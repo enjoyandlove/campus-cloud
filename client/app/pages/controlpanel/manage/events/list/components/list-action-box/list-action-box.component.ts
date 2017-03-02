@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { CPDate } from '../../../../../../../shared/utils/date';
 import { BUTTON_DROPDOWN, DATE_FILTER } from './events-filters';
@@ -10,25 +11,26 @@ import {
 } from '../../../../../../../shared/components/cp-button-dropdown';
 
 interface IState {
-  search_str: string;
-  upcoming: boolean;
-  start: number;
   end: number;
+  start: number;
   store_id: number;
+  upcoming: boolean;
+  search_str: string;
   attendance_only: number;
 }
 
 const threeYearsFromNow = new Date(new Date().setFullYear(new Date().getFullYear() + 3));
 
 const state = {
+  upcoming: true,       // true -> upcoming false -> past
   search_str: null,
-  upcoming: true, // true -> upcoming false -> past
-  start: CPDate.toEpoch(new Date()),
-  end: CPDate.toEpoch(threeYearsFromNow),
-  store_id: null, // all stores
+  store_id: null,       // all stores
   attendance_only: 1,
+  start: CPDate.toEpoch(new Date()),
+  end: CPDate.toEpoch(threeYearsFromNow)
 };
 
+declare var $: any;
 
 @Component({
   selector: 'cp-list-action-box',
@@ -37,7 +39,6 @@ const state = {
 })
 export class ListActionBoxComponent extends BaseComponent implements OnInit {
   @Output() listAction: EventEmitter<IState> = new EventEmitter();
-  @Output() isReady: EventEmitter<boolean> = new EventEmitter();
 
   hosts;
   loading;
@@ -48,6 +49,7 @@ export class ListActionBoxComponent extends BaseComponent implements OnInit {
   buttonDropdownOptions;
 
   constructor(
+    private router: Router,
     private storeService: StoreService
   ) {
     super();
@@ -76,7 +78,6 @@ export class ListActionBoxComponent extends BaseComponent implements OnInit {
       .fetchData(stores$)
       .then(res => {
         this.hosts = res;
-        this.isReady.emit(true);
         this.listAction.emit(this.state);
       })
       .catch(err => console.error(err));
@@ -93,7 +94,7 @@ export class ListActionBoxComponent extends BaseComponent implements OnInit {
       return;
     }
     this.state = Object.assign({}, this.state,
-        { start: 0, end: CPDate.toEpoch(new Date()) });
+      { start: 0, end: CPDate.toEpoch(new Date()) });
     this.dateFilterOpts = Object.assign({},
       this.dateFilterOpts, { minDate: null, maxDate: new Date() }
     );
@@ -134,13 +135,11 @@ export class ListActionBoxComponent extends BaseComponent implements OnInit {
   onButtonDropdown(event) {
     switch (event) {
       case 'facebook':
-        console.log('doing facebook');
-        // this.router.navigate(['/manage/events/import/facebook']);
+        this.router.navigate(['/manage/events/import/facebook']);
         break;
       case 'excel':
-        console.log('doing excel');
         // TODO Avoid this...
-        // $('#excelModal').modal();
+        $('#excelModal').modal();
         break;
     }
   }

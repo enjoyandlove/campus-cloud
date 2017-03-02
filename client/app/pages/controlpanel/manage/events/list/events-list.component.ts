@@ -54,6 +54,10 @@ export class EventsListComponent extends BaseComponent implements OnInit, OnDest
     this.fetch(this.service.getEvents(search));
   }
 
+  onDeleteEvent(event) {
+    this.deleteEvent = event;
+  }
+
   shouldBeFilled(rating: number, index: number) {
     return rating > index ? true : false;
   }

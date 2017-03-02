@@ -14,8 +14,8 @@ export class ListUpcomingComponent implements OnInit {
 
   constructor() { }
 
-  onDelete() {
-    console.log('deleting');
+  onDelete(event) {
+    this.deleteEvent.emit(event);
   }
 
   ngOnInit() { }
