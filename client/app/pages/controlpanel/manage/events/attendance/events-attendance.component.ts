@@ -7,6 +7,7 @@ import {
   HEADER_UPDATE
 } from '../../../../../reducers/header.reducer';
 import { EventsService } from '../events.service';
+import { CPDate } from '../../../../../shared/utils/date';
 import { BaseComponent } from '../../../../../base/base.component';
 
 
@@ -17,6 +18,7 @@ import { BaseComponent } from '../../../../../base/base.component';
 })
 export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   event;
+  isUpcoming;
   loading = true;
   eventId: number;
 
@@ -27,17 +29,21 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   ) {
     super();
     this.eventId = this.route.snapshot.params['eventId'];
+    super.isLoading().subscribe(res => this.loading = res);
 
     this.fetch();
   }
 
-  private fetch() {
-    super.isLoading().subscribe(res => this.loading = res);
+  private isUpcomingEvent(startDate) {
+    return startDate > CPDate.toEpoch(new Date());
+  }
 
+  private fetch() {
     super
       .fetchData(this.service.getEventById(this.eventId))
       .then(res => {
         this.event = res;
+        this.isUpcoming = this.isUpcomingEvent(this.event.start);
         this.buildHeader(res);
         console.log(res);
       })

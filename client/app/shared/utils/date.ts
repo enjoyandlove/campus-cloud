@@ -6,7 +6,12 @@ const toEpoch = function toEpoch(date) {
   return Math.round(d.getTime() / 1000);
 };
 
+const fromEpoch = function fromEpoch(epoch) {
+  return moment(epoch).toDate();
+};
+
 export const CPDate = {
   toEpoch,
+  fromEpoch,
 };
 

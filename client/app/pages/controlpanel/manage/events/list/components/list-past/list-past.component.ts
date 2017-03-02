@@ -19,7 +19,5 @@ export class ListPastComponent implements OnInit {
     this.deleteEvent.emit(event);
   }
 
-  ngOnInit() {
-    console.log(this.events);
-  }
+  ngOnInit() { }
 }

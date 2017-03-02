@@ -23,6 +23,11 @@ import {
 } from './list/components';
 
 import {
+  AttendancePastComponent,
+  AttendanceUpcomingComponent
+} from './attendance/components';
+
+import {
   EventsExcelModalComponent,
   EventsImportTopBarComponent,
   EventsImportActionDropdownComponent
@@ -32,7 +37,8 @@ import {
   declarations: [ EventsListComponent, EventsCreateComponent, EventsAttendanceComponent,
   EventsDeleteComponent, EventsInfoComponent, EventsEditComponent, EventsExcelModalComponent,
   EventsFacebookComponent, EventsExcelComponent, EventsImportActionDropdownComponent,
-  EventsImportTopBarComponent, ListActionBoxComponent, ListPastComponent, ListUpcomingComponent ],
+  EventsImportTopBarComponent, ListActionBoxComponent, ListPastComponent, ListUpcomingComponent,
+  AttendancePastComponent, AttendanceUpcomingComponent ],
 
   imports: [ CommonModule, SharedModule, EventsRoutingModule, RouterModule, ReactiveFormsModule ],
 
