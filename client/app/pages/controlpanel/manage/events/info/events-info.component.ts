@@ -6,6 +6,7 @@ import {
   IHeader,
   HEADER_UPDATE
 } from '../../../../../reducers/header.reducer';
+import { EventDate } from '../utils';
 import { EventsService } from '../events.service';
 import { FORMAT } from '../../../../../shared/pipes/date.pipe';
 import { BaseComponent } from '../../../../../base/base.component';
@@ -21,6 +22,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   mapCenter;
   loading = true;
   eventId: number;
+  isUpcomingEvent = EventDate.isUpcomingEvent;
 
   constructor(
     private store: Store<IHeader>,
