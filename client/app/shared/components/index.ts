@@ -1,5 +1,5 @@
-export * from './cp-star';
 export * from './cp-maps';
+export * from './cp-stars';
 export * from './cp-alert';
 export * from './cp-modal';
 export * from './cp-avatar';

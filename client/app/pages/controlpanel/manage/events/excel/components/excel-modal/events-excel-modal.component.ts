@@ -1,15 +1,9 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
 
 import { EventsService } from '../../../events.service';
 import { FileUploadService } from '../../../../../../../shared/services';
-
-import {
-  IHeader,
-  HEADER_UPDATE
-} from '../../../../../../../reducers/header.reducer';
 
 declare var $: any;
 
@@ -25,12 +19,9 @@ export class EventsExcelModalComponent implements OnInit {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private store: Store<IHeader>,
     private service: EventsService,
     private fileService: FileUploadService,
   ) {
-    this.buildHeader();
-
     this.form = this.fb.group({
       'link': ['', Validators.required]
     });
@@ -91,17 +82,6 @@ export class EventsExcelModalComponent implements OnInit {
   onNavigate() {
     this.doReset();
     this.router.navigate(['/manage/events/import/excel']);
-  }
-
-  private buildHeader() {
-    this.store.dispatch({
-      type: HEADER_UPDATE,
-      payload: {
-        'heading': 'Import Events from Excel',
-        'subheading': '',
-        'children': []
-      }
-    });
   }
 
   doReset() {
