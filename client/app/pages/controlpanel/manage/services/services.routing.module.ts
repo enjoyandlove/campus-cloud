@@ -5,10 +5,20 @@ import { RouterModule, Routes } from '@angular/router';
  * CRUD
  */
 import { ServicesListComponent } from './list';
+import { ServicesAttendanceComponent } from './attendance';
 
 
 const appRoutes: Routes = [
+  { path: 'import', redirectTo: '', pathMatch: 'full' },
+
   { path: '', component: ServicesListComponent },
+
+  // { path: 'create', component: EventsCreateComponent },
+  { path: ':serviceId', component: ServicesAttendanceComponent },
+  // { path: ':eventId/edit', component: EventsEditComponent },
+  // { path: ':eventId/info', component: EventsInfoComponent },
+
+  // { path: 'import/excel', component: EventsExcelComponent },
 ];
 @NgModule({
   imports: [

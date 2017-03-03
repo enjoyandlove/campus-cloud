@@ -1,0 +1,40 @@
+@import '~styles/core/colors';
+@import '~styles/components/card';
+@import '~styles/components/table';
+@import '~styles/components/button';
+
+
+.delete-provider {
+  font-size: 2em;
+}
+
+.visits {
+  span {
+    display: block;
+    text-align: left;
+    margin-bottom: 14px;
+    color: $color-med-grey;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    strong {
+      float: right;
+      color: $color-black;
+    }
+  }
+}
+
+.header,
+.actions {
+  @include card-margin();
+}
+
+.header {
+  &__digit {
+    @include font-bold();
+
+    font-size: 2.4em;
+  }
+}

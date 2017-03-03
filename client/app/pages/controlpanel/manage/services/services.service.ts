@@ -5,6 +5,7 @@ import { Http, URLSearchParams } from '@angular/http';
 // import { API } from '../../../../config/api';
 import { BaseService } from '../../../../base/base.service';
 
+const mockServices = require('./mock.json');
 
 @Injectable()
 export class ServicesService extends BaseService {
@@ -22,11 +23,22 @@ export class ServicesService extends BaseService {
     if (search) { console.log(search); }
 
     const promise = new Promise(resolve => {
-      const services = require('./mock.json');
-      resolve(services);
+      resolve(mockServices);
     });
 
     return Observable.fromPromise(promise).map(res => res);
+  }
+
+  getServiceById(serviceId) {
+    const promise = new Promise(resolve => {
+      resolve(mockServices.filter(service => {
+        if (service.id === +serviceId) {
+          return service;
+        }
+      }));
+    });
+
+    return Observable.fromPromise(promise).map(res => res[0]);
   }
 
   setModalServices(services: any[]): void {
