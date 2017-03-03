@@ -28,4 +28,12 @@ export class ServicesService extends BaseService {
 
     return Observable.fromPromise(promise).map(res => res);
   }
+
+  setModalServices(services: any[]): void {
+    console.log(services);
+    // this.store.dispatch({
+    //   type: EVENTS_MODAL_SET,
+    //   payload: services
+    // });
+  }
 }

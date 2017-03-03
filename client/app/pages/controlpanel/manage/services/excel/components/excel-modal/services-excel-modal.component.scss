@@ -1,0 +1,14 @@
+@import '~styles/components/modal';
+@import '~styles/components/button';
+
+
+button i {
+  font-size: 18px;
+  margin-top: 2px;
+  vertical-align: bottom;
+}
+
+label.error {
+  margin-right: 10px;
+  display: inline-block;
+}
