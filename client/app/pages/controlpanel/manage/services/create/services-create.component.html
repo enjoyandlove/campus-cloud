@@ -1,0 +1,184 @@
+<div class="row margin-bottom">
+  <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+    <div class="col-xs-12 col-sm-6">
+      <div class="cp-card">
+        <div class="row">
+          <div class="col-xs-12">
+            <em i18n>Service Photo</em>
+            <div class="row">
+              <div class="col-xs-3">
+                <div class="placeholder"></div>
+              </div>
+              <div class="col-xs-9">
+                <strong>Upload your photo</strong>
+                <p>
+                  <small i18n>.png, .gif, .jpg with maximum file size of 5MB</small>
+                </p>
+                <button type="button" class="cpbtn cpbtn--default" i18n>Upload Photo</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <em i18n>Service Details</em>
+            <div class="form-group">
+              <label i18n>Service Name</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="title"
+                placeholder="Add a short, clear name"
+                [class.error]="formError && form.controls['title'].hasError('required')">
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12 col-sm-6">
+                <label i18n>Select Category</label>
+                <select
+                  class="form-control"
+                  formControlName="store_id"
+                  [class.error]="formError && form.controls['store_id'].hasError('required')">
+                  <option value="" i18n>ABC Category</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12 col-sm-6">
+                <label i18n>Phone Number</label>
+                <input type="number" class="form-control">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12 col-sm-6">
+                <label i18n>Email</label>
+                <input type="email" class="form-control">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12 col-sm-6">
+                <label i18n>Website</label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label i18n>Description (optional)</label>
+              <textarea
+                formControlName="description"
+                placeholder="Tell people more about the event">
+              </textarea>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12">
+                <label i18n>Location (optional)</label>
+                <div class="row">
+                  <div class="col-xs-6 col-sm-4">
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Building"
+                        formControlName="location">
+                    </div>
+                  </div>
+
+                  <div class="col-xs-6 col-sm-4">
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Room"
+                        formControlName="room_data">
+                    </div>
+                  </div>
+
+                  <div class="col-xs-6 col-sm-4">
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Address"
+                        formControlName="address">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12 maps">
+                <cp-maps></cp-maps>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-6">
+      <div class="cp-card">
+        <div class="row">
+          <div class="col-xs-12">
+            <em i18n>Service Attendance</em>
+            <span class="pull-right">
+              <cp-switch
+                [id]="attendance"
+                (toggle)="attendance = !attendance">
+              </cp-switch>
+            </span>
+          </div>
+        </div>
+
+        <div *ngIf="attendance">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="form-group">
+                <label i18n>Default Question</label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cp-card margin-top">
+        <div class="row">
+          <div class="col-xs-12">
+            <em i18n>Admins</em>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="form-footer">
+  <div class="container">
+    <div class="col-xs-12">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="text-right">
+            <label class="error" *ngIf="formError" i18n>
+                <span>&#x26A0;</span> Please fill out the marked fields
+            </label>
+            <a [routerLink]="['/manage/services']"
+              class="cpbtn cpbtn--tall cpbtn--default-alt" i18n>
+              Cancel
+            </a>
+            <button
+              type="submit"
+              class="cpbtn cpbtn--tall cpbtn--primary" i18n>
+              Create Service
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

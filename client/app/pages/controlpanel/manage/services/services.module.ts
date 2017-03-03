@@ -6,6 +6,7 @@ import { SharedModule } from '../../../../shared/shared.module';
 
 import { ServicesListComponent } from './list';
 import { ServicesDeleteComponent } from './delete';
+import { ServicesCreateComponent } from './create';
 import { ServicesAttendanceComponent } from './attendance';
 
 import { ServicesService } from './services.service';
@@ -26,7 +27,8 @@ import {
 
 @NgModule({
   declarations: [ ServicesListComponent, ServicesListActionBoxComponent, ServicesDeleteComponent,
-  ServicesExcelModalComponent, ServicesAttendanceComponent, DeleteProviderComponent ],
+  ServicesExcelModalComponent, ServicesAttendanceComponent,
+  DeleteProviderComponent, ServicesCreateComponent ],
 
   imports: [ CommonModule, SharedModule, ServicesRoutingModule, RouterModule, ReactiveFormsModule ],
 

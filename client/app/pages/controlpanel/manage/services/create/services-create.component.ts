@@ -1,20 +1,25 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+
+import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
 @Component({
-  selector: 'cp-events-create',
-  templateUrl: './events-create.component.html',
-  styleUrls: ['./events-create.component.scss']
+  selector: 'cp-services-create',
+  templateUrl: './services-create.component.html',
+  styleUrls: ['./services-create.component.scss']
 })
-export class EventsCreateComponent implements OnInit {
+export class ServicesCreateComponent implements OnInit {
   form: FormGroup;
   datePickerOpts;
   formError = false;
   attendance = false;
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private store: Store<IHeader>
   ) {
+    this.buildHeader();
     this.form = this.fb.group({
       'title': ['', Validators.required],
       'store_id': ['', Validators.required],
@@ -26,18 +31,18 @@ export class EventsCreateComponent implements OnInit {
       'description': ['', Validators.required],
       'attend_verification_methods': ['']
     });
+  }
 
-    this.datePickerOpts = {
-      utc: true,
-      altInput: true,
-      enableTime: true,
-      altFormat: 'F j, Y h:i K',
-      onClose: function(selectedDates, dateStr, instance) {
-        console.log(selectedDates);
-        console.log(dateStr);
-        console.log(instance);
+  buildHeader() {
+    this.store.dispatch({
+      type: HEADER_UPDATE,
+      payload: {
+        'heading': 'Create Service',
+        'subheading': null,
+        'em': null,
+        'children': []
       }
-    };
+    });
   }
 
   onSubmit() {
@@ -49,5 +54,7 @@ export class EventsCreateComponent implements OnInit {
     }
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+
+  }
 }

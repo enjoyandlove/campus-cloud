@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
  * CRUD
  */
 import { ServicesListComponent } from './list';
+import { ServicesCreateComponent } from './create';
 import { ServicesAttendanceComponent } from './attendance';
 
 
@@ -13,7 +14,7 @@ const appRoutes: Routes = [
 
   { path: '', component: ServicesListComponent },
 
-  // { path: 'create', component: EventsCreateComponent },
+  { path: 'create', component: ServicesCreateComponent },
   { path: ':serviceId', component: ServicesAttendanceComponent },
   // { path: ':eventId/edit', component: EventsEditComponent },
   // { path: ':eventId/info', component: EventsInfoComponent },
