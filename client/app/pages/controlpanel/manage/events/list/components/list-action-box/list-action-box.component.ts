@@ -139,7 +139,7 @@ export class ListActionBoxComponent extends BaseComponent implements OnInit {
         break;
       case 'excel':
         // TODO Avoid this...
-        $('#excelModal').modal();
+        $('#excelEventsModal').modal();
         break;
     }
   }

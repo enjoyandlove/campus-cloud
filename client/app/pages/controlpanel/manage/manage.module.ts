@@ -3,12 +3,11 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../../shared/shared.module';
 
 import { ManageComponent }  from './manage.component';
-import { ManageServiceComponent } from './services';
 
 import { ManageRoutingModule } from './manage.routing.module';
 
 @NgModule({
-  declarations: [ ManageComponent, ManageServiceComponent ],
+  declarations: [ ManageComponent ],
 
   imports: [ CommonModule, SharedModule, ManageRoutingModule ],
 

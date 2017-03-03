@@ -87,7 +87,7 @@ export class EventsExcelModalComponent implements OnInit {
   doReset() {
     this.error = '';
     this.uploaded = false;
-    $('#excelModal').modal('hide');
+    $('#excelEventsModal').modal('hide');
   }
 
   ngOnInit() {

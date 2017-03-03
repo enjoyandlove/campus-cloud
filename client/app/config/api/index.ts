@@ -16,6 +16,7 @@ const API_ENDPOINTS = {
   EVENT: 'event/',
   SESSION: 'session/',
   P_RESET: 'ns_admin/',
+  SERVICES: 'services/',
   PRIVILEGE: 'privilege/',
 };
 

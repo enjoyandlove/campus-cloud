@@ -71,23 +71,5 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     });
   }
 
-  shouldBeFilled(rating: number, index: number) {
-    return rating > index ? true : false;
-  }
-
-  buildStars(event) {
-    const stars = [];
-    const MAX_RATING = event.rating_scale_maximum;
-    const AVG_RATING = event.avg_rating_percent;
-    const rating = AVG_RATING / MAX_RATING;
-
-    for (let i = 0; i < MAX_RATING; i++) {
-      stars.push({
-        'filled': this.shouldBeFilled(rating, i)
-      });
-    }
-    return stars;
-  }
-
   ngOnInit() { }
 }

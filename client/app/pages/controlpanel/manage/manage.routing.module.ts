@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '../../../config/guards';
 
 import { ManageComponent } from './manage.component';
-import { ManageServiceComponent } from './services';
 
 
 const appRoutes: Routes = [
@@ -16,7 +15,7 @@ const appRoutes: Routes = [
     canActivate: [ AuthGuard ],
     children: [
       { path: 'events', loadChildren: './events/events.module#EventsModule' },
-      { path: 'services', component: ManageServiceComponent  },
+      { path: 'services', loadChildren: './services/services.module#ServicesModule'  },
     ]
   }
 ];

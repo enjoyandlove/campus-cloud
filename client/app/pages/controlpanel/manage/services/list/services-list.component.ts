@@ -2,27 +2,27 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
-import { EventsService } from '../events.service';
+import { ServicesService } from '../services.service';
 import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 
 @Component({
-  selector: 'cp-events-list',
-  templateUrl: './events-list.component.html',
-  styleUrls: ['./events-list.component.scss']
+  selector: 'cp-services-list',
+  templateUrl: './services-list.component.html',
+  styleUrls: ['./services-list.component.scss']
 })
-export class EventsListComponent extends BaseComponent implements OnInit, OnDestroy {
-  events;
+export class ServicesListComponent extends BaseComponent implements OnInit, OnDestroy {
   loading;
-  isUpcoming;
-  deleteEvent = '';
+  services;
+  deleteService = '';
 
   constructor(
     private store: Store<IHeader>,
-    private service: EventsService
+    private service: ServicesService
   ) {
     super();
     this.buildHeader();
+    this.fetch(this.service.getServices());
     super.isLoading().subscribe(res => this.loading = res);
   }
 
@@ -30,7 +30,7 @@ export class EventsListComponent extends BaseComponent implements OnInit, OnDest
     super
       .fetchData(stream$)
       .then(res => {
-        this.events = res;
+        this.services = res;
       })
       .catch(err => console.error(err));
   }
@@ -45,17 +45,13 @@ export class EventsListComponent extends BaseComponent implements OnInit, OnDest
   doFilter(state) {
     let search = new URLSearchParams();
 
-    search.append('start', state.start);
-    search.append('end', state.end);
-    search.append('store_id', state.store_id);
     search.append('attendance_only', state.attendance_only);
 
-    this.isUpcoming = state.upcoming;
-    this.fetch(this.service.getEvents(search));
+    this.fetch(this.service.getServices(search));
   }
 
-  onDeleteEvent(event) {
-    this.deleteEvent = event;
+  onDelete(service) {
+    this.deleteService = service;
   }
 
   ngOnDestroy() {
