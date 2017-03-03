@@ -10,5 +10,7 @@ export class AttendancePastComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    console.log(this.event);
+  }
 }

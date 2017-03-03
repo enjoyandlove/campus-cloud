@@ -45,7 +45,6 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
         this.event = res;
         this.isUpcoming = this.isUpcomingEvent(this.event.start);
         this.buildHeader(res);
-        console.log(res);
       })
       .catch(err => console.error(err));
   }
