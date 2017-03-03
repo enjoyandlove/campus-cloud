@@ -18,6 +18,7 @@ import { STAR_SIZE } from '../../../../../shared/components/cp-stars';
 export class ServicesAttendanceComponent extends BaseComponent implements OnInit {
   loading;
   service;
+  deleteProvider;
   serviceId: number;
   detailStarSize = STAR_SIZE.LARGE;
   listStarSize = STAR_SIZE.DEFAULT;
@@ -34,8 +35,8 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
     this.fetch();
   }
 
-  onDelete(service) {
-    console.log(service);
+  onDelete(provider) {
+    this.deleteProvider = provider;
   }
 
   private fetch() {

@@ -19,10 +19,14 @@ import {
   ServicesExcelModalComponent
 } from './excel/components';
 
+import {
+  DeleteProviderComponent
+} from './attendance/components';
+
 
 @NgModule({
   declarations: [ ServicesListComponent, ServicesListActionBoxComponent, ServicesDeleteComponent,
-  ServicesExcelModalComponent, ServicesAttendanceComponent ],
+  ServicesExcelModalComponent, ServicesAttendanceComponent, DeleteProviderComponent ],
 
   imports: [ CommonModule, SharedModule, ServicesRoutingModule, RouterModule, ReactiveFormsModule ],
 
