@@ -1,7 +1,10 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 
+import { ServicesService } from '../services.service';
+import { BaseComponent } from '../../../../../base/base.component';
 import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
 @Component({
@@ -9,30 +12,52 @@ import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
   templateUrl: './services-edit.component.html',
   styleUrls: ['./services-edit.component.scss']
 })
-export class ServicesEditComponent implements OnInit {
+export class ServicesEditComponent extends BaseComponent implements OnInit {
+  center;
+  loading;
+  service;
   form: FormGroup;
   formError = false;
+  serviceId: number;
   attendance = false;
 
   constructor(
     private fb: FormBuilder,
-    private store: Store<IHeader>
+    private store: Store<IHeader>,
+    private route: ActivatedRoute,
+    private serviceService: ServicesService
   ) {
-    this.buildForm();
+    super();
+    super.isLoading().subscribe(res => this.loading = res);
+    this.serviceId = this.route.snapshot.params['serviceId'];
+    this.fetch();
     this.buildHeader();
+  }
+
+  private fetch() {
+    const stream$ = this.serviceService.getServiceById(this.serviceId);
+    super
+      .fetchData(stream$)
+      .then(res => {
+        this.service = res;
+        this.center = { lat: res.latitude, lng: res.longitude };
+
+        this.buildForm();
+      })
+      .catch(err => console.error(err));
   }
 
   buildForm() {
     this.form = this.fb.group({
-      'title': ['', Validators.required],
-      'store_id': ['', Validators.required],
-      'location': ['', Validators.required],
-      'room_data': ['', Validators.required],
-      'address': ['', Validators.required],
-      'start': ['', Validators.required],
-      'end': ['', Validators.required],
-      'description': ['', Validators.required],
-      'attend_verification_methods': ['']
+      'name': [this.service.name, Validators.required],
+      'category': [this.service.category, Validators.required],
+      'contactphone': [this.service.contactphone, Validators.required],
+      'email': [this.service.email, Validators.required],
+      'website': [this.service.website, Validators.required],
+      'description': [this.service.description],
+      'location': [this.service.location],
+      'room_data': [this.service.room_data],
+      'address': [this.service.address]
     });
   }
 

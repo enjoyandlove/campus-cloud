@@ -26,14 +26,13 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
     private serviceService: ServicesService
   ) {
     super();
+    super.isLoading().subscribe(res => this.loading = res);
     this.serviceId = this.route.snapshot.params['serviceId'];
 
     this.fetch();
   }
 
   private fetch() {
-    super.isLoading().subscribe(res => this.loading = res);
-
     super
       .fetchData(this.serviceService.getServiceById(this.serviceId))
       .then(res => {
