@@ -4,7 +4,9 @@
   <div *ngSwitchCase="false">
     <cp-attendance-past
       [event]="event"
-      *ngIf="!isUpcoming">
+      *ngIf="!isUpcoming"
+      [attendees]="attendees"
+      (listAction)="doSearch($event)">
     </cp-attendance-past>
 
     <cp-attendance-upcoming

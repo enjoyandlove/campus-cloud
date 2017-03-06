@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
 import {
@@ -18,9 +19,11 @@ import { BaseComponent } from '../../../../../base/base.component';
 })
 export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   event;
+  attendees;
   isUpcoming;
   loading = true;
   eventId: number;
+  search: URLSearchParams = new URLSearchParams();
 
   constructor(
     private store: Store<IHeader>,
@@ -39,17 +42,29 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    super
-      .fetchData(this.service.getEventById(this.eventId))
-      .then(res => {
+    const event$ = this
+      .service
+      .getEventById(this.eventId)
+      .switchMap(
+      res => {
         this.event = res;
-        this.isUpcoming = this.isUpcomingEvent(this.event.start);
         this.buildHeader(res);
-      })
+        this.isUpcoming = this.isUpcomingEvent(this.event.start);
+        this.search.append('event_id', (this.eventId).toString());
+        return this.service.getEventAttendanceByEventId(this.search);
+      }
+      );
+    super
+      .fetchData(event$)
+      .then(res => this.attendees = res)
       .catch(err => console.error(err));
   }
 
-
+  doSearch(terms) {
+    this.search.append('search_text', terms.search_text);
+    this.fetch();
+    // console.log(terms);
+  }
 
   private buildHeader(res) {
     this.store.dispatch({
@@ -71,5 +86,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+
+  }
 }

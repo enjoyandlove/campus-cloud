@@ -30,6 +30,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     super();
     super.isLoading().subscribe(res => this.loading = res);
     this.serviceId = this.route.snapshot.params['serviceId'];
+
     this.fetch();
     this.buildHeader();
   }
@@ -81,10 +82,6 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       this.formError = true;
       return;
     }
-  }
-
-  onDelete() {
-    console.log('hello');
   }
 
   ngOnInit() { }

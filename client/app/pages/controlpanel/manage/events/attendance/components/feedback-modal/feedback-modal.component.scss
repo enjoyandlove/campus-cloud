@@ -1,0 +1,13 @@
+@import '~styles/core/typography';
+@import '~styles/components/modal';
+@import '~styles/components/button';
+
+.cpmodal {
+  p {
+    &.name {
+      @include font-bold();
+
+      margin: 15px auto 10px auto;
+    }
+  }
+}

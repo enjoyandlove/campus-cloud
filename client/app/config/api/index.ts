@@ -18,6 +18,7 @@ const API_ENDPOINTS = {
   P_RESET: 'ns_admin/',
   SERVICES: 'services/',
   PRIVILEGE: 'privilege/',
+  EVENT_ASSESMENT: 'event_assessment/',
 };
 
 const API_AUTH_HEADER = {

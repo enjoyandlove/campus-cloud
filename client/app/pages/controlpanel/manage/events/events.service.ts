@@ -35,6 +35,12 @@ export class EventsService extends BaseService {
     return super.get(url, { search }).map(res => res.json());
   }
 
+  getEventAttendanceByEventId(search?: URLSearchParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT_ASSESMENT}`;
+
+    return super.get(url, { search }).map(res => res.json());
+  }
+
   setModalEvents(events: any[]): void {
     this.store.dispatch({
       type: EVENTS_MODAL_SET,

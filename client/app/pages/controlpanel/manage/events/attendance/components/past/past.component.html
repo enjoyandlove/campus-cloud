@@ -35,12 +35,24 @@
 
 <div class="row">
   <div class="col-xs-12">
+    <cp-past-events-action-box
+      (querySearch)="doSearch($event)">
+    </cp-past-events-action-box>
+  </div>
+</div>
+
+<!--<div class="row">
+  <div class="col-xs-12">
     <div class="cp-card actions">
       <div class="row">
         <div class="col-xs-12 col-sm-4">
-          <cp-searchbox placeholder="Search Attendee..."></cp-searchbox>
+          <cp-searchbox
+            (query)="onSearch($event)"
+            placeholder="Search Attendee...">
+          </cp-searchbox>
         </div>
-        <div class="col-xs-12 col-xs-offset-0 col-sm-4 col-sm-offset-4 text-right">
+        <div
+          class="col-xs-12 col-xs-offset-0 col-sm-4 col-sm-offset-4 text-right">
           <button class="cpbtn cpbtn--secondary" i18n>
             Web Check-in
           </button>
@@ -51,7 +63,7 @@
       </div>
     </div>
   </div>
-</div>
+</div>-->
 
 <div class="row">
   <div class="col-xs-12">
@@ -67,7 +79,7 @@
           <div class="col-xs-2">
             <span i18n>Check-in Method</span>
           </div>
-          <div class="col-xs-3">
+          <div class="col-xs-4">
             <span i18n>User Feedback</span>
           </div>
           <div class="col-xs-3">
@@ -76,24 +88,58 @@
         </div>
       </div>
 
-      <div class="cp-table__item">
+      <div class="cp-table__item" *ngIf="!attendees.length">
+        <p class="text-center no-margin" i18n>No attendees yet</p>
+      </div>
+
+      <div class="cp-table__item"
+        *ngFor="let attendee of attendees">
         <div class="row">
-          <div class="col-xs-2">
-            <span><strong>John Smith</strong> <br> john@smith.com</span>
+          <div class="col-xs-2 text-truncate">
+            <strong>
+                {{ attendee.firstname }}
+                {{ attendee.lastname }}
+              </strong>
+            <br>
+            <small class="text-muted">{{ attendee.email }}</small>
           </div>
           <div class="col-xs-1">
-            <span>&#10003;</span>
+            <i
+              class="material-icons"
+              *ngIf="attendee.rsvp === 1">
+              check
+            </i>
+            <i
+              class="material-icons"
+              *ngIf="attendee.rsvp === 0">
+              close
+            </i>
           </div>
           <div class="col-xs-2">
-            <span>&#10003;</span>
+            <i
+              class="material-icons"
+              *ngIf="attendee.check_in_method === 3">
+              smartphone
+            </i>
+            <i
+              class="material-icons"
+              *ngIf="attendee.check_in_method === 1">
+              computer
+            </i>
           </div>
-          <div class="col-xs-3">
-            <span></span>
+          <div class="col-xs-4 text-truncate">
+            <span
+              class="link hover"
+              data-toggle="modal"
+              (click)="onViewFeedback(attendee)"
+              data-target="#eventFeedbackModal">
+              {{ attendee.feedback_text }}
+            </span>
           </div>
           <div class="col-xs-3">
             <cp-stars
               [size]="listStarSize"
-              [avgRate]="event.avg_rating_percent"
+              [avgRate]="attendee.feedback_rating"
               [maxRate]="event.rating_scale_maximum">
             </cp-stars>
           </div>
@@ -102,3 +148,10 @@
     </div>
   </div>
 </div>
+
+<cp-modal modalId="eventFeedbackModal">
+  <cp-feedback-modal
+    (resetModal)="onResetModal()"
+    [attendee]="attendeeFeedback">
+  </cp-feedback-modal>
+</cp-modal>

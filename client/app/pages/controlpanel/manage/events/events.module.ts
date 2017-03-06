@@ -24,7 +24,9 @@ import {
 
 import {
   AttendancePastComponent,
-  AttendanceUpcomingComponent
+  AttendanceUpcomingComponent,
+  EventsFeedbackModalComponent,
+  EventsPastActionBoxComponent
 } from './attendance/components';
 
 import {
@@ -38,7 +40,8 @@ import {
   EventsDeleteComponent, EventsInfoComponent, EventsEditComponent, EventsExcelModalComponent,
   EventsFacebookComponent, EventsExcelComponent, EventsImportActionDropdownComponent,
   EventsImportTopBarComponent, ListActionBoxComponent, ListPastComponent, ListUpcomingComponent,
-  AttendancePastComponent, AttendanceUpcomingComponent ],
+  AttendancePastComponent, AttendanceUpcomingComponent,
+  EventsFeedbackModalComponent, EventsPastActionBoxComponent ],
 
   imports: [ CommonModule, SharedModule, EventsRoutingModule, RouterModule, ReactiveFormsModule ],
 
