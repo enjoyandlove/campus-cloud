@@ -8,48 +8,42 @@ import {
 } from '../../../../../reducers/header.reducer';
 import { ServicesService } from '../services.service';
 import { BaseComponent } from '../../../../../base/base.component';
-import { STAR_SIZE } from '../../../../../shared/components/cp-stars';
 
 @Component({
-  selector: 'cp-services-attendance',
-  templateUrl: './services-attendance.component.html',
-  styleUrls: ['./services-attendance.component.scss']
+  selector: 'cp-services-info',
+  templateUrl: './services-info.component.html',
+  styleUrls: ['./services-info.component.scss']
 })
-export class ServicesAttendanceComponent extends BaseComponent implements OnInit {
-  loading;
+export class ServicesInfoComponent extends BaseComponent implements OnInit {
   service;
-  deleteProvider;
+  mapCenter;
+  loading = true;
   serviceId: number;
-  detailStarSize = STAR_SIZE.LARGE;
-  listStarSize = STAR_SIZE.DEFAULT;
 
   constructor(
-    private route: ActivatedRoute,
     private store: Store<IHeader>,
+    private route: ActivatedRoute,
     private serviceService: ServicesService
   ) {
     super();
     this.serviceId = this.route.snapshot.params['serviceId'];
-    super.isLoading().subscribe(res => this.loading = res);
 
     this.fetch();
   }
 
-  onDelete(provider) {
-    this.deleteProvider = provider;
-  }
-
   private fetch() {
+    super.isLoading().subscribe(res => this.loading = res);
+
     super
       .fetchData(this.serviceService.getServiceById(this.serviceId))
       .then(res => {
         this.service = res;
         this.buildHeader(res);
+        console.log(this.service);
+        this.mapCenter = { lat: res.latitude, lng: res.longitude };
       })
       .catch(err => console.error(err));
   }
-
-
 
   private buildHeader(res) {
     this.store.dispatch({
@@ -77,4 +71,3 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
 
   ngOnInit() { }
 }
-

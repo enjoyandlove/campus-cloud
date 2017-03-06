@@ -1,0 +1,53 @@
+@import '~styles/components/card';
+@import '~styles/components/button';
+@import '~styles/core/typography';
+
+.service {
+  &__banner {
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+
+  &__map,
+  &__banner {
+    height: 200px;
+  }
+
+  &__meta {
+    margin-top: 25px;
+    padding-top: 25px;
+    margin-bottom: 25px;
+    padding-bottom: 25px;
+    border-top: 1px solid $border-color;
+    border-bottom: 1px solid $border-color;
+
+    i {
+      margin-right: 5px;
+      vertical-align: -7px;
+    }
+    p {
+      margin-bottom: 15px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &__admins {
+    margin-top: 25px;
+    padding-top: 25px;
+    border-top: 1px solid $border-color;
+  }
+
+  &__title {
+    @include font-bold();
+
+    font-size: 1.6em;
+    margin-bottom: 3px;
+  }
+}

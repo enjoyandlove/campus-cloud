@@ -14,7 +14,5 @@ export class DeleteProviderComponent implements OnInit {
     console.log('deleting');
   }
 
-  ngOnInit() {
-    console.log(this);
-  }
+  ngOnInit() { }
 }

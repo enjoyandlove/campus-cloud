@@ -6,6 +6,7 @@ import { SharedModule } from '../../../../shared/shared.module';
 
 import { ServicesEditComponent } from './edit';
 import { ServicesListComponent } from './list';
+import { ServicesInfoComponent } from './info';
 import { ServicesDeleteComponent } from './delete';
 import { ServicesCreateComponent } from './create';
 import { ServicesAttendanceComponent } from './attendance';
@@ -34,7 +35,7 @@ import {
   declarations: [ ServicesListComponent, ServicesListActionBoxComponent, ServicesDeleteComponent,
   ServicesExcelModalComponent, ServicesAttendanceComponent,
   DeleteProviderComponent, ServicesCreateComponent, ServicesDeleteAdminModalComponent,
-  ServicesEditComponent ],
+  ServicesEditComponent, ServicesInfoComponent ],
 
   imports: [ CommonModule, SharedModule, ServicesRoutingModule, RouterModule, ReactiveFormsModule ],
 

@@ -6,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
  */
 import { ServicesListComponent } from './list';
 import { ServicesEditComponent } from './edit';
+import { ServicesInfoComponent } from './info';
 import { ServicesCreateComponent } from './create';
 import { ServicesAttendanceComponent } from './attendance';
 
@@ -16,9 +17,9 @@ const appRoutes: Routes = [
   { path: '', component: ServicesListComponent },
 
   { path: 'create', component: ServicesCreateComponent },
+  { path: ':serviceId/info', component: ServicesInfoComponent },
   { path: ':serviceId/edit', component: ServicesEditComponent },
   { path: ':serviceId', component: ServicesAttendanceComponent },
-  // { path: ':eventId/info', component: EventsInfoComponent },
 
   // { path: 'import/excel', component: EventsExcelComponent },
 ];
