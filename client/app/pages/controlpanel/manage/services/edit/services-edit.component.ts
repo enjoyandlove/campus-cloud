@@ -5,11 +5,11 @@ import { Store } from '@ngrx/store';
 import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
 @Component({
-  selector: 'cp-services-create',
-  templateUrl: './services-create.component.html',
-  styleUrls: ['./services-create.component.scss']
+  selector: 'cp-services-edit',
+  templateUrl: './services-edit.component.html',
+  styleUrls: ['./services-edit.component.scss']
 })
-export class ServicesCreateComponent implements OnInit {
+export class ServicesEditComponent implements OnInit {
   form: FormGroup;
   formError = false;
   attendance = false;
@@ -18,7 +18,11 @@ export class ServicesCreateComponent implements OnInit {
     private fb: FormBuilder,
     private store: Store<IHeader>
   ) {
+    this.buildForm();
     this.buildHeader();
+  }
+
+  buildForm() {
     this.form = this.fb.group({
       'title': ['', Validators.required],
       'store_id': ['', Validators.required],
@@ -36,7 +40,7 @@ export class ServicesCreateComponent implements OnInit {
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': 'Create Service',
+        'heading': 'Edit Service',
         'subheading': null,
         'em': null,
         'children': []
@@ -58,7 +62,5 @@ export class ServicesCreateComponent implements OnInit {
     console.log('hello');
   }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() { }
 }

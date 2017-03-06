@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../../shared/shared.module';
 
+import { ServicesEditComponent } from './edit';
 import { ServicesListComponent } from './list';
 import { ServicesDeleteComponent } from './delete';
 import { ServicesCreateComponent } from './create';
@@ -21,6 +22,10 @@ import {
 } from './excel/components';
 
 import {
+  ServicesDeleteAdminModalComponent,
+} from './create/components';
+
+import {
   DeleteProviderComponent
 } from './attendance/components';
 
@@ -28,7 +33,8 @@ import {
 @NgModule({
   declarations: [ ServicesListComponent, ServicesListActionBoxComponent, ServicesDeleteComponent,
   ServicesExcelModalComponent, ServicesAttendanceComponent,
-  DeleteProviderComponent, ServicesCreateComponent ],
+  DeleteProviderComponent, ServicesCreateComponent, ServicesDeleteAdminModalComponent,
+  ServicesEditComponent ],
 
   imports: [ CommonModule, SharedModule, ServicesRoutingModule, RouterModule, ReactiveFormsModule ],
 
