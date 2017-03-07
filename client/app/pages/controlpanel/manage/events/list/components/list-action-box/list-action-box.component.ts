@@ -25,7 +25,7 @@ const state = {
   upcoming: true,       // true -> upcoming false -> past
   search_str: null,
   store_id: null,       // all stores
-  attendance_only: 1,
+  attendance_only: 0,
   start: CPDate.toEpoch(new Date()),
   end: CPDate.toEpoch(threeYearsFromNow)
 };

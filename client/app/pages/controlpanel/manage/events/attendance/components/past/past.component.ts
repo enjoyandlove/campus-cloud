@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
+import { generateExcelFile } from './excel';
 import { EventsService } from '../../../events.service';
 import { BaseComponent } from '../../../../../../../base/base.component';
 import { STAR_SIZE } from '../../../../../../../shared/components/cp-stars';
@@ -62,6 +63,10 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
       }
     );
     this.fetch();
+  }
+
+  onCreateExcel() {
+    generateExcelFile(this.attendees);
   }
 
   onViewFeedback(attendee): void {

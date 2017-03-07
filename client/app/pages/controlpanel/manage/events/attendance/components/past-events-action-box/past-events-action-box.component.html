@@ -11,8 +11,10 @@
       <button class="cpbtn cpbtn--secondary" i18n>
         Web Check-in
       </button>
-      <button class="cpbtn cpbtn--primary" i18n>
-        Download Excel File
+      <button
+        (click)="downloadExcel()"
+        class="cpbtn cpbtn--primary" i18n>
+        Download CSV File
       </button>
     </div>
   </div>

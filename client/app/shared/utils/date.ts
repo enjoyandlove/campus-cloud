@@ -7,7 +7,7 @@ const toEpoch = function toEpoch(date) {
 };
 
 const fromEpoch = function fromEpoch(epoch) {
-  return moment(epoch).toDate();
+  return new Date(epoch * 1000);
 };
 
 export const CPDate = {

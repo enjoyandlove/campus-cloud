@@ -43,16 +43,16 @@
         {{ event.avg_rating_percent + '%'}}
       </span>
         <span class="col-xs-12 col-md-1 text-truncate">
-        {{ event.checkins }}
+        {{ event.attends }}
       </span>
 
       <span class="col-xs-12 col-md-3 text-truncate">
-        <!--<span *ngIf="event.rating_scale_maximum > -1">
-          <cp-star
-            [data]="star"
-            *ngFor="let star of buildStars(event)">
-          </cp-star>
-        </span>-->
+        <span *ngIf="event.rating_scale_maximum > -1">
+          <cp-stars
+            [maxRate]="event.rating_scale_maximum"
+            [avgRate]="event.avg_rating_percent">
+          </cp-stars>
+        </span>
       </span>
 
       <span

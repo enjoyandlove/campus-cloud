@@ -75,5 +75,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+
+  }
 }
