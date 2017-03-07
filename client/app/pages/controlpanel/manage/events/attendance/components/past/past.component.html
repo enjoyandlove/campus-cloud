@@ -50,19 +50,83 @@
         <div class="cp-table__header">
           <div class="row">
             <div class="col-xs-2">
-              <span i18n>Attendant</span>
+              <span
+                class="hover"
+                (click)="doSort('name')" i18n>
+                Attendant
+                <span *ngIf="state.sort_field === 'name'">
+                  <i
+                    class="material-icons"
+                    *ngIf="state.sort_direction === 'asc'">
+                    arrow_drop_up
+                  </i>
+                  <i
+                    class="material-icons"
+                    *ngIf="state.sort_direction === 'desc'">
+                    arrow_drop_down
+                  </i>
+                </span>
+              </span>
             </div>
             <div class="col-xs-1">
-              <span i18n>RSVP</span>
+              <span
+                class="hover"
+                (click)="doSort('rsvp')" i18n>
+                RSVP
+                <span *ngIf="state.sort_field === 'rsvp'">
+                  <i
+                    class="material-icons"
+                    *ngIf="state.sort_direction === 'asc'">
+                    arrow_drop_up
+                  </i>
+                  <i
+                    class="material-icons"
+                    *ngIf="state.sort_direction === 'desc'">
+                    arrow_drop_down
+                  </i>
+                </span>
+              </span>
             </div>
             <div class="col-xs-2">
-              <span i18n>Check-in Method</span>
+              <span
+                class="hover"
+                (click)="doSort('check_in_method')" i18n>
+                Check-in Method
+                <span *ngIf="state.sort_field === 'check_in_method'">
+                  <i
+                    class="material-icons"
+                    *ngIf="state.sort_direction === 'asc'">
+                    arrow_drop_up
+                  </i>
+                  <i
+                    class="material-icons"
+                    *ngIf="state.sort_direction === 'desc'">
+                    arrow_drop_down
+                  </i>
+                </span>
+              </span>
             </div>
             <div class="col-xs-4">
               <span i18n>User Feedback</span>
             </div>
             <div class="col-xs-3">
-              <span i18n>Rating</span>
+              <span
+                class="hover"
+                (click)="doSort('feedback_rating')" i18n>
+                Rating
+                <span *ngIf="state.sort_field === 'feedback_rating'">
+                  <i
+                    class="material-icons"
+                    *ngIf="state.sort_direction === 'asc'">
+                    arrow_drop_up
+                  </i>
+                  <i
+                    class="material-icons"
+                    *ngIf="state.sort_direction === 'desc'">
+                    arrow_drop_down
+                  </i>
+                </span>
+              </span>
             </div>
           </div>
         </div>

@@ -31,7 +31,7 @@ export class CPSearchBoxComponent implements AfterViewInit, OnInit {
 
     this
       .stream$
-      .debounceTime(300)
+      .debounceTime(501)
       .map((res: any) => res.target.value)
       .distinctUntilChanged()
       .subscribe(query => this.query.emit(query));

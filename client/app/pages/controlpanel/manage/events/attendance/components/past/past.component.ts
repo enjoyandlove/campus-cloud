@@ -39,7 +39,6 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    // console.log(this.state);
     let search = new URLSearchParams();
     search.append('event_id', this.event.id);
     search.append('sort_field', this.state.sort_field);
@@ -50,11 +49,19 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
 
     super
       .fetchData(stream$)
-      .then(res => {
-        this.attendees = res;
-        // console.log(res);
-      })
+      .then(res => this.attendees = res )
       .catch(err => console.error(err));
+  }
+
+  doSort(sort_field) {
+    this.state = Object.assign(
+      {},
+      this.state,
+      { sort_field,
+        sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc'
+      }
+    );
+    this.fetch();
   }
 
   onViewFeedback(attendee): void {
@@ -67,11 +74,15 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
   }
 
   doSearch(search_text): void {
+    search_text = search_text === '' ? null : search_text;
     this.state = Object.assign({}, this.state, { search_text });
     this.fetch();
   }
 
   onResetModal(): void {
+    /**
+     * in order to clean the stars component
+     */
     this.attendeeFeedback = null;
   }
 
