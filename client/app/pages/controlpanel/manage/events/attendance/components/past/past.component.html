@@ -41,117 +41,97 @@
   </div>
 </div>
 
-<!--<div class="row">
-  <div class="col-xs-12">
-    <div class="cp-card actions">
-      <div class="row">
-        <div class="col-xs-12 col-sm-4">
-          <cp-searchbox
-            (query)="onSearch($event)"
-            placeholder="Search Attendee...">
-          </cp-searchbox>
-        </div>
-        <div
-          class="col-xs-12 col-xs-offset-0 col-sm-4 col-sm-offset-4 text-right">
-          <button class="cpbtn cpbtn--secondary" i18n>
-            Web Check-in
-          </button>
-          <button class="cpbtn cpbtn--primary" i18n>
-            Download Excel File
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>-->
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
-<div class="row">
-  <div class="col-xs-12">
-    <div class="cp-table">
-      <div class="cp-table__header">
-        <div class="row">
-          <div class="col-xs-2">
-            <span i18n>Attendant</span>
-          </div>
-          <div class="col-xs-1">
-            <span i18n>RSVP</span>
-          </div>
-          <div class="col-xs-2">
-            <span i18n>Check-in Method</span>
-          </div>
-          <div class="col-xs-4">
-            <span i18n>User Feedback</span>
-          </div>
-          <div class="col-xs-3">
-            <span i18n>Rating</span>
+  <div class="row" *ngSwitchCase="false">
+    <div class="col-xs-12">
+      <div class="cp-table">
+        <div class="cp-table__header">
+          <div class="row">
+            <div class="col-xs-2">
+              <span i18n>Attendant</span>
+            </div>
+            <div class="col-xs-1">
+              <span i18n>RSVP</span>
+            </div>
+            <div class="col-xs-2">
+              <span i18n>Check-in Method</span>
+            </div>
+            <div class="col-xs-4">
+              <span i18n>User Feedback</span>
+            </div>
+            <div class="col-xs-3">
+              <span i18n>Rating</span>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="cp-table__item" *ngIf="!attendees.length">
-        <p class="text-center no-margin" i18n>No attendees yet</p>
-      </div>
+        <div class="cp-table__item" *ngIf="!attendees.length">
+          <p class="text-center no-margin" i18n>No attendees yet</p>
+        </div>
 
-      <div class="cp-table__item"
-        *ngFor="let attendee of attendees">
-        <div class="row">
-          <div class="col-xs-2 text-truncate">
-            <strong>
-                {{ attendee.firstname }}
-                {{ attendee.lastname }}
-              </strong>
-            <br>
-            <small class="text-muted">{{ attendee.email }}</small>
-          </div>
-          <div class="col-xs-1">
-            <i
-              class="material-icons"
-              *ngIf="attendee.rsvp === 1">
-              check
-            </i>
-            <i
-              class="material-icons"
-              *ngIf="attendee.rsvp === 0">
-              close
-            </i>
-          </div>
-          <div class="col-xs-2">
-            <i
-              class="material-icons"
-              *ngIf="attendee.check_in_method === 3">
-              smartphone
-            </i>
-            <i
-              class="material-icons"
-              *ngIf="attendee.check_in_method === 1">
-              computer
-            </i>
-          </div>
-          <div class="col-xs-4 text-truncate">
-            <span
-              class="link hover"
-              data-toggle="modal"
-              (click)="onViewFeedback(attendee)"
-              data-target="#eventFeedbackModal">
-              {{ attendee.feedback_text }}
-            </span>
-          </div>
-          <div class="col-xs-3">
-            <cp-stars
-              [size]="listStarSize"
-              [avgRate]="attendee.feedback_rating"
-              [maxRate]="event.rating_scale_maximum">
-            </cp-stars>
+        <div class="cp-table__item"
+          *ngFor="let attendee of attendees">
+          <div class="row">
+            <div class="col-xs-2 text-truncate">
+              <strong>
+                  {{ attendee.firstname }}
+                  {{ attendee.lastname }}
+                </strong>
+              <br>
+              <small class="text-muted">{{ attendee.email }}</small>
+            </div>
+            <div class="col-xs-1">
+              <i
+                class="material-icons"
+                *ngIf="attendee.rsvp === 1">
+                check
+              </i>
+              <i
+                class="material-icons"
+                *ngIf="attendee.rsvp === 0">
+                close
+              </i>
+            </div>
+            <div class="col-xs-2">
+              <i
+                class="material-icons"
+                *ngIf="attendee.check_in_method === 3">
+                smartphone
+              </i>
+              <i
+                class="material-icons"
+                *ngIf="attendee.check_in_method === 1">
+                computer
+              </i>
+            </div>
+            <div class="col-xs-4 text-truncate">
+              <span
+                class="link hover"
+                data-toggle="modal"
+                (click)="onViewFeedback(attendee)"
+                data-target="#eventFeedbackModal">
+                {{ attendee.feedback_text }}
+              </span>
+            </div>
+            <div class="col-xs-3">
+              <cp-stars
+                [size]="listStarSize"
+                [avgRate]="attendee.feedback_rating"
+                [maxRate]="event.rating_scale_maximum">
+              </cp-stars>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <cp-modal modalId="eventFeedbackModal">
+    <cp-feedback-modal
+      (resetModal)="onResetModal()"
+      [attendee]="attendeeFeedback">
+    </cp-feedback-modal>
+  </cp-modal>
 </div>
-
-<cp-modal modalId="eventFeedbackModal">
-  <cp-feedback-modal
-    (resetModal)="onResetModal()"
-    [attendee]="attendeeFeedback">
-  </cp-feedback-modal>
-</cp-modal>

@@ -42,28 +42,14 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    const event$ = this
-      .service
-      .getEventById(this.eventId)
-      .switchMap(
-      res => {
+    super
+      .fetchData(this.service.getEventById(this.eventId))
+      .then(res => {
         this.event = res;
         this.buildHeader(res);
         this.isUpcoming = this.isUpcomingEvent(this.event.start);
-        this.search.append('event_id', (this.eventId).toString());
-        return this.service.getEventAttendanceByEventId(this.search);
-      }
-      );
-    super
-      .fetchData(event$)
-      .then(res => this.attendees = res)
+      })
       .catch(err => console.error(err));
-  }
-
-  doSearch(terms) {
-    this.search.append('search_text', terms.search_text);
-    this.fetch();
-    // console.log(terms);
   }
 
   private buildHeader(res) {

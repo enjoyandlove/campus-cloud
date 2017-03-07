@@ -1,5 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { URLSearchParams } from '@angular/http';
 
+import { EventsService } from '../../../events.service';
+import { BaseComponent } from '../../../../../../../base/base.component';
 import { STAR_SIZE } from '../../../../../../../shared/components/cp-stars';
 
 interface IState {
@@ -19,17 +22,40 @@ const state = {
   templateUrl: './past.component.html',
   styleUrls: ['./past.component.scss']
 })
-export class AttendancePastComponent implements OnInit {
+export class AttendancePastComponent extends BaseComponent implements OnInit {
   @Input() event: any;
-  @Input() attendees: any;
-  @Output() listAction: EventEmitter<IState> = new EventEmitter();
-
+  loading;
+  attendees;
   attendeeFeedback;
   state: IState = state;
   listStarSize = STAR_SIZE.DEFAULT;
   detailStarSize = STAR_SIZE.LARGE;
 
-  constructor() { }
+  constructor(
+    private eventService: EventsService
+  ) {
+    super();
+    super.isLoading().subscribe(res => this.loading = res);
+  }
+
+  private fetch() {
+    // console.log(this.state);
+    let search = new URLSearchParams();
+    search.append('event_id', this.event.id);
+    search.append('sort_field', this.state.sort_field);
+    search.append('sort_direction', this.state.sort_direction);
+    search.append('search_text', this.state.search_text);
+
+    const stream$ = this.eventService.getEventAttendanceByEventId(search);
+
+    super
+      .fetchData(stream$)
+      .then(res => {
+        this.attendees = res;
+        // console.log(res);
+      })
+      .catch(err => console.error(err));
+  }
 
   onViewFeedback(attendee): void {
     attendee = Object.assign(
@@ -40,10 +66,9 @@ export class AttendancePastComponent implements OnInit {
     this.attendeeFeedback = attendee;
   }
 
-  doSearch(search_text) {
+  doSearch(search_text): void {
     this.state = Object.assign({}, this.state, { search_text });
-
-    this.listAction.emit(this.state);
+    this.fetch();
   }
 
   onResetModal(): void {
@@ -51,6 +76,6 @@ export class AttendancePastComponent implements OnInit {
   }
 
   ngOnInit() {
-    // console.log(this.attendees);
+    this.fetch();
   }
 }
