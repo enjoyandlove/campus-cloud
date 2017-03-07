@@ -50,21 +50,27 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   }
 
   private buildHeader(res) {
+    let children;
+    if (res.attend_verification_methods.length) {
+      children = [
+        {
+          'label': 'Attendance',
+          'url': `/manage/events/${this.eventId}`
+        },
+        {
+          'label': 'Info',
+          'url': `/manage/events/${this.eventId}/info`
+        }
+      ];
+    } else {
+      children = [];
+    }
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
         'heading': res.title,
         'subheading': '',
-        'children': [
-          {
-            'label': 'Attendance',
-            'url': `/manage/events/${this.eventId}`
-          },
-          {
-            'label': 'Info',
-            'url': `/manage/events/${this.eventId}/info`
-          }
-        ]
+        'children': [ ...children ]
       }
     });
   }

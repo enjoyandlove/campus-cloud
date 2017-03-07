@@ -13,13 +13,15 @@
 
           <button
             type="button"
-            class="cpbtn cpbtn--default" i18n>
+            class="cpbtn cpbtn--default" i18n
+            *ngIf="event.attend_verification_methods.length">
             Print QR Code
           </button>
 
           <button
             type="button"
-            class="cpbtn cpbtn--primary" i18n>
+            class="cpbtn cpbtn--primary" i18n
+            *ngIf="event.attend_verification_methods.length">
             Start Web Check-in
           </button>
         </div>

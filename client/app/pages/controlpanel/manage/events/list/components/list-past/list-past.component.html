@@ -18,7 +18,18 @@
           [src]="event.poster_thumb_url ?
                  event.poster_thumb_url :
                  event.store_logo_url">
-        <strong><a [routerLink]="[event.id]">{{ event.title }}</a></strong>
+        <strong>
+            <a
+              [routerLink]="[event.id]"
+              *ngIf="event.attend_verification_methods.length">
+              {{ event.title }}
+            </a>
+            <a
+              [routerLink]="[event.id + '/info']"
+              *ngIf="!event.attend_verification_methods.length">
+              {{ event.title }}
+            </a>
+        </strong>
         <br>
         {{ event.description }}
       </span>
