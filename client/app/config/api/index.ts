@@ -14,6 +14,7 @@ const API_ENDPOINTS = {
   ME: 'admin/',
   STORE: 'store/',
   EVENT: 'event/',
+  IMAGE: 'image/',
   SESSION: 'session/',
   P_RESET: 'ns_admin/',
   SERVICES: 'services/',
