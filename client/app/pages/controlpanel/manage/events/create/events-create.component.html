@@ -6,13 +6,27 @@
           <div class="col-xs-12">
             <em i18n>Event Photo</em>
             <div class="row">
-              <div class="col-xs-3">
-                <div class="placeholder"></div>
+              <div class="col-xs-3 event-image">
+                <div
+                  class="placeholder"
+                  *ngIf="!form.controls['poster_url'].value">
+                </div>
+                <img
+                  *ngIf="form.controls['poster_url'].value"
+                  [src]="form.controls['poster_url'].value" class="img-rounded img-responsive">
               </div>
               <div class="col-xs-9">
                 <small i18n><strong>Upload your photo</strong></small>
-                <p class="text-muted" i18n>.png, .gif, .jpg with maximum file size of 5MB</p>
-                <button type="button" class="cpbtn cpbtn--dark" i18n>Upload Photo</button>
+                <p class="text-muted" i18n>.png, .jpg, .jpeg with maximum file size of 5MB</p>
+                <p *ngIf="imageError">
+                  <label class="error"><span>&#x26A0;</span> {{ imageError }}</label>
+                </p>
+
+                <cp-upload-button
+                  buttonClass="default"
+                  buttonText="Upload Photo"
+                  (fileUpload)="onFileUpload($event)">
+                </cp-upload-button>
               </div>
             </div>
           </div>

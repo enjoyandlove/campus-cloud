@@ -20,6 +20,10 @@ export class EventsService extends BaseService {
     return super.get(url, { search }).map(res => res.json());
   }
 
+  getUploadImageUrl() {
+    return `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}`;
+  }
+
   getEventById(id: number) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT}${id}`;
 
