@@ -8,8 +8,9 @@
             <div class="row">
               <div class="col-xs-3 event-image">
                 <div
-                  class="placeholder"
+                  class="placeholder text-center"
                   *ngIf="!form.controls['poster_url'].value">
+                  <i class="material-icons">image</i>
                 </div>
                 <img
                   *ngIf="form.controls['poster_url'].value"

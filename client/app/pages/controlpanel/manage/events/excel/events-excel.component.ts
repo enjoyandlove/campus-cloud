@@ -39,8 +39,8 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
       .select('EVENTS_MODAL')
       .subscribe(
         (res) => {
-          this.events = res;
-          // this.events = require('./mock.json');
+          // this.events = res;
+          this.events = require('./mock.json');
           this.fetch();
         },
         err => console.log(err)

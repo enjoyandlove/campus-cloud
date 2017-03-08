@@ -7,11 +7,16 @@
         class="checkbox pull-left"
         (toggle)="this.checkAll.emit($event)">
       </cp-checkbox>
-      <button
+      <!--<button
         type="button"
         class="cpbtn cpbtn--default-alt" i18n>
         Upload Photo
-      </button>
+      </button>-->
+      <cp-upload-button
+        buttonClass="default"
+        buttonText="Upload Photo"
+        (fileUpload)="onFileUpload($event)">
+      </cp-upload-button>
     </div>
 
     <div class="col-xs-2">

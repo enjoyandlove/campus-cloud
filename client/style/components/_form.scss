@@ -35,9 +35,9 @@ label {
     padding: 5px 15px;
     color: $color-danger;
     display: inline-block;
+    background: transparent;
     margin-top: 0 !important;
     border: 1px solid $color-danger;
-    background: lighten($color-danger, 20%);
 
     span {
       font-size: 1.1em;

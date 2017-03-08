@@ -16,11 +16,24 @@ body {
   height: 108px;
   border-radius: 4px;
   display: inline-block;
-  background-color: #D8D8D8;
+  border: 1px solid $border-color;
+  background-color: $color-white;
+
+  i {
+    font-size: 6em;
+    margin-top: 12px;
+    color: $color-black;
+  }
 
   &--small {
     width: 35px;
     height: 35px;
+
+    i {
+      margin-top: 6px;
+      font-size: 1.75em;
+      color: $color-black;
+    }
   }
 }
 
