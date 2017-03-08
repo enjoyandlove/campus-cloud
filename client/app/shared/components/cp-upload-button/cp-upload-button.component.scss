@@ -16,7 +16,7 @@
 
     label:hover,
     &:focus > label {
-      border: 1px solid $color-brand;
+      border: 1px solid $color-text;
     }
   }
 
@@ -29,7 +29,7 @@
 
     label:hover,
     &:focus > label {
-      background-color: $color-brand;
+      background: #1771b5;
     }
   }
 

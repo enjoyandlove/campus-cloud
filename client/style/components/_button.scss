@@ -16,6 +16,8 @@ a.cpbtn, {
   background-image: none;
   touch-action: manipulation;
   border: 1px solid transparent;
+  transition: border 300ms ease-in-out;
+  transition: background 300ms ease-in-out;
 
   &:disabled {
     color: $color-white;
@@ -38,12 +40,25 @@ a.cpbtn, {
 
   &--primary {
     background: $color-brand;
-    // box-shadow: 0 2px 0 0 #299AE6;
+
+    &:hover {
+      background: #1771b5;
+    }
   }
 
   &--secondary {
-    background: $color-grey;
-    // box-shadow: 0 2px 0 0 darken($color-grey, 10%);
+    color: $color-brand;
+    background: $color-white;
+    border: 1px solid $color-brand;
+
+    &:hover {
+      color: #1771b5;
+      border: 1px solid #1771b5;
+    }
+
+    &:disabled {
+      border: 1px solid $color-med-grey;
+    }
   }
 
   &--link {
@@ -53,19 +68,32 @@ a.cpbtn, {
     border-color: transparent;
   }
 
-  &--default {
-    color: $color-brand;
-    background: $color-white;
-    border: 1px solid $color-brand;
-  }
-
-  &--default-alt {
-    color: $color-black;
+  &--cancel {
+    color: $color-text;
     background: $color-white;
     border: 1px solid $border-color;
+
+    &:hover {
+      border: 1px solid $color-text;
+    }
+
+    &:disabled {
+      color: $color-med-grey;
+      border: 1px solid $color-med-grey;
+    }
   }
+
+  // &--default-alt {
+  //   color: $color-black;
+  //   background: $color-white;
+  //   border: 1px solid $border-color;
+  // }
 
   &--danger {
     background: $color-danger;
+
+    &:hover {
+      background: #cc4e47;
+    }
   }
 }

@@ -7,13 +7,13 @@
         <div class="col-xs-12 event__actions">
           <a routerLink="/manage/events"
             type="button"
-            class="cpbtn cpbtn--default" i18n>
+            class="cpbtn cpbtn--secondary" i18n>
             Back to Events
           </a>
 
           <button
             type="button"
-            class="cpbtn cpbtn--default" i18n
+            class="cpbtn cpbtn--secondary" i18n
             *ngIf="event.attend_verification_methods.length">
             Print QR Code
           </button>
