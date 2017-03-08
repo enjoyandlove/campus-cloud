@@ -45,7 +45,7 @@
   }
 
   &__title {
-    @include font-bold();
+    @include font-semi-bold();
 
     font-size: 1.6em;
     margin-bottom: 3px;

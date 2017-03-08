@@ -1,6 +1,6 @@
 @import 'colors';
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
-@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700");
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,700");
 
 body {
   font-family: 'Open Sans', sans-serif;
@@ -53,13 +53,13 @@ a {
 }
 
 @mixin font-bold() {
+  font-weight: 700;
+}
+
+@mixin font-semi-bold() {
   font-weight: 600;
 }
 
 @mixin font-normal() {
   font-weight: 400;
-}
-
-@mixin font-thin() {
-  font-weight: 300;
 }

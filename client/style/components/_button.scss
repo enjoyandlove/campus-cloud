@@ -1,7 +1,10 @@
 @import '../core/colors';
+@import '../core/typography';
 
 .cpbtn,
 a.cpbtn, {
+  @include font-semi-bold();
+
   font-size: 1em;
   cursor: pointer;
   margin-bottom: 0;

@@ -44,7 +44,7 @@
         color: $color-med-grey;
 
         &.active {
-          @include font-bold();
+          @include font-semi-bold();
 
           color: $color-white;
         }

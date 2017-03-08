@@ -16,7 +16,7 @@
   @include card-margin();
 
   &__digit {
-    @include font-bold();
+    @include font-semi-bold();
 
     font-size: 2.4em;
   }
