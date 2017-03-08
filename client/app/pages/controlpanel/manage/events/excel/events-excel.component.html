@@ -32,10 +32,19 @@
                         (toggle)="onSingleCheck($event, i)">
                       </cp-checkbox>
 
-                      <div class="event__avatar placeholder placeholder--small text-center">
-                        <i class="material-icons">image</i>
+                      <div class="event__avatar">
+                        <div
+                          *ngIf="!event.controls.event_poster.value"
+                          class="placeholder placeholder--small text-center">
+                          <i class="material-icons">image</i>
+                        </div>
+                        <img
+                          *ngIf="event.controls.event_poster.value"
+                          class="img-responsive img-rounded"
+                          [src]="event.controls.event_poster.value">
                       </div>
                     </div>
+
                     <div class="col-xs-12 col-sm-8 no-left-padding">
                       <span class="event__title">
                         <strong>{{ event.controls.title.value }}</strong>

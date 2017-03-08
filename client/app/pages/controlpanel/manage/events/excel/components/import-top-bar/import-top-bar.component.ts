@@ -1,7 +1,11 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Headers } from '@angular/http';
 
-import { StoreService } from '../../../../../../../shared/services';
+import { API } from '../../../../../../../config/api';
+import { EventsService } from '../../../events.service';
 import { BaseComponent } from '../../../../../../../base/base.component';
+import { CPImage, CPArray, appStorage } from '../../../../../../../shared/utils';
+import { StoreService, FileUploadService } from '../../../../../../../shared/services';
 
 @Component({
   selector: 'cp-import-top-bar',
@@ -16,10 +20,13 @@ export class EventsImportTopBarComponent extends BaseComponent implements OnInit
   @Output() imageChange: EventEmitter<string> = new EventEmitter();
 
   stores;
+  imageError;
   loading = true;
 
   constructor(
-    private storeService: StoreService
+    private storeService: StoreService,
+    private eventService: EventsService,
+    private fileUploadService: FileUploadService
   ) {
     super();
     this.fetch();
@@ -49,6 +56,37 @@ export class EventsImportTopBarComponent extends BaseComponent implements OnInit
       .fetchData(stores$)
       .then(res => this.stores = res)
       .catch(err => console.error(err));
+  }
+
+  onFileUpload(file) {
+    this.imageError = null;
+    const fileExtension = CPArray.last(file.name.split('.'));
+
+    if (!CPImage.isSizeOk(file.size, CPImage.MAX_IMAGE_SIZE)) {
+      this.imageError = 'File too Big';
+      return;
+    }
+
+    if (!CPImage.isValidExtension(fileExtension, CPImage.VALID_EXTENSIONS)) {
+      this.imageError = 'Invalid Extension';
+      return;
+    }
+
+    const headers = new Headers();
+    const url = this.eventService.getUploadImageUrl();
+    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
+
+    headers.append('Authorization', auth);
+
+    this
+      .fileUploadService
+      .uploadFile(file, url, headers)
+      .subscribe(
+      res => {
+        this.imageChange.emit(res.image_url);
+      },
+      err => console.error(err)
+      );
   }
 
   ngOnInit() { }

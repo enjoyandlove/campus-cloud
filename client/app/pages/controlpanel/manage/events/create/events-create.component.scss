@@ -7,11 +7,12 @@
 }
 
 .event-image {
-  height: 105px;
+  height: 108px;
 
   img {
     height: 100%;
     width: auto;
+    max-width: 108px;
   }
 }
 

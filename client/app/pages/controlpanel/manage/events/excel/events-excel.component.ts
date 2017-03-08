@@ -116,7 +116,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
       'store_id': ['', Validators.required],
       'room': [event.room, Validators.required],
       'title': [event.title, Validators.required],
-      'event_poster': ['default', Validators.required],
+      'event_poster': [null, Validators.required],
       'location': [event.location, Validators.required],
       'description': [event.description, Validators.required],
       'end': [CPDate.toEpoch(event.end_date), Validators.required],
@@ -200,8 +200,8 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     this.onBulkChange({ store_id });
   }
 
-  onImageBulkChange(image) {
-    console.log(image);
+  onImageBulkChange(event_poster) {
+    this.onBulkChange({ event_poster });
   }
 
   onSubmit() {

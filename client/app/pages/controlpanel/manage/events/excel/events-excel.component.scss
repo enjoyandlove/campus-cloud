@@ -8,6 +8,16 @@
   margin-top: 6px;
 }
 
+.event__avatar {
+  height: 35px;
+
+  img {
+    width: auto;
+    height: 100%;
+    max-width: 35px;
+  }
+}
+
 .header {
   padding: 0 8px;
 }
