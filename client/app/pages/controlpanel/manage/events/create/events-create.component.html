@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row margin-bottom">
   <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
     <div class="col-xs-12 col-sm-6">
       <div class="cp-card">
@@ -184,19 +184,26 @@
       </div>
     </div>
 
-    <div class="col-xs-12">
-      <div class="row">
+    <div class="footer">
+      <div class="container">
         <div class="col-xs-12">
-          <hr>
-          <div class="text-right">
-            <label class="error" *ngIf="formError" i18n>
-                <span>&#x26A0;</span> Please fill out the marked fields
-            </label>
-            <button
-              type="submit"
-              class="cpbtn cpbtn--primary" i18n>
-              Create Event
-            </button>
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="text-right">
+                <label class="error" *ngIf="formError" i18n>
+                    <span>&#x26A0;</span> Please fill out the marked fields
+                </label>
+                 <a [routerLink]="['../']"
+                  class="cpbtn cpbtn--tall cpbtn--default-alt" i18n>
+                  Cancel
+                </a>
+                <button
+                  type="submit"
+                  class="cpbtn cpbtn--tall cpbtn--primary" i18n>
+                  Create Event
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

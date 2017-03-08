@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-xs-12 header">
+  <div class="col-xs-5 header">
     <p i18n>
       To import events from Facebook pages, input the link to the page's
       event list eg. https://www.facebook.com/oohlala/events
@@ -7,16 +7,16 @@
   </div>
 </div>
 
-<div class="row">
+<div class="row margin-bottom">
   <div class="col-xs-12">
-    <div class="cp-card">
-      <form [formGroup]="form">
-        <div class="form-group" formArrayName="links">
-          <div
-            class="row link-group"
-            *ngFor="let link of form.controls.links.controls; let i = index">
-            <div [formGroupName]="i">
-              <div class="row" >
+    <form [formGroup]="form">
+      <div class="form-group" formArrayName="links">
+        <div
+          class="link-group"
+          *ngFor="let link of form.controls.links.controls; let i = index">
+          <div [formGroupName]="i">
+            <div class="border-top">
+              <div class="row">
                 <div class="col-xs-12 col-md-3">
                   <label i18n>Facebook Event Link</label>
                   <input
@@ -25,62 +25,27 @@
                     formControlName="link"
                     placeholder="https://www.facebook.com/oohlala/events">
                 </div>
-                <div class="col-xs-12 col-md-2" *ngIf="!link.isOpen">
+                <div class="col-sm-6 col-md-2">
+                  <label i18n>Host</label>
+                  <select formControlName="store_id">
+                    <option value="">Host Name</option>
+                    <option value="1">John Smith</option>
+                  </select>
+                </div>
+                <div class="col-xs-12 col-md-2">
                   <label>&nbsp;</label>
                   <button
                     type="button"
-                    (click)="addLinkControl(i)"
-                    (click)="link.isOpen = true"
+                    (click)="doSinglePost(i)"
                     [disabled]="!link.controls['link'].valid"
                     class="cpbtn cpbtn--secondary text-right" i18n>
                     Add Link
                   </button>
                 </div>
-                <div *ngIf="link.isOpen">
-                  <div class="col-sm-6 col-md-2">
-                    <label i18n>Host</label>
-                    <select formControlName="store_id">
-                      <option value="">Host Name</option>
-                    </select>
-                  </div>
-                  <div class="col-xs-6 col-sm-1">
-                    <label i18n>Attendance</label>
-                    <cp-switch
-                      [id]="i + 1"
-                      class="switch"
-                      (toggle)="toggleIsAttendance(i, $event)">
-                    </cp-switch>
-                  </div>
-                  <div class="col-xs-6 col-sm-1">
-                    <label i18n>Feedback</label>
-                    <cp-switch
-                      [id]="'feed' + i + 1"
-                      class="switch"
-                      (toggle)="toogleIsFeedback(i, $event)">
-                    </cp-switch>
-                  </div>
-                  <div *ngIf="link.controls['attendance'].value">
-                    <div class="col-xs-6 col-md-2">
-                      <label i18n>Event Manager</label>
-                      <select formControlName="event_manager">
-                        <option value="">John Smith</option>
-                      </select>
-                    </div>
-                    <div class="col-xs-6 col-md-2">
-                      <label i18n>Attendance Manager</label>
-                      <input
-                        type="email"
-                        class="form-control"
-                        placeholder="email@example.com"
-                        formControlName="attendance_manager">
-                    </div>
-                  </div>
+                <div class="col-xs-2 pull-right">
                   <div
                     (click)="onDeleteControl(i)"
-                    class="delete hover"
-                    [ngClass]="[link.controls['attendance'].value
-                              ? 'col-xs-1'
-                              : 'col-xs-1 col-xs-offset-4']">
+                    class="delete hover text-right">
                     &times;
                   </div>
                 </div>
@@ -88,12 +53,35 @@
             </div>
           </div>
         </div>
-      </form>
-    </div>
+      </div>
+      <div class="footer">
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="pull-right">
+                <button
+                  i18n
+                  type="button"
+                  class="cpbtn cpbtn--tall cpbtn--default-alt submit">
+                  Cancel
+                </button>
+                <button
+                  i18n
+                  type="submit"
+                  class="cpbtn cpbtn--tall cpbtn--primary submit">
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
   </div>
 </div>
 
-<div class="row" *ngIf="form.controls.links.length > 1">
+<!--<div class="row" *ngIf="form.controls.links.length > 1">
   <div class="col-xs-12">
     <button
       i18n
@@ -103,6 +91,6 @@
       <span>&#10227;</span>Sync Facebook Events
     </button>
   </div>
-</div>
+</div>-->
 
 

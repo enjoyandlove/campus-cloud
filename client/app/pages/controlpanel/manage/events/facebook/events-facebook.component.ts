@@ -33,11 +33,7 @@ export class EventsFacebookComponent implements OnInit {
   createLinkControl() {
     return this.fb.group({
       'link': ['', Validators.required],
-      'store_id': ['', Validators.required],
-      'feedback': [false, Validators.required],
-      'attendance': [false, Validators.required],
-      'event_manager': ['', Validators.required],
-      'attendance_manager': [''],
+      'store_id': ['', Validators.required]
     });
   }
 
@@ -53,6 +49,17 @@ export class EventsFacebookComponent implements OnInit {
 
   onDeleteControl(index) {
     this.removeService(index);
+  }
+
+  doSinglePost(index) {
+    const control = <FormArray>this.form.controls['links'];
+
+    console.log(control.controls[index]);
+
+    if (this.form.valid) {
+      this.addLinkControl();
+      return;
+    }
   }
 
   private buildHeader() {

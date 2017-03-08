@@ -1,42 +1,41 @@
 @import '~styles/components/form';
 @import '~styles/components/card';
 @import '~styles/components/button';
-
+@import '~styles/core/colors';
 @import '~styles/core/typography';
 
 .header {
   p {
-    @include font-bold();
-
     margin-bottom: 30px;
   }
+}
+
+.margin-bottom {
+  // to account for the fixed footer
+  padding-bottom: 90px;
 }
 
 .form-group {
   margin-bottom: 0;
 
-  .link-group {
-    padding-bottom: 35px;
-
-    &:last-child {
-      padding-bottom: 0;
-    }
+  .border-top {
+    padding: 35px 0;
+    border-top: 1px solid $border-color;
   }
 }
 
-
-button.submit {
+.footer {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  position: fixed;
   margin-top: 25px;
+  background: $color-white;
+  border-top: 1px solid $border-color;
 
-  span {
-    margin-right: 8px;
-    display: inline-block;
+  > div {
+    padding: 15px 0;
   }
-}
-
-.switch {
-  margin-top: 6px;
-  display: inline-block;
 }
 
 .delete {
