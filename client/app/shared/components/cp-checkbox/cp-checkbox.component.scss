@@ -21,7 +21,14 @@
     height: 20px;
     border-radius: 4px;
     position: absolute;
-    background: #e6e6e6;
+    background: $color-white;
+    border: 1px solid $color-med-grey;
+    transition: border 300ms ease-in-out;
+    transition: background 200ms ease-in;
+
+    &:hover {
+      border: 1px solid $color-text;
+    }
   }
 }
 
@@ -34,6 +41,7 @@
 /* Checked state */
 .control input:checked ~ .control__indicator {
   background: $color-brand;
+  border: 1px solid $color-brand;
 }
 
 /* Hover state whilst checked */
@@ -46,7 +54,7 @@
 .control input:disabled ~ .control__indicator {
   pointer-events: none;
   opacity: .6;
-  // background: #e6e6e6;
+  // background: $color-white;
 }
 
 /* Check mark */
