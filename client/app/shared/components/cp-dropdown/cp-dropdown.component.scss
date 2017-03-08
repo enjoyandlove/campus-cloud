@@ -13,8 +13,8 @@
   vertical-align: middle;
 
   &.open {
-    button span {
-      transform: rotate(-90deg);
+    button {
+      border: 1px solid $color-brand;
     }
   }
 
@@ -22,11 +22,18 @@
     min-width: 100%;
     text-align: left;
     position: relative;
+    transition: border 300ms ease-in-out;
 
-    span {
+    &:hover {
+      color: $color-text;
+      border: 1px solid $color-text;
+    }
+
+    i {
       top: 7px;
       right: 12px;
-      font-size: 15px;
+      line-height: 1;
+      font-size: 18px;
       position: absolute;
       transition: transform 200ms ease-in-out;
     }
@@ -35,17 +42,21 @@
   .dropdown-menu {
     top: 110%;
     padding: 0;
-    max-height: 200px;
+    max-height: 197px;
     overflow-y: scroll;
+    background-color: $color-white;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.12);
 
     li {
       padding: 10px;
       text-align: left;
-      transition: background 300ms ease-in-out;
+      color: $color-secondary-text;
+      transition: background 100ms ease-in;
 
       &:hover {
         cursor: pointer;
-        background: #eaeaea;
+        color: $color-white;
+        background: $color-brand;
       }
     }
   }
