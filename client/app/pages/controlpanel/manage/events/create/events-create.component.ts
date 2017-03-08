@@ -13,6 +13,7 @@ import { CPArray, CPImage, appStorage } from '../../../../../shared/utils';
   styleUrls: ['./events-create.component.scss']
 })
 export class EventsCreateComponent implements OnInit {
+  mapCenter;
   imageError;
   datePickerOpts;
   form: FormGroup;
@@ -79,6 +80,11 @@ export class EventsCreateComponent implements OnInit {
         },
         err => console.error(err)
       );
+  }
+
+  onPlaceChange(data) {
+    this.form.controls['address'].setValue(data.formatted_address);
+    this.mapCenter = data.geometry.location.toJSON();
   }
 
   onSubmit() {

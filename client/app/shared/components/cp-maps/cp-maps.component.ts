@@ -1,6 +1,7 @@
 import {
   Input,
   OnInit,
+  OnChanges,
   ViewChild,
   Component,
   ElementRef,
@@ -14,29 +15,43 @@ declare var google: any;
   templateUrl: './cp-maps.component.html',
   styleUrls: ['./cp-maps.component.scss']
 })
-export class CPMapsComponent implements OnInit, AfterViewInit {
+export class CPMapsComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() center: any;
   @ViewChild('map') map: ElementRef;
+  _map;
+  _center;
 
   constructor() { }
 
   ngAfterViewInit() {
+    this.drawMap();
+  }
+
+  drawMap() {
     const el = this.map.nativeElement;
     const defaultCenter = { lat: -34.397, lng: 150.644 };
 
-    const center = this.center ? this.center : defaultCenter;
-    const map = new google.maps.Map(el, {
-      center,
-      zoom: 8
+    this._center = this.center ? this.center : defaultCenter;
+
+    this._map = new google.maps.Map(el, {
+      zoom: 8,
+      draggable: false,
+      center: this._center,
+      disableDefaultUI: true
     });
 
     new google.maps.Marker({
-      position: center,
-      map,
+      position: this._center,
+      map: this._map,
     });
   }
 
+  ngOnChanges() {
+    if (this.center) {
+      this.drawMap();
+    }
+  }
+
   ngOnInit() {
-    // console.log(this);
   }
 }
