@@ -52,16 +52,21 @@ textarea {
   line-height: 1;
   border-radius: 4px;
   display: inline-block;
-  border: 1px solid $border-color;
+  border: 1px solid $color-med-grey;
   transition: border 300ms ease-in-out;
 
+  &:hover {
+    border: 1px solid $color-text;
+  }
+
   &:active {
-    border: 1px solid $color-black;
+    border: 1px solid $color-brand;
   }
 
   &.error {
+    color: $color-danger;
     border: 1px solid $color-danger;
-    background: lighten($color-danger, 20%);
+    background-color: rgba(255, 96, 89, 0.25);
 
     &::-webkit-input-placeholder {
       color: $color-danger;
