@@ -50,7 +50,7 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
 
     super
       .fetchData(stream$)
-      .then(res => this.attendees = res )
+      .then(res => this.attendees = res)
       .catch(err => console.error(err));
   }
 
@@ -58,7 +58,8 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
     this.state = Object.assign(
       {},
       this.state,
-      { sort_field,
+      {
+        sort_field,
         sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc'
       }
     );

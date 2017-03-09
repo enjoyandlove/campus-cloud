@@ -18,6 +18,7 @@
     <cp-list-upcoming
       [events]="events"
       *ngIf="isUpcoming"
+      (sortList)="onSortList($event)"
       (deleteEvent)="onDeleteEvent($event)">
     </cp-list-upcoming>
   </div>

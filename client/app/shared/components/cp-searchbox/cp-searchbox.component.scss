@@ -1,4 +1,5 @@
 @import '~styles/core/_colors';
+@import '~styles/components/form';
 
 .search {
   position: relative;
@@ -7,8 +8,8 @@
     top: 7px;
     left: 10px;
     position: absolute;
-
   }
+
   input {
     width: 100%;
     height: 36px;
@@ -20,6 +21,7 @@
     &:focus,
     &:active {
       outline: none;
+      border: 1px solid $color-text;
     }
   }
 }

@@ -6,6 +6,24 @@ import { EventsService } from '../events.service';
 import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 
+interface IState {
+  start: number;
+  end: number;
+  store_id: number;
+  attendance_only: number;
+  sort_field: string;
+  sort_direction: string;
+}
+
+const state = {
+  start: null,
+  end: null,
+  store_id: null,
+  attendance_only: 0,
+  sort_field: null,
+  sort_direction: null
+};
+
 @Component({
   selector: 'cp-events-list',
   templateUrl: './events-list.component.html',
@@ -16,6 +34,7 @@ export class EventsListComponent extends BaseComponent implements OnInit, OnDest
   loading;
   isUpcoming;
   deleteEvent = '';
+  state: IState = state;
 
   constructor(
     private store: Store<IHeader>,
@@ -42,15 +61,48 @@ export class EventsListComponent extends BaseComponent implements OnInit, OnDest
     });
   }
 
-  doFilter(state) {
+  onSortList(sort) {
+    this.state = Object.assign(
+      {},
+      this.state,
+      {
+        sort_field: sort.sort_field,
+        sort_direction: sort.sort_direction
+      }
+    );
+
+    this.buildHeaders();
+  }
+
+  doFilter(filter) {
+    this.state = Object.assign(
+      {},
+      this.state,
+      {
+        start: filter.start,
+        end: filter.end,
+        store_id: filter.store_id,
+        attendance_only: filter.attendance_only
+      }
+    );
+
+    this.isUpcoming = filter.upcoming;
+
+    this.buildHeaders();
+  }
+
+  buildHeaders() {
     let search = new URLSearchParams();
+    let store_id = this.state.store_id ? (this.state.store_id).toString() : null;
 
-    search.append('start', state.start);
-    search.append('end', state.end);
-    search.append('store_id', state.store_id);
-    search.append('attendance_only', state.attendance_only);
+    search.append('start', (this.state.start).toString());
+    search.append('end', (this.state.end).toString());
+    search.append('store_id', store_id);
+    search.append('attendance_only', (this.state.attendance_only).toString());
 
-    this.isUpcoming = state.upcoming;
+    search.append('sort_field', this.state.sort_field);
+    search.append('sort_direction', this.state.sort_direction);
+
     this.fetch(this.service.getEvents(search));
   }
 
