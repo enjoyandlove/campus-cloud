@@ -18,10 +18,11 @@
     <div class="row" *ngIf="data.children.length">
       <div class="col-xs-12">
         <ul class="header__nav">
-          <li *ngFor="let page of data.children">
+          <li
+            routerLinkActive="active"
+            *ngFor="let page of data.children"
+            [routerLinkActiveOptions]="{exact: true}">
             <a
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{exact: false}"
               [routerLink]="[page.url]">{{ page.label }}
             </a>
           </li>

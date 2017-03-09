@@ -9,23 +9,49 @@ nav {
   position: fixed;
   background: $color-black;
 
+  .avatar {
+    width: 40px;
+    height: 40px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 25px;
+    display: inline-block;
+    background: #f4f4f4;
+  }
+
   ul {
     margin: 0;
     padding: 0;
     list-style: none;
+
+    &:not(.nav__links) {
+      li {
+        &:last-child {
+          padding-right: 0;
+        }
+      }
+    }
+
+    &:not(.nav__default) {
+      li {
+        &:first-child {
+          padding-left: 0;
+          padding-right: 0;
+        }
+      }
+    }
+
+    li {
+      &:first-child {
+        padding-left: 0;
+      }
+    }
   }
 
   li {
-    padding: 25px;
-    padding-bottom: 8px;
     display: inline-block;
+    padding: 20px 25px 13px 20px;
     border-bottom: 3px solid transparent;
-
-    .avatar {
-      width: 40px;
-      height: 40px;
-      background: $color-med-grey;
-    }
 
     a,
     span {
@@ -56,18 +82,6 @@ nav {
         vertical-align: -7px;
       }
     }
-
-    &:first-child {
-      // padding-left: 0;
-    }
-
-    &:first-child {
-      padding-left: 0;
-    }
-
-    &:last-child {
-      padding-right: 0;
-    }
   }
 
   .dropdown-menu {
@@ -88,101 +102,3 @@ nav {
     }
   }
 }
-
-// nav {
-  // top: 0;
-  // width: 100%;
-  // z-index: 9999;
-  // position: fixed;
-  // background: $color-black;
-
-//   ul {
-    // margin: 0;
-    // padding: 0;
-    // list-style: none;
-//   }
-
-//   .nav__default {
-//     a,
-//     li {
-//       color: $color-med-grey;
-//     }
-
-//     li:last-child {
-//       padding-right: 0 !important;
-//     }
-
-//     .user__name {
-//       .dropdown {
-//         position: relative;
-//       }
-
-//       &--dropdown {
-//         top: 35px;
-//         border-radius: 4px;
-
-//         li {
-//           display: block;
-//           a {
-//             margin: 0;
-//             padding: 10px;
-//             border-radius: 4px;
-//           }
-//         }
-//       }
-//     }
-//   }
-//   .nav__links li {
-//     a {
-//       color: $color-med-grey;
-//     }
-
-//     &:first-child {
-//       a {
-//         padding-left: 0;
-//       }
-//     }
-//   }
-
-//   .nav__links li,
-//   .nav__default li {
-//     display: inline-block;
-//     vertical-align: middle;
-
-//     &.active {
-//       a {
-//         color: $color-white;
-//       }
-//     }
-
-//     &:last-child {
-//       padding-right: 0;
-//     }
-
-//     i {
-//         padding-right: 0;
-//         margin-left: 10px;
-//         vertical-align: -7px;
-//     }
-
-//     a,
-//     &.user__name {
-//       font-size: 1em;
-//       padding: 25px;
-//     }
-
-//     a {
-//       display: block;
-
-//       &:focus,
-//       &:hover,
-//       &:active {
-//         text-decoration: none;
-//       }
-//     }
-
-//     &:last-child {
-//       margin-right: 0;
-//     }
-//   }
-// }
