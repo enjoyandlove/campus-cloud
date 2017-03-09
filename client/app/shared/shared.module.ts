@@ -5,9 +5,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { CPMapsComponent, CPModalComponent, CPTopBarComponent, CPAvatarComponent,
   CPSpinnerComponent, CPDropdownComponent, CPCheckboxComponent,
-  CPHamburgerComponent, CPMobileMenuComponent, CPPlaceAutoCompleteComponent,
+  CPHamburgerComponent, CPPlaceAutoCompleteComponent,
   CPPageHeaderComponent, CPSearchBoxComponent, CPStarsComponent,
-  CPAlertComponent, CPAnimatedButtonComponent, CPButtonDropdownComponent,
+  CPAlertComponent, CPAnimatedButtonComponent,
   CPDatePickerComponent, CPSwitchComponent, CPSmallDatePickerComponent, CPUploadButtonComponent,
 } from './components';
 
@@ -23,14 +23,13 @@ import {
 
 @NgModule({
   declarations: [ CPTopBarComponent, CPMapsComponent,
-  CPAvatarComponent, CPMobileMenuComponent, CPModalComponent,
+  CPAvatarComponent, CPModalComponent,
   CPPlaceAutoCompleteComponent, CPUploadButtonComponent,
   CPSpinnerComponent, CPDropdownComponent,  CPCheckboxComponent,
   CPPageHeaderComponent, CPHamburgerComponent, CPSearchBoxComponent,
   CPDatePipe, CPStarsComponent, CPFilterPipe, CPAlertComponent,
-  CPAlertComponent, CPAnimatedButtonComponent,
-  CPButtonDropdownComponent, CPDatePickerComponent, CPSwitchComponent,
-  CPAnimatedButtonComponent, CPButtonDropdownComponent, CPDatePickerComponent,
+  CPAlertComponent, CPAnimatedButtonComponent, CPDatePickerComponent, CPSwitchComponent,
+  CPAnimatedButtonComponent, CPDatePickerComponent,
   CPSmallDatePickerComponent ],
 
   imports: [ CommonModule, RouterModule, ReactiveFormsModule ],
@@ -38,14 +37,13 @@ import {
   providers: [ StoreService, FileUploadService ],
 
   exports: [ CPTopBarComponent, CPMapsComponent,
-  CPAvatarComponent, CPMobileMenuComponent, CPModalComponent,
+  CPAvatarComponent, CPModalComponent,
   CPPlaceAutoCompleteComponent, CPUploadButtonComponent,
   CPSpinnerComponent, CPDropdownComponent, CPCheckboxComponent,
   CPPageHeaderComponent, CPHamburgerComponent, CPSearchBoxComponent,
   CPDatePipe, CPStarsComponent, CPFilterPipe, CPAlertComponent,
-  CPAlertComponent, CPAnimatedButtonComponent,
-  CPButtonDropdownComponent, CPDatePickerComponent, CPSwitchComponent,
-  CPAnimatedButtonComponent, CPButtonDropdownComponent, CPDatePickerComponent,
+  CPAlertComponent, CPAnimatedButtonComponent, CPDatePickerComponent, CPSwitchComponent,
+  CPAnimatedButtonComponent, CPDatePickerComponent,
   CPSmallDatePickerComponent ]
 })
 export class SharedModule { }

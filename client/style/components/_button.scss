@@ -41,6 +41,18 @@ a.cpbtn, {
     padding: 14px 16px;
   }
 
+  &--square-right {
+    border-radius: 4px 0 0 4px;
+  }
+
+  &--square-left {
+    border-radius: 0 4px 4px 0;
+  }
+
+  &--no-padding {
+    padding: 0;
+  }
+
   &--primary {
     background: $color-brand;
 

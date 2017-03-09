@@ -1,11 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
-import { BUTTON_DROPDOWN } from './services-filters';
 // import { StoreService } from '../../../../../../../shared/services';
-import {
-  BUTTON_ALIGN,
-  BUTTON_THEME
-} from '../../../../../../../shared/components/cp-button-dropdown';
 
 interface IState {
   search_str: string;
@@ -28,9 +23,7 @@ export class ServicesListActionBoxComponent implements OnInit {
   @Output() listAction: EventEmitter<IState> = new EventEmitter();
 
   loading;
-  buttonDropdown;
   state: IState = state;
-  buttonDropdownOptions;
 
   constructor() { }
 
@@ -46,16 +39,9 @@ export class ServicesListActionBoxComponent implements OnInit {
     this.listAction.emit(this.state);
   }
 
-  onButtonDropdown() {
+  launchModal() {
     $('#excelServicesModal').modal();
   }
 
-  ngOnInit() {
-    this.buttonDropdown = BUTTON_DROPDOWN;
-
-    this.buttonDropdownOptions = {
-      align: BUTTON_ALIGN.RIGHT,
-      theme: BUTTON_THEME.PRIMARY
-    };
-  }
+  ngOnInit() { }
 }

@@ -55,14 +55,24 @@
       </div>
 
       <div class="col-xs-12 col-md-2">
-        <cp-button-dropdown
-          class="pull-right"
-          [data]="buttonDropdown"
-          [options]="buttonDropdownOptions"
-          (selected)="onButtonDropdown($event.event)">
-        </cp-button-dropdown>
+        <a
+          [routerLink]="['create']" i18n
+          class="cpbtn cpbtn--primary cpbtn--square-right no-right-padding">
+          Create Event
+        </a>
+        <div
+          class="cpbtn cpbtn--square-left cpbtn--no-padding cpbtn--primary no-left-padding hover action-dropdown">
+          <i class="material-icons" data-toggle="dropdown">expand_more</i>
+          <ul class="dropdown-menu dropdown-menu-right text-left">
+            <li i18n>
+              <a [routerLink]="['import/facebook']">
+                Import Events From Facebook
+              </a>
+            </li>
+            <li i18n (click)="launchModal()">Import Events from Excel</li>
+          </ul>
+        </div>
       </div>
-
     </div>
   </div>
 </div>

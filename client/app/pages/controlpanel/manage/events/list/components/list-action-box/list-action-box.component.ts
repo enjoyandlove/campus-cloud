@@ -1,14 +1,9 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { CPDate } from '../../../../../../../shared/utils/date';
-import { BUTTON_DROPDOWN, DATE_FILTER } from './events-filters';
+import { DATE_FILTER } from './events-filters';
 import { StoreService } from '../../../../../../../shared/services';
 import { BaseComponent } from '../../../../../../../base/base.component';
-import {
-  BUTTON_ALIGN,
-  BUTTON_THEME
-} from '../../../../../../../shared/components/cp-button-dropdown';
 
 interface IState {
   end: number;
@@ -43,13 +38,10 @@ export class ListActionBoxComponent extends BaseComponent implements OnInit {
   hosts;
   loading;
   eventFilter;
-  buttonDropdown;
   dateFilterOpts;
   state: IState = state;
-  buttonDropdownOptions;
 
   constructor(
-    private router: Router,
     private storeService: StoreService
   ) {
     super();
@@ -132,21 +124,12 @@ export class ListActionBoxComponent extends BaseComponent implements OnInit {
     this.listAction.emit(this.state);
   }
 
-  onButtonDropdown(event) {
-    switch (event) {
-      case 'facebook':
-        this.router.navigate(['/manage/events/import/facebook']);
-        break;
-      case 'excel':
-        // TODO Avoid this...
-        $('#excelEventsModal').modal();
-        break;
-    }
+  launchModal() {
+    $('#excelEventsModal').modal();
   }
 
   ngOnInit() {
     this.eventFilter = DATE_FILTER;
-    this.buttonDropdown = BUTTON_DROPDOWN;
 
     this.dateFilterOpts = {
       utc: true,
@@ -154,11 +137,6 @@ export class ListActionBoxComponent extends BaseComponent implements OnInit {
       mode: 'range',
       minDate: new Date(),
       maxDate: null
-    };
-
-    this.buttonDropdownOptions = {
-      align: BUTTON_ALIGN.RIGHT,
-      theme: BUTTON_THEME.PRIMARY
     };
   }
 }
