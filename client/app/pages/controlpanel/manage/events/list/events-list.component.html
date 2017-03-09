@@ -10,12 +10,15 @@
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
   <div *ngSwitchCase="false">
     <cp-list-past
+      [state]="state"
       [events]="events"
       *ngIf="!isUpcoming"
+      (sortList)="onSortList($event)"
       (deleteEvent)="onDeleteEvent($event)">
     </cp-list-past>
 
     <cp-list-upcoming
+      [state]="state"
       [events]="events"
       *ngIf="isUpcoming"
       (sortList)="onSortList($event)"

@@ -20,8 +20,8 @@ const state = {
   end: null,
   store_id: null,
   attendance_only: 0,
-  sort_field: null,
-  sort_direction: null
+  sort_field: 'start',
+  sort_direction: 'asc'
 };
 
 @Component({

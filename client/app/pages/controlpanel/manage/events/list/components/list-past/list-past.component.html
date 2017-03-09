@@ -1,9 +1,41 @@
 <ul class="col-xs-12 cp-form">
   <div class="events">
     <li class="cp-form__header col-xs-12">
-      <span class="col-xs-2" i18n>Name</span>
+      <span
+        (click)="doSort('title')"
+        class="col-xs-2 hover" i18n>
+        Name
+        <span *ngIf="state.sort_field === 'title'">
+          <i
+            class="material-icons"
+            *ngIf="state.sort_direction === 'asc'">
+            arrow_drop_up
+          </i>
+          <i
+            class="material-icons"
+            *ngIf="state.sort_direction === 'desc'">
+            arrow_drop_down
+          </i>
+        </span>
+      </span>
       <span class="col-xs-2" i18n>Host</span>
-      <span class="col-xs-2" i18n>Date</span>
+      <span
+        (click)="doSort('start')"
+        class="col-xs-2 hover" i18n>
+        Date
+        <span *ngIf="state.sort_field === 'start'">
+          <i
+            class="material-icons"
+            *ngIf="state.sort_direction === 'asc'">
+            arrow_drop_up
+          </i>
+          <i
+            class="material-icons"
+            *ngIf="state.sort_direction === 'desc'">
+            arrow_drop_down
+          </i>
+        </span>
+      </span>
       <span class="col-xs-1" i18n>Response</span>
       <span class="col-xs-1" i18n>Attendance</span>
       <span class="col-xs-3" i18n>Rating</span>

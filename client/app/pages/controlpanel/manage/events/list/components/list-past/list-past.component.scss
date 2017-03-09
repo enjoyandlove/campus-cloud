@@ -7,6 +7,17 @@
   font-size: 2em;
 }
 
+.cp-form__header {
+  span.hover {
+    position: relative;
+
+    > span i {
+      top: -2px;
+      position: absolute;
+    }
+  }
+}
+
 .events {
   padding: 0;
   list-style: none;
