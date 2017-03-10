@@ -99,10 +99,6 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-          # Webpack builds the SPA to this folder
-          os.path.join(BASE_DIR, 'dist/'),
-        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
