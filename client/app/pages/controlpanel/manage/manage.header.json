@@ -10,18 +10,6 @@
     {
       "label": "Services",
       "url": "/manage/services"
-    },
-    {
-      "label": "Clubs & Groups",
-      "url": "clubs-and-groups"
-    },
-    {
-      "label": "Orientation",
-      "url": "orientation"
-    },
-    {
-      "label": "Calendars",
-      "url": "calendars"
     }
   ]
 }
