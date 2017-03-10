@@ -2,6 +2,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+
+import { ENV } from '../../../../../../../config/env';
 import { EventsService } from '../../../events.service';
 import { FileUploadService } from '../../../../../../../shared/services';
 
@@ -13,9 +15,11 @@ declare var $: any;
   styleUrls: ['./events-excel-modal.component.scss']
 })
 export class EventsExcelModalComponent implements OnInit {
-  uploaded;
   error;
+  uploaded;
+  downloadLink;
   form: FormGroup;
+  
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -25,6 +29,10 @@ export class EventsExcelModalComponent implements OnInit {
     this.form = this.fb.group({
       'link': ['', Validators.required]
     });
+
+    this.downloadLink = ENV === 'production' ? 
+                                '/dist/templates/mass_event_invite_sample.xlsx' :
+                                '/templates/mass_event_invite_sample.xlsx'
   }
 
   onSubmit(data) {
@@ -61,7 +69,6 @@ export class EventsExcelModalComponent implements OnInit {
     this.error = '';
 
     if (!validation.length) {
-      const ENV = process.env.ENV;
       const url = ENV === 'production' ? '/events/excel' : 'http://localhost:8000/events/excel';
       this
       .fileService
