@@ -1,0 +1,19 @@
+<div class="cppagination">
+  <div class="row">
+    <div class="col-xs-12 text-center">
+      <span
+        class="hover noselect"
+        (click)="onPrevious()"
+        [class.disabled]="pageNumber === 1">
+        <i class="material-icons">keyboard_arrow_left</i>
+      </span>
+      <span class="cppagination__page noselect">{{ pageNumber }}</span>
+      <span
+        (click)="onNext()"
+        class="hover noselect"
+        [class.disabled]="limit > total">
+        <i class="material-icons">keyboard_arrow_right</i>
+      </span>
+    </div>
+  </div>
+</div>

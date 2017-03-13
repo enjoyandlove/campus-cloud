@@ -24,6 +24,18 @@
       (sortList)="onSortList($event)"
       (deleteEvent)="onDeleteEvent($event)">
     </cp-list-upcoming>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <cp-pagination
+          [total]="events.length"
+          [limit]="resultsPerPage"
+          [pageNumber]="pageNumber"
+          (next)="onPaginationNext()"
+          (previous)="onPaginationPrevious()">
+        </cp-pagination>
+      </div>
+    </div>
   </div>
 </div>
 
