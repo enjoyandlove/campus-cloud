@@ -33,7 +33,11 @@ export class EventsListComponent extends BaseComponent implements OnInit, OnDest
   events;
   loading;
   isUpcoming;
+  endRage = 3;
+  startRage = 1;
+  pageNumber = 1;
   deleteEvent = '';
+  resultsPerPage = 2;
   state: IState = state;
 
   constructor(
@@ -103,16 +107,35 @@ export class EventsListComponent extends BaseComponent implements OnInit, OnDest
     search.append('sort_field', this.state.sort_field);
     search.append('sort_direction', this.state.sort_direction);
 
-    this.fetch(this.service.getEvents(search));
+    this.fetch(this.service.getEvents(this.startRage, this.endRage, search));
   }
 
   onDeleteEvent(event) {
     this.deleteEvent = event;
   }
 
+  onPaginationNext() {
+    this.pageNumber += 1;
+    this.startRage = this.endRage + 1;
+    this.endRage = (this.endRage + this.resultsPerPage) + 1;
+
+    this.buildHeaders();
+  }
+
+  onPaginationPrevious() {
+    if (this.pageNumber === 1) { return; };
+    this.pageNumber -= 1;
+
+    this.endRage = this.startRage - 1;
+    this.startRage = this.endRage - this.resultsPerPage;
+
+    this.startRage = this.startRage === 0 ? 1 : this.startRage;
+
+    this.buildHeaders();
+  }
+
   ngOnDestroy() {
     // console.log('destroy');
-
   }
 
   ngOnInit() { }

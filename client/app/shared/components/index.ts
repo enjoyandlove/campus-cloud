@@ -11,6 +11,7 @@ export * from './cp-checkbox';
 export * from './cp-searchbox';
 export * from './cp-hamburger';
 export * from './cp-datepicker';
+export * from './cp-pagination';
 export * from './cp-page-header';
 export * from './cp-upload-button';
 export * from './cp-animated-button';
