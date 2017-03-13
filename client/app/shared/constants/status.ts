@@ -9,11 +9,10 @@ export const STATUS = {
    */
   PASSWORD_MIN_LENGTH: 'Make sure your password is at least 6 characters long',
 
+  PASSWORDS_DO_NOT_MATCH: 'Passwords do not match',
+
   EMAIL_DOES_NOT_EXIST: 'I\'m sorry, but we weren\'t able to find a user\
    with that login information',
-
-  PASSWORDS_DO_NOT_MATCH: 'Please make sure Password and Confirm Password\
-   fields are matching',
 
   NO_ACCOUNT_FOUND: 'The username you entered doesn\'t belong to an account.\
    Please check your credentials and try again.',

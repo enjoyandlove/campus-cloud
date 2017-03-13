@@ -19,7 +19,7 @@ export class EventsExcelModalComponent implements OnInit {
   uploaded;
   downloadLink;
   form: FormGroup;
-  
+
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -30,9 +30,9 @@ export class EventsExcelModalComponent implements OnInit {
       'link': ['', Validators.required]
     });
 
-    this.downloadLink = ENV === 'production' ? 
+    this.downloadLink = ENV === 'production' ?
                                 '/dist/templates/mass_event_invite_sample.xlsx' :
-                                '/templates/mass_event_invite_sample.xlsx'
+                                '/templates/mass_event_invite_sample.xlsx';
   }
 
   onSubmit(data) {
