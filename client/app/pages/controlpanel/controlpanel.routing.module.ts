@@ -14,6 +14,8 @@ const appRoutes: Routes = [
       { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
 
       { path: 'manage', loadChildren: './manage/manage.module#ManageModule' },
+
+      { path: 'account', loadChildren: './account/account.module#AccountModule' },
     ]
   },
 ];
