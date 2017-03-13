@@ -2,6 +2,10 @@
 @import "~bootstrap/variables";
 @import "~styles/core/typography";
 
+hr {
+  margin: 0;
+}
+
 nav {
   top: 0;
   width: 100%;
@@ -52,7 +56,7 @@ nav {
 
     li {
       margin-right: 24px;
-      
+
       &:first-child {
         padding-left: 0;
       }
@@ -98,23 +102,23 @@ nav {
         vertical-align: -7px;
       }
     }
-  }
 
-  .dropdown-menu {
-    top: 35px;
+    .dropdown-menu {
+      top: 35px;
 
-    li {
-      @include font-14px();
-
-      padding: 0;
-      display: block;
-      border-bottom: 0;
-      margin-right: 0;
-
-      a {
+      li {
         padding: 0;
-        padding: 12px;
-        line-height: 1;
+        display: block;
+        border-bottom: 0;
+        margin-right: 0;
+
+        a {
+          @include font-14px();
+
+          padding: 0;
+          padding: 12px;
+          line-height: 1;
+        }
       }
     }
   }
