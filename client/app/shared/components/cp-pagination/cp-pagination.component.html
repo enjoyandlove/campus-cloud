@@ -8,7 +8,10 @@
         <i class="material-icons">keyboard_arrow_left</i>
       </span>
       <span class="cppagination__page noselect">{{ pageNumber }}</span>
-      <span class="hover noselect" (click)="onNext()">
+      <span
+        (click)="onNext()"
+        class="hover noselect"
+        [class.disabled]="limit > total">
         <i class="material-icons">keyboard_arrow_right</i>
       </span>
     </div>

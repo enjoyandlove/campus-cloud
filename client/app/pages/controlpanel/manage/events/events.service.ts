@@ -16,7 +16,7 @@ export class EventsService extends BaseService {
   }
 
   getEvents(startRage: number, endRage: number, search?: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT}/${startRage};${endRage}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT}${startRage};${endRage}`;
     return super.get(url, { search }).map(res => res.json());
   }
 

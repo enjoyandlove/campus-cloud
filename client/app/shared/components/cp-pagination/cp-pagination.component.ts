@@ -7,6 +7,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class CPPaginationComponent implements OnInit {
   @Input() total: number;
+  @Input() limit: number;
   @Input() pageNumber: number;
   @Output() next: EventEmitter<null> = new EventEmitter();
   @Output() previous: EventEmitter<null> = new EventEmitter();
@@ -22,7 +23,6 @@ export class CPPaginationComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this);
     this.pageNumber = this.pageNumber ? this.pageNumber : 1;
   }
 }

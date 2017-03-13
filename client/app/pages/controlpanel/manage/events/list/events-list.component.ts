@@ -33,11 +33,11 @@ export class EventsListComponent extends BaseComponent implements OnInit, OnDest
   events;
   loading;
   isUpcoming;
-  endRage = 3;
+  endRage = 20;
   startRage = 1;
   pageNumber = 1;
   deleteEvent = '';
-  resultsPerPage = 2;
+  resultsPerPage = 20;
   state: IState = state;
 
   constructor(
@@ -117,7 +117,7 @@ export class EventsListComponent extends BaseComponent implements OnInit, OnDest
   onPaginationNext() {
     this.pageNumber += 1;
     this.startRage = this.endRage + 1;
-    this.endRage = (this.endRage + this.resultsPerPage) + 1;
+    this.endRage = this.endRage + this.resultsPerPage;
 
     this.buildHeaders();
   }
@@ -127,9 +127,7 @@ export class EventsListComponent extends BaseComponent implements OnInit, OnDest
     this.pageNumber -= 1;
 
     this.endRage = this.startRage - 1;
-    this.startRage = this.endRage - this.resultsPerPage;
-
-    this.startRage = this.startRage === 0 ? 1 : this.startRage;
+    this.startRage = (this.endRage - this.resultsPerPage) + 1;
 
     this.buildHeaders();
   }

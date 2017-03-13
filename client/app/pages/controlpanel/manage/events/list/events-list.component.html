@@ -29,6 +29,7 @@
       <div class="col-xs-12">
         <cp-pagination
           [total]="events.length"
+          [limit]="resultsPerPage"
           [pageNumber]="pageNumber"
           (next)="onPaginationNext()"
           (previous)="onPaginationPrevious()">
