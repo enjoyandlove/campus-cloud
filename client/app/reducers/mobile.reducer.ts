@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 
-export const TOGGLE = 'toggle';
+export const TOGGLE = 'TOGGLE';
 
 export interface IMobile {
   isOpen: boolean;

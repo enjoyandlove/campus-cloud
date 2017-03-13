@@ -2,45 +2,69 @@
 @import '~styles/core/typography';
 
 .header {
-  padding-top: 60px;
+  height: 170px;
+  padding-top: 38px;
+  margin-bottom: 25px;
+  background: $color-black;
+
+  em,
+  &__sub-title {
+    top: 50px;
+    position: absolute;
+  }
+
+  em {
+    margin-bottom: 15px;
+    display: inline-block;
+    color: $color-med-grey;
+  }
 
   &__title {
-    @include font-bold();
+    @include font-heading();
 
-    font-size: 2.5em;
+    color: $color-white;
+    position: relative;
   }
 
   &__sub-title {
     font-size: 1.5em;
+    color: $color-white;
   }
 
   &__nav {
     padding: 0;
-    margin-top: 60px;
+    margin-top: 40px;
+    margin-bottom: 0;
     list-style: none;
-    margin-bottom: 25px;
-    padding-bottom: 16px;
-    border-bottom: 2px solid #CCCCCC;
 
     li {
-      line-height: 1;
-      margin-right: 45px;
+      margin-right: 24px;
       display: inline-block;
+
+      a {
+        @include font-16px();
+
+        transition: color 300ms ease-in-out;
+        border-bottom: 3px solid transparent;
+      }
 
       &.last-child {
         margin-right: 0;
       }
 
-      a {
-        padding: 10px 0;
-        display: inline-block;
-        color: $color-med-grey;
+      &.active {
 
-        &.active {
-          @include font-bold();
-
-          color: $color-black;
+        a {
+          color: $color-white;
+          border-bottom: 3px solid $color-brand;
         }
+      }
+
+      a {
+        padding: 0;
+        color: $color-grey;
+        padding-bottom: 8px;
+        display: inline-block;
       }
     }
   }

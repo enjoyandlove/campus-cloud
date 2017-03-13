@@ -1,0 +1,15 @@
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div *ngSwitchCase="false">
+    <cp-attendance-past
+      [event]="event"
+      *ngIf="!isUpcoming">
+    </cp-attendance-past>
+
+    <cp-attendance-upcoming
+      [event]="event"
+      *ngIf="isUpcoming">
+    </cp-attendance-upcoming>
+  </div>
+</div>

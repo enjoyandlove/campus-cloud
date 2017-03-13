@@ -3,6 +3,44 @@ body {
   height: 100%;
 }
 
+hr {
+  border-top: 1px solid $border-color;
+}
+
 body {
-  background: $color-light-grey;
+  background: #F9F9F9;
+}
+
+.placeholder {
+  width: 108px;
+  height: 108px;
+  border-radius: 4px;
+  display: inline-block;
+  border: 1px solid $border-color;
+  background-color: $color-white;
+
+  i {
+    font-size: 6em;
+    margin-top: 12px;
+    color: $color-black;
+  }
+
+  &--small {
+    width: 35px;
+    height: 35px;
+
+    i {
+      margin-top: 6px;
+      font-size: 1.75em;
+      color: $color-black;
+    }
+  }
+}
+
+.no-left-padding {
+  padding-left: 0;
+}
+
+.no-right-padding {
+  padding-right: 0;
 }

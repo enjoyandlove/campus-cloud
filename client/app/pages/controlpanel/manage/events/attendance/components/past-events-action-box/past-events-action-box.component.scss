@@ -1,0 +1,17 @@
+@import '~styles/components/card';
+@import '~styles/components/table';
+@import '~styles/components/button';
+
+.header,
+.actions {
+  @include card-margin();
+}
+
+.header {
+  &__digit {
+    @include font-semi-bold();
+
+    font-size: 2.4em;
+  }
+}
+

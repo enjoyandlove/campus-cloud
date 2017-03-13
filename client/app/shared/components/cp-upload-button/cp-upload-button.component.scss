@@ -1,0 +1,55 @@
+@import '~styles/core/colors';
+@import '~styles/components/form';
+
+
+.input {
+  display: inline-block;
+
+  &.default {
+    label {
+      line-height: 1.5;
+      color: $color-black;
+      background-color: transparent;
+      border: 1px solid $border-color;
+      transition: border 300ms ease-in-out;
+    }
+
+    label:hover,
+    &:focus > label {
+      border: 1px solid $color-text;
+    }
+  }
+
+  &.primary {
+    label {
+      line-height: 1.5;
+      color: $color-white;
+      background-color: $color-brand;
+    }
+
+    label:hover,
+    &:focus > label {
+      background: #1771b5;
+    }
+  }
+
+  .inputfile {
+    opacity: 0;
+    z-index: -1;
+    width: 0.1px;
+    height: 0.1px;
+    overflow: hidden;
+    position: absolute;
+
+    ~ label {
+      cursor: pointer;
+      font-size: 1em;
+      font-weight: 400;
+      margin-bottom: 0;
+      user-select: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+  }
+}

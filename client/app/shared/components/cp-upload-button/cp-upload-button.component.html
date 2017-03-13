@@ -1,0 +1,10 @@
+<div [class]="['input ' + buttonClass]">
+  <input
+    id="file"
+    type="file"
+    name="file"
+    class="inputfile"
+    (change)="onChange($event)" />
+  <label for="file" i18n>{{ buttonText ? buttonText : 'Choose a file' }}</label>
+</div>
+

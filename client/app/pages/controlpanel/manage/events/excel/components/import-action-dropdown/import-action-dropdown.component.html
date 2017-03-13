@@ -1,0 +1,69 @@
+<div class="menu cpbtn cpbtn--cancel">
+  <div class="menu__header" (click)="isOpen = !isOpen">
+    <span i18n>Event Attendance</span>
+    <span class="icon"><i class="material-icons">keyboard_arrow_down</i></span>
+  </div>
+  <div class="menu__content" [class.open]="isOpen">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="menu__item">
+          <label i18n>Event Attendance</label>
+          <cp-switch
+            [id]="id1"
+            (toggle)="toggleEventAttendance()">
+          </cp-switch>
+        </div>
+        <div *ngIf="state.event_attendance">
+          <div class="menu__item">
+            <div class="row">
+              <div class="col-xs-6">
+                <label i18n>Attendance Feedback</label>
+                <cp-dropdown
+                  [items]="eventAttendanceFeedback"
+                  (selected)="updateAttendanceFeedback($event)">
+                </cp-dropdown>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu__item">
+            <div class="row">
+              <div class="col-xs-6">
+                <label i18n>Event Manager</label>
+                <cp-dropdown
+                  [items]="eventManagers"
+                  (selected)="updateEventManager($event)">
+                </cp-dropdown>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu__item">
+            <label i18n>Attendance Manager</label>
+            <input
+              type="email"
+              (keyup)="updateAttendanceManager($event.target.value)">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row menu__content--footer">
+      <div class="col-xs-12">
+        <div class="pull-right">
+          <button
+            type="button"
+            (click)="isOpen = false"
+            class="cpbtn cpbtn--cancel" i18n>
+            Cancel
+          </button>
+          <button
+            type="button"
+            (click)="doSubmit()"
+            class="cpbtn cpbtn--primary" i18n>
+            Apply
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

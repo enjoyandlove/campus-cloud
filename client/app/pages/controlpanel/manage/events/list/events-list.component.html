@@ -1,79 +1,36 @@
-<div [ngSwitch]="loading">
-  <cp-spinner *ngSwitchCase="true"></cp-spinner>
-
-  <div *ngSwitchCase="false">
-    <div class="cp-card col-xs-12">
-      <div class="row">
-        <cp-searchbox
-          class="col-xs-12 col-sm-3"
-          (query)="query = $event">
-        </cp-searchbox>
-        <div class="col-xs-12 col-sm-3">
-          Date Picker
-        </div>
-        <cp-dropdown
-          class="col-xs-12 col-sm-3">
-        </cp-dropdown>
-        <cp-dropdown
-          class="col-xs-12 col-sm-3">
-        </cp-dropdown>
-      </div>
-    </div>
-
-    <ul class="events cp-form">
-      <li class="events__header col-xs-12">
-        <span class="col-xs-2" i18n>Name</span>
-        <span class="col-xs-2" i18n>Host</span>
-        <span class="col-xs-2" i18n>Date</span>
-        <span class="col-xs-1" i18n>Response</span>
-        <span class="col-xs-1" i18n>Attendance</span>
-        <span class="col-xs-3" i18n>Rating</span>
-        <span class="col-xs-1"></span>
-      </li>
-
-      <li
-        class="text-center no-content col-xs-12"
-        *ngIf="(events | cpFilterPipe:{ query: query ,
-        filterBy: ['title', 'description' ] }).length === 0">
-        <strong>No Events...</strong>
-      </li>
-
-        <li
-          class="events__item col-xs-12"
-          *ngFor="let event of events |
-          cpFilterPipe:{ query: query , filterBy: ['title', 'description' ] }">
-
-          <span class="col-xs-2 text-truncate events__thumbnail">
-          <img [src]="event.poster_thumb_url" class="img-circle">
-          <strong>{{ event.title }}</strong>
-          <br>
-          {{ event.description }}
-        </span>
-          <span class="col-xs-2 text-truncate">
-          {{ event.city }}
-        </span>
-          <span class="col-xs-2 text-truncate">
-          {{ event.start | cpDatePipe:dateFormat }}
-        </span>
-          <span class="col-xs-1 text-truncate">
-          {{ event.avg_rating_percent === -1 ? '--' :  event.avg_rating_percent + '%'}}
-        </span>
-          <span class="col-xs-1 text-truncate">
-          {{ event.attends }}
-        </span>
-          <span class="col-xs-3 text-truncate">
-          <span *ngIf="event.rating_scale_maximum > -1">
-            <cp-star
-              [data]="star"
-              *ngFor="let star of buildStars(event)">
-            </cp-star>
-          </span>
-          <span *ngIf="event.rating_scale_maximum === -1">
-            --
-          </span>
-          </span>
-          <span class="col-xs-1 text-truncate">x</span>
-          </li>
-    </ul>
+<div class="row">
+  <div class="col-xs-12">
+    <cp-list-action-box
+      (listAction)="doFilter($event)">
+    </cp-list-action-box>
   </div>
 </div>
+
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+  <div *ngSwitchCase="false">
+    <cp-list-past
+      [state]="state"
+      [events]="events"
+      *ngIf="!isUpcoming"
+      (sortList)="onSortList($event)"
+      (deleteEvent)="onDeleteEvent($event)">
+    </cp-list-past>
+
+    <cp-list-upcoming
+      [state]="state"
+      [events]="events"
+      *ngIf="isUpcoming"
+      (sortList)="onSortList($event)"
+      (deleteEvent)="onDeleteEvent($event)">
+    </cp-list-upcoming>
+  </div>
+</div>
+
+<cp-modal modalId="deleteEventsModal">
+  <cp-events-delete [event]="deleteEvent"></cp-events-delete>
+</cp-modal>
+
+<cp-modal modalId="excelEventsModal">
+  <cp-events-excel-modal></cp-events-excel-modal>
+</cp-modal>

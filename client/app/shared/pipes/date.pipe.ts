@@ -5,6 +5,7 @@ import * as moment from 'moment';
 export const FORMAT = {
   'LONG': 'MMM Do YY',
   'SHORT': 'MMM Do YY',
+  'DATETIME': 'MMMM Do YYYY, h:mm:ss a'
 };
 
 @Pipe({name: 'cpDatePipe'})

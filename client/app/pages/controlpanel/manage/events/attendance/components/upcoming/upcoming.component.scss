@@ -1,0 +1,35 @@
+@import '~styles/components/button';
+@import '~styles/core/typography';
+@import '~bootstrap/variables';
+
+
+.event {
+  margin-top: 130px;
+
+  @media all and (max-width: $screen-sm) {
+    margin-top: 40px;
+  }
+
+  i {
+    font-size: 4em;
+    margin-bottom: 15px;
+  }
+
+  p {
+    @include font-semi-bold();
+
+    font-size: 2em;
+  }
+
+  &__actions {
+    margin: 0 auto;
+    a,
+    button {
+      margin-right: 10px;
+    }
+
+    button:last-child {
+      margin-right: 0;
+    }
+  }
+}

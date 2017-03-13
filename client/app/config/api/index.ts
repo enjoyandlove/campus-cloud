@@ -6,14 +6,20 @@ const API_VERSION = {
 };
 
 const API_BASE_URL = `https://api.studentlifemobile.com/cc`;
+// const API_BASE_URL = 'http://ec2-54-234-212-53.compute-1.amazonaws.com:5002/cc';
 
-const API_KEY = 'Fw4e6T7QTVa2Yj6Fcez5OGmnXryRbIFt';
+const API_KEY = 'IUm65kXecFWch54mzJjpy63spWZX3AVp';
 
 const API_ENDPOINTS = {
+  ME: 'admin/',
   STORE: 'store/',
   EVENT: 'event/',
+  IMAGE: 'image/',
   SESSION: 'session/',
+  P_RESET: 'ns_admin/',
+  SERVICES: 'services/',
   PRIVILEGE: 'privilege/',
+  EVENT_ASSESMENT: 'event_assessment/',
 };
 
 const API_AUTH_HEADER = {
@@ -25,7 +31,7 @@ const BUILD_COMMON_HEADERS = function buildCommonHeaders() {
   const auth = `${API_AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
 
   return new Headers({
-    'Content-Type': 'application/x-www-form-urlencoded',
+    'Content-Type': 'application/json',
     'Authorization': auth
   });
 };

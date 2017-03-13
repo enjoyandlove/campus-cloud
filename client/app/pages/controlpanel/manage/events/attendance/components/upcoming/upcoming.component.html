@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="col-xs-12">
+    <div class="event text-center">
+      <i class="material-icons">access_time</i>
+      <p>{{ event.start | cpDatePipe:format }}</p>
+      <div class="row">
+        <div class="col-xs-12 event__actions">
+          <a routerLink="/manage/events"
+            type="button"
+            class="cpbtn cpbtn--secondary" i18n>
+            Back to Events
+          </a>
+
+          <button
+            type="button"
+            class="cpbtn cpbtn--secondary" i18n
+            *ngIf="event.attend_verification_methods.length">
+            Print QR Code
+          </button>
+
+          <button
+            type="button"
+            class="cpbtn cpbtn--primary" i18n
+            *ngIf="event.attend_verification_methods.length">
+            Start Web Check-in
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

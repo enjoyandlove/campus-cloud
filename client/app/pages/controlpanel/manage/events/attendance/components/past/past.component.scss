@@ -1,0 +1,24 @@
+@import '~styles/components/card';
+@import '~styles/components/table';
+
+.cp-table__header {
+  span.hover {
+    position: relative;
+
+    > span i {
+      top: -2px;
+      position: absolute;
+    }
+  }
+}
+
+.header {
+  @include card-margin();
+
+  &__digit {
+    @include font-semi-bold();
+
+    font-size: 2.4em;
+  }
+}
+

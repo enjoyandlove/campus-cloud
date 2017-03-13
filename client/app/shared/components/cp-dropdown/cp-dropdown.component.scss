@@ -1,57 +1,63 @@
-.dropdown {
+@import '~styles/core/colors';
+@import '~styles/components/button';
+
+:host {
   width: 100%;
-  background: #f2f2f2;
   display: inline-block;
+}
 
-  &:hover {
-    cursor: pointer;
-  }
+.cpbtn-group {
+  min-width: 100%;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
 
-  &__wrapper {
-    &.disabled {
-      opacity: 0.8;
+  &.open {
+    button {
+      border: 1px solid $color-brand;
     }
   }
 
-  span {
-    padding: 10px;
-    display: inline-block;
-    vertical-align: middle;
-  }
-
-  &__icon {
-    float: right;
-    background: #ccc;
-    border-left: 2px solid white;
-  }
-
-  &__button {
-    min-width: 140px;
-  }
-
-  ul {
-    padding: 0;
-    margin: 8px 0 0;
-    border-radius: 0;
-    min-width: 140px;
-    max-height: 160px;
-    overflow-y: scroll;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
-
-  li {
-    padding: 10px;
-    transition: background 300ms ease-in-out;
-
-    &:nth-child(odd) {
-      background: #f6f6f6;
-    }
+  button {
+    min-width: 100%;
+    text-align: left;
+    position: relative;
+    transition: border 300ms ease-in-out;
 
     &:hover {
-      background: #f2f2f2;
+      color: $color-text;
+      border: 1px solid $color-text;
+    }
+
+    i {
+      top: 7px;
+      right: 12px;
+      line-height: 1;
+      font-size: 18px;
+      position: absolute;
+      transition: transform 200ms ease-in-out;
+    }
+  }
+
+  .dropdown-menu {
+    top: 110%;
+    padding: 0;
+    max-height: 197px;
+    overflow-y: scroll;
+    background-color: $color-white;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.12);
+
+    li {
+      padding: 10px;
+      text-align: left;
+      color: $color-secondary-text;
+      transition: background 100ms ease-in;
+
+      &:hover {
+        cursor: pointer;
+        color: $color-white;
+        background: $color-brand;
+      }
     }
   }
 }

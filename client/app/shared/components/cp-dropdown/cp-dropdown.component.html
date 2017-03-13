@@ -1,17 +1,18 @@
-<div class="dropdown">
-  <div class="dropdown__wrapper" data-toggle="dropdown">
-    <span class="dropdown__button text-truncate">
-      {{ selected ? selected.label : 'Click Me' }}
-    </span>
-    <span class="dropdown__icon">
-      Icon
-    </span>
-  </div>
+<div class="cpbtn-group">
+  <button
+    type="button"
+    aria-haspopup="true"
+    aria-expanded="false"
+    data-toggle="dropdown"
+    class="cpbtn cpbtn--cancel dropdown-toggle">
+    {{ selectedItem ? selectedItem.label : items[0].label }}
+    <i class="material-icons">arrow_drop_down</i>
+  </button>
   <ul class="dropdown-menu">
     <li
-      (click)="selected = item"
-      (click)="itemSelected.emit(item)"
-      *ngFor="let item of dummyContent">
+      (click)="selectedItem = item"
+      *ngFor="let item of items"
+      (click)="onClick(item)">
       {{ item.label }}
     </li>
   </ul>

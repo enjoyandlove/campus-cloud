@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'cp-checkbox',
@@ -6,11 +6,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cp-checkbox.component.scss']
 })
 export class CPCheckboxComponent implements OnInit {
-  constructor() { }
+  @Input() isChecked: boolean;
+  @Output() toggle: EventEmitter<boolean> = new EventEmitter();
 
-  ngOnInit() { }
+  constructor() {
+    if (!this.isChecked ) {
+      this.isChecked = false;
+    }
+  }
+
+  ngOnInit() {
+    // console.log('init check');
+  }
 
   onChange(evt) {
-    console.log(evt.target.checked);
+    this.toggle.emit(evt.target.checked);
   }
 }

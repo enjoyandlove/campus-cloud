@@ -5,6 +5,7 @@
 This is a standard NG2 / Webpack app, that once built for production is read by a Django template.
 
 ### TODO
+- Load https://popper.js.org/ for tooltips
 - Ensure G_MAPS library is only loaded once, avoid loading a script tag though
 
 **Dev Workflow**

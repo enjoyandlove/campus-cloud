@@ -1,0 +1,87 @@
+@import '~styles/core/colors';
+@import '~styles/core/typography';
+@import '~styles/components/card';
+@import '~styles/components/form';
+@import '~styles/components/button';
+
+.maps {
+  height: 200px;
+}
+
+.admins {
+  padding: 0;
+  list-style: none;
+
+  &__item {
+    padding: 8px 0;
+    overflow: auto;
+    border-top: 1px solid $border-color;
+
+    &:last-child {
+      border-bottom: 1px solid #CCCCCC;
+    }
+
+    strong {
+      display: block;
+    }
+
+
+      span {
+      font-size: 2em;
+    }
+  }
+
+  &__footer {
+    margin-top: 10px;
+    padding-top: 10px;
+  }
+}
+
+.margin-bottom {
+  // to account for the fixed footer
+  padding-bottom: 90px;
+}
+
+.margin-top {
+  margin-top: 25px;
+}
+
+form {
+  em {
+    margin: 10px 0;
+    display: inline-block;
+  }
+  label {
+    margin-top: 10px;
+    display: inline-block;
+  }
+
+  .text-muted {
+    font-size: 0.8em;
+  }
+
+  .tooltip {
+    width: 15px;
+    height: 15px;
+    font-size: 0.7em;
+    text-align: center;
+    border-radius: 50%;
+    color: $color-white;
+    display: inline-block;
+    background: $color-black;
+  }
+}
+
+.form-footer {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  position: fixed;
+  margin-top: 25px;
+  background: $color-white;
+  border-top: 1px solid $border-color;
+
+  > div {
+    padding: 15px 0;
+  }
+}

@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { CPMapsComponent, CPModalComponent, CPTopBarComponent, CPAvatarComponent,
-  CPSpinnerComponent, CPDropdownComponent,
-  CPCheckboxComponent, CPHamburgerComponent, CPMobileMenuComponent, CPImageUploadComponent,
-  CPPlaceAutoCompleteComponent, CPPageHeaderComponent, CPSearchBoxComponent, CPStarComponent
+  CPSpinnerComponent, CPDropdownComponent, CPCheckboxComponent,
+  CPHamburgerComponent, CPPlaceAutoCompleteComponent,
+  CPPageHeaderComponent, CPSearchBoxComponent, CPStarsComponent,
+  CPAlertComponent, CPAnimatedButtonComponent,
+  CPDatePickerComponent, CPSwitchComponent, CPSmallDatePickerComponent, CPUploadButtonComponent,
 } from './components';
 
 import {
@@ -13,23 +16,34 @@ import {
   CPFilterPipe
 } from './pipes';
 
+import {
+  StoreService,
+  FileUploadService
+} from './services';
+
 @NgModule({
   declarations: [ CPTopBarComponent, CPMapsComponent,
-  CPAvatarComponent, CPMobileMenuComponent, CPModalComponent,
-  CPPlaceAutoCompleteComponent, CPImageUploadComponent,
+  CPAvatarComponent, CPModalComponent,
+  CPPlaceAutoCompleteComponent, CPUploadButtonComponent,
   CPSpinnerComponent, CPDropdownComponent,  CPCheckboxComponent,
   CPPageHeaderComponent, CPHamburgerComponent, CPSearchBoxComponent,
-  CPDatePipe, CPStarComponent, CPFilterPipe ],
+  CPDatePipe, CPStarsComponent, CPFilterPipe, CPAlertComponent,
+  CPAlertComponent, CPAnimatedButtonComponent, CPDatePickerComponent, CPSwitchComponent,
+  CPAnimatedButtonComponent, CPDatePickerComponent,
+  CPSmallDatePickerComponent ],
 
-  imports: [ CommonModule, RouterModule ],
+  imports: [ CommonModule, RouterModule, ReactiveFormsModule ],
 
-  providers: [ ],
+  providers: [ StoreService, FileUploadService ],
 
   exports: [ CPTopBarComponent, CPMapsComponent,
-  CPAvatarComponent, CPMobileMenuComponent, CPModalComponent,
-  CPPlaceAutoCompleteComponent, CPImageUploadComponent,
+  CPAvatarComponent, CPModalComponent,
+  CPPlaceAutoCompleteComponent, CPUploadButtonComponent,
   CPSpinnerComponent, CPDropdownComponent, CPCheckboxComponent,
   CPPageHeaderComponent, CPHamburgerComponent, CPSearchBoxComponent,
-  CPDatePipe, CPStarComponent, CPFilterPipe ]
+  CPDatePipe, CPStarsComponent, CPFilterPipe, CPAlertComponent,
+  CPAlertComponent, CPAnimatedButtonComponent, CPDatePickerComponent, CPSwitchComponent,
+  CPAnimatedButtonComponent, CPDatePickerComponent,
+  CPSmallDatePickerComponent ]
 })
 export class SharedModule { }

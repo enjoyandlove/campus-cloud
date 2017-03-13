@@ -1,0 +1,21 @@
+<div class="cp-card actions">
+  <div class="row">
+    <div class="col-xs-12 col-sm-4">
+      <cp-searchbox
+        (query)="onSearch($event)"
+        placeholder="Search Attendee...">
+      </cp-searchbox>
+    </div>
+    <div
+      class="col-xs-12 col-xs-offset-0 col-sm-4 col-sm-offset-4 text-right">
+      <button class="cpbtn cpbtn--secondary" i18n>
+        Web Check-in
+      </button>
+      <button
+        (click)="downloadExcel()"
+        class="cpbtn cpbtn--primary" i18n>
+        Download CSV File
+      </button>
+    </div>
+  </div>
+</div>

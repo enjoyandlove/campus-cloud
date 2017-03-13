@@ -1,9 +1,35 @@
-@import '~styles/core/_colors';
-@import '~styles/components/_card';
-@import '~styles/components/_form';
+@import '~styles/core/colors';
+@import '~styles/core/typography';
+@import '~styles/components/card';
+@import '~styles/components/form';
+@import '~styles/components/button';
+@import '~bootstrap/variables';
 
-.actions {
-  padding: 25px 0;
+// .actions {
+//   label {
+//     @include font-normal();
+
+//     display: inline-block;
+//     vertical-align: -8px;
+//   }
+
+//   .calendar {
+//     height: 40px;
+//   }
+
+//   .checkbox {
+//     margin-top: 5px;
+//   }
+
+//   & > div > * {
+//     @media all and (max-width: $screen-md) {
+//       margin-bottom: 10px;
+//     }
+//   }
+// }
+
+.delete-event {
+  font-size: 2em;
 }
 
 .events {
@@ -25,18 +51,12 @@
     }
   }
 
-  &__header {
-    padding: 15px 0;
-    background: $color-light-grey;
-    border-bottom: 1px solid $color-grey;
-  }
-
-  &__item {
-    padding: 25px 0;
-    border-bottom: 1px solid $color-grey;
-
-    &:last-child {
-      border-bottom: none;
+  @media all and (max-width: $screen-md) {
+    li {
+      > span:not(.events__thumbnail) {
+        text-align: center;
+        padding-bottom: 10px;
+      }
     }
   }
 }

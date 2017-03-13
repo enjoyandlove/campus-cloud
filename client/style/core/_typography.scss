@@ -1,7 +1,22 @@
-@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700");
+@import 'colors';
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,700");
 
 body {
   font-family: 'Open Sans', sans-serif;
+  color: $color-text;
+}
+
+.text-muted {
+  color: $color-med-grey;
+}
+
+p.no-margin {
+  margin-bottom: 0;
+}
+
+.link {
+  color: $color-brand;
 }
 
 .text-truncate {
@@ -10,7 +25,38 @@ body {
   text-overflow: ellipsis;
 }
 
+.hover {
+  cursor: pointer;
+}
+
+a {
+  color: $color-black;
+  display: inline-block;
+
+  &:focus,
+  &:hover,
+  &:active {
+    text-decoration: none;
+  }
+
+  &:focus,
+  &:active {
+    outline: none;
+    outline-offset: 0;
+  }
+}
+
+@mixin font-heading() {
+  @include font-bold();
+
+  font-size: 2.5em;
+}
+
 @mixin font-bold() {
+  font-weight: 700;
+}
+
+@mixin font-semi-bold() {
   font-weight: 600;
 }
 
@@ -18,6 +64,18 @@ body {
   font-weight: 400;
 }
 
-@mixin font-thin() {
-  font-weight: 300;
+@mixin font-14px() {
+  font-size: 1em;
+}
+
+@mixin font-16px() {
+  font-size: 1.15em;
+}
+
+@mixin font-24px() {
+  font-size: 1.72em;
+}
+
+@mixin font-36px() {
+  font-size: 2.58em;
 }

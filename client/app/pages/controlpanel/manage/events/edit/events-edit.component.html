@@ -1,0 +1,183 @@
+<div class="row">
+  <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" *ngIf="isFormReady">
+    <div class="col-xs-12 col-sm-6">
+      <div class="cp-card">
+        <div class="row">
+          <div class="col-xs-12">
+            <em i18n>Event Photo</em>
+            <div class="row">
+              <div class="col-xs-3">
+                <img [src]="event.poster_thumb_url" class="img-rounded img-responsive">
+              </div>
+              <div class="col-xs-9">
+                <small i18n><strong>Upload your photo...</strong></small>
+                <p class="text-muted" i18n>.png, .gif, .jpg with maximum file size of 5MB</p>
+                <button type="button" class="cpbtn cpbtn--dark" i18n>Upload Photo</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <em i18n>Event Details</em>
+            <div class="form-group">
+              <label i18n>Event Name</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="title"
+                placeholder="Add a short, clear name">
+            </div>
+
+            <div class="form-group">
+              <label i18n>Select Host</label>
+              <select
+                class="form-control"
+                formControlName="store_id">
+                <option value="abc" i18n>ABC Host</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label i18n>Description</label>
+              <textarea
+                class="form-control"
+                formControlName="description"
+                placeholder="Tell people more about the event"></textarea>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="row">
+                  <div class="col-xs-12 col-sm-6">
+                    <label i18n>Start</label>
+                    <cp-datepicker [options]="startDatePicker"></cp-datepicker>
+                  </div>
+                  <div class="col-xs-12 col-sm-6">
+                    <label i18n>End</label>
+                    <cp-datepicker [options]="endDatePicker"></cp-datepicker>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12">
+                <label i18n>Location</label>
+                <div class="row">
+                  <div class="col-xs-6 col-sm-4">
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Building"
+                        formControlName="location">
+                    </div>
+                  </div>
+
+                  <div class="col-xs-6 col-sm-4">
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Room"
+                        formControlName="room_data">
+                    </div>
+                  </div>
+
+                  <div class="col-xs-6 col-sm-4">
+                    <div class="form-group">
+                      <cp-place-autocomplete
+                        (placeChange)="onPlaceChanged($event)">
+                      </cp-place-autocomplete>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12">
+                <cp-maps [center]="mapCenter"></cp-maps>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-6">
+      <div class="cp-card">
+        <div class="row">
+          <div class="col-xs-12">
+            <em i18n>Event Attendance</em>
+            <span class="pull-right">
+              <cp-switch
+                [id]="attendance"
+                (toggle)="attendance = !attendance">
+              </cp-switch>
+            </span>
+          </div>
+        </div>
+
+        <div *ngIf="attendance">
+          <div class="row">
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group">
+                <label i18n>Event Manager <span class="tooltip">&#63;</span></label>
+                <select class="form-control">
+                  <option value="">---</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group">
+                <label i18n>Attendance Manager <span class="tooltip">&#63;</span></label>
+                <input type="text" class="form-control" placeholder="example@mail.com">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-12 col-sm-6">
+              <label i18n>Attendance Feedback</label>
+              <select class="form-control">
+                  <option value="">---</option>
+                </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-6">
+              <label i18n>QR Code</label>
+              <div class="placeholder"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-12">
+      <div class="row">
+        <div class="col-xs-12">
+
+          <hr>
+
+          <div class="text-right">
+            <a [routerLink]="['../info']"
+              class="cpbtn cpbtn--secondary" i18n>
+              Cancel
+            </a>
+            <button
+              type="submit"
+              class="cpbtn cpbtn--primary" i18n>
+              Update Event
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

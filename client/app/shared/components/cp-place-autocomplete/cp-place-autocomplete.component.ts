@@ -1,4 +1,5 @@
 import {
+  NgZone,
   OnInit,
   Output,
   Component,
@@ -19,14 +20,18 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
   @Output() placeChange: EventEmitter<any> = new EventEmitter();
   @ViewChild('input') input: ElementRef;
 
-  constructor() { }
+  constructor(
+    private zone: NgZone
+  ) { }
 
   ngAfterViewInit() {
     const input = this.input.nativeElement;
     const autocomplete = new google.maps.places.Autocomplete(input);
 
     autocomplete.addListener('place_changed', () => {
-      this.placeChange.emit(autocomplete.getPlace());
+      this.zone.run(() => {
+        this.placeChange.emit(autocomplete.getPlace());
+      });
     });
   }
 

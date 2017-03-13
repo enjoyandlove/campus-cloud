@@ -1,26 +1,15 @@
 {
   "heading": "Manage",
   "subheading": "",
+  "em": null,
   "children": [
     {
       "label": "Events",
-      "url": "/manage"
+      "url": "/manage/events"
     },
     {
       "label": "Services",
-      "url": "services"
-    },
-    {
-      "label": "Clubs & Groups",
-      "url": "clubs-and-groups"
-    },
-    {
-      "label": "Orientation",
-      "url": "orientation"
-    },
-    {
-      "label": "Calendars",
-      "url": "calendars"
+      "url": "/manage/services"
     }
   ]
 }

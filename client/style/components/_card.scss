@@ -1,7 +1,20 @@
+@import '../core/colors';
+@import '~bootstrap/variables';
+
 .cp-card {
   padding: 24px;
   border-radius: 4px;
   background: $color-white;
-  border: 1px solid #CCCCCC;
+  border: 1px solid $border-color;
   box-shadow: 0 0 2px 0 rgba(0,0,0,0.16);
+}
+
+@media all and (max-width: $screen-sm) {
+  .cp-card {
+    margin-bottom: 25px;
+  }
+}
+
+@mixin card-margin() {
+  margin: 15px 0;
 }

@@ -1,1 +1,7 @@
-<input type="text" #q placeholder="Search...">
+<div class="search">
+  <i class="material-icons">search</i>
+  <input
+    #q
+    type="text"
+    [placeholder]="placeholder ? placeholder : 'Search...'">
+</div>

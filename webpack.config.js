@@ -16,7 +16,7 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 var ENV = process.env.npm_lifecycle_event;
 var isTestWatch = ENV === 'test-watch';
 var isTest = ENV === 'test' || isTestWatch;
-var isProd = ENV === 'build';
+var isProd = ENV === 'production';
 
 module.exports = function makeWebpackConfig() {
   /**
@@ -171,8 +171,8 @@ module.exports = function makeWebpackConfig() {
     }),
 
     new webpack.ProvidePlugin({
-      jQuery: 'jquery',
       $: 'jquery',
+      jQuery: 'jquery',
       jquery: 'jquery',
     }),
 

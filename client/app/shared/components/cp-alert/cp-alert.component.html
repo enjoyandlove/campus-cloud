@@ -1,3 +1,7 @@
-<div [class]="['alert alert-' + data.class]" role="alert">
-  {{ data.message }}
+<div class="alerts text-center" *ngIf="message.isShow">
+  <p
+    [class]="['cpalert cpalert-' + message.class]">
+    {{ message.body }}
+    <!--<span class="pull-right hover" (click)="onClose()">&#10006;</span>-->
+  </p>
 </div>

@@ -1,0 +1,47 @@
+@import '~styles/core/colors';
+
+.stars {
+  display: inline-block;
+
+  &.default i {
+    font-size: 25px;
+  }
+
+  &.small i {
+    font-size: 15px;
+  }
+
+  &.large i {
+    font-size: 35px
+  }
+
+  i {
+    margin-right: 10px;
+    color: $border-color;
+
+    &.filled {
+      color: #FED431;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  // img {
+  //   max-width: 100%;
+  // }
+
+  // &--small {
+  //   width: 15px;
+  //   height: 15px;
+  // }
+  // &--large {
+  //   width: 30px;
+  //   height: 30px;
+  // }
+  // &--default {
+  //   width: 25px;
+  //   height: 25px;
+  // }
+}

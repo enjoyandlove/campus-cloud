@@ -1,0 +1,49 @@
+@import '~styles/core/colors';
+@import '~styles/components/form';
+@import '~styles/components/button';
+
+.menu {
+  position: relative;
+
+  &__header {
+    line-height: 1;
+    cursor: pointer;
+
+    // span.icon { }
+    i {
+      font-size: 20px;
+      vertical-align: -5px;
+    }
+  }
+
+  &__content {
+    width: 340px;
+    display: none;
+    padding: 20px;
+
+    &.open {
+      left: 0;
+      top: 45px;
+      z-index: 99;
+      display: block;
+      position: absolute;
+      background: white;
+      box-shadow: 0 0 2px 0 rgba(0,0,0,0.16);
+    }
+
+    &--footer {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid $border-color;
+    }
+  }
+
+  &__item {
+    margin-bottom: 15px;
+
+    label {
+      display: block;
+      text-align: left;
+    }
+  }
+}

@@ -3,71 +3,119 @@
 @import "~styles/core/typography";
 
 nav {
-  background: $color-white;
-  box-shadow: 0 1px 2px 0 rgba(0,0,0,0.16);
+  top: 0;
+  width: 100%;
+  z-index: 9999;
+  position: fixed;
+  background: $color-black;
+
+  .avatar {
+    top: 7px;
+    width: 40px;
+    height: 40px;
+    position: fixed;
+    display: inline-block;
+    background: #f4f4f4;
+  }
 
   ul {
     margin: 0;
     padding: 0;
     list-style: none;
-  }
 
-  .nav__default {
-    a,
-    li {
-      color: $color-black;
+    &:not(.dropdown-menu) {
+      padding-top: 20px;
     }
-    .user__name--dropdown {
-      top: 35px;
-      border-radius: 0;
 
+    &.nav__links {
+      padding-left: 75px;
+    }
+
+    &:not(.nav__links) {
       li {
-        display: block;
-        a {
-          margin: 0;
-          padding: 10px;
+        &:last-child {
+          margin-right: 0;
+          padding-right: 0;
         }
       }
     }
-  }
-  .nav__links li a {
-    color: $color-grey;
-  }
 
-  .nav__links li,
-  .nav__default li {
-    display: inline-block;
-    vertical-align: middle;
-    transition: background-color 300ms ease-in-out;
+    &:not(.nav__default) {
 
-    &.active {
-      @include font-bold();
-      color: $color-black;
-      background-color: $color-light-grey;
-    }
-
-    &:hover {
-      background-color: $color-light-grey;
-    }
-
-    a,
-    &.user__name {
-      font-size: 1em;
-      padding: 15px 10px;
-    }
-
-    a {
-      display: block;
-
-      &:focus,
-      &:hover,
-      &:active {
-        text-decoration: none;
+      li {
+        &:first-child {
+          padding-left: 0;
+          padding-right: 0;
+        }
       }
     }
 
-    &:last-child {
+    li {
+      margin-right: 24px;
+      
+      &:first-child {
+        padding-left: 0;
+      }
+    }
+  }
+
+  li {
+    display: inline-block;
+
+    a,
+    span {
+      @include font-16px();
+
+      width: 100%;
+      height: 100%;
+      display: block;
+      color: $color-grey;
+      padding-bottom: 8px;
+      transition: color 300ms ease-in-out;
+      border-bottom: 3px solid transparent;
+
+      &:hover {
+        cursor: pointer;
+        color: $color-white;
+      }
+    }
+
+    &.active {
+
+      a {
+        border-bottom: 3px solid $color-brand;
+      }
+
+      a,
+      span {
+        color: $color-white;
+      }
+    }
+
+    &.user__name {
+      i {
+        margin-left: 7px;
+        vertical-align: -7px;
+      }
+    }
+  }
+
+  .dropdown-menu {
+    top: 35px;
+
+    li {
+      @include font-14px();
+
+      padding: 0;
+      display: block;
+      border-bottom: 0;
       margin-right: 0;
+
+      a {
+        padding: 0;
+        padding: 12px;
+        line-height: 1;
+      }
     }
   }
 }

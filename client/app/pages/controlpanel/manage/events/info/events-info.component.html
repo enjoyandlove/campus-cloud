@@ -1,0 +1,59 @@
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div *ngSwitchCase="false">
+    <div class="row">
+      <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+        <div class="cp-card event">
+          <div class="row">
+            <div class="col-xs-12">
+              <div
+                class="event__banner placeholder img-responsive img-rounded"
+                [ngStyle]="{ 'background-image' : 'url(' + event.poster_url + ')' }">
+              </div>
+
+              <div class="row">
+                <div class="col-xs-10">
+                  <p class="event__title">{{ event.title }}</p>
+                </div>
+                <div class="col-xs-2" *ngIf="isUpcomingEvent(event.start)">
+                  <a
+                    [routerLink]="['../edit']"
+                    class="cpbtn cpbtn--primary pull-right" i18n>
+                    Edit
+                  </a>
+                </div>
+              </div>
+              <p class="text-muted">
+                <span i18n>Hosted by </span> {{ event.store_name }}
+              </p>
+
+              <div class="event__meta">
+                <p>
+                  <strong i18n>Starts:</strong> {{ event.start | cpDatePipe:dateFormat }}
+                  <br>
+                  <strong i18n>Ends:</strong> {{ event.end | cpDatePipe:dateFormat }}</p>
+                <p>
+                  {{ event.address }},
+                  {{ event.city }},
+                  {{ event.province }},
+                  {{ event.postal_code }}
+                </p>
+              </div>
+
+              <hr>
+
+              <p>{{ event.description }}</p>
+
+              <div class="row">
+                <div class="col-xs-12 event__map">
+                  <cp-maps [center]="mapCenter"></cp-maps>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

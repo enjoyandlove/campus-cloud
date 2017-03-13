@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'cp-modal',
@@ -6,7 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cp-modal.component.scss']
 })
 export class CPModalComponent implements OnInit {
+  @Input() modalId: string;
+
   constructor() { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    // console.log(this, 'init modal');
+  }
 }

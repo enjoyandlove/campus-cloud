@@ -1,19 +1,38 @@
-@import '../../../../style/core/colors';
+@import '~styles/core/colors';
+@import '~styles/components/form';
+@import '~styles/components/button';
+@import '~bootstrap/variables';
 
 :host {
   height: 100%;
   display: block;
 }
 
+.footer {
+  margin-top: 30px;
+}
+
 form {
-  position: relative;
-  transform: translateY(120%);
-}
+  padding: 30px;
+  margin-top: 180px;
+  background: $color-white;
+  border: 1px solid $border-color;
+  box-shadow: 0 0 2px 0 rgba(0,0,0,0.16);
 
-input.isError {
-  border-left: 3px solid $color-error;
-}
+  @media all and (max-width: $screen-sm) {
+    margin-top: 80px;
+  }
 
-input.isOk {
-  border-left: 3px solid $color-success;
+  button {
+    width: 100%;
+  }
+
+  .heading {
+    p {
+      font-size: 1.8em;
+      color: $color-black;
+      text-transform: uppercase;
+      margin: 10px auto 40px auto;
+    }
+  }
 }

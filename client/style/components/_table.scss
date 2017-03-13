@@ -1,0 +1,30 @@
+@import '../core/colors';
+@import '../core/typography';
+
+.cp-table {
+  border-radius: 4px;
+  background: $color-white;
+  border: 1px solid $border-color;
+  box-shadow: 0 0 2px 0 rgba(0,0,0,0.16);
+
+  &__header {
+    @include font-semi-bold();
+
+    padding: 12px;
+    line-height: 1;
+  }
+
+  &__item,
+  &__header {
+    vertical-align: middle;
+    border-bottom: 1px solid $border-color;
+  }
+
+  &__item {
+    padding: 15px;
+
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+}

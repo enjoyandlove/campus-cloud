@@ -1,4 +1,7 @@
 <label class="control control--checkbox">
-  <input type="checkbox" checked="checked" (change)="onChange($event)"/>
+  <input
+    type="checkbox"
+    [checked]="isChecked"
+    (change)="onChange($event)"/>
   <div class="control__indicator"></div>
 </label>
