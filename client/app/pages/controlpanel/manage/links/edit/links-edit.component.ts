@@ -1,5 +1,5 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Headers } from '@angular/http';
 
 import { API } from '../../../../../config/api';
@@ -13,6 +13,7 @@ import { CPImage, CPArray, appStorage } from '../../../../../shared/utils';
   styleUrls: ['./links-edit.component.scss']
 })
 export class LinksEditComponent implements OnInit {
+  @Input() link: any;
   imageError;
   form: FormGroup;
 
@@ -24,16 +25,12 @@ export class LinksEditComponent implements OnInit {
 
   buildForm() {
     this.form = this.fb.group({
-      'url': ['', Validators.required],
-      'name': ['', Validators.required],
-      'description': ['', Validators.maxLength(512)],
-      'image': [''],
+      'link_url': [this.link.link_url, Validators.required],
+      'name': [this.link.name, Validators.required],
+      'description': [this.link.description, Validators.maxLength(512)],
+      'img_url': [this.link.img_url],
     });
   }
-
-  // onSubmit(data) {
-  //   console.log(data);
-  // }
 
   onFileUpload(file) {
     this.imageError = null;
@@ -70,7 +67,15 @@ export class LinksEditComponent implements OnInit {
     console.log(this.form.value);
   }
 
+  ngOnChanges() {
+    // console.log(this.link);
+    if (this.link) {
+      this.buildForm();
+    }
+  }
+
   ngOnInit() {
-    this.buildForm();
+    // console.log(this.link);
+    // this.buildForm();
   }
 }

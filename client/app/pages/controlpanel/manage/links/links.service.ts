@@ -1,15 +1,15 @@
-import { Injectable } from '@angular/core';
 import { Http, URLSearchParams } from '@angular/http';
-import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
 
 import { API } from '../../../../config/api';
 import { BaseService } from '../../../../base/base.service';
 
-import { EVENTS_MODAL_SET } from '../../../../reducers/events-modal.reducer';
+const mockLinks = require('./mock.json');
 
 @Injectable()
 export class LinksService extends BaseService {
-  constructor(http: Http, private store: Store<any>) {
+  constructor(http: Http) {
     super(http);
 
     Object.setPrototypeOf(this, LinksService.prototype);
@@ -21,6 +21,28 @@ export class LinksService extends BaseService {
 
   createLink() {
     return 'creating link';
+  }
+
+  getLinks(search?: URLSearchParams) {
+    if (search) { console.log(search); }
+
+    const promise = new Promise(resolve => {
+      resolve(mockLinks);
+    });
+
+    return Observable.fromPromise(promise).map(res => res);
+  }
+
+  getLinkById(serviceId) {
+    const promise = new Promise(resolve => {
+      resolve(mockLinks.filter(service => {
+        if (service.id === +serviceId) {
+          return service;
+        }
+      }));
+    });
+
+    return Observable.fromPromise(promise).map(res => res[0]);
   }
 
   getEvents(startRage: number, endRage: number, search?: URLSearchParams) {
@@ -47,12 +69,5 @@ export class LinksService extends BaseService {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT_ASSESMENT}`;
 
     return super.get(url, { search }).map(res => res.json());
-  }
-
-  setModalEvents(events: any[]): void {
-    this.store.dispatch({
-      type: EVENTS_MODAL_SET,
-      payload: events
-    });
   }
 }

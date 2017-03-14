@@ -10,5 +10,9 @@ export class LinksDeleteComponent implements OnInit {
 
   constructor() { }
 
+  onDelete() {
+    console.log('deleting...');
+  }
+
   ngOnInit() { }
 }

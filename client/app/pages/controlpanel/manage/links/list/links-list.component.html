@@ -8,10 +8,67 @@
   </div>
 </div>
 
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <ul class="col-xs-12 cp-form" *ngSwitchCase="false">
+    <div class="links">
+      <li class="cp-form__header col-xs-12">
+        <div class="row">
+          <span class="col-sm-5 col-xs-12" i18n>
+            Name
+          </span>
+          <span class="col-sm-6 col-xs-12" i18n>Description</span>
+          <span class="col-sm-1 col-xs-12"></span>
+        </div>
+      </li>
+
+      <li class="text-center" *ngIf="!links.length">
+        <br>
+        <p i18n><strong>No Links...</strong></p>
+      </li>
+
+      <li class="cp-form__item col-xs-12" *ngFor="let link of links">
+        <div class="row">
+          <span class="col-sm-5 col-xs-12 text-truncate links__thumbnail">
+            <img class="img-rounded" [src]="link.img_url">
+
+            <strong>
+              <button
+                (click)="editLink = link"
+                class="cpbtn cpbtn--link-dark"
+                data-toggle="modal" data-target="#linksEdit">
+                {{ link.name }}
+              </button>
+            </strong>
+            <br>
+            {{ link.link_url }}
+          </span>
+            <span class="col-sm-6 col-xs-12 text-truncate">
+            {{ link.description }}
+          </span>
+
+          <span
+            (click)="onDelete(link)"
+            data-toggle="modal" data-target="#linksDelete"
+            class="col-sm-1 col-xs-12 hover delete-link">
+            &times;
+          </span>
+        </div>
+      </li>
+    </div>
+  </ul>
+
+</div>
+
 <cp-modal modalId="linksCreate">
   <cp-links-create></cp-links-create>
 </cp-modal>
 
 <cp-modal modalId="linksDelete">
-  <cp-links-delete></cp-links-delete>
+  <cp-links-delete [link]="deleteLink"></cp-links-delete>
+</cp-modal>
+
+<cp-modal modalId="linksEdit">
+  <cp-links-edit [link]="editLink"></cp-links-edit>
 </cp-modal>
