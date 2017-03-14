@@ -15,6 +15,7 @@ import { ALERT_DEFAULT, IAlert } from '../../../../reducers/alert.reducer';
 export class ChangePasswordComponent implements OnInit {
   pageHeader;
   form: FormGroup;
+  isCompleted = false;
 
   constructor(
     private fb: FormBuilder,
@@ -90,6 +91,7 @@ export class ChangePasswordComponent implements OnInit {
       .resetPassword(data.current, data.password)
       .then(res => {
         this.form.reset();
+        this.isCompleted = true;
         console.log(res);
       });
   }
