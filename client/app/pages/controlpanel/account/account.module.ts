@@ -4,9 +4,9 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../shared/shared.module';
 
-import { AccountRoutingModule } from './account.routing.module';
-
+import { AccountService } from './account.service';
 import { ChangePasswordComponent } from './change-password';
+import { AccountRoutingModule } from './account.routing.module';
 
 
 @NgModule({
@@ -15,6 +15,6 @@ import { ChangePasswordComponent } from './change-password';
   imports: [ CommonModule, RouterModule, ReactiveFormsModule, SharedModule,
   AccountRoutingModule ],
 
-  providers: [  ],
+  providers: [ AccountService ],
 })
 export class AccountModule {}
