@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'cp-links-delete',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./links-delete.component.scss']
 })
 export class LinksDeleteComponent implements OnInit {
+  @Input() link: any;
+
   constructor() { }
 
   ngOnInit() { }
