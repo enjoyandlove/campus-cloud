@@ -4,6 +4,31 @@
 @import '~styles/components/card';
 @import '~styles/components/button';
 
+.margin-bottom {
+  // to account for the fixed footer
+  padding-bottom: 90px;
+}
+
+p {
+  margin-bottom: 2px;
+
+  &.section__title {
+    @include font-24px();
+    @include font-bold();
+
+    margin-bottom: 20px;
+  }
+
+  &.section-sub-title {
+    @include font-16px();
+    @include font-semi-bold();
+  }
+
+  &.section-description {
+    color: $color-med-grey;
+  }
+}
+
 .all-access {
   margin-top: 25px;
   padding: 12px 20px;
@@ -11,15 +36,7 @@
   margin-bottom: 12px;
   background: $color-text-alt;
   border: 1px solid $border-color;
-
-  p {
-    margin-bottom: 2px;
-
-    &.title {
-      @include font-16px();
-      @include font-semi-bold();
-    }
-  }
+  transition: all 200ms ease-in-out;
 
   &.isEnabled {
     border: 1px solid $color-success;
@@ -27,9 +44,19 @@
   }
 }
 
-.all-access-checkbox {
+.cpcheckbox {
   vertical-align: 2px;
   display: inline-block;
+}
+
+.options-row {
+  margin-top: 18px;
+}
+
+.section {
+  &__item {
+    margin-bottom: 45px;
+  }
 }
 
 .footer {

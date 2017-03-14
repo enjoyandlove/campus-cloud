@@ -3,7 +3,7 @@
     <form
       [formGroup]="form"
       (ngSubmit)="onSubmit(form.value)"
-      class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2">
+      class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 margin-bottom">
       <div class="section cp-card form-group">
         <p class="section__title" i18n>Invitee</p>
         <div class="row">
@@ -28,8 +28,8 @@
             <div class="all-access" [class.isEnabled]="isAllAccessEnabled">
               <div class="row">
                 <div class="col-xs-8">
-                  <p class="title" i18n>All Access</p>
-                  <p class="text-muted" i18n>
+                  <p class="section-sub-title" i18n>All Access</p>
+                  <p class="section-description" i18n>
                     Give access to all of the Services, Clubs and App Content
                   </p>
                 </div>
@@ -47,11 +47,153 @@
 
         <div class="row" *ngIf="isAllAccessEnabled">
           <div class="col-xs-12">
-            <cp-checkbox class="all-access-checkbox"></cp-checkbox>
+            <cp-checkbox class="cpcheckbox"></cp-checkbox>
             <span i18n>Manage Team Members</span>
           </div>
         </div>
       </div>
+
+      <!-- Permissions -->
+      <div class="section cp-card form-group">
+        <!-- Service Owner -->
+        <div class="section__item">
+          <p class="section__title" i18n>Permissions</p>
+          <div class="row">
+            <div class="col-xs-8">
+              <p class="section-sub-title" i18n>Service Owner</p>
+              <p class="section-description" i18n>
+                Manage service details, events and assessment
+              </p>
+            </div>
+            <div class="col-xs-4">
+              <cp-dropdown [items]="servicesMenu"></cp-dropdown>
+            </div>
+          </div>
+        </div>
+        <!-- END Service Owner -->
+
+        <!-- Club Owner -->
+        <div class="section__item">
+          <div class="row">
+            <div class="col-xs-8">
+              <p class="section-sub-title" i18n>Club Owner</p>
+              <p class="section-description" i18n>
+                Manage club details, events and membership
+              </p>
+            </div>
+            <div class="col-xs-4">
+              <cp-dropdown [items]="clubsMenu"></cp-dropdown>
+            </div>
+          </div>
+        </div>
+        <!-- END Club Owner -->
+
+        <!-- Events -->
+        <div class="section__item">
+          <div class="row">
+            <div class="col-xs-8">
+              <p class="section-sub-title" i18n>Events</p>
+              <p class="section-description" i18n>
+                Manage and assess events
+              </p>
+            </div>
+            <div class="col-xs-4">
+              <cp-dropdown [items]="eventsMenu"></cp-dropdown>
+            </div>
+          </div>
+        </div>
+        <!-- END Events -->
+
+        <!-- App Content -->
+        <div class="section__item section--content">
+          <div class="row">
+            <div class="col-xs-12">
+              <p class="section-sub-title" i18n>App Content</p>
+              <p class="section-description" i18n>
+                Select the content that you want your invitee to access
+              </p>
+            </div>
+          </div>
+          <div class="row options-row">
+            <div class="col-xs-4">
+              <cp-checkbox
+                class="cpcheckbox">
+              </cp-checkbox>
+              <span i18n>Orientation</span>
+            </div>
+
+            <div class="col-xs-4">
+              <cp-checkbox
+                class="cpcheckbox">
+              </cp-checkbox>
+              <span i18n>Calendars</span>
+            </div>
+
+            <div class="col-xs-4">
+              <cp-checkbox
+                class="cpcheckbox">
+              </cp-checkbox>
+              <span i18n>Maps</span>
+            </div>
+          </div>
+
+          <div class="row options-row">
+            <div class="col-xs-4">
+              <cp-checkbox
+                class="cpcheckbox">
+              </cp-checkbox>
+              <span i18n>Feeds</span>
+            </div>
+
+            <div class="col-xs-4">
+              <cp-checkbox
+                class="cpcheckbox">
+              </cp-checkbox>
+              <span i18n>Links</span>
+            </div>
+
+            <div class="col-xs-4">
+              <cp-checkbox
+                class="cpcheckbox">
+              </cp-checkbox>
+              <span i18n>App Customization</span>
+            </div>
+          </div>
+        </div>
+        <!-- END App Content -->
+
+        <!-- Notify -->
+        <div class="section__item">
+          <div class="row">
+            <div class="col-xs-12">
+              <p class="section-sub-title" i18n>Notify</p>
+              <p class="section-description" i18n>
+                Select push notifications
+              </p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="row options-row">
+                <div class="col-xs-6 col-sm-4">
+                  <cp-checkbox
+                    class="cpcheckbox">
+                  </cp-checkbox>
+                  <span i18n>Campus Announcements</span>
+                </div>
+                <div class="col-xs-6 col-sm-5">
+                  <cp-checkbox
+                    class="cpcheckbox">
+                  </cp-checkbox>
+                  <span i18n>Emergency Announcements</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- END Notify -->
+      </div>
+      <!-- END Permissions -->
 
       <div class="footer">
         <div class="container">

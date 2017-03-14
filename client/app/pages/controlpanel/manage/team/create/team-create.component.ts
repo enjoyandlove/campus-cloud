@@ -12,6 +12,9 @@ import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
   styleUrls: ['./team-create.component.scss']
 })
 export class TeamCreateComponent implements OnInit {
+  clubsMenu;
+  eventsMenu;
+  servicesMenu;
   form: FormGroup;
   isAllAccessEnabled;
 
@@ -49,5 +52,50 @@ export class TeamCreateComponent implements OnInit {
   ngOnInit() {
     this.buildHeader();
     this.buildForm();
+
+    this.servicesMenu = [
+      {
+        'label': 'No Access',
+        'action': 1
+      },
+      {
+        'label': 'Select services',
+        'action': 2
+      },
+      {
+        'label': 'All services',
+        'action': 3
+      },
+    ];
+
+    this.clubsMenu = [
+      {
+        'label': 'No Access',
+        'action': 1
+      },
+      {
+        'label': 'Select clubs',
+        'action': 2
+      },
+      {
+        'label': 'All clubs',
+        'action': 3
+      },
+    ];
+
+    this.eventsMenu = [
+      {
+        'label': 'No access',
+        'action': 1
+      },
+      {
+        'label': 'Manage events',
+        'action': 2
+      },
+      {
+        'label': 'Manage and assess events',
+        'action': 3
+      }
+    ];
   }
 }
