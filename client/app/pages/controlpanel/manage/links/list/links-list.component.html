@@ -1,1 +1,13 @@
-List
+<div class="row">
+  <div class="col-xs-12">
+    <cp-links-list-action-box
+      (search)="onSearch($event)"
+      (listAction)="doFilter($event)"
+      (launchCreateModal)="onLaunchCreateModal()">
+    </cp-links-list-action-box>
+  </div>
+</div>
+
+<cp-modal modalId="linksCreate">
+  <cp-links-create></cp-links-create>
+</cp-modal>

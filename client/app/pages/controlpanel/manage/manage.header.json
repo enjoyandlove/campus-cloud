@@ -10,6 +10,10 @@
     {
       "label": "Services",
       "url": "/manage/services"
+    },
+    {
+      "label": "Links",
+      "url": "/manage/links"
     }
   ]
 }

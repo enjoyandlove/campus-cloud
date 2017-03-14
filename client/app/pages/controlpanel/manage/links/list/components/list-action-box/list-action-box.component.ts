@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'cp-links-list-action-box',
@@ -6,7 +6,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./list-action-box.component.scss']
 })
 export class LinksListActionBoxComponent implements OnInit {
+  @Output() search: EventEmitter<string> = new EventEmitter();
+  @Output() launchCreateModal: EventEmitter<null> = new EventEmitter();
+
   constructor() { }
+
+  onSearch(query) {
+    this.search.emit(query);
+  }
+
+  onLaunchCreateModal() {
+    this.launchCreateModal.emit();
+  }
 
   ngOnInit() { }
 }

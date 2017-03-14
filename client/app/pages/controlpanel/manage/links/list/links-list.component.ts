@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+declare var $: any;
+
 @Component({
   selector: 'cp-links-list',
   templateUrl: './links-list.component.html',
@@ -7,6 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LinksListComponent implements OnInit {
   constructor() { }
+
+  onSearch() {
+    console.log('doing Search');
+  }
+
+  onLaunchCreateModal() {
+    $('#linksCreate').modal();
+  }
 
   ngOnInit() { }
 }

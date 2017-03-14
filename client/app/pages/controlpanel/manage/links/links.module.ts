@@ -9,7 +9,7 @@ import { LinksEditComponent }  from './edit';
 import { LinksCreateComponent }  from './create';
 import { LinksDeleteComponent }  from './delete';
 
-// import { EventsService } from './events.service';
+import { LinksService } from './links.service';
 import { LinksRoutingModule } from './links.routing.module';
 
 import {
@@ -23,6 +23,6 @@ import {
 
   imports: [ CommonModule, SharedModule, RouterModule, ReactiveFormsModule, LinksRoutingModule ],
 
-  providers: [ ],
+  providers: [ LinksService ],
 })
 export class LinksModule {}
