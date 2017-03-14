@@ -15,7 +15,10 @@ const appRoutes: Routes = [
     canActivate: [ AuthGuard ],
     children: [
       { path: 'events', loadChildren: './events/events.module#EventsModule' },
-      { path: 'services', loadChildren: './services/services.module#ServicesModule'  },
+
+      { path: 'services', loadChildren: './services/services.module#ServicesModule' },
+
+      { path: 'team', loadChildren: './team/team.module#TeamModule' },
     ]
   }
 ];
