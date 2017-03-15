@@ -9,23 +9,34 @@
         <div class="row">
           <div class="col-xs-12 col-sm-4">
             <label i18n>First Name</label>
-            <input type="text" class="form-control" formControlName="first_name">
+            <input
+              type="text"
+              class="form-control"
+              formControlName="first_name">
           </div>
 
           <div class="col-xs-12 col-sm-4">
             <label i18n>Last Name</label>
-            <input type="text" class="form-control" formControlName="last_name">
+            <input
+              type="text"
+              class="form-control"
+              formControlName="last_name">
           </div>
 
           <div class="col-xs-12 col-sm-4">
             <label i18n>Email</label>
-            <input type="text" class="form-control" formControlName="email">
+            <input
+              type="text"
+              class="form-control"
+              formControlName="email">
           </div>
         </div>
 
         <div class="row">
           <div class="col-xs-12">
-            <div class="all-access" [class.isEnabled]="isAllAccessEnabled">
+            <div
+              class="all-access"
+              [class.isEnabled]="isAllAccessEnabled">
               <div class="row">
                 <div class="col-xs-8">
                   <p class="section-sub-title" i18n>All Access</p>
@@ -36,6 +47,7 @@
                 <div class="col-xs-4">
                   <div class="pull-right">
                     <cp-switch
+                      (toggle)="toggleAllAccess($event)"
                       (toggle)="isAllAccessEnabled = !isAllAccessEnabled">
                     </cp-switch>
                   </div>
@@ -54,7 +66,10 @@
       </div>
 
       <!-- Permissions -->
-      <div class="section cp-card form-group">
+      <fieldset [disabled]="isAllAccessEnabled">
+      <div
+        class="section cp-card form-group"
+        [class.isDisabled]="isAllAccessEnabled">
         <!-- Service Owner -->
         <div class="section__item">
           <p class="section__title" i18n>Permissions</p>
@@ -177,13 +192,15 @@
               <div class="row options-row">
                 <div class="col-xs-6 col-sm-4">
                   <cp-checkbox
-                    class="cpcheckbox">
+                    class="cpcheckbox"
+                    (toggle)="checkControl($event, 'notifications', 'campus')">
                   </cp-checkbox>
                   <span i18n>Campus Announcements</span>
                 </div>
                 <div class="col-xs-6 col-sm-5">
                   <cp-checkbox
-                    class="cpcheckbox">
+                    class="cpcheckbox"
+                    (toggle)="checkControl($event, 'notifications', 'emergency')">
                   </cp-checkbox>
                   <span i18n>Emergency Announcements</span>
                 </div>
@@ -193,6 +210,7 @@
         </div>
         <!-- END Notify -->
       </div>
+      </fieldset>
       <!-- END Permissions -->
 
       <div class="footer">

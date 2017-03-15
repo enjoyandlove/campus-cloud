@@ -4,6 +4,11 @@
 @import '~styles/components/card';
 @import '~styles/components/button';
 
+.cpbtn--cancel:disabled,
+a.cpbtn--cancel:disabled {
+  color: $color-text !important;
+}
+
 .margin-bottom {
   // to account for the fixed footer
   padding-bottom: 90px;
@@ -54,8 +59,14 @@ p {
 }
 
 .section {
+  transition: opacity 200ms ease-in-out;
+
   &__item {
     margin-bottom: 45px;
+  }
+
+  &.isDisabled {
+    opacity: 0.5;
   }
 }
 
