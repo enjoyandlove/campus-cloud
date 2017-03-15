@@ -1,3 +1,4 @@
+<!--<cp-select-services-modal></cp-select-services-modal>-->
 <div class="container">
   <div class="row">
     <form
@@ -81,7 +82,10 @@
               </p>
             </div>
             <div class="col-xs-4">
-              <cp-dropdown [items]="servicesMenu"></cp-dropdown>
+              <cp-dropdown
+                [items]="servicesMenu"
+                (selected)="onServicesSelected($event)">
+              </cp-dropdown>
             </div>
           </div>
         </div>
@@ -236,3 +240,7 @@
     </form>
   </div>
 </div>
+
+<cp-modal [type]="MODAL_TYPE" modalId="selectServiesModal">
+  <cp-select-services-modal></cp-select-services-modal>
+</cp-modal>

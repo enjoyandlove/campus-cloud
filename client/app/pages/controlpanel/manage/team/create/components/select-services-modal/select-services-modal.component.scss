@@ -1,0 +1,96 @@
+@import '~styles/components/modal';
+@import '~styles/components/button';
+
+@import '~styles/core/colors';
+@import '~styles/components/button';
+@import '~bootstrap/variables';
+
+.max-height {
+  max-height: 300px;
+  overflow: scroll;
+}
+
+.delete-button {
+  font-size: 2em;
+}
+
+.services-list {
+
+  &--margin-top {
+    .max-height {
+      padding-top: 50px;
+    }
+  }
+
+  &--no-margin {
+    &:after {
+      content: none !important;
+    }
+  }
+
+  &:after {
+    top: -20px;
+    width: 1px;
+    right: -1px;
+    content: '';
+    height: 340px;
+    display: block;
+    position: absolute;
+    background: $border-color;
+  }
+
+  &__search-box {
+    width: 100%;
+    z-index: 1;
+    position: absolute;
+    padding-bottom: 20px;
+    background: $color-white;
+
+    &:after {
+      top: 20px;
+      left: -5px;
+      content: '';
+      height: 1px;
+      width: 101.3%;
+      position: relative;
+      background: $border-color;
+    }
+  }
+
+  ul {
+    margin-bottom: 0;
+
+    .services {
+      padding: 0;
+      list-style: none;
+      padding-bottom: 20px;
+
+      .no-content {
+        padding: 15px 0;
+      }
+
+      li {
+        padding: 10px 0;
+      }
+
+      &__thumbnail {
+        img {
+          float: left;
+          width: 30px;
+          height: 30px;
+          margin-top: 5px;
+          margin-right: 10px;
+        }
+      }
+
+      @media all and (max-width: $screen-md) {
+        li {
+          > span:not(.services__thumbnail) {
+            text-align: center;
+            padding-bottom: 10px;
+          }
+        }
+      }
+    }
+  }
+}

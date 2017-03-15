@@ -52,24 +52,6 @@
   </ul>
 </div>
 
-
-<!--<div [ngSwitch]="loading">
-  <cp-spinner *ngSwitchCase="true"></cp-spinner>
-  <div *ngSwitchCase="false">
-    <cp-list-past
-      [events]="events"
-      *ngIf="!isUpcoming"
-      (deleteEvent)="onDeleteEvent($event)">
-    </cp-list-past>
-
-    <cp-list-upcoming
-      [events]="events"
-      *ngIf="isUpcoming"
-      (deleteEvent)="onDeleteEvent($event)">
-    </cp-list-upcoming>
-  </div>
-</div>-->
-
 <cp-modal modalId="excelServicesModal">
   <cp-services-excel-modal></cp-services-excel-modal>
 </cp-modal>

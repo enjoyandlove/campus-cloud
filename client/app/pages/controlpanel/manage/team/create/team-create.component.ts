@@ -1,10 +1,13 @@
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { STATUS } from '../../../../../shared/constants';
 import { ErrorService } from '../../../../../shared/services';
+import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+
+declare var $: any;
 
 @Component({
   selector: 'cp-team-create',
@@ -17,6 +20,7 @@ export class TeamCreateComponent implements OnInit {
   servicesMenu;
   form: FormGroup;
   isAllAccessEnabled;
+  MODAL_TYPE = MODAL_TYPE.WIDE;
 
   constructor(
     private fb: FormBuilder,
@@ -53,36 +57,71 @@ export class TeamCreateComponent implements OnInit {
   }
 
   toggleAllAccess(checked) {
-    let value = checked ? 1 : 2;
-
-    let clubsControl = <FormArray>this.form.controls['clubs'];
-    let eventsControl = <FormArray>this.form.controls['events'];
-    let serviceControl = <FormArray>this.form.controls['services'];
-
-    clubsControl.controls['clubs'].setValue(value);
-    eventsControl.controls['events'].setValue(value);
-    serviceControl.controls['services'].setValue(value);
+    // 1 -> no access - 2 -> all access
+    let value = checked ? 2 : 1;
+    this.form.controls['clubs'].setValue(value);
+    this.form.controls['events'].setValue(value);
+    this.form.controls['services'].setValue(value);
   }
 
-  buildServicesGroup(): void {
-    let group = this.fb.group({
-      'services': [1, Validators.required]
-    });
-    this.form.registerControl('services', group);
+  onServicesSelected(service) {
+    if (service.action === 2) {
+      $('#selectServiesModal').modal();
+      return;
+    }
+    // console.log(service);
   }
 
-  buildClubsGroup(): void {
-    let group = this.fb.group({
-      'clubs': [1, Validators.required]
-    });
-    this.form.registerControl('clubs', group);
+  buildServicesControl(): void {
+    // let group = this.fb.array([
+    //   ...this.buildServicesGroup()
+    // ]);
+
+    // this.form.addControl('services', group);
+    // console.log(this.buildServicesGroup());
+
+    let control = new FormControl(1, [Validators.required]);
+
+    this.form.addControl('services', control);
   }
 
-  buildEventsGroup(): void {
-    let group = this.fb.group({
-      'events': [1, Validators.required]
+  buildServicesGroup() {
+    let groups = [];
+    let services = [
+      {
+        id: 1,
+        name: 'Monday',
+        access: 1
+      },
+      {
+        id: 2,
+        name: 'Tuesday',
+        access: 1
+      }
+    ];
+
+    services.forEach(service => {
+      let group = this.fb.group({
+        'name': [service.name],
+        'selected': [false],
+        'access': []
+      });
+      groups.push(group);
     });
-    this.form.registerControl('events', group);
+
+    return groups;
+  }
+
+  buildClubsControl(): void {
+    let control = new FormControl(1, [Validators.required]);
+
+    this.form.addControl('clubs', control);
+  }
+
+  buildEventsControl(): void {
+    let control = new FormControl(1, [Validators.required]);
+
+    this.form.addControl('events', control);
   }
 
   buildContentGroup(): void {
@@ -117,9 +156,9 @@ export class TeamCreateComponent implements OnInit {
      * access to that section
      */
 
-    this.buildServicesGroup();
-    this.buildClubsGroup();
-    this.buildEventsGroup();
+    this.buildServicesControl();
+    this.buildClubsControl();
+    this.buildEventsControl();
     this.buildContentGroup();
     this.buildNotificationsGroup();
   }
