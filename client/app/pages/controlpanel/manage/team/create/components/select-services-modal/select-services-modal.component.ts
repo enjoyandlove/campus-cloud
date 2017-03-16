@@ -27,6 +27,10 @@ export class SelectServicesModalComponent extends BaseComponent implements OnIni
     // console.log(service);
   }
 
+  removeSelectedService(service) {
+    console.log(service);
+  }
+
   private fetch() {
     super
     .fetchData(this.servicesService.getServices())

@@ -1,96 +1,241 @@
+@import '~styles/core/colors';
+@import '~bootstrap/variables';
+@import '~styles/core/typography';
 @import '~styles/components/modal';
 @import '~styles/components/button';
 
-@import '~styles/core/colors';
-@import '~styles/components/button';
-@import '~bootstrap/variables';
-
-.max-height {
-  max-height: 300px;
-  overflow: scroll;
+.checkbox {
+  margin-top: -3px;
 }
 
 .delete-button {
   font-size: 2em;
 }
 
-.services-list {
+.cpmodal {
+  &__body {
+    padding: 0;
+    height: 360px;
+    overflow: hidden;
+  }
 
-  &--margin-top {
-    .max-height {
-      padding-top: 50px;
+  .privileges-menu i {
+    font-size: 20px;
+    vertical-align: -7px;
+  }
+
+  .services-list {
+    // padding: 20px;
+    border-right: 1px solid $border-color;
+
+    &:last-child {
+      border-right: none;
     }
-  }
-
-  &--no-margin {
-    &:after {
-      content: none !important;
+    p.title {
+      padding-top: 20px;
+      color: $color-secondary-text;
     }
-  }
 
-  &:after {
-    top: -20px;
-    width: 1px;
-    right: -1px;
-    content: '';
-    height: 340px;
-    display: block;
-    position: absolute;
-    background: $border-color;
-  }
-
-  &__search-box {
-    width: 100%;
-    z-index: 1;
-    position: absolute;
-    padding-bottom: 20px;
-    background: $color-white;
-
-    &:after {
-      top: 20px;
-      left: -5px;
-      content: '';
-      height: 1px;
-      width: 101.3%;
-      position: relative;
-      background: $border-color;
+    &__thumbnail {
+      img {
+        float: left;
+        width: 30px;
+        height: 30px;
+        margin-top: 5px;
+        margin-right: 10px;
+      }
     }
-  }
 
-  ul {
-    margin-bottom: 0;
-
-    .services {
-      padding: 0;
+    &__results {
+      height: 283px;
+      overflow: scroll;
       list-style: none;
-      padding-bottom: 20px;
+      margin-bottom: 0;
 
-      .no-content {
-        padding: 15px 0;
+      &--full-height {
+        height: 321px;
       }
 
       li {
-        padding: 10px 0;
-      }
+        padding: 12px 0;
 
-      &__thumbnail {
-        img {
-          float: left;
-          width: 30px;
-          height: 30px;
-          margin-top: 5px;
-          margin-right: 10px;
-        }
-      }
 
-      @media all and (max-width: $screen-md) {
-        li {
-          > span:not(.services__thumbnail) {
-            text-align: center;
-            padding-bottom: 10px;
-          }
-        }
       }
+    }
+
+    &__search-box {
+      padding: 20px 0;
+      border-bottom: 1px solid $border-color;
     }
   }
 }
+
+.privileges-menu {
+  &__list {
+    top: 45px;
+    margin: 0;
+    padding: 0;
+    width: 400px;
+    box-shadow: 0 0 4px 0 rgba(0,0,0,0.12);
+  }
+
+  &__icon {
+    i {
+      vertical-align: -5px;
+    }
+  }
+
+  &__item {
+    padding: 15px;
+    transition: all 300ms ease-in-out;
+    border-bottom: 1px solid $border-color;
+
+    &:hover {
+      background: $color-light-grey;
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+    &--title {
+      @include font-semi-bold();
+
+      margin-bottom: 6px;
+    }
+    &--description {
+      color: $color-secondary-text;
+    }
+  }
+}
+
+
+// .cpmodal__body {
+  // height: 360px;
+  // padding: 0 20px;
+  // overflow: scroll;
+// }
+
+// .delete-button {
+//   font-size: 2em;
+// }
+
+// .services-list {
+//   width: 50%;
+//   float: left;
+
+//   ul:not(.dropdown-menu) {
+//     width: 46%;
+//     height: 283px;
+//     padding-left: 0;
+//     position: fixed;
+//     overflow: scroll;
+//     border-right: 1px solid $border-color;
+//   }
+
+//   &--no-border {
+//     ul:not(.dropdown-menu) {
+//       height: 342px;
+//       border-right: none;
+//     }
+
+//     border-right: none;
+//   }
+
+//   // &:after {
+//   //   top: -20px;
+//   //   width: 1px;
+//   //   right: -1px;
+//   //   content: '';
+//   //   height: 397px;
+//   //   display: block;
+//   //   position: absolute;
+//   //   background: $border-color;
+//   // }
+
+//   &__search-box {
+//     width: 100%;
+//     padding-top: 20px;
+//     padding-bottom: 20px;
+//     background: $color-white;
+//     border-right: 1px solid $border-color;
+//     border-bottom: 1px solid $border-color;
+
+//     // &:after {
+//     //   top: 20px;
+//     //   left: -5px;
+//     //   content: '';
+//     //   height: 1px;
+//     //   width: 108.5%;
+//     //   position: relative;
+//     //   background: $border-color;
+//     // }
+//   }
+
+//   ul {
+//     margin-bottom: 0;
+
+//     .services {
+//       // padding: 0;
+//       list-style: none;
+//       // padding-bottom: 20px;
+
+//       .no-content {
+//         padding: 15px 0;
+//       }
+
+//       li {
+//         padding: 10px 0;
+//       }
+
+//       &__thumbnail {
+        // img {
+        //   float: left;
+        //   width: 30px;
+        //   height: 30px;
+        //   margin-top: 5px;
+        //   margin-right: 10px;
+        // }
+//       }
+
+//       @media all and (max-width: $screen-md) {
+//         li {
+//           > span:not(.services__thumbnail) {
+//             text-align: center;
+//             padding-bottom: 10px;
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
+
+// .privileges-menu {
+//   &__list {
+//     top: 45px;
+//     width: 400px;
+//     box-shadow: 0 0 4px 0 rgba(0,0,0,0.12);
+//   }
+
+//   &__icon {
+//     i {
+//       vertical-align: -5px;
+//     }
+//   }
+
+//   &__item {
+//     padding: 15px;
+//     border-bottom: 1px solid $border-color;
+
+//     &:last-child {
+//       border-bottom: none;
+//     }
+//     &--title {
+//       @include font-semi-bold();
+
+//       margin-bottom: 6px;
+//     }
+//     &--description {
+//       color: $color-secondary-text;
+//     }
+//   }
+// }
