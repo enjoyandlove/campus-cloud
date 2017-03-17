@@ -1,4 +1,4 @@
-import { Http } from '@angular/http';
+import { Http, URLSearchParams } from '@angular/http';
 import { Injectable } from '@angular/core';
 
 import { API } from '../../../../config/api';
@@ -19,8 +19,11 @@ export class LinksService extends BaseService {
   }
 
   getLinks(startRage: number, endRage: number) {
+    let search = new URLSearchParams();
+    search.append('is_system', '0');
+
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LINKS}/${startRage};${endRage}`;
-    return super.get(url).map(res => res.json());
+    return super.get(url, { search }).map(res => res.json());
   }
 
   getLinkById(linkId: number) {
