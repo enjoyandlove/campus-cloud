@@ -10,6 +10,7 @@
 
 .delete-button {
   font-size: 2em;
+  line-height: 1;
 }
 
 .cpmodal {
@@ -25,7 +26,6 @@
   }
 
   .services-list {
-    // padding: 20px;
     border-right: 1px solid $border-color;
 
     &:last-child {
@@ -58,8 +58,6 @@
 
       li {
         padding: 12px 0;
-
-
       }
     }
 
@@ -108,134 +106,3 @@
   }
 }
 
-
-// .cpmodal__body {
-  // height: 360px;
-  // padding: 0 20px;
-  // overflow: scroll;
-// }
-
-// .delete-button {
-//   font-size: 2em;
-// }
-
-// .services-list {
-//   width: 50%;
-//   float: left;
-
-//   ul:not(.dropdown-menu) {
-//     width: 46%;
-//     height: 283px;
-//     padding-left: 0;
-//     position: fixed;
-//     overflow: scroll;
-//     border-right: 1px solid $border-color;
-//   }
-
-//   &--no-border {
-//     ul:not(.dropdown-menu) {
-//       height: 342px;
-//       border-right: none;
-//     }
-
-//     border-right: none;
-//   }
-
-//   // &:after {
-//   //   top: -20px;
-//   //   width: 1px;
-//   //   right: -1px;
-//   //   content: '';
-//   //   height: 397px;
-//   //   display: block;
-//   //   position: absolute;
-//   //   background: $border-color;
-//   // }
-
-//   &__search-box {
-//     width: 100%;
-//     padding-top: 20px;
-//     padding-bottom: 20px;
-//     background: $color-white;
-//     border-right: 1px solid $border-color;
-//     border-bottom: 1px solid $border-color;
-
-//     // &:after {
-//     //   top: 20px;
-//     //   left: -5px;
-//     //   content: '';
-//     //   height: 1px;
-//     //   width: 108.5%;
-//     //   position: relative;
-//     //   background: $border-color;
-//     // }
-//   }
-
-//   ul {
-//     margin-bottom: 0;
-
-//     .services {
-//       // padding: 0;
-//       list-style: none;
-//       // padding-bottom: 20px;
-
-//       .no-content {
-//         padding: 15px 0;
-//       }
-
-//       li {
-//         padding: 10px 0;
-//       }
-
-//       &__thumbnail {
-        // img {
-        //   float: left;
-        //   width: 30px;
-        //   height: 30px;
-        //   margin-top: 5px;
-        //   margin-right: 10px;
-        // }
-//       }
-
-//       @media all and (max-width: $screen-md) {
-//         li {
-//           > span:not(.services__thumbnail) {
-//             text-align: center;
-//             padding-bottom: 10px;
-//           }
-//         }
-//       }
-//     }
-//   }
-// }
-
-// .privileges-menu {
-//   &__list {
-//     top: 45px;
-//     width: 400px;
-//     box-shadow: 0 0 4px 0 rgba(0,0,0,0.12);
-//   }
-
-//   &__icon {
-//     i {
-//       vertical-align: -5px;
-//     }
-//   }
-
-//   &__item {
-//     padding: 15px;
-//     border-bottom: 1px solid $border-color;
-
-//     &:last-child {
-//       border-bottom: none;
-//     }
-//     &--title {
-//       @include font-semi-bold();
-
-//       margin-bottom: 6px;
-//     }
-//     &--description {
-//       color: $color-secondary-text;
-//     }
-//   }
-// }

@@ -66,7 +66,7 @@ export class TeamCreateComponent implements OnInit {
 
   onServicesSelected(service) {
     if (service.action === 2) {
-      $('#selectServiesModal').modal();
+      setTimeout(() => { $('#selectServiesModal').modal(); }, 1);
       return;
     }
     // console.log(service);
