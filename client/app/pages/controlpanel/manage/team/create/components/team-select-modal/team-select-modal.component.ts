@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
 import { servicesPermissions } from './permissions';
-import { ServicesService } from '../../../../services/services.service';
 import { BaseComponent } from '../../../../../../../base/base.component';
 
 interface ISelected {
@@ -20,32 +19,28 @@ const state: IState = {
 };
 
 @Component({
-  selector: 'cp-select-services-modal',
-  templateUrl: './select-services-modal.component.html',
-  styleUrls: ['./select-services-modal.component.scss']
+  selector: 'cp-team-select-modal',
+  templateUrl: './team-select-modal.component.html',
+  styleUrls: ['./team-select-modal.component.scss']
 })
-export class SelectServicesModalComponent extends BaseComponent implements OnInit {
+export class BaseTeamSelectModalComponent extends BaseComponent implements OnInit {
+  title;
   loading;
-  services;
   privileges;
   query = null;
   state: IState = state;
   userPrivileges = [1, 2];
 
-  constructor(
-    private servicesService: ServicesService
-  ) {
+  constructor() {
     super();
     super.isLoading().subscribe(res => this.loading = res);
-
-    this.fetch();
   }
 
-  onCheckedService(checked, service) {
-    this.updateService(service.id, 'checked', checked);
+  onCheckedItem(checked, service) {
+    this.updateItem(service.id, 'checked', checked);
   }
 
-  updateService(id: number, key: string, value: any) {
+  updateItem(id: number, key: string, value: any) {
     let _state = Object.assign({}, this.state);
 
     _state.selected.forEach(service => {
@@ -55,17 +50,14 @@ export class SelectServicesModalComponent extends BaseComponent implements OnIni
     });
   }
 
-  removeSelectedService(service) {
-    this.updateService(service.id, 'checked', false);
+  removeSelectedItem(service) {
+    this.updateItem(service.id, 'checked', false);
   }
 
-  private fetch() {
+  fetch(stream$) {
     super
-    .fetchData(this.servicesService.getServices())
-    .then(res => {
-      this.services = res;
-      this.updateState();
-    })
+    .fetchData(stream$)
+    .then(res => this.updateState(res))
     .catch(err => console.log(err));
   }
 
@@ -79,9 +71,10 @@ export class SelectServicesModalComponent extends BaseComponent implements OnIni
     });
   }
 
-  private updateState() {
+  private updateState(items) {
     let _selected = [];
-    this.services.forEach(service => {
+
+    items.forEach(service => {
       _selected.push({
         id: service.id,
         type: 1,

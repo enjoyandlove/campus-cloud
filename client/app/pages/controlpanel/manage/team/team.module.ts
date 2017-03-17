@@ -12,14 +12,17 @@ import { ServicesService } from '../services/services.service';
 import {
   TeamFilterPipe,
   TeamSelectedPipe,
-  SelectServicesModalComponent
+  BaseTeamSelectModalComponent,
+  SelectTeamClubsModalComponent,
+  SelectTeamServicesModalComponent
 } from './create/components';
 
 import { TeamRoutingModule } from './team.routing.module';
 
 @NgModule({
-  declarations: [ TeamListComponent, TeamCreateComponent, SelectServicesModalComponent,
-  TeamSelectedPipe, TeamFilterPipe ],
+  declarations: [ TeamListComponent, TeamCreateComponent, BaseTeamSelectModalComponent,
+  TeamSelectedPipe, TeamFilterPipe, SelectTeamServicesModalComponent,
+  SelectTeamClubsModalComponent ],
 
   imports: [ CommonModule, SharedModule, RouterModule, ReactiveFormsModule, TeamRoutingModule ],
 

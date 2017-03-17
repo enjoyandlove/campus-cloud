@@ -2,7 +2,7 @@
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-xs-12 text-center">
-        <span i18n><strong>Select Services</strong></span>
+        <span i18n><strong>Select {{ title }}</strong></span>
 
         <span
           data-dismiss="modal"
@@ -14,29 +14,29 @@
   </div>
 
   <div class="cpmodal__body">
-    <div class="col-xs-4 services-list">
-      <div class="row services-list__search-box">
+    <div class="col-xs-4 items-list">
+      <div class="row items-list__search-box">
         <div class="col-xs-12">
           <cp-searchbox (query)="query = $event"></cp-searchbox>
         </div>
       </div>
 
       <div class="row">
-        <ul class="col-xs-12 services-list__results">
+        <ul class="col-xs-12 items-list__results">
           <li class="cp-form__item"
-            *ngFor="let service of state.selected | cpTeamFilterPipe:{query: query, filterBy: 'name'}">
+            *ngFor="let item of state.selected | cpTeamFilterPipe:{query: query, filterBy: 'name'}">
             <div class="row">
               <span class="col-xs-10" i18n>
                 <div class="row">
-                  <div class="col-sm-3 col-xs-12 services-list__thumbnail">
-                    <img class="img-rounded img-responsive" [src]="service.data.logo_url">
+                  <div class="col-sm-3 col-xs-12 items-list__thumbnail">
+                    <img class="img-rounded img-responsive" [src]="item.data.logo_url">
                   </div>
                   <div class="col-sm-9 col-xs-12 text-truncate no-left-padding">
                     <strong>
-                      <a [routerLink]="[service.id]">{{ service.data.name }}</a>
+                      <a [routerLink]="[item.id]">{{ item.data.name }}</a>
                     </strong>
                     <br>
-                    {{ service.data.description }}
+                    {{ item.data.description }}
                   </div>
                 </div>
               </span>
@@ -44,8 +44,8 @@
                 class="col-xs-2">
                 <cp-checkbox
                   class="checkbox"
-                  [isChecked]="service.checked"
-                  (toggle)="onCheckedService($event, service)">
+                  [isChecked]="item.checked"
+                  (toggle)="onCheckedItem($event, item)">
                 </cp-checkbox>
               </span>
             </div>
@@ -53,25 +53,25 @@
         </ul>
       </div>
     </div>
-    <div class="col-xs-8 services-list">
+    <div class="col-xs-8 items-list">
       <div class="row">
         <div class="col-xs-12">
           <p class="title" i18n>Selected</p>
           <div class="row">
-            <ul class="col-xs-12 services-list__results services-list__results--full-height">
-              <li class="cp-form__item col-xs-12" *ngFor="let service of state.selected | cpTeamSelectedPipe">
-                <div class="row" *ngIf="service.checked">
+            <ul class="col-xs-12 items-list__results items-list__results--full-height">
+              <li class="cp-form__item col-xs-12" *ngFor="let item of state.selected | cpTeamSelectedPipe">
+                <div class="row" *ngIf="item.checked">
                   <span class="col-xs-9" i18n>
                     <div class="row">
-                      <div class="col-sm-2 col-xs-12 services-list__thumbnail">
-                        <img class="img-rounded img-responsive" [src]="service.data.logo_url">
+                      <div class="col-sm-2 col-xs-12 items-list__thumbnail">
+                        <img class="img-rounded img-responsive" [src]="item.data.logo_url">
                       </div>
                       <div class="col-sm-9 col-xs-12 text-truncate no-left-padding">
                         <strong>
-                          <a [routerLink]="[service.id]">{{ service.data.name }}</a>
+                          <a [routerLink]="[item.id]">{{ item.data.name }}</a>
                         </strong>
                         <br>
-                        {{ service.data.description }}
+                        {{ item.data.description }}
                       </div>
                     </div>
                   </span>
@@ -87,12 +87,12 @@
                       <li
                         class="privileges-menu__item"
                         *ngFor="let privilege of privileges"
-                        (click)="updateService(service.id, 'type', privilege.type)">
+                        (click)="updateItem(item.id, 'type', privilege.type)">
                         <div class="row">
                           <div class="col-xs-2 text-center no-right-padding">
                             <i
                               class="material-icons"
-                              *ngIf="service.type === privilege.type">check</i>
+                              *ngIf="item.type === privilege.type">check</i>
                           </div>
                           <div class="col-xs-10 no-left-padding">
                             <p class="privileges-menu__item--title" i18n>
@@ -109,7 +109,7 @@
                   </span>
                   <span
                     class="col-xs-1 hover text-right delete-button"
-                    (click)="removeSelectedService(service)">
+                    (click)="removeSelectedItem(item)">
                     &times;
                   </span>
                 </div>

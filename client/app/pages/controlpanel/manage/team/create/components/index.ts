@@ -1,1 +1,1 @@
-export * from './select-services-modal';
+export * from './team-select-modal';
