@@ -29,8 +29,6 @@ export class LinksEditComponent implements OnInit, OnChanges {
   ) { }
 
   buildForm() {
-    console.log('building form');
-    console.log(this.link.img_url);
     this.form = this.fb.group({
       'url': [this.link.link_url, Validators.required],
       'name': [this.link.name, Validators.required],

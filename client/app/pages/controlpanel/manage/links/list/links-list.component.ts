@@ -21,7 +21,6 @@ const state: IState = {
   styleUrls: ['./links-list.component.scss']
 })
 export class LinksListComponent extends BaseComponent implements OnInit {
-  // links;
   endRage = 20;
   editLink = '';
   startRage = 1;
@@ -41,12 +40,26 @@ export class LinksListComponent extends BaseComponent implements OnInit {
     super.isLoading().subscribe(res => this.loading = res);
   }
 
-  onSearch() {
-    console.log('doing Search');
+  onPaginationNext() {
+    this.pageNumber += 1;
+    this.startRage = this.endRage + 1;
+    this.endRage = this.endRage + this.resultsPerPage;
+
+    this.fetch();
   }
 
-  doFilter(query) {
-    console.log(`Searching for ${query}`);
+  onPaginationPrevious() {
+    if (this.pageNumber === 1) { return; };
+    this.pageNumber -= 1;
+
+    this.endRage = this.startRage - 1;
+    this.startRage = (this.endRage - this.resultsPerPage) + 1;
+
+    this.fetch();
+  }
+
+  onSearch() {
+    console.log('doing Search');
   }
 
   private fetch() {
