@@ -27,7 +27,7 @@
           </div>
 
           <div class="form-group">
-            <label i18n>Link URL</label>
+            <label i18n>Link Name</label>
             <input
               type="text"
               class="form-control"
@@ -50,13 +50,13 @@
         <img
           alt=""
           class="img-rounded img-responsive"
-          *ngIf="form.controls['image'].value"
-          [src]="form.controls['image'].value">
+          *ngIf="form.controls['img_url'].value"
+          [src]="form.controls['img_url'].value">
 
         <cp-upload-button
           buttonClass="default"
           (fileUpload)="onFileUpload($event)"
-          [buttonText]="form.controls['image'].value ? 'Change Image' : 'Upload Photo'">
+          [buttonText]="form.controls['img_url'].value ? 'Change Image' : 'Upload Photo'">
         </cp-upload-button>
       </div>
     </div>

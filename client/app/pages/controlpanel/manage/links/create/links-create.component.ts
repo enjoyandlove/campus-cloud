@@ -1,11 +1,14 @@
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
 import { Headers } from '@angular/http';
 
+import { ILink } from '../link.interface';
 import { API } from '../../../../../config/api';
 import { LinksService } from '../links.service';
 import { FileUploadService } from '../../../../../shared/services';
 import { CPImage, CPArray, appStorage } from '../../../../../shared/utils';
+
+declare var $: any;
 
 @Component({
   selector: 'cp-links-create',
@@ -13,6 +16,7 @@ import { CPImage, CPArray, appStorage } from '../../../../../shared/utils';
   styleUrls: ['./links-create.component.scss']
 })
 export class LinksCreateComponent implements OnInit {
+  @Output() createLink: EventEmitter<ILink> = new EventEmitter();
   imageError;
   form: FormGroup;
 
@@ -24,16 +28,13 @@ export class LinksCreateComponent implements OnInit {
 
   buildForm() {
     this.form = this.fb.group({
-      'url': ['', Validators.required],
       'name': ['', Validators.required],
+      'url': ['', Validators.required],
+      'school_id': [157, Validators.required],
       'description': ['', Validators.maxLength(512)],
-      'image': [''],
+      'img_url': [''],
     });
   }
-
-  // onSubmit(data) {
-  //   console.log(data);
-  // }
 
   onFileUpload(file) {
     this.imageError = null;
@@ -60,14 +61,24 @@ export class LinksCreateComponent implements OnInit {
       .uploadFile(file, url, headers)
       .subscribe(
       res => {
-        this.form.controls['poster_url'].setValue(res.image_url);
+        this.form.controls['img_url'].setValue(res.image_url);
       },
       err => console.error(err)
       );
   }
 
   doSubmit() {
-    console.log(this.form.value);
+    this
+      .service
+      .createLink(this.form.value)
+      .subscribe(
+        res => {
+          $('#linksCreate').modal('hide');
+          this.createLink.emit(res);
+
+        },
+        err => console.log(err),
+      );
   }
 
   ngOnInit() {

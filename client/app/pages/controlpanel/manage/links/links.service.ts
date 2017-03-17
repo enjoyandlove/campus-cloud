@@ -1,11 +1,10 @@
-import { Http, URLSearchParams } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Http } from '@angular/http';
 import { Injectable } from '@angular/core';
 
 import { API } from '../../../../config/api';
 import { BaseService } from '../../../../base/base.service';
 
-const mockLinks = require('./mock.json');
+// const mockLinks = require('./mock.json');
 
 @Injectable()
 export class LinksService extends BaseService {
@@ -16,58 +15,57 @@ export class LinksService extends BaseService {
   }
 
   getUploadImageUrl() {
-    return `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}`;
+    return `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
   }
 
-  createLink() {
-    return 'creating link';
+  getLinks(startRage: number, endRage: number) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LINKS}/${startRage};${endRage}`;
+    return super.get(url).map(res => res.json());
   }
 
-  getLinks(search?: URLSearchParams) {
-    if (search) { console.log(search); }
-
-    const promise = new Promise(resolve => {
-      resolve(mockLinks);
-    });
-
-    return Observable.fromPromise(promise).map(res => res);
-  }
-
-  getLinkById(serviceId) {
-    const promise = new Promise(resolve => {
-      resolve(mockLinks.filter(service => {
-        if (service.id === +serviceId) {
-          return service;
-        }
-      }));
-    });
-
-    return Observable.fromPromise(promise).map(res => res[0]);
-  }
-
-  getEvents(startRage: number, endRage: number, search?: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT}${startRage};${endRage}`;
-    return super.get(url, { search }).map(res => res.json());
-  }
-
-  getEventById(id: number) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT}${id}`;
+  getLinkById(linkId: number) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LINKS}/${linkId}`;
 
     return super.get(url).map(res => res.json());
   }
 
-  getEventsByHostId(hostId: string) {
-    const search = new URLSearchParams();
-    search.append('store_id', hostId);
+  updateLink(body, linkId: number) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LINKS}/${linkId}`;
 
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT}`;
-
-    return super.get(url, { search }).map(res => res.json());
+    return super.update(url, body).map(res => res.json());
   }
 
-  getEventAttendanceByEventId(search?: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT_ASSESMENT}`;
+  createLink(body) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LINKS}/`;
 
-    return super.get(url, { search }).map(res => res.json());
+    return super.post(url, body).map(res => res.json());
   }
+
+  deleteLink(linkId: number) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LINKS}/${linkId}`;
+
+    return super.delete(url).map(res => res.json());
+  }
+
+  // getLinks(search?: URLSearchParams) {
+  //   if (search) { console.log(search); }
+
+  //   const promise = new Promise(resolve => {
+  //     resolve(mockLinks);
+  //   });
+
+  //   return Observable.fromPromise(promise).map(res => res);
+  // }
+
+  // getLinkById(serviceId) {
+  //   const promise = new Promise(resolve => {
+  //     resolve(mockLinks.filter(service => {
+  //       if (service.id === +serviceId) {
+  //         return service;
+  //       }
+  //     }));
+  //   });
+
+  //   return Observable.fromPromise(promise).map(res => res[0]);
+  // }
 }

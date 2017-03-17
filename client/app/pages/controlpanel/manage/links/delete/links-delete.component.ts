@@ -1,4 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+
+import { LinksService } from '../links.service';
+import { ErrorService } from '../../../../../shared/services/error.service';
+
+declare var $: any;
 
 @Component({
   selector: 'cp-links-delete',
@@ -7,11 +12,24 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class LinksDeleteComponent implements OnInit {
   @Input() link: any;
+  @Output() deleteLink: EventEmitter<number> = new EventEmitter();
 
-  constructor() { }
+  constructor(
+    private service: LinksService,
+    private errorService: ErrorService
+  ) { }
 
   onDelete() {
-    console.log('deleting...');
+    this
+      .service
+      .deleteLink(this.link.id)
+      .subscribe(
+        _ => {
+          $('#linksDelete').modal('hide');
+          this.deleteLink.emit(this.link.id);
+        },
+        err => this.errorService.handleError(err)
+      );
   }
 
   ngOnInit() { }

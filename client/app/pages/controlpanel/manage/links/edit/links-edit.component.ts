@@ -1,5 +1,5 @@
+import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, OnInit, Input } from '@angular/core';
 import { Headers } from '@angular/http';
 
 import { API } from '../../../../../config/api';
@@ -7,13 +7,18 @@ import { LinksService } from '../links.service';
 import { FileUploadService } from '../../../../../shared/services';
 import { CPImage, CPArray, appStorage } from '../../../../../shared/utils';
 
+import { ILink } from '../link.interface';
+
+declare var $: any;
+
 @Component({
   selector: 'cp-links-edit',
   templateUrl: './links-edit.component.html',
   styleUrls: ['./links-edit.component.scss']
 })
-export class LinksEditComponent implements OnInit {
+export class LinksEditComponent implements OnInit, OnChanges {
   @Input() link: any;
+  @Output() editLink: EventEmitter<ILink> = new EventEmitter();
   imageError;
   form: FormGroup;
 
@@ -24,9 +29,12 @@ export class LinksEditComponent implements OnInit {
   ) { }
 
   buildForm() {
+    console.log('building form');
+    console.log(this.link.img_url);
     this.form = this.fb.group({
-      'link_url': [this.link.link_url, Validators.required],
+      'url': [this.link.link_url, Validators.required],
       'name': [this.link.name, Validators.required],
+      'school_id': [157, Validators.required],
       'description': [this.link.description, Validators.maxLength(512)],
       'img_url': [this.link.img_url],
     });
@@ -57,7 +65,7 @@ export class LinksEditComponent implements OnInit {
       .uploadFile(file, url, headers)
       .subscribe(
       res => {
-        this.form.controls['poster_url'].setValue(res.image_url);
+        this.form.controls['img_url'].setValue(res.image_url);
       },
       err => console.error(err)
       );
@@ -65,17 +73,23 @@ export class LinksEditComponent implements OnInit {
 
   doSubmit() {
     console.log(this.form.value);
+    this
+      .service
+      .updateLink(this.form.value, this.link.id)
+      .subscribe(
+        res => {
+          this.editLink.emit(res);
+          $('#linksEdit').modal('hide');
+        },
+        err => console.error(err)
+      );
   }
 
   ngOnChanges() {
-    // console.log(this.link);
     if (this.link) {
       this.buildForm();
     }
   }
 
-  ngOnInit() {
-    // console.log(this.link);
-    // this.buildForm();
-  }
+  ngOnInit() { }
 }
