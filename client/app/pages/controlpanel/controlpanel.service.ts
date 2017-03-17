@@ -4,7 +4,7 @@ import { Http } from '@angular/http';
 import { API } from '../../config/api';
 import { BaseService } from '../../base/base.service';
 
-const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.PRIVILEGE}`;
+const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.PRIVILEGE}/`;
 
 @Injectable()
 export class ControlPanelService extends BaseService {

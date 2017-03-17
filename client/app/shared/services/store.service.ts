@@ -13,7 +13,7 @@ export class StoreService extends BaseService {
   }
 
   getStores() {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.STORE}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.STORE}/`;
 
     return super.get(url).map(res => res.json());
   }
