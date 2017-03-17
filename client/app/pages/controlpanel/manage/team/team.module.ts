@@ -7,6 +7,7 @@ import { SharedModule } from '../../../../shared/shared.module';
 import { TeamListComponent } from './list';
 import { TeamCreateComponent } from './create';
 
+import { ClubsService } from '../clubs/clubs.service';
 import { ServicesService } from '../services/services.service';
 
 import {
@@ -26,6 +27,6 @@ import { TeamRoutingModule } from './team.routing.module';
 
   imports: [ CommonModule, SharedModule, RouterModule, ReactiveFormsModule, TeamRoutingModule ],
 
-  providers: [ ServicesService ],
+  providers: [ ServicesService, ClubsService ],
 })
 export class TeamModule {}

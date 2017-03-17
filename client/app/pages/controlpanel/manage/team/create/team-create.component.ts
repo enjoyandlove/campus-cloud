@@ -66,12 +66,19 @@ export class TeamCreateComponent implements OnInit {
 
   onServicesSelected(service) {
     if (service.action === 2) {
-      // $('#selectServicesModal').modal();
+      $('#selectServicesModal').modal();
+      return;
+    }
+  }
+
+  onClubsSelected(club) {
+    if (club.action === 2) {
       $('#selectClubsModal').modal();
       return;
     }
-    // console.log(service);
   }
+
+
 
   buildServicesControl(): void {
     // let group = this.fb.array([

@@ -100,7 +100,10 @@
               </p>
             </div>
             <div class="col-xs-4">
-              <cp-dropdown [items]="clubsMenu"></cp-dropdown>
+              <cp-dropdown
+                [items]="clubsMenu"
+                (selected)="onClubsSelected($event)">
+              </cp-dropdown>
             </div>
           </div>
         </div>

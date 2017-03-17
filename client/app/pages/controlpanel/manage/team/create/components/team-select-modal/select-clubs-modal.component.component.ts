@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ServicesService } from '../../../../services/services.service';
+import { ClubsService } from '../../../../clubs/clubs.service';
 import { BaseTeamSelectModalComponent } from './team-select-modal.component';
 
 @Component({
@@ -11,12 +11,13 @@ import { BaseTeamSelectModalComponent } from './team-select-modal.component';
 export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent
 implements OnInit {
 
-  constructor(private service: ServicesService) {
+  constructor(private service: ClubsService) {
     super();
     this.title = 'Clubs';
   }
 
   ngOnInit() {
-    super.fetch(this.service.getServices());
+    super.fetch(this.service.getClubs());
+    super.buildPrivilegesDropDown();
   }
 }

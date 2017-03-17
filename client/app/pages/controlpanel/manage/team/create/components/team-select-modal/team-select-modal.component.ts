@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { servicesPermissions } from './permissions';
+import { permissions } from './permissions';
 import { BaseComponent } from '../../../../../../../base/base.component';
 
 interface ISelected {
@@ -86,11 +86,13 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
     this.state = Object.assign({}, this.state, {selected: _selected});
   }
 
-  ngOnInit() {
-    this.privileges = servicesPermissions.filter(privilege => {
+  buildPrivilegesDropDown() {
+    this.privileges = permissions.filter(privilege => {
       if (this.userPrivileges.indexOf(privilege.type) > -1) {
         return privilege;
       }
     });
   }
+
+  ngOnInit() { }
 }

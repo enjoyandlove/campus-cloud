@@ -18,5 +18,6 @@ implements OnInit {
 
   ngOnInit() {
     super.fetch(this.service.getServices());
+    super.buildPrivilegesDropDown();
   }
 }

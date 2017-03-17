@@ -1,4 +1,4 @@
-const permissions = [
+export const permissions = [
   {
     type: 1,
     title: 'Can View',
@@ -18,5 +18,3 @@ const permissions = [
   }
 ];
 
-
-export const servicesPermissions = permissions;
