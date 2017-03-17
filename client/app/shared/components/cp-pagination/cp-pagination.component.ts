@@ -15,14 +15,19 @@ export class CPPaginationComponent implements OnInit {
   constructor() { }
 
   onNext(): void {
+    if (this.limit > this.total) { return; }
+
     this.next.emit();
   }
 
   onPrevious(): void {
+    if (this.pageNumber === 1) { return; }
     this.previous.emit();
   }
 
   ngOnInit() {
+    console.log(this.total);
+    console.log(this.limit);
     this.pageNumber = this.pageNumber ? this.pageNumber : 1;
   }
 }

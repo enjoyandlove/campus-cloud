@@ -4,8 +4,6 @@ import { Injectable } from '@angular/core';
 import { API } from '../../../../config/api';
 import { BaseService } from '../../../../base/base.service';
 
-// const mockLinks = require('./mock.json');
-
 @Injectable()
 export class LinksService extends BaseService {
   constructor(http: Http) {
@@ -49,26 +47,4 @@ export class LinksService extends BaseService {
 
     return super.delete(url).map(res => res.json());
   }
-
-  // getLinks(search?: URLSearchParams) {
-  //   if (search) { console.log(search); }
-
-  //   const promise = new Promise(resolve => {
-  //     resolve(mockLinks);
-  //   });
-
-  //   return Observable.fromPromise(promise).map(res => res);
-  // }
-
-  // getLinkById(serviceId) {
-  //   const promise = new Promise(resolve => {
-  //     resolve(mockLinks.filter(service => {
-  //       if (service.id === +serviceId) {
-  //         return service;
-  //       }
-  //     }));
-  //   });
-
-  //   return Observable.fromPromise(promise).map(res => res[0]);
-  // }
 }
