@@ -32,10 +32,10 @@ const state = {
 export class EventsListComponent extends BaseComponent implements OnInit, OnDestroy {
   events;
   loading;
-  pagePrev;
   pageNext;
+  pagePrev;
+  pageNumber;
   isUpcoming;
-  pageNumber = 1;
   deleteEvent = '';
   state: IState = state;
 
@@ -53,8 +53,6 @@ export class EventsListComponent extends BaseComponent implements OnInit, OnDest
       .fetchData(stream$)
       .then(res => {
         this.events = res.data;
-        this.pagePrev = res.pagePrev;
-        this.pageNext = res.pageNext;
       })
       .catch(err => console.error(err));
   }
@@ -97,8 +95,8 @@ export class EventsListComponent extends BaseComponent implements OnInit, OnDest
   }
 
   buildHeaders() {
-    let end = super.getEndRange();
-    let start = super.getStartRange();
+    let end = this.endRange;
+    let start = this.startRange;
     let search = new URLSearchParams();
     let store_id = this.state.store_id ? (this.state.store_id).toString() : null;
 
@@ -119,14 +117,12 @@ export class EventsListComponent extends BaseComponent implements OnInit, OnDest
 
   onPaginationNext() {
     super.goToNext();
-    this.pageNumber = super.getPageNumber();
 
     this.buildHeaders();
   }
 
   onPaginationPrevious() {
     super.goToPrevious();
-    this.pageNumber = super.getPageNumber();
 
     this.buildHeaders();
   }

@@ -17,23 +17,11 @@ export class BaseComponent implements OnInit {
   private _isLoading$ = this._isLoading.asObservable();
 
   constructor(
-    private _endRange = 100,
-    private _startRange = 1,
-    private _pageNumber = 1,
-    private _resultsPerPage = 100,
+    public endRange = 100,
+    public startRange = 1,
+    public pageNumber = 1,
+    public resultsPerPage = 100,
   ) { }
-
-  getEndRange(): number {
-    return this._endRange;
-  }
-
-  getStartRange(): number {
-    return this._startRange;
-  }
-
-  getPageNumber(): number {
-    return this._pageNumber;
-  }
 
   fetchData(service: Observable<any>) {
     this._isLoading.next(true);
@@ -43,11 +31,11 @@ export class BaseComponent implements OnInit {
         this.pageNext = true;
         this.pagePrev = true;
 
-        if (this._pageNumber === 1) {
+        if (this.pageNumber === 1) {
           this.pagePrev = false;
         }
 
-        if (res.length < this._resultsPerPage) {
+        if (res.length < this.resultsPerPage) {
           this.pageNext = false;
         }
 
@@ -66,17 +54,17 @@ export class BaseComponent implements OnInit {
   }
 
   goToNext(): void {
-    this._pageNumber += 1;
-    this._startRange = this._endRange + 1;
-    this._endRange = this._endRange + this._resultsPerPage;
+    this.pageNumber += 1;
+    this.startRange = this.endRange + 1;
+    this.endRange = this.endRange + this.resultsPerPage;
   }
 
   goToPrevious(): void {
-    if (this._pageNumber === 1) { return; };
-    this._pageNumber -= 1;
+    if (this.pageNumber === 1) { return; };
+    this.pageNumber -= 1;
 
-    this._endRange = this._startRange - 1;
-    this._startRange = (this._endRange - this._resultsPerPage) + 1;
+    this.endRange = this.startRange - 1;
+    this.startRange = (this.endRange - this.resultsPerPage) + 1;
   }
 
   isLoading(): Observable<boolean> {
