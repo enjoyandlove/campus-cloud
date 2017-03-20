@@ -45,8 +45,8 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     super
       .fetchData(this.service.getEventById(this.eventId))
       .then(res => {
-        this.event = res;
-        this.buildHeader(res);
+        this.event = res.data;
+        this.buildHeader(res.data);
         this.isUpcoming = this.isUpcomingEvent(this.event.start);
       })
       .catch(err => console.error(err));

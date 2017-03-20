@@ -21,18 +21,16 @@ const state: IState = {
   styleUrls: ['./links-list.component.scss']
 })
 export class LinksListComponent extends BaseComponent implements OnInit {
-  endRage = 20;
-  editLink = '';
-  startRage = 1;
-  pageNumber = 1;
-  loading = true;
-  deleteLink = '';
-  resultsPerPage = 20;
-  state: IState = state;
-
+  pageNext;
+  pagePrev;
+  pageNumber;
   isLinksEdit;
+  editLink = '';
   isLinksDelete;
   isLinksCreate;
+  loading = true;
+  deleteLink = '';
+  state: IState = state;
 
   constructor(
     private service: LinksService
@@ -45,19 +43,15 @@ export class LinksListComponent extends BaseComponent implements OnInit {
   }
 
   onPaginationNext() {
-    this.pageNumber += 1;
-    this.startRage = this.endRage + 1;
-    this.endRage = this.endRage + this.resultsPerPage;
+    super.goToNext();
+    this.pageNumber = super.getPageNumber();
 
     this.fetch();
   }
 
   onPaginationPrevious() {
-    if (this.pageNumber === 1) { return; };
-    this.pageNumber -= 1;
-
-    this.endRage = this.startRage - 1;
-    this.startRage = (this.endRage - this.resultsPerPage) + 1;
+    super.goToPrevious();
+    this.pageNumber = super.getPageNumber();
 
     this.fetch();
   }
@@ -67,9 +61,16 @@ export class LinksListComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
+    let end = super.getEndRange();
+    let start = super.getStartRange();
+
     super
-      .fetchData(this.service.getLinks(this.startRage, this.endRage))
-      .then(res => this.state.links = res)
+      .fetchData(this.service.getLinks(start, end))
+      .then(res => {
+        this.state.links = res.data;
+        this.pageNext = res.pageNext;
+        this.pagePrev = res.pagePrev;
+      })
       .catch(err => console.error(err));
   }
 

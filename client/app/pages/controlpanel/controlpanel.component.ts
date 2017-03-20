@@ -28,7 +28,7 @@ export class ControlPanelComponent extends BaseComponent implements OnInit {
     super.isLoading().subscribe(res => this.loading = res);
     super
       .fetchData(this.service.getPrivileges())
-      .then(res => { this.privileges = res.privilege_types; })
+      .then(res => this.privileges = res.data.privilege_types )
       .catch(err => console.error(err.json()));
   }
 

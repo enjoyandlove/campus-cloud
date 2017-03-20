@@ -100,10 +100,10 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     super
       .fetchData(this.service.getEventById(this.eventId))
       .then(res => {
-        this.event = res;
+        this.event = res.data;
         this.buildHeader();
-        this.buildForm(res);
-        this.mapCenter = { lat: res.latitude, lng: res.longitude };
+        this.buildForm(res.data);
+        this.mapCenter = { lat: res.data.latitude, lng: res.data.longitude };
       })
       .catch(err => console.error(err));
   }

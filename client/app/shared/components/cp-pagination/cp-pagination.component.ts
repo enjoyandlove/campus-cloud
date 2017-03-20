@@ -6,8 +6,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./cp-pagination.component.scss']
 })
 export class CPPaginationComponent implements OnInit {
-  @Input() total: number;
-  @Input() limit: number;
+  @Input() pageNext: boolean;
+  @Input() pagePrev: boolean;
   @Input() pageNumber: number;
   @Output() next: EventEmitter<null> = new EventEmitter();
   @Output() previous: EventEmitter<null> = new EventEmitter();
@@ -15,13 +15,13 @@ export class CPPaginationComponent implements OnInit {
   constructor() { }
 
   onNext(): void {
-    if (this.limit > this.total) { return; }
+    if (!this.pageNext) { return; }
 
     this.next.emit();
   }
 
   onPrevious(): void {
-    if (this.pageNumber === 1) { return; }
+    if (!this.pagePrev) { return; }
     this.previous.emit();
   }
 

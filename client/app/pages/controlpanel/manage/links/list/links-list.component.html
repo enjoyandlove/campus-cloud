@@ -62,9 +62,9 @@
     </ul>
 
     <cp-pagination
-      [limit]="resultsPerPage"
+      [pageNext]="pageNext"
+      [pagePrev]="pagePrev"
       [pageNumber]="pageNumber"
-      [total]="state.links.length"
       (next)="onPaginationNext()"
       (previous)="onPaginationPrevious()">
     </cp-pagination>
