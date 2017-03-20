@@ -17,6 +17,7 @@ declare var $: any;
 })
 export class LinksCreateComponent implements OnInit {
   @Output() createLink: EventEmitter<ILink> = new EventEmitter();
+  @Output() resetCreateModal: EventEmitter<null> = new EventEmitter();
   imageError;
   form: FormGroup;
 
@@ -75,10 +76,15 @@ export class LinksCreateComponent implements OnInit {
         res => {
           $('#linksCreate').modal('hide');
           this.createLink.emit(res);
+          this.resetModal();
 
         },
         err => console.log(err),
       );
+  }
+
+  resetModal() {
+    this.resetCreateModal.emit();
   }
 
   ngOnInit() {

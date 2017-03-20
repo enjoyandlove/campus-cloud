@@ -30,6 +30,10 @@ export class LinksListComponent extends BaseComponent implements OnInit {
   resultsPerPage = 20;
   state: IState = state;
 
+  isLinksEdit;
+  isLinksDelete;
+  isLinksCreate;
+
   constructor(
     private service: LinksService
   ) {
@@ -70,14 +74,17 @@ export class LinksListComponent extends BaseComponent implements OnInit {
   }
 
   onLaunchCreateModal() {
+    this.isLinksCreate = true;
     $('#linksCreate').modal();
   }
 
   onCreatedLink(link: ILink) {
+    this.isLinksCreate = false;
     this.state.links = [link, ...this.state.links];
   }
 
   onEditedLink(editedLink) {
+    this.isLinksEdit = false;
     let _state = Object.assign({}, this.state, {
       links: this.state.links.map(link => {
         if (link.id === editedLink.id) {
@@ -91,6 +98,7 @@ export class LinksListComponent extends BaseComponent implements OnInit {
   }
 
   onDeletedLink(linkId: number) {
+    this.isLinksDelete = false;
     let _state = Object.assign({}, this.state);
 
     _state.links = _state.links.filter(link => {

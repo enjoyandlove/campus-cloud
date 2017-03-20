@@ -13,6 +13,7 @@ declare var $: any;
 export class LinksDeleteComponent implements OnInit {
   @Input() link: any;
   @Output() deleteLink: EventEmitter<number> = new EventEmitter();
+  @Output() resetDeleteModal: EventEmitter<null> = new EventEmitter();
 
   constructor(
     private service: LinksService,
@@ -27,9 +28,14 @@ export class LinksDeleteComponent implements OnInit {
         _ => {
           $('#linksDelete').modal('hide');
           this.deleteLink.emit(this.link.id);
+          this.resetModal();
         },
         err => this.errorService.handleError(err)
       );
+  }
+
+  resetModal() {
+    this.resetDeleteModal.emit();
   }
 
   ngOnInit() { }

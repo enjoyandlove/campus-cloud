@@ -19,6 +19,7 @@ declare var $: any;
 export class LinksEditComponent implements OnInit, OnChanges {
   @Input() link: any;
   @Output() editLink: EventEmitter<ILink> = new EventEmitter();
+  @Output() resetEditModal: EventEmitter<null> = new EventEmitter();
   imageError;
   form: FormGroup;
 
@@ -75,11 +76,12 @@ export class LinksEditComponent implements OnInit, OnChanges {
       .service
       .updateLink(this.form.value, this.link.id)
       .subscribe(
-        res => {
-          this.editLink.emit(res);
-          $('#linksEdit').modal('hide');
-        },
-        err => console.error(err)
+      res => {
+        this.editLink.emit(res);
+        $('#linksEdit').modal('hide');
+        this.resetModal();
+      },
+      err => console.error(err)
       );
   }
 
@@ -87,6 +89,10 @@ export class LinksEditComponent implements OnInit, OnChanges {
     if (this.link) {
       this.buildForm();
     }
+  }
+
+  resetModal() {
+    this.resetEditModal.emit();
   }
 
   ngOnInit() { }

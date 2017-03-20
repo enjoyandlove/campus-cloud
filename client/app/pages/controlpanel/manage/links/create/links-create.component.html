@@ -6,6 +6,7 @@
 
         <span
           data-dismiss="modal"
+          (click)="resetModal()"
           class="pull-right hover cpmodal__header__close">
           &times;
         </span>
@@ -67,8 +68,9 @@
       <div class="col-xs-6 col-xs-offset-6 text-right">
         <button
           type="button"
-          class="cpbtn cpbtn--cancel"
-          data-dismiss="modal" i18n>
+          data-dismiss="modal"
+          (click)="resetModal()"
+          class="cpbtn cpbtn--cancel" i18n>
           Cancel
         </button>
 

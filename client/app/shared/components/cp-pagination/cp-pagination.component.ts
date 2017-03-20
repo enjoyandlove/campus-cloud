@@ -26,8 +26,6 @@ export class CPPaginationComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.total);
-    console.log(this.limit);
     this.pageNumber = this.pageNumber ? this.pageNumber : 1;
   }
 }
