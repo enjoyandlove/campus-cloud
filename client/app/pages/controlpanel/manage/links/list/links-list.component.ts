@@ -75,7 +75,7 @@ export class LinksListComponent extends BaseComponent implements OnInit {
 
   onLaunchCreateModal() {
     this.isLinksCreate = true;
-    $('#linksCreate').modal();
+    setTimeout(() => { $('#linksCreate').modal(); }, 1);
   }
 
   onCreatedLink(link: ILink) {
