@@ -16,7 +16,7 @@ export class EventsService extends BaseService {
   }
 
   getEvents(startRage: number, endRage: number, search?: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT}${startRage};${endRage}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT}/${startRage};${endRage}`;
     return super.get(url, { search }).map(res => res.json());
   }
 
@@ -25,7 +25,7 @@ export class EventsService extends BaseService {
   }
 
   getEventById(id: number) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT}${id}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT}/${id}`;
 
     return super.get(url).map(res => res.json());
   }
@@ -40,7 +40,7 @@ export class EventsService extends BaseService {
   }
 
   getEventAttendanceByEventId(search?: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT_ASSESMENT}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT_ASSESMENT}/`;
 
     return super.get(url, { search }).map(res => res.json());
   }

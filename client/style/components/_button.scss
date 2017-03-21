@@ -28,6 +28,7 @@ a.cpbtn, {
 
     &:hover {
       cursor: not-allowed;
+      background: $color-med-grey !important;
     }
   }
 
@@ -77,8 +78,17 @@ a.cpbtn, {
   }
 
   &--link {
+    padding: 0;
     border: none;
     color: $color-brand;
+    background: transparent;
+    border-color: transparent;
+  }
+
+  &--link-dark {
+    padding: 0;
+    border: none;
+    color: $color-text;
     background: transparent;
     border-color: transparent;
   }

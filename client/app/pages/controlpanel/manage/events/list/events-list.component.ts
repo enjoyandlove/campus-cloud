@@ -32,12 +32,11 @@ const state = {
 export class EventsListComponent extends BaseComponent implements OnInit, OnDestroy {
   events;
   loading;
+  pageNext;
+  pagePrev;
+  pageNumber;
   isUpcoming;
-  endRage = 20;
-  startRage = 1;
-  pageNumber = 1;
   deleteEvent = '';
-  resultsPerPage = 20;
   state: IState = state;
 
   constructor(
@@ -53,7 +52,7 @@ export class EventsListComponent extends BaseComponent implements OnInit, OnDest
     super
       .fetchData(stream$)
       .then(res => {
-        this.events = res;
+        this.events = res.data;
       })
       .catch(err => console.error(err));
   }
@@ -96,6 +95,8 @@ export class EventsListComponent extends BaseComponent implements OnInit, OnDest
   }
 
   buildHeaders() {
+    let end = this.endRange;
+    let start = this.startRange;
     let search = new URLSearchParams();
     let store_id = this.state.store_id ? (this.state.store_id).toString() : null;
 
@@ -107,7 +108,7 @@ export class EventsListComponent extends BaseComponent implements OnInit, OnDest
     search.append('sort_field', this.state.sort_field);
     search.append('sort_direction', this.state.sort_direction);
 
-    this.fetch(this.service.getEvents(this.startRage, this.endRage, search));
+    this.fetch(this.service.getEvents(start, end, search));
   }
 
   onDeleteEvent(event) {
@@ -115,19 +116,13 @@ export class EventsListComponent extends BaseComponent implements OnInit, OnDest
   }
 
   onPaginationNext() {
-    this.pageNumber += 1;
-    this.startRage = this.endRage + 1;
-    this.endRage = this.endRage + this.resultsPerPage;
+    super.goToNext();
 
     this.buildHeaders();
   }
 
   onPaginationPrevious() {
-    if (this.pageNumber === 1) { return; };
-    this.pageNumber -= 1;
-
-    this.endRage = this.startRage - 1;
-    this.startRage = (this.endRage - this.resultsPerPage) + 1;
+    super.goToPrevious();
 
     this.buildHeaders();
   }

@@ -69,7 +69,7 @@ export class ListActionBoxComponent extends BaseComponent implements OnInit {
     super
       .fetchData(stores$)
       .then(res => {
-        this.hosts = res;
+        this.hosts = res.data;
         this.listAction.emit(this.state);
       })
       .catch(err => console.error(err));

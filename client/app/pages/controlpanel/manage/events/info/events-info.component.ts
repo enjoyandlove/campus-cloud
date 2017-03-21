@@ -42,9 +42,9 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
     super
       .fetchData(this.service.getEventById(this.eventId))
       .then(res => {
-        this.event = res;
-        this.buildHeader(res);
-        this.mapCenter = { lat: res.latitude, lng: res.longitude };
+        this.event = res.data;
+        this.buildHeader(res.data);
+        this.mapCenter = { lat: res.data.latitude, lng: res.data.longitude };
       })
       .catch(err => console.error(err));
   }

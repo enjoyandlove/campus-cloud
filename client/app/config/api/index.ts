@@ -11,15 +11,16 @@ const API_BASE_URL = `https://api.studentlifemobile.com/cc`;
 const API_KEY = 'IUm65kXecFWch54mzJjpy63spWZX3AVp';
 
 const API_ENDPOINTS = {
-  ME: 'admin/',
-  STORE: 'store/',
-  EVENT: 'event/',
-  IMAGE: 'image/',
-  SESSION: 'session/',
-  P_RESET: 'ns_admin/',
-  SERVICES: 'services/',
-  PRIVILEGE: 'privilege/',
-  EVENT_ASSESMENT: 'event_assessment/',
+  ME: 'admin',
+  STORE: 'store',
+  EVENT: 'event',
+  IMAGE: 'image',
+  SESSION: 'session',
+  P_RESET: 'ns_admin',
+  SERVICES: 'services',
+  LINKS: 'campus_link',
+  PRIVILEGE: 'privilege',
+  EVENT_ASSESMENT: 'event_assessment',
 };
 
 const API_AUTH_HEADER = {

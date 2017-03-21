@@ -39,7 +39,7 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
         this.service = res;
         this.buildHeader(res);
         console.log(this.service);
-        this.mapCenter = { lat: res.latitude, lng: res.longitude };
+        this.mapCenter = { lat: res.data.latitude, lng: res.data.longitude };
       })
       .catch(err => console.error(err));
   }
