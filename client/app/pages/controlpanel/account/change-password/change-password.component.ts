@@ -1,5 +1,5 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { AccountService } from '../account.service';
@@ -12,7 +12,7 @@ import { ALERT_DEFAULT, IAlert } from '../../../../reducers/alert.reducer';
   templateUrl: './change-password.component.html',
   styleUrls: ['./change-password.component.scss']
 })
-export class ChangePasswordComponent implements OnInit {
+export class ChangePasswordComponent implements OnInit, OnDestroy {
   pageHeader;
   form: FormGroup;
   isCompleted = false;
@@ -116,6 +116,10 @@ export class ChangePasswordComponent implements OnInit {
       'em': null,
       'children': [],
     };
+  }
+
+  ngOnDestroy() {
+    this.store.dispatch({ type: ALERT_DEFAULT });
   }
 }
 
