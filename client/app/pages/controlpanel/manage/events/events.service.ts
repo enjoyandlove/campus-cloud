@@ -21,7 +21,7 @@ export class EventsService extends BaseService {
   }
 
   getUploadImageUrl() {
-    return `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}`;
+    return `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
   }
 
   getEventById(id: number) {
@@ -50,5 +50,11 @@ export class EventsService extends BaseService {
       type: EVENTS_MODAL_SET,
       payload: events
     });
+  }
+
+  createEvent(body: any) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT}/`;
+
+    return super.post(url, body).map(res => res.json());
   }
 }
