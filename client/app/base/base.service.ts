@@ -9,7 +9,8 @@ import { Http, RequestOptionsArgs } from '@angular/http';
 import { Router } from '@angular/router';
 
 import { API } from '../config/api';
-import { appStorage } from '../shared/utils/localStorage';
+import { CPObj, appStorage } from '../shared/utils';
+
 
 @Injectable()
 export class BaseService {
@@ -30,6 +31,8 @@ export class BaseService {
 
   post(url: string, data: any) {
     const headers = API.BUILD_COMMON_HEADERS();
+
+    data = CPObj.cleanNullValues(data);
 
     return this
             .http
