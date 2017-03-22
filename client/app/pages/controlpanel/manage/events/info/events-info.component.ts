@@ -51,7 +51,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
 
   private buildHeader(res) {
     let children;
-    if (res.attend_verification_methods.length) {
+    if (res.event_attendance) {
       children = [
         {
           'label': 'Attendance',

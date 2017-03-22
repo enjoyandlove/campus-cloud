@@ -1,10 +1,11 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Headers } from '@angular/http';
 
 import { API } from '../../../../../config/api';
 import { EventsService } from '../events.service';
-import { FileUploadService } from '../../../../../shared/services';
+import { FileUploadService, ErrorService } from '../../../../../shared/services';
 import { CPArray, CPImage, CPMap, CPDate, appStorage } from '../../../../../shared/utils';
 
 const COMMON_DATE_PICKER_OPTIONS = {
@@ -29,7 +30,9 @@ export class EventsCreateComponent implements OnInit {
   startdatePickerOpts;
 
   constructor(
+    private router: Router,
     private fb: FormBuilder,
+    private errorService: ErrorService,
     private eventService: EventsService,
     private fileUploadService: FileUploadService
   ) {
@@ -129,13 +132,14 @@ export class EventsCreateComponent implements OnInit {
       return;
     }
 
-    // console.log(this.form.value);
     this
       .eventService
       .createEvent(this.form.value)
       .subscribe(
-        res => console.log(res),
-        err => console.log(err)
+        res => {
+          this.router.navigate(['../' + res.id]);
+        },
+        err => this.errorService.handleError(err)
       );
   }
 

@@ -6,22 +6,21 @@
       <div class="row">
         <div class="col-xs-12 event__actions">
           <a routerLink="/manage/events"
-            type="button"
             class="cpbtn cpbtn--secondary" i18n>
             Back to Events
           </a>
 
-          <button
-            type="button"
+          <a [href]="event.qr_img_url"
+            target="_blank"
             class="cpbtn cpbtn--secondary" i18n
-            *ngIf="event.attend_verification_methods.length">
+            *ngIf="event.event_attendance">
             Print QR Code
-          </button>
+          </a>
 
           <button
             type="button"
             class="cpbtn cpbtn--primary" i18n
-            *ngIf="event.attend_verification_methods.length">
+            *ngIf="event.event_attendance">
             Start Web Check-in
           </button>
         </div>

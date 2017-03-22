@@ -57,12 +57,12 @@
         <strong>
             <a
               [routerLink]="[event.id]"
-              *ngIf="event.attend_verification_methods.length">
+              *ngIf="event.event_attendance">
               {{ event.title }}
             </a>
             <a
               [routerLink]="[event.id + '/info']"
-              *ngIf="!event.attend_verification_methods.length">
+              *ngIf="!event.event_attendance">
               {{ event.title }}
             </a>
         </strong>
