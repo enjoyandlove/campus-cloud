@@ -41,15 +41,15 @@ export class BaseComponent implements OnInit {
 
         this._isLoading.next(false);
 
-        return {
+        return Promise.resolve({
           data: res,
           pageNext: this.pageNext,
           pagePrev: this.pagePrev
-        };
+        });
       })
       .catch(err => {
         this._isLoading.next(false);
-        return err;
+        return Promise.reject(err);
       });
   }
 

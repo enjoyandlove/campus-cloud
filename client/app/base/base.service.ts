@@ -25,7 +25,7 @@ export class BaseService {
     return this
             .http
             .get(url, { headers, ...opts })
-            .retry(3)
+            .debounceTime(10000)
             .catch(err => this.catchError(err));
   }
 
@@ -37,7 +37,7 @@ export class BaseService {
     return this
             .http
             .post(url, data, { headers })
-            .retry(3)
+            .debounceTime(10000)
             .catch(err => this.catchError(err));
   }
 
@@ -49,7 +49,7 @@ export class BaseService {
     return this
             .http
             .put(url, data, { headers })
-            .retry(3)
+            .debounceTime(10000)
             .catch(err => this.catchError(err));
   }
 
@@ -59,7 +59,7 @@ export class BaseService {
     return this
             .http
             .delete(url, { headers })
-            .retry(3)
+            .debounceTime(10000)
             .catch(err => this.catchError(err));
   }
 
@@ -70,6 +70,7 @@ export class BaseService {
       this.router.navigate(['/login']);
       return;
     }
+
     return Observable.throw(err);
   }
 }

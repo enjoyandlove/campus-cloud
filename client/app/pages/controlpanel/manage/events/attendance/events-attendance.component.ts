@@ -1,5 +1,5 @@
+import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
@@ -26,6 +26,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   search: URLSearchParams = new URLSearchParams();
 
   constructor(
+    private router: Router,
     private store: Store<IHeader>,
     private route: ActivatedRoute,
     private service: EventsService
@@ -49,7 +50,14 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
         this.buildHeader(res.data);
         this.isUpcoming = this.isUpcomingEvent(this.event.start);
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        if (err.status === 404) {
+          this.router.navigate(['/manage/events']);
+          return;
+        }
+
+        console.error(err);
+      });
   }
 
   private buildHeader(res) {
