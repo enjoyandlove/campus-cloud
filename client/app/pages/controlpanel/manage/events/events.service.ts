@@ -63,4 +63,10 @@ export class EventsService extends BaseService {
 
     return super.update(url, body).map(res => res.json());
   }
+
+  deleteEventById(eventId: number) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT}/${eventId}`;
+
+    return super.delete(url).map(res => res.json());
+  }
 }

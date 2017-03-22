@@ -3,6 +3,7 @@ import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
 import { EventsService } from '../events.service';
+import { CPState } from '../../../../../shared/utils';
 import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 
@@ -13,6 +14,7 @@ interface IState {
   attendance_only: number;
   sort_field: string;
   sort_direction: string;
+  events: any[];
 }
 
 const state = {
@@ -21,7 +23,8 @@ const state = {
   store_id: null,
   attendance_only: 0,
   sort_field: 'start',
-  sort_direction: 'asc'
+  sort_direction: 'asc',
+  events: []
 };
 
 @Component({
@@ -52,7 +55,7 @@ export class EventsListComponent extends BaseComponent implements OnInit, OnDest
     super
       .fetchData(stream$)
       .then(res => {
-        this.events = res.data;
+        this.state = Object.assign({}, this.state, { events: res.data });
       })
       .catch(err => console.error(err));
   }
@@ -113,6 +116,12 @@ export class EventsListComponent extends BaseComponent implements OnInit, OnDest
 
   onDeleteEvent(event) {
     this.deleteEvent = event;
+  }
+
+  onDeletedEvent(eventId) {
+    const _state = CPState.deleteById(this.state, 'events', eventId);
+
+    this.state = Object.assign({}, this.state, _state);
   }
 
   onPaginationNext() {
