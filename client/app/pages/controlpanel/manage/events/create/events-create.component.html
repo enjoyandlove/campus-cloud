@@ -52,7 +52,7 @@
                 class="form-control"
                 formControlName="store_id"
                 [class.error]="formError && form.controls['store_id'].hasError('required')">
-                <option value="2756" i18n>ABC Host</option>
+                <option [value]="store.value" *ngFor="let store of stores$ | async">{{ store.name }}</option>
               </select>
             </div>
 

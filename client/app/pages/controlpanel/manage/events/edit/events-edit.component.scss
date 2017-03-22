@@ -2,6 +2,20 @@
 @import '~styles/components/card';
 @import '~styles/components/form';
 
+.maps {
+  height: 200px;
+}
+
+.event-image {
+  height: 108px;
+
+  img {
+    height: 100%;
+    width: auto;
+    max-width: 108px;
+  }
+}
+
 form {
   em {
     margin: 10px 0;
@@ -25,5 +39,24 @@ form {
     color: $color-white;
     display: inline-block;
     background: $color-black;
+  }
+}
+
+.margin-bottom {
+  // to account for the fixed footer
+  padding-bottom: 90px;
+}
+
+.footer {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  position: fixed;
+  margin-top: 25px;
+  background: $color-white;
+  border-top: 1px solid $border-color;
+
+  > div {
+    padding: 15px 0;
   }
 }

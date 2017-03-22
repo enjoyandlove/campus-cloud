@@ -1,17 +1,27 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import { Headers } from '@angular/http';
 import { Store } from '@ngrx/store';
 
 import {
   IHeader,
   HEADER_UPDATE
 } from '../../../../../reducers/header.reducer';
+import { API } from '../../../../../config/api';
 import { EventsService } from '../events.service';
 import { FORMAT } from '../../../../../shared/pipes/date.pipe';
 import { BaseComponent } from '../../../../../base/base.component';
+import { CPArray, CPImage, CPMap, CPDate, appStorage } from '../../../../../shared/utils';
+import { FileUploadService, ErrorService, StoreService } from '../../../../../shared/services';
 
-import * as moment from 'moment';
+const COMMON_DATE_PICKER_OPTIONS = {
+  utc: true,
+  altInput: true,
+  enableTime: true,
+  altFormat: 'F j, Y h:i K'
+};
 
 @Component({
   selector: 'cp-events-edit',
@@ -21,12 +31,15 @@ import * as moment from 'moment';
 export class EventsEditComponent extends BaseComponent implements OnInit {
   form: FormGroup;
   event;
+  stores;
   mapCenter;
   dateFormat;
-  endDatePicker;
+  imageError;
   loading = true;
   eventId: number;
-  startDatePicker;
+  enddatePickerOpts;
+  formError = false;
+  startdatePickerOpts;
   attendance = false;
   isFormReady = false;
 
@@ -34,78 +47,110 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     private fb: FormBuilder,
     private store: Store<IHeader>,
     private route: ActivatedRoute,
-    private service: EventsService
+    private storeService: StoreService,
+    private errorService: ErrorService,
+    private eventService: EventsService,
+    private fileUploadService: FileUploadService
   ) {
     super();
-    this.dateFormat = FORMAT.DATETIME;
     this.eventId = this.route.snapshot.params['eventId'];
 
     this.fetch();
+    this.buildHeader();
   }
 
   onSubmit(data) {
+    this.formError = false;
+    this.imageError = null;
+
+    if (!this.form.valid) {
+      if (!this.form.controls['poster_url'].valid) {
+        this.imageError = 'Image is required';
+      }
+      this.formError = true;
+      return;
+    }
     console.log(data);
   }
 
   private buildForm(res) {
-    let _self = this;
-
     this.form = this.fb.group({
       'title': [res.title, Validators.required],
       'store_id': [res.store_id, Validators.required],
-      'location': [res.location, Validators.required],
-      'room_data': [res.room_data, Validators.required],
-      'address': [res.address, Validators.required],
+      'location': [res.location],
+      'room_data': [res.room_data],
+      'city': [res.city],
+      'province': [res.province],
+      'country': [res.country],
+      'address': [res.address],
+      'postal_code': [res.postal_code],
+      'latitude': [res.latitude],
+      'longitude': [res.longitude],
+      'event_attendance': [res.event_attendance],
       'start': [res.start, Validators.required],
       'end': [res.end, Validators.required],
-      'description': [res.description, Validators.required],
-      'attend_verification_methods': [res.attend_verification_methods]
+      'poster_url': [res.poster_url, Validators.required],
+      'poster_thumb_url': [res.poster_thumb_url, Validators.required],
+      'description': [res.description],
+      'event_feedback': [res.event_feedback],
+      'event_manager_id': [res.event_manager_id],
+      'attendance_manager_email': [res.attendance_manager_email]
     });
 
-    this.startDatePicker = {
-      utc: true,
-      defaultDate: new Date(res.start * 1000),
-      altInput: true,
-      enableTime: true,
-      altFormat: 'F j, Y h:i K',
-      onChange: function(_, dateStr) {
-        _self.form.controls['start'].setValue(moment(dateStr).valueOf());
-      }
-    };
-
-    this.endDatePicker = {
-      utc: true,
-      defaultDate: new Date(res.end * 1000),
-      altInput: true,
-      enableTime: true,
-      altFormat: 'F j, Y h:i K',
-      onChange: function(_, dateStr) {
-        _self.form.controls['end'].setValue(moment(dateStr).valueOf());
-      }
-    };
+    this.updateDatePicker();
     this.isFormReady = true;
   }
 
-  onPlaceChanged(data) {
-    this.form.controls['address'].setValue(data.name);
-    this.mapCenter = {
-      lat: data.geometry.location.lat(),
-      lng: data.geometry.location.lng()
+  updateDatePicker() {
+    let _self = this;
+
+    this.startdatePickerOpts = {
+      ...COMMON_DATE_PICKER_OPTIONS,
+      defaultDate: new Date(this.form.controls['start'].value * 1000),
+      onClose: function (date) {
+        _self.form.controls['start'].setValue(CPDate.toEpoch(date[0]));
+      }
+    };
+    this.enddatePickerOpts = {
+      ...COMMON_DATE_PICKER_OPTIONS,
+      defaultDate: new Date(this.form.controls['end'].value * 1000),
+      onClose: function (date) {
+        _self.form.controls['end'].setValue(CPDate.toEpoch(date[0]));
+      }
     };
   }
 
   private fetch() {
     super.isLoading().subscribe(res => this.loading = res);
 
+    const event$ = this.eventService.getEventById(this.eventId);
+    const stores$ = this.storeService.getStores().map(res => {
+      const stores = [
+        {
+          'name': 'All Host',
+          'value': null
+        }
+      ];
+      res.forEach(store => {
+        stores.push({
+          'name': store.name,
+          'value': store.id
+        });
+      });
+      return stores;
+    });
+
+    const stream$ = Observable.combineLatest(event$, stores$);
+
     super
-      .fetchData(this.service.getEventById(this.eventId))
+      .fetchData(stream$)
       .then(res => {
-        this.event = res.data;
-        this.buildHeader();
-        this.buildForm(res.data);
-        this.mapCenter = { lat: res.data.latitude, lng: res.data.longitude };
+        this.stores = res.data[1];
+        this.event = res.data[0];
+        this.buildForm(res.data[0]);
+        this.mapCenter = { lat: res.data[0].latitude, lng: res.data[0].longitude };
       })
-      .catch(err => console.error(err));
+      .catch(err => this.errorService.handleError(err));
   }
 
   private buildHeader() {
@@ -119,5 +164,67 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  onFileUpload(file) {
+    this.imageError = null;
+    const fileExtension = CPArray.last(file.name.split('.'));
+
+    if (!CPImage.isSizeOk(file.size, CPImage.MAX_IMAGE_SIZE)) {
+      this.imageError = 'File too Big';
+      return;
+    }
+
+    if (!CPImage.isValidExtension(fileExtension, CPImage.VALID_EXTENSIONS)) {
+      this.imageError = 'Invalid Extension';
+      return;
+    }
+
+    const headers = new Headers();
+    const url = this.eventService.getUploadImageUrl();
+    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
+
+    headers.append('Authorization', auth);
+
+    this
+      .fileUploadService
+      .uploadFile(file, url, headers)
+      .subscribe(
+      res => {
+        this.form.controls['poster_url'].setValue(res.image_url);
+        this.form.controls['poster_thumb_url'].setValue(res.image_url);
+      },
+      err => console.error(err)
+      );
+  }
+
+  toggleEventAttendance(value) {
+    value = value ? 1 : 0;
+
+    if (value === 1) {
+      this.form.controls['event_manager_id'].setValidators(Validators.required);
+      this.form.controls['event_feedback'].setValidators(Validators.required);
+    } else {
+      this.form.controls['event_manager_id'].clearValidators();
+      this.form.controls['event_feedback'].clearValidators();
+    }
+
+    this.form.controls['event_attendance'].setValue(value);
+  }
+
+  onPlaceChange(data) {
+    let cpMap = CPMap.getBaseMapObject(data);
+
+    this.form.controls['city'].setValue(cpMap.city);
+    this.form.controls['province'].setValue(cpMap.province);
+    this.form.controls['country'].setValue(cpMap.country);
+    this.form.controls['latitude'].setValue(cpMap.latitude);
+    this.form.controls['longitude'].setValue(cpMap.longitude);
+    this.form.controls['address'].setValue(`${cpMap.street_number} ${cpMap.street_name}`);
+    this.form.controls['postal_code'].setValue(cpMap.postal_code);
+
+    this.mapCenter = data.geometry.location.toJSON();
+  }
+
+  ngOnInit() {
+    this.dateFormat = FORMAT.DATETIME;
+  }
 }

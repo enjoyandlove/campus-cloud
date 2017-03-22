@@ -5,7 +5,7 @@ import { Headers } from '@angular/http';
 
 import { API } from '../../../../../config/api';
 import { EventsService } from '../events.service';
-import { FileUploadService, ErrorService } from '../../../../../shared/services';
+import { FileUploadService, ErrorService, StoreService } from '../../../../../shared/services';
 import { CPArray, CPImage, CPMap, CPDate, appStorage } from '../../../../../shared/utils';
 
 const COMMON_DATE_PICKER_OPTIONS = {
@@ -21,6 +21,7 @@ const COMMON_DATE_PICKER_OPTIONS = {
   styleUrls: ['./events-create.component.scss']
 })
 export class EventsCreateComponent implements OnInit {
+  stores$;
   mapCenter;
   imageError;
   form: FormGroup;
@@ -32,13 +33,14 @@ export class EventsCreateComponent implements OnInit {
   constructor(
     private router: Router,
     private fb: FormBuilder,
+    private storeService: StoreService,
     private errorService: ErrorService,
     private eventService: EventsService,
     private fileUploadService: FileUploadService
   ) {
     this.form = this.fb.group({
       'title': ['', Validators.required],
-      'store_id': [2756, Validators.required],
+      'store_id': [null, Validators.required],
       'location': [''],
       'room_data': [''],
       'city': [''],
@@ -57,6 +59,22 @@ export class EventsCreateComponent implements OnInit {
       'event_feedback': [null], // 1 => Enabled
       'event_manager_id': [null],
       'attendance_manager_email': [null]
+    });
+
+    this.stores$ = this.storeService.getStores().map(res => {
+      const stores = [
+        {
+          'name': 'All Host',
+          'value': null
+        }
+      ];
+      res.forEach(store => {
+        stores.push({
+          'name': store.name,
+          'value': store.id
+        });
+      });
+      return stores;
     });
   }
 

@@ -44,6 +44,8 @@ export class BaseService {
   update(url: string, data: any) {
     const headers = API.BUILD_COMMON_HEADERS();
 
+    data = CPObj.cleanNullValues(data);
+
     return this
             .http
             .put(url, data, { headers })
