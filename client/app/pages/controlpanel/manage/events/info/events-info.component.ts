@@ -51,10 +51,26 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
 
   private buildHeader(res) {
     let children;
-    if (res.event_attendance) {
+
+    if (EventDate.isPastEvent(res.end)) {
+      if (res.event_attendance) {
+        children = [
+          {
+            'label': 'Attendance',
+            'url': `/manage/events/${this.eventId}`
+          },
+          {
+            'label': 'Info',
+            'url': `/manage/events/${this.eventId}/info`
+          }
+        ];
+      } else {
+        children = [];
+      }
+    } else {
       children = [
         {
-          'label': 'Attendance',
+          'label': res.event_attendance ? 'Attendance' : 'Event',
           'url': `/manage/events/${this.eventId}`
         },
         {
@@ -62,15 +78,14 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
           'url': `/manage/events/${this.eventId}/info`
         }
       ];
-    } else {
-      children = [];
     }
+
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
         'heading': res.title,
         'subheading': '',
-        'children': [ ...children ]
+        'children': [...children]
       }
     });
   }

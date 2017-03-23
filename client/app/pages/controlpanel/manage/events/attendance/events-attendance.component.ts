@@ -3,13 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
-import {
-  IHeader,
-  HEADER_UPDATE
-} from '../../../../../reducers/header.reducer';
+import { EventDate } from '../utils';
 import { EventsService } from '../events.service';
 import { CPDate } from '../../../../../shared/utils/date';
 import { BaseComponent } from '../../../../../base/base.component';
+import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
 
 @Component({
@@ -54,10 +52,26 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
 
   private buildHeader(res) {
     let children;
-    if (res.event_attendance) {
+
+    if (EventDate.isPastEvent(res.end)) {
+      if (res.event_attendance) {
+        children = [
+          {
+            'label': 'Attendance',
+            'url': `/manage/events/${this.eventId}`
+          },
+          {
+            'label': 'Info',
+            'url': `/manage/events/${this.eventId}/info`
+          }
+        ];
+      } else {
+        children = [];
+      }
+    } else {
       children = [
         {
-          'label': 'Attendance',
+          'label': res.event_attendance ? 'Attendance' : 'Event',
           'url': `/manage/events/${this.eventId}`
         },
         {
@@ -65,15 +79,15 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
           'url': `/manage/events/${this.eventId}/info`
         }
       ];
-    } else {
-      children = [];
     }
+
+
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
         'heading': res.title,
         'subheading': '',
-        'children': [ ...children ]
+        'children': [...children]
       }
     });
   }
