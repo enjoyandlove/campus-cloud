@@ -13,14 +13,14 @@
           <a [href]="event.qr_img_url"
             target="_blank"
             class="cpbtn cpbtn--secondary" i18n
-            *ngIf="event.event_attendance">
+            *ngIf="event.event_attendance === 1">
             Print QR Code
           </a>
 
           <button
             type="button"
             class="cpbtn cpbtn--primary" i18n
-            *ngIf="event.event_attendance">
+            *ngIf="event.event_attendance === 1">
             Start Web Check-in
           </button>
         </div>

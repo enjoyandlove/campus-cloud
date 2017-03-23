@@ -26,7 +26,7 @@ export class BaseService {
             .http
             .get(url, { headers, ...opts })
             .throttleTime(10000)
-            .retry()
+            .retry(1)
             .catch(err => this.catchError(err));
   }
 
@@ -39,7 +39,7 @@ export class BaseService {
             .http
             .post(url, data, { headers })
             .throttleTime(10000)
-            .retry()
+            .retry(1)
             .catch(err => this.catchError(err));
   }
 
@@ -52,7 +52,7 @@ export class BaseService {
             .http
             .put(url, data, { headers })
             .throttleTime(10000)
-            .retry()
+            .retry(1)
             .catch(err => this.catchError(err));
   }
 
@@ -63,7 +63,7 @@ export class BaseService {
             .http
             .delete(url, { headers })
             .throttleTime(10000)
-            .retry()
+            .retry(1)
             .catch(err => this.catchError(err));
   }
 

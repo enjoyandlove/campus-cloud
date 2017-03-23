@@ -56,7 +56,6 @@ export class EventsListComponent extends BaseComponent implements OnInit, OnDest
       .fetchData(stream$)
       .then(res => {
         this.state = Object.assign({}, this.state, { events: res.data });
-        console.log(this.state);
       })
       .catch(err => console.error(err));
   }

@@ -40,11 +40,10 @@
       </div>
     </div>
 
-    <div *ngIf="!state.events.length">
-      <cp-no-content
-        noContentText="No events found...">
-      </cp-no-content>
-    </div>
+    <cp-no-content
+      *ngIf="!state.events.length"
+      noContentText="No events found...">
+    </cp-no-content>
   </div>
 </div>
 

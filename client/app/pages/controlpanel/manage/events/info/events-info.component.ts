@@ -22,7 +22,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   mapCenter;
   loading = true;
   eventId: number;
-  isUpcomingEvent = EventDate.isUpcomingEvent;
+  isEventOver = EventDate.isPastEvent;
 
   constructor(
     private store: Store<IHeader>,
@@ -53,7 +53,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
     let children;
 
     if (EventDate.isPastEvent(res.end)) {
-      if (res.event_attendance) {
+      if (res.event_attendance === 1) {
         children = [
           {
             'label': 'Attendance',
@@ -70,7 +70,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
     } else {
       children = [
         {
-          'label': res.event_attendance ? 'Attendance' : 'Event',
+          'label': res.event_attendance === 1 ? 'Attendance' : 'Event',
           'url': `/manage/events/${this.eventId}`
         },
         {

@@ -52,7 +52,16 @@
                  event.store_logo_url">
 
           <strong>
-            <a [routerLink]="[event.id]">{{ event.title }}</a>
+            <a
+              [routerLink]="[event.id]"
+              *ngIf="event.event_attendance === 1">
+              {{ event.title }}
+            </a>
+            <a
+              [routerLink]="[event.id + '/info']"
+              *ngIf="event.event_attendance === 0">
+              {{ event.title }}
+            </a>
           </strong>
           <br>
           {{ event.description }}
@@ -67,7 +76,7 @@
         <span class="col-sm-2 col-xs-12 text-truncate">
           <button
             type="button"
-            *ngIf="event.event_attendance"
+            *ngIf="event.event_attendance === 1"
             class="cpbtn cpbtn--secondary" i18n>
             Start Web Check-in
           </button>

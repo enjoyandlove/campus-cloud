@@ -35,8 +35,8 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     this.fetch();
   }
 
-  private isUpcomingEvent(startDate) {
-    return startDate > CPDate.toEpoch(new Date());
+  private isEventOver(endDate) {
+    return endDate > CPDate.toEpoch(new Date());
   }
 
   private fetch() {
@@ -45,16 +45,17 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       .then(res => {
         this.event = res.data;
         this.buildHeader(res.data);
-        this.isUpcoming = this.isUpcomingEvent(this.event.start);
+        this.isUpcoming = this.isEventOver(this.event.end);
       })
       .catch(err => console.error(err));
   }
 
   private buildHeader(res) {
+    console.log(res);
     let children;
 
     if (EventDate.isPastEvent(res.end)) {
-      if (res.event_attendance) {
+      if (res.event_attendance === 1) {
         children = [
           {
             'label': 'Attendance',
@@ -71,7 +72,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     } else {
       children = [
         {
-          'label': res.event_attendance ? 'Attendance' : 'Event',
+          'label': res.event_attendance === 1 ? 'Attendance' : 'Event',
           'url': `/manage/events/${this.eventId}`
         },
         {

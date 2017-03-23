@@ -2,9 +2,9 @@
 @import '~styles/components/table';
 @import '~styles/components/button';
 
-.header,
+
 .actions {
-  @include card-margin();
+  margin-top: 25px;
 }
 
 .header {
