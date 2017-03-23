@@ -155,7 +155,7 @@ export class EventsCreateComponent implements OnInit {
       .createEvent(this.form.value)
       .subscribe(
         res => {
-          this.router.navigate(['../' + res.id]);
+          this.router.navigate(['/manage/events/' + res.id]);
         },
         err => this.errorService.handleError(err)
       );
