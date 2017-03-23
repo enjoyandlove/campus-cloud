@@ -2,13 +2,13 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 interface IState {
   event_manager: number;
-  event_attendance: boolean;
+  event_attendance: number;
   attendance_manager: string;
   event_attendance_feedback: number;
 }
 
 const actionState = {
-  event_attendance: false,
+  event_attendance: 0,
   event_manager: null,
   attendance_manager: null,
   event_attendance_feedback: 2
@@ -31,35 +31,50 @@ export class EventsImportActionDropdownComponent implements OnInit {
   constructor() { }
 
   toggleEventAttendance() {
-    this.state = Object.assign({}, this.state,
-    { event_attendance: !this.state.event_attendance });
+    let value = this.state.event_attendance === 0 ? 1 : 0;
+
+    this.state = Object.assign(
+      {},
+      this.state,
+      { event_attendance: value }
+    );
     return;
   }
 
   updateEventManager(manager) {
-    this.state = Object.assign({}, this.state,
-    { event_manager: manager });
+    this.state = Object.assign(
+      {},
+      this.state,
+      { event_manager: manager });
     return;
   }
 
   updateAttendanceManager(manager) {
-    this.state = Object.assign({}, this.state,
-    { attendance_manager: manager });
+    this.state = Object.assign(
+      {},
+      this.state,
+      { attendance_manager: manager });
     return;
   }
 
   updateAttendanceFeedback(feedback) {
-    this.state = Object.assign({}, this.state,
-    { event_attendance_feedback: feedback });
+    this.state = Object.assign(
+      {},
+      this.state,
+      { event_attendance_feedback: feedback });
     return;
   }
 
   defaultState() {
-    this.state = Object.assign({}, this.state, actionState);
+    this.state = Object.assign(
+      {},
+      this.state,
+      actionState);
+    return;
   }
 
   doSubmit() {
-    if (!this.state.event_attendance) {
+    if (this.state.event_attendance === 0) {
       this.defaultState();
     }
 
