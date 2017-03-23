@@ -1,6 +1,7 @@
 @import '~styles/core/colors';
 @import '~styles/components/card';
 @import '~styles/components/form';
+@import '~styles/core/typography';
 
 .maps {
   height: 200px;
@@ -17,10 +18,26 @@
 }
 
 form {
-  em {
-    margin: 10px 0;
+  .margin-top {
+    margin-top: 24px;
+  }
+
+  label.no-margin {
+    margin: 0;
+  }
+
+  p.title {
+    @include font-24px();
+    @include font-bold();
+
+    margin: 0;
     display: inline-block;
   }
+
+  .event-details {
+    margin-top: 40px;
+  }
+
   label {
     margin-top: 10px;
     display: inline-block;

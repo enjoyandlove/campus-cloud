@@ -24,8 +24,10 @@
 }
 
 label {
+  @include font-semi-bold();
+
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
 
   &.error {
     height: 35px;
