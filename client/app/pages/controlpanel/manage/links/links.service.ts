@@ -1,13 +1,14 @@
 import { Http, URLSearchParams } from '@angular/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { API } from '../../../../config/api';
 import { BaseService } from '../../../../base/base.service';
 
 @Injectable()
 export class LinksService extends BaseService {
-  constructor(http: Http) {
-    super(http);
+  constructor(http: Http, router: Router) {
+    super(http, router);
 
     Object.setPrototypeOf(this, LinksService.prototype);
   }

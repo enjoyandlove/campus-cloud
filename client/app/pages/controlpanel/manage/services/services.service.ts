@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Http, URLSearchParams } from '@angular/http';
 
@@ -9,8 +10,8 @@ const mockServices = require('./mock.json');
 
 @Injectable()
 export class ServicesService extends BaseService {
-  constructor(http: Http) {
-    super(http);
+  constructor(http: Http, router: Router) {
+    super(http, router);
 
     Object.setPrototypeOf(this, ServicesService.prototype);
   }

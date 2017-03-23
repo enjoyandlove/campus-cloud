@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
+import { Router } from '@angular/router';
 
 // import { API } from '../../../config/api';
 import { BaseService } from '../../../base/base.service';
@@ -7,8 +8,8 @@ import { BaseService } from '../../../base/base.service';
 
 @Injectable()
 export class AccountService extends BaseService {
-  constructor(http: Http) {
-    super(http);
+  constructor(http: Http, router: Router) {
+    super(http, router);
 
     Object.setPrototypeOf(this, AccountService.prototype);
   }

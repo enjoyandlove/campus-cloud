@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
 import { Http, URLSearchParams } from '@angular/http';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { API } from '../../../../config/api';
@@ -9,8 +10,8 @@ import { EVENTS_MODAL_SET } from '../../../../reducers/events-modal.reducer';
 
 @Injectable()
 export class EventsService extends BaseService {
-  constructor(http: Http, private store: Store<any>) {
-    super(http);
+  constructor(http: Http, router: Router, private store: Store<any>) {
+    super(http, router);
 
     Object.setPrototypeOf(this, EventsService.prototype);
   }

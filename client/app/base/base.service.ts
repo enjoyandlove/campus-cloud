@@ -16,7 +16,7 @@ import { CPObj, appStorage } from '../shared/utils';
 export class BaseService {
   constructor(
     private http: Http,
-    private router?: Router
+    private router: Router
   ) { }
 
   get(url: string, opts?: RequestOptionsArgs) {
@@ -25,7 +25,8 @@ export class BaseService {
     return this
             .http
             .get(url, { headers, ...opts })
-            .debounceTime(10000)
+            .throttleTime(10000)
+            .retry()
             .catch(err => this.catchError(err));
   }
 
@@ -37,7 +38,8 @@ export class BaseService {
     return this
             .http
             .post(url, data, { headers })
-            .debounceTime(10000)
+            .throttleTime(10000)
+            .retry()
             .catch(err => this.catchError(err));
   }
 
@@ -49,7 +51,8 @@ export class BaseService {
     return this
             .http
             .put(url, data, { headers })
-            .debounceTime(10000)
+            .throttleTime(10000)
+            .retry()
             .catch(err => this.catchError(err));
   }
 
@@ -59,18 +62,32 @@ export class BaseService {
     return this
             .http
             .delete(url, { headers })
-            .debounceTime(10000)
+            .throttleTime(10000)
+            .retry()
             .catch(err => this.catchError(err));
   }
 
   private catchError(err) {
-    // if session key is expired
-    if (err.status === 401) {
-      appStorage.clear();
-      this.router.navigate(['/login']);
-      return;
-    }
+    switch (err.status) {
+      case 401:
+        appStorage.clear();
+        this.router.navigate(['/login']);
+        break;
 
-    return Observable.throw(err);
+      case 404:
+        this.router.navigate(['../']);
+        break;
+
+      case 403:
+        this.router.navigate(['../']);
+        break;
+
+      case 500:
+        this.router.navigate(['/dashboard']);
+        break;
+
+      default:
+        return Observable.throw(err);
+    }
   }
 }
