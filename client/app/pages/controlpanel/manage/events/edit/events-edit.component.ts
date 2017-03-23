@@ -96,7 +96,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       'event_manager_id': [res.event_manager_id],
       'attendance_manager_email': [res.attendance_manager_email]
     });
-
+    console.log(this.form);
     this.updateDatePicker();
     this.isFormReady = true;
   }

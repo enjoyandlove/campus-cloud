@@ -1,4 +1,5 @@
 import {
+  Input,
   NgZone,
   OnInit,
   Output,
@@ -17,6 +18,8 @@ declare var google: any;
   styleUrls: ['./cp-place-autocomplete.component.scss']
 })
 export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
+  @Input() placeHolder: string;
+  @Input() defaultValue: string;
   @Output() placeChange: EventEmitter<any> = new EventEmitter();
   @ViewChild('input') input: ElementRef;
 
@@ -28,6 +31,8 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
     const input = this.input.nativeElement;
     const autocomplete = new google.maps.places.Autocomplete(input);
 
+    input.value = this.defaultValue ? this.defaultValue : null;
+
     autocomplete.addListener('place_changed', () => {
       this.zone.run(() => {
         this.placeChange.emit(autocomplete.getPlace());
@@ -35,5 +40,7 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    // console.log(this);
+  }
 }

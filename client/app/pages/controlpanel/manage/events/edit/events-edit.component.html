@@ -115,7 +115,9 @@
                   <div class="col-xs-6 col-sm-4">
                     <div class="form-group">
                       <cp-place-autocomplete
-                        (placeChange)="onPlaceChange($event)">
+                        placeHolder="Location..."
+                        (placeChange)="onPlaceChange($event)"
+                        [defaultValue]="form.controls.address.value">
                       </cp-place-autocomplete>
                     </div>
                   </div>
@@ -140,7 +142,6 @@
             <p class="title" i18n>Event Attendance</p>
             <span class="pull-right">
               <cp-switch
-                id="attendance_switch"
                 (toggle)="toggleEventAttendance($event)"
                 [isChecked]="form.controls.event_attendance.value">
               </cp-switch>
