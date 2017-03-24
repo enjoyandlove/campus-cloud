@@ -22,7 +22,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   mapCenter;
   loading = true;
   eventId: number;
-  isEventOver = EventDate.isPastEvent;
+  isPastEvent = EventDate.isPastEvent;
 
   constructor(
     private store: Store<IHeader>,

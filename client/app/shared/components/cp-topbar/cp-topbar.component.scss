@@ -17,7 +17,7 @@ nav {
     top: 7px;
     width: 40px;
     height: 40px;
-    position: fixed;
+    position: relative;
     display: inline-block;
     background: #f4f4f4;
   }
@@ -32,7 +32,7 @@ nav {
     }
 
     &.nav__links {
-      padding-left: 75px;
+      padding-left: 40px;
     }
 
     &:not(.nav__links) {
