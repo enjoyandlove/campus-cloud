@@ -72,7 +72,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
       .then(res => {
         this.buildForm();
         this.buildHeader();
-        this.stores = res;
+        this.stores = res.data;
       })
       .catch(err => console.error(err));
   }

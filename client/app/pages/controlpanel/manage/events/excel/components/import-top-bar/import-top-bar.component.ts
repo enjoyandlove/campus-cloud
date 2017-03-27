@@ -54,7 +54,7 @@ export class EventsImportTopBarComponent extends BaseComponent implements OnInit
 
     super
       .fetchData(stores$)
-      .then(res => this.stores = res)
+      .then(res => this.stores = res.data)
       .catch(err => console.error(err));
   }
 

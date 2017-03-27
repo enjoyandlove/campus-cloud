@@ -15,7 +15,7 @@ export class AuthService {
     headers.set('Authorization', authorization);
     headers.set('Content-Type', 'application/x-www-form-urlencoded');
 
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SESSION}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SESSION}/`;
 
     return this.http.post(url, {}, { headers }).map(res => res.json());
   }
@@ -28,7 +28,7 @@ export class AuthService {
     headers.set('Authorization', authorization);
     headers.set('Content-Type', 'application/json');
 
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.P_RESET}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.P_RESET}/`;
 
     return this.http.put(url, body, { headers }).map(res => res);
   }

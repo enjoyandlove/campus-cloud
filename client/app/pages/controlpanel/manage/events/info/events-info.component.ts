@@ -22,7 +22,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   mapCenter;
   loading = true;
   eventId: number;
-  isUpcomingEvent = EventDate.isUpcomingEvent;
+  isPastEvent = EventDate.isPastEvent;
 
   constructor(
     private store: Store<IHeader>,
@@ -42,19 +42,35 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
     super
       .fetchData(this.service.getEventById(this.eventId))
       .then(res => {
-        this.event = res;
-        this.buildHeader(res);
-        this.mapCenter = { lat: res.latitude, lng: res.longitude };
+        this.event = res.data;
+        this.buildHeader(res.data);
+        this.mapCenter = { lat: res.data.latitude, lng: res.data.longitude };
       })
       .catch(err => console.error(err));
   }
 
   private buildHeader(res) {
     let children;
-    if (res.attend_verification_methods.length) {
+
+    if (EventDate.isPastEvent(res.end)) {
+      if (res.event_attendance === 1) {
+        children = [
+          {
+            'label': 'Attendance',
+            'url': `/manage/events/${this.eventId}`
+          },
+          {
+            'label': 'Info',
+            'url': `/manage/events/${this.eventId}/info`
+          }
+        ];
+      } else {
+        children = [];
+      }
+    } else {
       children = [
         {
-          'label': 'Attendance',
+          'label': res.event_attendance === 1 ? 'Attendance' : 'Event',
           'url': `/manage/events/${this.eventId}`
         },
         {
@@ -62,15 +78,14 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
           'url': `/manage/events/${this.eventId}/info`
         }
       ];
-    } else {
-      children = [];
     }
+
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
         'heading': res.title,
         'subheading': '',
-        'children': [ ...children ]
+        'children': [...children]
       }
     });
   }

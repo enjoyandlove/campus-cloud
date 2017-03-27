@@ -57,7 +57,7 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
   fetch(stream$) {
     super
     .fetchData(stream$)
-    .then(res => this.updateState(res))
+    .then(res => this.updateState(res.data))
     .catch(err => console.log(err));
   }
 
