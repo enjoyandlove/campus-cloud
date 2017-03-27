@@ -13,14 +13,16 @@ import {
   alertReducer,
   mobileReducer,
   headerReducer,
-  eventsModalReducer
+  eventsModalReducer,
+  servicesModalReducer
 } from '../../reducers';
 
 const APP_STATE_MODULE = StoreModule.provideStore({
   ALERT: alertReducer,
   HEADER: headerReducer,
   MOBILE: mobileReducer,
-  EVENTS_MODAL: eventsModalReducer
+  EVENTS_MODAL: eventsModalReducer,
+  SERVICES_MODAL: servicesModalReducer
 });
 
 export const APP_MODULES = [ APP_STATE_MODULE, HttpModule, FormsModule, BrowserModule,

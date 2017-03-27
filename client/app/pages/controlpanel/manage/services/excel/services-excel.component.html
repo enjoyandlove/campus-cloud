@@ -1,0 +1,98 @@
+<div *ngIf="isFormReady">
+  <div class="row">
+    <cp-import-top-bar
+      (deleteServices)="onBulkDelete()"
+      (checkAll)="onCheckAll($event)"
+      (imageChange)="onImageBulkChange($event)"
+      (categoryChange)="onCategoryBulkChange($event)">
+    </cp-import-top-bar>
+  </div>
+
+  <div class="row margin-bottom">
+    <div class="col-xs-12">
+      <form [formGroup]="form" class="form">
+        <div formArrayName="services">
+          <div class="row">
+            <div class="col-xs-12">
+              <cp-no-content
+                noContentText="No Services to Add..."
+                *ngIf="!form.controls.services.controls.length">
+              </cp-no-content>
+            </div>
+          </div>
+          <div
+            class="row cp-form"
+            *ngFor="let service of form.controls.services.controls; let i=index">
+            <div [formGroupName]="i" class="col-xs-12">
+              <div class="row form__item">
+                <div class="col-xs-12 col-sm-4 text-truncate">
+                  <div class="row margin-top">
+                    <div class="col-xs-12 col-sm-3 no-left-padding">
+                      <cp-checkbox
+                        class="checkbox pull-left"
+                        [isChecked]="isChecked[i].checked"
+                        (toggle)="onSingleCheck($event, i)">
+                      </cp-checkbox>
+
+                      <div class="service__avatar">
+                        <div
+                          *ngIf="!service.controls.logo_url.value"
+                          class="placeholder placeholder--small text-center">
+                          <i class="material-icons">image</i>
+                        </div>
+                        <img
+                          *ngIf="service.controls.logo_url.value"
+                          class="img-responsive img-rounded"
+                          [src]="service.controls.logo_url.value">
+                      </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-8 no-left-padding text-truncate">
+                      <span class="service__title">
+                        <strong>{{ service.controls.name.value }}</strong>
+                      </span>
+                      <br>
+                      <span class="service__description">
+                        {{ service.controls.description.value }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-3">
+                  <label i18n>Category</label>
+                  <cp-dropdown
+                    [items]="stores"
+                    (selected)="onSingleCategorySelected($event, i)"
+                    [selectedItem]="service.controls['category_id'].value">
+                  </cp-dropdown>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="pull-right">
+            <a [routerLink]="['/manage/services']"
+              class="cpbtn cpbtn--tall cpbtn--cancel" i18n>
+              Cancel
+            </a>
+            <button
+              type="button"
+              (click)="onSubmit()"
+              class="cpbtn cpbtn--tall cpbtn--primary" i18n
+              [disabled]="!form.controls.services.controls.length">
+              Import Services
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

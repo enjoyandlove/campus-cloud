@@ -6,44 +6,40 @@ import { Store } from '@ngrx/store';
 import { StoreService } from '../../../../../shared/services';
 import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE, HEADER_DEFAULT } from '../../../../../reducers/header.reducer';
-import { CPDate } from '../../../../../shared/utils/date';
-
 
 @Component({
-  selector: 'cp-events-excel',
-  templateUrl: './events-excel.component.html',
-  styleUrls: ['./events-excel.component.scss']
+  selector: 'cp-services-excel',
+  templateUrl: './services-excel.component.html',
+  styleUrls: ['./services-excel.component.scss']
 })
-export class EventsExcelComponent extends BaseComponent implements OnInit, OnDestroy {
-  events;
+export class ServicesExcelComponent extends BaseComponent implements OnInit, OnDestroy {
   stores;
-  mockDropdown;
-  eventManagers;
+  services;
   isChecked = [];
   loading = false;
   form: FormGroup;
   isFormReady = false;
-  buttonDropdownOptions;
+  // buttonDropdownOptions;
   eventAttendanceFeedback;
 
   constructor(
     private fb: FormBuilder,
     private store: Store<any>,
     private storeService: StoreService
-    // private service: EventsService
+    // private service: servicesService
   ) {
     super();
     this
       .store
-      .select('EVENTS_MODAL')
+      .select('SERVICES_MODAL')
       .subscribe(
-        (res) => {
-          this.events = res;
-          // this.events = require('./mock.json');
-          this.fetch();
-        },
-        err => console.log(err)
-    );
+      (_) => {
+        // this.services = res;
+        this.services = require('./mock.json');
+        this.fetch();
+      },
+      err => console.log(err)
+      );
   }
 
   private fetch() {
@@ -63,6 +59,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
           'action': store.id
         });
       });
+
       return stores;
     });
 
@@ -80,8 +77,8 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': 'Import Events from Excel',
-        'em': `${this.events.length} calendar event(s) data information in the file`,
+        'heading': 'Import Services from Excel',
+        'em': `${this.services.length} student service(s) data information in the file`,
         'children': []
       }
     });
@@ -89,16 +86,16 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
 
   private buildForm() {
     this.form = this.fb.group({
-      'events': this.fb.array([])
+      'services': this.fb.array([])
     });
     this.buildGroup();
   }
 
   private buildGroup() {
-    const control = <FormArray>this.form.controls['events'];
+    const control = <FormArray>this.form.controls['services'];
 
-    this.events.forEach((event, index) => {
-      control.push(this.buildEventControl(event));
+    this.services.forEach((service, index) => {
+      control.push(this.buildServiceControl(service));
       this.isChecked.push({ index, checked: false });
     });
 
@@ -106,30 +103,21 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
   }
 
   removeControl(index) {
-    const control = <FormArray>this.form.controls['events'];
+    const control = <FormArray>this.form.controls['services'];
     control.removeAt(index);
   }
 
-  buildEventControl(event) {
+  buildServiceControl(service) {
     return this.fb.group({
-      'store_id': ['', Validators.required],
-      'room': [event.room, Validators.required],
-      'title': [event.title, Validators.required],
-      'event_poster': [null, Validators.required],
-      'location': [event.location, Validators.required],
-      'description': [event.description, Validators.required],
-      'end': [CPDate.toEpoch(event.end_date), Validators.required],
-      'start': [CPDate.toEpoch(event.start_date), Validators.required],
-      // these controls are only required when event attendance is true
-      'attendance_manager': [null],
-      'event_manager': [this.eventManagers[0]],
-      'event_attendance': [true, Validators.required],
-      'event_attendance_feedback': [this.eventAttendanceFeedback[1]],
+      'name': [service.service_name, Validators.required],
+      'description': [service.description, Validators.required],
+      'email': [service.service_email, Validators.required],
+      'admin_email': [service.admin_email, Validators.required],
+      'phone_number': [service.phone_number, Validators.required],
+      'website': [service.website, Validators.required],
+      'category_id': [null, Validators.required],
+      'logo_url': [null, Validators.required],
     });
-  }
-
-  updateEventManager(manager) {
-    console.log(manager);
   }
 
   onBulkDelete() {
@@ -145,11 +133,11 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
       _isChecked.push(item);
     });
 
-    this.isChecked = [ ..._isChecked ];
+    this.isChecked = [..._isChecked];
   }
 
   onBulkChange(actions) {
-    const control = <FormArray>this.form.controls['events'];
+    const control = <FormArray>this.form.controls['services'];
 
     this.isChecked.map(item => {
 
@@ -163,14 +151,13 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
 
       return item;
     });
-    console.log(actions);
   }
 
-  onSingleHostSelected(host, index) {
-    const controls = <FormArray>this.form.controls['events'];
+  onSingleCategorySelected(category, index) {
+    const controls = <FormArray>this.form.controls['services'];
     const control = <FormGroup>controls.controls[index];
 
-    control.controls['store_id'].setValue(host.action);
+    control.controls['category_id'].setValue(category);
   }
 
   onSingleCheck(checked, index) {
@@ -195,12 +182,12 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     this.isChecked = [..._isChecked];
   }
 
-  onHostBulkChange(store_id) {
-    this.onBulkChange({ store_id });
+  onCategoryBulkChange(category_id) {
+    this.onBulkChange({ category_id });
   }
 
-  onImageBulkChange(event_poster) {
-    this.onBulkChange({ event_poster });
+  onImageBulkChange(logo_url) {
+    this.onBulkChange({ logo_url });
   }
 
   onSubmit() {
@@ -209,38 +196,10 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     // console.log(this.form.value);
   }
 
-  toggleSingleEventAttendance(checked, index) {
-    const controls = <FormArray>this.form.controls['events'];
-    const control = <FormGroup>controls.controls[index];
-
-    control.controls['event_attendance'].setValue(checked);
-  }
-
   ngOnDestroy() {
     this.store.dispatch({ type: HEADER_DEFAULT });
   }
 
   ngOnInit() {
-    this.eventAttendanceFeedback = [
-      {
-        'label': 'Enabled',
-        'event': 1
-      },
-      {
-        'label': 'Disabled',
-        'event': 2
-      }
-    ];
-
-    this.eventManagers = [
-      {
-        'label': 'Dummy',
-        'event': 16776
-      },
-      {
-        'label': 'Hello',
-        'event': 16776
-      }
-    ];
   }
 }

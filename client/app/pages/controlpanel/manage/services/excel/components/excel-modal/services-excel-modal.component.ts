@@ -62,7 +62,7 @@ export class ServicesExcelModalComponent implements OnInit {
 
     if (!validation.length) {
       const ENV = process.env.ENV;
-      const url = ENV === 'production' ? '/events/excel' : 'http://localhost:8000/events/excel';
+      const url = ENV === 'production' ? '/services/excel' : 'http://localhost:8000/services/excel';
       this
       .fileService
       .uploadFile(file, url)
