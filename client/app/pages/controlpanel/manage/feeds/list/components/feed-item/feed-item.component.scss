@@ -1,6 +1,57 @@
+@import '~styles/core/colors';
 @import '~styles/components/card';
+@import '~styles/components/button';
 
 :host {
   display: block;
   @include card-margin();
+}
+
+.avatar {
+  margin-right: 8px;
+  display: inline-block;
+
+  &--small {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+.feed {
+  &__footer {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    position: absolute;
+    padding-right: 20px;
+
+    span {
+      margin-right: 25px;
+      color: $color-secondary-text;
+
+      i {
+        font-size: 18px;
+        margin-right: 3px;
+        vertical-align: -4px;
+        display: inline-block;
+      }
+
+      &.flag {
+        color: $color-danger;
+      }
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
+  &__body {
+    margin-top: 14px;
+    position: relative;
+  }
+
+  &__message {
+    height: 144px;
+  }
 }

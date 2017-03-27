@@ -1,5 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+import { CPDate } from '../../../../../../../shared/utils';
+import { FORMAT } from '../../../../../../../shared/pipes/date.pipe';
+
 @Component({
   selector: 'cp-feed-item',
   templateUrl: './feed-item.component.html',
@@ -7,8 +10,12 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class FeedItemComponent implements OnInit {
   @Input() feed: any;
+  CPDate = CPDate;
+  FORMAT = FORMAT.SHORT;
 
   constructor() { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    console.log(this);
+  }
 }
