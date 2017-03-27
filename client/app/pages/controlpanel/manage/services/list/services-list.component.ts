@@ -30,7 +30,7 @@ export class ServicesListComponent extends BaseComponent implements OnInit, OnDe
     super
       .fetchData(stream$)
       .then(res => {
-        this.services = res;
+        this.services = res.data;
       })
       .catch(err => console.error(err));
   }
@@ -40,6 +40,14 @@ export class ServicesListComponent extends BaseComponent implements OnInit, OnDe
       type: HEADER_UPDATE,
       payload: require('../../manage.header.json')
     });
+  }
+
+  onPaginationNext() {
+    super.goToNext();
+  }
+
+  onPaginationPrevious() {
+    super.goToPrevious();
   }
 
   doFilter(state) {

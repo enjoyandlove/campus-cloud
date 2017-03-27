@@ -4,8 +4,8 @@
       <div class="cp-card">
         <div class="row">
           <div class="col-xs-12">
-            <em i18n>Event Photo</em>
-            <div class="row">
+            <p class="title" i18n>Event Photo</p>
+            <div class="row margin-top">
               <div class="col-xs-3 event-image">
                 <div
                   class="placeholder text-center"
@@ -17,7 +17,7 @@
                   [src]="form.controls['poster_url'].value" class="img-rounded img-responsive">
               </div>
               <div class="col-xs-9">
-                <small i18n><strong>Upload your photo</strong></small>
+                <label class="no-margin" i18n>Upload your photo</label>
                 <p class="text-muted" i18n>.png, .jpg, .jpeg with maximum file size of 5MB</p>
                 <p *ngIf="imageError">
                   <label class="error"><span>&#x26A0;</span> {{ imageError }}</label>
@@ -33,10 +33,10 @@
           </div>
         </div>
 
-        <div class="row">
+        <div class="row event-details">
           <div class="col-xs-12">
-            <em i18n>Event Details</em>
-            <div class="form-group">
+            <p class="title" i18n>Event Details</p>
+            <div class="form-group margin-top">
               <label i18n>Event Name</label>
               <input
                 type="text"
@@ -46,24 +46,32 @@
                 [class.error]="formError && form.controls['title'].hasError('required')">
             </div>
 
-            <div class="form-group">
-              <label i18n>Select Host</label>
-              <select
-                class="form-control"
-                formControlName="store_id"
-                [class.error]="formError && form.controls['store_id'].hasError('required')">
-                <option value="" i18n>ABC Host</option>
-              </select>
+            <div class="row form-group">
+              <div class="col-xs-6">
+                <label i18n>Select Host</label>
+                <select
+                  class="form-control"
+                  formControlName="store_id"
+                  [class.error]="formError && form.controls['store_id'].hasError('required')">
+                  <option [value]="store.value" *ngFor="let store of stores$ | async">{{ store.name }}</option>
+                </select>
+              </div>
             </div>
 
-            <div class="row">
+            <div class="row form-group">
               <div class="col-xs-12 col-sm-6">
                 <label i18n>Start</label>
-                <cp-datepicker [options]="datePickerOpts"></cp-datepicker>
+                <cp-datepicker
+                  [options]="startdatePickerOpts"
+                  [error]="formError && form.controls['start'].hasError('required')">
+                </cp-datepicker>
               </div>
               <div class="col-xs-12 col-sm-6">
                 <label i18n>End</label>
-                <cp-datepicker [options]="datePickerOpts"></cp-datepicker>
+                <cp-datepicker
+                  [options]="enddatePickerOpts"
+                  [error]="formError && form.controls['end'].hasError('required')">
+                </cp-datepicker>
               </div>
             </div>
 
@@ -71,8 +79,7 @@
               <label i18n>Description</label>
               <textarea
                 formControlName="description"
-                placeholder="Tell people more about the event"
-                [class.error]="formError && form.controls['description'].hasError('required')">
+                placeholder="Tell people more about the event">
               </textarea>
             </div>
 
@@ -86,8 +93,7 @@
                         type="text"
                         class="form-control"
                         placeholder="Building"
-                        formControlName="location"
-                        [class.error]="formError && form.controls['location'].hasError('required')">
+                        formControlName="location">
                     </div>
                   </div>
 
@@ -97,19 +103,12 @@
                         type="text"
                         class="form-control"
                         placeholder="Room"
-                        formControlName="room_data"
-                        [class.error]="formError && form.controls['room_data'].hasError('required')">
+                        formControlName="room_data">
                     </div>
                   </div>
 
                   <div class="col-xs-6 col-sm-4">
                     <div class="form-group">
-                      <!--<input
-                        type="text"
-                        class="form-control"
-                        placeholder="Address"
-                        formControlName="address"
-                        [class.error]="formError && form.controls['address'].hasError('required')">-->
                       <cp-place-autocomplete
                         (placeChange)="onPlaceChange($event)">
                       </cp-place-autocomplete>
@@ -133,23 +132,27 @@
       <div class="cp-card">
         <div class="row">
           <div class="col-xs-12">
-            <em i18n>Event Attendance</em>
+            <p class="title" i18n>Event Attendance</p>
             <span class="pull-right">
               <cp-switch
                 [id]="attendance"
-                (toggle)="attendance = !attendance">
+                (toggle)="attendance = !attendance"
+                (toggle)="toggleEventAttendance($event)">
               </cp-switch>
             </span>
           </div>
         </div>
 
         <div *ngIf="attendance">
-          <div class="row">
+          <div class="row margin-top">
             <div class="col-xs-12 col-sm-6">
               <div class="form-group">
                 <label i18n>Event Manager <span class="tooltip">&#63;</span></label>
-                <select class="form-control">
-                  <option value="">---</option>
+                <select
+                  class="form-control"
+                  formControlName="event_manager_id"
+                  [class.error]="formError && form.controls['event_manager_id'].hasError('required')">
+                  <option value="16685">Dummy User</option>
                 </select>
               </div>
             </div>
@@ -159,7 +162,11 @@
                   Attendance Manager (optional)
                   <span class="tooltip">&#63;</span>
                 </label>
-                <input type="text" class="form-control" placeholder="example@mail.com">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="example@mail.com"
+                  formControlName="attendance_manager_email">
               </div>
             </div>
           </div>
@@ -167,9 +174,12 @@
           <div class="row">
             <div class="col-xs-12 col-sm-6">
               <label i18n>Attendance Feedback</label>
-              <select class="form-control">
-                  <option value="" i18n>Enabled</option>
-                  <option value="" i18n>Disabled</option>
+              <select
+                class="form-control"
+                formControlName="event_feedback"
+                [class.error]="formError && form.controls['event_feedback'].hasError('required')">
+                  <option value="1" i18n>Enabled</option>
+                  <option value="0" i18n>Disabled</option>
                 </select>
             </div>
           </div>

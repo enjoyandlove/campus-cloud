@@ -21,6 +21,7 @@ declare var $: any;
 })
 export class CPDatePickerComponent implements AfterViewInit, OnInit {
   @ViewChild('input') input: ElementRef;
+  @Input() error: boolean;
   @Input() options: any;
   flatPicker;
 
