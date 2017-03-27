@@ -4,24 +4,20 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../../shared/shared.module';
 
-import { FeedsListComponent } from './list';
-
 import {
-  MoveFeedComponent,
+  FeedMoveComponent,
   FeedItemComponent,
   FeedCommentComponent,
   FeedInputBoxComponent,
   FeedSettingsComponent
 } from './list/components';
 
-
+import { FeedsListComponent } from './list';
 import { FeedsService } from './feeds.service';
 import { FeedsRoutingModule } from './feeds.routing.module';
 
-
-
 @NgModule({
-  declarations: [ FeedsListComponent, MoveFeedComponent, FeedItemComponent, FeedCommentComponent,
+  declarations: [ FeedsListComponent, FeedMoveComponent, FeedItemComponent, FeedCommentComponent,
   FeedInputBoxComponent, FeedSettingsComponent ],
 
   imports: [ CommonModule, SharedModule, FeedsRoutingModule, RouterModule, ReactiveFormsModule ],
