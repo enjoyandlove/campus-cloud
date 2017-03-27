@@ -1,0 +1,6 @@
+@import '~styles/components/card';
+
+:host {
+  display: block;
+  @include card-margin();
+}

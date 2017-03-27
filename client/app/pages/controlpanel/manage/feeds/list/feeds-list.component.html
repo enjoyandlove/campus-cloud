@@ -1,5 +1,16 @@
-<cp-feed-settings-modal></cp-feed-settings-modal>
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
-<cp-feed-input-box></cp-feed-input-box>
+  <div *ngSwitchCase="false">
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+      <cp-feed-filters></cp-feed-filters>
 
-<cp-feed-item></cp-feed-item>
+      <cp-feed-input-box></cp-feed-input-box>
+
+      <cp-feed-item
+        [feed]="feed"
+        *ngFor="let feed of feeds">
+      </cp-feed-item>
+    </div>
+  </div>
+</div>

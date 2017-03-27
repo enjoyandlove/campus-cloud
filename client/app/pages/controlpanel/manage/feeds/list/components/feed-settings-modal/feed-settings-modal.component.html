@@ -1,1 +1,73 @@
-Feed Settings
+<div class="cpmodal">
+  <div class="cpmodal__header">
+    <div class="row">
+      <div class="col-xs-12 text-center">
+        <span i18n><strong>Wall Settings</strong></span>
+
+        <span
+          data-dismiss="modal"
+          class="pull-right hover cpmodal__header__close">
+          &times;
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cpmodal__body">
+    <div class="row">
+      <form [formGroup]="form" class="cp-form">
+        <div class="cp-form__header row">
+          <span class="col-xs-4" i18n>Wall</span>
+          <span class="col-xs-4" i18n>Can Post</span>
+          <span class="col-xs-4" i18n>Can Comment</span>
+        </div>
+
+        <div class="cp-form__body" formArrayName="walls">
+          <div
+            class="cp-form__item"
+            *ngFor="let wall of form.controls.walls.controls; let i=index">
+            <div class="row">
+              <div class="col-xs-4 title">
+                <span>{{ wall.controls.name.value }}</span>
+              </div>
+              <div class="col-xs-4">
+                <cp-dropdown
+                  [items]="privileges"
+                  (selected)="onCanPostChanged($event, i)"
+                  [selectedItem]="privileges[wall.controls.can_post.value]">
+                </cp-dropdown>
+              </div>
+              <div class="col-xs-4">
+                <cp-dropdown
+                  [items]="privileges"
+                  (selected)="onCanCommentChanged($event, i)"
+                  [selectedItem]="privileges[wall.controls.can_comment.value]">
+                </cp-dropdown>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="cpmodal__footer">
+    <div class="row">
+      <div class="col-xs-6 col-xs-offset-6 text-right">
+        <button
+          type="button"
+          class="cpbtn cpbtn--cancel"
+          data-dismiss="modal" i18n>
+          Cancel
+        </button>
+
+        <button
+          type="button"
+          (click)="onSave()"
+          class="cpbtn cpbtn--primary"i18n>
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

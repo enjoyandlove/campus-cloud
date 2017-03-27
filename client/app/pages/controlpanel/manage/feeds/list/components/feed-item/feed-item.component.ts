@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'cp-feed-item',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./feed-item.component.scss']
 })
 export class FeedItemComponent implements OnInit {
+  @Input() feed: any;
+
   constructor() { }
 
   ngOnInit() { }
