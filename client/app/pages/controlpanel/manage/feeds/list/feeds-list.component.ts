@@ -30,7 +30,7 @@ export class FeedsListComponent extends BaseComponent implements OnInit {
       })
       .catch(
         err => console.log(err)
-      )
+      );
   }
 
   ngOnInit() { }

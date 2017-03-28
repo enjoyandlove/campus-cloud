@@ -37,6 +37,6 @@ export class FeedDropdownComponent implements OnInit {
 
     this.options = this.isComment ? items.filter(item => !item.isPostOnly) : items;
 
-    console.log(this);
+    // console.log(this);
   }
 };

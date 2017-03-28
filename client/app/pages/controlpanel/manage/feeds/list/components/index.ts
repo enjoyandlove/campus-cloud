@@ -7,4 +7,5 @@ export * from './feed-dropdown';
 export * from './feed-comments';
 export * from './feed-input-box';
 export * from './feed-move-modal';
+export * from './feed-delete-modal';
 export * from './feed-settings-modal';

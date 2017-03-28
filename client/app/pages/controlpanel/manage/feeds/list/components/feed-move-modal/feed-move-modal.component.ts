@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'cp-feed-move-modal',
@@ -6,7 +7,41 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./feed-move-modal.component.scss']
 })
 export class FeedMoveComponent implements OnInit {
-  constructor() { }
+  @Output() teardown: EventEmitter<null> = new EventEmitter();
+  @Input() feed: any;
+  form: FormGroup;
+  channels;
 
-  ngOnInit() { }
+  constructor(
+    private fb: FormBuilder
+  ) {
+    this.form = this.fb.group({
+      'channel': [null, Validators.required]
+    });
+  }
+
+  onSelectedChannel(channel) {
+    this.form.controls['channel'].setValue(channel);
+  }
+
+  onSubmit() {
+    console.log(this.form.value.channel);
+  }
+
+  ngOnInit() {
+    this.channels = [
+      {
+        label: 'Dummy Channel',
+        action: 1
+      },
+      {
+        label: 'Dummy Channel 2',
+        action: 2
+      },
+      {
+        label: 'Dummy Channel 3',
+        action: 1
+      }
+    ];
+  }
 }

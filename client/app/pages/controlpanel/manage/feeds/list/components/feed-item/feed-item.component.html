@@ -36,4 +36,17 @@
     </div>
   </div>
 </div>
-<!--<cp-feed-move-modal></cp-feed-move-modal>-->
+
+<cp-modal modalId="moveFeedModal" *ngIf="isMoveModal">
+  <cp-feed-move-modal
+    [feed]="feed"
+    (teardown)="isMoveModal = false">
+  </cp-feed-move-modal>
+</cp-modal>
+
+<cp-modal modalId="deleteFeedModal" *ngIf="isDeleteModal">
+  <cp-feed-delete-modal
+    [feed]="feed"
+    (teardown)="isDeleteModal = false">
+  </cp-feed-delete-modal>
+</cp-modal>
