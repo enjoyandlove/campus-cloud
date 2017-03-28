@@ -1,0 +1,10 @@
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div *ngSwitchCase="false">
+    <cp-feed-comment
+      [comment]="comment"
+      *ngFor="let comment of comments">
+    </cp-feed-comment>
+  </div>
+</div>

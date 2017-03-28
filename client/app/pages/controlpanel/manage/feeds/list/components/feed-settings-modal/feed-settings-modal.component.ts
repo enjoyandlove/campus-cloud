@@ -1,18 +1,6 @@
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
 
-// const WALL_ACCESS_MAPPING = {
-//   'DISABLED': -1,
-//   'EVERYONE': 2,
-//   'TEAM_MEMBERS': 3
-// };
-
-// const WALL_ACCESS = {
-//   'Disabled': 'DISABLED',
-//   'Everyone': 'EVERYONE',
-//   'Team Members': 'TEAM_MEMBERS'
-// };
-
 @Component({
   selector: 'cp-feed-settings-modal',
   templateUrl: './feed-settings-modal.component.html',

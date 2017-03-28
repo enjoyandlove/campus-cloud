@@ -6,7 +6,8 @@ import { Http, URLSearchParams } from '@angular/http';
 // import { API } from '../../../../config/api';
 import { BaseService } from '../../../../base/base.service';
 
-const mockFeeds = require('./mock.json');
+const mockFeeds = require('./feeds.json');
+const mockComments = require('./comments.json');
 
 @Injectable()
 export class FeedsService extends BaseService {
@@ -21,6 +22,15 @@ export class FeedsService extends BaseService {
 
     const promise = new Promise(resolve => {
       resolve(mockFeeds);
+    });
+
+    return Observable.fromPromise(promise).map(res => res);
+  }
+
+  getCommentsByFeedId(feedId: number) {
+    console.log(feedId);
+    const promise = new Promise(resolve => {
+      resolve(mockComments.filter(comment => comment.school_buzz_id === feedId));
     });
 
     return Observable.fromPromise(promise).map(res => res);

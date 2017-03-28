@@ -4,18 +4,16 @@ import { CPDate } from '../../../../../../../shared/utils';
 import { FORMAT } from '../../../../../../../shared/pipes/date.pipe';
 
 @Component({
-  selector: 'cp-feed-item',
-  templateUrl: './feed-item.component.html',
-  styleUrls: ['./feed-item.component.scss']
+  selector: 'cp-feed-header',
+  templateUrl: './feed-header.component.html',
+  styleUrls: ['./feed-header.component.scss']
 })
-export class FeedItemComponent implements OnInit {
+export class FeeHeaderComponent implements OnInit {
   @Input() feed: any;
   CPDate = CPDate;
   FORMAT = FORMAT.SHORT;
 
   constructor() { }
 
-  ngOnInit() {
-    // console.log(this);
-  }
+  ngOnInit() { }
 }
