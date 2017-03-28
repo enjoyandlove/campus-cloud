@@ -3,6 +3,7 @@ export * from './feed-item';
 export * from './feed-header';
 export * from './feed-filters';
 export * from './feed-comment';
+export * from './feed-dropdown';
 export * from './feed-comments';
 export * from './feed-input-box';
 export * from './feed-move-modal';

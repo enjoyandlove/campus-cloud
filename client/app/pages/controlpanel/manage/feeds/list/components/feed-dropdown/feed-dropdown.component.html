@@ -1,0 +1,15 @@
+<div class="cp-dropdown">
+  <button
+    type="button"
+    data-toggle="dropdown"
+    class="cpbtn cpbtn--link-dark">
+    <i class="material-icons">keyboard_arrow_down</i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-right">
+    <li
+      *ngFor="let option of options"
+      (click)="selected.emit(option.action)">
+      {{ option.label }}
+    </li>
+  </ul>
+</div>

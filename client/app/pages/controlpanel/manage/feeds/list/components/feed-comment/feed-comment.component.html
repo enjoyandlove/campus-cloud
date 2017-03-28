@@ -11,11 +11,14 @@
                   [isComment]="isComment">
                 </cp-feed-header>
                 <div class="comment__more pull-right">
-                  <button
+                  <cp-feed-dropdown
+                    [isComment]="isComment">
+                  </cp-feed-dropdown>
+                  <!--<button
                     type="button"
                     class="cpbtn cpbtn--link-dark">
                     <i class="material-icons">keyboard_arrow_down</i>
-                  </button>
+                  </button>-->
                 </div>
               </div>
             </div>

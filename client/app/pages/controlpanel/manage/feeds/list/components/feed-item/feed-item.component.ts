@@ -15,6 +15,10 @@ export class FeedItemComponent implements OnInit {
 
   constructor() { }
 
+  onSelected(action) {
+    console.log(action);
+  }
+
   ngOnInit() {
     // console.log(this);
   }

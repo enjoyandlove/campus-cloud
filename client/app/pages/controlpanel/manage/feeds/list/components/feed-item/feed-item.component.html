@@ -8,11 +8,9 @@
               <div class="feed__header">
                 <cp-feed-header [feed]="feed"></cp-feed-header>
                 <div class="feed__more pull-right">
-                  <button
-                    type="button"
-                    class="cpbtn cpbtn--link-dark">
-                    <i class="material-icons">keyboard_arrow_down</i>
-                  </button>
+                  <cp-feed-dropdown
+                    (selected)="onSelected($event)">
+                  </cp-feed-dropdown>
                 </div>
               </div>
             </div>
