@@ -28,7 +28,7 @@ export class FeedsService extends BaseService {
   }
 
   getCommentsByFeedId(feedId: number) {
-    console.log(feedId);
+
     const promise = new Promise(resolve => {
       resolve(mockComments.filter(comment => comment.school_buzz_id === feedId));
     });

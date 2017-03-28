@@ -1,1 +1,34 @@
-Feed Comment
+<div class="row">
+  <div class="col-xs-12">
+    <div [class]="[last ? 'cp-card comment isLast' : 'cp-card comment']">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="comment__header">
+                <cp-feed-header
+                  [feed]="comment"
+                  [isComment]="isComment">
+                </cp-feed-header>
+                <div class="comment__more pull-right">
+                  <button
+                    type="button"
+                    class="cpbtn cpbtn--link-dark">
+                    <i class="material-icons">keyboard_arrow_down</i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-12">
+              <cp-feed-body [feed]="comment"></cp-feed-body>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--<cp-feed-move-modal></cp-feed-move-modal>-->

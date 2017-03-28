@@ -6,11 +6,12 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./feed-comment.component.scss']
 })
 export class FeedCommentComponent implements OnInit {
+  @Input() last: boolean;
   @Input() comment: any;
+
+  isComment = true;
 
   constructor() { }
 
-  ngOnInit() {
-    console.log(this.comment);
-  }
+  ngOnInit() { }
 }

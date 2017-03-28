@@ -10,7 +10,7 @@
     <div
       [class]="[feed.message_has_image === 0 ? 'col-xs-12' : 'col-xs-9 no-left-padding']">
       <div
-        [class]="[feed.message_has_image === 1 ? 'row feed__message' : 'row']">
+        [class]="[feed.message_has_image === 1 ? 'row feed__message--tall' : 'row feed__message']">
         <div class="col-xs-12">
           <p>{{ feed.message }}</p>
         </div>
@@ -24,7 +24,7 @@
               <i class="material-icons">thumb_up</i>
               {{ feed.likes }}
             </span>
-            <span class="flag">
+            <span class="flag" *ngIf="feed.flag > 0">
               <i class="material-icons">flag</i>
               {{ feed.flag }}
             </span>

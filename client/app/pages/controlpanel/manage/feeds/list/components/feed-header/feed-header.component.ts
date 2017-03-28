@@ -10,6 +10,8 @@ import { FORMAT } from '../../../../../../../shared/pipes/date.pipe';
 })
 export class FeeHeaderComponent implements OnInit {
   @Input() feed: any;
+  @Input() isComment: boolean;
+
   CPDate = CPDate;
   FORMAT = FORMAT.SHORT;
 

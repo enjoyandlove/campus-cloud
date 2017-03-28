@@ -36,13 +36,14 @@
     }
 
     span {
+      font-size: 12px;
       margin-right: 25px;
       color: $color-secondary-text;
 
       i {
-        font-size: 18px;
+        font-size: 15px;
         margin-right: 3px;
-        vertical-align: -4px;
+        vertical-align: -3px;
         display: inline-block;
       }
 
@@ -57,6 +58,8 @@
   }
 
   &__message {
-    height: 144px;
+    &--tall {
+      height: 144px;
+    }
   }
 }
