@@ -14,6 +14,7 @@ export class FeedItemComponent implements OnInit {
   @Input() feed: any;
   isMoveModal;
   isDeleteModal;
+  isApproveModal;
   CPDate = CPDate;
   FORMAT = FORMAT.SHORT;
 
@@ -22,7 +23,8 @@ export class FeedItemComponent implements OnInit {
   onSelected(action) {
     switch (action) {
       case 1:
-        // approve
+        this.isApproveModal = true;
+        setTimeout(() => { $('#approveFeedModal').modal(); }, 1);
         break;
       case 2:
         this.isMoveModal = true;

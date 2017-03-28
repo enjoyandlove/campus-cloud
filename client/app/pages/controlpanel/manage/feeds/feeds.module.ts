@@ -15,7 +15,8 @@ import {
   FeedDropdownComponent,
   FeedInputBoxComponent,
   FeedSettingsComponent,
-  FeedDeleteModalComponent
+  FeedDeleteModalComponent,
+  FeedApproveModalComponent
 } from './list/components';
 
 import { FeedsListComponent } from './list';
@@ -25,7 +26,8 @@ import { FeedsRoutingModule } from './feeds.routing.module';
 @NgModule({
   declarations: [ FeedsListComponent, FeedMoveComponent, FeedItemComponent, FeedCommentComponent,
   FeedInputBoxComponent, FeedSettingsComponent, FeedFiltersComponent, FeedCommentsComponent,
-  FeeHeaderComponent, FeedBodyComponent, FeedDropdownComponent, FeedDeleteModalComponent ],
+  FeeHeaderComponent, FeedBodyComponent, FeedDropdownComponent, FeedDeleteModalComponent,
+  FeedApproveModalComponent ],
 
   imports: [ CommonModule, SharedModule, FeedsRoutingModule, RouterModule, ReactiveFormsModule ],
 

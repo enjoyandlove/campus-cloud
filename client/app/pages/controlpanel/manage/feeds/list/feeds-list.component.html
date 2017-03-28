@@ -1,12 +1,14 @@
 <div [ngSwitch]="loading">
-  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+  <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+    <cp-feed-filters
+      (doFilter)="onDoFilter($event)">
+    </cp-feed-filters>
 
-  <div *ngSwitchCase="false">
-    <div class="col-xs-12 col-sm-8 col-sm-offset-2">
-      <cp-feed-filters></cp-feed-filters>
+    <cp-feed-input-box></cp-feed-input-box>
 
-      <cp-feed-input-box></cp-feed-input-box>
+    <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
+    <div *ngSwitchCase="false">
       <cp-feed-item
         [feed]="feed"
         *ngFor="let feed of feeds">

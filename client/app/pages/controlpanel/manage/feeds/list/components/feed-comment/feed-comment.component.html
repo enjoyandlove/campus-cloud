@@ -12,13 +12,10 @@
                 </cp-feed-header>
                 <div class="comment__more pull-right">
                   <cp-feed-dropdown
-                    [isComment]="isComment">
+                    [isComment]="isComment"
+                    (selected)="onSelected($event)"
+                    [requiresApproval]="comment.flag > 0">
                   </cp-feed-dropdown>
-                  <!--<button
-                    type="button"
-                    class="cpbtn cpbtn--link-dark">
-                    <i class="material-icons">keyboard_arrow_down</i>
-                  </button>-->
                 </div>
               </div>
             </div>
@@ -34,4 +31,17 @@
     </div>
   </div>
 </div>
-<!--<cp-feed-move-modal></cp-feed-move-modal>-->
+
+<cp-modal modalId="deleteFeedModal" *ngIf="isDeleteModal">
+  <cp-feed-delete-modal
+    [feed]="feed"
+    (teardown)="isDeleteModal = false">
+  </cp-feed-delete-modal>
+</cp-modal>
+
+<cp-modal modalId="approveFeedModal" *ngIf="isApproveModal">
+  <cp-feed-approve-modal
+    [feed]="feed"
+    (teardown)="isApproveModal = false">
+  </cp-feed-approve-modal>
+</cp-modal>

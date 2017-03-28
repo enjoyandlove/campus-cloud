@@ -6,10 +6,13 @@
           <div class="row">
             <div class="col-xs-12">
               <div class="feed__header">
-                <cp-feed-header [feed]="feed"></cp-feed-header>
+                <cp-feed-header
+                  [feed]="feed">
+                </cp-feed-header>
                 <div class="feed__more pull-right">
                   <cp-feed-dropdown
-                    (selected)="onSelected($event)">
+                    (selected)="onSelected($event)"
+                    [requiresApproval]="feed.flag > 0">
                   </cp-feed-dropdown>
                 </div>
               </div>
@@ -22,10 +25,14 @@
                 [feed]="feed"
                 (viewComments)="isCommentsOpen = $event">
               </cp-feed-body>
-              <div class="feed__comments" *ngIf="isCommentsOpen">
+              <div
+                class="feed__comments"
+                *ngIf="isCommentsOpen">
                 <div class="row">
                   <div class="col-xs-12">
-                    <cp-feed-comments [feedId]="feed.id"></cp-feed-comments>
+                    <cp-feed-comments
+                      [feedId]="feed.id">
+                    </cp-feed-comments>
                   </div>
                 </div>
               </div>
@@ -49,4 +56,11 @@
     [feed]="feed"
     (teardown)="isDeleteModal = false">
   </cp-feed-delete-modal>
+</cp-modal>
+
+<cp-modal modalId="approveFeedModal" *ngIf="isApproveModal">
+  <cp-feed-approve-modal
+    [feed]="feed"
+    (teardown)="isApproveModal = false">
+  </cp-feed-approve-modal>
 </cp-modal>

@@ -1,4 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+
+interface IState {
+  wall: number;
+  channel: number;
+  type: number;
+}
+
+const state: IState = {
+  wall: null,
+  channel: null,
+  type: null
+};
 
 @Component({
   selector: 'cp-feed-filters',
@@ -6,13 +18,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./feed-filters.component.scss']
 })
 export class FeedFiltersComponent implements OnInit {
+  @Output() doFilter: EventEmitter<IState> = new EventEmitter();
   walls;
   posts;
   channels;
+  state: IState;
 
-  constructor() { }
+  constructor() {
+    this.state = state;
+  }
 
-  ngOnInit() {
+  private fetch() {
     this.channels = [
       {
         label: 'All Channels',
@@ -38,5 +54,20 @@ export class FeedFiltersComponent implements OnInit {
         action: 2
       }
     ];
+
+    this.doFilter.emit(this.state);
+  }
+
+  onFilterSelected(item, type) {
+    this.updateState(type, item.action);
+  }
+
+  updateState(key: string, value: any) {
+    this.state = Object.assign({}, this.state, { [key]: value });
+    this.doFilter.emit(this.state);
+  }
+
+  ngOnInit() {
+    this.fetch();
   }
 }

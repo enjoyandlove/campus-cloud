@@ -17,7 +17,10 @@ export class FeedsListComponent extends BaseComponent implements OnInit {
   ) {
     super();
     super.isLoading().subscribe(res => this.loading = res);
+  }
 
+  onDoFilter(state) {
+    console.log(state);
     this.fetch();
   }
 

@@ -4,15 +4,24 @@
 
       <div class="row">
         <div class="col-xs-6 col-sm-4">
-          <cp-dropdown [items]="channels"></cp-dropdown>
+          <cp-dropdown
+            [items]="channels"
+            (selected)="onFilterSelected($event, 'wall')">
+          </cp-dropdown>
         </div>
 
         <div class="col-xs-6 col-sm-4 no-left-padding">
-          <cp-dropdown [items]="channels"></cp-dropdown>
+          <cp-dropdown
+            [items]="channels"
+            (selected)="onFilterSelected($event, 'channel')">
+          </cp-dropdown>
         </div>
 
         <div class="col-xs-10 col-sm-3 no-left-padding">
-          <cp-dropdown [items]="posts"></cp-dropdown>
+          <cp-dropdown
+            [items]="posts"
+            (selected)="onFilterSelected($event, 'type')">
+          </cp-dropdown>
         </div>
 
         <div class="col-xs-2 col-sm-1 no-left-padding">

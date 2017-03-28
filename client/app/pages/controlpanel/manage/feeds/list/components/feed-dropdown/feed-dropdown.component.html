@@ -1,4 +1,13 @@
-<div class="cp-dropdown">
+<div *ngIf="options.length === 1">
+  <button
+    type="button"
+    class="cpbtn cpbtn--link-dark"
+    (click)="selected.emit(3)">
+    <i class="material-icons">close</i>
+  </button>
+</div>
+
+<div class="cp-dropdown" *ngIf="options.length > 1">
   <button
     type="button"
     data-toggle="dropdown"

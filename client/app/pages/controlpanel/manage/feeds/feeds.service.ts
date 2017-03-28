@@ -24,7 +24,7 @@ export class FeedsService extends BaseService {
       resolve(mockFeeds);
     });
 
-    return Observable.fromPromise(promise).map(res => res);
+    return Observable.fromPromise(promise).delay(1000).map(res => res);
   }
 
   getCommentsByFeedId(feedId: number) {
