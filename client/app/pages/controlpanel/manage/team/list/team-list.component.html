@@ -11,8 +11,13 @@
 
       <li class="cp-form__item col-xs-12" *ngFor="let admin of admins">
 
-        <span class="col-xs-5 text-truncate ">
-          {{ admin.firstname }} {{ admin.lastname }}
+
+        <span class="col-xs-5 text-truncate">
+          <strong>
+            <a [routerLink]="[admin.id + '/edit']">
+              {{ admin.firstname }} {{ admin.lastname }}
+            </a>
+          </strong>
           <br>
           <small class="text-muted">{{ admin.email }}</small>
         </span>

@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../../shared/shared.module';
 
 import { TeamListComponent } from './list';
+import { TeamEditComponent } from './edit';
 import { TeamDeleteComponent } from './delete';
 import { TeamCreateComponent } from './create';
 
@@ -25,7 +26,7 @@ import { TeamRoutingModule } from './team.routing.module';
 @NgModule({
   declarations: [ TeamListComponent, TeamCreateComponent, BaseTeamSelectModalComponent,
   TeamSelectedPipe, TeamFilterPipe, SelectTeamServicesModalComponent,
-  SelectTeamClubsModalComponent, TeamDeleteComponent ],
+  SelectTeamClubsModalComponent, TeamDeleteComponent, TeamEditComponent ],
 
   imports: [ CommonModule, SharedModule, RouterModule, ReactiveFormsModule, TeamRoutingModule ],
 
