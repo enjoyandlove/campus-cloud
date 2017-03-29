@@ -18,6 +18,7 @@ import { CPArray, CPImage, CPMap, CPDate, appStorage } from '../../../../../shar
 import { FileUploadService, ErrorService, StoreService } from '../../../../../shared/services';
 
 const COMMON_DATE_PICKER_OPTIONS = {
+  // utc: true,
   altInput: true,
   enableTime: true,
   altFormat: 'F j, Y h:i K'
@@ -95,8 +96,8 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       'latitude': [res.latitude],
       'longitude': [res.longitude],
       'event_attendance': [res.event_attendance],
-      'start': [CPDate.fromEpoch(res.start), Validators.required],
-      'end': [CPDate.fromEpoch(res.end), Validators.required],
+      'start': [res.start, Validators.required],
+      'end': [res.end, Validators.required],
       'poster_url': [res.poster_url, Validators.required],
       'poster_thumb_url': [res.poster_thumb_url, Validators.required],
       'description': [res.description],
@@ -114,14 +115,14 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
     this.startdatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: this.form.controls['start'].value,
+      defaultDate: CPDate.fromEpoch(this.form.controls['start'].value),
       onClose: function (date) {
         _self.form.controls['start'].setValue(CPDate.toEpoch(date[0]));
       }
     };
     this.enddatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: this.form.controls['end'].value,
+      defaultDate: CPDate.fromEpoch(this.form.controls['end'].value),
       onClose: function (date) {
         _self.form.controls['end'].setValue(CPDate.toEpoch(date[0]));
       }
