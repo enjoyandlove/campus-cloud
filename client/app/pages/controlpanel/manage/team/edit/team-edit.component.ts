@@ -1,10 +1,14 @@
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 
+import { NOTIFY, CONTENT } from '../utils';
 import { STATUS } from '../../../../../shared/constants';
-import { ErrorService } from '../../../../../shared/services';
+import { CP_PRIVILEGES } from '../../../../../shared/utils';
+import { BaseComponent } from '../../../../../base/base.component';
 import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
+import { ErrorService, AdminService } from '../../../../../shared/services';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 
 declare var $: any;
@@ -14,19 +18,47 @@ declare var $: any;
   templateUrl: './team-edit.component.html',
   styleUrls: ['./team-edit.component.scss']
 })
-export class TeamEditComponent implements OnInit {
+export class TeamEditComponent extends BaseComponent implements OnInit {
+  admin;
+  adminId;
+  loading;
   clubsMenu;
   eventsMenu;
   servicesMenu;
+  isClubsModal;
+  isServicesModal;
   form: FormGroup;
   isAllAccessEnabled;
   MODAL_TYPE = MODAL_TYPE.WIDE;
+  CP_PRIVILEGES = CP_PRIVILEGES;
 
   constructor(
     private fb: FormBuilder,
+    private route: ActivatedRoute,
     private store: Store<IHeader>,
+    private adminService: AdminService,
     private errorService: ErrorService
-  ) { }
+  ) {
+    super();
+    super.isLoading().subscribe(res => this.loading = res);
+
+    this.adminId = this.route.snapshot.params['adminId'];
+    this.buildHeader();
+
+    this.fetch();
+  }
+
+  private fetch() {
+    super
+      .fetchData(this.adminService.getAdminById(this.adminId))
+      .then(res => {
+        this.admin = res.data;
+        this.buildForm();
+        console.log(CONTENT.createList([17, 16]));
+        console.log(this.admin);
+      })
+      .catch(err => console.log(err));
+  }
 
   private buildHeader() {
     this.store.dispatch({
@@ -37,9 +69,9 @@ export class TeamEditComponent implements OnInit {
 
   private buildForm() {
     this.form = this.fb.group({
-      'first_name': ['', Validators.required],
-      'last_name': ['', Validators.required],
-      'email': ['', Validators.required]
+      'first_name': [this.admin.firstname, Validators.required],
+      'last_name': [this.admin.lastname, Validators.required],
+      'email': [this.admin.email, Validators.required]
     });
 
     this.buildFormGroupsByPermission();
@@ -66,14 +98,20 @@ export class TeamEditComponent implements OnInit {
 
   onServicesSelected(service) {
     if (service.action === 2) {
-      $('#selectServicesModal').modal();
+      this.isServicesModal = true;
+      setTimeout(() => { $('#selectServicesModal').modal(); }, 1);
       return;
     }
   }
 
+  onCloseModal(modal): void {
+    this[modal] = false;
+  }
+
   onClubsSelected(club) {
     if (club.action === 2) {
-      $('#selectClubsModal').modal();
+      this.isClubsModal = true;
+      setTimeout(() => { $('#selectClubsModal').modal(); }, 1);
       return;
     }
   }
@@ -172,9 +210,6 @@ export class TeamEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.buildHeader();
-    this.buildForm();
-
     this.servicesMenu = [
       {
         'label': 'No Access',

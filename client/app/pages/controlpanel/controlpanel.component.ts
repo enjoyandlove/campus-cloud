@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { BaseComponent } from '../../base';
-import { ControlPanelService } from './controlpanel.service';
+import { PrivilegeService } from '../../shared/services';
 
 @Component({
   selector: 'cp-controlpanel',
@@ -16,7 +16,7 @@ export class ControlPanelComponent extends BaseComponent implements OnInit {
 
   constructor(
     private store: Store<any>,
-    private service: ControlPanelService
+    private service: PrivilegeService
   ) {
     super();
 
