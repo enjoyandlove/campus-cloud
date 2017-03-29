@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Http, URLSearchParams } from '@angular/http';
 
-// import { API } from '../../../../config/api';
+import { API } from '../../../../config/api';
 import { BaseService } from '../../../../base/base.service';
 
 const mockFeeds = require('./feeds.json');
@@ -25,6 +25,10 @@ export class FeedsService extends BaseService {
     });
 
     return Observable.fromPromise(promise).delay(1000).map(res => res);
+  }
+
+  getUploadImageUrl() {
+    return `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
   }
 
   getCommentsByFeedId(feedId: number) {

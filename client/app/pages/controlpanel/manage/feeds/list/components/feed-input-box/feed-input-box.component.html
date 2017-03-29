@@ -1,7 +1,68 @@
 <div class="row">
   <div class="col-xs-12">
     <div class="cp-card">
-      Feed Input Box
+      <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+        <div class="row form-group">
+          <div class="col-xs-12">
+            <div class="textarea">
+              <textarea
+                #textarea
+                autofocus
+                class="form-control"
+                formControlName="message"
+                placeholder="What's on your mind?"
+                [ngStyle]="{'height': textareaHeight}">
+              </textarea>
+              <img
+                class="img-responsive avatar"
+                src="https://source.unsplash.com/random/45x45">
+              <div
+                class="textarea__upload"
+                *ngIf="form.controls.message_image_url.value">
+                <img
+                  class="img-responsive"
+                  [src]="form.controls.message_image_url.value">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-6">
+            <cp-upload-button
+              buttonText="Upload Photo"
+              buttonClass="cpbtn cpbtn--link"
+              (fileUpload)="onFileUpload($event)">
+            </cp-upload-button>
+          </div>
+
+          <div class="col-xs-6">
+            <div class="row">
+              <div class="col-xs-9 channel-dropdown no-right-padding">
+                <div class="row">
+                  <div class="col-xs-3 no-right-padding">
+                    <span i18n>Post to</span>
+                  </div>
+                  <div class="col-xs-9 no-left-padding">
+                    <cp-dropdown
+                      [items]="channels"
+                      class="dropdown"
+                      selected="onSelectedChannel($event)">
+                    </cp-dropdown>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-3 pull-right">
+                <button
+                  type="submit"
+                  class="cpbtn cpbtn--primary text-right" i18n>
+                  Post
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>
