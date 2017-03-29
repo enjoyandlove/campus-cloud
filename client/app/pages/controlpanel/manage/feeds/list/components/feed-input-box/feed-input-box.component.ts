@@ -46,7 +46,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
     Observable
       .fromEvent(el, 'blur')
       .subscribe((res: any) => {
-        if (res.target.textContent === '') {
+        if (!res.target.textContent) {
           res.target.textContent = this.defaultText;
         }
         return;
@@ -57,11 +57,8 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
       .debounceTime(100)
       .distinctUntilChanged()
       .subscribe((res: any) => {
-      if (!res.target.textContent) {
-        el.innerHTML = this.defaultText;
-      }
-      this.form.controls['message'].setValue(res.target.textContent);
-    });
+        this.form.controls['message'].setValue(res.target.textContent);
+      });
   }
 
   onSelectedChannel(channel) {
