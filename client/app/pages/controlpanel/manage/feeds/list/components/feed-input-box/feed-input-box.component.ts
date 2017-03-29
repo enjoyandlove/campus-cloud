@@ -18,7 +18,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
   form: FormGroup;
   channels;
   imageError;
-  textareaHeight = '61px';
+  defaultText = 'What\'s on your mind?';
 
   constructor(
     private fb: FormBuilder,
@@ -28,13 +28,39 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
 
   onSubmit(data) {
     console.log(data);
+    this.form.reset();
   }
 
   ngAfterViewInit() {
     let el = this.textarea.nativeElement;
     // http://stackoverflow.com/questions/995168/textarea-to-resize-based-on-content-length
-    Observable.fromEvent(el, 'keyup').subscribe((res: any) => {
-      this.textareaHeight = res.target.scrollHeight + 'px';
+    Observable
+      .fromEvent(el, 'click')
+      .subscribe((res: any) => {
+        if (res.target.textContent === this.defaultText) {
+          res.target.textContent = '';
+        }
+        return;
+      });
+
+    Observable
+      .fromEvent(el, 'blur')
+      .subscribe((res: any) => {
+        if (res.target.textContent === '') {
+          res.target.textContent = this.defaultText;
+        }
+        return;
+      });
+
+    Observable
+      .fromEvent(el, 'keyup')
+      .debounceTime(100)
+      .distinctUntilChanged()
+      .subscribe((res: any) => {
+      if (!res.target.textContent) {
+        el.innerHTML = this.defaultText;
+      }
+      this.form.controls['message'].setValue(res.target.textContent);
     });
   }
 
@@ -73,6 +99,10 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
       );
   }
 
+  removePhoto(): void {
+    this.form.controls['message_image_url'].setValue(null);
+  }
+
   ngOnInit() {
     this.channels = [
       {
@@ -94,12 +124,5 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
       'message_image_url': [null],
       'post_type': [this.channels[0], Validators.required]
     });
-
-    setTimeout(() => {
-      this
-      .form
-      .controls['message_image_url']
-      .setValue('https://source.unsplash.com/random/300x300')
-    }, 2000);
   }
 }

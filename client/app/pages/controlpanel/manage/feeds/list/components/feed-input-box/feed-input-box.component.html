@@ -5,20 +5,23 @@
         <div class="row form-group">
           <div class="col-xs-12">
             <div class="textarea">
-              <textarea
+              <div
                 #textarea
-                autofocus
-                class="form-control"
-                formControlName="message"
-                placeholder="What's on your mind?"
-                [ngStyle]="{'height': textareaHeight}">
-              </textarea>
+                class="textarea__input"
+                [innerHTML]="defaultText" contenteditable>
+              </div>
               <img
                 class="img-responsive avatar"
                 src="https://source.unsplash.com/random/45x45">
               <div
                 class="textarea__upload"
                 *ngIf="form.controls.message_image_url.value">
+                <button
+                  type="button"
+                  (click)="removePhoto()"
+                  class="cpbtn cpbtn--link-dark">
+                  <i class="material-icons">close</i>
+                </button>
                 <img
                   class="img-responsive"
                   [src]="form.controls.message_image_url.value">

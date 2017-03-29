@@ -24,11 +24,17 @@
     left: 15px;
     position: absolute;
   }
-  textarea {
+  &__input {
     height: auto;
     border: none;
-    min-height: 100%; // overrides global
+    min-height: 61px;
+    color: $color-med-grey;
     padding: 17px 15px 0 70px;
+
+    &:focus,
+    &:active {
+      outline: none;
+    }
   }
 
   &__upload {
@@ -41,6 +47,16 @@
     img {
       width: auto;
       height: 100%;
+    }
+
+    button {
+      top: 45px;
+      left: 4px;
+      position: absolute;
+
+      i {
+        color: $color-white;
+      }
     }
   }
 }
