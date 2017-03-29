@@ -2,6 +2,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
 import { Headers } from '@angular/http';
 import { Store } from '@ngrx/store';
 
@@ -17,7 +18,6 @@ import { CPArray, CPImage, CPMap, CPDate, appStorage } from '../../../../../shar
 import { FileUploadService, ErrorService, StoreService } from '../../../../../shared/services';
 
 const COMMON_DATE_PICKER_OPTIONS = {
-  utc: true,
   altInput: true,
   enableTime: true,
   altFormat: 'F j, Y h:i K'
@@ -44,6 +44,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   isFormReady = false;
 
   constructor(
+    private router: Router,
     private fb: FormBuilder,
     private store: Store<IHeader>,
     private route: ActivatedRoute,
@@ -70,7 +71,14 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       this.formError = true;
       return;
     }
-    console.log(data);
+
+    this
+      .eventService
+      .updateEvent(data, this.eventId)
+      .subscribe(
+        _ => this.router.navigate([`/manage/events/${this.eventId}/info`]),
+        err => this.errorService.handleError(err)
+      );
   }
 
   private buildForm(res) {
@@ -87,8 +95,8 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       'latitude': [res.latitude],
       'longitude': [res.longitude],
       'event_attendance': [res.event_attendance],
-      'start': [res.start, Validators.required],
-      'end': [res.end, Validators.required],
+      'start': [CPDate.fromEpoch(res.start), Validators.required],
+      'end': [CPDate.fromEpoch(res.end), Validators.required],
       'poster_url': [res.poster_url, Validators.required],
       'poster_thumb_url': [res.poster_thumb_url, Validators.required],
       'description': [res.description],
@@ -96,7 +104,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       'event_manager_id': [res.event_manager_id],
       'attendance_manager_email': [res.attendance_manager_email]
     });
-    console.log(this.form);
+
     this.updateDatePicker();
     this.isFormReady = true;
   }
@@ -106,14 +114,14 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
     this.startdatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: new Date(this.form.controls['start'].value * 1000),
+      defaultDate: this.form.controls['start'].value,
       onClose: function (date) {
         _self.form.controls['start'].setValue(CPDate.toEpoch(date[0]));
       }
     };
     this.enddatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: new Date(this.form.controls['end'].value * 1000),
+      defaultDate: this.form.controls['end'].value,
       onClose: function (date) {
         _self.form.controls['end'].setValue(CPDate.toEpoch(date[0]));
       }

@@ -58,7 +58,12 @@
                   class="form-control"
                   formControlName="store_id"
                   [class.error]="formError && form.controls['store_id'].hasError('required')">
-                  <option [value]="store.value" *ngFor="let store of stores">{{ store.name }}</option>
+                  <option
+                    [value]="store.value"
+                    *ngFor="let store of stores"
+                    [selected]="store.value === form.controls['store_id'].value">
+                    {{ store.name }}
+                  </option>
                 </select>
               </div>
             </div>
