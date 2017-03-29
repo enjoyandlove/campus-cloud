@@ -1,1 +1,36 @@
-hello team list
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div *ngSwitchCase="false">
+    <ul class="col-xs-12 cp-form">
+      <li class="cp-form__header col-xs-12">
+        <span class="col-xs-5" i18n>Name</span>
+        <span class="col-xs-5" i18n>Status</span>
+        <span class="col-xs-2"></span>
+      </li>
+
+      <li class="cp-form__item col-xs-12" *ngFor="let admin of admins">
+
+        <span class="col-xs-5 text-truncate ">
+          {{ admin.firstname }} {{ admin.lastname }}
+          <br>
+          <small class="text-muted">{{ admin.email }}</small>
+        </span>
+        <span class="col-xs-5 text-truncate">
+          Status
+        </span>
+
+        <span
+          (click)="deleteAdmin = admin"
+          data-toggle="modal" data-target="#teamDeleteModal"
+          class="col-xs-1 col-xs-offset-1 hover text-truncate deletebutton text-center">
+          &times;
+        </span>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<cp-modal modalId="teamDeleteModal">
+  <cp-team-delete [admin]="deleteAdmin"></cp-team-delete>
+</cp-modal>

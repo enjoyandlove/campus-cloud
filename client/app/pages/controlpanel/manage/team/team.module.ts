@@ -5,9 +5,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../../shared/shared.module';
 
 import { TeamListComponent } from './list';
+import { TeamDeleteComponent } from './delete';
 import { TeamCreateComponent } from './create';
 
 import { ClubsService } from '../clubs/clubs.service';
+import { AdminService } from '../../../../shared/services';
 import { ServicesService } from '../services/services.service';
 
 import {
@@ -23,10 +25,10 @@ import { TeamRoutingModule } from './team.routing.module';
 @NgModule({
   declarations: [ TeamListComponent, TeamCreateComponent, BaseTeamSelectModalComponent,
   TeamSelectedPipe, TeamFilterPipe, SelectTeamServicesModalComponent,
-  SelectTeamClubsModalComponent ],
+  SelectTeamClubsModalComponent, TeamDeleteComponent ],
 
   imports: [ CommonModule, SharedModule, RouterModule, ReactiveFormsModule, TeamRoutingModule ],
 
-  providers: [ ServicesService, ClubsService ],
+  providers: [ ServicesService, ClubsService, AdminService ],
 })
 export class TeamModule {}
