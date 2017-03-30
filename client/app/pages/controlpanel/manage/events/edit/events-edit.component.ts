@@ -73,7 +73,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       this.formMissingFields = true;
       return;
     }
-    console.log(data);
+
     this
       .eventService
       .updateEvent(data, this.eventId)
@@ -86,8 +86,6 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   private buildForm(res) {
-    console.log(res);
-
     this.form = this.fb.group({
       'title': [res.title, Validators.required],
       'store_id': [res.store_id, Validators.required],
