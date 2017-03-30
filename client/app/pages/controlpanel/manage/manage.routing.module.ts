@@ -21,6 +21,8 @@ const appRoutes: Routes = [
       { path: 'links', loadChildren: './links/links.module#LinksModule' },
 
       { path: 'feeds', loadChildren: './feeds/feeds.module#FeedsModule' },
+
+      { path: 'clubs', loadChildren: './clubs/clubs.module#ClubsModule' },
     ]
   }
 ];

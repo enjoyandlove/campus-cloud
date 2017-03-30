@@ -8,16 +8,20 @@
       "url": "/manage/events"
     },
     {
+      "label": "Feeds",
+      "url": "/manage/feeds"
+    },
+    {
+      "label": "Clubs & Groups",
+      "url": "/manage/clubs"
+    },
+    {
       "label": "Services",
       "url": "/manage/services"
     },
     {
       "label": "Links",
       "url": "/manage/links"
-    },
-    {
-      "label": "Feeds",
-      "url": "/manage/feeds"
     }
   ]
 }
