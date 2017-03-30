@@ -5,11 +5,11 @@ import { Store } from '@ngrx/store';
 
 import { NOTIFY, CONTENT } from '../utils';
 import { STATUS } from '../../../../../shared/constants';
-import { CP_PRIVILEGES } from '../../../../../shared/utils';
 import { BaseComponent } from '../../../../../base/base.component';
 import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
-import { ErrorService, AdminService } from '../../../../../shared/services';
+import { CP_PRIVILEGES, appStorage } from '../../../../../shared/utils';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+import { ErrorService, AdminService } from '../../../../../shared/services';
 
 declare var $: any;
 
@@ -49,12 +49,16 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
+    const admin$ = this.adminService.getAdminById(this.adminId);
+    const privileges = JSON.parse(appStorage.get(appStorage.keys.PRIVILEGES));
+
     super
-      .fetchData(this.adminService.getAdminById(this.adminId))
+      .fetchData(admin$)
       .then(res => {
         this.admin = res.data;
         this.buildForm();
-        console.log(CONTENT.createList([17, 16]));
+        // console.log(CONTENT.createList(privileges));
+        // console.log(NOTIFY.createList(privileges));
         console.log(this.admin);
       })
       .catch(err => console.log(err));
@@ -79,7 +83,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
   onSubmit(data) {
     console.log(data);
-    console.log(this.form);
+    // console.log(this.form);
     if (!this.form.valid) {
       this.errorService.handleError({ reason: STATUS.ALL_FIELDS_ARE_REQUIRED });
       return;
@@ -107,6 +111,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   onCloseModal(modal): void {
     this[modal] = false;
   }
+
 
   onClubsSelected(club) {
     if (club.action === 2) {

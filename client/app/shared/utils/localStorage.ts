@@ -2,7 +2,8 @@ import { base64 } from './base64';
 
 const STORAGE_KEYS = {
   'SESSION': 'session',
-  'LANGUAGE': 'language'
+  'LANGUAGE': 'language',
+  'PRIVILEGES': 'privileges'
 };
 
 const storageAvailable = function storageAvailable() {
