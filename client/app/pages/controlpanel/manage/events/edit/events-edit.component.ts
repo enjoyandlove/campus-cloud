@@ -40,9 +40,10 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   eventId: number;
   enddatePickerOpts;
   formError = false;
-  startdatePickerOpts;
   attendance = false;
   isFormReady = false;
+  startdatePickerOpts;
+  formMissingFields = false;
 
   constructor(
     private router: Router,
@@ -62,27 +63,31 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   onSubmit(data) {
-    this.formError = false;
+    this.formMissingFields = false;
     this.imageError = null;
 
     if (!this.form.valid) {
       if (!this.form.controls['poster_url'].valid) {
         this.imageError = 'Image is required';
       }
-      this.formError = true;
+      this.formMissingFields = true;
       return;
     }
-
+    console.log(data);
     this
       .eventService
       .updateEvent(data, this.eventId)
       .subscribe(
-        _ => this.router.navigate([`/manage/events/${this.eventId}/info`]),
-        err => this.errorService.handleError(err)
+        _ => {
+          this.router.navigate([`/manage/events/${this.eventId}/info`]);
+        },
+        _ => this.formError = true
       );
   }
 
   private buildForm(res) {
+    console.log(res);
+
     this.form = this.fb.group({
       'title': [res.title, Validators.required],
       'store_id': [res.store_id, Validators.required],
