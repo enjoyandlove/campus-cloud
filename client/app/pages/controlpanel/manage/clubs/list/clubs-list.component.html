@@ -1,1 +1,83 @@
-Hello Clubs
+<div class="row">
+  <div class="col-xs-12">
+    <cp-clubs-list-action-box
+      (filter)="doFilter($event)">
+    </cp-clubs-list-action-box>
+  </div>
+</div>
+
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div *ngSwitchCase="false">
+    <div *ngIf="state.clubs.length">
+      <ul class="col-xs-12 cp-form clubs">
+        <li class="cp-form__header col-xs-12">
+          <span class="col-xs-5" i18n>Name</span>
+          <span class="col-xs-2" i18n>Status</span>
+          <span class="col-xs-2" i18n>Members</span>
+          <span class="col-xs-2" i18n>Events</span>
+          <span class="col-xs-1"></span>
+        </li>
+
+        <li class="cp-form__item col-xs-12" *ngFor="let club of state.clubs">
+          <span class="col-xs-5 text-truncate clubs__thumbnail">
+            <img class="img-rounded" [src]="club.logo_url">
+            <strong>
+                <a [routerLink]="[club.id]">
+                  {{ club.name }}
+                </a>
+            </strong>
+            <br>
+            {{ club.description }}
+          </span>
+          <span class="col-xs-2 text-truncate">
+            status
+          </span>
+          <span class="col-xs-2 text-truncate">
+            members
+          </span>
+          <span class="col-xs-12 col-md-1 text-truncate">
+            events
+          </span>
+
+          <span
+            (click)="deleteClub = club"
+            data-toggle="modal" data-target="#deleteClubsModal"
+            class="col-xs-12 col-md-1 hover text-truncate delete-club pull-right">
+            &times;
+          </span>
+        </li>
+      </ul>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <cp-pagination
+            [pageNext]="pageNext"
+            [pagePrev]="pagePrev"
+            [pageNumber]="pageNumber"
+            (next)="onPaginationNext()"
+            (previous)="onPaginationPrevious()">
+          </cp-pagination>
+        </div>
+      </div>
+    </div>
+
+    <cp-no-content
+      *ngIf="!state.clubs.length"
+      noContentText="No clubs found...">
+    </cp-no-content>
+  </div>
+</div>
+
+<cp-modal modalId="deleteClubsModal">
+  <cp-clubs-delete
+    [club]="deleteClub"
+    (deletedClub)="onDeletedClub($event)">
+  </cp-clubs-delete>
+</cp-modal>
+
+<!--<cp-modal modalId="excelEventsModal">
+  <cp-events-excel-modal></cp-events-excel-modal>
+</cp-modal>-->
+

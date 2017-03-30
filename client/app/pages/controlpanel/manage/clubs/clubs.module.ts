@@ -13,12 +13,17 @@ import { ClubsCreateComponent } from './create';
 import { ClubsDeleteComponent } from './delete';
 
 
+import {
+  ClubsListActionBoxComponent
+} from './list/components';
+
+
 import { ClubsService } from './clubs.service';
 import { ClubsRoutingModule } from './clubs.routing.module';
 
 @NgModule({
   declarations: [ ClubsListComponent, ClubsEditComponent, ClubsCreateComponent,
-  ClubsDeleteComponent ],
+  ClubsDeleteComponent, ClubsListActionBoxComponent ],
 
   imports: [ CommonModule, SharedModule, RouterModule, ReactiveFormsModule, ClubsRoutingModule ],
 
