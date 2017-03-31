@@ -12,7 +12,11 @@ import { ClubsEditComponent } from './edit';
 import { ClubsCreateComponent } from './create';
 import { ClubsDeleteComponent } from './delete';
 
+import { ClubsInfoComponent } from './info';
+import { ClubsWallComponent } from './wall';
 import { ClubsExcelComponent } from './excel';
+import { ClubsEventsComponent } from './events';
+import { ClubsMembersComponent } from './members';
 
 import {
   ClubsListActionBoxComponent
@@ -22,6 +26,11 @@ import {
   ClubsExcelModalComponent
 } from './excel/components';
 
+/**
+ * External Modules
+ */
+import { FeedsModule } from '../feeds/feeds.module';
+import { EventsModule } from '../events/events.module';
 
 import { ClubsService } from './clubs.service';
 import { ClubsRoutingModule } from './clubs.routing.module';
@@ -29,9 +38,11 @@ import { ClubsRoutingModule } from './clubs.routing.module';
 @NgModule({
   declarations: [ ClubsListComponent, ClubsEditComponent, ClubsCreateComponent,
   ClubsDeleteComponent, ClubsListActionBoxComponent, ClubsExcelModalComponent,
-  ClubsExcelComponent ],
+  ClubsExcelComponent, ClubsWallComponent, ClubsEventsComponent, ClubsInfoComponent,
+  ClubsMembersComponent ],
 
-  imports: [ CommonModule, SharedModule, RouterModule, ReactiveFormsModule, ClubsRoutingModule ],
+  imports: [ CommonModule, SharedModule, RouterModule, ReactiveFormsModule, ClubsRoutingModule,
+  FeedsModule, EventsModule ],
 
   providers: [ ClubsService ],
 })

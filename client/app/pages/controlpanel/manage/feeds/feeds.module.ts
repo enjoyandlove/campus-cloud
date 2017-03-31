@@ -32,5 +32,10 @@ import { FeedsRoutingModule } from './feeds.routing.module';
   imports: [ CommonModule, SharedModule, FeedsRoutingModule, RouterModule, ReactiveFormsModule ],
 
   providers: [ FeedsService ],
+
+  exports: [ FeedsListComponent, FeedMoveComponent, FeedItemComponent, FeedCommentComponent,
+  FeedInputBoxComponent, FeedSettingsComponent, FeedFiltersComponent, FeedCommentsComponent,
+  FeeHeaderComponent, FeedBodyComponent, FeedDropdownComponent, FeedDeleteModalComponent,
+  FeedApproveModalComponent ]
 })
 export class FeedsModule {}

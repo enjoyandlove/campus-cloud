@@ -19,8 +19,7 @@ export class FeedsListComponent extends BaseComponent implements OnInit {
     super.isLoading().subscribe(res => this.loading = res);
   }
 
-  onDoFilter(state) {
-    console.log(state);
+  onDoFilter() {
     this.fetch();
   }
 
@@ -28,7 +27,6 @@ export class FeedsListComponent extends BaseComponent implements OnInit {
     super
       .fetchData(this.feedsService.getFeeds())
       .then(res => {
-        console.log(res);
         this.feeds = res.data;
       })
       .catch(

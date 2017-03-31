@@ -14,7 +14,7 @@
           *ngIf="form.controls.clubs.controls.length">
           <ul class="col-xs-12 cp-form" formArrayName="clubs">
             <div class="clubs">
-              <li class="cp-form__header col-xs-12">
+              <li class="cp-form__header row">
                 <span class="col-xs-3" i18n>Club Name</span>
                 <span class="col-xs-2" i18n>Club Email</span>
                 <span class="col-xs-2" i18n>Admin Email</span>
@@ -80,7 +80,7 @@
                 (click)="onSubmit()"
                 class="cpbtn cpbtn--tall cpbtn--primary" i18n
                 [disabled]="!form.controls.clubs.controls.length">
-                Import Clubs
+                Import {{form.controls.clubs.controls.length}} Clubs
               </button>
             </div>
           </div>

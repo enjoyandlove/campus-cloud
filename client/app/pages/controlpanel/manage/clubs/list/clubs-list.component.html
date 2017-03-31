@@ -24,7 +24,7 @@
           <span class="col-xs-5 text-truncate clubs__thumbnail">
             <img class="img-rounded" [src]="club.logo_url">
             <strong>
-                <a [routerLink]="[club.id]">
+                <a [routerLink]="[club.id + '/wall']">
                   {{ club.name }}
                 </a>
             </strong>
