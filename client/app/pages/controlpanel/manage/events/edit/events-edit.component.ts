@@ -18,7 +18,6 @@ import { CPArray, CPImage, CPMap, CPDate, appStorage } from '../../../../../shar
 import { FileUploadService, ErrorService, StoreService } from '../../../../../shared/services';
 
 const COMMON_DATE_PICKER_OPTIONS = {
-  // utc: true,
   altInput: true,
   enableTime: true,
   altFormat: 'F j, Y h:i K'
@@ -212,10 +211,10 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     value = value ? 1 : 0;
 
     if (value === 1) {
-      this.form.controls['event_manager_id'].setValidators(Validators.required);
+      this.form.controls['event_manager_id'].setValue(16685);
       this.form.controls['event_feedback'].setValidators(Validators.required);
     } else {
-      this.form.controls['event_manager_id'].clearValidators();
+      this.form.controls['event_manager_id'].setValue(null);
       this.form.controls['event_feedback'].clearValidators();
     }
 
