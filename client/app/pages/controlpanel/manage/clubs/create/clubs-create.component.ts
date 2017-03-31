@@ -4,6 +4,7 @@ import { Headers } from '@angular/http';
 
 import { API } from '../../../../../config/api';
 import { ClubsService } from '../clubs.service';
+import { membershipTypes, statusTypes } from './permissions';
 import { CPArray, CPMap, CPImage, appStorage } from '../../../../../shared/utils';
 import { FileUploadService, ErrorService } from '../../../../../shared/services';
 
@@ -14,6 +15,8 @@ import { FileUploadService, ErrorService } from '../../../../../shared/services'
 })
 export class ClubsCreateComponent implements OnInit {
   imageError;
+  statusTypes;
+  membershipTypes;
   form: FormGroup;
 
   constructor(
@@ -86,7 +89,18 @@ export class ClubsCreateComponent implements OnInit {
     console.log(data);
   }
 
+  onSelectedMembership(type) {
+    console.log(type);
+  }
+
+  onSelectedStatus(type) {
+    console.log(type);
+  }
+
   ngOnInit() {
+    this.statusTypes = statusTypes;
+    this.membershipTypes = membershipTypes;
+
     this.form = this.fb.group({
       'name': [null, Validators.required],
       'logo_url': [null, Validators.required],

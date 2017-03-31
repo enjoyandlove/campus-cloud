@@ -49,25 +49,29 @@
         <div class="row form-group margin-top">
           <div class="col-xs-6">
             <p class="title" i18n>Club Status</p>
-            <input
-              type="text"
-              class="form-control"
-              formControlName="status"
-              placeholder="Add a short, clear name"
-              [class.error]="formError && form.controls['name'].hasError('required')">
+            <div class="row">
+              <div class="col-xs-12">
+                <cp-check-dropdown
+                  [items]="statusTypes"
+                  buttonClass="cpbtn cpbtn--cancel"
+                  (selected)="onSelectedStatus($event)">
+                </cp-check-dropdown>
+              </div>
+            </div>
           </div>
         </div>
 
         <div class="row margin-top">
           <div class="col-xs-6">
             <p class="title" i18n>Club Membership</p>
-            <div class="form-group">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="membership"
-                placeholder="Add a short, clear name"
-                [class.error]="formError && form.controls['name'].hasError('required')">
+            <div class="row">
+              <div class="col-xs-12">
+                <cp-check-dropdown
+                  [items]="membershipTypes"
+                  buttonClass="cpbtn cpbtn--cancel"
+                  (selected)="onSelectedMembership($event)">
+                </cp-check-dropdown>
+              </div>
             </div>
           </div>
         </div>
@@ -195,7 +199,6 @@
                   </div>
                 </div>
               </div>
-
               <div class="row">
                 <div class="col-xs-12">
                   <button

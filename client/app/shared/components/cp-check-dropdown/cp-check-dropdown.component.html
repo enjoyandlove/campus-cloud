@@ -1,0 +1,32 @@
+<div class="dropdown">
+  <button
+    type="button"
+    data-toggle="dropdown"
+    [class]="buttonClass" i18n>
+    {{ selectedItem.label }}
+    <span class="pull-right">
+      <i class="material-icons">arrow_drop_down</i>
+    </span>
+  </button>
+  <ul class="dropdown-menu dropdown__list">
+    <li
+      *ngFor="let item of items"
+      class="dropdown__item hover"
+      (click)="onClick(item)">
+      <div class="row">
+        <div class="col-xs-2 text-center no-right-padding">
+          <i class="material-icons" *ngIf="selectedItem === item">check</i>
+        </div>
+        <div class="col-xs-10 no-left-padding">
+          <p class="dropdown__item--title" i18n>
+            {{ item.label }}
+          </p>
+          <p
+            [innerHTML]="item.description"
+            class="dropdown__item--description" i18n>
+          </p>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
