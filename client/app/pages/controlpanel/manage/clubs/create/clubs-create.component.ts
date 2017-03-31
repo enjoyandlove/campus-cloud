@@ -6,7 +6,7 @@ import { API } from '../../../../../config/api';
 import { ClubsService } from '../clubs.service';
 import { membershipTypes, statusTypes } from './permissions';
 import { CPArray, CPMap, CPImage, appStorage } from '../../../../../shared/utils';
-import { FileUploadService, ErrorService } from '../../../../../shared/services';
+import { FileUploadService } from '../../../../../shared/services';
 
 @Component({
   selector: 'cp-clubs-create',
@@ -21,7 +21,7 @@ export class ClubsCreateComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private errorService: ErrorService,
+    // private errorService: ErrorService,
     private clubsService: ClubsService,
     private fileUploadService: FileUploadService
   ) { }

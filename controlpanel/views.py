@@ -75,3 +75,41 @@ def event_invite(request):
     return JsonResponse(json.dumps(event_dict), safe=False)
 
 
+'''
+Parse Clubs Mass Upload
+'''
+@csrf_exempt
+def clubs_invite(request):
+    input_excel = request.FILES['file']
+
+    wb = load_workbook(filename = input_excel)
+
+    ws = wb.get_active_sheet()
+
+    club_dict = []
+
+    for row in ws.rows:
+        club_info = []
+        for col in row:
+            if col.value is not None:
+                club_info.append(col.value)
+        if len(club_info):
+            club_dict.append(club_info)
+
+    events = club_dict[1:]
+    column_titles = club_dict[:1]
+
+    column_titles = [title.lower().replace(" ", "_") for title in column_titles[0]]
+
+    club_dict = []
+
+    for i in events:
+        # all fields are required
+        if len(i) is not len(column_titles):
+            return JsonResponse({ "error": "All fields are required" }, safe=False, status=500)
+
+        club_dict.append(dict(zip(column_titles, i)))
+
+    return JsonResponse(json.dumps(club_dict), safe=False)
+
+

@@ -22,9 +22,14 @@
         class="cpbtn cpbtn--square-left cpbtn--no-padding cpbtn--primary no-left-padding hover action-dropdown">
         <i class="material-icons" data-toggle="dropdown">expand_more</i>
         <ul class="dropdown-menu dropdown-menu-right text-left">
-          <li i18n (click)="launchModal()">Import Clubs from Excel</li>
+          <li data-toggle="modal" data-target="#excelClubssModal" i18n>Import Clubs from Excel</li>
         </ul>
       </div>
     </div>
   </div>
 </div>
+
+<cp-modal
+  modalId="excelClubssModal">
+  <cp-clubs-excel-modal></cp-clubs-excel-modal>
+</cp-modal>

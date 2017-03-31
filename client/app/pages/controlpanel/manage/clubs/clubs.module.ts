@@ -12,10 +12,15 @@ import { ClubsEditComponent } from './edit';
 import { ClubsCreateComponent } from './create';
 import { ClubsDeleteComponent } from './delete';
 
+import { ClubsExcelComponent } from './excel';
 
 import {
   ClubsListActionBoxComponent
 } from './list/components';
+
+import {
+  ClubsExcelModalComponent
+} from './excel/components';
 
 
 import { ClubsService } from './clubs.service';
@@ -23,7 +28,8 @@ import { ClubsRoutingModule } from './clubs.routing.module';
 
 @NgModule({
   declarations: [ ClubsListComponent, ClubsEditComponent, ClubsCreateComponent,
-  ClubsDeleteComponent, ClubsListActionBoxComponent ],
+  ClubsDeleteComponent, ClubsListActionBoxComponent, ClubsExcelModalComponent,
+  ClubsExcelComponent ],
 
   imports: [ CommonModule, SharedModule, RouterModule, ReactiveFormsModule, ClubsRoutingModule ],
 

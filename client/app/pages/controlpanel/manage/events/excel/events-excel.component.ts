@@ -1,7 +1,6 @@
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-
 // import { EventsService } from '../events.service';
 import { StoreService } from '../../../../../shared/services';
 import { BaseComponent } from '../../../../../base/base.component';
