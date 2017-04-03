@@ -2,6 +2,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
 import { Headers } from '@angular/http';
 import { Store } from '@ngrx/store';
 
@@ -17,7 +18,6 @@ import { CPArray, CPImage, CPMap, CPDate, appStorage } from '../../../../../shar
 import { FileUploadService, ErrorService, StoreService } from '../../../../../shared/services';
 
 const COMMON_DATE_PICKER_OPTIONS = {
-  utc: true,
   altInput: true,
   enableTime: true,
   altFormat: 'F j, Y h:i K'
@@ -39,11 +39,13 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   eventId: number;
   enddatePickerOpts;
   formError = false;
-  startdatePickerOpts;
   attendance = false;
   isFormReady = false;
+  startdatePickerOpts;
+  formMissingFields = false;
 
   constructor(
+    private router: Router,
     private fb: FormBuilder,
     private store: Store<IHeader>,
     private route: ActivatedRoute,
@@ -60,17 +62,26 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   onSubmit(data) {
-    this.formError = false;
+    this.formMissingFields = false;
     this.imageError = null;
 
     if (!this.form.valid) {
       if (!this.form.controls['poster_url'].valid) {
         this.imageError = 'Image is required';
       }
-      this.formError = true;
+      this.formMissingFields = true;
       return;
     }
-    console.log(data);
+
+    this
+      .eventService
+      .updateEvent(data, this.eventId)
+      .subscribe(
+        _ => {
+          this.router.navigate([`/manage/events/${this.eventId}/info`]);
+        },
+        _ => this.formError = true
+      );
   }
 
   private buildForm(res) {
@@ -96,7 +107,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       'event_manager_id': [res.event_manager_id],
       'attendance_manager_email': [res.attendance_manager_email]
     });
-    console.log(this.form);
+
     this.updateDatePicker();
     this.isFormReady = true;
   }
@@ -106,14 +117,14 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
     this.startdatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: new Date(this.form.controls['start'].value * 1000),
+      defaultDate: CPDate.fromEpoch(this.form.controls['start'].value),
       onClose: function (date) {
         _self.form.controls['start'].setValue(CPDate.toEpoch(date[0]));
       }
     };
     this.enddatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: new Date(this.form.controls['end'].value * 1000),
+      defaultDate: CPDate.fromEpoch(this.form.controls['end'].value),
       onClose: function (date) {
         _self.form.controls['end'].setValue(CPDate.toEpoch(date[0]));
       }
@@ -200,10 +211,10 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     value = value ? 1 : 0;
 
     if (value === 1) {
-      this.form.controls['event_manager_id'].setValidators(Validators.required);
+      this.form.controls['event_manager_id'].setValue(16685);
       this.form.controls['event_feedback'].setValidators(Validators.required);
     } else {
-      this.form.controls['event_manager_id'].clearValidators();
+      this.form.controls['event_manager_id'].setValue(null);
       this.form.controls['event_feedback'].clearValidators();
     }
 

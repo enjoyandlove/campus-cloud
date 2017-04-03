@@ -1,6 +1,12 @@
 @import '../core/_colors';
 @import '../core/_typography';
 
+.form-control[readonly].error {
+  color: $color-danger;
+  border: 1px solid $color-danger;
+  background-color: rgba(255, 96, 89, 0.25);
+}
+
 .cp-form {
   margin-top: 25px;
   border-radius: 4px;
