@@ -33,12 +33,11 @@ export class ClubsService extends BaseService {
   }
 
   getClubsbyId(clubId: number) {
-
     const promise = new Promise(resolve => {
-      resolve(mockClubs.filter(club => club.id === clubId));
+      setTimeout(() => { resolve(mockClubs.filter(club => club.id === +clubId)); }, 1000);
     });
 
-    return Observable.fromPromise(promise).map(res => res);
+    return Observable.fromPromise(promise).map(res => res[0]);
   }
 
   setModalClubs(clubs: any[]): void {

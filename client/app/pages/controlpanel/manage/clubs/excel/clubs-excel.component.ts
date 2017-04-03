@@ -2,7 +2,7 @@ import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { ClubsService } from '../clubs.service';
+// import { ClubsService } from '../clubs.service';
 import { BaseComponent } from '../../../../../base/base.component';
 import { CLUBS_MODAL_RESET } from '../../../../../reducers/clubs.reducer';
 import { HEADER_UPDATE, HEADER_DEFAULT } from '../../../../../reducers/header.reducer';
@@ -20,7 +20,7 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
   constructor(
     private fb: FormBuilder,
     private store: Store<any>,
-    private clubService: ClubsService
+    // private clubService: ClubsService
   ) {
     super();
     this

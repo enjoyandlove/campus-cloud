@@ -1,1 +1,78 @@
-Hello Info
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+  <div *ngSwitchCase="false">
+    <div class="row">
+      <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+        <div class="cp-card club">
+          <div class="row">
+            <div class="col-xs-3">
+              <img
+                [alt]="club.name"
+                [src]="club.logo_url"
+                class="img-responsive img-rounded">
+            </div>
+            <div class="col-xs-9">
+              <div class="row">
+                <div class="col-xs-9 text-truncate">
+                  <p class="club__title">{{ club.name }}</p>
+                  <p class="club__status">Status</p>
+                </div>
+                <div class="col-xs-3 pull-right">
+                  <a
+                    routerLink="../edit"
+                    class="cpbtn cpbtn--primary" i18n>
+                    Edit Club
+                  </a>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12">
+                  {{ club.description }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+        <div class="cp-card meta">
+          <div class="row" *ngIf="club.contactphone">
+            <div class="col-xs-3 meta__type">
+              Phone
+            </div>
+            <div class="col-xs-9">
+              <span>{{ club.contactphone }}</span>
+            </div>
+          </div>
+          <div class="row" *ngIf="club.email">
+            <div class="col-xs-3 meta__type">
+              Email
+            </div>
+            <div class="col-xs-9">
+              <span>{{ club.email }}</span>
+            </div>
+          </div>
+          <div class="row" *ngIf="club.website">
+            <div class="col-xs-3 meta__type">
+              Website
+            </div>
+            <div class="col-xs-9">
+              <span>{{ club.website }}</span>
+            </div>
+          </div>
+          <div class="row" *ngIf="club.address">
+            <div class="col-xs-3 meta__type">
+              Location
+            </div>
+            <div class="col-xs-9">
+              <span>{{ club.address }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

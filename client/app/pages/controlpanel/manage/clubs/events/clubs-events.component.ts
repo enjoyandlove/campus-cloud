@@ -12,7 +12,7 @@ export class ClubsEventsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute
   ) {
-    this.clubId = this.route.snapshot.params['clubId'];
+    this.clubId = this.route.parent.snapshot.params['clubId'];
   }
 
   ngOnInit() { }
