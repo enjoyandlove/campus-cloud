@@ -6,7 +6,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ClubsInfoComponent } from '../info';
 import { ClubsWallComponent } from '../wall';
 import { ClubsEditComponent } from '../edit';
-import { ClubsMembersComponent } from '../members';
 
 import { ClubsDetailsComponent } from './details.component';
 
@@ -23,7 +22,7 @@ import { ClubsService } from '../clubs.service';
 
 @NgModule({
   declarations: [ ClubsWallComponent, ClubsInfoComponent,
-  ClubsMembersComponent, ClubsDetailsComponent, ClubsEditComponent ],
+  ClubsDetailsComponent, ClubsEditComponent ],
 
   imports: [ CommonModule, SharedModule, RouterModule, ReactiveFormsModule,
   ClubsDetailsRoutingModule,
