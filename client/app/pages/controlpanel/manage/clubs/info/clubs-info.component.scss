@@ -1,7 +1,48 @@
+@import '~styles/core/colors';
 @import '~styles/components/card';
+@import '~styles/core/typography';
 @import '~styles/components/button';
 
 .club,
 .meta {
   @include card-margin();
+}
+
+.club {
+  &__avatar {
+    width: auto;
+    height: 200px;
+    border-radius: 4px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+
+  &__title,
+  &__status {
+    margin-bottom: 0;
+  }
+
+  &__title {
+    @include font-bold();
+    @include font-24px;
+  }
+
+  &__status {
+    @include font-semi-bold();
+    @include font-16px;
+
+    margin-bottom: 10px;
+  }
+
+  &__status,
+  &__description {
+    color: $color-secondary-text;
+  }
+}
+
+.meta {
+  &__type {
+    color: $color-secondary-text;
+  }
 }

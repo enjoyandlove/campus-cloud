@@ -6,10 +6,10 @@
         <div class="cp-card club">
           <div class="row">
             <div class="col-xs-3">
-              <img
-                [alt]="club.name"
-                [src]="club.logo_url"
-                class="img-responsive img-rounded">
+              <div
+                class="club__avatar"
+                [ngStyle]="{ 'background-image': 'url(' + club.logo_url + ')' }">
+              </div>
             </div>
             <div class="col-xs-9">
               <div class="row">
@@ -18,7 +18,7 @@
                   <p class="club__status">Status</p>
                 </div>
                 <div class="col-xs-3 pull-right">
-                  <a
+                <a
                     routerLink="../edit"
                     class="cpbtn cpbtn--primary" i18n>
                     Edit Club
@@ -26,8 +26,8 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-xs-12">
-                  {{ club.description }}
+                <div class="col-xs-12 club__description">
+                  <p>{{ club.description }}</p>
                 </div>
               </div>
             </div>
