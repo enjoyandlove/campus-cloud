@@ -59,8 +59,8 @@ export class EventsService extends BaseService {
     return super.post(url, body).map(res => res.json());
   }
 
-  updateEvent(body: any) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT}/`;
+  updateEvent(body: any, eventId: number) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT}/${eventId}`;
 
     return super.update(url, body).map(res => res.json());
   }

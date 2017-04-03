@@ -51,16 +51,18 @@
                  event.poster_thumb_url :
                  event.store_logo_url">
         <strong>
-          <a
-            [routerLink]="[event.id]"
-            *ngIf="event.event_attendance === 1">
-            {{ event.title }}
-          </a>
-          <a
-            [routerLink]="[event.id + '/info']"
-            *ngIf="event.event_attendance === 0">
-            {{ event.title }}
-          </a>
+            <a
+              class="event__title"
+              [routerLink]="[event.id]"
+              *ngIf="event.event_attendance === 1">
+              {{ event.title }}
+            </a>
+            <a
+              class="event__title"
+              [routerLink]="[event.id + '/info']"
+              *ngIf="event.event_attendance === 0">
+              {{ event.title }}
+            </a>
         </strong>
         <br>
         {{ event.description }}
