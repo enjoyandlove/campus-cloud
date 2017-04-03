@@ -13,7 +13,7 @@ export class ClubsWallComponent extends FeedsComponent implements OnInit {
   isSimple = true;
 
   constructor(
-    private service: FeedsService,
+    public service: FeedsService,
     private route: ActivatedRoute
   ) {
     super(service.getFeeds());

@@ -1,0 +1,59 @@
+<div class="row">
+  <div class="col-xs-12">
+    <cp-list-action-box
+      (listAction)="doFilter($event)">
+    </cp-list-action-box>
+  </div>
+</div>
+
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+  <div *ngSwitchCase="false">
+
+    <div *ngIf="state.events.length">
+      <cp-list-past
+        [state]="state"
+        [events]="state.events"
+        *ngIf="!isUpcoming"
+        (sortList)="onSortList($event)"
+        (deleteEvent)="onDeleteEvent($event)">
+      </cp-list-past>
+
+      <cp-list-upcoming
+        [state]="state"
+        [events]="state.events"
+        *ngIf="isUpcoming"
+        (sortList)="onSortList($event)"
+        (deleteEvent)="onDeleteEvent($event)">
+      </cp-list-upcoming>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <cp-pagination
+            [pageNext]="pageNext"
+            [pagePrev]="pagePrev"
+            [pageNumber]="pageNumber"
+            (next)="onPaginationNext()"
+            (previous)="onPaginationPrevious()">
+          </cp-pagination>
+        </div>
+      </div>
+    </div>
+
+    <cp-no-content
+      *ngIf="!state.events.length"
+      noContentText="No events found...">
+    </cp-no-content>
+  </div>
+</div>
+
+<cp-modal modalId="deleteEventsModal">
+  <cp-events-delete
+    [event]="deleteEvent"
+    (deletedEvent)="onDeletedEvent($event)">
+  </cp-events-delete>
+</cp-modal>
+
+<cp-modal modalId="excelEventsModal">
+  <cp-events-excel-modal></cp-events-excel-modal>
+</cp-modal>
