@@ -1,6 +1,6 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Headers } from '@angular/http';
 
 import { API } from '../../../../../config/api';
@@ -21,6 +21,7 @@ const COMMON_DATE_PICKER_OPTIONS = {
   styleUrls: ['./events-create.component.scss']
 })
 export class EventsCreateComponent implements OnInit {
+  clubId;
   stores$;
   mapCenter;
   imageError;
@@ -30,17 +31,21 @@ export class EventsCreateComponent implements OnInit {
   enddatePickerOpts;
   startdatePickerOpts;
 
+
   constructor(
     private router: Router,
     private fb: FormBuilder,
+    private route: ActivatedRoute,
     private storeService: StoreService,
     private errorService: ErrorService,
     private eventService: EventsService,
     private fileUploadService: FileUploadService
   ) {
+    this.clubId = this.route.parent.parent.snapshot.params['clubId'];
+
     this.form = this.fb.group({
       'title': ['', Validators.required],
-      'store_id': [null, Validators.required],
+      'store_id': [this.clubId ? this.clubId : null, Validators.required],
       'location': [''],
       'room_data': [''],
       'city': [''],
