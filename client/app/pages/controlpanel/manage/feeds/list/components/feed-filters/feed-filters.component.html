@@ -3,28 +3,28 @@
     <div class="cp-card">
 
       <div class="row">
-        <div class="col-xs-6 col-sm-4">
+        <div class="col-xs-6 col-sm-4" *ngIf="!isSimple">
           <cp-dropdown
             [items]="channels"
             (selected)="onFilterSelected($event, 'wall')">
           </cp-dropdown>
         </div>
 
-        <div class="col-xs-6 col-sm-4 no-left-padding">
+        <div class="col-xs-6 col-sm-4 no-left-padding" *ngIf="!isSimple">
           <cp-dropdown
             [items]="channels"
             (selected)="onFilterSelected($event, 'channel')">
           </cp-dropdown>
         </div>
 
-        <div class="col-xs-10 col-sm-3 no-left-padding">
+        <div [class]="[isSimple ? 'col-xs-10 col-sm-3' : 'col-xs-10 col-sm-3 no-left-padding']">
           <cp-dropdown
             [items]="posts"
             (selected)="onFilterSelected($event, 'type')">
           </cp-dropdown>
         </div>
 
-        <div class="col-xs-2 col-sm-1 no-left-padding">
+        <div [class]="[isSimple ? 'col-xs-2 col-sm-1 pull-right no-left-padding' : 'col-xs-2 col-sm-1 no-left-padding']">
           <button
             type="button"
             class="cpbtn cpbtn--cancel"

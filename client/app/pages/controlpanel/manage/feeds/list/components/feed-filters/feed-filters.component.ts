@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 interface IState {
   wall: number;
@@ -18,6 +18,7 @@ const state: IState = {
   styleUrls: ['./feed-filters.component.scss']
 })
 export class FeedFiltersComponent implements OnInit {
+  @Input() isSimple: boolean;
   @Output() doFilter: EventEmitter<IState> = new EventEmitter();
   walls;
   posts;
@@ -69,5 +70,6 @@ export class FeedFiltersComponent implements OnInit {
 
   ngOnInit() {
     this.fetch();
+    console.log(this);
   }
 }

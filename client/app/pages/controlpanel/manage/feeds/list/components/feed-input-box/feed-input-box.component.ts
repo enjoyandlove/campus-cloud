@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ElementRef, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { Headers } from '@angular/http';
@@ -14,6 +14,7 @@ import { CPArray, CPImage, appStorage } from '../../../../../../../shared/utils'
   styleUrls: ['./feed-input-box.component.scss']
 })
 export class FeedInputBoxComponent implements AfterViewInit, OnInit {
+  @Input() isSimple: boolean;
   @ViewChild('textarea') textarea: ElementRef;
   form: FormGroup;
   channels;
@@ -96,9 +97,9 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
       );
   }
 
-  removePhoto(): void {
-    this.form.controls['message_image_url'].setValue(null);
-  }
+  // removePhoto(): void {
+  //   this.form.controls['message_image_url'].setValue(null);
+  // }
 
   ngOnInit() {
     this.channels = [

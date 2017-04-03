@@ -21,7 +21,7 @@ export class FeedsService extends BaseService {
     if (search) { console.log(search); }
 
     const promise = new Promise(resolve => {
-      resolve(mockFeeds);
+      setTimeout(() => { resolve(mockFeeds); }, 700);
     });
 
     return Observable.fromPromise(promise).delay(1000).map(res => res);

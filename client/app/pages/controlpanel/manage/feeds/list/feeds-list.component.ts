@@ -1,37 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 
+import { FeedsComponent } from './base';
 import { FeedsService } from '../feeds.service';
-import { BaseComponent } from '../../../../../base/base.component';
 
 @Component({
   selector: 'cp-feeds-list',
-  templateUrl: './feeds-list.component.html',
-  styleUrls: ['./feeds-list.component.scss']
+  templateUrl: './base/feeds.component.html',
+  styleUrls: ['./base/feeds.component.scss']
 })
-export class FeedsListComponent extends BaseComponent implements OnInit {
+export class FeedsListComponent extends FeedsComponent implements OnInit {
   feeds;
   loading;
 
   constructor(
-    private feedsService: FeedsService
+    public service: FeedsService
   ) {
-    super();
+    super(service.getFeeds());
     super.isLoading().subscribe(res => this.loading = res);
-  }
-
-  onDoFilter() {
-    this.fetch();
-  }
-
-  private fetch() {
-    super
-      .fetchData(this.feedsService.getFeeds())
-      .then(res => {
-        this.feeds = res.data;
-      })
-      .catch(
-        err => console.log(err)
-      );
   }
 
   ngOnInit() { }

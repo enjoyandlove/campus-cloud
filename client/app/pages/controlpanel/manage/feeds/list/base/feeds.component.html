@@ -1,10 +1,11 @@
 <div [ngSwitch]="loading">
   <div class="col-xs-12 col-sm-8 col-sm-offset-2">
     <cp-feed-filters
+      [isSimple]="isSimple"
       (doFilter)="onDoFilter($event)">
     </cp-feed-filters>
 
-    <cp-feed-input-box></cp-feed-input-box>
+    <cp-feed-input-box [isSimple]="isSimple"></cp-feed-input-box>
 
     <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
