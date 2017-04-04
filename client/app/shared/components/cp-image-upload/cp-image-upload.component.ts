@@ -11,8 +11,8 @@ import { FileUploadService } from '../../../shared/services/file-upload.service'
   styleUrls: ['./cp-image-upload.component.scss']
 })
 export class CPImageUploadComponent implements OnInit, OnChanges {
-  @Input() required: boolean;
   @Input() small: boolean;
+  @Input() required: boolean;
   @Output() uploaded: EventEmitter<string> = new EventEmitter();
 
   image;
@@ -27,12 +27,13 @@ export class CPImageUploadComponent implements OnInit, OnChanges {
   }
 
   onFileUpload(file) {
+    this.errors = [];
+
     if (!file) {
       this.image = null;
       return;
     }
 
-    this.errors = [];
     const fileExtension = CPArray.last(file.name.split('.'));
 
     if (!CPImage.isSizeOk(file.size, CPImage.MAX_IMAGE_SIZE)) {

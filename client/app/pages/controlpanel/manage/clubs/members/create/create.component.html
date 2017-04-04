@@ -23,7 +23,8 @@
               type="text"
               class="form-control"
               formControlName="fullname"
-              placeholder="Enter a name or Email Address">
+              placeholder="Enter a name or Email Address"
+              [class.error]="formErrors && form.controls['fullname'].hasError('required')">
           </div>
           <div class="row form-group">
             <div class="col-xs-6">
@@ -52,7 +53,9 @@
           </div>
 
           <div class="form-group" *ngIf="isExec">
-
+            <div class="row">
+              <cp-image-upload (uploaded)="onUploadedImage($event)"></cp-image-upload>
+            </div>
           </div>
         </form>
       </div>

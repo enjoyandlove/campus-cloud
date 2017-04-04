@@ -25,11 +25,12 @@
             <span class="col-xs-3 text-truncate members__thumbnail">
               <img class="img-rounded" [src]="member.avatar_url">
               <strong>
-                  <a
-                    class="member__title"
-                    [routerLink]="[member.id]">
+                  <button
+                    (click)="editMember = member"
+                    class="cpbtn cpbtn--link-dark member__title"
+                    data-toggle="modal" data-target="#membersEdit">
                     {{ member.firstname }} {{ member.lastname }}
-                  </a>
+                  </button>
               </strong>
               <br>
               {{ member.role }}
@@ -44,7 +45,6 @@
               class="col-xs-1 col-xs-offset-5 pull-right text-center delete-member hover">
               &times;
             </span>
-
           </li>
         </div>
       </ul>
@@ -54,7 +54,7 @@
 
 
 <cp-modal modalId="membersEdit">
-  <cp-members-edit></cp-members-edit>
+  <cp-members-edit [member]="editMember"></cp-members-edit>
 </cp-modal>
 
 <cp-modal modalId="membersDelete">
