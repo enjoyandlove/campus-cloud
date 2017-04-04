@@ -28,7 +28,7 @@ const state = {
 @Component({
   selector: 'cp-events',
   templateUrl: './events.component.html',
-  styleUrls: ['./events.component.scss']
+  // styleUrls: ['./events.component.scss']
 })
 export class EventsComponent extends BaseComponent implements OnInit, OnDestroy {
   events;
@@ -38,6 +38,7 @@ export class EventsComponent extends BaseComponent implements OnInit, OnDestroy 
   pageNumber;
   isUpcoming;
   deleteEvent = '';
+  isSimple: boolean;
   state: IState = state;
 
   constructor(

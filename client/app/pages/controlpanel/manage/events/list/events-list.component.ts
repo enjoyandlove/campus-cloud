@@ -32,7 +32,7 @@ const state = {
 @Component({
   selector: 'cp-events-list',
   templateUrl: './base/events.component.html',
-  // styleUrls: ['./events-list.component.scss']
+  styleUrls: ['./base/events.component.scss']
 })
 export class EventsListComponent extends EventsComponent implements OnInit {
   events;

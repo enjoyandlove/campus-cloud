@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col-xs-12">
+    <div class="cp-card">
+      <div class="row">
+        <div class="col-xs-3">
+          <cp-searchbox (query)="query.emit($event)"></cp-searchbox>
+        </div>
+        <div class="col-xs-3 pull-right">
+          <a
+            routerLink="create"
+            class="cpbtn cpbtn--primary pull-right" i18n>
+            Add Member
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

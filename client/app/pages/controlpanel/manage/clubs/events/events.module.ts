@@ -12,12 +12,14 @@ import { ClubsEventsComponent } from './clubs-events.component';
 import { EventsModule } from '../../events/events.module';
 import { ClubsEventsRoutingModule } from './events.routing.module';
 
+import { ClubsEventsService } from './events.services';
+
 @NgModule({
   declarations: [ ClubsEventsComponent ],
 
   imports: [ CommonModule, SharedModule, RouterModule, ReactiveFormsModule,
   ClubsEventsRoutingModule, EventsModule ],
 
-  providers: [ ],
+  providers: [ ClubsEventsService ],
 })
 export class ClubsEventsModule {}

@@ -9,15 +9,19 @@ import { SharedModule } from '../../../../../shared/shared.module';
  */
 import { ClubsMembersComponent } from './list';
 
-// import { ClubsService } from './members.service';
+import {
+  ClubsMembersActionBoxComponent
+} from './list/components';
+
+import { MembersService } from './members.service';
 import { ClubsMembersRoutingModule } from './members.routing.module';
 
 @NgModule({
-  declarations: [ ClubsMembersComponent ],
+  declarations: [ ClubsMembersComponent, ClubsMembersActionBoxComponent ],
 
   imports: [ CommonModule, SharedModule, RouterModule, ReactiveFormsModule,
   ClubsMembersRoutingModule ],
 
-  providers: [ ],
+  providers: [ MembersService ],
 })
 export class ClubsMembersModule {}
