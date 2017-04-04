@@ -16,6 +16,7 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
   isEdit;
   isCreate;
   isDelete;
+  deleteMember = '';
 
   constructor(
     private membersService: MembersService

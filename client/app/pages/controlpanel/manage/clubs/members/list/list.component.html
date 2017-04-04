@@ -39,8 +39,8 @@
             </span>
 
             <span
-              (click)="onDelete(event)"
-              data-toggle="modal" data-target="#deleteEventsModal"
+              (click)="deleteMember = member"
+              data-toggle="modal" data-target="#membersDelete"
               class="col-xs-1 col-xs-offset-5 pull-right text-center delete-member hover">
               &times;
             </span>
@@ -50,5 +50,17 @@
       </ul>
     </div>
   </div>
-
 </div>
+
+
+<cp-modal modalId="membersEdit">
+  <cp-members-edit></cp-members-edit>
+</cp-modal>
+
+<cp-modal modalId="membersDelete">
+  <cp-members-delete [member]="deleteMember"></cp-members-delete>
+</cp-modal>
+
+<cp-modal modalId="membersCreate">
+  <cp-members-create></cp-members-create>
+</cp-modal>

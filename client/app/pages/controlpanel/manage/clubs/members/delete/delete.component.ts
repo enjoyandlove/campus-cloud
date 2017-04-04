@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'cp-members-delete',
@@ -6,7 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./delete.component.scss']
 })
 export class ClubsMembersDeleteComponent implements OnInit {
+  @Input() member: any;
+
   constructor() { }
+
+  onDelete() {
+    console.log('delete');
+  }
 
   ngOnInit() { }
 }
