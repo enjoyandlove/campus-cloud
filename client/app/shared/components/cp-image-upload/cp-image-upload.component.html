@@ -1,7 +1,43 @@
-<input
-  id="file"
-  name="file"
-  type="file"
-  class="inputfile"
-  (change)="onFileChange($event)" />
-<label for="file">{{ fileName ? fileName : 'Upload Image' }}</label>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="wrapper">
+      <div class="col-xs-3 wrapper__left-side">
+        <div
+          *ngIf="image"
+          class="wrapper__image"
+          [ngStyle]="{'background-image': 'url(' + image + ')' }">
+          <button
+            type="button"
+            (click)="removeImage()"
+            class="cpbtn cpbtn--link-dark wrapper__delete">
+            &times;
+          </button>
+        </div>
+
+        <div
+          *ngIf="!image"
+          class="wrapper__image wrapper__image--no-image">
+          <cp-spinner theme="small" *ngIf="isLoading"></cp-spinner>
+        </div>
+      </div>
+      <div class="col-xs-9 wrapper__right-side">
+        <label class="no-margin dark" i18n>Upload your photo</label>
+        <span class="text-muted" i18n>JPG, GIF or PNG. Max size of 5MB</span>
+        <span *ngIf="errors.length">
+          <label
+            class="error"
+            *ngFor="let error of errors">
+            {{ error }}
+          </label>
+        </span>
+
+        <cp-upload-button
+          [buttonText]="buttonText"
+          class="wrapper__button"
+          buttonClass="cpbtn cpbtn--secondary"
+          (fileUpload)="onFileUpload($event)">
+        </cp-upload-button>
+      </div>
+    </div>
+  </div>
+</div>
