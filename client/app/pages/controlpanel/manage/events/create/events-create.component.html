@@ -6,7 +6,10 @@
           <div class="col-xs-12">
             <p class="title" i18n>Event Photo</p>
             <div class="row margin-top">
-              <cp-image-upload></cp-image-upload>
+              <cp-image-upload
+                (uploaded)="onUploadedImage($event)"
+                [required]="formError && form.controls['poster_url'].hasError('required')">
+              </cp-image-upload>
             </div>
           </div>
         </div>

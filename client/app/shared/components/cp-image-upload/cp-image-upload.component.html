@@ -23,13 +23,15 @@
       <div class="col-xs-9 wrapper__right-side">
         <label class="no-margin dark" i18n>Upload your photo</label>
         <span class="text-muted" i18n>JPG, GIF or PNG. Max size of 5MB</span>
-        <span *ngIf="errors.length">
-          <label
-            class="error"
-            *ngFor="let error of errors">
-            {{ error }}
-          </label>
-        </span>
+        <div class="row" *ngIf="errors.length">
+          <div class="col-xs-12">
+            <label
+              class="error"
+              *ngFor="let error of errors">
+              {{ error }}
+            </label>
+          </div>
+        </div>
 
         <cp-upload-button
           [buttonText]="buttonText"
