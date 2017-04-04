@@ -2,6 +2,9 @@ import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
+import { BaseComponent } from '../../../../../base/base.component';
+import { StoreService } from '../../../../../shared/services/store.service';
+
 import {
   IHeader,
   HEADER_UPDATE
@@ -13,21 +16,62 @@ import {
   templateUrl: './events-facebook.component.html',
   styleUrls: ['./events-facebook.component.scss']
 })
-export class EventsFacebookComponent implements OnInit {
+export class EventsFacebookComponent extends BaseComponent implements OnInit {
+  stores;
   isAttendance;
+  loading = true;
   form: FormGroup;
+
   constructor(
     private fb: FormBuilder,
     private store: Store<IHeader>,
+    private storeService: StoreService
     // private service: EventsService
   ) {
+    super();
     this.buildHeader();
 
+    this.fetch();
+  }
+
+  buildForm() {
     this.form = this.fb.group({
       'links': this.fb.array([
         this.createLinkControl()
       ])
     });
+
+    this.loading = false;
+  }
+
+  onSelectedHost(host, index) {
+    console.log(host);
+    console.log(index);
+  }
+  private fetch() {
+    const stores$ = this.storeService.getStores().map(res => {
+      const stores = [
+        {
+          'label': 'All Host',
+          'action': null
+        }
+      ];
+      res.forEach(store => {
+        stores.push({
+          'label': store.name,
+          'action': store.id
+        });
+      });
+      return stores;
+    });
+
+    super
+      .fetchData(stores$)
+      .then(res => {
+        this.stores = res.data;
+        this.buildForm();
+      })
+      .catch(err => console.log(err));
   }
 
   createLinkControl() {

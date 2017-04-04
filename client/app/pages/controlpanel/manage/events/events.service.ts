@@ -1,4 +1,5 @@
 import { Http, URLSearchParams } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -69,5 +70,13 @@ export class EventsService extends BaseService {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT}/${eventId}`;
 
     return super.delete(url).map(res => res.json());
+  }
+
+  getFacebookEvents() {
+    const promise = new Promise(resolve => {
+      setTimeout(() => { resolve(require('./mock.json')); }, 1000);
+    });
+
+    return Observable.fromPromise(promise).map(res => res);
   }
 }
