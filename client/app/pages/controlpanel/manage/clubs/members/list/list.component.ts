@@ -36,7 +36,7 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
 
   onLaunchCreateModal() {
     this.isCreate = true;
-    $('membersCreateModal').modal();
+    $('#membersCreate').modal();
   }
 
   onTearDown(modal) {
