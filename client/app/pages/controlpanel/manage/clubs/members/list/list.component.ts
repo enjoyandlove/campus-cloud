@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { MembersService } from '../members.service';
 import { BaseComponent } from '../../../../../../base/base.component';
 
+declare var $: any;
+
 @Component({
   selector: 'cp-clubs-members',
   templateUrl: './list.component.html',
@@ -11,6 +13,9 @@ import { BaseComponent } from '../../../../../../base/base.component';
 export class ClubsMembersComponent extends BaseComponent implements OnInit {
   members;
   loading;
+  isEdit;
+  isCreate;
+  isDelete;
 
   constructor(
     private membersService: MembersService
@@ -26,6 +31,15 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
       .fetchData(this.membersService.getMembers())
       .then(res => this.members = res.data)
       .catch(err => console.log(err));
+  }
+
+  onLaunchCreateModal() {
+    this.isCreate = true;
+    $('membersCreateModal').modal();
+  }
+
+  onTearDown(modal) {
+    this[modal] = false;
   }
 
   ngOnInit() { }

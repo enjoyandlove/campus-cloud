@@ -6,11 +6,12 @@
           <cp-searchbox (query)="query.emit($event)"></cp-searchbox>
         </div>
         <div class="col-xs-3 pull-right">
-          <a
-            routerLink="create"
+          <button
+            type="button"
+            (click)="create.emit()"
             class="cpbtn cpbtn--primary pull-right" i18n>
             Add Member
-          </a>
+          </button>
         </div>
       </div>
     </div>

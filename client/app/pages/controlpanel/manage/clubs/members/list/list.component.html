@@ -1,4 +1,6 @@
-<cp-clubs-members-action-box></cp-clubs-members-action-box>
+<cp-clubs-members-action-box
+  (create)="onLaunchCreateModal()">
+</cp-clubs-members-action-box>
 
 <div [ngSwitch]="loading">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
