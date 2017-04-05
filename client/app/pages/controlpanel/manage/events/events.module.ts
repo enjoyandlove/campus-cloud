@@ -23,6 +23,11 @@ import {
 } from './list/components';
 
 import {
+  FacebookEventsCreateComponent,
+  FacebookEventsUpdateComponent
+} from './facebook/components';
+
+import {
   AttendancePastComponent,
   AttendanceUpcomingComponent,
   EventsFeedbackModalComponent,
@@ -41,7 +46,8 @@ import {
   EventsFacebookComponent, EventsExcelComponent, EventsImportActionDropdownComponent,
   EventsImportTopBarComponent, ListActionBoxComponent, ListPastComponent, ListUpcomingComponent,
   AttendancePastComponent, AttendanceUpcomingComponent,
-  EventsFeedbackModalComponent, EventsPastActionBoxComponent ],
+  EventsFeedbackModalComponent, EventsPastActionBoxComponent, FacebookEventsCreateComponent,
+  FacebookEventsUpdateComponent ],
 
   imports: [ CommonModule, SharedModule, EventsRoutingModule, RouterModule, ReactiveFormsModule ],
 

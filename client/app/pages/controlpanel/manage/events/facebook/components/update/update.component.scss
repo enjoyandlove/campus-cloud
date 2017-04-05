@@ -1,0 +1,34 @@
+@import '~styles/components/form';
+@import '~styles/components/card';
+@import '~styles/components/button';
+@import '~styles/core/colors';
+@import '~styles/core/typography';
+
+.link-group {
+  overflow: auto;
+  padding: 30px 0;
+  border-top: 1px solid $border-color;
+}
+
+.footer {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  position: fixed;
+  margin-top: 25px;
+  background: $color-white;
+  border-top: 1px solid $border-color;
+
+  > div {
+    padding: 15px 0;
+  }
+}
+
+.delete-button {
+  font-size: 2em;
+}
+
+form {
+  // to account for the fixed footer
+  padding-bottom: 90px;
+}

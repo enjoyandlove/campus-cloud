@@ -1,4 +1,3 @@
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
@@ -18,36 +17,35 @@ import {
 })
 export class EventsFacebookComponent extends BaseComponent implements OnInit {
   stores;
-  isAttendance;
-  loading = true;
-  form: FormGroup;
+  loading;
 
   constructor(
-    private fb: FormBuilder,
     private store: Store<IHeader>,
     private storeService: StoreService
-    // private service: EventsService
   ) {
     super();
     this.buildHeader();
 
+    super.isLoading().subscribe(res => this.loading = res);
     this.fetch();
   }
 
-  buildForm() {
-    this.form = this.fb.group({
-      'links': this.fb.array([
-        this.createLinkControl()
-      ])
-    });
+  // buildForm() {
+  //   this.formPost = this.fb.group({
+  //     'url': ['', Validators.required],
+  //     'store_id': ['', Validators.required]
+  //   });
 
-    this.loading = false;
-  }
+  //   this.formUpdate = this.fb.group({
+  //     'links': this.fb.array([
+  //       this.createLinkControl()
+  //     ])
+  //   });
 
-  onSelectedHost(host, index) {
-    console.log(host);
-    console.log(index);
-  }
+
+  //   console.log(this);
+  // }
+
   private fetch() {
     const stores$ = this.storeService.getStores().map(res => {
       const stores = [
@@ -69,42 +67,31 @@ export class EventsFacebookComponent extends BaseComponent implements OnInit {
       .fetchData(stores$)
       .then(res => {
         this.stores = res.data;
-        this.buildForm();
       })
       .catch(err => console.log(err));
   }
 
-  createLinkControl() {
-    return this.fb.group({
-      'link': ['', Validators.required],
-      'store_id': ['', Validators.required]
-    });
-  }
+  // createLinkControl() {
+  //   return this.fb.group({
+  //     'url': [null, Validators.required],
+  //     'store_id': [null, Validators.required]
+  //   });
+  // }
 
-  addLinkControl() {
-    const control = <FormArray>this.form.controls['links'];
-    control.push(this.createLinkControl());
-  }
+  // addLinkControl() {
+  //   const control = <FormArray>this.formUpdate.controls['links'];
+  //   control.push(this.createLinkControl());
+  // }
 
-  removeService(index) {
-    const control = <FormArray>this.form.controls['links'];
-    control.removeAt(index);
-  }
+  // removeService(index) {
+  //   const control = <FormArray>this.formUpdate.controls['links'];
+  //   console.log(this.formUpdate.controls);
+  //   control.removeAt(index);
+  // }
 
-  onDeleteControl(index) {
-    this.removeService(index);
-  }
-
-  doSinglePost(index) {
-    const control = <FormArray>this.form.controls['links'];
-
-    console.log(control.controls[index]);
-
-    if (this.form.valid) {
-      this.addLinkControl();
-      return;
-    }
-  }
+  // onDeleteControl(index) {
+  //   this.removeService(index);
+  // }
 
   private buildHeader() {
     this.store.dispatch({
@@ -115,24 +102,6 @@ export class EventsFacebookComponent extends BaseComponent implements OnInit {
         'children': []
       }
     });
-  }
-
-  doSubmit() {
-    console.log(this.form.value);
-  }
-
-  toogleIsFeedback(index, status) {
-    const control = <FormArray>this.form.controls['links'];
-    const group = <FormGroup>control.controls[index];
-
-    group.controls['feedback'].setValue(status);
-  }
-
-  toggleIsAttendance(index, status) {
-    const control = <FormArray>this.form.controls['links'];
-    const group = <FormGroup>control.controls[index];
-
-    group.controls['attendance'].setValue(status);
   }
 
   ngOnInit() { }
