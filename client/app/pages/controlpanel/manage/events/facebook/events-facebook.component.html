@@ -10,7 +10,10 @@
         </p>
       </div>
     </div>
-    <cp-facebook-events-create [stores]="stores"></cp-facebook-events-create>
+    <cp-facebook-events-create
+      [stores]="stores"
+      (created)="onCreated()">
+    </cp-facebook-events-create>
 
     <cp-facebook-update [stores]="stores"></cp-facebook-update>
   </div>

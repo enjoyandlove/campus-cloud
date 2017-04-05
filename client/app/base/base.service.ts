@@ -30,38 +30,38 @@ export class BaseService {
             .catch(err => this.catchError(err));
   }
 
-  post(url: string, data: any) {
+  post(url: string, data: any, opts?: RequestOptionsArgs) {
     const headers = API.BUILD_COMMON_HEADERS();
 
     data = CPObj.cleanNullValues(data);
 
     return this
             .http
-            .post(url, data, { headers })
+            .post(url, data, { headers, ...opts })
             .delay(200)
             .retry(1)
             .catch(err => this.catchError(err));
   }
 
-  update(url: string, data: any) {
+  update(url: string, data: any, opts?: RequestOptionsArgs) {
     const headers = API.BUILD_COMMON_HEADERS();
 
     data = CPObj.cleanNullValues(data);
 
     return this
             .http
-            .put(url, data, { headers })
+            .put(url, data, { headers, ...opts })
             .delay(200)
             .retry(1)
             .catch(err => this.catchError(err));
   }
 
-  delete(url: string) {
+  delete(url: string, opts?: RequestOptionsArgs) {
     const headers = API.BUILD_COMMON_HEADERS();
 
     return this
             .http
-            .delete(url, { headers })
+            .delete(url, { headers, ...opts })
             .delay(200)
             .retry(1)
             .catch(err => this.catchError(err));

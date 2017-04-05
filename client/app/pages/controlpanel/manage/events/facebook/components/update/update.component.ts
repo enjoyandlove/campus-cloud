@@ -1,5 +1,6 @@
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
+import { URLSearchParams } from '@angular/http';
 
 import { EventsService } from '../../../events.service';
 import { BaseComponent } from '../../../../../../../base/base.component';
@@ -47,10 +48,27 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
   }
 
   onBulkUpdate(data) {
-    this.loading = true;
+    let search = new URLSearchParams();
+    search.append('school_id', '157');
 
-    setTimeout(() => { this.loading = false; }, 500);
-    console.log(data);
+    let _links = [];
+
+
+    data.links.forEach(link => {
+      _links.push({
+        id: link.id,
+        url: link.url,
+        store_id: link.store_id
+      });
+    });
+
+    this
+      .eventsService
+      .bulkUpdateFacebookEvents(_links, search)
+      .subscribe(
+      _ => this.fetch(),
+      err => console.log(err)
+      );
   }
 
   onSelectedStore(store, index) {
@@ -69,18 +87,16 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
     });
   }
 
-  doDelete(link: FormGroup, index: number) {
-    const linkId = link.controls['id'].value;
-    console.log(linkId);
-    console.log(index);
-
+  onDeleted() {
     this.fetch();
   }
 
   private fetch() {
     this.loading = true;
+    let search = new URLSearchParams();
+    search.append('school_id', '157');
 
-    const links$ = this.eventsService.getFacebookEvents().map((links: any) => {
+    const links$ = this.eventsService.getFacebookEvents(search).map((links: any) => {
       let _links = [];
 
       links.map(link => {

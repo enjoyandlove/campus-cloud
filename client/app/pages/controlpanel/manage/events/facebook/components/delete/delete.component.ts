@@ -1,4 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { EventsService } from '../../../events.service';
+import { URLSearchParams } from '@angular/http';
+
+declare var $: any;
 
 @Component({
   selector: 'cp-facebook-delete',
@@ -7,8 +11,28 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class FacebookEventsDeleteComponent implements OnInit {
   @Input() link: any;
+  @Output() deleted: EventEmitter<null> = new EventEmitter();
 
-  constructor() { }
+  constructor(
+    private eventsService: EventsService
+  ) { }
+
+  onDelete() {
+    const linkId = this.link.controls['id'].value;
+    let search = new URLSearchParams();
+    search.append('school_id', '157');
+
+    this
+      .eventsService
+      .deleteFacebookEventByLinkId(linkId, search)
+      .subscribe(
+        _ => {
+          this.deleted.emit();
+          $('#facebookDelete').modal('hide');
+        },
+        err => console.log(err)
+      );
+  }
 
   ngOnInit() { }
 }

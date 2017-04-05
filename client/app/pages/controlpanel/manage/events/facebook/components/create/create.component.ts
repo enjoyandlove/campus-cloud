@@ -1,5 +1,8 @@
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { URLSearchParams } from '@angular/http';
+
+import { EventsService } from '../../../events.service';
 
 @Component({
   selector: 'cp-facebook-events-create',
@@ -8,16 +11,31 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class FacebookEventsCreateComponent implements OnInit {
   @Input() stores: Array<any>;
-  @Output() eventCreate: EventEmitter<any> = new EventEmitter();
+  @Output() created: EventEmitter<null> = new EventEmitter();
   form: FormGroup;
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private eventsService: EventsService
   ) { }
 
   onSubmit(data) {
+    let search = new URLSearchParams();
+    search.append('school_id', '157');
+
+    this
+      .eventsService
+      .createFacebookEvent(data, search)
+      .subscribe(
+        _ => {
+          this.form.reset();
+          this.created.emit();
+        },
+        err => console.log(err)
+      );
+
     console.log(data);
-    this.eventCreate.emit();
+    // this.created.emit();
   }
 
   onSelectedStore(host) {

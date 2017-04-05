@@ -1,5 +1,4 @@
 import { Http, URLSearchParams } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -72,23 +71,27 @@ export class EventsService extends BaseService {
     return super.delete(url).map(res => res.json());
   }
 
-  getFacebookEvents() {
-    const promise = new Promise(resolve => {
-      setTimeout(() => { resolve(require('./mock.json')); }, 1000);
-    });
+  getFacebookEvents(search: URLSearchParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.FB_EVENTS}/`;
 
-    return Observable.fromPromise(promise).map(res => res);
+    return super.get(url, { search }).map(res => res.json());
   }
 
-  bulkUpdateFacebookEvents(events) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT}/`;
+  createFacebookEvent(body, search: URLSearchParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.FB_EVENTS}/`;
 
-    super.update(url, events).map(res => res.json());
+    return super.post(url, body, { search }).map(res => res.json());
   }
 
-  deleteFacebookEventByLinkId(linkId: number) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT}/${linkId}`;
+  bulkUpdateFacebookEvents(events, search: URLSearchParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.FB_EVENTS}/`;
 
-    return super.delete(url).map(res => res.json());
+    return super.update(url, events, { search }).map(res => res.json());
+  }
+
+  deleteFacebookEventByLinkId(linkId: number, search: URLSearchParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.FB_EVENTS}/${linkId}`;
+
+    return super.delete(url, { search }).map(res => res.json());
   }
 }

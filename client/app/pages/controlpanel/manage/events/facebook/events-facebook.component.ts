@@ -30,22 +30,9 @@ export class EventsFacebookComponent extends BaseComponent implements OnInit {
     this.fetch();
   }
 
-  // buildForm() {
-  //   this.formPost = this.fb.group({
-  //     'url': ['', Validators.required],
-  //     'store_id': ['', Validators.required]
-  //   });
-
-  //   this.formUpdate = this.fb.group({
-  //     'links': this.fb.array([
-  //       this.createLinkControl()
-  //     ])
-  //   });
-
-
-  //   console.log(this);
-  // }
-
+  onCreated() {
+    console.log('should refresh');
+  }
   private fetch() {
     const stores$ = this.storeService.getStores().map(res => {
       const stores = [
@@ -70,28 +57,6 @@ export class EventsFacebookComponent extends BaseComponent implements OnInit {
       })
       .catch(err => console.log(err));
   }
-
-  // createLinkControl() {
-  //   return this.fb.group({
-  //     'url': [null, Validators.required],
-  //     'store_id': [null, Validators.required]
-  //   });
-  // }
-
-  // addLinkControl() {
-  //   const control = <FormArray>this.formUpdate.controls['links'];
-  //   control.push(this.createLinkControl());
-  // }
-
-  // removeService(index) {
-  //   const control = <FormArray>this.formUpdate.controls['links'];
-  //   console.log(this.formUpdate.controls);
-  //   control.removeAt(index);
-  // }
-
-  // onDeleteControl(index) {
-  //   this.removeService(index);
-  // }
 
   private buildHeader() {
     this.store.dispatch({
