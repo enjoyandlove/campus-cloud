@@ -1,1 +1,2 @@
-export * from './delete-provider';
+export * from './providers-add';
+export * from './providers-delete';
