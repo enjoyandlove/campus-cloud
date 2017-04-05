@@ -1,6 +1,7 @@
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 
 import { EventsService } from '../../../events.service';
 import { BaseComponent } from '../../../../../../../base/base.component';
@@ -11,6 +12,7 @@ import { BaseComponent } from '../../../../../../../base/base.component';
   styleUrls: ['./update.component.scss']
 })
 export class FacebookEventsUpdateComponent extends BaseComponent implements OnInit {
+  @Input() reload: Observable<boolean>;
   @Input() stores: Array<any>;
 
   links;
@@ -123,6 +125,10 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
   }
 
   ngOnInit() {
-    // console.log(this);
+    this.reload.subscribe(res => {
+      if (res) {
+        this.fetch();
+      }
+    });
   }
 }

@@ -1,3 +1,4 @@
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
@@ -8,7 +9,6 @@ import {
   IHeader,
   HEADER_UPDATE
 } from '../../../../../reducers/header.reducer';
-// import { EventsService } from '../events.service';
 
 @Component({
   selector: 'cp-events-facebook',
@@ -18,6 +18,7 @@ import {
 export class EventsFacebookComponent extends BaseComponent implements OnInit {
   stores;
   loading;
+  reload$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
     private store: Store<IHeader>,
@@ -31,7 +32,7 @@ export class EventsFacebookComponent extends BaseComponent implements OnInit {
   }
 
   onCreated() {
-    console.log('should refresh');
+    this.reload$.next(true);
   }
   private fetch() {
     const stores$ = this.storeService.getStores().map(res => {
