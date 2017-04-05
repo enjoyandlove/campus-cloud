@@ -16,6 +16,7 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
   isEdited;
   loading = true;
   form: FormGroup;
+  deleteLink = '';
 
   constructor(
     private fb: FormBuilder,

@@ -1,3 +1,7 @@
+@import '~styles/core/typography';
+
 p {
+  @include font-16px();
+
   padding-bottom: 30px;
 }

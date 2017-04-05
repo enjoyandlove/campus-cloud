@@ -27,7 +27,9 @@
                   <button
                     type="button"
                     (click)="doDelete(link, i)"
-                    class="cpbtn cpbtn--link-dark delete-button">
+                    (click)="deleteLink = link"
+                    class="cpbtn cpbtn--link-dark delete-button"
+                    data-toggle="modal" data-target="#facebookDelete">
                     &times;
                   </button>
                 </div>
@@ -62,3 +64,7 @@
     </form>
   </div>
 </div>
+
+<cp-modal modalId="facebookDelete">
+  <cp-facebook-delete [link]="deleteLink"></cp-facebook-delete>
+</cp-modal>

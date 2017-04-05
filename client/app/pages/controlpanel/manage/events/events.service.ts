@@ -79,4 +79,16 @@ export class EventsService extends BaseService {
 
     return Observable.fromPromise(promise).map(res => res);
   }
+
+  bulkUpdateFacebookEvents(events) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT}/`;
+
+    super.update(url, events).map(res => res.json());
+  }
+
+  deleteFacebookEventByLinkId(linkId: number) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT}/${linkId}`;
+
+    return super.delete(url).map(res => res.json());
+  }
 }
