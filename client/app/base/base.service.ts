@@ -39,7 +39,6 @@ export class BaseService {
             .http
             .post(url, data, { headers, ...opts })
             .delay(200)
-            .retry(1)
             .catch(err => this.catchError(err));
   }
 
