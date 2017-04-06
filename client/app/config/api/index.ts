@@ -19,7 +19,6 @@ const API_ENDPOINTS = {
   P_RESET: 'ns_admin',
   SERVICES: 'services',
   LINKS: 'campus_link',
-  PRIVILEGE: 'privilege',
   EVENT_ASSESMENT: 'event_assessment',
 };
 

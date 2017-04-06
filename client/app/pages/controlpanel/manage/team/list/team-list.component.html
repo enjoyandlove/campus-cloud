@@ -9,27 +9,32 @@
         <span class="col-xs-2"></span>
       </li>
 
-      <li class="cp-form__item col-xs-12" *ngFor="let admin of admins">
+      <li class="cp-form__item col-xs-12" *ngFor="let admin of state.admins">
 
 
         <span class="col-xs-5 text-truncate">
           <strong>
             <a [routerLink]="[admin.id + '/edit']">
               {{ admin.firstname }} {{ admin.lastname }}
+              <span *ngIf="admin.is_current_user" i18n>(You)</span>
             </a>
           </strong>
           <br>
           <small class="text-muted">{{ admin.email }}</small>
         </span>
         <span class="col-xs-5 text-truncate">
-          Status
+          {{ admin.account_activated ? 'Active' : 'Pending' }}
         </span>
 
-        <span
-          (click)="deleteAdmin = admin"
-          data-toggle="modal" data-target="#teamDeleteModal"
-          class="col-xs-1 col-xs-offset-1 hover text-truncate deletebutton text-center">
-          &times;
+        <span class="col-xs-1 col-xs-offset-1 text-center">
+          <button
+            type="button"
+            (click)="deleteAdmin = admin"
+            *ngIf="!admin.is_current_user"
+            class="cpbtn cpbtn--link-dark deletebutton"
+            data-toggle="modal" data-target="#teamDeleteModal">
+            &times;
+          </button>
         </span>
       </li>
     </ul>
@@ -37,5 +42,13 @@
 </div>
 
 <cp-modal modalId="teamDeleteModal">
-  <cp-team-delete [admin]="deleteAdmin"></cp-team-delete>
+  <cp-team-delete
+    [admin]="deleteAdmin"
+    (errorModal)="onForbidden()"
+    (deleted)="onDeleted($event)">
+  </cp-team-delete>
+</cp-modal>
+
+<cp-modal modalId="teamErrorModal">
+  <cp-team-error-modal></cp-team-error-modal>
 </cp-modal>

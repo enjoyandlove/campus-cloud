@@ -3,11 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { NOTIFY, CONTENT } from '../utils';
+// import { NOTIFY, CONTENT } from '../utils';
 import { STATUS } from '../../../../../shared/constants';
 import { BaseComponent } from '../../../../../base/base.component';
 import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
-import { CP_PRIVILEGES, appStorage } from '../../../../../shared/utils';
+import { CP_PRIVILEGES } from '../../../../../shared/utils';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 import { ErrorService, AdminService } from '../../../../../shared/services';
 
@@ -50,7 +50,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
   private fetch() {
     const admin$ = this.adminService.getAdminById(this.adminId);
-    const privileges = JSON.parse(appStorage.get(appStorage.keys.PRIVILEGES));
+    // const privileges = JSON.parse(appStorage.get(appStorage.keys.PRIVILEGES));
 
     super
       .fetchData(admin$)

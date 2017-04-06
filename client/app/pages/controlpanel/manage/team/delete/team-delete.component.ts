@@ -1,4 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+
+import { TeamService } from '../team.service';
+
+declare var $: any;
 
 @Component({
   selector: 'cp-team-delete',
@@ -7,11 +11,32 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class TeamDeleteComponent implements OnInit {
   @Input() admin: any;
+  @Output() deleted: EventEmitter<any> = new EventEmitter();
+  @Output() errorModal: EventEmitter<null> = new EventEmitter();
 
-  constructor() { }
+  constructor(
+    private teamService: TeamService
+  ) { }
 
   onDelete() {
-    console.log('deleting');
+
+    this
+      .teamService
+      .deleteAdminById(this.admin.id)
+      .subscribe(
+        _ => {
+          this.deleted.emit(this.admin.id);
+          $('#teamDeleteModal').modal('hide');
+        },
+        err => {
+          if (err.status === 503) {
+            this.errorModal.emit();
+          }
+          $('#teamDeleteModal').modal('hide');
+        }
+      );
+
   }
   ngOnInit() { }
 }
+
