@@ -12,6 +12,8 @@ import { EventsService } from '../../../events.service';
 export class FacebookEventsCreateComponent implements OnInit {
   @Input() stores: Array<any>;
   @Output() created: EventEmitter<null> = new EventEmitter();
+
+  errors = [];
   form: FormGroup;
 
   constructor(
@@ -20,6 +22,7 @@ export class FacebookEventsCreateComponent implements OnInit {
   ) { }
 
   onSubmit(data) {
+    this.errors = [];
     let search = new URLSearchParams();
     search.append('school_id', '157');
 
@@ -31,11 +34,14 @@ export class FacebookEventsCreateComponent implements OnInit {
           this.form.reset();
           this.created.emit();
         },
-        err => console.log(err)
+        err => {
+          if (err.status === 400) {
+            this.errors.push('Duplicate event for host');
+            return;
+          }
+          console.log(err);
+        }
       );
-
-    console.log(data);
-    // this.created.emit();
   }
 
   onSelectedStore(host) {

@@ -63,7 +63,7 @@ export class EventsFacebookComponent extends BaseComponent implements OnInit {
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': 'Import Facebook Events',
+        'heading': 'Import Events from Facebook',
         'subheading': '',
         'children': []
       }
