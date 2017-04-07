@@ -7,9 +7,9 @@ import { Store } from '@ngrx/store';
 import { STATUS } from '../../../../../shared/constants';
 import { BaseComponent } from '../../../../../base/base.component';
 import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
-import { CP_PRIVILEGES } from '../../../../../shared/utils';
-import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+import { CP_PRIVILEGES, appStorage } from '../../../../../shared/utils';
 import { ErrorService, AdminService } from '../../../../../shared/services';
+import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 
 declare var $: any;
 
@@ -19,9 +19,11 @@ declare var $: any;
   styleUrls: ['./team-edit.component.scss']
 })
 export class TeamEditComponent extends BaseComponent implements OnInit {
-  admin;
+  me;
+  // admin;
   adminId;
   loading;
+  profile;
   clubsMenu;
   eventsMenu;
   servicesMenu;
@@ -50,16 +52,15 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
   private fetch() {
     const admin$ = this.adminService.getAdminById(this.adminId);
-    // const privileges = JSON.parse(appStorage.get(appStorage.keys.PRIVILEGES));
 
     super
       .fetchData(admin$)
       .then(res => {
-        this.admin = res.data;
+        this.profile = res.data;
+        console.log(this.profile);
         this.buildForm();
         // console.log(CONTENT.createList(privileges));
         // console.log(NOTIFY.createList(privileges));
-        console.log(this.admin);
       })
       .catch(err => console.log(err));
   }
@@ -73,9 +74,9 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
   private buildForm() {
     this.form = this.fb.group({
-      'first_name': [this.admin.firstname, Validators.required],
-      'last_name': [this.admin.lastname, Validators.required],
-      'email': [this.admin.email, Validators.required]
+      'first_name': [this.profile.firstname, Validators.required],
+      'last_name': [this.profile.lastname, Validators.required],
+      'email': [this.profile.email, Validators.required]
     });
 
     this.buildFormGroupsByPermission();
@@ -83,13 +84,10 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
   onSubmit(data) {
     console.log(data);
-    // console.log(this.form);
     if (!this.form.valid) {
       this.errorService.handleError({ reason: STATUS.ALL_FIELDS_ARE_REQUIRED });
       return;
     }
-
-    // console.log(data);
   }
 
   toggleAllAccess(checked) {
@@ -215,6 +213,9 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.me = JSON.parse(appStorage.get(appStorage.keys.PROFILE));
+    console.log(this.me);
+
     this.servicesMenu = [
       {
         'label': 'No Access',

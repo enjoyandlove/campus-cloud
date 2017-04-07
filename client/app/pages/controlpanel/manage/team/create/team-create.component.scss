@@ -4,6 +4,10 @@
 @import '~styles/components/card';
 @import '~styles/components/button';
 
+.isDisabled span {
+  color: $color-secondary-text;
+}
+
 .cpbtn--cancel:disabled,
 a.cpbtn--cancel:disabled {
   color: $color-text !important;

@@ -1,10 +1,12 @@
-import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { STATUS } from '../../../../../shared/constants';
+import { TEAM_ACCESS } from '../utils';
+// import { STATUS } from '../../../../../shared/constants';
 import { ErrorService } from '../../../../../shared/services';
 import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
+import { CP_PRIVILEGES, appStorage } from '../../../../../shared/utils';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 
 declare var $: any;
@@ -15,12 +17,15 @@ declare var $: any;
   styleUrls: ['./team-create.component.scss']
 })
 export class TeamCreateComponent implements OnInit {
+  formData;
   clubsMenu;
   eventsMenu;
+  privileges;
   servicesMenu;
   form: FormGroup;
   isAllAccessEnabled;
   MODAL_TYPE = MODAL_TYPE.WIDE;
+  CP_PRIVILEGES = CP_PRIVILEGES;
 
   constructor(
     private fb: FormBuilder,
@@ -37,23 +42,20 @@ export class TeamCreateComponent implements OnInit {
 
   private buildForm() {
     this.form = this.fb.group({
-      'first_name': ['', Validators.required],
-      'last_name': ['', Validators.required],
+      'firstname': ['', Validators.required],
+      'lastname': ['', Validators.required],
       'email': ['', Validators.required]
     });
-
-    this.buildFormGroupsByPermission();
   }
 
   onSubmit(data) {
     console.log(data);
-    console.log(this.form);
-    if (!this.form.valid) {
-      this.errorService.handleError({ reason: STATUS.ALL_FIELDS_ARE_REQUIRED });
-      return;
-    }
-
-    // console.log(data);
+    // console.log(this.form);
+    console.log(this.privileges);
+    // if (!this.form.valid) {
+    //   this.errorService.handleError({ reason: STATUS.ALL_FIELDS_ARE_REQUIRED });
+    //   return;
+    // }
   }
 
   toggleAllAccess(checked) {
@@ -69,6 +71,22 @@ export class TeamCreateComponent implements OnInit {
       $('#selectServicesModal').modal();
       return;
     }
+
+    if (service.action === null) {
+      delete this.privileges[24];
+      return;
+    }
+
+    this.privileges = Object.assign(
+      {},
+      this.privileges,
+      {
+        24 : {
+          r: service.action,
+          w: service.action
+        }
+      }
+    );
   }
 
   onClubsSelected(club) {
@@ -76,109 +94,66 @@ export class TeamCreateComponent implements OnInit {
       $('#selectClubsModal').modal();
       return;
     }
-  }
 
+    if (club.action === null) {
+      delete this.privileges[22];
+      return;
+    }
 
-
-  buildServicesControl(): void {
-    // let group = this.fb.array([
-    //   ...this.buildServicesGroup()
-    // ]);
-
-    // this.form.addControl('services', group);
-    // console.log(this.buildServicesGroup());
-
-    let control = new FormControl(1, [Validators.required]);
-
-    this.form.addControl('services', control);
-  }
-
-  buildServicesGroup() {
-    let groups = [];
-    let services = [
+    this.privileges = Object.assign(
+      {},
+      this.privileges,
       {
-        id: 1,
-        name: 'Monday',
-        access: 1
-      },
-      {
-        id: 2,
-        name: 'Tuesday',
-        access: 1
+        22 : {
+          r: club.action,
+          w: club.action
+        }
       }
-    ];
+    );
+  }
 
-    services.forEach(service => {
-      let group = this.fb.group({
-        'name': [service.name],
-        'selected': [false],
-        'access': []
+  onEventsSelected(event) {
+    if (event.action === null) {
+      delete this.privileges[18];
+      return;
+    }
+
+    this.privileges = Object.assign(
+      {},
+      this.privileges,
+      {
+        18 : {
+          r: event.action === 2 ? true : true,
+          w: event.action === 2 ? false : false
+        }
+      }
+    );
+  }
+
+
+  checkControl(checked, type): void {
+    this.privileges = Object.assign(
+      {},
+      this.privileges,
+      {
+        [type]: {
+          r: checked,
+          w: checked
+        }
       });
-      groups.push(group);
-    });
-
-    return groups;
-  }
-
-  buildClubsControl(): void {
-    let control = new FormControl(1, [Validators.required]);
-
-    this.form.addControl('clubs', control);
-  }
-
-  buildEventsControl(): void {
-    let control = new FormControl(1, [Validators.required]);
-
-    this.form.addControl('events', control);
-  }
-
-  buildContentGroup(): void {
-    let group = this.fb.group({
-      'orientation': [false, Validators.required],
-      'calendars': [false, Validators.required],
-      'maps': [false, Validators.required],
-      'feeds': [false, Validators.required],
-      'links': [false, Validators.required],
-      'app_customization': [false, Validators.required]
-    });
-    this.form.registerControl('content', group);
-  }
-
-  buildNotificationsGroup(): void {
-    let group = this.fb.group({
-      'campus': [false, Validators.required],
-      'emergency': [false, Validators.required]
-    });
-    this.form.registerControl('notifications', group);
-  }
-
-  checkControl(checked, group, controlName): void {
-    let control = <FormArray>this.form.controls[group];
-    control.controls[controlName].setValue(checked);
-  }
-
-  buildFormGroupsByPermission() {
-    /**
-     * check user permissions and
-     * build form groups if user has
-     * access to that section
-     */
-
-    this.buildServicesControl();
-    this.buildClubsControl();
-    this.buildEventsControl();
-    this.buildContentGroup();
-    this.buildNotificationsGroup();
   }
 
   ngOnInit() {
+    let user = JSON.parse(appStorage.get(appStorage.keys.PROFILE));
+    this.formData = TEAM_ACCESS.getMenu(user.school_level_privileges[157]);
+
     this.buildHeader();
     this.buildForm();
 
     this.servicesMenu = [
       {
         'label': 'No Access',
-        'action': 1
+        'action': null
       },
       {
         'label': 'Select services',
@@ -193,7 +168,7 @@ export class TeamCreateComponent implements OnInit {
     this.clubsMenu = [
       {
         'label': 'No Access',
-        'action': 1
+        'action': null
       },
       {
         'label': 'Select clubs',
@@ -208,7 +183,7 @@ export class TeamCreateComponent implements OnInit {
     this.eventsMenu = [
       {
         'label': 'No access',
-        'action': 1
+        'action': null
       },
       {
         'label': 'Manage events',
