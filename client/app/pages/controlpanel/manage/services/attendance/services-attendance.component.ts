@@ -39,6 +39,10 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
     this.deleteProvider = provider;
   }
 
+  onCreatedProvider(provider) {
+    console.log(provider);
+  }
+
   private fetch() {
     super
       .fetchData(this.serviceService.getServiceById(this.serviceId))
@@ -55,7 +59,7 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': res.name,
+        'heading': res.data.name,
         'subheading': '',
         'children': [
           {

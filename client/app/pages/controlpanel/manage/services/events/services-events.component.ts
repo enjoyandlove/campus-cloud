@@ -10,24 +10,22 @@ import { ServicesService } from '../services.service';
 import { BaseComponent } from '../../../../../base/base.component';
 
 @Component({
-  selector: 'cp-services-info',
-  templateUrl: './services-info.component.html',
-  styleUrls: ['./services-info.component.scss']
+  selector: 'cp-services-events',
+  templateUrl: './services-events.component.html',
+  styleUrls: ['./services-events.component.scss']
 })
-export class ServicesInfoComponent extends BaseComponent implements OnInit {
-  service;
-  mapCenter;
-  loading = true;
+export class ServicesEventsComponent extends BaseComponent implements OnInit {
+  loading;
   serviceId: number;
 
   constructor(
-    private store: Store<IHeader>,
     private route: ActivatedRoute,
+    private store: Store<IHeader>,
     private serviceService: ServicesService
   ) {
     super();
-    super.isLoading().subscribe(res => this.loading = res);
     this.serviceId = this.route.snapshot.params['serviceId'];
+    super.isLoading().subscribe(res => this.loading = res);
 
     this.fetch();
   }
@@ -36,10 +34,8 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
     super
       .fetchData(this.serviceService.getServiceById(this.serviceId))
       .then(res => {
-        this.service = res.data;
+        // this.service = res;
         this.buildHeader(res);
-        console.log(this.service);
-        this.mapCenter = { lat: res.data.latitude, lng: res.data.longitude };
       })
       .catch(err => console.error(err));
   }
