@@ -19,6 +19,10 @@ const API_ENDPOINTS = {
   P_RESET: 'ns_admin',
   SERVICES: 'services',
   LINKS: 'campus_link',
+<<<<<<< HEAD
+=======
+  FB_EVENTS: 'facebook_event_link',
+>>>>>>> 7887962c0cd34a0d05a11f9f29e4852aa1da79eb
   EVENT_ASSESMENT: 'event_assessment',
 };
 
