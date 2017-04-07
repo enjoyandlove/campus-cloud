@@ -1,11 +1,13 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { Component, OnInit } from '@angular/core';
+// import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
 import { EventsService } from '../events.service';
-import { CPState } from '../../../../../shared/utils';
-import { BaseComponent } from '../../../../../base/base.component';
+// import { CPState } from '../../../../../shared/utils';
+// import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+
+import { EventsComponent } from './base/events.component';
 
 interface IState {
   start: number;
@@ -29,10 +31,10 @@ const state = {
 
 @Component({
   selector: 'cp-events-list',
-  templateUrl: './events-list.component.html',
-  styleUrls: ['./events-list.component.scss']
+  templateUrl: './base/events.component.html',
+  styleUrls: ['./base/events.component.scss']
 })
-export class EventsListComponent extends BaseComponent implements OnInit, OnDestroy {
+export class EventsListComponent extends EventsComponent implements OnInit {
   events;
   loading;
   pageNext;
@@ -44,21 +46,21 @@ export class EventsListComponent extends BaseComponent implements OnInit, OnDest
 
   constructor(
     private store: Store<IHeader>,
-    private service: EventsService
+    public service: EventsService
   ) {
-    super();
+    super(service);
     this.buildHeader();
-    super.isLoading().subscribe(res => this.loading = res);
+    // super.isLoading().subscribe(res => this.loading = res);
   }
 
-  private fetch(stream$) {
-    super
-      .fetchData(stream$)
-      .then(res => {
-        this.state = Object.assign({}, this.state, { events: res.data });
-      })
-      .catch(err => console.error(err));
-  }
+  // private fetch(stream$) {
+  //   super
+  //     .fetchData(stream$)
+  //     .then(res => {
+  //       this.state = Object.assign({}, this.state, { events: res.data });
+  //     })
+  //     .catch(err => console.error(err));
+  // }
 
   private buildHeader() {
     this.store.dispatch({
@@ -67,78 +69,78 @@ export class EventsListComponent extends BaseComponent implements OnInit, OnDest
     });
   }
 
-  onSortList(sort) {
-    this.state = Object.assign(
-      {},
-      this.state,
-      {
-        sort_field: sort.sort_field,
-        sort_direction: sort.sort_direction
-      }
-    );
+  // onSortList(sort) {
+  //   this.state = Object.assign(
+  //     {},
+  //     this.state,
+  //     {
+  //       sort_field: sort.sort_field,
+  //       sort_direction: sort.sort_direction
+  //     }
+  //   );
 
-    this.buildHeaders();
-  }
+  //   this.buildHeaders();
+  // }
 
-  doFilter(filter) {
-    this.state = Object.assign(
-      {},
-      this.state,
-      {
-        start: filter.start,
-        end: filter.end,
-        store_id: filter.store_id,
-        attendance_only: filter.attendance_only
-      }
-    );
+  // doFilter(filter) {
+  //   this.state = Object.assign(
+  //     {},
+  //     this.state,
+  //     {
+  //       start: filter.start,
+  //       end: filter.end,
+  //       store_id: filter.store_id,
+  //       attendance_only: filter.attendance_only
+  //     }
+  //   );
 
-    this.isUpcoming = filter.upcoming;
+  //   this.isUpcoming = filter.upcoming;
 
-    this.buildHeaders();
-  }
+  //   this.buildHeaders();
+  // }
 
-  buildHeaders() {
-    let end = this.endRange;
-    let start = this.startRange;
-    let search = new URLSearchParams();
-    let store_id = this.state.store_id ? (this.state.store_id).toString() : null;
+  // buildHeaders() {
+  //   let end = this.endRange;
+  //   let start = this.startRange;
+  //   let search = new URLSearchParams();
+  //   let store_id = this.state.store_id ? (this.state.store_id).toString() : null;
 
-    search.append('start', (this.state.start).toString());
-    search.append('end', (this.state.end).toString());
-    search.append('store_id', store_id);
-    search.append('attendance_only', (this.state.attendance_only).toString());
+  //   search.append('start', (this.state.start).toString());
+  //   search.append('end', (this.state.end).toString());
+  //   search.append('store_id', store_id);
+  //   search.append('attendance_only', (this.state.attendance_only).toString());
 
-    search.append('sort_field', this.state.sort_field);
-    search.append('sort_direction', this.state.sort_direction);
+  //   search.append('sort_field', this.state.sort_field);
+  //   search.append('sort_direction', this.state.sort_direction);
 
-    this.fetch(this.service.getEvents(start, end, search));
-  }
+  //   this.fetch(this.service.getEvents(start, end, search));
+  // }
 
-  onDeleteEvent(event) {
-    this.deleteEvent = event;
-  }
+  // onDeleteEvent(event) {
+  //   this.deleteEvent = event;
+  // }
 
-  onDeletedEvent(eventId) {
-    const _state = CPState.deleteById(this.state, 'events', eventId);
+  // onDeletedEvent(eventId) {
+  //   const _state = CPState.deleteById(this.state, 'events', eventId);
 
-    this.state = Object.assign({}, this.state, _state);
-  }
+  //   this.state = Object.assign({}, this.state, _state);
+  // }
 
-  onPaginationNext() {
-    super.goToNext();
+  // onPaginationNext() {
+  //   super.goToNext();
 
-    this.buildHeaders();
-  }
+  //   this.buildHeaders();
+  // }
 
-  onPaginationPrevious() {
-    super.goToPrevious();
+  // onPaginationPrevious() {
+  //   super.goToPrevious();
 
-    this.buildHeaders();
-  }
+  //   this.buildHeaders();
+  // }
 
-  ngOnDestroy() {
-    // console.log('destroy');
-  }
+  // ngOnDestroy() {
+  //   // console.log('destroy');
+  // }
 
   ngOnInit() { }
 }

@@ -59,8 +59,8 @@ export class EventsService extends BaseService {
     return super.post(url, body).map(res => res.json());
   }
 
-  updateEvent(body: any) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT}/`;
+  updateEvent(body: any, eventId: number) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT}/${eventId}`;
 
     return super.update(url, body).map(res => res.json());
   }
@@ -69,5 +69,29 @@ export class EventsService extends BaseService {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT}/${eventId}`;
 
     return super.delete(url).map(res => res.json());
+  }
+
+  getFacebookEvents(search: URLSearchParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.FB_EVENTS}/`;
+
+    return super.get(url, { search }).map(res => res.json());
+  }
+
+  createFacebookEvent(body, search: URLSearchParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.FB_EVENTS}/`;
+
+    return super.post(url, body, { search }).map(res => res.json());
+  }
+
+  bulkUpdateFacebookEvents(events, search: URLSearchParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.FB_EVENTS}/`;
+
+    return super.update(url, events, { search }).map(res => res.json());
+  }
+
+  deleteFacebookEventByLinkId(linkId: number, search: URLSearchParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.FB_EVENTS}/${linkId}`;
+
+    return super.delete(url, { search }).map(res => res.json());
   }
 }

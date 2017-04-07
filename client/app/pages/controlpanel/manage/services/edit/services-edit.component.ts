@@ -40,7 +40,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     super
       .fetchData(stream$)
       .then(res => {
-        this.service = res;
+        this.service = res.data;
         this.center = { lat: res.data.latitude, lng: res.data.longitude };
 
         this.buildForm();

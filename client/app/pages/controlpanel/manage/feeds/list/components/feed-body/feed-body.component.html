@@ -1,0 +1,48 @@
+<div class="feed">
+  <div class="row">
+    <div class="col-xs-3" *ngIf="feed.message_has_image === 1">
+      <div
+        class="avatar"
+        [ngStyle]="{'background-image': 'url(' + feed.message_image_url + ')'}">
+      </div>
+    </div>
+
+    <div
+      [class]="[feed.message_has_image === 0 ? 'col-xs-12' : 'col-xs-9 no-left-padding']">
+      <div
+        [class]="[feed.message_has_image === 1 ? 'row feed__message--tall' : 'row feed__message']">
+        <div class="col-xs-12">
+          <p>{{ feed.message }}</p>
+        </div>
+      </div>
+
+      <div
+        [class]="[feed.message_has_image === 1 ? 'feed__footer feed__footer--absolute' : 'feed__footer']">
+        <div class="row">
+          <div class="col-xs-8">
+            <span>
+              <i class="material-icons">thumb_up</i>
+              {{ feed.likes }}
+            </span>
+            <span class="flag" *ngIf="feed.flag > 0">
+              <i class="material-icons">flag</i>
+              {{ feed.flag }}
+            </span>
+          </div>
+          <div
+            *ngIf="feed.comment_count > 0"
+            class="col-xs-4 pull-right text-right">
+            <button
+              class="cpbtn cpbtn--link-dark"
+              (click)="isCommentsOpen = !isCommentsOpen"
+              (click)="viewComments.emit(isCommentsOpen)">
+              <i class="material-icons" *ngIf="!isCommentsOpen">chevron_right</i>
+              <i class="material-icons" *ngIf="isCommentsOpen">expand_more</i>
+              {{ isCommentsOpen ? 'Hide' : 'Show' }} {{ feed.comment_count }} Comment
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

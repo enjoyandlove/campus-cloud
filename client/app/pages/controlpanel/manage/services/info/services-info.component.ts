@@ -36,7 +36,7 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
     super
       .fetchData(this.serviceService.getServiceById(this.serviceId))
       .then(res => {
-        this.service = res;
+        this.service = res.data;
         this.buildHeader(res);
         console.log(this.service);
         this.mapCenter = { lat: res.data.latitude, lng: res.data.longitude };
@@ -48,7 +48,7 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': res.name,
+        'heading': res.data.name,
         'subheading': '',
         'children': [
           {

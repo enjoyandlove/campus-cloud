@@ -1,13 +1,11 @@
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-
 // import { EventsService } from '../events.service';
 import { StoreService } from '../../../../../shared/services';
 import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE, HEADER_DEFAULT } from '../../../../../reducers/header.reducer';
 import { CPDate } from '../../../../../shared/utils/date';
-import { EVENTS_MODAL_RESET } from '../../../../../reducers/events-modal.reducer';
 
 
 @Component({
@@ -219,7 +217,6 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
 
   ngOnDestroy() {
     this.store.dispatch({ type: HEADER_DEFAULT });
-    this.store.dispatch({ type: EVENTS_MODAL_RESET });
   }
 
   ngOnInit() {

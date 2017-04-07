@@ -6,6 +6,7 @@ import {
   OnInit,
   Component,
   ViewChild,
+  OnChanges,
   ElementRef,
   AfterViewInit,
   ViewEncapsulation
@@ -19,11 +20,12 @@ declare var $: any;
   styleUrls: ['./cp-datepicker.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class CPDatePickerComponent implements AfterViewInit, OnInit {
+export class CPDatePickerComponent implements AfterViewInit, OnInit, OnChanges {
   @ViewChild('input') input: ElementRef;
   @Input() error: boolean;
   @Input() options: any;
   flatPicker;
+  el;
 
   constructor() {
     this.flatPicker = require('flatpickr');
@@ -32,7 +34,17 @@ export class CPDatePickerComponent implements AfterViewInit, OnInit {
   ngAfterViewInit() {
     const el = this.input.nativeElement;
 
-    $(el).flatpickr(this.options);
+    this.el = $(el).flatpickr(this.options);
+  }
+
+  ngOnChanges() {
+    if (this.el) {
+      if (this.error) {
+        this.el.altInput.classList.add('error');
+        return;
+      }
+      this.el.altInput.classList.remove('error');
+    }
   }
 
   ngOnInit() { }

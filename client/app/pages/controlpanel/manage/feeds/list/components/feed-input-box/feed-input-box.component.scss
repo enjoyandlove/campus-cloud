@@ -1,0 +1,52 @@
+@import '~styles/components/form';
+@import '~styles/components/card';
+@import '~styles/components/button';
+
+.channel-dropdown {
+  span,
+  .dropdown {
+    display: inline-block;
+  }
+
+  span {
+    line-height: 2.6;
+  }
+}
+
+.textarea {
+  min-height: 80px;
+  position: relative;
+  border-radius: 4px;
+  border: 1px solid $border-color;
+
+  img.avatar {
+    top: 17px;
+    left: 15px;
+    position: absolute;
+  }
+  &__input {
+    height: auto;
+    border: none;
+    min-height: 61px;
+    color: $color-med-grey;
+    padding: 17px 15px 0 70px;
+
+    &:focus,
+    &:active {
+      outline: none;
+    }
+  }
+
+  &__upload {
+    left: 15px;
+    bottom: 15px;
+    padding-top: 40px;
+    height: 140px;
+    position: relative;
+
+    img {
+      width: auto;
+      height: 100%;
+    }
+  }
+}
