@@ -1,94 +1,73 @@
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+
+import { BaseComponent } from '../../../../../base/base.component';
+import { StoreService } from '../../../../../shared/services/store.service';
 
 import {
   IHeader,
   HEADER_UPDATE
 } from '../../../../../reducers/header.reducer';
-// import { EventsService } from '../events.service';
 
 @Component({
   selector: 'cp-events-facebook',
   templateUrl: './events-facebook.component.html',
   styleUrls: ['./events-facebook.component.scss']
 })
-export class EventsFacebookComponent implements OnInit {
-  isAttendance;
-  form: FormGroup;
+export class EventsFacebookComponent extends BaseComponent implements OnInit {
+  stores;
+  loading;
+  reload$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
   constructor(
-    private fb: FormBuilder,
     private store: Store<IHeader>,
-    // private service: EventsService
+    private storeService: StoreService
   ) {
+    super();
     this.buildHeader();
 
-    this.form = this.fb.group({
-      'links': this.fb.array([
-        this.createLinkControl()
-      ])
+    super.isLoading().subscribe(res => this.loading = res);
+    this.fetch();
+  }
+
+  onCreated() {
+    this.reload$.next(true);
+  }
+  private fetch() {
+    const stores$ = this.storeService.getStores().map(res => {
+      const stores = [
+        {
+          'label': 'All Host',
+          'action': null
+        }
+      ];
+      res.forEach(store => {
+        stores.push({
+          'label': store.name,
+          'action': store.id
+        });
+      });
+      return stores;
     });
-  }
 
-  createLinkControl() {
-    return this.fb.group({
-      'link': ['', Validators.required],
-      'store_id': ['', Validators.required]
-    });
-  }
-
-  addLinkControl() {
-    const control = <FormArray>this.form.controls['links'];
-    control.push(this.createLinkControl());
-  }
-
-  removeService(index) {
-    const control = <FormArray>this.form.controls['links'];
-    control.removeAt(index);
-  }
-
-  onDeleteControl(index) {
-    this.removeService(index);
-  }
-
-  doSinglePost(index) {
-    const control = <FormArray>this.form.controls['links'];
-
-    console.log(control.controls[index]);
-
-    if (this.form.valid) {
-      this.addLinkControl();
-      return;
-    }
+    super
+      .fetchData(stores$)
+      .then(res => {
+        this.stores = res.data;
+      })
+      .catch(err => console.log(err));
   }
 
   private buildHeader() {
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': 'Import Facebook Events',
+        'heading': 'Import Events from Facebook',
         'subheading': '',
         'children': []
       }
     });
-  }
-
-  doSubmit() {
-    console.log(this.form.value);
-  }
-
-  toogleIsFeedback(index, status) {
-    const control = <FormArray>this.form.controls['links'];
-    const group = <FormGroup>control.controls[index];
-
-    group.controls['feedback'].setValue(status);
-  }
-
-  toggleIsAttendance(index, status) {
-    const control = <FormArray>this.form.controls['links'];
-    const group = <FormGroup>control.controls[index];
-
-    group.controls['attendance'].setValue(status);
   }
 
   ngOnInit() { }

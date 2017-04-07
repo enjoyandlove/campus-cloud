@@ -1,0 +1,33 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+  <div class="form-group">
+    <div class="row">
+      <div class="col-xs-3">
+        <label i18n>Facebook Events Link</label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="url">
+      </div>
+      <div class="col-xs-3">
+        <label i18n>Host</label>
+        <cp-dropdown
+          [items]="stores"
+          (selected)="onSelectedStore($event)">
+        </cp-dropdown>
+      </div>
+      <div class="col-xs-3">
+        <label i18n>&nbsp;</label>
+        <button
+          type="submit"
+          [disabled]="!form.valid"
+          class="cpbtn cpbtn--primary"i18n>
+          Add Link
+        </button>
+      </div>
+      <div class="col-xs-3 pull-right">
+        <label i18n>&nbsp;</label>
+        <label class="error text-center" *ngFor="let error of errors">{{ error }}</label>
+      </div>
+    </div>
+  </div>
+</form>
