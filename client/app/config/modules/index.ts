@@ -10,6 +10,7 @@ import { AuthModule } from '../../pages/auth/auth.module';
 import { ControlPanelModule } from '../../pages/controlpanel/controlpanel.module';
 
 import {
+  clubsReducer,
   alertReducer,
   mobileReducer,
   headerReducer,
@@ -18,6 +19,7 @@ import {
 } from '../../reducers';
 
 const APP_STATE_MODULE = StoreModule.provideStore({
+  CLUBS: clubsReducer,
   ALERT: alertReducer,
   HEADER: headerReducer,
   MOBILE: mobileReducer,

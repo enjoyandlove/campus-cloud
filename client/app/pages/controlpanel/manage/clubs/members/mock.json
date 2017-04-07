@@ -1,0 +1,11 @@
+[
+  {
+    "id": 2,
+    "firstname": "Andres",
+    "lastname": "Roget",
+    "role": null,
+    "description": "Some random text",
+    "avatar_url": "https://d3iw72m71ie81c.cloudfront.net/male-89.jpg",
+    "member_type": "Member"
+  }
+]

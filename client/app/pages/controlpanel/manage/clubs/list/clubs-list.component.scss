@@ -1,38 +1,24 @@
 @import '~styles/core/colors';
-@import '~styles/core/typography';
-@import '~styles/components/card';
 @import '~styles/components/form';
 @import '~styles/components/button';
 @import '~bootstrap/variables';
 
-// .actions {
-//   label {
-//     @include font-normal();
-
-//     display: inline-block;
-//     vertical-align: -8px;
-//   }
-
-//   .calendar {
-//     height: 40px;
-//   }
-
-//   .checkbox {
-//     margin-top: 5px;
-//   }
-
-//   & > div > * {
-//     @media all and (max-width: $screen-md) {
-//       margin-bottom: 10px;
-//     }
-//   }
-// }
-
-.delete-event {
+.delete-club {
   font-size: 2em;
 }
 
-.events {
+.cp-form__header {
+  span.hover {
+    position: relative;
+
+    > span i {
+      top: -2px;
+      position: absolute;
+    }
+  }
+}
+
+.clubs {
   padding: 0;
   list-style: none;
   padding-bottom: 20px;
@@ -53,7 +39,7 @@
 
   @media all and (max-width: $screen-md) {
     li {
-      > span:not(.events__thumbnail) {
+      > span:not(.clubs__thumbnail) {
         text-align: center;
         padding-bottom: 10px;
       }

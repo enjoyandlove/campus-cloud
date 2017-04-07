@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 
 import { CPDate } from '../../../../../../../shared/utils/date';
 import { DATE_FILTER } from './events-filters';
@@ -33,6 +33,7 @@ declare var $: any;
   styleUrls: ['./list-action-box.component.scss']
 })
 export class ListActionBoxComponent extends BaseComponent implements OnInit {
+  @Input() isSimple: boolean;
   @Output() listAction: EventEmitter<IState> = new EventEmitter();
 
   hosts;

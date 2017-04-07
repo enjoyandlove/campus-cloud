@@ -29,7 +29,6 @@ def app_login(request):
 Parse Excel Mass Event Invite
 '''
 
-
 @csrf_exempt
 def import_excel_event(request):
     input_excel = request.FILES['file']
@@ -88,7 +87,33 @@ def import_excel_event(request):
 
 
 '''
-Parse Excel Mass Service Upload
+Parse Clubs Mass Upload
+'''
+@csrf_exempt
+def clubs_invite(request):
+    input_excel = request.FILES['file']
+
+    wb = load_workbook(filename = input_excel)
+
+    ws = wb.get_active_sheet()
+
+    club_dict = []
+
+    for row in ws.rows:
+        club_info = []
+        for col in row:
+            if col.value is not None:
+                club_info.append(col.value)
+        if len(club_info):
+            club_dict.append(club_info)
+
+    events = club_dict[1:]
+    column_titles = club_dict[:1]
+
+    column_titles = [title.lower().replace(" ", "_") for title in column_titles[0]]
+
+    club_dict = []
+
 '''
 @csrf_exempt
 def import_excel_service(request):
@@ -118,6 +143,13 @@ def import_excel_service(request):
     for i in events:
         # all fields are required
         if len(i) is not len(column_titles):
+            return JsonResponse({ "error": "All fields are required" }, safe=False, status=500)
+
+        club_dict.append(dict(zip(column_titles, i)))
+
+    return JsonResponse(json.dumps(club_dict), safe=False)
+
+
             return JsonResponse({"error": "All fields are required"},
                                 safe=False, status=500)
 

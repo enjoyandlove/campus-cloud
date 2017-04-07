@@ -1,0 +1,66 @@
+<div class="cpmodal">
+  <div class="cpmodal__header">
+    <div class="row">
+      <div class="col-xs-12 text-center">
+        <span i18n><strong>Upload Excel File</strong></span>
+
+        <span
+          data-dismiss="modal"
+          class="pull-right hover cpmodal__header__close">
+          &times;
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cpmodal__body">
+    <div class="row">
+      <div class="col-xs-12">
+        <p class="text-center" i18n>
+          Please upload an Excel file with columns in the exact same order as per below
+        </p>
+        <br>
+        <p class="text-center">Ugly picture here</p>
+        <br>
+        <a [href]="downloadLink" download
+          class="cpbtn cpbtn--link" i18n>
+          Download Excel Sample File
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="cpmodal__footer">
+    <div class="row">
+      <div class="col-xs-12 text-right">
+        <label
+          class="error"
+          *ngIf="error" i18n>
+          <span>&#x26A0;</span>
+          {{ error }}
+        </label>
+        <button
+          type="button"
+          class="cpbtn cpbtn--cancel"
+          data-dismiss="modal" i18n>
+          Cancel
+        </button>
+
+        <cp-upload-button
+          *ngIf="!uploaded"
+          buttonClass="cpbtn cpbtn--primary"
+          (fileUpload)="onFileUpload($event)">
+        </cp-upload-button>
+
+        <button
+          *ngIf="uploaded"
+          type="button"
+          (click)="onNavigate()"
+          class="cpbtn cpbtn--primary"
+          data-dismiss="modal" i18n>
+          <i class="material-icons">arrow_forward</i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

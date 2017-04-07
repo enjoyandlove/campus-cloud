@@ -1,0 +1,9 @@
+@import '~styles/components/button';
+
+.comment {
+  padding-bottom: 25px;
+
+  &.isLast {
+    padding-bottom: 0;
+  }
+}

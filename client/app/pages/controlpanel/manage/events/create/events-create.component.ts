@@ -1,12 +1,10 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Headers } from '@angular/http';
 
-import { API } from '../../../../../config/api';
 import { EventsService } from '../events.service';
-import { FileUploadService, ErrorService, StoreService } from '../../../../../shared/services';
-import { CPArray, CPImage, CPMap, CPDate, appStorage } from '../../../../../shared/utils';
+import { CPMap, CPDate } from '../../../../../shared/utils';
+import { ErrorService, StoreService } from '../../../../../shared/services';
 
 const COMMON_DATE_PICKER_OPTIONS = {
   utc: true,
@@ -21,6 +19,7 @@ const COMMON_DATE_PICKER_OPTIONS = {
   styleUrls: ['./events-create.component.scss']
 })
 export class EventsCreateComponent implements OnInit {
+  clubId;
   stores$;
   mapCenter;
   imageError;
@@ -30,17 +29,20 @@ export class EventsCreateComponent implements OnInit {
   enddatePickerOpts;
   startdatePickerOpts;
 
+
   constructor(
     private router: Router,
     private fb: FormBuilder,
+    private route: ActivatedRoute,
     private storeService: StoreService,
     private errorService: ErrorService,
-    private eventService: EventsService,
-    private fileUploadService: FileUploadService
+    private eventService: EventsService
   ) {
+    this.clubId = this.route.parent.parent.snapshot.params['clubId'];
+
     this.form = this.fb.group({
       'title': ['', Validators.required],
-      'store_id': [null, Validators.required],
+      'store_id': [this.clubId ? this.clubId : null, Validators.required],
       'location': [''],
       'room_data': [''],
       'city': [''],
@@ -78,36 +80,10 @@ export class EventsCreateComponent implements OnInit {
     });
   }
 
-  onFileUpload(file) {
-    this.imageError = null;
-    const fileExtension = CPArray.last(file.name.split('.'));
-
-    if (!CPImage.isSizeOk(file.size, CPImage.MAX_IMAGE_SIZE)) {
-      this.imageError = 'File too Big';
-      return;
-    }
-
-    if (!CPImage.isValidExtension(fileExtension, CPImage.VALID_EXTENSIONS)) {
-      this.imageError = 'Invalid Extension';
-      return;
-    }
-
-    const headers = new Headers();
-    const url = this.eventService.getUploadImageUrl();
-    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
-
-    headers.append('Authorization', auth);
-
-    this
-      .fileUploadService
-      .uploadFile(file, url, headers)
-      .subscribe(
-        res => {
-          this.form.controls['poster_url'].setValue(res.image_url);
-          this.form.controls['poster_thumb_url'].setValue(res.image_url);
-        },
-        err => console.error(err)
-      );
+  onUploadedImage(image) {
+    console.log(image);
+    this.form.controls['poster_url'].setValue(image);
+    this.form.controls['poster_thumb_url'].setValue(image);
   }
 
   toggleEventAttendance(value) {
