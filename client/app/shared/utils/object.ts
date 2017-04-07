@@ -1,4 +1,6 @@
 const cleanNullValues = function(obj: any) {
+  if (Array.isArray(obj)) { return obj; }
+
   let _obj = {};
 
   Object.keys(obj).forEach(key => {
@@ -9,7 +11,6 @@ const cleanNullValues = function(obj: any) {
 
   return _obj;
 };
-
 
 export const CPObj = {
   cleanNullValues
