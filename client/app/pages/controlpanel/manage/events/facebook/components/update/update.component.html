@@ -1,0 +1,72 @@
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div *ngSwitchCase="false">
+    <form [formGroup]="form" (ngSubmit)="onBulkUpdate(form.value)">
+      <div class="form-group" formArrayName="links">
+        <div class="row"  *ngFor="let link of form.controls.links.controls; let i=index">
+          <div class="col-xs-12">
+            <div class="link-group">
+              <div [formGroupName]="i">
+                <div class="col-xs-3 no-left-padding">
+                  <label i18n>Facebook Events Link</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="url">
+                </div>
+                <div class="col-xs-3">
+                  <label i18n>Host</label>
+                  <cp-dropdown
+                    [items]="stores"
+                    [selectedItem]="link.controls.selected.value"
+                    (selected)="onSelectedStore($event, i)">
+                  </cp-dropdown>
+                </div>
+                <div class="col-xs-2 pull-right text-right">
+                  <button
+                    type="button"
+                    (click)="deleteLink = link"
+                    class="cpbtn cpbtn--link-dark delete-button"
+                    data-toggle="modal" data-target="#facebookDelete">
+                    &times;
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="pull-right">
+                <button
+                  i18n
+                  type="button"
+                  class="cpbtn cpbtn--tall cpbtn--cancel submit">
+                  Cancel
+                </button>
+                <button
+                  i18n
+                  type="submit"
+                  [disabled]="!isEdited || !form.controls.links.length"
+                  class="cpbtn cpbtn--tall cpbtn--primary submit">
+                  Update
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<cp-modal modalId="facebookDelete">
+  <cp-facebook-delete
+    [link]="deleteLink"
+    (deleted)="onDeleted()">
+  </cp-facebook-delete>
+</cp-modal>
