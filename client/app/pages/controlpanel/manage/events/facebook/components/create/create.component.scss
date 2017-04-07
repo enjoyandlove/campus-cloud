@@ -1,0 +1,14 @@
+@import '~styles/components/form';
+@import '~styles/components/card';
+@import '~styles/components/button';
+@import '~styles/core/colors';
+@import '~styles/core/typography';
+
+form {
+  padding: 30px 0;
+  border-top: 1px solid $border-color;
+}
+
+label.error {
+  display: block;
+}

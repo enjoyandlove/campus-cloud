@@ -1,0 +1,44 @@
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div class="header" *ngSwitchCase="false">
+    <div class="col-xs-2 no-left-padding">
+      <cp-checkbox
+        class="checkbox pull-left"
+        (toggle)="this.checkAll.emit($event)">
+      </cp-checkbox>
+      <cp-upload-button
+        buttonClass="default"
+        buttonText="Upload Photo"
+        (fileUpload)="onFileUpload($event)">
+      </cp-upload-button>
+    </div>
+
+    <div class="col-xs-2">
+      <cp-dropdown
+        [items]="stores"
+        (selected)="categoryChange.emit($event)">
+      </cp-dropdown>
+    </div>
+    <div class="col-xs-2">
+      <button
+        type="button"
+        (click)="deleteServices.emit()"
+        class="cpbtn cpbtn--danger" i18n>
+        Delete
+      </button>
+    </div>
+    <div class="pull-right">
+      <button
+        type="button"
+        class="cpbtn cpbtn--secondary" i18n
+        data-toggle="modal" data-target="#excelServicesModal">
+        Upload Another Excel File
+      </button>
+    </div>
+  </div>
+</div>
+
+<cp-modal modalId="excelServicesModal">
+  <cp-services-excel-modal></cp-services-excel-modal>
+</cp-modal>

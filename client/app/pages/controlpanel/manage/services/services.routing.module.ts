@@ -10,6 +10,11 @@ import { ServicesInfoComponent } from './info';
 import { ServicesCreateComponent } from './create';
 import { ServicesAttendanceComponent } from './attendance';
 
+/**
+ * Excel
+ */
+import { ServicesExcelComponent } from './excel';
+
 
 const appRoutes: Routes = [
   { path: 'import', redirectTo: '', pathMatch: 'full' },
@@ -21,7 +26,7 @@ const appRoutes: Routes = [
   { path: ':serviceId/edit', component: ServicesEditComponent },
   { path: ':serviceId', component: ServicesAttendanceComponent },
 
-  // { path: 'import/excel', component: EventsExcelComponent },
+  { path: 'import/excel', component: ServicesExcelComponent },
 ];
 @NgModule({
   imports: [

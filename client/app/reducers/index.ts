@@ -3,6 +3,7 @@ export { reducer as alertReducer } from './alert.reducer';
 export { reducer as headerReducer } from './header.reducer';
 export { reducer as mobileReducer } from './mobile.reducer';
 export { reducer as eventsModalReducer } from './events-modal.reducer';
+export { reducer as servicesModalReducer } from './services-modal.reducer';
 
 // /**
 //  * combineReducers is another useful metareducer that takes a map of reducer

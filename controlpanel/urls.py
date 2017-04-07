@@ -6,7 +6,9 @@ urlpatterns = [
 
     url(r'^login$', views.app_login),
 
-    url(r'^events/excel$', views.event_invite),
-
     url(r'^clubs/excel$', views.clubs_invite),
+
+    url(r'^events/excel$', views.import_excel_event),
+
+    url(r'^services/excel$', views.import_excel_service),
 ]
