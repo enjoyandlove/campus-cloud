@@ -1,0 +1,19 @@
+@import '~styles/components/card';
+@import '~styles/components/button';
+
+:host {
+  display: block;
+  @include card-margin();
+
+  margin-top: 0;
+}
+
+button {
+  padding: 6px;
+
+  i {
+    line-height: 1;
+    font-size: 19px;
+    vertical-align: -4px;
+  }
+}

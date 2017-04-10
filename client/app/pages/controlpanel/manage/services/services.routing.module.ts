@@ -8,7 +8,13 @@ import { ServicesListComponent } from './list';
 import { ServicesEditComponent } from './edit';
 import { ServicesInfoComponent } from './info';
 import { ServicesCreateComponent } from './create';
+import { ServicesEventsComponent } from './events';
 import { ServicesAttendanceComponent } from './attendance';
+
+/**
+ * Excel
+ */
+import { ServicesExcelComponent } from './excel';
 
 
 const appRoutes: Routes = [
@@ -19,9 +25,10 @@ const appRoutes: Routes = [
   { path: 'create', component: ServicesCreateComponent },
   { path: ':serviceId/info', component: ServicesInfoComponent },
   { path: ':serviceId/edit', component: ServicesEditComponent },
+  { path: ':serviceId/events', component: ServicesEventsComponent },
   { path: ':serviceId', component: ServicesAttendanceComponent },
 
-  // { path: 'import/excel', component: EventsExcelComponent },
+  { path: 'import/excel', component: ServicesExcelComponent },
 ];
 @NgModule({
   imports: [

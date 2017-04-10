@@ -10,23 +10,30 @@ import datetime
 Shell to serve angular app,
 all logic is then worked on the API
 '''
+
+
 def web_app(request):
     return render_to_response("index.html")
+
 
 '''
 Control Panel Login Page
 '''
+
+
 def app_login(request):
     return render_to_response("controlpanel/login.html")
 
+
 '''
-Parse Excel Mass Invite
+Parse Excel Mass Event Invite
 '''
+
 @csrf_exempt
-def event_invite(request):
+def import_excel_event(request):
     input_excel = request.FILES['file']
 
-    wb = load_workbook(filename = input_excel)
+    wb = load_workbook(filename=input_excel)
 
     ws = wb.get_active_sheet()
 
@@ -50,22 +57,26 @@ def event_invite(request):
     for i in events:
         # all fields are required
         if len(i) is not len(column_titles):
-            return JsonResponse({ "error": "All fields are required" }, safe=False, status=500)
+            return JsonResponse({"error": "All fields are required"},
+                                safe=False, status=500)
 
         # end date is not greater than start date
         if i[3] < i[2]:
-          return JsonResponse({ "error": "Start date can not be greater than end date" }, safe=False, status=500)
+            return JsonResponse({"error": "Start date can not be greater than end date"},
+                                safe=False, status=500)
 
         # start date is not in the past
         if i[2] < datetime.datetime.now():
-          return JsonResponse({ "error": "Start date can not be in the past" }, safe=False, status=500)
+            return JsonResponse({"error": "Start date can not be in the past"},
+                                safe=False, status=500)
 
         # check date time format (2017-05-12 09:00:00)
         try:
-          datetime.datetime.strptime(str(i[2]), "%Y-%m-%d %H:%M:%S")
-          datetime.datetime.strptime(str(i[3]), "%Y-%m-%d %H:%M:%S")
+            datetime.datetime.strptime(str(i[2]), "%Y-%m-%d %H:%M:%S")
+            datetime.datetime.strptime(str(i[3]), "%Y-%m-%d %H:%M:%S")
         except ValueError:
-          return JsonResponse({ "error": "Invalid date format" }, safe=False, status=500)
+            return JsonResponse({"error": "Invalid date format"},
+                                safe=False, status=500)
 
         i[2] = str(i[2])
         i[3] = str(i[3])
@@ -75,3 +86,67 @@ def event_invite(request):
     return JsonResponse(json.dumps(event_dict), safe=False)
 
 
+'''
+Parse Clubs Mass Upload
+'''
+@csrf_exempt
+def import_excel_clubs(request):
+    input_excel = request.FILES['file']
+
+    wb = load_workbook(filename = input_excel)
+
+    ws = wb.get_active_sheet()
+
+    club_dict = []
+
+    for row in ws.rows:
+        club_info = []
+        for col in row:
+            if col.value is not None:
+                club_info.append(col.value)
+        if len(club_info):
+            club_dict.append(club_info)
+
+    events = club_dict[1:]
+    column_titles = club_dict[:1]
+
+    column_titles = [title.lower().replace(" ", "_") for title in column_titles[0]]
+
+    club_dict = []
+
+'''
+Parse Services Excel Mass Upload
+'''
+@csrf_exempt
+def import_excel_service(request):
+    input_excel = request.FILES['file']
+
+    wb = load_workbook(filename=input_excel)
+
+    ws = wb.get_active_sheet()
+
+    service_dict = []
+
+    for row in ws.rows:
+        service_info = []
+        for col in row:
+            if col.value is not None:
+                service_info.append(col.value)
+        if len(service_info):
+            service_dict.append(service_info)
+
+    services = service_dict[1:]
+    column_titles = service_dict[:1]
+
+    column_titles = [title.lower().replace(" ", "_") for title in column_titles[0]]
+
+    service_dict = []
+
+    for i in services:
+        # all fields are required
+        if len(i) is not len(column_titles):
+            return JsonResponse({ "error": "All fields are required" }, safe=False, status=500)
+
+        service_dict.append(dict(zip(column_titles, i)))
+
+    return JsonResponse(json.dumps(service_dict), safe=False)

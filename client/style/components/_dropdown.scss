@@ -1,0 +1,21 @@
+@mixin cpDropdownMenu() {
+  top: 80%;
+  padding: 0;
+  max-height: 197px;
+  overflow-y: scroll;
+  background-color: $color-white;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.12);
+
+  li {
+    padding: 10px;
+    text-align: left;
+    color: $color-secondary-text;
+    transition: background 100ms ease-in;
+
+    &:hover {
+      cursor: pointer;
+      color: $color-white;
+      background: $color-brand;
+    }
+  }
+}

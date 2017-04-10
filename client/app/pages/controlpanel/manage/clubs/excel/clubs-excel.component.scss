@@ -1,0 +1,58 @@
+@import '~styles/core/colors';
+@import '~styles/components/form';
+@import '~styles/components/button';
+@import '~bootstrap/variables';
+
+.delete-button {
+  font-size: 2em;
+}
+
+.cp-form__header {
+  span.hover {
+    position: relative;
+
+    > span i {
+      top: -2px;
+      position: absolute;
+    }
+  }
+}
+
+.clubs {
+  padding: 0;
+  list-style: none;
+  padding-bottom: 20px;
+
+  &__thumbnail {
+    img {
+      float: left;
+      width: 30px;
+      height: 30px;
+      margin-top: 5px;
+      margin-right: 10px;
+    }
+  }
+
+  @media all and (max-width: $screen-md) {
+    li {
+      > span:not(.clubs__thumbnail) {
+        text-align: center;
+        padding-bottom: 10px;
+      }
+    }
+  }
+}
+
+.footer {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  position: fixed;
+  margin-top: 25px;
+  background: $color-white;
+  border-top: 1px solid $border-color;
+
+  > div {
+    padding: 15px 0;
+  }
+}

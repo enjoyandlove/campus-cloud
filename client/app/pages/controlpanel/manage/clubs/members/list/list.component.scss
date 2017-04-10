@@ -1,0 +1,56 @@
+@import '~styles/core/colors';
+@import '~styles/components/form';
+@import '~styles/components/button';
+@import '~bootstrap/variables';
+
+.delete-member {
+  font-size: 2em;
+}
+
+.cp-form {
+  margin-top: 0;
+}
+
+.cp-form__header {
+  span.hover {
+    position: relative;
+
+    > span i {
+      top: -2px;
+      position: absolute;
+    }
+  }
+}
+
+.members {
+  padding: 0;
+  list-style: none;
+  padding-bottom: 20px;
+
+  .no-content {
+    padding: 15px 0;
+  }
+
+  .member__title {
+    display: inherit
+  }
+
+  &__thumbnail {
+    img {
+      float: left;
+      width: 30px;
+      height: 30px;
+      margin-top: 5px;
+      margin-right: 10px;
+    }
+  }
+
+  @media all and (max-width: $screen-md) {
+    li {
+      > span:not(.members__thumbnail) {
+        text-align: center;
+        padding-bottom: 10px;
+      }
+    }
+  }
+}

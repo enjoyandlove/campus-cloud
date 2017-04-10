@@ -1,5 +1,6 @@
 @import '~styles/core/colors';
 @import '~styles/components/form';
+@import '~styles/components/button';
 
 
 .input {
@@ -44,10 +45,8 @@
     ~ label {
       cursor: pointer;
       font-size: 1em;
-      font-weight: 400;
       margin-bottom: 0;
       user-select: none;
-      padding: 6px 12px;
       border-radius: 4px;
       display: inline-block;
     }

@@ -1,25 +1,79 @@
-.inputfile {
-  width: 0.1px;
-  height: 0.1px;
-  opacity: 0;
-  overflow: hidden;
-  position: absolute;
-  z-index: -1;
-}
+@import '~styles/core/colors';
 
-.inputfile + label {
-  font-size: 1.25em;
-  font-weight: 700;
-  color: white;
-  background-color: black;
-  display: inline-block;
-}
+$img_height: 108px;
 
-.inputfile:focus + label,
-.inputfile + label:hover {
-  background-color: red;
-}
+.wrapper {
+  &__left-side {
 
-.inputfile + label {
-  cursor: pointer; /* "hand" cursor */
+  }
+
+  &__right-side {
+    position: relative;
+    height: $img_height;
+
+    span,
+    label:not('.dark') {
+      color: $color-secondary-text;
+    }
+
+    label.dark {
+      margin-bottom: 2px;
+      display: block;
+    }
+  }
+
+  &__image {
+    width: 100%;
+    border-radius: 4px;
+    height: $img_height;
+    position: relative;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+
+  &__delete {
+    top: 0px;
+    right: 6px;
+    font-weight: 400;
+    font-size: 1.8em;
+    position: absolute;
+    color: $color-white;
+  }
+
+  &__image--no-image {
+    border-radius: 4px;
+    border: 1px solid $border-color;
+  }
+
+  &__button {
+    left: 15px;
+    bottom: 0px;
+    position: absolute;
+  }
 }
+// .inputfile {
+//   width: 0.1px;
+//   height: 0.1px;
+//   opacity: 0;
+//   overflow: hidden;
+//   position: absolute;
+//   z-index: -1;
+// }
+
+// .inputfile + label {
+//   font-size: 1.25em;
+//   font-weight: 700;
+//   color: white;
+//   background-color: black;
+//   display: inline-block;
+// }
+
+// .inputfile:focus + label,
+// .inputfile + label:hover {
+//   background-color: red;
+// }
+
+// .inputfile + label {
+//   cursor: pointer; /* "hand" cursor */
+// }

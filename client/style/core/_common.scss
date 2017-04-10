@@ -17,7 +17,7 @@ body {
   border-radius: 4px;
   display: inline-block;
   border: 1px solid $border-color;
-  background-color: $color-white;
+  background-color: $color-light-grey;
 
   i {
     font-size: 6em;
@@ -26,8 +26,8 @@ body {
   }
 
   &--small {
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
 
     i {
       margin-top: 6px;

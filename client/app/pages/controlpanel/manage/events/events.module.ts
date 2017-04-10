@@ -53,5 +53,12 @@ import {
   imports: [ CommonModule, SharedModule, EventsRoutingModule, RouterModule, ReactiveFormsModule ],
 
   providers: [ EventsService ],
+
+  exports: [ EventsListComponent, EventsCreateComponent, EventsAttendanceComponent,
+  EventsDeleteComponent, EventsInfoComponent, EventsEditComponent, EventsExcelModalComponent,
+  EventsFacebookComponent, EventsExcelComponent, EventsImportActionDropdownComponent,
+  EventsImportTopBarComponent, ListActionBoxComponent, ListPastComponent, ListUpcomingComponent,
+  AttendancePastComponent, AttendanceUpcomingComponent,
+  EventsFeedbackModalComponent, EventsPastActionBoxComponent ]
 })
 export class EventsModule {}

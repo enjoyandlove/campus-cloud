@@ -2,6 +2,9 @@
   "name": "oohlalamobile_control_panel",
   "version": "1.0.1",
   "description": "Control Panel",
+  "engines" : {
+    "node" : "6.10.0"
+  },
   "scripts": {
     "i18n": "ng-xi18n -p ",
     "clean": "rimraf node_modules doc dist && npm cache clean",

@@ -1,0 +1,56 @@
+@import '~styles/components/form';
+@import '~styles/components/button';
+@import '~styles/core/typography';
+
+
+.checkbox {
+  margin: 0 auto;
+  margin-top: 6px;
+}
+
+.service__avatar {
+  height: 35px;
+
+  img {
+    width: auto;
+    height: 100%;
+    max-width: 35px;
+  }
+}
+
+.header {
+  padding: 0 8px;
+}
+
+.form {
+  label {
+    margin-bottom: 8px;
+  }
+
+  &__item {
+    padding: 10px 8px;
+
+    .margin-top {
+      margin-top: 15px;
+    }
+  }
+}
+
+.margin-bottom {
+  // to account for the fixed footer
+  padding-bottom: 90px;
+}
+
+.footer {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  position: fixed;
+  margin-top: 25px;
+  background: $color-white;
+  border-top: 1px solid $border-color;
+
+  > div {
+    padding: 15px 0;
+  }
+}

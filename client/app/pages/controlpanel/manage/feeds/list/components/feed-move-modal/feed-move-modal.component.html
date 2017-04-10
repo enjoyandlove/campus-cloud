@@ -1,0 +1,57 @@
+<div class="cpmodal">
+  <div class="cpmodal__header">
+    <div class="row">
+      <div class="col-xs-12 text-center">
+        <span i18n><strong>Move Post</strong></span>
+
+        <span
+          data-dismiss="modal"
+          (click)="teardown.emit()"
+          class="pull-right hover cpmodal__header__close">
+          &times;
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cpmodal__body">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="row text-center">
+          <div class="col-xs-offset-2 vertical-align pull-left">
+            <span i18n>Move post from NAME to</span>
+          </div>
+          <div class="col-xs-4">
+            <cp-dropdown
+              class="dropdown"
+              [items]="channels"
+              (selected)="onSelectedChannel($event)">
+            </cp-dropdown>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cpmodal__footer">
+    <div class="row">
+      <div class="col-xs-6 col-xs-offset-6 text-right">
+        <button
+          type="button"
+          class="cpbtn cpbtn--cancel"
+          data-dismiss="modal" i18n
+          (click)="teardown.emit()">
+          Cancel
+        </button>
+
+        <button
+          type="button"
+          (click)="onSubmit()"
+          [disabled]="!form.valid"
+          class="cpbtn cpbtn--primary"i18n>
+          Move
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

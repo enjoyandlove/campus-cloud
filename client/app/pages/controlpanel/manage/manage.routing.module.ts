@@ -24,6 +24,8 @@ const appRoutes: Routes = [
 
       { path: 'links', loadChildren: './links/links.module#LinksModule' },
 
+      { path: 'feeds', loadChildren: './feeds/feeds.module#FeedsModule' },
+
     ]
   }
 ];

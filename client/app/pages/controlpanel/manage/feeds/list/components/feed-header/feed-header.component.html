@@ -1,0 +1,25 @@
+<div class="pull-left avatar avatar--small">
+  <img
+    class="img-responsive img-rounded"
+    src="https://source.unsplash.com/random/40x40">
+</div>
+<div class="feed__meta pull-left">
+  <span class="name">
+    {{ feed.display_name }}
+  </span>
+  <span class="email">
+    (no@data.com)
+  </span>
+  <span *ngIf="!isComment">
+    <span class="text-muted" i18n>
+      posted in
+    </span>
+    <span class="cpbtn cpbtn--link">
+      Wall Name
+    </span>
+  </span>
+  <br>
+  <span class="text-muted">
+    {{ CPDate.fromEpoch(feed.added_time_epoch) }}
+  </span>
+</div>

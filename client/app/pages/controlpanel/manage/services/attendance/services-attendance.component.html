@@ -60,11 +60,14 @@
             </div>
             <div class="col-xs-12 col-xs-offset-0 col-sm-4 col-sm-offset-4 text-right">
               <button class="cpbtn cpbtn--primary" i18n>
-                Download Excel File
+                Download CSV File
               </button>
-              <a [routerLink]="['/manage/services/create']" class="cpbtn cpbtn--primary" i18n>
+              <button
+                type="button"
+                class="cpbtn cpbtn--primary"
+                data-toggle="modal" data-target="#createProvider" i18n>
                 Add Service Provider
-              </a>
+              </button>
             </div>
           </div>
         </div>
@@ -123,7 +126,7 @@
               <div class="col-xs-1">
                 <span
                   (click)="onDelete(provider)"
-                  data-toggle="modal" data-target="#deleteServiceProvierModal"
+                  data-toggle="modal" data-target="#deleteProvider"
                   class="col-xs-12 col-md-1 hover text-truncate delete-provider">
                   &times;
                 </span>
@@ -136,8 +139,14 @@
   </div>
 </div>
 
-<cp-modal modalId="deleteServiceProvierModal">
-  <cp-delete-provider
+<cp-modal modalId="deleteProvider">
+  <cp-providers-delete
     [provider]="deleteProvider">
-  </cp-delete-provider>
+  </cp-providers-delete>
+</cp-modal>
+
+<cp-modal modalId="createProvider">
+  <cp-providers-add
+    (created)="onCreatedProvider($event)">
+  </cp-providers-add>
 </cp-modal>

@@ -7,6 +7,8 @@ import { SharedModule } from '../../../../shared/shared.module';
 import { ServicesEditComponent } from './edit';
 import { ServicesListComponent } from './list';
 import { ServicesInfoComponent } from './info';
+import { ServicesExcelComponent } from './excel';
+import { ServicesEventsComponent } from './events';
 import { ServicesDeleteComponent } from './delete';
 import { ServicesCreateComponent } from './create';
 import { ServicesAttendanceComponent } from './attendance';
@@ -19,7 +21,8 @@ import {
 } from './list/components';
 
 import {
-  ServicesExcelModalComponent
+  ServicesExcelModalComponent,
+  ServicesImportTopBarComponent
 } from './excel/components';
 
 import {
@@ -27,15 +30,17 @@ import {
 } from './create/components';
 
 import {
-  DeleteProviderComponent
+  ServicesProviderAddComponent,
+  ServicesProviderDeleteComponent
 } from './attendance/components';
 
 
 @NgModule({
   declarations: [ ServicesListComponent, ServicesListActionBoxComponent, ServicesDeleteComponent,
-  ServicesExcelModalComponent, ServicesAttendanceComponent,
-  DeleteProviderComponent, ServicesCreateComponent, ServicesDeleteAdminModalComponent,
-  ServicesEditComponent, ServicesInfoComponent ],
+  ServicesExcelModalComponent, ServicesAttendanceComponent, ServicesCreateComponent,
+  ServicesDeleteAdminModalComponent, ServicesEditComponent, ServicesInfoComponent,
+  ServicesEventsComponent, ServicesProviderAddComponent, ServicesProviderDeleteComponent,
+  ServicesExcelComponent, ServicesImportTopBarComponent ],
 
   imports: [ CommonModule, SharedModule, ServicesRoutingModule, RouterModule, ReactiveFormsModule ],
 
