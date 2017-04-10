@@ -1,7 +1,6 @@
 <div *ngIf="isFormReady">
   <div class="row">
     <cp-import-top-bar
-      (deleteEvent)="onBulkDelete()"
       (bulkChange)="onBulkChange($event)"
       (checkAll)="onCheckAll($event)"
       (hostChange)="onHostBulkChange($event)"

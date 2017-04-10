@@ -8,7 +8,7 @@
     {{ selectedItem ? selectedItem.label : items[0].label }}
     <i class="material-icons">arrow_drop_down</i>
   </button>
-  <ul class="dropdown-menu">
+  <ul class="dropdown-menu" *ngIf="items.length > 1">
     <li
       (click)="selectedItem = item"
       *ngFor="let item of items"

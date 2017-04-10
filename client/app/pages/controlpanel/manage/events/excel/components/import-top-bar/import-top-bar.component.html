@@ -1,7 +1,4 @@
-<div [ngSwitch]="loading">
-  <cp-spinner *ngSwitchCase="true"></cp-spinner>
-
-  <div class="header" *ngSwitchCase="false">
+  <div class="header">
     <div class="col-xs-2 no-left-padding">
       <cp-checkbox
         class="checkbox pull-left"
@@ -14,18 +11,18 @@
       </cp-upload-button>
     </div>
 
-    <div class="col-xs-2">
+    <!--<div class="col-xs-2">
       <cp-dropdown
         [items]="stores"
         (selected)="hostChange.emit($event)">
       </cp-dropdown>
-    </div>
-    <div class="col-xs-2">
+    </div>-->
+    <div class="col-xs-2 no-left-padding">
       <cp-import-action-dropdown
         (bulkAction)="bulkChange.emit($event)">
       </cp-import-action-dropdown>
     </div>
-    <div class="col-xs-2">
+    <!--<div class="col-xs-2">
       <button
         type="button"
         (click)="deleteEvent.emit()"
@@ -40,10 +37,5 @@
         data-toggle="modal" data-target="#excelEventsModal">
         Upload Another Excel File
       </button>
-    </div>
+    </div>-->
   </div>
-</div>
-
-<cp-modal modalId="excelEventsModal">
-  <cp-events-excel-modal></cp-events-excel-modal>
-</cp-modal>

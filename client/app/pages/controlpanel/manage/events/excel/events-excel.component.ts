@@ -143,23 +143,24 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     control.controls['event_feedback'].setValue(feedback);
   }
 
-  onBulkDelete() {
-    let _isChecked = [];
+  // onBulkDelete() {
+  //   let _isChecked = [];
 
-    this.isChecked.reverse().forEach(item => {
-      if (item.checked) {
-        this.isChecked.slice(item.index, 1);
-        this.removeControl(item.index);
-        return;
-      }
-      item = Object.assign({}, item, { index: _isChecked.length });
-      _isChecked.push(item);
-    });
+  //   this.isChecked.reverse().forEach(item => {
+  //     if (item.checked) {
+  //       this.isChecked.slice(item.index, 1);
+  //       this.removeControl(item.index);
+  //       return;
+  //     }
+  //     item = Object.assign({}, item, { index: _isChecked.length });
+  //     _isChecked.push(item);
+  //   });
 
-    this.isChecked = [ ..._isChecked ];
-  }
+  //   this.isChecked = [ ..._isChecked ];
+  // }
 
   onBulkChange(actions) {
+    console.log(actions);
     const control = <FormArray>this.form.controls['events'];
 
     this.isChecked.map(item => {
