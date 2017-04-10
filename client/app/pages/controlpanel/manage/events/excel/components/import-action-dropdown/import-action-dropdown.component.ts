@@ -1,17 +1,17 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 interface IState {
-  event_manager: number;
+  event_manager_id: number;
   event_attendance: number;
-  attendance_manager: string;
-  event_attendance_feedback: number;
+  attendance_manager_email: string;
+  event_feedback: number;
 }
 
 const actionState = {
   event_attendance: 0,
-  event_manager: null,
-  attendance_manager: null,
-  event_attendance_feedback: 2
+  event_manager_id: null,
+  attendance_manager_email: null,
+  event_feedback: 1
 };
 
 @Component({
@@ -45,7 +45,7 @@ export class EventsImportActionDropdownComponent implements OnInit {
     this.state = Object.assign(
       {},
       this.state,
-      { event_manager: manager });
+      { event_manager_id: manager });
     return;
   }
 
@@ -53,7 +53,7 @@ export class EventsImportActionDropdownComponent implements OnInit {
     this.state = Object.assign(
       {},
       this.state,
-      { attendance_manager: manager });
+      { attendance_manager_email: manager });
     return;
   }
 
@@ -61,7 +61,7 @@ export class EventsImportActionDropdownComponent implements OnInit {
     this.state = Object.assign(
       {},
       this.state,
-      { event_attendance_feedback: feedback });
+      { event_feedback: feedback });
     return;
   }
 
@@ -90,7 +90,7 @@ export class EventsImportActionDropdownComponent implements OnInit {
       },
       {
         'label': 'Disabled',
-        'event': 2
+        'event': 0
       }
     ];
 
