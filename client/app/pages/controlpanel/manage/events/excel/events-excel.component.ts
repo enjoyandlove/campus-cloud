@@ -1,13 +1,13 @@
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
 import { EventsService } from '../events.service';
+import { CPDate } from '../../../../../shared/utils/date';
+import { isProd } from '../../../../../config/env';
 import { StoreService } from '../../../../../shared/services';
 import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE, HEADER_DEFAULT } from '../../../../../reducers/header.reducer';
-import { CPDate } from '../../../../../shared/utils/date';
 
 
 @Component({
@@ -38,9 +38,8 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
       .store
       .select('EVENTS_MODAL')
       .subscribe(
-      (_) => {
-        // this.events = res;
-        this.events = require('./mock.json');
+      (res) => {
+        this.events = isProd ? res : require('./mock.json');
         this.fetch();
       },
       err => console.log(err)
@@ -102,7 +101,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
       control.push(this.buildEventControl(event));
       this.isChecked.push({ index, checked: false });
     });
-
+    console.log(this.form);
     this.isFormReady = true;
   }
 
@@ -119,12 +118,13 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
       'poster_url': [null, Validators.required],
       'poster_thumb_url': [null, Validators.required],
       'location': [event.location, Validators.required],
+      'managers': [[{ 'label': '---', 'action': null }]],
       'description': [event.description, Validators.required],
       'end': [CPDate.toEpoch(event.end_date), Validators.required],
       'start': [CPDate.toEpoch(event.start_date), Validators.required],
       // these controls are only required when event attendance is true
       'attendance_manager_email': [null],
-      'event_manager_id': [this.eventManagers[0]],
+      'event_manager_id': [null],
       'event_attendance': [true, Validators.required],
       'event_feedback': [this.eventAttendanceFeedback[1]],
     });
@@ -182,17 +182,24 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     const control = <FormGroup>controls.controls[index];
 
     control.controls['store_id'].setValue(host);
-
-    this.getManagersByHostId(host.action);
+    control.controls['managers'].setValue(this.getManagersByHostId(host.action));
   }
 
   getManagersByHostId(hostId) {
-    let promise = new Promise(resolve => {
-      setTimeout(() => {
-        resolve(this.eventManagers.filter(manager => manager.host_id === hostId));
-      }, 1000);
+    let _managers = [
+      {
+        'label': '---',
+        'action': null
+      }
+    ];
+
+    this.eventManagers.filter(manager => {
+      if (manager.host_id === hostId) {
+        _managers.push(manager);
+      }
     });
-    return Observable.fromPromise(promise);
+
+    return _managers;
   }
 
   onSingleCheck(checked, index) {

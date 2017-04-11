@@ -86,7 +86,7 @@
                     <div class="col-xs-12 col-sm-4">
                       <label i18n>Manager</label>
                       <cp-dropdown
-                        [items]="eventManagers"
+                        [items]="event.controls['managers'].value"
                         (selected)="updateEventManager($event, i)"
                         [selectedItem]="event.controls['event_manager_id'].value">
                       </cp-dropdown>
