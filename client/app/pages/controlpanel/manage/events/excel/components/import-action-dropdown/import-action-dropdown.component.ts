@@ -52,21 +52,21 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
         .startWith([
           {
             'label': '---',
-            'action': null
+            'event': null
           }
         ])
         .map((res: any) => {
           let managers = [
             {
               'label': '---',
-              'action': null
+              'event': null
             }
           ];
 
           res.forEach(manager => {
             managers.push({
               'label': manager.label,
-              'action': manager.action
+              'event': manager.event
             });
           });
           return managers;
@@ -80,14 +80,14 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
       const stores = [
         {
           'label': 'Host Name',
-          'action': null
+          'event': null
         }
       ];
 
       res.forEach(store => {
         stores.push({
           'label': store.name,
-          'action': store.id
+          'event': store.id
         });
       });
       return stores;
@@ -102,7 +102,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
   }
 
   onHostSelected(store_id) {
-    this.selectedHost.next(store_id.action);
+    this.selectedHost.next(store_id.event);
 
     this.state = Object.assign(
       {},
@@ -217,7 +217,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
       event_attendance: 0,
       event_manager_id: {
         'label': '',
-        'action': null
+        'event': null
       },
       attendance_manager_email: null,
       event_feedback: this.eventAttendanceFeedback[1]

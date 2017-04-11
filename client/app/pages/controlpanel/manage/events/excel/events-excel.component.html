@@ -114,6 +114,9 @@
     <div class="container">
       <div class="row">
         <div class="col-xs-12">
+          <div class="pull-left" *ngIf="formError">
+            <label class="error" *ngFor="let error of errors">{{ error }}</label>
+          </div>
           <div class="pull-right">
             <a [routerLink]="['/manage/events']"
               class="cpbtn cpbtn--tall cpbtn--cancel" i18n>

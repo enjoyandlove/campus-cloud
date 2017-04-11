@@ -1,10 +1,11 @@
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { EventsService } from '../events.service';
-import { CPDate } from '../../../../../shared/utils/date';
 import { isProd } from '../../../../../config/env';
+import { CPDate } from '../../../../../shared/utils';
 import { StoreService } from '../../../../../shared/services';
 import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE, HEADER_DEFAULT } from '../../../../../reducers/header.reducer';
@@ -18,6 +19,8 @@ import { HEADER_UPDATE, HEADER_DEFAULT } from '../../../../../reducers/header.re
 export class EventsExcelComponent extends BaseComponent implements OnInit, OnDestroy {
   events;
   stores;
+  errors = [];
+  formError;
   mockDropdown;
   eventManagers;
   isChecked = [];
@@ -28,6 +31,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
   eventAttendanceFeedback;
 
   constructor(
+    private router: Router,
     private fb: FormBuilder,
     private store: Store<any>,
     private storeService: StoreService,
@@ -53,14 +57,14 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
       const stores = [
         {
           'label': 'Host Name',
-          'action': null
+          'event': null
         }
       ];
 
       res.forEach(store => {
         stores.push({
           'label': store.name,
-          'action': store.id
+          'event': store.id
         });
       });
       return stores;
@@ -101,7 +105,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
       control.push(this.buildEventControl(event));
       this.isChecked.push({ index, checked: false });
     });
-    console.log(this.form);
+
     this.isFormReady = true;
   }
 
@@ -112,20 +116,20 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
 
   buildEventControl(event) {
     return this.fb.group({
-      'store_id': ['', Validators.required],
+      'store_id': [null, Validators.required],
       'room': [event.room, Validators.required],
       'title': [event.title, Validators.required],
       'poster_url': [null, Validators.required],
       'poster_thumb_url': [null, Validators.required],
       'location': [event.location, Validators.required],
-      'managers': [[{ 'label': '---', 'action': null }]],
+      'managers': [[{ 'label': '---', 'event': null }]],
       'description': [event.description, Validators.required],
       'end': [CPDate.toEpoch(event.end_date), Validators.required],
       'start': [CPDate.toEpoch(event.start_date), Validators.required],
       // these controls are only required when event attendance is true
       'attendance_manager_email': [null],
       'event_manager_id': [null],
-      'event_attendance': [true, Validators.required],
+      'event_attendance': [1, Validators.required],
       'event_feedback': [this.eventAttendanceFeedback[1]],
     });
   }
@@ -182,14 +186,14 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     const control = <FormGroup>controls.controls[index];
 
     control.controls['store_id'].setValue(host);
-    control.controls['managers'].setValue(this.getManagersByHostId(host.action));
+    control.controls['managers'].setValue(this.getManagersByHostId(host.event));
   }
 
   getManagersByHostId(hostId) {
     let _managers = [
       {
         'label': '---',
-        'action': null
+        'event': null
       }
     ];
 
@@ -234,34 +238,53 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
   }
 
   onSubmit() {
+    this.errors = [];
+    this.formError = false;
+
     let events = Object.assign({}, this.form.controls['events'].value);
     let _events = [];
 
     Object.keys(events).forEach(key => {
-      _events.push({
-        attendance_manager_email: events[key].attendance_manager_email,
+      let _event = {
+        title: events[key].title,
+        store_id: events[key].store_id.event,
         description: events[key].description,
         end: events[key].end,
-        event_attendance: events[key].event_attendance,
-        event_feedback: events[key].event_feedback.event,
-        event_manager_id: events[key].event_manager_id.event,
-        location: events[key].location,
-        poster_thumb_url: events[key].poster_thumb_url,
-        poster_url: events[key].poster_url,
         room: events[key].room,
         start: events[key].start,
-        store_id: events[key].store_id.action,
-        title: events[key].title
-      });
+        location: events[key].location,
+        poster_url: events[key].poster_url,
+        poster_thumb_url: events[key].poster_thumb_url,
+        event_attendance: events[key].event_attendance
+      };
+
+      if (events[key].event_attendance) {
+        _event = Object.assign({}, _event, {
+          event_feedback: events[key].event_feedback.event,
+          event_manager_id: events[key].event_manager_id.event,
+          attendance_manager_email: events[key].attendance_manager_email
+        });
+      }
+
+      _events.push(_event);
     });
 
     this
       .eventsService
       .createEvent(_events)
       .subscribe(
-      res => console.log(res),
-      err => console.log(err)
-      );
+      _ => this.router.navigate(['/manage/events']),
+      err => {
+        this.formError = true;
+
+        if (err.status === 400) {
+          this.errors.push('Invalid data');
+          return;
+        }
+
+        this.errors.push('Something went wrong');
+      }
+    );
   }
 
   toggleSingleEventAttendance(checked, index) {
