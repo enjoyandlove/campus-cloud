@@ -25,6 +25,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
   managers$;
   id1 = 'id1';
   id2 = 'id2';
+  sopa$;
   eventManagers;
   isOpen = false;
   state: IState;
@@ -47,15 +48,29 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
     this.managers$ =
       this
         .selectedHost
-        .flatMap(host => {
-          console.log('running', host);
-          return this.getManagersByHostId(host);
-        }).startWith([
+        .flatMap(host => this.getManagersByHostId(host))
+        .startWith([
           {
             'label': '---',
             'action': null
           }
-        ]);
+        ])
+        .map((res: any) => {
+          let managers = [
+            {
+              'label': '---',
+              'action': null
+            }
+          ];
+
+          res.forEach(manager => {
+            managers.push({
+              'label': manager.label,
+              'action': manager.action
+            });
+          });
+          return managers;
+        });
   }
 
   private fetch() {
@@ -175,6 +190,16 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
     ];
 
     this.eventManagers = [
+      {
+        'host_id': 28819,
+        'label': 'Dummy',
+        'event': 16776
+      },
+      {
+        'host_id': 28819,
+        'label': 'Dummy',
+        'event': 16776
+      },
       {
         'host_id': 28819,
         'label': 'Dummy',

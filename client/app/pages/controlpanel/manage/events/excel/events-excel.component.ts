@@ -1,5 +1,6 @@
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
 import { EventsService } from '../events.service';
@@ -37,13 +38,13 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
       .store
       .select('EVENTS_MODAL')
       .subscribe(
-        (_) => {
-          // this.events = res;
-          this.events = require('./mock.json');
-          this.fetch();
-        },
-        err => console.log(err)
-    );
+      (_) => {
+        // this.events = res;
+        this.events = require('./mock.json');
+        this.fetch();
+      },
+      err => console.log(err)
+      );
   }
 
   private fetch() {
@@ -160,7 +161,6 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
   // }
 
   onBulkChange(actions) {
-    console.log(actions);
     const control = <FormArray>this.form.controls['events'];
 
     this.isChecked.map(item => {
@@ -182,6 +182,17 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     const control = <FormGroup>controls.controls[index];
 
     control.controls['store_id'].setValue(host);
+
+    this.getManagersByHostId(host.action);
+  }
+
+  getManagersByHostId(hostId) {
+    let promise = new Promise(resolve => {
+      setTimeout(() => {
+        resolve(this.eventManagers.filter(manager => manager.host_id === hostId));
+      }, 1000);
+    });
+    return Observable.fromPromise(promise);
   }
 
   onSingleCheck(checked, index) {
@@ -241,8 +252,8 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
       .eventsService
       .createEvent(_events)
       .subscribe(
-        res => console.log(res),
-        err => console.log(err)
+      res => console.log(res),
+      err => console.log(err)
       );
   }
 
@@ -271,10 +282,22 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
 
     this.eventManagers = [
       {
+        'host_id': 28819,
         'label': 'Dummy',
         'event': 16776
       },
       {
+        'host_id': 28819,
+        'label': 'Dummy',
+        'event': 16776
+      },
+      {
+        'host_id': 28819,
+        'label': 'Dummy',
+        'event': 16776
+      },
+      {
+        'host_id': 2756,
         'label': 'Hello',
         'event': 16776
       }

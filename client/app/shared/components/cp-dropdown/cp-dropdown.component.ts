@@ -22,6 +22,6 @@ export class CPDropdownComponent implements OnInit {
   }
 
   ngOnInit() {
-    // console.log(this);
+    // console.log(this.items);
   }
 }
