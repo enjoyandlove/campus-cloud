@@ -1,10 +1,15 @@
 @import '~styles/core/colors';
 @import '~styles/components/form';
+@import '~styles/components/card';
 @import '~styles/components/button';
 @import '~bootstrap/variables';
 
 .delete-location {
   font-size: 2em;
+}
+
+.no-content {
+  @include card-margin();
 }
 
 .cp-form__header {
@@ -22,8 +27,4 @@
   padding: 0;
   list-style: none;
   padding-bottom: 20px;
-
-  // .no-content {
-  //   padding: 15px 0;
-  // }
 }
