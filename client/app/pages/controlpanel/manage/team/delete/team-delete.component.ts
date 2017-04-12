@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-import { TeamService } from '../team.service';
+import { AdminService } from '../../../../../shared/services';
 
 declare var $: any;
 
@@ -15,13 +15,13 @@ export class TeamDeleteComponent implements OnInit {
   @Output() errorModal: EventEmitter<null> = new EventEmitter();
 
   constructor(
-    private teamService: TeamService
+    private adminService: AdminService
   ) { }
 
   onDelete() {
 
     this
-      .teamService
+      .adminService
       .deleteAdminById(this.admin.id)
       .subscribe(
         _ => {

@@ -4,11 +4,10 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { TEAM_ACCESS } from '../utils';
-import { TeamService } from '../team.service';
 import { STATUS } from '../../../../../shared/constants';
-import { ErrorService } from '../../../../../shared/services';
 import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
 import { CP_PRIVILEGES, appStorage } from '../../../../../shared/utils';
+import { ErrorService, AdminService } from '../../../../../shared/services';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 
 declare var $: any;
@@ -38,7 +37,7 @@ export class TeamCreateComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private store: Store<IHeader>,
-    private teamService: TeamService,
+    private teamService: AdminService,
     private errorService: ErrorService
   ) { }
 

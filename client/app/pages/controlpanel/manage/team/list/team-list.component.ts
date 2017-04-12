@@ -38,7 +38,7 @@ export class TeamListComponent extends BaseComponent implements OnInit {
 
   private fetch() {
     super
-      .fetchData(this.adminService.getAdmins())
+      .fetchData(this.adminService.getAdmins(this.startRange, this.endRange))
       .then(res => {
         this.state = Object.assign({}, this.state, { admins: res.data });
       })
@@ -51,6 +51,16 @@ export class TeamListComponent extends BaseComponent implements OnInit {
       type: HEADER_UPDATE,
       payload: require('../team.header.json')
     });
+  }
+
+  onPaginationNext() {
+    super.goToNext();
+    this.fetch();
+  }
+
+  onPaginationPrevious() {
+    super.goToPrevious();
+    this.fetch();
   }
 
   onForbidden() {

@@ -13,8 +13,8 @@ export class AdminService extends BaseService {
     Object.setPrototypeOf(this, AdminService.prototype);
   }
 
-  getAdmins() {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/`;
+  getAdmins(startRage: number, endRage: number) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/${startRage};${endRage}`;
 
     return super.get(url).map(res => res.json());
   }
@@ -23,6 +23,12 @@ export class AdminService extends BaseService {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/${adminId}`;
 
     return super.get(url).map(res => res.json());
+  }
+
+  deleteAdminById(adminId: number) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/${adminId}`;
+
+    return super.delete(url).map(res => res.json());
   }
 
   createAdmin(data: any) {

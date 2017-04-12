@@ -14,8 +14,6 @@ import { ClubsService } from '../clubs/clubs.service';
 import { AdminService } from '../../../../shared/services';
 import { ServicesService } from '../services/services.service';
 
-import { TeamService } from './team.service';
-
 import {
   TeamFilterPipe,
   TeamSelectedPipe,
@@ -33,6 +31,6 @@ import { TeamRoutingModule } from './team.routing.module';
 
   imports: [ CommonModule, SharedModule, RouterModule, ReactiveFormsModule, TeamRoutingModule ],
 
-  providers: [ ServicesService, ClubsService, AdminService, TeamService ],
+  providers: [ ServicesService, ClubsService, AdminService ],
 })
 export class TeamModule {}

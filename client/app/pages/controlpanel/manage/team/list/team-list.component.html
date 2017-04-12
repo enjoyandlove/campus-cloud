@@ -38,6 +38,18 @@
         </span>
       </li>
     </ul>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <cp-pagination
+          [pageNext]="pageNext"
+          [pagePrev]="pagePrev"
+          [pageNumber]="pageNumber"
+          (next)="onPaginationNext()"
+          (previous)="onPaginationPrevious()">
+        </cp-pagination>
+      </div>
+    </div>
   </div>
 </div>
 

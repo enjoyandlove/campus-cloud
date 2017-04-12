@@ -31,7 +31,7 @@ export class ControlPanelComponent extends BaseComponent implements OnInit {
 
   private fetch() {
     super
-      .fetchData(this.service.getAdmins())
+      .fetchData(this.service.getAdmins(this.startRange, this.endRange))
       .then(res => {
         appStorage.set(appStorage.keys.PROFILE, JSON.stringify(res.data[0]));
       })
