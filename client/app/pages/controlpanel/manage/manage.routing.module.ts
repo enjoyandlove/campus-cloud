@@ -23,6 +23,8 @@ const appRoutes: Routes = [
       { path: 'feeds', loadChildren: './feeds/feeds.module#FeedsModule' },
 
       { path: 'clubs', loadChildren: './clubs/clubs.module#ClubsModule' },
+
+      { path: 'locations', loadChildren: './locations/locations.module#LocationsModule' },
     ]
   }
 ];

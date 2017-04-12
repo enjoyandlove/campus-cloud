@@ -22,6 +22,10 @@
     {
       "label": "Links",
       "url": "/manage/links"
+    },
+    {
+      "label": "Locations",
+      "url": "/manage/locations"
     }
   ]
 }
