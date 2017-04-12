@@ -22,6 +22,8 @@ export const STATUS = {
    */
   ALL_FIELDS_ARE_REQUIRED: 'All fields are required',
 
+  DUPLICATE_ENTRY: 'An entry like that already exists',
+
   /**
    * GENERAL
    */

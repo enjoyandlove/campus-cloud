@@ -13,6 +13,12 @@ export class TeamService extends BaseService {
     Object.setPrototypeOf(this, TeamService.prototype);
   }
 
+  createAdmin(body: any) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/`;
+
+    return super.post(url, body).map(res => res.json());
+  }
+
   deleteAdminById(adminId: number) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/${adminId}`;
 

@@ -62,13 +62,19 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
   }
 
   onSubmit() {
-    let _results = [];
+    let _item = {};
+    let _state = [...this.state.selected];
 
-    this.state.selected.forEach(srv => {
-      if (srv.checked) {
-        _results.push(srv);
+    _state.map(item => {
+
+      if (item.checked) {
+        _item[item.data.id] = {
+          r: true,
+          w: item.type === 1 ? false : true
+        };
       }
     });
+    return _item;
   }
 
   private updateState(items) {
@@ -87,11 +93,12 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
   }
 
   buildPrivilegesDropDown() {
-    this.privileges = permissions.filter(privilege => {
-      if (this.userPrivileges.indexOf(privilege.type) > -1) {
-        return privilege;
-      }
-    });
+    // this.privileges = permissions.filter(privilege => {
+    //   if (this.userPrivileges.indexOf(privilege.type) > -1) {
+    //     return privilege;
+    //   }
+    // });
+    this.privileges = permissions;
   }
 
   ngOnInit() { }

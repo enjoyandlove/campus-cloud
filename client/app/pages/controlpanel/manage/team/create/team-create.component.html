@@ -11,6 +11,7 @@
             <label i18n>First Name</label>
             <input
               type="text"
+              placeholder="John"
               class="form-control"
               formControlName="firstname">
           </div>
@@ -19,6 +20,7 @@
             <label i18n>Last Name</label>
             <input
               type="text"
+              placeholder="Smith"
               class="form-control"
               formControlName="lastname">
           </div>
@@ -28,7 +30,8 @@
             <input
               type="text"
               class="form-control"
-              formControlName="email">
+              formControlName="email"
+              placeholder="john@smith.com">
           </div>
         </div>
 
@@ -56,13 +59,6 @@
             </div>
           </div>
         </div>
-
-        <div class="row" *ngIf="isAllAccessEnabled">
-          <div class="col-xs-12">
-            <cp-checkbox class="cpcheckbox"></cp-checkbox>
-            <span i18n>Manage Team Members</span>
-          </div>
-        </div>
       </div>
 
       <!-- Permissions -->
@@ -70,9 +66,28 @@
       <div
         class="section cp-card form-group"
         [class.isDisabled]="isAllAccessEnabled">
-        <!-- Service Owner -->
+        <!-- Manage Team Members -->
         <div class="section__item">
           <p class="section__title" i18n>Permissions</p>
+          <div class="row">
+            <div class="col-xs-8">
+              <p class="section-sub-title" i18n>Manage Team Members</p>
+              <p class="section-description" i18n>
+                View this page
+              </p>
+            </div>
+            <div class="col-xs-4">
+              <cp-dropdown
+                [items]="manageAdmins"
+                (selected)="onManageAdminSelected($event)">
+              </cp-dropdown>
+            </div>
+          </div>
+        </div>
+        <!-- END Manage Admin -->
+
+        <!-- Service Owner -->
+        <div class="section__item">
           <div class="row">
             <div class="col-xs-8">
               <p class="section-sub-title" i18n>Service Owner</p>
@@ -256,6 +271,9 @@
         <div class="container">
           <div class="row">
             <div class="col-xs-12">
+              <div class="pull-left" *ngIf="isFormError">
+                <label class="error">{{ formError }}</label>
+              </div>
               <div class="pull-right">
                 <a [routerLink]="['/manage/events']"
                   class="cpbtn cpbtn--tall cpbtn--cancel" i18n>
@@ -279,11 +297,15 @@
 <cp-modal
   [type]="MODAL_TYPE"
   modalId="selectServicesModal">
-  <cp-select-services-modal></cp-select-services-modal>
+  <cp-select-services-modal
+    (selected)="onServicesModalSelected($event)">
+  </cp-select-services-modal>
 </cp-modal>
 
 <cp-modal
   [type]="MODAL_TYPE"
   modalId="selectClubsModal">
-  <cp-select-clubs-modal></cp-select-clubs-modal>
+  <cp-select-clubs-modal
+    (selected)="onClubsModalSelected($event)">
+  </cp-select-clubs-modal>
 </cp-modal>

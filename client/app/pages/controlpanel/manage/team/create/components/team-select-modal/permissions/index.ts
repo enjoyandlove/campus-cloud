@@ -9,12 +9,6 @@ export const permissions = [
     title: 'Can Edit',
     description: 'See content created by other team members<br>\
     and create your own content'
-  },
-  {
-    type: 3,
-    title: 'Can Edit and Assess',
-    description: 'See content created by other team members<br>\
-    and create your own content and manage assessment'
   }
 ];
 
