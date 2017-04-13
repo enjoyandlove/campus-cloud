@@ -11,6 +11,7 @@ declare var $: any;
   styleUrls: ['./locations-create.component.scss']
 })
 export class LocationsCreateComponent implements OnInit {
+  @Output() teardown: EventEmitter<null> = new EventEmitter();
   @Output() locationCreated: EventEmitter<any> = new EventEmitter();
   form: FormGroup;
   mapCenter;
@@ -36,6 +37,11 @@ export class LocationsCreateComponent implements OnInit {
   doSubmit() {
     this.locationCreated.emit(this.form.value);
     $('#locationsCreate').modal('hide');
+    this.resetModal();
+  }
+
+  resetModal() {
+    this.teardown.emit();
   }
 
   ngOnInit() {

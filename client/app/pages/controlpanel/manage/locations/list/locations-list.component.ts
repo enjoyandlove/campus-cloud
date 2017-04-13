@@ -20,6 +20,9 @@ const state: IState = {
 })
 export class LocationsListComponent extends BaseComponent implements OnInit {
   loading;
+  isLocationsCreate;
+  deleteLocation = '';
+  updateLocation = '';
   state: IState = state;
 
   constructor(
@@ -40,7 +43,8 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
   }
 
   onLaunchModal() {
-    $('#locationsCreate').modal();
+    this.isLocationsCreate = !this.isLocationsCreate;
+    setTimeout(() => { $('#locationsCreate').modal(); }, 1);
   }
 
   onLocationCreated(location) {
@@ -49,6 +53,29 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
       this.state,
       { locations: [location, ...this.state.locations] }
     );
+  }
+
+  onLocationUpdated(location) {
+    let _state = Object.assign({}, this.state, {
+      locations: this.state.locations.map(_location => {
+        if (_location.id === location.id) {
+          return _location = location.data;
+        }
+        return _location;
+      })
+    });
+
+    this.state = Object.assign({}, this.state, _state);
+  }
+
+  onLocationDeleted(locationId) {
+    let _state = Object.assign({}, this.state);
+
+    _state.locations = _state.locations.filter(locations => {
+      if (locations.id !== locationId) { return locations; }
+    });
+
+    this.state = Object.assign({}, this.state, { locations: _state.locations });
   }
 
   ngOnInit() { }

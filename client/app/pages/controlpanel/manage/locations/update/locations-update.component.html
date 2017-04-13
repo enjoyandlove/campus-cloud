@@ -1,1 +1,94 @@
-Update
+<div class="cpmodal">
+  <div class="cpmodal__header">
+    <div class="row">
+      <div class="col-xs-12 text-center">
+        <span i18n><strong>Update Location</strong></span>
+
+        <span
+          data-dismiss="modal"
+          (click)="resetModal()"
+          class="pull-right hover cpmodal__header__close">
+          &times;
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div [ngSwitch]="isFormReady">
+    <cp-spinner *ngSwitchCase="false"></cp-spinner>
+
+      <div class="cpmodal__body" *ngSwitchCase="true">
+        <div class="row">
+          <div class="col-xs-12">
+            <form [formGroup]="form">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-xs-6">
+                    <label i18n>Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="name"
+                      placeholder="Add a short, clear name"
+                      [class.error]="formError && form.controls['name'].hasError('required')">
+                  </div>
+                  <div class="col-xs-6">
+                    <label i18n>Short Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="short_name"
+                      placeholder="Short Name"
+                      [class.error]="formError && form.controls['name'].hasError('required')">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <label i18n>Address</label>
+                    <cp-place-autocomplete
+                      placeHolder="Address"
+                      (placeChange)="onPlaceChange($event)"
+                      [defaultValue]="form.controls.address.value">
+                    </cp-place-autocomplete>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <cp-maps class="map" [center]="mapCenter"></cp-maps>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <div class="cpmodal__footer">
+    <div class="row">
+      <div class="col-xs-6 col-xs-offset-6 text-right">
+        <button
+          type="button"
+          data-dismiss="modal"
+          (click)="resetModal()"
+          class="cpbtn cpbtn--cancel" i18n>
+          Cancel
+        </button>
+
+        <button
+          type="button"
+          (click)="doSubmit()"
+          [disabled]="!form.valid"
+          class="cpbtn cpbtn--primary"i18n>
+          Update
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
