@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { LocationsService } from '../locations.service';
 import { BaseComponent } from '../../../../../base/base.component';
 
-// declare var $: any;
+declare var $: any;
 
 interface IState {
   locations: Array<any>;
@@ -37,6 +37,18 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
       .then(res => {
         this.state = Object.assign({}, this.state, { locations: res.data });
       });
+  }
+
+  onLaunchModal() {
+    $('#locationsCreate').modal();
+  }
+
+  onLocationCreated(location) {
+    this.state = Object.assign(
+      {},
+      this.state,
+      { locations: [location, ...this.state.locations] }
+    );
   }
 
   ngOnInit() { }

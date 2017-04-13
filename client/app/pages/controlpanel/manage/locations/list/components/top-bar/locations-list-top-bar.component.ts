@@ -7,6 +7,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class LocationsListTopBarComponent implements OnInit {
   @Output() search: EventEmitter<string> = new EventEmitter();
+  @Output() launchModal: EventEmitter<null> = new EventEmitter();
 
   constructor() { }
 
@@ -14,9 +15,5 @@ export class LocationsListTopBarComponent implements OnInit {
 
   onSearch(query) {
     this.search.emit(query);
-  }
-
-  onLaunchCreateModal() {
-    console.log('launching Modal');
   }
 }

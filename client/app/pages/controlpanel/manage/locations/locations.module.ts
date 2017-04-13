@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../../shared/shared.module';
 
 import { LocationsListComponent }  from './list';
 import { LocationsDeleteComponent }  from './delete';
 import { LocationsUpdateComponent }  from './update';
+import { LocationsCreateComponent }  from './create';
 
 import {
   LocationsListTopBarComponent
@@ -15,9 +17,9 @@ import { LocationsRoutingModule } from './locations.routing.module';
 
 @NgModule({
   declarations: [ LocationsListComponent, LocationsDeleteComponent, LocationsUpdateComponent,
-  LocationsListTopBarComponent ],
+  LocationsListTopBarComponent, LocationsCreateComponent ],
 
-  imports: [ CommonModule, SharedModule, LocationsRoutingModule ],
+  imports: [ CommonModule, SharedModule, LocationsRoutingModule, ReactiveFormsModule ],
 
   providers: [ LocationsService ],
 })
