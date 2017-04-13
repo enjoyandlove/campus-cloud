@@ -22,6 +22,10 @@
     {
       "label": "Links",
       "url": "/manage/links"
+    },
+    {
+      "label": "Cover Photo",
+      "url": "/manage/customization"
     }
   ]
 }
