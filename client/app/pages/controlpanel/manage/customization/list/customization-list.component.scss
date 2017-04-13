@@ -1,0 +1,59 @@
+@import '~styles/core/colors';
+@import '~styles/components/card';
+@import '~styles/core/typography';
+@import '~styles/components/button';
+
+label.error {
+  @include error-label();
+}
+
+.card {
+  p {
+    margin-bottom: 3px;
+  }
+
+  &__title {
+    @include font-24px();
+    @include font-bold();
+  }
+
+  &__error {
+    margin-top: 8px;
+  }
+
+  .canvas {
+    margin-top: 25px;
+    position: relative;
+  }
+
+  .upload-button {
+    top: 20px;
+    right: 30px;
+    position: absolute;
+  }
+
+  .control-buttons {
+    right: 30px;
+    bottom: 20px;
+    position: absolute;
+  }
+
+  .tooltip {
+    top: 80px;
+    left: 38%;
+    margin-bottom: 0;
+    padding: 10px 19px;
+    position: absolute;
+    border-radius: 4px;
+    color: $color-white;
+    background: rgba(0, 0, 0, 0.5);
+  }
+}
+
+.dummy {
+  height: 200px;
+  background-size: cover;
+  background-repeat: no-repat;
+  background-position: center center;
+  background-image: url('https://source.unsplash.com/random/600x200');
+}

@@ -6,7 +6,25 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./customization-list.component.scss']
 })
 export class CustomizationListComponent implements OnInit {
+  error;
+  image;
+  isError;
+
   constructor() { }
+
+  onError(error) {
+    this.isError = true;
+    this.error = error;
+  }
+
+  onReset() {
+    this.isError = false;
+    this.error = null;
+  }
+
+  onUpload(image) {
+    this.image = image;
+  }
 
   ngOnInit() { }
 }
