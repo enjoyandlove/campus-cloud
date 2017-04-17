@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../../shared/shared.module';
 
 import { ListsListComponent }  from './list';
+import { ListsEditComponent }  from './edit';
 import { ListsCreateComponent }  from './create';
 import { ListsDeleteComponent }  from './delete';
 
@@ -16,7 +17,7 @@ import { ListsRoutingModule } from './lists.routing.module';
 
 @NgModule({
   declarations: [ ListsListComponent, ListsListActionBoxComponent, ListsDeleteComponent,
-  ListsCreateComponent ],
+  ListsCreateComponent, ListsEditComponent ],
 
   imports: [ CommonModule, SharedModule, ListsRoutingModule, ReactiveFormsModule ],
 

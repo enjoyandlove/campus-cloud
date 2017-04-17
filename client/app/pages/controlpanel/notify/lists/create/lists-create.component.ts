@@ -12,6 +12,7 @@ declare var $: any;
 })
 export class ListsCreateComponent implements OnInit {
   @Output() created: EventEmitter<any> = new EventEmitter();
+  @Output() reset: EventEmitter<null> = new EventEmitter();
 
   form: FormGroup;
 
@@ -28,6 +29,7 @@ export class ListsCreateComponent implements OnInit {
 
   resetModal() {
     this.form.reset();
+    this.reset.emit();
   }
 
   ngOnInit() {

@@ -35,7 +35,7 @@
                   <button
                     (click)="editList = list"
                     class="cpbtn cpbtn--link-dark"
-                    (click)="islistsEdit = true"
+                    (click)="isListsEdit = true"
                     data-toggle="modal" data-target="#listsEdit">
                     {{ list.name }}
                   </button>
@@ -86,11 +86,10 @@
   </cp-lists-create>
 </cp-modal>
 
-<!--
-<cp-modal modalId="listsEdit" *ngIf="islistsEdit">
-  <cp-links-edit
-    [link]="editList"
-    (editList)="onEditedLink($event)"
-    (resetEditModal)="islistsEdit = false">
-  </cp-links-edit>
-</cp-modal>-->
+<cp-modal modalId="listsEdit" *ngIf="isListsEdit">
+  <cp-lists-edit
+    [list]="editList"
+    (edited)="onEditedList($event)"
+    (reset)="isListsEdit = false">
+  </cp-lists-edit>
+</cp-modal>
