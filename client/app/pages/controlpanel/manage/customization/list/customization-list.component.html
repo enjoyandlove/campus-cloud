@@ -18,10 +18,12 @@
 
       <div class="row canvas">
         <div class="col-xs-12">
-          <div id="canvas_wrapper" class="canvas__wrapper">
+          <div id="canvas_wrapper" class="canvas__wrapper" [class.canvas__wrapper--blank]="!isEdit">
             <div class="canvas__bounds"></div>
           </div>
+
           <cp-customization-upload-button
+            *ngIf="!isEdit"
             class="upload-button"
             (reset)="onReset()"
             (error)="onError($event)"
@@ -29,12 +31,13 @@
           </cp-customization-upload-button>
 
           <cp-customizaton-control-buttons
+            *ngIf="isEdit"
             (save)="onSave()"
             (cancel)="onCancel()"
             class="control-buttons">
           </cp-customizaton-control-buttons>
 
-          <p class="tooltip" i18n>Drag to Reposition Photo</p>
+          <p class="tooltip" *ngIf="isEdit" i18n>Drag to Reposition Photo</p>
         </div>
       </div>
     </div>

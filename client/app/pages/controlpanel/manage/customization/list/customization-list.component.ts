@@ -15,6 +15,7 @@ export class CustomizationListComponent implements OnInit {
   error;
   image;
   canvas;
+  isEdit;
   isError;
 
   constructor(
@@ -27,12 +28,30 @@ export class CustomizationListComponent implements OnInit {
   }
 
   onReset() {
+    this.isEdit = false;
     this.isError = false;
     this.error = null;
   }
 
+  onCancel() {
+    this.onReset();
+    this.canvas.destroy();
+  }
+
   onUpload(image) {
+    this.isEdit = true;
     this.image = image;
+
+    // https://foliotek.github.io/Croppie/
+    let Croppie = require('croppie');
+
+    this.canvas = new Croppie(document.getElementById('canvas_wrapper'), {
+      'showZoomer': false,
+      'viewport': { width: 700, height: 270 },
+      'boundary': { height: 270 },
+      // 'url': this.image
+      'url': 'https://source.unsplash.com/random/900x500'
+    });
   }
 
   onSave() {
@@ -93,19 +112,15 @@ export class CustomizationListComponent implements OnInit {
       );
   }
 
-  onCancel() {
-    console.log('Cancel');
-  }
-
   ngOnInit() {
-    // https://foliotek.github.io/Croppie/
-    let Croppie = require('croppie');
+    // // https://foliotek.github.io/Croppie/
+    // let Croppie = require('croppie');
 
-    this.canvas = new Croppie(document.getElementById('canvas_wrapper'), {
-      'showZoomer': false,
-      'viewport': { width: 700, height: 270 },
-      'boundary': { height: 270 },
-      'url': 'https://source.unsplash.com/random/900x500'
-    });
+    // this.canvas = new Croppie(document.getElementById('canvas_wrapper'), {
+    //   'showZoomer': false,
+    //   'viewport': { width: 700, height: 270 },
+    //   'boundary': { height: 270 },
+    //   'url': 'https://source.unsplash.com/random/900x500'
+    // });
   }
 }
