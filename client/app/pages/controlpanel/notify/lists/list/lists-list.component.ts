@@ -11,6 +11,8 @@ const state: IState = {
   lists: []
 };
 
+declare var $: any;
+
 @Component({
   selector: 'cp-lists-list',
   templateUrl: './lists-list.component.html',
@@ -35,10 +37,7 @@ export class ListsListComponent extends BaseComponent implements OnInit {
   private fetch() {
     super
       .fetchData(this.listsService.getLists())
-      .then(res => {
-        console.log(res);
-        this.state = Object.assign({}, this.state, { lists: res.data });
-      })
+      .then(res => this.state = Object.assign({}, this.state, { lists: res.data }))
       .catch(err => console.log(err));
   }
 
@@ -46,12 +45,17 @@ export class ListsListComponent extends BaseComponent implements OnInit {
     console.log(query);
   }
 
-  onCreatedLink(list) {
+  onCreatedList(list) {
     this.isListsCreate = false;
     this.state.lists = [list, ...this.state.lists];
   }
 
-  onEditedLink(editedList) {
+  onLaunchCreateModal() {
+    this.isListsCreate = true;
+    setTimeout(() => { $('#listsCreate').modal(); }, 1);
+  }
+
+  onEditedList(editedList) {
     this.isListsEdit = false;
     let _state = Object.assign({}, this.state, {
       lists: this.state.lists.map(list => {
@@ -65,7 +69,7 @@ export class ListsListComponent extends BaseComponent implements OnInit {
     this.state = Object.assign({}, this.state, _state);
   }
 
-  onDeletedLists(listId: number) {
+  onDeletedList(listId: number) {
     this.isListsDelete = false;
     let _state = Object.assign({}, this.state);
 

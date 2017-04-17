@@ -2,11 +2,10 @@
   <div class="col-xs-12">
     <cp-lists-list-action-box
       (search)="onSearch($event)"
-      (launchCreateModal)="onLaunchCreateModal()">
+      (launchModal)="onLaunchCreateModal()">
     </cp-lists-list-action-box>
   </div>
 </div>
-
 
 
 <div [ngSwitch]="loading">
@@ -80,14 +79,14 @@
   </cp-lists-delete>
 </cp-modal>
 
-<!--
-<cp-modal modalId="listsCreate" *ngIf="islistsCreate">
-  <cp-links-create
-    (createLink)="onCreatedLink($event)"
-    (resetCreateModal)="islistsCreate = false">
-  </cp-links-create>
+<cp-modal modalId="listsCreate" *ngIf="isListsCreate">
+  <cp-lists-create
+    (created)="onCreatedList($event)"
+    (reset)="isListsCreate = false">
+  </cp-lists-create>
 </cp-modal>
 
+<!--
 <cp-modal modalId="listsEdit" *ngIf="islistsEdit">
   <cp-links-edit
     [link]="editList"

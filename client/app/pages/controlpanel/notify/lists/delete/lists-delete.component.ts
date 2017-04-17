@@ -7,12 +7,12 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class ListsDeleteComponent implements OnInit {
   @Input() list: any;
-  @Output() deletedList: EventEmitter<number> = new EventEmitter();
+  @Output() deleteList: EventEmitter<number> = new EventEmitter();
 
   constructor() { }
 
   onDelete() {
-    console.log('deleting');
+    this.deleteList.emit(this.list.id);
   }
 
   ngOnInit() { }

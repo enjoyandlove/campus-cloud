@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../../shared/shared.module';
 
 import { ListsListComponent }  from './list';
+import { ListsCreateComponent }  from './create';
 import { ListsDeleteComponent }  from './delete';
 
 import {
@@ -13,9 +15,10 @@ import { ListsService } from './lists.service';
 import { ListsRoutingModule } from './lists.routing.module';
 
 @NgModule({
-  declarations: [ ListsListComponent, ListsListActionBoxComponent, ListsDeleteComponent ],
+  declarations: [ ListsListComponent, ListsListActionBoxComponent, ListsDeleteComponent,
+  ListsCreateComponent ],
 
-  imports: [ CommonModule, SharedModule, ListsRoutingModule ],
+  imports: [ CommonModule, SharedModule, ListsRoutingModule, ReactiveFormsModule ],
 
   providers: [ ListsService ],
 })
