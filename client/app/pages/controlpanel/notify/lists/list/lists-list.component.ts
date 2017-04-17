@@ -1,12 +1,81 @@
 import { Component, OnInit } from '@angular/core';
 
+import { ListsService } from '../lists.service';
+import { BaseComponent } from '../../../../../base/base.component';
+
+interface IState {
+  lists: Array<any>;
+}
+
+const state: IState = {
+  lists: []
+};
+
 @Component({
   selector: 'cp-lists-list',
   templateUrl: './lists-list.component.html',
   styleUrls: ['./lists-list.component.scss']
 })
-export class ListsListComponent implements OnInit {
-  constructor() { }
+export class ListsListComponent extends BaseComponent implements OnInit {
+  loading;
+  isListsEdit;
+  isListsCreate;
+  isListsDelete;
+  state: IState = state;
+
+  constructor(
+    private listsService: ListsService
+  ) {
+    super();
+    super.isLoading().subscribe(res => this.loading = res);
+
+    this.fetch();
+  }
+
+  private fetch() {
+    super
+      .fetchData(this.listsService.getLists())
+      .then(res => {
+        console.log(res);
+        this.state = Object.assign({}, this.state, { lists: res.data });
+      })
+      .catch(err => console.log(err));
+  }
+
+  onSearch(query) {
+    console.log(query);
+  }
+
+  onCreatedLink(list) {
+    this.isListsCreate = false;
+    this.state.lists = [list, ...this.state.lists];
+  }
+
+  onEditedLink(editedList) {
+    this.isListsEdit = false;
+    let _state = Object.assign({}, this.state, {
+      lists: this.state.lists.map(list => {
+        if (list.id === editedList.id) {
+          return list = editedList;
+        }
+        return list;
+      })
+    });
+
+    this.state = Object.assign({}, this.state, _state);
+  }
+
+  onDeletedLists(listId: number) {
+    this.isListsDelete = false;
+    let _state = Object.assign({}, this.state);
+
+    _state.lists = _state.lists.filter(list => {
+      if (list.id !== listId) { return list; }
+      return;
+    });
+
+    this.state = Object.assign({}, this.state, { lists: _state.lists });
+  }
 
   ngOnInit() { }
 }

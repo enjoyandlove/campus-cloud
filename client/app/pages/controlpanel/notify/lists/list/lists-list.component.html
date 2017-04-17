@@ -1,1 +1,97 @@
-Hello Lists List
+<div class="row">
+  <div class="col-xs-12">
+    <cp-lists-list-action-box
+      (search)="onSearch($event)"
+      (launchCreateModal)="onLaunchCreateModal()">
+    </cp-lists-list-action-box>
+  </div>
+</div>
+
+
+
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div *ngSwitchCase="false">
+    <cp-no-content
+      *ngIf="!state.lists.length"
+      noContentText="No lists found...">
+    </cp-no-content>
+
+    <div *ngIf="state.lists.length">
+      <ul class="col-xs-12 cp-form">
+        <div class="lists">
+          <li class="cp-form__header col-xs-12">
+            <div class="row">
+              <span class="col-sm-5 col-xs-12" i18n>Name</span>
+              <span class="col-sm-6 col-xs-12" i18n>Users</span>
+              <span class="col-sm-1 col-xs-12"></span>
+            </div>
+          </li>
+
+          <li class="cp-form__item col-xs-12" *ngFor="let list of state.lists">
+            <div class="row">
+              <span class="col-sm-5 col-xs-12 text-truncate">
+                <strong>
+                  <button
+                    (click)="editList = list"
+                    class="cpbtn cpbtn--link-dark"
+                    (click)="islistsEdit = true"
+                    data-toggle="modal" data-target="#listsEdit">
+                    {{ list.name }}
+                  </button>
+                </strong>
+                <br>
+                {{ list.description }}
+              </span>
+
+              <span class="col-sm-6 col-xs-12" i18n>
+                No Content
+              </span>
+
+              <span
+                (click)="deleteList = list;"
+                (click)="islistsDelete = true"
+                data-toggle="modal" data-target="#listsDelete"
+                class="col-sm-1 col-xs-12 hover delete-list">
+                &times;
+              </span>
+            </div>
+          </li>
+        </div>
+      </ul>
+
+      <cp-pagination
+        [pageNext]="pageNext"
+        [pagePrev]="pagePrev"
+        [pageNumber]="pageNumber"
+        (next)="onPaginationNext()"
+        (previous)="onPaginationPrevious()">
+      </cp-pagination>
+    </div>
+  </div>
+</div>
+
+<cp-modal modalId="listsDelete" *ngIf="islistsDelete">
+  <cp-lists-delete
+    [list]="deleteList"
+    (deleteList)="onDeletedList($event)"
+    (resetDeleteModal)="islistsDelete = false">
+  </cp-lists-delete>
+</cp-modal>
+
+<!--
+<cp-modal modalId="listsCreate" *ngIf="islistsCreate">
+  <cp-links-create
+    (createLink)="onCreatedLink($event)"
+    (resetCreateModal)="islistsCreate = false">
+  </cp-links-create>
+</cp-modal>
+
+<cp-modal modalId="listsEdit" *ngIf="islistsEdit">
+  <cp-links-edit
+    [link]="editList"
+    (editList)="onEditedLink($event)"
+    (resetEditModal)="islistsEdit = false">
+  </cp-links-edit>
+</cp-modal>-->

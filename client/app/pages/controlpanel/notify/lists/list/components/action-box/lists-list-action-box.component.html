@@ -1,0 +1,21 @@
+<div class="cp-card">
+  <div class="row">
+    <div class="col-xs-12 col-sm-3 pull-left">
+      <cp-searchbox (query)="search.emit($event)"></cp-searchbox>
+    </div>
+    <div class="col-xs-12 col-sm-3 pull-right text-right">
+      <button
+        (click)="onLaunchCreateModal()"
+        class="cpbtn cpbtn--primary cpbtn--square-right no-right-padding" i18n>
+        Create List
+      </button>
+      <div
+        class="cpbtn cpbtn--square-left cpbtn--no-padding cpbtn--primary no-left-padding hover action-dropdown">
+        <i class="material-icons" data-toggle="dropdown">expand_more</i>
+        <ul class="dropdown-menu dropdown-menu-right text-left">
+          <li i18n (click)="launchModal()">Import List from Excel</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
