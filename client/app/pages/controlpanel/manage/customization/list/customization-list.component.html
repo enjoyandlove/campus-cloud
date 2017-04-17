@@ -18,7 +18,9 @@
 
       <div class="row canvas">
         <div class="col-xs-12">
-          <div class="dummy"></div>
+          <div id="canvas_wrapper" class="canvas__wrapper">
+            <div class="canvas__bounds"></div>
+          </div>
           <cp-customization-upload-button
             class="upload-button"
             (reset)="onReset()"
@@ -27,6 +29,8 @@
           </cp-customization-upload-button>
 
           <cp-customizaton-control-buttons
+            (save)="onSave()"
+            (cancel)="onCancel()"
             class="control-buttons">
           </cp-customizaton-control-buttons>
 

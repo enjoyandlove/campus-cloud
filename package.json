@@ -2,8 +2,8 @@
   "name": "oohlalamobile_control_panel",
   "version": "1.0.1",
   "description": "Control Panel",
-  "engines" : {
-    "node" : "6.10.0"
+  "engines": {
+    "node": "6.10.0"
   },
   "scripts": {
     "i18n": "ng-xi18n -p ",
@@ -45,6 +45,7 @@
     "@ngrx/core": "^1.2.0",
     "@ngrx/store": "^2.2.1",
     "core-js": "^2.4.1",
+    "croppie": "^2.4.1",
     "flatpickr": "^2.4.4",
     "hamburgers": "^0.7.0",
     "jquery": "^3.1.1",
