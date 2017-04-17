@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../../shared/shared.module';
 
 import { AnnouncementsListComponent } from './list';
+import { AnnouncementsComposeComponent } from './compose';
 
-import { AnnouncementsListActionBoxComponent
+import {
+  AnnouncementsListActionBoxComponent
 } from './list/components';
 
 import { AnnouncementsRoutingModule } from './announcements.routing.module';
@@ -12,9 +15,10 @@ import { AnnouncementsRoutingModule } from './announcements.routing.module';
 import { AnnouncementsService } from './announcements.service';
 
 @NgModule({
-  declarations: [ AnnouncementsListComponent, AnnouncementsListActionBoxComponent ],
+  declarations: [ AnnouncementsListComponent, AnnouncementsListActionBoxComponent,
+  AnnouncementsComposeComponent ],
 
-  imports: [ CommonModule, SharedModule, AnnouncementsRoutingModule ],
+  imports: [ CommonModule, SharedModule, AnnouncementsRoutingModule, ReactiveFormsModule ],
 
   providers: [ AnnouncementsService ],
 })

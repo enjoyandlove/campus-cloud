@@ -52,6 +52,10 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
     this.fetch();
   }
 
+  onLaunchCreateModal() {
+    $('#composeModal').modal();
+  }
+
   private fetch() {
     let search = new URLSearchParams();
     let type = this.state.type ? this.state.type.toString() : null;
