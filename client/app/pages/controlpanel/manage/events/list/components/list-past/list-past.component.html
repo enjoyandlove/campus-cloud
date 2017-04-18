@@ -1,101 +1,98 @@
-<ul class="col-xs-12 cp-form">
-  <div class="events">
-    <li class="cp-form__header col-xs-12">
-      <span
-        (click)="doSort('title')"
-        class="col-xs-2 hover" i18n>
-        Name
-        <span *ngIf="state.sort_field === 'title'">
-          <i
-            class="material-icons"
-            *ngIf="state.sort_direction === 'asc'">
-            arrow_drop_up
-          </i>
-          <i
-            class="material-icons"
-            *ngIf="state.sort_direction === 'desc'">
-            arrow_drop_down
-          </i>
-        </span>
+<ul class="events cp-form">
+  <li class="cp-form__header col-xs-12">
+    <span
+      (click)="doSort('title')"
+      class="col-xs-2 hover" i18n>
+      Name
+      <span *ngIf="state.sort_field === 'title'">
+        <i
+          class="material-icons"
+          *ngIf="state.sort_direction === 'asc'">
+          arrow_drop_up
+        </i>
+        <i
+          class="material-icons"
+          *ngIf="state.sort_direction === 'desc'">
+          arrow_drop_down
+        </i>
       </span>
-      <span class="col-xs-2" i18n>Host</span>
-      <span
-        (click)="doSort('start')"
-        class="col-xs-2 hover" i18n>
-        Date
-        <span *ngIf="state.sort_field === 'start'">
-          <i
-            class="material-icons"
-            *ngIf="state.sort_direction === 'asc'">
-            arrow_drop_up
-          </i>
-          <i
-            class="material-icons"
-            *ngIf="state.sort_direction === 'desc'">
-            arrow_drop_down
-          </i>
-        </span>
+    </span>
+    <span class="col-xs-2" i18n>Host</span>
+    <span
+      (click)="doSort('start')"
+      class="col-xs-2 hover" i18n>
+      Date
+      <span *ngIf="state.sort_field === 'start'">
+        <i
+          class="material-icons"
+          *ngIf="state.sort_direction === 'asc'">
+          arrow_drop_up
+        </i>
+        <i
+          class="material-icons"
+          *ngIf="state.sort_direction === 'desc'">
+          arrow_drop_down
+        </i>
       </span>
-      <span class="col-xs-1" i18n>Response</span>
-      <span class="col-xs-1" i18n>Attendance</span>
-      <span class="col-xs-3" i18n>Rating</span>
-      <span class="col-xs-1"></span>
-    </li>
+    </span>
+    <span class="col-xs-1" i18n>Response</span>
+    <span class="col-xs-1" i18n>Attendance</span>
+    <span class="col-xs-3" i18n>Rating</span>
+    <span class="col-xs-1"></span>
+  </li>
 
-    <li class="cp-form__item col-xs-12" *ngFor="let event of events">
+  <li class="cp-form__item col-xs-12" *ngFor="let event of events">
 
-      <span class="col-xs-12 col-md-2 text-truncate events__thumbnail">
-        <img
-          class="img-rounded"
-          [src]="event.poster_thumb_url ?
-                 event.poster_thumb_url :
-                 event.store_logo_url">
-        <strong>
-            <a
-              class="event__title"
-              [routerLink]="[event.id]"
-              *ngIf="event.event_attendance === 1">
-              {{ event.title }}
-            </a>
-            <a
-              class="event__title"
-              [routerLink]="[event.id + '/info']"
-              *ngIf="event.event_attendance === 0">
-              {{ event.title }}
-            </a>
-        </strong>
-        <br>
-        {{ event.description }}
-      </span>
-        <span class="col-xs-12 col-md-2 text-truncate">
-        {{ event.store_name }}
-      </span>
-        <span class="col-xs-12 col-md-2 text-truncate">
-        {{ event.start | cpDatePipe:dateFormat }}
-      </span>
-        <span class="col-xs-12 col-md-1 text-truncate">
-        {{ event.avg_rating_percent + '%'}}
-      </span>
-        <span class="col-xs-12 col-md-1 text-truncate">
-        {{ event.attends }}
-      </span>
+    <span class="col-xs-12 col-md-2 text-truncate events__thumbnail">
+      <img
+        class="img-rounded"
+        [src]="event.poster_thumb_url ?
+                event.poster_thumb_url :
+                event.store_logo_url">
+      <strong>
+          <a
+            class="event__title"
+            [routerLink]="[event.id]"
+            *ngIf="event.event_attendance === 1">
+            {{ event.title }}
+          </a>
+          <a
+            class="event__title"
+            [routerLink]="[event.id + '/info']"
+            *ngIf="event.event_attendance === 0">
+            {{ event.title }}
+          </a>
+      </strong>
+      <br>
+      {{ event.description }}
+    </span>
+      <span class="col-xs-12 col-md-2 text-truncate">
+      {{ event.store_name }}
+    </span>
+      <span class="col-xs-12 col-md-2 text-truncate">
+      {{ event.start | cpDatePipe:dateFormat }}
+    </span>
+      <span class="col-xs-12 col-md-1 text-truncate">
+      {{ event.avg_rating_percent + '%'}}
+    </span>
+      <span class="col-xs-12 col-md-1 text-truncate">
+      {{ event.attends }}
+    </span>
 
-      <span class="col-xs-12 col-md-3 text-truncate">
-        <span *ngIf="event.rating_scale_maximum > -1">
-          <cp-stars
-            [maxRate]="event.rating_scale_maximum"
-            [avgRate]="event.avg_rating_percent">
-          </cp-stars>
-        </span>
+    <span class="col-xs-12 col-md-3 text-truncate">
+      <span *ngIf="event.rating_scale_maximum > -1">
+        <cp-stars
+          [maxRate]="event.rating_scale_maximum"
+          [avgRate]="event.avg_rating_percent">
+        </cp-stars>
       </span>
+    </span>
 
-      <span
-        (click)="onDelete(event)"
-        data-toggle="modal" data-target="#deleteEventsModal"
-        class="col-xs-12 col-md-1 hover text-truncate delete-event">
-        &times;
-      </span>
-
-    </li>
-  </div>
+    <span
+      (click)="onDelete(event)"
+      data-toggle="modal" data-target="#deleteEventsModal"
+      class="col-xs-12 col-md-1 hover text-truncate delete-event text-center">
+      &times;
+    </span>
+  </li>
 </ul>

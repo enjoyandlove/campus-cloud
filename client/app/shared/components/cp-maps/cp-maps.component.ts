@@ -34,7 +34,7 @@ export class CPMapsComponent implements OnInit, AfterViewInit, OnChanges {
     this._center = this.center ? this.center : defaultCenter;
 
     this._map = new google.maps.Map(el, {
-      zoom: 8,
+      zoom: 16,
       draggable: false,
       center: this._center,
       disableDefaultUI: true
@@ -44,6 +44,7 @@ export class CPMapsComponent implements OnInit, AfterViewInit, OnChanges {
       position: this._center,
       map: this._map,
     });
+
   }
 
   ngOnChanges() {
