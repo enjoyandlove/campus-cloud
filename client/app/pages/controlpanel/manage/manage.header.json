@@ -26,6 +26,10 @@
     {
       "label": "Cover Photo",
       "url": "/manage/customization"
+    },
+    {
+      "label": "Locations",
+      "url": "/manage/locations"
     }
   ]
 }
