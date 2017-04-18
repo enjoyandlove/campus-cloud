@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { ListsService } from '../lists.service';
+// import { ListsService } from '../lists.service';
 
 declare var $: any;
 
@@ -19,7 +19,7 @@ export class ListsEditComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private service: ListsService,
+    // private service: ListsService,
   ) { }
 
   doSubmit() {

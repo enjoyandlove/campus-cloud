@@ -1,7 +1,7 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { ListsService } from '../lists.service';
+// import { ListsService } from '../lists.service';
 
 declare var $: any;
 
@@ -11,6 +11,7 @@ declare var $: any;
   styleUrls: ['./lists-create.component.scss']
 })
 export class ListsCreateComponent implements OnInit {
+  @Input() users: any;
   @Output() created: EventEmitter<any> = new EventEmitter();
   @Output() reset: EventEmitter<null> = new EventEmitter();
 
@@ -18,7 +19,7 @@ export class ListsCreateComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private service: ListsService,
+    // private service: ListsService,
   ) { }
 
   doSubmit() {
@@ -33,6 +34,7 @@ export class ListsCreateComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this);
     this.form = this.fb.group({
       'name': [null, Validators.required],
       'description': [null],

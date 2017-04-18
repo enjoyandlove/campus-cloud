@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
+import { FORMAT } from '../../../../../shared/pipes/date.pipe';
 import { AnnouncementsService } from '../announcements.service';
 import { BaseComponent } from '../../../../../base/base.component';
-
-import { FORMAT } from '../../../../../shared/pipes/date.pipe'
 
 interface IState {
   messages: Array<any>;
