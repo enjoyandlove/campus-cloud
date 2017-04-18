@@ -20,9 +20,11 @@ declare var $: any;
 })
 export class ListsListComponent extends BaseComponent implements OnInit {
   loading;
+  listUsers;
   isListsEdit;
   isListsCreate;
   isListsDelete;
+  isListsImport;
   state: IState = state;
 
   constructor(
@@ -50,9 +52,15 @@ export class ListsListComponent extends BaseComponent implements OnInit {
     this.state.lists = [list, ...this.state.lists];
   }
 
-  onLaunchCreateModal() {
+  onLaunchCreateModal(users?: Array<any>) {
     this.isListsCreate = true;
+    this.listUsers = users ? users : null;
     setTimeout(() => { $('#listsCreate').modal(); }, 1);
+  }
+
+  onLaunchImportModal() {
+    this.isListsImport = true;
+    setTimeout(() => { $('#listsImport').modal(); }, 1);
   }
 
   onEditedList(editedList) {

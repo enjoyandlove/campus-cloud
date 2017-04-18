@@ -85,8 +85,8 @@ export class AnnouncementsComposeComponent implements OnInit {
       'school_id': [157, Validators.required],
       'user_id': [157, Validators.required],
       'store_id': [157, Validators.required],
-      'subject': [null, Validators.required],
-      'message': [null, Validators.required],
+      'subject': [null, [Validators.required, Validators.maxLength(128)]],
+      'message': [null, [Validators.required, Validators.maxLength(512)]],
       'priority': [this.types[0], Validators.required],
     });
   }

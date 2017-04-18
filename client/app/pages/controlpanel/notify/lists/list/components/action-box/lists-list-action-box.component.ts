@@ -7,7 +7,8 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 })
 export class ListsListActionBoxComponent implements OnInit {
   @Output() search: EventEmitter<string> = new EventEmitter();
-  @Output() launchModal: EventEmitter<null> = new EventEmitter();
+  @Output() launchCreateModal: EventEmitter<null> = new EventEmitter();
+  @Output() launchImportModal: EventEmitter<null> = new EventEmitter();
 
   constructor() { }
 
