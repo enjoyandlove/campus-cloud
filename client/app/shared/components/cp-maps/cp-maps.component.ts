@@ -54,5 +54,6 @@ export class CPMapsComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnInit() {
+
   }
 }

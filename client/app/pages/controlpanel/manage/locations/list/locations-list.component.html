@@ -36,9 +36,9 @@
                   <strong>
                     <button
                       class="cpbtn cpbtn--link-dark"
-                      (click)="editLocation = location"
-                      (click)="isLocationsEdit = true"
-                      data-toggle="modal" data-target="#locationsEdit">
+                      (click)="updateLocation = location"
+                      (click)="isLocationsUpdate = !isLocationsUpdate"
+                      data-toggle="modal" data-target="#locationsUpdate">
                       {{ location.name }}
                     </button>
                   </strong>
@@ -73,8 +73,28 @@
   </div>
 </div>
 
-<cp-modal modalId="locationsCreate">
+<cp-modal
+  modalId="locationsCreate"
+  *ngIf="isLocationsCreate">
   <cp-locations-create
-    (locationCreated)="onLocationCreated($event)">
+    (locationCreated)="onLocationCreated($event)"
+    (teardown)="isLocationsCreate = !isLocationsCreate">
   </cp-locations-create>
+</cp-modal>
+
+<cp-modal modalId="locationsDelete">
+  <cp-locations-delete
+    [location]="deleteLocation"
+    (locationDeleted)="onLocationDeleted($event)">
+  </cp-locations-delete>
+</cp-modal>
+
+<cp-modal
+  modalId="locationsUpdate"
+  *ngIf="isLocationsUpdate">
+  <cp-locations-update
+    [location]="updateLocation"
+    (locationUpdated)="onLocationUpdated($event)"
+    (teardown)="isLocationsUpdate = !isLocationsUpdate">
+  </cp-locations-update>
 </cp-modal>
