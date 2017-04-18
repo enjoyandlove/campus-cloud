@@ -1,0 +1,160 @@
+<div [ngSwitch]="shouldConfirm">
+  <div class="cpmodal" *ngSwitchCase="false">
+    <div class="cpmodal__header">
+      <div class="row">
+        <div class="col-xs-12 text-center">
+          <span i18n><strong>Create New List</strong></span>
+
+          <span
+            data-dismiss="modal"
+            (click)="resetModal()"
+            class="pull-right hover cpmodal__header__close">
+            &times;
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cpmodal__body">
+      <div class="row">
+        <div class="col-xs-12">
+          <form [formGroup]="form">
+            <div class="form-group campus-switch" [class.isActive]="isCampusWide">
+              <div class="row">
+                <div class="col-xs-8">
+                  <p class="title" i18n>Campus Wide</p>
+                  <p class="text-muted" i18n>Announce to all students</p>
+                </div>
+                <div class="col-xs-4">
+                  <div class="pull-right">
+                    <cp-switch
+                      (toggle)="isCampusWide = !isCampusWide"
+                      [isChecked]="isCampusWide">
+                    </cp-switch>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label i18n>Announcement Type</label>
+              <div class="row">
+                <div class="col-xs-12 text-right hover types-menu">
+                  <button
+                    data-toggle="dropdown"
+                    class="cpbtn cpbtn--cancel hover masterButton col-xs-12">
+                    <div class="row">
+                      <div class="col-xs-10 text-left">
+                        <span class="title">
+                          {{ form.controls.priority.value.title }}
+                        </span>
+                        <span class="description text-muted">
+                          {{ form.controls.priority.value.description }}
+                        </span>
+                      </div>
+                      <div class="col-xs-2 text-right">
+                        <i class="material-icons more">arrow_drop_down</i>
+                      </div>
+                    </div>
+                  </button>
+
+                  <ul class="dropdown-menu types-menu__list">
+                    <li
+                      class="types-menu__item"
+                      *ngFor="let type of types"
+                      (click)="onTypeChanged(type)">
+                      <div class="row">
+                        <div class="col-xs-2 text-center no-right-padding">
+                          <i
+                            class="material-icons"
+                            *ngIf="form.controls.priority.value.id === type.id">
+                            check
+                          </i>
+                        </div>
+                        <div class="col-xs-10 no-left-padding">
+                          <p class="types-menu__item--title" i18n>
+                            {{ type.title }}
+                          </p>
+                          <p
+                            [innerHTML]="type.description"
+                            class="types-menu__item--description" i18n>
+                          </p>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group" *ngIf="!isCampusWide">
+              <label i18n>To</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="subject"
+                placeholder="Name of a user or a list">
+            </div>
+
+            <div class="form-group">
+              <label i18n>Subject</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Subject"
+                formControlName="subject">
+            </div>
+
+            <div class="form-group">
+              <label i18n>Message</label>
+              <textarea
+                class="form-control"
+                formControlName="message"
+                placeholder="Message" >
+              </textarea>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="cpmodal__footer">
+      <div class="row">
+        <div class="col-xs-6">
+          <div class="row">
+            <div class="col-xs-3 from-label" i18n>
+              From
+            </div>
+            <div class="col-xs-9 no-left-padding no-right-padding">
+              <cp-dropdown
+                [items]="stores$ | async"
+                (selected)="onSelectedStore($event)">
+              </cp-dropdown>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-6 text-right">
+          <button
+            type="button"
+            data-dismiss="modal"
+            (click)="resetModal()"
+            class="cpbtn cpbtn--cancel" i18n>
+            Cancel
+          </button>
+
+          <button
+            type="button"
+            (click)="doValidate()"
+            class="cpbtn cpbtn--primary"i18n>
+            Announce
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <cp-announcements-confirm
+    *ngSwitchCase="true"
+    (confirmed)="onConfirmed()"
+    (teardown)="shouldConfirm = false">
+  </cp-announcements-confirm>
+</div>
