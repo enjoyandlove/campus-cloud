@@ -96,7 +96,12 @@
             </div>
 
             <div class="form-group">
-              <label i18n>Subject</label>
+              <label i18n>
+                Subject
+                <span class="pull-right">
+                  {{ form.controls.subject.value ? form.controls.subject.value.length : 0 }}/128
+                </span>
+              </label>
               <input
                 type="text"
                 class="form-control"
@@ -105,7 +110,12 @@
             </div>
 
             <div class="form-group">
-              <label i18n>Message</label>
+              <label i18n>
+                Message
+                <span class="pull-right">
+                  {{ form.controls.message.value ? form.controls.message.value.length : 0 }}/512
+                </span>
+              </label>
               <textarea
                 class="form-control"
                 formControlName="message"

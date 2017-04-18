@@ -8,6 +8,14 @@
   margin-top: 15px;
 }
 
+label {
+  span {
+    @include font-normal();
+
+    color: $color-secondary-text;
+  }
+}
+
 button.masterButton {
   padding: 12px 20px;
 
