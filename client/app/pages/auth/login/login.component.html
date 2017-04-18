@@ -1,55 +1,57 @@
-<div class="row">
-  <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4">
-    <form
-      [formGroup]="form"
-      (ngSubmit)="onSubmit(form.value)">
-      <div class="row">
-        <div class="col-xs-12 heading text-center">
-          <img src="" alt="">
-          <p>campus cloud</p>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4">
+      <form
+        [formGroup]="form"
+        (ngSubmit)="onSubmit(form.value)">
+        <div class="row">
+          <div class="col-xs-12 heading text-center">
+            <img src="" alt="">
+            <p>campus cloud</p>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label i18n>Email</label>
-        <input
-          autofocus
-          type="email"
-          name="username"
-          class="form-control"
-          formControlName="username">
-      </div>
-      <div class="form-group">
-        <label i18n>Password</label>
-        <input
-          type="password"
-          name="password"
-          class="form-control"
-          formControlName="password">
-      </div>
+        <div class="form-group">
+          <label i18n>Email</label>
+          <input
+            autofocus
+            type="email"
+            name="username"
+            class="form-control"
+            formControlName="username">
+        </div>
+        <div class="form-group">
+          <label i18n>Password</label>
+          <input
+            type="password"
+            name="password"
+            class="form-control"
+            formControlName="password">
+        </div>
 
-      <div class="row text-center">
-        <div class="col-xs-12">
-          <button
-            type="submit"
-            class="cpbtn cpbtn--primary">
-            Login
-          </button>
+        <div class="row text-center">
+          <div class="col-xs-12">
+            <button
+              type="submit"
+              class="cpbtn cpbtn--primary">
+              Login
+            </button>
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <cp-alert></cp-alert>
+        <div class="row">
+          <div class="col-xs-12">
+            <cp-alert></cp-alert>
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
-</div>
 
-<div class="row text-center footer">
-  <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4">
-    <div class="row">
-      <div class="col-xs-12">
-        <a [routerLink]="['/password-reset']" i18n>Lost your password?</a>
+  <div class="row text-center footer">
+    <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4">
+      <div class="row">
+        <div class="col-xs-12">
+          <a [routerLink]="['/password-reset']" i18n>Lost your password?</a>
+        </div>
       </div>
     </div>
   </div>
