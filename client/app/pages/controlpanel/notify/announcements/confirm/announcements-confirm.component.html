@@ -1,0 +1,49 @@
+<div class="cpmodal">
+  <div class="cpmodal__header">
+    <div class="row">
+      <div class="col-xs-12 text-center">
+        <span i18n><strong>Confirm</strong></span>
+
+        <span
+          (click)="teardown.emit()"
+          class="pull-right hover cpmodal__header__close">
+          &times;
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cpmodal__body">
+    <div class="row">
+      <div class="col-xs-12 text-center">
+        <p class="title" i18n>
+          Campus Wide Announcement
+        </p>
+        <p class="text-muted">
+          You are about to send a campus wide
+          announcement. <br> Are you Sure?
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cpmodal__footer">
+    <div class="row">
+      <div class="col-xs-6 col-xs-offset-6 text-right">
+        <button
+          type="button"
+          class="cpbtn cpbtn--cancel"
+          (click)="teardown.emit()" i18n>
+          Cancel
+        </button>
+
+        <button
+          type="button"
+          (click)="onCofirm()"
+          class="cpbtn cpbtn--primary"i18n>
+          Yes, I'm Sure
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
