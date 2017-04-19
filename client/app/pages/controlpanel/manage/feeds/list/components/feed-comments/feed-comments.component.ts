@@ -4,6 +4,14 @@ import { URLSearchParams } from '@angular/http';
 import { FeedsService } from '../../../feeds.service';
 import { BaseComponent } from '../../../../../../../base/base.component';
 
+interface IState {
+  comments: Array<any>;
+}
+
+const state: IState = {
+  comments: []
+};
+
 @Component({
   selector: 'cp-feed-comments',
   templateUrl: './feed-comments.component.html',
@@ -14,6 +22,7 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
 
   loading;
   comments;
+  state: IState = state;
 
   constructor(
     private feedsService: FeedsService
@@ -46,7 +55,7 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
           });
         });
 
-        this.comments = _comments;
+        this.state = Object.assign({}, this.state, {  comments: _comments });
       })
       .catch(err => console.log(err));
   }

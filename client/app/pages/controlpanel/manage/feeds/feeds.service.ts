@@ -33,8 +33,14 @@ export class FeedsService extends BaseService {
     return super.post(url, data).map(res => res.json());
   }
 
-  deleteById(threadId: number) {
+  deleteMessageById(threadId: number) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CAMPUS_THREAD}/${threadId}`;
+
+    return super.delete(url).map(res => res.json());
+  }
+
+  deleteCommentById(commentId: number) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CAMPUS_COMMENT}/${commentId}`;
 
     return super.delete(url).map(res => res.json());
   }
