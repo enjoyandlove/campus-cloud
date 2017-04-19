@@ -15,6 +15,8 @@ const appRoutes: Routes = [
 
       { path: 'manage', loadChildren: './manage/manage.module#ManageModule' },
 
+      { path: 'notify', loadChildren: './notify/notify.module#NotifyModule' },
+
       { path: 'account', loadChildren: './account/account.module#AccountModule' },
     ]
   },

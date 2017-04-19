@@ -1,0 +1,45 @@
+<div class="row">
+  <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+    <div class="cp-card card">
+      <div class="row">
+        <div class="col-xs-12">
+          <p class="card__title" i18n>Personalize your Cover Photo</p>
+          <p class="text-muted" i18n>
+            Pick one that shows off your school's personality
+          </p>
+        </div>
+      </div>
+
+      <div class="row card__error" *ngIf="isError">
+        <div class="col-xs-12">
+          <label class="error">{{ error }}</label>
+        </div>
+      </div>
+
+      <div class="row canvas">
+        <div class="col-xs-12">
+          <div id="canvas_wrapper" class="canvas__wrapper" [class.canvas__wrapper--blank]="!isEdit">
+            <div class="canvas__bounds"></div>
+          </div>
+
+          <cp-customization-upload-button
+            *ngIf="!isEdit"
+            class="upload-button"
+            (reset)="onReset()"
+            (error)="onError($event)"
+            (upload)="onUpload($event)">
+          </cp-customization-upload-button>
+
+          <cp-customizaton-control-buttons
+            *ngIf="isEdit"
+            (save)="onSave()"
+            (cancel)="onCancel()"
+            class="control-buttons">
+          </cp-customizaton-control-buttons>
+
+          <p class="tooltip" *ngIf="isEdit" i18n>Drag to Reposition Photo</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

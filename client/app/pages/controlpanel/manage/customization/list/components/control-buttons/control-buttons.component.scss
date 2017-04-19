@@ -1,0 +1,11 @@
+@import '~styles/components/button';
+
+.controls {
+  button {
+    margin-right: 12px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

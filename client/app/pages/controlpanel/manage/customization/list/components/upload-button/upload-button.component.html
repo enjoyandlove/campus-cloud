@@ -1,0 +1,23 @@
+<div class="upload-menu">
+  <button
+    type="button"
+    data-toggle="dropdown"
+    class="cpbtn cpbtn--cancel">
+    <span class="pencil">
+      <i class="material-icons">mode_edit</i>
+    </span>
+    <span class="down">
+      <i class="material-icons">arrow_drop_down</i>
+    </span>
+  </button>
+
+  <ul class="dropdown-menu dropdown-menu-right">
+    <!--<li i18n>Upload Photo</li>-->
+    <li>
+      <cp-upload-button
+        buttonText="Upload Photo"
+        (fileUpload)="onFileUpload($event)"
+        buttonClass="cpbtn cpbtn--link-dark">
+      </cp-upload-button></li>
+  </ul>
+</div>

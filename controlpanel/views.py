@@ -85,6 +85,44 @@ def import_excel_event(request):
 
     return JsonResponse(json.dumps(event_dict), safe=False)
 
+'''
+Parse Excel Mass Announcements Import
+'''
+@csrf_exempt
+def import_excel_announcements(request):
+    input_excel = request.FILES['file']
+
+    wb = load_workbook(filename=input_excel)
+
+    ws = wb.get_active_sheet()
+
+    message_dict = []
+
+    for row in ws.rows:
+        message_info = []
+        for col in row:
+            if col.value is not None:
+                message_info.append(col.value)
+        if len(message_info):
+            message_dict.append(message_info)
+
+    messages = message_dict[1:]
+    column_titles = message_dict[:1]
+
+    column_titles = [title.lower() for title in column_titles[0]]
+
+    message_dict = []
+
+    for i in messages:
+        # all fields are required
+        if len(i) is not len(column_titles):
+            return JsonResponse({"error": "All fields are required"},
+                                safe=False, status=500)
+
+        message_dict.append(dict(zip(column_titles, i)))
+
+    return JsonResponse(json.dumps(message_dict), safe=False)
+
 
 '''
 Parse Clubs Mass Upload

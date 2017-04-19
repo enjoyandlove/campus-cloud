@@ -1,6 +1,12 @@
 /**
  * Any status string used in the
  * cp-alert component comes from this file
+ *
+ *  1.- AUTH
+ *  2.- FORMS
+ *  3.- GENERAL
+ *  4.- IMAGE
+ *
  */
 
 export const STATUS = {
@@ -27,6 +33,13 @@ export const STATUS = {
   /**
    * GENERAL
    */
-  SOMETHING_WENT_WRONG: 'Something went wrong'
+  SOMETHING_WENT_WRONG: 'Something went wrong',
+
+  /**
+   * IMAGE
+   */
+  FILE_IS_TOO_BIG: 'File is too big',
+
+  WRONG_EXTENSION: 'Wrong extension',
 };
 
