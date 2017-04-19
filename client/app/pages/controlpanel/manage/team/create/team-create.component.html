@@ -1,0 +1,311 @@
+<div class="container">
+  <div class="row">
+    <form
+      [formGroup]="form"
+      (ngSubmit)="onSubmit(form.value)"
+      class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 margin-bottom">
+      <div class="section cp-card form-group">
+        <p class="section__title" i18n>Invitee</p>
+        <div class="row">
+          <div class="col-xs-12 col-sm-4">
+            <label i18n>First Name</label>
+            <input
+              type="text"
+              placeholder="John"
+              class="form-control"
+              formControlName="firstname">
+          </div>
+
+          <div class="col-xs-12 col-sm-4">
+            <label i18n>Last Name</label>
+            <input
+              type="text"
+              placeholder="Smith"
+              class="form-control"
+              formControlName="lastname">
+          </div>
+
+          <div class="col-xs-12 col-sm-4">
+            <label i18n>Email</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="email"
+              placeholder="john@smith.com">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <div
+              class="all-access"
+              [class.isEnabled]="isAllAccessEnabled">
+              <div class="row">
+                <div class="col-xs-8">
+                  <p class="section-sub-title" i18n>All Access</p>
+                  <p class="section-description" i18n>
+                    Give access to all of the Services, Clubs and App Content
+                  </p>
+                </div>
+                <div class="col-xs-4">
+                  <div class="pull-right">
+                    <cp-switch
+                      (toggle)="toggleAllAccess($event)"
+                      (toggle)="isAllAccessEnabled = !isAllAccessEnabled">
+                    </cp-switch>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Permissions -->
+      <fieldset [disabled]="isAllAccessEnabled">
+      <div
+        class="section cp-card form-group"
+        [class.isDisabled]="isAllAccessEnabled">
+        <!-- Manage Team Members -->
+        <div class="section__item">
+          <p class="section__title" i18n>Permissions</p>
+          <div class="row">
+            <div class="col-xs-8">
+              <p class="section-sub-title" i18n>Manage Team Members</p>
+              <p class="section-description" i18n>
+                View this page
+              </p>
+            </div>
+            <div class="col-xs-4">
+              <cp-dropdown
+                [items]="manageAdmins"
+                (selected)="onManageAdminSelected($event)">
+              </cp-dropdown>
+            </div>
+          </div>
+        </div>
+        <!-- END Manage Admin -->
+
+        <!-- Service Owner -->
+        <div class="section__item">
+          <div class="row">
+            <div class="col-xs-8">
+              <p class="section-sub-title" i18n>Service Owner</p>
+              <p class="section-description" i18n>
+                Manage service details, events and assessment
+              </p>
+            </div>
+            <div class="col-xs-4">
+              <cp-dropdown
+                [items]="servicesMenu"
+                (selected)="onServicesSelected($event)">
+              </cp-dropdown>
+            </div>
+          </div>
+        </div>
+        <!-- END Service Owner -->
+
+        <!-- Club Owner -->
+        <div class="section__item">
+          <div class="row">
+            <div class="col-xs-8">
+              <p class="section-sub-title" i18n>Club Owner</p>
+              <p class="section-description" i18n>
+                Manage club details, events and membership
+              </p>
+            </div>
+            <div class="col-xs-4">
+              <cp-dropdown
+                [items]="clubsMenu"
+                (selected)="onClubsSelected($event)">
+              </cp-dropdown>
+            </div>
+          </div>
+        </div>
+        <!-- END Club Owner -->
+
+        <!-- Events -->
+        <div class="section__item">
+          <div class="row">
+            <div class="col-xs-8">
+              <p class="section-sub-title" i18n>Events</p>
+              <p class="section-description" i18n>
+                Manage and assess events
+              </p>
+            </div>
+            <div class="col-xs-4">
+              <cp-dropdown
+                [items]="eventsMenu"
+                (selected)="onEventsSelected($event)">
+              </cp-dropdown>
+            </div>
+          </div>
+        </div>
+        <!-- END Events -->
+
+        <!-- App Content -->
+        <div class="section__item section--content">
+          <div class="row">
+            <div class="col-xs-12">
+              <p class="section-sub-title" i18n>App Content</p>
+              <p class="section-description" i18n>
+                Select the content that you want your invitee to access
+              </p>
+            </div>
+          </div>
+          <div class="row options-row">
+            <div
+              class="col-xs-4"
+              [class.isDisabled]="!formData.content.orientation">
+              <cp-checkbox
+                class="cpcheckbox"
+                (toggle)="checkControl($event, 17)"
+                [isDisabled]="!formData.content.orientation">
+              </cp-checkbox>
+              <span i18n>Orientation</span>
+            </div>
+
+            <div
+              class="col-xs-4"
+              [class.isDisabled]="!formData.content.calendars">
+              <cp-checkbox
+                class="cpcheckbox"
+                (toggle)="checkControl($event, 16)"
+                [isDisabled]="!formData.content.calendars">
+              </cp-checkbox>
+              <span i18n>Calendars</span>
+            </div>
+
+            <div
+              class="col-xs-4"
+              [class.isDisabled]="!formData.content.maps">
+              <cp-checkbox
+                class="cpcheckbox"
+                (toggle)="checkControl($event, 21)"
+                [isDisabled]="!formData.content.maps">
+              </cp-checkbox>
+              <span i18n>Maps</span>
+            </div>
+          </div>
+
+          <div class="row options-row">
+            <div
+              class="col-xs-4"
+              [class.isDisabled]="!formData.content.feeds">
+              <cp-checkbox
+                class="cpcheckbox"
+                (toggle)="checkControl($event, 15)"
+                [isDisabled]="!formData.content.feeds">
+              </cp-checkbox>
+              <span i18n>Feeds</span>
+            </div>
+
+            <div
+              class="col-xs-4"
+              [class.isDisabled]="!formData.content.links">
+              <cp-checkbox
+                class="cpcheckbox"
+                (toggle)="checkControl($event, 23)"
+                [isDisabled]="!formData.content.links">
+              </cp-checkbox>
+              <span i18n>Links</span>
+            </div>
+
+            <div
+              class="col-xs-4"
+              [class.isDisabled]="!formData.content.appCustomizaton">
+              <cp-checkbox
+                class="cpcheckbox"
+                (toggle)="checkControl($event, 13)"
+                [isDisabled]="!formData.content.appCustomizaton">
+              </cp-checkbox>
+              <span i18n>App Customization</span>
+            </div>
+          </div>
+        </div>
+        <!-- END App Content -->
+
+        <!-- Notify -->
+        <div class="section__item">
+          <div class="row">
+            <div class="col-xs-12">
+              <p class="section-sub-title" i18n>Notify</p>
+              <p class="section-description" i18n>
+                Select push notifications
+              </p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="row options-row">
+                <div
+                  class="col-xs-6 col-sm-4"
+                  [class.isDisabled]="!formData.notify.campus">
+                  <cp-checkbox
+                    class="cpcheckbox"
+                    [isDisabled]="!formData.notify.campus"
+                    (toggle)="checkControl($event, 12)">
+                  </cp-checkbox>
+                  <span i18n>Campus Announcements</span>
+                </div>
+                <div
+                  class="col-xs-6 col-sm-5"
+                  [class.isDisabled]="!formData.notify.emergency">
+                  <cp-checkbox
+                    class="cpcheckbox"
+                    [isDisabled]="!formData.notify.emergency"
+                    (toggle)="checkControl($event, 32)">
+                  </cp-checkbox>
+                  <span i18n>Emergency Announcements</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- END Notify -->
+      </div>
+      </fieldset>
+      <!-- END Permissions -->
+
+      <div class="footer">
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="pull-left" *ngIf="isFormError">
+                <label class="error">{{ formError }}</label>
+              </div>
+              <div class="pull-right">
+                <a [routerLink]="['/manage/events']"
+                  class="cpbtn cpbtn--tall cpbtn--cancel" i18n>
+                  Cancel
+                </a>
+                <button
+                  type="submit"
+                  class="cpbtn cpbtn--tall cpbtn--primary" i18n
+                  [disabled]="!form.valid">
+                  Send Invite
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<cp-modal
+  [type]="MODAL_TYPE"
+  modalId="selectServicesModal">
+  <cp-select-services-modal
+    (selected)="onServicesModalSelected($event)">
+  </cp-select-services-modal>
+</cp-modal>
+
+<cp-modal
+  [type]="MODAL_TYPE"
+  modalId="selectClubsModal">
+  <cp-select-clubs-modal
+    (selected)="onClubsModalSelected($event)">
+  </cp-select-clubs-modal>
+</cp-modal>
