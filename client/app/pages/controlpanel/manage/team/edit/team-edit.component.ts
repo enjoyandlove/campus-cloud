@@ -14,16 +14,16 @@
 
 // declare var $: any;
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { TEAM_ACCESS } from '../utils';
-import { STATUS } from '../../../../../shared/constants';
+// import { STATUS } from '../../../../../shared/constants';
 import { BaseComponent } from '../../../../../base/base.component';
 import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
 import { CP_PRIVILEGES, appStorage } from '../../../../../shared/utils';
-import { ErrorService, AdminService } from '../../../../../shared/services';
+import { AdminService } from '../../../../../shared/services';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 
 declare var $: any;
@@ -53,12 +53,12 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   CP_PRIVILEGES = CP_PRIVILEGES;
 
   constructor(
-    private router: Router,
+    // private router: Router,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private store: Store<IHeader>,
     private adminService: AdminService,
-    private errorService: ErrorService
+    // private errorService: ErrorService
   ) {
     super();
     super.isLoading().subscribe(res => this.loading = res);

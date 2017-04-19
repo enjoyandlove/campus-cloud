@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Headers } from '@angular/http';
 
 import { API } from '../../../.././../config/api';
-import { STATUS } from '../../../.././../shared/constants';
+// import { STATUS } from '../../../.././../shared/constants';
 import { FileUploadService } from '../../../../../shared/services';
-import { CPArray, CPImage, appStorage } from '.././../../../../shared/utils';
+import { appStorage } from '.././../../../../shared/utils';
 
 @Component({
   selector: 'cp-customization-list',

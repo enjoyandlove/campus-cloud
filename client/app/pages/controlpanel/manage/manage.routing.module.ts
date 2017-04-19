@@ -32,7 +32,7 @@ const appRoutes: Routes = [
         path: 'customization',
         loadChildren: './customization/customization.module#CustomizationModule'
       },
-      
+
       { path: 'locations', loadChildren: './locations/locations.module#LocationsModule' }
     ]
   }
