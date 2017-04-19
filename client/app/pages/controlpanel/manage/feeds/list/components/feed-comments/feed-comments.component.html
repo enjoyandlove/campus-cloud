@@ -5,6 +5,7 @@
     <cp-feed-comment
       [last]="last"
       [comment]="comment"
+      (deleted)="onDeletedComment($event)"
       *ngFor="let comment of state.comments; let last = last">
     </cp-feed-comment>
   </div>

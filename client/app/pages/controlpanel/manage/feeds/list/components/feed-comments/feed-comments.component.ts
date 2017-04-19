@@ -31,6 +31,14 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
     super.isLoading().subscribe(res => this.loading = res);
   }
 
+  onDeletedComment(commentId: number) {
+    let _state = Object.assign({}, this.state);
+
+    _state.comments = _state.comments.filter(comment => comment.id !== commentId);
+
+    this.state = Object.assign({}, this.state, { comments: _state.comments });
+  }
+
   private fetch() {
     let search = new URLSearchParams();
     search.append('school_id', '157');

@@ -48,6 +48,7 @@ export class FeedSettingsComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('INIT');
     this.form = this.fb.group({
       'walls': this.fb.array([])
     });
