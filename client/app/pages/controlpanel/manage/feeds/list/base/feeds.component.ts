@@ -45,6 +45,17 @@ export class FeedsComponent extends BaseComponent implements OnInit {
     this.fetch();
   }
 
+  onPaginationNext() {
+    super.goToNext();
+    this.fetch();
+  }
+
+  onPaginationPrevious() {
+    super.goToPrevious();
+    this.fetch();
+  }
+
+
   private fetch() {
     const school_id = '157';
     let search = new URLSearchParams();
@@ -59,8 +70,11 @@ export class FeedsComponent extends BaseComponent implements OnInit {
     search.append('flagged_by_users_only', flagged);
 
     super
-      .fetchData(this.service.getFeeds(search))
-      .then(res => this.feeds = res.data)
+      .fetchData(this.service.getFeeds(this.startRange, this.endRange, search))
+      .then(res => {
+        this.feeds = res.data;
+        console.log(res);
+      })
       .catch(err => console.log(err));
   }
 

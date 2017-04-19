@@ -13,8 +13,9 @@ export class FeedsService extends BaseService {
     Object.setPrototypeOf(this, FeedsService.prototype);
   }
 
-  getFeeds(search?: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CAMPUS_THREAD}/`;
+  getFeeds(startRange: number, endRange: number, search?: URLSearchParams) {
+    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CAMPUS_THREAD}`;
+    const url = `${common}/${startRange};${endRange}`;
 
     return super.get(url, { search }).map(res => res.json());
   }
