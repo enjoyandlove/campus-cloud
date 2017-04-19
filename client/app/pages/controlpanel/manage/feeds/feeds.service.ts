@@ -27,9 +27,20 @@ export class FeedsService extends BaseService {
     return super.get(url, { search }).map(res => res.json());
   }
 
+  postToWall(data) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CAMPUS_THREAD}/`;
+
+    return super.post(url, data).map(res => res.json());
+  }
+
+  deleteById(threadId: number) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CAMPUS_THREAD}/${threadId}`;
+
+    return super.delete(url).map(res => res.json());
+  }
+
 
   getCommentsByFeedId(search?: URLSearchParams) {
-
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CAMPUS_COMMENT}/`;
 
     return super.get(url, { search }).map(res => res.json());

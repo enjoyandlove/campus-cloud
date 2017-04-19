@@ -1,4 +1,13 @@
-import { Component, OnInit, ViewChild, AfterViewInit, ElementRef, Input } from '@angular/core';
+import {
+  Input,
+  OnInit,
+  Output,
+  Component,
+  ViewChild,
+  ElementRef,
+  EventEmitter,
+  AfterViewInit,
+} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { Headers, URLSearchParams } from '@angular/http';
@@ -16,6 +25,8 @@ import { CPArray, CPImage, appStorage } from '../../../../../../../shared/utils'
 export class FeedInputBoxComponent implements AfterViewInit, OnInit {
   @Input() isSimple: boolean;
   @ViewChild('textarea') textarea: ElementRef;
+  @Output() created: EventEmitter<null> = new EventEmitter();
+
   form: FormGroup;
   channels;
   imageError;
@@ -32,11 +43,11 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
     search.append('school_id', schoolId.toString());
 
     this.channels$ = this.feedsService.getChannelsBySchoolId(1, 100, search)
-      .startWith([{ label: 'All' }])
+      .startWith([{ label: '---' }])
       .map(channels => {
         let _channels = [
           {
-            label: 'All',
+            label: '---',
             action: null
           }
         ];
@@ -55,8 +66,19 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
   }
 
   onSubmit(data) {
-    console.log(data);
-    this.form.reset();
+    // console.log(data);
+    if (!this.form.valid) { return; }
+
+    this
+      .feedsService
+      .postToWall(data)
+      .subscribe(
+        res => {
+          this.form.reset();
+          this.created.emit(res);
+        },
+        err => console.log(err)
+      );
   }
 
   ngAfterViewInit() {
@@ -90,8 +112,9 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
       });
   }
 
-  onSelectedChannel(channel) {
-    this.form.controls['post_type'].setValue(channel.action);
+  onSelectedChannel() {
+    console.log('What do I do??');
+    // this.form.controls['post_type'].setValue(channel.action);
   }
 
   onFileUpload(file) {
@@ -125,17 +148,16 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
       );
   }
 
-  // removePhoto(): void {
-  //   this.form.controls['message_image_url'].setValue(null);
-  // }
+  removePhoto(): void {
+    this.form.controls['message_image_url'].setValue(null);
+  }
 
   ngOnInit() {
     this.form = this.fb.group({
       'school_id': [157],
-      'store_id': [null],
+      'store_id': [2445],
       'message': [null, Validators.required],
-      'message_image_url': [null],
-      'post_type': [null, Validators.required]
+      'message_image_url': [null]
     });
   }
 }

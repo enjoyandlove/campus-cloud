@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { CPDate } from '../../../../../../../shared/utils';
 import { FORMAT } from '../../../../../../../shared/pipes/date.pipe';
@@ -12,6 +12,8 @@ declare var $: any;
 })
 export class FeedItemComponent implements OnInit {
   @Input() feed: any;
+  @Output() deleted: EventEmitter<number> = new EventEmitter();
+
   isMoveModal;
   isDeleteModal;
   isApproveModal;

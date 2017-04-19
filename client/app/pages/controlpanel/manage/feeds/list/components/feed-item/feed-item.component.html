@@ -54,6 +54,7 @@
 <cp-modal modalId="deleteFeedModal" *ngIf="isDeleteModal">
   <cp-feed-delete-modal
     [feed]="feed"
+    (deleted)="deleted.emit($event)"
     (teardown)="isDeleteModal = false">
   </cp-feed-delete-modal>
 </cp-modal>
