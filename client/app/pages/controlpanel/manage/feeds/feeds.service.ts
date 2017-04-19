@@ -19,6 +19,13 @@ export class FeedsService extends BaseService {
     return super.get(url, { search }).map(res => res.json());
   }
 
+  getChannelsBySchoolId(startRange: number, endRange: number, search?: URLSearchParams) {
+    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SOCIAL_POST_CATEGORY}`;
+    const url = `${common}/${startRange};${endRange}`;
+
+    return super.get(url, { search }).map(res => res.json());
+  }
+
 
   getCommentsByFeedId(search?: URLSearchParams) {
 

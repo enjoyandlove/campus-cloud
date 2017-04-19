@@ -1,15 +1,17 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { URLSearchParams } from '@angular/http';
+
+import { FeedsService } from '../../../feeds.service';
+import { BaseComponent } from '../../../../../../../base/base.component';
 
 interface IState {
-  wall: number;
-  channel: number;
-  type: number;
+  post_types: number;
+  flagged_by_users_only: number;
 }
 
 const state: IState = {
-  wall: null,
-  channel: null,
-  type: null
+  post_types: null,
+  flagged_by_users_only: null
 };
 
 @Component({
@@ -17,46 +19,59 @@ const state: IState = {
   templateUrl: './feed-filters.component.html',
   styleUrls: ['./feed-filters.component.scss']
 })
-export class FeedFiltersComponent implements OnInit {
+export class FeedFiltersComponent extends BaseComponent implements OnInit {
   @Input() isSimple: boolean;
   @Output() doFilter: EventEmitter<IState> = new EventEmitter();
   walls;
   posts;
+  loading;
   channels;
   state: IState;
 
-  constructor() {
+  constructor(
+    private feedsService: FeedsService,
+  ) {
+    super();
     this.state = state;
+    super.isLoading().subscribe(res => this.loading = res);
+
+    this.fetch();
   }
 
   private fetch() {
-    this.channels = [
-      {
-        label: 'All Channels',
-        action: null
-      },
-      {
-        label: 'Student Feed',
-        action: 12
-      }
-    ];
+    const schoolId = 157;
+    let search = new URLSearchParams();
+    search.append('school_id', schoolId.toString());
 
-    this.posts = [
-      {
-        label: 'All Posts',
-        action: null
-      },
-      {
-        label: 'Flagged Posts',
-        action: 1
-      },
-      {
-        label: 'Removed Posts',
-        action: 2
-      }
-    ];
+    const stream$ = this.feedsService.getChannelsBySchoolId(1, 100, search)
+      .map(channels => {
+        let _channels = [
+          {
+            label: 'All',
+            action: null
+          }
+        ];
 
-    this.doFilter.emit(this.state);
+        channels.forEach(channel => {
+          let _channel = {
+            label: channel.name,
+            action: channel.id
+          };
+
+          _channels.push(_channel);
+        });
+
+        return _channels;
+      });
+
+    super
+      .fetchData(stream$)
+      .then(res => {
+        this.channels = res.data;
+        this.doFilter.emit(this.state);
+      })
+      .catch(err => console.log(err));
+
   }
 
   onFilterSelected(item, type) {
@@ -69,7 +84,19 @@ export class FeedFiltersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.fetch();
-    console.log(this);
+    this.posts = [
+      {
+        label: 'All Posts',
+        action: null
+      },
+      {
+        label: 'Flagged Posts',
+        action: 1
+      }
+      // {
+      //   label: 'Removed Posts',
+      //   action: 2
+      // }
+    ];
   }
 }

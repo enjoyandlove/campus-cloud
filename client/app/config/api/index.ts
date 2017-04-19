@@ -23,6 +23,7 @@ const API_ENDPOINTS = {
   CAMPUS_COMMENT: 'campus_comment',
   FB_EVENTS: 'facebook_event_link',
   EVENT_ASSESMENT: 'event_assessment',
+  SOCIAL_POST_CATEGORY: 'social_post_category',
 };
 
 const API_AUTH_HEADER = {

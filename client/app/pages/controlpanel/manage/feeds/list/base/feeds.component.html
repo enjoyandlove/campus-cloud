@@ -14,6 +14,13 @@
         [feed]="feed"
         *ngFor="let feed of feeds">
       </cp-feed-item>
+
+      <cp-no-content
+        class="no-content"
+        *ngIf="feeds.length === 0"
+        noContentText="No Posts found...">
+      </cp-no-content>
+
     </div>
   </div>
 </div>
