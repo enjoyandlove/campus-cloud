@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { URLSearchParams } from '@angular/http';
 
+import { FeedsService } from '../../feeds.service';
 import { BaseComponent } from '../../../../../../base/base.component';
 
 @Component({
@@ -14,11 +15,10 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   isSimple;
 
   constructor(
-    private stream$: Observable<any>
+    public service: FeedsService
   ) {
     super();
     super.isLoading().subscribe(res => this.loading = res);
-    console.log(this);
   }
 
   onDoFilter() {
@@ -26,8 +26,12 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
+    const school_id = '157';
+    let search = new URLSearchParams();
+    search.append('school_id', school_id);
+
     super
-      .fetchData(this.stream$)
+      .fetchData(this.service.getFeeds( search ))
       .then(res => this.feeds = res.data)
       .catch(err => console.log(err));
   }

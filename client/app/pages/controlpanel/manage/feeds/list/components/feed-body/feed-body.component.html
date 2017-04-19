@@ -1,23 +1,23 @@
 <div class="feed">
   <div class="row">
-    <div class="col-xs-3" *ngIf="feed.message_has_image === 1">
+    <div class="col-xs-3" *ngIf="feed.image_thumb_url !== ''">
       <div
         class="avatar"
-        [ngStyle]="{'background-image': 'url(' + feed.message_image_url + ')'}">
+        [ngStyle]="{'background-image': 'url(' + feed.image_thumb_url + ')'}">
       </div>
     </div>
 
     <div
-      [class]="[feed.message_has_image === 0 ? 'col-xs-12' : 'col-xs-9 no-left-padding']">
+      [class]="[feed.image_thumb_url === '' ? 'col-xs-12' : 'col-xs-9 no-left-padding']">
       <div
-        [class]="[feed.message_has_image === 1 ? 'row feed__message--tall' : 'row feed__message']">
+        [class]="[feed.image_thumb_url !== '' ? 'row feed__message--tall' : 'row feed__message']">
         <div class="col-xs-12">
           <p>{{ feed.message }}</p>
         </div>
       </div>
 
       <div
-        [class]="[feed.message_has_image === 1 ? 'feed__footer feed__footer--absolute' : 'feed__footer']">
+        [class]="[feed.image_thumb_url !== '' ? 'feed__footer feed__footer--absolute' : 'feed__footer']">
         <div class="row">
           <div class="col-xs-8">
             <span>

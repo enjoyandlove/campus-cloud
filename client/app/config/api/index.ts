@@ -19,6 +19,8 @@ const API_ENDPOINTS = {
   P_RESET: 'ns_admin',
   SERVICES: 'services',
   LINKS: 'campus_link',
+  CAMPUS_THREAD: 'campus_thread',
+  CAMPUS_COMMENT: 'campus_comment',
   FB_EVENTS: 'facebook_event_link',
   EVENT_ASSESMENT: 'event_assessment',
 };

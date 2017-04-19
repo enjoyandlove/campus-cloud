@@ -81,7 +81,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
     }
 
     const headers = new Headers();
-    const url = this.feedsService.getUploadImageUrl();
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
     const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
 
     headers.append('Authorization', auth);
