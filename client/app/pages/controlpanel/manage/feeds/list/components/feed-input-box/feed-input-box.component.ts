@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit, ElementRef, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
-import { Headers } from '@angular/http';
+import { Headers, URLSearchParams } from '@angular/http';
 
 import { API } from '../../../../../../../config/api';
 import { FeedsService } from '../../../feeds.service';
@@ -19,13 +19,40 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
   form: FormGroup;
   channels;
   imageError;
+  channels$;
   defaultText = 'What\'s on your mind?';
 
   constructor(
     private fb: FormBuilder,
     private feedsService: FeedsService,
     private fileUploadService: FileUploadService
-  ) { }
+  ) {
+    const schoolId = 157;
+    let search = new URLSearchParams();
+    search.append('school_id', schoolId.toString());
+
+    this.channels$ = this.feedsService.getChannelsBySchoolId(1, 100, search)
+      .startWith([{ label: 'All' }])
+      .map(channels => {
+        let _channels = [
+          {
+            label: 'All',
+            action: null
+          }
+        ];
+
+        channels.forEach(channel => {
+          let _channel = {
+            label: channel.name,
+            action: channel.id
+          };
+
+          _channels.push(_channel);
+        });
+
+        return _channels;
+      });
+  }
 
   onSubmit(data) {
     console.log(data);
@@ -34,6 +61,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
 
   ngAfterViewInit() {
     let el = this.textarea.nativeElement;
+
     // http://stackoverflow.com/questions/995168/textarea-to-resize-based-on-content-length
     Observable
       .fromEvent(el, 'click')
@@ -102,25 +130,12 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
   // }
 
   ngOnInit() {
-    this.channels = [
-      {
-        action: 1,
-        label: 'Dummy Channel'
-      },
-      {
-        action: 2,
-        label: 'Dummy Channel 2'
-      },
-      {
-        action: 3,
-        label: 'Dummy Channel 3'
-      }
-    ];
-
     this.form = this.fb.group({
+      'school_id': [157],
+      'store_id': [null],
       'message': [null, Validators.required],
       'message_image_url': [null],
-      'post_type': [this.channels[0], Validators.required]
+      'post_type': [null, Validators.required]
     });
   }
 }

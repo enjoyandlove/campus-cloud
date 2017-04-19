@@ -44,7 +44,7 @@
                   </div>
                   <div class="col-xs-9 no-left-padding">
                     <cp-dropdown
-                      [items]="channels"
+                      [items]="channels$ | async"
                       class="dropdown"
                       selected="onSelectedChannel($event)">
                     </cp-dropdown>

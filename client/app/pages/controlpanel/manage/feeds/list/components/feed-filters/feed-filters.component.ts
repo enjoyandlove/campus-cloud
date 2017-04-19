@@ -2,7 +2,6 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
 import { FeedsService } from '../../../feeds.service';
-import { BaseComponent } from '../../../../../../../base/base.component';
 
 interface IState {
   post_types: number;
@@ -19,22 +18,20 @@ const state: IState = {
   templateUrl: './feed-filters.component.html',
   styleUrls: ['./feed-filters.component.scss']
 })
-export class FeedFiltersComponent extends BaseComponent implements OnInit {
+export class FeedFiltersComponent implements OnInit {
   @Input() isSimple: boolean;
   @Output() doFilter: EventEmitter<IState> = new EventEmitter();
+
   walls;
   posts;
-  loading;
   channels;
+  channels$;
   state: IState;
 
   constructor(
     private feedsService: FeedsService,
   ) {
-    super();
     this.state = state;
-    super.isLoading().subscribe(res => this.loading = res);
-
     this.fetch();
   }
 
@@ -43,7 +40,8 @@ export class FeedFiltersComponent extends BaseComponent implements OnInit {
     let search = new URLSearchParams();
     search.append('school_id', schoolId.toString());
 
-    const stream$ = this.feedsService.getChannelsBySchoolId(1, 100, search)
+    this.channels$ = this.feedsService.getChannelsBySchoolId(1, 100, search)
+      .startWith([{ label: 'All' }])
       .map(channels => {
         let _channels = [
           {
@@ -63,15 +61,6 @@ export class FeedFiltersComponent extends BaseComponent implements OnInit {
 
         return _channels;
       });
-
-    super
-      .fetchData(stream$)
-      .then(res => {
-        this.channels = res.data;
-        this.doFilter.emit(this.state);
-      })
-      .catch(err => console.log(err));
-
   }
 
   onFilterSelected(item, type) {
@@ -98,5 +87,7 @@ export class FeedFiltersComponent extends BaseComponent implements OnInit {
       //   action: 2
       // }
     ];
+
+    this.doFilter.emit(this.state);
   }
 }

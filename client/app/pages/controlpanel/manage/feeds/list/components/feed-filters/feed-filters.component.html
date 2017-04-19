@@ -1,47 +1,42 @@
-<div [ngSwitch]="loading">
-  <cp-spinner *ngSwitchCase="true"></cp-spinner>
-  <div *ngSwitchCase="false">
-    <div class="row">
-      <div class="col-xs-12">
-        <div class="cp-card">
+<div class="row">
+  <div class="col-xs-12">
+    <div class="cp-card">
 
-          <div class="row">
-            <div class="col-xs-6 col-sm-4" *ngIf="!isSimple">
-              <cp-dropdown
-                [items]="channels"
-                (selected)="onFilterSelected($event, 'post_types')">
-              </cp-dropdown>
-            </div>
+      <div class="row">
+        <div class="col-xs-6 col-sm-4" *ngIf="!isSimple">
+          <cp-dropdown
+            [items]="channels$ | async"
+            (selected)="onFilterSelected($event, 'post_types')">
+          </cp-dropdown>
+        </div>
 
-            <!--<div class="col-xs-6 col-sm-4 no-left-padding" *ngIf="!isSimple">
-              <cp-dropdown
-                [items]="channels"
-                (selected)="onFilterSelected($event, 'channel')">
-              </cp-dropdown>
-            </div>-->
+        <!--<div class="col-xs-6 col-sm-4 no-left-padding" *ngIf="!isSimple">
+          <cp-dropdown
+            [items]="channels"
+            (selected)="onFilterSelected($event, 'channel')">
+          </cp-dropdown>
+        </div>-->
 
-            <div [class]="[isSimple ? 'col-xs-10 col-sm-3' : 'col-xs-10 col-sm-3 no-left-padding']">
-              <cp-dropdown
-                [items]="posts"
-                (selected)="onFilterSelected($event, 'flagged_by_users_only')">
-              </cp-dropdown>
-            </div>
+        <div [class]="[isSimple ? 'col-xs-10 col-sm-3' : 'col-xs-10 col-sm-3 no-left-padding']">
+          <cp-dropdown
+            [items]="posts"
+            (selected)="onFilterSelected($event, 'flagged_by_users_only')">
+          </cp-dropdown>
+        </div>
 
-            <div [class]="[isSimple ? 'col-xs-2 col-sm-1 pull-right no-left-padding pull-right' : 'col-xs-2 col-sm-1 no-left-padding pull-right']">
-              <button
-                type="button"
-                class="cpbtn cpbtn--cancel"
-                data-toggle="modal" data-target="#settingsModal">
-                <i class="material-icons">settings</i>
-              </button>
-            </div>
-          </div>
+        <div [class]="[isSimple ? 'col-xs-2 col-sm-1 pull-right no-left-padding pull-right' : 'col-xs-2 col-sm-1 no-left-padding pull-right']">
+          <button
+            type="button"
+            class="cpbtn cpbtn--cancel"
+            data-toggle="modal" data-target="#settingsModal">
+            <i class="material-icons">settings</i>
+          </button>
         </div>
       </div>
     </div>
-
-    <cp-modal modalId="settingsModal">
-      <cp-feed-settings-modal></cp-feed-settings-modal>
-    </cp-modal>
   </div>
 </div>
+
+<cp-modal modalId="settingsModal">
+  <cp-feed-settings-modal></cp-feed-settings-modal>
+</cp-modal>
