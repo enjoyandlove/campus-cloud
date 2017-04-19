@@ -1,0 +1,85 @@
+<div class="row">
+  <div class="col-xs-12">
+    <cp-announcements-list-action-box
+      (filter)="doFilter($event)"
+      (launchModal)="onLaunchCreateModal()">
+    </cp-announcements-list-action-box>
+  </div>
+</div>
+
+
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div *ngSwitchCase="false">
+    <cp-no-content
+      *ngIf="!state.messages.length"
+      noContentText="No messages found...">
+    </cp-no-content>
+
+    <div *ngIf="state.messages.length">
+      <ul class="col-xs-12 cp-form">
+        <div class="messages">
+          <li class="cp-form__header col-xs-12">
+            <div class="row">
+              <span class="col-sm-5 col-xs-12" i18n>To</span>
+              <span class="col-sm-3 col-xs-12" i18n>Announcement Type</span>
+              <span class="col-sm-3 col-xs-12">Sent</span>
+              <span class="col-sm-1 col-xs-12"></span>
+            </div>
+          </li>
+
+          <li class="cp-form__item col-xs-12" *ngFor="let message of state.messages">
+            <div class="row">
+              <span class="col-sm-5 col-xs-12">
+                <strong>
+                  <button
+                    (click)="editList = message"
+                    class="cpbtn cpbtn--link-dark"
+                    (click)="isListsEdit = true"
+                    data-toggle="modal" data-target="#listsEdit">
+                    List Name
+                  </button>
+                </strong>
+                <br>
+                {{ message.subject }}
+                <br>
+                {{ message.message }}
+              </span>
+
+              <span class="col-sm-3 col-xs-12" i18n>
+                {{ message.priority }}
+              </span>
+
+              <span class="col-sm-3 col-xs-12">
+                {{ message.sent_time | cpDatePipe:dateFormat }}
+              </span>
+
+              <span
+                (click)="deleteList = list;"
+                (click)="islistsDelete = true"
+                data-toggle="modal" data-target="#listsDelete"
+                class="col-sm-1 col-xs-12 hover delete-message">
+                &times;
+              </span>
+            </div>
+          </li>
+        </div>
+      </ul>
+
+      <cp-pagination
+        [pageNext]="pageNext"
+        [pagePrev]="pagePrev"
+        [pageNumber]="pageNumber"
+        (next)="onPaginationNext()"
+        (previous)="onPaginationPrevious()">
+      </cp-pagination>
+    </div>
+  </div>
+</div>
+
+<cp-modal modalId="composeModal">
+  <cp-announcements-compose
+    (created)="onCreated($event)">
+  </cp-announcements-compose>
+</cp-modal>

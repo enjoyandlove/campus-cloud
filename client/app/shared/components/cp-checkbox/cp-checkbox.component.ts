@@ -7,6 +7,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 })
 export class CPCheckboxComponent implements OnInit {
   @Input() isChecked: boolean;
+  @Input() isDisabled: boolean;
   @Output() toggle: EventEmitter<boolean> = new EventEmitter();
 
   constructor() {

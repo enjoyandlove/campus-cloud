@@ -11,4 +11,6 @@ urlpatterns = [
     url(r'^events/excel$', views.import_excel_event),
 
     url(r'^services/excel$', views.import_excel_service),
+
+    url(r'^announcements/import$', views.import_excel_announcements)
 ]

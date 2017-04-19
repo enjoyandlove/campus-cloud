@@ -6,6 +6,7 @@
         <ul class="nav__links pull-left">
           <li routerLinkActive="active"><a [routerLink]="['/dashboard']">Dashboard</a></li>
           <li routerLinkActive="active"><a [routerLink]="['/manage']">Manage</a></li>
+          <li routerLinkActive="active"><a [routerLink]="['/notify']">Notify</a></li>
         </ul>
         <ul class="nav__default pull-right">
           <li class="user__name dropdown">
@@ -15,7 +16,9 @@
                 <i class="material-icons">expand_more</i>
               </span>
               <ul class="dropdown-menu dropdown-menu-right user__name--dropdown">
-                <li><a href="#" i18n>Team Settings</a></li>
+                <li>
+                  <a [routerLink]="['/manage/team']" i18n>Team Settings</a>
+                </li>
                 <li>
                   <a [routerLink]="['/account/change-password']" i18n>Change Password</a>
                 </li>

@@ -1,11 +1,14 @@
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-// import { EventsService } from '../events.service';
+
+import { EventsService } from '../events.service';
+import { isProd } from '../../../../../config/env';
+import { CPDate } from '../../../../../shared/utils';
 import { StoreService } from '../../../../../shared/services';
 import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE, HEADER_DEFAULT } from '../../../../../reducers/header.reducer';
-import { CPDate } from '../../../../../shared/utils/date';
 
 
 @Component({
@@ -16,6 +19,8 @@ import { CPDate } from '../../../../../shared/utils/date';
 export class EventsExcelComponent extends BaseComponent implements OnInit, OnDestroy {
   events;
   stores;
+  errors = [];
+  formError;
   mockDropdown;
   eventManagers;
   isChecked = [];
@@ -26,23 +31,23 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
   eventAttendanceFeedback;
 
   constructor(
+    private router: Router,
     private fb: FormBuilder,
     private store: Store<any>,
-    private storeService: StoreService
-    // private service: EventsService
+    private storeService: StoreService,
+    private eventsService: EventsService
   ) {
     super();
     this
       .store
       .select('EVENTS_MODAL')
       .subscribe(
-        (res) => {
-          this.events = res;
-          // this.events = require('./mock.json');
-          this.fetch();
-        },
-        err => console.log(err)
-    );
+      (res) => {
+        this.events = isProd ? res : require('./mock.json');
+        this.fetch();
+      },
+      err => console.log(err)
+      );
   }
 
   private fetch() {
@@ -52,14 +57,14 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
       const stores = [
         {
           'label': 'Host Name',
-          'action': null
+          'event': null
         }
       ];
 
       res.forEach(store => {
         stores.push({
           'label': store.name,
-          'action': store.id
+          'event': store.id
         });
       });
       return stores;
@@ -111,41 +116,53 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
 
   buildEventControl(event) {
     return this.fb.group({
-      'store_id': ['', Validators.required],
+      'store_id': [null, Validators.required],
       'room': [event.room, Validators.required],
       'title': [event.title, Validators.required],
-      'event_poster': [null, Validators.required],
+      'poster_url': [null, Validators.required],
+      'poster_thumb_url': [null, Validators.required],
       'location': [event.location, Validators.required],
+      'managers': [[{ 'label': '---', 'event': null }]],
       'description': [event.description, Validators.required],
       'end': [CPDate.toEpoch(event.end_date), Validators.required],
       'start': [CPDate.toEpoch(event.start_date), Validators.required],
       // these controls are only required when event attendance is true
-      'attendance_manager': [null],
-      'event_manager': [this.eventManagers[0]],
-      'event_attendance': [true, Validators.required],
-      'event_attendance_feedback': [this.eventAttendanceFeedback[1]],
+      'attendance_manager_email': [null],
+      'event_manager_id': [null],
+      'event_attendance': [1, Validators.required],
+      'event_feedback': [this.eventAttendanceFeedback[1]],
     });
   }
 
-  updateEventManager(manager) {
-    console.log(manager);
+  updateEventManager(manager, index) {
+    const controls = <FormArray>this.form.controls['events'];
+    const control = <FormGroup>controls.controls[index];
+
+    control.controls['event_manager_id'].setValue(manager);
   }
 
-  onBulkDelete() {
-    let _isChecked = [];
+  updateAttendanceFeedback(feedback, index) {
+    const controls = <FormArray>this.form.controls['events'];
+    const control = <FormGroup>controls.controls[index];
 
-    this.isChecked.reverse().forEach(item => {
-      if (item.checked) {
-        this.isChecked.slice(item.index, 1);
-        this.removeControl(item.index);
-        return;
-      }
-      item = Object.assign({}, item, { index: _isChecked.length });
-      _isChecked.push(item);
-    });
-
-    this.isChecked = [ ..._isChecked ];
+    control.controls['event_feedback'].setValue(feedback);
   }
+
+  // onBulkDelete() {
+  //   let _isChecked = [];
+
+  //   this.isChecked.reverse().forEach(item => {
+  //     if (item.checked) {
+  //       this.isChecked.slice(item.index, 1);
+  //       this.removeControl(item.index);
+  //       return;
+  //     }
+  //     item = Object.assign({}, item, { index: _isChecked.length });
+  //     _isChecked.push(item);
+  //   });
+
+  //   this.isChecked = [ ..._isChecked ];
+  // }
 
   onBulkChange(actions) {
     const control = <FormArray>this.form.controls['events'];
@@ -162,14 +179,31 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
 
       return item;
     });
-    console.log(actions);
   }
 
   onSingleHostSelected(host, index) {
     const controls = <FormArray>this.form.controls['events'];
     const control = <FormGroup>controls.controls[index];
 
-    control.controls['store_id'].setValue(host.action);
+    control.controls['store_id'].setValue(host);
+    control.controls['managers'].setValue(this.getManagersByHostId(host.event));
+  }
+
+  getManagersByHostId(hostId) {
+    let _managers = [
+      {
+        'label': '---',
+        'event': null
+      }
+    ];
+
+    this.eventManagers.filter(manager => {
+      if (manager.host_id === hostId) {
+        _managers.push(manager);
+      }
+    });
+
+    return _managers;
   }
 
   onSingleCheck(checked, index) {
@@ -198,14 +232,59 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     this.onBulkChange({ store_id });
   }
 
-  onImageBulkChange(event_poster) {
-    this.onBulkChange({ event_poster });
+  onImageBulkChange(poster_url) {
+    this.onBulkChange({ poster_url });
+    this.onBulkChange({ poster_thumb_url: poster_url });
   }
 
   onSubmit() {
-    console.log(this.form.value);
-    console.log(this.form.valid);
-    // console.log(this.form.value);
+    this.errors = [];
+    this.formError = false;
+
+    let events = Object.assign({}, this.form.controls['events'].value);
+    let _events = [];
+
+    Object.keys(events).forEach(key => {
+      let _event = {
+        title: events[key].title,
+        store_id: events[key].store_id.event,
+        description: events[key].description,
+        end: events[key].end,
+        room: events[key].room,
+        start: events[key].start,
+        location: events[key].location,
+        poster_url: events[key].poster_url,
+        poster_thumb_url: events[key].poster_thumb_url,
+        event_attendance: events[key].event_attendance
+      };
+
+      if (events[key].event_attendance) {
+        _event = Object.assign({}, _event, {
+          event_feedback: events[key].event_feedback.event,
+          event_manager_id: events[key].event_manager_id.event,
+          attendance_manager_email: events[key].attendance_manager_email
+        });
+      }
+
+      _events.push(_event);
+    });
+
+    this
+      .eventsService
+      .createEvent(_events)
+      .subscribe(
+      _ => this.router.navigate(['/manage/events']),
+      err => {
+        this.formError = true;
+
+        if (err.status === 400) {
+          this.errors.push('Invalid data');
+          return;
+        }
+
+        this.errors.push('Something went wrong');
+      }
+    );
   }
 
   toggleSingleEventAttendance(checked, index) {
@@ -227,16 +306,28 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
       },
       {
         'label': 'Disabled',
-        'event': 2
+        'event': 0
       }
     ];
 
     this.eventManagers = [
       {
+        'host_id': 28819,
         'label': 'Dummy',
         'event': 16776
       },
       {
+        'host_id': 28819,
+        'label': 'Dummy',
+        'event': 16776
+      },
+      {
+        'host_id': 28819,
+        'label': 'Dummy',
+        'event': 16776
+      },
+      {
+        'host_id': 2756,
         'label': 'Hello',
         'event': 16776
       }

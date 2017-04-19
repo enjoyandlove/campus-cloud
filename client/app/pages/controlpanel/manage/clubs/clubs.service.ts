@@ -12,6 +12,7 @@ const mockClubs = require('./mock.json');
 
 @Injectable()
 export class ClubsService extends BaseService {
+
   constructor(http: Http, router: Router, private store: Store<any>) {
     super(http, router);
 
@@ -25,6 +26,17 @@ export class ClubsService extends BaseService {
       resolve(mockClubs);
     });
 
+    return Observable.fromPromise(promise).map(res => res);
+  }
+
+  getClubById(serviceId) {
+    const promise = new Promise(resolve => {
+      resolve(mockClubs.filter(service => {
+        if (service.id === +serviceId) {
+          return service;
+        }
+      }));
+    });
     return Observable.fromPromise(promise).delay(1000).map(res => res);
   }
 

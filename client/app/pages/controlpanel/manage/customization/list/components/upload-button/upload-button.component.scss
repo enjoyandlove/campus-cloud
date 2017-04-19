@@ -1,0 +1,22 @@
+@import '~styles/components/button';
+@import '~styles/components/dropdown';
+
+.upload-menu {
+  i {
+    font-size: 20px;
+  }
+
+  .pencil {
+
+  }
+
+  .down {
+
+  }
+
+  .dropdown-menu {
+    @include cpDropdownMenu();
+
+    top: 115%;
+  }
+}

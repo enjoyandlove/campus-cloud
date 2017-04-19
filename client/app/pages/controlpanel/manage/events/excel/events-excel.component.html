@@ -1,7 +1,6 @@
 <div *ngIf="isFormReady">
   <div class="row">
     <cp-import-top-bar
-      (deleteEvent)="onBulkDelete()"
       (bulkChange)="onBulkChange($event)"
       (checkAll)="onCheckAll($event)"
       (hostChange)="onHostBulkChange($event)"
@@ -34,14 +33,14 @@
 
                       <div class="event__avatar">
                         <div
-                          *ngIf="!event.controls.event_poster.value"
+                          *ngIf="!event.controls.poster_url.value"
                           class="placeholder placeholder--small text-center">
                           <i class="material-icons">image</i>
                         </div>
                         <img
-                          *ngIf="event.controls.event_poster.value"
+                          *ngIf="event.controls.poster_url.value"
                           class="img-responsive img-rounded"
-                          [src]="event.controls.event_poster.value">
+                          [src]="event.controls.poster_url.value">
                       </div>
                     </div>
 
@@ -80,16 +79,16 @@
                       <label i18n>Attd Feedback</label>
                       <cp-dropdown
                         [items]="eventAttendanceFeedback"
-                        (selected)="updateEventManager($event)"
-                        [selectedItem]="event.controls['event_attendance_feedback'].value">
+                        (selected)="updateAttendanceFeedback($event, i)"
+                        [selectedItem]="event.controls['event_feedback'].value">
                       </cp-dropdown>
                     </div>
                     <div class="col-xs-12 col-sm-4">
                       <label i18n>Manager</label>
                       <cp-dropdown
-                        [items]="eventManagers"
-                        (selected)="updateEventManager($event)"
-                        [selectedItem]="event.controls['event_manager'].value">
+                        [items]="event.controls['managers'].value"
+                        (selected)="updateEventManager($event, i)"
+                        [selectedItem]="event.controls['event_manager_id'].value">
                       </cp-dropdown>
                     </div>
                     <div class="col-xs-12 col-sm-4">
@@ -98,8 +97,8 @@
                         type="email"
                         class="form-control"
                         placeholder="john@example.com"
-                        formControlName="attendance_manager"
-                        ([value])="event.controls['attendance_manager'].value">
+                        formControlName="attendance_manager_email"
+                        ([value])="event.controls['attendance_manager_email'].value">
                     </div>
                   </div>
                 </div>
@@ -115,6 +114,9 @@
     <div class="container">
       <div class="row">
         <div class="col-xs-12">
+          <div class="pull-left" *ngIf="formError">
+            <label class="error" *ngFor="let error of errors">{{ error }}</label>
+          </div>
           <div class="pull-right">
             <a [routerLink]="['/manage/events']"
               class="cpbtn cpbtn--tall cpbtn--cancel" i18n>
@@ -123,9 +125,9 @@
             <button
               type="button"
               (click)="onSubmit()"
-              class="cpbtn cpbtn--tall cpbtn--primary" i18n
-              [disabled]="!form.controls.events.controls.length">
-              Import Event
+              class="cpbtn cpbtn--tall cpbtn--primary"
+              [disabled]="!form.controls.events.controls.length || !form.valid" i18n>
+              Import {{ form.controls.events.controls.length }} Event(s)
             </button>
           </div>
         </div>

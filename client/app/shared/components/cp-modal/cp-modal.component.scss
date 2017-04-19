@@ -1,3 +1,9 @@
+.modal-dialog {
+  &.wide {
+    width: 900px;
+  }
+}
+
 .modal-body {
   padding: 0;
 }
