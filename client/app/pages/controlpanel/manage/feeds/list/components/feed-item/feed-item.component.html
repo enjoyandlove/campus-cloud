@@ -12,7 +12,7 @@
                 <div class="feed__more pull-right">
                   <cp-feed-dropdown
                     (selected)="onSelected($event)"
-                    [requiresApproval]="feed.flag > 0">
+                    [requiresApproval]="feed.dislikes > 0">
                   </cp-feed-dropdown>
                 </div>
               </div>
@@ -54,6 +54,7 @@
 <cp-modal modalId="deleteFeedModal" *ngIf="isDeleteModal">
   <cp-feed-delete-modal
     [feed]="feed"
+    (deleted)="deleted.emit($event)"
     (teardown)="isDeleteModal = false">
   </cp-feed-delete-modal>
 </cp-modal>

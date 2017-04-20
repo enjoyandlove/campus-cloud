@@ -1,7 +1,16 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { URLSearchParams } from '@angular/http';
 
 import { FeedsService } from '../../../feeds.service';
 import { BaseComponent } from '../../../../../../../base/base.component';
+
+interface IState {
+  comments: Array<any>;
+}
+
+const state: IState = {
+  comments: []
+};
 
 @Component({
   selector: 'cp-feed-comments',
@@ -13,6 +22,7 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
 
   loading;
   comments;
+  state: IState = state;
 
   constructor(
     private feedsService: FeedsService
@@ -21,26 +31,38 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
     super.isLoading().subscribe(res => this.loading = res);
   }
 
+  onDeletedComment(commentId: number) {
+    let _state = Object.assign({}, this.state);
+
+    _state.comments = _state.comments.filter(comment => comment.id !== commentId);
+
+    this.state = Object.assign({}, this.state, { comments: _state.comments });
+  }
+
   private fetch() {
+    let search = new URLSearchParams();
+    search.append('school_id', '157');
+    search.append('thread_id', this.feedId.toString());
+
     super
-      .fetchData(this.feedsService.getCommentsByFeedId(this.feedId))
+      .fetchData(this.feedsService.getCommentsByFeedId(search))
       .then(res => {
         let _comments = [];
 
         res.data.map(comment => {
           _comments.push({
             id: comment.id,
-            message_has_image: comment.comment_has_image,
-            message_image_url: comment.comment_image_url,
+            avatar_thumb: comment.avatar_thumb,
+            image_thumb_url: comment.image_thumb_url,
             message: comment.comment,
             likes: comment.likes,
             flag: comment.flag,
             display_name: comment.display_name,
-            added_time_epoch: comment.added_time_epoch
+            added_time: comment.added_time
           });
         });
 
-        this.comments = _comments;
+        this.state = Object.assign({}, this.state, {  comments: _comments });
       })
       .catch(err => console.log(err));
   }

@@ -1,7 +1,6 @@
-<div class="pull-left avatar avatar--small">
-  <img
-    class="img-responsive img-rounded"
-    src="https://source.unsplash.com/random/40x40">
+<div
+  class="pull-left avatar avatar--small"
+  [ngStyle]="{'background-image': 'url(' + feed.avatar_thumb + ')'}">
 </div>
 <div class="feed__meta pull-left">
   <span class="name">
@@ -20,6 +19,6 @@
   </span>
   <br>
   <span class="text-muted">
-    {{ CPDate.fromEpoch(feed.added_time_epoch) }}
+    {{ feed.added_time | cpDatePipe: FORMAT }}
   </span>
 </div>

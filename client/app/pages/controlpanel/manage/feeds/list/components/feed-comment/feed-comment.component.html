@@ -32,16 +32,19 @@
   </div>
 </div>
 
-<cp-modal modalId="deleteFeedModal" *ngIf="isDeleteModal">
-  <cp-feed-delete-modal
-    [feed]="feed"
+<cp-modal
+  *ngIf="isDeleteModal"
+  modalId="deleteFeedCommentModal">
+  <cp-feed-delete-comment-modal
+    [feed]="comment"
+    (deleted)="deleted.emit($event)"
     (teardown)="isDeleteModal = false">
-  </cp-feed-delete-modal>
+  </cp-feed-delete-comment-modal>
 </cp-modal>
 
 <cp-modal modalId="approveFeedModal" *ngIf="isApproveModal">
   <cp-feed-approve-modal
-    [feed]="feed"
+    [feed]="comment"
     (teardown)="isApproveModal = false">
   </cp-feed-approve-modal>
 </cp-modal>

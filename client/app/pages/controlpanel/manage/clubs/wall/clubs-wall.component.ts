@@ -16,7 +16,7 @@ export class ClubsWallComponent extends FeedsComponent implements OnInit {
     public service: FeedsService,
     private route: ActivatedRoute
   ) {
-    super(service.getFeeds());
+    super(service);
     this.clubId = this.route.parent.snapshot.params['clubId'];
   }
 

@@ -15,7 +15,7 @@ export class FeedsListComponent extends FeedsComponent implements OnInit {
   constructor(
     public service: FeedsService
   ) {
-    super(service.getFeeds());
+    super(service);
     super.isLoading().subscribe(res => this.loading = res);
   }
 

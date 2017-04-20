@@ -13,7 +13,7 @@ export class FeeHeaderComponent implements OnInit {
   @Input() isComment: boolean;
 
   CPDate = CPDate;
-  FORMAT = FORMAT.SHORT;
+  FORMAT = FORMAT.DATETIME;
 
   constructor() { }
 

@@ -5,15 +5,38 @@
       (doFilter)="onDoFilter($event)">
     </cp-feed-filters>
 
-    <cp-feed-input-box [isSimple]="isSimple"></cp-feed-input-box>
+    <cp-feed-input-box
+      [isSimple]="isSimple"
+      [isHidden]="isHidden$"
+      (created)="onCreated($event)">
+    </cp-feed-input-box>
 
     <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
     <div *ngSwitchCase="false">
       <cp-feed-item
         [feed]="feed"
-        *ngFor="let feed of feeds">
+        (deleted)="onDeleted($event)"
+        *ngFor="let feed of state.feeds">
       </cp-feed-item>
+
+      <cp-no-content
+        class="no-content"
+        *ngIf="!state.feeds.length"
+        noContentText="No Posts found...">
+      </cp-no-content>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <cp-pagination
+            [pageNext]="pageNext"
+            [pagePrev]="pagePrev"
+            [pageNumber]="pageNumber"
+            (next)="onPaginationNext()"
+            (previous)="onPaginationPrevious()">
+          </cp-pagination>
+        </div>
+      </div>
     </div>
   </div>
 </div>

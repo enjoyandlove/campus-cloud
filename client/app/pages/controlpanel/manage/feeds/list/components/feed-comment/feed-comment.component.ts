@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 declare var $: any;
 
@@ -8,8 +8,9 @@ declare var $: any;
   styleUrls: ['./feed-comment.component.scss']
 })
 export class FeedCommentComponent implements OnInit {
-  @Input() last: boolean;
   @Input() comment: any;
+  @Input() last: boolean;
+  @Output() deleted: EventEmitter<number> = new EventEmitter();
 
   isComment = true;
   isDeleteModal;
@@ -23,7 +24,7 @@ export class FeedCommentComponent implements OnInit {
         break;
       case 3:
         this.isDeleteModal = true;
-        setTimeout(() => { $('#deleteFeedModal').modal(); }, 1);
+        setTimeout(() => { $('#deleteFeedCommentModal').modal(); }, 1);
         break;
     }
   }

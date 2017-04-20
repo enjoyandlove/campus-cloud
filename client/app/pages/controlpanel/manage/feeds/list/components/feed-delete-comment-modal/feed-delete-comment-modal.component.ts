@@ -5,11 +5,11 @@ import { FeedsService } from '../../../feeds.service';
 declare var $: any;
 
 @Component({
-  selector: 'cp-feed-delete-modal',
-  templateUrl: './feed-delete-modal.component.html',
-  styleUrls: ['./feed-delete-modal.component.scss']
+  selector: 'cp-feed-delete-comment-modal',
+  templateUrl: './feed-delete-comment-modal.component.html',
+  styleUrls: ['./feed-delete-comment-modal.component.scss']
 })
-export class FeedDeleteModalComponent implements OnInit {
+export class FeedDeleteCommentModalComponent implements OnInit {
   @Input() feed: any;
   @Output() teardown: EventEmitter<null> = new EventEmitter();
   @Output() deleted: EventEmitter<number> = new EventEmitter();
@@ -21,10 +21,10 @@ export class FeedDeleteModalComponent implements OnInit {
   onDelete() {
     this
       .feedsService
-      .deleteMessageById(this.feed.id)
+      .deleteCommentById(this.feed.id)
       .subscribe(
         _ => {
-          $('#deleteFeedModal').modal('hide');
+          $('#deleteFeedCommentModal').modal('hide');
           this.deleted.emit(this.feed.id);
           this.teardown.emit();
         },
