@@ -24,14 +24,15 @@ import { CPArray, CPImage, appStorage } from '../../../../../../../shared/utils'
 })
 export class FeedInputBoxComponent implements AfterViewInit, OnInit {
   @Input() isSimple: boolean;
-  @Input() isHidden: Observable<boolean>;
+  @Input() isHidden: Observable<number>;
   @ViewChild('textarea') textarea: ElementRef;
   @Output() created: EventEmitter<null> = new EventEmitter();
 
+  groupId;
   channels;
   channels$;
-  _isHidden;
   imageError;
+  isGroupWallView;
   form: FormGroup;
   defaultText = 'What\'s on your mind?';
 
@@ -68,16 +69,39 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
   }
 
   onSubmit(data) {
-    this
-      .feedsService
-      .postToCampusWall(data)
+    let _data = this.parseData(data);
+    let groupWall$ = this.feedsService.postToGroupWall(_data);
+    let campusWall$ = this.feedsService.postToCampusWall(_data);
+    let stream$ = this.isGroupWallView ? groupWall$ : campusWall$;
+
+    stream$
       .subscribe(
         res => {
           this.form.reset();
           this.created.emit(res);
         },
-        err => console.log(err)
+        err => {
+          if (err.status === 403) {
+            console.log('hey not authorized!');
+          }
+        }
       );
+  }
+
+  parseData(data) {
+    let _data = {
+      'post_type': 1,
+      'store_id': 2445,
+      'school_id': 157,
+      'message': data.message,
+      'message_image_url': data.message_image_url
+    };
+
+    if (this.isGroupWallView) {
+      _data['group_id'] = this.groupId;
+    }
+
+    return _data;
   }
 
   ngAfterViewInit() {
@@ -151,9 +175,18 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit() {
-    this.isHidden.subscribe(res => this._isHidden = res);
+    this.isHidden.subscribe(res => {
+      if (res !== 1) {
+        this.groupId = res;
+        this.isGroupWallView = true;
+        return;
+      }
+
+      this.isGroupWallView = false;
+    });
 
     this.form = this.fb.group({
+      'group_id': [null],
       'school_id': [157],
       'store_id': [2445],
       'post_type': [1],

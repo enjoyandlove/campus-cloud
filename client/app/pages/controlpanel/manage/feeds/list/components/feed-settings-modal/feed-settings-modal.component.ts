@@ -96,9 +96,21 @@ export class FeedSettingsComponent implements OnInit {
       .feedsService
       .upodateSocialGroup(control.value.wall_id, control.value, search)
       .subscribe(
-        res => console.log(res),
+        _ => { return; },
         err => console.log(err)
       );
+  }
+
+  getPrivilegeObj(privilege) {
+    let result;
+
+    this.privileges.forEach(_privilege => {
+      if (_privilege.action === privilege) {
+        result = _privilege;
+      }
+    });
+
+    return result;
   }
 
   ngOnInit() {
