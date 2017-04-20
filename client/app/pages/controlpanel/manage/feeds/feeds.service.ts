@@ -27,6 +27,12 @@ export class FeedsService extends BaseService {
     return super.get(url, { search }).map(res => res.json());
   }
 
+  getSocialGroups(search?: URLSearchParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SOCIAL_GROUP}/1;100`;
+
+    return super.get(url, { search }).map(res => res.json());
+  }
+
   postToWall(data) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CAMPUS_THREAD}/`;
 

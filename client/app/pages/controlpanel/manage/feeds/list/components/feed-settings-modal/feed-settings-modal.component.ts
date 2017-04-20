@@ -1,5 +1,8 @@
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { URLSearchParams } from '@angular/http';
+
+import { FeedsService } from '../../../feeds.service';
 
 @Component({
   selector: 'cp-feed-settings-modal',
@@ -7,13 +10,44 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./feed-settings-modal.component.scss']
 })
 export class FeedSettingsComponent implements OnInit {
-  @Input() walls: any[];
-  form: FormGroup;
+  walls;
   privileges;
+  form: FormGroup;
 
   constructor(
-    private fb: FormBuilder
-  ) { }
+    private fb: FormBuilder,
+    private feedsService: FeedsService
+  ) {
+    this.feedsService.getSocialGroups();
+
+    this.fetch();
+  }
+
+  private fetch() {
+    let search = new URLSearchParams();
+    search.append('school_id', '157');
+
+    this
+      .feedsService
+      .getSocialGroups(search)
+      .map(groups => {
+        let _groups = [];
+
+        groups.forEach(group => {
+          _groups.push({
+            id: group.id,
+            name: group.name,
+            can_post: 2,
+            can_comment: 1
+          });
+        });
+        return _groups;
+      })
+      .subscribe(
+        walls => walls.forEach(wall => this.addFeedControl(wall)),
+        err => console.log(err)
+      );
+  }
 
   createFeedControl(wall) {
     return this.fb.group({
@@ -48,31 +82,9 @@ export class FeedSettingsComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('INIT');
     this.form = this.fb.group({
       'walls': this.fb.array([])
     });
-
-    this.walls = [
-      {
-        id: 1,
-        name: 'Campus Wall',
-        can_post: 2,
-        can_comment: 1
-      },
-      {
-        id: 2,
-        name: 'Campus Wall 2',
-        can_post: 1,
-        can_comment: 1
-      },
-      {
-        id: 3,
-        name: 'Campus Wall 3',
-        can_post: -1,
-        can_comment: 2
-      }
-    ];
 
     this.privileges = [
       {
@@ -88,7 +100,5 @@ export class FeedSettingsComponent implements OnInit {
         action: 2
       }
     ];
-
-    this.walls.forEach(wall => this.addFeedControl(wall));
   }
 }

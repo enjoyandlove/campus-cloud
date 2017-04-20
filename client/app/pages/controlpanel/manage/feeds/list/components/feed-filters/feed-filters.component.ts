@@ -4,11 +4,13 @@ import { URLSearchParams } from '@angular/http';
 import { FeedsService } from '../../../feeds.service';
 
 interface IState {
+  wall: number;
   post_types: number;
   flagged_by_users_only: number;
 }
 
 const state: IState = {
+  wall: null,
   post_types: null,
   flagged_by_users_only: null
 };
@@ -73,6 +75,21 @@ export class FeedFiltersComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.walls = [
+      {
+        label: 'All',
+        action: null
+      },
+      {
+        label: 'Campus Wall',
+        action: 1
+      },
+      {
+        label: 'Club Wall',
+        action: 2
+      }
+    ];
+
     this.posts = [
       {
         label: 'All Posts',
