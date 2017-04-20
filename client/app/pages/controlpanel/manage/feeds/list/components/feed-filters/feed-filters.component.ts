@@ -7,11 +7,13 @@ import { FeedsService } from '../../../feeds.service';
 interface IState {
   wall_type: number;
   post_types: number;
+  group_id: number;
   flagged_by_users_only: number;
 }
 
 const state: IState = {
   wall_type: 1,
+  group_id: null,
   post_types: null,
   flagged_by_users_only: null
 };
@@ -61,7 +63,8 @@ export class FeedFiltersComponent implements OnInit {
         walls.forEach(wall => {
           let _wall = {
             label: wall.name,
-            action: wall.id
+            action: wall.id,
+            group_id: wall.related_obj_id
           };
 
           _walls.push(_wall);
@@ -94,6 +97,11 @@ export class FeedFiltersComponent implements OnInit {
   }
 
   onFilterSelected(item, type) {
+    this.state = Object.assign(
+      {},
+      this.state,
+      { group_id: item.group_id ? item.group_id : null }
+    );
     this.updateState(type, item.action);
   }
 
