@@ -1,3 +1,4 @@
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
@@ -5,14 +6,18 @@ import { FeedsService } from '../../feeds.service';
 import { BaseComponent } from '../../../../../../base/base.component';
 
 interface IState {
+  wall_type: number;
   feeds: Array<any>;
   post_types: number;
+  isCampusThread: boolean;
   flagged_by_users_only: number;
 }
 
 const state: IState = {
   feeds: [],
+  wall_type: null,
   post_types: null,
+  isCampusThread: true,
   flagged_by_users_only: null
 };
 
@@ -27,6 +32,7 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   isSimple;
   school_id = 157;
   state: IState = state;
+  isHidden$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
     public service: FeedsService
@@ -36,11 +42,19 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   }
 
   onDoFilter(data) {
+    if (data.wall_type !== 1) {
+      this.isHidden$.next(true);
+    } else {
+      this.isHidden$.next(false);
+    }
+
     this.state = Object.assign(
       {},
       this.state,
       {
+        wall_type: data.wall_type,
         post_types: data.post_types,
+        isCampusThread: data.wall_type === 1 ? true : false,
         flagged_by_users_only: data.flagged_by_users_only
       }
     );
@@ -58,7 +72,6 @@ export class FeedsComponent extends BaseComponent implements OnInit {
     this.fetch();
   }
 
-
   private fetch() {
     let search = new URLSearchParams();
     let flagged = this.state.flagged_by_users_only ?
@@ -68,11 +81,21 @@ export class FeedsComponent extends BaseComponent implements OnInit {
       this.state.post_types.toString() : null;
 
     search.append('post_types', type);
-    search.append('school_id', this.school_id.toString());
     search.append('flagged_by_users_only', flagged);
 
+    if (this.state.isCampusThread) {
+      search.append('school_id', this.school_id.toString());
+    } else {
+      search.append('group_id', this.state.wall_type.toString());
+    }
+
+    let groupThread$ = this.service.getGroupWallFeeds(this.startRange, this.endRange, search);
+    let campusThread$ = this.service.getCampusWallFeeds(this.startRange, this.endRange, search);
+
+    let stream$ = this.state.isCampusThread ? campusThread$ : groupThread$;
+
     super
-      .fetchData(this.service.getFeeds(this.startRange, this.endRange, search))
+      .fetchData(stream$)
       .then(res => {
         this.state = Object.assign({}, this.state, { feeds: res.data });
       })

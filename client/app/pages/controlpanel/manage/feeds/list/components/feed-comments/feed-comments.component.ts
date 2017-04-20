@@ -47,7 +47,6 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
     super
       .fetchData(this.feedsService.getCommentsByFeedId(search))
       .then(res => {
-        console.log(res);
         let _comments = [];
 
         res.data.map(comment => {

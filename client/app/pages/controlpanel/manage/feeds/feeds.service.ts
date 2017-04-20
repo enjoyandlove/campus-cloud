@@ -13,8 +13,15 @@ export class FeedsService extends BaseService {
     Object.setPrototypeOf(this, FeedsService.prototype);
   }
 
-  getFeeds(startRange: number, endRange: number, search?: URLSearchParams) {
+  getCampusWallFeeds(startRange: number, endRange: number, search?: URLSearchParams) {
     const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CAMPUS_THREAD}`;
+    const url = `${common}/${startRange};${endRange}`;
+
+    return super.get(url, { search }).map(res => res.json());
+  }
+
+  getGroupWallFeeds(startRange: number, endRange: number, search?: URLSearchParams) {
+    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GROUP_THREAD}`;
     const url = `${common}/${startRange};${endRange}`;
 
     return super.get(url, { search }).map(res => res.json());
@@ -28,13 +35,25 @@ export class FeedsService extends BaseService {
   }
 
   getSocialGroups(search?: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SOCIAL_GROUP}/1;100`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SOCIAL_GROUP}/1;5000`;
 
     return super.get(url, { search }).map(res => res.json());
   }
 
-  postToWall(data) {
+  upodateSocialGroup(groupId, data, search) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SOCIAL_GROUP}/${groupId}`;
+
+    return super.update(url, data, { search }).map(res => res.json());
+  }
+
+  postToCampusWall(data) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CAMPUS_THREAD}/`;
+
+    return super.post(url, data).map(res => res.json());
+  }
+
+  postToGroupWall(data) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GROUP_THREAD}/`;
 
     return super.post(url, data).map(res => res.json());
   }

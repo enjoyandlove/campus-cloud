@@ -24,13 +24,15 @@ import { CPArray, CPImage, appStorage } from '../../../../../../../shared/utils'
 })
 export class FeedInputBoxComponent implements AfterViewInit, OnInit {
   @Input() isSimple: boolean;
+  @Input() isHidden: Observable<boolean>;
   @ViewChild('textarea') textarea: ElementRef;
   @Output() created: EventEmitter<null> = new EventEmitter();
 
-  form: FormGroup;
   channels;
-  imageError;
   channels$;
+  _isHidden;
+  imageError;
+  form: FormGroup;
   defaultText = 'What\'s on your mind?';
 
   constructor(
@@ -66,12 +68,9 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
   }
 
   onSubmit(data) {
-    // console.log(data);
-    if (!this.form.valid) { return; }
-
     this
       .feedsService
-      .postToWall(data)
+      .postToCampusWall(data)
       .subscribe(
         res => {
           this.form.reset();
@@ -112,9 +111,8 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
       });
   }
 
-  onSelectedChannel() {
-    console.log('What do I do??');
-    // this.form.controls['post_type'].setValue(channel.action);
+  onSelectedChannel(channel): void {
+    this.form.controls['post_type'].setValue(channel.action);
   }
 
   onFileUpload(file) {
@@ -153,9 +151,12 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit() {
+    this.isHidden.subscribe(res => this._isHidden = res);
+
     this.form = this.fb.group({
       'school_id': [157],
       'store_id': [2445],
+      'post_type': [1],
       'message': [null, Validators.required],
       'message_image_url': [null]
     });

@@ -1,16 +1,17 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 
 import { FeedsService } from '../../../feeds.service';
 
 interface IState {
-  wall: number;
+  wall_type: number;
   post_types: number;
   flagged_by_users_only: number;
 }
 
 const state: IState = {
-  wall: null,
+  wall_type: 1,
   post_types: null,
   flagged_by_users_only: null
 };
@@ -24,8 +25,8 @@ export class FeedFiltersComponent implements OnInit {
   @Input() isSimple: boolean;
   @Output() doFilter: EventEmitter<IState> = new EventEmitter();
 
-  walls;
   posts;
+  walls$: Observable<any>;
   channels;
   channels$;
   state: IState;
@@ -41,6 +42,33 @@ export class FeedFiltersComponent implements OnInit {
     const schoolId = 157;
     let search = new URLSearchParams();
     search.append('school_id', schoolId.toString());
+
+    this.walls$ = this.feedsService.getSocialGroups(search)
+      .startWith([
+        {
+          label: 'Campus Wall',
+          action: 1
+        }
+      ])
+      .map(walls => {
+        let _walls = [
+          {
+            label: 'Campus Wall',
+            action: 1
+          }
+        ];
+
+        walls.forEach(wall => {
+          let _wall = {
+            label: wall.name,
+            action: wall.id
+          };
+
+          _walls.push(_wall);
+        });
+
+        return _walls;
+      });
 
     this.channels$ = this.feedsService.getChannelsBySchoolId(1, 100, search)
       .startWith([{ label: 'All' }])
@@ -75,21 +103,6 @@ export class FeedFiltersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.walls = [
-      {
-        label: 'All',
-        action: null
-      },
-      {
-        label: 'Campus Wall',
-        action: 1
-      },
-      {
-        label: 'Club Wall',
-        action: 2
-      }
-    ];
-
     this.posts = [
       {
         label: 'All Posts',
@@ -98,11 +111,11 @@ export class FeedFiltersComponent implements OnInit {
       {
         label: 'Flagged Posts',
         action: 1
+      },
+      {
+        label: 'Removed Posts',
+        action: 2
       }
-      // {
-      //   label: 'Removed Posts',
-      //   action: 2
-      // }
     ];
 
     this.doFilter.emit(this.state);

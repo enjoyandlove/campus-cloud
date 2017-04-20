@@ -37,14 +37,21 @@ export class FeedSettingsComponent implements OnInit {
           _groups.push({
             id: group.id,
             name: group.name,
-            can_post: 2,
-            can_comment: 1
+            min_posting_member_type: group.min_posting_member_type,
+            min_commenting_member_type: group.min_commenting_member_type
           });
         });
         return _groups;
       })
       .subscribe(
-        walls => walls.forEach(wall => this.addFeedControl(wall)),
+        walls => {
+          walls.forEach(wall => this.addFeedControl(wall));
+          // console.log(this.form.value);
+          // let a = <FormArray>this.form.controls['walls'];
+          // let b = <FormGroup>a.at(0);
+          // console.log(b.controls['min_commenting_member_type'].value);
+          // console.log(b.controls['min_posting_member_type'].value);
+        },
         err => console.log(err)
       );
   }
@@ -52,9 +59,9 @@ export class FeedSettingsComponent implements OnInit {
   createFeedControl(wall) {
     return this.fb.group({
       'name': [wall.name, Validators.required],
-      'wall_id': [wall.wall_id, Validators.required],
-      'can_post': [wall.can_post, Validators.required],
-      'can_comment': [wall.can_comment, Validators.required]
+      'wall_id': [wall.id, Validators.required],
+      'min_posting_member_type': [wall.min_posting_member_type, Validators.required],
+      'min_commenting_member_type': [wall.min_commenting_member_type, Validators.required]
     });
   }
 
@@ -67,18 +74,31 @@ export class FeedSettingsComponent implements OnInit {
     const controls = <FormArray>this.form.controls['walls'];
     const control = <FormGroup>controls.at(index);
 
-    control.controls['can_post'].setValue(event.action);
+    control.controls['min_posting_member_type'].setValue(event.action);
+
+    this.updateGroup(control);
   }
 
   onCanCommentChanged(event, index) {
     const controls = <FormArray>this.form.controls['walls'];
     const control = <FormGroup>controls.at(index);
 
-    control.controls['can_comment'].setValue(event.action);
+    control.controls['min_commenting_member_type'].setValue(event.action);
+
+    this.updateGroup(control);
   }
 
-  onSave() {
-    console.log(this.form.value);
+  updateGroup(control) {
+    let search = new URLSearchParams();
+    search.append('school_id', '157');
+
+    this
+      .feedsService
+      .upodateSocialGroup(control.value.wall_id, control.value, search)
+      .subscribe(
+        res => console.log(res),
+        err => console.log(err)
+      );
   }
 
   ngOnInit() {
@@ -89,15 +109,15 @@ export class FeedSettingsComponent implements OnInit {
     this.privileges = [
       {
         label: 'Disabled',
-        action: -1
+        action: 100
       },
       {
         label: 'Team Members',
-        action: 1
+        action: 3
       },
       {
         label: 'Everyone',
-        action: 2
+        action: 0
       }
     ];
   }

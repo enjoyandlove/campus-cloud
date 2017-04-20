@@ -20,6 +20,8 @@ const API_ENDPOINTS = {
   SERVICES: 'services',
   LINKS: 'campus_link',
   SOCIAL_GROUP: 'group',
+  GROUP_THREAD: 'group_thread',
+  GROUP_COMMENT: 'group_comment',
   CAMPUS_THREAD: 'campus_thread',
   CAMPUS_COMMENT: 'campus_comment',
   FB_EVENTS: 'facebook_event_link',
