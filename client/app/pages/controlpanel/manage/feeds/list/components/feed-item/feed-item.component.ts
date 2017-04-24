@@ -14,6 +14,7 @@ declare var $: any;
 export class FeedItemComponent implements OnInit {
   @Input() feed: any;
   @Input() isCampusWallView: Observable<any>;
+  @Output() moved: EventEmitter<number> = new EventEmitter();
   @Output() deleted: EventEmitter<number> = new EventEmitter();
 
   isMoveModal;

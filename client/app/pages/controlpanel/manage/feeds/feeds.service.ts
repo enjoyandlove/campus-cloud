@@ -118,4 +118,10 @@ export class FeedsService extends BaseService {
 
     return super.get(url, { search }).map(res => res.json());
   }
+
+  moveCampusWallThreadToChannel(threadId: number, data: any) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CAMPUS_THREAD}/${threadId}`;
+
+    return super.update(url, data).map(res => res.json());
+  }
 }

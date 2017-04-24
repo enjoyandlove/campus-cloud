@@ -49,6 +49,7 @@
 <cp-modal modalId="moveFeedModal" *ngIf="isMoveModal">
   <cp-feed-move-modal
     [feed]="feed"
+    (moved)="moved.emit($event)"
     (teardown)="isMoveModal = false">
   </cp-feed-move-modal>
 </cp-modal>
