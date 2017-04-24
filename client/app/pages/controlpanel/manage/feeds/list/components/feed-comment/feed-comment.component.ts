@@ -17,13 +17,12 @@ export class FeedCommentComponent implements OnInit {
   isComment = true;
   isDeleteModal;
   isApproveModal;
-  _isCampusWallView: number;
 
   onSelected(action) {
     switch (action) {
       case 1:
         this.isApproveModal = true;
-        setTimeout(() => { $('#approveFeedModal').modal(); }, 1);
+        setTimeout(() => { $('#approveCommentModal').modal(); }, 1);
         break;
       case 3:
         this.isDeleteModal = true;
@@ -34,7 +33,5 @@ export class FeedCommentComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-    this.isCampusWallView.subscribe(res => this._isCampusWallView = res);
-  }
+  ngOnInit() { }
 }

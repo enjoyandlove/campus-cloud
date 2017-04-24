@@ -46,4 +46,8 @@ export class FeedItemComponent implements OnInit {
     // console.log(this);
     this.isCampusWallView.subscribe(res => this._isCampusWallView = res);
   }
+
+  onApprovedPost(postId: number) {
+    console.log(postId);
+  }
 }

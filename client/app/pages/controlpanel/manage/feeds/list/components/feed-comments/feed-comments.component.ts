@@ -70,6 +70,7 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
             message: comment.comment,
             likes: comment.likes,
             flag: comment.flag,
+            dislikes: comment.dislikes,
             display_name: comment.display_name,
             added_time: comment.added_time
           });
