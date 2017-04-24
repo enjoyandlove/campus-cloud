@@ -38,7 +38,8 @@
   <cp-feed-delete-comment-modal
     [feed]="comment"
     (deleted)="deleted.emit($event)"
-    (teardown)="isDeleteModal = false">
+    (teardown)="isDeleteModal = false"
+    [isCampusWallView]="_isCampusWallView">
   </cp-feed-delete-comment-modal>
 </cp-modal>
 

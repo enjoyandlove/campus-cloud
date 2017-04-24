@@ -6,6 +6,7 @@
       [last]="last"
       [comment]="comment"
       (deleted)="onDeletedComment($event)"
+      [isCampusWallView]="isCampusWallView"
       *ngFor="let comment of state.comments; let last = last">
     </cp-feed-comment>
   </div>

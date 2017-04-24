@@ -58,8 +58,14 @@ export class FeedsService extends BaseService {
     return super.post(url, data).map(res => res.json());
   }
 
-  deleteMessageById(threadId: number) {
+  deleteCampusWallMessageByThreadId(threadId: number) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CAMPUS_THREAD}/${threadId}`;
+
+    return super.delete(url).map(res => res.json());
+  }
+
+  deleteGroupWallMessageByThreadId(threadId: number) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GROUP_THREAD}/${threadId}`;
 
     return super.delete(url).map(res => res.json());
   }
@@ -71,8 +77,14 @@ export class FeedsService extends BaseService {
   }
 
 
-  getCommentsByFeedId(search?: URLSearchParams) {
+  getCampusWallCommentsByThreadId(search?: URLSearchParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CAMPUS_COMMENT}/`;
+
+    return super.get(url, { search }).map(res => res.json());
+  }
+
+  getGroupWallCommentsByThreadId(search?: URLSearchParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GROUP_COMMENT}/`;
 
     return super.get(url, { search }).map(res => res.json());
   }

@@ -24,16 +24,16 @@ import { CPArray, CPImage, appStorage } from '../../../../../../../shared/utils'
 })
 export class FeedInputBoxComponent implements AfterViewInit, OnInit {
   @Input() isSimple: boolean;
-  @Input() isHidden: Observable<number>;
   @ViewChild('textarea') textarea: ElementRef;
+  @Input() isCampusWallView: Observable<number>;
   @Output() created: EventEmitter<null> = new EventEmitter();
 
   groupId;
   channels;
   channels$;
   imageError;
-  isGroupWallView;
   form: FormGroup;
+  _isCampusWallView;
   defaultText = 'What\'s on your mind?';
 
   constructor(
@@ -72,7 +72,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
     let _data = this.parseData(data);
     let groupWall$ = this.feedsService.postToGroupWall(_data);
     let campusWall$ = this.feedsService.postToCampusWall(_data);
-    let stream$ = this.isGroupWallView ? groupWall$ : campusWall$;
+    let stream$ = this._isCampusWallView ? groupWall$ : campusWall$;
 
     stream$
       .subscribe(
@@ -81,7 +81,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
           this.created.emit(res);
         },
         err => {
-          if (err.status === 403) {
+          if (err.code === 403) {
             console.log('hey not authorized!');
           }
         }
@@ -97,7 +97,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
       'message_image_url': data.message_image_url
     };
 
-    if (this.isGroupWallView) {
+    if (this._isCampusWallView) {
       _data['group_id'] = this.groupId;
     }
 
@@ -175,14 +175,14 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit() {
-    this.isHidden.subscribe(res => {
+    this.isCampusWallView.subscribe(res => {
       if (res !== 1) {
         this.groupId = res;
-        this.isGroupWallView = true;
+        this._isCampusWallView = true;
         return;
       }
 
-      this.isGroupWallView = false;
+      this._isCampusWallView = false;
     });
 
     this.form = this.fb.group({

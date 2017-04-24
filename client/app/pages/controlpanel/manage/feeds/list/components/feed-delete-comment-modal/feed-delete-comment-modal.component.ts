@@ -11,6 +11,7 @@ declare var $: any;
 })
 export class FeedDeleteCommentModalComponent implements OnInit {
   @Input() feed: any;
+  @Input() isCampusWallView: number;
   @Output() teardown: EventEmitter<null> = new EventEmitter();
   @Output() deleted: EventEmitter<number> = new EventEmitter();
 
@@ -33,6 +34,6 @@ export class FeedDeleteCommentModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this);
+    console.log(this.isCampusWallView);
   }
 }
