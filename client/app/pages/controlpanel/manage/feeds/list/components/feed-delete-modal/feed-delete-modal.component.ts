@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
 import { FeedsService } from '../../../feeds.service';
 
@@ -11,17 +12,22 @@ declare var $: any;
 })
 export class FeedDeleteModalComponent implements OnInit {
   @Input() feed: any;
+  @Input() isCampusWallView: Observable<number>;
   @Output() teardown: EventEmitter<null> = new EventEmitter();
   @Output() deleted: EventEmitter<number> = new EventEmitter();
+
+  _isCampusWallView;
 
   constructor(
     private feedsService: FeedsService
   ) { }
 
   onDelete() {
-    this
-      .feedsService
-      .deleteMessageById(this.feed.id)
+    const deleteCampusThread$ = this.feedsService.deleteCampusWallMessageByThreadId(this.feed.id);
+    const deleteGroupThread$ = this.feedsService.deleteGroupWallMessageByThreadId(this.feed.id);
+    const stream$ = this._isCampusWallView ? deleteCampusThread$ : deleteGroupThread$;
+
+    stream$
       .subscribe(
         _ => {
           $('#deleteFeedModal').modal('hide');
@@ -33,6 +39,8 @@ export class FeedDeleteModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this);
+    this.isCampusWallView.subscribe(res => {
+      this._isCampusWallView = res === 1 ? true : false;
+    });
   }
 }

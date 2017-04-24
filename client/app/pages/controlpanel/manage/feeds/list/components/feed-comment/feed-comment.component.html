@@ -14,7 +14,7 @@
                   <cp-feed-dropdown
                     [isComment]="isComment"
                     (selected)="onSelected($event)"
-                    [requiresApproval]="comment.flag > 0">
+                    [requiresApproval]="comment.dislikes > 0 && comment.flag !== 2">
                   </cp-feed-dropdown>
                 </div>
               </div>
@@ -38,13 +38,15 @@
   <cp-feed-delete-comment-modal
     [feed]="comment"
     (deleted)="deleted.emit($event)"
-    (teardown)="isDeleteModal = false">
+    (teardown)="isDeleteModal = false"
+    [isCampusWallView]="isCampusWallView">
   </cp-feed-delete-comment-modal>
 </cp-modal>
 
-<cp-modal modalId="approveFeedModal" *ngIf="isApproveModal">
-  <cp-feed-approve-modal
+<cp-modal modalId="approveCommentModal" *ngIf="isApproveModal">
+  <cp-feed-approve-comment-modal
     [feed]="comment"
-    (teardown)="isApproveModal = false">
-  </cp-feed-approve-modal>
+    (teardown)="isApproveModal = false"
+    [isCampusWallView]="isCampusWallView">
+  </cp-feed-approve-comment-modal>
 </cp-modal>

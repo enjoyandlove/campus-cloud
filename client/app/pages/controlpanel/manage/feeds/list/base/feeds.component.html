@@ -7,7 +7,7 @@
 
     <cp-feed-input-box
       [isSimple]="isSimple"
-      [isHidden]="isHidden$"
+      [isCampusWallView]="isCampusWallView$"
       (created)="onCreated($event)">
     </cp-feed-input-box>
 
@@ -17,7 +17,8 @@
       <cp-feed-item
         [feed]="feed"
         (deleted)="onDeleted($event)"
-        *ngFor="let feed of state.feeds">
+        *ngFor="let feed of state.feeds"
+        [isCampusWallView]="isCampusWallView$">
       </cp-feed-item>
 
       <cp-no-content

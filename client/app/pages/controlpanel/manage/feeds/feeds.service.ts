@@ -58,21 +58,63 @@ export class FeedsService extends BaseService {
     return super.post(url, data).map(res => res.json());
   }
 
-  deleteMessageById(threadId: number) {
+  deleteCampusWallMessageByThreadId(threadId: number) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CAMPUS_THREAD}/${threadId}`;
 
     return super.delete(url).map(res => res.json());
   }
 
-  deleteCommentById(commentId: number) {
+  deleteGroupWallMessageByThreadId(threadId: number) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GROUP_THREAD}/${threadId}`;
+
+    return super.delete(url).map(res => res.json());
+  }
+
+  deleteCampusWallCommentByThreadId(commentId: number) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CAMPUS_COMMENT}/${commentId}`;
 
     return super.delete(url).map(res => res.json());
   }
 
+  deleteGroupWallCommentByThreadId(commentId: number) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GROUP_COMMENT}/${commentId}`;
 
-  getCommentsByFeedId(search?: URLSearchParams) {
+    return super.delete(url).map(res => res.json());
+  }
+
+  approveCampusWallThread(threadId: number, data: any) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CAMPUS_THREAD}/${threadId}`;
+
+    return super.update(url, data).map(res => res.json());
+  }
+
+  approveGroupWallThread(threadId: number, data: any) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GROUP_THREAD}/${threadId}`;
+
+    return super.update(url, data).map(res => res.json());
+  }
+
+  approveCampusWallComment(threadId: number, data: any) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CAMPUS_COMMENT}/${threadId}`;
+
+    return super.update(url, data).map(res => res.json());
+  }
+
+  approveGroupWallComment(threadId: number, data: any) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GROUP_COMMENT}/${threadId}`;
+
+    return super.update(url, data).map(res => res.json());
+  }
+
+
+  getCampusWallCommentsByThreadId(search?: URLSearchParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CAMPUS_COMMENT}/`;
+
+    return super.get(url, { search }).map(res => res.json());
+  }
+
+  getGroupWallCommentsByThreadId(search?: URLSearchParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GROUP_COMMENT}/`;
 
     return super.get(url, { search }).map(res => res.json());
   }

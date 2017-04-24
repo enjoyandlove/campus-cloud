@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
 import { CPDate } from '../../../../../../../shared/utils';
 import { FORMAT } from '../../../../../../../shared/pipes/date.pipe';
@@ -12,12 +13,14 @@ declare var $: any;
 })
 export class FeedItemComponent implements OnInit {
   @Input() feed: any;
+  @Input() isCampusWallView: Observable<any>;
   @Output() deleted: EventEmitter<number> = new EventEmitter();
 
   isMoveModal;
   isDeleteModal;
   isApproveModal;
   CPDate = CPDate;
+  _isCampusWallView;
   FORMAT = FORMAT.SHORT;
 
   constructor() { }
@@ -41,5 +44,10 @@ export class FeedItemComponent implements OnInit {
 
   ngOnInit() {
     // console.log(this);
+    this.isCampusWallView.subscribe(res => this._isCampusWallView = res);
+  }
+
+  onApprovedPost(postId: number) {
+    console.log(postId);
   }
 }

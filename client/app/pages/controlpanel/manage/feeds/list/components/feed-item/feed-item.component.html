@@ -12,7 +12,7 @@
                 <div class="feed__more pull-right">
                   <cp-feed-dropdown
                     (selected)="onSelected($event)"
-                    [requiresApproval]="feed.dislikes > 0">
+                    [requiresApproval]="feed.dislikes > 0 && feed.flag !== 2">
                   </cp-feed-dropdown>
                 </div>
               </div>
@@ -31,7 +31,8 @@
                 <div class="row">
                   <div class="col-xs-12">
                     <cp-feed-comments
-                      [feedId]="feed.id">
+                      [feedId]="feed.id"
+                      [isCampusWallView]="isCampusWallView">
                     </cp-feed-comments>
                   </div>
                 </div>
@@ -55,6 +56,7 @@
   <cp-feed-delete-modal
     [feed]="feed"
     (deleted)="deleted.emit($event)"
+    [isCampusWallView]="isCampusWallView"
     (teardown)="isDeleteModal = false">
   </cp-feed-delete-modal>
 </cp-modal>
@@ -62,6 +64,8 @@
 <cp-modal modalId="approveFeedModal" *ngIf="isApproveModal">
   <cp-feed-approve-modal
     [feed]="feed"
-    (teardown)="isApproveModal = false">
+    [isCampusWallView]="isCampusWallView"
+    (teardown)="isApproveModal = false"
+    (updated)="onApprovedPost($event)">
   </cp-feed-approve-modal>
 </cp-modal>

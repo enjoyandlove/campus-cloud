@@ -17,7 +17,8 @@ import {
   FeedSettingsComponent,
   FeedDeleteModalComponent,
   FeedApproveModalComponent,
-  FeedDeleteCommentModalComponent
+  FeedDeleteCommentModalComponent,
+  FeedApproveCommentModalComponent
 } from './list/components';
 
 import { FeedsListComponent } from './list';
@@ -28,7 +29,7 @@ import { FeedsRoutingModule } from './feeds.routing.module';
   declarations: [ FeedsListComponent, FeedMoveComponent, FeedItemComponent, FeedCommentComponent,
   FeedInputBoxComponent, FeedSettingsComponent, FeedFiltersComponent, FeedCommentsComponent,
   FeeHeaderComponent, FeedBodyComponent, FeedDropdownComponent, FeedDeleteModalComponent,
-  FeedApproveModalComponent, FeedDeleteCommentModalComponent ],
+  FeedApproveModalComponent, FeedDeleteCommentModalComponent, FeedApproveCommentModalComponent ],
 
   imports: [ CommonModule, SharedModule, FeedsRoutingModule, RouterModule, ReactiveFormsModule ],
 
@@ -37,6 +38,6 @@ import { FeedsRoutingModule } from './feeds.routing.module';
   exports: [ FeedsListComponent, FeedMoveComponent, FeedItemComponent, FeedCommentComponent,
   FeedInputBoxComponent, FeedSettingsComponent, FeedFiltersComponent, FeedCommentsComponent,
   FeeHeaderComponent, FeedBodyComponent, FeedDropdownComponent, FeedDeleteModalComponent,
-  FeedApproveModalComponent, FeedDeleteCommentModalComponent ]
+  FeedApproveModalComponent, FeedDeleteCommentModalComponent, FeedApproveCommentModalComponent ]
 })
 export class FeedsModule {}

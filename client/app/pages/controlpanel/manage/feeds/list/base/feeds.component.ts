@@ -34,7 +34,7 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   isSimple;
   school_id = 157;
   state: IState = state;
-  isHidden$: BehaviorSubject<number> = new BehaviorSubject(1);
+  isCampusWallView$: BehaviorSubject<number> = new BehaviorSubject(1);
 
   constructor(
     public service: FeedsService
@@ -46,9 +46,9 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   onDoFilter(data) {
     console.log('doFilter', data);
     if (data.wall_type !== 1) {
-      this.isHidden$.next(data.wall_type);
+      this.isCampusWallView$.next(data.wall_type);
     } else {
-      this.isHidden$.next(data.wall_type);
+      this.isCampusWallView$.next(data.wall_type);
     }
 
     this.state = Object.assign(
