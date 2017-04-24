@@ -44,7 +44,6 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   }
 
   onDoFilter(data) {
-    console.log('doFilter', data);
     if (data.wall_type !== 1) {
       this.isCampusWallView$.next(data.wall_type);
     } else {
