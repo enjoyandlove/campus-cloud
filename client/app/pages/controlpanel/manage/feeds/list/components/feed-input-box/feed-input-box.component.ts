@@ -90,7 +90,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
 
   parseData(data) {
     let _data = {
-      'post_type': 1,
+      'post_type': data.post_type,
       'store_id': 2445,
       'school_id': 157,
       'message': data.message,

@@ -73,7 +73,7 @@ export class FeedFiltersComponent implements OnInit {
         return _walls;
       });
 
-    this.channels$ = this.feedsService.getChannelsBySchoolId(1, 100, search)
+    this.channels$ = this.feedsService.getChannelsBySchoolId(1, 1000, search)
       .startWith([{ label: 'All' }])
       .map(channels => {
         let _channels = [
