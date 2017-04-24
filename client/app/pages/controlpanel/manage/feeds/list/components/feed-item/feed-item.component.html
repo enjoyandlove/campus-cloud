@@ -12,6 +12,7 @@
                 <div class="feed__more pull-right">
                   <cp-feed-dropdown
                     (selected)="onSelected($event)"
+                    [isCampusWallView]="isCampusWallView"
                     [requiresApproval]="feed.dislikes > 0 && feed.flag !== 2">
                   </cp-feed-dropdown>
                 </div>
