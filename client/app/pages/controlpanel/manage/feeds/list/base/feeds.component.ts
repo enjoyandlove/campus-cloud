@@ -63,7 +63,7 @@ export class FeedsComponent extends BaseComponent implements OnInit {
       }
     );
 
-    this.fetch();
+    setTimeout(() => { this.fetch(); }, 1100);
   }
 
   onPaginationNext() {
@@ -93,10 +93,11 @@ export class FeedsComponent extends BaseComponent implements OnInit {
       search.append('group_id', this.state.wall_type.toString());
     }
 
-    let groupThread$ = this.service.getGroupWallFeeds(this.startRange, this.endRange, search);
-    let campusThread$ = this.service.getCampusWallFeeds(this.startRange, this.endRange, search);
+    // let groupThread$ = this.service.getGroupWallFeeds(this.startRange, this.endRange, search);
+    // let campusThread$ = this.service.getCampusWallFeeds(this.startRange, this.endRange, search);
 
-    let stream$ = this.state.isCampusThread ? campusThread$ : groupThread$;
+    // let stream$ = this.state.isCampusThread ? campusThread$ : groupThread$;
+    let stream$ = this.doAdvancedSearch(search);
 
     super
       .fetchData(stream$)
