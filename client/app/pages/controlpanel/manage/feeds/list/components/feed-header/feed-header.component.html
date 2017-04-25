@@ -6,15 +6,15 @@
   <span class="name">
     {{ feed.display_name }}
   </span>
-  <span class="email">
-    (no@data.com)
+  <span class="email" *ngIf="feed.email && feed.email !== ''">
+    ({{ feed.email }})
   </span>
   <span *ngIf="!isComment">
     <span class="text-muted" i18n>
       posted in
     </span>
     <span class="cpbtn cpbtn--link cpbtn--no-hover">
-      Wall Name
+      {{ feed.channelName }}
     </span>
   </span>
   <br>

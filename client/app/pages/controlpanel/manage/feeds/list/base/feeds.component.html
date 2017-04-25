@@ -16,7 +16,7 @@
     <div *ngSwitchCase="false">
       <cp-feed-item
         [feed]="feed"
-        (moved)="onDeleted($event)"
+        (moved)="onEdited($event)"
         (deleted)="onDeleted($event)"
         *ngFor="let feed of state.feeds"
         [isCampusWallView]="isCampusWallView$">

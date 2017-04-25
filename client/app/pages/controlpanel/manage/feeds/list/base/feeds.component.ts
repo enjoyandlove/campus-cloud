@@ -1,6 +1,7 @@
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 
 import { FeedsService } from '../../feeds.service';
 import { BaseComponent } from '../../../../../../base/base.component';
@@ -103,6 +104,83 @@ export class FeedsComponent extends BaseComponent implements OnInit {
         this.state = Object.assign({}, this.state, { feeds: res.data });
       })
       .catch(err => console.log(err));
+  }
+
+  doAdvancedSearch(search) {
+    let stream$;
+
+    let groupThread$ = this.service.getGroupWallFeeds(this.startRange, this.endRange, search);
+    let campusThread$ = this.service.getCampusWallFeeds(this.startRange, this.endRange, search);
+
+    if (this.state.isCampusThread) {
+      let _search = new URLSearchParams();
+      _search.append('school_id', this.school_id.toString());
+
+      let channels$ = this.service.getChannelsBySchoolId(1, 1000, _search);
+
+      stream$ =
+        Observable
+          .combineLatest(campusThread$, channels$)
+          .map(res => {
+            let result = [];
+            let threads = res[0];
+            let channels = res[1];
+
+
+            threads.forEach(thread => {
+              result.push({
+                ...thread,
+                channelName: this.getChannelNameFromArray(channels, thread)
+              });
+            });
+            return result;
+          });
+    } else {
+      let _search = new URLSearchParams();
+      _search.append('school_id', this.school_id.toString());
+
+      let groups$ = this.service.getSocialGroups(_search);
+
+      stream$ =
+        Observable
+          .combineLatest(groupThread$, groups$)
+          .map(res => {
+            let result = [];
+            let threads = res[0];
+            let groups = res[1];
+
+            threads.forEach(thread => {
+              result.push({
+                ...thread,
+                channelName: this.getGroupNameFromArray(groups, thread)
+              });
+            });
+
+            return result;
+          });
+    }
+
+    return stream$;
+  }
+
+  getChannelNameFromArray(channels, thread) {
+    let name;
+    channels.filter(channel => {
+      if (channel.id === thread.post_type) {
+        name = channel.name;
+      }
+    });
+    return name;
+  }
+
+  getGroupNameFromArray(groups, thread) {
+    let name;
+    groups.filter(group => {
+      if (group.id === thread.group_id) {
+        name = group.name;
+      }
+    });
+    return name;
   }
 
   onCreated(feed) {
