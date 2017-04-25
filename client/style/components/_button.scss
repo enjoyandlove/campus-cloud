@@ -42,6 +42,12 @@ a.cpbtn, {
     padding: 14px 16px;
   }
 
+  &--no-hover {
+    &:hover {
+      cursor: text !important;
+    }
+  }
+
   &--square-right {
     border-radius: 4px 0 0 4px;
   }
@@ -82,6 +88,7 @@ a.cpbtn, {
     border: none;
     color: $color-brand;
     background: transparent;
+    vertical-align: baseline;
     border-color: transparent;
   }
 

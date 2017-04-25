@@ -17,5 +17,7 @@ export class FeeHeaderComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    // console.log(this);
+  }
 }
