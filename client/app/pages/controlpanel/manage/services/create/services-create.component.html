@@ -4,78 +4,70 @@
       <div class="cp-card">
         <div class="row">
           <div class="col-xs-12">
-            <em i18n>Service Photo</em>
-            <div class="row">
-              <div class="col-xs-3">
-                <div class="placeholder"></div>
-              </div>
-              <div class="col-xs-9">
-                <strong>Upload your photo</strong>
-                <p>
-                  <small i18n>.png, .gif, .jpg with maximum file size of 5MB</small>
-                </p>
-                <button type="button" class="cpbtn cpbtn--secondary" i18n>Upload Photo</button>
-              </div>
+            <p class="title" i18n>Service Photo</p>
+            <div class="margin-top row">
+              <cp-image-upload
+                [required]="formError && form.controls['logo_url'].hasError('required')"
+                (uploaded)="form.controls.logo_url.setValue($event)">
+              </cp-image-upload>
             </div>
           </div>
         </div>
 
-        <div class="row">
+        <div class="row margin-top">
           <div class="col-xs-12">
-            <em i18n>Service Details</em>
-            <div class="form-group">
+            <p class="title" i18n>Service Details</p>
+            <div class="form-group margin-top">
               <label i18n>Service Name</label>
               <input
                 type="text"
                 class="form-control"
-                formControlName="title"
+                formControlName="name"
                 placeholder="Add a short, clear name"
-                [class.error]="formError && form.controls['title'].hasError('required')">
+                [class.error]="formError && form.controls['name'].hasError('required')">
             </div>
 
-            <div class="row">
+            <div class="row form-group">
               <div class="col-xs-12 col-sm-6">
                 <label i18n>Select Category</label>
-                <select
-                  class="form-control"
-                  formControlName="store_id"
-                  [class.error]="formError && form.controls['store_id'].hasError('required')">
-                  <option value="" i18n>ABC Category</option>
-                </select>
+                <cp-dropdown
+                  [items]="categories"
+                  (selected)="form.controls['category'].setValue($event.action)">
+                </cp-dropdown>
               </div>
             </div>
 
-            <div class="row">
+            <div class="row form-group">
               <div class="col-xs-12 col-sm-6">
                 <label i18n>Phone Number</label>
                 <input
-                  type="number"
+                  type="text"
                   class="form-control"
-                  [class.error]="formError && form.controls['store_id'].hasError('required')">
+                  formControlName="phone">
               </div>
             </div>
 
-            <div class="row">
+            <div class="row form-group">
               <div class="col-xs-12 col-sm-6">
                 <label i18n>Email</label>
                 <input
                   type="email"
                   class="form-control"
-                  [class.error]="formError && form.controls['store_id'].hasError('required')">
+                  formControlName="email">
               </div>
             </div>
 
-            <div class="row">
+            <div class="row form-group">
               <div class="col-xs-12 col-sm-6">
                 <label i18n>Website</label>
                 <input
                   type="text"
                   class="form-control"
-                  [class.error]="formError && form.controls['store_id'].hasError('required')">
+                  formControlName="website">
               </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group form-group">
               <label i18n>Description (optional)</label>
               <textarea
                 formControlName="description"
@@ -83,7 +75,7 @@
               </textarea>
             </div>
 
-            <div class="row">
+            <div class="row form-group">
               <div class="col-xs-12">
                 <label i18n>Location (optional)</label>
                 <div class="row">
@@ -109,20 +101,18 @@
 
                   <div class="col-xs-6 col-sm-4">
                     <div class="form-group">
-                      <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Address"
-                        formControlName="address">
+                      <cp-place-autocomplete
+                        (placeChange)="onPlaceChanged($event)">
+                      </cp-place-autocomplete>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="row">
+            <div class="row form-group">
               <div class="col-xs-12 maps">
-                <cp-maps></cp-maps>
+                <cp-maps [center]="mapCenter"></cp-maps>
               </div>
             </div>
           </div>
@@ -134,11 +124,12 @@
       <div class="cp-card">
         <div class="row">
           <div class="col-xs-12">
-            <em i18n>Service Attendance</em>
+            <p class="title" i18n>Service Attendance</p>
             <span class="pull-right">
               <cp-switch
                 [id]="attendance"
-                (toggle)="attendance = !attendance">
+                (toggle)="attendance = !attendance"
+                (toggle)="form.controls['service_attendance'].setValue($event)">
               </cp-switch>
             </span>
           </div>
@@ -149,7 +140,10 @@
             <div class="col-xs-12">
               <div class="form-group">
                 <label i18n>Default Question</label>
-                <input type="text" class="form-control">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="default_basic_feedback_label">
               </div>
             </div>
           </div>
@@ -159,10 +153,10 @@
       <div class="cp-card margin-top">
         <div class="row">
           <div class="col-xs-12">
-            <em i18n>Admins</em>
+            <p class="title" i18n>Admins</p>
           </div>
         </div>
-        <ul class="row admins">
+        <ul class="row admins margin-top">
           <li class="admins__item">
             <div class="col-xs-12">
               <div class="pull-left">
@@ -179,7 +173,9 @@
 
         <div class="row admins__footer">
           <div class="col-xs-12">
-            <button class="cpbtn cpbtn--secondary pull-right" i18n>
+            <button
+              type="button"
+              class="cpbtn cpbtn--secondary pull-right" i18n>
               Add Admin
             </button>
           </div>

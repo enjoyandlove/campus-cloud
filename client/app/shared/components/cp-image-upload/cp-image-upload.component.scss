@@ -1,12 +1,9 @@
 @import '~styles/core/colors';
+@import '~styles/core/typography';
 
 $img_height: 108px;
 
 .wrapper {
-  &__left-side {
-
-  }
-
   &__right-side {
     position: relative;
     height: $img_height;
@@ -14,6 +11,10 @@ $img_height: 108px;
     span,
     label:not('.dark') {
       color: $color-secondary-text;
+    }
+
+    label.error {
+      @include error-label();
     }
 
     label.dark {
@@ -39,6 +40,7 @@ $img_height: 108px;
     font-size: 1.8em;
     position: absolute;
     color: $color-white;
+    background: transparent;
   }
 
   &__image--no-image {
@@ -52,28 +54,3 @@ $img_height: 108px;
     position: absolute;
   }
 }
-// .inputfile {
-//   width: 0.1px;
-//   height: 0.1px;
-//   opacity: 0;
-//   overflow: hidden;
-//   position: absolute;
-//   z-index: -1;
-// }
-
-// .inputfile + label {
-//   font-size: 1.25em;
-//   font-weight: 700;
-//   color: white;
-//   background-color: black;
-//   display: inline-block;
-// }
-
-// .inputfile:focus + label,
-// .inputfile + label:hover {
-//   background-color: red;
-// }
-
-// .inputfile + label {
-//   cursor: pointer; /* "hand" cursor */
-// }

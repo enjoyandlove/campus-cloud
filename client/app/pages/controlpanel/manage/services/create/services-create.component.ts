@@ -2,6 +2,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
+import { CPMap } from '../../../../../shared/utils';
 import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
 @Component({
@@ -10,7 +11,9 @@ import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
   styleUrls: ['./services-create.component.scss']
 })
 export class ServicesCreateComponent implements OnInit {
+  mapCenter;
   form: FormGroup;
+  categories = [{ label: '---', action: null }];
   formError = false;
   attendance = false;
 
@@ -20,16 +23,42 @@ export class ServicesCreateComponent implements OnInit {
   ) {
     this.buildHeader();
     this.form = this.fb.group({
-      'title': ['', Validators.required],
-      'store_id': ['', Validators.required],
-      'location': ['', Validators.required],
-      'room_data': ['', Validators.required],
-      'address': ['', Validators.required],
-      'start': ['', Validators.required],
-      'end': ['', Validators.required],
-      'description': ['', Validators.required],
-      'attend_verification_methods': ['']
+      'name': [null, Validators.required],
+      'logo_url': [null, Validators.required],
+      'category': [null, Validators.required],
+      'store_id': [null, Validators.required],
+      'location': [null],
+      'room_data': [null],
+      'address': [null],
+      'description': [null],
+      'email': [null],
+      'website': [null],
+      'phone': [null],
+      'secondary_name': [null],
+      'city': [null],
+      'province': [null],
+      'country': [null],
+      'postal_code': [null],
+      'latitude': [null],
+      'longitude': [null],
+      'service_attendance': [null],
+      'rating_scale_maximum': [null],
+      'default_basic_feedback_label': [null]
     });
+  }
+
+  onPlaceChanged(data) {
+    let cpMap = CPMap.getBaseMapObject(data);
+
+    this.form.controls['city'].setValue(cpMap.city);
+    this.form.controls['province'].setValue(cpMap.province);
+    this.form.controls['country'].setValue(cpMap.country);
+    this.form.controls['latitude'].setValue(cpMap.latitude);
+    this.form.controls['longitude'].setValue(cpMap.longitude);
+    this.form.controls['address'].setValue(`${cpMap.street_number} ${cpMap.street_name}`);
+    this.form.controls['postal_code'].setValue(cpMap.postal_code);
+
+    this.mapCenter = data.geometry.location.toJSON();
   }
 
   buildHeader() {
@@ -45,7 +74,6 @@ export class ServicesCreateComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.form.value);
     this.formError = false;
 
     if (!this.form.valid) {
@@ -55,10 +83,17 @@ export class ServicesCreateComponent implements OnInit {
   }
 
   onDelete() {
-    console.log('hello');
+
   }
 
   ngOnInit() {
+    let categories = require('../categories.json');
 
+    categories.map(category => {
+      this.categories.push({
+        label: category.name,
+        action: category.id
+      });
+    });
   }
 }
