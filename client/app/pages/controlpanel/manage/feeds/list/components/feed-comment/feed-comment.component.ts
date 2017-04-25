@@ -34,6 +34,6 @@ export class FeedCommentComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this);
+    // console.log(this);
   }
 }
