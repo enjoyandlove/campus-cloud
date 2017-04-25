@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ServicesService } from '../../../services.service';
+import { STATUS } from '../../../../../../../shared/constants';
 import { FileUploadService } from '../../../../../../../shared/services';
 
 declare var $: any;
@@ -36,12 +37,12 @@ export class ServicesExcelModalComponent implements OnInit {
     let validators = [
       {
         'exp': file.name.split('.').pop() === 'xlsx',
-        'error': 'Wrong Extension',
+        'error': STATUS.WRONG_EXTENSION,
         'isError': false
       },
       {
         'exp': file.size > 5000,
-        'error': 'File to big',
+        'error': STATUS.FILE_IS_TOO_BIG,
         'isError': false
       }
     ];

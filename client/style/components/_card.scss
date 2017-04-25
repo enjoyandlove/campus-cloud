@@ -7,6 +7,18 @@
   background: $color-white;
   border: 1px solid $border-color;
   box-shadow: 0 0 2px 0 rgba(0,0,0,0.16);
+
+  &--alt {
+    background: $color-text-alt;
+  }
+
+  &--half-padding {
+    padding: 12px;
+  }
+
+  &--no-shadow {
+    box-shadow: none;
+  }
 }
 
 @media all and (max-width: $screen-sm) {

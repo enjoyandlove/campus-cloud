@@ -14,6 +14,9 @@ import { ServicesCreateComponent } from './create';
 import { ServicesAttendanceComponent } from './attendance';
 
 import { ServicesService } from './services.service';
+import { ProvidersService } from './providers.service';
+import { AdminService } from '../../../../shared/services/admin.service';
+
 import { ServicesRoutingModule } from './services.routing.module';
 
 import {
@@ -44,6 +47,6 @@ import {
 
   imports: [ CommonModule, SharedModule, ServicesRoutingModule, RouterModule, ReactiveFormsModule ],
 
-  providers: [ ServicesService ],
+  providers: [ ServicesService, ProvidersService, AdminService ],
 })
 export class ServicesModule {}
