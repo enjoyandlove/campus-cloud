@@ -1,4 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+
+import { ServicesService } from '../services.service';
+
+declare var $: any;
 
 @Component({
   selector: 'cp-services-delete',
@@ -7,12 +11,24 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ServicesDeleteComponent implements OnInit {
   @Input() service: any;
+  @Output() deleted: EventEmitter<number> = new EventEmitter();
 
-  constructor() { }
+  constructor(
+    private servicesService: ServicesService
+  ) { }
 
 
   onDelete() {
-    console.log(`Deleteing ${this.service}`);
+    this
+      .servicesService
+      .deleteService(this.service.id)
+      .subscribe(
+        _ => {
+          this.deleted.emit(this.service.id);
+          $('#deleteServicesModal').modal('hide');
+        },
+        err => console.log(err)
+      );
   }
 
   ngOnInit() { }

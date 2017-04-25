@@ -1,5 +1,4 @@
 import { Http, URLSearchParams } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -7,8 +6,6 @@ import { Store } from '@ngrx/store';
 import { API } from '../../../../config/api';
 import { BaseService } from '../../../../base/base.service';
 import { SERVICES_MODAL_SET } from '../../../../reducers/services-modal.reducer';
-
-const mockServices = require('./mock.json');
 
 @Injectable()
 export class ServicesService extends BaseService {
@@ -21,38 +18,26 @@ export class ServicesService extends BaseService {
     Object.setPrototypeOf(this, ServicesService.prototype);
   }
 
-  // getServices(search?: URLSearchParams) {
-  //   const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}`;
-  //   return super.get(url, { search }).map(res => res.json());
-  // }
-  getServices(search?: URLSearchParams) {
-    if (search) { console.log(search); }
+  getServices(startRange: number, endRange: number, search?: URLSearchParams) {
+    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}`;
+    const url = `${common}/${startRange};${endRange}`;
 
-    const promise = new Promise(resolve => {
-      resolve(mockServices);
-    });
-
-    return Observable.fromPromise(promise).map(res => res);
+    return super.get(url, { search }).map(res => res.json());
   }
 
-  getServiceById(serviceId) {
-    const promise = new Promise(resolve => {
-      resolve(mockServices.filter(service => {
-        if (service.id === +serviceId) {
-          return service;
-        }
-      }));
-    });
+  getServiceById(serviceId: number) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}/${serviceId}`;
 
-    return Observable.fromPromise(promise).map(res => res[0]);
+    return super.get(url).map(res => res.json());
   }
 
-  getUploadImageUrl() {
-    return `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
+  deleteService(serviceId: number) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}/${serviceId}`;
+
+    return super.delete(url).map(res => res.json());
   }
 
   setModalServices(services: any[]): void {
-    console.log(services);
     this.store.dispatch({
       type: SERVICES_MODAL_SET,
       payload: services

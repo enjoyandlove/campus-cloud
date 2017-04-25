@@ -17,7 +17,7 @@ const API_ENDPOINTS = {
   IMAGE: 'image',
   SESSION: 'session',
   P_RESET: 'ns_admin',
-  SERVICES: 'services',
+  SERVICES: 'service',
   LINKS: 'campus_link',
   SOCIAL_GROUP: 'group',
   GROUP_THREAD: 'group_thread',
@@ -26,6 +26,8 @@ const API_ENDPOINTS = {
   CAMPUS_COMMENT: 'campus_comment',
   FB_EVENTS: 'facebook_event_link',
   EVENT_ASSESMENT: 'event_assessment',
+  SERVICE_PROVIDER: 'service_provider',
+  SERVICE_ASSESSMENT: 'service_assessment',
   SOCIAL_POST_CATEGORY: 'social_post_category',
 };
 

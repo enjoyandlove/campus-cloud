@@ -14,13 +14,13 @@
       <div class="row">
         <span class="col-sm-4 col-xs-12" i18n>Name</span>
         <span class="col-sm-2 col-xs-12" i18n>Total Visits</span>
-        <span class="col-sm-3 col-xs-12" i18n>Total Ratings</span>
-        <span class="col-sm-2 col-xs-12" i18n>Average Ratings</span>
+        <span class="col-sm-2 col-xs-12" i18n>Total Ratings</span>
+        <span class="col-sm-3 col-xs-12" i18n>Average Ratings</span>
         <span class="col-sm-1 col-xs-12"></span>
       </div>
     </li>
 
-    <li class="cp-form__item col-xs-12" *ngFor="let service of services">
+    <li class="cp-form__item col-xs-12" *ngFor="let service of state.services">
       <div class="row">
         <span class="col-sm-4 col-xs-12" i18n>
           <div class="row">
@@ -36,9 +36,15 @@
             </div>
           </div>
         </span>
-        <span class="col-sm-2 col-xs-12" i18n>Total Visits</span>
-        <span class="col-sm-3 col-xs-12" i18n>Total Ratings</span>
-        <span class="col-sm-2 col-xs-12" i18n>Average Ratings</span>
+        <span class="col-sm-2 col-xs-12" i18n>{{ service.total_visits }}</span>
+        <span class="col-sm-2 col-xs-12" i18n>{{ service.num_ratings }}</span>
+        <span class="col-sm-3 col-xs-12" i18n>
+          <cp-stars
+          *ngIf="service.service_attendance === 1"
+          [maxRate]="service.rating_scale_maximum"
+          [avgRate]="service.avg_rating_percent">
+        </cp-stars>
+        </span>
         <span
           (click)="onDelete(service)"
           data-toggle="modal" data-target="#deleteServicesModal"
@@ -67,5 +73,8 @@
 </cp-modal>
 
 <cp-modal modalId="deleteServicesModal">
-  <cp-services-delete [service]="deleteService"></cp-services-delete>
+  <cp-services-delete
+    [service]="deleteService"
+    (deleted)="onDeleted($event)">
+  </cp-services-delete>
 </cp-modal>
