@@ -72,7 +72,7 @@ export class ServicesImportTopBarComponent extends BaseComponent implements OnIn
     }
 
     const headers = new Headers();
-    const url = this.servicesService.getUploadImageUrl();
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
     const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
 
     headers.append('Authorization', auth);

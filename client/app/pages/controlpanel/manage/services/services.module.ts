@@ -34,6 +34,7 @@ import {
 
 import {
   ServicesProviderAddComponent,
+  ServicesProvidersListComponent,
   ServicesProviderDeleteComponent
 } from './attendance/components';
 
@@ -43,7 +44,7 @@ import {
   ServicesExcelModalComponent, ServicesAttendanceComponent, ServicesCreateComponent,
   ServicesDeleteAdminModalComponent, ServicesEditComponent, ServicesInfoComponent,
   ServicesEventsComponent, ServicesProviderAddComponent, ServicesProviderDeleteComponent,
-  ServicesExcelComponent, ServicesImportTopBarComponent ],
+  ServicesExcelComponent, ServicesImportTopBarComponent, ServicesProvidersListComponent ],
 
   imports: [ CommonModule, SharedModule, ServicesRoutingModule, RouterModule, ReactiveFormsModule ],
 

@@ -10,15 +10,15 @@
               <div class="col-xs-6 col-xs-offset-3">
                 <span i18n>
                   Total Visits
-                  <strong>10</strong>
+                  <strong>{{ service.total_visits }}</strong>
                 </span>
                 <span i18n>
                   Unique Visits
-                  <strong>11</strong>
+                  <strong>{{ service.unique_visits }}</strong>
                 </span>
                 <span i18n>
                   Repeat Visits
-                  <strong>4</strong>
+                  <strong>{{ service.total_visits - service.unique_visits }}</strong>
                 </span>
               </div>
             </div>
@@ -26,25 +26,28 @@
         </div>
         <div class="col-xs-6 col-sm-4 text-center">
           <div class="cp-card">
-            <p class="header__digit">5</p>
+            <p class="header__digit">{{ service.num_ratings || 'N/A' }}</p>
             <p i18n>Total Responses</p>
           </div>
         </div>
         <div class="col-xs-12 col-sm-4 text-center">
           <div class="cp-card">
-            <p class="header__digit">
+            <p
+              class="header__digit"
+              *ngIf="service.service_attendance === 0">
+              N/A
+            </p>
+            <p
+              class="header__digit"
+              *ngIf="service.service_attendance === 1">
               <cp-stars
                 [size]="detailStarSize"
-                [avgRate]="70"
-                [maxRate]="5">
+                [avgRate]="service.avg_rating_percent"
+                [maxRate]="service.rating_scale_maximum">
               </cp-stars>
             </p>
             <p i18n>
-              Average Rating:
-              <!--<strong *ngIf="event.rating_scale_maximum > -1">
-                {{ ((event.rating_scale_maximum * event.avg_rating_percent) / 100).toFixed(1) }}
-              </strong>
-              <strong *ngIf="event.rating_scale_maximum === -1">N/A</strong>-->
+              Average Rating
             </p>
           </div>
         </div>
@@ -56,17 +59,20 @@
         <div class="cp-card actions">
           <div class="row">
             <div class="col-xs-12 col-sm-4">
-              <cp-searchbox placeholder="Search Service Provider..."></cp-searchbox>
+              <cp-searchbox
+                (query)=onSearch($event)
+                placeholder="Search Service Provider...">
+              </cp-searchbox>
             </div>
-            <div class="col-xs-12 col-xs-offset-0 col-sm-4 col-sm-offset-4 text-right">
-              <button class="cpbtn cpbtn--primary" i18n>
-                Download CSV File
-              </button>
+            <div class="col-xs-12 col-xs-offset-0 col-sm-6 col-sm-offset-2 text-right">
               <button
                 type="button"
                 class="cpbtn cpbtn--primary"
                 data-toggle="modal" data-target="#createProvider" i18n>
                 Add Service Provider
+              </button>
+              <button class="cpbtn cpbtn--primary" i18n>
+                Download Attendance Data
               </button>
             </div>
           </div>
@@ -76,74 +82,15 @@
 
     <div class="row">
       <div class="col-xs-12">
-        <div class="cp-table">
-          <div class="cp-table__header">
-            <div class="row">
-              <div class="col-xs-3">
-                <span i18n>Service Provider</span>
-              </div>
-              <div class="col-xs-1">
-                <span i18n>Total Visits</span>
-              </div>
-              <div class="col-xs-1">
-                <span i18n>Total Ratings</span>
-              </div>
-              <div class="col-xs-3">
-                <span i18n>QR Code</span>
-              </div>
-              <div class="col-xs-3">
-                <span i18n>Average Rating</span>
-              </div>
-              <div class="col-xs-1"></div>
-            </div>
-          </div>
-
-          <div class="cp-table__item">
-            <div class="row">
-              <div class="col-xs-3">
-                <span><strong>John Smith</strong> <br> john@smith.com</span>
-              </div>
-              <div class="col-xs-1">
-                <span>11</span>
-              </div>
-              <div class="col-xs-1">
-                <span>11</span>
-              </div>
-              <div class="col-xs-3">
-                <button
-                  type="button"
-                  class="cpbtn cpbtn--secondary" i18n>
-                  Get QR Code
-                </button>
-              </div>
-              <div class="col-xs-3">
-                <cp-stars
-                  [size]="listStarSize"
-                  [avgRate]="90"
-                  [maxRate]="5">
-                </cp-stars>
-              </div>
-              <div class="col-xs-1">
-                <span
-                  (click)="onDelete(provider)"
-                  data-toggle="modal" data-target="#deleteProvider"
-                  class="col-xs-12 col-md-1 hover text-truncate delete-provider">
-                  &times;
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
+        <cp-providers-list
+          [query]="search_text$"
+          [serviceId]="serviceId">
+        </cp-providers-list>
       </div>
     </div>
   </div>
 </div>
 
-<cp-modal modalId="deleteProvider">
-  <cp-providers-delete
-    [provider]="deleteProvider">
-  </cp-providers-delete>
-</cp-modal>
 
 <cp-modal modalId="createProvider">
   <cp-providers-add

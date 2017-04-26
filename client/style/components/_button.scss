@@ -86,6 +86,14 @@ a.cpbtn, {
       color: $color-danger;
       border: 1px solid $color-danger;
     }
+
+    &--no-border {
+      border: none;
+
+      &:hover {
+        border: none;
+      }
+    }
   }
 
   &--link {

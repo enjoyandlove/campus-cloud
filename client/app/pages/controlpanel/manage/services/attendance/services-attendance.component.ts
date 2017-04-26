@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject'
 
 import {
   IHeader,
   HEADER_UPDATE
 } from '../../../../../reducers/header.reducer';
 import { ServicesService } from '../services.service';
+import { ProvidersService } from '../providers.service';
 import { BaseComponent } from '../../../../../base/base.component';
 import { STAR_SIZE } from '../../../../../shared/components/cp-stars';
+
 
 @Component({
   selector: 'cp-services-attendance',
@@ -18,25 +21,22 @@ import { STAR_SIZE } from '../../../../../shared/components/cp-stars';
 export class ServicesAttendanceComponent extends BaseComponent implements OnInit {
   loading;
   service;
-  deleteProvider;
   serviceId: number;
   detailStarSize = STAR_SIZE.LARGE;
   listStarSize = STAR_SIZE.DEFAULT;
+  search_text$: BehaviorSubject<string> = new BehaviorSubject(null);
 
   constructor(
     private route: ActivatedRoute,
     private store: Store<IHeader>,
-    private serviceService: ServicesService
+    private serviceService: ServicesService,
+    private providersService: ProvidersService
   ) {
     super();
     this.serviceId = this.route.snapshot.params['serviceId'];
     super.isLoading().subscribe(res => this.loading = res);
 
     this.fetch();
-  }
-
-  onDelete(provider) {
-    this.deleteProvider = provider;
   }
 
   onCreatedProvider(provider) {
@@ -47,19 +47,23 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
     super
       .fetchData(this.serviceService.getServiceById(this.serviceId))
       .then(res => {
-        this.service = res;
-        this.buildHeader(res);
+        this.service = res.data;
+        this.buildHeader(this.service);
       })
       .catch(err => console.error(err));
   }
 
-
+  onSearch(search_text) {
+    this.search_text$.next(search_text);
+    // this.state = Object.assign({}, this.state, { search_text });
+    console.log(search_text);
+  }
 
   private buildHeader(res) {
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': res.data.name,
+        'heading': res.name,
         'subheading': '',
         'children': [
           {
