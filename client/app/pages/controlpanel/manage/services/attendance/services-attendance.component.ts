@@ -1,7 +1,7 @@
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject'
 
 import {
   IHeader,
@@ -24,6 +24,8 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
   serviceId: number;
   detailStarSize = STAR_SIZE.LARGE;
   listStarSize = STAR_SIZE.DEFAULT;
+  reload$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  download$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   search_text$: BehaviorSubject<string> = new BehaviorSubject(null);
 
   constructor(
@@ -55,8 +57,6 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
 
   onSearch(search_text) {
     this.search_text$.next(search_text);
-    // this.state = Object.assign({}, this.state, { search_text });
-    console.log(search_text);
   }
 
   private buildHeader(res) {
