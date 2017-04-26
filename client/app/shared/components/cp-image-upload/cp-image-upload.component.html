@@ -16,6 +16,7 @@
 
         <div
           *ngIf="!image"
+          [class.required]="required"
           class="wrapper__image wrapper__image--no-image">
           <cp-spinner theme="small" *ngIf="isLoading"></cp-spinner>
         </div>

@@ -64,6 +64,34 @@ export class ServicesCreateComponent implements OnInit {
   onSubmit() {
     this.formError = false;
 
+    if (this.form.controls['admins'].dirty) {
+      let adminControls = <FormArray>this.form.controls['admins'];
+      adminControls.controls.forEach((control: FormGroup) => {
+        if (control.dirty && control.touched) {
+          Object.keys(control.controls).forEach(key => {
+            if (!control.controls[key].value) {
+              this.formError = true;
+              control.controls[key].setErrors({ 'required': true });
+            }
+          });
+        }
+      });
+    }
+
+    if (this.form.controls['providers'].dirty) {
+      let adminControls = <FormArray>this.form.controls['providers'];
+      adminControls.controls.forEach((control: FormGroup) => {
+        if (control.dirty && control.touched) {
+          Object.keys(control.controls).forEach(key => {
+            if (!control.controls[key].value) {
+              this.formError = true;
+              control.controls[key].setErrors({ 'required': true });
+            }
+          });
+        }
+      });
+    }
+
     if (!this.form.valid) {
       this.formError = true;
       return;
@@ -181,19 +209,17 @@ export class ServicesCreateComponent implements OnInit {
 
   buildServiceProviderControl() {
     return this.fb.group({
-      'service_id': [null, Validators.required],
-      'provider_name': [null, Validators.required],
-      'email': [null, Validators.required],
-      'custom_basic_feedback_label': [null, Validators.required]
+      'provider_name': [null],
+      'email': [null],
+      'custom_basic_feedback_label': [null]
     });
   }
 
   buildAdminControl() {
     return this.fb.group({
-      'firstname': [null, Validators.required],
-      'lastname': [null, Validators.required],
-      'email': [null, Validators.required],
-      'account_level_privileges': [null, Validators.required]
+      'firstname': [null],
+      'lastname': [null],
+      'email': [null],
     });
   }
 
@@ -203,7 +229,6 @@ export class ServicesCreateComponent implements OnInit {
       'name': [null, Validators.required],
       'logo_url': [null, Validators.required],
       'category': [null, Validators.required],
-      'store_id': [null, Validators.required],
       'location': [null],
       'room_data': [null],
       'address': [null],

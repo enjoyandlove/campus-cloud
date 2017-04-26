@@ -81,6 +81,11 @@ a.cpbtn, {
     &:disabled {
       border: 1px solid $color-med-grey;
     }
+
+     &--error {
+      color: $color-danger;
+      border: 1px solid $color-danger;
+    }
   }
 
   &--link {
@@ -107,6 +112,12 @@ a.cpbtn, {
 
     &:hover {
       border: 1px solid $color-text;
+    }
+
+    &--error {
+      color: $color-danger;
+      border: 1px solid $color-danger;
+      background-color: rgba(255, 96, 89, 0.25);
     }
 
     &:disabled {

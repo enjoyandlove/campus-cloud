@@ -13,6 +13,7 @@ interface IItems {
 export class CPDropdownComponent implements OnInit {
   @Input() items: IItems[];
   @Input() selectedItem: any;
+  @Input() isRequiredError: boolean;
   @Output() selected: EventEmitter<{'label': string, 'event': string}> = new EventEmitter();
 
   constructor() { }
