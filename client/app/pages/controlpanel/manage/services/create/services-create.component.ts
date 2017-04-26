@@ -1,4 +1,4 @@
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import { CPMap } from '../../../../../shared/utils';
 import { ServicesService } from '../services.service';
 import { ProvidersService } from '../providers.service';
+import { CP_PRIVILEGES_MAP } from '../../../../../shared/utils/privileges';
 import { AdminService } from '../../../../../shared/services/admin.service';
 import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
@@ -98,10 +99,10 @@ export class ServicesCreateComponent implements OnInit {
       }
       )
       .switchMap(service => {
+        this.createdServiceId = service.id;
+
         let providers = [];
         let search = new URLSearchParams();
-
-        this.createdServiceId = service.id;
         let controls = <FormArray>this.form.controls['providers'];
         let providersControls = controls.controls;
 
@@ -128,7 +129,7 @@ export class ServicesCreateComponent implements OnInit {
             'email': admin.controls['email'].value,
             'account_level_privileges': {
               [this.storeId]: {
-                '24': {
+                [CP_PRIVILEGES_MAP.services]: {
                   r: true,
                   w: true
                 }
@@ -183,7 +184,7 @@ export class ServicesCreateComponent implements OnInit {
       'service_id': [null, Validators.required],
       'provider_name': [null, Validators.required],
       'email': [null, Validators.required],
-      'custom_basic_feedback_label': [null]
+      'custom_basic_feedback_label': [null, Validators.required]
     });
   }
 
@@ -192,7 +193,7 @@ export class ServicesCreateComponent implements OnInit {
       'firstname': [null, Validators.required],
       'lastname': [null, Validators.required],
       'email': [null, Validators.required],
-      'account_level_privileges': [null]
+      'account_level_privileges': [null, Validators.required]
     });
   }
 
