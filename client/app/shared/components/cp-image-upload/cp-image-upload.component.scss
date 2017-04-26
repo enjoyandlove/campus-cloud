@@ -25,9 +25,10 @@ $img_height: 108px;
 
   &__image {
     width: 100%;
+    border: none;
     border-radius: 4px;
-    height: $img_height;
     position: relative;
+    height: $img_height;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;

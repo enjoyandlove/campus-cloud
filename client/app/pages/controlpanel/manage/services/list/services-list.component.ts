@@ -86,7 +86,7 @@ export class ServicesListComponent extends BaseComponent implements OnInit, OnDe
   }
 
   onDeleted(serviceId: number) {
-    this.deleteService = null;
+    this.deleteService = '';
     let _state = Object.assign({}, this.state);
 
     _state.services = _state.services.filter(service => service.id !== serviceId);

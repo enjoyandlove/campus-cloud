@@ -1,5 +1,6 @@
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
@@ -60,9 +61,14 @@ export class ServicesCreateComponent implements OnInit {
   }
 
   onSubmit() {
-    let data = Object.assign(this.form.value);
     this.formError = false;
-    console.log(this.form.value);
+
+    if (!this.form.valid) {
+      this.formError = true;
+      return;
+    }
+
+    let data = Object.assign(this.form.value);
 
     this
       .servicesService
@@ -92,129 +98,139 @@ export class ServicesCreateComponent implements OnInit {
       }
       )
       .switchMap(service => {
-        this.createdServiceId = service.id;
-        let providers = this.form.controls['providers'].value;
+        let providers = [];
+        let search = new URLSearchParams();
 
-        providers = providers.map(provider => {
-          provider.controls['service_id'].setValue(this.createdServiceId);
+        this.createdServiceId = service.id;
+        let controls = <FormArray>this.form.controls['providers'];
+        let providersControls = controls.controls;
+
+        providersControls.forEach((provider: FormGroup) => {
+          providers.push({
+            'provider_name': provider.controls['provider_name'].value,
+            'email': provider.controls['email'].value,
+            'custom_basic_feedback_label': provider.controls['custom_basic_feedback_label'].value
+          });
         });
 
-        return this.providersService.createProvider(providers);
+        search.append('service_id', this.createdServiceId);
+        return this.providersService.createProvider(providers, search);
       })
       .switchMap(_ => {
-        let admins$;
-        let admins = this.form.controls['admins'].value;
+        let admins$ = [];
+        let admins = <FormArray>this.form.controls['admins'];
+        let adminsControls = admins.controls;
 
-        admins = admins.map(admin => {
-          admin.controls['account_level_privileges'].setValue({
-            [this.createdServiceId]: {
-              '24': {
-                r: true,
-                w: true
+        adminsControls.forEach((admin: FormGroup) => {
+          let _admin = {
+            'firstname': admin.controls['firstname'].value,
+            'lastname': admin.controls['lastname'].value,
+            'email': admin.controls['email'].value,
+            'account_level_privileges': {
+              [this.storeId]: {
+                '24': {
+                  r: true,
+                  w: true
+                }
               }
             }
-            });
-          });
-        admins.forEach(admin => admins$.push(this.adminService.createAdmin(admin)));
+          };
+          admins$.push(this.adminService.createAdmin(_admin));
+        });
 
         return Observable.combineLatest(admins$);
       })
       .catch(err => Observable.throw(err))
       .subscribe(
-        res => console.log(res),
-        err => console.log(err)
+      res => console.log(res),
+      err => console.log(err)
       );
-
-  // if (!this.form.valid) {
-  //   this.formError = true;
-  //   return;
-  // }
-}
-
-
-onToggleAttendance(event) {
-  if (event) {
-    this.form.controls['default_basic_feedback_label'].setValue('How did you like the service?');
-  } else {
-    this.form.controls['default_basic_feedback_label'].setValue(null);
   }
 
-  this.form.controls['service_attendance'].setValue(event ? 1 : 0);
-}
 
-onAddProviderControl(): void {
-  const controls = <FormArray>this.form.controls['providers'];
-  controls.controls.push(this.buildServiceProviderControl());
-}
+  onToggleAttendance(event) {
+    if (event) {
+      this.form.controls['default_basic_feedback_label'].setValue('How did you like the service?');
+    } else {
+      this.form.controls['default_basic_feedback_label'].setValue(null);
+    }
 
-onAddAdminControl() : void {
-  const controls = <FormArray>this.form.controls['admins'];
-  controls.controls.push(this.buildAdminControl());
-}
+    this.form.controls['service_attendance'].setValue(event ? 1 : 0);
+  }
 
-delteProviderControl(index): void {
-  const controls = <FormArray>this.form.controls['providers'];
-  controls.removeAt(index);
-}
+  onAddProviderControl(): void {
+    const controls = <FormArray>this.form.controls['providers'];
+    controls.controls.push(this.buildServiceProviderControl());
+  }
 
-deleteAdminControl(index): void {
-  const controls = <FormArray>this.form.controls['admins'];
-  controls.removeAt(index);
-}
+  onAddAdminControl(): void {
+    const controls = <FormArray>this.form.controls['admins'];
+    controls.controls.push(this.buildAdminControl());
+  }
 
-buildServiceProviderControl() {
-  return this.fb.group({
-    'service_id': [null, Validators.required],
-    'provider_name': [null, Validators.required],
-    'email': [null, Validators.required],
-    'custom_basic_feedback_label': [null]
-  });
-}
+  delteProviderControl(index): void {
+    const controls = <FormArray>this.form.controls['providers'];
+    controls.removeAt(index);
+  }
 
-buildAdminControl() {
-  return this.fb.group({
-    'firstname': [null, Validators.required],
-    'lastname': [null, Validators.required],
-    'email': [null, Validators.required],
-    'account_level_privileges': [null]
-  });
-}
+  deleteAdminControl(index): void {
+    const controls = <FormArray>this.form.controls['admins'];
+    controls.removeAt(index);
+  }
 
-ngOnInit() {
-  this.storeId = 157;
-  this.form = this.fb.group({
-    'name': [null, Validators.required],
-    'logo_url': [null, Validators.required],
-    'category': [null, Validators.required],
-    'store_id': [null, Validators.required],
-    'location': [null],
-    'room_data': [null],
-    'address': [null],
-    'description': [null],
-    'email': [null],
-    'website': [null],
-    'phone': [null],
-    'secondary_name': [null],
-    'city': [null],
-    'province': [null],
-    'country': [null],
-    'postal_code': [null],
-    'latitude': [null],
-    'longitude': [null],
-    'service_attendance': [null],
-    'rating_scale_maximum': [null],
-    'default_basic_feedback_label': [null],
-    'providers': this.fb.array([this.buildServiceProviderControl()]),
-    'admins': this.fb.array([this.buildAdminControl()])
-  });
-
-  let categories = require('../categories.json');
-
-  categories.map(category => {
-    this.categories.push({
-      label: category.name,
-      action: category.id
+  buildServiceProviderControl() {
+    return this.fb.group({
+      'service_id': [null, Validators.required],
+      'provider_name': [null, Validators.required],
+      'email': [null, Validators.required],
+      'custom_basic_feedback_label': [null]
     });
-  });
-}
+  }
+
+  buildAdminControl() {
+    return this.fb.group({
+      'firstname': [null, Validators.required],
+      'lastname': [null, Validators.required],
+      'email': [null, Validators.required],
+      'account_level_privileges': [null]
+    });
+  }
+
+  ngOnInit() {
+    this.storeId = 14748;
+    this.form = this.fb.group({
+      'name': [null, Validators.required],
+      'logo_url': [null, Validators.required],
+      'category': [null, Validators.required],
+      'store_id': [null, Validators.required],
+      'location': [null],
+      'room_data': [null],
+      'address': [null],
+      'description': [null],
+      'email': [null],
+      'website': [null],
+      'phone': [null],
+      'secondary_name': [null],
+      'city': [null],
+      'province': [null],
+      'country': [null],
+      'postal_code': [null],
+      'latitude': [null],
+      'longitude': [null],
+      'service_attendance': [null],
+      'rating_scale_maximum': [null],
+      'default_basic_feedback_label': [null],
+      'providers': this.fb.array([this.buildServiceProviderControl()]),
+      'admins': this.fb.array([this.buildAdminControl()])
+    });
+
+    let categories = require('../categories.json');
+
+    categories.map(category => {
+      this.categories.push({
+        label: category.name,
+        action: category.id
+      });
+    });
+  }
 }
