@@ -2,7 +2,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-
 import { ENV } from '../../../../../../../config/env';
 import { EventsService } from '../../../events.service';
 import { STATUS } from '../../../../../../../shared/constants';

@@ -8,6 +8,7 @@ import { isProd } from '../../../../../config/env';
 import { CPDate } from '../../../../../shared/utils';
 import { StoreService } from '../../../../../shared/services';
 import { BaseComponent } from '../../../../../base/base.component';
+import { EVENTS_MODAL_RESET } from '../../../../../reducers/events-modal.reducer';
 import { HEADER_UPDATE, HEADER_DEFAULT } from '../../../../../reducers/header.reducer';
 
 
@@ -296,6 +297,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
 
   ngOnDestroy() {
     this.store.dispatch({ type: HEADER_DEFAULT });
+    this.store.dispatch({ type: EVENTS_MODAL_RESET });
   }
 
   ngOnInit() {

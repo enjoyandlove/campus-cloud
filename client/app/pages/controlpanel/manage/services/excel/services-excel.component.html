@@ -63,7 +63,7 @@
                   <cp-dropdown
                     [items]="stores"
                     (selected)="onSingleCategorySelected($event, i)"
-                    [selectedItem]="service.controls['category_id'].value">
+                    [selectedItem]="service.controls['category'].value">
                   </cp-dropdown>
                 </div>
               </div>
@@ -87,7 +87,7 @@
               type="button"
               (click)="onSubmit()"
               class="cpbtn cpbtn--tall cpbtn--primary" i18n
-              [disabled]="!form.controls.services.controls.length">
+              [disabled]="!form.controls.services.controls.length || !form.valid">
               Import Services
             </button>
           </div>
