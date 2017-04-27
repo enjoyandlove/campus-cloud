@@ -26,6 +26,8 @@
 }
 
 .header {
+  margin-top: 0;
+
   &__digit {
     @include font-semi-bold();
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { ActivatedRoute } from '@angular/router';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Store } from '@ngrx/store';
 
 import { ProvidersService } from '../../../providers.service';
@@ -17,6 +18,7 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
   provider;
   serviceId;
   providerId;
+  query$: BehaviorSubject<string> = new BehaviorSubject(null);
 
   constructor(
     private store: Store<IHeader>,
