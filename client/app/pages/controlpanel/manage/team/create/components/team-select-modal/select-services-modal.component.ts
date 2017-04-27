@@ -25,7 +25,7 @@ implements OnInit {
   }
 
   ngOnInit() {
-    super.fetch(this.service.getServices());
+    super.fetch(this.service.getServices(1, 1000));
     super.buildPrivilegesDropDown();
   }
 }

@@ -2,7 +2,6 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Headers } from '@angular/http';
 
 import { API } from '../../../../../../../config/api';
-import { ServicesService } from '../../../services.service';
 import { BaseComponent } from '../../../../../../../base/base.component';
 import { CPImage, CPArray, appStorage } from '../../../../../../../shared/utils';
 import { StoreService, FileUploadService } from '../../../../../../../shared/services';
@@ -24,7 +23,6 @@ export class ServicesImportTopBarComponent extends BaseComponent implements OnIn
 
   constructor(
     private storeService: StoreService,
-    private servicesService: ServicesService,
     private fileUploadService: FileUploadService
   ) {
     super();
