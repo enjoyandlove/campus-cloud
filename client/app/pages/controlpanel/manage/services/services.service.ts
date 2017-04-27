@@ -43,6 +43,12 @@ export class ServicesService extends BaseService {
     return super.post(url, data).map(res => res.json());
   }
 
+  updateService(data: any) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}/`;
+
+    return super.update(url, data).map(res => res.json());
+  }
+
   setModalServices(services: any[]): void {
     this.store.dispatch({
       type: SERVICES_MODAL_SET,

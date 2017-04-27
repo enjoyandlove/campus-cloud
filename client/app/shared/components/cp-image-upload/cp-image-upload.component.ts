@@ -13,6 +13,7 @@ import { FileUploadService } from '../../../shared/services/file-upload.service'
 export class CPImageUploadComponent implements OnInit {
   @Input() small: boolean;
   @Input() required: boolean;
+  @Input() defaultImage: string;
   @Output() uploaded: EventEmitter<string> = new EventEmitter();
 
   image;
@@ -23,8 +24,7 @@ export class CPImageUploadComponent implements OnInit {
 
   constructor(
     private fileUploadService: FileUploadService
-  ) {
-  }
+  ) { }
 
   onFileUpload(file) {
     this.errors = [];
@@ -75,5 +75,9 @@ export class CPImageUploadComponent implements OnInit {
     this.uploaded.emit(null);
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.defaultImage) {
+      this.image = this.defaultImage;
+    }
+  }
 }
