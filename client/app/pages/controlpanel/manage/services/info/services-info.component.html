@@ -24,18 +24,25 @@
                   </a>
                 </div>
               </div>
-              <p class="text-muted">
+              <p class="text-muted section">
                 {{ service.description }}
               </p>
 
               <div class="service__meta">
-                <p><i class="material-icons">phone</i> {{ service.contactphone }}<p>
+                <p *ngIf="service.contactphone">
+                  <i class="material-icons">phone</i> {{ service.contactphone }}
+                <p>
 
-                <p><i class="material-icons">email</i>{{ service.email }}</p>
+                <p *ngIf="service.email">
+                  <i class="material-icons">email</i>{{ service.email }}
+                </p>
 
-                <p><i class="material-icons">web</i>{{ service.website }}</p>
+                <p *ngIf="service.website">
+                  <i class="material-icons">web</i>{{ service.website }}
+                </p>
 
-                <p><i class="material-icons">place</i>
+                <p *ngIf="service.location">
+                  <i class="material-icons">place</i>
                   {{ service.address }} {{ service.location }}
                 </p>
               </div>
@@ -49,7 +56,7 @@
               <div class="row">
                 <div class="col-xs-12">
                   <div class="service__admins">
-                    <p class="service__admins__title">Admins</p>
+                    <p class="service__admins__title">MISSING ADMINS ENDPOINT</p>
                   </div>
                 </div>
               </div>
