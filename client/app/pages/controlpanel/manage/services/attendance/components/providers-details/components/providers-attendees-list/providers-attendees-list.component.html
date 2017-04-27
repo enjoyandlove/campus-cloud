@@ -1,1 +1,76 @@
-List
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div *ngSwitchCase="false">
+    <cp-no-content
+      *ngIf="!assessments.length"
+      noContentText="No attendees found...">
+    </cp-no-content>
+
+    <div class="row" *ngIf="assessments.length">
+      <div class="col-xs-12">
+        <div class="cp-table">
+          <div class="cp-table__header">
+            <div class="row">
+              <div class="col-xs-4">
+                <span i18n>Attendee Name</span>
+              </div>
+              <div class="col-xs-3">
+                <span i18n>Rating</span>
+              </div>
+              <div class="col-xs-2">
+                <span i18n>All check-in methods</span>
+              </div>
+              <div class="col-xs-3">
+                <span i18n>Checked-in time</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="cp-table__item" *ngFor="let assessment of assessments">
+            <div class="row">
+              <div class="col-xs-4">
+                <img
+                  class="img-rounded pull-left avatar"
+                  src="https://source.unsplash.com/random/30x30">
+                <div class="meta">
+                  <strong>
+                    {{ assessment.firstname }} {{ assessment.lastname }}
+                  </strong>
+                  <br>
+                  {{ assessment.email }}
+                  <br>
+                  <span class="text-muted">{{ assessment.feedback_text }}</span>
+                </div>
+              </div>
+              <div class="col-xs-3">
+                <cp-stars
+                  [maxRate]="5"
+                  [avgRate]="assessment.feedback_rating">
+                </cp-stars>
+              </div>
+              <div class="col-xs-2">
+                <span>{{ checkinMethods[assessment.check_in_method].label }}</span>
+              </div>
+              <div class="col-xs-3">
+                <span>{{ assessment.check_in_time | cpDatePipe:dateFormat }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <cp-pagination
+            [pageNext]="pageNext"
+            [pagePrev]="pagePrev"
+            [pageNumber]="pageNumber"
+            (next)="onPaginationNext()"
+            (previous)="onPaginationPrevious()">
+          </cp-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

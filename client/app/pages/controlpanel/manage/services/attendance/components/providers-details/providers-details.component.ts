@@ -29,7 +29,6 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
     this.serviceId = this.route.snapshot.params['serviceId'];
 
     this.fetch();
-    console.log(this.providerId);
   }
 
   private fetch() {
@@ -41,20 +40,23 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
       .fetchData(stream$)
       .then(res => {
         this.provider = res.data;
-        console.log(res);
+        this.buildHeader();
       })
       .catch(err => console.error(err));
   }
 
-  ngOnInit() {
+  buildHeader() {
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': 'Sopa de Caracol',
+        'heading': this.provider.provider_name,
         'subheading': null,
         'em': null,
         'children': []
       }
     });
+  }
+
+  ngOnInit() {
   }
 }

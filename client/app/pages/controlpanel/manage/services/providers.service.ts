@@ -39,4 +39,11 @@ export class ProvidersService extends BaseService {
 
     return super.get(url, { search }).map(res => res.json());
   }
+
+  getProviderAssessments(startRange: number, endRange: number, search?: URLSearchParams) {
+    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICE_ASSESSMENT}`;
+    const url = `${common}/${startRange};${endRange}`;
+
+    return super.get(url, { search }).map(res => res.json());
+  }
 }
