@@ -68,7 +68,6 @@ __pycache__/
 
 # Distribution / packaging
 .Python
-
 build/
 develop-eggs/
 dist/
@@ -142,8 +141,6 @@ celerybeat-schedule
 # virtualenv
 .venv
 venv/
-
-
 # Spyder project settings
 .spyderproject
 
