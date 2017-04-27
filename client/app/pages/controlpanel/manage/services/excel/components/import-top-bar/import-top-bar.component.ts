@@ -8,7 +8,7 @@ import { CPImage, CPArray, appStorage } from '../../../../../../../shared/utils'
 import { StoreService, FileUploadService } from '../../../../../../../shared/services';
 
 @Component({
-  selector: 'cp-import-top-bar',
+  selector: 'cp-services-import-top-bar',
   templateUrl: './import-top-bar.component.html',
   styleUrls: ['./import-top-bar.component.scss']
 })
