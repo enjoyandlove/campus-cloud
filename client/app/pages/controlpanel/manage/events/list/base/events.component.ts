@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
 import { EventsService } from '../../events.service';
@@ -28,9 +28,12 @@ const state = {
 @Component({
   selector: 'cp-events',
   templateUrl: './events.component.html',
-  // styleUrls: ['./events.component.scss']
+  styleUrls: ['./events.component.scss']
 })
 export class EventsComponent extends BaseComponent implements OnInit, OnDestroy {
+  @Input() storeId: number;
+  @Input() isSimple: boolean;
+
   events;
   loading;
   pageNext;
@@ -38,7 +41,6 @@ export class EventsComponent extends BaseComponent implements OnInit, OnDestroy 
   pageNumber;
   isUpcoming;
   deleteEvent = '';
-  isSimple: boolean;
   state: IState = state;
 
   constructor(
@@ -49,6 +51,7 @@ export class EventsComponent extends BaseComponent implements OnInit, OnDestroy 
   }
 
   private fetch(stream$) {
+
     super
       .fetchData(stream$)
       .then(res => {
@@ -93,6 +96,10 @@ export class EventsComponent extends BaseComponent implements OnInit, OnDestroy 
     let search = new URLSearchParams();
     let store_id = this.state.store_id ? (this.state.store_id).toString() : null;
 
+    if (this.storeId) {
+      store_id = this.storeId.toString();
+    }
+
     search.append('start', (this.state.start).toString());
     search.append('end', (this.state.end).toString());
     search.append('store_id', store_id);
@@ -130,5 +137,7 @@ export class EventsComponent extends BaseComponent implements OnInit, OnDestroy 
     // console.log('destroy');
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    console.log('INIT BASE EVENTS COMPONENT');
+  }
 }

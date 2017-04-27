@@ -7,44 +7,53 @@ import {
   HEADER_UPDATE
 } from '../../../../../reducers/header.reducer';
 import { ServicesService } from '../services.service';
-import { BaseComponent } from '../../../../../base/base.component';
+import { EventsService } from '../../events/events.service';
+import { EventsComponent } from '../../events/list/base/events.component';
 
 @Component({
   selector: 'cp-services-events',
   templateUrl: './services-events.component.html',
   styleUrls: ['./services-events.component.scss']
 })
-export class ServicesEventsComponent extends BaseComponent implements OnInit {
-  loading;
+export class ServicesEventsComponent extends EventsComponent implements OnInit {
+  service;
+  loading = true;
   serviceId: number;
+  isSimple = true;
+
 
   constructor(
     private route: ActivatedRoute,
     private store: Store<IHeader>,
+    public eventsService: EventsService,
     private serviceService: ServicesService
   ) {
-    super();
+    super(eventsService);
     this.serviceId = this.route.snapshot.params['serviceId'];
-    super.isLoading().subscribe(res => this.loading = res);
 
-    this.fetch();
+    this.fetchServiceData();
   }
 
-  private fetch() {
-    super
-      .fetchData(this.serviceService.getServiceById(this.serviceId))
-      .then(res => {
-        // this.service = res;
-        this.buildHeader(res);
-      })
-      .catch(err => console.error(err));
+  fetchServiceData() {
+    this
+      .serviceService
+      .getServiceById(this.serviceId)
+      .subscribe(
+        res => {
+          this.service = res;
+          this.buildHeader();
+          this.loading = false;
+        },
+        err => console.log(err)
+      );
   }
 
-  private buildHeader(res) {
+
+  private buildHeader() {
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': res.data.name,
+        'heading': this.service.name,
         'subheading': '',
         'children': [
           {
@@ -64,5 +73,8 @@ export class ServicesEventsComponent extends BaseComponent implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    console.log('INIT SERVICE EVENTS');
+    // super.fetchData()
+  }
 }
