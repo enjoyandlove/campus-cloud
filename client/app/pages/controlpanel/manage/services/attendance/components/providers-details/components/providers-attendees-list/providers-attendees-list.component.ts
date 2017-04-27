@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
+import { generateExcelFile } from './excel';
 import { ProvidersService } from '../../../../../providers.service';
 import { FORMAT } from '../../../../../../../../../shared/pipes/date.pipe';
 import { BaseComponent } from '../../../../../../../../../base/base.component';
@@ -23,6 +24,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
   @Input() serviceId: number;
   @Input() providerId: number;
   @Input() query: Observable<string>;
+  @Input() download: Observable<boolean>;
 
   loading;
   assessments;
@@ -57,6 +59,12 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
   }
 
   ngOnInit() {
+    this.download.subscribe(download => {
+      if (download && this.assessments.length) {
+        generateExcelFile(this.assessments);
+      }
+    });
+
     this.query.subscribe(search_text => {
       this.state = Object.assign({}, this.state, { search_text });
       this.fetch();

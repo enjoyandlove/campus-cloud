@@ -19,6 +19,7 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
   serviceId;
   providerId;
   query$: BehaviorSubject<string> = new BehaviorSubject(null);
+  download$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
     private store: Store<IHeader>,
