@@ -43,6 +43,8 @@ import {
   ServicesProvidersAttendeesListComponent
 } from './attendance/components/providers-details/components';
 
+import { EventsModule } from '../events/events.module';
+
 
 @NgModule({
   declarations: [ ServicesListComponent, ServicesListActionBoxComponent, ServicesDeleteComponent,
@@ -52,7 +54,8 @@ import {
   ServicesExcelComponent, ServicesImportTopBarComponent, ServicesProvidersListComponent,
   ServicesProviderDetailsComponent, ServicesProvidersAttendeesListComponent ],
 
-  imports: [ CommonModule, SharedModule, ServicesRoutingModule, RouterModule, ReactiveFormsModule ],
+  imports: [ CommonModule, SharedModule, ServicesRoutingModule, RouterModule,
+  ReactiveFormsModule, EventsModule ],
 
   providers: [ ServicesService, ProvidersService, AdminService ],
 })
