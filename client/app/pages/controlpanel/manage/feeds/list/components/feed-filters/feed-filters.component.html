@@ -5,26 +5,28 @@
       <div class="row">
         <div class="col-xs-6 col-sm-4" *ngIf="!isSimple">
           <cp-dropdown
-            [items]="channels"
-            (selected)="onFilterSelected($event, 'wall')">
+            [items]="walls$ | async"
+            (selected)="onFilterSelected($event, 'wall_type')">
           </cp-dropdown>
         </div>
 
         <div class="col-xs-6 col-sm-4 no-left-padding" *ngIf="!isSimple">
-          <cp-dropdown
-            [items]="channels"
-            (selected)="onFilterSelected($event, 'channel')">
-          </cp-dropdown>
+          <fieldset [disabled]="state.wall_type !== 1">
+            <cp-dropdown
+              [items]="channels$ | async"
+              (selected)="onFilterSelected($event, 'post_types')">
+            </cp-dropdown>
+          </fieldset>
         </div>
 
         <div [class]="[isSimple ? 'col-xs-10 col-sm-3' : 'col-xs-10 col-sm-3 no-left-padding']">
           <cp-dropdown
             [items]="posts"
-            (selected)="onFilterSelected($event, 'type')">
+            (selected)="onFilterSelected($event, 'flagged_by_users_only')">
           </cp-dropdown>
         </div>
 
-        <div [class]="[isSimple ? 'col-xs-2 col-sm-1 pull-right no-left-padding' : 'col-xs-2 col-sm-1 no-left-padding']">
+        <div [class]="[isSimple ? 'col-xs-2 col-sm-1 no-left-padding pull-right' : 'col-xs-2 col-sm-1 no-left-padding']">
           <button
             type="button"
             class="cpbtn cpbtn--cancel"

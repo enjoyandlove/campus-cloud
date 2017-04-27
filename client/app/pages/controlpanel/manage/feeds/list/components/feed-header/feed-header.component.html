@@ -1,25 +1,24 @@
-<div class="pull-left avatar avatar--small">
-  <img
-    class="img-responsive img-rounded"
-    src="https://source.unsplash.com/random/40x40">
+<div
+  class="pull-left avatar avatar--small"
+  [ngStyle]="{'background-image': 'url(' + feed.avatar_thumb + ')'}">
 </div>
 <div class="feed__meta pull-left">
   <span class="name">
     {{ feed.display_name }}
   </span>
-  <span class="email">
-    (no@data.com)
+  <span class="email" *ngIf="feed.email && feed.email !== ''">
+    ({{ feed.email }})
   </span>
   <span *ngIf="!isComment">
     <span class="text-muted" i18n>
       posted in
     </span>
-    <span class="cpbtn cpbtn--link">
-      Wall Name
+    <span class="cpbtn cpbtn--link cpbtn--no-hover">
+      {{ feed.channelName }}
     </span>
   </span>
   <br>
   <span class="text-muted">
-    {{ CPDate.fromEpoch(feed.added_time_epoch) }}
+    {{ feed.added_time | cpDatePipe: FORMAT }}
   </span>
 </div>

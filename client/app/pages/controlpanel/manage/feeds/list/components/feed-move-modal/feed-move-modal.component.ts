@@ -1,5 +1,10 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { URLSearchParams } from '@angular/http';
+
+import { FeedsService } from '../../../feeds.service';
+
+declare var $: any;
 
 @Component({
   selector: 'cp-feed-move-modal',
@@ -7,41 +12,70 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./feed-move-modal.component.scss']
 })
 export class FeedMoveComponent implements OnInit {
-  @Output() teardown: EventEmitter<null> = new EventEmitter();
   @Input() feed: any;
+  @Output() moved: EventEmitter<number> = new EventEmitter();
+  @Output() teardown: EventEmitter<null> = new EventEmitter();
+
+  schoolId;
+  channels$;
+  currentChannel;
   form: FormGroup;
-  channels;
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private feedsService: FeedsService
   ) {
     this.form = this.fb.group({
-      'channel': [null, Validators.required]
+      'post_type': [null, Validators.required]
     });
   }
 
-  onSelectedChannel(channel) {
-    this.form.controls['channel'].setValue(channel);
+  onSelectedChannel(post_type) {
+    this.form.controls['post_type'].setValue(post_type.action);
   }
 
   onSubmit() {
-    console.log(this.form.value.channel);
+    this
+      .feedsService
+      .moveCampusWallThreadToChannel(this.feed.id, this.form.value)
+      .subscribe(
+        _ => {
+          $('#moveFeedModal').modal('hide');
+          this.moved.emit(this.feed.id);
+        },
+        err => console.log(err)
+      );
   }
 
   ngOnInit() {
-    this.channels = [
-      {
-        label: 'Dummy Channel',
-        action: 1
-      },
-      {
-        label: 'Dummy Channel 2',
-        action: 2
-      },
-      {
-        label: 'Dummy Channel 3',
-        action: 1
-      }
-    ];
+    this.schoolId = 157;
+    let search = new URLSearchParams();
+    search.append('school_id', this.schoolId.toString());
+
+    this.channels$ = this
+      .feedsService.getChannelsBySchoolId(1, 1000, search)
+      .startWith([{ label: '---' }])
+      .map(channels => {
+        let _channels = [
+          {
+            label: '---',
+            action: null
+          }
+        ];
+
+        channels.forEach(channel => {
+          if (this.feed.post_type === channel.id) {
+            this.currentChannel = channel.name;
+          }
+          let _channel = {
+            label: channel.name,
+            action: channel.id
+          };
+
+          _channels.push(_channel);
+        });
+
+        return _channels;
+      });
   }
 }

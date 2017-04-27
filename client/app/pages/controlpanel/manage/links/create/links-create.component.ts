@@ -18,6 +18,8 @@ declare var $: any;
 export class LinksCreateComponent implements OnInit {
   @Output() createLink: EventEmitter<ILink> = new EventEmitter();
   @Output() resetCreateModal: EventEmitter<null> = new EventEmitter();
+
+  storeId;
   imageError;
   form: FormGroup;
 
@@ -30,8 +32,8 @@ export class LinksCreateComponent implements OnInit {
   buildForm() {
     this.form = this.fb.group({
       'name': ['', Validators.required],
-      'url': ['', Validators.required],
-      'school_id': [157, Validators.required],
+      'link_url': ['', Validators.required],
+      'school_id': [this.storeId, Validators.required],
       'description': ['', Validators.maxLength(512)],
       'img_url': [''],
     });
@@ -88,6 +90,7 @@ export class LinksCreateComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.storeId = 157;
     this.buildForm();
   }
 }

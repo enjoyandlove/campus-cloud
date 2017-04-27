@@ -2,7 +2,7 @@
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-xs-12 text-center">
-        <span i18n><strong>Move Post</strong></span>
+        <span i18n><strong>Are you sure?</strong></span>
 
         <span
           data-dismiss="modal"
@@ -17,18 +17,9 @@
   <div class="cpmodal__body">
     <div class="row">
       <div class="col-xs-12">
-        <div class="row text-center">
-          <div class="col-xs-offset-2 vertical-align pull-left">
-            <span i18n>Move post from <strong>{{ currentChannel }}</strong> to</span>
-          </div>
-          <div class="col-xs-4">
-            <cp-dropdown
-              class="dropdown"
-              [items]="channels$ | async"
-              (selected)="onSelectedChannel($event)">
-            </cp-dropdown>
-          </div>
-        </div>
+        <p class="text-center" i18n>
+          Are you sure you want to approve this post?
+        </p>
       </div>
     </div>
   </div>
@@ -47,9 +38,8 @@
         <button
           type="button"
           (click)="onSubmit()"
-          [disabled]="!form.valid"
           class="cpbtn cpbtn--primary"i18n>
-          Move
+          Approve
         </button>
       </div>
     </div>

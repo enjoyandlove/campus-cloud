@@ -6,11 +6,11 @@ import { FeedsService } from '../../../feeds.service';
 declare var $: any;
 
 @Component({
-  selector: 'cp-feed-delete-modal',
-  templateUrl: './feed-delete-modal.component.html',
-  styleUrls: ['./feed-delete-modal.component.scss']
+  selector: 'cp-feed-delete-comment-modal',
+  templateUrl: './feed-delete-comment-modal.component.html',
+  styleUrls: ['./feed-delete-comment-modal.component.scss']
 })
-export class FeedDeleteModalComponent implements OnInit {
+export class FeedDeleteCommentModalComponent implements OnInit {
   @Input() feed: any;
   @Input() isCampusWallView: Observable<number>;
   @Output() teardown: EventEmitter<null> = new EventEmitter();
@@ -23,14 +23,14 @@ export class FeedDeleteModalComponent implements OnInit {
   ) { }
 
   onDelete() {
-    const deleteCampusThread$ = this.feedsService.deleteCampusWallMessageByThreadId(this.feed.id);
-    const deleteGroupThread$ = this.feedsService.deleteGroupWallMessageByThreadId(this.feed.id);
-    const stream$ = this._isCampusWallView ? deleteCampusThread$ : deleteGroupThread$;
+    const deleteCampusComment$ = this.feedsService.deleteCampusWallCommentByThreadId(this.feed.id);
+    const deleteGroupComment$ = this.feedsService.deleteGroupWallCommentByThreadId(this.feed.id);
+    const stream$ = this._isCampusWallView ? deleteCampusComment$ : deleteGroupComment$;
 
     stream$
       .subscribe(
         _ => {
-          $('#deleteFeedModal').modal('hide');
+          $('#deleteFeedCommentModal').modal('hide');
           this.deleted.emit(this.feed.id);
           this.teardown.emit();
         },
@@ -39,6 +39,7 @@ export class FeedDeleteModalComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.isCampusWallView);
     this.isCampusWallView.subscribe(res => {
       this._isCampusWallView = res === 1 ? true : false;
     });

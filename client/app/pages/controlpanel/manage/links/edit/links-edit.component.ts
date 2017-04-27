@@ -20,6 +20,7 @@ export class LinksEditComponent implements OnInit, OnChanges {
   @Input() link: any;
   @Output() editLink: EventEmitter<ILink> = new EventEmitter();
   @Output() resetEditModal: EventEmitter<null> = new EventEmitter();
+
   imageError;
   form: FormGroup;
 
@@ -31,9 +32,9 @@ export class LinksEditComponent implements OnInit, OnChanges {
 
   buildForm() {
     this.form = this.fb.group({
-      'url': [this.link.link_url, Validators.required],
+      'link_url': [this.link.link_url, Validators.required],
       'name': [this.link.name, Validators.required],
-      'school_id': [157, Validators.required],
+      'school_id': [this.link.school_id, Validators.required],
       'description': [this.link.description, Validators.maxLength(512)],
       'img_url': [this.link.img_url],
     });
@@ -71,7 +72,6 @@ export class LinksEditComponent implements OnInit, OnChanges {
   }
 
   doSubmit() {
-    console.log(this.form.value);
     this
       .service
       .updateLink(this.form.value, this.link.id)
@@ -95,5 +95,6 @@ export class LinksEditComponent implements OnInit, OnChanges {
     this.resetEditModal.emit();
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+  }
 }

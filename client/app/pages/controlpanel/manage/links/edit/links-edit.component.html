@@ -24,7 +24,7 @@
               type="text"
               class="form-control"
               placeholder="Link URL"
-              formControlName="url">
+              formControlName="link_url">
           </div>
 
           <div class="form-group">
@@ -55,7 +55,7 @@
           [src]="form.controls['img_url'].value">
 
         <cp-upload-button
-          buttonClass="default"
+          buttonClass="cpbtn cpbtn--cancel"
           (fileUpload)="onFileUpload($event)"
           [buttonText]="form.controls['img_url'].value ? 'Change Image' : 'Upload Photo'">
         </cp-upload-button>

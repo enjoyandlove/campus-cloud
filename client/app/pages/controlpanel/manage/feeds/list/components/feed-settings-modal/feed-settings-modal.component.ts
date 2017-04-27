@@ -1,5 +1,8 @@
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { URLSearchParams } from '@angular/http';
+
+import { FeedsService } from '../../../feeds.service';
 
 @Component({
   selector: 'cp-feed-settings-modal',
@@ -7,20 +10,58 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./feed-settings-modal.component.scss']
 })
 export class FeedSettingsComponent implements OnInit {
-  @Input() walls: any[];
-  form: FormGroup;
+  walls;
   privileges;
+  form: FormGroup;
 
   constructor(
-    private fb: FormBuilder
-  ) { }
+    private fb: FormBuilder,
+    private feedsService: FeedsService
+  ) {
+    this.feedsService.getSocialGroups();
+
+    this.fetch();
+  }
+
+  private fetch() {
+    let search = new URLSearchParams();
+    search.append('school_id', '157');
+
+    this
+      .feedsService
+      .getSocialGroups(search)
+      .map(groups => {
+        let _groups = [];
+
+        groups.forEach(group => {
+          _groups.push({
+            id: group.id,
+            name: group.name,
+            min_posting_member_type: group.min_posting_member_type,
+            min_commenting_member_type: group.min_commenting_member_type
+          });
+        });
+        return _groups;
+      })
+      .subscribe(
+        walls => {
+          walls.forEach(wall => this.addFeedControl(wall));
+          // console.log(this.form.value);
+          // let a = <FormArray>this.form.controls['walls'];
+          // let b = <FormGroup>a.at(0);
+          // console.log(b.controls['min_commenting_member_type'].value);
+          // console.log(b.controls['min_posting_member_type'].value);
+        },
+        err => console.log(err)
+      );
+  }
 
   createFeedControl(wall) {
     return this.fb.group({
       'name': [wall.name, Validators.required],
-      'wall_id': [wall.wall_id, Validators.required],
-      'can_post': [wall.can_post, Validators.required],
-      'can_comment': [wall.can_comment, Validators.required]
+      'wall_id': [wall.id, Validators.required],
+      'min_posting_member_type': [wall.min_posting_member_type, Validators.required],
+      'min_commenting_member_type': [wall.min_commenting_member_type, Validators.required]
     });
   }
 
@@ -33,18 +74,43 @@ export class FeedSettingsComponent implements OnInit {
     const controls = <FormArray>this.form.controls['walls'];
     const control = <FormGroup>controls.at(index);
 
-    control.controls['can_post'].setValue(event.action);
+    control.controls['min_posting_member_type'].setValue(event.action);
+
+    this.updateGroup(control);
   }
 
   onCanCommentChanged(event, index) {
     const controls = <FormArray>this.form.controls['walls'];
     const control = <FormGroup>controls.at(index);
 
-    control.controls['can_comment'].setValue(event.action);
+    control.controls['min_commenting_member_type'].setValue(event.action);
+
+    this.updateGroup(control);
   }
 
-  onSave() {
-    console.log(this.form.value);
+  updateGroup(control) {
+    let search = new URLSearchParams();
+    search.append('school_id', '157');
+
+    this
+      .feedsService
+      .upodateSocialGroup(control.value.wall_id, control.value, search)
+      .subscribe(
+        _ => { return; },
+        err => console.log(err)
+      );
+  }
+
+  getPrivilegeObj(privilege) {
+    let result;
+
+    this.privileges.forEach(_privilege => {
+      if (_privilege.action === privilege) {
+        result = _privilege;
+      }
+    });
+
+    return result;
   }
 
   ngOnInit() {
@@ -52,42 +118,19 @@ export class FeedSettingsComponent implements OnInit {
       'walls': this.fb.array([])
     });
 
-    this.walls = [
-      {
-        id: 1,
-        name: 'Campus Wall',
-        can_post: 2,
-        can_comment: 1
-      },
-      {
-        id: 2,
-        name: 'Campus Wall 2',
-        can_post: 1,
-        can_comment: 1
-      },
-      {
-        id: 3,
-        name: 'Campus Wall 3',
-        can_post: -1,
-        can_comment: 2
-      }
-    ];
-
     this.privileges = [
       {
         label: 'Disabled',
-        action: -1
+        action: 100
       },
       {
         label: 'Team Members',
-        action: 1
+        action: 3
       },
       {
         label: 'Everyone',
-        action: 2
+        action: 0
       }
     ];
-
-    this.walls.forEach(wall => this.addFeedControl(wall));
   }
 }

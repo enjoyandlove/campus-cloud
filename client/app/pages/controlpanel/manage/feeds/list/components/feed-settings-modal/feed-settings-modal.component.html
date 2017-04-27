@@ -34,14 +34,14 @@
                 <cp-dropdown
                   [items]="privileges"
                   (selected)="onCanPostChanged($event, i)"
-                  [selectedItem]="privileges[wall.controls.can_post.value]">
+                  [selectedItem]="getPrivilegeObj(wall.controls.min_posting_member_type.value)">
                 </cp-dropdown>
               </div>
               <div class="col-xs-4">
                 <cp-dropdown
                   [items]="privileges"
                   (selected)="onCanCommentChanged($event, i)"
-                  [selectedItem]="privileges[wall.controls.can_comment.value]">
+                  [selectedItem]="getPrivilegeObj(wall.controls.min_commenting_member_type.value)">
                 </cp-dropdown>
               </div>
             </div>
@@ -63,9 +63,9 @@
 
         <button
           type="button"
-          (click)="onSave()"
+          data-dismiss="modal"
           class="cpbtn cpbtn--primary"i18n>
-          Save
+          Done
         </button>
       </div>
     </div>
