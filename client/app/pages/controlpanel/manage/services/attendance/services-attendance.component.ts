@@ -8,7 +8,6 @@ import {
   HEADER_UPDATE
 } from '../../../../../reducers/header.reducer';
 import { ServicesService } from '../services.service';
-import { ProvidersService } from '../providers.service';
 import { BaseComponent } from '../../../../../base/base.component';
 import { STAR_SIZE } from '../../../../../shared/components/cp-stars';
 
@@ -31,8 +30,7 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
   constructor(
     private route: ActivatedRoute,
     private store: Store<IHeader>,
-    private serviceService: ServicesService,
-    private providersService: ProvidersService
+    private serviceService: ServicesService
   ) {
     super();
     this.serviceId = this.route.snapshot.params['serviceId'];

@@ -1,0 +1,99 @@
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div *ngSwitchCase="false">
+    <cp-no-content
+      *ngIf="!state.providers.length"
+      noContentText="No providers found...">
+    </cp-no-content>
+
+    <div class="row" *ngIf="state.providers.length">
+      <div class="col-xs-12">
+        <div class="cp-table">
+          <div class="cp-table__header">
+            <div class="row">
+              <div class="col-xs-3">
+                <span i18n>Service Provider</span>
+              </div>
+              <div class="col-xs-4">
+                <span i18n>Average Rating</span>
+              </div>
+              <div class="col-xs-1">
+                <span i18n>Ratings</span>
+              </div>
+              <div class="col-xs-1">
+                <span i18n>Visits</span>
+              </div>
+              <div class="col-xs-2">
+                <span i18n>Attendance</span>
+              </div>
+              <div class="col-xs-1"></div>
+            </div>
+          </div>
+
+          <div class="cp-table__item" *ngFor="let provider of state.providers">
+            <div class="row">
+              <div class="col-xs-3">
+                <a [routerLink]="['provider/' +  provider.id]">
+                  <span>
+                    <strong>{{ provider.provider_name }}</strong>
+                    <br>
+                    {{ provider.email }}
+                  </span>
+                </a>
+              </div>
+              <div class="col-xs-4">
+                <cp-stars
+                  [size]="listStarSize"
+                  [avgRate]="provider.avg_rating_percent"
+                  [maxRate]="5">
+                </cp-stars>
+              </div>
+              <div class="col-xs-1">
+                <span>{{ provider.num_ratings }}</span>
+              </div>
+              <div class="col-xs-1">
+                <span>{{ provider.total_visits }}</span>
+              </div>
+              <div class="col-xs-2">
+                <button
+                  type="button"
+                  class="cpbtn cpbtn--secondary cpbtn--secondary--no-border" i18n>
+                  Start Web Check-in
+                </button>
+              </div>
+              <div class="col-xs-1">
+                <span
+                  (click)="deleteProvider = provider"
+                  data-toggle="modal" data-target="#deleteProvider"
+                  class="col-xs-12 col-md-1 hover text-truncate delete-provider">
+                  &times;
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <cp-pagination
+            [pageNext]="pageNext"
+            [pagePrev]="pagePrev"
+            [pageNumber]="pageNumber"
+            (next)="onPaginationNext()"
+            (previous)="onPaginationPrevious()">
+          </cp-pagination>
+        </div>
+      </div>
+    </div>
+
+    <cp-modal modalId="deleteProvider">
+      <cp-providers-delete
+        [serviceId]="serviceId"
+        [provider]="deleteProvider"
+        (deleted)="onDeleted($event)">
+      </cp-providers-delete>
+    </cp-modal>
+  </div>
+</div>

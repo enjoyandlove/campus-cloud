@@ -11,6 +11,8 @@ import { ServicesCreateComponent } from './create';
 import { ServicesEventsComponent } from './events';
 import { ServicesAttendanceComponent } from './attendance';
 
+import { ServicesProviderDetailsComponent } from './attendance/components';
+
 /**
  * Excel
  */
@@ -27,6 +29,8 @@ const appRoutes: Routes = [
   { path: ':serviceId/edit', component: ServicesEditComponent },
   { path: ':serviceId/events', component: ServicesEventsComponent },
   { path: ':serviceId', component: ServicesAttendanceComponent },
+
+  { path: ':serviceId/provider/:providerId', component: ServicesProviderDetailsComponent },
 
   { path: 'import/excel', component: ServicesExcelComponent },
 ];

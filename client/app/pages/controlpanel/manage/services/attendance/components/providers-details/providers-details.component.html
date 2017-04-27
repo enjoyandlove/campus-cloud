@@ -1,0 +1,63 @@
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div *ngSwitchCase="false">
+    <div class="row">
+      <div class="header">
+        <div class="col-xs-4 text-center">
+          <div class="cp-card cp-card--half-padding">
+            <p class="header__digit">{{ provider.avg_rating_percent }}</p>
+            <p i18n>Average Rating</p>
+          </div>
+        </div>
+        <div class="col-xs-4 text-center">
+          <div class="cp-card cp-card--half-padding">
+            <p class="header__digit">{{ provider.num_ratings }}</p>
+            <p i18n>Average Rating</p>
+          </div>
+        </div>
+        <div class="col-xs-4 text-center">
+          <div class="cp-card cp-card--half-padding">
+            <p class="header__digit">{{ provider.total_visits }}</p>
+            <p i18n>Average Rating</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="cp-card actions">
+          <div class="row">
+            <div class="col-xs-12 col-sm-4">
+              <cp-searchbox
+                (query)=onSearch($event)
+                placeholder="Search Attendees...">
+              </cp-searchbox>
+            </div>
+            <div class="col-xs-12 col-xs-offset-0 col-sm-6 col-sm-offset-2 text-right">
+              <button
+                type="button"
+                class="cpbtn cpbtn--primary"
+                data-toggle="modal" data-target="#createProvider" i18n>
+                Start Web Check-in
+              </button>
+              <button
+                (click)="download$.next(true)"
+                class="cpbtn cpbtn--primary" i18n>
+                Download Attendance Data
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <cp-providers-attendees-list>
+        </cp-providers-attendees-list>
+      </div>
+    </div>
+  </div>
+</div>
