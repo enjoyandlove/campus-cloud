@@ -41,23 +41,23 @@ export class EventsCreateComponent implements OnInit {
     this.clubId = this.route.parent.parent.snapshot.params['clubId'];
 
     this.form = this.fb.group({
-      'title': ['', Validators.required],
+      'title': [null, Validators.required],
       'store_id': [this.clubId ? this.clubId : null, Validators.required],
-      'location': [''],
-      'room_data': [''],
-      'city': [''],
-      'province': [''],
-      'country': [''],
-      'address': [''],
-      'postal_code': [''],
-      'latitude': [''],
-      'longitude': [''],
+      'location': [null],
+      'room_data': [null],
+      'city': [null],
+      'province': [null],
+      'country': [null],
+      'address': [null],
+      'postal_code': [null],
+      'latitude': [0],
+      'longitude': [0],
       'event_attendance': [null], // 1 => Enabled
-      'start': ['', Validators.required],
-      'poster_url': ['', Validators.required],
-      'poster_thumb_url': ['', Validators.required],
-      'end': ['', Validators.required],
-      'description': [''],
+      'start': [null, Validators.required],
+      'poster_url': [null, Validators.required],
+      'poster_thumb_url': [null, Validators.required],
+      'end': [null, Validators.required],
+      'description': [null],
       'event_feedback': [null], // 1 => Enabled
       'event_manager_id': [null],
       'attendance_manager_email': [null]
