@@ -75,7 +75,6 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.form.value);
     this.formError = false;
 
     if (!this.form.valid) {
