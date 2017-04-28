@@ -1,3 +1,4 @@
+import { URLSearchParams } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Http } from '@angular/http';
@@ -13,10 +14,10 @@ export class AdminService extends BaseService {
     Object.setPrototypeOf(this, AdminService.prototype);
   }
 
-  getAdmins(startRage: number, endRage: number) {
+  getAdmins(startRage: number, endRage: number, search?: URLSearchParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/${startRage};${endRage}`;
 
-    return super.get(url).map(res => res.json());
+    return super.get(url, { search }).map(res => res.json());
   }
 
   getAdminById(adminId: number) {
@@ -35,5 +36,11 @@ export class AdminService extends BaseService {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/`;
 
     return super.post(url, data).map(res => res.json());
+  }
+
+  updateAdmin(data: any) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/`;
+
+    return super.update(url, data).map(res => res.json());
   }
 }

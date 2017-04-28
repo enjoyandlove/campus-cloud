@@ -28,6 +28,12 @@ export class ProvidersService extends BaseService {
     return super.post(url, data, { search }).map(res => res.json());
   }
 
+  updateProvider(data: any, search?: URLSearchParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICE_PROVIDER}/`;
+
+    return super.update(url, data, { search }).map(res => res.json());
+  }
+
   deleteProvider(providerId: number, search?: URLSearchParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICE_PROVIDER}/${providerId}`;
 

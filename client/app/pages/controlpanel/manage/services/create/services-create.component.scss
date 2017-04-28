@@ -50,6 +50,7 @@
 .delete-provider {
   top: 5px;
   right: 30px;
+  z-index: 10;
   float: right;
   font-size: 2em;
   position: absolute;
@@ -93,6 +94,7 @@ form {
   left: 0;
   bottom: 0;
   width: 100%;
+  z-index: 11;
   position: fixed;
   margin-top: 25px;
   background: $color-white;

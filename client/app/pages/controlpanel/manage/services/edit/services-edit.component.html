@@ -154,7 +154,7 @@
                     <div class="cp-card cp-card--alt cp-card--half-padding cp-card--no-shadow">
                       <div class="delete-provider">
                         <button
-                          *ngIf="i > 0"
+                          *ngIf="form.controls.providers.controls.length > 0"
                           (click)="delteProviderControl(i)"
                           class="cpbtn cpbtn--link-dark">
                           &times;
@@ -221,7 +221,7 @@
                   <div class="cp-card cp-card--alt cp-card--half-padding cp-card--no-shadow">
                     <div class="delete-admin">
                       <button
-                        *ngIf="i > 0"
+                        *ngIf="form.controls.admins.controls.length > 0"
                         (click)="deleteAdminControl(i)"
                         class="cpbtn cpbtn--link-dark">
                         &times;

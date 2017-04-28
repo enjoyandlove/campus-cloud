@@ -52,7 +52,6 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
     super
       .fetchData(stream$)
       .then(res => {
-        console.log(res.data);
         this.assessments = res.data;
       })
       .catch(err => console.log(err));

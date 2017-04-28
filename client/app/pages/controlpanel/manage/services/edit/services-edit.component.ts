@@ -46,15 +46,45 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    const stream$ = this.servicesService.getServiceById(this.serviceId);
+    let searchProviders = new URLSearchParams();
+    let searchAdmin = new URLSearchParams();
+    searchAdmin.append('school_id', '157');
+    searchProviders.append('service_id', this.serviceId.toString());
+
+    const service$ = this.servicesService.getServiceById(this.serviceId);
+    const providers$ = this.providersService.getProviders(1, 1000, searchProviders);
+    const admins$ = this.adminService.getAdmins(1, 1000, searchAdmin);
+
+    const stream$ = Observable.combineLatest(service$, providers$, admins$);
     super
       .fetchData(stream$)
       .then(res => {
-        this.service = res.data;
-        console.log(this.service);
-        this.mapCenter = { lat: res.data.latitude, lng: res.data.longitude };
+        let admins = res.data[2];
+
+        let providers = res.data[1];
+
+        this.service = res.data[0];
+        this.mapCenter = { lat: res.data[0].latitude, lng: res.data[0].longitude };
 
         this.buildForm();
+
+        if (admins.length) {
+          let control = <FormArray>this.form.controls['admins'];
+          admins.forEach(admin => control.push(this.buildAdminControl(admin)));
+          control.push(this.buildAdminControl());
+        } else {
+          let control = <FormArray>this.form.controls['admins'];
+          control.push(this.buildAdminControl());
+        }
+
+        if (providers.length) {
+          let control = <FormArray>this.form.controls['providers'];
+          providers.forEach(provider => control.push(this.buildServiceProviderControl(provider)));
+          control.push(this.buildServiceProviderControl());
+        } else {
+          let control = <FormArray>this.form.controls['providers'];
+          control.push(this.buildServiceProviderControl());
+        }
       })
       .catch(err => console.error(err));
   }
@@ -103,7 +133,14 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     controls.removeAt(index);
   }
 
-  buildServiceProviderControl() {
+  buildServiceProviderControl(provider?: any) {
+    if (provider) {
+      return this.fb.group({
+        'provider_name': [provider.provider_name],
+        'email': [provider.email],
+        'custom_basic_feedback_label': [provider.custom_basic_feedback_label]
+      });
+    }
     return this.fb.group({
       'provider_name': [null],
       'email': [null],
@@ -111,7 +148,14 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     });
   }
 
-  buildAdminControl() {
+  buildAdminControl(admin?: any) {
+    if (admin) {
+      return this.fb.group({
+        'firstname': [admin.firstname],
+        'lastname': [admin.lastname],
+        'email': [admin.email],
+      });
+    }
     return this.fb.group({
       'firstname': [null],
       'lastname': [null],
@@ -141,8 +185,8 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       'service_attendance': [this.service.service_attendance],
       'rating_scale_maximum': [this.service.rating_scale_maximum],
       'default_basic_feedback_label': [this.service.default_basic_feedback_label],
-      'providers': this.fb.array([this.buildServiceProviderControl()]),
-      'admins': this.fb.array([this.buildAdminControl()])
+      'providers': this.fb.array([]),
+      'admins': this.fb.array([])
     });
   }
 
@@ -160,7 +204,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
 
   onSubmit() {
     this.formError = false;
-    console.log(this.form.controls['admins'].dirty);
+
     if (this.form.controls['admins'].dirty) {
       let adminControls = <FormArray>this.form.controls['admins'];
       adminControls.controls.forEach((control: FormGroup) => {
@@ -198,7 +242,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
 
     this
       .servicesService
-      .createService(
+      .updateService(
       {
         store_id: this.storeId,
         name: data.name,
@@ -238,7 +282,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
         });
 
         search.append('service_id', this.serviceId.toString());
-        return this.providersService.createProvider(providers, search);
+        return this.providersService.updateProvider(providers, search);
       })
       .switchMap(_ => {
         let admins$ = [];
@@ -259,7 +303,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
               }
             }
           };
-          admins$.push(this.adminService.createAdmin(_admin));
+          admins$.push(this.adminService.updateAdmin(_admin));
         });
 
         return Observable.combineLatest(admins$);
@@ -272,7 +316,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.storeId = 157;
+    this.storeId = 14748;
     let categories = require('../categories.json');
 
     categories.map(category => {
