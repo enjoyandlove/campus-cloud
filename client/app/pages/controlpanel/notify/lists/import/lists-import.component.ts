@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { isProd } from '../../../../../config/env';
+import { STATUS } from '../../../../../shared/constants';
 import { FileUploadService } from '../../../../../shared/services';
 
 declare var $: any;
@@ -29,12 +30,12 @@ export class ListsImportComponent implements OnInit {
     let validators = [
       {
         'exp': file.name.split('.').pop() === 'xlsx',
-        'error': 'Wrong Extension',
+        'error': STATUS.WRONG_EXTENSION,
         'isError': false
       },
       {
         'exp': file.size > 5000,
-        'error': 'File to big',
+        'error': STATUS.FILE_IS_TOO_BIG,
         'isError': false
       }
     ];

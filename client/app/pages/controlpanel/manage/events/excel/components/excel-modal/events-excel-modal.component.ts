@@ -1,10 +1,10 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
-
 
 import { ENV } from '../../../../../../../config/env';
 import { EventsService } from '../../../events.service';
+import { STATUS } from '../../../../../../../shared/constants';
 import { FileUploadService } from '../../../../../../../shared/services';
 
 declare var $: any;
@@ -15,6 +15,10 @@ declare var $: any;
   styleUrls: ['./events-excel-modal.component.scss']
 })
 export class EventsExcelModalComponent implements OnInit {
+  @Input() storeId: number;
+  @Input() isClub: boolean;
+  @Input() isService: boolean;
+
   error;
   uploaded;
   downloadLink;
@@ -35,21 +39,17 @@ export class EventsExcelModalComponent implements OnInit {
                                 '/templates/mass_event_invite_sample.xlsx';
   }
 
-  onSubmit(data) {
-    console.log(data);
-  }
-
   fileIsValid(file) {
     let result = [];
     let validators = [
       {
         'exp': file.name.split('.').pop() === 'xlsx',
-        'error': 'Wrong Extension',
+        'error': STATUS.WRONG_EXTENSION,
         'isError': false
       },
       {
         'exp': file.size > 5000,
-        'error': 'File to big',
+        'error': STATUS.FILE_IS_TOO_BIG,
         'isError': false
       }
     ];
@@ -88,6 +88,16 @@ export class EventsExcelModalComponent implements OnInit {
 
   onNavigate() {
     this.doReset();
+    if (this.isService) {
+      this.router.navigate([`/manage/services/${this.storeId}/import/excel`]);
+      return;
+    }
+
+    if (this.isClub) {
+      this.router.navigate([`/manage/clubs/${this.storeId}/import/excel`]);
+      return;
+    }
+
     this.router.navigate(['/manage/events/import/excel']);
   }
 
@@ -98,6 +108,8 @@ export class EventsExcelModalComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.isService);
+    console.log(this.storeId);
     // console.log($('#excelModal'));
   }
 }

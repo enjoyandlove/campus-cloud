@@ -1,6 +1,63 @@
 /**
  * Privileges Mapping as per DB
  */
+
+export const CP_PRIVILEGES_MAP = {
+  'exec_profile': 1, // 'Exec Profile',
+
+  'deals_collector': 2, // 'Deal Collector',
+
+  'campaign': 3, // 'Campaign',
+
+  'manage_admin': 10, // 'Manage Admin',
+
+  'dashboard': 11, // 'Dashboard',
+
+  'campus_announcements': 12, // 'Campus Announcement',
+
+  'app_customization': 13, // 'App Customization',
+
+  'promotions': 14, // 'Promotions',
+
+  'moderation': 15, // 'Moderation',
+
+  'calendar': 16, // 'Academic Calendar',
+
+  'orientation': 17, // 'Orientation Schedule',
+
+  'events': 18, // 'Events',
+
+  'campus_game': 19, // 'Campus Game',
+
+  'campus_tour': 20, // 'Campus Tour',
+
+  'campus_maps': 21, // 'Campus Maps',
+
+  'clubs': 22, // 'Clubs',
+
+  'links': 23, // 'Links',
+
+  'services': 24, // 'Services',
+
+  'jobs': 25, // 'Jobs',
+
+  'deals': 26, // 'Deals',
+
+  'payment': 27, // 'Payment',
+
+  'athletics': 28, // 'Athletics',
+
+  'membership': 29, // 'Membership',
+
+  'ticket': 30, // 'Ticket',
+
+  'promotion_customization': 31, // 'Promotion Customization',
+
+  'emergency_announcement': 32, // 'Emergency Announcement',
+
+  'event_attendance': 33// 'Event Attendance'
+};
+
 const PRIVILEGES = {
   1: 'Exec Profile',
 

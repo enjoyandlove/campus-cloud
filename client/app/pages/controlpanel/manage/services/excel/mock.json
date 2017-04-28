@@ -5,7 +5,7 @@
     "phone_number": "555-444-3322",
     "service_email": "demo@oohlala.com",
     "service_name": "Student Financial Support",
-    "website": "=HYPERLINK('http://www.oohlalamobile.com','www.oohlalamobile.com')"
+    "website": "http://www.oohlalamobile.com"
   },
   {
     "admin_email": "admin@oohlalamobile.com",
@@ -13,6 +13,6 @@
     "phone_number": "555-444-3322",
     "service_email": "demo@oohlala.com",
     "service_name": "Student Financial Support",
-    "website": "=HYPERLINK('http://www.oohlalamobile.com','www.oohlalamobile.com')"
+    "website": "http://www.oohlalamobile.com"
   }
 ]

@@ -1,20 +1,18 @@
+import { CPDate } from '../../../../../../../../../shared/utils/date';
+
 const columns = [
-  'Service Provider',
-  'Total Visits',
-  'Total Ratings',
-  'QR Code',
-  'Averate Rating',
+  'Attendee Name',
+  'Email',
+  'Average Rating',
+  'Checked-in Method',
+  'Checked-in Time',
 ];
 
 const check_in_method = {
-  1: 'Web',
-  3: 'QR Code'
+  1: 'Web check-in',
+  3: 'App check-in'
 };
 
-const rsvp = {
-  1: 'Yes',
-  0: 'No'
-};
 
 export const generateExcelFile = function generateExcelFile(data: any[]) {
   const array = typeof data !== 'object' ? JSON.parse(data) : data;
@@ -31,13 +29,11 @@ export const generateExcelFile = function generateExcelFile(data: any[]) {
   for (let i = 0; i < array.length; i++) {
     let line = '';
 
-    line += array[i]['firstname'] + ' ' + array[i]['lastname'] + ',';
+    line += array[i]['firstname'] + array[i]['lastname'] + ',';
     line += array[i]['email'] + ',';
-    line += rsvp[array[i]['rsvp']] + ',';
-    // line += CPDate.fromEpoch(array[i]['check_in_time']) + ',';
-    line += ((array[i]['feedback_rating'] * 5) / 100).toFixed(2) + ',';
-    line += array[i]['feedback_text'] + ',';
-    line += check_in_method[array[i]['check_in_method']];
+    line += array[i]['feedback_rating'] === -1 ? 0 : array[i]['feedback_rating'] + ',';
+    line += check_in_method[array[i]['check_in_method']] + ',';
+    line += CPDate.fromEpoch(array[i]['check_in_time']) + ',';
 
     line.slice(0, line.length - 1);
 

@@ -1,6 +1,6 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { EventsService } from '../events.service';
 import { CPMap, CPDate } from '../../../../../shared/utils';
@@ -19,7 +19,10 @@ const COMMON_DATE_PICKER_OPTIONS = {
   styleUrls: ['./events-create.component.scss']
 })
 export class EventsCreateComponent implements OnInit {
-  clubId;
+  @Input() storeId: number;
+  @Input() isClub: boolean;
+  @Input() isService: boolean;
+
   stores$;
   mapCenter;
   imageError;
@@ -29,40 +32,13 @@ export class EventsCreateComponent implements OnInit {
   enddatePickerOpts;
   startdatePickerOpts;
 
-
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private route: ActivatedRoute,
     private storeService: StoreService,
     private errorService: ErrorService,
     private eventService: EventsService
   ) {
-    this.clubId = this.route.parent.parent.snapshot.params['clubId'];
-
-    this.form = this.fb.group({
-      'title': [null, Validators.required],
-      'store_id': [this.clubId ? this.clubId : null, Validators.required],
-      'location': [null],
-      'room_data': [null],
-      'city': [null],
-      'province': [null],
-      'country': [null],
-      'address': [null],
-      'postal_code': [null],
-      'latitude': [0],
-      'longitude': [0],
-      'event_attendance': [null], // 1 => Enabled
-      'start': [null, Validators.required],
-      'poster_url': [null, Validators.required],
-      'poster_thumb_url': [null, Validators.required],
-      'end': [null, Validators.required],
-      'description': [null],
-      'event_feedback': [null], // 1 => Enabled
-      'event_manager_id': [null],
-      'attendance_manager_email': [null]
-    });
-
     this.stores$ = this.storeService.getStores().map(res => {
       const stores = [
         {
@@ -81,7 +57,6 @@ export class EventsCreateComponent implements OnInit {
   }
 
   onUploadedImage(image) {
-    console.log(image);
     this.form.controls['poster_url'].setValue(image);
     this.form.controls['poster_thumb_url'].setValue(image);
   }
@@ -130,24 +105,57 @@ export class EventsCreateComponent implements OnInit {
       .eventService
       .createEvent(this.form.value)
       .subscribe(
-        res => {
-          this.router.navigate(['/manage/events/' + res.id]);
-        },
-        err => this.errorService.handleError(err)
+      res => {
+        if (this.isService) {
+          this.router.navigate([`/manage/services/${this.storeId}/events/${res.id}`]);
+          return;
+        }
+        if (this.isClub) {
+          this.router.navigate([`/manage/clubs/${this.storeId}/events/${res.id}`]);
+          return;
+        }
+        this.router.navigate(['/manage/events/' + res.id]);
+      },
+      err => this.errorService.handleError(err)
       );
   }
 
   ngOnInit() {
+    this.form = this.fb.group({
+      'title': [null, Validators.required],
+      'store_id': [this.storeId ? this.storeId : null, Validators.required],
+      'location': [null],
+      'room_data': [null],
+      'city': [null],
+      'province': [null],
+      'country': [null],
+      'address': [null],
+      'postal_code': [null],
+      'latitude': [0],
+      'longitude': [0],
+      'event_attendance': [null], // 1 => Enabled
+      'start': [null, Validators.required],
+      'poster_url': [null, Validators.required],
+      'poster_thumb_url': [null, Validators.required],
+      'end': [null, Validators.required],
+      'description': [null],
+      'event_feedback': [null], // 1 => Enabled
+      'event_manager_id': [null],
+      'attendance_manager_email': [null]
+    });
+
     let _self = this;
+
     this.startdatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      onClose: function(date) {
+      onClose: function (date) {
         _self.form.controls['start'].setValue(CPDate.toEpoch(date[0]));
       }
     };
+
     this.enddatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      onClose: function(date) {
+      onClose: function (date) {
         _self.form.controls['end'].setValue(CPDate.toEpoch(date[0]));
       }
     };

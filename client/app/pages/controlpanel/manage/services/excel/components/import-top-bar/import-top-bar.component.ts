@@ -2,13 +2,12 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Headers } from '@angular/http';
 
 import { API } from '../../../../../../../config/api';
-import { ServicesService } from '../../../services.service';
 import { BaseComponent } from '../../../../../../../base/base.component';
 import { CPImage, CPArray, appStorage } from '../../../../../../../shared/utils';
 import { StoreService, FileUploadService } from '../../../../../../../shared/services';
 
 @Component({
-  selector: 'cp-import-top-bar',
+  selector: 'cp-services-import-top-bar',
   templateUrl: './import-top-bar.component.html',
   styleUrls: ['./import-top-bar.component.scss']
 })
@@ -24,7 +23,6 @@ export class ServicesImportTopBarComponent extends BaseComponent implements OnIn
 
   constructor(
     private storeService: StoreService,
-    private servicesService: ServicesService,
     private fileUploadService: FileUploadService
   ) {
     super();
@@ -72,7 +70,7 @@ export class ServicesImportTopBarComponent extends BaseComponent implements OnIn
     }
 
     const headers = new Headers();
-    const url = this.servicesService.getUploadImageUrl();
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
     const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
 
     headers.append('Authorization', auth);

@@ -1,5 +1,5 @@
+import { Component, OnInit, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { BaseComponent } from '../../../../../base/base.component';
@@ -16,6 +16,7 @@ import {
   styleUrls: ['./events-facebook.component.scss']
 })
 export class EventsFacebookComponent extends BaseComponent implements OnInit {
+  @Input() storeId: number;
   stores;
   loading;
   reload$: BehaviorSubject<boolean> = new BehaviorSubject(false);

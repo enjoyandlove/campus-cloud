@@ -1,1 +1,10 @@
-Events
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <cp-events
+    *ngSwitchCase="false"
+    [isSimple]="isSimple"
+    [isService]="isService"
+    [storeId]="service.store_id">
+  </cp-events>
+</div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 
@@ -17,6 +17,11 @@ import { BaseComponent } from '../../../../../base/base.component';
   styleUrls: ['./events-info.component.scss']
 })
 export class EventsInfoComponent extends BaseComponent implements OnInit {
+  @Input() isClub: boolean;
+  @Input() clubId: number;
+  @Input() serviceId: number;
+  @Input() isService: boolean;
+
   event;
   dateFormat;
   mapCenter;
@@ -57,11 +62,11 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
         children = [
           {
             'label': 'Attendance',
-            'url': `/manage/events/${this.eventId}`
+            'url': `${this.buildUrlPrefix()}/${this.eventId}`
           },
           {
             'label': 'Info',
-            'url': `/manage/events/${this.eventId}/info`
+            'url': `${this.buildUrlPrefix()}/${this.eventId}/info`
           }
         ];
       } else {
@@ -71,11 +76,11 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
       children = [
         {
           'label': res.event_attendance === 1 ? 'Attendance' : 'Event',
-          'url': `/manage/events/${this.eventId}`
+          'url': `${this.buildUrlPrefix()}/${this.eventId}`
         },
         {
           'label': 'Info',
-          'url': `/manage/events/${this.eventId}/info`
+          'url': `${this.buildUrlPrefix()}/${this.eventId}/info`
         }
       ];
     }
@@ -89,6 +94,15 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
       }
     });
   }
+
+  buildUrlPrefix() {
+     if (this.isClub) {
+       return `/manage/clubs/${this.clubId}/events`;
+     } else if (this.isService) {
+      return `/manage/services/${this.serviceId}/events`;
+     }
+     return '/manage/events';
+   }
 
   ngOnInit() {
 

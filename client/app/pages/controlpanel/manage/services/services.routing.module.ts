@@ -11,6 +11,17 @@ import { ServicesCreateComponent } from './create';
 import { ServicesEventsComponent } from './events';
 import { ServicesAttendanceComponent } from './attendance';
 
+import {
+  ServicesEventsEditComponent,
+  ServicesEventsInfoComponent,
+  ServicesEventsExcelComponent,
+  ServicesEventsCreateComponent,
+  ServicesEventsFacebookComponent,
+  ServicesEventsAttendanceComponent
+} from './events/components';
+
+import { ServicesProviderDetailsComponent } from './attendance/components';
+
 /**
  * Excel
  */
@@ -26,9 +37,20 @@ const appRoutes: Routes = [
   { path: ':serviceId/info', component: ServicesInfoComponent },
   { path: ':serviceId/edit', component: ServicesEditComponent },
   { path: ':serviceId/events', component: ServicesEventsComponent },
+
+  { path: ':serviceId/events/create', component: ServicesEventsCreateComponent },
+  { path: ':serviceId/events/:eventId', component: ServicesEventsAttendanceComponent },
+  { path: ':serviceId/events/:eventId/info', component: ServicesEventsInfoComponent },
+
+  { path: ':serviceId/events/:eventId/edit', component: ServicesEventsEditComponent },
+  { path: ':serviceId/events/import/excel', component: ServicesEventsExcelComponent },
+  { path: ':serviceId/events/import/facebook', component: ServicesEventsFacebookComponent },
+
   { path: ':serviceId', component: ServicesAttendanceComponent },
 
-  { path: 'import/excel', component: ServicesExcelComponent },
+  { path: ':serviceId/provider/:providerId', component: ServicesProviderDetailsComponent },
+
+  { path: 'import/excel', component: ServicesExcelComponent }
 ];
 @NgModule({
   imports: [
@@ -38,4 +60,4 @@ const appRoutes: Routes = [
     RouterModule
   ]
 })
-export class ServicesRoutingModule {}
+export class ServicesRoutingModule { }

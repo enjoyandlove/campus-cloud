@@ -53,7 +53,6 @@ export class ErrorService {
   }
 
   handleError(err) {
-    console.log('error here');
     this.store.dispatch({
       type: ALERT_PUSH,
       payload: {

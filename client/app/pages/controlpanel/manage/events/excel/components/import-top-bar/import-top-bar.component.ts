@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Headers } from '@angular/http';
 
 import { API } from '../../../../../../../config/api';
@@ -12,6 +12,7 @@ import { FileUploadService } from '../../../../../../../shared/services';
   styleUrls: ['./import-top-bar.component.scss']
 })
 export class EventsImportTopBarComponent implements OnInit {
+  @Input() storeId: number;
   @Output() bulkChange: EventEmitter<any> = new EventEmitter();
   // @Output() deleteEvent: EventEmitter<any> = new EventEmitter();
   @Output() checkAll: EventEmitter<boolean> = new EventEmitter();

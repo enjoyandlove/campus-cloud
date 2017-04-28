@@ -12,11 +12,13 @@
     </div>
     <cp-facebook-events-create
       [stores]="stores"
+      [storeId]="storeId"
       (created)="onCreated()">
     </cp-facebook-events-create>
 
     <cp-facebook-update
       [stores]="stores"
+      [storeId]="storeId"
       [reload]="reload$">
     </cp-facebook-update>
   </div>

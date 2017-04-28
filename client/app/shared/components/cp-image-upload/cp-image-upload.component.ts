@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Headers } from '@angular/http';
 
 import { API } from '../../../config/api';
@@ -10,9 +10,10 @@ import { FileUploadService } from '../../../shared/services/file-upload.service'
   templateUrl: './cp-image-upload.component.html',
   styleUrls: ['./cp-image-upload.component.scss']
 })
-export class CPImageUploadComponent implements OnInit, OnChanges {
+export class CPImageUploadComponent implements OnInit {
   @Input() small: boolean;
   @Input() required: boolean;
+  @Input() defaultImage: string;
   @Output() uploaded: EventEmitter<string> = new EventEmitter();
 
   image;
@@ -23,8 +24,7 @@ export class CPImageUploadComponent implements OnInit, OnChanges {
 
   constructor(
     private fileUploadService: FileUploadService
-  ) {
-  }
+  ) { }
 
   onFileUpload(file) {
     this.errors = [];
@@ -75,11 +75,9 @@ export class CPImageUploadComponent implements OnInit, OnChanges {
     this.uploaded.emit(null);
   }
 
-  ngOnChanges() {
-    if (this.required) {
-      this.errors.push('Image is required');
+  ngOnInit() {
+    if (this.defaultImage) {
+      this.image = this.defaultImage;
     }
   }
-
-  ngOnInit() {}
 }

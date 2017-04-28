@@ -6,6 +6,18 @@ import { ServicesService } from '../services.service';
 import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 
+interface IState {
+  search_text: string;
+  attendance_only: number;
+  services: Array<any>;
+}
+
+const state: IState = {
+  services: [],
+  search_text: null,
+  attendance_only: 0
+};
+
 @Component({
   selector: 'cp-services-list',
   templateUrl: './services-list.component.html',
@@ -13,8 +25,8 @@ import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 })
 export class ServicesListComponent extends BaseComponent implements OnInit, OnDestroy {
   loading;
-  services;
   deleteService = '';
+  state: IState = state;
 
   constructor(
     private store: Store<IHeader>,
@@ -22,15 +34,23 @@ export class ServicesListComponent extends BaseComponent implements OnInit, OnDe
   ) {
     super();
     this.buildHeader();
-    this.fetch(this.service.getServices());
     super.isLoading().subscribe(res => this.loading = res);
   }
 
-  private fetch(stream$) {
+  private fetch() {
+    let search = new URLSearchParams();
+    let attendance_only = this.state.attendance_only ?
+      this.state.attendance_only.toString() : null;
+
+    search.append('attendance_only', attendance_only);
+    search.append('search_text', this.state.search_text);
+
+    const stream$ = this.service.getServices(this.startRange, this.endRange, search);
+
     super
       .fetchData(stream$)
       .then(res => {
-        this.services = res.data;
+        this.state = Object.assign({}, this.state, { services: res.data });
       })
       .catch(err => console.error(err));
   }
@@ -44,28 +64,41 @@ export class ServicesListComponent extends BaseComponent implements OnInit, OnDe
 
   onPaginationNext() {
     super.goToNext();
+    this.fetch();
   }
 
   onPaginationPrevious() {
     super.goToPrevious();
+    this.fetch();
   }
 
-  doFilter(state) {
-    let search = new URLSearchParams();
+  doFilter(data) {
+    this.state = Object.assign({}, this.state, {
+      search_text: data.search_text,
+      attendance_only: data.attendance_only
+    });
 
-    search.append('attendance_only', state.attendance_only);
-
-    this.fetch(this.service.getServices(search));
+    this.fetch();
   }
 
   onDelete(service) {
     this.deleteService = service;
   }
 
-  ngOnDestroy() {
-    // console.log('destroy');
+  onDeleted(serviceId: number) {
+    this.deleteService = '';
+    let _state = Object.assign({}, this.state);
 
+    _state.services = _state.services.filter(service => service.id !== serviceId);
+
+    this.state = Object.assign({}, this.state, { services: _state.services });
   }
 
-  ngOnInit() { }
+  ngOnDestroy() {
+    // console.log('destroy');
+  }
+
+  ngOnInit() {
+    this.fetch();
+  }
 }

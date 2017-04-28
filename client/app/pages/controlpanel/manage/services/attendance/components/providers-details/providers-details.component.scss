@@ -1,0 +1,36 @@
+@import '~styles/core/colors';
+@import '~styles/components/card';
+@import '~styles/components/button';
+
+.visits {
+  span {
+    display: block;
+    text-align: left;
+    margin-bottom: 14px;
+    color: $color-med-grey;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    strong {
+      float: right;
+      color: $color-black;
+    }
+  }
+}
+
+.header,
+.actions {
+  @include card-margin();
+}
+
+.header {
+  margin-top: 0;
+
+  &__digit {
+    @include font-semi-bold();
+
+    font-size: 2.4em;
+  }
+}
