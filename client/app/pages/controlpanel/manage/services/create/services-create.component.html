@@ -4,78 +4,71 @@
       <div class="cp-card">
         <div class="row">
           <div class="col-xs-12">
-            <em i18n>Service Photo</em>
-            <div class="row">
-              <div class="col-xs-3">
-                <div class="placeholder"></div>
-              </div>
-              <div class="col-xs-9">
-                <strong>Upload your photo</strong>
-                <p>
-                  <small i18n>.png, .gif, .jpg with maximum file size of 5MB</small>
-                </p>
-                <button type="button" class="cpbtn cpbtn--secondary" i18n>Upload Photo</button>
-              </div>
+            <p class="title" i18n>Service Photo</p>
+            <div class="margin-top row">
+              <cp-image-upload
+                [required]="formError && form.controls['logo_url'].hasError('required')"
+                (uploaded)="form.controls.logo_url.setValue($event)">
+              </cp-image-upload>
             </div>
           </div>
         </div>
 
-        <div class="row">
+        <div class="row margin-top">
           <div class="col-xs-12">
-            <em i18n>Service Details</em>
-            <div class="form-group">
+            <p class="title" i18n>Service Details</p>
+            <div class="form-group margin-top">
               <label i18n>Service Name</label>
               <input
                 type="text"
                 class="form-control"
-                formControlName="title"
+                formControlName="name"
                 placeholder="Add a short, clear name"
-                [class.error]="formError && form.controls['title'].hasError('required')">
+                [class.error]="formError && form.controls['name'].hasError('required')">
             </div>
 
-            <div class="row">
+            <div class="row form-group">
               <div class="col-xs-12 col-sm-6">
                 <label i18n>Select Category</label>
-                <select
-                  class="form-control"
-                  formControlName="store_id"
-                  [class.error]="formError && form.controls['store_id'].hasError('required')">
-                  <option value="" i18n>ABC Category</option>
-                </select>
+                <cp-dropdown
+                  [items]="categories"
+                  (selected)="form.controls['category'].setValue($event.action)"
+                  [isRequiredError]="formError && form.controls['category'].hasError('required')">
+                </cp-dropdown>
               </div>
             </div>
 
-            <div class="row">
+            <div class="row form-group">
               <div class="col-xs-12 col-sm-6">
                 <label i18n>Phone Number</label>
                 <input
-                  type="number"
+                  type="text"
                   class="form-control"
-                  [class.error]="formError && form.controls['store_id'].hasError('required')">
+                  formControlName="phone">
               </div>
             </div>
 
-            <div class="row">
+            <div class="row form-group">
               <div class="col-xs-12 col-sm-6">
                 <label i18n>Email</label>
                 <input
                   type="email"
                   class="form-control"
-                  [class.error]="formError && form.controls['store_id'].hasError('required')">
+                  formControlName="email">
               </div>
             </div>
 
-            <div class="row">
+            <div class="row form-group">
               <div class="col-xs-12 col-sm-6">
                 <label i18n>Website</label>
                 <input
                   type="text"
                   class="form-control"
-                  [class.error]="formError && form.controls['store_id'].hasError('required')">
+                  formControlName="website">
               </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group form-group">
               <label i18n>Description (optional)</label>
               <textarea
                 formControlName="description"
@@ -83,7 +76,7 @@
               </textarea>
             </div>
 
-            <div class="row">
+            <div class="row form-group">
               <div class="col-xs-12">
                 <label i18n>Location (optional)</label>
                 <div class="row">
@@ -109,20 +102,18 @@
 
                   <div class="col-xs-6 col-sm-4">
                     <div class="form-group">
-                      <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Address"
-                        formControlName="address">
+                      <cp-place-autocomplete
+                        (placeChange)="onPlaceChanged($event)">
+                      </cp-place-autocomplete>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="row">
+            <div class="row form-group">
               <div class="col-xs-12 maps">
-                <cp-maps></cp-maps>
+                <cp-maps [center]="mapCenter"></cp-maps>
               </div>
             </div>
           </div>
@@ -133,23 +124,77 @@
     <div class="col-xs-12 col-sm-6">
       <div class="cp-card">
         <div class="row">
-          <div class="col-xs-12">
-            <em i18n>Service Attendance</em>
+          <div class="col-xs-8">
+            <p class="title" i18n>Service Attendance</p>
+            <p class="text-muted" i18n>Add Service Providers</p>
+          </div>
+          <div class="col-xs-4 pull-right">
             <span class="pull-right">
               <cp-switch
                 [id]="attendance"
-                (toggle)="attendance = !attendance">
+                (toggle)="attendance = !attendance"
+                (toggle)="onToggleAttendance($event)">
               </cp-switch>
             </span>
           </div>
         </div>
 
         <div *ngIf="attendance">
-          <div class="row">
-            <div class="col-xs-12">
-              <div class="form-group">
-                <label i18n>Default Question</label>
-                <input type="text" class="form-control">
+          <div formArrayName="providers">
+            <div
+              class="row form-box"
+              *ngFor="let provider of form.controls.providers.controls; let i=index">
+              <div [formGroupName]="i" class="col-xs-12">
+                <div class="cp-card cp-card--alt cp-card--half-padding cp-card--no-shadow">
+                  <div class="delete-provider">
+                    <button
+                      *ngIf="form.controls.providers.controls.length > 1"
+                      (click)="delteProviderControl(i)"
+                      class="cpbtn cpbtn--link-dark">
+                      &times;
+                    </button>
+                  </div>
+                  <div class="row form-group">
+                    <div class="col-xs-6">
+                      <label i18n>Name</label>
+                      <input
+                        type="text"
+                        placeholder="Name"
+                        formControlName="provider_name"
+                        [class.error]="formError && attendance && provider.controls['provider_name'].hasError('required')">
+                    </div>
+                    <div class="col-xs-6">
+                      <label i18n>Email</label>
+                      <input
+                        type="email"
+                        placeholder="Email"
+                        formControlName="email"
+                        [class.error]="formError && attendance && provider.controls['email'].hasError('required')">
+                    </div>
+                  </div>
+
+                  <div class="row form-group">
+                    <div class="col-xs-12">
+                      <label i18n>Default Question</label>
+                      <input
+                        type="text"
+                        placeholder="How did you like the service?"
+                        formControlName="custom_basic_feedback_label"
+                        [class.error]="formError && attendance && provider.controls['custom_basic_feedback_label'].hasError('required')">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-4">
+                <button
+                  type="button"
+                  class="cpbtn cpbtn--secondary"
+                  (click)="onAddProviderControl()" i18n>
+                  Add Another Service Provider
+                </button>
               </div>
             </div>
           </div>
@@ -159,29 +204,63 @@
       <div class="cp-card margin-top">
         <div class="row">
           <div class="col-xs-12">
-            <em i18n>Admins</em>
+            <p class="title" i18n>Invite Team Members</p>
           </div>
         </div>
-        <ul class="row admins">
-          <li class="admins__item">
-            <div class="col-xs-12">
-              <div class="pull-left">
-                <strong>Dummy User</strong>
-                <small class="text-muted">dummy@gmail.com</small>
-              </div>
-              <span
-                (click)="onDelete()"
-                class="pull-right text-right hover"
-                data-toggle="modal" data-target="#deleteAdminServiceForm">&times;</span>
-            </div>
-          </li>
-        </ul>
+        <div formArrayName="admins">
+          <div
+            class="row form-box"
+            *ngFor="let admin of form.controls.admins.controls; let i=index">
+            <div [formGroupName]="i" class="col-xs-12">
+              <div class="cp-card cp-card--alt cp-card--half-padding cp-card--no-shadow">
+                <div class="delete-admin">
+                  <button
+                    *ngIf="form.controls.admins.controls.length > 1"
+                    (click)="deleteAdminControl(i)"
+                    class="cpbtn cpbtn--link-dark">
+                    &times;
+                  </button>
+                </div>
+                <div class="row form-group">
+                  <div class="col-xs-4 no-right-padding">
+                    <label i18n>First Name</label>
+                    <input
+                      type="text"
+                      placeholder="First Name"
+                      formControlName="firstname"
+                      [class.error]="formError && !admin.pristine && admin.controls['firstname'].hasError('required')">
+                  </div>
+                  <div class="col-xs-4 no-right-padding">
+                    <label i18n>Last Name</label>
+                    <input
+                      type="email"
+                      placeholder="Last Name"
+                      formControlName="lastname"
+                      [class.error]="formError && !admin.pristine && admin.controls['lastname'].hasError('required')">
+                  </div>
 
-        <div class="row admins__footer">
-          <div class="col-xs-12">
-            <button class="cpbtn cpbtn--secondary pull-right" i18n>
-              Add Admin
-            </button>
+                  <div class="col-xs-4">
+                    <label i18n>Email</label>
+                    <input
+                      type="email"
+                      placeholder="Email"
+                      formControlName="email"
+                      [class.error]="formError && !admin.pristine && admin.controls['email'].hasError('required')">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-4">
+              <button
+                type="button"
+                class="cpbtn cpbtn--secondary"
+                (click)="onAddAdminControl()" i18n>
+                Add Another Invitation
+              </button>
+            </div>
           </div>
         </div>
       </div>

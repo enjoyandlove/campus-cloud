@@ -1,3 +1,4 @@
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -10,6 +11,7 @@ import { ServicesService } from '../services.service';
 import { BaseComponent } from '../../../../../base/base.component';
 import { STAR_SIZE } from '../../../../../shared/components/cp-stars';
 
+
 @Component({
   selector: 'cp-services-attendance',
   templateUrl: './services-attendance.component.html',
@@ -18,10 +20,12 @@ import { STAR_SIZE } from '../../../../../shared/components/cp-stars';
 export class ServicesAttendanceComponent extends BaseComponent implements OnInit {
   loading;
   service;
-  deleteProvider;
   serviceId: number;
   detailStarSize = STAR_SIZE.LARGE;
   listStarSize = STAR_SIZE.DEFAULT;
+  reload$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  download$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  search_text$: BehaviorSubject<string> = new BehaviorSubject(null);
 
   constructor(
     private route: ActivatedRoute,
@@ -35,10 +39,6 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
     this.fetch();
   }
 
-  onDelete(provider) {
-    this.deleteProvider = provider;
-  }
-
   onCreatedProvider(provider) {
     console.log(provider);
   }
@@ -47,19 +47,21 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
     super
       .fetchData(this.serviceService.getServiceById(this.serviceId))
       .then(res => {
-        this.service = res;
-        this.buildHeader(res);
+        this.service = res.data;
+        this.buildHeader(this.service);
       })
       .catch(err => console.error(err));
   }
 
-
+  onSearch(search_text) {
+    this.search_text$.next(search_text);
+  }
 
   private buildHeader(res) {
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': res.data.name,
+        'heading': res.name,
         'subheading': '',
         'children': [
           {

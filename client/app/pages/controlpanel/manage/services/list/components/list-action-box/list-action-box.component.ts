@@ -3,13 +3,13 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 // import { StoreService } from '../../../../../../../shared/services';
 
 interface IState {
-  search_str: string;
+  search_text: string;
   attendance_only: number;
 }
 
 const state = {
-  search_str: null,
-  attendance_only: 1,
+  search_text: null,
+  attendance_only: 0,
 };
 
 declare var $: any;
@@ -27,8 +27,8 @@ export class ServicesListActionBoxComponent implements OnInit {
 
   constructor() { }
 
-  onSearch(search_str): void {
-    this.state = Object.assign({}, this.state, { search_str });
+  onSearch(search_text): void {
+    this.state = Object.assign({}, this.state, { search_text });
     this.listAction.emit(this.state);
   }
 

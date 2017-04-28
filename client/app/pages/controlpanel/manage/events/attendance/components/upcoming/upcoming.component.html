@@ -5,7 +5,7 @@
       <p>{{ event.start | cpDatePipe:format }}</p>
       <div class="row">
         <div class="col-xs-12 event__actions">
-          <a routerLink="/manage/events"
+          <a [routerLink]="['../']"
             class="cpbtn cpbtn--secondary" i18n>
             Back to Events
           </a>

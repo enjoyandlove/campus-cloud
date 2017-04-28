@@ -1,11 +1,11 @@
 <div *ngIf="isFormReady">
   <div class="row">
-    <cp-import-top-bar
+    <cp-services-import-top-bar
       (deleteServices)="onBulkDelete()"
       (checkAll)="onCheckAll($event)"
       (imageChange)="onImageBulkChange($event)"
       (categoryChange)="onCategoryBulkChange($event)">
-    </cp-import-top-bar>
+    </cp-services-import-top-bar>
   </div>
 
   <div class="row margin-bottom">
@@ -63,7 +63,7 @@
                   <cp-dropdown
                     [items]="stores"
                     (selected)="onSingleCategorySelected($event, i)"
-                    [selectedItem]="service.controls['category_id'].value">
+                    [selectedItem]="service.controls['category'].value">
                   </cp-dropdown>
                 </div>
               </div>
@@ -87,7 +87,7 @@
               type="button"
               (click)="onSubmit()"
               class="cpbtn cpbtn--tall cpbtn--primary" i18n
-              [disabled]="!form.controls.services.controls.length">
+              [disabled]="!form.controls.services.controls.length || !form.valid">
               Import Services
             </button>
           </div>

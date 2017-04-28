@@ -16,37 +16,40 @@
 
   <div class="cpmodal__body">
     <div class="row">
-      <div class="col-xs-7">
+      <div class="col-xs-12">
         <form [formGroup]="form">
-          <div class="form-group">
-            <label i18n>Name</label>
-            <input
-              type="text"
-              class="form-control"
-              formControlName="name"
-              [class.error]="formErrors && form.controls.name.hasError('required')">
+          <div class="row form-group">
+            <div class="col-xs-6">
+              <label i18n>Name</label>
+              <input
+                type="text"
+                placeholder="Name"
+                class="form-control"
+                formControlName="provider_name"
+                [class.error]="formErrors && form.controls.name.hasError('required')">
+            </div>
+            <div class="col-xs-6">
+              <label i18n>Email</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Email"
+                formControlName="email"
+                [class.error]="formErrors && form.controls.email.hasError('required')">
+            </div>
           </div>
 
-          <div class="form-group">
-            <label i18n>Email</label>
-            <input
-              type="text"
-              class="form-control"
-              formControlName="email"
-              [class.error]="formErrors && form.controls.email.hasError('required')">
-          </div>
-
-          <div class="form-group">
-            <label i18n>Question</label>
-            <input
-              type="text"
-              class="form-control"
-              formControlName="question">
+          <div class="row form-group">
+            <div class="col-xs-12">
+              <label i18n>Default Question</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Default Question"
+                formControlName="custom_basic_feedback_label">
+            </div>
           </div>
         </form>
-      </div>
-      <div class="col-xs-3 col-xs-offset-2">
-
       </div>
     </div>
   </div>
@@ -65,8 +68,9 @@
         <button
           type="button"
           (click)="onSubmit()"
+          [disabled]="!form.valid"
           class="cpbtn cpbtn--primary"i18n>
-          Send Invite
+          Add
         </button>
       </div>
     </div>

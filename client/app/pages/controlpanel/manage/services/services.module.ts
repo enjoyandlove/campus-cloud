@@ -14,7 +14,19 @@ import { ServicesCreateComponent } from './create';
 import { ServicesAttendanceComponent } from './attendance';
 
 import { ServicesService } from './services.service';
+import { ProvidersService } from './providers.service';
+import { AdminService } from '../../../../shared/services/admin.service';
+
 import { ServicesRoutingModule } from './services.routing.module';
+
+import {
+  ServicesEventsEditComponent,
+  ServicesEventsInfoComponent,
+  ServicesEventsExcelComponent,
+  ServicesEventsCreateComponent,
+  ServicesEventsFacebookComponent,
+  ServicesEventsAttendanceComponent
+} from './events/components';
 
 import {
   ServicesListActionBoxComponent
@@ -31,8 +43,16 @@ import {
 
 import {
   ServicesProviderAddComponent,
-  ServicesProviderDeleteComponent
+  ServicesProvidersListComponent,
+  ServicesProviderDeleteComponent,
+  ServicesProviderDetailsComponent
 } from './attendance/components';
+
+import {
+  ServicesProvidersAttendeesListComponent
+} from './attendance/components/providers-details/components';
+
+import { EventsModule } from '../events/events.module';
 
 
 @NgModule({
@@ -40,10 +60,14 @@ import {
   ServicesExcelModalComponent, ServicesAttendanceComponent, ServicesCreateComponent,
   ServicesDeleteAdminModalComponent, ServicesEditComponent, ServicesInfoComponent,
   ServicesEventsComponent, ServicesProviderAddComponent, ServicesProviderDeleteComponent,
-  ServicesExcelComponent, ServicesImportTopBarComponent ],
+  ServicesExcelComponent, ServicesImportTopBarComponent, ServicesProvidersListComponent,
+  ServicesProviderDetailsComponent, ServicesProvidersAttendeesListComponent,
+  ServicesEventsCreateComponent, ServicesEventsAttendanceComponent, ServicesEventsInfoComponent,
+  ServicesEventsEditComponent, ServicesEventsFacebookComponent, ServicesEventsExcelComponent ],
 
-  imports: [ CommonModule, SharedModule, ServicesRoutingModule, RouterModule, ReactiveFormsModule ],
+  imports: [ CommonModule, SharedModule, ServicesRoutingModule, RouterModule,
+  ReactiveFormsModule, EventsModule ],
 
-  providers: [ ServicesService ],
+  providers: [ ServicesService, ProvidersService, AdminService ],
 })
 export class ServicesModule {}

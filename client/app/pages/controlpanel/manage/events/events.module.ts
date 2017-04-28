@@ -41,6 +41,8 @@ import {
   EventsImportActionDropdownComponent
 } from './excel/components';
 
+import { EventsComponent } from './list/base/events.component';
+
 @NgModule({
   declarations: [ EventsListComponent, EventsCreateComponent, EventsAttendanceComponent,
   EventsDeleteComponent, EventsInfoComponent, EventsEditComponent, EventsExcelModalComponent,
@@ -48,7 +50,7 @@ import {
   EventsImportTopBarComponent, ListActionBoxComponent, ListPastComponent, ListUpcomingComponent,
   AttendancePastComponent, AttendanceUpcomingComponent,
   EventsFeedbackModalComponent, EventsPastActionBoxComponent, FacebookEventsCreateComponent,
-  FacebookEventsUpdateComponent, FacebookEventsDeleteComponent ],
+  FacebookEventsUpdateComponent, FacebookEventsDeleteComponent, EventsComponent ],
 
   imports: [ CommonModule, SharedModule, EventsRoutingModule, RouterModule, ReactiveFormsModule ],
 
@@ -59,6 +61,6 @@ import {
   EventsFacebookComponent, EventsExcelComponent, EventsImportActionDropdownComponent,
   EventsImportTopBarComponent, ListActionBoxComponent, ListPastComponent, ListUpcomingComponent,
   AttendancePastComponent, AttendanceUpcomingComponent,
-  EventsFeedbackModalComponent, EventsPastActionBoxComponent ]
+  EventsFeedbackModalComponent, EventsPastActionBoxComponent, EventsComponent]
 })
 export class EventsModule {}

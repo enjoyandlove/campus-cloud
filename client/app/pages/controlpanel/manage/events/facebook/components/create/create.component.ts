@@ -11,6 +11,7 @@ import { EventsService } from '../../../events.service';
 })
 export class FacebookEventsCreateComponent implements OnInit {
   @Input() stores: Array<any>;
+  @Input() storeId: number;
   @Output() created: EventEmitter<null> = new EventEmitter();
 
   errors = [];
@@ -51,7 +52,7 @@ export class FacebookEventsCreateComponent implements OnInit {
   ngOnInit() {
     this.form = this.fb.group({
       'url': [null, Validators.required],
-      'store_id': [null, Validators.required]
+      'store_id': [this.storeId || null, Validators.required]
     });
   }
 }

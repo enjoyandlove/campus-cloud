@@ -1,0 +1,9 @@
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <cp-events-create
+    [storeId]="storeId"
+    *ngSwitchCase="false"
+    [isService]="isService">
+  </cp-events-create>
+</div>

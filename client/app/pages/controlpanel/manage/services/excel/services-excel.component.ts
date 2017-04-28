@@ -1,8 +1,10 @@
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-// import { EventsService } from '../events.service';
+import { isProd } from '../../../../../config/env';
+import { ServicesService } from '../services.service';
 import { StoreService } from '../../../../../shared/services';
 import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE, HEADER_DEFAULT } from '../../../../../reducers/header.reducer';
@@ -19,23 +21,23 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
   loading = false;
   form: FormGroup;
   isFormReady = false;
-  // buttonDropdownOptions;
   eventAttendanceFeedback;
 
   constructor(
+    private router: Router,
     private fb: FormBuilder,
     private store: Store<any>,
-    private storeService: StoreService
-    // private service: servicesService
+    private storeService: StoreService,
+    private servicesService: ServicesService
   ) {
     super();
     this
       .store
       .select('SERVICES_MODAL')
       .subscribe(
-      (_) => {
+      (res) => {
         // this.services = res;
-        this.services = require('./mock.json');
+        this.services = isProd ? res : require('./mock.json');
         this.fetch();
       },
       err => console.log(err)
@@ -109,13 +111,13 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
 
   buildServiceControl(service) {
     return this.fb.group({
+      'store_id': [14748],
       'name': [service.service_name, Validators.required],
       'description': [service.description, Validators.required],
       'email': [service.service_email, Validators.required],
-      'admin_email': [service.admin_email, Validators.required],
-      'phone_number': [service.phone_number, Validators.required],
+      'phone': [service.phone_number, Validators.required],
       'website': [service.website, Validators.required],
-      'category_id': [null, Validators.required],
+      'category': [null, Validators.required],
       'logo_url': [null, Validators.required],
     });
   }
@@ -157,7 +159,7 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
     const controls = <FormArray>this.form.controls['services'];
     const control = <FormGroup>controls.controls[index];
 
-    control.controls['category_id'].setValue(category);
+    control.controls['category'].setValue(category);
   }
 
   onSingleCheck(checked, index) {
@@ -182,8 +184,8 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
     this.isChecked = [..._isChecked];
   }
 
-  onCategoryBulkChange(category_id) {
-    this.onBulkChange({ category_id });
+  onCategoryBulkChange(category) {
+    this.onBulkChange({ category });
   }
 
   onImageBulkChange(logo_url) {
@@ -191,9 +193,20 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
   }
 
   onSubmit() {
-    console.log(this.form.value);
-    console.log(this.form.valid);
-    // console.log(this.form.value);
+    let parsedServices = [];
+    let _data = Object.assign({}, this.form.value.services);
+
+    Object.keys(_data).forEach(key => {
+      parsedServices.push(Object.assign({}, _data[key], { category: _data[key].category.action }));
+    });
+
+    this
+      .servicesService
+      .createService(parsedServices)
+      .subscribe(
+        _ => this.router.navigate(['/manage/services']),
+        err => console.error(err)
+      );
   }
 
   ngOnDestroy() {
