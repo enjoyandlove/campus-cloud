@@ -20,6 +20,7 @@ import { AdminService } from '../../../../shared/services/admin.service';
 import { ServicesRoutingModule } from './services.routing.module';
 
 import {
+  ServicesEventsEditComponent,
   ServicesEventsInfoComponent,
   ServicesEventsCreateComponent,
   ServicesEventsAttendanceComponent
@@ -59,7 +60,8 @@ import { EventsModule } from '../events/events.module';
   ServicesEventsComponent, ServicesProviderAddComponent, ServicesProviderDeleteComponent,
   ServicesExcelComponent, ServicesImportTopBarComponent, ServicesProvidersListComponent,
   ServicesProviderDetailsComponent, ServicesProvidersAttendeesListComponent,
-  ServicesEventsCreateComponent, ServicesEventsAttendanceComponent, ServicesEventsInfoComponent ],
+  ServicesEventsCreateComponent, ServicesEventsAttendanceComponent, ServicesEventsInfoComponent,
+  ServicesEventsEditComponent ],
 
   imports: [ CommonModule, SharedModule, ServicesRoutingModule, RouterModule,
   ReactiveFormsModule, EventsModule ],

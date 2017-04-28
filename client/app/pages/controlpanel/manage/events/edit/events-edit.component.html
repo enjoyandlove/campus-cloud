@@ -33,7 +33,7 @@
                 [class.error]="formError && form.controls['title'].hasError('required')">
             </div>
 
-            <div class="row form-group">
+            <div class="row form-group" *ngIf="!storeId">
               <div class="col-xs-6">
                 <label i18n>Select Host</label>
                 <select

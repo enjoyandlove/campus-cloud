@@ -13,7 +13,7 @@ import { EventsService } from '../events.service';
 import { CPMap, CPDate } from '../../../../../shared/utils';
 import { FORMAT } from '../../../../../shared/pipes/date.pipe';
 import { BaseComponent } from '../../../../../base/base.component';
-import { FileUploadService, ErrorService, StoreService } from '../../../../../shared/services';
+import { ErrorService, StoreService } from '../../../../../shared/services';
 
 const COMMON_DATE_PICKER_OPTIONS = {
   altInput: true,
