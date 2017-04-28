@@ -20,6 +20,7 @@ export class ServicesEventsComponent extends EventsComponent implements OnInit {
   loading = true;
   serviceId: number;
   isSimple = true;
+  isService = true;
 
 
   constructor(
@@ -74,7 +75,6 @@ export class ServicesEventsComponent extends EventsComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('INIT SERVICE EVENTS');
     // super.fetchData()
   }
 }

@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { EventsExcelComponent } from '../events/excel/events-excel.component';
-
 /**
  * CRUD
  */
@@ -16,6 +14,7 @@ import { ServicesAttendanceComponent } from './attendance';
 import {
   ServicesEventsEditComponent,
   ServicesEventsInfoComponent,
+  ServicesEventsExcelComponent,
   ServicesEventsCreateComponent,
   ServicesEventsFacebookComponent,
   ServicesEventsAttendanceComponent
@@ -44,7 +43,7 @@ const appRoutes: Routes = [
   { path: ':serviceId/events/:eventId/info', component: ServicesEventsInfoComponent },
 
   { path: ':serviceId/events/:eventId/edit', component: ServicesEventsEditComponent },
-  { path: ':serviceId/events/import/excel', component: EventsExcelComponent },
+  { path: ':serviceId/events/import/excel', component: ServicesEventsExcelComponent },
   { path: ':serviceId/events/import/facebook', component: ServicesEventsFacebookComponent },
 
   { path: ':serviceId', component: ServicesAttendanceComponent },
@@ -62,9 +61,3 @@ const appRoutes: Routes = [
   ]
 })
 export class ServicesRoutingModule { }
-
-
-// { path: 'create', component: EventsCreateComponent },
-// { path: ':eventId', component: EventsAttendanceComponent },
-// { path: ':eventId/edit', component: EventsEditComponent },
-// { path: ':eventId/info', component: EventsInfoComponent },

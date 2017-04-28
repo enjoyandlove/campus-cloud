@@ -33,6 +33,7 @@ const state = {
 export class EventsComponent extends BaseComponent implements OnInit, OnDestroy {
   @Input() storeId: number;
   @Input() isSimple: boolean;
+  @Input() isService: boolean;
 
   events;
   loading;
@@ -137,7 +138,5 @@ export class EventsComponent extends BaseComponent implements OnInit, OnDestroy 
     // console.log('destroy');
   }
 
-  ngOnInit() {
-    console.log('INIT BASE EVENTS COMPONENT');
-  }
+  ngOnInit() { }
 }

@@ -1,5 +1,5 @@
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
@@ -18,6 +18,10 @@ import { HEADER_UPDATE, HEADER_DEFAULT } from '../../../../../reducers/header.re
   styleUrls: ['./events-excel.component.scss']
 })
 export class EventsExcelComponent extends BaseComponent implements OnInit, OnDestroy {
+  @Input() storeId: number;
+  @Input() isClub: boolean;
+  @Input() isService: boolean;
+
   events;
   stores;
   errors = [];
@@ -71,14 +75,16 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
       return stores;
     });
 
-    super
-      .fetchData(stores$)
-      .then(res => {
-        this.buildForm();
-        this.buildHeader();
-        this.stores = res.data;
-      })
-      .catch(err => console.error(err));
+    if (!this.storeId) {
+      super
+        .fetchData(stores$)
+        .then(res => {
+          this.buildForm();
+          this.buildHeader();
+          this.stores = res.data;
+        })
+        .catch(err => console.error(err));
+    }
   }
 
   private buildHeader() {
@@ -117,7 +123,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
 
   buildEventControl(event) {
     return this.fb.group({
-      'store_id': [null, Validators.required],
+      'store_id': [this.storeId || null, Validators.required],
       'room': [event.room, Validators.required],
       'title': [event.title, Validators.required],
       'poster_url': [null, Validators.required],
@@ -285,7 +291,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
 
         this.errors.push('Something went wrong');
       }
-    );
+      );
   }
 
   toggleSingleEventAttendance(checked, index) {
@@ -301,6 +307,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
   }
 
   ngOnInit() {
+    console.log(this);
     this.eventAttendanceFeedback = [
       {
         'label': 'Enabled',

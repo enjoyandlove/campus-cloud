@@ -1,5 +1,5 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ENV } from '../../../../../../../config/env';
@@ -15,6 +15,10 @@ declare var $: any;
   styleUrls: ['./events-excel-modal.component.scss']
 })
 export class EventsExcelModalComponent implements OnInit {
+  @Input() storeId: number;
+  @Input() isClub: boolean;
+  @Input() isService: boolean;
+
   error;
   uploaded;
   downloadLink;
@@ -84,6 +88,16 @@ export class EventsExcelModalComponent implements OnInit {
 
   onNavigate() {
     this.doReset();
+    if (this.isService) {
+      this.router.navigate([`/manage/services/${this.storeId}/import/excel`]);
+      return;
+    }
+
+    if (this.isClub) {
+      this.router.navigate([`/manage/clubs/${this.storeId}/import/excel`]);
+      return;
+    }
+
     this.router.navigate(['/manage/events/import/excel']);
   }
 
@@ -94,6 +108,8 @@ export class EventsExcelModalComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.isService);
+    console.log(this.storeId);
     // console.log($('#excelModal'));
   }
 }

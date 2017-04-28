@@ -22,6 +22,7 @@ import { ServicesRoutingModule } from './services.routing.module';
 import {
   ServicesEventsEditComponent,
   ServicesEventsInfoComponent,
+  ServicesEventsExcelComponent,
   ServicesEventsCreateComponent,
   ServicesEventsFacebookComponent,
   ServicesEventsAttendanceComponent
@@ -62,7 +63,7 @@ import { EventsModule } from '../events/events.module';
   ServicesExcelComponent, ServicesImportTopBarComponent, ServicesProvidersListComponent,
   ServicesProviderDetailsComponent, ServicesProvidersAttendeesListComponent,
   ServicesEventsCreateComponent, ServicesEventsAttendanceComponent, ServicesEventsInfoComponent,
-  ServicesEventsEditComponent, ServicesEventsFacebookComponent ],
+  ServicesEventsEditComponent, ServicesEventsFacebookComponent, ServicesEventsExcelComponent ],
 
   imports: [ CommonModule, SharedModule, ServicesRoutingModule, RouterModule,
   ReactiveFormsModule, EventsModule ],

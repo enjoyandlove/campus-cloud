@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
@@ -19,6 +19,7 @@ interface IState {
   styleUrls: ['./import-action-dropdown.component.scss']
 })
 export class EventsImportActionDropdownComponent extends BaseComponent implements OnInit {
+  @Input() storeId: number;
   @Output() bulkAction: EventEmitter<IState> = new EventEmitter();
   stores;
   loading;

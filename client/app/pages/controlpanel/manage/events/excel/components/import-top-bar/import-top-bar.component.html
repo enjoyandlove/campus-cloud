@@ -19,6 +19,7 @@
     </div>-->
     <div class="col-xs-2 no-left-padding">
       <cp-import-action-dropdown
+        [storeId]="storeId"
         (bulkAction)="bulkChange.emit($event)">
       </cp-import-action-dropdown>
     </div>
