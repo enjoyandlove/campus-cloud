@@ -20,7 +20,7 @@ export class StoreService extends BaseService {
   }
 
   getStoreById(storeId: number) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.STORE}${storeId}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.STORE}/${storeId}`;
 
     return super.get(url).map(res => res.json());
   }

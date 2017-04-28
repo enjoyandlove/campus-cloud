@@ -20,6 +20,11 @@ import { AdminService } from '../../../../shared/services/admin.service';
 import { ServicesRoutingModule } from './services.routing.module';
 
 import {
+  ServicesEventsCreateComponent,
+  ServicesEventsAttendanceComponent
+} from './events/components';
+
+import {
   ServicesListActionBoxComponent
 } from './list/components';
 
@@ -52,7 +57,8 @@ import { EventsModule } from '../events/events.module';
   ServicesDeleteAdminModalComponent, ServicesEditComponent, ServicesInfoComponent,
   ServicesEventsComponent, ServicesProviderAddComponent, ServicesProviderDeleteComponent,
   ServicesExcelComponent, ServicesImportTopBarComponent, ServicesProvidersListComponent,
-  ServicesProviderDetailsComponent, ServicesProvidersAttendeesListComponent ],
+  ServicesProviderDetailsComponent, ServicesProvidersAttendeesListComponent,
+  ServicesEventsCreateComponent, ServicesEventsAttendanceComponent ],
 
   imports: [ CommonModule, SharedModule, ServicesRoutingModule, RouterModule,
   ReactiveFormsModule, EventsModule ],

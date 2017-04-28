@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
@@ -16,6 +16,11 @@ import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
   styleUrls: ['./events-attendance.component.scss']
 })
 export class EventsAttendanceComponent extends BaseComponent implements OnInit {
+  @Input() isClub: boolean;
+  @Input() clubId: number;
+  @Input() serviceId: number;
+  @Input() isService: boolean;
+
   event;
   attendees;
   isUpcoming;
@@ -59,11 +64,11 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
         children = [
           {
             'label': 'Attendance',
-            'url': `/manage/events/${this.eventId}`
+            'url': `${this.buildUrlPrefix()}/${this.eventId}`
           },
           {
             'label': 'Info',
-            'url': `/manage/events/${this.eventId}/info`
+            'url': `${this.buildUrlPrefix()}/${this.eventId}/info`
           }
         ];
       } else {
@@ -73,11 +78,11 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       children = [
         {
           'label': res.event_attendance === 1 ? 'Attendance' : 'Event',
-          'url': `/manage/events/${this.eventId}`
+          'url': `${this.buildUrlPrefix()}/${this.eventId}`
         },
         {
           'label': 'Info',
-          'url': `/manage/events/${this.eventId}/info`
+          'url': `${this.buildUrlPrefix()}/${this.eventId}/info`
         }
       ];
     }
@@ -92,6 +97,15 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       }
     });
   }
+
+   buildUrlPrefix() {
+     if (this.isClub) {
+       return `/manage/clubs/${this.clubId}/events`;
+     } else if (this.isService) {
+      return `/manage/services/${this.serviceId}/events`;
+     }
+     return '/manage/events';
+   }
 
   ngOnInit() { }
 }

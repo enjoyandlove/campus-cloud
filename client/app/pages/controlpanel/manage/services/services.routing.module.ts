@@ -1,6 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { EventsEditComponent } from '../events/edit/events-edit.component';
+import { EventsExcelComponent } from '../events/excel/events-excel.component';
+import { EventsFacebookComponent } from '../events/facebook/events-facebook.component';
+
 /**
  * CRUD
  */
@@ -10,6 +14,11 @@ import { ServicesInfoComponent } from './info';
 import { ServicesCreateComponent } from './create';
 import { ServicesEventsComponent } from './events';
 import { ServicesAttendanceComponent } from './attendance';
+
+import {
+  ServicesEventsCreateComponent,
+  ServicesEventsAttendanceComponent
+} from './events/components';
 
 import { ServicesProviderDetailsComponent } from './attendance/components';
 
@@ -28,11 +37,18 @@ const appRoutes: Routes = [
   { path: ':serviceId/info', component: ServicesInfoComponent },
   { path: ':serviceId/edit', component: ServicesEditComponent },
   { path: ':serviceId/events', component: ServicesEventsComponent },
+
+  { path: ':serviceId/events/create', component: ServicesEventsCreateComponent },
+  { path: ':serviceId/events/:eventId', component: ServicesEventsAttendanceComponent },
+  { path: ':serviceId/events/:eventId/edit', component: EventsEditComponent },
+  { path: ':serviceId/events/import/excel', component: EventsExcelComponent },
+  { path: ':serviceId/events/import/facebook', component: EventsFacebookComponent },
+
   { path: ':serviceId', component: ServicesAttendanceComponent },
 
   { path: ':serviceId/provider/:providerId', component: ServicesProviderDetailsComponent },
 
-  { path: 'import/excel', component: ServicesExcelComponent },
+  { path: 'import/excel', component: ServicesExcelComponent }
 ];
 @NgModule({
   imports: [
@@ -42,4 +58,10 @@ const appRoutes: Routes = [
     RouterModule
   ]
 })
-export class ServicesRoutingModule {}
+export class ServicesRoutingModule { }
+
+
+// { path: 'create', component: EventsCreateComponent },
+// { path: ':eventId', component: EventsAttendanceComponent },
+// { path: ':eventId/edit', component: EventsEditComponent },
+// { path: ':eventId/info', component: EventsInfoComponent },
