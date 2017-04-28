@@ -12,8 +12,9 @@ import { BaseComponent } from '../../../../../../../base/base.component';
   styleUrls: ['./update.component.scss']
 })
 export class FacebookEventsUpdateComponent extends BaseComponent implements OnInit {
-  @Input() reload: Observable<boolean>;
+  @Input() storeId: number;
   @Input() stores: Array<any>;
+  @Input() reload: Observable<boolean>;
 
   links;
   isEdited;

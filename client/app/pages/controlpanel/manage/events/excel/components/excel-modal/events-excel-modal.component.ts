@@ -35,10 +35,6 @@ export class EventsExcelModalComponent implements OnInit {
                                 '/templates/mass_event_invite_sample.xlsx';
   }
 
-  onSubmit(data) {
-    console.log(data);
-  }
-
   fileIsValid(file) {
     let result = [];
     let validators = [

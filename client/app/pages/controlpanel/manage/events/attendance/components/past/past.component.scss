@@ -12,8 +12,13 @@
   }
 }
 
+.add-card-margin {
+  @include card-margin();
+}
+
 .header {
   @include card-margin();
+  margin-top: 0;
 
   &__digit {
     @include font-semi-bold();

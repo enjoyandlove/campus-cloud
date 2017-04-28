@@ -56,7 +56,6 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   }
 
   private buildHeader(res) {
-    console.log(res);
     let children;
 
     if (EventDate.isPastEvent(res.end)) {

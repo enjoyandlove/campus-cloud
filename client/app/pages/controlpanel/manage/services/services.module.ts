@@ -23,6 +23,7 @@ import {
   ServicesEventsEditComponent,
   ServicesEventsInfoComponent,
   ServicesEventsCreateComponent,
+  ServicesEventsFacebookComponent,
   ServicesEventsAttendanceComponent
 } from './events/components';
 
@@ -61,7 +62,7 @@ import { EventsModule } from '../events/events.module';
   ServicesExcelComponent, ServicesImportTopBarComponent, ServicesProvidersListComponent,
   ServicesProviderDetailsComponent, ServicesProvidersAttendeesListComponent,
   ServicesEventsCreateComponent, ServicesEventsAttendanceComponent, ServicesEventsInfoComponent,
-  ServicesEventsEditComponent ],
+  ServicesEventsEditComponent, ServicesEventsFacebookComponent ],
 
   imports: [ CommonModule, SharedModule, ServicesRoutingModule, RouterModule,
   ReactiveFormsModule, EventsModule ],

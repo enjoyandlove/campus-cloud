@@ -9,7 +9,7 @@ interface IState {
 
 const state = {
   search_text: null,
-  attendance_only: 1,
+  attendance_only: 0,
 };
 
 declare var $: any;

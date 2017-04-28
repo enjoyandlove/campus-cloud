@@ -4,7 +4,8 @@
 
 
 .actions {
-  margin-top: 25px;
+  @include card-margin();
+  margin-bottom: 0;
 }
 
 .header {

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { EventsExcelComponent } from '../events/excel/events-excel.component';
-import { EventsFacebookComponent } from '../events/facebook/events-facebook.component';
 
 /**
  * CRUD
@@ -18,6 +17,7 @@ import {
   ServicesEventsEditComponent,
   ServicesEventsInfoComponent,
   ServicesEventsCreateComponent,
+  ServicesEventsFacebookComponent,
   ServicesEventsAttendanceComponent
 } from './events/components';
 
@@ -45,7 +45,7 @@ const appRoutes: Routes = [
 
   { path: ':serviceId/events/:eventId/edit', component: ServicesEventsEditComponent },
   { path: ':serviceId/events/import/excel', component: EventsExcelComponent },
-  { path: ':serviceId/events/import/facebook', component: EventsFacebookComponent },
+  { path: ':serviceId/events/import/facebook', component: ServicesEventsFacebookComponent },
 
   { path: ':serviceId', component: ServicesAttendanceComponent },
 

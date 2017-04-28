@@ -1,10 +1,15 @@
 @import '~styles/core/colors';
+@import '~styles/components/card';
 @import '~styles/components/form';
 @import '~styles/components/button';
 @import '~bootstrap/variables';
 
 .delete-service {
   font-size: 2em;
+}
+
+.add-card-margin {
+  @include card-margin();
 }
 
 .services {

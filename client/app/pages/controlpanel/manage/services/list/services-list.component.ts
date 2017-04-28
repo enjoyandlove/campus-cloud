@@ -15,7 +15,7 @@ interface IState {
 const state: IState = {
   services: [],
   search_text: null,
-  attendance_only: null
+  attendance_only: 0
 };
 
 @Component({
