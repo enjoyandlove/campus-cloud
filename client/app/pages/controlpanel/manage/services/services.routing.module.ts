@@ -16,6 +16,7 @@ import { ServicesEventsComponent } from './events';
 import { ServicesAttendanceComponent } from './attendance';
 
 import {
+  ServicesEventsInfoComponent,
   ServicesEventsCreateComponent,
   ServicesEventsAttendanceComponent
 } from './events/components';
@@ -40,6 +41,8 @@ const appRoutes: Routes = [
 
   { path: ':serviceId/events/create', component: ServicesEventsCreateComponent },
   { path: ':serviceId/events/:eventId', component: ServicesEventsAttendanceComponent },
+  { path: ':serviceId/events/:eventId/info', component: ServicesEventsInfoComponent },
+
   { path: ':serviceId/events/:eventId/edit', component: EventsEditComponent },
   { path: ':serviceId/events/import/excel', component: EventsExcelComponent },
   { path: ':serviceId/events/import/facebook', component: EventsFacebookComponent },

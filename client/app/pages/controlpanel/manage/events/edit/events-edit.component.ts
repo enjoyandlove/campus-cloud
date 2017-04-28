@@ -1,20 +1,18 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
-import { Headers } from '@angular/http';
 import { Store } from '@ngrx/store';
 
 import {
   IHeader,
   HEADER_UPDATE
 } from '../../../../../reducers/header.reducer';
-import { API } from '../../../../../config/api';
 import { EventsService } from '../events.service';
+import { CPMap, CPDate } from '../../../../../shared/utils';
 import { FORMAT } from '../../../../../shared/pipes/date.pipe';
 import { BaseComponent } from '../../../../../base/base.component';
-import { CPArray, CPImage, CPMap, CPDate, appStorage } from '../../../../../shared/utils';
 import { FileUploadService, ErrorService, StoreService } from '../../../../../shared/services';
 
 const COMMON_DATE_PICKER_OPTIONS = {
@@ -29,6 +27,10 @@ const COMMON_DATE_PICKER_OPTIONS = {
   styleUrls: ['./events-edit.component.scss']
 })
 export class EventsEditComponent extends BaseComponent implements OnInit {
+  @Input() storeId: number;
+  @Input() isClub: boolean;
+  @Input() isService: boolean;
+
   form: FormGroup;
   event;
   stores;
@@ -51,14 +53,18 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     private route: ActivatedRoute,
     private storeService: StoreService,
     private errorService: ErrorService,
-    private eventService: EventsService,
-    private fileUploadService: FileUploadService
+    private eventService: EventsService
   ) {
     super();
     this.eventId = this.route.snapshot.params['eventId'];
 
     this.fetch();
     this.buildHeader();
+  }
+
+  onUploadedImage(image) {
+    this.form.controls['poster_url'].setValue(image);
+    this.form.controls['poster_thumb_url'].setValue(image);
   }
 
   onSubmit(data) {
@@ -78,8 +84,16 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       .updateEvent(data, this.eventId)
       .subscribe(
         _ => {
-          this.router.navigate([`/manage/events/${this.eventId}/info`]);
-        },
+          if (this.isService) {
+            this.router.navigate([`/manage/services/${this.storeId}/events/${this.eventId}`]);
+            return;
+          }
+          if (this.isClub) {
+            this.router.navigate([`/manage/clubs/${this.storeId}/events/${this.eventId}`]);
+            return;
+          }
+          this.router.navigate(['/manage/events/' + this.eventId]);
+          },
         _ => this.formError = true
       );
   }
@@ -173,38 +187,6 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
         'children': []
       }
     });
-  }
-
-  onFileUpload(file) {
-    this.imageError = null;
-    const fileExtension = CPArray.last(file.name.split('.'));
-
-    if (!CPImage.isSizeOk(file.size, CPImage.MAX_IMAGE_SIZE)) {
-      this.imageError = 'File too Big';
-      return;
-    }
-
-    if (!CPImage.isValidExtension(fileExtension, CPImage.VALID_EXTENSIONS)) {
-      this.imageError = 'Invalid Extension';
-      return;
-    }
-
-    const headers = new Headers();
-    const url = this.eventService.getUploadImageUrl();
-    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
-
-    headers.append('Authorization', auth);
-
-    this
-      .fileUploadService
-      .uploadFile(file, url, headers)
-      .subscribe(
-      res => {
-        this.form.controls['poster_url'].setValue(res.image_url);
-        this.form.controls['poster_thumb_url'].setValue(res.image_url);
-      },
-      err => console.error(err)
-      );
   }
 
   toggleEventAttendance(value) {
