@@ -43,8 +43,8 @@ export class ServicesService extends BaseService {
     return super.post(url, data).map(res => res.json());
   }
 
-  updateService(data: any) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}/`;
+  updateService(data: any, serviceId: number) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}/${serviceId}`;
 
     return super.update(url, data).map(res => res.json());
   }

@@ -312,6 +312,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     }
 
     let data = Object.assign(this.form.value);
+    console.log('updating service');
 
     this
       .servicesService
@@ -338,9 +339,11 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
         service_attendance: data.service_attendance,
         rating_scale_maximum: data.rating_scale_maximum,
         default_basic_feedback_label: data.default_basic_feedback_label,
-      }
+      },
+      this.serviceId
       )
       .switchMap(_ => {
+        console.log('updating provider');
         let providers = [];
         let search = new URLSearchParams();
         let controls = <FormArray>this.form.controls['providers'];
@@ -348,6 +351,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
 
         providersControls.forEach((provider: FormGroup) => {
           providers.push({
+            'id': provider.controls['id'].value,
             'provider_name': provider.controls['provider_name'].value,
             'email': provider.controls['email'].value,
             'custom_basic_feedback_label': provider.controls['custom_basic_feedback_label'].value
@@ -358,6 +362,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
         return this.providersService.updateProvider(providers, search);
       })
       .switchMap(_ => {
+        console.log('updating admins');
         let admins$ = [];
         let admins = <FormArray>this.form.controls['admins'];
         let adminsControls = admins.controls;
@@ -376,7 +381,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
               }
             }
           };
-          admins$.push(this.adminService.updateAdmin(1, _admin));
+          admins$.push(this.adminService.updateAdmin(admin.controls['id'].value, _admin));
         });
 
         return Observable.combineLatest(admins$);
