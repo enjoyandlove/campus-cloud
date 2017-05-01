@@ -63,7 +63,7 @@ export class FeedsComponent extends BaseComponent implements OnInit {
       }
     );
 
-    setTimeout(() => { this.fetch(); }, 1100);
+    this.fetch();
   }
 
   onPaginationNext() {

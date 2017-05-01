@@ -2,6 +2,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { isProd } from '../../../../../../../config/env';
 import { ServicesService } from '../../../services.service';
 import { STATUS } from '../../../../../../../shared/constants';
 import { FileUploadService } from '../../../../../../../shared/services';
@@ -14,8 +15,9 @@ declare var $: any;
   styleUrls: ['./services-excel-modal.component.scss']
 })
 export class ServicesExcelModalComponent implements OnInit {
-  uploaded;
   error;
+  uploaded;
+  downloadLink;
   form: FormGroup;
   constructor(
     private router: Router,
@@ -26,10 +28,9 @@ export class ServicesExcelModalComponent implements OnInit {
     this.form = this.fb.group({
       'link': ['', Validators.required]
     });
-  }
-
-  onSubmit(data) {
-    console.log(data);
+    this.downloadLink = isProd ?
+                                '/dist/templates/mass_service_invite_sample.xlsx' :
+                                '/templates/mass_service_invite_sample.xlsx';
   }
 
   fileIsValid(file) {
@@ -62,8 +63,7 @@ export class ServicesExcelModalComponent implements OnInit {
     this.error = '';
 
     if (!validation.length) {
-      const ENV = process.env.ENV;
-      const url = ENV === 'production' ?
+      const url = isProd ?
       '/services/excel' :
       'http://localhost:8000/services/excel';
       this
@@ -93,8 +93,5 @@ export class ServicesExcelModalComponent implements OnInit {
     $('#excelServicesModal').modal('hide');
   }
 
-  ngOnInit() {
-    console.log('init excel modal');
-    // console.log($('#excelModal'));
-  }
+  ngOnInit() { }
 }
