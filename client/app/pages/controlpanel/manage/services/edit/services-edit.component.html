@@ -154,7 +154,6 @@
                     <div class="cp-card cp-card--alt cp-card--half-padding cp-card--no-shadow">
                       <div class="delete-provider">
                         <button
-                          *ngIf="form.controls.providers.controls.length > 0"
                           (click)="delteProviderControl(i)"
                           class="cpbtn cpbtn--link-dark">
                           &times;
@@ -167,7 +166,7 @@
                             type="text"
                             placeholder="Name"
                             formControlName="provider_name"
-                            [class.error]="formError && attendance && provider.controls['provider_name'].hasError('required')">
+                            [class.error]="formError && form.controls.service_attendance.value && provider.controls['provider_name'].hasError('required')">
                         </div>
                         <div class="col-xs-6">
                           <label i18n>Email</label>
@@ -175,7 +174,7 @@
                             type="email"
                             placeholder="Email"
                             formControlName="email"
-                            [class.error]="formError && attendance && provider.controls['email'].hasError('required')">
+                            [class.error]="formError && form.controls.service_attendance.value && provider.controls['email'].hasError('required')">
                         </div>
                       </div>
 
@@ -186,23 +185,17 @@
                             type="text"
                             placeholder="How did you like the service?"
                             formControlName="custom_basic_feedback_label"
-                            [class.error]="formError && attendance && provider.controls['custom_basic_feedback_label'].hasError('required')">
+                            [class.error]="formError && form.controls.service_attendance.value && provider.controls['custom_basic_feedback_label'].hasError('required')">
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div class="row">
-                  <div class="col-xs-4">
-                    <button
-                      type="button"
-                      class="cpbtn cpbtn--secondary"
-                      (click)="onAddProviderControl()" i18n>
-                      Add Another Service Provider
-                    </button>
-                  </div>
-                </div>
+                <cp-services-edit-create-provider
+                  [serviceId]="serviceId"
+                  (created)="onProviderCreated($event)">
+                </cp-services-edit-create-provider>
               </div>
             </div>
           </div>
@@ -221,7 +214,6 @@
                   <div class="cp-card cp-card--alt cp-card--half-padding cp-card--no-shadow">
                     <div class="delete-admin">
                       <button
-                        *ngIf="form.controls.admins.controls.length > 0"
                         (click)="deleteAdminControl(i)"
                         class="cpbtn cpbtn--link-dark">
                         &times;
@@ -258,16 +250,10 @@
                 </div>
               </div>
 
-              <div class="row">
-                <div class="col-xs-4">
-                  <button
-                    type="button"
-                    class="cpbtn cpbtn--secondary"
-                    (click)="onAddAdminControl()" i18n>
-                    Add Another Invitation
-                  </button>
-                </div>
-              </div>
+              <cp-services-edit-create-admin
+                [storeId]="storeId"
+                (created)="onAdminCreated($event)">
+              </cp-services-edit-create-admin>
             </div>
           </div>
         </div>
@@ -300,8 +286,10 @@
       </div>
     </div>
 
-    <cp-modal modalId="deleteAdminServiceForm">
-      <cp-delete-admin-modal></cp-delete-admin-modal>
+    <cp-modal modalId="serviceEditDeleteModal">
+      <cp-service-edit-delete-modal
+        [item]="deletedItem"
+        (confirmed)="onDelete($event)"></cp-service-edit-delete-modal>
     </cp-modal>
   </div>
 </div>

@@ -108,8 +108,6 @@ export class EventsExcelModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.isService);
-    console.log(this.storeId);
     // console.log($('#excelModal'));
   }
 }
