@@ -150,20 +150,32 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       .providersService
       .deleteProvider(data.id, search)
       .subscribe(
-        _ => controls.removeAt(data.index),
-        err => console.error(err)
+      _ => controls.removeAt(data.index),
+      err => console.error(err)
       );
   }
 
   deleteAdmin(data: IServiceDeleteModal) {
     const controls = <FormArray>this.form.controls['admins'];
+    let _data = {
+      'account_level_privileges': [
+        {
+          [this.storeId]: {
+            [CP_PRIVILEGES_MAP.services]: {
+              r: false,
+              w: false
+            }
+          }
+        }
+      ]
+    };
 
     this
       .adminService
-      .deleteAdminById(data.id)
+      .updateAdmin(data.id, _data)
       .subscribe(
-        _ => controls.removeAt(data.index),
-        err => console.error(err)
+      _ => controls.removeAt(data.index),
+      err => console.error(err)
       );
   }
 
@@ -364,7 +376,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
               }
             }
           };
-          admins$.push(this.adminService.updateAdmin(_admin));
+          admins$.push(this.adminService.updateAdmin(1, _admin));
         });
 
         return Observable.combineLatest(admins$);
