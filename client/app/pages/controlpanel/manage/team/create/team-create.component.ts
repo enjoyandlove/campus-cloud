@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { TEAM_ACCESS } from '../utils';
 import { STATUS } from '../../../../../shared/constants';
 import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
-import { CP_PRIVILEGES, appStorage } from '../../../../../shared/utils';
+import { CP_PRIVILEGES, CP_PRIVILEGES_MAP, appStorage } from '../../../../../shared/utils';
 import { ErrorService, AdminService } from '../../../../../shared/services';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 
@@ -24,14 +24,16 @@ export class TeamCreateComponent implements OnInit {
   formError;
   clubsMenu;
   eventsMenu;
-  privileges;
   isFormError;
   manageAdmins;
   servicesMenu;
   form: FormGroup;
+  schoolPrivileges;
+  accountPrivileges;
   isAllAccessEnabled;
   MODAL_TYPE = MODAL_TYPE.WIDE;
   CP_PRIVILEGES = CP_PRIVILEGES;
+  CP_PRIVILEGES_MAP = CP_PRIVILEGES_MAP;
 
   constructor(
     private router: Router,
@@ -69,8 +71,11 @@ export class TeamCreateComponent implements OnInit {
       ...data,
       school_level_privileges: {
         [this.schoolId]: {
-          ...this.privileges
+          ...this.schoolPrivileges
         }
+      },
+      account_level_privileges: {
+        ...this.accountPrivileges
       }
     };
 
@@ -94,13 +99,13 @@ export class TeamCreateComponent implements OnInit {
 
   onManageAdminSelected(data) {
     if (!data.action) {
-      delete this.privileges[10];
+      delete this.accountPrivileges[10];
       return;
     }
 
-    this.privileges = Object.assign(
+    this.accountPrivileges = Object.assign(
       {},
-      this.privileges,
+      this.accountPrivileges,
       {
         10: {
           r: true,
@@ -111,20 +116,28 @@ export class TeamCreateComponent implements OnInit {
   }
 
   toggleAllAccess(checked) {
-   if (checked) {
-     this.privileges = Object.assign({}, this.user.school_level_privileges[this.schoolId]);
-     return;
-   }
-   this.privileges = {};
+    if (checked) {
+      this.accountPrivileges = Object.assign(
+        {},
+        this.user.account_level_privileges
+      );
+
+      this.schoolPrivileges = Object.assign(
+        {},
+        this.user.school_level_privileges[this.schoolId]
+      );
+      return;
+    }
+
+    this.accountPrivileges = {};
+    this.schoolPrivileges = {};
   }
 
   onServicesModalSelected(services) {
-    this.privileges = Object.assign(
+    this.schoolPrivileges = Object.assign(
       {},
-      this.privileges,
-      {
-        24: {...services}
-      }
+      this.schoolPrivileges,
+      ...services
     );
   }
 
@@ -135,15 +148,15 @@ export class TeamCreateComponent implements OnInit {
     }
 
     if (service.action === null) {
-      delete this.privileges[24];
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.services];
       return;
     }
 
-    this.privileges = Object.assign(
+    this.schoolPrivileges = Object.assign(
       {},
-      this.privileges,
+      this.schoolPrivileges,
       {
-        24 : {
+        [CP_PRIVILEGES_MAP.services]: {
           r: service.action === 2 ? true : true,
           w: service.action === 2 ? false : true
         }
@@ -152,11 +165,11 @@ export class TeamCreateComponent implements OnInit {
   }
 
   onClubsModalSelected(clubs) {
-    this.privileges = Object.assign(
+    this.accountPrivileges = Object.assign(
       {},
-      this.privileges,
+      this.accountPrivileges,
       {
-        22: {...clubs}
+        [CP_PRIVILEGES_MAP.clubs]: { ...clubs }
       }
     );
   }
@@ -168,15 +181,15 @@ export class TeamCreateComponent implements OnInit {
     }
 
     if (club.action === null) {
-      delete this.privileges[22];
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.clubs];
       return;
     }
 
-    this.privileges = Object.assign(
+    this.schoolPrivileges = Object.assign(
       {},
-      this.privileges,
+      this.schoolPrivileges,
       {
-        22 : {
+        [CP_PRIVILEGES_MAP.clubs]: {
           r: club.action === 2 ? true : true,
           w: club.action === 2 ? false : true
         }
@@ -186,15 +199,15 @@ export class TeamCreateComponent implements OnInit {
 
   onEventsSelected(event) {
     if (event.action === null) {
-      delete this.privileges[18];
+      delete this.accountPrivileges[CP_PRIVILEGES_MAP.events];
       return;
     }
 
-    this.privileges = Object.assign(
+    this.accountPrivileges = Object.assign(
       {},
-      this.privileges,
+      this.accountPrivileges,
       {
-        18 : {
+        [CP_PRIVILEGES_MAP.events]: {
           r: event.action === 2 ? true : true,
           w: event.action === 2 ? false : true
         }
@@ -204,15 +217,14 @@ export class TeamCreateComponent implements OnInit {
 
 
   checkControl(checked, type): void {
-
-    if (this.privileges && this.privileges[type]) {
-      delete this.privileges[type];
+    if (this.schoolPrivileges && this.schoolPrivileges[type]) {
+      delete this.schoolPrivileges[type];
       return;
     }
 
-    this.privileges = Object.assign(
+    this.schoolPrivileges = Object.assign(
       {},
-      this.privileges,
+      this.schoolPrivileges,
       {
         [type]: {
           r: checked,
@@ -245,14 +257,14 @@ export class TeamCreateComponent implements OnInit {
     ];
 
     this.manageAdmins = [
-     {
+      {
         'label': 'Disabled',
         'action': null
-     },
-     {
+      },
+      {
         'label': 'Enabled',
         'action': 1
-     }
+      }
     ];
 
     this.clubsMenu = [

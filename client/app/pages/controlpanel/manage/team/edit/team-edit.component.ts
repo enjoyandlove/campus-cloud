@@ -20,11 +20,11 @@ import { Store } from '@ngrx/store';
 
 import { TEAM_ACCESS } from '../utils';
 // import { STATUS } from '../../../../../shared/constants';
+import { AdminService } from '../../../../../shared/services';
 import { BaseComponent } from '../../../../../base/base.component';
 import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
-import { CP_PRIVILEGES, appStorage } from '../../../../../shared/utils';
-import { AdminService } from '../../../../../shared/services';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+import { CP_PRIVILEGES, CP_PRIVILEGES_MAP, appStorage } from '../../../../../shared/utils';
 
 declare var $: any;
 
@@ -48,9 +48,12 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   manageAdmins;
   servicesMenu;
   form: FormGroup;
+  schoolPrivileges;
+  accountPrivileges;
   isAllAccessEnabled;
   MODAL_TYPE = MODAL_TYPE.WIDE;
   CP_PRIVILEGES = CP_PRIVILEGES;
+  CP_PRIVILEGES_MAP = CP_PRIVILEGES_MAP;
 
   constructor(
     // private router: Router,
@@ -80,8 +83,6 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
           {},
           res.data.school_level_privileges[this.schoolId]
         );
-        console.log(this.formData);
-        console.log(this.privileges);
         this.isAllAccessEnabled = _.isEqual(this.privileges,
                                      this.user.school_level_privileges[this.schoolId]);
       })
