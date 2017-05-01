@@ -89,10 +89,9 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
     this
       .accountService
       .resetPassword(data.current, data.password)
-      .then(res => {
+      .then(_ => {
         this.form.reset();
         this.isCompleted = true;
-        console.log(res);
       });
   }
 

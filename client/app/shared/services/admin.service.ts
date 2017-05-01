@@ -38,8 +38,8 @@ export class AdminService extends BaseService {
     return super.post(url, data).map(res => res.json());
   }
 
-  updateAdmin(data: any) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/`;
+  updateAdmin(adminId: number, data: any) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/${adminId}`;
 
     return super.update(url, data).map(res => res.json());
   }
