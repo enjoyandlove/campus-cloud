@@ -11,7 +11,10 @@ import { ProvidersService } from '../providers.service';
 import { BaseComponent } from '../../../../../base/base.component';
 import { CP_PRIVILEGES_MAP } from '../../../../../shared/utils/privileges';
 import { AdminService } from '../../../../../shared/services/admin.service';
+import { IServiceDeleteModal } from './components/service-edit-delete-modal';
 import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+
+declare var $: any;
 
 @Component({
   selector: 'cp-services-edit',
@@ -28,6 +31,12 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   formError = false;
   serviceId: number;
   attendance = false;
+  deletedItem: IServiceDeleteModal = {
+    id: null,
+    name: null,
+    type: null,
+    index: null
+  };
 
   constructor(
     private fb: FormBuilder,
@@ -66,24 +75,18 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
         this.service = res.data[0];
         this.mapCenter = { lat: res.data[0].latitude, lng: res.data[0].longitude };
 
+        this.storeId = res.data[0].store_id;
+
         this.buildForm();
 
         if (admins.length) {
           let control = <FormArray>this.form.controls['admins'];
           admins.forEach(admin => control.push(this.buildAdminControl(admin)));
-          control.push(this.buildAdminControl());
-        } else {
-          let control = <FormArray>this.form.controls['admins'];
-          control.push(this.buildAdminControl());
         }
 
         if (providers.length) {
           let control = <FormArray>this.form.controls['providers'];
           providers.forEach(provider => control.push(this.buildServiceProviderControl(provider)));
-          control.push(this.buildServiceProviderControl());
-        } else {
-          let control = <FormArray>this.form.controls['providers'];
-          control.push(this.buildServiceProviderControl());
         }
       })
       .catch(err => console.error(err));
@@ -113,29 +116,86 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     this.form.controls['service_attendance'].setValue(event ? 1 : 0);
   }
 
-  onAddProviderControl(): void {
+  onProviderCreated(provider) {
     const controls = <FormArray>this.form.controls['providers'];
-    controls.controls.push(this.buildServiceProviderControl());
+    controls.push(this.buildServiceProviderControl(provider));
   }
 
-  onAddAdminControl(): void {
+  onAdminCreated(admin) {
     const controls = <FormArray>this.form.controls['admins'];
-    controls.controls.push(this.buildAdminControl());
+    controls.push(this.buildAdminControl(admin));
   }
 
   delteProviderControl(index): void {
     const controls = <FormArray>this.form.controls['providers'];
-    controls.removeAt(index);
+    const control = <FormGroup>controls.at(index);
+
+    this.deletedItem = {
+      index: index,
+      type: 'provider',
+      id: control.controls['id'].value,
+      name: control.controls['provider_name'].value
+    };
+
+    $('#serviceEditDeleteModal').modal();
+  }
+
+  deleteProvider(data: IServiceDeleteModal) {
+    const controls = <FormArray>this.form.controls['providers'];
+
+    let search = new URLSearchParams();
+    search.append('service_id', this.serviceId.toString());
+
+    this
+      .providersService
+      .deleteProvider(data.id, search)
+      .subscribe(
+        _ => controls.removeAt(data.index),
+        err => console.error(err)
+      );
+  }
+
+  deleteAdmin(data: IServiceDeleteModal) {
+    const controls = <FormArray>this.form.controls['admins'];
+
+    this
+      .adminService
+      .deleteAdminById(data.id)
+      .subscribe(
+        _ => controls.removeAt(data.index),
+        err => console.error(err)
+      );
+  }
+
+  onDelete(event) {
+    if (event.type === 'provider') {
+      this.deleteProvider(event);
+      return;
+    }
+    if (event.type === 'admin') {
+      this.deleteAdmin(event);
+      return;
+    }
   }
 
   deleteAdminControl(index): void {
     const controls = <FormArray>this.form.controls['admins'];
-    controls.removeAt(index);
+    const control = <FormGroup>controls.at(index);
+
+    this.deletedItem = {
+      index: index,
+      type: 'admin',
+      id: control.controls['id'].value,
+      name: `${control.controls['firstname'].value} ${control.controls['lastname'].value}`,
+    };
+
+    $('#serviceEditDeleteModal').modal();
   }
 
   buildServiceProviderControl(provider?: any) {
     if (provider) {
       return this.fb.group({
+        'id': [provider.id],
         'provider_name': [provider.provider_name],
         'email': [provider.email],
         'custom_basic_feedback_label': [provider.custom_basic_feedback_label]
@@ -151,6 +211,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   buildAdminControl(admin?: any) {
     if (admin) {
       return this.fb.group({
+        'id': [admin.id],
         'firstname': [admin.firstname],
         'lastname': [admin.lastname],
         'email': [admin.email],
@@ -316,7 +377,6 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.storeId = 14748;
     let categories = require('../categories.json');
 
     categories.map(category => {

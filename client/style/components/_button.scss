@@ -79,6 +79,7 @@ a.cpbtn, {
     }
 
     &:disabled {
+      color: $color-white;
       border: 1px solid $color-med-grey;
     }
 

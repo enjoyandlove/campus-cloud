@@ -29,6 +29,12 @@ import {
 } from './events/components';
 
 import {
+  ServicesEditCreateAdminComponent,
+  ServicesEditDeleteModalComponent,
+  ServicesEditCreateProviderComponent
+} from './edit/components';
+
+import {
   ServicesListActionBoxComponent
 } from './list/components';
 
@@ -63,7 +69,9 @@ import { EventsModule } from '../events/events.module';
   ServicesExcelComponent, ServicesImportTopBarComponent, ServicesProvidersListComponent,
   ServicesProviderDetailsComponent, ServicesProvidersAttendeesListComponent,
   ServicesEventsCreateComponent, ServicesEventsAttendanceComponent, ServicesEventsInfoComponent,
-  ServicesEventsEditComponent, ServicesEventsFacebookComponent, ServicesEventsExcelComponent ],
+  ServicesEventsEditComponent, ServicesEventsFacebookComponent, ServicesEventsExcelComponent,
+  ServicesEditDeleteModalComponent, ServicesEditCreateProviderComponent,
+  ServicesEditCreateAdminComponent ],
 
   imports: [ CommonModule, SharedModule, ServicesRoutingModule, RouterModule,
   ReactiveFormsModule, EventsModule ],
