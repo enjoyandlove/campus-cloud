@@ -4,9 +4,10 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { TEAM_ACCESS } from '../utils';
+import { CPSession } from '../../../../../session';
 import { STATUS } from '../../../../../shared/constants';
+import { CP_PRIVILEGES } from '../../../../../shared/utils';
 import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
-import { CP_PRIVILEGES, appStorage } from '../../../../../shared/utils';
 import { ErrorService, AdminService } from '../../../../../shared/services';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 
@@ -36,6 +37,7 @@ export class TeamCreateComponent implements OnInit {
   constructor(
     private router: Router,
     private fb: FormBuilder,
+    private session: CPSession,
     private store: Store<IHeader>,
     private teamService: AdminService,
     private errorService: ErrorService
@@ -223,7 +225,7 @@ export class TeamCreateComponent implements OnInit {
 
   ngOnInit() {
     this.schoolId = 157;
-    this.user = JSON.parse(appStorage.get(appStorage.keys.PROFILE));
+    this.user = this.session.user;
     this.formData = TEAM_ACCESS.getMenu(this.user.school_level_privileges[this.schoolId]);
 
     this.buildHeader();

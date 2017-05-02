@@ -1,7 +1,9 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
+import { URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
 
+import { CPSession } from '../../../../../session';
 import { EventsService } from '../events.service';
 import { CPMap, CPDate } from '../../../../../shared/utils';
 import { ErrorService, StoreService } from '../../../../../shared/services';
@@ -36,11 +38,16 @@ export class EventsCreateComponent implements OnInit {
   constructor(
     private router: Router,
     private fb: FormBuilder,
+    private session: CPSession,
     private storeService: StoreService,
     private errorService: ErrorService,
     private eventService: EventsService
   ) {
-    this.stores$ = this.storeService.getStores().map(res => {
+    let school = this.session.school;
+    let search: URLSearchParams = new URLSearchParams();
+    search.append('school_id', school.id.toString());
+
+    this.stores$ = this.storeService.getStores(search).map(res => {
       const stores = [
         {
           'name': 'All Host',

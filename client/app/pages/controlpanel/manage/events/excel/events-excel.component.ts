@@ -1,9 +1,11 @@
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { EventsService } from '../events.service';
+import { CPSession } from '../../../../../session';
 import { isProd } from '../../../../../config/env';
 import { CPDate } from '../../../../../shared/utils';
 import { StoreService } from '../../../../../shared/services';
@@ -39,10 +41,14 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     private router: Router,
     private fb: FormBuilder,
     private store: Store<any>,
+    private session: CPSession,
     private storeService: StoreService,
     private eventsService: EventsService
   ) {
     super();
+
+    super.isLoading().subscribe(res => this.loading = res);
+
     this
       .store
       .select('EVENTS_MODAL')
@@ -56,9 +62,11 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
   }
 
   private fetch() {
-    super.isLoading().subscribe(res => this.loading = res);
+    const school = this.session.school;
+    let search: URLSearchParams = new URLSearchParams();
+    search.append('school_id', school.id.toString());
 
-    const stores$ = this.storeService.getStores().map(res => {
+    const stores$ = this.storeService.getStores(search).map(res => {
       const stores = [
         {
           'label': 'Host Name',

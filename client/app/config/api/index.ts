@@ -15,6 +15,7 @@ const API_ENDPOINTS = {
   STORE: 'store',
   EVENT: 'event',
   IMAGE: 'image',
+  SCHOOL: 'school',
   SESSION: 'session',
   P_RESET: 'ns_admin',
   SERVICES: 'service',

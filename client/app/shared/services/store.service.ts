@@ -1,6 +1,6 @@
+import { Http, URLSearchParams } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Http } from '@angular/http';
 
 import { API } from '../../config/api';
 import { BaseService } from '../../base/base.service';
@@ -13,10 +13,10 @@ export class StoreService extends BaseService {
     Object.setPrototypeOf(this, StoreService.prototype);
   }
 
-  getStores() {
+  getStores(search: URLSearchParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.STORE}/`;
 
-    return super.get(url).map(res => res.json());
+    return super.get(url, { search }).map(res => res.json());
   }
 
   getStoreById(storeId: number) {

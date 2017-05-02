@@ -20,10 +20,11 @@ import { Store } from '@ngrx/store';
 
 import { TEAM_ACCESS } from '../utils';
 // import { STATUS } from '../../../../../shared/constants';
+import { CPSession } from '../../../../../session';
+import { CP_PRIVILEGES } from '../../../../../shared/utils';
+import { AdminService } from '../../../../../shared/services';
 import { BaseComponent } from '../../../../../base/base.component';
 import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
-import { CP_PRIVILEGES, appStorage } from '../../../../../shared/utils';
-import { AdminService } from '../../../../../shared/services';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 
 declare var $: any;
@@ -55,6 +56,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   constructor(
     // private router: Router,
     private fb: FormBuilder,
+    private session: CPSession,
     private route: ActivatedRoute,
     private store: Store<IHeader>,
     private adminService: AdminService,
@@ -272,7 +274,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.schoolId = 157;
-    this.user = JSON.parse(appStorage.get(appStorage.keys.PROFILE));
+    this.user = this.session.user;
     this.formData = TEAM_ACCESS.getMenu(this.user.school_level_privileges[this.schoolId]);
 
     this.buildHeader();

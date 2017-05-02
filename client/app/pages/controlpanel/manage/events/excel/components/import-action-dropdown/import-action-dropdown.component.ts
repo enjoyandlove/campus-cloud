@@ -1,7 +1,9 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
+import { CPSession } from '../../../../../../../session';
 import { StoreService } from '../../../../../../../shared/services';
 import { BaseComponent } from '../../../../../../../base/base.component';
 
@@ -26,7 +28,6 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
   managers$;
   id1 = 'id1';
   id2 = 'id2';
-  sopa$;
   eventManagers;
   isOpen = false;
   state: IState;
@@ -34,6 +35,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
   selectedHost: BehaviorSubject<number> = new BehaviorSubject(null);
 
   constructor(
+    private session: CPSession,
     private storeService: StoreService
   ) {
     super();
@@ -75,9 +77,11 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
   }
 
   private fetch() {
-    super.isLoading().subscribe(res => this.loading = res);
+    let school = this.session.school;
+    let search: URLSearchParams = new URLSearchParams();
+    search.append('school_id', school.id.toString());
 
-    const stores$ = this.storeService.getStores().map(res => {
+    const stores$ = this.storeService.getStores(search).map(res => {
       const stores = [
         {
           'label': 'Host Name',

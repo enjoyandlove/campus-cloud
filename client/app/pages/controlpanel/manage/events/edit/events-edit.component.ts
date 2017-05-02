@@ -1,6 +1,7 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -10,6 +11,7 @@ import {
   HEADER_UPDATE
 } from '../../../../../reducers/header.reducer';
 import { EventsService } from '../events.service';
+import { CPSession } from '../../../../../session';
 import { CPMap, CPDate } from '../../../../../shared/utils';
 import { FORMAT } from '../../../../../shared/pipes/date.pipe';
 import { BaseComponent } from '../../../../../base/base.component';
@@ -49,6 +51,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   constructor(
     private router: Router,
     private fb: FormBuilder,
+    private session: CPSession,
     private store: Store<IHeader>,
     private route: ActivatedRoute,
     private storeService: StoreService,
@@ -57,6 +60,8 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   ) {
     super();
     this.eventId = this.route.snapshot.params['eventId'];
+
+    super.isLoading().subscribe(res => this.loading = res);
 
     this.fetch();
     this.buildHeader();
@@ -146,10 +151,12 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    super.isLoading().subscribe(res => this.loading = res);
+    let school = this.session.school;
+    let search: URLSearchParams = new URLSearchParams();
+    search.append('school_id', school.id.toString());
 
     const event$ = this.eventService.getEventById(this.eventId);
-    const stores$ = this.storeService.getStores().map(res => {
+    const stores$ = this.storeService.getStores(search).map(res => {
       const stores = [
         {
           'name': 'All Host',
