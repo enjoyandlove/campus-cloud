@@ -1,7 +1,9 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
+import { URLSearchParams } from '@angular/http';
 
-import { CPDate } from '../../../../../../../shared/utils/date';
 import { DATE_FILTER } from './events-filters';
+import { CPSession } from '../../../../../../../session';
+import { CPDate } from '../../../../../../../shared/utils/date';
 import { StoreService } from '../../../../../../../shared/services';
 import { BaseComponent } from '../../../../../../../base/base.component';
 
@@ -43,6 +45,7 @@ export class ListActionBoxComponent extends BaseComponent implements OnInit {
   state: IState = state;
 
   constructor(
+    private session: CPSession,
     private storeService: StoreService
   ) {
     super();
@@ -51,7 +54,11 @@ export class ListActionBoxComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    const stores$ = this.storeService.getStores().map(res => {
+    const school = this.session.school;
+    let search: URLSearchParams = new URLSearchParams();
+    search.append('school_id', school.id.toString());
+
+    const stores$ = this.storeService.getStores(search).map(res => {
       const stores = [
         {
           'label': 'All Host',

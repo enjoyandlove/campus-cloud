@@ -1,10 +1,12 @@
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { isProd } from '../../../../../config/env';
 import { ServicesService } from '../services.service';
+import { CPSession } from '../../../../../session';
 import { StoreService } from '../../../../../shared/services';
 import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE, HEADER_DEFAULT } from '../../../../../reducers/header.reducer';
@@ -27,10 +29,13 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
     private router: Router,
     private fb: FormBuilder,
     private store: Store<any>,
+    private session: CPSession,
     private storeService: StoreService,
     private servicesService: ServicesService
   ) {
     super();
+    super.isLoading().subscribe(res => this.loading = res);
+
     this
       .store
       .select('SERVICES_MODAL')
@@ -45,9 +50,11 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
   }
 
   private fetch() {
-    super.isLoading().subscribe(res => this.loading = res);
+    const school = this.session.school;
+    let search: URLSearchParams = new URLSearchParams();
+    search.append('school_id', school.id.toString());
 
-    const stores$ = this.storeService.getStores().map(res => {
+    const stores$ = this.storeService.getStores(search).map(res => {
       const stores = [
         {
           'label': 'Host Name',

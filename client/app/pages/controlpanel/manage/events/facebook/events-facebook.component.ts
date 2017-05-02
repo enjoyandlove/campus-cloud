@@ -1,7 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
+import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base/base.component';
 import { StoreService } from '../../../../../shared/services/store.service';
 
@@ -22,6 +24,7 @@ export class EventsFacebookComponent extends BaseComponent implements OnInit {
   reload$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
+    private session: CPSession,
     private store: Store<IHeader>,
     private storeService: StoreService
   ) {
@@ -36,7 +39,11 @@ export class EventsFacebookComponent extends BaseComponent implements OnInit {
     this.reload$.next(true);
   }
   private fetch() {
-    const stores$ = this.storeService.getStores().map(res => {
+    const school = this.session.school;
+    let search: URLSearchParams = new URLSearchParams();
+    search.append('school_id', school.id.toString());
+
+    const stores$ = this.storeService.getStores(search).map(res => {
       const stores = [
         {
           'label': 'All Host',
