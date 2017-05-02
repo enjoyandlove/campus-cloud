@@ -57,7 +57,9 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
   fetch(stream$) {
     super
     .fetchData(stream$)
-    .then(res => this.updateState(res.data))
+    .then(res => {
+      this.updateState(res.data);
+    })
     .catch(err => console.log(err));
   }
 
@@ -68,7 +70,7 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
     _state.map(item => {
 
       if (item.checked) {
-        _item[item.data.id] = {
+        _item[item.data.store_id] = {
           [this.privilegeType]: {
             r: true,
             w: item.type === 1 ? false : true
@@ -95,11 +97,6 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
   }
 
   buildPrivilegesDropDown() {
-    // this.privileges = permissions.filter(privilege => {
-    //   if (this.userPrivileges.indexOf(privilege.type) > -1) {
-    //     return privilege;
-    //   }
-    // });
     this.privileges = permissions;
   }
 

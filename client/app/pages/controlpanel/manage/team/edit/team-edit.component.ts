@@ -83,46 +83,61 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
   servicesDefaultPermission() {
     let selected;
-    let school_level_privileges = this.session.user.school_level_privileges[this.schoolId];
+    let school_level_privileges = this.schoolPrivileges;
     let service_privilege = school_level_privileges[CP_PRIVILEGES_MAP.services];
 
     if (!service_privilege) {
       selected = this.servicesMenu[0];
+      Object.keys(this.accountPrivileges).forEach(store => {
+        if (this.accountPrivileges[store][CP_PRIVILEGES_MAP.services]) {
+          selected = this.servicesMenu[1];
+        }
+      });
     } else if (service_privilege.r && service_privilege.w) {
       selected = this.servicesMenu[2];
     } else {
       selected = this.servicesMenu[1];
     }
+
     return selected;
   }
 
   clubsDefaultPermission() {
     let selected;
-    let school_level_privileges = this.session.user.school_level_privileges[this.schoolId];
+    let school_level_privileges = this.schoolPrivileges;
     let club_privilege = school_level_privileges[CP_PRIVILEGES_MAP.clubs];
 
     if (!club_privilege) {
       selected = this.clubsMenu[0];
+      Object.keys(this.accountPrivileges).forEach(store => {
+        if (this.accountPrivileges[store][CP_PRIVILEGES_MAP.clubs]) {
+          selected = this.clubsMenu[1];
+        }
+      });
     } else if (club_privilege.r && club_privilege.w) {
       selected = this.clubsMenu[2];
     } else {
       selected = this.clubsMenu[1];
     }
+
     return selected;
   }
 
   eventsDefaultPermission() {
     let selected;
-    let school_level_privileges = this.session.user.school_level_privileges[this.schoolId];
+    let school_level_privileges = this.schoolPrivileges;
     let event_privilege = school_level_privileges[CP_PRIVILEGES_MAP.events];
 
-    if (event_privilege.r && event_privilege.w) {
+    if (!event_privilege) {
+      selected = this.eventsMenu[0];
+    } else if (event_privilege.r && event_privilege.w) {
       selected = this.eventsMenu[2];
     } else if (event_privilege.r && !event_privilege.w) {
       selected = this.eventsMenu[1];
     } else {
       selected = this.eventsMenu[0];
     }
+
     return selected;
   }
 

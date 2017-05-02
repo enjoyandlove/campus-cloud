@@ -136,8 +136,6 @@ export class TeamCreateComponent implements OnInit {
   }
 
   onServicesModalSelected(services) {
-    delete this.schoolPrivileges[CP_PRIVILEGES_MAP.services];
-
     this.accountPrivileges = Object.assign(
       {},
       this.accountPrivileges,

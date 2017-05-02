@@ -256,7 +256,8 @@ module.exports = function makeWebpackConfig() {
       new webpack.optimize.UglifyJsPlugin({
         sourceMap: true,
         drop_console: true,
-        mangle: { keep_fnames: true }
+        comments: false,
+        mangle: { keep_fnames: true },
       }),
 
       // Copy assets from the public folder
