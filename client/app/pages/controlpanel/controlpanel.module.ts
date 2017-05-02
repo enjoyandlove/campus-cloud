@@ -8,12 +8,12 @@ import { ControlPanelRoutingModule } from './controlpanel.routing.module';
 import { ControlPanelComponent } from './controlpanel.component';
 import { ControlPanelService } from './controlpanel.service';
 
-import { AdminService } from '../../shared/services';
+import { AdminService, StoreService, SchoolService } from '../../shared/services';
 
 @NgModule({
   declarations: [ ControlPanelComponent ],
   imports: [ RouterModule, ControlPanelRoutingModule, CommonModule,
   SharedModule ],
-  providers: [ ControlPanelService, AdminService ],
+  providers: [ ControlPanelService, AdminService, StoreService, SchoolService ],
 })
 export class ControlPanelModule {}

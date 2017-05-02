@@ -1,6 +1,8 @@
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { URLSearchParams } from '@angular/http';
 
+import { CPSession } from '../../../../../session';
 import { StoreService } from '../../../../../shared/services';
 
 declare var $: any;
@@ -21,11 +23,16 @@ export class AnnouncementsComposeComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private session: CPSession,
     private storeService: StoreService
   ) {
+    const school = this.session.school;
+    let search: URLSearchParams = new URLSearchParams();
+    search.append('school_id', school.id.toString());
+
     this.stores$ = this
       .storeService
-      .getStores()
+      .getStores(search)
       .startWith([
         {
           'label': '---',

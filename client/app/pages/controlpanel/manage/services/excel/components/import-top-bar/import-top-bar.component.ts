@@ -1,7 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Headers } from '@angular/http';
+import { Headers, URLSearchParams } from '@angular/http';
 
 import { API } from '../../../../../../../config/api';
+import { CPSession } from '../../../../../../../session';
 import { BaseComponent } from '../../../../../../../base/base.component';
 import { CPImage, CPArray, appStorage } from '../../../../../../../shared/utils';
 import { StoreService, FileUploadService } from '../../../../../../../shared/services';
@@ -22,17 +23,22 @@ export class ServicesImportTopBarComponent extends BaseComponent implements OnIn
   loading = true;
 
   constructor(
+    private session: CPSession,
     private storeService: StoreService,
     private fileUploadService: FileUploadService
   ) {
     super();
     this.fetch();
+
+    super.isLoading().subscribe(res => this.loading = res);
   }
 
   private fetch() {
-    super.isLoading().subscribe(res => this.loading = res);
+    const school = this.session.school;
+    let search: URLSearchParams = new URLSearchParams();
+    search.append('school_id', school.id.toString());
 
-    const stores$ = this.storeService.getStores().map(res => {
+    const stores$ = this.storeService.getStores(search).map(res => {
       const stores = [
         {
           'label': 'Host Name',

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
 
+import { CPSession } from '../../session';
 import { BaseComponent } from '../../base';
-import { appStorage } from '../../shared/utils';
-import { AdminService } from '../../shared/services';
+import { AdminService, SchoolService } from '../../shared/services';
 
 @Component({
   selector: 'cp-controlpanel',
@@ -15,28 +15,38 @@ export class ControlPanelComponent extends BaseComponent implements OnInit {
   loading = true;
 
   constructor(
-    private store: Store<any>,
-    private service: AdminService
+    private session: CPSession,
+    private adminService: AdminService,
+    private schoolService: SchoolService
   ) {
     super();
 
     super.isLoading().subscribe(res => this.loading = res);
 
-    if (!appStorage.get(appStorage.keys.PROFILE)) {
-      this.fetch();
-    }
-
-    this.status = this.store.select('MOBILE');
+    // if (!appStorage.get(appStorage.keys.PROFILE)) {
+    //   this.fetch();
+    // }
   }
 
   private fetch() {
+    const admins$ = this.adminService.getAdmins(1, 1);
+    const school$ = this.schoolService.getShool();
+    const stream$ = Observable.combineLatest(admins$, school$);
+
     super
-      .fetchData(this.service.getAdmins(this.startRange, this.endRange))
+      .fetchData(stream$)
       .then(res => {
-        appStorage.set(appStorage.keys.PROFILE, JSON.stringify(res.data[0]));
+        this.session.user = res.data[0][0];
+        this.session.school = res.data[1][0];
+        // appStorage.set(appStorage.keys.PROFILE, JSON.stringify(res.data[0][0]));
       })
       .catch(err => console.error(err));
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.fetch();
+    // if (!appStorage.get(appStorage.keys.PROFILE)) {
+    //   this.fetch();
+    // }
+  }
 }
