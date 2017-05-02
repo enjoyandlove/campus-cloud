@@ -76,9 +76,54 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
         this.isAllAccessEnabled = _.isEqual(this.schoolPrivileges,
           this.user.school_level_privileges[this.schoolId]) && _.isEqual(this.accountPrivileges,
-          this.user.account_level_privileges);
+            this.user.account_level_privileges);
       })
       .catch(err => console.log(err));
+  }
+
+  servicesDefaultPermission() {
+    let selected;
+    let school_level_privileges = this.session.user.school_level_privileges[this.schoolId];
+    let service_privilege = school_level_privileges[CP_PRIVILEGES_MAP.services];
+
+    if (!service_privilege) {
+      selected = this.servicesMenu[0];
+    } else if (service_privilege.r && service_privilege.w) {
+      selected = this.servicesMenu[2];
+    } else {
+      selected = this.servicesMenu[1];
+    }
+    return selected;
+  }
+
+  clubsDefaultPermission() {
+    let selected;
+    let school_level_privileges = this.session.user.school_level_privileges[this.schoolId];
+    let club_privilege = school_level_privileges[CP_PRIVILEGES_MAP.clubs];
+
+    if (!club_privilege) {
+      selected = this.clubsMenu[0];
+    } else if (club_privilege.r && club_privilege.w) {
+      selected = this.clubsMenu[2];
+    } else {
+      selected = this.clubsMenu[1];
+    }
+    return selected;
+  }
+
+  eventsDefaultPermission() {
+    let selected;
+    let school_level_privileges = this.session.user.school_level_privileges[this.schoolId];
+    let event_privilege = school_level_privileges[CP_PRIVILEGES_MAP.events];
+
+    if (event_privilege.r && event_privilege.w) {
+      selected = this.eventsMenu[2];
+    } else if (event_privilege.r && !event_privilege.w) {
+      selected = this.eventsMenu[1];
+    } else {
+      selected = this.eventsMenu[0];
+    }
+    return selected;
   }
 
   private buildHeader() {
@@ -121,17 +166,17 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       .adminService
       .createAdmin(_data)
       .subscribe(
-        _ => this.router.navigate['/manage/team'],
-        err => {
-          this.isFormError = true;
+      _ => this.router.navigate['/manage/team'],
+      err => {
+        this.isFormError = true;
 
-          if (err.status === 409) {
-            this.formError = STATUS.DUPLICATE_ENTRY;
-            return;
-          }
-
-          this.formError = 'Something went wrong';
+        if (err.status === 409) {
+          this.formError = STATUS.DUPLICATE_ENTRY;
+          return;
         }
+
+        this.formError = 'Something went wrong';
+      }
       );
   }
 
@@ -251,9 +296,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     );
   }
 
-
   checkControl(checked, type): void {
-        if (this.schoolPrivileges && this.schoolPrivileges[type]) {
+    if (this.schoolPrivileges && this.schoolPrivileges[type]) {
       delete this.schoolPrivileges[type];
       return;
     }
