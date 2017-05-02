@@ -1,5 +1,5 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
@@ -41,7 +41,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   CP_PRIVILEGES_MAP = CP_PRIVILEGES_MAP;
 
   constructor(
-    // private router: Router,
+    private router: Router,
     private fb: FormBuilder,
     private session: CPSession,
     private route: ActivatedRoute,
@@ -75,7 +75,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
         );
 
         this.isAllAccessEnabled = _.isEqual(this.schoolPrivileges,
-          this.user.school_level_privileges[this.schoolId]);
+          this.user.school_level_privileges[this.schoolId]) && _.isEqual(this.accountPrivileges,
+          this.user.account_level_privileges);
       })
       .catch(err => console.log(err));
   }
@@ -116,24 +117,22 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       }
     };
 
-    console.log(_data);
+    this
+      .adminService
+      .createAdmin(_data)
+      .subscribe(
+        _ => this.router.navigate['/manage/team'],
+        err => {
+          this.isFormError = true;
 
-    // this
-    //   .adminService
-    //   .createAdmin(_data)
-    //   .subscribe(
-    //     _ => this.router.navigate['/manage/team'],
-    //     err => {
-    //       this.isFormError = true;
+          if (err.status === 409) {
+            this.formError = STATUS.DUPLICATE_ENTRY;
+            return;
+          }
 
-    //       if (err.status === 409) {
-    //         this.formError = STATUS.DUPLICATE_ENTRY;
-    //         return;
-    //       }
-
-    //       this.formError = 'Something went wrong';
-    //     }
-    //   );
+          this.formError = 'Something went wrong';
+        }
+      );
   }
 
   onManageAdminSelected(data) {
@@ -173,16 +172,15 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   onServicesModalSelected(services) {
-    this.schoolPrivileges = Object.assign(
+    this.accountPrivileges = Object.assign(
       {},
-      this.schoolPrivileges,
+      this.accountPrivileges,
       ...services
     );
   }
 
   onServicesSelected(service) {
     if (service.action === 2) {
-      console.log('launching modal');
       $('#selectServicesModal').modal();
       return;
     }
@@ -208,9 +206,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     this.accountPrivileges = Object.assign(
       {},
       this.accountPrivileges,
-      {
-        [CP_PRIVILEGES_MAP.clubs]: { ...clubs }
-      }
+      ...clubs
     );
   }
 
@@ -274,8 +270,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.schoolId = 157;
     this.user = this.session.user;
+    this.schoolId = this.session.school.id;
     this.formData = TEAM_ACCESS.getMenu(this.user.school_level_privileges[this.schoolId]);
 
     this.buildHeader();

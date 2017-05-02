@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
+import { CP_PRIVILEGES_MAP } from '../../../../../../../shared/utils';
 import { ServicesService } from '../../../../services/services.service';
 import { BaseTeamSelectModalComponent } from './team-select-modal.component';
 
@@ -17,6 +18,7 @@ implements OnInit {
   constructor(private service: ServicesService) {
     super();
     this.title = 'Services';
+    this.privilegeType = CP_PRIVILEGES_MAP.services;
   }
 
   onSubmit(): any {

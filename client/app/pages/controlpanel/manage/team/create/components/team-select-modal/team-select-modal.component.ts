@@ -28,8 +28,8 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
   loading;
   privileges;
   query = null;
+  privilegeType;
   state: IState = state;
-  userPrivileges = [1, 2];
 
   constructor() {
     super();
@@ -69,8 +69,10 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
 
       if (item.checked) {
         _item[item.data.id] = {
-          r: true,
-          w: item.type === 1 ? false : true
+          [this.privilegeType]: {
+            r: true,
+            w: item.type === 1 ? false : true
+          }
         };
       }
     });

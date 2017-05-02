@@ -136,9 +136,11 @@ export class TeamCreateComponent implements OnInit {
   }
 
   onServicesModalSelected(services) {
-    this.schoolPrivileges = Object.assign(
+    delete this.schoolPrivileges[CP_PRIVILEGES_MAP.services];
+
+    this.accountPrivileges = Object.assign(
       {},
-      this.schoolPrivileges,
+      this.accountPrivileges,
       ...services
     );
   }
@@ -236,8 +238,8 @@ export class TeamCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.schoolId = 157;
     this.user = this.session.user;
+    this.schoolId = this.session.school.id;
     this.formData = TEAM_ACCESS.getMenu(this.user.school_level_privileges[this.schoolId]);
 
     this.buildHeader();

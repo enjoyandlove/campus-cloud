@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { ClubsService } from '../../../../clubs/clubs.service';
+import { CP_PRIVILEGES_MAP } from '../../../../../../../shared/utils';
 import { BaseTeamSelectModalComponent } from './team-select-modal.component';
 
 declare var $: any;
@@ -12,11 +13,14 @@ declare var $: any;
 })
 export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent
   implements OnInit {
-    @Output() selected: EventEmitter<any> = new EventEmitter();
+  @Output() selected: EventEmitter<any> = new EventEmitter();
 
-  constructor(private service: ClubsService) {
+  constructor(
+    private service: ClubsService
+  ) {
     super();
     this.title = 'Clubs';
+    this.privilegeType = CP_PRIVILEGES_MAP.clubs;
   }
 
   onSubmit(): any {
