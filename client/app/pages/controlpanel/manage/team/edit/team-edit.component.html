@@ -54,6 +54,7 @@
                     <div class="pull-right">
                       <cp-switch
                         [isChecked]="isAllAccessEnabled"
+                        (toggle)="toggleAllAccess($event)"
                         (toggle)="isAllAccessEnabled = !isAllAccessEnabled">
                       </cp-switch>
                     </div>
@@ -83,7 +84,7 @@
                 <cp-dropdown
                   [items]="manageAdmins"
                   (selected)="onManageAdminSelected($event)"
-                  [selectedItem]="privileges[10] ? manageAdmins[1] : manageAdmins[0]">
+                  [selectedItem]="schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin] ? manageAdmins[1] : manageAdmins[0]">
                 </cp-dropdown>
               </div>
             </div>
@@ -163,8 +164,8 @@
                 [class.isDisabled]="!formData.content.orientation">
                 <cp-checkbox
                   class="cpcheckbox"
-                  [isChecked]="privileges[17]"
-                  (toggle)="checkControl($event, 17)"
+                  [isChecked]="schoolPrivileges[CP_PRIVILEGES_MAP.orientation]"
+                  (toggle)="checkControl($event, CP_PRIVILEGES_MAP.orientation)"
                   [isDisabled]="!formData.content.orientation">
                 </cp-checkbox>
                 <span i18n>Orientation</span>
@@ -175,8 +176,8 @@
                 [class.isDisabled]="!formData.content.calendars">
                 <cp-checkbox
                   class="cpcheckbox"
-                  [isChecked]="privileges[16]"
-                  (toggle)="checkControl($event, 16)"
+                  [isChecked]="schoolPrivileges[CP_PRIVILEGES_MAP.calendar]"
+                  (toggle)="checkControl($event, CP_PRIVILEGES_MAP.calendar)"
                   [isDisabled]="!formData.content.calendars">
                 </cp-checkbox>
                 <span i18n>Calendars</span>
@@ -184,11 +185,11 @@
 
               <div
                 class="col-xs-4"
-                [class.isDisabled]="!formData.content.maps">
+                [class.isDisabled]="!formData.content.campus_maps">
                 <cp-checkbox
                   class="cpcheckbox"
-                  [isChecked]="privileges[21]"
-                  (toggle)="checkControl($event, 21)"
+                  [isChecked]="schoolPrivileges[CP_PRIVILEGES_MAP.campus_maps]"
+                  (toggle)="checkControl($event, CP_PRIVILEGES_MAP.campus_maps)"
                   [isDisabled]="!formData.content.maps">
                 </cp-checkbox>
                 <span i18n>Maps</span>
@@ -201,8 +202,8 @@
                 [class.isDisabled]="!formData.content.feeds">
                 <cp-checkbox
                   class="cpcheckbox"
-                  [isChecked]="privileges[15]"
-                  (toggle)="checkControl($event, 15)"
+                  [isChecked]="schoolPrivileges[CP_PRIVILEGES_MAP.moderation]"
+                  (toggle)="checkControl($event, CP_PRIVILEGES_MAP.moderation)"
                   [isDisabled]="!formData.content.feeds">
                 </cp-checkbox>
                 <span i18n>Feeds</span>
@@ -213,8 +214,8 @@
                 [class.isDisabled]="!formData.content.links">
                 <cp-checkbox
                   class="cpcheckbox"
-                  [isChecked]="privileges[23]"
-                  (toggle)="checkControl($event, 23)"
+                  [isChecked]="schoolPrivileges[CP_PRIVILEGES_MAP.links]"
+                  (toggle)="checkControl($event, CP_PRIVILEGES_MAP.links)"
                   [isDisabled]="!formData.content.links">
                 </cp-checkbox>
                 <span i18n>Links</span>
@@ -225,8 +226,8 @@
                 [class.isDisabled]="!formData.content.appCustomizaton">
                 <cp-checkbox
                   class="cpcheckbox"
-                  [isChecked]="privileges[13]"
-                  (toggle)="checkControl($event, 13)"
+                  [isChecked]="schoolPrivileges[CP_PRIVILEGES_MAP.app_customization]"
+                  (toggle)="checkControl($event, CP_PRIVILEGES_MAP.app_customization)"
                   [isDisabled]="!formData.content.appCustomizaton">
                 </cp-checkbox>
                 <span i18n>App Customization</span>
@@ -253,9 +254,9 @@
                     [class.isDisabled]="!formData.notify.campus">
                     <cp-checkbox
                       class="cpcheckbox"
-                      [isChecked]="privileges[12]"
+                      [isChecked]="schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements]"
                       [isDisabled]="!formData.notify.campus"
-                      (toggle)="checkControl($event, 12)">
+                      (toggle)="checkControl($event, CP_PRIVILEGES_MAP.campus_announcements)">
                     </cp-checkbox>
                     <span i18n>Campus Announcements</span>
                   </div>
@@ -264,9 +265,9 @@
                     [class.isDisabled]="!formData.notify.emergency">
                     <cp-checkbox
                       class="cpcheckbox"
-                      [isChecked]="privileges[32]"
+                      [isChecked]="schoolPrivileges[CP_PRIVILEGES_MAP.emergency_announcement]"
                       [isDisabled]="!formData.notify.emergency"
-                      (toggle)="checkControl($event, 32)">
+                      (toggle)="checkControl($event, CP_PRIVILEGES_MAP.emergency_announcement)">
                     </cp-checkbox>
                     <span i18n>Emergency Announcements</span>
                   </div>
@@ -309,18 +310,16 @@
 
 <cp-modal
   [type]="MODAL_TYPE"
-  *ngIf="isServicesModal"
   modalId="selectServicesModal">
   <cp-select-services-modal
-    (teardown)="onCloseModal('isServicesModal')">
+    (selected)="onServicesModalSelected($event)">
   </cp-select-services-modal>
 </cp-modal>
 
 <cp-modal
   [type]="MODAL_TYPE"
-  *ngIf="isClubsModal"
   modalId="selectClubsModal">
   <cp-select-clubs-modal
-    (teardown)="onCloseModal('isClubsModal')">
+    (selected)="onClubsModalSelected($event)">
   </cp-select-clubs-modal>
 </cp-modal>

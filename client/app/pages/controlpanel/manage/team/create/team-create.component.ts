@@ -99,15 +99,15 @@ export class TeamCreateComponent implements OnInit {
 
   onManageAdminSelected(data) {
     if (!data.action) {
-      delete this.accountPrivileges[10];
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin];
       return;
     }
 
-    this.accountPrivileges = Object.assign(
+    this.schoolPrivileges = Object.assign(
       {},
-      this.accountPrivileges,
+      this.schoolPrivileges,
       {
-        10: {
+        [CP_PRIVILEGES_MAP.manage_admin]: {
           r: true,
           w: true
         }
@@ -148,7 +148,7 @@ export class TeamCreateComponent implements OnInit {
     }
 
     if (service.action === null) {
-      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.services];
+      delete this.accountPrivileges[CP_PRIVILEGES_MAP.services];
       return;
     }
 
@@ -181,7 +181,7 @@ export class TeamCreateComponent implements OnInit {
     }
 
     if (club.action === null) {
-      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.clubs];
+      delete this.accountPrivileges[CP_PRIVILEGES_MAP.clubs];
       return;
     }
 
@@ -199,13 +199,13 @@ export class TeamCreateComponent implements OnInit {
 
   onEventsSelected(event) {
     if (event.action === null) {
-      delete this.accountPrivileges[CP_PRIVILEGES_MAP.events];
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.events];
       return;
     }
 
-    this.accountPrivileges = Object.assign(
+    this.schoolPrivileges = Object.assign(
       {},
-      this.accountPrivileges,
+      this.schoolPrivileges,
       {
         [CP_PRIVILEGES_MAP.events]: {
           r: event.action === 2 ? true : true,
