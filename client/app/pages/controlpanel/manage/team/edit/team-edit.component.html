@@ -309,20 +309,22 @@
       </form>
     </div>
   </div>
+
+  <cp-modal
+    [type]="MODAL_TYPE"
+    modalId="selectServicesModal">
+    <cp-select-services-modal
+      (selected)="onServicesModalSelected($event)"
+      [selectedServices]="accountPrivileges">
+    </cp-select-services-modal>
+  </cp-modal>
+
+  <cp-modal
+    [type]="MODAL_TYPE"
+    modalId="selectClubsModal">
+    <cp-select-clubs-modal
+      (selected)="onClubsModalSelected($event)"
+      [selectedClubs]="accountPrivileges">
+    </cp-select-clubs-modal>
+  </cp-modal>
 </div>
-
-<cp-modal
-  [type]="MODAL_TYPE"
-  modalId="selectServicesModal">
-  <cp-select-services-modal
-    (selected)="onServicesModalSelected($event)">
-  </cp-select-services-modal>
-</cp-modal>
-
-<cp-modal
-  [type]="MODAL_TYPE"
-  modalId="selectClubsModal">
-  <cp-select-clubs-modal
-    (selected)="onClubsModalSelected($event)">
-  </cp-select-clubs-modal>
-</cp-modal>

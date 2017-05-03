@@ -1,22 +1,22 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
-import { ClubsService } from '../../../../clubs/clubs.service';
+// import { ClubsService } from '../../../../clubs/clubs.service';
 import { CP_PRIVILEGES_MAP } from '../../../../../../../shared/utils';
-import { BaseTeamSelectModalComponent } from './team-select-modal.component';
+import { BaseTeamSelectModalComponent } from './base/team-select-modal.component';
 
 declare var $: any;
 
 @Component({
   selector: 'cp-select-clubs-modal',
-  templateUrl: './team-select-modal.component.html',
-  styleUrls: ['./team-select-modal.component.scss']
+  template: ''
+  // template: '<cp-team-select-modal></cp-team-select-modal>'
 })
 export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent
   implements OnInit {
   @Output() selected: EventEmitter<any> = new EventEmitter();
 
   constructor(
-    private service: ClubsService
+    // private service: ClubsService
   ) {
     super();
     this.title = 'Clubs';
@@ -29,7 +29,7 @@ export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent
   }
 
   ngOnInit() {
-    super.fetch(this.service.getClubs());
-    super.buildPrivilegesDropDown();
+    // super.fetch(this.service.getClubs());
+    // super.buildPrivilegesDropDown();
   }
 }

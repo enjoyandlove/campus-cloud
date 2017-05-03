@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-
-import { permissions } from './permissions';
-import { BaseComponent } from '../../../../../../../base/base.component';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { permissions } from '../permissions';
+import { BaseComponent } from '../../../../../../../../base/base.component';
 
 interface ISelected {
   id: number;
@@ -24,16 +24,22 @@ const state: IState = {
   styleUrls: ['./team-select-modal.component.scss']
 })
 export class BaseTeamSelectModalComponent extends BaseComponent implements OnInit {
-  title;
+  @Input() title: string;
+  @Input() defaultState: any;
+  @Input() data: Observable<any>;
+  @Input() privilegeType: number;
+  @Output() submit: EventEmitter<any> = new EventEmitter();
+
   loading;
   privileges;
   query = null;
-  privilegeType;
   state: IState = state;
 
   constructor() {
     super();
     super.isLoading().subscribe(res => this.loading = res);
+
+    this.privileges = permissions;
   }
 
   onCheckedItem(checked, service) {
@@ -54,21 +60,11 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
     this.updateItem(service.id, 'checked', false);
   }
 
-  fetch(stream$) {
-    super
-    .fetchData(stream$)
-    .then(res => {
-      this.updateState(res.data);
-    })
-    .catch(err => console.log(err));
-  }
-
   onSubmit() {
     let _item = {};
     let _state = [...this.state.selected];
 
     _state.map(item => {
-
       if (item.checked) {
         _item[item.data.store_id] = {
           [this.privilegeType]: {
@@ -78,27 +74,36 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
         };
       }
     });
-    return _item;
+
+    this.submit.emit(_item);
   }
 
-  private updateState(items) {
+  updateState(items) {
     let _selected = [];
 
-    items.forEach(service => {
+    items.forEach(item => {
       _selected.push({
-        id: service.id,
+        id: item.id,
         type: 1,
-        checked: false,
-        data: service
+        checked: item.checked || false,
+        data: item
       });
     });
 
     this.state = Object.assign({}, this.state, {selected: _selected});
   }
 
-  buildPrivilegesDropDown() {
-    this.privileges = permissions;
+  ngOnInit() {
+    this.data.subscribe(res => {
+      if (res.data) {
+        this.updateState(res.data);
+      }
+      if (res.selected) {
+        Object.keys(res.selected).forEach(storeId => {
+          let type = res.selected[storeId].w ? 2 : 1;
+          this.updateItem(res.selected[storeId].id, 'type', type);
+        });
+      }
+    });
   }
-
-  ngOnInit() { }
 }
