@@ -26,8 +26,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private service: AuthService
   ) {
     this.form = this.fb.group({
-      'username': ['', [Validators.required]],
-      'password': ['', [Validators.required]],
+      'username': [null, [Validators.required]],
+      'password': [null, [Validators.required]],
     });
   }
 

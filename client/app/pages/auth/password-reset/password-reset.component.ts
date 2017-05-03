@@ -26,7 +26,7 @@ export class PasswordResetComponent implements OnInit, OnDestroy {
   ) {
     this.form = this.fb.group({
       'request_password_reset': [1],
-      'email': ['', [Validators.required]],
+      'email': [null, [Validators.required]],
     });
   }
 

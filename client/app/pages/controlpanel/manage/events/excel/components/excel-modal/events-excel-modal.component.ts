@@ -31,7 +31,7 @@ export class EventsExcelModalComponent implements OnInit {
     private fileService: FileUploadService,
   ) {
     this.form = this.fb.group({
-      'link': ['', Validators.required]
+      'link': [null, Validators.required]
     });
 
     this.downloadLink = ENV === 'production' ?

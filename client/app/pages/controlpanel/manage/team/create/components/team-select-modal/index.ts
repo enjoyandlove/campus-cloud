@@ -1,4 +1,4 @@
 export * from './pipes';
-export * from './team-select-modal.component';
-export * from './select-services-modal.component';
-export * from './select-clubs-modal.component.component';
+export * from './select-clubs-modal';
+export * from './select-services-modal';
+export * from './base/team-select-modal.component';
