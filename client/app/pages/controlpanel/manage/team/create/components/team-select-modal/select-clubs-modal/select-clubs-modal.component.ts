@@ -43,17 +43,7 @@ export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent
         let selected = {};
 
         if (this.selectedClubs) {
-          // selected = this.filterServiceDataFromAccountPrivilege();
-          selected = {
-            9952: {
-              r: true,
-              w: true
-            },
-            9951: {
-              r: true,
-              w: false
-            }
-          };
+          selected = this.filterClubDataFromAccountPrivilege();
 
           clubs.map(club => {
             if (selected[club.store_id]) {

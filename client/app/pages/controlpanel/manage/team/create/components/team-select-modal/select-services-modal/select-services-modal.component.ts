@@ -41,17 +41,8 @@ export class SelectTeamServicesModalComponent extends BaseTeamSelectModalCompone
         let selected = {};
 
         if (this.selectedServices) {
-          // selected = this.filterServiceDataFromAccountPrivilege();
-          selected = {
-            9952: {
-              r: true,
-              w: true
-            },
-            9951: {
-              r: true,
-              w: false
-            }
-          };
+          selected = this.filterServiceDataFromAccountPrivilege();
+
           services.map(service => {
             if (selected[service.store_id]) {
               service.checked = true;
