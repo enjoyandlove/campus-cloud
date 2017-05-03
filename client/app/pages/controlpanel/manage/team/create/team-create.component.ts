@@ -54,9 +54,9 @@ export class TeamCreateComponent implements OnInit {
 
   private buildForm() {
     this.form = this.fb.group({
-      'firstname': ['', Validators.required],
-      'lastname': ['', Validators.required],
-      'email': ['', Validators.required]
+      'firstname': [null, Validators.required],
+      'lastname': [null, Validators.required],
+      'email': [null, Validators.required]
     });
   }
 
@@ -85,7 +85,7 @@ export class TeamCreateComponent implements OnInit {
       .teamService
       .createAdmin(_data)
       .subscribe(
-        _ => this.router.navigate['/manage/team'],
+        _ => this.router.navigate(['/manage/team']),
         err => {
           this.isFormError = true;
 

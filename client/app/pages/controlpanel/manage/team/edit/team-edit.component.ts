@@ -181,7 +181,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       .adminService
       .createAdmin(_data)
       .subscribe(
-      _ => this.router.navigate['/manage/team'],
+      _ => this.router.navigate(['/manage/team']),
       err => {
         this.isFormError = true;
 

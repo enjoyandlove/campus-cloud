@@ -31,11 +31,11 @@ export class LinksCreateComponent implements OnInit {
 
   buildForm() {
     this.form = this.fb.group({
-      'name': ['', Validators.required],
-      'link_url': ['', Validators.required],
+      'name': [null, Validators.required],
+      'link_url': [null, Validators.required],
       'school_id': [this.storeId, Validators.required],
-      'description': ['', Validators.maxLength(512)],
-      'img_url': [''],
+      'description': [null, Validators.maxLength(512)],
+      'img_url': [null],
     });
   }
 

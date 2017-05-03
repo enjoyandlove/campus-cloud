@@ -30,11 +30,11 @@ export class CallbackPasswordResetComponent implements OnDestroy, OnInit {
     this.key = this.route.snapshot.params['key'];
 
     this.form = this.fb.group({
-      'new_password': ['',
+      'new_password': [null,
       Validators.compose([Validators.required, Validators.minLength(6)])
       ],
       'password_reset_key': [this.key],
-      'confirmPassword': ['',
+      'confirmPassword': [null,
       Validators.compose([Validators.required, Validators.minLength(6)])
       ],
     });

@@ -24,17 +24,17 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
     private accountService: AccountService
   ) {
     this.form = this.fb.group({
-      'current': ['', [
+      'current': [null, [
         Validators.required,
         Validators.minLength(6)
       ]
       ],
-      'password': ['', [
+      'password': [null, [
         Validators.required,
         Validators.minLength(6)
       ]
       ],
-      'confirmation': ['', [
+      'confirmation': [null, [
         Validators.required,
         Validators.minLength(6),
         this.passwordsMatch.bind(this)
