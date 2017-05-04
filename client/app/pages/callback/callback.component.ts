@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'cp-callback',
-  template: '<div class="container"><router-outlet></router-outlet></div>'
+  template: '<router-outlet></router-outlet>'
 })
 export class CallbackComponent implements OnInit {
 

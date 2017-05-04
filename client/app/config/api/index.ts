@@ -30,6 +30,7 @@ const API_ENDPOINTS = {
   SERVICE_PROVIDER: 'service_provider',
   SERVICE_ASSESSMENT: 'service_assessment',
   SOCIAL_POST_CATEGORY: 'social_post_category',
+  EXTERNAL_SERVICE_CHECKIN: 'external_service_checkin'
 };
 
 const API_AUTH_HEADER = {
@@ -46,8 +47,18 @@ const BUILD_COMMON_HEADERS = function buildCommonHeaders() {
   });
 };
 
+const BUILD_TOKEN_HEADERS = function buildTokenHeaders() {
+  const auth = `${API_AUTH_HEADER.TOKEN} ${API_KEY}`;
+
+  return new Headers({
+    'Content-Type': 'application/json',
+    'Authorization': auth
+  });
+};
+
 export const API = {
   KEY: API_KEY,
+  BUILD_TOKEN_HEADERS,
   VERSION: API_VERSION,
   BUILD_COMMON_HEADERS,
   BASE_URL: API_BASE_URL,
