@@ -22,13 +22,20 @@ import {
   CheckinServiceHeaderComponent
 } from './checkin';
 
+import {
+  BaseFeedbackComponent,
+  FeedbackEventComponent,
+  FeedbackServiceComponent
+} from './feedback';
+
 import { CheckinService } from './checkin/checkin.service';
 
 @NgModule({
   declarations: [ CallbackComponent, CallbackPasswordResetComponent,
   CheckinServiceComponent, BaseCheckinComponent, CheckinServiceHeaderComponent,
   CheckinRegisterComponent, CheckinAttendeesListComponent, CheckinInstructionsComponent,
-  CheckinEventsComponent, CheckinEventHeaderComponent ],
+  CheckinEventsComponent, CheckinEventHeaderComponent, BaseFeedbackComponent,
+  FeedbackEventComponent, FeedbackServiceComponent ],
 
   imports: [ CommonModule, ReactiveFormsModule, SharedModule, RouterModule,
   CallbackRoutingModule ],
