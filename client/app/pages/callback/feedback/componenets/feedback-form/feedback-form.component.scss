@@ -1,0 +1,15 @@
+@import '~styles/components/card';
+@import '~styles/core/typography';
+@import '~styles/components/form';
+@import '~styles/components/button';
+
+:host {
+  display: block;
+}
+
+p.title {
+  @include font-16px();
+  @include font-bold();
+
+  margin-bottom: 0;
+}

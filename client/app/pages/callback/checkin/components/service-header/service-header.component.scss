@@ -1,0 +1,39 @@
+@import '~styles/core/colors';
+@import '~styles/components/card';
+@import '~styles/core/typography';
+
+.card {
+  @include card-margin();
+
+  margin-bottom: 0;
+
+  &__background {
+    height: 225px;
+    position: relative;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+  }
+
+  &__meta {
+    left: 55px;
+    bottom: 40px;
+    position: absolute;
+
+    p {
+      margin-bottom: 0;
+      color: $color-white;
+    }
+  }
+
+  &__title {
+    @include font-semi-bold();
+    @include font-24px();
+
+    margin-bottom: 0;
+  }
+
+  &__host {
+    @include font-16px();
+  }
+}

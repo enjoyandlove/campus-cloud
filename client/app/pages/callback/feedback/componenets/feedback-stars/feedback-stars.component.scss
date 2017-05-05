@@ -1,0 +1,19 @@
+@import '~styles/core/colors';
+
+.rate {
+  padding: 15px 0;
+
+  &__item {
+    font-size: 4em;
+    color: $border-color;
+
+    &:hover,
+    &.filled {
+      color: #FED431;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

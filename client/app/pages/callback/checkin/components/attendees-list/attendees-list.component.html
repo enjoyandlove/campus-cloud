@@ -1,0 +1,20 @@
+<div class="attendees">
+  <div class="attendees__header">
+    <div class="row">
+      <div class="col-xs-12">
+        <p i18n>Attendance List</p>
+      </div>
+    </div>
+  </div>
+  <ul class="attendees__list">
+    <li class="attendees__item" *ngFor="let attendee of attendees">
+      <span class="attendees__name">{{ attendee.first_name }} {{ attendee.last_name }}</span>
+      <br>
+      <span class="attendees__email">{{ attendee.email }}</span>
+
+      <span>
+        <i class="material-icons attendees__icon pull-right">check</i>
+      </span>
+    </li>
+  </ul>
+</div>

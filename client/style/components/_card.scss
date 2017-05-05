@@ -1,12 +1,31 @@
 @import '../core/colors';
 @import '~bootstrap/variables';
 
+@media all and (max-width: $screen-sm) {
+  .cp-card {
+    margin-bottom: 25px;
+  }
+}
+
+@mixin card-margin() {
+  margin: 15px 0;
+}
+
+@mixin card-padding() {
+  padding: 24px;
+}
+
+@mixin card-shadow() {
+  box-shadow: 0 0 2px 0 rgba(0,0,0,0.16);
+}
+
 .cp-card {
+  @include card-shadow();
+
   padding: 24px;
   border-radius: 4px;
   background: $color-white;
   border: 1px solid $border-color;
-  box-shadow: 0 0 2px 0 rgba(0,0,0,0.16);
 
   &--alt {
     background: $color-text-alt;
@@ -19,14 +38,8 @@
   &--no-shadow {
     box-shadow: none;
   }
-}
 
-@media all and (max-width: $screen-sm) {
-  .cp-card {
-    margin-bottom: 25px;
+  &--no-border {
+    border: none;
   }
-}
-
-@mixin card-margin() {
-  margin: 15px 0;
 }

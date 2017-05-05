@@ -66,7 +66,7 @@ export class BaseService {
             .catch(err => this.catchError(err));
   }
 
-  private catchError(err) {
+  catchError(err) {
     switch (err.status) {
       case 401:
         appStorage.clear();

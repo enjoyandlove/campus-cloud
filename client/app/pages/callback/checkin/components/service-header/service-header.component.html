@@ -1,0 +1,14 @@
+<div class="row">
+  <div class="col-xs-12">
+    <div class="cp-card card">
+      <div
+        class="card__background"
+        [ngStyle]="{'background': 'linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url(' + service.logo_url + ')'}">
+      </div>
+      <div class="card__meta">
+        <p class="card__title">{{ service.service_name }}</p>
+        <p class="card__host">{{ service.provider_name }}</p>
+      </div>
+    </div>
+  </div>
+</div>
