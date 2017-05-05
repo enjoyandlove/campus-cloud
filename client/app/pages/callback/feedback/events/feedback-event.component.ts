@@ -12,8 +12,8 @@ import { BaseComponent } from '../../../../base/base.component';
   styleUrls: ['./feedback-event.component.scss']
 })
 export class FeedbackEventComponent extends BaseComponent implements OnInit {
-  loading;
   event;
+  loading;
   isEvent = true;
   eventId: number;
   search: URLSearchParams = new URLSearchParams();

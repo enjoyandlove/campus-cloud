@@ -25,7 +25,7 @@ const appRoutes: Routes = [
       { path: 'feedback/s/:service', component: FeedbackServiceComponent },
 
       { path: 'checkin/e/:event', component: CheckinEventsComponent },
-      { path: 'checkin/s/:service/:provider', component: CheckinServiceComponent },
+      { path: 'checkin/s/:service', component: CheckinServiceComponent },
     ]
   },
 ];
