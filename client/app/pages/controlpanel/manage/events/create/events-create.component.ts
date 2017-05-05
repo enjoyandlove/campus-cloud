@@ -85,14 +85,21 @@ export class EventsCreateComponent implements OnInit {
   }
 
   onPlaceChange(data) {
+    let address;
     let cpMap = CPMap.getBaseMapObject(data);
+
+    if (!cpMap.street_name) {
+      address = data.formatted_address;
+    } else {
+      address = `${cpMap.street_number} ${cpMap.street_name}`;
+    }
 
     this.form.controls['city'].setValue(cpMap.city);
     this.form.controls['province'].setValue(cpMap.province);
     this.form.controls['country'].setValue(cpMap.country);
     this.form.controls['latitude'].setValue(cpMap.latitude);
     this.form.controls['longitude'].setValue(cpMap.longitude);
-    this.form.controls['address'].setValue(`${cpMap.street_number} ${cpMap.street_name}`);
+    this.form.controls['address'].setValue(address);
     this.form.controls['postal_code'].setValue(cpMap.postal_code);
 
     this.mapCenter = data.geometry.location.toJSON();
