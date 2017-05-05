@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import { CPMap } from '../../../../../shared/utils';
 import { ServicesService } from '../services.service';
 import { ProvidersService } from '../providers.service';
+import { CPSession, ISchool } from '../../../../../session';
 import { CP_PRIVILEGES_MAP } from '../../../../../shared/utils/privileges';
 import { AdminService } from '../../../../../shared/services/admin.service';
 import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
@@ -19,6 +20,7 @@ import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 export class ServicesCreateComponent implements OnInit {
   mapCenter;
   storeId: number;
+  school: ISchool;
   form: FormGroup;
   createdServiceId;
   formError = false;
@@ -27,6 +29,7 @@ export class ServicesCreateComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private session: CPSession,
     private store: Store<IHeader>,
     private adminService: AdminService,
     private servicesService: ServicesService,
@@ -176,7 +179,6 @@ export class ServicesCreateComponent implements OnInit {
       );
   }
 
-
   onToggleAttendance(event) {
     if (event) {
       this.form.controls['default_basic_feedback_label'].setValue('How did you like the service?');
@@ -224,7 +226,12 @@ export class ServicesCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.storeId = 14748;
+    this.school = this.session.school;
+
+    // this.storeId = 14748;
+    this.storeId = this.school.main_union_store_id;
+    this.mapCenter = { lat: this.school.latitude, lng: this.school.longitude };
+
     this.form = this.fb.group({
       'name': [null, Validators.required],
       'logo_url': [null, Validators.required],
@@ -241,8 +248,8 @@ export class ServicesCreateComponent implements OnInit {
       'province': [null],
       'country': [null],
       'postal_code': [null],
-      'latitude': [null],
-      'longitude': [null],
+      'latitude': [this.school.latitude],
+      'longitude': [this.school.longitude],
       'service_attendance': [null],
       'rating_scale_maximum': [null],
       'default_basic_feedback_label': [null],

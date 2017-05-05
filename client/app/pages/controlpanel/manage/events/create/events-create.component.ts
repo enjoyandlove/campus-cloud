@@ -4,7 +4,7 @@ import { URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
 
 import { EventsService } from '../events.service';
-import { CPSession } from '../../../../../session';
+import { CPSession, ISchool } from '../../../../../session';
 import { CPMap, CPDate } from '../../../../../shared/utils';
 import { ErrorService, StoreService } from '../../../../../shared/services';
 
@@ -26,10 +26,10 @@ export class EventsCreateComponent implements OnInit {
   @Input() serviceId: number;
   @Input() isService: boolean;
 
-  school;
   stores$;
   mapCenter;
   imageError;
+  school: ISchool;
   form: FormGroup;
   formError = false;
   attendance = false;
@@ -46,8 +46,6 @@ export class EventsCreateComponent implements OnInit {
   ) {
     this.school = this.session.school;
     let search: URLSearchParams = new URLSearchParams();
-    console.log(this.school);
-    console.log(this.session.user);
     search.append('school_id', this.school.id.toString());
 
     this.stores$ = this.storeService.getStores(search).map(res => {
