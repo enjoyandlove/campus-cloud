@@ -30,6 +30,7 @@ const API_ENDPOINTS = {
   SERVICE_PROVIDER: 'service_provider',
   SERVICE_ASSESSMENT: 'service_assessment',
   SOCIAL_POST_CATEGORY: 'social_post_category',
+  EXTERNAL_EVENT_CHECKIN: 'external_event_checkin',
   EXTERNAL_SERVICE_CHECKIN: 'external_service_checkin'
 };
 

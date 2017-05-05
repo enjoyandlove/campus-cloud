@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
 
 import { AuthService } from '../auth/auth.service';
 import { CallbackService } from './callback.service';
@@ -13,15 +13,21 @@ import { CallbackRoutingModule } from './callback.routing.module';
 
 import {
   BaseCheckinComponent,
-  ServiceHeaderComponent,
-  CheckinServiceComponent
+  CheckinEventsComponent,
+  CheckinServiceComponent,
+  CheckinRegisterComponent,
+  CheckinInstructionsComponent,
+  CheckinAttendeesListComponent,
+  CheckinServiceHeaderComponent
 } from './checkin';
 
 import { CheckinService } from './checkin/checkin.service';
 
 @NgModule({
   declarations: [ CallbackComponent, CallbackPasswordResetComponent,
-  CheckinServiceComponent, BaseCheckinComponent, ServiceHeaderComponent ],
+  CheckinServiceComponent, BaseCheckinComponent, CheckinServiceHeaderComponent,
+  CheckinRegisterComponent, CheckinAttendeesListComponent, CheckinInstructionsComponent,
+  CheckinEventsComponent ],
 
   imports: [ CommonModule, ReactiveFormsModule, SharedModule, RouterModule,
   CallbackRoutingModule ],

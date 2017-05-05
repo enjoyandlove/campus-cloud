@@ -1,0 +1,62 @@
+@import '~styles/core/colors';
+@import '~styles/components/card';
+@import '~styles/core/typography';
+@import '~styles/components/form';
+@import '~styles/components/button';
+
+:host {
+  display: block;
+}
+
+
+.attendees {
+  @include card-shadow();
+  border-radius: 4px;
+
+  &__header {
+    @include card-padding();
+
+    border-bottom: none;
+    border-radius: 4px 4px 0 0;
+    background: $color-text-alt;
+    border: 1px solid $border-color;
+    border-bottom: none;
+
+    p {
+      @include font-semi-bold();
+
+      margin-bottom: 0;
+    }
+  }
+
+  &__list {
+    @include card-padding();
+
+    padding-top: 0;
+    list-style: none;
+    background: $color-white;
+    border-radius: 0 0 4px 4px;
+    border: 1px solid $border-color;
+  }
+
+  &__item {
+    padding: 10px 0;
+    border-bottom: 1px solid $border-color;
+
+    &:last-child {
+      border: none;
+      padding-bottom: 0;
+    }
+  }
+
+  &__name {
+    @include font-semi-bold();
+  }
+
+  &__icon {
+    display: block;
+    margin-top: -10px;
+    color: $color-success;
+  }
+}
+

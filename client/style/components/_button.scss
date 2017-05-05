@@ -42,6 +42,10 @@ a.cpbtn, {
     padding: 14px 16px;
   }
 
+  &--full-width {
+    width: 100%;
+  }
+
   &--no-hover {
     &:hover {
       cursor: text !important;

@@ -5,6 +5,8 @@
 
 .card-margin {
   @include card-margin();
+
+  margin-bottom: 0;
 }
 
 .page {

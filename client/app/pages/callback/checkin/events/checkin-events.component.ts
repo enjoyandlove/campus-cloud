@@ -15,16 +15,14 @@ const state: IState = {
 
 @Component({
   selector: 'cp-checkin-service',
-  templateUrl: './checkin-service.component.html',
-  styleUrls: ['./checkin-service.component.scss']
+  templateUrl: './checkin-events.component.html',
+  styleUrls: ['./checkin-events.component.scss']
 })
-export class CheckinServiceComponent extends BaseComponent implements OnInit {
+export class CheckinEventsComponent extends BaseComponent implements OnInit {
   loading;
-  serviceId: string;
+  eventId: string;
   state: IState = state;
-  serviceProviderId: string;
   search: URLSearchParams = new URLSearchParams();
-
 
   constructor(
     private router: Router,
@@ -34,14 +32,13 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
     super();
     super.isLoading().subscribe(res => this.loading = res);
 
-    this.serviceId = this.route.snapshot.params['service'];
-    this.serviceProviderId = this.route.snapshot.params['provider'];
+    this.eventId = this.route.snapshot.params['event'];
   }
 
   onSubmit(data) {
     this
       .checkinService
-      .doServiceCheckin(data, this.search)
+      .doEventCheckin(data, this.search)
       .subscribe(
         _ => this.updateAttendeesList(data),
         err => console.error(err)
@@ -58,7 +55,7 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
   // cb/checkin/services;service=XeqmohCZNONC05rEcBItaw;provider=rA5myiH9NEpMczvDufnVCw
   fetch() {
     super
-      .fetchData(this.checkinService.getServiceData(this.search))
+      .fetchData(this.checkinService.getEventData(this.search))
       .then(res => {
         console.log(res.data);
         this.state = Object.assign({}, this.state, { services: res.data });
@@ -67,10 +64,9 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.search.append('service_id', this.serviceId);
-    this.search.append('provider_id', this.serviceProviderId);
+    this.search.append('event_id', this.eventId);
 
-    if (!this.serviceId || !this.serviceProviderId) {
+    if (!this.eventId) {
       this.router.navigate(['/login']);
     }
     this.fetch();

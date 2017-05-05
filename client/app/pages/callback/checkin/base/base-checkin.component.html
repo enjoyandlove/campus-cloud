@@ -6,7 +6,9 @@
           <p class="page__title" i18n>Verified Attendance</p>
           <div class="pull-right">
             <button
-              class="cpbtn cpbtn--primary" i18n>
+              data-toggle="modal"
+              class="cpbtn cpbtn--primary"
+              data-target="#checkinInstruction" i18n>
               Instructions
             </button>
           </div>
@@ -18,8 +20,27 @@
   <div class="container">
     <div class="row">
       <div class="col-xs-12 col-sm-8 col-sm-offset-2">
-        <cp-service-header class="card-margin"></cp-service-header>
+        <cp-service-header
+          [service]="data"
+          class="card-margin">
+        </cp-service-header>
+
+        <cp-checkin-register
+          [data]="data"
+          class="card-margin"
+          (send)="send.emit($event)">
+        </cp-checkin-register>
+
+        <cp-attendees-list
+          class="card-margin"
+          [attendees]="data.external_attendees"
+          *ngIf="data.external_attendees.length">
+        </cp-attendees-list>
       </div>
     </div>
   </div>
 </div>
+
+<cp-modal modalId="checkinInstruction">
+  <cp-instructions-modal></cp-instructions-modal>
+</cp-modal>

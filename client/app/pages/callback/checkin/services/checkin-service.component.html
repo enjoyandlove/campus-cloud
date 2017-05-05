@@ -1,1 +1,9 @@
-<cp-base-checkin></cp-base-checkin>
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <cp-base-checkin
+    [data]="state.services"
+    *ngSwitchCase="false"
+    (send)="onSubmit($event)">
+  </cp-base-checkin>
+</div>

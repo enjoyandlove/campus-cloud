@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'cp-base-checkin',
@@ -7,6 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class BaseCheckinComponent implements OnInit {
   @Input() data: any;
+  @Output() send: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
 
