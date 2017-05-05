@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'cp-feedback-form',
@@ -9,15 +10,17 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class FeedbackFormComponent implements OnInit {
   @Input() isEvent: boolean;
   @Input() isService: boolean;
+  @Input() isSubmitted: Observable<boolean>;
   @Output() send: EventEmitter<any> = new EventEmitter();
 
+  _isSubmitted: boolean;
   feedbackForm: FormGroup;
 
   constructor(
     private fb: FormBuilder
   ) { }
 
-  onRate(rating: number): void {
+  onRated(rating: number): void {
     this.feedbackForm.controls['user_rating_percent'].setValue((rating / 5) * 100);
   }
 
@@ -30,5 +33,7 @@ export class FeedbackFormComponent implements OnInit {
       'user_feedback_text': [null, Validators.required],
       'user_rating_percent': [null, Validators.required],
     });
+
+    this.isSubmitted.subscribe(res => this._isSubmitted = res);
   }
 }

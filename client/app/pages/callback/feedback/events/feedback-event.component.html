@@ -5,6 +5,7 @@
     [data]="event"
     [isEvent]="isEvent"
     *ngSwitchCase="false"
-    (send)="onSubmit($event)">
+    (send)="onSubmit($event)"
+    [isSubmitted]="isSubmitted$">
   </cp-base-feedback>
 </div>

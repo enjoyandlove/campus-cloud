@@ -25,8 +25,10 @@ import {
 import {
   FeedbackFormComponent,
   BaseFeedbackComponent,
+  FeedbackStarsComponent,
   FeedbackEventComponent,
-  FeedbackServiceComponent
+  FeedbackServiceComponent,
+  FeedbackConfirmationComponent
 } from './feedback';
 
 import { CheckinService } from './checkin/checkin.service';
@@ -37,7 +39,8 @@ import { FeedbackService } from './feedback/feedback.service';
   CheckinServiceComponent, BaseCheckinComponent, CheckinServiceHeaderComponent,
   CheckinRegisterComponent, CheckinAttendeesListComponent, CheckinInstructionsComponent,
   CheckinEventsComponent, CheckinEventHeaderComponent, BaseFeedbackComponent,
-  FeedbackEventComponent, FeedbackServiceComponent, FeedbackFormComponent ],
+  FeedbackEventComponent, FeedbackServiceComponent, FeedbackFormComponent,
+  FeedbackStarsComponent, FeedbackConfirmationComponent ],
 
   imports: [ CommonModule, ReactiveFormsModule, SharedModule, RouterModule,
   CallbackRoutingModule ],
