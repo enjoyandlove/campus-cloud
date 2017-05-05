@@ -31,7 +31,9 @@ const API_ENDPOINTS = {
   SERVICE_ASSESSMENT: 'service_assessment',
   SOCIAL_POST_CATEGORY: 'social_post_category',
   EXTERNAL_EVENT_CHECKIN: 'external_event_checkin',
-  EXTERNAL_SERVICE_CHECKIN: 'external_service_checkin'
+  EXTERNAL_EVENT_FEEDBACK: 'external_event_feedback',
+  EXTERNAL_SERVICE_CHECKIN: 'external_service_checkin',
+  EXTERNAL_SERVICE_FEEDBACK: 'external_service_feedback'
 };
 
 const API_AUTH_HEADER = {

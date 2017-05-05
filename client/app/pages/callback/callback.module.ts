@@ -23,23 +23,25 @@ import {
 } from './checkin';
 
 import {
+  FeedbackFormComponent,
   BaseFeedbackComponent,
   FeedbackEventComponent,
   FeedbackServiceComponent
 } from './feedback';
 
 import { CheckinService } from './checkin/checkin.service';
+import { FeedbackService } from './feedback/feedback.service';
 
 @NgModule({
   declarations: [ CallbackComponent, CallbackPasswordResetComponent,
   CheckinServiceComponent, BaseCheckinComponent, CheckinServiceHeaderComponent,
   CheckinRegisterComponent, CheckinAttendeesListComponent, CheckinInstructionsComponent,
   CheckinEventsComponent, CheckinEventHeaderComponent, BaseFeedbackComponent,
-  FeedbackEventComponent, FeedbackServiceComponent ],
+  FeedbackEventComponent, FeedbackServiceComponent, FeedbackFormComponent ],
 
   imports: [ CommonModule, ReactiveFormsModule, SharedModule, RouterModule,
   CallbackRoutingModule ],
 
-  providers: [ AuthService, CallbackService, CheckinService ],
+  providers: [ AuthService, CallbackService, CheckinService, FeedbackService ],
 })
 export class CallbackModule {}

@@ -1,0 +1,88 @@
+<div class="row">
+  <div class="col-xs-12">
+    <div class="cp-card">
+      <div class="row">
+        <div class="col-xs-8 col-xs-offset-2">
+          <form [formGroup]="feedbackForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <p class="title text-center" i18n>
+                Please click a star to rate the {{ isEvent ? 'event' : 'service' }}
+              </p>
+            </div>
+
+            <div class="form-group">
+              <textarea
+                class="form-control"
+                formControlName="user_feedback_text"
+                placeholder="Tells us what you think...">
+              </textarea>
+            </div>
+
+            <div class="row form-group">
+              <div class="col-xs-12">
+                <button
+                  type="submit"
+                  [disabled]="!feedbackForm.valid"
+                  class="cpbtn cpbtn--tall cpbtn--full-width cpbtn--primary" i18n>
+                  Rate Event
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--<div class="registration">
+  <div class="registration__header">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="row">
+          <div class="col-xs-6"><span i18n>Scan QR Code</span></div>
+          <div class="col-xs-6"><span i18n>Manual Checkin</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="registration__form">
+    <div class="row">
+      <div class="col-xs-6">
+        <div
+          class="registration__qrcode"
+          [ngStyle]="{'background-image': 'url(' + data.qr_img_url + ')'}"></div>
+      </div>
+      <div class="col-xs-6">
+        <form [formGroup]="registrationForm" (ngSubmit)="onSubmit(registrationForm.value)">
+          <div class="form-group">
+            <label i18n>First Name</label>
+            <input type="text" class="form-control" formControlName="firstname">
+          </div>
+
+          <div class="form-group">
+            <label i18n>Last Name</label>
+            <input type="text" class="form-control" formControlName="lastname">
+          </div>
+
+          <div class="form-group">
+            <label i18n>Email</label>
+            <input type="email" class="form-control" formControlName="email">
+          </div>
+
+          <div class="form-group">
+            <div class="row">
+              <div class="col-xs-12">
+                <button
+                  type="submit"
+                  [disabled]="!registrationForm.valid"
+                  class="cpbtn cpbtn--tall cpbtn--full-width cpbtn--primary" i18n>
+                  Confirm
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>-->

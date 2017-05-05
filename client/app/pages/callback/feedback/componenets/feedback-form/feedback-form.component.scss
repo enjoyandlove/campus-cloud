@@ -1,0 +1,51 @@
+// @import '~styles/core/colors';
+@import '~styles/components/card';
+@import '~styles/core/typography';
+@import '~styles/components/form';
+@import '~styles/components/button';
+
+:host {
+  display: block;
+}
+
+p.title {
+  @include font-16px();
+  @include font-bold();
+
+  margin-bottom: 10px;
+}
+
+// .registration {
+//   @include card-shadow();
+//   border-radius: 4px;
+
+//   &__header {
+//     @include card-padding();
+
+//     border-bottom: none;
+//     border-radius: 4px 4px 0 0;
+//     background: $color-text-alt;
+//     border: 1px solid $border-color;
+//     border-bottom: none;
+
+//     span {
+//       @include font-semi-bold();
+//     }
+//   }
+
+//   &__qrcode {
+//     height: 310px;
+//     background-size: contain;
+//     background-repeat: no-repeat;
+//     background-position: left center;
+//   }
+
+//   &__form {
+//     @include card-padding();
+
+//     background: $color-white;
+//     border-radius: 0 0 4px 4px;
+//     border: 1px solid $border-color;
+//   }
+// }
+

@@ -9,6 +9,11 @@ import {
   CheckinServiceComponent
 } from './checkin';
 
+import {
+  FeedbackEventComponent,
+  FeedbackServiceComponent
+} from './feedback';
+
 const appRoutes: Routes = [
   {
     path: '',
@@ -16,9 +21,11 @@ const appRoutes: Routes = [
     children: [
       { path: 'password-reset', component: CallbackPasswordResetComponent },
 
-      { path: 'checkin/s/:service/:provider', component: CheckinServiceComponent },
+      { path: 'feedback/e/:event', component: FeedbackEventComponent },
+      { path: 'feedback/s/:service', component: FeedbackServiceComponent },
 
-      { path: 'checkin/e/:event', component: CheckinEventsComponent }
+      { path: 'checkin/e/:event', component: CheckinEventsComponent },
+      { path: 'checkin/s/:service/:provider', component: CheckinServiceComponent },
     ]
   },
 ];

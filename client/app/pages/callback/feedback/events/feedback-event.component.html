@@ -1,1 +1,10 @@
-Feedback
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <cp-base-feedback
+    [data]="event"
+    [isEvent]="isEvent"
+    *ngSwitchCase="false"
+    (send)="onSubmit($event)">
+  </cp-base-feedback>
+</div>

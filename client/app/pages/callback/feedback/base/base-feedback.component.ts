@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'cp-base-feedback',
@@ -6,8 +6,10 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./base-feedback.component.scss']
 })
 export class BaseFeedbackComponent implements OnInit {
+  @Input() data: any;
   @Input() isEvent: boolean;
   @Input() isService: boolean;
+  @Output() send: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
 
