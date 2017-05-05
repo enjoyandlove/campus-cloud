@@ -3,8 +3,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
 
-import { CPSession } from '../../../../../session';
 import { EventsService } from '../events.service';
+import { CPSession } from '../../../../../session';
 import { CPMap, CPDate } from '../../../../../shared/utils';
 import { ErrorService, StoreService } from '../../../../../shared/services';
 
@@ -26,6 +26,7 @@ export class EventsCreateComponent implements OnInit {
   @Input() serviceId: number;
   @Input() isService: boolean;
 
+  school;
   stores$;
   mapCenter;
   imageError;
@@ -43,9 +44,11 @@ export class EventsCreateComponent implements OnInit {
     private errorService: ErrorService,
     private eventService: EventsService
   ) {
-    let school = this.session.school;
+    this.school = this.session.school;
     let search: URLSearchParams = new URLSearchParams();
-    search.append('school_id', school.id.toString());
+    console.log(this.school);
+    console.log(this.session.user);
+    search.append('school_id', this.school.id.toString());
 
     this.stores$ = this.storeService.getStores(search).map(res => {
       const stores = [
@@ -129,6 +132,8 @@ export class EventsCreateComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.mapCenter = { lat: this.school.latitude, lng: this.school.longitude };
+
     this.form = this.fb.group({
       'title': [null, Validators.required],
       'store_id': [this.storeId ? this.storeId : null, Validators.required],
@@ -139,8 +144,8 @@ export class EventsCreateComponent implements OnInit {
       'country': [null],
       'address': [null],
       'postal_code': [null],
-      'latitude': [0],
-      'longitude': [0],
+      'latitude': [this.school.latitude],
+      'longitude': [this.school.longitude],
       'event_attendance': [null], // 1 => Enabled
       'start': [null, Validators.required],
       'poster_url': [null, Validators.required],
