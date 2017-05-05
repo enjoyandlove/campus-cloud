@@ -16,6 +16,7 @@ import {
   CheckinEventsComponent,
   CheckinServiceComponent,
   CheckinRegisterComponent,
+  CheckinEventHeaderComponent,
   CheckinInstructionsComponent,
   CheckinAttendeesListComponent,
   CheckinServiceHeaderComponent
@@ -27,7 +28,7 @@ import { CheckinService } from './checkin/checkin.service';
   declarations: [ CallbackComponent, CallbackPasswordResetComponent,
   CheckinServiceComponent, BaseCheckinComponent, CheckinServiceHeaderComponent,
   CheckinRegisterComponent, CheckinAttendeesListComponent, CheckinInstructionsComponent,
-  CheckinEventsComponent ],
+  CheckinEventsComponent, CheckinEventHeaderComponent ],
 
   imports: [ CommonModule, ReactiveFormsModule, SharedModule, RouterModule,
   CallbackRoutingModule ],

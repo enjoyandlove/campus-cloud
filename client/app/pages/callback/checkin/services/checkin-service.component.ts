@@ -20,6 +20,7 @@ const state: IState = {
 })
 export class CheckinServiceComponent extends BaseComponent implements OnInit {
   loading;
+  isService = true;
   serviceId: string;
   state: IState = state;
   serviceProviderId: string;
@@ -55,7 +56,7 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
       { external_attendees: [data, ...this.state.services['external_attendees'] ] }
     );
   }
-  // cb/checkin/services;service=XeqmohCZNONC05rEcBItaw;provider=rA5myiH9NEpMczvDufnVCw
+  // cb/checkin/s/XeqmohCZNONC05rEcBItaw/rA5myiH9NEpMczvDufnVCw
   fetch() {
     super
       .fetchData(this.checkinService.getServiceData(this.search))

@@ -2,8 +2,9 @@
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
   <cp-base-checkin
-    [data]="state.services"
     *ngSwitchCase="false"
+    [data]="state.services"
+    [isService]="isService"
     (send)="onSubmit($event)">
   </cp-base-checkin>
 </div>

@@ -1,0 +1,10 @@
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <cp-base-checkin
+    [isEvent]="isEvent"
+    *ngSwitchCase="false"
+    [data]="state.events"
+    (send)="onSubmit($event)">
+  </cp-base-checkin>
+</div>

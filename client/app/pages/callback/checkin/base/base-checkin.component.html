@@ -22,8 +22,15 @@
       <div class="col-xs-12 col-sm-8 col-sm-offset-2">
         <cp-service-header
           [service]="data"
+          *ngIf="isService"
           class="card-margin">
         </cp-service-header>
+
+        <cp-event-header
+          [event]="data"
+          *ngIf="isEvent"
+          class="card-margin">
+        </cp-event-header>
 
         <cp-checkin-register
           [data]="data"

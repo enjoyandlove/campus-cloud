@@ -6,11 +6,11 @@ import { CheckinService } from '../checkin.service';
 import { BaseComponent } from '../../../../base/base.component';
 
 interface IState {
-  services: Array<any>;
+  events: Array<any>;
 }
 
 const state: IState = {
-  services: []
+  events: []
 };
 
 @Component({
@@ -20,6 +20,7 @@ const state: IState = {
 })
 export class CheckinEventsComponent extends BaseComponent implements OnInit {
   loading;
+  isEvent = true;
   eventId: string;
   state: IState = state;
   search: URLSearchParams = new URLSearchParams();
@@ -40,25 +41,24 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
       .checkinService
       .doEventCheckin(data, this.search)
       .subscribe(
-        _ => this.updateAttendeesList(data),
-        err => console.error(err)
+      _ => this.updateAttendeesList(data),
+      err => console.error(err)
       );
   }
 
   updateAttendeesList(data) {
-    this.state.services = Object.assign(
+    this.state.events = Object.assign(
       {},
-      this.state.services,
-      { external_attendees: [data, ...this.state.services['external_attendees'] ] }
+      this.state.events,
+      { external_attendees: [data, ...this.state.events['external_attendees']] }
     );
   }
-  // cb/checkin/services;service=XeqmohCZNONC05rEcBItaw;provider=rA5myiH9NEpMczvDufnVCw
+  // cb/checkin/e/GJ-Fn5w06XY-7h-_oetnJw
   fetch() {
     super
       .fetchData(this.checkinService.getEventData(this.search))
       .then(res => {
-        console.log(res.data);
-        this.state = Object.assign({}, this.state, { services: res.data });
+        this.state = Object.assign({}, this.state, { events: res.data });
       })
       .catch(err => console.log(err));
   }

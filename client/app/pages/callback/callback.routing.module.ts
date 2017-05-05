@@ -16,9 +16,9 @@ const appRoutes: Routes = [
     children: [
       { path: 'password-reset', component: CallbackPasswordResetComponent },
 
-      { path: 'checkin/service', component: CheckinServiceComponent },
+      { path: 'checkin/s/:service/:provider', component: CheckinServiceComponent },
 
-      { path: 'checkin/event', component: CheckinEventsComponent }
+      { path: 'checkin/e/:event', component: CheckinEventsComponent }
     ]
   },
 ];

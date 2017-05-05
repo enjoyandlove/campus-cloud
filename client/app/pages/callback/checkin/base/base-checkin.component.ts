@@ -7,9 +7,16 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class BaseCheckinComponent implements OnInit {
   @Input() data: any;
+  @Input() isEvent: boolean;
+  @Input() isService: boolean;
   @Output() send: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    if (!this.isEvent && !this.isService) {
+      console.warn('BaseCheckinComponent requires an isEvent or isService input');
+      return;
+    }
+  }
 }
