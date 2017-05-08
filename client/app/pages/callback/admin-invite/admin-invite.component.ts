@@ -16,6 +16,7 @@ import { ALERT_DEFAULT } from '../../../reducers/alert.reducer';
 })
 export class AdminInviteComponent implements OnInit, OnDestroy {
   key: string;
+  isSubmitted;
   form: FormGroup;
 
   constructor(
@@ -33,9 +34,14 @@ export class AdminInviteComponent implements OnInit, OnDestroy {
       .authService
       .createInvitePassword(data)
       .subscribe(
-        res => console.log(res),
+        _ => this.handleSuccess(),
         err => console.error(err)
       );
+  }
+
+  handleSuccess() {
+    this.isSubmitted = true;
+    setTimeout(() => { this.router.navigate(['/login']); }, 1500);
   }
 
   ngOnDestroy() {
