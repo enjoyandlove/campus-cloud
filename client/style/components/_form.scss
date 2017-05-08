@@ -1,6 +1,18 @@
 @import '../core/_colors';
 @import '../core/_typography';
 
+input.flatpickr-input[readonly] {
+  width: 100%;
+  height: 36px;
+  padding: 8px;
+  line-height: 1;
+  border-radius: 4px;
+  display: inline-block;
+  background: $color-white;
+  border: 1px solid $color-med-grey;
+  transition: border 300ms ease-in-out;
+}
+
 .form-control[readonly].error {
   color: $color-danger;
   border: 1px solid $color-danger;

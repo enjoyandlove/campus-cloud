@@ -117,6 +117,13 @@ export class EventsCreateComponent implements OnInit {
       return;
     }
 
+    if (this.form.controls['end'].value <= this.form.controls['start'].value) {
+      this.formError = true;
+      this.form.controls['end'].setErrors({'required': true});
+      this.form.controls['start'].setErrors({'required': true});
+      return;
+    }
+
     this
       .eventService
       .createEvent(this.form.value)
