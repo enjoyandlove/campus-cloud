@@ -14,6 +14,10 @@ import {
   FeedbackServiceComponent
 } from './feedback';
 
+import {
+  AdminInviteComponent
+} from './admin-invite';
+
 const appRoutes: Routes = [
   {
     path: '',
@@ -21,11 +25,15 @@ const appRoutes: Routes = [
     children: [
       { path: 'password-reset', component: CallbackPasswordResetComponent },
 
+      { path: 'invite/:key', component: AdminInviteComponent },
+
       { path: 'feedback/e/:event', component: FeedbackEventComponent },
       { path: 'feedback/s/:service', component: FeedbackServiceComponent },
 
       { path: 'checkin/e/:event', component: CheckinEventsComponent },
       { path: 'checkin/s/:service', component: CheckinServiceComponent },
+
+      { path: '**', redirectTo: '/login' },
     ]
   },
 ];

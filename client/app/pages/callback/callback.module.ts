@@ -31,6 +31,10 @@ import {
   FeedbackConfirmationComponent
 } from './feedback';
 
+import {
+  AdminInviteComponent
+} from './admin-invite';
+
 import { CheckinService } from './checkin/checkin.service';
 import { FeedbackService } from './feedback/feedback.service';
 
@@ -40,7 +44,7 @@ import { FeedbackService } from './feedback/feedback.service';
   CheckinRegisterComponent, CheckinAttendeesListComponent, CheckinInstructionsComponent,
   CheckinEventsComponent, CheckinEventHeaderComponent, BaseFeedbackComponent,
   FeedbackEventComponent, FeedbackServiceComponent, FeedbackFormComponent,
-  FeedbackStarsComponent, FeedbackConfirmationComponent ],
+  FeedbackStarsComponent, FeedbackConfirmationComponent, AdminInviteComponent ],
 
   imports: [ CommonModule, ReactiveFormsModule, SharedModule, RouterModule,
   CallbackRoutingModule ],
