@@ -7,6 +7,10 @@ body {
   color: $color-text;
 }
 
+* {
+  word-wrap: break-word;
+}
+
 .text-muted {
   // color: $color-med-grey;
   color: $color-secondary-text;
