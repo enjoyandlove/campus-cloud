@@ -23,7 +23,7 @@ const appRoutes: Routes = [
     path: '',
     component: CallbackComponent,
     children: [
-      { path: 'password-reset', component: CallbackPasswordResetComponent },
+      { path: 'password-reset/:key', component: CallbackPasswordResetComponent },
 
       { path: 'invite/:key', component: AdminInviteComponent },
 
