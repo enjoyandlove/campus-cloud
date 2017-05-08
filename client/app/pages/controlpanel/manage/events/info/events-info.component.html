@@ -34,10 +34,10 @@
                   <br>
                   <strong i18n>Ends:</strong> {{ event.end | cpDatePipe:dateFormat }}</p>
                 <p>
-                  {{ event.address }},
-                  {{ event.city }},
-                  {{ event.province }},
-                  {{ event.postal_code }}
+                  {{ event.address ? event.address + '.' : '' }}
+                  {{ event.city ? event.city + ',' : '' }}
+                  {{ event.province ? event.province + '.' : '' }}
+                  {{ event.postal_code ? event.postal_code : '' }}
                 </p>
               </div>
 

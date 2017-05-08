@@ -3,6 +3,9 @@ import { Injectable } from '@angular/core';
 import { IUser } from './user.interface';
 import { ISchool } from './school.interface';
 
+export * from './user.interface';
+export * from './school.interface';
+
 @Injectable()
 export class CPSession {
   private _user: IUser;

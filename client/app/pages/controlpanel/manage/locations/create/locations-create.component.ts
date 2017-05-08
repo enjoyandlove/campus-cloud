@@ -2,6 +2,7 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { CPMap } from '../../../../../shared/utils';
+import { CPSession, ISchool } from '../../../../../session';
 
 declare var $: any;
 
@@ -13,11 +14,14 @@ declare var $: any;
 export class LocationsCreateComponent implements OnInit {
   @Output() teardown: EventEmitter<null> = new EventEmitter();
   @Output() locationCreated: EventEmitter<any> = new EventEmitter();
-  form: FormGroup;
+
   mapCenter;
+  form: FormGroup;
+  school: ISchool;
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private session: CPSession
   ) { }
 
   onPlaceChange(data) {
@@ -45,6 +49,10 @@ export class LocationsCreateComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.school = this.session.school;
+
+    this.mapCenter = { lat: this.school.latitude, lng: this.school.longitude };
+
     this.form = this.fb.group({
       'name': [null, Validators.required],
       'short_name': [null, Validators.required],
@@ -53,8 +61,8 @@ export class LocationsCreateComponent implements OnInit {
       'province': [null, Validators.required],
       'country': [null, Validators.required],
       'postal_code': [null, Validators.required],
-      'latitude': [null, Validators.required],
-      'longitude': [null, Validators.required],
+      'latitude': [this.school.latitude, Validators.required],
+      'longitude': [this.school.longitude, Validators.required],
     });
   }
 }
