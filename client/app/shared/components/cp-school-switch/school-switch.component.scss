@@ -1,0 +1,46 @@
+@import '~styles/core/colors';
+@import '~styles/components/dropdown';
+
+.switch {
+  @include cpDropdownMenu();
+
+  width: 230px;
+  max-height: 204px;
+
+  &__item {
+    border-bottom: 1px solid $border-color;
+
+    i {
+      font-size: 20px;
+    }
+
+    a {
+      width: 100%;
+      width: 100%;
+      color: inherit;
+      display: block;
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &__school {
+    height: 55px;
+    &__thumb {
+      float: left;
+      height: 36px;
+      width: 36px;
+      margin-right: 8px;
+      border-radius: 4px;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+    }
+
+    &__name {
+      padding-top: 6px;
+    }
+  }
+}

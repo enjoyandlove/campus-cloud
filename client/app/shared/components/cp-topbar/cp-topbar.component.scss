@@ -1,6 +1,7 @@
 @import '~styles/core/colors';
-@import "~bootstrap/variables";
-@import "~styles/core/typography";
+@import '~bootstrap/variables';
+@import '~styles/core/typography';
+@import '~styles/components/dropdown';
 
 hr {
   margin: 0;
@@ -100,6 +101,7 @@ nav {
     }
 
     .dropdown-menu {
+      @include cpDropdownMenu();
       top: 35px;
 
       li {
@@ -118,4 +120,19 @@ nav {
       }
     }
   }
+}
+
+.school__thumb {
+  width: 40px;
+  height: 40px;
+  margin-right: 8px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.school__name {
+  display: block;
+  font-size: 0.7em;
+  color: $color-white;
 }

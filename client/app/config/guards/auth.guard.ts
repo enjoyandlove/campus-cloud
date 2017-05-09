@@ -22,7 +22,7 @@ export class AuthGuard implements CanActivate {
   canActivate() {
     if (appStorage.get(appStorage.keys.SESSION)) {
       const admins$ = this.adminService.getAdmins(1, 1);
-      const school$ = this.schoolService.getShool();
+      const school$ = this.schoolService.getScool();
       const stream$ = Observable.combineLatest(admins$, school$);
 
       if (!this.session.school || !this.session.user) {
@@ -31,7 +31,7 @@ export class AuthGuard implements CanActivate {
           .toPromise()
           .then(res => {
             this.session.user = res[0][0];
-            this.session.school = res[1][0];
+            this.session.school = res[1][1];
             return true;
           })
           .catch(_ => false);

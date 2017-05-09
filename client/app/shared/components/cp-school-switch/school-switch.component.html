@@ -1,0 +1,73 @@
+<ul class="switch">
+  <li class="switch__item">
+    <a href="#" class="switch__item" *ngIf="isSchoolPanel" (click)="isSchoolPanel = !isSchoolPanel">
+      <i class="material-icons pull-left">chevron_left</i><span i18n>Back</span>
+    </a>
+    <a href="#" *ngIf="!isSchoolPanel" (click)="isSchoolPanel = !isSchoolPanel">
+      <span i18n>Change School</span>
+      <i class="material-icons pull-right">chevron_right</i>
+    </a>
+  </li>
+
+  <div class="switch__left" *ngIf="!isSchoolPanel">
+    <li class="switch__item">
+      <a [routerLink]="['/manage/team']" i18n>Team Settings</a>
+    </li>
+    <li class="switch__item">
+      <a [routerLink]="['/account/change-password']" i18n>Change Password</a>
+    </li>
+    <li class="switch__item">
+      <a [routerLink]="['/logout']" i18n>Logout</a>
+    </li>
+  </div>
+
+  <div class="switch__right" *ngIf="isSchoolPanel">
+    <li class="switch__item switch__school switch__school--current">
+      <a [routerLink]="['/manage/team']" i18n>
+        <div
+          class="switch__school__thumb"
+          [ngStyle]="{'background-image': 'url(https://source.unsplash.com/random/30x30)'}">
+        </div>
+        <div class="switch__school__name">
+            School One
+          <span class="pull-right">
+            <i class="material-icons">check</i>
+          </span>
+        </div>
+      </a>
+    </li>
+    <li class="switch__item switch__school">
+      <a [routerLink]="['/manage/team']" i18n>
+        <div
+          class="switch__school__thumb"
+          [ngStyle]="{'background-image': 'url(https://source.unsplash.com/random/30x30)'}">
+        </div>
+        <div class="switch__school__name">
+          School Two
+        </div>
+      </a>
+    </li>
+    <li class="switch__item switch__school">
+      <a [routerLink]="['/manage/team']" i18n>
+        <div
+          class="switch__school__thumb"
+          [ngStyle]="{'background-image': 'url(https://source.unsplash.com/random/30x30)'}">
+        </div>
+        <div class="switch__school__name">
+          School Three
+        </div>
+      </a>
+    </li>
+    <li class="switch__item switch__school">
+      <a [routerLink]="['/manage/team']" i18n>
+        <div
+          class="switch__school__thumb"
+          [ngStyle]="{'background-image': 'url(https://source.unsplash.com/random/30x30)'}">
+        </div>
+        <div class="switch__school__name">
+          School Four
+        </div>
+      </a>
+    </li>
+  </div>
+</ul>

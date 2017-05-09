@@ -11,11 +11,21 @@
         <ul class="nav__default pull-right">
           <li class="user__name dropdown">
             <div class="dropdown">
-              <span class="dropdown-toggle hover" data-toggle="dropdown">
-                Hello, Username
-                <i class="material-icons">expand_more</i>
+              <span class="dropdown-toggle hover text-capitalize" data-toggle="dropdown">
+                <div
+                  class="school__thumb pull-left img-rounded"
+                  [ngStyle]="{'background-image': 'url(' + school.logo_url + ')'}">
+                </div>
+                <div class="school__user">
+                  {{ user.firstname }}
+                  <i class="material-icons">expand_more</i>
+                </div>
+                <div class="school__name">
+                  {{ school.name }}
+                </div>
               </span>
-              <ul class="dropdown-menu dropdown-menu-right user__name--dropdown">
+              <cp-school-switch></cp-school-switch>
+              <!--<ul class="dropdown-menu dropdown-menu-right user__name--dropdown">
                 <li>
                   <a [routerLink]="['/manage/team']" i18n>Team Settings</a>
                 </li>
@@ -24,7 +34,7 @@
                 </li>
                 <hr>
                 <li><a [routerLink]="['/logout']" i18n>Logout</a></li>
-              </ul>
+              </ul>-->
             </div>
           </li>
         </ul>
