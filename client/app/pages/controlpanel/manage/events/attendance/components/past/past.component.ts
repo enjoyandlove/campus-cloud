@@ -51,7 +51,7 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
     super
       .fetchData(stream$)
       .then(res => this.attendees = res.data)
-      .catch(err => console.error(err));
+      .catch(_ => {});
   }
 
   doSort(sort_field) {

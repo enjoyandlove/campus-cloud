@@ -23,7 +23,7 @@ export class SchoolSwitchComponent implements OnInit {
     if (school.id === this.selectedSchool.id) { return; }
 
     appStorage.set(appStorage.keys.DEFAULT_SCHOOL, JSON.stringify(school));
-    window.location.reload();
+    window.location.replace('/');
   }
 
   onGoToSchools(event): void {
