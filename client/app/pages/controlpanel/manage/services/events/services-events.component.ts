@@ -44,9 +44,7 @@ export class ServicesEventsComponent extends EventsComponent implements OnInit {
           this.service = res;
           this.buildHeader();
           this.loading = false;
-        },
-        err => console.log(err)
-      );
+        });
   }
 
 

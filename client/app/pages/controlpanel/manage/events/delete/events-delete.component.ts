@@ -25,9 +25,7 @@ export class EventsDeleteComponent implements OnInit {
         _ => {
           this.deletedEvent.emit(this.event.id);
           $('#deleteEventsModal').modal('hide');
-        },
-        err => console.log(err)
-      );
+        });
   }
 
   ngOnInit() { }

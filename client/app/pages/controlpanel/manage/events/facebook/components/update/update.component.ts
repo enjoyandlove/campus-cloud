@@ -69,8 +69,7 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
       .eventsService
       .bulkUpdateFacebookEvents(_links, search)
       .subscribe(
-      _ => this.fetch(),
-      err => console.log(err)
+      _ => this.fetch()
       );
   }
 
@@ -122,7 +121,7 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
         this.links = res.data;
         this.buildForm();
       })
-      .catch(err => console.log(err));
+      .catch(_ => {});
   }
 
   ngOnInit() {

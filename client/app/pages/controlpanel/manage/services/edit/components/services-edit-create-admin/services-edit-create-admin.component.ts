@@ -28,9 +28,7 @@ export class ServicesEditCreateAdminComponent implements OnInit {
         res => {
           this.created.emit(res);
           this.form.reset();
-        },
-        err => console.log(err)
-      );
+        });
   }
 
   ngOnInit() {

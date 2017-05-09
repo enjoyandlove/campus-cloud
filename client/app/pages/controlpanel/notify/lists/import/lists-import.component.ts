@@ -67,13 +67,11 @@ export class ListsImportComponent implements OnInit {
       .fileService
       .uploadFile(file, url)
       .subscribe(
-        (res) => {
+        res => {
           this.doReset();
           $('#listsImport').modal('hide');
           this.launchCreateModal.emit(res);
-        },
-        err => console.log(err)
-      );
+        });
       return;
     }
 

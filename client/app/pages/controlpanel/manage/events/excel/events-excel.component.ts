@@ -56,9 +56,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
       (res) => {
         this.events = isProd ? res : require('./mock.json');
         this.fetch();
-      },
-      err => console.log(err)
-      );
+      });
   }
 
   private fetch() {
