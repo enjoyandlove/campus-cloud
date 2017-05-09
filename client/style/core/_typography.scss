@@ -44,6 +44,10 @@ p.no-margin {
   cursor: pointer;
 }
 
+.text-capitalize {
+  text-transform: capitalize;
+}
+
 a {
   color: $color-black;
   display: inline-block;

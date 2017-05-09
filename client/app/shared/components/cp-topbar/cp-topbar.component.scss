@@ -1,6 +1,7 @@
 @import '~styles/core/colors';
-@import "~bootstrap/variables";
-@import "~styles/core/typography";
+@import '~bootstrap/variables';
+@import '~styles/core/typography';
+@import '~styles/components/dropdown';
 
 hr {
   margin: 0;
@@ -18,37 +19,38 @@ nav {
     background: #f4f4f4;
   }
 
+  .nav__links,
+  .nav__school {
+    padding-top: 20px;
+  }
+
   ul {
     margin: 0;
     padding: 0;
     list-style: none;
 
-    &:not(.dropdown-menu) {
-      padding-top: 20px;
-    }
-
     &.nav__links {
       padding-left: 40px;
     }
 
-    &:not(.nav__links) {
-      li {
-        &:last-child {
-          margin-right: 0;
-          padding-right: 0;
-        }
-      }
-    }
+    // .nav__toggle {
+    //   li {
+    //     &:last-child {
+    //       margin-right: 0;
+    //       padding-right: 0;
+    //     }
+    //   }
+    // }
 
-    &:not(.nav__default) {
+    // &:not(.nav__default) {
 
-      li {
-        &:first-child {
-          padding-left: 0;
-          padding-right: 0;
-        }
-      }
-    }
+    //   li {
+    //     &:first-child {
+    //       padding-left: 0;
+    //       padding-right: 0;
+    //     }
+    //   }
+    // }
 
     li {
       margin-right: 24px;
@@ -92,30 +94,76 @@ nav {
       }
     }
 
-    &.user__name {
+    // &.user__name {
+    //   i {
+    //     margin-left: 7px;
+    //     vertical-align: -7px;
+    //   }
+    // }
+
+    // .dropdown-menu {
+    //   @include cpDropdownMenu();
+    //   top: 35px;
+
+    //   li {
+    //     padding: 0;
+    //     display: block;
+    //     border-bottom: 0;
+    //     margin-right: 0;
+
+    //     a {
+    //       @include font-14px();
+
+    //       padding: 0;
+    //       padding: 12px;
+    //       line-height: 1;
+    //     }
+    //   }
+    // }
+  }
+}
+
+.nav__school {
+  width: 200px;
+  max-width: 200px;
+  position: relative;
+
+  &--menu {
+    top: 115%;
+    z-index: 1;
+    right: 20px;
+    position: absolute;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+
+    &__name,
+    &__user,
+    &__user i {
+      display: block;
+      color: $color-white;
+    }
+
+    &__user {
+      @include font-semi-bold();
+
       i {
-        margin-left: 7px;
-        vertical-align: -7px;
+        padding-top: 8px;
       }
     }
 
-    .dropdown-menu {
-      top: 35px;
+    &__thumb {
+    width: 40px;
+    height: 40px;
+    margin-right: 8px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
 
-      li {
-        padding: 0;
-        display: block;
-        border-bottom: 0;
-        margin-right: 0;
-
-        a {
-          @include font-14px();
-
-          padding: 0;
-          padding: 12px;
-          line-height: 1;
-        }
-      }
-    }
+  &__name {
+    font-size: 0.9em;
   }
 }

@@ -4,30 +4,39 @@
       <div class="col-xs-12">
         <div class="avatar pull-left img-rounded"></div>
         <ul class="nav__links pull-left">
-          <li routerLinkActive="active"><a [routerLink]="['/dashboard']">Dashboard</a></li>
-          <li routerLinkActive="active"><a [routerLink]="['/manage']">Manage</a></li>
-          <li routerLinkActive="active"><a [routerLink]="['/notify']">Notify</a></li>
-        </ul>
-        <ul class="nav__default pull-right">
-          <li class="user__name dropdown">
-            <div class="dropdown">
-              <span class="dropdown-toggle hover" data-toggle="dropdown">
-                Hello, Username
-                <i class="material-icons">expand_more</i>
-              </span>
-              <ul class="dropdown-menu dropdown-menu-right user__name--dropdown">
-                <li>
-                  <a [routerLink]="['/manage/team']" i18n>Team Settings</a>
-                </li>
-                <li>
-                  <a [routerLink]="['/account/change-password']" i18n>Change Password</a>
-                </li>
-                <hr>
-                <li><a [routerLink]="['/logout']" i18n>Logout</a></li>
-              </ul>
-            </div>
+          <li
+            (click)="isOpen = false"
+            routerLinkActive="active">
+            <a [routerLink]="['/dashboard']">Dashboard</a>
+          </li>
+          <li
+            (click)="isOpen = false"
+            routerLinkActive="active">
+            <a [routerLink]="['/manage']">Manage</a>
+          </li>
+          <li
+            (click)="isOpen = false"
+            routerLinkActive="active">
+            <a [routerLink]="['/notify']">Notify</a>
           </li>
         </ul>
+
+        <div class="nav__school pull-right" (click)="isOpen = !isOpen">
+          <div
+            class="nav__school__thumb pull-left img-rounded"
+            [ngStyle]="{'background-image': 'url(' + school.logo_url + ')'}">
+          </div>
+          <div class="nav__school__user">
+            <span>{{ user.firstname }}</span>
+            <i class="material-icons pull-right">expand_more</i>
+          </div>
+          <div class="nav__school__name text-truncate">
+            {{ school.name }}
+          </div>
+        </div>
+        <div class="nav__school--menu" *ngIf="isOpen">
+          <cp-school-switch (close)="isOpen = !isOpen"></cp-school-switch>
+        </div>
       </div>
     </div>
   </div>
