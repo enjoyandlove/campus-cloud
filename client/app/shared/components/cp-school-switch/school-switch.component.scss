@@ -1,4 +1,5 @@
 @import '~styles/core/colors';
+@import '~styles/components/button';
 @import '~styles/components/dropdown';
 
 .switch {
@@ -11,6 +12,11 @@
   &__item {
     display: block;
     border-bottom: 1px solid $border-color;
+
+    &--no-hover:hover {
+      color: initial;
+      background: $color-white;
+    }
 
     i {
       font-size: 20px;
