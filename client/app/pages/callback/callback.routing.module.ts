@@ -28,7 +28,7 @@ const appRoutes: Routes = [
       { path: 'invite/:key', component: AdminInviteComponent },
 
       { path: 'feedback/e/:event', component: FeedbackEventComponent },
-      { path: 'feedback/s/:service', component: FeedbackServiceComponent },
+      { path: 'feedback/s/:service/:provider', component: FeedbackServiceComponent },
 
       { path: 'checkin/e/:event', component: CheckinEventsComponent },
       { path: 'checkin/s/:service', component: CheckinServiceComponent },
