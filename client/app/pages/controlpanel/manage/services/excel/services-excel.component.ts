@@ -44,9 +44,7 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
         // this.services = res;
         this.services = isProd ? res : require('./mock.json');
         this.fetch();
-      },
-      err => console.log(err)
-      );
+      });
   }
 
   private fetch() {

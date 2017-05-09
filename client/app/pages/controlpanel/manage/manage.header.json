@@ -4,30 +4,37 @@
   "em": null,
   "children": [
     {
+      "privilege": 18,
       "label": "Events",
       "url": "/manage/events"
     },
     {
+      "privilege": 15,
       "label": "Feeds",
       "url": "/manage/feeds"
     },
     {
+      "privilege": 22,
       "label": "Clubs & Groups",
       "url": "/manage/clubs"
     },
     {
+      "privilege": 24,
       "label": "Services",
       "url": "/manage/services"
     },
     {
+      "privilege": 23,
       "label": "Links",
       "url": "/manage/links"
     },
     {
+      "privilege": 13,
       "label": "Cover Photo",
       "url": "/manage/customization"
     },
     {
+      "privilege": 21,
       "label": "Locations",
       "url": "/manage/locations"
     }

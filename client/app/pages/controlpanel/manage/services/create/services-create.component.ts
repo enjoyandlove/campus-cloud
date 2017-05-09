@@ -173,10 +173,7 @@ export class ServicesCreateComponent implements OnInit {
         return Observable.combineLatest(admins$);
       })
       .catch(err => Observable.throw(err))
-      .subscribe(
-      res => console.log(res),
-      err => console.log(err)
-      );
+      .subscribe(res => console.log(res));
   }
 
   onToggleAttendance(event) {

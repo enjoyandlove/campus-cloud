@@ -32,9 +32,7 @@ export class ServicesEditCreateProviderComponent implements OnInit {
         res => {
           this.created.emit(res);
           this.form.reset();
-        },
-        err => console.log(err)
-      );
+        });
   }
 
   ngOnInit() {

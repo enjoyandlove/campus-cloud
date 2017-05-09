@@ -11,8 +11,8 @@
                 [innerHTML]="defaultText" contenteditable>
               </div>
               <img
-                class="img-responsive avatar"
-                src="https://source.unsplash.com/random/45x45">
+                [src]="school.logo_url"
+                class="img-responsive avatar img-rounded">
               <div
                 class="textarea__upload"
                 *ngIf="form.controls.message_image_url.value">

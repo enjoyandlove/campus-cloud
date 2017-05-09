@@ -60,7 +60,7 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
       .then(res => {
         this.state = Object.assign({}, this.state, { events: res.data });
       })
-      .catch(err => console.log(err));
+      .catch(_ => {});
   }
 
   ngOnInit() {

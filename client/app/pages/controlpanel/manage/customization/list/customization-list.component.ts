@@ -77,7 +77,7 @@ export class CustomizationListComponent implements OnInit {
 
         // // this.onFileUpload(res);
       })
-      .catch(err => console.log(err));
+      .catch(_ => {});
   }
 
     onFileUpload(file) {
@@ -106,10 +106,7 @@ export class CustomizationListComponent implements OnInit {
     this
       .fileUploadService
       .uploadFile(file, url, headers)
-      .subscribe(
-      res => console.log(res),
-      err => console.log(err)
-      );
+      .subscribe(res => console.log(res));
   }
 
   ngOnInit() {

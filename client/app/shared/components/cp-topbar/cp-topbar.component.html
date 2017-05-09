@@ -15,13 +15,14 @@
             <a [routerLink]="['/manage']">Manage</a>
           </li>
           <li
+            *ngIf="canNotify"
             (click)="isOpen = false"
             routerLinkActive="active">
             <a [routerLink]="['/notify']">Notify</a>
           </li>
         </ul>
 
-        <div class="nav__school pull-right" (click)="isOpen = !isOpen">
+        <div class="nav__school pull-right noselect" (click)="isOpen = !isOpen">
           <div
             class="nav__school__thumb pull-left img-rounded"
             [ngStyle]="{'background-image': 'url(' + school.logo_url + ')'}">

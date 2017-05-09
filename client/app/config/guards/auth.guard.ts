@@ -26,19 +26,22 @@ export class AuthGuard implements CanActivate {
       const stream$ = Observable.combineLatest(admins$, school$);
 
       if (!this.session.school || !this.session.user) {
-        console.log('no school or user data');
         return stream$
           .toPromise()
           .then(res => {
             let storedSchool = JSON.parse(appStorage.get(appStorage.keys.DEFAULT_SCHOOL));
+            // global user
             this.session.user = res[0][0];
-            this.session.school =  storedSchool || res[1][0];
+
+            // global users array
             this.session.schools = res[1];
+
+            // global default school
+            this.session.school =  storedSchool || res[1][0];
             return true;
           })
           .catch(_ => false);
       }
-      console.log('school or user data exists');
       return true;
     }
 

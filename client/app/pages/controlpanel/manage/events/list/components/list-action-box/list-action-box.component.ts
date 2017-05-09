@@ -80,7 +80,7 @@ export class ListActionBoxComponent extends BaseComponent implements OnInit {
         this.hosts = res.data;
         this.listAction.emit(this.state);
       })
-      .catch(err => console.error(err));
+      .catch(_ => {});
   }
 
   private resetDateRange() {
