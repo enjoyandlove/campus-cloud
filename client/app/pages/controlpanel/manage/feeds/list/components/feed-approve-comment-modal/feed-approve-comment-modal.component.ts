@@ -35,8 +35,7 @@ export class FeedApproveCommentModalComponent implements OnInit {
         $('#approveCommentModal').modal('hide');
         this.approved.emit(this.feed.id);
         this.teardown.emit();
-      },
-      err => console.log(err)
+      }
       );
   }
 

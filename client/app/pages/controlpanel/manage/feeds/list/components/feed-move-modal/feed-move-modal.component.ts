@@ -42,9 +42,7 @@ export class FeedMoveComponent implements OnInit {
         _ => {
           $('#moveFeedModal').modal('hide');
           this.moved.emit(this.feed.id);
-        },
-        err => console.log(err)
-      );
+        });
   }
 
   ngOnInit() {

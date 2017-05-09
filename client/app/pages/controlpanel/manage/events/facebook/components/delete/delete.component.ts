@@ -29,8 +29,7 @@ export class FacebookEventsDeleteComponent implements OnInit {
         _ => {
           this.deleted.emit();
           $('#facebookDelete').modal('hide');
-        },
-        err => console.log(err)
+        }
       );
   }
 

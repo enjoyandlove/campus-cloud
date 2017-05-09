@@ -34,9 +34,7 @@ export class ServicesProviderAddComponent implements OnInit {
         res => {
           $('#createProvider').modal('hide');
           this.created.emit(res);
-        },
-        err => console.log(err)
-      );
+        });
   }
 
   doReset() {

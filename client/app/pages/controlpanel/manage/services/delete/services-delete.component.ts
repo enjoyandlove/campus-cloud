@@ -26,9 +26,7 @@ export class ServicesDeleteComponent implements OnInit {
         _ => {
           this.deleted.emit(this.service.id);
           $('#deleteServicesModal').modal('hide');
-        },
-        err => console.log(err)
-      );
+        });
   }
 
   ngOnInit() { }

@@ -33,7 +33,7 @@ export class FeedbackEventComponent extends BaseComponent implements OnInit {
     super
       .fetchData(this.feedbackService.getEventData(this.search))
       .then(res => this.event = res.data)
-      .catch(err => console.error(err));
+      .catch(_ => {});
   }
 
   onSubmit(data) {

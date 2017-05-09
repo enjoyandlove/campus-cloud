@@ -388,9 +388,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       })
       .catch(err => Observable.throw(err))
       .subscribe(
-      res => console.log(res),
-      err => console.log(err)
-      );
+      res => console.log(res));
   }
 
   ngOnInit() {

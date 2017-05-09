@@ -35,8 +35,7 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
           this.buildForm();
           console.log(this.clubs);
           // this.fetch();
-        },
-        err => console.log(err)
+        }
     );
   }
 

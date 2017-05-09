@@ -29,9 +29,7 @@ export class ClubsEventsComponent extends EventsComponent implements OnInit {
       .subscribe(
         res => {
           console.log(res);
-        },
-        err => console.log(err)
-      );
+        });
   }
 
   ngOnInit() {

@@ -137,13 +137,18 @@ nav {
 
   &:hover {
     cursor: pointer;
+    > *,
+    > * i {
+      color: $color-white;
+    }
   }
 
     &__name,
     &__user,
     &__user i {
       display: block;
-      color: $color-white;
+      color: $color-grey;
+      transition: color 300ms ease-in-out;
     }
 
     &__user {

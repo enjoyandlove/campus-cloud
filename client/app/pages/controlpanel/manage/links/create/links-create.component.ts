@@ -79,10 +79,7 @@ export class LinksCreateComponent implements OnInit {
           $('#linksCreate').modal('hide');
           this.createLink.emit(res);
           this.resetModal();
-
-        },
-        err => console.log(err),
-      );
+        });
   }
 
   resetModal() {

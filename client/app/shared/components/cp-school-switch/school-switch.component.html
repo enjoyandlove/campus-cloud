@@ -1,6 +1,10 @@
 <ul class="switch">
-  <li class="switch__item" *ngIf="schools.length > 1">
-    <a href="#" class="switch__item" *ngIf="isSchoolPanel" (click)="onGoToSchools($event)">
+  <li class="switch__item no-hover" *ngIf="schools.length > 1">
+    <a
+      href="#"
+      class="switch__item"
+      *ngIf="isSchoolPanel"
+      (click)="onGoToSchools($event)">
       <i class="material-icons pull-left">chevron_left</i><span i18n>Back</span>
     </a>
     <a href="#" *ngIf="!isSchoolPanel" (click)="onGoToSchools($event)">

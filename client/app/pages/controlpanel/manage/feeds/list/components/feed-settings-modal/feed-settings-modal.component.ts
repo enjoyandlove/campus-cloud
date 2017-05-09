@@ -46,14 +46,7 @@ export class FeedSettingsComponent implements OnInit {
       .subscribe(
         walls => {
           walls.forEach(wall => this.addFeedControl(wall));
-          // console.log(this.form.value);
-          // let a = <FormArray>this.form.controls['walls'];
-          // let b = <FormGroup>a.at(0);
-          // console.log(b.controls['min_commenting_member_type'].value);
-          // console.log(b.controls['min_posting_member_type'].value);
-        },
-        err => console.log(err)
-      );
+        });
   }
 
   createFeedControl(wall) {
@@ -96,9 +89,7 @@ export class FeedSettingsComponent implements OnInit {
       .feedsService
       .upodateSocialGroup(control.value.wall_id, control.value, search)
       .subscribe(
-        _ => { return; },
-        err => console.log(err)
-      );
+        _ => { return; });
   }
 
   getPrivilegeObj(privilege) {

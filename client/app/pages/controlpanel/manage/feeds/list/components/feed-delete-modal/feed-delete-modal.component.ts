@@ -33,9 +33,7 @@ export class FeedDeleteModalComponent implements OnInit {
           $('#deleteFeedModal').modal('hide');
           this.deleted.emit(this.feed.id);
           this.teardown.emit();
-        },
-        err => console.log(err)
-      );
+        });
   }
 
   ngOnInit() {

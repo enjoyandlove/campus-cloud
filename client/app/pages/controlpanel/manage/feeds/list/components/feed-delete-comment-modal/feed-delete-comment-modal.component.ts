@@ -33,8 +33,7 @@ export class FeedDeleteCommentModalComponent implements OnInit {
           $('#deleteFeedCommentModal').modal('hide');
           this.deleted.emit(this.feed.id);
           this.teardown.emit();
-        },
-        err => console.log(err)
+        }
       );
   }
 
