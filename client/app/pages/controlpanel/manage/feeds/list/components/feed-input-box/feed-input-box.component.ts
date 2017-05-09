@@ -8,12 +8,13 @@ import {
   EventEmitter,
   AfterViewInit,
 } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { Headers, URLSearchParams } from '@angular/http';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { API } from '../../../../../../../config/api';
 import { FeedsService } from '../../../feeds.service';
+import { CPSession, ISchool } from '../../../../../../../session';
 import { FileUploadService } from '../../../../../../../shared/services';
 import { CPArray, CPImage, appStorage } from '../../../../../../../shared/utils';
 
@@ -33,11 +34,13 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
   channels$;
   imageError;
   form: FormGroup;
+  school: ISchool;
   _isCampusWallView;
   defaultText = 'What\'s on your mind?';
 
   constructor(
     private fb: FormBuilder,
+    private session: CPSession,
     private feedsService: FeedsService,
     private fileUploadService: FileUploadService
   ) {
@@ -175,6 +178,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit() {
+    this.school = this.session.school;
     this.isCampusWallView.subscribe(res => {
       if (res !== 1) {
         this.groupId = res;
