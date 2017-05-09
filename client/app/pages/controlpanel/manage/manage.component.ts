@@ -26,20 +26,11 @@ export class ManageComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.session.user;
-    let schooldId = this.session.school.id;
-    let privileges = require('./manage.header.json');
-
-    privileges = Object.assign(
-      {},
-      privileges,
-      { children:  privileges.children.filter(p =>
-        this.user.school_level_privileges[schooldId] === p.privilege)
-      }
-    );
+    // let schooldId = this.session.school.id;
 
     this.store.dispatch({
       type: HEADER_UPDATE,
-      payload: privileges
+      payload: require('./manage.header.json')
     });
   }
 }
