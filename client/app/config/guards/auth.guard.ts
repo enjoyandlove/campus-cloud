@@ -31,7 +31,7 @@ export class AuthGuard implements CanActivate {
           .toPromise()
           .then(res => {
             this.session.user = res[0][0];
-            this.session.school = res[1][0];
+            this.session.school = res[1][1];
             return true;
           })
           .catch(_ => false);
