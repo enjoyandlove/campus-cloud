@@ -1,0 +1,50 @@
+<ul class="switch">
+  <li class="switch__item" *ngIf="schools.length > 1">
+    <a href="#" class="switch__item" *ngIf="isSchoolPanel" (click)="onGoToSchools($event)">
+      <i class="material-icons pull-left">chevron_left</i><span i18n>Back</span>
+    </a>
+    <a href="#" *ngIf="!isSchoolPanel" (click)="onGoToSchools($event)">
+      <span i18n>Change School</span>
+      <i class="material-icons pull-right">chevron_right</i>
+    </a>
+  </li>
+
+  <div class="switch__left" *ngIf="!isSchoolPanel">
+    <li class="switch__item" (click)="close.emit()">
+      <a [routerLink]="['/manage/team']" i18n>Team Settings</a>
+    </li>
+    <li class="switch__item" (click)="close.emit()">
+      <a [routerLink]="['/account/change-password']" i18n>Change Password</a>
+    </li>
+    <li class="switch__item" (click)="close.emit()">
+      <a [routerLink]="['/logout']" i18n>Logout</a>
+    </li>
+  </div>
+
+  <div class="switch__right" *ngIf="isSchoolPanel">
+    <li
+      *ngFor="let school of schools"
+      class="switch__item switch__school switch__school--current">
+      <a href="#" (click)="onSwitchSchool($event, school)">
+      <div class="row">
+        <div class="col-xs-10">
+          <div
+            class="switch__school__thumb"
+            [ngStyle]="{'background-image': 'url(' + school.logo_url + ')'}">
+          </div>
+          <div class="switch__school__name text-truncate">
+            {{ school.name }}
+          </div>
+        </div>
+        <div class="col-xs-2">
+          <div class="switch__school__default">
+            <span class="pull-right" *ngIf="selectedSchool.id === school.id">
+              <i class="material-icons">check</i>
+            </span>
+          </div>
+        </div>
+      </div>
+      </a>
+    </li>
+  </div>
+</ul>

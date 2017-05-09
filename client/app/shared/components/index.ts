@@ -15,6 +15,7 @@ export * from './cp-datepicker';
 export * from './cp-pagination';
 export * from './cp-page-header';
 export * from './cp-image-upload';
+export * from './cp-school-switch';
 export * from './cp-upload-button';
 export * from './cp-check-dropdown';
 export * from './cp-animated-button';
