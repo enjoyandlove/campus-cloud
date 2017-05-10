@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
 import { FeedsService } from '../../../feeds.service';
+import { CPSession } from '../../../../../../../session';
 
 @Component({
   selector: 'cp-feed-settings-modal',
@@ -16,6 +17,7 @@ export class FeedSettingsComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private session: CPSession,
     private feedsService: FeedsService
   ) {
     this.feedsService.getSocialGroups();
@@ -25,7 +27,7 @@ export class FeedSettingsComponent implements OnInit {
 
   private fetch() {
     let search = new URLSearchParams();
-    search.append('school_id', '157');
+    search.append('school_id', this.session.school.id.toString());
 
     this
       .feedsService
@@ -83,7 +85,7 @@ export class FeedSettingsComponent implements OnInit {
 
   updateGroup(control) {
     let search = new URLSearchParams();
-    search.append('school_id', '157');
+    search.append('school_id', this.session.school.id.toString());
 
     this
       .feedsService

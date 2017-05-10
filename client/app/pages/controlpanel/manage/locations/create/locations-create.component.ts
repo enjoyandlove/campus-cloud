@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { CPMap } from '../../../../../shared/utils';
 import { CPSession, ISchool } from '../../../../../session';
@@ -15,9 +16,9 @@ export class LocationsCreateComponent implements OnInit {
   @Output() teardown: EventEmitter<null> = new EventEmitter();
   @Output() locationCreated: EventEmitter<any> = new EventEmitter();
 
-  mapCenter;
   form: FormGroup;
   school: ISchool;
+  mapCenter: BehaviorSubject<any>;
 
   constructor(
     private fb: FormBuilder,
@@ -32,10 +33,10 @@ export class LocationsCreateComponent implements OnInit {
     this.form.controls['country'].setValue(cpMap.country);
     this.form.controls['latitude'].setValue(cpMap.latitude);
     this.form.controls['longitude'].setValue(cpMap.longitude);
-    this.form.controls['address'].setValue(`${cpMap.street_number} ${cpMap.street_name}`);
+    this.form.controls['address'].setValue(data. formatted_address);
     this.form.controls['postal_code'].setValue(cpMap.postal_code);
 
-    this.mapCenter = data.geometry.location.toJSON();
+    this.mapCenter.next(data.geometry.location.toJSON());
   }
 
   doSubmit() {
@@ -50,8 +51,12 @@ export class LocationsCreateComponent implements OnInit {
 
   ngOnInit() {
     this.school = this.session.school;
-
-    this.mapCenter = { lat: this.school.latitude, lng: this.school.longitude };
+    this.mapCenter = new BehaviorSubject(
+      {
+        lat: this.school.latitude,
+        lng: this.school.longitude
+      }
+    );
 
     this.form = this.fb.group({
       'name': [null, Validators.required],

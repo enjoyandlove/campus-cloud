@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { FeedsComponent } from './base';
 import { FeedsService } from '../feeds.service';
+import { CPSession } from '../../../../../session';
 
 @Component({
   selector: 'cp-feeds-list',
@@ -13,9 +14,10 @@ export class FeedsListComponent extends FeedsComponent implements OnInit {
   loading;
 
   constructor(
+    public session: CPSession,
     public service: FeedsService
   ) {
-    super(service);
+    super(session, service);
     super.isLoading().subscribe(res => this.loading = res);
   }
 

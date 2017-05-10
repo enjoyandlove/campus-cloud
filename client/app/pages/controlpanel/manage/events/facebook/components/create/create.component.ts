@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
 
 import { EventsService } from '../../../events.service';
+import { CPSession } from '../../../../../../../session';
 
 @Component({
   selector: 'cp-facebook-events-create',
@@ -19,13 +20,14 @@ export class FacebookEventsCreateComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private session: CPSession,
     private eventsService: EventsService
   ) { }
 
   onSubmit(data) {
     this.errors = [];
     let search = new URLSearchParams();
-    search.append('school_id', '157');
+    search.append('school_id', this.session.school.id.toString());
 
     this
       .eventsService
@@ -50,6 +52,7 @@ export class FacebookEventsCreateComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.session.school);
     this.form = this.fb.group({
       'url': [null, Validators.required],
       'store_id': [this.storeId || null, Validators.required]

@@ -1,5 +1,6 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
 
@@ -27,7 +28,6 @@ export class EventsCreateComponent implements OnInit {
   @Input() isService: boolean;
 
   stores$;
-  mapCenter;
   imageError;
   booleanOptions;
   school: ISchool;
@@ -36,6 +36,7 @@ export class EventsCreateComponent implements OnInit {
   attendance = false;
   enddatePickerOpts;
   startdatePickerOpts;
+  mapCenter: BehaviorSubject<any>;
 
   constructor(
     private router: Router,
@@ -52,22 +53,22 @@ export class EventsCreateComponent implements OnInit {
     this.stores$ = this
       .storeService
       .getStores(search)
-      .startWith([{'label': 'All Host'}])
+      .startWith([{ 'label': 'All Host' }])
       .map(res => {
-      const stores = [
-        {
-          'label': 'All Host',
-          'value': null
-        }
-      ];
-      res.forEach(store => {
-        stores.push({
-          'label': store.name,
-          'value': store.id
+        const stores = [
+          {
+            'label': 'All Host',
+            'value': null
+          }
+        ];
+        res.forEach(store => {
+          stores.push({
+            'label': store.name,
+            'value': store.id
+          });
         });
+        return stores;
       });
-      return stores;
-    });
   }
 
   onSelectedHost(host): void {
@@ -101,10 +102,10 @@ export class EventsCreateComponent implements OnInit {
     this.form.controls['country'].setValue(cpMap.country);
     this.form.controls['latitude'].setValue(cpMap.latitude);
     this.form.controls['longitude'].setValue(cpMap.longitude);
-    this.form.controls['address'].setValue(data.formatted_address);
+    this.form.controls['address'].setValue(data.name);
     this.form.controls['postal_code'].setValue(cpMap.postal_code);
 
-    this.mapCenter = data.geometry.location.toJSON();
+    this.mapCenter.next(data.geometry.location.toJSON());
   }
 
   onSubmit() {
@@ -121,8 +122,8 @@ export class EventsCreateComponent implements OnInit {
 
     if (this.form.controls['end'].value <= this.form.controls['start'].value) {
       this.formError = true;
-      this.form.controls['end'].setErrors({'required': true});
-      this.form.controls['start'].setErrors({'required': true});
+      this.form.controls['end'].setErrors({ 'required': true });
+      this.form.controls['start'].setErrors({ 'required': true });
       return;
     }
 
@@ -160,7 +161,12 @@ export class EventsCreateComponent implements OnInit {
         'action': 0
       }
     ];
-    this.mapCenter = { lat: this.school.latitude, lng: this.school.longitude };
+
+    this.mapCenter = new BehaviorSubject(
+      {
+        lat: this.school.latitude,
+        lng: this.school.longitude
+      });
 
     this.form = this.fb.group({
       'title': [null, Validators.required],

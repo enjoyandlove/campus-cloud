@@ -4,6 +4,7 @@ import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 import { FeedsService } from '../../feeds.service';
+import { CPSession } from '../../../../../../session';
 import { BaseComponent } from '../../../../../../base/base.component';
 
 interface IState {
@@ -33,11 +34,11 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   feeds;
   loading;
   isSimple;
-  school_id = 157;
   state: IState = state;
   isCampusWallView$: BehaviorSubject<number> = new BehaviorSubject(1);
 
   constructor(
+    public session: CPSession,
     public service: FeedsService
   ) {
     super();
@@ -88,7 +89,7 @@ export class FeedsComponent extends BaseComponent implements OnInit {
     search.append('flagged_by_users_only', flagged);
 
     if (this.state.isCampusThread) {
-      search.append('school_id', this.school_id.toString());
+      search.append('school_id', this.session.school.id.toString());
     } else {
       search.append('group_id', this.state.wall_type.toString());
     }
@@ -115,7 +116,7 @@ export class FeedsComponent extends BaseComponent implements OnInit {
 
     if (this.state.isCampusThread) {
       let _search = new URLSearchParams();
-      _search.append('school_id', this.school_id.toString());
+      _search.append('school_id', this.session.school.id.toString());
 
       let channels$ = this.service.getChannelsBySchoolId(1, 1000, _search);
 
@@ -138,7 +139,7 @@ export class FeedsComponent extends BaseComponent implements OnInit {
           });
     } else {
       let _search = new URLSearchParams();
-      _search.append('school_id', this.school_id.toString());
+      _search.append('school_id', this.session.school.id.toString());
 
       let groups$ = this.service.getSocialGroups(_search);
 

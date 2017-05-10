@@ -4,6 +4,7 @@ import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 import { EventsService } from '../../../events.service';
+import { CPSession } from '../../../../../../../session';
 import { BaseComponent } from '../../../../../../../base/base.component';
 
 @Component({
@@ -24,6 +25,7 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
 
   constructor(
     private fb: FormBuilder,
+    private session: CPSession,
     private eventsService: EventsService
   ) {
     super();
@@ -52,7 +54,7 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
 
   onBulkUpdate(data) {
     let search = new URLSearchParams();
-    search.append('school_id', '157');
+    search.append('school_id', this.session.school.id.toString());
 
     let _links = [];
 
@@ -96,7 +98,7 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
   private fetch() {
     this.loading = true;
     let search = new URLSearchParams();
-    search.append('school_id', '157');
+    search.append('school_id', this.session.school.id.toString());
 
     const links$ = this.eventsService.getFacebookEvents(search).map((links: any) => {
       let _links = [];

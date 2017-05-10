@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { CPMap } from '../../../../../shared/utils';
 
@@ -15,8 +16,8 @@ export class LocationsUpdateComponent implements OnInit {
   @Output() teardown: EventEmitter<null> = new EventEmitter();
   @Output() locationUpdated: EventEmitter<any> = new EventEmitter();
   form: FormGroup;
-  mapCenter;
   isFormReady = false;
+  mapCenter: BehaviorSubject<any>;
 
   constructor(
     private fb: FormBuilder
@@ -32,6 +33,7 @@ export class LocationsUpdateComponent implements OnInit {
   }
 
   onPlaceChange(data) {
+    console.log(data);
     let cpMap = CPMap.getBaseMapObject(data);
 
     this.form.controls['city'].setValue(cpMap.city);
@@ -39,10 +41,10 @@ export class LocationsUpdateComponent implements OnInit {
     this.form.controls['country'].setValue(cpMap.country);
     this.form.controls['latitude'].setValue(cpMap.latitude);
     this.form.controls['longitude'].setValue(cpMap.longitude);
-    this.form.controls['address'].setValue(`${cpMap.street_number} ${cpMap.street_name}`);
+    this.form.controls['address'].setValue(data.name);
     this.form.controls['postal_code'].setValue(cpMap.postal_code);
 
-    this.mapCenter = data.geometry.location.toJSON();
+    this.mapCenter.next(data.geometry.location.toJSON());
   }
 
   resetModal() {
@@ -50,7 +52,11 @@ export class LocationsUpdateComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.mapCenter = { lat: this.location.latitude, lng: this.location.longitude };
+    this.mapCenter = new BehaviorSubject(
+      {
+        lat: this.location.latitude,
+        lng: this.location.longitude
+      });
 
     this.form = this.fb.group({
       'name': [this.location.name, Validators.required],

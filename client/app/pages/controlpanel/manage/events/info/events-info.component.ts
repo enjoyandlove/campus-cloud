@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 
@@ -24,9 +25,9 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
 
   event;
   dateFormat;
-  mapCenter;
   loading = true;
   eventId: number;
+  mapCenter: BehaviorSubject<any>;
   isPastEvent = EventDate.isPastEvent;
 
   constructor(
@@ -49,7 +50,12 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
       .then(res => {
         this.event = res.data;
         this.buildHeader(res.data);
-        this.mapCenter = { lat: res.data.latitude, lng: res.data.longitude };
+        this.mapCenter = new BehaviorSubject(
+          {
+            lat: res.data.latitude,
+            lng: res.data.longitude
+          }
+        );
       })
       .catch(err => console.error(err));
   }
@@ -96,13 +102,13 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   }
 
   buildUrlPrefix() {
-     if (this.isClub) {
-       return `/manage/clubs/${this.clubId}/events`;
-     } else if (this.isService) {
+    if (this.isClub) {
+      return `/manage/clubs/${this.clubId}/events`;
+    } else if (this.isService) {
       return `/manage/services/${this.serviceId}/events`;
-     }
-     return '/manage/events';
-   }
+    }
+    return '/manage/events';
+  }
 
   ngOnInit() {
 
