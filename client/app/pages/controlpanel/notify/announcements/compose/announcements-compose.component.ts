@@ -89,7 +89,7 @@ export class AnnouncementsComposeComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      'school_id': [157, Validators.required],
+      'school_id': [this.session.school.id, Validators.required],
       'user_id': [157, Validators.required],
       'store_id': [157, Validators.required],
       'subject': [null, [Validators.required, Validators.maxLength(128)]],

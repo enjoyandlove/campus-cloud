@@ -3,6 +3,7 @@ import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 import { FeedsService } from '../../../feeds.service';
+import { CPSession } from '../../../../../../../session';
 
 interface IState {
   wall_type: number;
@@ -28,12 +29,13 @@ export class FeedFiltersComponent implements OnInit {
   @Output() doFilter: EventEmitter<IState> = new EventEmitter();
 
   posts;
-  walls$: Observable<any>;
   channels;
   channels$;
   state: IState;
+  walls$: Observable<any>;
 
   constructor(
+    private session: CPSession,
     private feedsService: FeedsService,
   ) {
     this.state = state;
@@ -41,9 +43,8 @@ export class FeedFiltersComponent implements OnInit {
   }
 
   private fetch() {
-    const schoolId = 157;
     let search = new URLSearchParams();
-    search.append('school_id', schoolId.toString());
+    search.append('school_id', this.session.school.id.toString());
 
     this.walls$ = this.feedsService.getSocialGroups(search)
       .startWith([

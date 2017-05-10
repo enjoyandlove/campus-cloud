@@ -44,9 +44,8 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
     private feedsService: FeedsService,
     private fileUploadService: FileUploadService
   ) {
-    const schoolId = 157;
     let search = new URLSearchParams();
-    search.append('school_id', schoolId.toString());
+    search.append('school_id', this.session.school.id.toString());
 
     this.channels$ = this.feedsService.getChannelsBySchoolId(1, 100, search)
       .startWith([{ label: '---' }])
@@ -95,7 +94,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
     let _data = {
       'post_type': data.post_type,
       'store_id': 2445,
-      'school_id': 157,
+      'school_id': this.session.school.id,
       'message': data.message,
       'message_image_url': data.message_image_url
     };
@@ -191,7 +190,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
 
     this.form = this.fb.group({
       'group_id': [null],
-      'school_id': [157],
+      'school_id': [this.session.school.id],
       'store_id': [2445],
       'post_type': [1],
       'message': [null, Validators.required],

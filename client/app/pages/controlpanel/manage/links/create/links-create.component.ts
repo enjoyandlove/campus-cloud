@@ -5,6 +5,7 @@ import { Headers } from '@angular/http';
 import { ILink } from '../link.interface';
 import { API } from '../../../../../config/api';
 import { LinksService } from '../links.service';
+import { CPSession } from '../../../../../session';
 import { FileUploadService } from '../../../../../shared/services';
 import { CPImage, CPArray, appStorage } from '../../../../../shared/utils';
 
@@ -25,6 +26,7 @@ export class LinksCreateComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private session: CPSession,
     private service: LinksService,
     private fileUploadService: FileUploadService
   ) { }
@@ -87,7 +89,7 @@ export class LinksCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.storeId = 157;
+    this.storeId = this.session.school.id;
     this.buildForm();
   }
 }

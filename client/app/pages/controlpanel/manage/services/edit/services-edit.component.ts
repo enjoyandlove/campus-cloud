@@ -6,6 +6,7 @@ import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
+import { CPSession } from '../../../../../session';
 import { CPMap } from '../../../../../shared/utils';
 import { ServicesService } from '../services.service';
 import { ProvidersService } from '../providers.service';
@@ -41,6 +42,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private session: CPSession,
     private store: Store<IHeader>,
     private route: ActivatedRoute,
     private adminService: AdminService,
@@ -58,7 +60,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   private fetch() {
     let searchProviders = new URLSearchParams();
     let searchAdmin = new URLSearchParams();
-    searchAdmin.append('school_id', '157');
+    searchAdmin.append('school_id', this.session.school.id.toString());
     searchProviders.append('service_id', this.serviceId.toString());
 
     const service$ = this.servicesService.getServiceById(this.serviceId);

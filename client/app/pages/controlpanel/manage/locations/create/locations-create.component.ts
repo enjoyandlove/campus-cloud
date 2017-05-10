@@ -26,7 +26,6 @@ export class LocationsCreateComponent implements OnInit {
   ) { }
 
   onPlaceChange(data) {
-    console.log(data);
     let cpMap = CPMap.getBaseMapObject(data);
 
     this.form.controls['city'].setValue(cpMap.city);

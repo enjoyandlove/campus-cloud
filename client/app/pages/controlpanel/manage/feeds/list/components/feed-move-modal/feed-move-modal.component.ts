@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
 
 import { FeedsService } from '../../../feeds.service';
+import { CPSession } from '../../../../../../../session';
 
 declare var $: any;
 
@@ -16,13 +17,13 @@ export class FeedMoveComponent implements OnInit {
   @Output() moved: EventEmitter<number> = new EventEmitter();
   @Output() teardown: EventEmitter<null> = new EventEmitter();
 
-  schoolId;
   channels$;
   currentChannel;
   form: FormGroup;
 
   constructor(
     private fb: FormBuilder,
+    private session: CPSession,
     private feedsService: FeedsService
   ) {
     this.form = this.fb.group({
@@ -46,9 +47,8 @@ export class FeedMoveComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.schoolId = 157;
     let search = new URLSearchParams();
-    search.append('school_id', this.schoolId.toString());
+    search.append('school_id', this.session.school.id.toString());
 
     this.channels$ = this
       .feedsService.getChannelsBySchoolId(1, 1000, search)
