@@ -1,12 +1,13 @@
 import {
   Input,
   OnInit,
-  OnChanges,
   ViewChild,
   Component,
   ElementRef,
   AfterViewInit
 } from '@angular/core';
+
+import { Observable } from 'rxjs/Observable';
 
 declare var google: any;
 
@@ -15,45 +16,45 @@ declare var google: any;
   templateUrl: './cp-maps.component.html',
   styleUrls: ['./cp-maps.component.scss']
 })
-export class CPMapsComponent implements OnInit, AfterViewInit, OnChanges {
-  @Input() center: any;
+export class CPMapsComponent implements OnInit, AfterViewInit {
+  @Input() center: Observable<any>;
   @ViewChild('map') map: ElementRef;
-  _map;
-  _center;
+  // _map;
+  // _center;
 
   constructor() { }
 
   ngAfterViewInit() {
-    this.drawMap();
+    this.center.subscribe(center => {
+      this.drawMap(center);
+    });
   }
 
-  drawMap() {
+  drawMap(center) {
     const el = this.map.nativeElement;
-    const defaultCenter = { lat: -34.397, lng: 150.644 };
+    // const defaultCenter = { lat: -34.397, lng: 150.644 };
 
-    this._center = this.center ? this.center : defaultCenter;
+    // this._center = center ? center : defaultCenter;
 
-    this._map = new google.maps.Map(el, {
+    let map = new google.maps.Map(el, {
       zoom: 16,
       draggable: false,
-      center: this._center,
+      center: center,
       disableDefaultUI: true
     });
 
     new google.maps.Marker({
-      position: this._center,
-      map: this._map,
+      position: center,
+      map: map,
     });
 
   }
 
-  ngOnChanges() {
-    if (this.center) {
-      this.drawMap();
-    }
-  }
+  // ngOnChanges() {
+  //   if (this.center) {
+  //     this.drawMap();
+  //   }
+  // }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() { }
 }

@@ -1,4 +1,5 @@
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -18,13 +19,13 @@ import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
   styleUrls: ['./services-create.component.scss']
 })
 export class ServicesCreateComponent implements OnInit {
-  mapCenter;
   storeId: number;
   school: ISchool;
   form: FormGroup;
   createdServiceId;
   formError = false;
   attendance = false;
+  mapCenter: BehaviorSubject<any>;
   categories = [{ label: '---', action: null }];
 
   constructor(
@@ -49,7 +50,7 @@ export class ServicesCreateComponent implements OnInit {
     this.form.controls['address'].setValue(`${cpMap.street_number} ${cpMap.street_name}`);
     this.form.controls['postal_code'].setValue(cpMap.postal_code);
 
-    this.mapCenter = data.geometry.location.toJSON();
+    this.mapCenter.next(data.geometry.location.toJSON());
   }
 
   buildHeader() {
@@ -225,9 +226,13 @@ export class ServicesCreateComponent implements OnInit {
   ngOnInit() {
     this.school = this.session.school;
 
-    // this.storeId = 14748;
     this.storeId = this.school.main_union_store_id;
-    this.mapCenter = { lat: this.school.latitude, lng: this.school.longitude };
+    this.mapCenter = new BehaviorSubject(
+      {
+        lat: this.school.latitude,
+        lng: this.school.longitude
+      }
+    );
 
     this.form = this.fb.group({
       'name': [null, Validators.required],

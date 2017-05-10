@@ -1,5 +1,6 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ActivatedRoute } from '@angular/router';
 import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -35,7 +36,6 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
   event;
   stores;
-  mapCenter;
   dateFormat;
   originalHost;
   booleanOptions;
@@ -49,6 +49,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   startdatePickerOpts;
   originalAttnFeedback;
   formMissingFields = false;
+  mapCenter: BehaviorSubject<any>;
 
   constructor(
     private router: Router,
@@ -79,7 +80,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
     if (!this.form.valid) {
       if (!this.form.controls['poster_url'].valid) {
-        this.form.controls['poster_url'].setErrors({'required': true});
+        this.form.controls['poster_url'].setErrors({ 'required': true });
       }
       this.formMissingFields = true;
       return;
@@ -89,18 +90,18 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       .eventService
       .updateEvent(data, this.eventId)
       .subscribe(
-        _ => {
-          if (this.isService) {
-            this.router.navigate([`/manage/services/${this.storeId}/events/${this.eventId}`]);
-            return;
-          }
-          if (this.isClub) {
-            this.router.navigate([`/manage/clubs/${this.storeId}/events/${this.eventId}`]);
-            return;
-          }
-          this.router.navigate(['/manage/events/' + this.eventId]);
-          },
-        _ => this.formError = true
+      _ => {
+        if (this.isService) {
+          this.router.navigate([`/manage/services/${this.storeId}/events/${this.eventId}`]);
+          return;
+        }
+        if (this.isClub) {
+          this.router.navigate([`/manage/clubs/${this.storeId}/events/${this.eventId}`]);
+          return;
+        }
+        this.router.navigate(['/manage/events/' + this.eventId]);
+      },
+      _ => this.formError = true
       );
   }
 
@@ -170,22 +171,22 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     const stores$ = this
       .storeService
       .getStores(search)
-      .startWith([{'label': '---'}])
+      .startWith([{ 'label': '---' }])
       .map(res => {
-      const stores = [
-        {
-          'label': 'All Host',
-          'action': null
-        }
-      ];
-      res.forEach(store => {
-        stores.push({
-          'label': store.name,
-          'action': store.id
+        const stores = [
+          {
+            'label': 'All Host',
+            'action': null
+          }
+        ];
+        res.forEach(store => {
+          stores.push({
+            'label': store.name,
+            'action': store.id
+          });
         });
+        return stores;
       });
-      return stores;
-    });
 
     const stream$ = Observable.combineLatest(event$, stores$);
 
@@ -195,7 +196,12 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
         this.stores = res.data[1];
         this.event = res.data[0];
         this.buildForm(res.data[0]);
-        this.mapCenter = { lat: res.data[0].latitude, lng: res.data[0].longitude };
+        this.mapCenter = new BehaviorSubject(
+          {
+            lat: res.data[0].latitude,
+            lng: res.data[0].longitude
+          }
+        );
       })
       .catch(err => this.errorService.handleError(err));
   }
@@ -248,7 +254,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.form.controls['address'].setValue(data.formatted_address);
     this.form.controls['postal_code'].setValue(cpMap.postal_code);
 
-    this.mapCenter = data.geometry.location.toJSON();
+    this.mapCenter.next(data.geometry.location.toJSON());
   }
 
   onEventFeedbackChange(option) {

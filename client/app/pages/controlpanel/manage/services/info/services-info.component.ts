@@ -1,3 +1,4 @@
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -16,9 +17,9 @@ import { BaseComponent } from '../../../../../base/base.component';
 })
 export class ServicesInfoComponent extends BaseComponent implements OnInit {
   service;
-  mapCenter;
   loading = true;
   serviceId: number;
+  mapCenter: BehaviorSubject<any>;
 
   constructor(
     private store: Store<IHeader>,
@@ -38,7 +39,12 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
       .then(res => {
         this.service = res.data;
         this.buildHeader(res.data);
-        this.mapCenter = { lat: res.data.latitude, lng: res.data.longitude };
+        this.mapCenter = new BehaviorSubject(
+          {
+            lat: res.data.latitude,
+            lng: res.data.longitude
+          }
+        );
       })
       .catch(err => console.error(err));
   }

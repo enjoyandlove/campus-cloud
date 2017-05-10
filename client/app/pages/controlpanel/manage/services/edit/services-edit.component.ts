@@ -1,6 +1,7 @@
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
@@ -22,7 +23,6 @@ declare var $: any;
   styleUrls: ['./services-edit.component.scss']
 })
 export class ServicesEditComponent extends BaseComponent implements OnInit {
-  mapCenter;
   loading;
   service;
   storeId: number;
@@ -31,6 +31,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   formError = false;
   serviceId: number;
   attendance = false;
+  mapCenter: BehaviorSubject<any>;
   deletedItem: IServiceDeleteModal = {
     id: null,
     name: null,
@@ -73,7 +74,12 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
         let providers = res.data[1];
 
         this.service = res.data[0];
-        this.mapCenter = { lat: res.data[0].latitude, lng: res.data[0].longitude };
+        this.mapCenter = new BehaviorSubject(
+          {
+            lat: res.data[0].latitude,
+            lng: res.data[0].longitude
+          }
+        );
 
         this.storeId = res.data[0].store_id;
 
@@ -103,7 +109,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     this.form.controls['address'].setValue(`${cpMap.street_number} ${cpMap.street_name}`);
     this.form.controls['postal_code'].setValue(cpMap.postal_code);
 
-    this.mapCenter = data.geometry.location.toJSON();
+    this.mapCenter.next(data.geometry.location.toJSON());
   }
 
   onToggleAttendance(event) {
