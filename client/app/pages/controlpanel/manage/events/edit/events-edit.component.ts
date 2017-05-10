@@ -33,14 +33,16 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   @Input() isClub: boolean;
   @Input() isService: boolean;
 
-  form: FormGroup;
   event;
   stores;
   mapCenter;
   dateFormat;
   imageError;
+  originalHost;
+  booleanOptions;
   loading = true;
   eventId: number;
+  form: FormGroup;
   enddatePickerOpts;
   formError = false;
   attendance = false;
@@ -150,23 +152,31 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     };
   }
 
+  onSelectedHost(host): void {
+    this.form.controls['store_id'].setValue(host.value);
+  }
+
   private fetch() {
     let school = this.session.school;
     let search: URLSearchParams = new URLSearchParams();
     search.append('school_id', school.id.toString());
 
     const event$ = this.eventService.getEventById(this.eventId);
-    const stores$ = this.storeService.getStores(search).map(res => {
+    const stores$ = this
+      .storeService
+      .getStores(search)
+      .startWith([{'label': '---'}])
+      .map(res => {
       const stores = [
         {
-          'name': 'All Host',
-          'value': null
+          'label': 'All Host',
+          'action': null
         }
       ];
       res.forEach(store => {
         stores.push({
-          'name': store.name,
-          'value': store.id
+          'label': store.name,
+          'action': store.id
         });
       });
       return stores;
@@ -224,7 +234,21 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.mapCenter = data.geometry.location.toJSON();
   }
 
+  onEventFeedbackChange(option) {
+    this.form.controls['event_feedback'].setValue(option.value);
+  }
+
   ngOnInit() {
     this.dateFormat = FORMAT.DATETIME;
+    this.booleanOptions = [
+      {
+        'label': 'Enabled',
+        'action': 1
+      },
+      {
+        'label': 'Disabled',
+        'action': 0
+      }
+    ];
   }
 }

@@ -71,7 +71,7 @@ export class EventsCreateComponent implements OnInit {
   }
 
   onSelectedHost(host): void {
-    this.form.controls['store_id'].setValue = host.value;
+    this.form.controls['store_id'].setValue(host.value);
   }
 
   onUploadedImage(image) {
@@ -94,27 +94,21 @@ export class EventsCreateComponent implements OnInit {
   }
 
   onPlaceChange(data) {
-    let address;
     let cpMap = CPMap.getBaseMapObject(data);
-
-    if (!cpMap.street_name) {
-      address = data.formatted_address;
-    } else {
-      address = `${cpMap.street_number} ${cpMap.street_name}`;
-    }
 
     this.form.controls['city'].setValue(cpMap.city);
     this.form.controls['province'].setValue(cpMap.province);
     this.form.controls['country'].setValue(cpMap.country);
     this.form.controls['latitude'].setValue(cpMap.latitude);
     this.form.controls['longitude'].setValue(cpMap.longitude);
-    this.form.controls['address'].setValue(address);
+    this.form.controls['address'].setValue(data.formatted_address);
     this.form.controls['postal_code'].setValue(cpMap.postal_code);
 
     this.mapCenter = data.geometry.location.toJSON();
   }
 
   onSubmit() {
+    console.log(this.form.value);
     this.formError = false;
     this.imageError = null;
 
@@ -153,7 +147,7 @@ export class EventsCreateComponent implements OnInit {
   }
 
   onEventFeedbackChange(option) {
-    this.form.controls['event_feedback'].setValue = option.value;
+    this.form.controls['event_feedback'].setValue(option.value);
   }
 
   ngOnInit() {

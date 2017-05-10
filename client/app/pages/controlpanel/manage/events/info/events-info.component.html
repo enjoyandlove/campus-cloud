@@ -33,12 +33,8 @@
                   <strong i18n>Starts:</strong> {{ event.start | cpDatePipe:dateFormat }}
                   <br>
                   <strong i18n>Ends:</strong> {{ event.end | cpDatePipe:dateFormat }}</p>
-                <p>
-                  {{ event.address ? event.address + '.' : '' }}
-                  {{ event.city ? event.city + ',' : '' }}
-                  {{ event.province ? event.province + '.' : '' }}
-                  {{ event.postal_code ? event.postal_code : '' }}
-                </p>
+
+                  <p *ngIf="event.address">{{ event.address }}</p>
               </div>
 
               <hr>
