@@ -38,6 +38,7 @@
                 <label i18n>Select Host</label>
                 <cp-dropdown
                   [items]="stores"
+                  [selectedItem]="originalHost"
                   (selected)="onSelectedHost($event)">
                 </cp-dropdown>
               </div>
@@ -161,7 +162,8 @@
               <label i18n>Attendance Feedback</label>
               <cp-dropdown
                 [items]="booleanOptions"
-                [selectedItem]="form.controls['event_feedback'].value">
+                [selectedItem]="originalAttnFeedback"
+                (selected)="onEventFeedbackChange($event)">
               </cp-dropdown>
             </div>
           </div>

@@ -48,6 +48,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   attendance = false;
   isFormReady = false;
   startdatePickerOpts;
+  originalAttnFeedback;
   formMissingFields = false;
 
   constructor(
@@ -130,6 +131,13 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     });
 
     this.updateDatePicker();
+    this.originalAttnFeedback = this
+      .getFromArray(this.booleanOptions, 'action', res.event_feedback);
+
+    this.originalHost = this
+      .getFromArray(this.stores, 'action', res.store_id);
+
+    console.log(this.originalHost);
     this.isFormReady = true;
   }
 
@@ -204,6 +212,18 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
         'children': []
       }
     });
+  }
+
+  getFromArray(arr: Array<any>, key: string, val: any) {
+    let result;
+
+    arr.forEach(item => {
+      if (item[key] === val) {
+        result = item;
+      }
+    });
+
+    return result;
   }
 
   toggleEventAttendance(value) {

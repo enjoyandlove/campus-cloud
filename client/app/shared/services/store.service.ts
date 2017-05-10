@@ -14,7 +14,7 @@ export class StoreService extends BaseService {
   }
 
   getStores(search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.STORE}/`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.STORE}/1;1000`;
 
     return super.get(url, { search }).map(res => res.json());
   }
