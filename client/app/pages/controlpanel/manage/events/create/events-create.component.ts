@@ -108,7 +108,6 @@ export class EventsCreateComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.form.value);
     this.formError = false;
     this.imageError = null;
 

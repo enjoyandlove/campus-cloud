@@ -37,7 +37,6 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   stores;
   mapCenter;
   dateFormat;
-  imageError;
   originalHost;
   booleanOptions;
   loading = true;
@@ -77,11 +76,10 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
   onSubmit(data) {
     this.formMissingFields = false;
-    this.imageError = null;
 
     if (!this.form.valid) {
       if (!this.form.controls['poster_url'].valid) {
-        this.imageError = 'Image is required';
+        this.form.controls['poster_url'].setErrors({'required': true});
       }
       this.formMissingFields = true;
       return;
@@ -137,7 +135,6 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.originalHost = this
       .getFromArray(this.stores, 'action', res.store_id);
 
-    console.log(this.originalHost);
     this.isFormReady = true;
   }
 
