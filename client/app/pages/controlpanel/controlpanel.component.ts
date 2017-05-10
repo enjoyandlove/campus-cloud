@@ -8,7 +8,5 @@ import { Component, OnInit } from '@angular/core';
 export class ControlPanelComponent implements OnInit {
   constructor() { }
 
-  ngOnInit() {
-    console.log('control panel component init');
-  }
+  ngOnInit() { }
 }

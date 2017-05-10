@@ -13,9 +13,6 @@ if (isProd) {
   API_BASE_URL = `https://usstagingapi.studentlifemobile.com/cc`;
 }
 
-// const API_BASE_URL = `https://api.studentlifemobile.com/cc`;
-// const API_BASE_URL = `https://usstagingapi.studentlifemobile.com/cc`;
-
 const API_KEY = 'IUm65kXecFWch54mzJjpy63spWZX3AVp';
 
 const API_ENDPOINTS = {

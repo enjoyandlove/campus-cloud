@@ -29,6 +29,7 @@ export class EventsCreateComponent implements OnInit {
   stores$;
   mapCenter;
   imageError;
+  booleanOptions;
   school: ISchool;
   form: FormGroup;
   formError = false;
@@ -48,21 +49,29 @@ export class EventsCreateComponent implements OnInit {
     let search: URLSearchParams = new URLSearchParams();
     search.append('school_id', this.school.id.toString());
 
-    this.stores$ = this.storeService.getStores(search).map(res => {
+    this.stores$ = this
+      .storeService
+      .getStores(search)
+      .startWith([{'label': 'All Host'}])
+      .map(res => {
       const stores = [
         {
-          'name': 'All Host',
+          'label': 'All Host',
           'value': null
         }
       ];
       res.forEach(store => {
         stores.push({
-          'name': store.name,
+          'label': store.name,
           'value': store.id
         });
       });
       return stores;
     });
+  }
+
+  onSelectedHost(host): void {
+    this.form.controls['store_id'].setValue(host.value);
   }
 
   onUploadedImage(image) {
@@ -85,21 +94,14 @@ export class EventsCreateComponent implements OnInit {
   }
 
   onPlaceChange(data) {
-    let address;
     let cpMap = CPMap.getBaseMapObject(data);
-
-    if (!cpMap.street_name) {
-      address = data.formatted_address;
-    } else {
-      address = `${cpMap.street_number} ${cpMap.street_name}`;
-    }
 
     this.form.controls['city'].setValue(cpMap.city);
     this.form.controls['province'].setValue(cpMap.province);
     this.form.controls['country'].setValue(cpMap.country);
     this.form.controls['latitude'].setValue(cpMap.latitude);
     this.form.controls['longitude'].setValue(cpMap.longitude);
-    this.form.controls['address'].setValue(address);
+    this.form.controls['address'].setValue(data.formatted_address);
     this.form.controls['postal_code'].setValue(cpMap.postal_code);
 
     this.mapCenter = data.geometry.location.toJSON();
@@ -143,7 +145,21 @@ export class EventsCreateComponent implements OnInit {
       );
   }
 
+  onEventFeedbackChange(option) {
+    this.form.controls['event_feedback'].setValue(option.value);
+  }
+
   ngOnInit() {
+    this.booleanOptions = [
+      {
+        'label': 'Enabled',
+        'action': 1
+      },
+      {
+        'label': 'Disabled',
+        'action': 0
+      }
+    ];
     this.mapCenter = { lat: this.school.latitude, lng: this.school.longitude };
 
     this.form = this.fb.group({
@@ -164,7 +180,7 @@ export class EventsCreateComponent implements OnInit {
       'poster_thumb_url': [null, Validators.required],
       'end': [null, Validators.required],
       'description': [null],
-      'event_feedback': [null], // 1 => Enabled
+      'event_feedback': [0], // 1 => Enabled
       'event_manager_id': [null],
       'attendance_manager_email': [null]
     });

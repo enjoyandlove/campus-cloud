@@ -29,7 +29,12 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     const input = this.input.nativeElement;
-    const autocomplete = new google.maps.places.Autocomplete(input);
+    const options = {
+      'types': ['establishment']
+    };
+
+    const autocomplete = new google.maps.places.Autocomplete(input, options);
+
 
     input.value = this.defaultValue ? this.defaultValue : null;
 
