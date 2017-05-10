@@ -1,12 +1,20 @@
 import { Headers } from '@angular/http';
+import { isProd } from '../../config/env';
 import { appStorage } from '../../shared/utils/localStorage';
 
+let API_BASE_URL;
 const API_VERSION = {
   'V1': 'v1'
 };
 
-const API_BASE_URL = `https://api.studentlifemobile.com/cc`;
-// const API_BASE_URL = 'http://ec2-54-234-212-53.compute-1.amazonaws.com:5002/cc';
+if (isProd) {
+  API_BASE_URL = `https://api.studentlifemobile.com/cc`;
+} else {
+  API_BASE_URL = `https://usstagingapi.studentlifemobile.com/cc`;
+}
+
+// const API_BASE_URL = `https://api.studentlifemobile.com/cc`;
+// const API_BASE_URL = `https://usstagingapi.studentlifemobile.com/cc`;
 
 const API_KEY = 'IUm65kXecFWch54mzJjpy63spWZX3AVp';
 
