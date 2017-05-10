@@ -33,6 +33,7 @@ export class LocationsUpdateComponent implements OnInit {
   }
 
   onPlaceChange(data) {
+    console.log(data);
     let cpMap = CPMap.getBaseMapObject(data);
 
     this.form.controls['city'].setValue(cpMap.city);
@@ -40,7 +41,7 @@ export class LocationsUpdateComponent implements OnInit {
     this.form.controls['country'].setValue(cpMap.country);
     this.form.controls['latitude'].setValue(cpMap.latitude);
     this.form.controls['longitude'].setValue(cpMap.longitude);
-    this.form.controls['address'].setValue(data.formatted_address);
+    this.form.controls['address'].setValue(data.name);
     this.form.controls['postal_code'].setValue(cpMap.postal_code);
 
     this.mapCenter.next(data.geometry.location.toJSON());
