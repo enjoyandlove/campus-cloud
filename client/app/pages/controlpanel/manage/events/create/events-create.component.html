@@ -30,12 +30,10 @@
             <div class="row form-group" *ngIf="!storeId">
               <div class="col-xs-6">
                 <label i18n>Select Host</label>
-                <select
-                  class="form-control"
-                  formControlName="store_id"
-                  [class.error]="formError && form.controls['store_id'].hasError('required')">
-                  <option [value]="store.value" *ngFor="let store of stores$ | async">{{ store.name }}</option>
-                </select>
+                <cp-dropdown
+                  [items]="stores$ | async"
+                  (selected)="onSelectedHost($event)">
+                </cp-dropdown>
               </div>
             </div>
 
@@ -67,33 +65,29 @@
             <div class="row">
               <div class="col-xs-12">
                 <label i18n>Location</label>
-                <div class="row">
-                  <div class="col-xs-6 col-sm-4">
-                    <div class="form-group">
-                      <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Building"
-                        formControlName="location">
-                    </div>
+                <div class="row form-group">
+                  <div class="col-xs-12">
+                    <cp-place-autocomplete
+                      placeHolder="Address..."
+                      (placeChange)="onPlaceChange($event)">
+                    </cp-place-autocomplete>
+                  </div>
+                </div>
+                <div class="row form-group">
+                  <div class="col-xs-6 col-sm-6">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Building"
+                      formControlName="location">
                   </div>
 
-                  <div class="col-xs-6 col-sm-4">
-                    <div class="form-group">
-                      <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Room"
-                        formControlName="room_data">
-                    </div>
-                  </div>
-
-                  <div class="col-xs-6 col-sm-4">
-                    <div class="form-group">
-                      <cp-place-autocomplete
-                        (placeChange)="onPlaceChange($event)">
-                      </cp-place-autocomplete>
-                    </div>
+                  <div class="col-xs-6 col-sm-6">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Room"
+                      formControlName="room_data">
                   </div>
                 </div>
               </div>
@@ -155,13 +149,10 @@
           <div class="row">
             <div class="col-xs-12 col-sm-6">
               <label i18n>Attendance Feedback</label>
-              <select
-                class="form-control"
-                formControlName="event_feedback"
-                [class.error]="formError && form.controls['event_feedback'].hasError('required')">
-                  <option value="1" i18n>Enabled</option>
-                  <option value="0" i18n>Disabled</option>
-                </select>
+              <cp-dropdown
+                [items]="booleanOptions"
+                (selected)="onEventFeedbackChange($event)">
+              </cp-dropdown>
             </div>
           </div>
         </div>
