@@ -39,7 +39,8 @@
                 <cp-dropdown
                   [items]="stores"
                   [selectedItem]="originalHost"
-                  (selected)="onSelectedHost($event)">
+                  (selected)="onSelectedHost($event)"
+                  [isRequiredError]="formMissingFields && form.controls['store_id'].hasError('required')">
                 </cp-dropdown>
               </div>
             </div>
@@ -75,7 +76,7 @@
                 <div class="row form-group">
                   <div class="col-xs-12">
                     <cp-place-autocomplete
-                      placeHolder="Location..."
+                      placeHolder="Address..."
                       (placeChange)="onPlaceChange($event)"
                       [defaultValue]="form.controls.address.value">
                     </cp-place-autocomplete>
@@ -160,7 +161,8 @@
               <cp-dropdown
                 [items]="booleanOptions"
                 [selectedItem]="originalAttnFeedback"
-                (selected)="onEventFeedbackChange($event)">
+                (selected)="onEventFeedbackChange($event)"
+                [isRequiredError]="formMissingFields && form.controls['event_feedback'].hasError('required')">
               </cp-dropdown>
             </div>
           </div>

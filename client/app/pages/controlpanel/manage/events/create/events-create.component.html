@@ -32,7 +32,8 @@
                 <label i18n>Select Host</label>
                 <cp-dropdown
                   [items]="stores$ | async"
-                  (selected)="onSelectedHost($event)">
+                  (selected)="onSelectedHost($event)"
+                  [isRequiredError]="formError && form.controls['store_id'].hasError('required')">
                 </cp-dropdown>
               </div>
             </div>
@@ -148,7 +149,8 @@
               <label i18n>Attendance Feedback</label>
               <cp-dropdown
                 [items]="booleanOptions"
-                (selected)="onEventFeedbackChange($event)">
+                (selected)="onEventFeedbackChange($event)"
+                [isRequiredError]="formError && form.controls['event_feedback'].hasError('required')">
               </cp-dropdown>
             </div>
           </div>
