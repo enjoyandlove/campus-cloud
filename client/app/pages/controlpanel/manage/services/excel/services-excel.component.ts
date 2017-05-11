@@ -4,7 +4,7 @@ import { URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { isProd } from '../../../../../config/env';
+import { isDev } from '../../../../../config/env';
 import { ServicesService } from '../services.service';
 import { CPSession } from '../../../../../session';
 import { StoreService } from '../../../../../shared/services';
@@ -42,7 +42,7 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
       .subscribe(
       (res) => {
         // this.services = res;
-        this.services = isProd ? res : require('./mock.json');
+        this.services = !isDev ? res : require('./mock.json');
         this.fetch();
       });
   }

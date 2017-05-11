@@ -44,7 +44,6 @@ export class FeedItemComponent implements OnInit {
   }
 
   ngOnInit() {
-    // console.log(this);
     this.isCampusWallView.subscribe(res => this._isCampusWallView = res);
   }
 

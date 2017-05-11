@@ -2,7 +2,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { isProd } from '../../../../../../../config/env';
+import { isDev } from '../../../../../../../config/env';
 import { ServicesService } from '../../../services.service';
 import { STATUS } from '../../../../../../../shared/constants';
 import { FileUploadService } from '../../../../../../../shared/services';
@@ -28,7 +28,7 @@ export class ServicesExcelModalComponent implements OnInit {
     this.form = this.fb.group({
       'link': [null, Validators.required]
     });
-    this.downloadLink = isProd ?
+    this.downloadLink = !isDev ?
                                 '/dist/templates/mass_service_invite_sample.xlsx' :
                                 '/templates/mass_service_invite_sample.xlsx';
   }
@@ -63,7 +63,7 @@ export class ServicesExcelModalComponent implements OnInit {
     this.error = '';
 
     if (!validation.length) {
-      const url = isProd ?
+      const url = !isDev ?
       '/services/excel' :
       'http://localhost:8000/services/excel';
       this
