@@ -36,7 +36,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
   form: FormGroup;
   school: ISchool;
   _isCampusWallView;
-  defaultText = 'What\'s on your mind?';
+  placeHolder = 'What\'s on your mind?';
 
   constructor(
     private fb: FormBuilder,
@@ -81,11 +81,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
         res => {
           this.form.reset();
           this.created.emit(res);
-        },
-        err => {
-          if (err.code === 403) {
-            console.log('hey not authorized!');
-          }
+          this.textarea.nativeElement.innerHTML = this.placeHolder;
         }
       );
   }
@@ -109,30 +105,28 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
   ngAfterViewInit() {
     let el = this.textarea.nativeElement;
 
-    // http://stackoverflow.com/questions/995168/textarea-to-resize-based-on-content-length
     Observable
       .fromEvent(el, 'click')
       .subscribe((res: any) => {
-        if (res.target.textContent === this.defaultText) {
-          res.target.textContent = '';
+        if (res.target.textContent === this.placeHolder) {
+          res.target.textContent = null;
         }
-        return;
       });
 
     Observable
       .fromEvent(el, 'blur')
       .subscribe((res: any) => {
         if (!res.target.textContent) {
-          res.target.textContent = this.defaultText;
+          res.target.textContent = this.placeHolder;
         }
-        return;
       });
 
     Observable
       .fromEvent(el, 'keyup')
-      .debounceTime(100)
-      .distinctUntilChanged()
       .subscribe((res: any) => {
+        if (!res.target.textContent) {
+          res.target.textContent = this.placeHolder;
+        }
         this.form.controls['message'].setValue(res.target.textContent);
       });
   }
