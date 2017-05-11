@@ -37,6 +37,7 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   feeds;
   loading;
   isSimple;
+  channels;
   state: IState = state;
   isCampusWallView$: BehaviorSubject<number> = new BehaviorSubject(1);
 
@@ -125,13 +126,13 @@ export class FeedsComponent extends BaseComponent implements OnInit {
           .map(res => {
             let result = [];
             let threads = res[0];
-            let channels = res[1];
+            this.channels = res[1];
 
 
             threads.forEach(thread => {
               result.push({
                 ...thread,
-                channelName: this.getChannelNameFromArray(channels, thread)
+                channelName: this.getChannelNameFromArray(this.channels, thread)
               });
             });
             return result;
@@ -185,6 +186,11 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   }
 
   onCreated(feed) {
+    feed = Object.assign({}, feed, {
+      ...feed,
+      channelName: this.getChannelNameFromArray(this.channels, feed)
+    });
+
     this.state = Object.assign(
       {},
       this.state,
