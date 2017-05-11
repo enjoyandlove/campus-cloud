@@ -1,5 +1,5 @@
+import { Component, OnInit, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
@@ -31,6 +31,9 @@ const state: IState = {
   styleUrls: ['./feeds.component.scss']
 })
 export class FeedsComponent extends BaseComponent implements OnInit {
+  @Input() clubId: number;
+  @Input() isClubsView: boolean;
+
   feeds;
   loading;
   isSimple;
