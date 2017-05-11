@@ -154,6 +154,7 @@
           <button
             type="button"
             (click)="doValidate()"
+            [disabled]="!form.valid"
             class="cpbtn cpbtn--primary"i18n>
             Announce
           </button>
