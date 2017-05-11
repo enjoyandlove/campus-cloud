@@ -24,8 +24,8 @@ export class CheckinRegisterComponent implements OnInit {
   ngOnInit() {
     this.registrationForm = this.fb.group({
       'email': [null, Validators.required],
-      'first_name': [null, Validators.required],
-      'last_name': [null, Validators.required]
+      'firstname': [null, Validators.required],
+      'lastname': [null, Validators.required]
     });
   }
 }
