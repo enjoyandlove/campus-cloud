@@ -1,5 +1,5 @@
 import { Headers } from '@angular/http';
-import { isDev } from '../../config/env';
+import { isProd } from '../../config/env';
 import { appStorage } from '../../shared/utils/localStorage';
 
 let API_BASE_URL;
@@ -7,10 +7,10 @@ const API_VERSION = {
   'V1': 'v1'
 };
 
-if (isDev) {
-  API_BASE_URL = `https://usstagingapi.studentlifemobile.com/cc`;
-} else {
+if (isProd) {
   API_BASE_URL = `https://api.studentlifemobile.com/cc`;
+} else {
+  API_BASE_URL = `https://usstagingapi.studentlifemobile.com/cc`;
 }
 
 const API_KEY = 'IUm65kXecFWch54mzJjpy63spWZX3AVp';
