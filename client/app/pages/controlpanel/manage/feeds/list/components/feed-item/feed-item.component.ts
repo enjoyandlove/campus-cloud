@@ -47,7 +47,11 @@ export class FeedItemComponent implements OnInit {
     this.isCampusWallView.subscribe(res => this._isCampusWallView = res);
   }
 
-  onApprovedPost(postId: number) {
-    console.log(postId);
+  onDeletedComment() {
+    this.feed = Object.assign(
+      {},
+      this.feed,
+      { comment_count: this.feed.comment_count - 1 }
+    );
   }
 }

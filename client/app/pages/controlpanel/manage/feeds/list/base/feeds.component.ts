@@ -1,5 +1,5 @@
+import { Component, OnInit, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
@@ -31,6 +31,9 @@ const state: IState = {
   styleUrls: ['./feeds.component.scss']
 })
 export class FeedsComponent extends BaseComponent implements OnInit {
+  @Input() clubId: number;
+  @Input() isClubsView: boolean;
+
   feeds;
   loading;
   isSimple;
@@ -94,10 +97,6 @@ export class FeedsComponent extends BaseComponent implements OnInit {
       search.append('group_id', this.state.wall_type.toString());
     }
 
-    // let groupThread$ = this.service.getGroupWallFeeds(this.startRange, this.endRange, search);
-    // let campusThread$ = this.service.getCampusWallFeeds(this.startRange, this.endRange, search);
-
-    // let stream$ = this.state.isCampusThread ? campusThread$ : groupThread$;
     let stream$ = this.doAdvancedSearch(search);
 
     super

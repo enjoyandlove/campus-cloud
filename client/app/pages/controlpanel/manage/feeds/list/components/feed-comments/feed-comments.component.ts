@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
@@ -22,6 +22,7 @@ const state: IState = {
 export class FeedCommentsComponent extends BaseComponent implements OnInit {
   @Input() feedId: number;
   @Input() isCampusWallView: Observable<number>;
+  @Output() deleted: EventEmitter<null> = new EventEmitter();
 
   loading;
   comments;
@@ -43,6 +44,7 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
     _state.comments = _state.comments.filter(comment => comment.id !== commentId);
 
     this.state = Object.assign({}, this.state, { comments: _state.comments });
+    this.deleted.emit();
   }
 
   private fetch() {
