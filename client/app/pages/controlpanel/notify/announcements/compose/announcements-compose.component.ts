@@ -57,13 +57,12 @@ export class AnnouncementsComposeComponent implements OnInit {
   }
 
   resetModal() {
-    // this.form.reset();
     this.teardown.emit();
     $('#composeModal').modal('hide');
   }
 
   onSelectedStore(store) {
-    console.log(store);
+    this.form.controls['store_id'].setValue(store.action);
   }
 
   doValidate() {
@@ -90,8 +89,8 @@ export class AnnouncementsComposeComponent implements OnInit {
   ngOnInit() {
     this.form = this.fb.group({
       'school_id': [this.session.school.id, Validators.required],
-      'user_id': [157, Validators.required],
-      'store_id': [157, Validators.required],
+      'user_id': [this.session.user.id, Validators.required],
+      'store_id': [null, Validators.required],
       'subject': [null, [Validators.required, Validators.maxLength(128)]],
       'message': [null, [Validators.required, Validators.maxLength(512)]],
       'priority': [this.types[0], Validators.required],

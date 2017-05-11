@@ -1,12 +1,9 @@
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { Headers } from '@angular/http';
 
-import { API } from '../../../../../config/api';
-import { ClubsService } from '../clubs.service';
+// import { ClubsService } from '../clubs.service';
+import { CPMap } from '../../../../../shared/utils';
 import { membershipTypes, statusTypes } from './permissions';
-import { CPArray, CPMap, CPImage, appStorage } from '../../../../../shared/utils';
-import { FileUploadService } from '../../../../../shared/services';
 
 @Component({
   selector: 'cp-clubs-create',
@@ -14,7 +11,7 @@ import { FileUploadService } from '../../../../../shared/services';
   styleUrls: ['./clubs-create.component.scss']
 })
 export class ClubsCreateComponent implements OnInit {
-  imageError;
+  formError;
   statusTypes;
   membershipTypes;
   form: FormGroup;
@@ -22,8 +19,7 @@ export class ClubsCreateComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     // private errorService: ErrorService,
-    private clubsService: ClubsService,
-    private fileUploadService: FileUploadService
+    // private clubsService: ClubsService,
   ) { }
 
   onPlaceChange(address) {
@@ -56,37 +52,11 @@ export class ClubsCreateComponent implements OnInit {
     control.push(this.buildAdminControl());
   }
 
-  onFileUpload(file) {
-    this.imageError = null;
-    const fileExtension = CPArray.last(file.name.split('.'));
-
-    if (!CPImage.isSizeOk(file.size, CPImage.MAX_IMAGE_SIZE)) {
-      this.imageError = 'File too Big';
+  onSubmit() {
+    if (!this.form.valid) {
+      this.formError = true;
       return;
     }
-
-    if (!CPImage.isValidExtension(fileExtension, CPImage.VALID_EXTENSIONS)) {
-      this.imageError = 'Invalid Extension';
-      return;
-    }
-
-    const headers = new Headers();
-    const url = this.clubsService.getUploadImageUrl();
-    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
-
-    headers.append('Authorization', auth);
-
-    this
-      .fileUploadService
-      .uploadFile(file, url, headers)
-      .subscribe(
-      res => this.form.controls['logo_url'].setValue(res.image_url),
-      err => console.error(err)
-      );
-  }
-
-  onSubmit(data) {
-    console.log(data);
   }
 
   onSelectedMembership(type) {

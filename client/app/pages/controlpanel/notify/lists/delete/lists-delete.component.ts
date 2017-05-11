@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
+declare var $: any;
+
 @Component({
   selector: 'cp-lists-delete',
   templateUrl: './lists-delete.component.html',
@@ -12,6 +14,7 @@ export class ListsDeleteComponent implements OnInit {
   constructor() { }
 
   onDelete() {
+    $('#listsDelete').modal('hide');
     this.deleteList.emit(this.list.id);
   }
 
