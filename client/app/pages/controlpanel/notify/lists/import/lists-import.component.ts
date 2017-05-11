@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
-import { isProd } from '../../../../../config/env';
+import { isDev } from '../../../../../config/env';
 import { STATUS } from '../../../../../shared/constants';
 import { FileUploadService } from '../../../../../shared/services';
 
@@ -20,7 +20,7 @@ export class ListsImportComponent implements OnInit {
   constructor(
     private fileService: FileUploadService
   ) {
-    this.downloadLink = isProd ?
+    this.downloadLink = !isDev ?
     '/dist/templates/mass_user_upload.xlsx' :
     '/templates/mass_user_upload.xlsx';
   }
@@ -60,7 +60,7 @@ export class ListsImportComponent implements OnInit {
     this.error = '';
 
     if (!validation.length) {
-      const url = isProd ?
+      const url = !isDev ?
         '/announcements/import' :
         'http://localhost:8000/announcements/import';
       this

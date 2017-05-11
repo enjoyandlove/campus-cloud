@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 
 import { EventsService } from '../events.service';
 import { CPSession } from '../../../../../session';
-import { isProd } from '../../../../../config/env';
+import { isDev } from '../../../../../config/env';
 import { CPDate } from '../../../../../shared/utils';
 import { StoreService } from '../../../../../shared/services';
 import { BaseComponent } from '../../../../../base/base.component';
@@ -54,7 +54,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
       .select('EVENTS_MODAL')
       .subscribe(
       (res) => {
-        this.events = isProd ? res : require('./mock.json');
+        this.events = !isDev ? res : require('./mock.json');
         this.fetch();
       });
   }
