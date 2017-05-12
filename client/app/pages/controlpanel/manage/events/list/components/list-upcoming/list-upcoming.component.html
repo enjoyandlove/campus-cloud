@@ -3,7 +3,7 @@
     <div class="row">
       <span
         (click)="doSort('title')"
-        class="col-sm-4 col-xs-12 hover" i18n>
+        class="col-xs-4 hover" i18n>
         Name
         <span *ngIf="state.sort_field === 'title'">
           <i
@@ -18,10 +18,10 @@
           </i>
         </span>
       </span>
-      <span class="col-sm-2 col-xs-12" i18n>Host</span>
+      <span class="col-xs-2" i18n>Host</span>
       <span
         (click)="doSort('start')"
-        class="col-sm-3 col-xs-12 hover" i18n>
+        class="col-xs-3 hover" i18n>
         Date
         <span *ngIf="state.sort_field === 'start'">
           <i
@@ -36,14 +36,14 @@
           </i>
         </span>
       </span>
-      <span class="col-sm-2 col-xs-12" i18n>Event Attendance</span>
-      <span class="col-sm-1 col-xs-12"></span>
+      <span class="col-xs-2" i18n>Event Attendance</span>
+      <span class="col-xs-1"></span>
     </div>
   </li>
 
   <li class="cp-form__item col-xs-12" *ngFor="let event of events">
     <div class="row">
-      <span class="col-sm-4 col-xs-12 text-truncate events__thumbnail">
+      <span class="col-xs-4 text-truncate events__thumbnail">
         <img
           class="img-rounded"
           [src]="event.poster_thumb_url ?
@@ -67,14 +67,14 @@
         <br>
         {{ event.description }}
       </span>
-      <span class="col-sm-2 col-xs-12 text-truncate">
+      <span class="col-xs-2 text-truncate">
         {{ event.store_name }}
       </span>
-      <span class="col-sm-3 col-xs-12 text-truncate">
+      <span class="col-xs-3 text-truncate">
         {{ event.start | cpDatePipe:dateFormat }}
       </span>
 
-      <span class="col-sm-2 col-xs-12 text-truncate">
+      <span class="col-xs-2 col-xs-2 text-truncate">
         <button
           type="button"
           *ngIf="event.event_attendance === 1"
@@ -86,7 +86,7 @@
       <span
         (click)="onDelete(event)"
         data-toggle="modal" data-target="#deleteEventsModal"
-        class="col-xs-12 col-md-1 hover text-truncate delete-event text-center">
+        class="col-xs-1 hover text-truncate delete-event text-center">
         &times;
       </span>
     </div>
