@@ -43,6 +43,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   school: ISchool;
   eventId: number;
   form: FormGroup;
+  selectedManager;
   enddatePickerOpts;
   formError = false;
   attendance = false;
@@ -110,7 +111,6 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   private buildForm(res) {
-    console.log(res);
     this.form = this.fb.group({
       'title': [res.title, Validators.required],
       'store_id': [res.store_id, Validators.required],
@@ -135,6 +135,8 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     });
 
     this.updateDatePicker();
+    this.fetchManagersBySelectedStore(res.store_id);
+
     this.originalAttnFeedback = this
       .getFromArray(this.booleanOptions, 'action', res.event_feedback);
 
@@ -163,7 +165,12 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     };
   }
 
+  onSelectedManager(manager): void {
+    this.form.controls['event_manager_id'].setValue(manager.value);
+  }
+
   onSelectedHost(host): void {
+    this.selectedManager = null;
     this.fetchManagersBySelectedStore(host.value);
     this.form.controls['store_id'].setValue(host.value);
   }
@@ -182,20 +189,23 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
         let _admins = [
           {
             'label': '---',
-            'value': null
+            'value': null,
           }
         ];
         admins.forEach(admin => {
+          if (admin.id === this.form.controls['event_manager_id'].value) {
+            this.selectedManager = {
+              'label': `${admin.firstname} ${admin.lastname}`,
+              'value': admin.id
+            };
+          }
           _admins.push({
             'label': `${admin.firstname} ${admin.lastname}`,
             'value': admin.id
           });
         });
         return _admins;
-      }).subscribe(
-      res => this.managers = res,
-      err => console.log(err)
-      );
+      }).subscribe(res => this.managers = res);
   }
 
   private fetch() {
