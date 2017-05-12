@@ -269,25 +269,23 @@
 </div>
 
 <div class="form-footer">
-  <div class="cp-wrapper">
-    <div class="col-xs-12">
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="text-right">
-            <label class="error" *ngIf="formError" i18n>
-                <span>&#x26A0;</span> Please fill out the marked fields
-            </label>
-            <a [routerLink]="['/manage/services']"
-              class="cpbtn cpbtn--tall cpbtn--cancel" i18n>
-              Cancel
-            </a>
-            <button
-              type="submit"
-              (click)="onSubmit()"
-              class="cpbtn cpbtn--tall cpbtn--primary" i18n>
-              Create Service
-            </button>
-          </div>
+  <div class="cp-wrapper cp-wrapper--outer">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="text-right">
+          <label class="error" *ngIf="formError" i18n>
+              <span>&#x26A0;</span> Please fill out the marked fields
+          </label>
+          <a [routerLink]="['/manage/services']"
+            class="cpbtn cpbtn--tall cpbtn--cancel" i18n>
+            Cancel
+          </a>
+          <button
+            type="submit"
+            (click)="onSubmit()"
+            class="cpbtn cpbtn--tall cpbtn--primary" i18n>
+            Create Service
+          </button>
         </div>
       </div>
     </div>

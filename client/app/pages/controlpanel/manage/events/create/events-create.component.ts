@@ -196,6 +196,11 @@ export class EventsCreateComponent implements OnInit {
   }
 
   ngOnInit() {
+    // services || clubs we need to fetch admins
+    if (this.storeId) {
+      this.fetchManagersBySelectedStore(this.storeId);
+    }
+
     this.booleanOptions = [
       {
         'label': 'Enabled',
