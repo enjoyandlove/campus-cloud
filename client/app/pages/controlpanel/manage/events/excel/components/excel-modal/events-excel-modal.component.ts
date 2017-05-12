@@ -2,7 +2,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ENV } from '../../../../../../../config/env';
+import { isDev } from '../../../../../../../config/env';
 import { EventsService } from '../../../events.service';
 import { STATUS } from '../../../../../../../shared/constants';
 import { FileUploadService } from '../../../../../../../shared/services';
@@ -34,9 +34,8 @@ export class EventsExcelModalComponent implements OnInit {
       'link': [null, Validators.required]
     });
 
-    this.downloadLink = ENV === 'production' ?
-                                '/dist/templates/mass_event_invite_sample.xlsx' :
-                                '/templates/mass_event_invite_sample.xlsx';
+    this.downloadLink = !isDev ? '/dist/templates/mass_event_invite_sample.xlsx' :
+                                 '/templates/mass_event_invite_sample.xlsx';
   }
 
   fileIsValid(file) {
@@ -69,7 +68,7 @@ export class EventsExcelModalComponent implements OnInit {
     this.error = '';
 
     if (!validation.length) {
-      const url = ENV === 'production' ? '/events/excel' : 'http://localhost:8000/events/excel';
+      const url = !isDev ? '/events/excel' : 'http://localhost:8000/events/excel';
       this
       .fileService
       .uploadFile(file, url)

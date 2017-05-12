@@ -17,12 +17,12 @@
             Print QR Code
           </a>
 
-          <button
-            type="button"
+          <a
+            [routerLink]="['/cb/checkin/e/' + event.encrypted_id]"
             class="cpbtn cpbtn--primary" i18n
             *ngIf="event.event_attendance === 1">
             Start Web Check-in
-          </button>
+          </a>
         </div>
       </div>
     </div>
