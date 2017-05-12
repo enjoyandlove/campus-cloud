@@ -121,14 +121,6 @@ export class EventsCreateComponent implements OnInit {
   toggleEventAttendance(value) {
     value = value ? 1 : 0;
 
-    if (value === 1) {
-      this.form.controls['event_manager_id'].setValidators(Validators.required);
-      this.form.controls['event_feedback'].setValidators(Validators.required);
-    } else {
-      this.form.controls['event_manager_id'].clearValidators();
-      this.form.controls['event_feedback'].clearValidators();
-    }
-
     this.form.controls['event_attendance'].setValue(value);
   }
 
@@ -156,6 +148,21 @@ export class EventsCreateComponent implements OnInit {
       }
       this.formError = true;
       return;
+    }
+
+    if (this.form.controls['event_attendance'].value === 1) {
+      let managerId = this.form.controls['event_manager_id'];
+      let eventFeedback = this.form.controls['event_feedback'];
+
+      if (managerId.value === null) {
+        this.formError = true;
+        managerId.setErrors({'required': true});
+      }
+
+      if (eventFeedback.value === null) {
+        this.formError = true;
+        eventFeedback.setErrors({'required': true});
+      }
     }
 
     if (this.form.controls['end'].value <= this.form.controls['start'].value) {

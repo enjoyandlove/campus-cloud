@@ -182,7 +182,6 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
     if (this.state.event_attendance === 0) {
       this.defaultState();
     }
-    console.log(this.state);
     this.bulkAction.emit(this.state);
     this.isOpen = false;
   }

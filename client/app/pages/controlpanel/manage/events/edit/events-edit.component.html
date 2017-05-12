@@ -30,7 +30,7 @@
                 class="form-control"
                 formControlName="title"
                 placeholder="Add a short, clear name"
-                [class.error]="formError && form.controls['title'].hasError('required')">
+                [class.error]="formMissingFields && form.controls['title'].hasError('required')">
             </div>
 
             <div class="row form-group" *ngIf="!storeId">
@@ -50,14 +50,14 @@
                 <label i18n>Start</label>
                 <cp-datepicker
                   [options]="startdatePickerOpts"
-                  [error]="formError && form.controls['start'].hasError('required')">
+                  [error]="formMissingFields && form.controls['start'].hasError('required')">
                 </cp-datepicker>
               </div>
               <div class="col-xs-6">
                 <label i18n>End</label>
                 <cp-datepicker
                   [options]="enddatePickerOpts"
-                  [error]="formError && form.controls['end'].hasError('required')">
+                  [error]="formMissingFields && form.controls['end'].hasError('required')">
                 </cp-datepicker>
               </div>
             </div>
@@ -137,7 +137,7 @@
                   [items]="managers"
                   [selectedItem]="selectedManager"
                   (selected)="onSelectedManager($event)"
-                  [isRequiredError]="formError && form.controls['event_manager_id'].hasError('required')">
+                  [isRequiredError]="formMissingFields && form.controls['event_manager_id'].hasError('required')">
                 </cp-dropdown>
               </div>
             </div>
@@ -176,9 +176,6 @@
               <div class="text-right">
                 <label class="error" *ngIf="formMissingFields" i18n>
                     <span>&#x26A0;</span> Please fill out the marked fields
-                </label>
-                <label class="error" *ngIf="formError" i18n>
-                    <span>&#x26A0;</span> Something went wrong
                 </label>
                  <a [routerLink]="['../']"
                   class="cpbtn cpbtn--tall cpbtn--cancel" i18n>

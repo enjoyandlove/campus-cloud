@@ -45,7 +45,6 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   form: FormGroup;
   selectedManager;
   enddatePickerOpts;
-  formError = false;
   attendance = false;
   isFormReady = false;
   startdatePickerOpts;
@@ -83,6 +82,21 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   onSubmit(data) {
     this.formMissingFields = false;
 
+    if (this.form.controls['event_attendance'].value === 1) {
+      let managerId = this.form.controls['event_manager_id'];
+      let eventFeedback = this.form.controls['event_feedback'];
+
+      if (managerId.value === null) {
+        this.formMissingFields = true;
+        managerId.setErrors({'required': true});
+      }
+
+      if (eventFeedback.value === null) {
+        this.formMissingFields = true;
+        eventFeedback.setErrors({'required': true});
+      }
+    }
+
     if (!this.form.valid) {
       if (!this.form.controls['poster_url'].valid) {
         this.form.controls['poster_url'].setErrors({ 'required': true });
@@ -106,7 +120,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
         }
         this.router.navigate(['/manage/events/' + this.eventId]);
       },
-      _ => this.formError = true
+      _ => this.formMissingFields = true
       );
   }
 
@@ -278,14 +292,6 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   toggleEventAttendance(value) {
     value = value ? 1 : 0;
 
-    if (value === 1) {
-      this.form.controls['event_manager_id'].setValue(16685);
-      this.form.controls['event_feedback'].setValidators(Validators.required);
-    } else {
-      this.form.controls['event_manager_id'].setValue(null);
-      this.form.controls['event_feedback'].clearValidators();
-    }
-
     this.form.controls['event_attendance'].setValue(value);
   }
 
@@ -297,7 +303,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.form.controls['country'].setValue(cpMap.country);
     this.form.controls['latitude'].setValue(cpMap.latitude);
     this.form.controls['longitude'].setValue(cpMap.longitude);
-    this.form.controls['address'].setValue(data.name);
+    this.form.controls['address'].setValue(data.formatted_address);
     this.form.controls['postal_code'].setValue(cpMap.postal_code);
 
     this.mapCenter.next(data.geometry.location.toJSON());
