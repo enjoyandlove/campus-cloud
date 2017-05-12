@@ -42,6 +42,7 @@
   .dropdown-menu {
     top: 110%;
     padding: 0;
+    max-width: 300px;
     max-height: 197px;
     overflow-y: scroll;
     background-color: $color-white;

@@ -1,15 +1,16 @@
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { EventsService } from '../events.service';
-import { CPSession } from '../../../../../session';
 import { isDev } from '../../../../../config/env';
-import { CPDate } from '../../../../../shared/utils';
-import { StoreService } from '../../../../../shared/services';
+import { CPSession, ISchool } from '../../../../../session';
 import { BaseComponent } from '../../../../../base/base.component';
+import { CPDate, CP_PRIVILEGES_MAP } from '../../../../../shared/utils';
+import { StoreService, AdminService } from '../../../../../shared/services';
 import { EVENTS_MODAL_RESET } from '../../../../../reducers/events-modal.reducer';
 import { HEADER_UPDATE, HEADER_DEFAULT } from '../../../../../reducers/header.reducer';
 
@@ -29,8 +30,8 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
   errors = [];
   formError;
   mockDropdown;
-  eventManagers;
   isChecked = [];
+  school: ISchool;
   loading = false;
   form: FormGroup;
   isFormReady = false;
@@ -42,11 +43,12 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     private fb: FormBuilder,
     private store: Store<any>,
     private session: CPSession,
+    private adminService: AdminService,
     private storeService: StoreService,
     private eventsService: EventsService
   ) {
     super();
-
+    this.school = this.session.school;
     super.isLoading().subscribe(res => this.loading = res);
 
     this
@@ -60,9 +62,8 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
   }
 
   private fetch() {
-    const school = this.session.school;
     let search: URLSearchParams = new URLSearchParams();
-    search.append('school_id', school.id.toString());
+    search.append('school_id', this.school.id.toString());
 
     const stores$ = this.storeService.getStores(search).map(res => {
       const stores = [
@@ -192,31 +193,47 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
 
       return item;
     });
+    console.log(this.form.value);
   }
 
   onSingleHostSelected(host, index) {
     const controls = <FormArray>this.form.controls['events'];
     const control = <FormGroup>controls.controls[index];
+    const managers$ = this.getManagersByHostId(host.event);
 
-    control.controls['store_id'].setValue(host);
-    control.controls['managers'].setValue(this.getManagersByHostId(host.event));
-  }
-
-  getManagersByHostId(hostId) {
-    let _managers = [
-      {
-        'label': '---',
-        'event': null
-      }
-    ];
-
-    this.eventManagers.filter(manager => {
-      if (manager.host_id === hostId) {
-        _managers.push(manager);
-      }
+    managers$.subscribe(res => {
+      control.controls['managers'].setValue(res);
     });
 
-    return _managers;
+    control.controls['store_id'].setValue(host);
+  }
+
+  getManagersByHostId(storeId): Observable<any> {
+    let search: URLSearchParams = new URLSearchParams();
+
+    search.append('school_id', this.school.id.toString());
+    search.append('store_id', storeId);
+    search.append('privilege_type', CP_PRIVILEGES_MAP.events.toString());
+
+    return this
+    .adminService
+    .getAdminByStoreId(search)
+    .startWith([{'label': '---'}])
+    .map(admins => {
+      let _admins = [
+        {
+          'label': '---',
+          'value': null
+        }
+      ];
+      admins.forEach(admin => {
+        _admins.push({
+          'label': `${admin.firstname} ${admin.lastname}`,
+          'value': admin.id
+        });
+      });
+      return _admins;
+    });
   }
 
   onSingleCheck(checked, index) {
@@ -313,7 +330,6 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
   }
 
   ngOnInit() {
-    console.log(this);
     this.eventAttendanceFeedback = [
       {
         'label': 'Enabled',
@@ -322,29 +338,6 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
       {
         'label': 'Disabled',
         'event': 0
-      }
-    ];
-
-    this.eventManagers = [
-      {
-        'host_id': 28819,
-        'label': 'Dummy',
-        'event': 16776
-      },
-      {
-        'host_id': 28819,
-        'label': 'Dummy',
-        'event': 16776
-      },
-      {
-        'host_id': 28819,
-        'label': 'Dummy',
-        'event': 16776
-      },
-      {
-        'host_id': 2756,
-        'label': 'Hello',
-        'event': 16776
       }
     ];
   }
