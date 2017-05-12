@@ -74,6 +74,10 @@ export class EventsCreateComponent implements OnInit {
       });
   }
 
+  onSelectedManager(manager): void {
+    this.form.controls['event_manager_id'].setValue(manager.value);
+  }
+
   onSelectedHost(host): void {
     this.fetchManagersBySelectedStore(host.value);
     this.form.controls['store_id'].setValue(host.value);
@@ -93,13 +97,13 @@ export class EventsCreateComponent implements OnInit {
       let _admins = [
         {
           'label': '---',
-          'action': null
+          'value': null
         }
       ];
       admins.forEach(admin => {
         _admins.push({
           'label': `${admin.firstname} ${admin.lastname}`,
-          'action': admin.id
+          'value': admin.id
         });
       });
       return _admins;
