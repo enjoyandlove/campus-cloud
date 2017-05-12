@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ENV } from '../../../../../../../config/env';
+import { isDev } from '../../../../../../../config/env';
 import { ClubsService } from '../../../clubs.service';
 import { STATUS } from '../../../../../../../shared/constants';
 import { FileUploadService } from '../../../../../../../shared/services';
@@ -21,9 +21,8 @@ export class ClubsExcelModalComponent implements OnInit {
     private service: ClubsService,
     private fileService: FileUploadService,
   ) {
-    this.downloadLink = ENV === 'production' ?
-                                '/dist/templates/mass_club_invite_sample.xlsx' :
-                                '/templates/mass_club_invite_sample.xlsx';
+    this.downloadLink = !isDev ? '/dist/templates/mass_club_invite_sample.xlsx' :
+                                 '/templates/mass_club_invite_sample.xlsx';
   }
 
   onSubmit(data) {
@@ -60,7 +59,7 @@ export class ClubsExcelModalComponent implements OnInit {
     this.error = '';
 
     if (!validation.length) {
-      const url = ENV === 'production' ? '/clubs/excel' : 'http://localhost:8000/clubs/excel';
+      const url = !isDev ? '/clubs/excel' : 'http://localhost:8000/clubs/excel';
       this
       .fileService
       .uploadFile(file, url)
