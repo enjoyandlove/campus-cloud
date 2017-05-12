@@ -22,17 +22,17 @@
           <div class="locations">
             <li class="cp-form__header col-xs-12">
               <div class="row">
-                <span class="col-sm-5 col-xs-12" i18n>
+                <span class="col-xs-5" i18n>
                   Locations
                 </span>
-                <span class="col-sm-6 col-xs-12" i18n>Short Name</span>
-                <span class="col-sm-1 col-xs-12"></span>
+                <span class="col-xs-6" i18n>Short Name</span>
+                <span class="col-xs-1"></span>
               </div>
             </li>
 
-            <li class="cp-form__item col-xs-12" *ngFor="let location of state.locations">
+            <li class="cp-form__item" *ngFor="let location of state.locations">
               <div class="row">
-                <span class="col-sm-5 col-xs-12 text-truncate">
+                <span class="col-xs-5 text-truncate">
                   <strong>
                     <button
                       class="cpbtn cpbtn--link-dark"
@@ -45,7 +45,7 @@
                   <br>
                   {{ location.address }}
                 </span>
-                  <span class="col-sm-6 col-xs-12 text-truncate">
+                  <span class="col-xs-6 text-truncate">
                   {{ location.short_name }}
                 </span>
 
@@ -53,7 +53,7 @@
                   (click)="deleteLocation = location;"
                   (click)="isLocationsDelete = true"
                   data-toggle="modal" data-target="#locationsDelete"
-                  class="col-sm-1 col-xs-12 hover delete-location">
+                  class="col-xs-1 hover delete-location">
                   &times;
                 </span>
               </div>

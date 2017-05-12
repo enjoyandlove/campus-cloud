@@ -27,7 +27,7 @@
                 class="cp-form__item col-xs-12"
                 *ngFor="let club of form.controls.clubs.controls; let i=index">
                 <div [formGroupName]="i" class="row">
-                  <span class="col-xs-12 col-md-3 text-truncate clubs__thumbnail">
+                  <span class="col-xs-3 text-truncate clubs__thumbnail">
                     <img
                       class="img-rounded"
                       [src]="club.controls.image_url.value ?
@@ -38,19 +38,19 @@
                     <span class="text-muted">{{ club.controls.description.value }}</span>
                   </span>
 
-                  <span class="col-xs-12 col-md-2 text-truncate">
+                  <span class="col-xs-2 text-truncate">
                     {{ club.controls.club_email.value }}
                   </span>
-                  <span class="col-xs-12 col-md-2 text-truncate">
+                  <span class="col-xs-2 text-truncate">
                     {{ club.controls.admin_email.value }}
                   </span>
-                  <span class="col-xs-12 col-md-2 text-truncate">
+                  <span class="col-xs-2 text-truncate">
                     {{ club.controls.phone_number.value }}
                   </span>
-                  <span class="col-xs-12 col-md-2 text-truncate">
+                  <span class="col-xs-2 text-truncate">
                     {{ club.controls.website.value }}
                   </span>
-                  <span class="col-xs-12 col-md-1 text-truncate">
+                  <span class="col-xs-1 text-truncate">
                     <button
                       type="button"
                       (click)="removeControl(i)"
@@ -67,7 +67,7 @@
     </div>
 
     <div class="footer">
-      <div class="container">
+      <div class="cp-wrapper">
         <div class="row">
           <div class="col-xs-12">
             <div class="pull-right">

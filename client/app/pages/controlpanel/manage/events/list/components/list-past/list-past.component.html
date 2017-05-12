@@ -43,7 +43,7 @@
 
   <li class="cp-form__item col-xs-12" *ngFor="let event of events">
 
-    <span class="col-xs-12 col-md-2 text-truncate events__thumbnail">
+    <span class="col-xs-2 text-truncate events__thumbnail">
       <img
         class="img-rounded"
         [src]="event.poster_thumb_url ?
@@ -66,20 +66,20 @@
       <br>
       {{ event.description }}
     </span>
-      <span class="col-xs-12 col-md-2 text-truncate">
+      <span class="col-xs-2 text-truncate">
       {{ event.store_name }}
     </span>
-      <span class="col-xs-12 col-md-2 text-truncate">
+      <span class="col-xs-2 text-truncate">
       {{ event.start | cpDatePipe:dateFormat }}
     </span>
-      <span class="col-xs-12 col-md-1 text-truncate">
+      <span class="col-xs-1 text-truncate">
       {{ event.avg_rating_percent + '%'}}
     </span>
-      <span class="col-xs-12 col-md-1 text-truncate">
+      <span class="col-xs-1 text-truncate">
       {{ event.attends }}
     </span>
 
-    <span class="col-xs-12 col-md-3 text-truncate">
+    <span class="col-xs-3 text-truncate">
       <span *ngIf="event.rating_scale_maximum > -1">
         <cp-stars
           [maxRate]="event.rating_scale_maximum"
@@ -91,7 +91,7 @@
     <span
       (click)="onDelete(event)"
       data-toggle="modal" data-target="#deleteEventsModal"
-      class="col-xs-12 col-md-1 hover text-truncate delete-event text-center">
+      class="col-xs-1 hover text-truncate delete-event text-center">
       &times;
     </span>
   </li>

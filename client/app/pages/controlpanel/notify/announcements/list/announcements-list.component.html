@@ -22,16 +22,16 @@
         <div class="messages">
           <li class="cp-form__header col-xs-12">
             <div class="row">
-              <span class="col-sm-5 col-xs-12" i18n>To</span>
-              <span class="col-sm-3 col-xs-12" i18n>Announcement Type</span>
-              <span class="col-sm-3 col-xs-12">Sent</span>
-              <span class="col-sm-1 col-xs-12"></span>
+              <span class="col-xs-5" i18n>To</span>
+              <span class="col-xs-3" i18n>Announcement Type</span>
+              <span class="col-xs-3">Sent</span>
+              <span class="col-xs-1"></span>
             </div>
           </li>
 
           <li class="cp-form__item col-xs-12" *ngFor="let message of state.messages">
             <div class="row">
-              <span class="col-sm-5 col-xs-12">
+              <span class="col-xs-5">
                 <strong>
                   <button
                     (click)="editList = message"
@@ -47,11 +47,11 @@
                 {{ message.message }}
               </span>
 
-              <span class="col-sm-3 col-xs-12" i18n>
+              <span class="col-xs-3" i18n>
                 {{ message.priority }}
               </span>
 
-              <span class="col-sm-3 col-xs-12">
+              <span class="col-xs-3">
                 {{ message.sent_time | cpDatePipe:dateFormat }}
               </span>
 
@@ -59,7 +59,7 @@
                 (click)="deleteList = list;"
                 (click)="islistsDelete = true"
                 data-toggle="modal" data-target="#listsDelete"
-                class="col-sm-1 col-xs-12 hover delete-message">
+                class="col-xs-1 hover delete-message">
                 &times;
               </span>
             </div>

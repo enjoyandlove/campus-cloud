@@ -4,10 +4,10 @@
 
       <cp-searchbox
         (query)="onSearch($event)"
-        class="col-xs-12 col-md-2">
+        class="col-xs-2">
       </cp-searchbox>
 
-      <div class="col-xs-12 col-md-3">
+      <div class="col-xs-3">
         <div class="row">
           <div class="col-xs-9">
             <cp-dropdown
@@ -25,7 +25,7 @@
         </div>
       </div>
 
-      <div class="col-xs-12 col-md-5">
+      <div class="col-xs-5">
         <div class="row">
           <div class="col-xs-6" *ngIf="!isSimple">
             <div class="row">
@@ -41,10 +41,10 @@
             </div>
           </div>
           <div class="col-xs-6">
-            <div class="col-xs-12 col-sm-9 text-truncate text-right">
+            <div class="col-xs-9 text-truncate text-right">
                 <label i18n>Attendance</label>
               </div>
-              <div class="col-xs-12 col-sm-3 no-left-padding">
+              <div class="col-xs-3 no-left-padding">
                 <cp-checkbox
                   (toggle)="onAttendanceToggle($event)"
                   class="checkbox">
@@ -54,7 +54,7 @@
         </div>
       </div>
 
-      <div class="col-xs-12 col-md-2 text-right">
+      <div class="col-xs-2 text-right">
         <a
           [routerLink]="['create']" i18n
           class="cpbtn cpbtn--primary cpbtn--square-right no-right-padding">

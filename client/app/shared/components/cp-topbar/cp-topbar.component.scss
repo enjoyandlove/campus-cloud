@@ -8,6 +8,8 @@ hr {
 }
 
 nav {
+  overflow: scroll;
+  min-width: 1115px;
   background: $color-black;
 
   .avatar {
@@ -32,25 +34,6 @@ nav {
     &.nav__links {
       padding-left: 40px;
     }
-
-    // .nav__toggle {
-    //   li {
-    //     &:last-child {
-    //       margin-right: 0;
-    //       padding-right: 0;
-    //     }
-    //   }
-    // }
-
-    // &:not(.nav__default) {
-
-    //   li {
-    //     &:first-child {
-    //       padding-left: 0;
-    //       padding-right: 0;
-    //     }
-    //   }
-    // }
 
     li {
       margin-right: 24px;
@@ -93,33 +76,6 @@ nav {
         color: $color-white;
       }
     }
-
-    // &.user__name {
-    //   i {
-    //     margin-left: 7px;
-    //     vertical-align: -7px;
-    //   }
-    // }
-
-    // .dropdown-menu {
-    //   @include cpDropdownMenu();
-    //   top: 35px;
-
-    //   li {
-    //     padding: 0;
-    //     display: block;
-    //     border-bottom: 0;
-    //     margin-right: 0;
-
-    //     a {
-    //       @include font-14px();
-
-    //       padding: 0;
-    //       padding: 12px;
-    //       line-height: 1;
-    //     }
-    //   }
-    // }
   }
 }
 

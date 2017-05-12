@@ -1,12 +1,6 @@
 @import '../core/colors';
 @import '~bootstrap/variables';
 
-@media all and (max-width: $screen-sm) {
-  .cp-card {
-    margin-bottom: 25px;
-  }
-}
-
 @mixin card-margin() {
   margin: 15px 0;
 }

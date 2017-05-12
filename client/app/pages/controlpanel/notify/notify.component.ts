@@ -11,7 +11,7 @@ import {
   selector: 'cp-notify',
   template: `
   <cp-page-header [data]="headerData$ | async"></cp-page-header>
-  <div class="container">
+  <div class="cp-wrapper cp-wrapper--outer">
     <router-outlet></router-outlet>
   </div>
   `,

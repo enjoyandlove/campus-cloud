@@ -53,3 +53,15 @@ body {
       width: 0 !important;
   }
 }
+
+.cp-wrapper {
+  margin: 0 auto;
+  padding: 0 15px;
+
+  &.cp-wrapper--outer {
+    @media all and (min-width: 1000px) {
+      width: 1115px;
+      margin: 0 auto;
+    }
+  }
+}

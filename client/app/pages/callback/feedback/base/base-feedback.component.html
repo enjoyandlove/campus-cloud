@@ -1,17 +1,17 @@
 <div class="page">
   <div class="page__nav">
-    <div class="container">
+    <div class="cp-wrapper">
       <div class="row">
-        <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+        <div class="col-xs-8 col-xs-offset-2">
           <p class="page__title" i18n>{{ isService ? 'Service': 'Event' }} Feedback</p>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="container">
+  <div class="cp-wrapper">
     <div class="row">
-      <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+      <div class="col-xs-8 col-xs-offset-2">
         <cp-service-header
           [service]="data"
           *ngIf="isService"

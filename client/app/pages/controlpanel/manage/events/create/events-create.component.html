@@ -1,6 +1,6 @@
 <div class="row margin-bottom">
   <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
-    <div class="col-xs-12 col-sm-6">
+    <div class="col-xs-6">
       <div class="cp-card">
         <div class="row">
           <div class="col-xs-12">
@@ -39,14 +39,14 @@
             </div>
 
             <div class="row form-group">
-              <div class="col-xs-12 col-sm-6">
+              <div class="col-xs-6">
                 <label i18n>Start</label>
                 <cp-datepicker
                   [options]="startdatePickerOpts"
                   [error]="formError && form.controls['start'].hasError('required')">
                 </cp-datepicker>
               </div>
-              <div class="col-xs-12 col-sm-6">
+              <div class="col-xs-6">
                 <label i18n>End</label>
                 <cp-datepicker
                   [options]="enddatePickerOpts"
@@ -75,7 +75,7 @@
                   </div>
                 </div>
                 <div class="row form-group">
-                  <div class="col-xs-6 col-sm-6">
+                  <div class="col-xs-6 col-xs-6">
                     <input
                       type="text"
                       class="form-control"
@@ -83,7 +83,7 @@
                       formControlName="location">
                   </div>
 
-                  <div class="col-xs-6 col-sm-6">
+                  <div class="col-xs-6 col-xs-6">
                     <input
                       type="text"
                       class="form-control"
@@ -95,7 +95,7 @@
             </div>
 
             <div class="row">
-              <div class="col-xs-12 maps">
+              <div class="maps">
                 <cp-maps [center]="mapCenter"></cp-maps>
               </div>
             </div>
@@ -104,7 +104,7 @@
       </div>
     </div>
 
-    <div class="col-xs-12 col-sm-6">
+    <div class="col-xs-6">
       <div class="cp-card">
         <div class="row">
           <div class="col-xs-12">
@@ -121,7 +121,7 @@
 
         <div *ngIf="attendance">
           <div class="row margin-top">
-            <div class="col-xs-12 col-sm-6">
+            <div class="col-xs-6">
               <div class="form-group">
                 <label i18n>Event Manager</label>
                 <select
@@ -132,7 +132,7 @@
                 </select>
               </div>
             </div>
-            <div class="col-xs-12 col-sm-6">
+            <div class="col-xs-6">
               <div class="form-group">
                 <label i18n>Attendance Manager (optional)</label>
                 <input
@@ -145,7 +145,7 @@
           </div>
 
           <div class="row">
-            <div class="col-xs-12 col-sm-6">
+            <div class="col-xs-6">
               <label i18n>Attendance Feedback</label>
               <cp-dropdown
                 [items]="booleanOptions"
@@ -159,7 +159,7 @@
     </div>
 
     <div class="footer">
-      <div class="container">
+      <div class="cp-wrapper">
         <div class="col-xs-12">
           <div class="row">
             <div class="col-xs-12">
