@@ -21,8 +21,8 @@ export class ClubsExcelModalComponent implements OnInit {
     private service: ClubsService,
     private fileService: FileUploadService,
   ) {
-    this.downloadLink = !isDev ? '/dist/templates/mass_club_invite_sample.xlsx' :
-                                 '/templates/mass_club_invite_sample.xlsx';
+    this.downloadLink = isDev ? '/templates/mass_club_invite_sample.xlsx':
+                                '/dist/templates/mass_club_invite_sample.xlsx';
   }
 
   onSubmit(data) {

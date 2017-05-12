@@ -34,8 +34,8 @@ export class EventsExcelModalComponent implements OnInit {
       'link': [null, Validators.required]
     });
 
-    this.downloadLink = !isDev ? '/dist/templates/mass_event_invite_sample.xlsx' :
-                                 '/templates/mass_event_invite_sample.xlsx';
+    this.downloadLink = isDev ? '/templates/mass_event_invite_sample.xlsx' :
+                                '/dist/templates/mass_event_invite_sample.xlsx';
   }
 
   fileIsValid(file) {

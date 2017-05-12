@@ -28,9 +28,9 @@ export class ServicesExcelModalComponent implements OnInit {
     this.form = this.fb.group({
       'link': [null, Validators.required]
     });
-    this.downloadLink = !isDev ?
-                                '/dist/templates/mass_service_invite_sample.xlsx' :
-                                '/templates/mass_service_invite_sample.xlsx';
+
+    this.downloadLink = isDev ? '/templates/mass_service_invite_sample.xlsx' :
+                                '/dist/templates/mass_service_invite_sample.xlsx';
   }
 
   fileIsValid(file) {
