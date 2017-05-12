@@ -95,8 +95,10 @@
             </div>
 
             <div class="row">
-              <div class="maps">
-                <cp-maps [center]="mapCenter"></cp-maps>
+              <div class="col-xs-12">
+                <div class="maps">
+                  <cp-maps [center]="mapCenter"></cp-maps>
+                </div>
               </div>
             </div>
           </div>
@@ -124,12 +126,11 @@
             <div class="col-xs-6">
               <div class="form-group">
                 <label i18n>Event Manager</label>
-                <select
-                  class="form-control"
-                  formControlName="event_manager_id"
-                  [class.error]="formError && form.controls['event_manager_id'].hasError('required')">
-                  <option value="16685">Dummy User</option>
-                </select>
+                <cp-dropdown
+                  [items]="managers"
+                  (selected)="onSelectedManager($event)"
+                  [isRequiredError]="formError && form.controls['event_manager_id'].hasError('required')">
+                </cp-dropdown>
               </div>
             </div>
             <div class="col-xs-6">

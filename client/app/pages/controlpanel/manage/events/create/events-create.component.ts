@@ -6,8 +6,8 @@ import { Router } from '@angular/router';
 
 import { EventsService } from '../events.service';
 import { CPSession, ISchool } from '../../../../../session';
-import { CPMap, CPDate } from '../../../../../shared/utils';
-import { ErrorService, StoreService } from '../../../../../shared/services';
+import { CPMap, CPDate, CP_PRIVILEGES_MAP } from '../../../../../shared/utils';
+import { ErrorService, StoreService, AdminService } from '../../../../../shared/services';
 
 const COMMON_DATE_PICKER_OPTIONS = {
   utc: true,
@@ -36,18 +36,21 @@ export class EventsCreateComponent implements OnInit {
   attendance = false;
   enddatePickerOpts;
   startdatePickerOpts;
+  managers: Array<any> = [{'label': '---'}];
   mapCenter: BehaviorSubject<any>;
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private session: CPSession,
+    private adminService: AdminService,
     private storeService: StoreService,
     private errorService: ErrorService,
     private eventService: EventsService
   ) {
     this.school = this.session.school;
     let search: URLSearchParams = new URLSearchParams();
+
     search.append('school_id', this.school.id.toString());
 
     this.stores$ = this
@@ -72,7 +75,38 @@ export class EventsCreateComponent implements OnInit {
   }
 
   onSelectedHost(host): void {
+    this.fetchManagersBySelectedStore(host.value);
     this.form.controls['store_id'].setValue(host.value);
+  }
+
+  fetchManagersBySelectedStore(storeId) {
+    let search: URLSearchParams = new URLSearchParams();
+
+    search.append('school_id', this.school.id.toString());
+    search.append('store_id', storeId);
+    search.append('privilege_type', CP_PRIVILEGES_MAP.events.toString());
+
+    this
+    .adminService
+    .getAdminByStoreId(search)
+    .map(admins => {
+      let _admins = [
+        {
+          'label': '---',
+          'action': null
+        }
+      ];
+      admins.forEach(admin => {
+        _admins.push({
+          'label': `${admin.firstname} ${admin.lastname}`,
+          'action': admin.id
+        });
+      });
+      return _admins;
+    }).subscribe(
+      res => this.managers = res,
+      err => console.log(err)
+    );
   }
 
   onUploadedImage(image) {
