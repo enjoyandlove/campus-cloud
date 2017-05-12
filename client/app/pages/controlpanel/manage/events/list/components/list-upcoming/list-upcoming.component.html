@@ -21,7 +21,7 @@
       <span class="col-xs-2" i18n>Host</span>
       <span
         (click)="doSort('start')"
-        class="col-xs-3 hover" i18n>
+        class="col-xs-2 hover" i18n>
         Date
         <span *ngIf="state.sort_field === 'start'">
           <i
@@ -36,7 +36,7 @@
           </i>
         </span>
       </span>
-      <span class="col-xs-2" i18n>Event Attendance</span>
+      <span class="col-xs-3" i18n>Event Attendance</span>
       <span class="col-xs-1"></span>
     </div>
   </li>
@@ -70,17 +70,17 @@
       <span class="col-xs-2 text-truncate">
         {{ event.store_name }}
       </span>
-      <span class="col-xs-3 text-truncate">
+      <span class="col-xs-2 text-truncate">
         {{ event.start | cpDatePipe:dateFormat }}
       </span>
 
-      <span class="col-xs-2 col-xs-2 text-truncate">
-        <button
-          type="button"
+      <span class="col-xs-3 text-truncate">
+        <a
+          [routerLink]="['/cb/checkin/e/' + event.encrypted_id]"
           *ngIf="event.event_attendance === 1"
           class="cpbtn cpbtn--secondary" i18n>
           Start Web Check-in
-        </button>
+        </a>
       </span>
 
       <span
