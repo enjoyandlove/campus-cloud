@@ -3,16 +3,17 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { CPSession } from '../../../../../../../session';
-import { StoreService } from '../../../../../../../shared/services';
+import { CPSession, ISchool } from '../../../../../../../session';
 import { BaseComponent } from '../../../../../../../base/base.component';
+import { CP_PRIVILEGES_MAP } from '../../../../../../../shared/utils/privileges';
+import { StoreService, AdminService } from '../../../../../../../shared/services';
 
 interface IState {
   store_id: any;
+  event_feedback: any;
   event_manager_id: any;
   event_attendance: number;
   attendance_manager_email: string;
-  event_feedback: any;
 }
 
 @Component({
@@ -23,23 +24,26 @@ interface IState {
 export class EventsImportActionDropdownComponent extends BaseComponent implements OnInit {
   @Input() storeId: number;
   @Output() bulkAction: EventEmitter<IState> = new EventEmitter();
+
   stores;
   loading;
   managers$;
   id1 = 'id1';
   id2 = 'id2';
-  eventManagers;
   isOpen = false;
   state: IState;
+  school: ISchool;
   eventAttendanceFeedback;
-  selectedHost: BehaviorSubject<number> = new BehaviorSubject(null);
+  selectedHost$: BehaviorSubject<number> = new BehaviorSubject(null);
 
   constructor(
     private session: CPSession,
+    private adminService: AdminService,
     private storeService: StoreService
   ) {
     super();
     this.fetch();
+    this.school = this.session.school;
     super.isLoading().subscribe(res => this.loading = res);
 
     /**
@@ -47,32 +51,14 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
      * dropdown, upon change we call the managers endpoint
      * and update the available managers
      */
-
     this.managers$ =
       this
-        .selectedHost
-        .flatMap(host => this.getManagersByHostId(host))
-        .startWith([
-          {
-            'label': '---',
-            'event': null
+        .selectedHost$
+        .flatMap(host => {
+          if (host) {
+            return this.getManagersByHostId(host);
           }
-        ])
-        .map((res: any) => {
-          let managers = [
-            {
-              'label': '---',
-              'event': null
-            }
-          ];
-
-          res.forEach(manager => {
-            managers.push({
-              'label': manager.label,
-              'event': manager.event
-            });
-          });
-          return managers;
+          return Observable.of([{'label': '---'}]);
         });
   }
 
@@ -107,7 +93,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
   }
 
   onHostSelected(store_id) {
-    this.selectedHost.next(store_id.event);
+    this.selectedHost$.next(store_id.event);
 
     this.state = Object.assign(
       {},
@@ -116,13 +102,32 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
     );
   }
 
-  getManagersByHostId(hostId) {
-    let promise = new Promise(resolve => {
-      setTimeout(() => {
-        resolve(this.eventManagers.filter(manager => manager.host_id === hostId));
-      }, 1000);
-    });
-    return Observable.fromPromise(promise);
+  getManagersByHostId(storeId) {
+    let search: URLSearchParams = new URLSearchParams();
+
+    search.append('school_id', this.school.id.toString());
+    search.append('store_id', storeId);
+    search.append('privilege_type', CP_PRIVILEGES_MAP.events.toString());
+
+    return this
+      .adminService
+      .getAdminByStoreId(search)
+      .startWith([{ 'label': '---' }])
+      .map(admins => {
+        let _admins = [
+          {
+            'label': '---',
+            'value': null
+          }
+        ];
+        admins.forEach(admin => {
+          _admins.push({
+            'label': `${admin.firstname} ${admin.lastname}`,
+            'value': admin.id
+          });
+        });
+        return _admins;
+      });
   }
 
   toggleEventAttendance() {
@@ -177,7 +182,6 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
     if (this.state.event_attendance === 0) {
       this.defaultState();
     }
-
     this.bulkAction.emit(this.state);
     this.isOpen = false;
   }
@@ -191,29 +195,6 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
       {
         'label': 'Disabled',
         'event': 0
-      }
-    ];
-
-    this.eventManagers = [
-      {
-        'host_id': 28819,
-        'label': 'Dummy',
-        'event': 16776
-      },
-      {
-        'host_id': 28819,
-        'label': 'Dummy',
-        'event': 16776
-      },
-      {
-        'host_id': 28819,
-        'label': 'Dummy',
-        'event': 16776
-      },
-      {
-        'host_id': 2756,
-        'label': 'Hello',
-        'event': 16776
       }
     ];
 

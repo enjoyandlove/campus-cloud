@@ -6,8 +6,8 @@ import { Router } from '@angular/router';
 
 import { EventsService } from '../events.service';
 import { CPSession, ISchool } from '../../../../../session';
-import { CPMap, CPDate } from '../../../../../shared/utils';
-import { ErrorService, StoreService } from '../../../../../shared/services';
+import { CPMap, CPDate, CP_PRIVILEGES_MAP } from '../../../../../shared/utils';
+import { ErrorService, StoreService, AdminService } from '../../../../../shared/services';
 
 const COMMON_DATE_PICKER_OPTIONS = {
   utc: true,
@@ -36,18 +36,21 @@ export class EventsCreateComponent implements OnInit {
   attendance = false;
   enddatePickerOpts;
   startdatePickerOpts;
+  managers: Array<any> = [{'label': '---'}];
   mapCenter: BehaviorSubject<any>;
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private session: CPSession,
+    private adminService: AdminService,
     private storeService: StoreService,
     private errorService: ErrorService,
     private eventService: EventsService
   ) {
     this.school = this.session.school;
     let search: URLSearchParams = new URLSearchParams();
+
     search.append('school_id', this.school.id.toString());
 
     this.stores$ = this
@@ -71,8 +74,43 @@ export class EventsCreateComponent implements OnInit {
       });
   }
 
+  onSelectedManager(manager): void {
+    this.form.controls['event_manager_id'].setValue(manager.value);
+  }
+
   onSelectedHost(host): void {
+    this.fetchManagersBySelectedStore(host.value);
     this.form.controls['store_id'].setValue(host.value);
+  }
+
+  fetchManagersBySelectedStore(storeId) {
+    let search: URLSearchParams = new URLSearchParams();
+
+    search.append('school_id', this.school.id.toString());
+    search.append('store_id', storeId);
+    search.append('privilege_type', CP_PRIVILEGES_MAP.events.toString());
+
+    this
+    .adminService
+    .getAdminByStoreId(search)
+    .map(admins => {
+      let _admins = [
+        {
+          'label': '---',
+          'value': null
+        }
+      ];
+      admins.forEach(admin => {
+        _admins.push({
+          'label': `${admin.firstname} ${admin.lastname}`,
+          'value': admin.id
+        });
+      });
+      return _admins;
+    }).subscribe(
+      res => this.managers = res,
+      err => console.log(err)
+    );
   }
 
   onUploadedImage(image) {
@@ -82,14 +120,6 @@ export class EventsCreateComponent implements OnInit {
 
   toggleEventAttendance(value) {
     value = value ? 1 : 0;
-
-    if (value === 1) {
-      this.form.controls['event_manager_id'].setValidators(Validators.required);
-      this.form.controls['event_feedback'].setValidators(Validators.required);
-    } else {
-      this.form.controls['event_manager_id'].clearValidators();
-      this.form.controls['event_feedback'].clearValidators();
-    }
 
     this.form.controls['event_attendance'].setValue(value);
   }
@@ -118,6 +148,21 @@ export class EventsCreateComponent implements OnInit {
       }
       this.formError = true;
       return;
+    }
+
+    if (this.form.controls['event_attendance'].value === 1) {
+      let managerId = this.form.controls['event_manager_id'];
+      let eventFeedback = this.form.controls['event_feedback'];
+
+      if (managerId.value === null) {
+        this.formError = true;
+        managerId.setErrors({'required': true});
+      }
+
+      if (eventFeedback.value === null) {
+        this.formError = true;
+        eventFeedback.setErrors({'required': true});
+      }
     }
 
     if (this.form.controls['end'].value <= this.form.controls['start'].value) {

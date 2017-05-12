@@ -20,6 +20,12 @@ export class AdminService extends BaseService {
     return super.get(url, { search }).map(res => res.json());
   }
 
+  getAdminByStoreId(search: URLSearchParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/`;
+
+    return super.get(url, { search }).map(res => res.json());
+  }
+
   getAdminById(adminId: number) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/${adminId}`;
 

@@ -12,11 +12,11 @@ import {
   HEADER_UPDATE
 } from '../../../../../reducers/header.reducer';
 import { EventsService } from '../events.service';
-import { CPSession } from '../../../../../session';
-import { CPMap, CPDate } from '../../../../../shared/utils';
+import { CPSession, ISchool } from '../../../../../session';
 import { FORMAT } from '../../../../../shared/pipes/date.pipe';
 import { BaseComponent } from '../../../../../base/base.component';
-import { ErrorService, StoreService } from '../../../../../shared/services';
+import { CPMap, CPDate, CP_PRIVILEGES_MAP } from '../../../../../shared/utils';
+import { ErrorService, StoreService, AdminService } from '../../../../../shared/services';
 
 const COMMON_DATE_PICKER_OPTIONS = {
   altInput: true,
@@ -40,16 +40,18 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   originalHost;
   booleanOptions;
   loading = true;
+  school: ISchool;
   eventId: number;
   form: FormGroup;
+  selectedManager;
   enddatePickerOpts;
-  formError = false;
   attendance = false;
   isFormReady = false;
   startdatePickerOpts;
   originalAttnFeedback;
   formMissingFields = false;
   mapCenter: BehaviorSubject<any>;
+  managers: Array<any> = [{'label': '---'}];
 
   constructor(
     private router: Router,
@@ -57,11 +59,13 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     private session: CPSession,
     private store: Store<IHeader>,
     private route: ActivatedRoute,
+    private adminService: AdminService,
     private storeService: StoreService,
     private errorService: ErrorService,
     private eventService: EventsService
   ) {
     super();
+    this.school = this.session.school;
     this.eventId = this.route.snapshot.params['eventId'];
 
     super.isLoading().subscribe(res => this.loading = res);
@@ -77,6 +81,21 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
   onSubmit(data) {
     this.formMissingFields = false;
+
+    if (this.form.controls['event_attendance'].value === 1) {
+      let managerId = this.form.controls['event_manager_id'];
+      let eventFeedback = this.form.controls['event_feedback'];
+
+      if (managerId.value === null) {
+        this.formMissingFields = true;
+        managerId.setErrors({'required': true});
+      }
+
+      if (eventFeedback.value === null) {
+        this.formMissingFields = true;
+        eventFeedback.setErrors({'required': true});
+      }
+    }
 
     if (!this.form.valid) {
       if (!this.form.controls['poster_url'].valid) {
@@ -101,7 +120,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
         }
         this.router.navigate(['/manage/events/' + this.eventId]);
       },
-      _ => this.formError = true
+      _ => this.formMissingFields = true
       );
   }
 
@@ -130,6 +149,8 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     });
 
     this.updateDatePicker();
+    this.fetchManagersBySelectedStore(res.store_id);
+
     this.originalAttnFeedback = this
       .getFromArray(this.booleanOptions, 'action', res.event_feedback);
 
@@ -158,8 +179,47 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     };
   }
 
+  onSelectedManager(manager): void {
+    this.form.controls['event_manager_id'].setValue(manager.value);
+  }
+
   onSelectedHost(host): void {
+    this.selectedManager = null;
+    this.fetchManagersBySelectedStore(host.value);
     this.form.controls['store_id'].setValue(host.value);
+  }
+
+  fetchManagersBySelectedStore(storeId) {
+    let search: URLSearchParams = new URLSearchParams();
+
+    search.append('school_id', this.school.id.toString());
+    search.append('store_id', storeId);
+    search.append('privilege_type', CP_PRIVILEGES_MAP.events.toString());
+
+    this
+      .adminService
+      .getAdminByStoreId(search)
+      .map(admins => {
+        let _admins = [
+          {
+            'label': '---',
+            'value': null,
+          }
+        ];
+        admins.forEach(admin => {
+          if (admin.id === this.form.controls['event_manager_id'].value) {
+            this.selectedManager = {
+              'label': `${admin.firstname} ${admin.lastname}`,
+              'value': admin.id
+            };
+          }
+          _admins.push({
+            'label': `${admin.firstname} ${admin.lastname}`,
+            'value': admin.id
+          });
+        });
+        return _admins;
+      }).subscribe(res => this.managers = res);
   }
 
   private fetch() {
@@ -232,14 +292,6 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   toggleEventAttendance(value) {
     value = value ? 1 : 0;
 
-    if (value === 1) {
-      this.form.controls['event_manager_id'].setValue(16685);
-      this.form.controls['event_feedback'].setValidators(Validators.required);
-    } else {
-      this.form.controls['event_manager_id'].setValue(null);
-      this.form.controls['event_feedback'].clearValidators();
-    }
-
     this.form.controls['event_attendance'].setValue(value);
   }
 
@@ -251,7 +303,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.form.controls['country'].setValue(cpMap.country);
     this.form.controls['latitude'].setValue(cpMap.latitude);
     this.form.controls['longitude'].setValue(cpMap.longitude);
-    this.form.controls['address'].setValue(data.name);
+    this.form.controls['address'].setValue(data.formatted_address);
     this.form.controls['postal_code'].setValue(cpMap.postal_code);
 
     this.mapCenter.next(data.geometry.location.toJSON());

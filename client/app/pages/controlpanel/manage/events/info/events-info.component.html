@@ -30,12 +30,12 @@
 
               <div class="event__meta text-truncate">
                 <p>
-                  <strong i18n *ngIf="!isPastEvent">Starts:</strong>
-                  <strong i18n *ngIf="isPastEvent">Started:</strong>
+                  <strong i18n *ngIf="!isPastEvent(event.end)">Starts:</strong>
+                  <strong i18n *ngIf="isPastEvent(event.end)">Started:</strong>
                   {{ event.start | cpDatePipe:dateFormat }}
                   <br>
-                  <strong i18n *ngIf="!isPastEvent">Ends:</strong>
-                  <strong i18n *ngIf="isPastEvent">Ended:</strong>
+                  <strong i18n *ngIf="!isPastEvent(event.end)">Ends:</strong>
+                  <strong i18n *ngIf="isPastEvent(event.end)">Ended:</strong>
                   {{ event.end | cpDatePipe:dateFormat }}
                 </p>
 

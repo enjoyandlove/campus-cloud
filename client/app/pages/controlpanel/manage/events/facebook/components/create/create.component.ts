@@ -52,7 +52,6 @@ export class FacebookEventsCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.session.school);
     this.form = this.fb.group({
       'url': [null, Validators.required],
       'store_id': [this.storeId || null, Validators.required]
