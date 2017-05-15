@@ -56,12 +56,11 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
       { external_attendees: [data, ...this.state.services['external_attendees'] ] }
     );
   }
-  // cb/checkin/s/XeqmohCZNONC05rEcBItaw/rA5myiH9NEpMczvDufnVCw
+
   fetch() {
     super
       .fetchData(this.checkinService.getServiceData(this.search))
       .then(res => {
-        console.log(res.data);
         this.state = Object.assign({}, this.state, { services: res.data });
       })
       .catch(err => console.log(err));

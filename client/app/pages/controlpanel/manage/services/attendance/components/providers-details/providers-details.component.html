@@ -36,12 +36,12 @@
               </cp-searchbox>
             </div>
             <div class="col-xs-6 col-xs-offset-2 text-right">
-              <button
-                type="button"
-                class="cpbtn cpbtn--primary"
-                data-toggle="modal" data-target="#createProvider" i18n>
+              <a
+                target="_blank"
+                class="cpbtn cpbtn--primary" i18n
+                [routerLink]="['/cb/checkin/s/' + provider.encrypted_campus_service_id + '/' + provider.encrypted_id]">
                 Start Web Check-in
-              </button>
+              </a>
               <button
                 (click)="download$.next(true)"
                 class="cpbtn cpbtn--primary" i18n>

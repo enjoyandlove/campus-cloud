@@ -51,6 +51,29 @@
       @include font-16px();
       @include font-semi-bold();
     }
+
+    &__list {
+      padding-left: 0;
+      margin-bottom: 0;
+      list-style: none;
+    }
+
+    &__admin {
+      padding: 12px 0;
+
+      span {
+        font-size: 0.9em;
+      }
+
+      &:first-child {
+        padding-top: 0;
+      }
+
+      &:last-child {
+        border-bottom: 0;
+        padding-bottom: 0;
+      }
+    }
   }
 
   &__title {

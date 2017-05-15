@@ -2,7 +2,7 @@
   <li class="cp-form__header col-xs-12">
     <span
       (click)="doSort('title')"
-      class="col-xs-2 hover" i18n>
+      class="col-xs-3 hover" i18n>
       Name
       <span *ngIf="state.sort_field === 'title'">
         <i
@@ -17,7 +17,6 @@
         </i>
       </span>
     </span>
-    <span class="col-xs-2" i18n>Host</span>
     <span
       (click)="doSort('start')"
       class="col-xs-2 hover" i18n>
@@ -36,14 +35,14 @@
       </span>
     </span>
     <span class="col-xs-1" i18n>RSPV</span>
-    <span class="col-xs-1" i18n>Attendance</span>
+    <span class="col-xs-2" i18n>Attendance</span>
     <span class="col-xs-3" i18n>Rating</span>
     <span class="col-xs-1"></span>
   </li>
 
   <li class="cp-form__item col-xs-12" *ngFor="let event of events">
 
-    <span class="col-xs-2 text-truncate events__thumbnail">
+    <span class="col-xs-3 text-truncate events__thumbnail">
       <img
         class="img-rounded"
         [src]="event.poster_thumb_url ?
@@ -64,18 +63,15 @@
           </a>
       </strong>
       <br>
-      {{ event.description }}
-    </span>
-      <span class="col-xs-2 text-truncate">
       {{ event.store_name }}
     </span>
-      <span class="col-xs-2 text-truncate">
+    <span class="col-xs-2 text-truncate">
       {{ event.start | cpDatePipe:dateFormat }}
     </span>
-      <span class="col-xs-1 text-truncate">
-      {{ event.avg_rating_percent + '%'}}
+    <span class="col-xs-1 text-truncate">
+      {{ event.avg_rating_percent > -1 ? event.avg_rating_percent + '%' : ''}}
     </span>
-      <span class="col-xs-1 text-truncate">
+    <span class="col-xs-2 text-truncate">
       {{ event.attends }}
     </span>
 

@@ -56,11 +56,11 @@
                 <span>{{ provider.total_visits }}</span>
               </div>
               <div class="col-xs-2">
-                <button
-                  type="button"
-                  class="cpbtn cpbtn--secondary cpbtn--secondary--no-border" i18n>
+                <a
+                  [routerLink]="['/cb/checkin/s/' + provider.encrypted_campus_service_id + '/' + provider.encrypted_id]"
+                  class="startcheckin cpbtn cpbtn--secondary cpbtn--secondary--no-border" i18n>
                   Start Web Check-in
-                </button>
+                </a>
               </div>
               <div class="col-xs-1">
                 <span
