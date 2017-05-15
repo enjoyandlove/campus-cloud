@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
-import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { URLSearchParams } from '@angular/http';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { ProvidersService } from '../../../providers.service';
@@ -22,8 +23,9 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
   download$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
-    private store: Store<IHeader>,
+    private router: Router,
     private route: ActivatedRoute,
+    private store: Store<IHeader>,
     private providersService: ProvidersService
   ) {
     super();
@@ -40,8 +42,12 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
     super
       .fetchData(stream$)
       .then(res => {
-        console.log(res);
+        if (res.data.avg_rating_percent === -1) {
+          this.router.navigate(['/manage/services/' + this.serviceId]);
+        }
+
         this.provider = res.data;
+
         this.buildHeader();
       })
       .catch(err => console.error(err));
