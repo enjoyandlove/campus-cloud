@@ -1,4 +1,12 @@
-import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
+import {
+  OnInit,
+  Output,
+  Input,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener
+} from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
 import { DATE_FILTER } from './events-filters';
@@ -40,17 +48,33 @@ export class ListActionBoxComponent extends BaseComponent implements OnInit {
 
   hosts;
   loading;
+  isCalendar;
   eventFilter;
   dateFilterOpts;
   state: IState = state;
 
   constructor(
+    private el: ElementRef,
     private session: CPSession,
     private storeService: StoreService
   ) {
     super();
     this.fetch();
     super.isLoading().subscribe(res => this.loading = res);
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClick(event) {
+    if (!this.el.nativeElement.contains(event.target) || (event.target.nodeName !== 'svg')) {
+      if (this.isCalendar) {
+        this.isCalendar = false;
+      }
+    }
+  }
+
+  onToggleCalendar(event: Event) {
+    event.stopPropagation();
+    this.isCalendar = !this.isCalendar;
   }
 
   private fetch() {

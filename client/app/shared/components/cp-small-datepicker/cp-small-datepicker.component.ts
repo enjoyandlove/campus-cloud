@@ -32,7 +32,6 @@ export class CPSmallDatePickerComponent implements AfterViewInit, OnInit, OnChan
   @ViewChild('input') input: ElementRef;
   @Input() options: any;
 
-  isActive;
   flatPicker;
 
   constructor() {
@@ -52,11 +51,9 @@ export class CPSmallDatePickerComponent implements AfterViewInit, OnInit, OnChan
       {
         onChange: function(dates) {
           if (dates.length === 2) {
-            self.isActive = true;
             self.rangeChange.emit(dates);
             return;
           }
-          self.isActive = false;
         }
       }
     );
@@ -64,7 +61,6 @@ export class CPSmallDatePickerComponent implements AfterViewInit, OnInit, OnChan
   }
 
   ngOnChanges() {
-    this.isActive = false;
     this.buildPicker(this.input.nativeElement);
   }
 

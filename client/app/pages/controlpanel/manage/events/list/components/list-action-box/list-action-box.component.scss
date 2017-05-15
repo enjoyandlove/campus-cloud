@@ -14,7 +14,13 @@
   }
 
   .calendar {
-    height: 40px;
+    &.isOpen {
+      border: 1px solid $color-black;
+    }
+    i {
+      padding: 5px;
+      font-size: 21px;
+    }
   }
 
   .checkbox {
