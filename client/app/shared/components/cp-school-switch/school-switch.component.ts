@@ -13,6 +13,7 @@ export class SchoolSwitchComponent implements OnInit {
   isSchoolPanel;
   selectedSchool: ISchool;
   schools: Array<ISchool> = [];
+
   constructor(
     private session: CPSession
   ) { }
@@ -26,8 +27,9 @@ export class SchoolSwitchComponent implements OnInit {
     window.location.replace('/');
   }
 
-  onGoToSchools(event): void {
+  onGoToSchools(event: Event): void {
     event.preventDefault();
+    event.stopPropagation();
     this.isSchoolPanel = !this.isSchoolPanel;
   }
 
