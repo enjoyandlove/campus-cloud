@@ -155,7 +155,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       .getFromArray(this.booleanOptions, 'action', res.event_feedback);
 
     this.originalHost = this
-      .getFromArray(this.stores, 'action', res.store_id);
+      .getFromArray(this.stores, 'value', res.store_id);
 
     this.isFormReady = true;
   }
@@ -236,13 +236,13 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
         const stores = [
           {
             'label': 'All Host',
-            'action': null
+            'value': null
           }
         ];
         res.forEach(store => {
           stores.push({
             'label': store.name,
-            'action': store.id
+            'value': store.id
           });
         });
         return stores;
