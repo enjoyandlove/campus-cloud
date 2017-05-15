@@ -15,9 +15,18 @@
               (selected)="onEventDate($event.action)">
             </cp-dropdown>
           </div>
-          <div class="col-xs-3 text-left no-left-padding">
+          <div
+            class="col-xs-3 text-left no-left-padding">
+            <button
+              type="button"
+              [class.isOpen]="isCalendar"
+              (click)="onToggleCalendar($event)"
+              class="cpbtn cpbtn--cancel cpbtn--no-padding calendar">
+              <i class="material-icons hover">date_range</i>
+            </button>
             <cp-small-datepicker
-              class="calendar"
+              [hidden]="!isCalendar"
+              (rangeChange)="isCalendar = false"
               (rangeChange)="onDateRange($event)"
               [options]="dateFilterOpts">
             </cp-small-datepicker>

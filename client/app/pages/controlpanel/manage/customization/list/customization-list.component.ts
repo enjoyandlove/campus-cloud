@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Headers } from '@angular/http';
 
 import { API } from '../../../.././../config/api';
+import { appStorage } from '../../../../../shared/utils';
+import { CPSession, ISchool } from '../../../../../session';
 // import { STATUS } from '../../../.././../shared/constants';
 import { FileUploadService } from '../../../../../shared/services';
-import { appStorage } from '.././../../../../shared/utils';
 
 @Component({
   selector: 'cp-customization-list',
@@ -17,10 +18,14 @@ export class CustomizationListComponent implements OnInit {
   canvas;
   isEdit;
   isError;
+  school: ISchool;
 
   constructor(
+    private session: CPSession,
     private fileUploadService: FileUploadService
-  ) { }
+  ) {
+    this.school = this.session.school;
+  }
 
   onError(error) {
     this.isError = true;
@@ -35,29 +40,22 @@ export class CustomizationListComponent implements OnInit {
 
   onCancel() {
     this.onReset();
-    this.canvas.destroy();
   }
 
   onUpload(image) {
     this.isEdit = true;
     this.image = image;
 
-    // https://foliotek.github.io/Croppie/
-    let Croppie = require('croppie');
-
-    this.canvas = new Croppie(document.getElementById('canvas_wrapper'), {
-      'showZoomer': false,
-      'viewport': { width: 700, height: 270 },
-      'boundary': { height: 270 },
-      // 'url': this.image
-      'url': 'https://source.unsplash.com/random/900x500'
-    });
+    this.canvas.bind({'url': image});
   }
 
   onSave() {
+    console.log('saving');
+    console.log(this.canvas);
+
     let promise: Promise<any> = this.canvas.result(
       {
-        'type': 'blob',
+        'type': 'base64',
         'size': 'viewport',
         'format': 'jpeg'
       }
@@ -77,7 +75,7 @@ export class CustomizationListComponent implements OnInit {
 
         // // this.onFileUpload(res);
       })
-      .catch(_ => {});
+      .catch(err => console.log(err));
   }
 
     onFileUpload(file) {
@@ -110,14 +108,15 @@ export class CustomizationListComponent implements OnInit {
   }
 
   ngOnInit() {
-    // // https://foliotek.github.io/Croppie/
-    // let Croppie = require('croppie');
+    // https://foliotek.github.io/Croppie/
+    let Croppie = require('croppie');
 
-    // this.canvas = new Croppie(document.getElementById('canvas_wrapper'), {
-    //   'showZoomer': false,
-    //   'viewport': { width: 700, height: 270 },
-    //   'boundary': { height: 270 },
-    //   'url': 'https://source.unsplash.com/random/900x500'
-    // });
+    this.canvas = new Croppie(document.getElementById('canvas_wrapper'), {
+      'enableZoom': false,
+      'enableOrientation': false,
+      'viewport': { width: 665, height: 270 },
+      'boundary': { height: 270 },
+      'url': this.school.logo_url
+    });
   }
 }

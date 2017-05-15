@@ -22,7 +22,10 @@
           </li>
         </ul>
 
-        <div class="nav__school pull-right noselect" (click)="isOpen = !isOpen">
+        <div
+          (click)="isOpen = !isOpen"
+          [class.nav__school--active]="isOpen"
+          class="nav__school pull-right noselect">
           <div
             class="nav__school__thumb pull-left img-rounded"
             [ngStyle]="{'background-image': 'url(' + school.logo_url + ')'}">

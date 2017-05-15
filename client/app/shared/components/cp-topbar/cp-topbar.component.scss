@@ -90,7 +90,8 @@ nav {
     position: absolute;
   }
 
-  &:hover {
+  &:hover,
+  &--active {
     cursor: pointer;
     > *,
     > * i {

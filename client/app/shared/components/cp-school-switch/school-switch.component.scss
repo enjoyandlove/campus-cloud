@@ -2,12 +2,17 @@
 @import '~styles/components/button';
 @import '~styles/components/dropdown';
 
+:host {
+  display: block;
+}
+
 .switch {
   @include cpDropdownMenu();
 
   width: 245px;
   max-height: 204px;
   border-radius: 4px;
+  overflow-y: visible;
 
   &__item {
     display: block;
@@ -31,6 +36,7 @@
 
     &:last-child {
       border-bottom: none;
+      border-radius: 0 0 4px 4px;
     }
   }
 
