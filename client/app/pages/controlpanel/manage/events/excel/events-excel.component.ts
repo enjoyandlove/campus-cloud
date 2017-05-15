@@ -193,7 +193,6 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
 
       return item;
     });
-    console.log(this.form.value);
   }
 
   onSingleHostSelected(host, index) {

@@ -36,7 +36,7 @@
       </span>
     </span>
     <span class="col-xs-1" i18n>RSPV</span>
-    <span class="col-xs-1" i18n>Attendance</span>
+    <span class="col-xs-1" i18n>ATTND</span>
     <span class="col-xs-3" i18n>Rating</span>
     <span class="col-xs-1"></span>
   </li>
@@ -72,10 +72,10 @@
       <span class="col-xs-2 text-truncate">
       {{ event.start | cpDatePipe:dateFormat }}
     </span>
-      <span class="col-xs-1 text-truncate">
-      {{ event.avg_rating_percent + '%'}}
+    <span class="col-xs-1 text-truncate">
+      {{ event.avg_rating_percent > -1 ? event.avg_rating_percent + '%' : ''}}
     </span>
-      <span class="col-xs-1 text-truncate">
+    <span class="col-xs-1 text-truncate">
       {{ event.attends }}
     </span>
 

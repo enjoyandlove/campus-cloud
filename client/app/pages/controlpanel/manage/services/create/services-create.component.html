@@ -76,25 +76,23 @@
               </textarea>
             </div>
 
-            <div class="row form-group">
+            <div class="row">
               <div class="col-xs-12">
                 <label i18n>Location (optional)</label>
-                <div class="row">
+                <div class="row form-group">
                   <div class="col-xs-12">
                     <cp-place-autocomplete
                       (placeChange)="onPlaceChanged($event)">
                     </cp-place-autocomplete>
                   </div>
                 </div>
-                <div class="row">
+                <div class="row form-group">
                   <div class="col-xs-6">
-                    <div class="form-group">
-                      <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Building"
-                        formControlName="location">
-                    </div>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Building"
+                      formControlName="location">
                   </div>
 
                   <div class="col-xs-6">
