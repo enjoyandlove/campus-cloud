@@ -6,10 +6,10 @@ import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
-import { CPSession } from '../../../../../session';
 import { CPMap } from '../../../../../shared/utils';
 import { ServicesService } from '../services.service';
 import { ProvidersService } from '../providers.service';
+import { CPSession, ISchool } from '../../../../../session';
 import { BaseComponent } from '../../../../../base/base.component';
 import { CP_PRIVILEGES_MAP } from '../../../../../shared/utils/privileges';
 import { AdminService } from '../../../../../shared/services/admin.service';
@@ -26,6 +26,7 @@ declare var $: any;
 export class ServicesEditComponent extends BaseComponent implements OnInit {
   loading;
   service;
+  school: ISchool;
   storeId: number;
   categories = [];
   form: FormGroup;
@@ -50,6 +51,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     private providersService: ProvidersService
   ) {
     super();
+    this.school = this.session.school;
     super.isLoading().subscribe(res => this.loading = res);
     this.serviceId = this.route.snapshot.params['serviceId'];
 
@@ -60,12 +62,27 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   private fetch() {
     let searchProviders = new URLSearchParams();
     let searchAdmin = new URLSearchParams();
-    searchAdmin.append('school_id', this.session.school.id.toString());
+
     searchProviders.append('service_id', this.serviceId.toString());
+
+    searchAdmin.append('school_id', this.school.id.toString());
+    searchAdmin.append('store_id', this.serviceId.toString());
+    searchAdmin.append('privilege_type', CP_PRIVILEGES_MAP.events.toString());
 
     const service$ = this.servicesService.getServiceById(this.serviceId);
     const providers$ = this.providersService.getProviders(1, 1000, searchProviders);
-    const admins$ = this.adminService.getAdmins(1, 1000, searchAdmin);
+    const admins$ = this
+    .adminService
+    .getAdminByStoreId(searchAdmin)
+    .map(admins => {
+      let _admins = [];
+        admins.forEach(admin => {
+          if (!admin.is_school_level) {
+            _admins.push(admin);
+          }
+        });
+        return _admins;
+    });
 
     const stream$ = Observable.combineLatest(service$, providers$, admins$);
     super

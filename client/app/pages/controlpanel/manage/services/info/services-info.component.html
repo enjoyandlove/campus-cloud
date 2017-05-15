@@ -57,9 +57,12 @@
                 <div class="col-xs-12">
                   <div class="service__admins">
                     <p class="service__admins__title i18n">Admins</p>
-                    <ul class="service__admins__list">
+
+                    <p *ngIf="!admins.length" i18n>No Admins found...</p>
+
+                    <ul class="service__admins__list" *ngIf="admins.length">
                       <li
-                      *ngFor="let admin of admins"
+                        *ngFor="let admin of admins"
                         class="service__admins__admin">
                         {{ admin.firstname }} {{ admin.lastname }}
                         <br>

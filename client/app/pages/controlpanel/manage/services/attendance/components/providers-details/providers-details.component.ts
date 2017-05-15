@@ -30,8 +30,6 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
     super.isLoading().subscribe(res => this.loading = res);
     this.providerId = this.route.snapshot.params['providerId'];
     this.serviceId = this.route.snapshot.params['serviceId'];
-
-    this.fetch();
   }
 
   private fetch() {
@@ -42,6 +40,7 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
     super
       .fetchData(stream$)
       .then(res => {
+        console.log(res);
         this.provider = res.data;
         this.buildHeader();
       })
@@ -61,5 +60,6 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
   }
 
   ngOnInit() {
+    this.fetch();
   }
 }

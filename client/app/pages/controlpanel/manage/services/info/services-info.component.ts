@@ -47,15 +47,27 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
     let search: URLSearchParams = new URLSearchParams();
     search.append('school_id', this.school.id.toString());
     search.append('store_id', this.serviceId.toString());
-    search.append('privilege_type', CP_PRIVILEGES_MAP.events.toString());
+    search.append('privilege_type', CP_PRIVILEGES_MAP.services.toString());
 
     const service$ = this.serviceService.getServiceById(this.serviceId);
-    const admins$ = this.adminService.getAdminByStoreId(search);
+
+    const admins$ = this
+    .adminService
+    .getAdminByStoreId(search)
+    .map(admins => {
+      let _admins = [];
+        admins.forEach(admin => {
+          if (!admin.is_school_level) {
+            _admins.push(admin);
+          }
+        });
+        return _admins;
+    });
+
     const stream$ = Observable.combineLatest(service$, admins$);
     super
       .fetchData(stream$)
       .then(res => {
-        console.log(res.data[1]);
         this.admins = res.data[1];
         this.service = res.data[0];
         this.buildHeader(res.data[0]);
