@@ -73,6 +73,9 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
       '1': {
         label: 'Web check-in'
       },
+      '2': {
+        label: 'Web Based QR scan'
+      },
       '3': {
         label: 'App check-in'
       }
