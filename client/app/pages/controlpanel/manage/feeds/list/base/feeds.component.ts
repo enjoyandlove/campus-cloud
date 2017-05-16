@@ -14,6 +14,7 @@ interface IState {
   post_types: number;
   isCampusThread: boolean;
   flagged_by_users_only: number;
+  removed_by_moderators_only: number;
 }
 
 const state: IState = {
@@ -22,7 +23,8 @@ const state: IState = {
   wall_type: null,
   post_types: null,
   isCampusThread: true,
-  flagged_by_users_only: null
+  flagged_by_users_only: null,
+  removed_by_moderators_only: null
 };
 
 @Component({
@@ -60,7 +62,6 @@ export class FeedsComponent extends BaseComponent implements OnInit {
       group_id: data.group_id
     });
 
-
     this.state = Object.assign(
       {},
       this.state,
@@ -69,7 +70,8 @@ export class FeedsComponent extends BaseComponent implements OnInit {
         wall_type: data.wall_type,
         post_types: data.post_types,
         isCampusThread: data.wall_type === 1 ? true : false,
-        flagged_by_users_only: data.flagged_by_users_only
+        flagged_by_users_only: data.flagged_by_users_only,
+        removed_by_moderators_only: data.removed_by_moderators_only
       }
     );
 
@@ -88,14 +90,19 @@ export class FeedsComponent extends BaseComponent implements OnInit {
 
   private fetch() {
     let search = new URLSearchParams();
+
     let flagged = this.state.flagged_by_users_only ?
       this.state.flagged_by_users_only.toString() : null;
+
+    let removed = this.state.removed_by_moderators_only ?
+      this.state.removed_by_moderators_only.toString() : null;
 
     let type = this.state.post_types ?
       this.state.post_types.toString() : null;
 
     search.append('post_types', type);
     search.append('flagged_by_users_only', flagged);
+    search.append('removed_by_moderators_only', removed);
 
     if (this.state.isCampusThread) {
       search.append('school_id', this.session.school.id.toString());

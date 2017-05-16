@@ -18,6 +18,7 @@ describe('Events list Component', () => {
   const state = {
     start: null,
     end: null,
+    search_str: null,
     store_id: null,
     attendance_only: 0,
     sort_field: 'start',

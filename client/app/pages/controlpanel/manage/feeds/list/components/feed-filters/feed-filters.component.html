@@ -22,7 +22,7 @@
         <div [class]="[isSimple ? 'col-xs-3' : 'col-xs-3 no-left-padding']">
           <cp-dropdown
             [items]="posts"
-            (selected)="onFilterSelected($event, 'flagged_by_users_only')">
+            (selected)="onFlaggedOrRemoved($event.action)">
           </cp-dropdown>
         </div>
 

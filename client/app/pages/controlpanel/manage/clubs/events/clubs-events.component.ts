@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { ClubsService } from '../clubs.service';
+import { CPSession } from '../../../../../session';
 import { EventsService } from '../../events/events.service';
 import { EventsComponent } from '../../events/list/base/events.component';
 
@@ -14,11 +15,12 @@ export class ClubsEventsComponent extends EventsComponent implements OnInit {
   isSimple = true;
 
   constructor(
+    public session: CPSession,
     private route: ActivatedRoute,
     public eventsService: EventsService,
     private clubsService: ClubsService
   ) {
-    super(eventsService);
+    super(session, eventsService);
     this.clubId = this.route.parent.snapshot.params['clubId'];
   }
 

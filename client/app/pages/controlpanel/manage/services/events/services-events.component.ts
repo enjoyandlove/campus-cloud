@@ -6,6 +6,7 @@ import {
   IHeader,
   HEADER_UPDATE
 } from '../../../../../reducers/header.reducer';
+import { CPSession } from '../../../../../session';
 import { ServicesService } from '../services.service';
 import { EventsService } from '../../events/events.service';
 import { EventsComponent } from '../../events/list/base/events.component';
@@ -24,12 +25,13 @@ export class ServicesEventsComponent extends EventsComponent implements OnInit {
 
 
   constructor(
+    public session: CPSession,
     private route: ActivatedRoute,
     private store: Store<IHeader>,
     public eventsService: EventsService,
     private serviceService: ServicesService
   ) {
-    super(eventsService);
+    super(session, eventsService);
     this.serviceId = this.route.snapshot.params['serviceId'];
 
     this.fetchServiceData();
