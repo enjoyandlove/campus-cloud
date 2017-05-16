@@ -29,15 +29,30 @@ export class CPTopBarComponent implements OnInit {
     }
   }
 
-
   ngOnInit() {
     this.user = this.session.user;
     this.school = this.session.school;
-    let privileges = this.user.school_level_privileges[this.school.id];
+    let schoolPrivileges = this.user.school_level_privileges[this.school.id];
 
-    if (privileges[CP_PRIVILEGES_MAP.campus_announcements] ||
-      privileges[CP_PRIVILEGES_MAP.emergency_announcement]) {
+    let manageItems = [
+      CP_PRIVILEGES_MAP.events,
+      CP_PRIVILEGES_MAP.moderation,
+      CP_PRIVILEGES_MAP.clubs,
+      CP_PRIVILEGES_MAP.services,
+      CP_PRIVILEGES_MAP.links,
+      CP_PRIVILEGES_MAP.app_customization,
+      CP_PRIVILEGES_MAP.campus_maps,
+    ];
+
+    if (schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements] ||
+      schoolPrivileges[CP_PRIVILEGES_MAP.emergency_announcement]) {
       this.canNotify = true;
     }
+
+    manageItems.forEach(privilege => {
+      if (schoolPrivileges[privilege]) {
+        this.canManage = true;
+      }
+    });
   }
 }
