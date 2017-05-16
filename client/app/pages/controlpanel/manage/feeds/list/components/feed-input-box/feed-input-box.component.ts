@@ -10,13 +10,14 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Headers, URLSearchParams } from '@angular/http';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
 import { API } from '../../../../../../../config/api';
 import { FeedsService } from '../../../feeds.service';
+import { STATUS } from '../../../../../../../shared/constants';
 import { CPSession, ISchool } from '../../../../../../../session';
-import { FileUploadService } from '../../../../../../../shared/services';
 import { CPArray, CPImage, appStorage } from '../../../../../../../shared/utils';
+import { FileUploadService, StoreService } from '../../../../../../../shared/services';
 
 @Component({
   selector: 'cp-feed-input-box',
@@ -30,7 +31,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
   @Output() created: EventEmitter<null> = new EventEmitter();
 
   groupId;
-  channels;
+  stores$;
   channels$;
   imageError;
   form: FormGroup;
@@ -42,10 +43,33 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
     private fb: FormBuilder,
     private session: CPSession,
     private feedsService: FeedsService,
+    private storeService: StoreService,
     private fileUploadService: FileUploadService
   ) {
     let search = new URLSearchParams();
     search.append('school_id', this.session.school.id.toString());
+
+    this.stores$ = this.storeService.getStores(search)
+      .startWith([{ label: '---' }])
+      .map(stores => {
+        let _stores = [
+          {
+            label: '---',
+            action: null
+          }
+        ];
+
+        stores.forEach(store => {
+          let _store = {
+            label: store.name,
+            action: store.id
+          };
+
+          _stores.push(_store);
+        });
+
+        return _stores;
+      });
 
     this.channels$ = this.feedsService.getChannelsBySchoolId(1, 100, search)
       .startWith([{ label: '---' }])
@@ -78,18 +102,18 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
 
     stream$
       .subscribe(
-        res => {
-          this.form.reset();
-          this.created.emit(res);
-          this.textarea.nativeElement.innerHTML = this.placeHolder;
-        }
+      res => {
+        this.form.reset();
+        this.created.emit(res);
+        this.textarea.nativeElement.innerHTML = this.placeHolder;
+      }
       );
   }
 
   parseData(data) {
     let _data = {
-      'post_type': data.post_type,
-      'store_id': 2445,
+      'post_type': data.post_type || null,
+      'store_id': data.store_id,
       'school_id': this.session.school.id,
       'message': data.message,
       'message_image_url': data.message_image_url
@@ -131,6 +155,10 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
       });
   }
 
+  onSelectedHost(host): void {
+    this.form.controls['store_id'].setValue(host.action);
+  }
+
   onSelectedChannel(channel): void {
     this.form.controls['post_type'].setValue(channel.action);
   }
@@ -140,12 +168,12 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
     const fileExtension = CPArray.last(file.name.split('.'));
 
     if (!CPImage.isSizeOk(file.size, CPImage.MAX_IMAGE_SIZE)) {
-      this.imageError = 'File too Big';
+      this.imageError = STATUS.FILE_IS_TOO_BIG;
       return;
     }
 
     if (!CPImage.isValidExtension(fileExtension, CPImage.VALID_EXTENSIONS)) {
-      this.imageError = 'Invalid Extension';
+      this.imageError = STATUS.WRONG_EXTENSION;
       return;
     }
 
@@ -175,8 +203,15 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
     this.isCampusWallView.subscribe(res => {
       if (res !== 1) {
         this.groupId = res;
+        this.form.controls['store_id'].setValue(this.groupId);
+        this.form.removeControl('post_type');
         this._isCampusWallView = true;
         return;
+      }
+
+      if (this.form) {
+        this.form.registerControl('post_type', new FormControl(null, Validators.required));
+        this.form.controls['store_id'].setValue(null);
       }
 
       this._isCampusWallView = false;
@@ -185,8 +220,8 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
     this.form = this.fb.group({
       'group_id': [null],
       'school_id': [this.session.school.id],
-      'store_id': [2445],
-      'post_type': [1],
+      'store_id': [null, Validators.required],
+      'post_type': [null, Validators.required],
       'message': [null, Validators.required],
       'message_image_url': [null]
     });

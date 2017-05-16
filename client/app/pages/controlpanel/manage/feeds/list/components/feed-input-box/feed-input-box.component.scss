@@ -29,9 +29,9 @@
   &__input {
     height: auto;
     border: none;
+    padding: 15px;
     min-height: 61px;
     color: $color-med-grey;
-    padding: 17px 15px 0 70px;
 
     &:focus,
     &:active {
