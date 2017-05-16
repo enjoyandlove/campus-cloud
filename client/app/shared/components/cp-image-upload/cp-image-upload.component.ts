@@ -20,7 +20,7 @@ export class CPImageUploadComponent implements OnInit {
   fileName;
   isLoading;
   errors = [];
-  buttonText = 'Upload Photo';
+  buttonText = 'Upload Picture';
 
   constructor(
     private fileUploadService: FileUploadService

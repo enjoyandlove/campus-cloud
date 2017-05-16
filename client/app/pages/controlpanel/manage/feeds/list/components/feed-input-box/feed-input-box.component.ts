@@ -37,7 +37,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
   form: FormGroup;
   school: ISchool;
   _isCampusWallView;
-  placeHolder = 'What\'s on your mind?';
+  placeHolder = 'Add some text to this post...';
 
   constructor(
     private fb: FormBuilder,

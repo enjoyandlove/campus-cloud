@@ -235,7 +235,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       .map(res => {
         const stores = [
           {
-            'label': 'All Host',
+            'label': 'All Hosts',
             'value': null
           }
         ];

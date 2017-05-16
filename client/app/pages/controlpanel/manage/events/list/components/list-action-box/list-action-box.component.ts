@@ -85,7 +85,7 @@ export class ListActionBoxComponent extends BaseComponent implements OnInit {
     const stores$ = this.storeService.getStores(search).map(res => {
       const stores = [
         {
-          'label': 'All Host',
+          'label': 'All Hosts',
           'action': null
         }
       ];
