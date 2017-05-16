@@ -56,11 +56,11 @@ export class EventsCreateComponent implements OnInit {
     this.stores$ = this
       .storeService
       .getStores(search)
-      .startWith([{ 'label': 'All Host' }])
+      .startWith([{ 'label': 'All Hosts' }])
       .map(res => {
         const stores = [
           {
-            'label': 'All Host',
+            'label': 'All Hosts',
             'value': null
           }
         ];

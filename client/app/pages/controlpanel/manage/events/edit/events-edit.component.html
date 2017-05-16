@@ -9,7 +9,7 @@
       <div class="cp-card">
         <div class="row">
           <div class="col-xs-12">
-            <p class="title" i18n>Event Photo</p>
+            <p class="title" i18n>Event Banner</p>
             <div class="row margin-top">
               <cp-image-upload
                 (uploaded)="onUploadedImage($event)"
@@ -35,7 +35,7 @@
 
             <div class="row form-group" *ngIf="!storeId">
               <div class="col-xs-6">
-                <label i18n>Select Host</label>
+                <label i18n>Select a Host</label>
                 <cp-dropdown
                   [items]="stores"
                   [selectedItem]="originalHost"
@@ -47,14 +47,14 @@
 
             <div class="row form-group">
               <div class="col-xs-6">
-                <label i18n>Start</label>
+                <label i18n>Start Date</label>
                 <cp-datepicker
                   [options]="startdatePickerOpts"
                   [error]="formMissingFields && form.controls['start'].hasError('required')">
                 </cp-datepicker>
               </div>
               <div class="col-xs-6">
-                <label i18n>End</label>
+                <label i18n>End Date</label>
                 <cp-datepicker
                   [options]="enddatePickerOpts"
                   [error]="formMissingFields && form.controls['end'].hasError('required')">
@@ -63,7 +63,7 @@
             </div>
 
             <div class="form-group">
-              <label i18n>Description</label>
+              <label i18n>Event Description</label>
               <textarea
                 formControlName="description"
                 placeholder="Tell people more about the event">
@@ -118,7 +118,7 @@
       <div class="cp-card">
         <div class="row">
           <div class="col-xs-12">
-            <p class="title" i18n>Event Attendance</p>
+            <p class="title" i18n>Assessment</p>
             <span class="pull-right">
               <cp-switch
                 (toggle)="toggleEventAttendance($event)"
@@ -143,7 +143,7 @@
             </div>
             <div class="col-xs-6">
               <div class="form-group">
-                <label i18n>Attendance Manager (optional)</label>
+                <label i18n>Attendance Manager (Optional)</label>
                 <input
                   type="text"
                   class="form-control"
@@ -155,7 +155,7 @@
 
           <div class="row">
             <div class="col-xs-6">
-              <label i18n>Attendance Feedback</label>
+              <label i18n>Student Feedback</label>
               <cp-dropdown
                 [items]="booleanOptions"
                 [selectedItem]="originalAttnFeedback"
