@@ -36,7 +36,7 @@
           </i>
         </span>
       </span>
-      <span class="col-xs-3" i18n>Event Attendance</span>
+      <span class="col-xs-3 text-center" i18n>Event Attendance</span>
       <span class="col-xs-1"></span>
     </div>
   </li>
@@ -74,7 +74,7 @@
         {{ event.start | cpDatePipe:dateFormat }}
       </span>
 
-      <span class="col-xs-3 text-truncate">
+      <span class="col-xs-3 text-truncate text-center">
         <a
           [routerLink]="['/cb/checkin/e/' + event.encrypted_id]"
           *ngIf="event.event_attendance === 1"
