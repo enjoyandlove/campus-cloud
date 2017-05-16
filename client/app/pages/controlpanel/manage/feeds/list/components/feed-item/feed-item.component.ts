@@ -44,7 +44,7 @@ export class FeedItemComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isCampusWallView.subscribe(res => this._isCampusWallView = res);
+    this.isCampusWallView.subscribe(res => this._isCampusWallView = res.type);
   }
 
   onDeletedComment() {

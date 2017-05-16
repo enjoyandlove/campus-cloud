@@ -35,11 +35,16 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   @Input() isClubsView: boolean;
 
   feeds;
+  groups;
   loading;
   isSimple;
   channels;
   state: IState = state;
-  isCampusWallView$: BehaviorSubject<number> = new BehaviorSubject(1);
+  isCampusWallView$: BehaviorSubject<any> = new BehaviorSubject({
+    type: 1,
+    group_id: null
+
+  });
 
   constructor(
     public session: CPSession,
@@ -50,11 +55,11 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   }
 
   onDoFilter(data) {
-    if (data.wall_type !== 1) {
-      this.isCampusWallView$.next(data.wall_type);
-    } else {
-      this.isCampusWallView$.next(data.wall_type);
-    }
+    this.isCampusWallView$.next({
+      type: data.wall_type,
+      group_id: data.group_id
+    });
+
 
     this.state = Object.assign(
       {},
@@ -149,12 +154,12 @@ export class FeedsComponent extends BaseComponent implements OnInit {
           .map(res => {
             let result = [];
             let threads = res[0];
-            let groups = res[1];
+            this.groups = res[1];
 
             threads.forEach(thread => {
               result.push({
                 ...thread,
-                channelName: this.getGroupNameFromArray(groups, thread)
+                channelName: this.getGroupNameFromArray(this.groups, thread)
               });
             });
 
@@ -186,10 +191,19 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   }
 
   onCreated(feed) {
+    let channelName;
+
+    if (this.state.isCampusThread) {
+      channelName = this.getChannelNameFromArray(this.channels, feed);
+    } else {
+      channelName = this.getGroupNameFromArray(this.groups, feed);
+    }
+
     feed = Object.assign({}, feed, {
       ...feed,
-      channelName: this.getChannelNameFromArray(this.channels, feed)
+      channelName
     });
+
 
     this.state = Object.assign(
       {},

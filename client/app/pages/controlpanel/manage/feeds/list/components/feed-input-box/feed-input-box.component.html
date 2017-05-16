@@ -3,6 +3,15 @@
     <div class="cp-card">
       <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
         <div class="row form-group">
+          <div class="col-xs-6 pull-right text-right">
+            <cp-upload-button
+              buttonText="Upload Photo"
+              buttonClass="cpbtn cpbtn--link"
+              (fileUpload)="onFileUpload($event)">
+            </cp-upload-button>
+          </div>
+        </div>
+        <div class="row form-group">
           <div class="col-xs-12">
             <div class="textarea">
               <div
@@ -10,9 +19,6 @@
                 class="textarea__input"
                 [innerHTML]="placeHolder" contenteditable>
               </div>
-              <img
-                [src]="school.logo_url"
-                class="img-responsive avatar img-rounded">
               <div
                 class="textarea__upload"
                 *ngIf="form.controls.message_image_url.value">
@@ -25,41 +31,47 @@
         </div>
 
         <div class="row">
-          <div class="col-xs-6">
-            <cp-upload-button
-              buttonText="Upload Photo"
-              buttonClass="cpbtn cpbtn--link"
-              (fileUpload)="onFileUpload($event)">
-            </cp-upload-button>
-          </div>
-
-          <div class="col-xs-6">
+          <div
+            *ngIf="!isSimple && !_isCampusWallView;"
+            class="col-xs-9 channel-dropdown no-right-padding">
             <div class="row">
-              <div
-                *ngIf="!isSimple && !_isCampusWallView;"
-                class="col-xs-9 channel-dropdown no-right-padding">
+              <div class="col-xs-6">
+                <div class="row">
+                  <div class="col-xs-3 no-right-padding">
+                    <span i18n>Post as</span>
+                  </div>
+                  <div class="col-xs-9 no-left-padding">
+                    <cp-dropdown
+                      [items]="stores$ | async"
+                      class="dropdown"
+                      (selected)="onSelectedHost($event)">
+                    </cp-dropdown>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-6">
                 <div class="row">
                   <div class="col-xs-3 no-right-padding">
                     <span i18n>Post to</span>
                   </div>
                   <div class="col-xs-9 no-left-padding">
                     <cp-dropdown
-                      [items]="channels$ | async"
                       class="dropdown"
+                      [items]="channels$ | async"
                       (selected)="onSelectedChannel($event)">
                     </cp-dropdown>
                   </div>
                 </div>
               </div>
-              <div class="col-xs-3 pull-right">
-                <button
-                  type="submit"
-                  [disabled]="!form.valid"
-                  class="cpbtn cpbtn--primary text-right" i18n>
-                  Post
-                </button>
-              </div>
             </div>
+          </div>
+          <div class="col-xs-3 pull-right text-right">
+            <button
+              type="submit"
+              [disabled]="!form.valid"
+              class="cpbtn cpbtn--primary text-right" i18n>
+              Post
+            </button>
           </div>
         </div>
       </form>

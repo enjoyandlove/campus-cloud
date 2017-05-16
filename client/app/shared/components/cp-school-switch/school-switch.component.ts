@@ -1,7 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
-import { CPSession, ISchool } from '../../../session';
+import { CPSession, ISchool, IUser } from '../../../session';
 import { appStorage } from '../../../shared/utils/localStorage';
+import { CP_PRIVILEGES_MAP } from '../../../shared/utils/privileges';
 
 @Component({
   selector: 'cp-school-switch',
@@ -10,7 +11,9 @@ import { appStorage } from '../../../shared/utils/localStorage';
 })
 export class SchoolSwitchComponent implements OnInit {
   @Output() close: EventEmitter<null> = new EventEmitter();
+
   isSchoolPanel;
+  canManageAdmins;
   selectedSchool: ISchool;
   schools: Array<ISchool> = [];
 
@@ -36,5 +39,8 @@ export class SchoolSwitchComponent implements OnInit {
   ngOnInit() {
     this.schools = this.session.schools;
     this.selectedSchool = this.session.school;
+
+    const user: IUser = this.session.user;
+    this.canManageAdmins = user.account_level_privileges[CP_PRIVILEGES_MAP.manage_admin];
   }
 }
