@@ -19,7 +19,8 @@
         (moved)="onEdited($event)"
         (deleted)="onDeleted($event)"
         *ngFor="let feed of state.feeds"
-        [isCampusWallView]="isCampusWallView$">
+        [isCampusWallView]="isCampusWallView$"
+        [isFilteredByRemovedPosts]="isFilteredByRemovedPosts$">
       </cp-feed-item>
 
       <cp-no-content

@@ -30,7 +30,7 @@
             </span>
           </div>
           <div
-            *ngIf="feed.comment_count > 0"
+            *ngIf="feed.comment_count > 0 && !isRemovedPosts"
             class="col-xs-4 pull-right text-right">
             <button
               class="cpbtn cpbtn--link-dark"

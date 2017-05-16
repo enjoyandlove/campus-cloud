@@ -14,12 +14,14 @@ declare var $: any;
 export class FeedItemComponent implements OnInit {
   @Input() feed: any;
   @Input() isCampusWallView: Observable<any>;
+  @Input() isFilteredByRemovedPosts: Observable<any>;
   @Output() moved: EventEmitter<number> = new EventEmitter();
   @Output() deleted: EventEmitter<number> = new EventEmitter();
 
   isMoveModal;
   isDeleteModal;
   isApproveModal;
+  isRemovedPosts;
   CPDate = CPDate;
   _isCampusWallView;
   FORMAT = FORMAT.SHORT;
@@ -43,15 +45,17 @@ export class FeedItemComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
-    this.isCampusWallView.subscribe(res => this._isCampusWallView = res.type);
-  }
-
   onDeletedComment() {
     this.feed = Object.assign(
       {},
       this.feed,
       { comment_count: this.feed.comment_count - 1 }
     );
+  }
+
+  ngOnInit() {
+    this.isCampusWallView.subscribe(res => this._isCampusWallView = res.type);
+
+    this.isFilteredByRemovedPosts.subscribe(res => this.isRemovedPosts = res);
   }
 }

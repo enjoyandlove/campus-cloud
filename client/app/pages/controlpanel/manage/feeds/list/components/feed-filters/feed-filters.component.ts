@@ -10,13 +10,15 @@ interface IState {
   post_types: number;
   group_id: number;
   flagged_by_users_only: number;
+  removed_by_moderators_only: number;
 }
 
 const state: IState = {
   wall_type: 1,
   group_id: null,
   post_types: null,
-  flagged_by_users_only: null
+  flagged_by_users_only: null,
+  removed_by_moderators_only: null
 };
 
 @Component({
@@ -95,6 +97,43 @@ export class FeedFiltersComponent implements OnInit {
 
         return _channels;
       });
+  }
+
+  onFlaggedOrRemoved(action) {
+    switch (action) {
+      case 1:
+        this.state = Object.assign(
+          {},
+          this.state,
+          {
+            flagged_by_users_only: 1,
+            removed_by_moderators_only: null
+          }
+        );
+        break;
+
+      case 2:
+        this.state = Object.assign(
+          {},
+          this.state,
+          {
+            flagged_by_users_only: null,
+            removed_by_moderators_only: 1
+          }
+        );
+        break;
+
+      default:
+        this.state = Object.assign(
+          {},
+          this.state,
+          {
+            flagged_by_users_only: null,
+            removed_by_moderators_only: null
+          }
+        );
+    }
+    this.doFilter.emit(this.state);
   }
 
   onFilterSelected(item, type) {

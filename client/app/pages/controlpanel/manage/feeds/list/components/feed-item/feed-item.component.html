@@ -9,6 +9,7 @@
                 <cp-feed-header [feed]="feed"></cp-feed-header>
                 <div class="feed__more pull-right">
                   <cp-feed-dropdown
+                    *ngIf="!isRemovedPosts"
                     (selected)="onSelected($event)"
                     [isCampusWallView]="isCampusWallView"
                     [requiresApproval]="feed.dislikes > 0 && feed.flag !== 2">
@@ -22,6 +23,7 @@
             <div class="col-xs-12">
               <cp-feed-body
                 [feed]="feed"
+                [isRemovedPosts]="isRemovedPosts"
                 (viewComments)="isCommentsOpen = $event">
               </cp-feed-body>
               <div

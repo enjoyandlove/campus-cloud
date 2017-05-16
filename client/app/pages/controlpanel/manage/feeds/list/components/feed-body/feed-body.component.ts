@@ -7,6 +7,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class FeedBodyComponent implements OnInit {
   @Input() feed: any;
+  @Input() isRemovedPosts: boolean;
   @Output() viewComments: EventEmitter<boolean> = new EventEmitter();
 
   constructor() { }

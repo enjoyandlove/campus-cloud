@@ -33,8 +33,14 @@
       <div class="row">
         <div class="col-xs-10">
           <div
+            *ngIf="school.logo_url !== ''"
             class="switch__school__thumb"
             [ngStyle]="{'background-image': 'url(' + school.logo_url + ')'}">
+          </div>
+          <div
+            *ngIf="school.logo_url === ''"
+            class="switch__school__thumb"
+            [ngStyle]="{'background-image': 'url(/dist/default/user.png)'}">
           </div>
           <div class="switch__school__name text-truncate">
             {{ school.name }}
