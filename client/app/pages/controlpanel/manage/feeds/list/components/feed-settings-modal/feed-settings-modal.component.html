@@ -15,39 +15,41 @@
 
   <div class="cpmodal__body">
     <div class="row">
-      <form [formGroup]="form" class="cp-form">
-        <div class="cp-form__header row">
-          <span class="col-xs-4" i18n>Wall</span>
-          <span class="col-xs-4" i18n>Can Post</span>
-          <span class="col-xs-4" i18n>Can Comment</span>
-        </div>
+      <div class="col-xs-12">
+        <form [formGroup]="form" class="feed-form">
+          <div class="feed-form__header row">
+            <span class="col-xs-4" i18n>Wall</span>
+            <span class="col-xs-4" i18n>Can Post</span>
+            <span class="col-xs-4" i18n>Can Comment</span>
+          </div>
 
-        <div class="cp-form__body" formArrayName="walls">
-          <div
-            class="cp-form__item"
-            *ngFor="let wall of form.controls.walls.controls; let i=index">
-            <div class="row">
-              <div class="col-xs-4 title">
-                <span>{{ wall.controls.name.value }}</span>
-              </div>
-              <div class="col-xs-4">
-                <cp-dropdown
-                  [items]="privileges"
-                  (selected)="onCanPostChanged($event, i)"
-                  [selectedItem]="getPrivilegeObj(wall.controls.min_posting_member_type.value)">
-                </cp-dropdown>
-              </div>
-              <div class="col-xs-4">
-                <cp-dropdown
-                  [items]="privileges"
-                  (selected)="onCanCommentChanged($event, i)"
-                  [selectedItem]="getPrivilegeObj(wall.controls.min_commenting_member_type.value)">
-                </cp-dropdown>
+          <div class="feed-form__body" formArrayName="walls">
+            <div
+              class="feed-form__item row"
+              *ngFor="let wall of form.controls.walls.controls; let i=index">
+              <div class="_">
+                <div class="col-xs-4 title">
+                  <span>{{ wall.controls.name.value }}</span>
+                </div>
+                <div class="col-xs-4">
+                  <cp-dropdown
+                    [items]="privileges"
+                    (selected)="onCanPostChanged($event, i)"
+                    [selectedItem]="getPrivilegeObj(wall.controls.min_posting_member_type.value)">
+                  </cp-dropdown>
+                </div>
+                <div class="col-xs-4">
+                  <cp-dropdown
+                    [items]="privileges"
+                    (selected)="onCanCommentChanged($event, i)"
+                    [selectedItem]="getPrivilegeObj(wall.controls.min_commenting_member_type.value)">
+                  </cp-dropdown>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   </div>
 
