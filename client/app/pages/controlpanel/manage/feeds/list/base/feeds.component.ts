@@ -42,6 +42,7 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   isSimple;
   channels;
   state: IState = state;
+  isFilteredByRemovedPosts$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   isCampusWallView$: BehaviorSubject<any> = new BehaviorSubject({
     type: 1,
     group_id: null
@@ -61,6 +62,12 @@ export class FeedsComponent extends BaseComponent implements OnInit {
       type: data.wall_type,
       group_id: data.group_id
     });
+
+    if (data.removed_by_moderators_only) {
+      this.isFilteredByRemovedPosts$.next(true);
+    } else {
+      this.isFilteredByRemovedPosts$.next(false);
+    }
 
     this.state = Object.assign(
       {},
