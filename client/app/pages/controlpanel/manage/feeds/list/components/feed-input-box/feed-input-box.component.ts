@@ -9,6 +9,7 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Headers, URLSearchParams } from '@angular/http';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
@@ -38,6 +39,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
   school: ISchool;
   _isCampusWallView;
   placeHolder = 'Add some text to this post...';
+  reset$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
     private fb: FormBuilder,
@@ -104,6 +106,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
       .subscribe(
       res => {
         this.form.reset();
+        this.reset$.next(true);
         this.created.emit(res);
         this.textarea.nativeElement.innerHTML = this.placeHolder;
       }
