@@ -3,14 +3,13 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { CPMap } from '../../../../../shared/utils';
 import { ServicesService } from '../services.service';
 import { ProvidersService } from '../providers.service';
 import { CPSession, ISchool } from '../../../../../session';
-import { CP_PRIVILEGES_MAP } from '../../../../../shared/utils/privileges';
-import { AdminService } from '../../../../../shared/services/admin.service';
 import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
 @Component({
@@ -29,10 +28,10 @@ export class ServicesCreateComponent implements OnInit {
   categories = [{ label: '---', action: null }];
 
   constructor(
+    private router: Router,
     private fb: FormBuilder,
     private session: CPSession,
     private store: Store<IHeader>,
-    private adminService: AdminService,
     private servicesService: ServicesService,
     private providersService: ProvidersService
   ) {
@@ -68,20 +67,6 @@ export class ServicesCreateComponent implements OnInit {
   onSubmit() {
     this.formError = false;
 
-    if (this.form.controls['admins'].dirty) {
-      let adminControls = <FormArray>this.form.controls['admins'];
-      adminControls.controls.forEach((control: FormGroup) => {
-        if (control.dirty && control.touched) {
-          Object.keys(control.controls).forEach(key => {
-            if (!control.controls[key].value) {
-              this.formError = true;
-              control.controls[key].setErrors({ 'required': true });
-            }
-          });
-        }
-      });
-    }
-
     if (this.form.controls['providers'].dirty) {
       let adminControls = <FormArray>this.form.controls['providers'];
       adminControls.controls.forEach((control: FormGroup) => {
@@ -107,7 +92,7 @@ export class ServicesCreateComponent implements OnInit {
       .servicesService
       .createService(
       {
-        store_id: this.storeId,
+        school_id: this.school.id,
         name: data.name,
         logo_url: data.logo_url,
         category: data.category,
@@ -149,32 +134,10 @@ export class ServicesCreateComponent implements OnInit {
         search.append('service_id', this.createdServiceId);
         return this.providersService.createProvider(providers, search);
       })
-      .switchMap(_ => {
-        let admins$ = [];
-        let admins = <FormArray>this.form.controls['admins'];
-        let adminsControls = admins.controls;
-
-        adminsControls.forEach((admin: FormGroup) => {
-          let _admin = {
-            'firstname': admin.controls['firstname'].value,
-            'lastname': admin.controls['lastname'].value,
-            'email': admin.controls['email'].value,
-            'account_level_privileges': {
-              [this.storeId]: {
-                [CP_PRIVILEGES_MAP.services]: {
-                  r: true,
-                  w: true
-                }
-              }
-            }
-          };
-          admins$.push(this.adminService.createAdmin(_admin));
-        });
-
-        return Observable.combineLatest(admins$);
-      })
       .catch(err => Observable.throw(err))
-      .subscribe(res => console.log(res));
+      .subscribe(_ => {
+        this.router.navigate(['/manage/services/' + this.createdServiceId + '/info']);
+      });
   }
 
   onToggleAttendance(event) {
@@ -192,18 +155,8 @@ export class ServicesCreateComponent implements OnInit {
     controls.controls.push(this.buildServiceProviderControl());
   }
 
-  onAddAdminControl(): void {
-    const controls = <FormArray>this.form.controls['admins'];
-    controls.controls.push(this.buildAdminControl());
-  }
-
   delteProviderControl(index): void {
     const controls = <FormArray>this.form.controls['providers'];
-    controls.removeAt(index);
-  }
-
-  deleteAdminControl(index): void {
-    const controls = <FormArray>this.form.controls['admins'];
     controls.removeAt(index);
   }
 
@@ -212,14 +165,6 @@ export class ServicesCreateComponent implements OnInit {
       'provider_name': [null],
       'email': [null],
       'custom_basic_feedback_label': [null]
-    });
-  }
-
-  buildAdminControl() {
-    return this.fb.group({
-      'firstname': [null],
-      'lastname': [null],
-      'email': [null],
     });
   }
 
@@ -255,8 +200,7 @@ export class ServicesCreateComponent implements OnInit {
       'service_attendance': [null],
       'rating_scale_maximum': [null],
       'default_basic_feedback_label': [null],
-      'providers': this.fb.array([this.buildServiceProviderControl()]),
-      'admins': this.fb.array([this.buildAdminControl()])
+      'providers': this.fb.array([this.buildServiceProviderControl()])
     });
 
     let categories = require('../categories.json');

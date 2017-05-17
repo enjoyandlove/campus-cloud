@@ -29,7 +29,6 @@ import {
 } from './events/components';
 
 import {
-  ServicesEditCreateAdminComponent,
   ServicesEditDeleteModalComponent,
   ServicesEditCreateProviderComponent
 } from './edit/components';
@@ -42,10 +41,6 @@ import {
   ServicesExcelModalComponent,
   ServicesImportTopBarComponent
 } from './excel/components';
-
-import {
-  ServicesDeleteAdminModalComponent,
-} from './create/components';
 
 import {
   ServicesProviderAddComponent,
@@ -64,14 +59,13 @@ import { EventsModule } from '../events/events.module';
 @NgModule({
   declarations: [ ServicesListComponent, ServicesListActionBoxComponent, ServicesDeleteComponent,
   ServicesExcelModalComponent, ServicesAttendanceComponent, ServicesCreateComponent,
-  ServicesDeleteAdminModalComponent, ServicesEditComponent, ServicesInfoComponent,
+  ServicesEditComponent, ServicesInfoComponent,
   ServicesEventsComponent, ServicesProviderAddComponent, ServicesProviderDeleteComponent,
   ServicesExcelComponent, ServicesImportTopBarComponent, ServicesProvidersListComponent,
   ServicesProviderDetailsComponent, ServicesProvidersAttendeesListComponent,
   ServicesEventsCreateComponent, ServicesEventsAttendanceComponent, ServicesEventsInfoComponent,
   ServicesEventsEditComponent, ServicesEventsFacebookComponent, ServicesEventsExcelComponent,
-  ServicesEditDeleteModalComponent, ServicesEditCreateProviderComponent,
-  ServicesEditCreateAdminComponent ],
+  ServicesEditDeleteModalComponent, ServicesEditCreateProviderComponent ],
 
   imports: [ CommonModule, SharedModule, ServicesRoutingModule, RouterModule,
   ReactiveFormsModule, EventsModule ],

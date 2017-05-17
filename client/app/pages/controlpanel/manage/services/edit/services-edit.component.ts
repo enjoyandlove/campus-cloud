@@ -12,7 +12,6 @@ import { ProvidersService } from '../providers.service';
 import { CPSession, ISchool } from '../../../../../session';
 import { BaseComponent } from '../../../../../base/base.component';
 import { CP_PRIVILEGES_MAP } from '../../../../../shared/utils/privileges';
-import { AdminService } from '../../../../../shared/services/admin.service';
 import { IServiceDeleteModal } from './components/service-edit-delete-modal';
 import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
@@ -46,7 +45,6 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     private session: CPSession,
     private store: Store<IHeader>,
     private route: ActivatedRoute,
-    private adminService: AdminService,
     private servicesService: ServicesService,
     private providersService: ProvidersService
   ) {
@@ -71,24 +69,11 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
 
     const service$ = this.servicesService.getServiceById(this.serviceId);
     const providers$ = this.providersService.getProviders(1, 1000, searchProviders);
-    const admins$ = this
-    .adminService
-    .getAdminByStoreId(searchAdmin)
-    .map(admins => {
-      let _admins = [];
-        admins.forEach(admin => {
-          if (!admin.is_school_level) {
-            _admins.push(admin);
-          }
-        });
-        return _admins;
-    });
 
-    const stream$ = Observable.combineLatest(service$, providers$, admins$);
+    const stream$ = Observable.combineLatest(service$, providers$);
     super
       .fetchData(stream$)
       .then(res => {
-        let admins = res.data[2];
 
         let providers = res.data[1];
 
@@ -103,11 +88,6 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
         this.storeId = res.data[0].store_id;
 
         this.buildForm();
-
-        if (admins.length) {
-          let control = <FormArray>this.form.controls['admins'];
-          admins.forEach(admin => control.push(this.buildAdminControl(admin)));
-        }
 
         if (providers.length) {
           let control = <FormArray>this.form.controls['providers'];
@@ -146,11 +126,6 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     controls.push(this.buildServiceProviderControl(provider));
   }
 
-  onAdminCreated(admin) {
-    const controls = <FormArray>this.form.controls['admins'];
-    controls.push(this.buildAdminControl(admin));
-  }
-
   delteProviderControl(index): void {
     const controls = <FormArray>this.form.controls['providers'];
     const control = <FormGroup>controls.at(index);
@@ -180,53 +155,11 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       );
   }
 
-  deleteAdmin(data: IServiceDeleteModal) {
-    const controls = <FormArray>this.form.controls['admins'];
-    let _data = {
-      'account_level_privileges': [
-        {
-          [this.storeId]: {
-            [CP_PRIVILEGES_MAP.services]: {
-              r: false,
-              w: false
-            }
-          }
-        }
-      ]
-    };
-
-    this
-      .adminService
-      .updateAdmin(data.id, _data)
-      .subscribe(
-      _ => controls.removeAt(data.index),
-      err => console.error(err)
-      );
-  }
-
   onDelete(event) {
     if (event.type === 'provider') {
       this.deleteProvider(event);
       return;
     }
-    if (event.type === 'admin') {
-      this.deleteAdmin(event);
-      return;
-    }
-  }
-
-  deleteAdminControl(index): void {
-    const controls = <FormArray>this.form.controls['admins'];
-    const control = <FormGroup>controls.at(index);
-
-    this.deletedItem = {
-      index: index,
-      type: 'admin',
-      id: control.controls['id'].value,
-      name: `${control.controls['firstname'].value} ${control.controls['lastname'].value}`,
-    };
-
-    $('#serviceEditDeleteModal').modal();
   }
 
   buildServiceProviderControl(provider?: any) {
@@ -242,22 +175,6 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       'provider_name': [null],
       'email': [null],
       'custom_basic_feedback_label': [null]
-    });
-  }
-
-  buildAdminControl(admin?: any) {
-    if (admin) {
-      return this.fb.group({
-        'id': [admin.id],
-        'firstname': [admin.firstname],
-        'lastname': [admin.lastname],
-        'email': [admin.email],
-      });
-    }
-    return this.fb.group({
-      'firstname': [null],
-      'lastname': [null],
-      'email': [null],
     });
   }
 
@@ -283,8 +200,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       'service_attendance': [this.service.service_attendance],
       'rating_scale_maximum': [this.service.rating_scale_maximum],
       'default_basic_feedback_label': [this.service.default_basic_feedback_label],
-      'providers': this.fb.array([]),
-      'admins': this.fb.array([])
+      'providers': this.fb.array([])
     });
   }
 
@@ -302,20 +218,6 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
 
   onSubmit() {
     this.formError = false;
-
-    if (this.form.controls['admins'].dirty) {
-      let adminControls = <FormArray>this.form.controls['admins'];
-      adminControls.controls.forEach((control: FormGroup) => {
-        if (control.dirty && control.touched) {
-          Object.keys(control.controls).forEach(key => {
-            if (!control.controls[key].value) {
-              this.formError = true;
-              control.controls[key].setErrors({ 'required': true });
-            }
-          });
-        }
-      });
-    }
 
     if (this.form.controls['providers'].dirty) {
       let adminControls = <FormArray>this.form.controls['providers'];
@@ -343,7 +245,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       .servicesService
       .updateService(
       {
-        store_id: this.storeId,
+        school_id: this.school.id,
         name: data.name,
         logo_url: data.logo_url,
         category: data.category,
@@ -386,34 +288,8 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
         search.append('service_id', this.serviceId.toString());
         return this.providersService.updateProvider(providers, search);
       })
-      .switchMap(_ => {
-        console.log('updating admins');
-        let admins$ = [];
-        let admins = <FormArray>this.form.controls['admins'];
-        let adminsControls = admins.controls;
-
-        adminsControls.forEach((admin: FormGroup) => {
-          let _admin = {
-            'firstname': admin.controls['firstname'].value,
-            'lastname': admin.controls['lastname'].value,
-            'email': admin.controls['email'].value,
-            'account_level_privileges': {
-              [this.storeId]: {
-                [CP_PRIVILEGES_MAP.services]: {
-                  r: true,
-                  w: true
-                }
-              }
-            }
-          };
-          admins$.push(this.adminService.updateAdmin(admin.controls['id'].value, _admin));
-        });
-
-        return Observable.combineLatest(admins$);
-      })
       .catch(err => Observable.throw(err))
-      .subscribe(
-      res => console.log(res));
+      .subscribe(res => console.log(res));
   }
 
   ngOnInit() {
