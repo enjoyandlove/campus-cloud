@@ -1,14 +1,13 @@
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { isDev } from '../../../../../config/env';
-import { ServicesService } from '../services.service';
 import { CPSession } from '../../../../../session';
-import { StoreService } from '../../../../../shared/services';
+import { ServicesService } from '../services.service';
 import { BaseComponent } from '../../../../../base/base.component';
+import { SERVICES_MODAL_RESET } from '../../../../../reducers/services-modal.reducer';
 import { HEADER_UPDATE, HEADER_DEFAULT } from '../../../../../reducers/header.reducer';
 
 @Component({
@@ -24,13 +23,13 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
   form: FormGroup;
   isFormReady = false;
   eventAttendanceFeedback;
+  categories = [{ label: '---', action: null }];
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private store: Store<any>,
     private session: CPSession,
-    private storeService: StoreService,
     private servicesService: ServicesService
   ) {
     super();
@@ -43,41 +42,9 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
       (res) => {
         // this.services = res;
         this.services = !isDev ? res : require('./mock.json');
-        this.fetch();
-      });
-  }
-
-  private fetch() {
-    const school = this.session.school;
-    let search: URLSearchParams = new URLSearchParams();
-    search.append('school_id', school.id.toString());
-
-    const stores$ = this.storeService.getStores(search).map(res => {
-      const stores = [
-        {
-          'label': 'Host Name',
-          'action': null
-        }
-      ];
-
-      res.forEach(store => {
-        stores.push({
-          'label': store.name,
-          'action': store.id
-        });
-      });
-
-      return stores;
-    });
-
-    super
-      .fetchData(stores$)
-      .then(res => {
         this.buildForm();
         this.buildHeader();
-        this.stores = res.data;
-      })
-      .catch(err => console.error(err));
+      });
   }
 
   private buildHeader() {
@@ -116,32 +83,32 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
 
   buildServiceControl(service) {
     return this.fb.group({
-      'store_id': [14748],
+      'school_id': [this.session.school.id],
       'name': [service.service_name, Validators.required],
-      'description': [service.description, Validators.required],
-      'email': [service.service_email, Validators.required],
-      'phone': [service.phone_number, Validators.required],
-      'website': [service.website, Validators.required],
+      'description': [service.description],
+      'email': [service.service_email],
+      'phone': [service.phone_number],
+      'website': [service.website],
       'category': [null, Validators.required],
       'logo_url': [null, Validators.required],
     });
   }
 
-  onBulkDelete() {
-    let _isChecked = [];
+  // onBulkDelete() {
+  //   let _isChecked = [];
 
-    this.isChecked.reverse().forEach(item => {
-      if (item.checked) {
-        this.isChecked.slice(item.index, 1);
-        this.removeControl(item.index);
-        return;
-      }
-      item = Object.assign({}, item, { index: _isChecked.length });
-      _isChecked.push(item);
-    });
+  //   this.isChecked.reverse().forEach(item => {
+  //     if (item.checked) {
+  //       this.isChecked.slice(item.index, 1);
+  //       this.removeControl(item.index);
+  //       return;
+  //     }
+  //     item = Object.assign({}, item, { index: _isChecked.length });
+  //     _isChecked.push(item);
+  //   });
 
-    this.isChecked = [..._isChecked];
-  }
+  //   this.isChecked = [..._isChecked];
+  // }
 
   onBulkChange(actions) {
     const control = <FormArray>this.form.controls['services'];
@@ -216,8 +183,17 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
 
   ngOnDestroy() {
     this.store.dispatch({ type: HEADER_DEFAULT });
+    this.store.dispatch({ type: SERVICES_MODAL_RESET });
   }
 
   ngOnInit() {
+    let categories = require('../categories.json');
+
+    categories.map(category => {
+      this.categories.push({
+        label: category.name,
+        action: category.id
+      });
+    });
   }
 }
