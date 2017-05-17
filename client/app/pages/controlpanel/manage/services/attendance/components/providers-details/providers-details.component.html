@@ -6,7 +6,9 @@
       <div class="header">
         <div class="col-xs-4 text-center">
           <div class="cp-card cp-card--half-padding">
-            <p class="header__digit">{{ provider.avg_rating_percent }}</p>
+            <p class="header__digit">
+              {{ provider.avg_rating_percent === -1 ? '---' : provider.avg_rating_percent }}
+            </p>
             <p i18n>Average Rating</p>
           </div>
         </div>
