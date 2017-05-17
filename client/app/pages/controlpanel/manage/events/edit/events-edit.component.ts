@@ -12,6 +12,7 @@ import {
   HEADER_UPDATE
 } from '../../../../../reducers/header.reducer';
 import { EventsService } from '../events.service';
+import { STATUS } from '../../../../../shared/constants';
 import { CPSession, ISchool } from '../../../../../session';
 import { FORMAT } from '../../../../../shared/pipes/date.pipe';
 import { BaseComponent } from '../../../../../base/base.component';
@@ -45,6 +46,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   eventId: number;
   form: FormGroup;
   selectedManager;
+  STATUS = STATUS;
   enddatePickerOpts;
   attendance = false;
   isFormReady = false;
