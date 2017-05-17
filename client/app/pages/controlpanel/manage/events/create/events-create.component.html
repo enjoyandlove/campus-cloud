@@ -166,7 +166,8 @@
             <div class="col-xs-12">
               <div class="text-right">
                 <label class="error" *ngIf="formError" i18n>
-                    <span>&#x26A0;</span> Please fill out the marked fields
+                    <span>&#x26A0;</span>
+                    {{ isDateError ? dateErrorMessage : 'Please fill out the marked fields' }}
                 </label>
                  <a [routerLink]="['../']"
                   class="cpbtn cpbtn--tall cpbtn--cancel" i18n>

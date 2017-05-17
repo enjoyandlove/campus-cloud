@@ -28,10 +28,11 @@ export class EventsCreateComponent implements OnInit {
   @Input() isService: boolean;
 
   stores$;
-  imageError;
+  isDateError;
   booleanOptions;
   school: ISchool;
   form: FormGroup;
+  dateErrorMessage;
   formError = false;
   attendance = false;
   enddatePickerOpts;
@@ -140,12 +141,9 @@ export class EventsCreateComponent implements OnInit {
 
   onSubmit() {
     this.formError = false;
-    this.imageError = null;
+    this.isDateError = false;
 
     if (!this.form.valid) {
-      if (!this.form.controls['poster_url'].valid) {
-        this.imageError = 'Image is required';
-      }
       this.formError = true;
       return;
     }
@@ -166,9 +164,20 @@ export class EventsCreateComponent implements OnInit {
     }
 
     if (this.form.controls['end'].value <= this.form.controls['start'].value) {
+      this.isDateError = true;
       this.formError = true;
       this.form.controls['end'].setErrors({ 'required': true });
       this.form.controls['start'].setErrors({ 'required': true });
+      this.dateErrorMessage = 'Event End Time must be after Event Start Time';
+      return;
+    }
+
+    if (this.form.controls['end'].value <= Math.round(new Date().getTime() / 1000)) {
+      this.isDateError = true;
+      this.formError = true;
+      this.form.controls['end'].setErrors({ 'required': true });
+      this.form.controls['start'].setErrors({ 'required': true });
+      this.dateErrorMessage = 'Event End Time must be greater than now';
       return;
     }
 
