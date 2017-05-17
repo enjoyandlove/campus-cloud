@@ -48,7 +48,12 @@ export const generateExcelFile = function generateExcelFile(data: any[]) {
     str += line + '\r\n';
   }
 
-  window.open('data:text/csv;charset=utf-8,' + encodeURI(str));
+  let link = document.createElement('a');
+  link.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURI(str));
+  link.setAttribute('download', 'download.csv');
+  document.body.appendChild(link); // Required for FF
+
+  link.click();
 };
 
 
