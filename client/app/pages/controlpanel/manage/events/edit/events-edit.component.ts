@@ -37,6 +37,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   event;
   stores;
   dateFormat;
+  serverError;
   originalHost;
   booleanOptions;
   loading = true;
@@ -80,6 +81,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   onSubmit(data) {
+    console.log(this.form.value);
     this.formMissingFields = false;
 
     if (this.form.controls['event_attendance'].value === 1) {
@@ -120,7 +122,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
         }
         this.router.navigate(['/manage/events/' + this.eventId]);
       },
-      _ => this.formMissingFields = true
+      _ => this.serverError = true
       );
   }
 
