@@ -39,6 +39,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   stores;
   dateFormat;
   serverError;
+  isDateError;
   originalHost;
   booleanOptions;
   loading = true;
@@ -47,6 +48,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   form: FormGroup;
   selectedManager;
   STATUS = STATUS;
+  dateErrorMessage;
   enddatePickerOpts;
   attendance = false;
   isFormReady = false;
@@ -83,7 +85,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   onSubmit(data) {
-    console.log(this.form.value);
+    this.isDateError = false;
     this.formMissingFields = false;
 
     if (this.form.controls['event_attendance'].value === 1) {
@@ -106,6 +108,24 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
         this.form.controls['poster_url'].setErrors({ 'required': true });
       }
       this.formMissingFields = true;
+      return;
+    }
+
+    if (this.form.controls['end'].value <= this.form.controls['start'].value) {
+      this.isDateError = true;
+      this.formMissingFields = true;
+      this.form.controls['end'].setErrors({ 'required': true });
+      this.form.controls['start'].setErrors({ 'required': true });
+      this.dateErrorMessage = 'Event End Time must be after Event Start Time';
+      return;
+    }
+
+    if (this.form.controls['end'].value <= Math.round(new Date().getTime() / 1000)) {
+      this.isDateError = true;
+      this.formMissingFields = true;
+      this.form.controls['end'].setErrors({ 'required': true });
+      this.form.controls['start'].setErrors({ 'required': true });
+      this.dateErrorMessage = 'Event End Time must be greater than now';
       return;
     }
 

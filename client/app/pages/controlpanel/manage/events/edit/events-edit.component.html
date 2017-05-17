@@ -175,7 +175,8 @@
             <div class="col-xs-12">
               <div class="text-right">
                 <label class="error" *ngIf="formMissingFields" i18n>
-                    <span>&#x26A0;</span> Please fill out the marked fields
+                    <span>&#x26A0;</span>
+                    {{ isDateError ? dateErrorMessage : 'Please fill out the marked fields' }}
                 </label>
                 <label class="error" *ngIf="serverError;" i18n>
                     <span>&#x26A0;</span> {{ STATUS.SOMETHING_WENT_WRONG }}
