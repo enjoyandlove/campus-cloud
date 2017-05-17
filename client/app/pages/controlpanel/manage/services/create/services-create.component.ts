@@ -24,6 +24,7 @@ export class ServicesCreateComponent implements OnInit {
   createdServiceId;
   formError = false;
   attendance = false;
+  shouldCreateAdmins;
   mapCenter: BehaviorSubject<any>;
   categories = [{ label: '---', action: null }];
 
@@ -68,10 +69,22 @@ export class ServicesCreateComponent implements OnInit {
     this.formError = false;
 
     if (this.form.controls['providers'].dirty) {
+      let isGroupBlank = false;
       let adminControls = <FormArray>this.form.controls['providers'];
+
+      Object.keys(adminControls.controls[0].value).forEach(key => {
+        console.log(adminControls.controls[0].value);
+        if (!adminControls.controls[0].value[key]) {
+          isGroupBlank = true;
+        }
+      });
+
+      this.shouldCreateAdmins = !isGroupBlank;
+
       adminControls.controls.forEach((control: FormGroup) => {
         if (control.dirty && control.touched) {
           Object.keys(control.controls).forEach(key => {
+            // console.log(control.controls[key]);
             if (!control.controls[key].value) {
               this.formError = true;
               control.controls[key].setErrors({ 'required': true });
@@ -117,6 +130,10 @@ export class ServicesCreateComponent implements OnInit {
       )
       .switchMap(service => {
         this.createdServiceId = service.id;
+
+        if (!this.form.controls['service_attendance'].value) { return Observable.of(null); }
+
+        if (!this.shouldCreateAdmins) { return Observable.of(null); }
 
         let providers = [];
         let search = new URLSearchParams();

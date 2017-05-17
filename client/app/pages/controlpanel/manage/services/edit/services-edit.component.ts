@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { CPMap } from '../../../../../shared/utils';
@@ -41,6 +42,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   };
 
   constructor(
+    private router: Router,
     private fb: FormBuilder,
     private session: CPSession,
     private store: Store<IHeader>,
@@ -289,7 +291,9 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
         return this.providersService.updateProvider(providers, search);
       })
       .catch(err => Observable.throw(err))
-      .subscribe(res => console.log(res));
+      .subscribe(_ => {
+        this.router.navigate(['/manage/services/' + this.serviceId + '/info']);
+      });
   }
 
   ngOnInit() {
