@@ -314,7 +314,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   onEventFeedbackChange(option) {
-    this.form.controls['event_feedback'].setValue(option.value);
+    this.form.controls['event_feedback'].setValue(option.action);
   }
 
   ngOnInit() {
