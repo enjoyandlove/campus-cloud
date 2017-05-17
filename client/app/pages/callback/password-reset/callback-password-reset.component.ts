@@ -60,8 +60,8 @@ export class CallbackPasswordResetComponent implements OnDestroy, OnInit {
       .service
       .submitPasswordReset(body)
       .subscribe(
-        () => this.handleSuccess(),
-        () => this.error.handleError({ reason: STATUS.SOMETHING_WENT_WRONG })
+        _ => this.handleSuccess(),
+        _ => this.error.handleError({ reason: STATUS.SOMETHING_WENT_WRONG })
       );
   }
 

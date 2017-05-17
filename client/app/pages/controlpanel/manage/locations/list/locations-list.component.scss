@@ -8,6 +8,10 @@
   font-size: 2em;
 }
 
+.updateLocationBtn {
+  max-width: 100%;
+}
+
 .no-content {
   @include card-margin();
 }
@@ -26,5 +30,4 @@
 .locations {
   padding: 0;
   list-style: none;
-  padding-bottom: 20px;
 }
