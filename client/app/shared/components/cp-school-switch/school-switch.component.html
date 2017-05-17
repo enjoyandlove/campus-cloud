@@ -14,9 +14,9 @@
   </li>
 
   <div class="switch__left" *ngIf="!isSchoolPanel">
-    <!--<li class="switch__item" (click)="close.emit()" *ngIf="canManageAdmins">
+    <li class="switch__item" (click)="close.emit()" *ngIf="canManageAdmins">
       <a [routerLink]="['/manage/team']" i18n>Team Settings</a>
-    </li>-->
+    </li>
     <li class="switch__item" (click)="close.emit()">
       <a [routerLink]="['/account/change-password']" i18n>Change Password</a>
     </li>

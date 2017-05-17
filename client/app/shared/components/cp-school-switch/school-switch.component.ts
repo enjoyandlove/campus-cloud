@@ -41,6 +41,8 @@ export class SchoolSwitchComponent implements OnInit {
     this.selectedSchool = this.session.school;
 
     const user: IUser = this.session.user;
-    this.canManageAdmins = user.account_level_privileges[CP_PRIVILEGES_MAP.manage_admin];
+    let schoolPrivileges = user.school_level_privileges[this.session.school.id];
+
+    this.canManageAdmins = schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin];
   }
 }
