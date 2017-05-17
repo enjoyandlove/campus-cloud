@@ -190,7 +190,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
           return;
         }
 
-        this.formError = 'Something went wrong';
+        this.formError = STATUS.SOMETHING_WENT_WRONG;
       }
       );
   }
