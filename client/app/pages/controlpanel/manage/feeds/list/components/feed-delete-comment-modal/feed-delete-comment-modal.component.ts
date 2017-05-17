@@ -38,9 +38,8 @@ export class FeedDeleteCommentModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.isCampusWallView);
-    this.isCampusWallView.subscribe(res => {
-      this._isCampusWallView = res === 1 ? true : false;
+    this.isCampusWallView.subscribe((res: any) => {
+      this._isCampusWallView = res.type === 1 ? true : false;
     });
   }
 }

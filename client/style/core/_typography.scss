@@ -9,10 +9,10 @@ body {
 
 * {
   word-wrap: break-word;
+  word-break: break-all;
 }
 
 .text-muted {
-  // color: $color-med-grey;
   color: $color-secondary-text;
 }
 
