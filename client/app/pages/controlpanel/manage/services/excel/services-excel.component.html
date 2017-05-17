@@ -61,7 +61,7 @@
                 <div class="col-xs-3">
                   <label i18n>Category</label>
                   <cp-dropdown
-                    [items]="stores"
+                    [items]="categories"
                     (selected)="onSingleCategorySelected($event, i)"
                     [selectedItem]="service.controls['category'].value">
                   </cp-dropdown>

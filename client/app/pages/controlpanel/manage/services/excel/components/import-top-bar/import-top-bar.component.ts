@@ -1,18 +1,16 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Headers, URLSearchParams } from '@angular/http';
+import { Headers } from '@angular/http';
 
 import { API } from '../../../../../../../config/api';
-import { CPSession } from '../../../../../../../session';
-import { BaseComponent } from '../../../../../../../base/base.component';
+import { FileUploadService } from '../../../../../../../shared/services';
 import { CPImage, CPArray, appStorage } from '../../../../../../../shared/utils';
-import { StoreService, FileUploadService } from '../../../../../../../shared/services';
 
 @Component({
   selector: 'cp-services-import-top-bar',
   templateUrl: './import-top-bar.component.html',
   styleUrls: ['./import-top-bar.component.scss']
 })
-export class ServicesImportTopBarComponent extends BaseComponent implements OnInit {
+export class ServicesImportTopBarComponent implements OnInit {
   @Output() checkAll: EventEmitter<boolean> = new EventEmitter();
   @Output() imageChange: EventEmitter<string> = new EventEmitter();
   @Output() deleteServices: EventEmitter<any> = new EventEmitter();
@@ -21,45 +19,9 @@ export class ServicesImportTopBarComponent extends BaseComponent implements OnIn
   stores;
   imageError;
   loading = true;
+  categories = [{ label: 'Select a Category', action: null }];
 
-  constructor(
-    private session: CPSession,
-    private storeService: StoreService,
-    private fileUploadService: FileUploadService
-  ) {
-    super();
-    this.fetch();
-
-    super.isLoading().subscribe(res => this.loading = res);
-  }
-
-  private fetch() {
-    const school = this.session.school;
-    let search: URLSearchParams = new URLSearchParams();
-    search.append('school_id', school.id.toString());
-
-    const stores$ = this.storeService.getStores(search).map(res => {
-      const stores = [
-        {
-          'label': 'Host Name',
-          'action': null
-        }
-      ];
-
-      res.forEach(store => {
-        stores.push({
-          'label': store.name,
-          'action': store.id
-        });
-      });
-      return stores;
-    });
-
-    super
-      .fetchData(stores$)
-      .then(res => this.stores = res.data)
-      .catch(err => console.error(err));
-  }
+  constructor(private fileUploadService: FileUploadService) { }
 
   onFileUpload(file) {
     this.imageError = null;
@@ -85,12 +47,19 @@ export class ServicesImportTopBarComponent extends BaseComponent implements OnIn
       .fileUploadService
       .uploadFile(file, url, headers)
       .subscribe(
-      res => {
-        this.imageChange.emit(res.image_url);
-      },
+      res => this.imageChange.emit(res.image_url),
       err => console.error(err)
       );
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    let categories = require('../../../categories.json');
+
+    categories.map(category => {
+      this.categories.push({
+        label: category.name,
+        action: category.id
+      });
+    });
+  }
 }
