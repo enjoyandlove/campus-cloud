@@ -177,6 +177,9 @@
                 <label class="error" *ngIf="formMissingFields" i18n>
                     <span>&#x26A0;</span> Please fill out the marked fields
                 </label>
+                <label class="error" *ngIf="serverError;" i18n>
+                    <span>&#x26A0;</span> {{ STATUS.SOMETHING_WENT_WRONG }}
+                </label>
                  <a [routerLink]="['../']"
                   class="cpbtn cpbtn--tall cpbtn--cancel" i18n>
                   Cancel

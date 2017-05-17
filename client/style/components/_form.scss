@@ -16,9 +16,9 @@
 }
 
 .form-control[readonly].error {
-  color: $color-danger;
-  border: 1px solid $color-danger;
-  background-color: rgba(255, 96, 89, 0.25);
+  color: $color-danger !important;
+  border: 1px solid $color-danger !important;
+  background-color: rgba(255, 96, 89, 0.25) !important;
 }
 
 .cp-form {
