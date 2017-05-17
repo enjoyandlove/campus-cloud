@@ -42,8 +42,9 @@
                   </div>
                   <div class="col-xs-9 no-left-padding">
                     <cp-dropdown
-                      [items]="stores$ | async"
+                      [reset]="reset$"
                       class="dropdown"
+                      [items]="stores$ | async"
                       (selected)="onSelectedHost($event)">
                     </cp-dropdown>
                   </div>
@@ -56,6 +57,7 @@
                   </div>
                   <div class="col-xs-9 no-left-padding">
                     <cp-dropdown
+                      [reset]="reset$"
                       class="dropdown"
                       [items]="channels$ | async"
                       (selected)="onSelectedChannel($event)">
