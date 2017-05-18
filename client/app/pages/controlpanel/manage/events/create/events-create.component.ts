@@ -3,9 +3,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 
 import { EventsService } from '../events.service';
 import { CPSession, ISchool } from '../../../../../session';
+import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { CPMap, CPDate, CP_PRIVILEGES_MAP } from '../../../../../shared/utils';
 import { ErrorService, StoreService, AdminService } from '../../../../../shared/services';
 
@@ -44,6 +46,7 @@ export class EventsCreateComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private session: CPSession,
+    private storeHeader: Store<any>,
     private adminService: AdminService,
     private storeService: StoreService,
     private errorService: ErrorService,
@@ -52,6 +55,7 @@ export class EventsCreateComponent implements OnInit {
     this.school = this.session.school;
     let search: URLSearchParams = new URLSearchParams();
 
+    this.buildHeader();
     search.append('school_id', this.school.id.toString());
 
     this.stores$ = this
@@ -73,6 +77,18 @@ export class EventsCreateComponent implements OnInit {
         });
         return stores;
       });
+  }
+
+  buildHeader() {
+    this.storeHeader.dispatch({
+      type: HEADER_UPDATE,
+      payload: {
+        'heading': 'Create Event',
+        'subheading': null,
+        'em': null,
+        'children': []
+      }
+    });
   }
 
   onSelectedManager(manager): void {
