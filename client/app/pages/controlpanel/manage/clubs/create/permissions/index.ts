@@ -15,12 +15,12 @@ export const membershipTypes = [
   {
     action: 1,
     label: 'Enabled',
-    description: 'Allows users to join to join the club and message fellow members'
+    description: 'Allows users to join the club and message other members'
   },
   {
     action: 2,
     label: 'Disabled',
-    description: 'Users can view the club but can not join our message fellow members'
+    description: 'Users can view the club but cannot join or message other members'
   }
 ];
 

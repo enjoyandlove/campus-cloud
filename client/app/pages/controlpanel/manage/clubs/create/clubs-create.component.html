@@ -4,10 +4,11 @@
       <div class="cp-card">
         <div class="row">
           <div class="col-xs-12">
-            <p class="title" i18n>Club Photo</p>
+            <p class="title" i18n>Club Banner</p>
             <div class="row">
               <cp-image-upload
                 (uploaded)="onUploadedImage($event)"
+                description="Upload a picture for your club"
                 [required]="formError && form.controls['logo_url'].hasError('required')">
               </cp-image-upload>
             </div>
@@ -88,7 +89,7 @@
 
         <div class="row form-group margin-top">
           <div class="col-xs-12">
-            <p class="title" i18n>Description</p>
+            <p class="title" i18n>Club Description</p>
             <textarea
               class="form-control"
               formControlName="description"
@@ -143,24 +144,21 @@
                             <input
                               type="text"
                               class="form-control"
-                              formControlName="first_name"
-                              placeholder="First Name">
+                              formControlName="first_name">
                           </div>
                           <div class="col-xs-4 form-group no-right-padding">
                             <label i18n>Last Name</label>
                             <input
                               type="text"
                               class="form-control"
-                              formControlName="last_name"
-                              placeholder="Last Name">
+                              formControlName="last_name">
                           </div>
                           <div class="col-xs-4 form-group no-right-padding">
                             <label i18n>Email</label>
                             <input
                               type="text"
                               class="form-control"
-                              formControlName="email"
-                              placeholder="Email">
+                              formControlName="email">
                           </div>
                         </div>
                       </div>
@@ -186,7 +184,7 @@
                     type="button"
                     class="cpbtn cpbtn--secondary"
                     (click)="addAdminControl()" i18n>
-                    New Member
+                    Add Another Team Member
                   </button>
                 </div>
               </div>
