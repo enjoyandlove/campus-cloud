@@ -205,6 +205,7 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   }
 
   onCreated(feed) {
+    if (this.isFilteredByRemovedPosts$.value) { return; }
     let channelName;
 
     if (this.state.isCampusThread) {

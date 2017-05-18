@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
 import { CPDate } from '../../../../../../../shared/utils';
@@ -25,6 +26,7 @@ export class FeedItemComponent implements OnInit {
   CPDate = CPDate;
   _isCampusWallView;
   FORMAT = FORMAT.SHORT;
+  requiresApproval$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor() { }
 
@@ -53,7 +55,17 @@ export class FeedItemComponent implements OnInit {
     );
   }
 
+  onApprovedPost() {
+    this.feed = Object.assign(
+      {},
+      this.feed,
+      { flag: 2 }
+    );
+    this.requiresApproval$.next(false);
+  }
+
   ngOnInit() {
+    this.requiresApproval$.next(this.feed.dislikes > 0 && this.feed.flag !== 2);
     this.isCampusWallView.subscribe(res => this._isCampusWallView = res.type);
 
     this.isFilteredByRemovedPosts.subscribe(res => this.isRemovedPosts = res);
