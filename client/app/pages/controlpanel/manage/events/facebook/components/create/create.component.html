@@ -2,14 +2,14 @@
   <div class="form-group">
     <div class="row">
       <div class="col-xs-5">
-        <label i18n>Facebook Events Link</label>
+        <label i18n>Facebook Event Link</label>
         <input
           type="text"
           class="form-control"
           formControlName="url">
       </div>
       <div class="col-xs-3" *ngIf="!storeId">
-        <label i18n>Host</label>
+        <label i18n>Select Host</label>
         <cp-dropdown
           [items]="stores"
           (selected)="onSelectedStore($event)">

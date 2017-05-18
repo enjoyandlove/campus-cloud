@@ -5,13 +5,12 @@
       (ngSubmit)="onSubmit(form.value)"
       class="col-xs-8 col-xs-offset-2 margin-bottom">
       <div class="section cp-card form-group">
-        <p class="section__title" i18n>Invitee</p>
+        <p class="section__title" i18n>Invite</p>
         <div class="row">
           <div class="col-xs-4">
             <label i18n>First Name</label>
             <input
               type="text"
-              placeholder="John"
               class="form-control"
               formControlName="firstname">
           </div>
@@ -20,7 +19,6 @@
             <label i18n>Last Name</label>
             <input
               type="text"
-              placeholder="Smith"
               class="form-control"
               formControlName="lastname">
           </div>
@@ -30,8 +28,7 @@
             <input
               type="text"
               class="form-control"
-              formControlName="email"
-              placeholder="john@smith.com">
+              formControlName="email">
           </div>
         </div>
 
@@ -42,7 +39,7 @@
               [class.isEnabled]="isAllAccessEnabled">
               <div class="row">
                 <div class="col-xs-8">
-                  <p class="section-sub-title" i18n>All Access</p>
+                  <p class="section-sub-title" i18n>Full Access</p>
                   <p class="section-description" i18n>
                     Give access to all of the Services, Clubs and App Content
                   </p>
@@ -92,7 +89,7 @@
             <div class="col-xs-8">
               <p class="section-sub-title" i18n>Service Owner</p>
               <p class="section-description" i18n>
-                Manage service details, events and assessment
+                Manage service details, events and assessments
               </p>
             </div>
             <div class="col-xs-4">
@@ -149,7 +146,7 @@
             <div class="col-xs-12">
               <p class="section-sub-title" i18n>App Content</p>
               <p class="section-description" i18n>
-                Select the content that you want your invitee to access
+                Select the content that you want your invite to access
               </p>
             </div>
           </div>

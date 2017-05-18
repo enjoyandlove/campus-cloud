@@ -32,7 +32,6 @@
             <input
               type="text"
               class="form-control"
-              placeholder="List Description"
               formControlName="description">
           </div>
 
@@ -41,7 +40,7 @@
             <textarea
               class="form-control"
               formControlName="users"
-              placeholder="Enter name or email address" >
+              placeholder="Enter a name or email address" >
             </textarea>
           </div>
         </form>
@@ -65,7 +64,7 @@
           (click)="doSubmit()"
           [disabled]="!form.valid"
           class="cpbtn cpbtn--primary"i18n>
-          Create
+          Create List
         </button>
       </div>
     </div>
