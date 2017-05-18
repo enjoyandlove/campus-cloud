@@ -88,12 +88,12 @@ export class EventsExcelModalComponent implements OnInit {
   onNavigate() {
     this.doReset();
     if (this.isService) {
-      this.router.navigate([`/manage/services/${this.storeId}/import/excel`]);
+      this.router.navigate([`/manage/services/${this.storeId}/events/import/excel`]);
       return;
     }
 
     if (this.isClub) {
-      this.router.navigate([`/manage/clubs/${this.storeId}/import/excel`]);
+      this.router.navigate([`/manage/clubs/${this.storeId}/events/import/excel`]);
       return;
     }
 

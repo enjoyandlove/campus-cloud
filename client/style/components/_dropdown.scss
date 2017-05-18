@@ -12,10 +12,6 @@
     color: $color-secondary-text;
     transition: background 100ms ease-in;
 
-    a {
-      color: $color-secondary-text;
-    }
-
     &:hover:not(.no-hover) {
       cursor: pointer;
       color: $color-white;

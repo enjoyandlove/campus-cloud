@@ -73,7 +73,6 @@ export class ServicesCreateComponent implements OnInit {
       let adminControls = <FormArray>this.form.controls['providers'];
 
       Object.keys(adminControls.controls[0].value).forEach(key => {
-        console.log(adminControls.controls[0].value);
         if (!adminControls.controls[0].value[key]) {
           isGroupBlank = true;
         }
