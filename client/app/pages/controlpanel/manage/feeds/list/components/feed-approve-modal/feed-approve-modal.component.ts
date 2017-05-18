@@ -42,7 +42,5 @@ export class FeedApproveModalComponent implements OnInit {
     this.isCampusWallView.subscribe((res: any) => {
       this._isCampusWallView = res.type === 1 ? true : false;
     });
-
-    console.log(this._isCampusWallView);
   }
 }

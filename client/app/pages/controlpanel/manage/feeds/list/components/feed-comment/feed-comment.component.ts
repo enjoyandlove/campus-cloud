@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
 declare var $: any;
@@ -17,6 +18,7 @@ export class FeedCommentComponent implements OnInit {
   isComment = true;
   isDeleteModal;
   isApproveModal;
+  requiresApproval$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   onSelected(action) {
     switch (action) {
@@ -34,6 +36,7 @@ export class FeedCommentComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.requiresApproval$.next(this.comment.dislikes > 0 && this.comment.flag !== 2);
     // console.log(this);
   }
 }

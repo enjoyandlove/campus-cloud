@@ -15,7 +15,7 @@
                     [isComment]="isComment"
                     (selected)="onSelected($event)"
                     [isCampusWallView]="isCampusWallView"
-                    [requiresApproval]="comment.dislikes > 0 && comment.flag !== 2">
+                    [requiresApproval]="requiresApproval$">
                   </cp-feed-dropdown>
                 </div>
               </div>

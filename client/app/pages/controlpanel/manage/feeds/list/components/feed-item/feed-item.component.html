@@ -12,7 +12,7 @@
                     *ngIf="!isRemovedPosts"
                     (selected)="onSelected($event)"
                     [isCampusWallView]="isCampusWallView"
-                    [requiresApproval]="feed.dislikes > 0 && feed.flag !== 2">
+                    [requiresApproval]="requiresApproval$">
                   </cp-feed-dropdown>
                 </div>
               </div>
@@ -69,6 +69,6 @@
     [feed]="feed"
     [isCampusWallView]="isCampusWallView"
     (teardown)="isApproveModal = false"
-    (updated)="onApprovedPost($event)">
+    (approved)="onApprovedPost($event)">
   </cp-feed-approve-modal>
 </cp-modal>

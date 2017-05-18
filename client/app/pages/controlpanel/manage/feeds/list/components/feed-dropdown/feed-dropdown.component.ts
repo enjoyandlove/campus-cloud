@@ -9,19 +9,35 @@ import { Observable } from 'rxjs/Observable';
 })
 export class FeedDropdownComponent implements OnInit {
   @Input() isComment: boolean;
-  @Input() requiresApproval: boolean;
+  @Input() requiresApproval: Observable<boolean>;
   @Input() isCampusWallView: Observable<number>;
   @Output() selected: EventEmitter<number> = new EventEmitter();
 
   options;
   _isCampusWallView;
+  _requiresApproval;
 
   constructor() { }
 
+  removeApproveOption() {
+    this.options = this.options.filter(option => option.action !== 1);
+  }
+
   ngOnInit() {
+    if (!this.requiresApproval) { return this.requiresApproval.startWith(false); }
+
     this.isCampusWallView.subscribe((res: any) => {
       this._isCampusWallView = res.type === 1 ? true : false;
     });
+
+    this.requiresApproval.subscribe(requiresApproval => {
+      this._requiresApproval = requiresApproval;
+
+      if (!requiresApproval && this.options) {
+        this.removeApproveOption();
+      }
+    });
+
     let items = [
       {
         action: 3,
@@ -40,7 +56,7 @@ export class FeedDropdownComponent implements OnInit {
       items = [approveMenu, ...items];
     }
 
-    if (this.requiresApproval) {
+    if (this._requiresApproval) {
       const flaggedMenu = {
         action: 1,
         isPostOnly: false,
