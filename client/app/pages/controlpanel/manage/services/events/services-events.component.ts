@@ -49,27 +49,33 @@ export class ServicesEventsComponent extends EventsComponent implements OnInit {
         });
   }
 
-
   private buildHeader() {
+    let children = [
+      {
+        'label': 'Events',
+        'url': `/manage/services/${this.serviceId}/events`
+      },
+      {
+        'label': 'Info',
+        'url': `/manage/services/${this.serviceId}/info`
+      }
+    ];
+
+    if (this.service.service_attendance) {
+      let attendance = {
+        'label': 'Attendance',
+        'url': `/manage/services/${this.serviceId}`
+      };
+
+      children = [attendance, ...children];
+    }
+
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
         'heading': this.service.name,
         'subheading': '',
-        'children': [
-          {
-            'label': 'Attendance',
-            'url': `/manage/services/${this.serviceId}`
-          },
-          {
-            'label': 'Events',
-            'url': `/manage/services/${this.serviceId}/events`
-          },
-          {
-            'label': 'Info',
-            'url': `/manage/services/${this.serviceId}/info`
-          }
-        ]
+        'children': [...children]
       }
     });
   }

@@ -36,7 +36,7 @@
               </div>
               <div class="col-xs-8 text-truncate no-left-padding">
                 <strong>
-                  <a [routerLink]="[service.id]">{{ service.name }}</a>
+                  <a [routerLink]="[service.service_attendance ? service.id : service.id + '/info']">{{ service.name }}</a>
                 </strong>
                 <br>
                 {{ service.description }}
