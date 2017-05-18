@@ -15,14 +15,10 @@ export class DashboardComponent implements OnInit {
   ) {
     this.user = this.session.user;
     this.headerData = {
-      'heading': `Good Afternoon, ${this.user.firstname} ${this.user.lastname}`,
-      'subheading': 'Welcome back to your account dashboard',
-      'children': [
-        {
-          'label': 'Overview',
-          'url': '/dashboard'
-        }
-      ]
+      'heading': `Hello ${this.user.firstname}!`,
+      'subheading': null,
+      'em': null,
+      'children': []
     };
   }
 
