@@ -2,7 +2,7 @@
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-xs-12 text-center">
-        <span i18n><strong>Upload Excel File</strong></span>
+        <span i18n><strong>Upload CSV File</strong></span>
 
         <span
           data-dismiss="modal"
@@ -18,13 +18,13 @@
     <div class="row">
       <div class="col-xs-12">
         <p class="text-center" i18n>
-          Please upload an Excel file with columns in the exact same order as per below
+          Upload a CSV file in the exact format as the sample file below
         </p>
         <br>
         <br>
         <a [href]="downloadLink" download
           class="cpbtn cpbtn--link" i18n>
-          Download Excel Sample File
+          Download CSV Sample File
         </a>
       </div>
     </div>
@@ -49,6 +49,7 @@
 
         <cp-upload-button
           *ngIf="!uploaded"
+          buttonText="Upload File"
           buttonClass="cpbtn cpbtn--primary"
           (fileUpload)="onFileUpload($event)">
         </cp-upload-button>

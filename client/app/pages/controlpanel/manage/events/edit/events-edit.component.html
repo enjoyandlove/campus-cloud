@@ -13,6 +13,7 @@
             <div class="row margin-top">
               <cp-image-upload
                 (uploaded)="onUploadedImage($event)"
+                description="Upload a picture for your event"
                 [defaultImage]="form.controls['poster_url'].value"
                 [required]="formMissingFields && form.controls['poster_url'].hasError('required')">
               </cp-image-upload>

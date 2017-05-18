@@ -6,9 +6,10 @@
       <div class="cp-card">
         <div class="row">
           <div class="col-xs-12">
-            <p class="title" i18n>Service Photo</p>
+            <p class="title" i18n>Service Banner</p>
             <div class="margin-top row">
               <cp-image-upload
+                description="Upload a picture for your service"
                 [required]="formError && form.controls['logo_url'].hasError('required')"
                 (uploaded)="form.controls.logo_url.setValue($event)">
               </cp-image-upload>
@@ -71,19 +72,20 @@
             </div>
 
             <div class="form-group form-group">
-              <label i18n>Description (optional)</label>
+              <label i18n>Service Description (Optional)</label>
               <textarea
                 formControlName="description"
-                placeholder="Tell people more about the event">
+                placeholder="Tell people more about the service">
               </textarea>
             </div>
 
             <div class="row">
               <div class="col-xs-12">
-                <label i18n>Location (optional)</label>
+                <label i18n>Location (Optional)</label>
                 <div class="row form-group">
                   <div class="col-xs-12">
                     <cp-place-autocomplete
+                      placeHolder="Address..."
                       (placeChange)="onPlaceChanged($event)">
                     </cp-place-autocomplete>
                   </div>
@@ -126,7 +128,7 @@
       <div class="cp-card">
         <div class="row">
           <div class="col-xs-8">
-            <p class="title" i18n>Service Attendance</p>
+            <p class="title" i18n>Service Assessment</p>
             <p class="text-muted" i18n>Add Service Providers</p>
           </div>
           <div class="col-xs-4 pull-right">
@@ -160,7 +162,6 @@
                       <label i18n>Name</label>
                       <input
                         type="text"
-                        placeholder="Name"
                         formControlName="provider_name"
                         [class.error]="formError && attendance && provider.controls['provider_name'].hasError('required')">
                     </div>
@@ -168,7 +169,6 @@
                       <label i18n>Email</label>
                       <input
                         type="email"
-                        placeholder="Email"
                         formControlName="email"
                         [class.error]="formError && attendance && provider.controls['email'].hasError('required')">
                     </div>

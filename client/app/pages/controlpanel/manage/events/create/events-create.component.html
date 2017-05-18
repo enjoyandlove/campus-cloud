@@ -8,6 +8,7 @@
             <div class="row margin-top">
               <cp-image-upload
                 (uploaded)="onUploadedImage($event)"
+                description="Upload a picture for your event"
                 [required]="formError && form.controls['poster_url'].hasError('required')">
               </cp-image-upload>
             </div>
@@ -176,7 +177,7 @@
                 <button
                   type="submit"
                   class="cpbtn cpbtn--tall cpbtn--primary" i18n>
-                  Create new event
+                  Create Event
                 </button>
               </div>
             </div>

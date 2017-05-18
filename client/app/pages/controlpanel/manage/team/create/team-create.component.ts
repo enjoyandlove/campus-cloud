@@ -249,11 +249,11 @@ export class TeamCreateComponent implements OnInit {
         'action': null
       },
       {
-        'label': 'Select services',
+        'label': 'Select Services',
         'action': 2
       },
       {
-        'label': 'All services',
+        'label': 'All Services',
         'action': 3
       },
     ];
@@ -275,26 +275,26 @@ export class TeamCreateComponent implements OnInit {
         'action': null
       },
       {
-        'label': 'Select clubs',
+        'label': 'Select Clubs',
         'action': 2
       },
       {
-        'label': 'All clubs',
+        'label': 'All Clubs',
         'action': 3
       },
     ];
 
     this.eventsMenu = [
       {
-        'label': 'No access',
+        'label': 'No Access',
         'action': null
       },
       {
-        'label': 'Manage events',
+        'label': 'Manage Events',
         'action': 2
       },
       {
-        'label': 'Manage and assess events',
+        'label': 'Manage and Assess Events',
         'action': 3
       }
     ];

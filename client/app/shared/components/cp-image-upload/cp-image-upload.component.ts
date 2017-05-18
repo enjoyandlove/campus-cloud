@@ -14,6 +14,7 @@ export class CPImageUploadComponent implements OnInit {
   @Input() small: boolean;
   @Input() required: boolean;
   @Input() defaultImage: string;
+  @Input() description: string;
   @Output() uploaded: EventEmitter<string> = new EventEmitter();
 
   image;
@@ -76,6 +77,8 @@ export class CPImageUploadComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (!this.description) { this.description = 'Upload your picture'; }
+
     if (this.defaultImage) {
       this.image = this.defaultImage;
     }
