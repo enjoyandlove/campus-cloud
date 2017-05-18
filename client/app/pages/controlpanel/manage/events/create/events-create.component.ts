@@ -262,7 +262,7 @@ export class EventsCreateComponent implements OnInit {
       'poster_thumb_url': [null, Validators.required],
       'end': [null, Validators.required],
       'description': [null],
-      'event_feedback': [0], // 1 => Enabled
+      'event_feedback': [1], // 1 => Enabled
       'event_manager_id': [null],
       'attendance_manager_email': [null]
     });

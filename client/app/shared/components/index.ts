@@ -8,6 +8,7 @@ export * from './cp-switch';
 export * from './cp-spinner';
 export * from './cp-dropdown';
 export * from './cp-checkbox';
+export * from './cp-intercomm';
 export * from './cp-searchbox';
 export * from './cp-hamburger';
 export * from './cp-no-content';
@@ -21,4 +22,5 @@ export * from './cp-check-dropdown';
 export * from './cp-animated-button';
 export * from './cp-small-datepicker';
 export * from './cp-place-autocomplete';
+
 
