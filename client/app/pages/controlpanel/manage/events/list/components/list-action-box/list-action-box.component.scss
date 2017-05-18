@@ -3,7 +3,12 @@
 @import '~styles/components/card';
 @import '~styles/components/form';
 @import '~styles/components/button';
+@import '~styles/components/dropdown';
 @import '~bootstrap/variables';
+
+.action-dropdown-list {
+  @include cpDropdownMenu();
+}
 
 .actions {
   label {
@@ -40,7 +45,7 @@
   .dropdown-menu {
     top: 115%;
     padding: 0;
-    min-width: 260px;
+    min-width: 200px;
   }
 
   a { padding: 0 };
