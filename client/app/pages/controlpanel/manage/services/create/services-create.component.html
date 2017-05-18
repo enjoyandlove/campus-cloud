@@ -220,6 +220,7 @@
           <button
             type="submit"
             (click)="onSubmit()"
+            [disabled]="!form.valid"
             class="cpbtn cpbtn--tall cpbtn--primary" i18n>
             Create Service
           </button>

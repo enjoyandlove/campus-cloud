@@ -52,17 +52,17 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
     const service$ = this.serviceService.getServiceById(this.serviceId);
 
     const admins$ = this
-    .adminService
-    .getAdminByStoreId(search)
-    .map(admins => {
-      let _admins = [];
+      .adminService
+      .getAdminByStoreId(search)
+      .map(admins => {
+        let _admins = [];
         admins.forEach(admin => {
           if (!admin.is_school_level) {
             _admins.push(admin);
           }
         });
         return _admins;
-    });
+      });
 
     const stream$ = Observable.combineLatest(service$, admins$);
     super
@@ -70,7 +70,7 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
       .then(res => {
         this.admins = res.data[1];
         this.service = res.data[0];
-        this.buildHeader(res.data[0]);
+        this.buildHeader();
         this.mapCenter = new BehaviorSubject(
           {
             lat: res.data[0].latitude,
@@ -81,26 +81,33 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
       .catch(err => console.error(err));
   }
 
-  private buildHeader(res) {
+  private buildHeader() {
+    let children = [
+      {
+        'label': 'Events',
+        'url': `/manage/services/${this.serviceId}/events`
+      },
+      {
+        'label': 'Info',
+        'url': `/manage/services/${this.serviceId}/info`
+      }
+    ];
+
+    if (this.service.service_attendance) {
+      let attendance = {
+        'label': 'Attendance',
+        'url': `/manage/services/${this.serviceId}`
+      };
+
+      children = [attendance, ...children];
+    }
+
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': res.name,
+        'heading': this.service.name,
         'subheading': '',
-        'children': [
-          {
-            'label': 'Attendance',
-            'url': `/manage/services/${this.serviceId}`
-          },
-          {
-            'label': 'Events',
-            'url': `/manage/services/${this.serviceId}/events`
-          },
-          {
-            'label': 'Info',
-            'url': `/manage/services/${this.serviceId}/info`
-          }
-        ]
+        'children': [...children]
       }
     });
   }
