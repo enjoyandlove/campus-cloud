@@ -112,15 +112,35 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
 
     this.mapCenter.next(data.geometry.location.toJSON());
   }
+  private updateServiceAttendance(event): Promise<any> {
+    return this
+      .servicesService
+      .updateService(
+        {
+          default_basic_feedback_label: 'How did you like the service?',
+          service_attendance: event ? 1 : 0,
+          rating_scale_maximum: event ? 5 : -1
+        },
+        this.serviceId
+      )
+      .toPromise();
+  }
 
   onToggleAttendance(event) {
-    if (event) {
-      this.form.controls['default_basic_feedback_label'].setValue('How did you like the service?');
-    } else {
-      this.form.controls['default_basic_feedback_label'].setValue(null);
-    }
+    let updateServiceAttendance = this.updateServiceAttendance(event);
 
-    this.form.controls['service_attendance'].setValue(event ? 1 : 0);
+    updateServiceAttendance
+      .then(_ => {
+        let defaultQuestionControl = this.form.controls['default_basic_feedback_label'];
+        if (event) {
+          defaultQuestionControl.setValue('How did you like the service?');
+        } else {
+          defaultQuestionControl.setValue(null);
+        }
+
+        this.form.controls['service_attendance'].setValue(event ? 1 : 0);
+      })
+      .catch(err => console.log(err));
   }
 
   onProviderCreated(provider) {
@@ -272,7 +292,6 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       this.serviceId
       )
       .switchMap(_ => {
-        console.log('updating provider');
         let providers = [];
         let search = new URLSearchParams();
         let controls = <FormArray>this.form.controls['providers'];

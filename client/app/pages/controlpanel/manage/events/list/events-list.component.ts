@@ -25,7 +25,7 @@ const state = {
   search_str: null,
   attendance_only: 0,
   sort_field: 'start',
-  sort_direction: 'asc',
+  sort_direction: 'desc',
   events: []
 };
 
