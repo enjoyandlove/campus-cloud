@@ -1,13 +1,14 @@
 <div class="cp-wrapper">
   <div class="row">
-    <div class="col-xs-4 col-xs-offset-4">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
       <form
         [formGroup]="form"
         (ngSubmit)="onSubmit(form.value)">
         <div class="row">
           <div class="col-xs-12 heading text-center">
-            <img src="" alt="">
-            <p>campus cloud</p>
+            <div class="heading__image">
+              <img class="pull-left" src="/dist/svg/full-logo.svg" alt="Campus Cloud" />
+            </div>
           </div>
         </div>
         <div class="form-group">
