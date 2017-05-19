@@ -19,6 +19,8 @@ import {
 })
 export class EventsFacebookComponent extends BaseComponent implements OnInit {
   @Input() storeId: number;
+  @Input() serviceId: number;
+
   stores;
   loading;
   reload$: BehaviorSubject<boolean> = new BehaviorSubject(false);

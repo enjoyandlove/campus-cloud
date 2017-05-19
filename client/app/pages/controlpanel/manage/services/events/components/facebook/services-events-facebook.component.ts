@@ -30,7 +30,7 @@ export class ServicesEventsFacebookComponent extends BaseComponent implements On
   private fetch() {
     super
       .fetchData(this.servicesService.getServiceById(this.serviceId))
-      .then(res => this.storeId = res.data.school_id)
+      .then(res => this.storeId = res.data.store_id)
       .catch(err => console.error(err));
   }
 
