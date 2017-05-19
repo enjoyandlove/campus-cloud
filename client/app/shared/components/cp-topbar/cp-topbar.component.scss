@@ -17,7 +17,11 @@ nav {
     height: 40px;
     position: relative;
     display: inline-block;
-    background: #f4f4f4;
+
+    img {
+      width: 40px;
+      height: 40px;
+    }
   }
 
   .nav__links,
@@ -31,11 +35,11 @@ nav {
     list-style: none;
 
     &.nav__links {
-      padding-left: 40px;
+      padding-left: 25px;
     }
 
     li {
-      margin-right: 24px;
+      margin-right: 25px;
 
       &:first-child {
         padding-left: 0;
