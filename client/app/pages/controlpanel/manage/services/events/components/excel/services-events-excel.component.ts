@@ -19,11 +19,6 @@ export class ServicesEventsExcelComponent extends BaseComponent implements OnIni
   ) {
     super();
     super.isLoading().subscribe(res => this.loading = res);
-
-    this.isService = true;
-    this.serviceId = this.route.snapshot.params['serviceId'];
-
-    this.fetch();
   }
 
   private fetch() {
@@ -35,5 +30,10 @@ export class ServicesEventsExcelComponent extends BaseComponent implements OnIni
       .catch(err => console.error(err));
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.isService = true;
+    this.serviceId = this.route.snapshot.params['serviceId'];
+
+    this.fetch();
+  }
 }

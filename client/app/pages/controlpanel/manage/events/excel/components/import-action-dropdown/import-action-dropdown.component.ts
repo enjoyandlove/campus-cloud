@@ -23,6 +23,13 @@ interface IState {
 })
 export class EventsImportActionDropdownComponent extends BaseComponent implements OnInit {
   @Input() storeId: number;
+
+  @Input() clubId: number;
+  @Input() isClub: boolean;
+
+  @Input() serviceId: number;
+  @Input() isService: boolean;
+
   @Output() bulkAction: EventEmitter<IState> = new EventEmitter();
 
   stores;
@@ -45,21 +52,6 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
     this.fetch();
     this.school = this.session.school;
     super.isLoading().subscribe(res => this.loading = res);
-
-    /**
-     * we subscribe to the onChange of the host
-     * dropdown, upon change we call the managers endpoint
-     * and update the available managers
-     */
-    this.managers$ =
-      this
-        .selectedHost$
-        .flatMap(host => {
-          if (host) {
-            return this.getManagersByHostId(host);
-          }
-          return Observable.of([{'label': '---'}]);
-        });
   }
 
   private fetch() {
@@ -178,6 +170,27 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
     );
   }
 
+  updateManagersByStoreOrClubId(storeId) {
+    this.managers$ = this.getManagersByHostId(storeId);
+  }
+
+  listenForHostChanges() {
+    /**
+     * we subscribe to the onChange of the host
+     * dropdown, upon change we call the managers endpoint
+     * and update the available managers
+     */
+    this.managers$ =
+      this
+        .selectedHost$
+        .flatMap(host => {
+          if (host) {
+            return this.getManagersByHostId(host);
+          }
+          return Observable.of([{'label': '---'}]);
+        });
+  }
+
   doSubmit() {
     if (this.state.event_attendance === 0) {
       this.defaultState();
@@ -187,6 +200,18 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
   }
 
   ngOnInit() {
+    if (this.isService) {
+      this.updateManagersByStoreOrClubId(this.serviceId);
+    }
+
+    if (this.isClub) {
+      this.updateManagersByStoreOrClubId(this.clubId);
+    }
+
+    if (!this.isClub && !this.isService) {
+      this.listenForHostChanges();
+    }
+
     this.eventAttendanceFeedback = [
       {
         'label': 'Enabled',
@@ -208,5 +233,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
       attendance_manager_email: null,
       event_feedback: this.eventAttendanceFeedback[1]
     };
+
+
   }
 }

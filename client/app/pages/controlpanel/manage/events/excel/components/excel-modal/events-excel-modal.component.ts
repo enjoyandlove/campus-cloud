@@ -16,7 +16,11 @@ declare var $: any;
 })
 export class EventsExcelModalComponent implements OnInit {
   @Input() storeId: number;
+
+  @Input() clubId: number;
   @Input() isClub: boolean;
+
+  @Input() serviceId: number;
   @Input() isService: boolean;
 
   error;
@@ -88,12 +92,12 @@ export class EventsExcelModalComponent implements OnInit {
   onNavigate() {
     this.doReset();
     if (this.isService) {
-      this.router.navigate([`/manage/services/${this.storeId}/events/import/excel`]);
+      this.router.navigate([`/manage/services/${this.serviceId}/events/import/excel`]);
       return;
     }
 
     if (this.isClub) {
-      this.router.navigate([`/manage/clubs/${this.storeId}/events/import/excel`]);
+      this.router.navigate([`/manage/clubs/${this.clubId}/events/import/excel`]);
       return;
     }
 

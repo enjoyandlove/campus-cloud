@@ -13,6 +13,13 @@ import { FileUploadService } from '../../../../../../../shared/services';
 })
 export class EventsImportTopBarComponent implements OnInit {
   @Input() storeId: number;
+
+  @Input() clubId: number;
+  @Input() isClub: boolean;
+
+  @Input() serviceId: number;
+  @Input() isService: boolean;
+
   @Output() bulkChange: EventEmitter<any> = new EventEmitter();
   // @Output() deleteEvent: EventEmitter<any> = new EventEmitter();
   @Output() checkAll: EventEmitter<boolean> = new EventEmitter();
