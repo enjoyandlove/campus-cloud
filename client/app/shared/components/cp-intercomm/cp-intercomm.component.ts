@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { isProd } from '../../../config/env';
+
 declare var window: any;
 
 @Component({
@@ -10,10 +12,12 @@ export class CPIntercommComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    setTimeout(() => {
-      window.Intercom('boot', {
-        app_id: 'v0k6hr06'
-      });
-    }, 2000);
+    if (isProd) {
+      setTimeout(() => {
+        window.Intercom('boot', {
+          app_id: 'v0k6hr06'
+        });
+      }, 2000);
+    }
   }
 }
