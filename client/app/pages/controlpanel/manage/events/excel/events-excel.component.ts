@@ -22,7 +22,11 @@ import { HEADER_UPDATE, HEADER_DEFAULT } from '../../../../../reducers/header.re
 })
 export class EventsExcelComponent extends BaseComponent implements OnInit, OnDestroy {
   @Input() storeId: number;
+
+  @Input() clubId: number;
   @Input() isClub: boolean;
+
+  @Input() serviceId: number;
   @Input() isService: boolean;
 
   events;
@@ -110,6 +114,10 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
       'events': this.fb.array([])
     });
     this.buildGroup();
+
+    if (this.isService) {
+      this.updateManagersByStoreOrClubId(this.serviceId);
+    }
   }
 
   private buildGroup() {
@@ -162,22 +170,6 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     control.controls['event_feedback'].setValue(feedback);
   }
 
-  // onBulkDelete() {
-  //   let _isChecked = [];
-
-  //   this.isChecked.reverse().forEach(item => {
-  //     if (item.checked) {
-  //       this.isChecked.slice(item.index, 1);
-  //       this.removeControl(item.index);
-  //       return;
-  //     }
-  //     item = Object.assign({}, item, { index: _isChecked.length });
-  //     _isChecked.push(item);
-  //   });
-
-  //   this.isChecked = [ ..._isChecked ];
-  // }
-
   onBulkChange(actions) {
     const control = <FormArray>this.form.controls['events'];
 
@@ -205,6 +197,18 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     });
 
     control.controls['store_id'].setValue(host);
+  }
+
+  updateManagersByStoreOrClubId(storeId) {
+    const events = <FormArray>this.form.controls['events'];
+    const managers$ = this.getManagersByHostId(storeId);
+    const groups = events.controls;
+
+    managers$.subscribe(managers => {
+      groups.forEach((group: FormGroup) => {
+        group.controls['managers'].setValue(managers);
+      });
+    });
   }
 
   getManagersByHostId(storeId): Observable<any> {
@@ -276,7 +280,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     Object.keys(events).forEach(key => {
       let _event = {
         title: events[key].title,
-        store_id: events[key].store_id.event,
+        store_id: this.storeId ? this.storeId : events[key].store_id.event,
         description: events[key].description,
         end: events[key].end,
         room: events[key].room,
@@ -290,7 +294,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
       if (events[key].event_attendance) {
         _event = Object.assign({}, _event, {
           event_feedback: events[key].event_feedback.event,
-          event_manager_id: events[key].event_manager_id.event,
+          event_manager_id: events[key].event_manager_id.value,
           attendance_manager_email: events[key].attendance_manager_email
         });
       }

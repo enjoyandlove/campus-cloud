@@ -49,6 +49,7 @@
 
         <cp-upload-button
           *ngIf="!uploaded"
+          buttonText="Upload File"
           buttonClass="cpbtn cpbtn--primary"
           (fileUpload)="onFileUpload($event)">
         </cp-upload-button>

@@ -2,6 +2,10 @@
   <div class="row">
     <cp-import-top-bar
       [storeId]="storeId"
+      [clubId]="clubId"
+      [isClub]="isClub"
+      [serviceId]="serviceId"
+      [isService]="isService"
       (bulkChange)="onBulkChange($event)"
       (checkAll)="onCheckAll($event)"
       (hostChange)="onHostBulkChange($event)"
@@ -25,7 +29,7 @@
               <div class="row form__item">
                 <div [class]="[storeId ? 'col-xs-5 text-truncate' : 'col-xs-3 text-truncate']">
                   <div class="row margin-top">
-                    <div [class]="[storeId ? 'col-xs-2 no-left-padding' : 'col-xs-4 no-left-padding']">
+                    <div [class]="[storeId ? 'col-xs-3 no-left-padding' : 'col-xs-4 no-left-padding']">
                       <cp-checkbox
                         class="checkbox pull-left"
                         [isChecked]="isChecked[i].checked"
@@ -45,7 +49,7 @@
                       </div>
                     </div>
 
-                    <div [class]="[storeId ? 'col-xs-10 no-left-padding text-truncate' : 'col-xs-8 no-left-padding text-truncate']">
+                    <div [class]="[storeId ? 'col-xs-9 no-left-padding text-truncate' : 'col-xs-8 no-left-padding text-truncate']">
                       <span class="event__title">
                         <strong>{{ event.controls.title.value }}</strong>
                       </span>

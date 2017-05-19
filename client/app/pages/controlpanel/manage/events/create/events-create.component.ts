@@ -26,6 +26,7 @@ const COMMON_DATE_PICKER_OPTIONS = {
 export class EventsCreateComponent implements OnInit {
   @Input() storeId: number;
   @Input() isClub: boolean;
+  @Input() clubeId: boolean;
   @Input() serviceId: number;
   @Input() isService: boolean;
 
@@ -207,7 +208,7 @@ export class EventsCreateComponent implements OnInit {
           return;
         }
         if (this.isClub) {
-          this.router.navigate([`/manage/clubs/${this.storeId}/events/${res.id}`]);
+          this.router.navigate([`/manage/clubs/${this.clubeId}/events/${res.id}`]);
           return;
         }
         this.router.navigate(['/manage/events/' + res.id]);
