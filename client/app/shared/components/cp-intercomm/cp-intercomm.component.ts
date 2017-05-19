@@ -10,8 +10,10 @@ export class CPIntercommComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    window.Intercom('boot', {
-      app_id: 'v0k6hr06'
-    });
+    setTimeout(() => {
+      window.Intercom('boot', {
+        app_id: 'v0k6hr06'
+      });
+    }, 2000);
   }
 }
