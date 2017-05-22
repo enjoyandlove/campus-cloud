@@ -10,7 +10,6 @@ import { CPSession, IUser, ISchool } from '../../../session';
 })
 export class CPTopBarComponent implements OnInit {
   isOpen;
-  logo;
   user: IUser;
   school: ISchool;
   canNotify = false;
@@ -33,8 +32,6 @@ export class CPTopBarComponent implements OnInit {
   ngOnInit() {
     this.user = this.session.user;
     this.school = this.session.school;
-
-    this.logo = require('../../../../public/png/logo.png');
     // let schoolPrivileges = this.user.school_level_privileges[this.school.id];
 
   //   let manageItems = [

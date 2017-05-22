@@ -16,7 +16,6 @@ import { ALERT_DEFAULT } from '../../../reducers/alert.reducer';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  logo;
   form: FormGroup;
 
   constructor(
@@ -65,7 +64,5 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.store.dispatch({ type: ALERT_DEFAULT });
   }
 
-  ngOnInit() {
-    this.logo = require('../../../../public/png/full-logo.png');
-  }
+  ngOnInit() { }
 }
