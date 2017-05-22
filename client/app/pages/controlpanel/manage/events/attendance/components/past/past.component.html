@@ -180,7 +180,7 @@
                 data-toggle="modal"
                 (click)="onViewFeedback(attendee)"
                 data-target="#eventFeedbackModal">
-                {{ attendee.feedback_text }}
+                {{ attendee.feedback_text !== -1 ? attendee.feedback_text : '' }}
               </span>
             </div>
             <div class="col-xs-3">

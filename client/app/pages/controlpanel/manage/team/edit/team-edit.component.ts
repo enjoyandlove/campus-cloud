@@ -32,6 +32,9 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   isFormError;
   manageAdmins;
   servicesMenu;
+  canReadEvents;
+  isServiceModal;
+  canReadServices;
   form: FormGroup;
   schoolPrivileges;
   accountPrivileges;
@@ -179,7 +182,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
     this
       .adminService
-      .createAdmin(_data)
+      .updateAdmin(this.adminId, _data)
       .subscribe(
       _ => this.router.navigate(['/manage/team']),
       err => {
@@ -241,7 +244,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
   onServicesSelected(service) {
     if (service.action === 2) {
-      $('#selectServicesModal').modal();
+      this.isServiceModal = true;
+      setTimeout(() => { $('#selectServicesModal').modal(); }, 1);
       return;
     }
 
@@ -311,19 +315,21 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     );
   }
 
-  checkControl(checked, type): void {
+  checkControl(_, type): void {
     if (this.schoolPrivileges && this.schoolPrivileges[type]) {
       delete this.schoolPrivileges[type];
       return;
     }
+
+    let privilege = this.user.school_level_privileges[this.schoolId][type];
 
     this.schoolPrivileges = Object.assign(
       {},
       this.schoolPrivileges,
       {
         [type]: {
-          r: checked,
-          w: checked
+          r: privilege.r,
+          w: privilege.w
         }
       });
   }
@@ -331,6 +337,11 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     this.user = this.session.user;
     this.schoolId = this.session.school.id;
+    this.formData = TEAM_ACCESS.getMenu(this.user.school_level_privileges[this.schoolId]);
+    let schoolPrivileges = this.user.school_level_privileges[this.schoolId];
+
+    this.canReadEvents = schoolPrivileges[CP_PRIVILEGES_MAP.events];
+    this.canReadServices = schoolPrivileges[CP_PRIVILEGES_MAP.services];
     this.formData = TEAM_ACCESS.getMenu(this.user.school_level_privileges[this.schoolId]);
 
     this.buildHeader();
