@@ -150,9 +150,9 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
       'start': [CPDate.toEpoch(event.start_date), Validators.required],
       // these controls are only required when event attendance is true
       'attendance_manager_email': [null],
-      'event_manager_id': [null],
+      'event_manager_id': [null, Validators.required],
       'event_attendance': [1, Validators.required],
-      'event_feedback': [this.eventAttendanceFeedback[1]],
+      'event_feedback': [this.eventAttendanceFeedback[0]],
     });
   }
 
@@ -168,6 +168,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     const control = <FormGroup>controls.controls[index];
 
     control.controls['event_feedback'].setValue(feedback);
+    control.controls['event_feedback'].value();
   }
 
   onBulkChange(actions) {
@@ -323,6 +324,12 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
   toggleSingleEventAttendance(checked, index) {
     const controls = <FormArray>this.form.controls['events'];
     const control = <FormGroup>controls.controls[index];
+
+    if (checked) {
+      control.controls['event_manager_id'].setErrors({'required': true});
+    } else {
+      control.controls['event_manager_id'].reset();
+    }
 
     control.controls['event_attendance'].setValue(checked);
   }
