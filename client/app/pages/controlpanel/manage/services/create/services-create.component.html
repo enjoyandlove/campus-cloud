@@ -141,64 +141,6 @@
             </span>
           </div>
         </div>
-
-        <div *ngIf="attendance">
-          <div formArrayName="providers">
-            <div
-              class="row form-box"
-              *ngFor="let provider of form.controls.providers.controls; let i=index">
-              <div [formGroupName]="i" class="col-xs-12">
-                <div class="cp-card cp-card--alt cp-card--half-padding cp-card--no-shadow">
-                  <div class="delete-provider">
-                    <button
-                      *ngIf="form.controls.providers.controls.length > 1"
-                      (click)="delteProviderControl(i)"
-                      class="cpbtn cpbtn--link-dark">
-                      &times;
-                    </button>
-                  </div>
-                  <div class="row form-group">
-                    <div class="col-xs-6">
-                      <label i18n>Name</label>
-                      <input
-                        type="text"
-                        formControlName="provider_name"
-                        [class.error]="formError && attendance && provider.controls['provider_name'].hasError('required')">
-                    </div>
-                    <div class="col-xs-6">
-                      <label i18n>Email</label>
-                      <input
-                        type="email"
-                        formControlName="email"
-                        [class.error]="formError && attendance && provider.controls['email'].hasError('required')">
-                    </div>
-                  </div>
-
-                  <div class="row form-group">
-                    <div class="col-xs-12">
-                      <label i18n>Default Question</label>
-                      <input
-                        type="text"
-                        formControlName="custom_basic_feedback_label"
-                        [class.error]="formError && attendance && provider.controls['custom_basic_feedback_label'].hasError('required')">
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-xs-4">
-                <button
-                  type="button"
-                  class="cpbtn cpbtn--secondary"
-                  (click)="onAddProviderControl()" i18n>
-                  Add Another Service Provider
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </form>

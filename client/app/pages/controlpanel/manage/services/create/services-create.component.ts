@@ -1,14 +1,12 @@
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { CPMap } from '../../../../../shared/utils';
 import { ServicesService } from '../services.service';
-import { ProvidersService } from '../providers.service';
 import { CPSession, ISchool } from '../../../../../session';
 import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
@@ -21,10 +19,8 @@ export class ServicesCreateComponent implements OnInit {
   storeId: number;
   school: ISchool;
   form: FormGroup;
-  createdServiceId;
   formError = false;
   attendance = false;
-  shouldCreateAdmins;
   mapCenter: BehaviorSubject<any>;
   categories = [{ label: '---', action: null }];
 
@@ -33,8 +29,7 @@ export class ServicesCreateComponent implements OnInit {
     private fb: FormBuilder,
     private session: CPSession,
     private store: Store<IHeader>,
-    private servicesService: ServicesService,
-    private providersService: ProvidersService
+    private servicesService: ServicesService
   ) {
     this.buildHeader();
   }
@@ -68,31 +63,6 @@ export class ServicesCreateComponent implements OnInit {
   onSubmit() {
     this.formError = false;
 
-    if (this.form.controls['providers'].dirty) {
-      let isGroupBlank = false;
-      let adminControls = <FormArray>this.form.controls['providers'];
-
-      Object.keys(adminControls.controls[0].value).forEach(key => {
-        if (!adminControls.controls[0].value[key]) {
-          isGroupBlank = true;
-        }
-      });
-
-      this.shouldCreateAdmins = !isGroupBlank;
-
-      adminControls.controls.forEach((control: FormGroup) => {
-        if (control.dirty && control.touched) {
-          Object.keys(control.controls).forEach(key => {
-            // console.log(control.controls[key]);
-            if (!control.controls[key].value) {
-              this.formError = true;
-              control.controls[key].setErrors({ 'required': true });
-            }
-          });
-        }
-      });
-    }
-
     if (!this.form.valid) {
       this.formError = true;
       return;
@@ -125,37 +95,15 @@ export class ServicesCreateComponent implements OnInit {
         service_attendance: data.service_attendance,
         rating_scale_maximum: data.rating_scale_maximum,
         default_basic_feedback_label: data.default_basic_feedback_label,
-      }
-      )
-      .switchMap(service => {
-        this.createdServiceId = service.id;
-
-        if (!this.form.controls['service_attendance'].value) { return Observable.of(null); }
-
-        if (!this.shouldCreateAdmins) { return Observable.of(null); }
-
-        let providers = [];
-        let search = new URLSearchParams();
-        let controls = <FormArray>this.form.controls['providers'];
-        let providersControls = controls.controls;
-
-        providersControls.forEach((provider: FormGroup) => {
-
-          if (!provider['provider_name']) { return; }
-
-          providers.push({
-            'provider_name': provider.controls['provider_name'].value,
-            'email': provider.controls['email'].value,
-            'custom_basic_feedback_label': provider.controls['custom_basic_feedback_label'].value
-          });
-        });
-
-        search.append('service_id', this.createdServiceId);
-        return this.providersService.createProvider(providers, search);
       })
       .catch(err => Observable.throw(err))
-      .subscribe(_ => {
-        this.router.navigate(['/manage/services/' + this.createdServiceId + '/info']);
+      .subscribe(service => {
+        if (service.service_attendance) {
+          this.router.navigate(['/manage/services/' + service.id]);
+          return;
+        }
+
+        this.router.navigate(['/manage/services/' + service.id + '/info']);
       });
   }
 
@@ -167,24 +115,6 @@ export class ServicesCreateComponent implements OnInit {
     }
 
     this.form.controls['service_attendance'].setValue(event ? 1 : 0);
-  }
-
-  onAddProviderControl(): void {
-    const controls = <FormArray>this.form.controls['providers'];
-    controls.controls.push(this.buildServiceProviderControl());
-  }
-
-  delteProviderControl(index): void {
-    const controls = <FormArray>this.form.controls['providers'];
-    controls.removeAt(index);
-  }
-
-  buildServiceProviderControl() {
-    return this.fb.group({
-      'provider_name': [null],
-      'email': [null],
-      'custom_basic_feedback_label': [null]
-    });
   }
 
   ngOnInit() {
@@ -218,8 +148,7 @@ export class ServicesCreateComponent implements OnInit {
       'longitude': [this.school.longitude],
       'service_attendance': [null],
       'rating_scale_maximum': [null],
-      'default_basic_feedback_label': [null],
-      'providers': this.fb.array([this.buildServiceProviderControl()])
+      'default_basic_feedback_label': [null]
     });
 
     let categories = require('../categories.json');
