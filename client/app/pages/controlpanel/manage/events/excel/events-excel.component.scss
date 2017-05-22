@@ -1,9 +1,15 @@
-@import '~styles/components/form';
+@import '~styles/core/colors';
 @import '~styles/components/button';
 @import '~styles/core/typography';
 
-.cp-form {
+.excel-form {
   overflow: visible;
+  margin-top: 25px;
+  border-radius: 4px;
+  border: 1px solid $border-color;
+  background-color: $color-white;
+  box-shadow: 0 0 2px 0 rgba(0,0,0,0.16);
+
 }
 
 .checkbox {
