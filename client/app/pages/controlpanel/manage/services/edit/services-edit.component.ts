@@ -26,6 +26,7 @@ declare var $: any;
 export class ServicesEditComponent extends BaseComponent implements OnInit {
   loading;
   service;
+  withAttendance;
   school: ISchool;
   storeId: number;
   categories = [];
@@ -285,7 +286,8 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       },
       this.serviceId
       )
-      .switchMap(_ => {
+      .switchMap(service => {
+        this.withAttendance = service.service_attendance;
         let providers = [];
         let search = new URLSearchParams();
         let controls = <FormArray>this.form.controls['providers'];
@@ -305,6 +307,11 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       })
       .catch(err => Observable.throw(err))
       .subscribe(_ => {
+        if (this.withAttendance) {
+          this.router.navigate(['/manage/services/' + this.serviceId ]);
+          return;
+        }
+
         this.router.navigate(['/manage/services/' + this.serviceId + '/info']);
       });
   }
