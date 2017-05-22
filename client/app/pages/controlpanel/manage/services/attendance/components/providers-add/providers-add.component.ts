@@ -32,6 +32,7 @@ export class ServicesProviderAddComponent implements OnInit {
       .createProvider(this.form.value, search)
       .subscribe(
         res => {
+          this.form.reset();
           $('#createProvider').modal('hide');
           this.created.emit(res);
         });
