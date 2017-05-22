@@ -66,15 +66,16 @@
             </div>
             <div class="col-xs-6 col-xs-offset-2 text-right">
               <button
+                (click)="download$.next(true)"
+                [disabled]="noProviders"
+                class="cpbtn cpbtn--secondary" i18n>
+                Download Attendance Data
+              </button>
+              <button
                 type="button"
                 class="cpbtn cpbtn--primary"
                 data-toggle="modal" data-target="#createProvider" i18n>
                 Add Service Provider
-              </button>
-              <button
-                (click)="download$.next(true)"
-                class="cpbtn cpbtn--primary" i18n>
-                Download Attendance Data
               </button>
             </div>
           </div>
@@ -88,7 +89,8 @@
           [reload]="reload$"
           [download]="download$"
           [query]="search_text$"
-          [serviceId]="serviceId">
+          [serviceId]="serviceId"
+          (providersLength$)="onProvidersResult($event)">
         </cp-providers-list>
       </div>
     </div>

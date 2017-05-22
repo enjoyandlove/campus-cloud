@@ -20,6 +20,7 @@ import { STAR_SIZE } from '../../../../../shared/components/cp-stars';
 export class ServicesAttendanceComponent extends BaseComponent implements OnInit {
   loading;
   service;
+  noProviders;
   serviceId: number;
   detailStarSize = STAR_SIZE.LARGE;
   listStarSize = STAR_SIZE.DEFAULT;
@@ -87,6 +88,10 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
         'children': [...children]
       }
     });
+  }
+
+  onProvidersResult(data) {
+    this.noProviders = !data;
   }
 
   ngOnInit() { }

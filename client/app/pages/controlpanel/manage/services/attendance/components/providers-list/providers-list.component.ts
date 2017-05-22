@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
@@ -26,6 +27,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
   @Input() query: Observable<string>;
   @Input() reload: Observable<boolean>;
   @Input() download: Observable<boolean>;
+  @Output() providersLength$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   loading;
   deleteProvider = '';
@@ -55,8 +57,11 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
 
     super
       .fetchData(this.providersService.getProviders(this.startRange, this.endRange, search))
-      .then(res => this.state = Object.assign({}, this.state, { providers: res.data }))
-      .catch(err => console.log(err));
+      .then(res => {
+        this.state = Object.assign({}, this.state, { providers: res.data });
+        this.providersLength$.next(res.data.length > 0);
+      })
+      .catch(_ => {});
   }
 
   onDeleted(providerId) {

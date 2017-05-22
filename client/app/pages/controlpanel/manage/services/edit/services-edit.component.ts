@@ -143,11 +143,6 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       .catch(err => console.log(err));
   }
 
-  onProviderCreated(provider) {
-    const controls = <FormArray>this.form.controls['providers'];
-    controls.push(this.buildServiceProviderControl(provider));
-  }
-
   delteProviderControl(index): void {
     const controls = <FormArray>this.form.controls['providers'];
     const control = <FormGroup>controls.at(index);
@@ -261,7 +256,6 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     }
 
     let data = Object.assign(this.form.value);
-    console.log('updating service');
 
     this
       .servicesService

@@ -86,6 +86,7 @@ export class EventsComponent extends BaseComponent implements OnInit, OnDestroy 
   }
 
   doFilter(filter) {
+    let isUpcoming = filter.upcoming;
     this.state = Object.assign(
       {},
       this.state,
@@ -98,7 +99,18 @@ export class EventsComponent extends BaseComponent implements OnInit, OnDestroy 
       }
     );
 
-    this.isUpcoming = filter.upcoming;
+    if (!isUpcoming) {
+      this.state = Object.assign(
+        {},
+        this.state,
+        {
+          sort_field: 'end',
+          sort_direction: 'desc',
+        }
+      );
+    }
+
+    this.isUpcoming = isUpcoming;
 
     this.buildHeaders();
   }
