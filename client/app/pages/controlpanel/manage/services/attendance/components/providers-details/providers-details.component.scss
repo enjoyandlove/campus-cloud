@@ -2,6 +2,20 @@
 @import '~styles/components/card';
 @import '~styles/components/button';
 
+.rating-box {
+  height: 112px;
+
+  &__star {
+    display: block;
+    padding-top: 12px;
+  }
+
+  p {
+    padding-top: 10px;
+    margin-bottom: 0;
+  }
+}
+
 .visits {
   span {
     display: block;

@@ -140,6 +140,9 @@ export class ServicesCreateComponent implements OnInit {
         let providersControls = controls.controls;
 
         providersControls.forEach((provider: FormGroup) => {
+
+          if (!provider['provider_name']) { return; }
+
           providers.push({
             'provider_name': provider.controls['provider_name'].value,
             'email': provider.controls['email'].value,

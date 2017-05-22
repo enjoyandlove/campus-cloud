@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 
 import { ProvidersService } from '../../../providers.service';
 import { BaseComponent } from '../../../../../../../base/base.component';
+import { STAR_SIZE } from '../../../../../../../shared/components/cp-stars';
 import { HEADER_UPDATE, IHeader } from '../../../../../../../reducers/header.reducer';
 
 @Component({
@@ -18,6 +19,9 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
   provider;
   serviceId;
   providerId;
+  MAX_RATE = 5;
+  eventRating;
+  starSize = STAR_SIZE.LARGE;
   query$: BehaviorSubject<string> = new BehaviorSubject(null);
   download$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
@@ -41,6 +45,7 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
       .fetchData(stream$)
       .then(res => {
         this.provider = res.data;
+        this.eventRating = ((this.provider.avg_rating_percent * this.MAX_RATE) / 100).toFixed(1);
 
         this.buildHeader();
       })
