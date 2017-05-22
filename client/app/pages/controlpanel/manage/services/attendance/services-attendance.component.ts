@@ -73,7 +73,7 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
 
     if (this.service.service_attendance) {
       let attendance = {
-        'label': 'Attendance',
+        'label': 'Assessment',
         'url': `/manage/services/${this.serviceId}`
       };
 

@@ -23,7 +23,6 @@
             <input
               type="text"
               class="form-control"
-              placeholder="Link URL"
               formControlName="link_url">
           </div>
 
@@ -32,7 +31,6 @@
             <input
               type="text"
               class="form-control"
-              placeholder="Add a short, clear name"
               formControlName="name">
           </div>
 
@@ -40,14 +38,13 @@
             <label i18n>Link Description (Optional)</label>
             <textarea
               class="form-control"
-              formControlName="description"
-              placeholder="Max 512 characters" >
+              formControlName="description">
             </textarea>
           </div>
         </form>
       </div>
       <div class="col-xs-4 event-image">
-        <label i18n>Link Image</label>
+        <label i18n>Link Banner</label>
         <img
           alt=""
           class="img-rounded img-responsive"
@@ -79,7 +76,7 @@
           (click)="doSubmit()"
           [disabled]="!form.valid"
           class="cpbtn cpbtn--primary"i18n>
-          Save
+          Add Link
         </button>
       </div>
     </div>

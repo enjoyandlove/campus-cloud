@@ -67,7 +67,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
       if (res.event_attendance === 1) {
         children = [
           {
-            'label': 'Attendance',
+            'label': 'Assessment',
             'url': `${this.buildUrlPrefix()}/${this.eventId}`
           },
           {
@@ -81,7 +81,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
     } else {
       children = [
         {
-          'label': res.event_attendance === 1 ? 'Attendance' : 'Event',
+          'label': res.event_attendance === 1 ? 'Assessment' : 'Event',
           'url': `${this.buildUrlPrefix()}/${this.eventId}`
         },
         {

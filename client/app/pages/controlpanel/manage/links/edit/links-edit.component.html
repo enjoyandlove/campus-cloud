@@ -2,7 +2,7 @@
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-xs-12 text-center">
-        <span i18n><strong>Edit Link</strong></span>
+        <span i18n><strong>Link</strong></span>
 
         <span
           data-dismiss="modal"
@@ -23,7 +23,6 @@
             <input
               type="text"
               class="form-control"
-              placeholder="Link URL"
               formControlName="link_url">
           </div>
 
@@ -32,7 +31,6 @@
             <input
               type="text"
               class="form-control"
-              placeholder="Add a short, clear name"
               formControlName="name">
           </div>
 
@@ -47,7 +45,7 @@
         </form>
       </div>
       <div class="col-xs-4 event-image">
-        <label i18n>Link Image</label>
+        <label i18n>Link Banner</label>
         <img
           alt=""
           class="img-rounded img-responsive"
@@ -57,7 +55,7 @@
         <cp-upload-button
           buttonClass="cpbtn cpbtn--cancel"
           (fileUpload)="onFileUpload($event)"
-          [buttonText]="form.controls['img_url'].value ? 'Change Image' : 'Upload Photo'">
+          [buttonText]="form.controls['img_url'].value ? 'Change Picture' : 'Upload Picture'">
         </cp-upload-button>
       </div>
     </div>

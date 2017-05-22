@@ -2,7 +2,7 @@
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-xs-12 text-center">
-        <span i18n><strong>Add New Service Provider</strong></span>
+        <span i18n><strong>Add Service Provider</strong></span>
 
         <span
           (click)="doReset()"
@@ -23,7 +23,6 @@
               <label i18n>Name</label>
               <input
                 type="text"
-                placeholder="Name"
                 class="form-control"
                 formControlName="provider_name"
                 [class.error]="formErrors && form.controls.name.hasError('required')">
@@ -33,7 +32,6 @@
               <input
                 type="text"
                 class="form-control"
-                placeholder="Email"
                 formControlName="email"
                 [class.error]="formErrors && form.controls.email.hasError('required')">
             </div>
@@ -45,7 +43,6 @@
               <input
                 type="text"
                 class="form-control"
-                placeholder="Default Question"
                 formControlName="custom_basic_feedback_label">
             </div>
           </div>
