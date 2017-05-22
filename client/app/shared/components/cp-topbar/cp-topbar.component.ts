@@ -54,5 +54,5 @@ export class CPTopBarComponent implements OnInit {
   //       this.canManage = true;
   //     }
   //   });
-  // }
+  }
 }
