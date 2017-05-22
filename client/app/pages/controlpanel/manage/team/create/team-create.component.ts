@@ -28,6 +28,9 @@ export class TeamCreateComponent implements OnInit {
   isFormError;
   manageAdmins;
   servicesMenu;
+  canReadEvents;
+  isServiceModal;
+  canReadServices;
   form: FormGroup;
   schoolPrivileges;
   accountPrivileges;
@@ -85,17 +88,17 @@ export class TeamCreateComponent implements OnInit {
       .teamService
       .createAdmin(_data)
       .subscribe(
-        _ => this.router.navigate(['/manage/team']),
-        err => {
-          this.isFormError = true;
+      _ => this.router.navigate(['/manage/team']),
+      err => {
+        this.isFormError = true;
 
-          if (err.status === 409) {
-            this.formError = STATUS.DUPLICATE_ENTRY;
-            return;
-          }
-
-          this.formError = 'Something went wrong';
+        if (err.status === 409) {
+          this.formError = STATUS.DUPLICATE_ENTRY;
+          return;
         }
+
+        this.formError = 'Something went wrong';
+      }
       );
   }
 
@@ -145,7 +148,9 @@ export class TeamCreateComponent implements OnInit {
 
   onServicesSelected(service) {
     if (service.action === 2) {
-      $('#selectServicesModal').modal();
+      this.isServiceModal = true;
+
+      setTimeout(() => { $('#selectServicesModal').modal(); }, 1);
       return;
     }
 
@@ -218,19 +223,21 @@ export class TeamCreateComponent implements OnInit {
   }
 
 
-  checkControl(checked, type): void {
+  checkControl(_, type): void {
     if (this.schoolPrivileges && this.schoolPrivileges[type]) {
       delete this.schoolPrivileges[type];
       return;
     }
+
+    let privilege = this.user.school_level_privileges[this.schoolId][type];
 
     this.schoolPrivileges = Object.assign(
       {},
       this.schoolPrivileges,
       {
         [type]: {
-          r: checked,
-          w: checked
+          r: privilege.r,
+          w: privilege.w
         }
       });
   }
@@ -238,6 +245,10 @@ export class TeamCreateComponent implements OnInit {
   ngOnInit() {
     this.user = this.session.user;
     this.schoolId = this.session.school.id;
+    let schoolPrivileges = this.user.school_level_privileges[this.schoolId];
+
+    this.canReadEvents = schoolPrivileges[CP_PRIVILEGES_MAP.events];
+    this.canReadServices = schoolPrivileges[CP_PRIVILEGES_MAP.services];
     this.formData = TEAM_ACCESS.getMenu(this.user.school_level_privileges[this.schoolId]);
 
     this.buildHeader();

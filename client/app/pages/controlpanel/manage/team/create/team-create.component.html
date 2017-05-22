@@ -84,22 +84,24 @@
         <!-- END Manage Admin -->
 
         <!-- Service Owner -->
-        <div class="section__item">
-          <div class="row">
-            <div class="col-xs-8">
-              <p class="section-sub-title" i18n>Service Owner</p>
-              <p class="section-description" i18n>
-                Manage service details, events and assessments
-              </p>
-            </div>
-            <div class="col-xs-4">
-              <cp-dropdown
-                [items]="servicesMenu"
-                (selected)="onServicesSelected($event)">
-              </cp-dropdown>
+        <fieldset [disabled]="!canReadServices">
+          <div class="section__item">
+            <div class="row">
+              <div class="col-xs-8">
+                <p class="section-sub-title" i18n>Service Owner</p>
+                <p class="section-description" i18n>
+                  Manage service details, events and assessments
+                </p>
+              </div>
+              <div class="col-xs-4">
+                <cp-dropdown
+                  [items]="servicesMenu"
+                  (selected)="onServicesSelected($event)">
+                </cp-dropdown>
+              </div>
             </div>
           </div>
-        </div>
+        </fieldset>
         <!-- END Service Owner -->
 
         <!-- Club Owner -->
@@ -122,22 +124,24 @@
         <!-- END Club Owner -->
 
         <!-- Events -->
-        <div class="section__item">
-          <div class="row">
-            <div class="col-xs-8">
-              <p class="section-sub-title" i18n>Events</p>
-              <p class="section-description" i18n>
-                Manage and assess events
-              </p>
-            </div>
-            <div class="col-xs-4">
-              <cp-dropdown
-                [items]="eventsMenu"
-                (selected)="onEventsSelected($event)">
-              </cp-dropdown>
+        <fieldset [disabled]="!canReadEvents">
+          <div class="section__item">
+            <div class="row">
+              <div class="col-xs-8">
+                <p class="section-sub-title" i18n>Events</p>
+                <p class="section-description" i18n>
+                  Manage and assess events
+                </p>
+              </div>
+              <div class="col-xs-4">
+                <cp-dropdown
+                  [items]="eventsMenu"
+                  (selected)="onEventsSelected($event)">
+                </cp-dropdown>
+              </div>
             </div>
           </div>
-        </div>
+        </fieldset>
         <!-- END Events -->
 
         <!-- App Content -->
@@ -293,6 +297,7 @@
 
 <cp-modal
   [type]="MODAL_TYPE"
+  *ngIf="isServiceModal"
   modalId="selectServicesModal">
   <cp-select-services-modal
     (selected)="onServicesModalSelected($event)">

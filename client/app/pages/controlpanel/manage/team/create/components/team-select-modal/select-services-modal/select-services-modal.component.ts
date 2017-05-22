@@ -13,6 +13,7 @@ export class SelectTeamServicesModalComponent extends BaseTeamSelectModalCompone
   implements OnInit {
   @Input() selectedServices: any;
   @Output() selected: EventEmitter<any> = new EventEmitter();
+  @Output() teardown: EventEmitter<any> = new EventEmitter();
   data$: BehaviorSubject<any> = new BehaviorSubject({});
 
   constructor(private service: ServicesService) {
@@ -30,6 +31,10 @@ export class SelectTeamServicesModalComponent extends BaseTeamSelectModalCompone
       }
     });
     return _selectedServices;
+  }
+
+  doReset() {
+    this.teardown.emit();
   }
 
   ngOnInit() {
@@ -59,6 +64,7 @@ export class SelectTeamServicesModalComponent extends BaseTeamSelectModalCompone
           selected: selected
         };
 
+        this.teardown.emit();
         this.data$.next(res);
       });
   }
