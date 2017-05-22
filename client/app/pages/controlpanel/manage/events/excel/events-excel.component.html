@@ -69,7 +69,7 @@
                   </cp-dropdown>
                 </div>
                 <div class="col-xs-2">
-                  <label i18n>Event Attendance</label>
+                  <label i18n>Assessment</label>
                   <cp-switch
                     [id]="i"
                     [isChecked]="event.controls['event_attendance'].value"
@@ -81,7 +81,7 @@
                   class="col-xs-5 no-left-padding" *ngIf="event.controls.event_attendance.value">
                   <div class="row">
                     <div class="col-xs-4 no-left-padding">
-                      <label i18n>Attd Feedback</label>
+                      <label i18n>Student Feedback</label>
                       <cp-dropdown
                         [items]="eventAttendanceFeedback"
                         (selected)="updateAttendanceFeedback($event, i)"
@@ -89,7 +89,7 @@
                       </cp-dropdown>
                     </div>
                     <div class="col-xs-4">
-                      <label i18n>Manager</label>
+                      <label i18n>Event Manager</label>
                       <cp-dropdown
                         [items]="event.controls['managers'].value"
                         (selected)="updateEventManager($event, i)"
