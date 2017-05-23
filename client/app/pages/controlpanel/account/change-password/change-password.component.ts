@@ -2,6 +2,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 
+import { CPSession } from '../../../../session';
 import { AccountService } from '../account.service';
 import { ErrorService } from '../../../../shared/services';
 import { STATUS } from '../../../../shared/constants/status';
@@ -19,6 +20,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
+    private session: CPSession,
     private store: Store<IAlert>,
     private errorService: ErrorService,
     private accountService: AccountService
@@ -86,9 +88,15 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
       return;
     }
 
+    let body = {
+      current_password: data.current,
+      new_password: data.password
+    };
+
     this
       .accountService
-      .resetPassword(data.current, data.password)
+      .resetPassword(body, this.session.user.id)
+      .toPromise()
       .then(_ => {
         this.form.reset();
         this.isCompleted = true;
