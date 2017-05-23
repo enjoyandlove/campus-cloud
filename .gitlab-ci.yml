@@ -1,0 +1,22 @@
+stages:
+  - deploy
+
+Deploying Web Staging:
+  stage: deploy
+  script:
+    - echo "Deploying Web Staging..."
+    - /ops_data/gitlab-runner/oohlala_env/bin/fab -f /ops_data/gitlab-runner/oohlala-ci/scripts/oohlala_cd.py us_staging_web_deploy
+    - echo "Web Staging deployed successfully"
+  only:
+    - staging
+  environment: Staging
+
+Deploying Web Production:
+  stage: deploy
+  script:
+    - echo "Deploying Web Production..."
+    - /ops_data/gitlab-runner/oohlala_env/bin/fab -f /ops_data/gitlab-runner/oohlala-ci/scripts/oohlala_cd.py us_production_web_deploy
+    - echo "Web Production deployed successfully"
+  only:
+    - master
+  environment: Production
