@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 
 import { EventsService } from '../events.service';
 import { isDev } from '../../../../../config/env';
+import { STATUS } from '../../../../../shared/constants';
 import { CPSession, ISchool } from '../../../../../session';
 import { BaseComponent } from '../../../../../base/base.component';
 import { CPDate, CP_PRIVILEGES_MAP } from '../../../../../shared/utils';
@@ -29,9 +30,9 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
   @Input() serviceId: number;
   @Input() isService: boolean;
 
+  error;
   events;
   stores;
-  errors = [];
   formError;
   mockDropdown;
   isChecked = [];
@@ -128,6 +129,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
       this.isChecked.push({ index, checked: false });
     });
 
+
     this.isFormReady = true;
   }
 
@@ -139,20 +141,20 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
   buildEventControl(event) {
     return this.fb.group({
       'store_id': [this.storeId || null, Validators.required],
-      'room': [event.room, Validators.required],
+      'room': [event.room],
       'title': [event.title, Validators.required],
       'poster_url': [null, Validators.required],
       'poster_thumb_url': [null, Validators.required],
-      'location': [event.location, Validators.required],
+      'location': [event.location],
       'managers': [[{ 'label': '---', 'event': null }]],
-      'description': [event.description, Validators.required],
+      'description': [event.description],
       'end': [CPDate.toEpoch(event.end_date), Validators.required],
       'start': [CPDate.toEpoch(event.start_date), Validators.required],
       // these controls are only required when event attendance is true
       'attendance_manager_email': [null],
-      'event_manager_id': [null, Validators.required],
-      'event_attendance': [1, Validators.required],
-      'event_feedback': [this.eventAttendanceFeedback[0]],
+      'event_manager_id': [null],
+      'event_attendance': [1],
+      'event_feedback': [1],
     });
   }
 
@@ -160,15 +162,14 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     const controls = <FormArray>this.form.controls['events'];
     const control = <FormGroup>controls.controls[index];
 
-    control.controls['event_manager_id'].setValue(manager);
+    control.controls['event_manager_id'].setValue(manager.value);
   }
 
   updateAttendanceFeedback(feedback, index) {
     const controls = <FormArray>this.form.controls['events'];
     const control = <FormGroup>controls.controls[index];
 
-    control.controls['event_feedback'].setValue(feedback);
-    control.controls['event_feedback'].value();
+    control.controls['event_feedback'].setValue(feedback.event);
   }
 
   onBulkChange(actions) {
@@ -197,7 +198,8 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
       control.controls['managers'].setValue(res);
     });
 
-    control.controls['store_id'].setValue(host);
+    control.controls['event_manager_id'].setValue(null);
+    control.controls['store_id'].setValue(host.event);
   }
 
   updateManagersByStoreOrClubId(storeId) {
@@ -220,24 +222,24 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     search.append('privilege_type', CP_PRIVILEGES_MAP.events.toString());
 
     return this
-    .adminService
-    .getAdminByStoreId(search)
-    .startWith([{'label': '---'}])
-    .map(admins => {
-      let _admins = [
-        {
-          'label': '---',
-          'value': null
-        }
-      ];
-      admins.forEach(admin => {
-        _admins.push({
-          'label': `${admin.firstname} ${admin.lastname}`,
-          'value': admin.id
+      .adminService
+      .getAdminByStoreId(search)
+      .startWith([{ 'label': '---' }])
+      .map(admins => {
+        let _admins = [
+          {
+            'label': '---',
+            'value': null
+          }
+        ];
+        admins.forEach(admin => {
+          _admins.push({
+            'label': `${admin.firstname} ${admin.lastname}`,
+            'value': admin.id
+          });
         });
+        return _admins;
       });
-      return _admins;
-    });
   }
 
   onSingleCheck(checked, index) {
@@ -272,16 +274,39 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
   }
 
   onSubmit() {
-    this.errors = [];
-    this.formError = false;
-
-    let events = Object.assign({}, this.form.controls['events'].value);
+    this.error = null;
     let _events = [];
+    this.formError = false;
+    let requiredFieldsError = false;
+    let events = Object.assign({}, this.form.controls['events'].value);
+
+    const eventsData = <FormArray>this.form.controls['events'];
+    const eventGroups = eventsData.controls;
+
+    Object.keys(eventGroups).forEach(index => {
+      let controls = eventGroups[index].controls;
+      if (controls.event_attendance.value === 1) {
+        if (!controls.event_manager_id.value) {
+          requiredFieldsError = true;
+          controls.event_manager_id.setErrors({ 'required': true });
+        }
+        if (!controls.event_attendance.value) {
+          requiredFieldsError = true;
+          controls.event_attendance.setErrors({ 'required': true });
+        }
+      }
+    });
+
+    if (requiredFieldsError || !this.form.valid) {
+      this.formError = true;
+      this.error = STATUS.ALL_FIELDS_ARE_REQUIRED;
+      return;
+    }
 
     Object.keys(events).forEach(key => {
       let _event = {
         title: events[key].title,
-        store_id: this.storeId ? this.storeId : events[key].store_id.event,
+        store_id: this.storeId ? this.storeId : events[key].store_id,
         description: events[key].description,
         end: events[key].end,
         room: events[key].room,
@@ -292,10 +317,10 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
         event_attendance: events[key].event_attendance
       };
 
-      if (events[key].event_attendance) {
+      if (events[key].event_attendance === 1) {
         _event = Object.assign({}, _event, {
-          event_feedback: events[key].event_feedback.event,
-          event_manager_id: events[key].event_manager_id.value,
+          event_feedback: events[key].event_feedback,
+          event_manager_id: events[key].event_manager_id,
           attendance_manager_email: events[key].attendance_manager_email
         });
       }
@@ -312,11 +337,11 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
         this.formError = true;
 
         if (err.status === 400) {
-          this.errors.push('Invalid data');
+          this.error = STATUS.ALL_FIELDS_ARE_REQUIRED;
           return;
         }
 
-        this.errors.push('Something went wrong');
+        this.error = STATUS.SOMETHING_WENT_WRONG;
       }
       );
   }
@@ -325,13 +350,8 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     const controls = <FormArray>this.form.controls['events'];
     const control = <FormGroup>controls.controls[index];
 
-    if (checked) {
-      control.controls['event_manager_id'].setErrors({'required': true});
-    } else {
-      control.controls['event_manager_id'].reset();
-    }
-
-    control.controls['event_attendance'].setValue(checked);
+    control.controls['event_manager_id'].setValue(null);
+    control.controls['event_attendance'].setValue(checked ? 1 : 0);
   }
 
   ngOnDestroy() {
