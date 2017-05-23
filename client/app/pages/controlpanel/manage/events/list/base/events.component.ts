@@ -95,7 +95,9 @@ export class EventsComponent extends BaseComponent implements OnInit, OnDestroy 
       {
         end: filter.end,
         start: filter.start,
+        sort_field: 'start',
         exclude_current: null,
+        sort_direction: 'asc',
         store_id: filter.store_id,
         search_str: filter.search_str,
         attendance_only: filter.attendance_only

@@ -57,6 +57,16 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
       .catch(err => console.log(err));
   }
 
+  onPaginationNext() {
+    super.goToNext();
+    this.fetch();
+  }
+
+  onPaginationPrevious() {
+    super.goToPrevious();
+    this.fetch();
+  }
+
   ngOnInit() {
     this.download.subscribe(download => {
       if (download && this.assessments.length) {

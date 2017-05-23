@@ -58,10 +58,12 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
 
   onPaginationNext() {
     super.goToNext();
+    this.fetch();
   }
 
   onPaginationPrevious() {
     super.goToPrevious();
+    this.fetch();
   }
 
   doSort(sort_field) {
