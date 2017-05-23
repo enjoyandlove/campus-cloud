@@ -29,7 +29,6 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
     private eventsService: EventsService
   ) {
     super();
-    this.fetch();
   }
 
   buildForm() {
@@ -100,6 +99,10 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
     let search = new URLSearchParams();
     search.append('school_id', this.session.school.id.toString());
 
+    if (this.storeId) {
+      search.append('store_id', this.storeId.toString());
+    }
+
     const links$ = this.eventsService.getFacebookEvents(search).map((links: any) => {
       let _links = [];
 
@@ -127,6 +130,8 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
   }
 
   ngOnInit() {
+    this.fetch();
+
     this.reload.subscribe(res => {
       if (res) {
         this.fetch();
