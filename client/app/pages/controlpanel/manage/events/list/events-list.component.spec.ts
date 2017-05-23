@@ -22,6 +22,7 @@ describe('Events list Component', () => {
     store_id: null,
     attendance_only: 0,
     sort_field: 'start',
+    exclude_current: null,
     sort_direction: 'asc',
     events: []
   };

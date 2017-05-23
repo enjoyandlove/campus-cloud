@@ -46,12 +46,24 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
     search.append('sort_direction', this.state.sort_direction);
     search.append('search_text', this.state.search_text);
 
-    const stream$ = this.eventService.getEventAttendanceByEventId(search);
+    const stream$ = this
+      .eventService
+      .getEventAttendanceByEventId(this.startRange, this.endRange, search);
 
     super
       .fetchData(stream$)
       .then(res => this.attendees = res.data)
       .catch(_ => {});
+  }
+
+  onPaginationNext() {
+    super.goToNext();
+    this.fetch();
+  }
+
+  onPaginationPrevious() {
+    super.goToPrevious();
+    this.fetch();
   }
 
   doSort(sort_field) {

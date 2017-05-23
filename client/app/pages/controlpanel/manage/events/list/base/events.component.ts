@@ -15,6 +15,7 @@ interface IState {
   sort_field: string;
   sort_direction: string;
   events: any[];
+  exclude_current: number;
 }
 
 const state = {
@@ -25,6 +26,7 @@ const state = {
   attendance_only: 0,
   sort_field: 'start',
   sort_direction: 'asc',
+  exclude_current: null,
   events: []
 };
 
@@ -93,6 +95,9 @@ export class EventsComponent extends BaseComponent implements OnInit, OnDestroy 
       {
         end: filter.end,
         start: filter.start,
+        sort_field: 'start',
+        exclude_current: null,
+        sort_direction: 'asc',
         store_id: filter.store_id,
         search_str: filter.search_str,
         attendance_only: filter.attendance_only
@@ -105,6 +110,7 @@ export class EventsComponent extends BaseComponent implements OnInit, OnDestroy 
         this.state,
         {
           sort_field: 'end',
+          exclude_current: 1,
           sort_direction: 'desc',
         }
       );
@@ -119,6 +125,10 @@ export class EventsComponent extends BaseComponent implements OnInit, OnDestroy 
     let end = this.endRange;
     let start = this.startRange;
     let search = new URLSearchParams();
+
+    let exclude_current = this.state.exclude_current ?
+      this.state.exclude_current.toString() : null;
+
     let store_id = this.state.store_id ? (this.state.store_id).toString() : null;
 
     if (this.storeId) {
@@ -130,6 +140,7 @@ export class EventsComponent extends BaseComponent implements OnInit, OnDestroy 
     search.append('store_id', store_id);
     search.append('school_id', this.session.school.id.toString());
     search.append('search_str', this.state.search_str);
+    search.append('exclude_current', exclude_current);
     search.append('attendance_only', (this.state.attendance_only).toString());
 
     search.append('sort_field', this.state.sort_field);
