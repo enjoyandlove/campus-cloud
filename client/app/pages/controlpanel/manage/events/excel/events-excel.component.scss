@@ -20,6 +20,11 @@
 .event__avatar {
   height: 35px;
 
+  .placeholder.isRequired {
+    border: 1px solid $color-danger;
+    background-color: rgba(255, 96, 89, 0.25);
+  }
+
   img {
     width: auto;
     height: 100%;
