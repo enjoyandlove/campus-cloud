@@ -113,35 +113,17 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
 
     this.mapCenter.next(data.geometry.location.toJSON());
   }
-  private updateServiceAttendance(event): Promise<any> {
-    return this
-      .servicesService
-      .updateService(
-        {
-          default_basic_feedback_label: 'How did you like the service?',
-          service_attendance: event ? 1 : 0,
-          rating_scale_maximum: event ? 5 : -1
-        },
-        this.serviceId
-      )
-      .toPromise();
-  }
 
   onToggleAttendance(event) {
-    let updateServiceAttendance = this.updateServiceAttendance(event);
-
-    updateServiceAttendance
-      .then(_ => {
-        let defaultQuestionControl = this.form.controls['default_basic_feedback_label'];
-        if (event) {
-          defaultQuestionControl.setValue('How did you like the service?');
-        } else {
-          defaultQuestionControl.setValue(null);
-        }
-
-        this.form.controls['service_attendance'].setValue(event ? 1 : 0);
-      })
-      .catch(err => console.log(err));
+    if (event) {
+      this.form.controls['default_basic_feedback_label'].setValue('How did you like the service?');
+      this.form.controls['service_attendance'].setValue(1);
+      this.form.controls['rating_scale_maximum'].setValue(5);
+      return;
+    }
+    this.form.controls['default_basic_feedback_label'].setValue(null);
+    this.form.controls['service_attendance'].setValue(0);
+    this.form.controls['rating_scale_maximum'].setValue(-1);
   }
 
   delteProviderControl(index): void {
