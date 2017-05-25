@@ -10,6 +10,7 @@ import {
   ClubsEventEditComponent,
   ClubsEventInfoComponent,
   ClubsEventsCreateComponent,
+  ClubsEventsFacebookComponent,
   ClubsEventsAttendanceComponent
 } from './components';
 
@@ -21,7 +22,8 @@ import { ClubsEventsRoutingModule } from './events.routing.module';
 
 @NgModule({
   declarations: [ ClubsEventsComponent, ClubsEventsCreateComponent,
-  ClubsEventsAttendanceComponent, ClubsEventInfoComponent, ClubsEventEditComponent ],
+  ClubsEventsAttendanceComponent, ClubsEventInfoComponent, ClubsEventEditComponent,
+  ClubsEventsFacebookComponent ],
 
   imports: [ CommonModule, SharedModule, RouterModule, ReactiveFormsModule,
   ClubsEventsRoutingModule, EventsModule ],

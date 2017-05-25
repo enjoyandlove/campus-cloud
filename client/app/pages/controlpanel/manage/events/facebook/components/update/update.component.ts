@@ -13,6 +13,7 @@ import { BaseComponent } from '../../../../../../../base/base.component';
   styleUrls: ['./update.component.scss']
 })
 export class FacebookEventsUpdateComponent extends BaseComponent implements OnInit {
+  @Input() clubId: number;
   @Input() storeId: number;
   @Input() stores: Array<any>;
   @Input() reload: Observable<boolean>;
@@ -101,6 +102,10 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
 
     if (this.storeId) {
       search.append('store_id', this.storeId.toString());
+    }
+
+    if (this.clubId) {
+      search.append('store_id', this.clubId.toString());
     }
 
     const links$ = this.eventsService.getFacebookEvents(search).map((links: any) => {

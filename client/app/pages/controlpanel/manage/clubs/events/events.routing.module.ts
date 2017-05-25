@@ -4,13 +4,13 @@ import { RouterModule, Routes } from '@angular/router';
 /**
  * CRUD
  */
-import { EventsEditComponent }  from '../../events/edit';
 import { ClubsEventsComponent } from './clubs-events.component';
 
 import {
   ClubsEventEditComponent,
   ClubsEventInfoComponent,
   ClubsEventsCreateComponent,
+  ClubsEventsFacebookComponent,
   ClubsEventsAttendanceComponent
 } from './components';
 
@@ -18,7 +18,6 @@ import {
  * Imports
  */
 import { EventsExcelComponent }  from '../../events/excel';
-import { EventsFacebookComponent }  from '../../events/facebook';
 
 
 const appRoutes: Routes = [
@@ -31,7 +30,7 @@ const appRoutes: Routes = [
   { path: ':eventId/info', component: ClubsEventInfoComponent },
 
   { path: 'import/excel', component: EventsExcelComponent },
-  { path: 'import/facebook', component: EventsFacebookComponent },
+  { path: 'import/facebook', component: ClubsEventsFacebookComponent },
 ];
 @NgModule({
   imports: [
