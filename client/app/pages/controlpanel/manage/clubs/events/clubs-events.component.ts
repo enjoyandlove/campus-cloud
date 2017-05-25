@@ -18,10 +18,3 @@ export class ClubsEventsComponent implements OnInit {
   ngOnInit() { }
 }
 
-  // <cp-events
-  //   *ngSwitchCase="false"
-  //   [isSimple]="isSimple"
-  //   [isService]="isService"
-  //   [serviceId]="serviceId"
-  //   [storeId]="service.store_id">
-  // </cp-events>

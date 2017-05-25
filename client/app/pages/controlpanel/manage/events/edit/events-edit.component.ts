@@ -339,16 +339,6 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    // fetch managers by service
-    if (this.storeId) {
-      this.fetchManagersBySelectedStore(this.storeId);
-    }
-
-    // fetch managers by club
-    if (this.clubId) {
-      this.fetchManagersBySelectedStore(this.clubId);
-    }
-
     this.dateFormat = FORMAT.DATETIME;
     this.booleanOptions = [
       {

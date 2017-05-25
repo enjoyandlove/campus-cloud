@@ -7,7 +7,10 @@ import { SharedModule } from '../../../../../shared/shared.module';
 import { ClubsEventsComponent } from './clubs-events.component';
 
 import {
-  ClubsEventsCreateComponent
+  ClubsEventEditComponent,
+  ClubsEventInfoComponent,
+  ClubsEventsCreateComponent,
+  ClubsEventsAttendanceComponent
 } from './components';
 
 /**
@@ -17,7 +20,8 @@ import { EventsModule } from '../../events/events.module';
 import { ClubsEventsRoutingModule } from './events.routing.module';
 
 @NgModule({
-  declarations: [ ClubsEventsComponent, ClubsEventsCreateComponent ],
+  declarations: [ ClubsEventsComponent, ClubsEventsCreateComponent,
+  ClubsEventsAttendanceComponent, ClubsEventInfoComponent, ClubsEventEditComponent ],
 
   imports: [ CommonModule, SharedModule, RouterModule, ReactiveFormsModule,
   ClubsEventsRoutingModule, EventsModule ],
