@@ -27,7 +27,7 @@ const state: IState = {
   styleUrls: ['./feed-filters.component.scss']
 })
 export class FeedFiltersComponent implements OnInit {
-  @Input() isSimple: boolean;
+  @Input() clubId: number;
   @Output() doFilter: EventEmitter<IState> = new EventEmitter();
 
   posts;
@@ -41,7 +41,6 @@ export class FeedFiltersComponent implements OnInit {
     private feedsService: FeedsService,
   ) {
     this.state = state;
-    this.fetch();
   }
 
   private fetch() {
@@ -137,6 +136,7 @@ export class FeedFiltersComponent implements OnInit {
   }
 
   onFilterSelected(item, type) {
+    console.log('onFilterSelected');
     this.state = Object.assign(
       {},
       this.state,
@@ -146,6 +146,7 @@ export class FeedFiltersComponent implements OnInit {
   }
 
   updateState(key: string, value: any) {
+    console.log('updateState');
     this.state = Object.assign({}, this.state, { [key]: value });
     this.doFilter.emit(this.state);
   }
@@ -166,6 +167,34 @@ export class FeedFiltersComponent implements OnInit {
       }
     ];
 
+    if (this.clubId) {
+      let search = new URLSearchParams();
+      search.append('school_id', this.session.school.id.toString());
+      search.append('store_id', this.clubId.toString());
+
+      let getGroup = this.feedsService.getSocialGroups(search).toPromise();
+
+      getGroup.then(groups => {
+        let group = groups[0];
+
+        this.state = Object.assign(
+          {},
+          this.state,
+          {
+            wall_type: group.id,
+            group_id: this.clubId,
+            flagged_by_users_only: null,
+            removed_by_moderators_only: null
+          }
+        );
+
+        this.doFilter.emit(this.state);
+        console.log(this.state);
+        return;
+      });
+    }
+
+    this.fetch();
     this.doFilter.emit(this.state);
   }
 }

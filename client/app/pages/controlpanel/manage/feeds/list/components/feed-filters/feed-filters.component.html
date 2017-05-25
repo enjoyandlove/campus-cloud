@@ -3,14 +3,14 @@
     <div class="cp-card">
 
       <div class="row">
-        <div class="col-xs-4" *ngIf="!isSimple">
+        <div class="col-xs-4" *ngIf="!clubId">
           <cp-dropdown
             [items]="walls$ | async"
             (selected)="onFilterSelected($event, 'wall_type')">
           </cp-dropdown>
         </div>
 
-        <div class="col-xs-4 no-left-padding" *ngIf="!isSimple">
+        <div class="col-xs-4 no-left-padding" *ngIf="!clubId">
           <fieldset [disabled]="state.wall_type !== 1">
             <cp-dropdown
               [items]="channels$ | async"
@@ -19,14 +19,14 @@
           </fieldset>
         </div>
 
-        <div [class]="[isSimple ? 'col-xs-3' : 'col-xs-3 no-left-padding']">
+        <div [class]="[clubId ? 'col-xs-3' : 'col-xs-3 no-left-padding']">
           <cp-dropdown
             [items]="posts"
             (selected)="onFlaggedOrRemoved($event.action)">
           </cp-dropdown>
         </div>
 
-        <div [class]="[isSimple ? 'col-xs-1 no-left-padding pull-right' : 'col-xs-1 no-left-padding']">
+        <div [class]="[clubId ? 'col-xs-1 no-left-padding pull-right' : 'col-xs-1 no-left-padding']">
           <button
             type="button"
             class="cpbtn cpbtn--cancel"

@@ -45,15 +45,7 @@ export class ClubsListActionBoxComponent implements OnInit {
       {
         label: 'Pending',
         action: 'pending'
-      },
-      {
-        label: 'Suspended',
-        action: 'suspended'
-      },
-      {
-        label: 'Expired',
-        action: 'expired'
-      },
+      }
     ];
   }
 }

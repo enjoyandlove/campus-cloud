@@ -1,12 +1,12 @@
 <div [ngSwitch]="loading">
   <div class="col-xs-8 col-xs-offset-2">
     <cp-feed-filters
-      [isSimple]="isSimple"
+      [clubId]="clubId"
       (doFilter)="onDoFilter($event)">
     </cp-feed-filters>
 
     <cp-feed-input-box
-      [isSimple]="isSimple"
+      [clubId]="clubId"
       [isCampusWallView]="isCampusWallView$"
       (created)="onCreated($event)">
     </cp-feed-input-box>

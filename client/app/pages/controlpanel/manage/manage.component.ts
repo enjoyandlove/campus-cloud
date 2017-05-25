@@ -35,11 +35,7 @@ export class ManageComponent implements OnInit {
   }
 }
 
-// {
-//   "privilege": 22,
-//   "label": "Clubs & Groups",
-//   "url": "/manage/clubs"
-// },
+
 // {
 //   "privilege": 13,
 //   "label": "Cover Photo",

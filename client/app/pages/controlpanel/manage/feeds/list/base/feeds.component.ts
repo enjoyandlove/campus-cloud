@@ -58,6 +58,7 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   }
 
   onDoFilter(data) {
+    console.log('filtering', data);
     this.isCampusWallView$.next({
       type: data.wall_type,
       group_id: data.group_id
@@ -248,5 +249,8 @@ export class FeedsComponent extends BaseComponent implements OnInit {
     this.state = Object.assign({}, this.state, { feeds: _state.feeds });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.isSimple = this.isClubsView;
+    console.log(this);
+  }
 }
