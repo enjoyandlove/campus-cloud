@@ -8,11 +8,11 @@ import { EventsComponent } from '../../events/list/base/events.component';
 
 @Component({
   selector: 'cp-clubs-events',
-  template: '<cp-events [isSimple]="isSimple" [storeId]="4443"></cp-events>'
+  template: '<cp-events [IsClub]="IsClub" [storeId]="4443"></cp-events>'
 })
 export class ClubsEventsComponent extends EventsComponent implements OnInit {
   clubId: number;
-  isSimple = true;
+  IsClub = true;
 
   constructor(
     public session: CPSession,
@@ -21,10 +21,10 @@ export class ClubsEventsComponent extends EventsComponent implements OnInit {
     private clubsService: ClubsService
   ) {
     super(session, eventsService);
-    this.clubId = this.route.parent.snapshot.params['clubId'];
   }
 
   getClubDetails() {
+    console.log(this.clubId);
     this
       .clubsService
       .getClubById(this.clubId)
@@ -35,6 +35,16 @@ export class ClubsEventsComponent extends EventsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.clubId = this.route.parent.snapshot.params['clubId'];
+    console.log(this.route);
     this.getClubDetails();
   }
 }
+
+  // <cp-events
+  //   *ngSwitchCase="false"
+  //   [isSimple]="isSimple"
+  //   [isService]="isService"
+  //   [serviceId]="serviceId"
+  //   [storeId]="service.store_id">
+  // </cp-events>
