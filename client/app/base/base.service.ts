@@ -82,7 +82,7 @@ export class BaseService {
         break;
 
       case 500:
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/welcome']);
         break;
 
       default:
