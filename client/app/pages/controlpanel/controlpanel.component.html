@@ -2,6 +2,7 @@
   <cp-topbar></cp-topbar>
   <router-outlet></router-outlet>
   <cp-alert></cp-alert>
-  <cp-intercomm></cp-intercomm>
+  <cp-intercomm *ngIf="isProd"></cp-intercomm>
+  <cp-trackers *ngIf="isProd"></cp-trackers>
 </div>
 
