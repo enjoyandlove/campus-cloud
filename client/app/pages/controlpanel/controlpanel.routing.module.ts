@@ -5,13 +5,13 @@ import { ControlPanelComponent } from './controlpanel.component';
 
 const appRoutes: Routes = [
   // HOME PAGE
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+  { path: '', redirectTo: 'welcome', pathMatch: 'full' },
 
   {
     path: '',
     component: ControlPanelComponent,
     children: [
-      { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
+      { path: 'welcome', loadChildren: './dashboard/dashboard.module#DashboardModule' },
 
       { path: 'manage', loadChildren: './manage/manage.module#ManageModule' },
 
