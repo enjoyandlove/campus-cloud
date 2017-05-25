@@ -6,6 +6,10 @@ import { SharedModule } from '../../../../../shared/shared.module';
 
 import { ClubsEventsComponent } from './clubs-events.component';
 
+import {
+  ClubsEventsCreateComponent
+} from './components';
+
 /**
  * External Modules
  */
@@ -13,7 +17,7 @@ import { EventsModule } from '../../events/events.module';
 import { ClubsEventsRoutingModule } from './events.routing.module';
 
 @NgModule({
-  declarations: [ ClubsEventsComponent ],
+  declarations: [ ClubsEventsComponent, ClubsEventsCreateComponent ],
 
   imports: [ CommonModule, SharedModule, RouterModule, ReactiveFormsModule,
   ClubsEventsRoutingModule, EventsModule ],

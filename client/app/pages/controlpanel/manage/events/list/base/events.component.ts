@@ -42,7 +42,7 @@ export class EventsComponent extends BaseComponent implements OnInit, OnDestroy 
   @Input() isService: boolean;
 
   @Input() clubId: number;
-  @Input() IsClub: boolean;
+  @Input() isClub: boolean;
 
   school;
   events;
@@ -87,7 +87,17 @@ export class EventsComponent extends BaseComponent implements OnInit, OnDestroy 
   }
 
   doFilter(filter) {
+    let storeId;
     let isUpcoming = filter.upcoming;
+
+    if (this.isClub) {
+      storeId = this.clubId;
+    }
+
+    if (this.isService) {
+      storeId = this.serviceId;
+    }
+
     this.state = Object.assign(
       {},
       this.state,
@@ -97,7 +107,7 @@ export class EventsComponent extends BaseComponent implements OnInit, OnDestroy 
         sort_field: 'start',
         exclude_current: null,
         sort_direction: 'asc',
-        store_id: filter.store_id,
+        store_id: storeId ? storeId : filter.store_id,
         search_str: filter.search_str,
         attendance_only: filter.attendance_only
       }
@@ -175,6 +185,6 @@ export class EventsComponent extends BaseComponent implements OnInit, OnDestroy 
   }
 
   ngOnInit() {
-    console.log(this);
+    // console.log(this);
   }
 }

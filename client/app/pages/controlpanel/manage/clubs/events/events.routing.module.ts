@@ -6,8 +6,11 @@ import { RouterModule, Routes } from '@angular/router';
  */
 import { EventsInfoComponent }  from '../../events/info';
 import { EventsEditComponent }  from '../../events/edit';
-import { EventsCreateComponent } from '../../events/create';
 import { ClubsEventsComponent } from './clubs-events.component';
+
+import {
+  ClubsEventsCreateComponent
+} from './components';
 
 /**
  * Imports
@@ -24,7 +27,7 @@ const appRoutes: Routes = [
   { path: 'import', redirectTo: '', pathMatch: 'full' },
 
   { path: '', component: ClubsEventsComponent },
-  { path: 'create', component: EventsCreateComponent },
+  { path: 'create', component: ClubsEventsCreateComponent },
   { path: ':eventId', component: EventsAttendanceComponent },
   { path: ':eventId/edit', component: EventsEditComponent },
   { path: ':eventId/info', component: EventsInfoComponent },
