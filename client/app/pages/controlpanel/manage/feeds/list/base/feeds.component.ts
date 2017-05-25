@@ -58,7 +58,6 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   }
 
   onDoFilter(data) {
-    console.log('filtering', data);
     this.isCampusWallView$.next({
       type: data.wall_type,
       group_id: data.group_id
@@ -97,6 +96,7 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
+    console.log('fetching', this.state);
     let search = new URLSearchParams();
 
     let flagged = this.state.flagged_by_users_only ?

@@ -136,7 +136,6 @@ export class FeedFiltersComponent implements OnInit {
   }
 
   onFilterSelected(item, type) {
-    console.log('onFilterSelected');
     this.state = Object.assign(
       {},
       this.state,
@@ -146,7 +145,6 @@ export class FeedFiltersComponent implements OnInit {
   }
 
   updateState(key: string, value: any) {
-    console.log('updateState');
     this.state = Object.assign({}, this.state, { [key]: value });
     this.doFilter.emit(this.state);
   }
@@ -189,9 +187,8 @@ export class FeedFiltersComponent implements OnInit {
         );
 
         this.doFilter.emit(this.state);
-        console.log(this.state);
-        return;
       });
+      return;
     }
 
     this.fetch();
