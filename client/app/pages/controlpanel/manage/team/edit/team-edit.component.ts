@@ -66,6 +66,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     super
       .fetchData(admin$)
       .then(res => {
+        this.buildHeader(`${res.data.firstname} ${res.data.lastname}`);
+
         this.buildForm(res.data);
         this.schoolPrivileges = Object.assign(
           {},
@@ -144,10 +146,15 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     return selected;
   }
 
-  private buildHeader() {
+  private buildHeader(name) {
     this.store.dispatch({
       type: HEADER_UPDATE,
-      payload: require('../team.header.json')
+      payload: {
+        'heading': `${name}`,
+        'subheading': null,
+        'em': null,
+        'children': []
+      }
     });
   }
 
@@ -334,6 +341,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       });
   }
 
+
   ngOnInit() {
     this.user = this.session.user;
     this.schoolId = this.session.school.id;
@@ -343,8 +351,6 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     this.canReadEvents = schoolPrivileges[CP_PRIVILEGES_MAP.events];
     this.canReadServices = schoolPrivileges[CP_PRIVILEGES_MAP.services];
     this.formData = TEAM_ACCESS.getMenu(this.user.school_level_privileges[this.schoolId]);
-
-    this.buildHeader();
 
     this.servicesMenu = [
       {
