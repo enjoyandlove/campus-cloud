@@ -19,19 +19,20 @@
       <div class="col-xs-8">
         <form [formGroup]="form">
           <div class="form-group">
-            <label i18n>Website Name</label>
-            <input
-              type="text"
-              class="form-control"
-              formControlName="link_url">
-          </div>
-
-          <div class="form-group">
             <label i18n>Link Name</label>
             <input
               type="text"
               class="form-control"
               formControlName="name">
+          </div>
+
+          <div class="form-group">
+            <label i18n>Link URL</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="link_url"
+              placeholder="https://www.example.com">
           </div>
 
           <div class="form-group">
