@@ -204,7 +204,6 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
   ngOnInit() {
     this.school = this.session.school;
     this.isCampusWallView.subscribe(res => {
-
       // Not Campus Wall
       if (res.type !== 1) {
         this.groupId = res.type;

@@ -96,7 +96,6 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    console.log('fetching', this.state);
     let search = new URLSearchParams();
 
     let flagged = this.state.flagged_by_users_only ?
@@ -251,6 +250,5 @@ export class FeedsComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.isSimple = this.isClubsView;
-    console.log(this);
   }
 }
