@@ -9,15 +9,11 @@ import { ClubsEventsComponent } from './clubs-events.component';
 import {
   ClubsEventEditComponent,
   ClubsEventInfoComponent,
+  ClubsEventsExcelComponent,
   ClubsEventsCreateComponent,
   ClubsEventsFacebookComponent,
   ClubsEventsAttendanceComponent
 } from './components';
-
-/**
- * Imports
- */
-import { EventsExcelComponent }  from '../../events/excel';
 
 
 const appRoutes: Routes = [
@@ -29,7 +25,7 @@ const appRoutes: Routes = [
   { path: ':eventId/edit', component: ClubsEventEditComponent },
   { path: ':eventId/info', component: ClubsEventInfoComponent },
 
-  { path: 'import/excel', component: EventsExcelComponent },
+  { path: 'import/excel', component: ClubsEventsExcelComponent },
   { path: 'import/facebook', component: ClubsEventsFacebookComponent },
 ];
 @NgModule({
