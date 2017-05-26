@@ -7,7 +7,7 @@
   display: inline-block;
 }
 
-.cpbtn-group {
+.cp-dropdown {
   width: 100%;
   position: relative;
   display: inline-block;
@@ -19,7 +19,7 @@
     }
   }
 
-  button {
+  &__button {
     width: 100%;
     text-align: left;
     position: relative;
@@ -40,16 +40,19 @@
     }
   }
 
-  .dropdown-menu {
+  &__list {
     top: 110%;
     padding: 0;
+    z-index: 1;
     max-width: 500px;
     max-height: 197px;
     overflow-y: scroll;
+    position: absolute;
+    border-radius: 4px;
     background-color: $color-white;
-    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.3);
 
-    li {
+    &__item {
       padding: 10px;
       text-align: left;
       color: $color-secondary-text;
@@ -61,7 +64,7 @@
         color: $color-text;
       }
 
-      &:hover {
+      &:hover:not(.no-hover) {
         cursor: pointer;
         color: $color-white;
         background: $color-brand;
@@ -69,6 +72,15 @@
         span.isLabel {
           color: $color-white;
         }
+      }
+
+      &--spinner {
+        height: 197px;
+      }
+
+      &--search {
+        padding: 5px 0;
+        border-bottom: 1px solid $border-color;
       }
     }
   }
