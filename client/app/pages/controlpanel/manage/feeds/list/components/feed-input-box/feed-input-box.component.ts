@@ -51,27 +51,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
     let search = new URLSearchParams();
     search.append('school_id', this.session.school.id.toString());
 
-    this.stores$ = this.storeService.getStores(search)
-      .startWith([{ label: '---' }])
-      .map(stores => {
-        let _stores = [
-          {
-            label: '---',
-            action: null
-          }
-        ];
-
-        stores.forEach(store => {
-          let _store = {
-            label: store.name,
-            action: store.id
-          };
-
-          _stores.push(_store);
-        });
-
-        return _stores;
-      });
+    this.stores$ = this.storeService.getStores(search);
 
     this.channels$ = this.feedsService.getChannelsBySchoolId(1, 100, search)
       .startWith([{ label: '---' }])
@@ -159,7 +139,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
   }
 
   onSelectedHost(host): void {
-    this.form.controls['store_id'].setValue(host.action);
+    this.form.controls['store_id'].setValue(host.value);
   }
 
   onSelectedChannel(channel): void {

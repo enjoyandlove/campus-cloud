@@ -11,11 +11,9 @@
   </button>
   <ul class="dropdown-menu" *ngIf="items.length > 1">
     <li
-      class="text-truncate"
       (click)="onClick(item)"
-      *ngFor="let item of items"
-      (click)="selectedItem = item">
-      {{ item.label }}
+      *ngFor="let item of items">
+      <span [class.isLabel]="item.heading">{{ item.label }}</span>
     </li>
   </ul>
 </div>

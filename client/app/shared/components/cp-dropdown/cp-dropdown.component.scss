@@ -1,4 +1,5 @@
 @import '~styles/core/colors';
+@import '~styles/core/typography';
 @import '~styles/components/button';
 
 :host {
@@ -42,7 +43,7 @@
   .dropdown-menu {
     top: 110%;
     padding: 0;
-    max-width: 300px;
+    max-width: 500px;
     max-height: 197px;
     overflow-y: scroll;
     background-color: $color-white;
@@ -54,10 +55,20 @@
       color: $color-secondary-text;
       transition: background 100ms ease-in;
 
+      span.isLabel {
+        @include font-semi-bold();
+
+        color: $color-text;
+      }
+
       &:hover {
         cursor: pointer;
         color: $color-white;
         background: $color-brand;
+
+        span.isLabel {
+          color: $color-white;
+        }
       }
     }
   }
