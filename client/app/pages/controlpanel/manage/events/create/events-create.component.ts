@@ -60,22 +60,6 @@ export class EventsCreateComponent implements OnInit {
     search.append('school_id', this.school.id.toString());
 
     this.stores$ = this.storeService.getStores(search);
-      // .startWith([{ 'label': 'All Hosts' }])
-      // .map(res => {
-      //   const stores = [
-      //     {
-      //       'label': 'All Hosts',
-      //       'value': null
-      //     }
-      //   ];
-      //   res.forEach(store => {
-      //     stores.push({
-      //       'label': store.name,
-      //       'value': store.id
-      //     });
-      //   });
-      //   return stores;
-      // });
   }
 
   buildHeader() {

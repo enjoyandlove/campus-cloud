@@ -21,6 +21,9 @@ export class CPDropdownComponent implements OnInit {
   constructor() { }
 
   onClick(item) {
+    if (item.heading) { return; }
+
+    this.selectedItem = item;
     this.selected.emit(item);
   }
 
@@ -36,6 +39,5 @@ export class CPDropdownComponent implements OnInit {
     this.reset.subscribe(reset => {
       if (reset) { this.resetMenu(); }
     });
-    // console.log(this.items);
   }
 }
