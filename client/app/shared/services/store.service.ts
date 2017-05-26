@@ -16,7 +16,25 @@ export class StoreService extends BaseService {
   getStores(search: URLSearchParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.STORE}/1;1000`;
 
-    return super.get(url, { search }).map(res => res.json());
+    return super
+      .get(url, { search })
+      .map(res => res.json())
+      .startWith([{ 'label': 'All Hosts' }])
+      .map(res => {
+        const stores = [
+          {
+            'label': 'All Hosts',
+            'value': null
+          }
+        ];
+        res.forEach(store => {
+          stores.push({
+            'label': store.name,
+            'value': store.id
+          });
+        });
+        return stores;
+      });
   }
 
   getStoreById(storeId: number) {

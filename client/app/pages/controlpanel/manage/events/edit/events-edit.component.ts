@@ -252,25 +252,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     search.append('school_id', school.id.toString());
 
     const event$ = this.eventService.getEventById(this.eventId);
-    const stores$ = this
-      .storeService
-      .getStores(search)
-      .startWith([{ 'label': '---' }])
-      .map(res => {
-        const stores = [
-          {
-            'label': 'All Hosts',
-            'value': null
-          }
-        ];
-        res.forEach(store => {
-          stores.push({
-            'label': store.name,
-            'value': store.id
-          });
-        });
-        return stores;
-      });
+    const stores$ = this.storeService.getStores(search);
 
     const stream$ = Observable.combineLatest(event$, stores$);
 

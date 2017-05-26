@@ -70,22 +70,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     let search: URLSearchParams = new URLSearchParams();
     search.append('school_id', this.school.id.toString());
 
-    const stores$ = this.storeService.getStores(search).map(res => {
-      const stores = [
-        {
-          'label': 'Host Name',
-          'event': null
-        }
-      ];
-
-      res.forEach(store => {
-        stores.push({
-          'label': store.name,
-          'event': store.id
-        });
-      });
-      return stores;
-    });
+    const stores$ = this.storeService.getStores(search);
 
     if (!this.storeId) {
       super
