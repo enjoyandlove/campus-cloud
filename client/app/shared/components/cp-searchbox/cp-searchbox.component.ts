@@ -8,7 +8,6 @@ import {
   EventEmitter,
   AfterViewInit,
 } from '@angular/core';
-
 import { Observable } from 'rxjs/Observable';
 
 @Component({
@@ -17,9 +16,11 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./cp-searchbox.component.scss']
 })
 export class CPSearchBoxComponent implements AfterViewInit, OnInit {
+  @Input() fixed: true;
   @Input() placeholder: string;
-  @Output() query: EventEmitter<string> = new EventEmitter();
   @ViewChild('q') q: ElementRef;
+  @Output() query: EventEmitter<string> = new EventEmitter();
+  @Output() searching: EventEmitter<boolean> = new EventEmitter();
 
   stream$: Observable<string>;
 
@@ -31,15 +32,21 @@ export class CPSearchBoxComponent implements AfterViewInit, OnInit {
 
     this
       .stream$
+      .map(res => {
+        this.searching.emit(true);
+        return res;
+      })
       .debounceTime(501)
       .map((res: any) => res.target.value)
       .distinctUntilChanged()
       .subscribe(query => {
         if (!query) {
           this.query.emit(null);
+          this.searching.emit(false);
           return;
         }
         this.query.emit(query);
+        this.searching.emit(false);
       });
   }
 
