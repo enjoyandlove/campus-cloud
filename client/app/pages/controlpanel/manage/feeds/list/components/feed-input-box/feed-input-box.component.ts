@@ -156,7 +156,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
     }
 
     if (!CPImage.isValidExtension(fileExtension, CPImage.VALID_EXTENSIONS)) {
-      this.imageError = STATUS.WRONG_EXTENSION;
+      this.imageError = STATUS.WRONG_EXTENSION_IMAGE;
       return;
     }
 
