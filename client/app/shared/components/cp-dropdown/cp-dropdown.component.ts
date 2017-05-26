@@ -30,6 +30,7 @@ export class CPDropdownComponent implements OnInit {
 
     this.selectedItem = item;
     this.selected.emit(item);
+    this.query = null;
   }
 
   onSearch(query) {
