@@ -39,7 +39,7 @@ export class AnnouncementsComposeComponent implements OnInit {
   }
 
   onSelectedStore(store) {
-    this.form.controls['store_id'].setValue(store.action);
+    this.form.controls['store_id'].setValue(store.value);
   }
 
   doValidate() {

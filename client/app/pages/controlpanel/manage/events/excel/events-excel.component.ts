@@ -177,14 +177,14 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
   onSingleHostSelected(host, index) {
     const controls = <FormArray>this.form.controls['events'];
     const control = <FormGroup>controls.controls[index];
-    const managers$ = this.getManagersByHostId(host.event);
+    const managers$ = this.getManagersByHostId(host.value);
 
     managers$.subscribe(res => {
       control.controls['managers'].setValue(res);
     });
 
     control.controls['event_manager_id'].setValue(null);
-    control.controls['store_id'].setValue(host.event);
+    control.controls['store_id'].setValue(host.value);
   }
 
   updateManagersByStoreOrClubId(storeId) {

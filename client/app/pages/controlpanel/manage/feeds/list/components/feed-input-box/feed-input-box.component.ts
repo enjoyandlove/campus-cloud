@@ -139,7 +139,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
   }
 
   onSelectedHost(host): void {
-    this.form.controls['store_id'].setValue(host.action);
+    this.form.controls['store_id'].setValue(host.value);
   }
 
   onSelectedChannel(channel): void {
