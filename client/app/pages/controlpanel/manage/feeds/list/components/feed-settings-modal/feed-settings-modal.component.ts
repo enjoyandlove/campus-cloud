@@ -1,5 +1,5 @@
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
 import { FeedsService } from '../../../feeds.service';
@@ -11,6 +11,8 @@ import { CPSession } from '../../../../../../../session';
   styleUrls: ['./feed-settings-modal.component.scss']
 })
 export class FeedSettingsComponent implements OnInit {
+  @Input() clubId: number;
+
   walls;
   privileges;
   form: FormGroup;
@@ -21,8 +23,6 @@ export class FeedSettingsComponent implements OnInit {
     private feedsService: FeedsService
   ) {
     this.feedsService.getSocialGroups();
-
-    this.fetch();
   }
 
   private fetch() {
@@ -39,10 +39,16 @@ export class FeedSettingsComponent implements OnInit {
           _groups.push({
             id: group.id,
             name: group.name,
+            related_obj_id: group.related_obj_id,
             min_posting_member_type: group.min_posting_member_type,
             min_commenting_member_type: group.min_commenting_member_type
           });
         });
+
+        if (this.clubId) {
+          _groups = _groups.filter(group => group.related_obj_id === +this.clubId);
+        }
+
         return _groups;
       })
       .subscribe(
@@ -107,6 +113,7 @@ export class FeedSettingsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.fetch();
     this.form = this.fb.group({
       'walls': this.fb.array([])
     });
