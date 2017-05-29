@@ -189,6 +189,7 @@ export class TeamCreateComponent implements OnInit {
 
     if (club.action === null) {
       delete this.accountPrivileges[CP_PRIVILEGES_MAP.clubs];
+      delete this.accountPrivileges[CP_PRIVILEGES_MAP.moderation];
       return;
     }
 
@@ -197,6 +198,11 @@ export class TeamCreateComponent implements OnInit {
       this.schoolPrivileges,
       {
         [CP_PRIVILEGES_MAP.clubs]: {
+          r: club.action === 2 ? true : true,
+          w: club.action === 2 ? false : true
+        },
+
+        [CP_PRIVILEGES_MAP.moderation]: {
           r: club.action === 2 ? true : true,
           w: club.action === 2 ? false : true
         }
