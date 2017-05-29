@@ -10,17 +10,19 @@ const API_VERSION = {
 if (isProd) {
   API_BASE_URL = `https://api.studentlifemobile.com/cc`;
 } else {
-  API_BASE_URL = `https://usstagingapi.studentlifemobile.com/cc`;
+  API_BASE_URL = 'https://usstagingapi.studentlifemobile.com/cc';
+  // API_BASE_URL = 'http://ec2-54-234-212-53.compute-1.amazonaws.com:5002/cc';
 }
 
 const API_KEY = 'IUm65kXecFWch54mzJjpy63spWZX3AVp';
 
 const API_ENDPOINTS = {
+  USER: 'user',
+  CLUBS: 'club',
+  IMAGE: 'image',
   ADMIN: 'admin',
   STORE: 'store',
   EVENT: 'event',
-  CLUBS: 'club',
-  IMAGE: 'image',
   SCHOOL: 'school',
   SESSION: 'session',
   P_RESET: 'ns_admin',

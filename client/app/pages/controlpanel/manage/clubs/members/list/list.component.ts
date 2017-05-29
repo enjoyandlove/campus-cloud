@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { URLSearchParams } from '@angular/http';
 
 import { MembersService } from '../members.service';
+import { CPSession } from '../../../../../../session';
 import { BaseComponent } from '../../../../../../base/base.component';
 
 declare var $: any;
@@ -20,17 +23,21 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
   deleteMember = '';
 
   constructor(
+    private session: CPSession,
+    private route: ActivatedRoute,
     private membersService: MembersService
   ) {
     super();
     super.isLoading().subscribe(res => this.loading = res);
-
-    this.fetch();
   }
 
   private fetch() {
+    let search = new URLSearchParams();
+    search.append('group_id', this.route.snapshot.parent.parent.parent.params['clubId']);
+    search.append('school_id', this.session.school.id.toString());
+
     super
-      .fetchData(this.membersService.getMembers())
+      .fetchData(this.membersService.getMembers(search))
       .then(res => this.members = res.data)
       .catch(err => console.log(err));
   }
@@ -44,5 +51,7 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
     this[modal] = false;
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.fetch();
+  }
 }

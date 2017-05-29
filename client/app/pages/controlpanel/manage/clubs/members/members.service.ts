@@ -16,14 +16,10 @@ export class MembersService extends BaseService {
     Object.setPrototypeOf(this, MembersService.prototype);
   }
 
-  getMembers(search?: URLSearchParams) {
-    if (search) { console.log(search); }
+  getMembers(search: URLSearchParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER}/`;
 
-    const promise = new Promise(resolve => {
-      resolve(mockMembers);
-    });
-
-    return Observable.fromPromise(promise).delay(1000).map(res => res);
+    return super.get(url, { search }).map(res => res.json());
   }
 
   getUploadImageUrl() {
