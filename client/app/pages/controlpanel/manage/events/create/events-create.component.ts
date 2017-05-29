@@ -264,7 +264,8 @@ export class EventsCreateComponent implements OnInit {
       'description': [null],
       'event_feedback': [1], // 1 => Enabled
       'event_manager_id': [null],
-      'attendance_manager_email': [null]
+      'attendance_manager_email': [null],
+      'custom_basic_feedback_label': [null]
     });
 
     let _self = this;

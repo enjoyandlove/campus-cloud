@@ -169,7 +169,8 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       'description': [res.description],
       'event_feedback': [res.event_feedback],
       'event_manager_id': [res.event_manager_id],
-      'attendance_manager_email': [res.attendance_manager_email]
+      'attendance_manager_email': [res.attendance_manager_email],
+      'custom_basic_feedback_label': [res.custom_basic_feedback_label]
     });
 
     this.updateDatePicker();
