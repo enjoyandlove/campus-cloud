@@ -21,5 +21,5 @@ from controlpanel import views
 
 urlpatterns = [
     url(r'^', include('controlpanel.urls', namespace="controlpanel")),
-    url(r'^', views.handle_404)
+    url(r'^.*/$', views.handle_404)
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
