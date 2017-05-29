@@ -19,6 +19,7 @@ const API_ENDPOINTS = {
   ADMIN: 'admin',
   STORE: 'store',
   EVENT: 'event',
+  CLUBS: 'club',
   IMAGE: 'image',
   SCHOOL: 'school',
   SESSION: 'session',

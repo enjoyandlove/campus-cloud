@@ -22,7 +22,14 @@
 
         <li class="cp-form__item row" *ngFor="let club of state.clubs">
           <span class="col-xs-5 text-truncate clubs__thumbnail">
-            <img class="img-rounded" [src]="club.logo_url">
+            <img
+              class="img-rounded"
+              [src]="club.logo_url"
+              *ngIf="club.logo_url !== ''">
+            <img
+              class="img-rounded"
+              src="/dist/default/user.png"
+              *ngIf="club.logo_url === ''">
             <strong>
                 <a [routerLink]="[club.id + '/wall']">
                   {{ club.name }}
@@ -38,7 +45,7 @@
             members
           </span>
           <span class="col-xs-1 text-truncate">
-            events
+            {{ club.total_item_count }}
           </span>
 
           <span

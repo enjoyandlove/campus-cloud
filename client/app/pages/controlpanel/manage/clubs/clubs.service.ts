@@ -19,25 +19,17 @@ export class ClubsService extends BaseService {
     Object.setPrototypeOf(this, ClubsService.prototype);
   }
 
-  getClubs(search?: URLSearchParams) {
-    if (search) { console.log(search); }
+  getClubs(search: URLSearchParams, startRange: number, endRange: number) {
+    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CLUBS}`;
+    const url = `${common}/${startRange};${endRange}`;
 
-    const promise = new Promise(resolve => {
-      resolve(mockClubs);
-    });
-
-    return Observable.fromPromise(promise).map(res => res);
+    return super.get(url, { search }).map(res => res.json());
   }
 
-  getClubById(serviceId) {
-    const promise = new Promise(resolve => {
-      resolve(mockClubs.filter(service => {
-        if (service.id === +serviceId) {
-          return service;
-        }
-      }));
-    });
-    return Observable.fromPromise(promise).delay(1000).map(res => res);
+  getClubById(serviceId: number, search: URLSearchParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CLUBS}/${serviceId}`;
+
+    return super.get(url, { search }).map(res => res.json());
   }
 
   getUploadImageUrl() {
