@@ -7,6 +7,7 @@ import { ClubsService } from '../clubs.service';
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { CP_PRIVILEGES_MAP } from '../../../../../shared/utils/privileges';
 
 @Component({
   selector: 'cp-clubs-details',
@@ -42,6 +43,8 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
   }
 
   buildHeader(name) {
+    let schoolPrivileges = this.session.user.school_level_privileges[this.clubId];
+    let accountPrivilege = this.session.user.account_level_privileges[this.clubId];
     let menu = {
       heading: name,
       subheading: null,
@@ -49,7 +52,31 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
       children: []
     };
 
-    const links = ['Wall', 'Events', 'Members', 'Info'];
+    let links = ['Members', 'Info'];
+
+    if (schoolPrivileges) {
+      if (schoolPrivileges[CP_PRIVILEGES_MAP.events].r) {
+        links = ['Events', ...links];
+      }
+
+      if (schoolPrivileges[CP_PRIVILEGES_MAP.moderation].r) {
+        links = ['Wall', ...links];
+      }
+    }
+
+    if (accountPrivilege) {
+      if (links.indexOf('Events') === -1 &&
+        accountPrivilege[CP_PRIVILEGES_MAP.events] &&
+        accountPrivilege[CP_PRIVILEGES_MAP.events].r) {
+        links = ['Events', ...links];
+      }
+
+      if (links.indexOf('Wall') === -1 &&
+        accountPrivilege[CP_PRIVILEGES_MAP.moderation]
+        && accountPrivilege[CP_PRIVILEGES_MAP.moderation].r) {
+        links = ['Wall', ...links];
+      }
+    }
 
     links.forEach(link => {
       menu.children.push({
