@@ -68,11 +68,13 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
   }
 
   onPaginationNext() {
-
+    super.goToNext();
+    this.fetch();
   }
 
   onPaginationPrevious() {
-
+    super.goToPrevious();
+    this.fetch();
   }
 
   ngOnInit() { }
