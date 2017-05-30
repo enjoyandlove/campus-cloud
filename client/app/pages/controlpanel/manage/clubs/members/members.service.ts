@@ -22,6 +22,12 @@ export class MembersService extends BaseService {
     return super.get(url, { search }).map(res => res.json());
   }
 
+  getSocialGroupDetails(search: URLSearchParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SOCIAL_GROUP}/`;
+
+    return super.get(url, { search }).map(res => res.json());
+  }
+
   getUploadImageUrl() {
     return `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
   }

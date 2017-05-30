@@ -41,7 +41,6 @@ export class ClubsMembersEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.member);
     this.form = this.fb.group({
       'firstname': [this.member.firstname, Validators.required],
       'lastname': [this.member.lastname, Validators.required],

@@ -32,12 +32,24 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    let search = new URLSearchParams();
-    search.append('group_id', this.route.snapshot.parent.parent.parent.params['clubId']);
-    search.append('school_id', this.session.school.id.toString());
+    let groupSearch = new URLSearchParams();
+    let memberSearch = new URLSearchParams();
+
+    memberSearch.append('school_id', this.session.school.id.toString());
+
+    groupSearch.append('store_id', this.route.snapshot.parent.parent.parent.params['clubId']);
+    groupSearch.append('school_id', this.session.school.id.toString());
+
+    let socialGroupDetails$ = this.membersService.getSocialGroupDetails(groupSearch);
+
+    let stream$ = socialGroupDetails$.flatMap((groups: any) => {
+      memberSearch.append('group_id', groups[0].id.toString());
+
+      return this.membersService.getMembers(memberSearch);
+    });
 
     super
-      .fetchData(this.membersService.getMembers(search))
+      .fetchData(stream$)
       .then(res => this.members = res.data)
       .catch(err => console.log(err));
   }
