@@ -31,7 +31,6 @@ export class ClubsMembersDeleteComponent implements OnInit {
         },
         err => console.error(err)
       );
-    console.log('delete');
   }
 
   ngOnInit() { }

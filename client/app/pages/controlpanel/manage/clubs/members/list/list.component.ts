@@ -74,6 +74,22 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
     );
   }
 
+  onEdited(member) {
+    this.state = Object.assign(
+      {},
+      this.state,
+      {
+        members: this.state.members.map(_member => {
+          if (_member.id === member.id) {
+            _member = member;
+            return _member;
+          }
+          return _member;
+        })
+      }
+    );
+  }
+
   onAdded(member) {
     this.state = Object.assign(
       {},

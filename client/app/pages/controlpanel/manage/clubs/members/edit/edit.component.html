@@ -6,6 +6,7 @@
 
         <span
           data-dismiss="modal"
+          (click)="doTearDown()"
           class="pull-right hover cpmodal__header__close">
           &times;
         </span>
@@ -17,44 +18,31 @@
     <div class="row">
       <div class="col-xs-12">
         <form [formGroup]="form">
-          <div class="form-group">
+          <div class="form-group dropdown">
             <label i18n>Name (need a mobile app account)</label>
             <input
+              disabled
               type="text"
               class="form-control"
-              formControlName="fullname"
-              placeholder="Enter a name or Email Address"
-              [class.error]="formErrors && form.controls['fullname'].hasError('required')">
+              [placeholder]="[member.firstname + ' ' + member.lastname]">
+
+              <ul class="membersBox" *ngIf="members.length">
+                <li
+                  (click)="onMemberSelected(member)"
+                  *ngFor="let member of members">
+                  {{ member.label }}
+                </li>
+              </ul>
+
           </div>
           <div class="row form-group">
             <div class="col-xs-6">
               <label i18n>Member Type</label>
               <cp-dropdown
                 [items]="memberTypes"
-                (selected)="onTypeChange($event)">
+                [selectedItem]="defaultType"
+                (selected)="onTypeChange($event.action)">
               </cp-dropdown>
-            </div>
-            <div class="col-xs-6" *ngIf="isExec">
-              <label i18n>Position</label>
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Position"
-                formControlName="position">
-            </div>
-          </div>
-
-          <div class="form-group" *ngIf="isExec">
-            <label i18n>Description</label>
-            <textarea
-              class="form-control"
-              formControlName="description">
-            </textarea>
-          </div>
-
-          <div class="form-group" *ngIf="isExec">
-            <div class="row">
-              <cp-image-upload (uploaded)="onUploadedImage($event)"></cp-image-upload>
             </div>
           </div>
         </form>
@@ -67,6 +55,7 @@
       <div class="col-xs-6 col-xs-offset-6 text-right">
         <button
           type="button"
+          (click)="doTearDown()"
           class="cpbtn cpbtn--cancel"
           data-dismiss="modal" i18n>
           Cancel
@@ -75,6 +64,7 @@
         <button
           type="button"
           (click)="onSave()"
+          [disabled]="!form.valid"
           class="cpbtn cpbtn--primary"i18n>
           Edit
         </button>

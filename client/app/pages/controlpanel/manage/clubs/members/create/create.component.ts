@@ -112,6 +112,7 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
         member => {
           this.added.emit(member);
           $('#membersCreate').modal('hide');
+          this.form.reset();
         },
         err => console.log(err)
       );
