@@ -8,19 +8,28 @@ import { BaseComponent } from '../../../../../../base/base.component';
 
 declare var $: any;
 
+interface IState {
+  members: Array<any>;
+}
+
+const state: IState = {
+  members: []
+};
+
 @Component({
   selector: 'cp-clubs-members',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
 export class ClubsMembersComponent extends BaseComponent implements OnInit {
-  members;
   loading;
   isEdit;
+  groupId;
   isCreate;
   isDelete;
   editMember = '';
   deleteMember = '';
+  state: IState = state;
 
   constructor(
     private session: CPSession,
@@ -44,14 +53,35 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
 
     let stream$ = socialGroupDetails$.flatMap((groups: any) => {
       memberSearch.append('group_id', groups[0].id.toString());
+      this.groupId = groups[0].id;
 
       return this.membersService.getMembers(memberSearch);
     });
 
     super
       .fetchData(stream$)
-      .then(res => this.members = res.data)
+      .then(res => this.state.members = res.data)
       .catch(err => console.log(err));
+  }
+
+  onDeleted(id) {
+    this.state = Object.assign(
+      {},
+      this.state.members,
+      {
+        members: this.state.members.filter(member => member.id !== id)
+      }
+    );
+  }
+
+  onAdded(member) {
+    this.state = Object.assign(
+      {},
+      this.state.members,
+      {
+        members: [member, ...this.state.members]
+      }
+    );
   }
 
   onLaunchCreateModal() {

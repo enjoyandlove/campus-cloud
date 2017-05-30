@@ -7,11 +7,11 @@
 
   <div *ngSwitchCase="false">
     <cp-no-content
-      *ngIf="!members.length"
+      *ngIf="!state.members.length"
       noContentText="No Members Found...">
     </cp-no-content>
 
-    <div *ngIf="members.length">
+    <div *ngIf="state.members.length">
       <ul class="members cp-form">
         <li class="cp-form__header col-xs-12">
           <div class="row">
@@ -21,7 +21,7 @@
           </div>
         </li>
 
-        <li class="cp-form__item col-xs-12" *ngFor="let member of members">
+        <li class="cp-form__item col-xs-12" *ngFor="let member of state.members">
           <div class="row">
             <span class="col-xs-3 text-truncate members__thumbnail">
               <img class="img-rounded" [src]="member.avatar_url">
@@ -37,7 +37,7 @@
               {{ member.role }}
             </span>
             <span class="col-xs-2 text-truncate">
-              {{ member.member_type }}
+              {{ member.member_type === 2 ? 'Executive' : 'Member' }}
             </span>
 
             <span
@@ -50,18 +50,24 @@
         </li>
       </ul>
     </div>
+
+    <cp-modal modalId="membersEdit">
+      <cp-members-edit [member]="editMember"></cp-members-edit>
+    </cp-modal>
+
+    <cp-modal modalId="membersDelete">
+      <cp-members-delete
+        [groupId]="groupId"
+        [member]="deleteMember"
+        (deleted)="onDeleted($event)">
+      </cp-members-delete>
+    </cp-modal>
+
+    <cp-modal modalId="membersCreate">
+      <cp-members-create
+        [groupId]="groupId"
+        (added)="onAdded($event)">
+      </cp-members-create>
+    </cp-modal>
   </div>
 </div>
-
-
-<cp-modal modalId="membersEdit">
-  <cp-members-edit [member]="editMember"></cp-members-edit>
-</cp-modal>
-
-<cp-modal modalId="membersDelete">
-  <cp-members-delete [member]="deleteMember"></cp-members-delete>
-</cp-modal>
-
-<cp-modal modalId="membersCreate">
-  <cp-members-create></cp-members-create>
-</cp-modal>
