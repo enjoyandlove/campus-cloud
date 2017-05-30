@@ -42,10 +42,10 @@
               {{ club.description }}
             </span>
             <span class="col-xs-2 text-truncate">
-              status
+              {{ club.status === 1 ? 'Active' : 'Pending' }}
             </span>
             <span class="col-xs-2 text-truncate">
-              members
+              {{ club.member_count !== -1 ? club.member_count : '---' }}
             </span>
             <span class="col-xs-1 text-truncate">
               {{ club.total_item_count }}

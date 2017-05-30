@@ -1,9 +1,11 @@
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 
 // import { ClubsService } from '../clubs.service';
 import { CPMap } from '../../../../../shared/utils';
 import { membershipTypes, statusTypes } from './permissions';
+import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
 @Component({
   selector: 'cp-clubs-create',
@@ -18,6 +20,7 @@ export class ClubsCreateComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private store: Store<any>
     // private errorService: ErrorService,
     // private clubsService: ClubsService,
   ) { }
@@ -68,6 +71,17 @@ export class ClubsCreateComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.store.dispatch({
+      type: HEADER_UPDATE,
+      payload:
+      {
+        'heading': 'Create Club',
+        'subheading': null,
+        'em': null,
+        'children': []
+      }
+    });
+
     this.statusTypes = statusTypes;
     this.membershipTypes = membershipTypes;
 
