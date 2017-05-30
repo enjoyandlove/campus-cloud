@@ -28,23 +28,19 @@ export class ClubsListActionBoxComponent implements OnInit {
     this.filter.emit(this.state);
   }
 
-  launchModal() {
-    console.log('launching modal');
-  }
-
   ngOnInit() {
     this.clubFilter = [
       {
         label: 'All Clubs',
-        action: 'all'
+        action: null
       },
       {
         label: 'Activated',
-        action: 'active'
+        action: 1
       },
       {
         label: 'Pending',
-        action: 'pending'
+        action: 0
       }
     ];
   }
