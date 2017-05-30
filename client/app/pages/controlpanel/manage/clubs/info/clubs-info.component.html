@@ -15,7 +15,7 @@
               <div class="row">
                 <div class="col-xs-9 text-truncate">
                   <p class="club__title">{{ club.name }}</p>
-                  <p class="club__status">PENDING (STATUS)</p>
+                  <p class="club__status">{{ club.status === 1 ? 'Active' : 'Pending' }}</p>
                 </div>
                 <div class="col-xs-3 pull-right">
                 <a

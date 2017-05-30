@@ -36,17 +36,4 @@ export class MembersService extends BaseService {
 
     return super.update(url, body).map(res => res.json());
   }
-
-  // getUploadImageUrl() {
-  //   return `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
-  // }
-
-  // getMembersbyId(clubId: number) {
-  //   const promise = new Promise(resolve => {
-  //     setTimeout(() => { resolve(mockMembers.filter(club => club.id === +clubId)); }, 1000);
-  //   });
-
-  //   return Observable.fromPromise(promise).map(res => res[0]);
-  // }
-
 }

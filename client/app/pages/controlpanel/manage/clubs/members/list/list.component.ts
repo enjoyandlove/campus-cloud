@@ -10,10 +10,12 @@ declare var $: any;
 
 interface IState {
   members: Array<any>;
+  search_str: string;
 }
 
 const state: IState = {
-  members: []
+  members: [],
+  search_str: null
 };
 
 @Component({
@@ -44,6 +46,7 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
     let groupSearch = new URLSearchParams();
     let memberSearch = new URLSearchParams();
 
+    memberSearch.append('search_str', this.state.search_str);
     memberSearch.append('school_id', this.session.school.id.toString());
 
     groupSearch.append('store_id', this.route.snapshot.parent.parent.parent.params['clubId']);
@@ -67,7 +70,7 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
   onDeleted(id) {
     this.state = Object.assign(
       {},
-      this.state.members,
+      this.state,
       {
         members: this.state.members.filter(member => member.id !== id)
       }
@@ -93,11 +96,17 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
   onAdded(member) {
     this.state = Object.assign(
       {},
-      this.state.members,
+      this.state,
       {
         members: [member, ...this.state.members]
       }
     );
+  }
+
+  onFilter(search_str) {
+    this.state = Object.assign({}, this.state, { search_str });
+
+    this.fetch();
   }
 
   onLaunchCreateModal() {
