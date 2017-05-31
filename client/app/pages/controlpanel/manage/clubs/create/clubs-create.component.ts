@@ -1,9 +1,11 @@
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
+import { URLSearchParams } from '@angular/http';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-// import { ClubsService } from '../clubs.service';
+import { ClubsService } from '../clubs.service';
 import { CPSession } from '../../../../../session';
 import { CPMap } from '../../../../../shared/utils';
 import { membershipTypes, statusTypes } from './permissions';
@@ -22,44 +24,43 @@ export class ClubsCreateComponent implements OnInit {
   mapCenter: BehaviorSubject<any>;
 
   constructor(
+    private router: Router,
     private fb: FormBuilder,
     private store: Store<any>,
-    private session: CPSession
-    // private errorService: ErrorService,
-    // private clubsService: ClubsService,
+    private session: CPSession,
+    private clubsService: ClubsService,
   ) { }
 
-  buildAdminControl() {
-    return this.fb.group({
-      'first_name': [null, Validators.required],
-      'last_name': [null, Validators.required],
-      'email': [null, Validators.required]
-    });
-  }
-
-  removeAdminControl(index): void {
-    let control = <FormArray>this.form.controls['admins'];
-    control.removeAt(index);
-  }
-
-  addAdminControl(): void {
-    let control = <FormArray>this.form.controls['admins'];
-    control.push(this.buildAdminControl());
-  }
-
   onSubmit() {
+    this.formError = false;
+
     if (!this.form.valid) {
       this.formError = true;
       return;
     }
+
+    let search = new URLSearchParams();
+    search.append('school_id', this.session.school.id.toString());
+
+    this
+      .clubsService
+      .createClub(this.form.value, search)
+      .subscribe(
+        res => {this.router.navigate(['/manage/clubs/' + res.id + '/info']); },
+        err => console.log(err)
+      );
+  }
+
+  onUploadedImage(image): void {
+    this.form.controls['logo_url'].setValue(image);
   }
 
   onSelectedMembership(type) {
-    console.log(type);
+    this.form.controls['has_membership'].setValue(type.action);
   }
 
   onSelectedStatus(type) {
-    console.log(type);
+    this.form.controls['status'].setValue(type.action);
   }
 
   onPlaceChange(data) {
@@ -102,8 +103,8 @@ export class ClubsCreateComponent implements OnInit {
     this.form = this.fb.group({
       'name': [null, Validators.required],
       'logo_url': [null, Validators.required],
-      'status': [null, Validators.required],
-      'membership': [null, Validators.required],
+      'status': [1, Validators.required],
+      'has_membership': [true, Validators.required],
       'location': [null],
       'address': [null],
       'city': [null],
@@ -112,13 +113,11 @@ export class ClubsCreateComponent implements OnInit {
       'province': [null],
       'latitude': [null],
       'longitude': [null],
-      'room': [null],
-      'room_data': [null],
+      'room_info': [null],
       'description': [null],
       'website': [null],
-      'phone_number': [null, Validators.required],
-      'email': [null, Validators.required],
-      'admins': this.fb.array([this.buildAdminControl()]),
+      'phone': [null],
+      'email': [null],
     });
   }
 }

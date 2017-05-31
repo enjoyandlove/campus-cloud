@@ -15,6 +15,7 @@ import { CP_PRIVILEGES_MAP } from '../../../../../shared/utils/privileges';
 })
 export class ClubsDetailsComponent extends BaseComponent implements OnInit {
   loading;
+  hasMembership;
   clubId: number;
 
   constructor(
@@ -35,6 +36,8 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
     super
       .fetchData(this.clubsService.getClubById(this.clubId, search))
       .then(club => {
+        this.hasMembership = club.data.has_membership;
+
         this.store.dispatch({
           type: HEADER_UPDATE,
           payload: this.buildHeader(club.data.name)
@@ -52,7 +55,11 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
       children: []
     };
 
-    let links = ['Members', 'Info'];
+    let links = ['Info'];
+
+    if (this.hasMembership) {
+      links = ['Members', ...links];
+    }
 
     if (schoolPrivileges) {
       if (schoolPrivileges[CP_PRIVILEGES_MAP.events].r) {

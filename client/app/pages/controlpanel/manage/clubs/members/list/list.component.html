@@ -22,7 +22,9 @@
           </div>
         </li>
 
-        <li class="cp-form__item col-xs-12" *ngFor="let member of state.members">
+        <li
+          class="cp-form__item col-xs-12"
+          *ngFor="let member of state.members | cpFilterPipe: { query: query, filterBy: ['firstname', 'lastname'] }">
           <div class="row">
             <span class="col-xs-3 text-truncate members__thumbnail">
               <img

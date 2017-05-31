@@ -35,6 +35,12 @@ export class ClubsService extends BaseService {
     return super.delete(url).map(res => res.json());
   }
 
+  createClub(body, search: URLSearchParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CLUBS}/`;
+
+    return super.post(url, body, { search }).map(res => res.json());
+  }
+
   setModalClubs(clubs: any[]): void {
     this.store.dispatch({
       type: CLUBS_MODAL_SET,
