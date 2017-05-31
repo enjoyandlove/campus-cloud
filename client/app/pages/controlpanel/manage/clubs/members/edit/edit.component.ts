@@ -107,6 +107,5 @@ export class ClubsMembersEditComponent implements OnInit {
         this.isTouched = true;
       }
     });
-    // console.log(this.form);
   }
 }

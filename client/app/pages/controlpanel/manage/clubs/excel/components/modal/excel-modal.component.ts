@@ -30,21 +30,23 @@ export class ClubsExcelModalComponent implements OnInit {
   }
 
   fileIsValid(file) {
+    console.log(file.size);
     let result = [];
     let validators = [
       {
-        'exp': file.name.split('.').pop() === 'xlsx',
+        'exp': file.name.split('.').pop() === 'csv',
         'error': STATUS.WRONG_EXTENSION,
         'isError': false
       },
       {
-        'exp': file.size > 5000,
+        'exp': file.size < 5000,
         'error': STATUS.FILE_IS_TOO_BIG,
         'isError': false
       }
     ];
 
     validators.map(validator => {
+      console.log(validator.exp);
       if (!validator.exp) {
         validator.isError = true;
         result.push(validator);
