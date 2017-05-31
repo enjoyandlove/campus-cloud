@@ -94,6 +94,11 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
     control.setValue(type);
   }
 
+  doReset() {
+    this.form.reset();
+    this.input.nativeElement.value = null;
+  }
+
   onSave() {
     this.formErrors = false;
 

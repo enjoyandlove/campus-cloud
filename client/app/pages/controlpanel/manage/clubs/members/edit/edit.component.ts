@@ -34,6 +34,7 @@ export class ClubsMembersEditComponent implements OnInit {
   defaultType;
   members = [];
   form: FormGroup;
+  isTouched = false;
 
   constructor(
     private fb: FormBuilder,
@@ -100,5 +101,12 @@ export class ClubsMembersEditComponent implements OnInit {
       'member': [null],
       'member_type': [this.memberTypes[0].action, Validators.required],
     });
+
+    this.form.valueChanges.subscribe(value => {
+      if (value.member_type !== this.member.member_type) {
+        this.isTouched = true;
+      }
+    });
+    // console.log(this.form);
   }
 }

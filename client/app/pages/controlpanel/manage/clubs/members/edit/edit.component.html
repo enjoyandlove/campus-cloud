@@ -2,7 +2,7 @@
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-xs-12 text-center">
-        <span i18n><strong>Add Member</strong></span>
+        <span i18n><strong>Edit Member</strong></span>
 
         <span
           data-dismiss="modal"
@@ -64,9 +64,9 @@
         <button
           type="button"
           (click)="onSave()"
-          [disabled]="!form.valid"
+          [disabled]="!isTouched"
           class="cpbtn cpbtn--primary"i18n>
-          Edit
+          Save
         </button>
       </div>
     </div>

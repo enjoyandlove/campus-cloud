@@ -58,6 +58,10 @@ form {
     margin: 0;
   }
 
+  .maps {
+    height: 200px;
+  }
+
   p.title {
     @include font-24px();
     @include font-bold();
