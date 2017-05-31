@@ -176,7 +176,16 @@ export class TeamCreateComponent implements OnInit {
       {},
       this.accountPrivileges,
       {
-        [CP_PRIVILEGES_MAP.clubs]: { ...clubs }
+        [CP_PRIVILEGES_MAP.clubs]: { ...clubs },
+
+        [CP_PRIVILEGES_MAP.membership]: {
+          r: this.user.account_level_privileges[CP_PRIVILEGES_MAP.membership].r,
+          w: this.user.account_level_privileges[CP_PRIVILEGES_MAP.membership].w
+         },
+        [CP_PRIVILEGES_MAP.moderation]: {
+          r: this.user.account_level_privileges[CP_PRIVILEGES_MAP.membership].r,
+          w: this.user.account_level_privileges[CP_PRIVILEGES_MAP.membership].w
+         }
       }
     );
   }
@@ -189,6 +198,7 @@ export class TeamCreateComponent implements OnInit {
 
     if (club.action === null) {
       delete this.accountPrivileges[CP_PRIVILEGES_MAP.clubs];
+      delete this.accountPrivileges[CP_PRIVILEGES_MAP.membership];
       delete this.accountPrivileges[CP_PRIVILEGES_MAP.moderation];
       return;
     }

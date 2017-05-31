@@ -20,8 +20,7 @@ export const STATUS = {
   EMAIL_DOES_NOT_EXIST: 'I\'m sorry, but we weren\'t able to find a user\
    with that login information',
 
-  NO_ACCOUNT_FOUND: 'The username you entered doesn\'t belong to an account.\
-   Please check your credentials and try again.',
+  NO_ACCOUNT_FOUND: 'Please check your credentials and try again.',
 
   /**
    * FORMS

@@ -2,6 +2,29 @@
 @import '~styles/components/form';
 @import '~styles/components/button';
 
+:host {
+  display: inline-block;
+}
+
+.input.small {
+  display: inline-block;
+
+  label {
+    border-radius: 4px;
+    border: 1px solid $border-color;
+
+    &.isRequired {
+      border: 1px solid $color-danger;
+      background-color: rgba(255, 96, 89, 0.25);
+    }
+
+    i {
+      padding: 8px;
+      font-size: 18px;
+      color: $color-text;
+    }
+  }
+}
 
 .input {
   display: inline-block;

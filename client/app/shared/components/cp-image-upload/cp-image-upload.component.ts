@@ -27,7 +27,19 @@ export class CPImageUploadComponent implements OnInit {
     private fileUploadService: FileUploadService
   ) { }
 
-  onFileUpload(file) {
+  validateImage(file) {
+    const fileExtension = CPArray.last(file.name.split('.'));
+
+    if (!CPImage.isSizeOk(file.size, CPImage.MAX_IMAGE_SIZE)) {
+      this.errors.push('File is too big');
+    }
+
+    if (!CPImage.isValidExtension(fileExtension, CPImage.VALID_EXTENSIONS)) {
+      this.errors.push('Wrong extension');
+    }
+  }
+
+  onFileUpload(file, asPromise?: boolean) {
     this.errors = [];
 
     if (!file) {
@@ -35,15 +47,12 @@ export class CPImageUploadComponent implements OnInit {
       return;
     }
 
-    const fileExtension = CPArray.last(file.name.split('.'));
+    this.validateImage(file);
 
-    if (!CPImage.isSizeOk(file.size, CPImage.MAX_IMAGE_SIZE)) {
-      this.errors.push('File is too big');
-      return;
-    }
-
-    if (!CPImage.isValidExtension(fileExtension, CPImage.VALID_EXTENSIONS)) {
-      this.errors.push('Wrong extension');
+    if (this.errors.length) {
+      if (asPromise) {
+        return Promise.reject(this.errors[0]);
+      }
       return;
     }
 
@@ -54,6 +63,10 @@ export class CPImageUploadComponent implements OnInit {
     const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
 
     headers.append('Authorization', auth);
+
+    if (asPromise) {
+      return this.fileUploadService.uploadFile(file, url, headers).toPromise();
+    }
 
     this
       .fileUploadService

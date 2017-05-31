@@ -29,11 +29,18 @@
                 *ngFor="let club of form.controls.clubs.controls; let i=index">
                 <div [formGroupName]="i">
                   <span class="col-xs-4 text-truncate clubs__thumbnail">
-                    <!--<img
-                      class="img-rounded"
-                      [src]="club.controls.image_url.value ?
-                            club.controls.image_url.value :
-                            club.controls.logo_url">-->
+                    <div class="avatar pull-left">
+                      <cp-upload-button
+                        theme="small"
+                        [isRequired]="formError && club.controls.logo_url.hasError('required')"
+                        (fileUpload)="onImageUpload($event, i)"
+                        *ngIf="!club.controls['logo_url'].value">
+                      </cp-upload-button>
+                      <img
+                        class="img-rounded"
+                        *ngIf="club.controls['logo_url'].value"
+                        [src]="club.controls['logo_url'].value" >
+                    </div>
                     {{ club.controls.name.value }}
                     <br>
                     <span class="text-muted">{{ club.controls.description.value }}</span>
@@ -68,8 +75,8 @@
               <button
                 type="button"
                 (click)="onSubmit()"
-                class="cpbtn cpbtn--tall cpbtn--primary" i18n>
-                <!--[disabled]="!form.controls.clubs.controls.length || !form.valid">-->
+                class="cpbtn cpbtn--tall cpbtn--primary" i18n
+                [disabled]="!form.controls.clubs.controls.length || !form.valid">
                 Import {{form.controls.clubs.controls.length}} Clubs
               </button>
             </div>
