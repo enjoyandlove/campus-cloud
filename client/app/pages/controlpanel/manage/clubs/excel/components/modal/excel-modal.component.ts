@@ -68,7 +68,6 @@ export class ClubsExcelModalComponent implements OnInit {
       .subscribe(
         (res) => {
           this.uploaded = true;
-          console.log(res);
           this.service.setModalClubs(JSON.parse(res));
         },
         err => this.error = err.json().error

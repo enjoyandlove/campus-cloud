@@ -1,4 +1,4 @@
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 
@@ -29,7 +29,6 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
       .subscribe(
         (_) => {
           // this.clubs = res;
-          // console.log(res);
           this.clubs = require('./mock.json');
           this.buildHeader();
           this.buildForm();
@@ -43,7 +42,7 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': 'Import Clubs from Excel',
+        'heading': 'Import Clubs',
         'em': `${this.clubs.length} valid student club(s) in the file`,
         'children': []
       }
@@ -64,25 +63,21 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
     this.clubs.forEach(club => {
       control.push(this.buildClubControl(club));
     });
+
     this.isFormReady = true;
-    console.log(this.form);
   }
 
   buildClubControl(club) {
     return this.fb.group({
-      'admin_email': [club.admin_email],
-      'club_email': [club.club_email],
-      'club_name': [club.club_name],
+      'name': [club.club_name, Validators.required],
+      'logo_url': [null, Validators.required],
+      'status': [0],
+      'has_membership': [true],
+      'email': [club.email],
       'description': [club.description],
-      'phone_number': [club.phone_number],
+      'phone': [club.phone],
       'website': [club.website],
-      'image_url': [null]
     });
-  }
-
-  removeControl(index) {
-    const control = <FormArray>this.form.controls['clubs'];
-    control.removeAt(index);
   }
 
   ngOnDestroy() {

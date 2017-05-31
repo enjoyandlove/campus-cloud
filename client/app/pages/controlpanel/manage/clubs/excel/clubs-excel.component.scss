@@ -21,7 +21,6 @@
 .clubs {
   padding: 0;
   list-style: none;
-  padding-bottom: 20px;
 
   &__thumbnail {
     img {
@@ -41,6 +40,11 @@
       }
     }
   }
+}
+
+.margin-bottom {
+  // to account for the fixed footer
+  padding-bottom: 90px;
 }
 
 .footer {
