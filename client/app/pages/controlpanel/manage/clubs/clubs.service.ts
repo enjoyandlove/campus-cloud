@@ -29,8 +29,10 @@ export class ClubsService extends BaseService {
     return super.get(url, { search }).map(res => res.json());
   }
 
-  getUploadImageUrl() {
-    return `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
+  deleteClubById(serviceId: number) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CLUBS}/${serviceId}`;
+
+    return super.delete(url).map(res => res.json());
   }
 
   setModalClubs(clubs: any[]): void {
