@@ -1,12 +1,144 @@
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
+import { URLSearchParams } from '@angular/http';
+import { Store } from '@ngrx/store';
+
+import { ClubsService } from '../clubs.service';
+import { CPSession } from '../../../../../session';
+import { CPMap } from '../../../../../shared/utils';
+import { BaseComponent } from '../../../../../base/base.component';
+import { membershipTypes, statusTypes } from '../create/permissions';
+import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
 @Component({
   selector: 'cp-clubs-edit',
   templateUrl: './clubs-edit.component.html',
   styleUrls: ['./clubs-edit.component.scss']
 })
-export class ClubsEditComponent implements OnInit {
-  constructor() { }
+export class ClubsEditComponent extends BaseComponent implements OnInit {
+  clubId;
+  loading;
+  formError;
+  statusTypes;
+  membershipTypes;
+  form: FormGroup;
+  mapCenter: BehaviorSubject<any>;
 
-  ngOnInit() { }
+  constructor(
+    private router: Router,
+    private fb: FormBuilder,
+    private store: Store<any>,
+    private session: CPSession,
+    private route: ActivatedRoute,
+    private clubsService: ClubsService,
+  ) {
+    super();
+    super.isLoading().subscribe(res => this.loading = res);
+    this.clubId = this.route.snapshot.params['clubId'];
+  }
+
+  fetch() {
+    let search = new URLSearchParams();
+    search.append('school_id', this.session.school.id.toString());
+
+    const stream$ = this.clubsService.getClubById(this.clubId, search);
+
+    super
+      .fetchData(stream$)
+      .then(res => console.log(res.data))
+      .catch(err => console.log(err));
+  }
+
+  onSubmit() {
+    this.formError = false;
+
+    if (!this.form.valid) {
+      this.formError = true;
+      return;
+    }
+
+    let search = new URLSearchParams();
+    search.append('school_id', this.session.school.id.toString());
+
+    this
+      .clubsService
+      .createClub(this.form.value, search)
+      .subscribe(
+      res => { this.router.navigate(['/manage/clubs/' + res.id + '/info']); },
+      err => console.log(err)
+      );
+  }
+
+  onUploadedImage(image): void {
+    this.form.controls['logo_url'].setValue(image);
+  }
+
+  onSelectedMembership(type) {
+    this.form.controls['has_membership'].setValue(type.action);
+  }
+
+  onSelectedStatus(type) {
+    this.form.controls['status'].setValue(type.action);
+  }
+
+  onPlaceChange(data) {
+    let cpMap = CPMap.getBaseMapObject(data);
+
+    this.form.controls['city'].setValue(cpMap.city);
+    this.form.controls['province'].setValue(cpMap.province);
+    this.form.controls['country'].setValue(cpMap.country);
+    this.form.controls['latitude'].setValue(cpMap.latitude);
+    this.form.controls['longitude'].setValue(cpMap.longitude);
+    this.form.controls['address'].setValue(data.name);
+    this.form.controls['postal_code'].setValue(cpMap.postal_code);
+
+    this.mapCenter.next(data.geometry.location.toJSON());
+  }
+
+  ngOnInit() {
+    this.fetch();
+    this.store.dispatch({
+      type: HEADER_UPDATE,
+      payload:
+      {
+        'heading': 'Edit Club',
+        'subheading': null,
+        'em': null,
+        'children': []
+      }
+    });
+
+    let school = this.session.school;
+
+    this.mapCenter = new BehaviorSubject(
+      {
+        lat: school.latitude,
+        lng: school.longitude
+      });
+
+    this.statusTypes = statusTypes;
+    this.membershipTypes = membershipTypes;
+
+    this.form = this.fb.group({
+      'name': [null, Validators.required],
+      'logo_url': [null, Validators.required],
+      'status': [1, Validators.required],
+      'has_membership': [true, Validators.required],
+      'location': [null],
+      'address': [null],
+      'city': [null],
+      'country': [null],
+      'postal_code': [null],
+      'province': [null],
+      'latitude': [null],
+      'longitude': [null],
+      'room_info': [null],
+      'description': [null],
+      'website': [null],
+      'phone': [null],
+      'email': [null],
+    });
+  }
 }

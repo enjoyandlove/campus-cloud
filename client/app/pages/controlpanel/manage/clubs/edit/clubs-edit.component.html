@@ -1,1 +1,7 @@
-Clubs Edit
+<ng-container [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <ng-container *ngSwitchCase="false">
+    Clubs Edit
+  </ng-container>
+</ng-container>
