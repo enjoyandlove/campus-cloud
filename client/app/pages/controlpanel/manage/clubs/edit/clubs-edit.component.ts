@@ -26,6 +26,8 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
   membershipTypes;
   form: FormGroup;
   isFormReady = false;
+  defaultStatus;
+  defaultMembership;
   mapCenter: BehaviorSubject<any>;
 
   constructor(
@@ -41,6 +43,30 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
     this.clubId = this.route.snapshot.params['clubId'];
   }
 
+  getDefaultStatus(value) {
+    let result;
+
+    this.statusTypes.map(status => {
+      if (status.action === value) {
+        result = status;
+      }
+    });
+
+    return result;
+  }
+
+  getDefaultMembership(value) {
+    let result;
+
+    this.membershipTypes.map(membership => {
+      if (membership.action === value) {
+        result = membership;
+      }
+    });
+
+    return result;
+  }
+
   fetch() {
     let search = new URLSearchParams();
     search.append('school_id', this.session.school.id.toString());
@@ -52,6 +78,10 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
       .then(res => {
         this.club = res.data;
         this.buildForm();
+
+        this.defaultStatus = this.getDefaultStatus(this.club.status);
+        this.defaultMembership = this.getDefaultMembership(this.club.has_membership);
+
         this.mapCenter = new BehaviorSubject(
           {
             lat: res.data.latitude,

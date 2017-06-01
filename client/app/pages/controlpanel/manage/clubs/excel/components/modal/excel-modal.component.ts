@@ -30,7 +30,6 @@ export class ClubsExcelModalComponent implements OnInit {
   }
 
   fileIsValid(file) {
-    console.log(file.size);
     let result = [];
     let validators = [
       {
@@ -46,7 +45,6 @@ export class ClubsExcelModalComponent implements OnInit {
     ];
 
     validators.map(validator => {
-      console.log(validator.exp);
       if (!validator.exp) {
         validator.isError = true;
         result.push(validator);
