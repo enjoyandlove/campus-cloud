@@ -1,23 +1,19 @@
+import io
+import csv
 import json
 import datetime
+
 from openpyxl import load_workbook
 from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-<<<<<<< HEAD
-import json
-import csv
-import io
-import datetime
-=======
 from django.http import HttpResponseRedirect
 
 
 
 def handle_404(request):
   return HttpResponseRedirect("/")
->>>>>>> 2a3a31d0edfea42d3c58b7138e11d6fb5c44366c
 
 '''
 Shell to serve angular app,

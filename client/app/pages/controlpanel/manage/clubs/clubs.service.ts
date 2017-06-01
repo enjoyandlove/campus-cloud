@@ -41,6 +41,12 @@ export class ClubsService extends BaseService {
     return super.post(url, body, { search }).map(res => res.json());
   }
 
+  updateClub(body, clubId: number, search: URLSearchParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CLUBS}/${clubId}`;
+
+    return super.update(url, body, { search }).map(res => res.json());
+  }
+
   setModalClubs(clubs: any[]): void {
     this.store.dispatch({
       type: CLUBS_MODAL_SET,

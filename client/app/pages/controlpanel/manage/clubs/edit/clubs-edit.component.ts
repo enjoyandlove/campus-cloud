@@ -18,9 +18,11 @@ import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
   styleUrls: ['./clubs-edit.component.scss']
 })
 export class ClubsEditComponent extends BaseComponent implements OnInit {
+  club;
   clubId;
   loading;
   formError;
+  isFormReady;
   statusTypes;
   membershipTypes;
   form: FormGroup;
@@ -47,8 +49,41 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
 
     super
       .fetchData(stream$)
-      .then(res => console.log(res.data))
+      .then(res => {
+        this.club = res.data;
+        this.buildForm();
+        this.mapCenter = new BehaviorSubject(
+          {
+            lat: res.data.latitude,
+            lng: res.data.longitude
+          }
+        );
+      })
       .catch(err => console.log(err));
+  }
+
+  buildForm() {
+    this.form = this.fb.group({
+      'name': [this.club.name, Validators.required],
+      'logo_url': [this.club.logo_url, Validators.required],
+      'status': [this.club.status, Validators.required],
+      'has_membership': [this.club.has_membership, Validators.required],
+      'location': [this.club.location],
+      'address': [this.club.address],
+      'city': [this.club.city],
+      'country': [this.club.country],
+      'postal_code': [this.club.postal_code],
+      'province': [this.club.province],
+      'latitude': [this.club.latitude],
+      'longitude': [this.club.longitude],
+      'room_info': [this.club.room_info],
+      'description': [this.club.description],
+      'website': [this.club.website],
+      'phone': [this.club.phone],
+      'email': [this.club.email],
+    });
+
+    this.isFormReady = true;
   }
 
   onSubmit() {
@@ -64,7 +99,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
 
     this
       .clubsService
-      .createClub(this.form.value, search)
+      .updateClub(this.form.value, this.clubId, search)
       .subscribe(
       res => { this.router.navigate(['/manage/clubs/' + res.id + '/info']); },
       err => console.log(err)
@@ -110,35 +145,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
       }
     });
 
-    let school = this.session.school;
-
-    this.mapCenter = new BehaviorSubject(
-      {
-        lat: school.latitude,
-        lng: school.longitude
-      });
-
     this.statusTypes = statusTypes;
     this.membershipTypes = membershipTypes;
-
-    this.form = this.fb.group({
-      'name': [null, Validators.required],
-      'logo_url': [null, Validators.required],
-      'status': [1, Validators.required],
-      'has_membership': [true, Validators.required],
-      'location': [null],
-      'address': [null],
-      'city': [null],
-      'country': [null],
-      'postal_code': [null],
-      'province': [null],
-      'latitude': [null],
-      'longitude': [null],
-      'room_info': [null],
-      'description': [null],
-      'website': [null],
-      'phone': [null],
-      'email': [null],
-    });
   }
 }
