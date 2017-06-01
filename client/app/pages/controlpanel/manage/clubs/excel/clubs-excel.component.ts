@@ -45,6 +45,12 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
     );
   }
 
+  onRemoveImage(index) {
+    let clubsControl = <FormArray>this.form.controls['clubs'];
+    let control = <FormGroup>clubsControl.at(index);
+    control.controls['logo_url'].setValue(null);
+  }
+
   private buildHeader() {
     this.store.dispatch({
       type: HEADER_UPDATE,
