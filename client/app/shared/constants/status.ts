@@ -40,6 +40,8 @@ export const STATUS = {
    */
   FILE_IS_TOO_BIG: 'File is too big',
 
-  WRONG_EXTENSION: 'Wrong extension',
+  WRONG_EXTENSION: 'Unsupported file type',
+
+  WRONG_EXTENSION_IMAGE: 'Please upload a JPG or PNG image',
 };
 

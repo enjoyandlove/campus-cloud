@@ -30,30 +30,7 @@ export class AnnouncementsComposeComponent implements OnInit {
     let search: URLSearchParams = new URLSearchParams();
     search.append('school_id', school.id.toString());
 
-    this.stores$ = this
-      .storeService
-      .getStores(search)
-      .startWith([
-        {
-          'label': '---',
-          'action': null
-        }
-      ])
-      .map(res => {
-      const stores = [
-        {
-          'label': '---',
-          'action': null
-        }
-      ];
-      res.forEach(store => {
-        stores.push({
-          'label': store.name,
-          'action': store.id
-        });
-      });
-      return stores;
-    });
+    this.stores$ = this.storeService.getStores(search);
   }
 
   resetModal() {
@@ -62,7 +39,7 @@ export class AnnouncementsComposeComponent implements OnInit {
   }
 
   onSelectedStore(store) {
-    this.form.controls['store_id'].setValue(store.action);
+    this.form.controls['store_id'].setValue(store.value);
   }
 
   doValidate() {

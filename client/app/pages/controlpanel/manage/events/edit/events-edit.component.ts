@@ -169,7 +169,8 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       'description': [res.description],
       'event_feedback': [res.event_feedback],
       'event_manager_id': [res.event_manager_id],
-      'attendance_manager_email': [res.attendance_manager_email]
+      'attendance_manager_email': [res.attendance_manager_email],
+      'custom_basic_feedback_label': [res.custom_basic_feedback_label]
     });
 
     this.updateDatePicker();
@@ -252,25 +253,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     search.append('school_id', school.id.toString());
 
     const event$ = this.eventService.getEventById(this.eventId);
-    const stores$ = this
-      .storeService
-      .getStores(search)
-      .startWith([{ 'label': '---' }])
-      .map(res => {
-        const stores = [
-          {
-            'label': 'All Hosts',
-            'value': null
-          }
-        ];
-        res.forEach(store => {
-          stores.push({
-            'label': store.name,
-            'value': store.id
-          });
-        });
-        return stores;
-      });
+    const stores$ = this.storeService.getStores(search);
 
     const stream$ = Observable.combineLatest(event$, stores$);
 

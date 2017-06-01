@@ -59,22 +59,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
     let search: URLSearchParams = new URLSearchParams();
     search.append('school_id', school.id.toString());
 
-    const stores$ = this.storeService.getStores(search).map(res => {
-      const stores = [
-        {
-          'label': 'Host Name',
-          'event': null
-        }
-      ];
-
-      res.forEach(store => {
-        stores.push({
-          'label': store.name,
-          'event': store.id
-        });
-      });
-      return stores;
-    });
+    const stores$ = this.storeService.getStores(search);
 
     super
       .fetchData(stores$)

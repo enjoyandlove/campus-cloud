@@ -28,8 +28,9 @@
           class="card-margin"
           [isEvent]="isEvent"
           [isService]="isService"
+          (send)="send.emit($event)"
           [isSubmitted]="isSubmitted"
-          (send)="send.emit($event)">
+          [defaultQuestion]="data.custom_basic_feedback_label">
         </cp-feedback-form>
       </div>
     </div>
