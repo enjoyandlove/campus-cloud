@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { ClubsService } from '../clubs.service';
+import { isDev } from '../../../../../config/env';
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base/base.component';
 import { CLUBS_MODAL_RESET } from '../../../../../reducers/clubs.reducer';
@@ -36,9 +37,8 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
       .store
       .select('CLUBS')
       .subscribe(
-        (_) => {
-          // this.clubs = res;
-          this.clubs = require('./mock.json');
+        res => {
+          this.clubs = !isDev ? res : require('./mock.json');
           this.buildHeader();
           this.buildForm();
         }
