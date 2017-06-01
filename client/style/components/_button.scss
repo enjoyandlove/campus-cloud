@@ -38,6 +38,14 @@ a.cpbtn, {
     outline: none;
   }
 
+  &--no-border {
+    border: none !important;
+
+    &:hover {
+      border: none;
+    }
+  }
+
   &--tall {
     padding: 14px 16px;
   }

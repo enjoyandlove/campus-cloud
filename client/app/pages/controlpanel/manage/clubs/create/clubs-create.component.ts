@@ -1,9 +1,15 @@
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
+import { URLSearchParams } from '@angular/http';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 
-// import { ClubsService } from '../clubs.service';
+import { ClubsService } from '../clubs.service';
+import { CPSession } from '../../../../../session';
 import { CPMap } from '../../../../../shared/utils';
 import { membershipTypes, statusTypes } from './permissions';
+import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
 @Component({
   selector: 'cp-clubs-create',
@@ -15,67 +21,90 @@ export class ClubsCreateComponent implements OnInit {
   statusTypes;
   membershipTypes;
   form: FormGroup;
+  mapCenter: BehaviorSubject<any>;
 
   constructor(
+    private router: Router,
     private fb: FormBuilder,
-    // private errorService: ErrorService,
-    // private clubsService: ClubsService,
+    private store: Store<any>,
+    private session: CPSession,
+    private clubsService: ClubsService,
   ) { }
 
-  onPlaceChange(address) {
-    let cpMap = CPMap.getBaseMapObject(address);
+  onSubmit() {
+    this.formError = false;
+
+    if (!this.form.valid) {
+      this.formError = true;
+      return;
+    }
+
+    let search = new URLSearchParams();
+    search.append('school_id', this.session.school.id.toString());
+
+    this
+      .clubsService
+      .createClub(this.form.value, search)
+      .subscribe(
+        res => {this.router.navigate(['/manage/clubs/' + res.id + '/info']); },
+        err => console.log(err)
+      );
+  }
+
+  onUploadedImage(image): void {
+    this.form.controls['logo_url'].setValue(image);
+  }
+
+  onSelectedMembership(type) {
+    this.form.controls['has_membership'].setValue(type.action);
+  }
+
+  onSelectedStatus(type) {
+    this.form.controls['status'].setValue(type.action);
+  }
+
+  onPlaceChange(data) {
+    let cpMap = CPMap.getBaseMapObject(data);
 
     this.form.controls['city'].setValue(cpMap.city);
     this.form.controls['province'].setValue(cpMap.province);
     this.form.controls['country'].setValue(cpMap.country);
     this.form.controls['latitude'].setValue(cpMap.latitude);
     this.form.controls['longitude'].setValue(cpMap.longitude);
-    this.form.controls['address'].setValue(`${cpMap.street_number} ${cpMap.street_name}`);
+    this.form.controls['address'].setValue(data.name);
     this.form.controls['postal_code'].setValue(cpMap.postal_code);
-  }
 
-  buildAdminControl() {
-    return this.fb.group({
-      'first_name': [null, Validators.required],
-      'last_name': [null, Validators.required],
-      'email': [null, Validators.required]
-    });
-  }
-
-  removeAdminControl(index): void {
-    let control = <FormArray>this.form.controls['admins'];
-    control.removeAt(index);
-  }
-
-  addAdminControl(): void {
-    let control = <FormArray>this.form.controls['admins'];
-    control.push(this.buildAdminControl());
-  }
-
-  onSubmit() {
-    if (!this.form.valid) {
-      this.formError = true;
-      return;
-    }
-  }
-
-  onSelectedMembership(type) {
-    console.log(type);
-  }
-
-  onSelectedStatus(type) {
-    console.log(type);
+    this.mapCenter.next(data.geometry.location.toJSON());
   }
 
   ngOnInit() {
+    let school = this.session.school;
+
+    this.mapCenter = new BehaviorSubject(
+      {
+        lat: school.latitude,
+        lng: school.longitude
+      });
+
+    this.store.dispatch({
+      type: HEADER_UPDATE,
+      payload:
+      {
+        'heading': 'Create Club',
+        'subheading': null,
+        'em': null,
+        'children': []
+      }
+    });
+
     this.statusTypes = statusTypes;
     this.membershipTypes = membershipTypes;
 
     this.form = this.fb.group({
       'name': [null, Validators.required],
       'logo_url': [null, Validators.required],
-      'status': [null, Validators.required],
-      'membership': [null, Validators.required],
+      'status': [1, Validators.required],
+      'has_membership': [true, Validators.required],
       'location': [null],
       'address': [null],
       'city': [null],
@@ -84,13 +113,11 @@ export class ClubsCreateComponent implements OnInit {
       'province': [null],
       'latitude': [null],
       'longitude': [null],
-      'room': [null],
-      'room_data': [null],
+      'room_info': [null],
       'description': [null],
       'website': [null],
-      'phone_number': [null, Validators.required],
-      'email': [null, Validators.required],
-      'admins': this.fb.array([this.buildAdminControl()]),
+      'phone': [null],
+      'email': [null],
     });
   }
 }

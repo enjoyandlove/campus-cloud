@@ -26,7 +26,7 @@ import { FileUploadService, StoreService } from '../../../../../../../shared/ser
   styleUrls: ['./feed-input-box.component.scss']
 })
 export class FeedInputBoxComponent implements AfterViewInit, OnInit {
-  @Input() isSimple: boolean;
+  @Input() clubId: number;
   @ViewChild('textarea') textarea: ElementRef;
   @Input() isCampusWallView: Observable<any>;
   @Output() created: EventEmitter<null> = new EventEmitter();
@@ -184,7 +184,6 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
   ngOnInit() {
     this.school = this.session.school;
     this.isCampusWallView.subscribe(res => {
-
       // Not Campus Wall
       if (res.type !== 1) {
         this.groupId = res.type;

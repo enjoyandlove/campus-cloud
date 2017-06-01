@@ -72,7 +72,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
 
     const stores$ = this.storeService.getStores(search);
 
-    if (!this.storeId) {
+    if (!this.storeId && !this.clubId) {
       super
         .fetchData(stores$)
         .then(res => {
@@ -124,8 +124,18 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
   }
 
   buildEventControl(event) {
+    let store_id;
+
+    if (this.storeId) {
+      store_id = this.storeId;
+    }
+
+    if (this.clubId) {
+      store_id = this.clubId;
+    }
+
     return this.fb.group({
-      'store_id': [this.storeId || null, Validators.required],
+      'store_id': [store_id ? store_id : null, Validators.required],
       'room': [event.room],
       'title': [event.title, Validators.required],
       'poster_url': [null, Validators.required],
@@ -289,9 +299,18 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     }
 
     Object.keys(events).forEach(key => {
+      let store_id;
+
+      if (this.storeId) {
+        store_id = this.storeId;
+      }
+
+      if (this.clubId) {
+        store_id = this.clubId;
+      }
       let _event = {
         title: events[key].title,
-        store_id: this.storeId ? this.storeId : events[key].store_id,
+        store_id: store_id ? store_id : events[key].store_id,
         description: events[key].description,
         end: events[key].end,
         room: events[key].room,
@@ -317,7 +336,17 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
       .eventsService
       .createEvent(_events)
       .subscribe(
-      _ => this.router.navigate(['/manage/events']),
+      _ => {
+        if (this.clubId) {
+          this.router.navigate([`/manage/clubs/${this.clubId}/events`]);
+        }
+
+        if (this.serviceId) {
+          this.router.navigate([`/manage/clubs/${this.serviceId}/events`]);
+        }
+
+        this.router.navigate(['/manage/events']);
+      },
       err => {
         this.formError = true;
 

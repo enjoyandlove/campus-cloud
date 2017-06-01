@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/dist/'
-SECURE_SSL_REDIRECT = True
+# SECURE_SSL_REDIRECT = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 

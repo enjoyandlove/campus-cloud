@@ -1,4 +1,16 @@
 @import '~styles/components/form';
 @import '~styles/components/modal';
 @import '~styles/components/button';
+@import '~styles/components/dropdown';
+
+.membersBox {
+  @include cpDropdownMenu();
+
+  top: 110%;
+  z-index: 1;
+  width: 100%;
+  position: absolute;
+  border-radius: 4px;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.30);
+}
 

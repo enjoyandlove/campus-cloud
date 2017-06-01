@@ -11,42 +11,53 @@
 
   <div *ngSwitchCase="false">
     <div *ngIf="state.clubs.length">
-      <ul class="col-xs-12 cp-form clubs">
-        <li class="cp-form__header row">
-          <span class="col-xs-5" i18n>Name</span>
-          <span class="col-xs-2" i18n>Status</span>
-          <span class="col-xs-2" i18n>Members</span>
-          <span class="col-xs-2" i18n>Events</span>
-          <span class="col-xs-1"></span>
+      <ul class="cp-form clubs">
+        <li class="cp-form__header col-xs-12">
+          <div class="row">
+            <span class="col-xs-5" i18n>Name</span>
+            <span class="col-xs-2" i18n>Status</span>
+            <span class="col-xs-2" i18n>Members</span>
+            <span class="col-xs-2" i18n>Events</span>
+            <span class="col-xs-1"></span>
+          </div>
         </li>
 
-        <li class="cp-form__item row" *ngFor="let club of state.clubs">
-          <span class="col-xs-5 text-truncate clubs__thumbnail">
-            <img class="img-rounded" [src]="club.logo_url">
-            <strong>
-                <a [routerLink]="[club.id + '/wall']">
-                  {{ club.name }}
-                </a>
-            </strong>
-            <br>
-            {{ club.description }}
-          </span>
-          <span class="col-xs-2 text-truncate">
-            status
-          </span>
-          <span class="col-xs-2 text-truncate">
-            members
-          </span>
-          <span class="col-xs-1 text-truncate">
-            events
-          </span>
+        <li class="cp-form__item col-xs-12" *ngFor="let club of state.clubs">
+          <div class="row">
+            <span class="col-xs-5 text-truncate clubs__thumbnail">
+              <img
+                class="img-rounded"
+                [src]="club.logo_url"
+                *ngIf="club.logo_url !== ''">
+              <img
+                class="img-rounded"
+                src="/dist/default/user.png"
+                *ngIf="club.logo_url === ''">
+              <strong>
+                  <a [routerLink]="[club.id + '/info']">
+                    {{ club.name }}
+                  </a>
+              </strong>
+              <br>
+              {{ club.description }}
+            </span>
+            <span class="col-xs-2 text-truncate">
+              {{ club.status === 1 ? 'Active' : 'Pending' }}
+            </span>
+            <span class="col-xs-2 text-truncate">
+              {{ club.member_count !== -1 ? club.member_count : '---' }}
+            </span>
+            <span class="col-xs-1 text-truncate">
+              {{ club.total_item_count }}
+            </span>
 
-          <span
-            (click)="deleteClub = club"
-            data-toggle="modal" data-target="#deleteClubsModal"
-            class="col-xs-1 hover text-truncate delete-club pull-right">
-            &times;
-          </span>
+            <span
+              (click)="deleteClub = club"
+              data-toggle="modal" data-target="#deleteClubsModal"
+              class="col-xs-1 hover text-truncate delete-club pull-right">
+              &times;
+            </span>
+          </div>
         </li>
       </ul>
 
@@ -64,6 +75,7 @@
     </div>
 
     <cp-no-content
+      class="no-content"
       *ngIf="!state.clubs.length"
       noContentText="No clubs found...">
     </cp-no-content>

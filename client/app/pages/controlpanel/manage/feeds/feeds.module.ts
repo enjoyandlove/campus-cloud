@@ -4,6 +4,8 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../../shared/shared.module';
 
+import { FeedsComponent } from './list/base/feeds.component';
+
 import {
   FeedBodyComponent,
   FeedMoveComponent,
@@ -29,7 +31,8 @@ import { FeedsRoutingModule } from './feeds.routing.module';
   declarations: [ FeedsListComponent, FeedMoveComponent, FeedItemComponent, FeedCommentComponent,
   FeedInputBoxComponent, FeedSettingsComponent, FeedFiltersComponent, FeedCommentsComponent,
   FeeHeaderComponent, FeedBodyComponent, FeedDropdownComponent, FeedDeleteModalComponent,
-  FeedApproveModalComponent, FeedDeleteCommentModalComponent, FeedApproveCommentModalComponent ],
+  FeedApproveModalComponent, FeedDeleteCommentModalComponent, FeedApproveCommentModalComponent,
+  FeedsComponent ],
 
   imports: [ CommonModule, SharedModule, FeedsRoutingModule, RouterModule, ReactiveFormsModule ],
 
@@ -38,6 +41,7 @@ import { FeedsRoutingModule } from './feeds.routing.module';
   exports: [ FeedsListComponent, FeedMoveComponent, FeedItemComponent, FeedCommentComponent,
   FeedInputBoxComponent, FeedSettingsComponent, FeedFiltersComponent, FeedCommentsComponent,
   FeeHeaderComponent, FeedBodyComponent, FeedDropdownComponent, FeedDeleteModalComponent,
-  FeedApproveModalComponent, FeedDeleteCommentModalComponent, FeedApproveCommentModalComponent ]
+  FeedApproveModalComponent, FeedDeleteCommentModalComponent, FeedApproveCommentModalComponent,
+  FeedsComponent ]
 })
 export class FeedsModule {}

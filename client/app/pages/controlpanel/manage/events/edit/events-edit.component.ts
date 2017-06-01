@@ -33,6 +33,7 @@ const COMMON_DATE_PICKER_OPTIONS = {
 export class EventsEditComponent extends BaseComponent implements OnInit {
   @Input() storeId: number;
   @Input() isClub: boolean;
+  @Input() clubId: boolean;
   @Input() isService: boolean;
 
   event;
@@ -139,7 +140,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
           return;
         }
         if (this.isClub) {
-          this.router.navigate([`/manage/clubs/${this.storeId}/events/${this.eventId}`]);
+          this.router.navigate([`/manage/clubs/${this.clubId}/events/${this.eventId}`]);
           return;
         }
         this.router.navigate(['/manage/events/' + this.eventId]);
@@ -321,11 +322,6 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    // services || clubs we need to fetch admins
-    if (this.storeId) {
-      this.fetchManagersBySelectedStore(this.storeId);
-    }
-
     this.dateFormat = FORMAT.DATETIME;
     this.booleanOptions = [
       {

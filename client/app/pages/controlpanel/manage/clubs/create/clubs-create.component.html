@@ -15,21 +15,40 @@
           </div>
         </div>
 
-        <div class="row form-group margin-top">
-          <div class="col-xs-6">
-            <p class="title" i18n>Club Name</p>
-            <input
-              type="text"
-              class="form-control"
-              formControlName="name"
-              placeholder="Add a short, clear name"
-              [class.error]="formError && form.controls['name'].hasError('required')">
+        <div class="form-group club-details">
+          <div class="row">
+            <div class="col-xs-12">
+              <p class="title" i18n>Club Details</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-12">
+              <label i18n>Club Name</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="name"
+                placeholder="Add a short, clear name"
+                [class.error]="formError && form.controls['name'].hasError('required')">
+            </div>
           </div>
         </div>
 
-        <div class="row form-group margin-top">
+        <div class="row form-group">
+          <div class="col-xs-12">
+            <label i18n>Club Description</label>
+            <textarea
+              class="form-control"
+              formControlName="description"
+              placeholder="Tell people more about the club">
+            </textarea>
+          </div>
+        </div>
+
+        <div class="row form-group">
           <div class="col-xs-6">
-            <p class="title" i18n>Club Status</p>
+            <label i18n>Club Status</label>
             <div class="row">
               <div class="col-xs-12">
                 <cp-check-dropdown
@@ -40,11 +59,8 @@
               </div>
             </div>
           </div>
-        </div>
-
-        <div class="row margin-top">
           <div class="col-xs-6">
-            <p class="title" i18n>Club Membership</p>
+            <label i18n>Club Membership</label>
             <div class="row">
               <div class="col-xs-12">
                 <cp-check-dropdown
@@ -57,9 +73,9 @@
           </div>
         </div>
 
-        <div class="row form-group margin-top">
+        <div class="row form-group">
           <div class="col-xs-12">
-            <p class="title" i18n>Location</p>
+            <label i18n>Location</label>
             <div class="row form-group">
               <div class="col-xs-12">
                 <cp-place-autocomplete
@@ -73,55 +89,23 @@
                 <input
                   type="text"
                   class="form-control"
-                  formControlName="room_data"
-                  placeholder="Room">
+                  formControlName="location"
+                  placeholder="Building">
               </div>
               <div class="col-xs-6">
                 <input
                   type="text"
                   class="form-control"
-                  formControlName="location"
-                  placeholder="Building">
+                  formControlName="room_info"
+                  placeholder="Room">
               </div>
             </div>
           </div>
         </div>
 
-        <div class="row form-group margin-top">
-          <div class="col-xs-12">
-            <p class="title" i18n>Club Description</p>
-            <textarea
-              class="form-control"
-              formControlName="description"
-              placeholder="Tell people more about the club">
-            </textarea>
-          </div>
-        </div>
-
-        <div class="row margin-top">
-          <div class="col-xs-6">
-            <p class="title" i18n>Contact Details</p>
-            <div class="form-group">
-              <label i18n>Website</label>
-              <input
-                type="text"
-                class="form-control"
-                formControlName="website">
-            </div>
-            <div class="form-group">
-              <label i18n>Phone Number</label>
-              <input
-                type="text"
-                class="form-control"
-                formControlName="phone_number">
-            </div>
-            <div>
-              <label i18n>Email</label>
-              <input
-                type="text"
-                class="form-control"
-                formControlName="email">
-            </div>
+        <div class="row form-group">
+          <div class="col-xs-12 maps">
+            <cp-maps [center]="mapCenter"></cp-maps>
           </div>
         </div>
       </div>
@@ -129,64 +113,35 @@
 
     <div class="col-xs-6">
       <div class="cp-card">
-        <div class="row">
+        <div class="row form-group">
           <div class="col-xs-12">
-            <p class="title" i18n>Invite Team Members</p>
-            <div formArrayName="admins">
-              <div *ngFor="let admin of form.controls.admins.controls; let i=index" class="row">
-                <div class="col-xs-12">
-                  <div class="row">
-                    <div class="col-xs-11">
-                      <div class="row">
-                        <div [formGroupName]="i" class="form-group">
-                          <div class="col-xs-4 form-group no-right-padding">
-                            <label i18n>First Name</label>
-                            <input
-                              type="text"
-                              class="form-control"
-                              formControlName="first_name">
-                          </div>
-                          <div class="col-xs-4 form-group no-right-padding">
-                            <label i18n>Last Name</label>
-                            <input
-                              type="text"
-                              class="form-control"
-                              formControlName="last_name">
-                          </div>
-                          <div class="col-xs-4 form-group no-right-padding">
-                            <label i18n>Email</label>
-                            <input
-                              type="text"
-                              class="form-control"
-                              formControlName="email">
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-xs-1">
-                      <div class="row" *ngIf="i !== 0">
-                        <div class="col-xs-12 text-right">
-                          <button
-                            type="button"
-                            (click)="removeAdminControl(i)"
-                            class="cpbtn cpbtn--link-dark deletebutton">
-                            &times;
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+            <p class="title" i18n>Contact Details</p>
+
+            <div class="row form--group">
+              <div class="col-xs-6">
+                <label i18n>Website</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="website">
               </div>
-              <div class="row">
-                <div class="col-xs-12">
-                  <button
-                    type="button"
-                    class="cpbtn cpbtn--secondary"
-                    (click)="addAdminControl()" i18n>
-                    Add Another Team Member
-                  </button>
-                </div>
+
+              <div class="col-xs-6">
+                <label i18n>Phone Number</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="phone">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12">
+                <label i18n>Email</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="email">
               </div>
             </div>
           </div>

@@ -42,7 +42,15 @@
 }
 
 .meta {
+  &__item {
+    margin-bottom: 12px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
   &__type {
-    color: $color-secondary-text;
+    @include font-semi-bold();
   }
 }

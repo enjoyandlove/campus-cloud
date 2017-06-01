@@ -1,32 +1,102 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { URLSearchParams } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+
+import {
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+  Component,
+  ElementRef,
+  EventEmitter,
+  AfterViewInit
+} from '@angular/core';
+
+import { MembersService } from '../members.service';
+import { CPSession } from '../../../../../../session';
+
+const MEMBER_TYPE = 0;
+const EXECUTIVE_TYPE = 2;
+
+declare var $: any;
 
 @Component({
   selector: 'cp-members-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss']
 })
-export class ClubsMembersCreateComponent implements OnInit {
-  @Output() memberCreated: EventEmitter<any> = new EventEmitter();
+export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
+  @Input() groupId: number;
+  @ViewChild('input') input: ElementRef;
+  @Output() added: EventEmitter<any> = new EventEmitter();
 
   formErrors;
   memberTypes;
-  isExec = false;
+  members = [];
   form: FormGroup;
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private session: CPSession,
+    private service: MembersService,
   ) { }
+
+  ngAfterViewInit() {
+    const keyup$ = Observable.fromEvent(this.input.nativeElement, 'keyup');
+    const blur$ = Observable.fromEvent(this.input.nativeElement, 'blur');
+
+    blur$
+    .debounceTime(200)
+    .subscribe(_ => { if (this.members.length) { this.members = []; } });
+
+    keyup$
+      .debounceTime(400)
+      .distinctUntilChanged()
+      .switchMap((event: KeyboardEvent) => {
+        const target = <HTMLInputElement>event.target;
+        const query = target.value;
+
+        if (!query) { return Observable.of([]); }
+
+        let search = new URLSearchParams();
+        search.append('search_str', query);
+        search.append('school_id', this.session.school.id.toString());
+
+        return this.service.getMembers(search).map(members => {
+          let _members = [];
+
+          members.forEach(member => {
+            _members.push({
+              'label': `${member.firstname} ${member.lastname}`,
+              'id': member.id
+            });
+          });
+
+          if (!_members.length) {
+            _members.push({ 'label': 'No Results...' });
+          }
+
+          return _members;
+        });
+      })
+      .subscribe(res => this.members = res);
+  }
+
+  onMemberSelected(member) {
+    this.members = [];
+    this.input.nativeElement.value = member.label;
+    this.form.controls['member'].setValue(member.id);
+  }
 
   onTypeChange(type): void {
     let control = this.form.controls['member_type'];
     control.setValue(type);
-
-    this.isExec = control.value.action === 1;
   }
 
-  onUploadedImage(image) {
-    this.form.controls['avatar_url'].setValue(image);
+  doReset() {
+    this.form.reset();
+    this.input.nativeElement.value = null;
   }
 
   onSave() {
@@ -36,29 +106,38 @@ export class ClubsMembersCreateComponent implements OnInit {
       this.formErrors = true;
       return;
     }
-    console.log(this.form.value);
+
+    let member_type = this.form.value.member_type;
+    let group_id = this.groupId;
+
+    this
+      .service
+      .addMember({ member_type, group_id }, this.form.value.member)
+      .subscribe(
+        member => {
+          this.added.emit(member);
+          $('#membersCreate').modal('hide');
+          this.form.reset();
+        },
+        err => console.log(err)
+      );
   }
 
   ngOnInit() {
-    this.form = this.fb.group({
-      'firstname': [null, Validators.required],
-      'lastname': [null, Validators.required],
-      'fullname': [null, Validators.required],
-      'member_type': [null, Validators.required],
-      'position': [null],
-      'description': [null],
-      'avatar_url': [null]
-    });
-
     this.memberTypes = [
       {
         label: 'Member',
-        action: 0
+        action: MEMBER_TYPE
       },
       {
         label: 'Executive',
-        action: 1
+        action: EXECUTIVE_TYPE
       }
     ];
+
+    this.form = this.fb.group({
+      'member': [null, Validators.required],
+      'member_type': [this.memberTypes[0].action, Validators.required],
+    });
   }
 }

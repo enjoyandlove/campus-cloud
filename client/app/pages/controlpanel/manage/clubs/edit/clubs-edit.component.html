@@ -1,1 +1,185 @@
-Clubs Edit
+<ng-container [ngSwitch]="isFormReady">
+  <cp-spinner *ngSwitchCase="false"></cp-spinner>
+
+  <ng-container *ngSwitchCase="true">
+    <div class="row margin-bottom">
+      <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+        <div class="col-xs-6">
+          <div class="cp-card">
+            <div class="row">
+              <div class="col-xs-12">
+                <p class="title" i18n>Club Banner</p>
+                <div class="row">
+                  <cp-image-upload
+                    (uploaded)="onUploadedImage($event)"
+                    description="Upload a picture for your club"
+                    [defaultImage]="form.controls['logo_url'].value"
+                    [required]="formError && form.controls['logo_url'].hasError('required')">
+                  </cp-image-upload>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group club-details">
+              <div class="row">
+                <div class="col-xs-12">
+                  <p class="title" i18n>Club Details</p>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-12">
+                  <label i18n>Club Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="name"
+                    placeholder="Add a short, clear name"
+                    [class.error]="formError && form.controls['name'].hasError('required')">
+                </div>
+              </div>
+            </div>
+
+            <div class="row form-group">
+              <div class="col-xs-12">
+                <label i18n>Club Description</label>
+                <textarea
+                  class="form-control"
+                  formControlName="description"
+                  placeholder="Tell people more about the club">
+                </textarea>
+              </div>
+            </div>
+
+            <div class="row form-group">
+              <div class="col-xs-6">
+                <label i18n>Club Status</label>
+                <div class="row">
+                  <div class="col-xs-12">
+                    <cp-check-dropdown
+                      [items]="statusTypes"
+                      buttonClass="cpbtn cpbtn--cancel"
+                      (selected)="onSelectedStatus($event)">
+                    </cp-check-dropdown>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-6">
+                <label i18n>Club Membership</label>
+                <div class="row">
+                  <div class="col-xs-12">
+                    <cp-check-dropdown
+                      [items]="membershipTypes"
+                      buttonClass="cpbtn cpbtn--cancel"
+                      (selected)="onSelectedMembership($event)">
+                    </cp-check-dropdown>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row form-group">
+              <div class="col-xs-12">
+                <label i18n>Location</label>
+                <div class="row form-group">
+                  <div class="col-xs-12">
+                    <cp-place-autocomplete
+                      placeHolder="Address..."
+                      (placeChange)="onPlaceChange($event)"
+                      [defaultValue]="form.controls.address.value">
+                    </cp-place-autocomplete>
+                  </div>
+                </div>
+                <div class="row form-group">
+                  <div class="col-xs-6">
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="location"
+                      placeholder="Building">
+                  </div>
+                  <div class="col-xs-6">
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="room_info"
+                      placeholder="Room">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row form-group">
+              <div class="col-xs-12 maps">
+                <cp-maps [center]="mapCenter"></cp-maps>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-6">
+          <div class="cp-card">
+            <div class="row form-group">
+              <div class="col-xs-12">
+                <p class="title" i18n>Contact Details</p>
+
+                <div class="row form--group">
+                  <div class="col-xs-6">
+                    <label i18n>Website</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="website">
+                  </div>
+
+                  <div class="col-xs-6">
+                    <label i18n>Phone Number</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="phone">
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-xs-12">
+                    <label i18n>Email</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="email">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer">
+          <div class="cp-wrapper cp-wrapper--outer">
+            <div class="col-xs-12">
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="text-right">
+                    <label class="error" *ngIf="formError" i18n>
+                        <span>&#x26A0;</span> Please fill out the marked fields
+                    </label>
+                    <a [routerLink]="['../']"
+                      class="cpbtn cpbtn--tall cpbtn--cancel" i18n>
+                      Cancel
+                    </a>
+                    <button
+                      type="submit"
+                      class="cpbtn cpbtn--tall cpbtn--primary" i18n>
+                      Save
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </ng-container>
+</ng-container>

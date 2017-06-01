@@ -248,5 +248,7 @@ export class FeedsComponent extends BaseComponent implements OnInit {
     this.state = Object.assign({}, this.state, { feeds: _state.feeds });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.isSimple = this.isClubsView;
+  }
 }

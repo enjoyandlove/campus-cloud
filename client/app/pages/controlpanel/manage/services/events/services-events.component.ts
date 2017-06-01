@@ -19,9 +19,8 @@ import { EventsComponent } from '../../events/list/base/events.component';
 export class ServicesEventsComponent extends EventsComponent implements OnInit {
   service;
   loading = true;
-  serviceId: number;
-  isSimple = true;
   isService = true;
+  serviceId: number;
 
 
   constructor(
