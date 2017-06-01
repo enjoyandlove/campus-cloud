@@ -4,6 +4,10 @@
   }
 }
 
+.modal.in .modal-dialog {
+    transform: translate(0, 50%);
+}
+
 .modal-body {
   padding: 0;
 }
