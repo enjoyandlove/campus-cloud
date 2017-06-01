@@ -22,10 +22,10 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
   clubId;
   loading;
   formError;
-  isFormReady;
   statusTypes;
   membershipTypes;
   form: FormGroup;
+  isFormReady = false;
   mapCenter: BehaviorSubject<any>;
 
   constructor(
