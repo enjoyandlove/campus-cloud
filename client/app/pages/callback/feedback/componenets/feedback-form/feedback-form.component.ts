@@ -10,6 +10,7 @@ import { Observable } from 'rxjs/Observable';
 export class FeedbackFormComponent implements OnInit {
   @Input() isEvent: boolean;
   @Input() isService: boolean;
+  @Input() defaultQuestion: string;
   @Input() isSubmitted: Observable<boolean>;
   @Output() send: EventEmitter<any> = new EventEmitter();
 

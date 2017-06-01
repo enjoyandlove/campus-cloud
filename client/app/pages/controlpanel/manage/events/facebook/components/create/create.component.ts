@@ -49,7 +49,7 @@ export class FacebookEventsCreateComponent implements OnInit {
   }
 
   onSelectedStore(host) {
-    this.form.controls['store_id'].setValue(host.action);
+    this.form.controls['store_id'].setValue(host.value);
   }
 
   ngOnInit() {

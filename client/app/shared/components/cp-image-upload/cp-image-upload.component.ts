@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Headers } from '@angular/http';
 
 import { API } from '../../../config/api';
+import { STATUS } from '../../../shared/constants';
 import { CPArray, CPImage, appStorage } from '../../../shared/utils';
 import { FileUploadService } from '../../../shared/services/file-upload.service';
 
@@ -31,12 +32,14 @@ export class CPImageUploadComponent implements OnInit {
     const fileExtension = CPArray.last(file.name.split('.'));
 
     if (!CPImage.isSizeOk(file.size, CPImage.MAX_IMAGE_SIZE)) {
-      this.errors.push('File is too big');
+      this.errors.push(STATUS.FILE_IS_TOO_BIG);
     }
 
     if (!CPImage.isValidExtension(fileExtension, CPImage.VALID_EXTENSIONS)) {
-      this.errors.push('Wrong extension');
+      this.errors.push(STATUS.WRONG_EXTENSION_IMAGE);
+      return;
     }
+
   }
 
   onFileUpload(file, asPromise?: boolean) {
@@ -79,7 +82,7 @@ export class CPImageUploadComponent implements OnInit {
         },
         _ => {
           this.isLoading = false;
-          this.errors.push('Something went wrong');
+          this.errors.push(STATUS.SOMETHING_WENT_WRONG);
         }
       );
   }

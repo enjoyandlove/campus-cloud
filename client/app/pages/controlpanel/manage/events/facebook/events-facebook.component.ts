@@ -47,21 +47,7 @@ export class EventsFacebookComponent extends BaseComponent implements OnInit {
     let search: URLSearchParams = new URLSearchParams();
     search.append('school_id', school.id.toString());
 
-    let stores$ = this.storeService.getStores(search).map(res => {
-      const stores = [
-        {
-          'label': 'All Hosts',
-          'action': null
-        }
-      ];
-      res.forEach(store => {
-        stores.push({
-          'label': store.name,
-          'action': store.id
-        });
-      });
-      return stores;
-    });
+    const stores$ = this.storeService.getStores(search);
 
     super
       .fetchData(stores$)

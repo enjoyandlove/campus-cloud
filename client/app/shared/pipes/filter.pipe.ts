@@ -19,10 +19,14 @@ export class CPFilterPipe implements PipeTransform {
       data.forEach(item => {
         let str: String = (item[filterBy]).toString().toLowerCase();
 
-        if (str.startsWith(query.toLowerCase())) {
+        if (str.includes(query.toLowerCase())) {
           filterResults.push(item);
         }
       });
+    }
+
+    if (!filterResults.length) {
+      filterResults.push({[filterBy]: 'No Results'});
     }
 
     return filterResults;

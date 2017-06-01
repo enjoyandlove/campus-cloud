@@ -79,7 +79,7 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
     const controls = <FormArray>this.form.controls['links'];
     const control = <FormGroup>controls.controls[index];
 
-    control.controls['store_id'].setValue(store.action);
+    control.controls['store_id'].setValue(store.value);
   }
 
   buildEventControl(link) {

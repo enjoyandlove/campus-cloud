@@ -13,8 +13,11 @@
             (ngSubmit)="onSubmit()"
             [formGroup]="feedbackForm">
             <div class="form-group">
-              <p class="title text-center" i18n>
+              <p class="title text-center" *ngIf="!defaultQuestion" i18n>
                 Please click a star to rate the {{ isEvent ? 'event' : 'service' }}
+              </p>
+              <p class="title text-center" *ngIf="defaultQuestion" i18n>
+                {{ defaultQuestion }}
               </p>
             </div>
 

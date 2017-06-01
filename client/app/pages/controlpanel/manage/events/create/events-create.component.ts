@@ -59,25 +59,7 @@ export class EventsCreateComponent implements OnInit {
     this.buildHeader();
     search.append('school_id', this.school.id.toString());
 
-    this.stores$ = this
-      .storeService
-      .getStores(search)
-      .startWith([{ 'label': 'All Hosts' }])
-      .map(res => {
-        const stores = [
-          {
-            'label': 'All Hosts',
-            'value': null
-          }
-        ];
-        res.forEach(store => {
-          stores.push({
-            'label': store.name,
-            'value': store.id
-          });
-        });
-        return stores;
-      });
+    this.stores$ = this.storeService.getStores(search);
   }
 
   buildHeader() {
@@ -272,7 +254,8 @@ export class EventsCreateComponent implements OnInit {
       'description': [null],
       'event_feedback': [1], // 1 => Enabled
       'event_manager_id': [null],
-      'attendance_manager_email': [null]
+      'attendance_manager_email': [null],
+      'custom_basic_feedback_label': [null]
     });
 
     let _self = this;
