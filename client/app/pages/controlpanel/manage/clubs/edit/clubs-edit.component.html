@@ -58,6 +58,7 @@
                   <div class="col-xs-12">
                     <cp-check-dropdown
                       [items]="statusTypes"
+                      [selectedItem]="defaultStatus"
                       buttonClass="cpbtn cpbtn--cancel"
                       (selected)="onSelectedStatus($event)">
                     </cp-check-dropdown>
@@ -71,6 +72,7 @@
                     <cp-check-dropdown
                       [items]="membershipTypes"
                       buttonClass="cpbtn cpbtn--cancel"
+                      [selectedItem]="defaultMembership"
                       (selected)="onSelectedMembership($event)">
                     </cp-check-dropdown>
                   </div>
