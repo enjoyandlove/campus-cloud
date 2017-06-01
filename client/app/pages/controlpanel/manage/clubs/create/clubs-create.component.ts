@@ -41,7 +41,6 @@ export class ClubsCreateComponent implements OnInit {
 
     let search = new URLSearchParams();
     search.append('school_id', this.session.school.id.toString());
-
     this
       .clubsService
       .createClub(this.form.value, search)
@@ -111,8 +110,8 @@ export class ClubsCreateComponent implements OnInit {
       'country': [null],
       'postal_code': [null],
       'province': [null],
-      'latitude': [null],
-      'longitude': [null],
+      'latitude': [this.session.school.latitude],
+      'longitude': [this.session.school.longitude],
       'room_info': [null],
       'description': [null],
       'website': [null],
