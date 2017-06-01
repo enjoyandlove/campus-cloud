@@ -13,18 +13,6 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 import os
 import json
 
-# Reading from setting files on the server values
-DEBUG = True
-SECURE_SSL_REDIRECT = False
-
-try:
-    with open('./settings.json') as f:
-        config = json.loads(f.read())
-        DEBUG = config.get('DEBUG', True)
-        SECURE_SSL_REDIRECT = config.get('SECURE_SSL_REDIRECT', True)
-except FileNotFoundError:
-    pass
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -43,9 +31,18 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'dist'),
 )
 
-# Default values
-# DEBUG = False
-# SECURE_SSL_REDIRECT = False
+# Reading from setting files on the server values
+DEBUG = True
+SECURE_SSL_REDIRECT = False
+
+try:
+    with open(os.path.join(BASE_DIR, 'core', 'settings.json')) as f:
+        config = json.loads(f.read())
+        DEBUG = config.get('DEBUG', True)
+        SECURE_SSL_REDIRECT = config.get('SECURE_SSL_REDIRECT', True)
+except FileNotFoundError:
+    pass
+
 
 
 
