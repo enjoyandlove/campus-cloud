@@ -30,6 +30,12 @@
                 <div [formGroupName]="i">
                   <span class="col-xs-4 text-truncate clubs__thumbnail">
                     <div class="avatar pull-left">
+                      <span
+                        class="deleteButton hover"
+                        (click)="onRemoveImage(i)"
+                        *ngIf="club.controls['logo_url'].value">
+                        &times;
+                      </span>
                       <cp-upload-button
                         theme="small"
                         [isRequired]="formError && club.controls.logo_url.hasError('required')"
