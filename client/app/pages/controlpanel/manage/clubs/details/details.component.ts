@@ -46,7 +46,7 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
   }
 
   buildHeader(name) {
-    let schoolPrivileges = this.session.user.school_level_privileges[this.clubId];
+    let schoolPrivileges = this.session.user.school_level_privileges[this.session.school.id];
     let accountPrivilege = this.session.user.account_level_privileges[this.clubId];
     let menu = {
       heading: name,
