@@ -3,9 +3,15 @@
 @import '~styles/core/typography';
 @import '~styles/components/button';
 
+.map,
 .club,
 .meta {
   @include card-margin();
+  margin-top: 0;
+}
+
+.map__container {
+  height: 200px;
 }
 
 .club {

@@ -1,3 +1,4 @@
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { URLSearchParams } from '@angular/http';
@@ -16,6 +17,7 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
   loading;
   hasMetaData;
   clubId: number;
+  mapCenter: BehaviorSubject<any>;
 
   constructor(
     private session: CPSession,
@@ -38,6 +40,12 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
       .fetchData(this.clubsService.getClubById(this.clubId, search))
       .then(res => {
         this.club = res.data;
+        this.mapCenter = new BehaviorSubject(
+          {
+            lat: res.data.latitude,
+            lng: res.data.longitude
+          }
+        );
         this.hasMetaData = this.club.contactphone ||
           this.club.email ||
           this.club.website ||
