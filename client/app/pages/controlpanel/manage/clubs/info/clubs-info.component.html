@@ -1,6 +1,6 @@
-<div [ngSwitch]="loading">
+<ng-container [ngSwitch]="loading">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
-  <div *ngSwitchCase="false">
+  <ng-container *ngSwitchCase="false">
     <div class="row">
       <div class="col-xs-8 col-xs-offset-2">
         <div class="cp-card club">
@@ -97,5 +97,5 @@
         </div>
       </div>
     </div>
-  </div>
-</div>
+  </ng-container>
+</ng-container>
