@@ -2,6 +2,10 @@
 @import '~styles/components/card';
 @import '~styles/components/button';
 
+p.maxLength {
+  margin-bottom: 0;
+}
+
 .channel-dropdown {
   span,
   .dropdown {
