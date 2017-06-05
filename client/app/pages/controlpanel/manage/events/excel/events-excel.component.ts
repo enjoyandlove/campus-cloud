@@ -1,5 +1,5 @@
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
@@ -10,10 +10,9 @@ import { isDev } from '../../../../../config/env';
 import { STATUS } from '../../../../../shared/constants';
 import { CPSession, ISchool } from '../../../../../session';
 import { BaseComponent } from '../../../../../base/base.component';
+import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { CPDate, CP_PRIVILEGES_MAP } from '../../../../../shared/utils';
 import { StoreService, AdminService } from '../../../../../shared/services';
-import { EVENTS_MODAL_RESET } from '../../../../../reducers/events-modal.reducer';
-import { HEADER_UPDATE, HEADER_DEFAULT } from '../../../../../reducers/header.reducer';
 
 
 @Component({
@@ -21,7 +20,7 @@ import { HEADER_UPDATE, HEADER_DEFAULT } from '../../../../../reducers/header.re
   templateUrl: './events-excel.component.html',
   styleUrls: ['./events-excel.component.scss']
 })
-export class EventsExcelComponent extends BaseComponent implements OnInit, OnDestroy {
+export class EventsExcelComponent extends BaseComponent implements OnInit {
   @Input() storeId: number;
 
   @Input() clubId: number;
@@ -55,15 +54,6 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     super();
     this.school = this.session.school;
     super.isLoading().subscribe(res => this.loading = res);
-
-    this
-      .store
-      .select('EVENTS_MODAL')
-      .subscribe(
-      (res) => {
-        this.events = !isDev ? res : require('./mock.json');
-        this.fetch();
-      });
   }
 
   private fetch() {
@@ -368,12 +358,16 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     control.controls['event_attendance'].setValue(checked ? 1 : 0);
   }
 
-  ngOnDestroy() {
-    this.store.dispatch({ type: HEADER_DEFAULT });
-    this.store.dispatch({ type: EVENTS_MODAL_RESET });
-  }
-
   ngOnInit() {
+    this
+      .store
+      .select('EVENTS_MODAL')
+      .subscribe(
+      res => {
+        this.events = !isDev ? res : require('./mock.json');
+        this.fetch();
+      });
+
     this.eventAttendanceFeedback = [
       {
         'label': 'Enabled',
