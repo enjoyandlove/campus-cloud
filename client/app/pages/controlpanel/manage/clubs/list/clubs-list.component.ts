@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
+import { Store } from '@ngrx/store';
 
 import { ClubsService } from '../clubs.service';
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base/base.component';
+import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
 interface IState {
   clubs: Array<any>;
@@ -28,6 +30,7 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
   state: IState = state;
 
   constructor(
+    private store: Store<any>,
     private session: CPSession,
     private clubsService: ClubsService
   ) {
@@ -78,5 +81,12 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
     this.fetch();
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this
+      .store
+      .dispatch({
+        type: HEADER_UPDATE,
+        payload: require('../../manage.header.json')
+      });
+  }
 }
