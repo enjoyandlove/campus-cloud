@@ -38,12 +38,12 @@
     <div class="row" *ngIf="hasMetaData">
       <div class="col-xs-8 col-xs-offset-2">
         <div class="cp-card meta">
-          <div class="row meta__item" *ngIf="club.contactphone">
+          <div class="row meta__item" *ngIf="club.phone">
             <div class="col-xs-2 meta__type">
               Phone
             </div>
             <div class="col-xs-10">
-              <span>{{ club.contactphone }}</span>
+              <span>{{ club.phone }}</span>
             </div>
           </div>
           <div class="row meta__item" *ngIf="club.email">
@@ -68,6 +68,22 @@
             </div>
             <div class="col-xs-10">
               <span>{{ club.address }}</span>
+            </div>
+          </div>
+          <div class="row meta__item" *ngIf="club.address">
+            <div class="col-xs-2 meta__type">
+              Building
+            </div>
+            <div class="col-xs-10">
+              <span>{{ club.location }}</span>
+            </div>
+          </div>
+          <div class="row meta__item" *ngIf="club.address">
+            <div class="col-xs-2 meta__type">
+              Room
+            </div>
+            <div class="col-xs-10">
+              <span>{{ club.room_info }}</span>
             </div>
           </div>
         </div>
