@@ -3,7 +3,12 @@
     <div class="cp-card">
       <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
         <div class="row form-group">
-          <div class="col-xs-6 pull-right text-right">
+          <div class="col-xs-6 text-left">
+            <p class="text-muted maxLength">
+              {{ form.controls.message.value ? form.controls.message.value.length : 0 }}/500
+            </p>
+          </div>
+          <div class="col-xs-6 text-right">
             <cp-upload-button
               buttonText="Add Photo"
               buttonClass="cpbtn cpbtn--link"

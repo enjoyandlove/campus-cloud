@@ -120,6 +120,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
       .subscribe((res: any) => {
         if (res.target.textContent === this.placeHolder) {
           res.target.textContent = null;
+          this.form.controls['message'].setValue(null);
         }
       });
 
@@ -128,6 +129,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
       .subscribe((res: any) => {
         if (!res.target.textContent) {
           res.target.textContent = this.placeHolder;
+          this.form.controls['message'].setValue(null);
         }
       });
 
@@ -136,6 +138,8 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
       .subscribe((res: any) => {
         if (!res.target.textContent) {
           res.target.textContent = this.placeHolder;
+          this.form.controls['message'].setValue(null);
+          return;
         }
         this.form.controls['message'].setValue(res.target.textContent);
       });
