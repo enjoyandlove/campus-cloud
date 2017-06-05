@@ -157,28 +157,7 @@ export class FeedsComponent extends BaseComponent implements OnInit {
             return result;
           });
     } else {
-      let _search = new URLSearchParams();
-      _search.append('school_id', this.session.school.id.toString());
-
-      let groups$ = this.service.getSocialGroups(_search);
-
-      stream$ =
-        Observable
-          .combineLatest(groupThread$, groups$)
-          .map(res => {
-            let result = [];
-            let threads = res[0];
-            this.groups = res[1];
-
-            threads.forEach(thread => {
-              result.push({
-                ...thread,
-                channelName: this.getGroupNameFromArray(this.groups, thread)
-              });
-            });
-
-            return result;
-          });
+      return groupThread$;
     }
 
     return stream$;

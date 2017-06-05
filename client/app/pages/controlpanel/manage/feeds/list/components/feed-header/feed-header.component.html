@@ -9,7 +9,7 @@
   <span class="email" *ngIf="feed.email && feed.email !== ''">
     ({{ feed.email }})
   </span>
-  <span *ngIf="!isComment">
+  <span *ngIf="!isComment && feed.channelName">
     <span class="text-muted" i18n>
       posted in
     </span>
