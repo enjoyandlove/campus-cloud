@@ -209,7 +209,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
       'school_id': [this.session.school.id],
       'store_id': [null, Validators.required],
       'post_type': [null, Validators.required],
-      'message': [null, Validators.required],
+      'message': [null, [Validators.required, Validators.maxLength(500)]],
       'message_image_url': [null]
     });
   }
