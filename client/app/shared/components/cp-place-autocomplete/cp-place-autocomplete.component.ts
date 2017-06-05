@@ -10,6 +10,8 @@ import {
   AfterViewInit
 } from '@angular/core';
 
+import { Observable } from 'rxjs/Observable';
+
 declare var google: any;
 
 @Component({
@@ -24,11 +26,22 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
   @ViewChild('input') input: ElementRef;
 
   constructor(
-    private zone: NgZone
+    private zone: NgZone,
   ) { }
 
   ngAfterViewInit() {
     const input = this.input.nativeElement;
+
+    const stream$ = Observable.fromEvent(input, 'keyup');
+
+    stream$.subscribe((res: any) => {
+      let query = res.target.value;
+
+      if (!query) {
+        this.placeChange.emit(null);
+      }
+    });
+
     const options = {
       'types': ['establishment']
     };
@@ -45,7 +58,5 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngOnInit() {
-    // console.log(this);
-  }
+  ngOnInit() { }
 }

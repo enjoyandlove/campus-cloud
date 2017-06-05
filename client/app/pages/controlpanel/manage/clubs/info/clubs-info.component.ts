@@ -14,6 +14,7 @@ import { BaseComponent } from '../../../../../base/base.component';
 export class ClubsInfoComponent extends BaseComponent implements OnInit {
   club;
   loading;
+  hasMetaData;
   clubId: number;
 
   constructor(
@@ -37,6 +38,10 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
       .fetchData(this.clubsService.getClubById(this.clubId, search))
       .then(res => {
         this.club = res.data;
+        this.hasMetaData = this.club.contactphone ||
+          this.club.email ||
+          this.club.website ||
+          this.club.address;
       })
       .catch(err => console.log(err));
   }
