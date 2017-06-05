@@ -62,16 +62,14 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
 
     const stores$ = this.storeService.getStores(search);
 
-    if (!this.storeId && !this.clubId) {
-      super
-        .fetchData(stores$)
-        .then(res => {
-          this.buildForm();
-          this.buildHeader();
-          this.stores = res.data;
-        })
-        .catch(err => console.error(err));
-    }
+    super
+      .fetchData(stores$)
+      .then(res => {
+        this.buildForm();
+        this.buildHeader();
+        this.stores = res.data;
+      })
+      .catch(err => console.error(err));
   }
 
   private buildHeader() {
@@ -93,6 +91,9 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
 
     if (this.isService) {
       this.updateManagersByStoreOrClubId(this.serviceId);
+    }
+    if (this.isClub) {
+      this.updateManagersByStoreOrClubId(this.clubId);
     }
   }
 
@@ -187,9 +188,9 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     control.controls['store_id'].setValue(host.value);
   }
 
-  updateManagersByStoreOrClubId(storeId) {
+  updateManagersByStoreOrClubId(storeOrClubId) {
     const events = <FormArray>this.form.controls['events'];
-    const managers$ = this.getManagersByHostId(storeId);
+    const managers$ = this.getManagersByHostId(storeOrClubId);
     const groups = events.controls;
 
     managers$.subscribe(managers => {
@@ -199,11 +200,11 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     });
   }
 
-  getManagersByHostId(storeId): Observable<any> {
+  getManagersByHostId(storeOrClubId): Observable<any> {
     let search: URLSearchParams = new URLSearchParams();
 
     search.append('school_id', this.school.id.toString());
-    search.append('store_id', storeId);
+    search.append('store_id', storeOrClubId);
     search.append('privilege_type', CP_PRIVILEGES_MAP.events.toString());
 
     return this
@@ -327,12 +328,14 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       .createEvent(_events)
       .subscribe(
       _ => {
-        if (this.clubId) {
+        if (this.isClub) {
           this.router.navigate([`/manage/clubs/${this.clubId}/events`]);
+          return;
         }
 
-        if (this.serviceId) {
+        if (this.isService) {
           this.router.navigate([`/manage/clubs/${this.serviceId}/events`]);
+          return;
         }
 
         this.router.navigate(['/manage/events']);
@@ -365,7 +368,14 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       .subscribe(
       res => {
         this.events = !isDev ? res : require('./mock.json');
-        this.fetch();
+
+        if (!this.storeId && !this.clubId) {
+          this.fetch();
+          return;
+        }
+
+        this.buildForm();
+        this.buildHeader();
       });
 
     this.eventAttendanceFeedback = [
