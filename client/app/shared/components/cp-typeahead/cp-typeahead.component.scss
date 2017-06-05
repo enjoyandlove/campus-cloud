@@ -1,0 +1,16 @@
+@import '~styles/components/form';
+@import '~styles/components/dropdown';
+
+:host {
+  display: block;
+  padding: 10px 0;
+}
+
+.typeahead {
+  &__list {
+    @include cpDropdownMenu();
+
+    top: 110%;
+    border-radius: 4px;
+  }
+}
