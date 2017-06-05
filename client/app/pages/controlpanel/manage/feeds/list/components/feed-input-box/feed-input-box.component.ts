@@ -85,7 +85,10 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
     stream$
       .subscribe(
       res => {
-        this.form.reset();
+        if (!this.clubId) {
+          this.form.reset();
+        }
+        this.form.controls['message'].setValue(null);
         this.reset$.next(true);
         this.created.emit(res);
         this.textarea.nativeElement.innerHTML = this.placeHolder;
