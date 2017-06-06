@@ -17,8 +17,10 @@
   }
 
   &__chips {
-    top: -40px;
-    position: relative;
+    height: 100%;
+    overflow: auto;
+    min-height: 38px;
+    background: $color-white;
   }
 
   &__chip {

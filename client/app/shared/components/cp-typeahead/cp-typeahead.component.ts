@@ -18,6 +18,7 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit {
   @ViewChild('input') input: ElementRef;
 
   el;
+  isFocus;
   searching;
   chipOptions;
   suggestions = [];
@@ -29,6 +30,16 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit {
     this.el = this.input.nativeElement;
 
     const stream$ = Observable.fromEvent(this.el, 'keyup');
+    const focus$ = Observable.fromEvent(this.el, 'focus');
+    const blur$ = Observable.fromEvent(this.el, 'blur');
+
+    focus$.subscribe(_ => {
+      this.isFocus = true;
+      this.updateInputValue();
+    });
+
+
+    blur$.subscribe(_ => this.isFocus = false);
 
     stream$
       .map((res: any) => {
@@ -48,21 +59,35 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit {
       );
   }
 
+  updateInputValue() {
+    let value = '';
+
+    this.state.selected.forEach(selection => {
+      value += `${selection.label}, `;
+    });
+
+    this.el.value = value;
+  }
+
   onHandleClick(suggestion) {
+    this.isFocus = true;
     this.state = Object.assign(
       {},
       this.state,
       { selected: this.state.selected.add(suggestion) }
     );
+
+    this.updateInputValue();
   }
 
   onHandleRemove(suggestion) {
-    console.log(suggestion);
     this.state.selected.forEach((item: any) => {
       if (item.id === suggestion) {
         this.state.selected.delete(item);
       }
     });
+
+    this.updateInputValue();
   }
 
   ngOnInit() {

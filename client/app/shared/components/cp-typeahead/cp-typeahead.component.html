@@ -2,17 +2,15 @@
   <div class="col-xs-4">
     <ng-container class="typeahead">
       <textarea #input></textarea>
-      <!--<input
-        #input
-        type="text"
-        class="typeahead__input">-->
-      <div class="typeahead__chips" *ngIf="state.selected.size">
+
+      <div
+        class="typeahead__chips input">
         <cp-chip
           [chip]="chip"
+          class="typeahead__chip"
           [icon]="chipOptions.icon"
           [withClose]="chipOptions.close"
           [withAvatar]="chipOptions.avatar"
-          class="typeahead__chip"
           *ngFor="let chip of state.selected"
           (handleClose)="onHandleRemove($event)">
         </cp-chip>
