@@ -7,7 +7,15 @@
   padding: 10px 0;
 }
 
+textarea {
+  height: 38px;
+  min-height: 38px;
+  position: relative;
+}
+
 .typeahead {
+  position: relative;
+
   &__input {
     height: 100%;
     padding: 3px;
@@ -24,14 +32,16 @@
   }
 
   &__chip {
-    margin-right: 6px;
+    padding: 3px;
+    // margin-right: 6px;
     display: inline-block;
   }
 
   &__list {
     @include cpDropdownMenu();
 
-    top: 115%;
+    top: 100%;
+    left: 15px;
     border-radius: 4px;
   }
 }

@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-xs-4">
     <ng-container class="typeahead">
-      <textarea #input></textarea>
+      <textarea #input data-toggle="dropdown"></textarea>
 
       <div
         class="typeahead__chips input">
@@ -16,7 +16,7 @@
         </cp-chip>
       </div>
 
-      <ul class="typeahead__list">
+      <ul class="typeahead__list dropdown-menu" *ngIf="suggestions.length">
         <li
           class="typeahead__item"
           (click)="onHandleClick(suggestion)"

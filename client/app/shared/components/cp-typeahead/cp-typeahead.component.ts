@@ -51,6 +51,32 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit {
       .subscribe(
       _ => {
         this.searching = false;
+        this.suggestions = [
+          {
+            'label': 'John Smith',
+            'id': 1
+          },
+          {
+            'label': 'Joe Smith',
+            'id': 2
+          },
+          {
+            'label': 'Sylvester Stallone',
+            'id': 3
+          },
+          {
+            'label': 'Harrison Ford',
+            'id': 4
+          },
+          {
+            'label': 'Nicholas Cage',
+            'id': 5
+          },
+          {
+            'label': 'Arnold Schwarzenegger',
+            'id': 6
+          }
+        ];
       },
       err => {
         console.log(err);
@@ -71,6 +97,7 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit {
 
   onHandleClick(suggestion) {
     this.isFocus = true;
+    this.suggestions = [];
     this.state = Object.assign(
       {},
       this.state,
@@ -96,31 +123,5 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit {
       avatar: true,
       icon: 'account_box'
     };
-    this.suggestions = [
-      {
-        'label': 'John Smith',
-        'id': 1
-      },
-      {
-        'label': 'Joe Smith',
-        'id': 2
-      },
-      {
-        'label': 'Sylvester Stallone',
-        'id': 3
-      },
-      {
-        'label': 'Harrison Ford',
-        'id': 4
-      },
-      {
-        'label': 'Nicholas Cage',
-        'id': 5
-      },
-      {
-        'label': 'Arnold Schwarzenegger',
-        'id': 6
-      }
-    ];
   }
 }
