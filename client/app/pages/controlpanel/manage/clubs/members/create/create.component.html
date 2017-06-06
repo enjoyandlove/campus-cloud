@@ -41,6 +41,7 @@
               <label i18n>Member Type</label>
               <cp-dropdown
                 [items]="memberTypes"
+                [reset]="reset$"
                 (selected)="onTypeChange($event.action)">
               </cp-dropdown>
             </div>

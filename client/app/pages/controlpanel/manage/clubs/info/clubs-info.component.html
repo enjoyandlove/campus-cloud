@@ -1,6 +1,6 @@
-<div [ngSwitch]="loading">
+<ng-container [ngSwitch]="loading">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
-  <div *ngSwitchCase="false">
+  <ng-container *ngSwitchCase="false">
     <div class="row">
       <div class="col-xs-8 col-xs-offset-2">
         <div class="cp-card club">
@@ -35,15 +35,15 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row" *ngIf="hasMetaData">
       <div class="col-xs-8 col-xs-offset-2">
         <div class="cp-card meta">
-          <div class="row meta__item" *ngIf="club.contactphone">
+          <div class="row meta__item" *ngIf="club.phone">
             <div class="col-xs-2 meta__type">
               Phone
             </div>
             <div class="col-xs-10">
-              <span>{{ club.contactphone }}</span>
+              <span>{{ club.phone }}</span>
             </div>
           </div>
           <div class="row meta__item" *ngIf="club.email">
@@ -70,8 +70,32 @@
               <span>{{ club.address }}</span>
             </div>
           </div>
+          <div class="row meta__item" *ngIf="club.address">
+            <div class="col-xs-2 meta__type">
+              Building
+            </div>
+            <div class="col-xs-10">
+              <span>{{ club.location }}</span>
+            </div>
+          </div>
+          <div class="row meta__item" *ngIf="club.address">
+            <div class="col-xs-2 meta__type">
+              Room
+            </div>
+            <div class="col-xs-10">
+              <span>{{ club.room_info }}</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
+
+    <div class="row">
+      <div class="col-xs-8 col-xs-offset-2">
+        <div class="cp-card map">
+          <cp-maps class="map__container" [center]="mapCenter"></cp-maps>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

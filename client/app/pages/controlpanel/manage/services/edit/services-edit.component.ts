@@ -100,18 +100,29 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       .catch(err => console.error(err));
   }
 
-  onPlaceChanged(data) {
+  onPlaceChange(data) {
     let cpMap = CPMap.getBaseMapObject(data);
+
+    if (!data) {
+      data = {};
+      data.name = '';
+      this.mapCenter.next({
+        lat: this.session.school.latitude,
+        lng: this.session.school.longitude
+      });
+    }
 
     this.form.controls['city'].setValue(cpMap.city);
     this.form.controls['province'].setValue(cpMap.province);
     this.form.controls['country'].setValue(cpMap.country);
-    this.form.controls['latitude'].setValue(cpMap.latitude);
-    this.form.controls['longitude'].setValue(cpMap.longitude);
-    this.form.controls['address'].setValue(`${cpMap.street_number} ${cpMap.street_name}`);
+    this.form.controls['latitude'].setValue(cpMap.latitude || this.session.school.latitude);
+    this.form.controls['longitude'].setValue(cpMap.longitude || this.session.school.longitude);
+    this.form.controls['address'].setValue(data.name);
     this.form.controls['postal_code'].setValue(cpMap.postal_code);
 
-    this.mapCenter.next(data.geometry.location.toJSON());
+    if (data.geometry) {
+      this.mapCenter.next(data.geometry.location.toJSON());
+    }
   }
 
   onToggleAttendance(event) {
@@ -290,7 +301,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       .catch(err => Observable.throw(err))
       .subscribe(_ => {
         if (this.withAttendance) {
-          this.router.navigate(['/manage/services/' + this.serviceId ]);
+          this.router.navigate(['/manage/services/' + this.serviceId]);
           return;
         }
 

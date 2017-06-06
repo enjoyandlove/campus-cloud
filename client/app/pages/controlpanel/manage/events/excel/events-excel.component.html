@@ -30,9 +30,9 @@
               *ngFor="let event of form.controls.events.controls; let i=index">
               <div [formGroupName]="i" class="col-xs-12">
                 <div class="row form__item">
-                  <div [class]="[storeId ? 'col-xs-5 text-truncate' : 'col-xs-3 text-truncate']">
+                  <div [class]="[storeId || clubId ? 'col-xs-5 text-truncate' : 'col-xs-3 text-truncate']">
                     <div class="row margin-top">
-                      <div [class]="[storeId ? 'col-xs-3 no-left-padding' : 'col-xs-4 no-left-padding']">
+                      <div [class]="[storeId || clubId? 'col-xs-3 no-left-padding' : 'col-xs-4 no-left-padding']">
                         <cp-checkbox
                           class="checkbox pull-left"
                           [isChecked]="isChecked[i].checked"
@@ -53,7 +53,7 @@
                         </div>
                       </div>
 
-                      <div [class]="[storeId ? 'col-xs-9 no-left-padding text-truncate' : 'col-xs-8 no-left-padding text-truncate']">
+                      <div [class]="[storeId || clubId? 'col-xs-9 no-left-padding text-truncate' : 'col-xs-8 no-left-padding text-truncate']">
                         <span class="event__title">
                           <strong>{{ event.controls.title.value }}</strong>
                         </span>
@@ -64,7 +64,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-xs-2" *ngIf="!storeId">
+                  <div class="col-xs-2" *ngIf="!storeId && !clubId">
                     <label i18n>Host</label>
                     <cp-dropdown
                       [items]="stores"

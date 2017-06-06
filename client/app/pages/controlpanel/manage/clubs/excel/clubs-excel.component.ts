@@ -88,7 +88,7 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
       'has_membership': [true],
       'email': [club.email],
       'description': [club.description],
-      'phone': [club.phone],
+      'phone': [club.phone_number],
       'website': [club.website],
     });
   }

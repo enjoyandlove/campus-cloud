@@ -13,6 +13,8 @@ import {
   AfterViewInit
 } from '@angular/core';
 
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+
 import { MembersService } from '../members.service';
 import { CPSession } from '../../../../../../session';
 
@@ -35,6 +37,7 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
   memberTypes;
   members = [];
   form: FormGroup;
+  reset$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
     private fb: FormBuilder,
@@ -84,6 +87,8 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
   }
 
   onMemberSelected(member) {
+    if (!member.id) { return; }
+
     this.members = [];
     this.input.nativeElement.value = member.label;
     this.form.controls['member'].setValue(member.id);
@@ -95,7 +100,8 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
   }
 
   doReset() {
-    this.form.reset();
+    this.form.controls['member'].setValue(null);
+    this.form.controls['member_type'].setValue(this.memberTypes[0].action);
     this.input.nativeElement.value = null;
   }
 
@@ -117,7 +123,8 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
         member => {
           this.added.emit(member);
           $('#membersCreate').modal('hide');
-          this.form.reset();
+          this.doReset();
+          this.reset$.next(true);
         },
         err => console.log(err)
       );
