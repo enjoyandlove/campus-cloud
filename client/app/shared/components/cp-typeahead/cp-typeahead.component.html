@@ -1,20 +1,21 @@
 <div class="row">
   <div class="col-xs-4">
     <ng-container class="typeahead">
-      <div
-        #input contenteditable
-        class="typeahead__input input">
-        <ng-container *ngIf="state.selected.size">
-          <cp-chip
-            [chip]="chip"
-            [icon]="chipOptions.icon"
-            [withClose]="chipOptions.close"
-            [withAvatar]="chipOptions.avatar"
-            class="typeahead__chip"
-            *ngFor="let chip of state.selected"
-            (handleClose)="onHandleRemove($event)">
-          </cp-chip>
-        </ng-container>
+      <textarea #input></textarea>
+      <!--<input
+        #input
+        type="text"
+        class="typeahead__input">-->
+      <div class="typeahead__chips" *ngIf="state.selected.size">
+        <cp-chip
+          [chip]="chip"
+          [icon]="chipOptions.icon"
+          [withClose]="chipOptions.close"
+          [withAvatar]="chipOptions.avatar"
+          class="typeahead__chip"
+          *ngFor="let chip of state.selected"
+          (handleClose)="onHandleRemove($event)">
+        </cp-chip>
       </div>
 
       <ul class="typeahead__list">

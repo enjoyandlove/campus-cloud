@@ -83,6 +83,18 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit {
       {
         'label': 'Sylvester Stallone',
         'id': 3
+      },
+      {
+        'label': 'Harrison Ford',
+        'id': 4
+      },
+      {
+        'label': 'Nicholas Cage',
+        'id': 5
+      },
+      {
+        'label': 'Arnold Schwarzenegger',
+        'id': 6
       }
     ];
   }

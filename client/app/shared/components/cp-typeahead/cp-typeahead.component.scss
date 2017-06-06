@@ -16,6 +16,11 @@
     background: $color-white;
   }
 
+  &__chips {
+    top: -40px;
+    position: relative;
+  }
+
   &__chip {
     margin-right: 6px;
     display: inline-block;
