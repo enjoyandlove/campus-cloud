@@ -43,6 +43,7 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   channels;
   state: IState = state;
   isFilteredByRemovedPosts$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  isFilteredByFlaggedPosts$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   isCampusWallView$: BehaviorSubject<any> = new BehaviorSubject({
     type: 1,
     group_id: null
@@ -63,10 +64,18 @@ export class FeedsComponent extends BaseComponent implements OnInit {
       group_id: data.group_id
     });
 
+    // filter by removed posts
     if (data.removed_by_moderators_only) {
       this.isFilteredByRemovedPosts$.next(true);
     } else {
       this.isFilteredByRemovedPosts$.next(false);
+    }
+
+    // filter by flagged posts
+    if (data.flagged_by_users_only) {
+      this.isFilteredByFlaggedPosts$.next(true);
+    } else {
+      this.isFilteredByFlaggedPosts$.next(false);
     }
 
     this.state = Object.assign(
@@ -174,7 +183,9 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   }
 
   onCreated(feed) {
-    if (this.isFilteredByRemovedPosts$.value) { return; }
+    // do not append to list if currently filtering by flagged or removed posts
+    if (this.isFilteredByRemovedPosts$.value || this.isFilteredByFlaggedPosts$.value) { return; }
+
     let channelName;
 
     if (this.state.isCampusThread) {
