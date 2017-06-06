@@ -48,6 +48,8 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
         );
         this.hasMetaData = this.club.contactphone ||
           this.club.email ||
+          this.club.room_info ||
+          this.club.location ||
           this.club.website ||
           this.club.address;
       })
