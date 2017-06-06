@@ -1,0 +1,27 @@
+@import '~styles/core/colors';
+.chip {
+  padding: 1px 5px;
+  background: $color-light-grey;
+
+  i,
+  span,
+  button {
+    line-height: 1;
+    display: inline-block;
+  }
+
+  span {
+    top: -6px;
+    position: relative;
+  }
+
+  button {
+    top: -1px;
+    padding: 0;
+    border: none;
+    margin-left: 8px;
+    font-size: 1.8em;
+    position: relative;
+    background: transparent;
+  }
+}

@@ -1,11 +1,30 @@
-<ng-container class="typeahead">
-  <input
-    #input
-    type="text">
+<div class="row">
+  <div class="col-xs-4">
+    <ng-container class="typeahead">
+      <div
+        #input contenteditable
+        class="typeahead__input input">
+        <ng-container *ngIf="state.selected.size">
+          <cp-chip
+            [chip]="chip"
+            [icon]="chipOptions.icon"
+            [withClose]="chipOptions.close"
+            [withAvatar]="chipOptions.avatar"
+            class="typeahead__chip"
+            *ngFor="let chip of state.selected"
+            (handleClose)="onHandleRemove($event)">
+          </cp-chip>
+        </ng-container>
+      </div>
 
-  <ul class="typeahead__list">
-    <li class="typeahead__item">Hello</li>
-    <li class="typeahead__item">World</li>
-  </ul>
-  <cp-chip></cp-chip>
-</ng-container>
+      <ul class="typeahead__list">
+        <li
+          class="typeahead__item"
+          (click)="onHandleClick(suggestion)"
+          *ngFor="let suggestion of suggestions">
+          {{ suggestion.label }}
+        </li>
+      </ul>
+    </ng-container>
+  </div>
+</div>
