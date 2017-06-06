@@ -173,24 +173,12 @@ export class FeedsComponent extends BaseComponent implements OnInit {
     return name;
   }
 
-  getGroupNameFromArray(groups, thread) {
-    let name;
-    groups.filter(group => {
-      if (group.id === thread.group_id) {
-        name = group.name;
-      }
-    });
-    return name;
-  }
-
   onCreated(feed) {
     if (this.isFilteredByRemovedPosts$.value) { return; }
     let channelName;
 
     if (this.state.isCampusThread) {
       channelName = this.getChannelNameFromArray(this.channels, feed);
-    } else {
-      channelName = this.getGroupNameFromArray(this.groups, feed);
     }
 
     feed = Object.assign({}, feed, {
