@@ -12,7 +12,7 @@ import { CP_PRIVILEGES_MAP } from '../../../../../shared/utils/privileges';
 
 @Component({
   selector: 'cp-clubs-events',
-  template: '<cp-events [isClub]="isClub" [clubId]="clubId"></cp-events>'
+  templateUrl: './clubs-events.component.html',
 })
 export class ClubsEventsComponent extends BaseComponent implements OnInit {
   loading;
@@ -49,7 +49,7 @@ export class ClubsEventsComponent extends BaseComponent implements OnInit {
 
   buildHeader(name) {
     let schoolPrivileges = this.session.user.school_level_privileges[this.session.school.id];
-    let accountPrivilege = this.session.user.account_level_privileges[this.clubId];
+    let accountPrivileges = this.session.user.account_level_privileges[this.clubId];
     let menu = {
       heading: name,
       subheading: null,
@@ -59,30 +59,40 @@ export class ClubsEventsComponent extends BaseComponent implements OnInit {
 
     let links = ['Info'];
 
-    if (this.hasMembership) {
-      links = ['Members', ...links];
-    }
-
     if (schoolPrivileges) {
       if (schoolPrivileges[CP_PRIVILEGES_MAP.events].r) {
         links = ['Events', ...links];
       }
 
-      if (schoolPrivileges[CP_PRIVILEGES_MAP.moderation].r) {
-        links = ['Wall', ...links];
+      if (this.hasMembership) {
+        if (schoolPrivileges[CP_PRIVILEGES_MAP.membership].r) {
+          links = ['Members', ...links];
+        }
+
+        if (schoolPrivileges[CP_PRIVILEGES_MAP.moderation].r) {
+          links = ['Wall', ...links];
+        }
       }
     }
 
-    if (accountPrivilege) {
+    if (accountPrivileges) {
       if (links.indexOf('Events') === -1 &&
-        accountPrivilege[CP_PRIVILEGES_MAP.events] &&
-        accountPrivilege[CP_PRIVILEGES_MAP.events].r) {
+        accountPrivileges[CP_PRIVILEGES_MAP.events] &&
+        accountPrivileges[CP_PRIVILEGES_MAP.events].r) {
         links = ['Events', ...links];
       }
 
+      if (links.indexOf('Members') === -1 &&
+        this.hasMembership &&
+        accountPrivileges[CP_PRIVILEGES_MAP.membership]
+        && accountPrivileges[CP_PRIVILEGES_MAP.membership].r) {
+        links = ['Members', ...links];
+      }
+
       if (links.indexOf('Wall') === -1 &&
-        accountPrivilege[CP_PRIVILEGES_MAP.moderation]
-        && accountPrivilege[CP_PRIVILEGES_MAP.moderation].r) {
+        this.hasMembership &&
+        accountPrivileges[CP_PRIVILEGES_MAP.moderation]
+        && accountPrivileges[CP_PRIVILEGES_MAP.moderation].r) {
         links = ['Wall', ...links];
       }
     }
