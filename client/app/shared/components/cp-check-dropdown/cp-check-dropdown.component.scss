@@ -12,6 +12,17 @@
     width: 100%;
     height: 33px;
     text-align: left;
+
+    span {
+      i {
+        top: 7px;
+        right: 12px;
+        line-height: 1;
+        font-size: 18px;
+        position: absolute;
+        transition: transform 200ms ease-in-out;
+      }
+    }
   }
 
   &__list {
