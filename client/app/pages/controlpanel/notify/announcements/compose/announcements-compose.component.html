@@ -88,11 +88,14 @@
 
             <div class="form-group" *ngIf="!isCampusWide">
               <label i18n>To</label>
-              <input
-                type="text"
-                class="form-control"
-                formControlName="subject"
-                placeholder="Enter name of a user or a list">
+              <div class="row">
+                <div class="col-xs-12">
+                  <cp-typeahead
+                    (query)="onSearch($event)"
+                    [suggestions]="suggestions">
+                  </cp-typeahead>
+                </div>
+              </div>
             </div>
 
             <div class="form-group">

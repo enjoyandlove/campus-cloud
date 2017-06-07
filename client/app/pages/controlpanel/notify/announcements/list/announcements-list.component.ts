@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
-import { CPSession } from '../../../../../session';
 import { FORMAT } from '../../../../../shared/pipes/date.pipe';
 import { AnnouncementsService } from '../announcements.service';
 import { BaseComponent } from '../../../../../base/base.component';
@@ -10,16 +9,12 @@ interface IState {
   messages: Array<any>;
   query: string;
   type: number;
-  userSerch: boolean;
-  listSearch: boolean;
 }
 
 const state: IState = {
   messages: [],
   query: null,
   type: null,
-  userSerch: true,
-  listSearch: false,
 };
 
 declare var $: any;
@@ -36,49 +31,12 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
   dateFormat = FORMAT.DATETIME;
 
   constructor(
-    private session: CPSession,
     private service: AnnouncementsService
   ) {
     super();
     super.isLoading().subscribe(res => this.loading = res);
 
     this.fetch();
-  }
-
-  private doUserSearch(query) {
-    let search = new URLSearchParams();
-    search.append('search_str', query);
-    search.append('school_id', this.session.school.id.toString());
-
-    this
-      .service
-      .getUsers(search)
-      .map(users => {
-        let _users = [];
-
-        users.forEach(user => {
-          _users.push({
-            'label': `${user.firstname} ${user.lastname}`,
-            'id': user.id
-          });
-        });
-
-        if (!_users.length) {
-          _users.push({ 'label': 'No Results...' });
-        }
-
-        return _users;
-      })
-      .subscribe(
-        res => this.suggestions = res,
-        err => console.log(err)
-      );
-  }
-
-  onSearch(query) {
-    if (this.state.userSerch) {
-      this.doUserSearch(query);
-    }
   }
 
   doFilter(data) {

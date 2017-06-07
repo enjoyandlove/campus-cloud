@@ -12,15 +12,6 @@
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
   <ng-container *ngSwitchCase="false">
-    <div class="row">
-      <div class="col-xs-12">
-        <cp-typeahead
-          (query)="onSearch($event)"
-          [suggestions]="suggestions">
-        </cp-typeahead>
-      </div>
-    </div>
-
     <cp-no-content
       *ngIf="!state.messages.length"
       noContentText="No messages found...">
