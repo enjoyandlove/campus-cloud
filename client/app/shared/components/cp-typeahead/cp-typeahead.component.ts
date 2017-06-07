@@ -18,8 +18,6 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit {
   @ViewChild('input') input: ElementRef;
 
   el;
-  isFocus;
-  searching;
   chipOptions;
   suggestions = [];
   state: IState = state;
@@ -30,20 +28,9 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit {
     this.el = this.input.nativeElement;
 
     const keyup$ = Observable.fromEvent(this.el, 'keyup');
-    const focus$ = Observable.fromEvent(this.el, 'focus');
-    const blur$ = Observable.fromEvent(this.el, 'blur');
-
-    focus$.subscribe(_ => {
-      this.isFocus = true;
-      // this.updateInputValue();
-    });
-
-
-    blur$.subscribe(_ => this.isFocus = false);
 
     keyup$
       .map((res: any) => {
-        this.searching = true;
         return res.target.value;
       })
       .debounceTime(400)
@@ -51,8 +38,6 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit {
       .subscribe(
       _ => {
         // const query = (res.split(',')[res.split(',').length - 1]).trim();
-
-        this.searching = false;
         this.suggestions = [
           {
             'label': 'John Smith',
@@ -82,7 +67,6 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit {
       },
       err => {
         console.log(err);
-        this.searching = false;
       }
       );
   }
@@ -98,7 +82,6 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit {
   }
 
   onHandleClick(suggestion) {
-    this.isFocus = true;
     this.suggestions = [];
     this.state.selected.add(suggestion);
     // this.state = Object.assign(
