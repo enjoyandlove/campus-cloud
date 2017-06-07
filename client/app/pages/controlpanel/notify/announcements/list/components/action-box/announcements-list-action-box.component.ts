@@ -41,15 +41,15 @@ export class AnnouncementsListActionBoxComponent implements OnInit {
       },
       {
         'label': 'Regular',
-        'action': 1
-      },
-      {
-        'label': 'Urgent',
         'action': 2
       },
       {
+        'label': 'Urgent',
+        'action': 1
+      },
+      {
         'label': 'Emergency',
-        'action': 3
+        'action': 0
       }
     ];
   }
