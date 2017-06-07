@@ -26,7 +26,7 @@ const COMMON_DATE_PICKER_OPTIONS = {
 export class EventsCreateComponent implements OnInit {
   @Input() storeId: number;
   @Input() isClub: boolean;
-  @Input() clubeId: boolean;
+  @Input() clubId: boolean;
   @Input() serviceId: number;
   @Input() isService: boolean;
 
@@ -190,7 +190,7 @@ export class EventsCreateComponent implements OnInit {
           return;
         }
         if (this.isClub) {
-          this.router.navigate([`/manage/clubs/${this.clubeId}/events/${res.id}`]);
+          this.router.navigate([`/manage/clubs/${this.clubId}/events/${res.id}`]);
           return;
         }
         this.router.navigate(['/manage/events/' + res.id]);
@@ -204,9 +204,17 @@ export class EventsCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    // services || clubs we need to fetch admins
+    let store_id;
+    // fetch managers by service
     if (this.storeId) {
+      store_id = this.storeId;
       this.fetchManagersBySelectedStore(this.storeId);
+    }
+
+    // fetch managers by club
+    if (this.clubId) {
+      store_id = this.clubId;
+      this.fetchManagersBySelectedStore(this.clubId);
     }
 
     this.booleanOptions = [
@@ -228,7 +236,7 @@ export class EventsCreateComponent implements OnInit {
 
     this.form = this.fb.group({
       'title': [null, Validators.required],
-      'store_id': [this.storeId ? this.storeId : null, Validators.required],
+      'store_id': [store_id ? store_id : null, Validators.required],
       'location': [null],
       'room_data': [null],
       'city': [null],

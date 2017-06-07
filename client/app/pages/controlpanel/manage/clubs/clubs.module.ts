@@ -8,6 +8,7 @@ import { SharedModule } from '../../../../shared/shared.module';
  * CRUD
  */
 import { ClubsListComponent } from './list';
+import { ClubsEditComponent } from './edit';
 import { ClubsCreateComponent } from './create';
 import { ClubsDeleteComponent } from './delete';
 
@@ -33,7 +34,7 @@ import { ClubsRoutingModule } from './clubs.routing.module';
 @NgModule({
   declarations: [ ClubsListComponent, ClubsCreateComponent,
   ClubsDeleteComponent, ClubsListActionBoxComponent, ClubsExcelModalComponent,
-  ClubsExcelComponent ],
+  ClubsExcelComponent, ClubsEditComponent ],
 
   imports: [ CommonModule, SharedModule, RouterModule, ReactiveFormsModule, ClubsRoutingModule,
   FeedsModule, EventsModule ],

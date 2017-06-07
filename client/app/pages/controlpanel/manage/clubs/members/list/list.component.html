@@ -1,4 +1,5 @@
 <cp-clubs-members-action-box
+  (query)="onFilter($event)"
   (create)="onLaunchCreateModal()">
 </cp-clubs-members-action-box>
 
@@ -7,25 +8,36 @@
 
   <div *ngSwitchCase="false">
     <cp-no-content
-      *ngIf="!members.length"
+      *ngIf="!state.members.length"
       noContentText="No Members Found...">
     </cp-no-content>
 
-    <div *ngIf="members.length">
-      <ul class="col-xs-12 cp-form">
-        <div class="members">
-          <li class="cp-form__header col-xs-12">
+    <div *ngIf="state.members.length">
+      <ul class="members cp-form">
+        <li class="cp-form__header col-xs-12">
+          <div class="row">
             <span class="col-xs-3" i18n>Name</span>
             <span class="col-xs-2" i18n>Member Type</span>
             <span class="col-xs-2 col-xs-2-offset-3"></span>
-          </li>
+          </div>
+        </li>
 
-          <li class="cp-form__item col-xs-12" *ngFor="let member of members">
-
+        <li
+          class="cp-form__item col-xs-12"
+          *ngFor="let member of state.members | cpFilterPipe: { query: query, filterBy: ['firstname', 'lastname'] }">
+          <div class="row">
             <span class="col-xs-3 text-truncate members__thumbnail">
-              <img class="img-rounded" [src]="member.avatar_url">
+              <img
+                class="img-rounded"
+                [src]="member.avatar_url"
+                *ngIf="member.avatar_url !== ''">
+              <img
+                class="img-rounded"
+                src="/dist/default/user.png"
+                *ngIf="member.avatar_url === ''">
               <strong>
                   <button
+                    (click)="isEdit = true"
                     (click)="editMember = member"
                     class="cpbtn cpbtn--link-dark member__title"
                     data-toggle="modal" data-target="#membersEdit">
@@ -36,7 +48,7 @@
               {{ member.role }}
             </span>
             <span class="col-xs-2 text-truncate">
-              {{ member.member_type }}
+              {{ member.member_type === 2 ? 'Executive' : 'Member' }}
             </span>
 
             <span
@@ -45,22 +57,34 @@
               class="col-xs-1 col-xs-offset-5 pull-right text-center delete-member hover">
               &times;
             </span>
-          </li>
-        </div>
+          </div>
+        </li>
       </ul>
     </div>
+
+    <cp-modal modalId="membersEdit">
+      <cp-members-edit
+        *ngIf="isEdit"
+        [groupId]="groupId"
+        [member]="editMember"
+        (edited)="onEdited($event)"
+        (teardown)="isEdit = false">
+      </cp-members-edit>
+    </cp-modal>
+
+    <cp-modal modalId="membersDelete">
+      <cp-members-delete
+        [groupId]="groupId"
+        [member]="deleteMember"
+        (deleted)="onDeleted($event)">
+      </cp-members-delete>
+    </cp-modal>
+
+    <cp-modal modalId="membersCreate">
+      <cp-members-create
+        [groupId]="groupId"
+        (added)="onAdded($event)">
+      </cp-members-create>
+    </cp-modal>
   </div>
 </div>
-
-
-<cp-modal modalId="membersEdit">
-  <cp-members-edit [member]="editMember"></cp-members-edit>
-</cp-modal>
-
-<cp-modal modalId="membersDelete">
-  <cp-members-delete [member]="deleteMember"></cp-members-delete>
-</cp-modal>
-
-<cp-modal modalId="membersCreate">
-  <cp-members-create></cp-members-create>
-</cp-modal>

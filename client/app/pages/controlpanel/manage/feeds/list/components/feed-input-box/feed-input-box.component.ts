@@ -26,7 +26,7 @@ import { FileUploadService, StoreService } from '../../../../../../../shared/ser
   styleUrls: ['./feed-input-box.component.scss']
 })
 export class FeedInputBoxComponent implements AfterViewInit, OnInit {
-  @Input() isSimple: boolean;
+  @Input() clubId: number;
   @ViewChild('textarea') textarea: ElementRef;
   @Input() isCampusWallView: Observable<any>;
   @Output() created: EventEmitter<null> = new EventEmitter();
@@ -85,7 +85,10 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
     stream$
       .subscribe(
       res => {
-        this.form.reset();
+        if (!this.clubId) {
+          this.form.reset();
+        }
+        this.form.controls['message'].setValue(null);
         this.reset$.next(true);
         this.created.emit(res);
         this.textarea.nativeElement.innerHTML = this.placeHolder;
@@ -117,6 +120,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
       .subscribe((res: any) => {
         if (res.target.textContent === this.placeHolder) {
           res.target.textContent = null;
+          this.form.controls['message'].setValue(null);
         }
       });
 
@@ -125,6 +129,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
       .subscribe((res: any) => {
         if (!res.target.textContent) {
           res.target.textContent = this.placeHolder;
+          this.form.controls['message'].setValue(null);
         }
       });
 
@@ -133,6 +138,8 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
       .subscribe((res: any) => {
         if (!res.target.textContent) {
           res.target.textContent = this.placeHolder;
+          this.form.controls['message'].setValue(null);
+          return;
         }
         this.form.controls['message'].setValue(res.target.textContent);
       });
@@ -184,7 +191,6 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
   ngOnInit() {
     this.school = this.session.school;
     this.isCampusWallView.subscribe(res => {
-
       // Not Campus Wall
       if (res.type !== 1) {
         this.groupId = res.type;
@@ -207,7 +213,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
       'school_id': [this.session.school.id],
       'store_id': [null, Validators.required],
       'post_type': [null, Validators.required],
-      'message': [null, Validators.required],
+      'message': [null, [Validators.required, Validators.maxLength(500)]],
       'message_image_url': [null]
     });
   }

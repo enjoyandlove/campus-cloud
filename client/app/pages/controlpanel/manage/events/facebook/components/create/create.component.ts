@@ -11,8 +11,9 @@ import { CPSession } from '../../../../../../../session';
   styleUrls: ['./create.component.scss']
 })
 export class FacebookEventsCreateComponent implements OnInit {
-  @Input() stores: Array<any>;
+  @Input() clubId: number;
   @Input() storeId: number;
+  @Input() stores: Array<any>;
   @Output() created: EventEmitter<null> = new EventEmitter();
 
   errors = [];
@@ -52,9 +53,19 @@ export class FacebookEventsCreateComponent implements OnInit {
   }
 
   ngOnInit() {
+    let store_id;
+
+    if (this.storeId) {
+      store_id = this.storeId;
+    }
+
+    if (this.clubId) {
+      store_id = this.clubId;
+    }
+
     this.form = this.fb.group({
       'url': [null, Validators.required],
-      'store_id': [this.storeId || null, Validators.required]
+      'store_id': [store_id ? store_id : null, Validators.required]
     });
   }
 }

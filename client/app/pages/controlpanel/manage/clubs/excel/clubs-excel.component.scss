@@ -3,6 +3,17 @@
 @import '~styles/components/button';
 @import '~bootstrap/variables';
 
+.avatar {
+  margin-right: 8px;
+}
+
+.deleteButton {
+  top: 4px;
+  left: 0px;
+  font-size: 1.5em;
+  position: absolute;
+}
+
 .delete-button {
   font-size: 2em;
 }
@@ -21,15 +32,12 @@
 .clubs {
   padding: 0;
   list-style: none;
-  padding-bottom: 20px;
 
   &__thumbnail {
     img {
-      float: left;
-      width: 30px;
-      height: 30px;
-      margin-top: 5px;
-      margin-right: 10px;
+      width: auto;
+      height: 35px;
+      width: 35px;
     }
   }
 
@@ -41,6 +49,11 @@
       }
     }
   }
+}
+
+.margin-bottom {
+  // to account for the fixed footer
+  padding-bottom: 90px;
 }
 
 .footer {

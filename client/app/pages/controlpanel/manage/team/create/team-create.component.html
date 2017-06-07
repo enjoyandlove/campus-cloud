@@ -105,7 +105,7 @@
         <!-- END Service Owner -->
 
         <!-- Club Owner -->
-        <!--<div class="section__item">
+        <div class="section__item">
           <div class="row">
             <div class="col-xs-8">
               <p class="section-sub-title" i18n>Club Owner</p>
@@ -120,7 +120,7 @@
               </cp-dropdown>
             </div>
           </div>
-        </div>-->
+        </div>
         <!-- END Club Owner -->
 
         <!-- Events -->
@@ -276,7 +276,7 @@
                 <label class="error">{{ formError }}</label>
               </div>
               <div class="pull-right">
-                <a [routerLink]="['/manage/events']"
+                <a [routerLink]="['/manage/team']"
                   class="cpbtn cpbtn--tall cpbtn--cancel" i18n>
                   Cancel
                 </a>
@@ -304,10 +304,10 @@
   </cp-select-services-modal>
 </cp-modal>
 
-<!--<cp-modal
+<cp-modal
   [type]="MODAL_TYPE"
   modalId="selectClubsModal">
   <cp-select-clubs-modal
     (selected)="onClubsModalSelected($event)">
   </cp-select-clubs-modal>
-</cp-modal>-->
+</cp-modal>

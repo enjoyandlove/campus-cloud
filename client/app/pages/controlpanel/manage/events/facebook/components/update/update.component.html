@@ -15,7 +15,7 @@
                     class="form-control"
                     formControlName="url">
                 </div>
-                <div class="col-xs-3" *ngIf="!storeId">
+                <div class="col-xs-3" *ngIf="!storeId && !clubId">
                   <label i18n>Select Host</label>
                   <cp-dropdown
                     [items]="stores"

@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { ClubsInfoComponent } from '../info';
 import { ClubsWallComponent } from '../wall';
-import { ClubsEditComponent } from '../edit';
 
 import { ClubsDetailsComponent } from './details.component';
 
@@ -18,9 +17,7 @@ const appRoutes: Routes = [
 
       { path: 'events', loadChildren: '../events/events.module#ClubsEventsModule' },
 
-      { path: 'members', loadChildren: '../members/members.module#ClubsMembersModule' },
-
-      { path: 'edit', component: ClubsEditComponent }
+      { path: 'members', loadChildren: '../members/members.module#ClubsMembersModule' }
     ]
   }
 ];

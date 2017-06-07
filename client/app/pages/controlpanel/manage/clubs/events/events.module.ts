@@ -6,6 +6,15 @@ import { SharedModule } from '../../../../../shared/shared.module';
 
 import { ClubsEventsComponent } from './clubs-events.component';
 
+import {
+  ClubsEventEditComponent,
+  ClubsEventInfoComponent,
+  ClubsEventsExcelComponent,
+  ClubsEventsCreateComponent,
+  ClubsEventsFacebookComponent,
+  ClubsEventsAttendanceComponent
+} from './components';
+
 /**
  * External Modules
  */
@@ -13,7 +22,9 @@ import { EventsModule } from '../../events/events.module';
 import { ClubsEventsRoutingModule } from './events.routing.module';
 
 @NgModule({
-  declarations: [ ClubsEventsComponent ],
+  declarations: [ ClubsEventsComponent, ClubsEventsCreateComponent,
+  ClubsEventsAttendanceComponent, ClubsEventInfoComponent, ClubsEventEditComponent,
+  ClubsEventsFacebookComponent, ClubsEventsExcelComponent ],
 
   imports: [ CommonModule, SharedModule, RouterModule, ReactiveFormsModule,
   ClubsEventsRoutingModule, EventsModule ],

@@ -1,6 +1,8 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { URLSearchParams } from '@angular/http';
 
+import { CPSession } from '../../../../../../../../session';
 import { ClubsService } from '../../../../../clubs/clubs.service';
 import { CP_PRIVILEGES_MAP } from '../../../../../../../../shared/utils';
 import { BaseTeamSelectModalComponent } from '../base/team-select-modal.component';
@@ -16,6 +18,7 @@ export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent
   data$: BehaviorSubject<any> = new BehaviorSubject({});
 
   constructor(
+    private session: CPSession,
     private service: ClubsService
   ) {
     super();
@@ -35,9 +38,12 @@ export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent
   }
 
   ngOnInit() {
+    let search = new URLSearchParams();
+    search.append('school_id', this.session.school.id.toString());
+
     this
       .service
-      .getClubs()
+      .getClubs(search, 1, 1000)
       .subscribe(clubs => {
         let res = {};
         let selected = {};

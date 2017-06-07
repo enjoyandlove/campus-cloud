@@ -19,8 +19,6 @@ declare var google: any;
 export class CPMapsComponent implements OnInit, AfterViewInit {
   @Input() center: Observable<any>;
   @ViewChild('map') map: ElementRef;
-  // _map;
-  // _center;
 
   constructor() { }
 
@@ -32,9 +30,6 @@ export class CPMapsComponent implements OnInit, AfterViewInit {
 
   drawMap(center) {
     const el = this.map.nativeElement;
-    // const defaultCenter = { lat: -34.397, lng: 150.644 };
-
-    // this._center = center ? center : defaultCenter;
 
     let map = new google.maps.Map(el, {
       zoom: 16,
@@ -49,12 +44,6 @@ export class CPMapsComponent implements OnInit, AfterViewInit {
     });
 
   }
-
-  // ngOnChanges() {
-  //   if (this.center) {
-  //     this.drawMap();
-  //   }
-  // }
 
   ngOnInit() { }
 }

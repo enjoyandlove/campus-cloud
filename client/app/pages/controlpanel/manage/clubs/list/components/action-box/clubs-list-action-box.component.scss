@@ -3,6 +3,7 @@
 @import '~styles/components/card';
 @import '~styles/components/form';
 @import '~styles/components/button';
+@import '~styles/components/dropdown';
 @import '~bootstrap/variables';
 
 .actions {
@@ -44,9 +45,9 @@
   }
 
   .dropdown-menu {
+    @include cpDropdownMenu();
     top: 115%;
-    padding: 0;
-    min-width: 260px;
+    min-width: 170px;
   }
 
   a { padding: 0 };
