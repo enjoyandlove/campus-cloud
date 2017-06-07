@@ -29,19 +29,19 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.el = this.input.nativeElement;
 
-    const stream$ = Observable.fromEvent(this.el, 'keyup');
+    const keyup$ = Observable.fromEvent(this.el, 'keyup');
     const focus$ = Observable.fromEvent(this.el, 'focus');
     const blur$ = Observable.fromEvent(this.el, 'blur');
 
     focus$.subscribe(_ => {
       this.isFocus = true;
-      this.updateInputValue();
+      // this.updateInputValue();
     });
 
 
     blur$.subscribe(_ => this.isFocus = false);
 
-    stream$
+    keyup$
       .map((res: any) => {
         this.searching = true;
         return res.target.value;
@@ -50,6 +50,8 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit {
       .distinctUntilChanged()
       .subscribe(
       _ => {
+        // const query = (res.split(',')[res.split(',').length - 1]).trim();
+
         this.searching = false;
         this.suggestions = [
           {
@@ -98,13 +100,15 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit {
   onHandleClick(suggestion) {
     this.isFocus = true;
     this.suggestions = [];
-    this.state = Object.assign(
-      {},
-      this.state,
-      { selected: this.state.selected.add(suggestion) }
-    );
+    this.state.selected.add(suggestion);
+    // this.state = Object.assign(
+    //   {},
+    //   this.state,
+    //   { selected: this.state.selected.add(suggestion) }
+    // );
 
-    this.updateInputValue();
+    this.el.value = null;
+    // this.updateInputValue();
   }
 
   onHandleRemove(suggestion) {
@@ -114,7 +118,7 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit {
       }
     });
 
-    this.updateInputValue();
+    // this.updateInputValue();
   }
 
   ngOnInit() {

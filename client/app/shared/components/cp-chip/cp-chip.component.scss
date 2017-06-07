@@ -1,5 +1,6 @@
 @import '~styles/core/colors';
 .chip {
+  height: 36px;
   padding: 1px 5px;
   background: $color-light-grey;
 
@@ -7,16 +8,20 @@
   span,
   button {
     line-height: 1;
+    position: relative;
     display: inline-block;
   }
 
+  i {
+    top: 4px;
+  }
+
   span {
-    top: -6px;
-    position: relative;
+    top: -3px;
   }
 
   button {
-    top: -1px;
+    top: 2px;
     padding: 0;
     border: none;
     margin-left: 8px;

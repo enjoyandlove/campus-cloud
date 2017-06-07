@@ -1,22 +1,31 @@
 <div class="row">
   <div class="col-xs-4">
     <ng-container class="typeahead">
-      <textarea #input data-toggle="dropdown"></textarea>
-
       <div
-        class="typeahead__chips input">
-        <cp-chip
-          [chip]="chip"
-          class="typeahead__chip"
-          [icon]="chipOptions.icon"
-          [withClose]="chipOptions.close"
-          [withAvatar]="chipOptions.avatar"
-          *ngFor="let chip of state.selected"
-          (handleClose)="onHandleRemove($event)">
-        </cp-chip>
+        class="typeahead__input-wrapper input">
+        <div
+          (click)="input.focus()"
+          class="typeahead__input-wrapper__padding">
+          <cp-chip
+            [chip]="chip"
+            class="typeahead__input-wrapper__chip"
+            [icon]="chipOptions.icon"
+            [withClose]="chipOptions.close"
+            [withAvatar]="chipOptions.avatar"
+            *ngFor="let chip of state.selected"
+            (handleClose)="onHandleRemove($event)">
+          </cp-chip>
+          <input
+            #input
+            autofocus
+            type="text"
+            class="typeahead__input-wrapper__input">
+        </div>
       </div>
 
-      <ul class="typeahead__list dropdown-menu" *ngIf="suggestions.length">
+      <ul
+        *ngIf="suggestions.length"
+        class="typeahead__list">
         <li
           class="typeahead__item"
           (click)="onHandleClick(suggestion)"
