@@ -1,11 +1,17 @@
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { URLSearchParams } from '@angular/http';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-// import { ClubsService } from '../clubs.service';
+import { ClubsService } from '../clubs.service';
+import { isDev } from '../../../../../config/env';
+import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base/base.component';
 import { CLUBS_MODAL_RESET } from '../../../../../reducers/clubs.reducer';
 import { HEADER_UPDATE, HEADER_DEFAULT } from '../../../../../reducers/header.reducer';
+import { CPImageUploadComponent } from '../../../../../shared/components';
+import { FileUploadService } from '../../../../../shared/services/file-upload.service';
 
 @Component({
   selector: 'cp-clubs-excel',
@@ -14,36 +20,42 @@ import { HEADER_UPDATE, HEADER_DEFAULT } from '../../../../../reducers/header.re
 })
 export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDestroy {
   clubs;
+  formError;
   form: FormGroup;
   isFormReady = false;
 
   constructor(
+    private router: Router,
     private fb: FormBuilder,
     private store: Store<any>,
-    // private clubService: ClubsService
+    private session: CPSession,
+    private clubService: ClubsService,
+    private fileUploadService: FileUploadService
   ) {
     super();
     this
       .store
       .select('CLUBS')
       .subscribe(
-        (_) => {
-          // this.clubs = res;
-          // console.log(res);
-          this.clubs = require('./mock.json');
+        res => {
+          this.clubs = !isDev ? res : require('./mock.json');
           this.buildHeader();
           this.buildForm();
-          console.log(this.clubs);
-          // this.fetch();
         }
     );
+  }
+
+  onRemoveImage(index) {
+    let clubsControl = <FormArray>this.form.controls['clubs'];
+    let control = <FormGroup>clubsControl.at(index);
+    control.controls['logo_url'].setValue(null);
   }
 
   private buildHeader() {
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': 'Import Clubs from Excel',
+        'heading': 'Import Clubs',
         'em': `${this.clubs.length} valid student club(s) in the file`,
         'children': []
       }
@@ -64,25 +76,21 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
     this.clubs.forEach(club => {
       control.push(this.buildClubControl(club));
     });
+
     this.isFormReady = true;
-    console.log(this.form);
   }
 
   buildClubControl(club) {
     return this.fb.group({
-      'admin_email': [club.admin_email],
-      'club_email': [club.club_email],
-      'club_name': [club.club_name],
+      'name': [club.club_name, Validators.required],
+      'logo_url': [null, Validators.required],
+      'status': [0],
+      'has_membership': [true],
+      'email': [club.email],
       'description': [club.description],
-      'phone_number': [club.phone_number],
+      'phone': [club.phone_number],
       'website': [club.website],
-      'image_url': [null]
     });
-  }
-
-  removeControl(index) {
-    const control = <FormArray>this.form.controls['clubs'];
-    control.removeAt(index);
   }
 
   ngOnDestroy() {
@@ -90,8 +98,37 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
     this.store.dispatch({ type: HEADER_DEFAULT });
   }
 
+  onImageUpload(image, index) {
+    let imageUpload = new CPImageUploadComponent(this.fileUploadService);
+    let promise = imageUpload.onFileUpload(image, true);
+
+    promise
+      .then((res: any) => {
+        let clubsControl = <FormArray>this.form.controls['clubs'];
+        let control = <FormGroup>clubsControl.at(index);
+        control.controls['logo_url'].setValue(res.image_url);
+      })
+      .catch(err => console.log(err));
+  }
+
   onSubmit() {
-    console.log(this.form.value);
+    this.formError = false;
+
+    if (!this.form.valid) {
+      this.formError = true;
+      return;
+    }
+
+    let search = new URLSearchParams();
+    search.append('school_id', this.session.school.id.toString());
+
+    this
+      .clubService
+      .createClub(this.form.value.clubs, search)
+      .subscribe(
+        _ => this.router.navigate(['/manage/clubs']),
+        err => console.log(err)
+      );
   }
 
   ngOnInit() { }

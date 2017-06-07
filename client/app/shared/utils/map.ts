@@ -58,12 +58,25 @@ const getBaseMapObject = function getBaseMapObject(data) {
     longitude: null
   };
 
+  if (!data) {
+    return {
+      city: '',
+      name: '',
+      country: '',
+      street_name: '',
+      postal_code: '',
+      street_number: '',
+      province: '',
+      latitude: null,
+      longitude: null
+    };
+  }
+
   Object.keys(map).map(item => {
     obj[item] = getValueFromAddressComponent(data.address_components, map[item]);
   });
 
   obj = Object.assign({}, obj, {...locationAsObject(data.geometry.location)});
-
   return obj;
 };
 

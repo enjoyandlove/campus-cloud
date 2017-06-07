@@ -34,7 +34,7 @@
                 [class.error]="formMissingFields && form.controls['title'].hasError('required')">
             </div>
 
-            <div class="row form-group" *ngIf="!storeId">
+            <div class="row form-group" *ngIf="!isClub && !isService">
               <div class="col-xs-12">
                 <label i18n>Select a Host</label>
                 <cp-dropdown

@@ -43,6 +43,7 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   channels;
   state: IState = state;
   isFilteredByRemovedPosts$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  isFilteredByFlaggedPosts$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   isCampusWallView$: BehaviorSubject<any> = new BehaviorSubject({
     type: 1,
     group_id: null
@@ -63,10 +64,18 @@ export class FeedsComponent extends BaseComponent implements OnInit {
       group_id: data.group_id
     });
 
+    // filter by removed posts
     if (data.removed_by_moderators_only) {
       this.isFilteredByRemovedPosts$.next(true);
     } else {
       this.isFilteredByRemovedPosts$.next(false);
+    }
+
+    // filter by flagged posts
+    if (data.flagged_by_users_only) {
+      this.isFilteredByFlaggedPosts$.next(true);
+    } else {
+      this.isFilteredByFlaggedPosts$.next(false);
     }
 
     this.state = Object.assign(
@@ -157,28 +166,7 @@ export class FeedsComponent extends BaseComponent implements OnInit {
             return result;
           });
     } else {
-      let _search = new URLSearchParams();
-      _search.append('school_id', this.session.school.id.toString());
-
-      let groups$ = this.service.getSocialGroups(_search);
-
-      stream$ =
-        Observable
-          .combineLatest(groupThread$, groups$)
-          .map(res => {
-            let result = [];
-            let threads = res[0];
-            this.groups = res[1];
-
-            threads.forEach(thread => {
-              result.push({
-                ...thread,
-                channelName: this.getGroupNameFromArray(this.groups, thread)
-              });
-            });
-
-            return result;
-          });
+      return groupThread$;
     }
 
     return stream$;
@@ -194,24 +182,14 @@ export class FeedsComponent extends BaseComponent implements OnInit {
     return name;
   }
 
-  getGroupNameFromArray(groups, thread) {
-    let name;
-    groups.filter(group => {
-      if (group.id === thread.group_id) {
-        name = group.name;
-      }
-    });
-    return name;
-  }
-
   onCreated(feed) {
-    if (this.isFilteredByRemovedPosts$.value) { return; }
+    // do not append to list if currently filtering by flagged or removed posts
+    if (this.isFilteredByRemovedPosts$.value || this.isFilteredByFlaggedPosts$.value) { return; }
+
     let channelName;
 
     if (this.state.isCampusThread) {
       channelName = this.getChannelNameFromArray(this.channels, feed);
-    } else {
-      channelName = this.getGroupNameFromArray(this.groups, feed);
     }
 
     feed = Object.assign({}, feed, {
@@ -248,5 +226,7 @@ export class FeedsComponent extends BaseComponent implements OnInit {
     this.state = Object.assign({}, this.state, { feeds: _state.feeds });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.isSimple = this.isClubsView;
+  }
 }

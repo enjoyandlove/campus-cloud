@@ -27,7 +27,6 @@ export class EventsListComponent extends EventsComponent implements OnInit {
     public service: EventsService
   ) {
     super(session, service);
-    this.buildHeader();
   }
 
   private buildHeader() {
@@ -37,5 +36,7 @@ export class EventsListComponent extends EventsComponent implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.buildHeader();
+  }
 }

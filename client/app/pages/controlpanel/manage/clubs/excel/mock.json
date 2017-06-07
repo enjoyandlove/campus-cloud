@@ -1,18 +1,16 @@
 [
   {
-    "admin_email": "swimteamadmin@oohlala.com",
-    "club_email": "swimteam@oohlala.com",
+    "email": "swimteam@oohlala.com",
     "club_name": "Swim Team",
     "description": "This is the swim team",
-    "phone_number": "xxx-xxx-xxxx",
+    "phone": "xxx-xxx-xxxx",
     "website": "www.oohlalamobile.com"
   },
   {
-    "admin_email": "admin@oohlala.com",
-    "club_email": "admin@oohlala.com",
+    "email": "admin@oohlala.com",
     "club_name": "Admin Team",
     "description": "This is the admin team",
-    "phone_number": "xxx-xxx-xxxx",
+    "phone": "xxx-xxx-xxxx",
     "website": "www.oohlalamobile.com"
   }
 ]

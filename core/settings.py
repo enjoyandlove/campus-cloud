@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
-import sys
+import json
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,7 +20,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/dist/'
-SECURE_SSL_REDIRECT = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
@@ -32,8 +31,20 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'dist'),
 )
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+# Reading from setting files on the server values
+DEBUG = True
+SECURE_SSL_REDIRECT = False
+
+try:
+    with open(os.path.join(BASE_DIR, 'core', 'settings.json')) as f:
+        config = json.loads(f.read())
+        DEBUG = config.get('DEBUG', True)
+        SECURE_SSL_REDIRECT = config.get('SECURE_SSL_REDIRECT', True)
+except FileNotFoundError:
+    pass
+
+
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/

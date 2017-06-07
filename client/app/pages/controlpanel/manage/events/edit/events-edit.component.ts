@@ -33,6 +33,7 @@ const COMMON_DATE_PICKER_OPTIONS = {
 export class EventsEditComponent extends BaseComponent implements OnInit {
   @Input() storeId: number;
   @Input() isClub: boolean;
+  @Input() clubId: boolean;
   @Input() isService: boolean;
 
   event;
@@ -56,7 +57,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   originalAttnFeedback;
   formMissingFields = false;
   mapCenter: BehaviorSubject<any>;
-  managers: Array<any> = [{'label': '---'}];
+  managers: Array<any> = [{ 'label': '---' }];
 
   constructor(
     private router: Router,
@@ -94,12 +95,12 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
       if (managerId.value === null) {
         this.formMissingFields = true;
-        managerId.setErrors({'required': true});
+        managerId.setErrors({ 'required': true });
       }
 
       if (eventFeedback.value === null) {
         this.formMissingFields = true;
-        eventFeedback.setErrors({'required': true});
+        eventFeedback.setErrors({ 'required': true });
       }
     }
 
@@ -139,7 +140,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
           return;
         }
         if (this.isClub) {
-          this.router.navigate([`/manage/clubs/${this.storeId}/events/${this.eventId}`]);
+          this.router.navigate([`/manage/clubs/${this.clubId}/events/${this.eventId}`]);
           return;
         }
         this.router.navigate(['/manage/events/' + this.eventId]);
@@ -305,15 +306,26 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   onPlaceChange(data) {
     let cpMap = CPMap.getBaseMapObject(data);
 
+    if (!data) {
+      data = {};
+      data.name = '';
+      this.mapCenter.next({
+        lat: this.session.school.latitude,
+        lng: this.session.school.longitude
+      });
+    }
+
     this.form.controls['city'].setValue(cpMap.city);
     this.form.controls['province'].setValue(cpMap.province);
     this.form.controls['country'].setValue(cpMap.country);
-    this.form.controls['latitude'].setValue(cpMap.latitude);
-    this.form.controls['longitude'].setValue(cpMap.longitude);
-    this.form.controls['address'].setValue(data.formatted_address);
+    this.form.controls['latitude'].setValue(cpMap.latitude || this.session.school.latitude);
+    this.form.controls['longitude'].setValue(cpMap.longitude || this.session.school.longitude);
+    this.form.controls['address'].setValue(data.name);
     this.form.controls['postal_code'].setValue(cpMap.postal_code);
 
-    this.mapCenter.next(data.geometry.location.toJSON());
+    if (data.geometry) {
+      this.mapCenter.next(data.geometry.location.toJSON());
+    }
   }
 
   onEventFeedbackChange(option) {
@@ -321,11 +333,6 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    // services || clubs we need to fetch admins
-    if (this.storeId) {
-      this.fetchManagersBySelectedStore(this.storeId);
-    }
-
     this.dateFormat = FORMAT.DATETIME;
     this.booleanOptions = [
       {

@@ -21,8 +21,8 @@ export class ClubsExcelModalComponent implements OnInit {
     private service: ClubsService,
     private fileService: FileUploadService,
   ) {
-    this.downloadLink = isDev ? '/templates/mass_club_invite_sample.xlsx' :
-                                '/dist/templates/mass_club_invite_sample.xlsx';
+    this.downloadLink = isDev ? '/templates/mass_club_invite_sample.csv' :
+                                '/dist/templates/mass_club_invite_sample.csv';
   }
 
   onSubmit(data) {
@@ -33,12 +33,12 @@ export class ClubsExcelModalComponent implements OnInit {
     let result = [];
     let validators = [
       {
-        'exp': file.name.split('.').pop() === 'xlsx',
+        'exp': file.name.split('.').pop() === 'csv',
         'error': STATUS.WRONG_EXTENSION,
         'isError': false
       },
       {
-        'exp': file.size > 5000,
+        'exp': file.size < 5000,
         'error': STATUS.FILE_IS_TOO_BIG,
         'isError': false
       }
@@ -66,7 +66,6 @@ export class ClubsExcelModalComponent implements OnInit {
       .subscribe(
         (res) => {
           this.uploaded = true;
-          console.log(res);
           this.service.setModalClubs(JSON.parse(res));
         },
         err => this.error = err.json().error

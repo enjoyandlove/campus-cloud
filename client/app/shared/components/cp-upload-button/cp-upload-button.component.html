@@ -1,10 +1,27 @@
-<div [class]="['input ' + buttonClass]">
-  <input
-    id="file"
-    type="file"
-    name="file"
-    class="inputfile"
-    (change)="onChange($event)" />
-  <label for="file" i18n>{{ buttonText ? buttonText : 'Choose a file' }}</label>
-</div>
+<ng-container *ngIf="theme === 'small'">
+  <div class="input small">
+    <input
+      id="file"
+      type="file"
+      name="file"
+      class="inputfile"
+      (change)="onChange($event)" />
+    <label
+      for="file"
+      class="small"
+      [class.isRequired]="isRequired" i18n><i class="material-icons">add_a_photo</i></label>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="!theme">
+  <div [class]="['input ' + buttonClass]">
+    <input
+      id="file"
+      type="file"
+      name="file"
+      class="inputfile"
+      (change)="onChange($event)" />
+    <label for="file" i18n>{{ buttonText ? buttonText : 'Choose a file' }}</label>
+  </div>
+</ng-container>
 

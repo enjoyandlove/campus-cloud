@@ -1,5 +1,5 @@
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
@@ -10,10 +10,9 @@ import { isDev } from '../../../../../config/env';
 import { STATUS } from '../../../../../shared/constants';
 import { CPSession, ISchool } from '../../../../../session';
 import { BaseComponent } from '../../../../../base/base.component';
+import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { CPDate, CP_PRIVILEGES_MAP } from '../../../../../shared/utils';
 import { StoreService, AdminService } from '../../../../../shared/services';
-import { EVENTS_MODAL_RESET } from '../../../../../reducers/events-modal.reducer';
-import { HEADER_UPDATE, HEADER_DEFAULT } from '../../../../../reducers/header.reducer';
 
 
 @Component({
@@ -21,7 +20,7 @@ import { HEADER_UPDATE, HEADER_DEFAULT } from '../../../../../reducers/header.re
   templateUrl: './events-excel.component.html',
   styleUrls: ['./events-excel.component.scss']
 })
-export class EventsExcelComponent extends BaseComponent implements OnInit, OnDestroy {
+export class EventsExcelComponent extends BaseComponent implements OnInit {
   @Input() storeId: number;
 
   @Input() clubId: number;
@@ -55,15 +54,6 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     super();
     this.school = this.session.school;
     super.isLoading().subscribe(res => this.loading = res);
-
-    this
-      .store
-      .select('EVENTS_MODAL')
-      .subscribe(
-      (res) => {
-        this.events = !isDev ? res : require('./mock.json');
-        this.fetch();
-      });
   }
 
   private fetch() {
@@ -72,16 +62,14 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
 
     const stores$ = this.storeService.getStores(search);
 
-    if (!this.storeId) {
-      super
-        .fetchData(stores$)
-        .then(res => {
-          this.buildForm();
-          this.buildHeader();
-          this.stores = res.data;
-        })
-        .catch(err => console.error(err));
-    }
+    super
+      .fetchData(stores$)
+      .then(res => {
+        this.buildForm();
+        this.buildHeader();
+        this.stores = res.data;
+      })
+      .catch(err => console.error(err));
   }
 
   private buildHeader() {
@@ -104,6 +92,9 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     if (this.isService) {
       this.updateManagersByStoreOrClubId(this.serviceId);
     }
+    if (this.isClub) {
+      this.updateManagersByStoreOrClubId(this.clubId);
+    }
   }
 
   private buildGroup() {
@@ -124,8 +115,18 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
   }
 
   buildEventControl(event) {
+    let store_id;
+
+    if (this.storeId) {
+      store_id = this.storeId;
+    }
+
+    if (this.clubId) {
+      store_id = this.clubId;
+    }
+
     return this.fb.group({
-      'store_id': [this.storeId || null, Validators.required],
+      'store_id': [store_id ? store_id : null, Validators.required],
       'room': [event.room],
       'title': [event.title, Validators.required],
       'poster_url': [null, Validators.required],
@@ -187,9 +188,9 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     control.controls['store_id'].setValue(host.value);
   }
 
-  updateManagersByStoreOrClubId(storeId) {
+  updateManagersByStoreOrClubId(storeOrClubId) {
     const events = <FormArray>this.form.controls['events'];
-    const managers$ = this.getManagersByHostId(storeId);
+    const managers$ = this.getManagersByHostId(storeOrClubId);
     const groups = events.controls;
 
     managers$.subscribe(managers => {
@@ -199,11 +200,11 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     });
   }
 
-  getManagersByHostId(storeId): Observable<any> {
+  getManagersByHostId(storeOrClubId): Observable<any> {
     let search: URLSearchParams = new URLSearchParams();
 
     search.append('school_id', this.school.id.toString());
-    search.append('store_id', storeId);
+    search.append('store_id', storeOrClubId);
     search.append('privilege_type', CP_PRIVILEGES_MAP.events.toString());
 
     return this
@@ -289,9 +290,18 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     }
 
     Object.keys(events).forEach(key => {
+      let store_id;
+
+      if (this.storeId) {
+        store_id = this.storeId;
+      }
+
+      if (this.clubId) {
+        store_id = this.clubId;
+      }
       let _event = {
         title: events[key].title,
-        store_id: this.storeId ? this.storeId : events[key].store_id,
+        store_id: store_id ? store_id : events[key].store_id,
         description: events[key].description,
         end: events[key].end,
         room: events[key].room,
@@ -317,7 +327,19 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
       .eventsService
       .createEvent(_events)
       .subscribe(
-      _ => this.router.navigate(['/manage/events']),
+      _ => {
+        if (this.isClub) {
+          this.router.navigate([`/manage/clubs/${this.clubId}/events`]);
+          return;
+        }
+
+        if (this.isService) {
+          this.router.navigate([`/manage/clubs/${this.serviceId}/events`]);
+          return;
+        }
+
+        this.router.navigate(['/manage/events']);
+      },
       err => {
         this.formError = true;
 
@@ -339,12 +361,23 @@ export class EventsExcelComponent extends BaseComponent implements OnInit, OnDes
     control.controls['event_attendance'].setValue(checked ? 1 : 0);
   }
 
-  ngOnDestroy() {
-    this.store.dispatch({ type: HEADER_DEFAULT });
-    this.store.dispatch({ type: EVENTS_MODAL_RESET });
-  }
-
   ngOnInit() {
+    this
+      .store
+      .select('EVENTS_MODAL')
+      .subscribe(
+      res => {
+        this.events = !isDev ? res : require('./mock.json');
+
+        if (!this.storeId && !this.clubId) {
+          this.fetch();
+          return;
+        }
+
+        this.buildForm();
+        this.buildHeader();
+      });
+
     this.eventAttendanceFeedback = [
       {
         'label': 'Enabled',

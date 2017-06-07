@@ -1,5 +1,8 @@
+import io
+import csv
 import json
 import datetime
+
 from openpyxl import load_workbook
 from django.shortcuts import render
 from django.shortcuts import render_to_response
@@ -135,28 +138,36 @@ Parse Clubs Mass Upload
 '''
 @csrf_exempt
 def import_excel_clubs(request):
-    input_excel = request.FILES['file']
+    csv_file = request.FILES['file']
+    decoded_file = csv_file.read().decode('utf-8')
+    io_string = io.StringIO(decoded_file)
 
-    wb = load_workbook(filename = input_excel)
+    data = []
+    column_titles = None
+    reader = csv.reader(io_string)
 
-    ws = wb.get_active_sheet()
+    for index, row in enumerate(reader):
+        if index == 0:
+            column_titles = row
+            continue
 
-    club_dict = []
+        if not row[0]:
+            continue
 
-    for row in ws.rows:
-        club_info = []
-        for col in row:
-            if col.value is not None:
-                club_info.append(col.value)
-        if len(club_info):
-            club_dict.append(club_info)
+        data.append(row)
 
-    events = club_dict[1:]
-    column_titles = club_dict[:1]
+    for index, title in enumerate(column_titles):
+        if column_titles[index] is None:
+            raise KeyError("All fields are required")
 
-    column_titles = [title.lower().replace(" ", "_") for title in column_titles[0]]
+        column_titles[index] = column_titles[index].lower().replace(" ", "_")
 
-    club_dict = []
+    # zip data with columns
+    result = []
+    for item in data:
+        result.append(dict(zip(column_titles, item)))
+
+    return JsonResponse(json.dumps(result), safe=False)
 
 '''
 Parse Services Excel Mass Upload

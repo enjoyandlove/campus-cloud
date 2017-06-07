@@ -1,5 +1,21 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
+import {
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+  Component,
+  ElementRef,
+  EventEmitter,
+} from '@angular/core';
+
+import { MembersService } from '../members.service';
+
+const MEMBER_TYPE = 0;
+const EXECUTIVE_TYPE = 2;
+
+declare var $: any;
 
 @Component({
   selector: 'cp-members-edit',
@@ -8,26 +24,37 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class ClubsMembersEditComponent implements OnInit {
   @Input() member: any;
-  @Output() memberEdited: EventEmitter<any> = new EventEmitter();
+  @Input() groupId: number;
+  @ViewChild('input') input: ElementRef;
+  @Output() edited: EventEmitter<any> = new EventEmitter();
+  @Output() teardown: EventEmitter<null> = new EventEmitter();
 
   formErrors;
   memberTypes;
-  isExec = false;
+  defaultType;
+  members = [];
   form: FormGroup;
+  isTouched = false;
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private service: MembersService,
   ) { }
+
+  onMemberSelected(member) {
+    this.members = [];
+    this.input.nativeElement.value = member.label;
+    this.form.controls['member'].setValue(member.id);
+  }
 
   onTypeChange(type): void {
     let control = this.form.controls['member_type'];
     control.setValue(type);
-
-    this.isExec = control.value.action === 1;
   }
 
-  onUploadedImage(image) {
-    this.form.controls['avatar_url'].setValue(image);
+  doTearDown() {
+    this.teardown.emit();
+    $('#membersEdit').modal('hide');
   }
 
   onSave() {
@@ -37,30 +64,48 @@ export class ClubsMembersEditComponent implements OnInit {
       this.formErrors = true;
       return;
     }
-    console.log(this.form.value);
+
+    let member_type = this.form.value.member_type;
+    let group_id = this.groupId;
+
+    this
+      .service
+      .addMember({ member_type, group_id }, this.member.id)
+      .subscribe(
+        member => {
+          this.edited.emit(member);
+          $('#membersEdit').modal('hide');
+          this.form.reset();
+          this.doTearDown();
+
+        },
+        err => console.log(err)
+      );
   }
 
   ngOnInit() {
-    console.log(this.member);
-    this.form = this.fb.group({
-      'firstname': [this.member.firstname, Validators.required],
-      'lastname': [this.member.lastname, Validators.required],
-      'fullname': [this.member.fullname, Validators.required],
-      'member_type': [this.member.member_type, Validators.required],
-      'position': [this.member.position],
-      'description': [this.member.description],
-      'avatar_url': [this.member.avatar_url]
-    });
-
     this.memberTypes = [
       {
         label: 'Member',
-        action: 0
+        action: MEMBER_TYPE
       },
       {
         label: 'Executive',
-        action: 1
+        action: EXECUTIVE_TYPE
       }
     ];
+
+    this.defaultType = this.memberTypes.filter(type => type.action === this.member.member_type)[0];
+
+    this.form = this.fb.group({
+      'member': [null],
+      'member_type': [this.memberTypes[0].action, Validators.required],
+    });
+
+    this.form.valueChanges.subscribe(value => {
+      if (value.member_type !== this.member.member_type) {
+        this.isTouched = true;
+      }
+    });
   }
 }

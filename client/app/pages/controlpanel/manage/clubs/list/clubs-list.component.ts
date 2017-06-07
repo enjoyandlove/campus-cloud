@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
+import { Store } from '@ngrx/store';
+
 import { ClubsService } from '../clubs.service';
+import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base/base.component';
+import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
 interface IState {
   clubs: Array<any>;
@@ -26,6 +30,8 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
   state: IState = state;
 
   constructor(
+    private store: Store<any>,
+    private session: CPSession,
     private clubsService: ClubsService
   ) {
     super();
@@ -36,11 +42,12 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
 
   private fetch() {
     let search = new URLSearchParams();
-    search.append('type', state.type);
-    search.append('query', state.query);
+    search.append('school_id', this.session.school.id.toString());
+    search.append('status', this.state.type);
+    search.append('search_str', this.state.query);
 
     super
-      .fetchData(this.clubsService.getClubs(search))
+      .fetchData(this.clubsService.getClubs(search, this.startRange, this.endRange))
       .then(res => {
         this.state = Object.assign({}, this.state, { clubs: res.data });
       })
@@ -65,12 +72,21 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
   }
 
   onPaginationNext() {
-
+    super.goToNext();
+    this.fetch();
   }
 
   onPaginationPrevious() {
-
+    super.goToPrevious();
+    this.fetch();
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this
+      .store
+      .dispatch({
+        type: HEADER_UPDATE,
+        payload: require('../../manage.header.json')
+      });
+  }
 }

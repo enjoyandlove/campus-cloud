@@ -5,7 +5,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { ClubsInfoComponent } from '../info';
 import { ClubsWallComponent } from '../wall';
-import { ClubsEditComponent } from '../edit';
 
 import { ClubsDetailsComponent } from './details.component';
 
@@ -22,7 +21,7 @@ import { ClubsService } from '../clubs.service';
 
 @NgModule({
   declarations: [ ClubsWallComponent, ClubsInfoComponent,
-  ClubsDetailsComponent, ClubsEditComponent ],
+  ClubsDetailsComponent ],
 
   imports: [ CommonModule, SharedModule, RouterModule, ReactiveFormsModule,
   ClubsDetailsRoutingModule,
