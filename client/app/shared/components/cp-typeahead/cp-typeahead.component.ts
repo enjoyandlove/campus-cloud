@@ -11,10 +11,12 @@ import {
 
 interface IState {
   selected: Map<number, Object>;
+  selectedJson: Array<any>;
 }
 
 const state: IState = {
-  selected: new Map()
+  selected: new Map(),
+  selectedJson: []
 };
 
 @Component({
@@ -66,6 +68,7 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit {
 
     this.resetList();
     this.state.selected.set(suggestion.id, suggestion);
+    this.state.selectedJson = this.state.selected.toJSON();
     this.el.value = null;
   }
 
@@ -75,8 +78,8 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit {
 
   onHandleRemove(id) {
     this.state.selected.delete(id);
+    this.state.selectedJson = this.state.selected.toJSON();
   }
-
   ngOnInit() {
     this.chipOptions = {
       close: true,

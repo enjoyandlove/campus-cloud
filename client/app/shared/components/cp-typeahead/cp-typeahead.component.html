@@ -8,11 +8,11 @@
           class="typeahead__input-wrapper__padding">
           <cp-chip
             [chip]="chip[1]"
-            class="typeahead__input-wrapper__chip"
             [icon]="chipOptions.icon"
             [withClose]="chipOptions.close"
             [withAvatar]="chipOptions.avatar"
-            *ngFor="let chip of state.selected.toJSON()"
+            class="typeahead__input-wrapper__chip"
+            *ngFor="let chip of state.selectedJson"
             (handleClose)="onHandleRemove($event)">
           </cp-chip>
           <input

@@ -12,6 +12,7 @@
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
   <ng-container *ngSwitchCase="false">
+
     <cp-no-content
       *ngIf="!state.messages.length"
       noContentText="No messages found...">
