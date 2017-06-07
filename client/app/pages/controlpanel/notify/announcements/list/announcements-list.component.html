@@ -8,10 +8,11 @@
 </div>
 
 
-<div [ngSwitch]="loading">
+<ng-container [ngSwitch]="loading">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
-  <div *ngSwitchCase="false">
+  <ng-container *ngSwitchCase="false">
+
     <cp-no-content
       *ngIf="!state.messages.length"
       noContentText="No messages found...">
@@ -75,8 +76,8 @@
         (previous)="onPaginationPrevious()">
       </cp-pagination>
     </div>
-  </div>
-</div>
+  </ng-container>
+</ng-container>
 
 <cp-modal modalId="composeModal">
   <cp-announcements-compose

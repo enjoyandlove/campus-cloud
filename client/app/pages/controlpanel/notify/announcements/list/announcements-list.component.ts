@@ -14,7 +14,7 @@ interface IState {
 const state: IState = {
   messages: [],
   query: null,
-  type: null
+  type: null,
 };
 
 declare var $: any;
@@ -26,6 +26,7 @@ declare var $: any;
 })
 export class AnnouncementsListComponent extends BaseComponent implements OnInit {
   loading;
+  suggestions = [];
   state: IState = state;
   dateFormat = FORMAT.DATETIME;
 
