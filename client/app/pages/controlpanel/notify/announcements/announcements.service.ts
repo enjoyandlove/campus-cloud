@@ -27,14 +27,11 @@ export class AnnouncementsService extends BaseService {
     return super.get(url, { search }).map(res => res.json());
   }
 
-  getAnnouncements(search?: URLSearchParams) {
-    if (search) { console.log(search); }
+  getAnnouncements(search: URLSearchParams, startRange: number, endRange: number) {
+    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ANNOUNCEMENT}`;
+    const url = `${common}/${startRange};${endRange}`;
 
-    const promise = new Promise(resolve => {
-      setTimeout(() => { resolve(mockAnnouncements); }, 700);
-    });
-
-    return Observable.fromPromise(promise).map(res => res);
+    return super.get(url, { search }).map(res => res.json());
   }
 
   getAnnouncementById(messageId) {
