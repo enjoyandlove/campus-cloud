@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-xs-4">
+  <div class="col-xs-12">
     <ng-container class="typeahead">
       <div
         class="typeahead__input-wrapper input">
@@ -7,12 +7,12 @@
           (click)="input.focus()"
           class="typeahead__input-wrapper__padding">
           <cp-chip
-            [chip]="chip"
+            [chip]="chip[1]"
             class="typeahead__input-wrapper__chip"
             [icon]="chipOptions.icon"
             [withClose]="chipOptions.close"
             [withAvatar]="chipOptions.avatar"
-            *ngFor="let chip of state.selected"
+            *ngFor="let chip of state.selected.toJSON()"
             (handleClose)="onHandleRemove($event)">
           </cp-chip>
           <input

@@ -1,12 +1,20 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import {
+  Input,
+  OnInit,
+  Output,
+  Component,
+  ViewChild,
+  ElementRef,
+  AfterViewInit,
+  EventEmitter } from '@angular/core';
 
 interface IState {
-  selected: Set<{ label: string; id: number }>;
+  selected: Map<number, Object>;
 }
 
 const state: IState = {
-  selected: new Set()
+  selected: new Map()
 };
 
 @Component({
@@ -15,11 +23,12 @@ const state: IState = {
   styleUrls: ['./cp-typeahead.component.scss']
 })
 export class CPTypeAheadComponent implements OnInit, AfterViewInit {
+  @Input() suggestions: Array<any> = [];
   @ViewChild('input') input: ElementRef;
+  @Output() query: EventEmitter<string> = new EventEmitter();
 
   el;
   chipOptions;
-  suggestions = [];
   state: IState = state;
 
   constructor() { }
@@ -36,34 +45,15 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit {
       .debounceTime(400)
       .distinctUntilChanged()
       .subscribe(
-      _ => {
-        // const query = (res.split(',')[res.split(',').length - 1]).trim();
-        this.suggestions = [
-          {
-            'label': 'John Smith',
-            'id': 1
-          },
-          {
-            'label': 'Joe Smith',
-            'id': 2
-          },
-          {
-            'label': 'Sylvester Stallone',
-            'id': 3
-          },
-          {
-            'label': 'Harrison Ford',
-            'id': 4
-          },
-          {
-            'label': 'Nicholas Cage',
-            'id': 5
-          },
-          {
-            'label': 'Arnold Schwarzenegger',
-            'id': 6
-          }
-        ];
+      res => {
+        const query = (res.split(',')[res.split(',').length - 1]).trim();
+
+        if (!query) {
+          this.resetList();
+          return;
+        }
+
+        this.query.emit(query);
       },
       err => {
         console.log(err);
@@ -71,37 +61,20 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit {
       );
   }
 
-  updateInputValue() {
-    let value = '';
-
-    this.state.selected.forEach(selection => {
-      value += `${selection.label}, `;
-    });
-
-    this.el.value = value;
-  }
-
   onHandleClick(suggestion) {
-    this.suggestions = [];
-    this.state.selected.add(suggestion);
-    // this.state = Object.assign(
-    //   {},
-    //   this.state,
-    //   { selected: this.state.selected.add(suggestion) }
-    // );
+    if (!suggestion.id) { return; }
 
+    this.resetList();
+    this.state.selected.set(suggestion.id, suggestion);
     this.el.value = null;
-    // this.updateInputValue();
   }
 
-  onHandleRemove(suggestion) {
-    this.state.selected.forEach((item: any) => {
-      if (item.id === suggestion) {
-        this.state.selected.delete(item);
-      }
-    });
+  resetList() {
+    this.suggestions = [];
+  }
 
-    // this.updateInputValue();
+  onHandleRemove(id) {
+    this.state.selected.delete(id);
   }
 
   ngOnInit() {
@@ -112,3 +85,5 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit {
     };
   }
 }
+
+

@@ -21,6 +21,12 @@ export class AnnouncementsService extends BaseService {
     Object.setPrototypeOf(this, AnnouncementsService.prototype);
   }
 
+  getUsers(search: URLSearchParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER}/`;
+
+    return super.get(url, { search }).map(res => res.json());
+  }
+
   getAnnouncements(search?: URLSearchParams) {
     if (search) { console.log(search); }
 
