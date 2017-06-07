@@ -83,6 +83,10 @@ export class AnnouncementsComposeComponent implements OnInit {
     }
   }
 
+  getTypeFromArray(id) {
+    return this.types.filter(type => type.id === id)[0];
+  }
+
   resetModal() {
     this.teardown.emit();
     $('#composeModal').modal('hide');
@@ -102,7 +106,18 @@ export class AnnouncementsComposeComponent implements OnInit {
   }
 
   doSubmit() {
+    let search = new URLSearchParams();
+    search.append('school_id', this.session.school.id.toString());
+
     console.log(this.form.value);
+
+    this
+      .service
+      .postAnnouncements(search, this.form.value)
+      .subscribe(
+        res => console.log(res),
+        err => console.log(err)
+      );
   }
 
   onConfirmed() {
@@ -110,17 +125,16 @@ export class AnnouncementsComposeComponent implements OnInit {
   }
 
   onTypeChanged(type): void {
-    this.form.controls['priority'].setValue(type);
+    this.form.controls['priority'].setValue(type.id);
   }
 
   ngOnInit() {
+    console.log(this.session);
     this.form = this.fb.group({
-      'school_id': [this.session.school.id, Validators.required],
-      'user_id': [this.session.user.id, Validators.required],
       'store_id': [null, Validators.required],
       'subject': [null, [Validators.required, Validators.maxLength(128)]],
       'message': [null, [Validators.required, Validators.maxLength(512)]],
-      'priority': [this.types[0], Validators.required],
+      'priority': [this.types[0].id, Validators.required]
     });
   }
 }

@@ -45,10 +45,10 @@
                     <div class="row">
                       <div class="col-xs-10 text-left">
                         <span class="title">
-                          {{ form.controls.priority.value.title }}
+                          {{ getTypeFromArray(form.controls['priority'].value).title }}
                         </span>
                         <span class="description text-muted">
-                          {{ form.controls.priority.value.description }}
+                          {{ getTypeFromArray(form.controls['priority'].value).description }}
                         </span>
                       </div>
                       <div class="col-xs-2 text-right">
@@ -66,7 +66,7 @@
                         <div class="col-xs-2 text-center no-right-padding">
                           <i
                             class="material-icons"
-                            *ngIf="form.controls.priority.value.id === type.id">
+                            *ngIf="form.controls.priority.value === type.id">
                             check
                           </i>
                         </div>
