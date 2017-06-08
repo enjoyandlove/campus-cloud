@@ -30,6 +30,7 @@ const API_ENDPOINTS = {
   LINKS: 'campus_link',
   SOCIAL_GROUP: 'group',
   GROUP_THREAD: 'group_thread',
+  ANNOUNCEMENT: 'announcement',
   GROUP_COMMENT: 'group_comment',
   CAMPUS_THREAD: 'campus_thread',
   CAMPUS_COMMENT: 'campus_comment',
