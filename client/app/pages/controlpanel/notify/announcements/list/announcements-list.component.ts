@@ -73,6 +73,15 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
       .catch(err => console.log(err));
   }
 
+  onCreated(notification) {
+    console.log('I am pushing this to the array', notification);
+    // this.state.messages = Object.assign(
+    //   {},
+    //   this.state.messages,
+    //   { notification, ...this.state.messages }
+    // );
+  }
+
   onPaginationNext() {
     super.goToNext();
     this.fetch();

@@ -9,13 +9,17 @@ import { StoreService } from '../../../../../shared/services';
 declare var $: any;
 
 interface IState {
-  isCampusWide: boolean;
+  isUrgent: boolean;
   userSerch: boolean;
+  isEmergency: boolean;
+  isCampusWide: boolean;
 }
 
 const state: IState = {
-  isCampusWide: false,
-  userSerch: true
+  userSerch: true,
+  isUrgent: false,
+  isEmergency: false,
+  isCampusWide: false
 };
 
 @Component({
@@ -25,13 +29,25 @@ const state: IState = {
 })
 export class AnnouncementsComposeComponent implements OnInit {
   @Output() teardown: EventEmitter<null> = new EventEmitter();
+  @Output() created: EventEmitter<any> = new EventEmitter();
 
   stores$;
   isCampusWide;
   form: FormGroup;
+
+  URGENT_TYPE = 1;
+  EMERGENCY_TYPE = 0;
+
   suggestions = [];
+
   state: IState = state;
   shouldConfirm = false;
+
+  subject_prefix = {
+    label: null,
+    type: null
+  };
+
   types = require('./announcement-types').types;
 
   constructor(
@@ -77,6 +93,19 @@ export class AnnouncementsComposeComponent implements OnInit {
       );
   }
 
+  getSubjectLength() {
+    let length = 0;
+
+    if (this.subject_prefix.label) {
+      length += this.subject_prefix.label.length;
+    }
+
+    if (this.form.controls['subject'].value) {
+      length += this.form.controls['subject'].value.length;
+    }
+    return length;
+  }
+
   onSearch(query) {
     if (this.state.userSerch) {
       this.doUserSearch(query);
@@ -109,13 +138,15 @@ export class AnnouncementsComposeComponent implements OnInit {
     let search = new URLSearchParams();
     search.append('school_id', this.session.school.id.toString());
 
-    console.log(this.form.value);
-
     this
       .service
       .postAnnouncements(search, this.form.value)
       .subscribe(
-        res => console.log(res),
+        _ => {
+          this.form.reset();
+          this.created.emit(this.form.value);
+          this.resetModal();
+        },
         err => console.log(err)
       );
   }
@@ -125,15 +156,37 @@ export class AnnouncementsComposeComponent implements OnInit {
   }
 
   onTypeChanged(type): void {
+    this.subject_prefix = {
+      label: null,
+      type: null
+    };
+    this.state.isUrgent = false;
+    this.state.isEmergency = false;
+
+    if (type.id === this.EMERGENCY_TYPE) {
+      this.state.isEmergency = true;
+      this.subject_prefix = {
+        label: 'Emergency',
+        type: 'danger'
+      };
+    }
+
+    if (type.id === this.URGENT_TYPE) {
+      this.state.isUrgent = true;
+      this.subject_prefix = {
+        label: 'Urgent',
+        type: 'warning'
+      };
+    }
+
     this.form.controls['priority'].setValue(type.id);
   }
 
   ngOnInit() {
-    console.log(this.session);
     this.form = this.fb.group({
       'store_id': [null, Validators.required],
       'subject': [null, [Validators.required, Validators.maxLength(128)]],
-      'message': [null, [Validators.required, Validators.maxLength(512)]],
+      'message': [null, [Validators.required, Validators.maxLength(400)]],
       'priority': [this.types[0].id, Validators.required]
     });
   }
