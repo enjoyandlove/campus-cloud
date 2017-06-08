@@ -48,7 +48,7 @@
     "@ngrx/store": "^2.2.1",
     "core-js": "^2.4.1",
     "croppie": "^2.4.1",
-    "flatpickr": "^2.4.4",
+    "flatpickr": "2.4.4",
     "jquery": "^3.1.1",
     "lodash": "^4.17.4",
     "moment": "^2.17.1",

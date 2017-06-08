@@ -14,27 +14,29 @@ declare var $: any;
 export class ListsImportComponent implements OnInit {
   @Output() launchCreateModal: EventEmitter<any> = new EventEmitter();
   @Output() teardown: EventEmitter<any> = new EventEmitter();
+
   error;
+  uploaded;
   downloadLink;
 
   constructor(
     private fileService: FileUploadService
   ) {
     this.downloadLink = !isDev ?
-    '/dist/templates/mass_user_upload.xlsx' :
-    '/templates/mass_user_upload.xlsx';
+    '/dist/templates/mass_user_upload.csv' :
+    '/templates/mass_user_upload.csv';
   }
 
   fileIsValid(file) {
     let result = [];
     let validators = [
       {
-        'exp': file.name.split('.').pop() === 'xlsx',
+        'exp': file.name.split('.').pop() === 'csv',
         'error': STATUS.WRONG_EXTENSION,
         'isError': false
       },
       {
-        'exp': file.size > 5000,
+        'exp': file.size < 5000,
         'error': STATUS.FILE_IS_TOO_BIG,
         'isError': false
       }
@@ -54,8 +56,11 @@ export class ListsImportComponent implements OnInit {
     this.teardown.emit();
   }
 
+  onNavigate() {
+    // this.router.navigate(['/manage/clubs/import/excel']);
+  }
+
   onFileUpload(file) {
-    console.log('File Uploaded');
     const validation = this.fileIsValid(file);
     this.error = '';
 
@@ -69,6 +74,7 @@ export class ListsImportComponent implements OnInit {
       .subscribe(
         res => {
           this.doReset();
+          this.uploaded = true;
           $('#listsImport').modal('hide');
           this.launchCreateModal.emit(res);
         });

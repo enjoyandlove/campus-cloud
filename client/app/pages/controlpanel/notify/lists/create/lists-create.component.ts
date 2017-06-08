@@ -11,10 +11,11 @@ declare var $: any;
   styleUrls: ['./lists-create.component.scss']
 })
 export class ListsCreateComponent implements OnInit {
-  @Input() users: any;
+  @Input() users: Array<any> = [];
   @Output() created: EventEmitter<any> = new EventEmitter();
   @Output() reset: EventEmitter<null> = new EventEmitter();
 
+  chipOptions;
   form: FormGroup;
 
   constructor(
@@ -34,11 +35,26 @@ export class ListsCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this);
+    this.users = [{
+      'label': 'Tom Baker',
+      'id': 'tom@oohlalamobile.com'
+    }, {
+      'label': 'Louise Liu',
+      'id': 'louise@oohlalamobile.com'
+    }];
+
     this.form = this.fb.group({
       'name': [null, Validators.required],
       'description': [null],
       'users': [null, Validators.required],
     });
+
+    this.chipOptions = {
+      icon: 'account_box',
+      withClose: true,
+      withAvatar: true
+    };
+
+    console.log(this.users);
   }
 }

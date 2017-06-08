@@ -37,11 +37,20 @@
 
           <div class="form-group">
             <label i18n>Users</label>
-            <textarea
+            <div class="cpInput chip-wrapper">
+              <cp-chip
+                [chip]="user"
+                [icon]="chipOptions.icon"
+                *ngFor="let user of users"
+                [withClose]="chipOptions.withClose"
+                [withAvatar]="chipOptions.withAvatar">
+              </cp-chip>
+            </div>
+            <!--<textarea
               class="form-control"
               formControlName="users"
               placeholder="Enter a name or email address" >
-            </textarea>
+            </textarea>-->
           </div>
         </form>
       </div>

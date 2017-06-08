@@ -48,9 +48,19 @@
         </button>
 
         <cp-upload-button
+          *ngIf="!uploaded"
           buttonClass="cpbtn cpbtn--primary"
           (fileUpload)="onFileUpload($event)">
         </cp-upload-button>
+
+        <button
+          *ngIf="uploaded"
+          type="button"
+          (click)="onNavigate()"
+          class="cpbtn cpbtn--primary"
+          data-dismiss="modal" i18n>
+          <i class="material-icons">arrow_forward</i>
+        </button>
       </div>
     </div>
   </div>
