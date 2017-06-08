@@ -33,6 +33,8 @@ export class AnnouncementsComposeComponent implements OnInit {
 
   stores$;
   isCampusWide;
+
+  sendAsName;
   form: FormGroup;
 
   URGENT_TYPE = 1;
@@ -122,6 +124,7 @@ export class AnnouncementsComposeComponent implements OnInit {
   }
 
   onSelectedStore(store) {
+    this.sendAsName = store.label;
     this.form.controls['store_id'].setValue(store.value);
   }
 
@@ -138,9 +141,18 @@ export class AnnouncementsComposeComponent implements OnInit {
     let search = new URLSearchParams();
     search.append('school_id', this.session.school.id.toString());
 
+    let prefix = this.subject_prefix.label ? this.subject_prefix.label.toUpperCase() : '';
+
+    let data = {
+      'store_id': this.form.value.store_id,
+      'subject': `${prefix} ${this.form.value.subject}`,
+      'message': `${this.form.value.message} \n ${this.sendAsName}`,
+      'priority': this.form.value.priority
+    };
+
     this
       .service
-      .postAnnouncements(search, this.form.value)
+      .postAnnouncements(search, data)
       .subscribe(
         _ => {
           this.form.reset();
