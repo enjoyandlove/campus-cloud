@@ -2,6 +2,15 @@
 @import '~styles/components/card';
 @import '~styles/components/button';
 
+.remove-image {
+  left: 12px;
+  padding: 0;
+  font-size: 2em;
+  position: absolute;
+  color: $color-white;
+  background: transparent;
+}
+
 p.maxLength {
   margin-bottom: 0;
 }
