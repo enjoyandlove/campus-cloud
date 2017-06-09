@@ -46,6 +46,7 @@
                 </cp-typeahead>
 
                 <cp-typeahead
+                  [reset]="resetChips$"
                   *ngIf="state.isPristine"
                   (query)="onSearch($event)"
                   [suggestions]="suggestions">

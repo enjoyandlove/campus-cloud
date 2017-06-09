@@ -1,8 +1,10 @@
 import { Component, Input, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { URLSearchParams } from '@angular/http';
 
-// import { ListsService } from '../lists.service';
+import { ListsService } from '../lists.service';
+import { CPSession } from '../../../../../session';
 
 declare var $: any;
 
@@ -27,11 +29,13 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
 
   chipOptions;
   form: FormGroup;
+  suggestions = [];
   state: IState = state;
 
   constructor(
     private fb: FormBuilder,
-    // private service: ListsService,
+    private session: CPSession,
+    private service: ListsService,
   ) { }
 
   doSubmit() {
@@ -56,7 +60,33 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
   }
 
   onSearch(query) {
-    console.log(query);
+    let search = new URLSearchParams();
+    search.append('search_str', query);
+    search.append('school_id', this.session.school.id.toString());
+
+    this
+      .service
+      .getUsers(search)
+      .map(users => {
+        let _users = [];
+
+        users.forEach(user => {
+          _users.push({
+            'label': `${user.firstname} ${user.lastname}`,
+            'id': user.id
+          });
+        });
+
+        if (!_users.length) {
+          _users.push({ 'label': 'No Results...' });
+        }
+
+        return _users;
+      })
+      .subscribe(
+      res => this.suggestions = res,
+      err => console.log(err)
+      );
   }
 
   ngOnInit() {
@@ -69,6 +99,10 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
           'id': index,
         };
       });
+    }
+
+    if (this.state.isPristine) {
+      this.resetChips$.next(true);
     }
 
     this.form = this.fb.group({

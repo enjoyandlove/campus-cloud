@@ -21,6 +21,12 @@ export class ListsService extends BaseService {
     Object.setPrototypeOf(this, ListsService.prototype);
   }
 
+  getUsers(search: URLSearchParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER}/`;
+
+    return super.get(url, { search }).map(res => res.json());
+  }
+
   getLists(search?: URLSearchParams) {
     if (search) { console.log(search); }
 

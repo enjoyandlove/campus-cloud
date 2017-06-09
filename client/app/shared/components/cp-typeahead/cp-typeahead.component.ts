@@ -3,6 +3,7 @@ import {
   Input,
   OnInit,
   Output,
+  OnDestroy,
   Component,
   ViewChild,
   ElementRef,
@@ -27,7 +28,7 @@ const state: IState = {
   templateUrl: './cp-typeahead.component.html',
   styleUrls: ['./cp-typeahead.component.scss']
 })
-export class CPTypeAheadComponent implements OnInit, AfterViewInit {
+export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() suggestions: Array<any>;
   @Input() preSelected: Array<any>;
   @Input() reset: Observable<boolean>;
@@ -98,6 +99,21 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit {
     }
   }
 
+  teardown() {
+    this.state = Object.assign(
+      {},
+      this.state,
+      {
+        selectedJson: [],
+        selected: new Map()
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.teardown();
+  }
+
   ngOnInit() {
     this.chipOptions = {
       close: true,
@@ -120,11 +136,7 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit {
 
     this.reset.subscribe(reset => {
       if (reset) {
-        this.state = {
-          selectedJson: [],
-          canSearch: true,
-          selected: new Map()
-        };
+        this.teardown();
       }
     });
   }
