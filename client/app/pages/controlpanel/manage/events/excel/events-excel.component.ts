@@ -1,5 +1,6 @@
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
@@ -41,6 +42,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   isFormReady = false;
   buttonDropdownOptions;
   eventAttendanceFeedback;
+  resetManagerDropdown$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
     private router: Router,
@@ -145,6 +147,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   }
 
   updateEventManager(manager, index) {
+    console.log(manager);
     const controls = <FormArray>this.form.controls['events'];
     const control = <FormGroup>controls.controls[index];
 
@@ -184,6 +187,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       control.controls['managers'].setValue(res);
     });
 
+    this.resetManagerDropdown$.next(true);
     control.controls['event_manager_id'].setValue(null);
     control.controls['store_id'].setValue(host.value);
   }
