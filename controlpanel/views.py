@@ -108,7 +108,7 @@ def import_list(request):
     parser = CSVParser(io_string)
     parsed_data = parser.parse()
 
-    return JsonResponse(json.dumps(parsed_data), safe=False)
+    return JsonResponse(parsed_data, safe=False)
 
 '''
 Parse Clubs Mass Upload
@@ -121,8 +121,7 @@ def import_clubs(request):
 
     parser = CSVParser(io_string)
     parsed_data = parser.parse()
-
-    return JsonResponse(json.dumps(parsed_data), safe=False)
+    return JsonResponse(parsed_data, safe=False)
 
 '''
 Parse Services Excel Mass Upload

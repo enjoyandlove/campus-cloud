@@ -57,6 +57,11 @@ export class ListsListComponent extends BaseComponent implements OnInit {
     this.fetch();
   }
 
+  onResetCreateList() {
+    this.listUsers = [];
+    this.isListsCreate = false;
+  }
+
   onCreatedList(list) {
     this.isListsCreate = false;
     this.state.lists = [list, ...this.state.lists];

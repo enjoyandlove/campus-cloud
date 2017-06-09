@@ -1,10 +1,11 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
 
 import { CPSession } from '../../../../../session';
-import { AnnouncementsService } from '../announcements.service';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { StoreService } from '../../../../../shared/services';
+import { AnnouncementsService } from '../announcements.service';
 
 declare var $: any;
 
@@ -27,15 +28,16 @@ const state: IState = {
   templateUrl: './announcements-compose.component.html',
   styleUrls: ['./announcements-compose.component.scss']
 })
-export class AnnouncementsComposeComponent implements OnInit {
-  @Output() teardown: EventEmitter<null> = new EventEmitter();
+export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   @Output() created: EventEmitter<any> = new EventEmitter();
+  @Output() teardown: EventEmitter<null> = new EventEmitter();
 
   stores$;
   isCampusWide;
 
   sendAsName;
   form: FormGroup;
+  resetChips$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   URGENT_TYPE = 1;
   EMERGENCY_TYPE = 0;
@@ -120,6 +122,7 @@ export class AnnouncementsComposeComponent implements OnInit {
 
   resetModal() {
     this.teardown.emit();
+    this.resetChips$.next(true);
     $('#composeModal').modal('hide');
   }
 
@@ -192,6 +195,10 @@ export class AnnouncementsComposeComponent implements OnInit {
     }
 
     this.form.controls['priority'].setValue(type.id);
+  }
+
+  ngOnDestroy() {
+    this.resetModal();
   }
 
   ngOnInit() {

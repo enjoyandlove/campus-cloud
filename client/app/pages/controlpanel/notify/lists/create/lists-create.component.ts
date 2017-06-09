@@ -6,6 +6,14 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 declare var $: any;
 
+interface IState {
+  isPristine: boolean;
+}
+
+const state: IState = {
+  isPristine: true
+};
+
 @Component({
   selector: 'cp-lists-create',
   templateUrl: './lists-create.component.html',
@@ -19,6 +27,7 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
 
   chipOptions;
   form: FormGroup;
+  state: IState = state;
 
   constructor(
     private fb: FormBuilder,
@@ -31,6 +40,7 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
   }
 
   resetModal() {
+    this.users = [];
     this.form.reset();
     this.reset.emit();
     this.resetChips$.next(true);
@@ -45,21 +55,21 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
     this.resetModal();
   }
 
+  onSearch(query) {
+    console.log(query);
+  }
+
   ngOnInit() {
-    this.users = [
-      {
-        'label': 'tom@oohlalamobile.com',
-        'id': 1
-      },
-      {
-        'label': 'john@oohlalamobile.com',
-        'id': 2
-      },
-      {
-        'label': 'louise@oohlalamobile.com',
-        'id': 3
-      }
-    ];
+    if (this.users) {
+      this.state.isPristine = false;
+
+      this.users = this.users.map((user, index) => {
+        return {
+          'label': user.email,
+          'id': index,
+        };
+      });
+    }
 
     this.form = this.fb.group({
       'name': [null, Validators.required],

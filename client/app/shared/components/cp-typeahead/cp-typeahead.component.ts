@@ -114,6 +114,10 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit {
       });
     }
 
+    if (!this.reset) {
+      this.reset = Observable.of(false);
+    }
+
     this.reset.subscribe(reset => {
       if (reset) {
         this.state = {
