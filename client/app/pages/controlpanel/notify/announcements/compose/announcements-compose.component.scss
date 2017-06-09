@@ -8,6 +8,46 @@
   margin-top: 15px;
 }
 
+.subject-input {
+  width: 100%;
+
+  &__label {
+    @include font-semi-bold();
+
+    width: 83px;
+    height: 100%;
+    padding: 0 8px;
+    line-height: 3.1;
+    font-size: 0.8em;
+    color: $color-white;
+    display: inline-block;
+    text-transform: uppercase;
+    border-radius: 4px 0 0 4px;
+
+    &.warning {
+      background: $color-warning;
+    }
+
+    &.danger {
+      background: $color-danger;
+    }
+  }
+
+  &__input {
+    width: 100%;
+  }
+
+}
+
+// .subject-label:before {
+//   content: attr(data-type);
+//   position: absolute;
+//   left: 0;
+//   background: red;
+//   height: 36px;
+//   width: 120px;
+// }
+
 label {
   span {
     @include font-normal();

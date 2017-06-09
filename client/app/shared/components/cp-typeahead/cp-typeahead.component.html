@@ -2,9 +2,9 @@
   <div class="col-xs-12">
     <ng-container class="typeahead">
       <div
-        class="typeahead__input-wrapper input">
+        class="typeahead__input-wrapper cpInput">
         <div
-          (click)="input.focus()"
+          (click)="shouldFocusInput()"
           class="typeahead__input-wrapper__padding">
           <cp-chip
             [chip]="chip[1]"
@@ -19,12 +19,13 @@
             #input
             autofocus
             type="text"
+            *ngIf="state.canSearch"
             class="typeahead__input-wrapper__input">
         </div>
       </div>
 
       <ul
-        *ngIf="suggestions.length"
+        *ngIf="suggestions && suggestions.length"
         class="typeahead__list">
         <li
           class="typeahead__item"

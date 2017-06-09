@@ -34,6 +34,12 @@ export class AnnouncementsService extends BaseService {
     return super.get(url, { search }).map(res => res.json());
   }
 
+  postAnnouncements(search: URLSearchParams, body: any) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ANNOUNCEMENT}/`;
+
+    return super.post(url, body, { search }).map(res => res.json());
+  }
+
   getAnnouncementById(messageId) {
     const promise = new Promise(resolve => {
       resolve(mockAnnouncements.filter(list => {

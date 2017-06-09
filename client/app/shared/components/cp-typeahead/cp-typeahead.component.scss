@@ -2,11 +2,6 @@
 @import '~styles/components/form';
 @import '~styles/components/dropdown';
 
-// :host {
-//   display: block;
-//   padding: 10px 0;
-// }
-
 textarea {
   height: 38px;
   min-height: 38px;
@@ -53,10 +48,6 @@ textarea {
       &:focus,
       &:active {
         border: none;
-        // width: auto;
-        // min-width: 12px;
-        // max-width: 100%;
-        // background: red;
       }
     }
   }
@@ -72,9 +63,3 @@ textarea {
     box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.3);
   }
 }
-
-// .blockMe {
-//   display: block;
-//   height: 100%;
-//   width: 100%;
-// }

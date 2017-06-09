@@ -3,20 +3,24 @@ import {
   Input,
   OnInit,
   Output,
+  OnDestroy,
   Component,
   ViewChild,
   ElementRef,
   AfterViewInit,
-  EventEmitter } from '@angular/core';
+  EventEmitter
+} from '@angular/core';
 
 interface IState {
-  selected: Map<number, Object>;
+  canSearch: boolean;
   selectedJson: Array<any>;
+  selected: Map<number, Object>;
 }
 
 const state: IState = {
-  selected: new Map(),
-  selectedJson: []
+  selectedJson: [],
+  canSearch: true,
+  selected: new Map()
 };
 
 @Component({
@@ -24,8 +28,10 @@ const state: IState = {
   templateUrl: './cp-typeahead.component.html',
   styleUrls: ['./cp-typeahead.component.scss']
 })
-export class CPTypeAheadComponent implements OnInit, AfterViewInit {
-  @Input() suggestions: Array<any> = [];
+export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
+  @Input() suggestions: Array<any>;
+  @Input() preSelected: Array<any>;
+  @Input() reset: Observable<boolean>;
   @ViewChild('input') input: ElementRef;
   @Output() query: EventEmitter<string> = new EventEmitter();
 
@@ -35,7 +41,7 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit {
 
   constructor() { }
 
-  ngAfterViewInit() {
+  listenForKeyChanges() {
     this.el = this.input.nativeElement;
 
     const keyup$ = Observable.fromEvent(this.el, 'keyup');
@@ -63,6 +69,12 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit {
       );
   }
 
+  ngAfterViewInit() {
+    if (this.state.canSearch) {
+      this.listenForKeyChanges();
+    }
+  }
+
   onHandleClick(suggestion) {
     if (!suggestion.id) { return; }
 
@@ -80,12 +92,53 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit {
     this.state.selected.delete(id);
     this.state.selectedJson = this.state.selected.toJSON();
   }
+
+  shouldFocusInput() {
+    if (this.state.canSearch) {
+      this.el.focus();
+    }
+  }
+
+  teardown() {
+    this.state = Object.assign(
+      {},
+      this.state,
+      {
+        selectedJson: [],
+        selected: new Map()
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.teardown();
+  }
+
   ngOnInit() {
     this.chipOptions = {
       close: true,
       avatar: true,
       icon: 'account_box'
     };
+
+    if (this.preSelected) {
+      this.state.canSearch = false;
+
+      this.preSelected.forEach(selection => {
+        this.state.selected.set(selection.id, selection);
+        this.state.selectedJson = this.state.selected.toJSON();
+      });
+    }
+
+    if (!this.reset) {
+      this.reset = Observable.of(false);
+    }
+
+    this.reset.subscribe(reset => {
+      if (reset) {
+        this.teardown();
+      }
+    });
   }
 }
 

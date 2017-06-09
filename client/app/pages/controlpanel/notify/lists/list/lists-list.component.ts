@@ -47,6 +47,21 @@ export class ListsListComponent extends BaseComponent implements OnInit {
     console.log(query);
   }
 
+  onPaginationNext() {
+    super.goToNext();
+    this.fetch();
+  }
+
+  onPaginationPrevious() {
+    super.goToPrevious();
+    this.fetch();
+  }
+
+  onResetCreateList() {
+    this.listUsers = [];
+    this.isListsCreate = false;
+  }
+
   onCreatedList(list) {
     this.isListsCreate = false;
     this.state.lists = [list, ...this.state.lists];

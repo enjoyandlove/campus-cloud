@@ -1,12 +1,9 @@
 @import '~styles/core/colors';
 
-// :host {
-//   display: block;
-// }
-
 .chip {
   height: 36px;
   padding: 1px 5px;
+  display: inline-block;
   background: $color-light-grey;
 
   i,
