@@ -27,6 +27,12 @@
               <div
                 class="textarea__upload"
                 *ngIf="form.controls.message_image_url.value">
+                <button
+                  type="button"
+                  (click)="onDeleteImage()"
+                  class="cpbtn cpbtn--cancel cpbtn--no-border remove-image">
+                  &times;
+                </button>
                 <img
                   class="img-responsive"
                   [src]="form.controls.message_image_url.value">

@@ -145,6 +145,10 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
       });
   }
 
+  onDeleteImage() {
+    this.form.controls['message_image_url'].setValue(null);
+  }
+
   onSelectedHost(host): void {
     this.form.controls['store_id'].setValue(host.value);
   }
