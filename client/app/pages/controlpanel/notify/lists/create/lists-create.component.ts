@@ -1,5 +1,6 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 // import { ListsService } from '../lists.service';
 
@@ -10,10 +11,11 @@ declare var $: any;
   templateUrl: './lists-create.component.html',
   styleUrls: ['./lists-create.component.scss']
 })
-export class ListsCreateComponent implements OnInit {
+export class ListsCreateComponent implements OnInit, OnDestroy {
   @Input() users: Array<any> = [];
-  @Output() created: EventEmitter<any> = new EventEmitter();
   @Output() reset: EventEmitter<null> = new EventEmitter();
+  @Output() created: EventEmitter<any> = new EventEmitter();
+  @Output() resetChips$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   chipOptions;
   form: FormGroup;
@@ -24,7 +26,6 @@ export class ListsCreateComponent implements OnInit {
   ) { }
 
   doSubmit() {
-    $('#listsCreate').modal('hide');
     this.created.emit(this.form.value);
     this.resetModal();
   }
@@ -32,16 +33,33 @@ export class ListsCreateComponent implements OnInit {
   resetModal() {
     this.form.reset();
     this.reset.emit();
+    this.resetChips$.next(true);
+    $('#listsCreate').modal('hide');
+  }
+
+  onRemoveUser(id) {
+    this.users = this.users.filter(user => user.id !== id);
+  }
+
+  ngOnDestroy() {
+    this.resetModal();
   }
 
   ngOnInit() {
-    this.users = [{
-      'label': 'Tom Baker',
-      'id': 'tom@oohlalamobile.com'
-    }, {
-      'label': 'Louise Liu',
-      'id': 'louise@oohlalamobile.com'
-    }];
+    this.users = [
+      {
+        'label': 'tom@oohlalamobile.com',
+        'id': 1
+      },
+      {
+        'label': 'john@oohlalamobile.com',
+        'id': 2
+      },
+      {
+        'label': 'louise@oohlalamobile.com',
+        'id': 3
+      }
+    ];
 
     this.form = this.fb.group({
       'name': [null, Validators.required],
@@ -54,7 +72,5 @@ export class ListsCreateComponent implements OnInit {
       withClose: true,
       withAvatar: true
     };
-
-    console.log(this.users);
   }
 }
