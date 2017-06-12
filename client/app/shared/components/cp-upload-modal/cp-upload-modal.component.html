@@ -33,7 +33,6 @@
           id="file"
           type="file"
           name="file"
-          [disabled]="processing"
           class="dropzone__input"
           (change)="onChange($event)" />
         <label
@@ -42,7 +41,7 @@
           *ngIf="!processing">
           <i class="material-icons">cloud_upload</i>
           <span *ngIf="!isError">
-            {{ fileName ? fileName : 'Click to select a .CSV file here' }}
+            {{ fileName ? fileName : 'Click to select a CSV file here' }}
           </span>
 
           <span *ngIf="isError">{{ errorMessage }}</span>
