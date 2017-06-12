@@ -1,0 +1,85 @@
+<div class="cpmodal">
+  <div class="cpmodal__header">
+    <div class="row">
+      <div class="col-xs-12">
+        <span i18n><strong>Upload CSV File</strong></span>
+
+        <span
+          (click)="resetValues()"
+          data-dismiss="modal text-right"
+          class="pull-right hover cpmodal__header__close">
+          &times;
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cpmodal__body">
+    <div class="row">
+      <div class="col-xs-12">
+        <p i18n>
+          Select or drag a CSV file into the field below.
+          <a [href]="props.templateUrl" download
+            class="cpbtn cpbtn--link" i18n>
+            Download CSV Sample File
+          </a>
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="dropzone" [class.isError]="isError">
+          <input
+          id="file"
+          type="file"
+          name="file"
+          [disabled]="processing"
+          class="dropzone__input"
+          (change)="onChange($event)" />
+        <label
+          for="file"
+          class="dropzone__label" i18n
+          *ngIf="!processing">
+          <i class="material-icons">cloud_upload</i>
+          <span *ngIf="!isError">
+            {{ fileName ? fileName : 'Click to select a .CSV file here' }}
+          </span>
+
+          <span *ngIf="isError">{{ errorMessage }}</span>
+        </label>
+
+        <label
+          for="file"
+          class="dropzone__label" i18n
+          *ngIf="processing">
+          <i class="material-icons loading">refresh</i>
+          <span>Uploading....</span>
+        </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cpmodal__footer">
+    <div class="row">
+      <div class="col-xs-12 text-right">
+        <button
+          type="button"
+          (click)="resetValues()"
+          class="cpbtn cpbtn--cancel"
+          data-dismiss="modal" i18n>
+          Cancel
+        </button>
+
+        <button
+          type="button"
+          (click)="onNavigate()"
+          [disabled]="!isReady"
+          class="cpbtn cpbtn--primary"
+          data-dismiss="modal" i18n>
+          Import
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

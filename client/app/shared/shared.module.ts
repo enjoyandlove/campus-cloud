@@ -11,7 +11,7 @@ import { CPMapsComponent, CPModalComponent, CPTopBarComponent, CPAvatarComponent
   CPDatePickerComponent, CPSwitchComponent, CPSmallDatePickerComponent,
   CPUploadButtonComponent, CPPaginationComponent, CPNoContentComponent,
   CPCheckDropdownComponent, CPImageUploadComponent, SchoolSwitchComponent,
-  CPIntercommComponent, CPTrackersComponent
+  CPIntercommComponent, CPTrackersComponent, CPUploadModalComponent
 } from './components';
 
 import {
@@ -35,7 +35,7 @@ import {
   CPAnimatedButtonComponent, CPDatePickerComponent,
   CPSmallDatePickerComponent, CPPaginationComponent, CPNoContentComponent,
   CPCheckDropdownComponent, CPImageUploadComponent, SchoolSwitchComponent, CPIntercommComponent,
-  CPTrackersComponent ],
+  CPTrackersComponent, CPUploadModalComponent ],
 
   imports: [ CommonModule, RouterModule, ReactiveFormsModule ],
 
@@ -51,6 +51,6 @@ import {
   CPAnimatedButtonComponent, CPDatePickerComponent,
   CPSmallDatePickerComponent, CPPaginationComponent, CPNoContentComponent,
   CPCheckDropdownComponent, CPImageUploadComponent, SchoolSwitchComponent, CPIntercommComponent,
-  CPTrackersComponent ]
+  CPTrackersComponent, CPUploadModalComponent ]
 })
 export class SharedModule { }
