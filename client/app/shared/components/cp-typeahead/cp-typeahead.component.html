@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="col-xs-12">
+    <ng-container class="typeahead">
+      <div
+        class="typeahead__input-wrapper cpInput">
+        <div
+          (click)="shouldFocusInput()"
+          class="typeahead__input-wrapper__padding">
+          <cp-chip
+            [chip]="chip[1]"
+            [icon]="chipOptions.icon"
+            [withClose]="chipOptions.close"
+            [withAvatar]="chipOptions.avatar"
+            class="typeahead__input-wrapper__chip"
+            *ngFor="let chip of state.selectedJson"
+            (handleClose)="onHandleRemove($event)">
+          </cp-chip>
+          <input
+            #input
+            autofocus
+            type="text"
+            *ngIf="state.canSearch"
+            class="typeahead__input-wrapper__input">
+        </div>
+      </div>
+
+      <ul
+        *ngIf="suggestions && suggestions.length"
+        class="typeahead__list">
+        <li
+          class="typeahead__item"
+          (click)="onHandleClick(suggestion)"
+          *ngFor="let suggestion of suggestions">
+          {{ suggestion.label }}
+        </li>
+      </ul>
+    </ng-container>
+  </div>
+</div>

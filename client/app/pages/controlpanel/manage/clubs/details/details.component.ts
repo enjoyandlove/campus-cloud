@@ -55,7 +55,7 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
       children: []
     };
 
-    let links = ['Info'];
+    let links = [];
 
     if (schoolPrivileges) {
       if (schoolPrivileges[CP_PRIVILEGES_MAP.events].r) {
@@ -94,6 +94,8 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
         links = ['Members', ...links];
       }
     }
+
+    links = ['Info', ...links];
 
     links.forEach(link => {
       menu.children.push({

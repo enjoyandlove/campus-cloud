@@ -45,10 +45,10 @@
                     <div class="row">
                       <div class="col-xs-10 text-left">
                         <span class="title">
-                          {{ form.controls.priority.value.title }}
+                          {{ getTypeFromArray(form.controls['priority'].value).title }}
                         </span>
                         <span class="description text-muted">
-                          {{ form.controls.priority.value.description }}
+                          {{ getTypeFromArray(form.controls['priority'].value).description }}
                         </span>
                       </div>
                       <div class="col-xs-2 text-right">
@@ -66,7 +66,7 @@
                         <div class="col-xs-2 text-center no-right-padding">
                           <i
                             class="material-icons"
-                            *ngIf="form.controls.priority.value.id === type.id">
+                            *ngIf="form.controls.priority.value === type.id">
                             check
                           </i>
                         </div>
@@ -88,32 +88,46 @@
 
             <div class="form-group" *ngIf="!isCampusWide">
               <label i18n>To</label>
-              <input
-                type="text"
-                class="form-control"
-                formControlName="subject"
-                placeholder="Enter name of a user or a list">
+              <div class="row">
+                <div class="col-xs-12">
+                  <cp-typeahead
+                    [reset]="resetChips$"
+                    (query)="onSearch($event)"
+                    [suggestions]="suggestions">
+                  </cp-typeahead>
+                </div>
+              </div>
             </div>
 
             <div class="form-group">
               <label i18n>
                 Subject
                 <span class="pull-right">
-                  {{ form.controls.subject.value ? form.controls.subject.value.length : 0 }}/128
+                  {{ getSubjectLength() }}/128
                 </span>
               </label>
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Subject"
-                formControlName="subject">
+              <div class="cpInput subject-input">
+                <div class="row">
+                  <div class="col-xs-2" *ngIf="subject_prefix.label">
+                    <span [class]="'subject-input__label text-center ' + subject_prefix.type">
+                      {{ subject_prefix.label }}
+                    </span>
+                  </div>
+                  <div [class]="subject_prefix.label ? 'col-xs-10 no-left-padding' : 'col-xs-12' ">
+                    <input
+                    type="text"
+                    formControlName="subject"
+                    class="form-control transparent subject-input__input">
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div class="form-group">
               <label i18n>
                 Message
                 <span class="pull-right">
-                  {{ form.controls.message.value ? form.controls.message.value.length : 0 }}/512
+                  {{ form.controls.message.value ? form.controls.message.value.length : 0 }}/400
                 </span>
               </label>
               <textarea

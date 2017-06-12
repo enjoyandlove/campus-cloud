@@ -19,46 +19,46 @@
     </cp-no-content>
 
     <div *ngIf="state.lists.length">
-      <ul class="col-xs-12 cp-form">
-        <div class="lists">
-          <li class="cp-form__header col-xs-12">
-            <div class="row">
-              <span class="col-xs-5" i18n>Name</span>
-              <span class="col-xs-6" i18n>Users</span>
-              <span class="col-xs-1"></span>
-            </div>
-          </li>
+      <ul class="lists cp-form">
+        <li class="cp-form__header col-xs-12">
+          <div class="row">
+            <span class="col-xs-5" i18n>Name</span>
+            <span class="col-xs-6" i18n>Users</span>
+            <span class="col-xs-1"></span>
+          </div>
+        </li>
 
-          <li class="cp-form__item col-xs-12" *ngFor="let list of state.lists">
-            <div class="row">
-              <span class="col-xs-5 text-truncate">
-                <strong>
-                  <button
-                    (click)="editList = list"
-                    class="cpbtn cpbtn--link-dark"
-                    (click)="isListsEdit = true"
-                    data-toggle="modal" data-target="#listsEdit">
-                    {{ list.name }}
-                  </button>
-                </strong>
-                <br>
-                {{ list.description }}
-              </span>
+        <li
+          class="cp-form__item col-xs-12"
+          *ngFor="let list of state.lists">
+          <div class="row">
+            <span class="col-xs-5 text-truncate">
+              <strong>
+                <button
+                  (click)="editList = list"
+                  class="cpbtn cpbtn--link-dark"
+                  (click)="isListsEdit = true"
+                  data-toggle="modal" data-target="#listsEdit">
+                  {{ list.name }}
+                </button>
+              </strong>
+              <br>
+              {{ list.description }}
+            </span>
 
-              <span class="col-xs-6" i18n>
-                No Content
-              </span>
+            <span class="col-xs-6" i18n>
+              No Content
+            </span>
 
-              <span
-                (click)="deleteList = list;"
-                (click)="islistsDelete = true"
-                data-toggle="modal" data-target="#listsDelete"
-                class="col-xs-1 hover delete-list">
-                &times;
-              </span>
-            </div>
-          </li>
-        </div>
+            <span
+              (click)="deleteList = list;"
+              (click)="islistsDelete = true"
+              data-toggle="modal" data-target="#listsDelete"
+              class="col-xs-1 hover delete-list">
+              &times;
+            </span>
+          </div>
+        </li>
       </ul>
 
       <cp-pagination
@@ -86,7 +86,7 @@
   <cp-lists-create
     [users]="listUsers"
     (created)="onCreatedList($event)"
-    (reset)="isListsCreate = false">
+    (reset)="onResetCreateList()">
   </cp-lists-create>
 </cp-modal>
 

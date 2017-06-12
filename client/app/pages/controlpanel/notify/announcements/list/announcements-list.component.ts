@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
+import { CPSession } from '../../../../../session';
 import { FORMAT } from '../../../../../shared/pipes/date.pipe';
 import { AnnouncementsService } from '../announcements.service';
 import { BaseComponent } from '../../../../../base/base.component';
@@ -14,7 +15,7 @@ interface IState {
 const state: IState = {
   messages: [],
   query: null,
-  type: null
+  type: null,
 };
 
 declare var $: any;
@@ -26,10 +27,13 @@ declare var $: any;
 })
 export class AnnouncementsListComponent extends BaseComponent implements OnInit {
   loading;
+  messageType;
+  suggestions = [];
   state: IState = state;
   dateFormat = FORMAT.DATETIME;
 
   constructor(
+    private session: CPSession,
     private service: AnnouncementsService
   ) {
     super();
@@ -38,13 +42,13 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
     this.fetch();
   }
 
-  doFilter(data) {
+  doFilter(filter) {
     this.state = Object.assign(
       {},
       this.state,
       {
-        query: data.query,
-        type: data.query
+        query: filter.query,
+        type: filter.type
       }
     );
 
@@ -57,16 +61,42 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
 
   private fetch() {
     let search = new URLSearchParams();
-    let type = this.state.type ? this.state.type.toString() : null;
+    let type = this.state.type !== null ? this.state.type.toString() : null;
 
-    search.append('type', type);
-    search.append('query', this.state.query);
+    search.append('priority', type);
+    search.append('search_str', this.state.query);
+    search.append('school_id', this.session.school.id.toString());
 
     super
-      .fetchData(this.service.getAnnouncements(search))
+      .fetchData(this.service.getAnnouncements(search, this.startRange, this.endRange))
       .then(res => this.state = Object.assign({}, this.state, { messages: res.data }))
       .catch(err => console.log(err));
   }
 
-  ngOnInit() { }
+  onCreated(notification) {
+    console.log('I am pushing this to the array', notification);
+    // this.state.messages = Object.assign(
+    //   {},
+    //   this.state.messages,
+    //   { notification, ...this.state.messages }
+    // );
+  }
+
+  onPaginationNext() {
+    super.goToNext();
+    this.fetch();
+  }
+
+  onPaginationPrevious() {
+    super.goToPrevious();
+    this.fetch();
+  }
+
+  ngOnInit() {
+    this.messageType = {
+      0: 'Emergency',
+      1: 'Urgent',
+      2: 'Normal',
+    };
+  }
 }

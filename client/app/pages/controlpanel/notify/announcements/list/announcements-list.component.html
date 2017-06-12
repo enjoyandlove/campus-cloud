@@ -8,63 +8,56 @@
 </div>
 
 
-<div [ngSwitch]="loading">
+<ng-container [ngSwitch]="loading">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
-  <div *ngSwitchCase="false">
+  <ng-container *ngSwitchCase="false">
+
     <cp-no-content
       *ngIf="!state.messages.length"
       noContentText="No messages found...">
     </cp-no-content>
 
     <div *ngIf="state.messages.length">
-      <ul class="col-xs-12 cp-form">
-        <div class="messages">
-          <li class="cp-form__header col-xs-12">
-            <div class="row">
-              <span class="col-xs-5" i18n>To</span>
-              <span class="col-xs-3" i18n>Announcement Type</span>
-              <span class="col-xs-3">Sent</span>
-              <span class="col-xs-1"></span>
-            </div>
-          </li>
+      <ul class="messages cp-form">
+        <li class="cp-form__header col-xs-12">
+          <div class="row">
+            <span class="col-xs-5" i18n>To</span>
+            <span class="col-xs-3" i18n>Announcement Type</span>
+            <span class="col-xs-3">Sent</span>
+            <span class="col-xs-1"></span>
+          </div>
+        </li>
 
-          <li class="cp-form__item col-xs-12" *ngFor="let message of state.messages">
-            <div class="row">
-              <span class="col-xs-5">
-                <strong>
-                  <button
-                    (click)="editList = message"
-                    class="cpbtn cpbtn--link-dark"
-                    (click)="isListsEdit = true"
-                    data-toggle="modal" data-target="#listsEdit">
-                    List Name
-                  </button>
-                </strong>
-                <br>
-                {{ message.subject }}
-                <br>
-                {{ message.message }}
-              </span>
+        <li class="cp-form__item col-xs-12" *ngFor="let message of state.messages">
+          <div class="row">
+            <span class="col-xs-5">
+              <strong>
+                {{ message.is_school_wide ? 'Campus Wide' : 'Few People' }}
+              </strong>
+              <br>
+              {{ message.subject }}
+              <br>
+              <span class="text-muted">{{ message.message }}</span>
+            </span>
 
-              <span class="col-xs-3" i18n>
-                {{ message.priority }}
-              </span>
+            <span class="col-xs-3" i18n>
+              {{ messageType[message.priority] }}
+            </span>
 
-              <span class="col-xs-3">
-                {{ message.sent_time | cpDatePipe:dateFormat }}
-              </span>
+            <span class="col-xs-3">
+              {{ message.sent_time | cpDatePipe:dateFormat }}
+            </span>
 
-              <span
-                (click)="deleteList = list;"
-                (click)="islistsDelete = true"
-                data-toggle="modal" data-target="#listsDelete"
-                class="col-xs-1 hover delete-message">
-                &times;
-              </span>
-            </div>
-          </li>
-        </div>
+            <span
+              (click)="deleteList = list;"
+              (click)="islistsDelete = true"
+              data-toggle="modal" data-target="#listsDelete"
+              class="col-xs-1 hover delete-message">
+              &times;
+            </span>
+          </div>
+        </li>
       </ul>
 
       <cp-pagination
@@ -75,8 +68,8 @@
         (previous)="onPaginationPrevious()">
       </cp-pagination>
     </div>
-  </div>
-</div>
+  </ng-container>
+</ng-container>
 
 <cp-modal modalId="composeModal">
   <cp-announcements-compose

@@ -10,6 +10,8 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseRedirect
 
+from controlpanel.utils.csv_parser import CSVParser
+
 
 
 def handle_404(request):
@@ -98,76 +100,28 @@ def import_excel_event(request):
 Parse Excel Mass Announcements Import
 '''
 @csrf_exempt
-def import_excel_announcements(request):
-    input_excel = request.FILES['file']
+def import_list(request):
+    csv_file = request.FILES['file']
+    decoded_file = csv_file.read().decode('utf-8')
+    io_string = io.StringIO(decoded_file)
 
-    wb = load_workbook(filename=input_excel)
+    parser = CSVParser(io_string)
+    parsed_data = parser.parse()
 
-    ws = wb.get_active_sheet()
-
-    message_dict = []
-
-    for row in ws.rows:
-        message_info = []
-        for col in row:
-            if col.value is not None:
-                message_info.append(col.value)
-        if len(message_info):
-            message_dict.append(message_info)
-
-    messages = message_dict[1:]
-    column_titles = message_dict[:1]
-
-    column_titles = [title.lower() for title in column_titles[0]]
-
-    message_dict = []
-
-    for i in messages:
-        # all fields are required
-        if len(i) is not len(column_titles):
-            return JsonResponse({"error": "All fields are required"},
-                                safe=False, status=500)
-
-        message_dict.append(dict(zip(column_titles, i)))
-
-    return JsonResponse(json.dumps(message_dict), safe=False)
-
+    return JsonResponse(parsed_data, safe=False)
 
 '''
 Parse Clubs Mass Upload
 '''
 @csrf_exempt
-def import_excel_clubs(request):
+def import_clubs(request):
     csv_file = request.FILES['file']
     decoded_file = csv_file.read().decode('utf-8')
     io_string = io.StringIO(decoded_file)
 
-    data = []
-    column_titles = None
-    reader = csv.reader(io_string)
-
-    for index, row in enumerate(reader):
-        if index == 0:
-            column_titles = row
-            continue
-
-        if not row[0]:
-            continue
-
-        data.append(row)
-
-    for index, title in enumerate(column_titles):
-        if column_titles[index] is None:
-            raise KeyError("All fields are required")
-
-        column_titles[index] = column_titles[index].lower().replace(" ", "_")
-
-    # zip data with columns
-    result = []
-    for item in data:
-        result.append(dict(zip(column_titles, item)))
-
-    return JsonResponse(json.dumps(result), safe=False)
+    parser = CSVParser(io_string)
+    parsed_data = parser.parse()
+    return JsonResponse(parsed_data, safe=False)
 
 '''
 Parse Services Excel Mass Upload

@@ -141,6 +141,8 @@ export class EventsCreateComponent implements OnInit {
   onSubmit() {
     this.formError = false;
     this.isDateError = false;
+    this.form.controls['start'].setErrors(null);
+    this.form.controls['end'].setErrors(null);
 
     if (!this.form.valid) {
       this.formError = true;
@@ -166,7 +168,6 @@ export class EventsCreateComponent implements OnInit {
       this.isDateError = true;
       this.formError = true;
       this.form.controls['end'].setErrors({ 'required': true });
-      this.form.controls['start'].setErrors({ 'required': true });
       this.dateErrorMessage = 'Event End Time must be after Event Start Time';
       return;
     }
@@ -175,7 +176,6 @@ export class EventsCreateComponent implements OnInit {
       this.isDateError = true;
       this.formError = true;
       this.form.controls['end'].setErrors({ 'required': true });
-      this.form.controls['start'].setErrors({ 'required': true });
       this.dateErrorMessage = 'Event End Time must be greater than now';
       return;
     }

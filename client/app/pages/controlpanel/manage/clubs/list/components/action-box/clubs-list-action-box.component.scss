@@ -47,7 +47,6 @@
   .dropdown-menu {
     @include cpDropdownMenu();
     top: 115%;
-    min-width: 170px;
   }
 
   a { padding: 0 };

@@ -1,0 +1,17 @@
+<div class="chip">
+  <i
+    *ngIf="withAvatar"
+    class="chip__avatar material-icons">
+    {{ icon }}
+  </i>
+
+  <span>{{ chip.label }}</span>
+
+  <button
+    type="button"
+    *ngIf="withClose"
+    (click)="onHandleClose(chip)"
+    class="cpbtn cpbtn--cancel cpbtn--no-border">
+      &times;
+    </button>
+</div>
