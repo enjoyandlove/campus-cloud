@@ -1,4 +1,3 @@
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -7,7 +6,6 @@ import { EventsService } from '../../../events.service';
 import { STATUS } from '../../../../../../../shared/constants';
 import { FileUploadService } from '../../../../../../../shared/services';
 
-declare var $: any;
 
 @Component({
   selector: 'cp-events-excel-modal',
@@ -23,74 +21,36 @@ export class EventsExcelModalComponent implements OnInit {
   @Input() serviceId: number;
   @Input() isService: boolean;
 
-  error;
-  uploaded;
-  downloadLink;
-  form: FormGroup;
+  options;
+  fileName;
 
   constructor(
     private router: Router,
-    private fb: FormBuilder,
     private service: EventsService,
     private fileService: FileUploadService,
-  ) {
-    this.form = this.fb.group({
-      'link': [null, Validators.required]
-    });
+  ) { }
 
-    this.downloadLink = isDev ? '/templates/mass_event_invite_sample.xlsx' :
-                                '/dist/templates/mass_event_invite_sample.xlsx';
-  }
-
-  fileIsValid(file) {
-    let result = [];
-    let validators = [
-      {
-        'exp': file.name.split('.').pop() === 'xlsx',
-        'error': STATUS.WRONG_EXTENSION,
-        'isError': false
-      },
-      {
-        'exp': file.size > 5000,
-        'error': STATUS.FILE_IS_TOO_BIG,
-        'isError': false
-      }
-    ];
-
-    validators.map(validator => {
-      if (!validator.exp) {
-        validator.isError = true;
-        result.push(validator);
-      }
-      return validator;
-    });
-    return result;
-  }
-
-  onFileUpload(file) {
-    const validation = this.fileIsValid(file);
-    this.error = '';
-
-    if (!validation.length) {
-      const url = !isDev ? '/events/excel' : 'http://localhost:8000/events/excel';
-      this
+  parser(file) {
+    const url = !isDev ? '/events/excel' : 'http://localhost:8000/events/excel';
+    return this
       .fileService
       .uploadFile(file, url)
-      .subscribe(
-        (res) => {
-          this.uploaded = true;
-          this.service.setModalEvents(JSON.parse(res));
-        },
-        err => this.error = err.json().error
+      .toPromise()
+      .then(
+      res => {
+        this.service.setModalEvents(JSON.parse(res));
+        return Promise.resolve();
+      }
+      )
+      .catch(
+      err => {
+        let serverError = err.json().error;
+        return Promise.reject(serverError ? serverError : STATUS.SOMETHING_WENT_WRONG);
+      }
       );
-      return;
-    }
-
-    this.error = validation[0].error;
   }
 
   onNavigate() {
-    this.doReset();
     if (this.isService) {
       this.router.navigate([`/manage/services/${this.serviceId}/events/import/excel`]);
       return;
@@ -104,13 +64,15 @@ export class EventsExcelModalComponent implements OnInit {
     this.router.navigate(['/manage/events/import/excel']);
   }
 
-  doReset() {
-    this.error = '';
-    this.uploaded = false;
-    $('#excelEventsModal').modal('hide');
-  }
-
   ngOnInit() {
-    // console.log($('#excelModal'));
+    this.fileName = 'mass_event_invite_sample.xlsx';
+
+    let templateUrl = isDev ? `/templates/${this.fileName}` : `/dist/templates/${this.fileName}`;
+
+    this.options = {
+      templateUrl,
+      validExtensions: ['xlsx'],
+      parser: this.parser.bind(this)
+    };
   }
 }
