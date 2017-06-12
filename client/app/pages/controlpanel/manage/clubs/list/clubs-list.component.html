@@ -15,9 +15,9 @@
         <li class="cp-form__header col-xs-12">
           <div class="row">
             <span class="col-xs-5" i18n>Name</span>
-            <span class="col-xs-2" i18n>Status</span>
-            <span class="col-xs-2" i18n>Members</span>
-            <span class="col-xs-2" i18n>Events</span>
+            <span class="col-xs-2 text-center" i18n>Status</span>
+            <span class="col-xs-2 text-center" i18n>Members</span>
+            <span class="col-xs-2 text-center" i18n>Events</span>
             <span class="col-xs-1"></span>
           </div>
         </li>
@@ -41,20 +41,20 @@
               <br>
               {{ club.description }}
             </span>
-            <span class="col-xs-2 text-truncate">
+            <span class="col-xs-2 text-truncate text-center">
               {{ club.status === 1 ? 'Active' : 'Inactive' }}
             </span>
-            <span class="col-xs-2 text-truncate">
-              {{ club.member_count !== -1 ? club.member_count : '---' }}
+            <span class="col-xs-2 text-truncate text-center">
+              {{ club.member_count !== -1 ? club.member_count : 'Disabled' }}
             </span>
-            <span class="col-xs-1 text-truncate">
+            <span class="col-xs-2 text-truncate text-center">
               {{ club.total_item_count }}
             </span>
 
             <span
               (click)="deleteClub = club"
               data-toggle="modal" data-target="#deleteClubsModal"
-              class="col-xs-1 hover text-truncate delete-club pull-right">
+              class="col-xs-1 hover text-center text-truncate delete-club pull-right">
               &times;
             </span>
           </div>

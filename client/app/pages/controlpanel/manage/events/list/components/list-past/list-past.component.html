@@ -19,7 +19,7 @@
     </span>
     <span
       (click)="doSort('end')"
-      class="col-xs-2 hover" i18n>
+      class="col-xs-2 hover text-center" i18n>
       Date
       <span *ngIf="state.sort_field === 'end'">
         <i
@@ -34,8 +34,8 @@
         </i>
       </span>
     </span>
-    <span class="col-xs-2" i18n>Check-Ins</span>
-    <span class="col-xs-3" i18n>Average Rating</span>
+    <span class="col-xs-2 text-center" i18n>Check-Ins</span>
+    <span class="col-xs-3 text-center" i18n>Average Rating</span>
     <span class="col-xs-1"></span>
   </li>
 
@@ -64,14 +64,14 @@
       <br>
       {{ event.store_name }}
     </span>
-    <span class="col-xs-2 text-truncate">
+    <span class="col-xs-2 text-truncate text-center">
       {{ event.start | cpDatePipe:dateFormat }}
     </span>
-    <span class="col-xs-2 text-truncate">
+    <span class="col-xs-2 text-truncate text-center">
       {{ event.verified_checkins }}
     </span>
 
-    <span class="col-xs-3 text-truncate">
+    <span class="col-xs-3 text-truncate text-center">
       <span *ngIf="event.rating_scale_maximum > -1">
         <cp-stars
           [maxRate]="event.rating_scale_maximum"

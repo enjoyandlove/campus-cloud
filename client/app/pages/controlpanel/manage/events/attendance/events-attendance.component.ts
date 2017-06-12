@@ -62,12 +62,12 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       if (res.event_attendance === 1) {
         children = [
           {
-            'label': 'Assessment',
-            'url': `${this.buildUrlPrefix()}/${this.eventId}`
-          },
-          {
             'label': 'Info',
             'url': `${this.buildUrlPrefix()}/${this.eventId}/info`
+          },
+          {
+            'label': 'Assessment',
+            'url': `${this.buildUrlPrefix()}/${this.eventId}`
           }
         ];
       } else {
@@ -76,12 +76,12 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     } else {
       children = [
         {
-          'label': res.event_attendance === 1 ? 'Assessment' : 'Event',
-          'url': `${this.buildUrlPrefix()}/${this.eventId}`
-        },
-        {
           'label': 'Info',
           'url': `${this.buildUrlPrefix()}/${this.eventId}/info`
+        },
+        {
+          'label': res.event_attendance === 1 ? 'Assessment' : 'Event',
+          'url': `${this.buildUrlPrefix()}/${this.eventId}`
         }
       ];
     }

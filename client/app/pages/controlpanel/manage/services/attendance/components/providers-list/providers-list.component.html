@@ -15,16 +15,16 @@
               <div class="col-xs-3">
                 <span i18n>Service Provider</span>
               </div>
-              <div class="col-xs-4">
+              <div class="col-xs-4 text-center">
                 <span i18n>Average Rating</span>
               </div>
-              <div class="col-xs-1">
+              <div class="col-xs-1 text-center">
                 <span i18n>Ratings</span>
               </div>
-              <div class="col-xs-1">
+              <div class="col-xs-1 text-center">
                 <span i18n>Visits</span>
               </div>
-              <div class="col-xs-2">
+              <div class="col-xs-2 text-center">
                 <span i18n>Assessment</span>
               </div>
               <div class="col-xs-1"></div>
@@ -42,27 +42,27 @@
                   </span>
                 </a>
               </div>
-              <div class="col-xs-4">
+              <div class="col-xs-4 text-center">
                 <cp-stars
                   [size]="listStarSize"
                   [avgRate]="provider.avg_rating_percent"
                   [maxRate]="5">
                 </cp-stars>
               </div>
-              <div class="col-xs-1">
+              <div class="col-xs-1 text-center">
                 <span>{{ provider.num_ratings }}</span>
               </div>
-              <div class="col-xs-1">
+              <div class="col-xs-1 text-center">
                 <span>{{ provider.total_visits }}</span>
               </div>
-              <div class="col-xs-2">
+              <div class="col-xs-2 text-center">
                 <a
                   [routerLink]="['/cb/checkin/s/' + provider.encrypted_campus_service_id + '/' + provider.encrypted_id]"
                   class="startcheckin cpbtn cpbtn--no-border cpbtn--secondary" i18n>
                   Check-In Details
                 </a>
               </div>
-              <div class="col-xs-1">
+              <div class="col-xs-1 text-center">
                 <span
                   (click)="deleteProvider = provider"
                   data-toggle="modal" data-target="#deleteProvider"
