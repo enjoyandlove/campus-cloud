@@ -5,7 +5,7 @@ import { STATUS } from '../../../shared/constants';
 const FIVE_MB = 5000000;
 
 interface IOptions {
-  parser: Function;
+  parser: Function; // Promise
   templateUrl: string;
   validExtensions: Array<string>;
 }
