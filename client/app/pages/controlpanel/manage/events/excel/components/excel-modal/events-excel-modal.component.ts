@@ -6,7 +6,6 @@ import { EventsService } from '../../../events.service';
 import { STATUS } from '../../../../../../../shared/constants';
 import { FileUploadService } from '../../../../../../../shared/services';
 
-// declare var $: any;
 
 @Component({
   selector: 'cp-events-excel-modal',
@@ -24,7 +23,6 @@ export class EventsExcelModalComponent implements OnInit {
 
   options;
   fileName;
-  downloadLink;
 
   constructor(
     private router: Router,
@@ -69,10 +67,10 @@ export class EventsExcelModalComponent implements OnInit {
   ngOnInit() {
     this.fileName = 'mass_event_invite_sample.xlsx';
 
-    this.downloadLink = isDev ? `/templates/${this.fileName}` : `/dist/templates/${this.fileName}`;
+    let templateUrl = isDev ? `/templates/${this.fileName}` : `/dist/templates/${this.fileName}`;
 
     this.options = {
-      templateUrl: isDev ? `/templates/${this.fileName}` : `/dist/templates/${this.fileName}`,
+      templateUrl,
       validExtensions: ['xlsx'],
       parser: this.parser.bind(this)
     };

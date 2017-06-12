@@ -12,68 +12,34 @@ import { FileUploadService } from '../../../../../../../shared/services';
   styleUrls: ['./excel-modal.component.scss']
 })
 export class ClubsExcelModalComponent implements OnInit {
-  error;
-  uploaded;
+  options;
+  fileName;
   downloadLink;
 
   constructor(
     private router: Router,
     private service: ClubsService,
     private fileService: FileUploadService,
-  ) {
-    this.downloadLink = isDev ? '/templates/mass_club_invite_sample.csv' :
-                                '/dist/templates/mass_club_invite_sample.csv';
-  }
+  ) { }
 
-  onSubmit(data) {
-    console.log(data);
-  }
-
-  fileIsValid(file) {
-    let result = [];
-    let validators = [
-      {
-        'exp': file.name.split('.').pop() === 'csv',
-        'error': STATUS.WRONG_EXTENSION,
-        'isError': false
-      },
-      {
-        'exp': file.size < 5000,
-        'error': STATUS.FILE_IS_TOO_BIG,
-        'isError': false
-      }
-    ];
-
-    validators.map(validator => {
-      if (!validator.exp) {
-        validator.isError = true;
-        result.push(validator);
-      }
-      return validator;
-    });
-    return result;
-  }
-
-  onFileUpload(file) {
-    const validation = this.fileIsValid(file);
-    this.error = '';
-
-    if (!validation.length) {
-      const url = !isDev ? '/clubs/excel' : 'http://localhost:8000/clubs/excel';
-      this
+  parser(file) {
+    const url = !isDev ? '/clubs/excel' : 'http://localhost:8000/clubs/excel';
+    return this
       .fileService
       .uploadFile(file, url)
-      .subscribe(
-        (res) => {
-          this.uploaded = true;
-          this.service.setModalClubs(JSON.parse(res));
-        },
-        err => this.error = err.json().error
+      .toPromise()
+      .then(
+      res => {
+        this.service.setModalClubs(JSON.parse(res));
+        return Promise.resolve();
+      }
+      )
+      .catch(
+      err => {
+        let serverError = err.json().error;
+        return Promise.reject(serverError ? serverError : STATUS.SOMETHING_WENT_WRONG);
+      }
       );
-      return;
-    }
-
-    this.error = validation[0].error;
   }
 
   onNavigate() {
@@ -81,6 +47,14 @@ export class ClubsExcelModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    // console.log($('#excelModal'));
+    this.fileName = 'mass_club_invite_sample.csv';
+
+    let templateUrl = isDev ? `/templates/${this.fileName}` : `/dist/templates/${this.fileName}`;
+
+    this.options = {
+      templateUrl,
+      validExtensions: ['csv'],
+      parser: this.parser.bind(this)
+    };
   }
 }

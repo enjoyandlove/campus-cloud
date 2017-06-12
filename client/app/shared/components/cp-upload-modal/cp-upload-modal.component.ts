@@ -2,6 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { STATUS } from '../../../shared/constants';
 
+const FIVE_MB = 5000000;
+
 interface IOptions {
   parser: Function;
   templateUrl: string;
@@ -36,19 +38,19 @@ export class CPUploadModalComponent implements OnInit {
     let result = [];
     let validators = [
       {
-        'exp': this.props.validExtensions.indexOf(file.name.split('.').pop()) > -1,
+        'exp': this.props.validExtensions.indexOf(file.name.split('.').pop()) === -1,
         'error': STATUS.WRONG_EXTENSION,
         'isError': false
       },
       {
-        'exp': file.size > 5000,
+        'exp': file.size > FIVE_MB,
         'error': STATUS.FILE_IS_TOO_BIG,
         'isError': false
       }
     ];
 
     validators.map(validator => {
-      if (!validator.exp) {
+      if (validator.exp) {
         validator.isError = true;
         result.push(validator);
       }
