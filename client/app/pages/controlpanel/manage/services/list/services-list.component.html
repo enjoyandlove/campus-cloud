@@ -20,9 +20,9 @@
       <li class="cp-form__header col-xs-12">
         <div class="row">
           <span class="col-xs-4" i18n>Name</span>
-          <span class="col-xs-2" i18n>Visits</span>
-          <span class="col-xs-2" i18n>Ratings</span>
-          <span class="col-xs-3" i18n>Average Rating</span>
+          <span class="col-xs-2 text-center" i18n>Visits</span>
+          <span class="col-xs-2 text-center" i18n>Ratings</span>
+          <span class="col-xs-3 text-center" i18n>Average Rating</span>
           <span class="col-xs-1"></span>
         </div>
       </li>
@@ -43,9 +43,9 @@
               </div>
             </div>
           </span>
-          <span class="col-xs-2" i18n>{{ service.total_visits }}</span>
-          <span class="col-xs-2" i18n>{{ service.num_ratings }}</span>
-          <span class="col-xs-3" i18n>
+          <span class="col-xs-2 text-center" i18n>{{ service.total_visits }}</span>
+          <span class="col-xs-2 text-center" i18n>{{ service.num_ratings }}</span>
+          <span class="col-xs-3 text-center" i18n>
             <cp-stars
             *ngIf="service.service_attendance === 1"
             [maxRate]="service.rating_scale_maximum"
