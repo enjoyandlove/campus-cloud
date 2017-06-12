@@ -88,6 +88,10 @@ export class LinksCreateComponent implements OnInit {
     this.resetCreateModal.emit();
   }
 
+  handleDeleteImage() {
+    this.form.controls['img_url'].setValue(null);
+  }
+
   ngOnInit() {
     this.storeId = this.session.school.id;
     this.buildForm();
