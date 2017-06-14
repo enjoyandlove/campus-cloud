@@ -150,6 +150,9 @@ export class AnnouncementsComposeComponent implements OnInit {
       'priority': this.form.value.priority
     };
 
+    console.log(this.form.value);
+    return;
+
     this
       .service
       .postAnnouncements(search, data)
@@ -175,7 +178,7 @@ export class AnnouncementsComposeComponent implements OnInit {
     this.state.isUrgent = false;
     this.state.isEmergency = false;
 
-    if (type.id === this.EMERGENCY_TYPE) {
+    if (type.action === this.EMERGENCY_TYPE) {
       this.state.isEmergency = true;
       this.subject_prefix = {
         label: 'Emergency',
@@ -183,7 +186,7 @@ export class AnnouncementsComposeComponent implements OnInit {
       };
     }
 
-    if (type.id === this.URGENT_TYPE) {
+    if (type.action === this.URGENT_TYPE) {
       this.state.isUrgent = true;
       this.subject_prefix = {
         label: 'Urgent',
@@ -191,7 +194,7 @@ export class AnnouncementsComposeComponent implements OnInit {
       };
     }
 
-    this.form.controls['priority'].setValue(type.id);
+    this.form.controls['priority'].setValue(type.action);
   }
 
   ngOnInit() {
@@ -199,7 +202,7 @@ export class AnnouncementsComposeComponent implements OnInit {
       'store_id': [null, Validators.required],
       'subject': [null, [Validators.required, Validators.maxLength(128)]],
       'message': [null, [Validators.required, Validators.maxLength(400)]],
-      'priority': [this.types[0].id, Validators.required]
+      'priority': [this.types[0].action, Validators.required]
     });
   }
 }
