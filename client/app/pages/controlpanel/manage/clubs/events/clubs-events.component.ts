@@ -57,7 +57,7 @@ export class ClubsEventsComponent extends BaseComponent implements OnInit {
       children: []
     };
 
-    let links = ['Info'];
+    let links = [];
 
     if (schoolPrivileges) {
       if (schoolPrivileges[CP_PRIVILEGES_MAP.events].r) {
@@ -65,12 +65,12 @@ export class ClubsEventsComponent extends BaseComponent implements OnInit {
       }
 
       if (this.hasMembership) {
-        if (schoolPrivileges[CP_PRIVILEGES_MAP.membership].r) {
-          links = ['Members', ...links];
-        }
-
         if (schoolPrivileges[CP_PRIVILEGES_MAP.moderation].r) {
           links = ['Wall', ...links];
+        }
+
+        if (schoolPrivileges[CP_PRIVILEGES_MAP.membership].r) {
+          links = ['Members', ...links];
         }
       }
     }
@@ -82,20 +82,22 @@ export class ClubsEventsComponent extends BaseComponent implements OnInit {
         links = ['Events', ...links];
       }
 
-      if (links.indexOf('Members') === -1 &&
-        this.hasMembership &&
-        accountPrivileges[CP_PRIVILEGES_MAP.membership]
-        && accountPrivileges[CP_PRIVILEGES_MAP.membership].r) {
-        links = ['Members', ...links];
-      }
-
       if (links.indexOf('Wall') === -1 &&
         this.hasMembership &&
         accountPrivileges[CP_PRIVILEGES_MAP.moderation]
         && accountPrivileges[CP_PRIVILEGES_MAP.moderation].r) {
         links = ['Wall', ...links];
       }
+
+      if (links.indexOf('Members') === -1 &&
+        this.hasMembership &&
+        accountPrivileges[CP_PRIVILEGES_MAP.membership]
+        && accountPrivileges[CP_PRIVILEGES_MAP.membership].r) {
+        links = ['Members', ...links];
+      }
     }
+
+    links = ['Info', ...links];
 
     links.forEach(link => {
       menu.children.push({
