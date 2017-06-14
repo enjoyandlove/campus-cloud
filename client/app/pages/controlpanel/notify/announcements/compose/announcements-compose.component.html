@@ -59,49 +59,6 @@
                         buttonClass="cpbtn cpbtn--cancel"
                         (selected)="onTypeChanged($event)">
                       </cp-check-dropdown>
-                      <!--<button
-                        data-toggle="dropdown"
-                        class="cpbtn cpbtn--cancel hover masterButton col-xs-12">
-                        <div class="row">
-                          <div class="col-xs-10 text-left">
-                            <span class="title">
-                              {{ getTypeFromArray(form.controls['priority'].value).title }}
-                            </span>
-                            <span class="description text-muted">
-                              {{ getTypeFromArray(form.controls['priority'].value).description }}
-                            </span>
-                          </div>
-                          <div class="col-xs-2 text-right">
-                            <i class="material-icons more">arrow_drop_down</i>
-                          </div>
-                        </div>
-                      </button>
-
-                      <ul class="dropdown-menu types-menu__list">
-                        <li
-                          class="types-menu__item"
-                          *ngFor="let type of types"
-                          (click)="onTypeChanged(type)">
-                          <div class="row">
-                            <div class="col-xs-2 text-center no-right-padding">
-                              <i
-                                class="material-icons"
-                                *ngIf="form.controls.priority.value === type.id">
-                                check
-                              </i>
-                            </div>
-                            <div class="col-xs-10 no-left-padding">
-                              <p class="types-menu__item--title" i18n>
-                                {{ type.title }}
-                              </p>
-                              <p
-                                [innerHTML]="type.description"
-                                class="types-menu__item--description" i18n>
-                              </p>
-                            </div>
-                          </div>
-                        </li>
-                      </ul>-->
                     </div>
                   </div>
                 </div>

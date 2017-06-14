@@ -39,15 +39,6 @@
 
 }
 
-// .subject-label:before {
-//   content: attr(data-type);
-//   position: absolute;
-//   left: 0;
-//   background: red;
-//   height: 36px;
-//   width: 120px;
-// }
-
 label {
   span {
     @include font-normal();
@@ -55,24 +46,6 @@ label {
     color: $color-secondary-text;
   }
 }
-
-button.masterButton {
-  padding: 12px 20px;
-
-  .title {
-    display: block;
-    margin-bottom: 3px;
-  }
-
-  .description {
-    @include font-normal();
-  }
-
-  i.more {
-    margin-top: 8px;
-  }
-}
-
 
 .cpmodal__footer {
   .from-label {
@@ -100,45 +73,6 @@ button.masterButton {
   &.isActive {
     border: 1px solid $color-success;
     background-color: rgba(40,202,66,0.06);
-  }
-}
-
-.types-menu{
-  &__list {
-    top: 115%;
-    left: 15px;
-    margin: 0;
-    padding: 0;
-    width: 400px;
-    box-shadow: 0 0 4px 0 rgba(0,0,0,0.12);
-  }
-
-  &__icon {
-    i {
-      vertical-align: -5px;
-    }
-  }
-
-  &__item {
-    padding: 15px;
-    transition: all 300ms ease-in-out;
-    border-bottom: 1px solid $border-color;
-
-    &:hover {
-      background: $color-light-grey;
-    }
-
-    &:last-child {
-      border-bottom: none;
-    }
-    &--title {
-      @include font-semi-bold();
-
-      margin-bottom: 6px;
-    }
-    &--description {
-      color: $color-secondary-text;
-    }
   }
 }
 
