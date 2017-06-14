@@ -6,10 +6,6 @@
     {
       "label": "Announcements",
       "url": "/notify"
-    },
-    {
-      "label": "Lists",
-      "url": "/notify/lists"
     }
   ]
 }

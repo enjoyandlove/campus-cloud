@@ -28,6 +28,8 @@ const appRoutes: Routes = [
 
       { path: 'clubs', loadChildren: './clubs/clubs.module#ClubsModule' },
 
+      { path: 'lists', loadChildren: './lists/lists.module#ListsModule' },
+
       {
         path: 'customization',
         loadChildren: './customization/customization.module#CustomizationModule'
