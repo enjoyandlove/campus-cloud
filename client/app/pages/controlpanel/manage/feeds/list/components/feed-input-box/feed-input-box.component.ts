@@ -20,6 +20,10 @@ import { CPSession, ISchool } from '../../../../../../../session';
 import { CPArray, CPImage, appStorage } from '../../../../../../../shared/utils';
 import { FileUploadService, StoreService } from '../../../../../../../shared/services';
 
+// const EVERYONE_MEMBER_TYPE = 0;
+// const DISABLED_MEMBER_TYPE = 100;
+// const ADMIN_ONLY_MEMBER_TYPE = 3;
+
 @Component({
   selector: 'cp-feed-input-box',
   templateUrl: './feed-input-box.component.html',
@@ -27,6 +31,7 @@ import { FileUploadService, StoreService } from '../../../../../../../shared/ser
 })
 export class FeedInputBoxComponent implements AfterViewInit, OnInit {
   @Input() clubId: number;
+  @Input() postingMemberType: number;
   @ViewChild('textarea') textarea: ElementRef;
   @Input() isCampusWallView: Observable<any>;
   @Output() created: EventEmitter<null> = new EventEmitter();

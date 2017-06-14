@@ -6,9 +6,11 @@ import { FeedsService } from '../../../feeds.service';
 import { CPSession } from '../../../../../../../session';
 
 interface IState {
+  group_id: number;
   wall_type: number;
   post_types: number;
-  group_id: number;
+  postingMemberType: number;
+  commentingMemberType: number;
   flagged_by_users_only: number;
   removed_by_moderators_only: number;
 }
@@ -17,6 +19,8 @@ const state: IState = {
   wall_type: 1,
   group_id: null,
   post_types: null,
+  postingMemberType: null,
+  commentingMemberType: null,
   flagged_by_users_only: null,
   removed_by_moderators_only: null
 };
@@ -54,7 +58,7 @@ export class FeedFiltersComponent implements OnInit {
           action: 1
         }
       ])
-      .map(walls => {
+      .map(groupWalls => {
         let _walls = [
           {
             label: 'Campus Wall',
@@ -62,10 +66,12 @@ export class FeedFiltersComponent implements OnInit {
           }
         ];
 
-        walls.forEach(wall => {
+        groupWalls.forEach(wall => {
           let _wall = {
             label: wall.name,
             action: wall.id,
+            commentingMemberType: wall.min_commenting_member_type,
+            postingMemberType: wall.min_posting_member_type,
             group_id: wall.related_obj_id
           };
 
@@ -139,7 +145,11 @@ export class FeedFiltersComponent implements OnInit {
     this.state = Object.assign(
       {},
       this.state,
-      { group_id: item.group_id ? item.group_id : null }
+      {
+        group_id: item.group_id ? item.group_id : null,
+        postingMemberType: item.postingMemberType ? item.postingMemberType : true,
+        commentingMemberType: item.commentingMemberType ? item.commentingMemberType : true,
+      }
     );
     this.updateState(type, item.action);
   }
@@ -174,7 +184,6 @@ export class FeedFiltersComponent implements OnInit {
 
       getGroup.then(groups => {
         let group = groups[0];
-
         this.state = Object.assign(
           {},
           this.state,
@@ -182,7 +191,9 @@ export class FeedFiltersComponent implements OnInit {
             wall_type: group.id,
             group_id: this.clubId,
             flagged_by_users_only: null,
-            removed_by_moderators_only: null
+            removed_by_moderators_only: null,
+            postingMemberType: group.min_posting_member_type,
+            commentingMemberType: group.min_commenting_member_type
           }
         );
 
