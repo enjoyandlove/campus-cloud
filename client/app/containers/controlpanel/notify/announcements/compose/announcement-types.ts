@@ -1,17 +1,17 @@
 export const types = [
   {
-    id: 2,
-    title: 'Regular',
+    action: 2,
+    label: 'Regular',
     description: 'Delivered as a regular push notification'
   },
   {
-    id: 1,
-    title: 'Urgent',
+    action: 1,
+    label: 'Urgent',
     description: 'Overrides the push settings of the user'
   },
   {
-    id: 0,
-    title: 'Emergency',
+    action: 0,
+    label: 'Emergency',
     description: 'Overrides the push settings of the user and force users to \
     dismiss the message'
   }
