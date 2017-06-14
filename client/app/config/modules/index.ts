@@ -6,8 +6,8 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { TopLevelRoutesModule } from '../../app.routing';
 import { SharedModule } from '../../shared/shared.module';
-import { AuthModule } from '../../pages/auth/auth.module';
-import { ControlPanelModule } from '../../pages/controlpanel/controlpanel.module';
+import { AuthModule } from '../../containers/auth/auth.module';
+import { ControlPanelModule } from '../../containers/controlpanel/controlpanel.module';
 
 import {
   clubsReducer,

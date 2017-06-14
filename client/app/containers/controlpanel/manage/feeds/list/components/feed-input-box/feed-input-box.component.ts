@@ -27,6 +27,7 @@ import { FileUploadService, StoreService } from '../../../../../../../shared/ser
 })
 export class FeedInputBoxComponent implements AfterViewInit, OnInit {
   @Input() clubId: number;
+  @Input() postingMemberType: number;
   @ViewChild('textarea') textarea: ElementRef;
   @Input() isCampusWallView: Observable<any>;
   @Output() created: EventEmitter<null> = new EventEmitter();
@@ -38,6 +39,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
   form: FormGroup;
   school: ISchool;
   _isCampusWallView;
+  DISABLED_MEMBER_TYPE = 100;
   placeHolder = 'Add some text to this post...';
   reset$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 

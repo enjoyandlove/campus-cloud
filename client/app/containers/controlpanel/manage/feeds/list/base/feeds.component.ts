@@ -8,21 +8,25 @@ import { CPSession } from '../../../../../../session';
 import { BaseComponent } from '../../../../../../base/base.component';
 
 interface IState {
+  canPost: boolean;
   group_id: number;
   wall_type: number;
   feeds: Array<any>;
-  post_types: number;
   isCampusThread: boolean;
+  postingMemberType: number;
+  commentingMemberType: boolean;
   flagged_by_users_only: number;
   removed_by_moderators_only: number;
 }
 
 const state: IState = {
   feeds: [],
+  canPost: true,
   group_id: null,
   wall_type: null,
-  post_types: null,
   isCampusThread: true,
+  postingMemberType: null,
+  commentingMemberType: true,
   flagged_by_users_only: null,
   removed_by_moderators_only: null
 };
@@ -82,9 +86,11 @@ export class FeedsComponent extends BaseComponent implements OnInit {
       {},
       this.state,
       {
+        canPost: data.canPost,
         group_id: data.group_id,
         wall_type: data.wall_type,
-        post_types: data.post_types,
+        commentingMemberType: data.commentingMemberType,
+        postingMemberType: data.postingMemberType,
         isCampusThread: data.wall_type === 1 ? true : false,
         flagged_by_users_only: data.flagged_by_users_only,
         removed_by_moderators_only: data.removed_by_moderators_only
@@ -113,10 +119,10 @@ export class FeedsComponent extends BaseComponent implements OnInit {
     let removed = this.state.removed_by_moderators_only ?
       this.state.removed_by_moderators_only.toString() : null;
 
-    let type = this.state.post_types ?
-      this.state.post_types.toString() : null;
+    let type = this.state.postingMemberType ?
+      this.state.postingMemberType.toString() : null;
 
-    search.append('post_types', type);
+    search.append('postingMemberType', type);
     search.append('flagged_by_users_only', flagged);
     search.append('removed_by_moderators_only', removed);
 
