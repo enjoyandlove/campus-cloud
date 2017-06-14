@@ -5,16 +5,16 @@ import {
   LoginComponent,
   LogoutComponent,
   PasswordResetComponent
-} from './pages/auth';
+} from './containers/auth';
 
 const routes: Routes = [
-  { path: '', loadChildren: './pages/controlpanel/controlpanel.module#ControlPanelModule' },
+  { path: '', loadChildren: './containers/controlpanel/controlpanel.module#ControlPanelModule' },
 
   { path: 'login', component: LoginComponent },
 
   { path: 'password-reset', component: PasswordResetComponent },
 
-  { path: 'cb', loadChildren: './pages/callback/callback.module#CallbackModule' },
+  { path: 'cb', loadChildren: './containers/callback/callback.module#CallbackModule' },
 
   { path: 'logout', component: LogoutComponent },
 ];
