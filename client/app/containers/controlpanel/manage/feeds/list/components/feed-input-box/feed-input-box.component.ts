@@ -20,10 +20,6 @@ import { CPSession, ISchool } from '../../../../../../../session';
 import { CPArray, CPImage, appStorage } from '../../../../../../../shared/utils';
 import { FileUploadService, StoreService } from '../../../../../../../shared/services';
 
-// const EVERYONE_MEMBER_TYPE = 0;
-// const DISABLED_MEMBER_TYPE = 100;
-// const ADMIN_ONLY_MEMBER_TYPE = 3;
-
 @Component({
   selector: 'cp-feed-input-box',
   templateUrl: './feed-input-box.component.html',
@@ -43,6 +39,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
   form: FormGroup;
   school: ISchool;
   _isCampusWallView;
+  DISABLED_MEMBER_TYPE = 100;
   placeHolder = 'Add some text to this post...';
   reset$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
