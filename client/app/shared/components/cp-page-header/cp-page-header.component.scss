@@ -41,7 +41,23 @@
 
     li {
       margin-right: 40px;
+      position: relative;
       display: inline-block;
+
+      .promote-badge {
+        top: -11px;
+        right: -25px;
+        padding: 3px;
+        line-height: 1;
+        font-size: 7px;
+        border-radius: 2px;
+        position: absolute;
+        color: $color-white;
+        // background: #F1B5B1;
+        text-transform: uppercase;
+        // border: 1px solid #ff0000;
+        transition: color 300ms ease-in-out;
+      }
 
       a {
         @include font-16px();
@@ -59,7 +75,6 @@
       }
 
       &.active {
-
         a {
           color: $color-white;
           border-bottom: 3px solid $color-brand;

@@ -8,7 +8,8 @@ import {
   ViewChild,
   ElementRef,
   AfterViewInit,
-  EventEmitter
+  EventEmitter,
+  HostListener
 } from '@angular/core';
 
 interface IState {
@@ -40,6 +41,11 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
   state: IState = state;
 
   constructor() { }
+
+  @HostListener('document:click', ['$event'])
+  onClick() {
+    setTimeout(() => { this.suggestions = []; }, 100);
+  }
 
   listenForKeyChanges() {
     this.el = this.input.nativeElement;
