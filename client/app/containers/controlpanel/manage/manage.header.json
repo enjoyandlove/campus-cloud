@@ -24,6 +24,11 @@
       "url": "/manage/services"
     },
     {
+      "privilege": 24,
+      "label": "Lists",
+      "url": "/manage/lists"
+    },
+    {
       "privilege": 23,
       "label": "Links",
       "url": "/manage/links"
