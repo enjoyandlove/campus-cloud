@@ -7,13 +7,13 @@
           (click)="shouldFocusInput()"
           class="typeahead__input-wrapper__padding">
           <cp-chip
-            [chip]="chip[1]"
+            [chip]="chip"
             [icon]="chipOptions.icon"
             [withClose]="chipOptions.close"
             [withAvatar]="chipOptions.avatar"
             class="typeahead__input-wrapper__chip"
-            *ngFor="let chip of state.selectedJson"
-            (handleClose)="onHandleRemove($event)">
+            (handleClose)="onHandleRemove($event)"
+            *ngFor="let chip of state.chips">
           </cp-chip>
           <input
             #input

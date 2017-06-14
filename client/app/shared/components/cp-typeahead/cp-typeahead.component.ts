@@ -13,15 +13,15 @@ import {
 } from '@angular/core';
 
 interface IState {
+  ids: Array<number>;
   canSearch: boolean;
-  selectedJson: Array<any>;
-  selected: Map<number, Object>;
+  chips: Array<{'label': string; 'id': number}>;
 }
 
 const state: IState = {
-  selectedJson: [],
-  canSearch: true,
-  selected: new Map()
+  ids: [],
+  chips: [],
+  canSearch: true
 };
 
 @Component({
@@ -30,11 +30,13 @@ const state: IState = {
   styleUrls: ['./cp-typeahead.component.scss']
 })
 export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
-  @Input() suggestions: Array<any>;
-  @Input() preSelected: Array<any>;
-  @Input() reset: Observable<boolean>;
   @ViewChild('input') input: ElementRef;
+
+  @Input() reset: Observable<boolean>;
+  @Input() suggestions: Array<any>;
+
   @Output() query: EventEmitter<string> = new EventEmitter();
+  @Output() selection: EventEmitter<Array<any>> = new EventEmitter();
 
   el;
   chipOptions;
@@ -84,19 +86,36 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
   onHandleClick(suggestion) {
     if (!suggestion.id) { return; }
 
+    // hide suggestions
     this.resetList();
-    this.state.selected.set(suggestion.id, suggestion);
-    this.state.selectedJson = this.state.selected.toJSON();
+
+    // clear input
     this.el.value = null;
+
+    // check for dupes
+    if (this.state.ids.indexOf(suggestion.id) !== -1) { return; }
+
+    this.state.ids.push(suggestion.id);
+    this.state.chips.push(suggestion);
+
+    this.selection.emit(this.state.ids);
   }
 
   resetList() {
     this.suggestions = [];
   }
 
+
   onHandleRemove(id) {
-    this.state.selected.delete(id);
-    this.state.selectedJson = this.state.selected.toJSON();
+    this.state = Object.assign(
+      {},
+      this.state,
+      {
+        ids: this.state.ids.filter(_id => _id !== id),
+        chips: this.state.chips.filter(chip => chip.id !== id)
+      }
+    );
+    this.selection.emit(this.state.ids);
   }
 
   shouldFocusInput() {
@@ -106,14 +125,8 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   teardown() {
-    this.state = Object.assign(
-      {},
-      this.state,
-      {
-        selectedJson: [],
-        selected: new Map()
-      }
-    );
+    this.state.ids = [];
+    this.state.chips = [];
   }
 
   ngOnDestroy() {
@@ -127,14 +140,14 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
       icon: 'account_box'
     };
 
-    if (this.preSelected) {
-      this.state.canSearch = false;
+    // if (this.preSelected) {
+    //   this.state.canSearch = false;
 
-      this.preSelected.forEach(selection => {
-        this.state.selected.set(selection.id, selection);
-        this.state.selectedJson = this.state.selected.toJSON();
-      });
-    }
+      // this.preSelected.forEach(selection => {
+      //   this.state.selected.set(selection.id, selection);
+      //   this.state.selectedJson = this.state.selected.toJSON();
+      // });
+    // }
 
     if (!this.reset) {
       this.reset = Observable.of(false);
