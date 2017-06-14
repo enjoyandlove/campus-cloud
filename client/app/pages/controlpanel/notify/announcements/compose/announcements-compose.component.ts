@@ -150,9 +150,6 @@ export class AnnouncementsComposeComponent implements OnInit {
       'priority': this.form.value.priority
     };
 
-    console.log(this.form.value);
-    return;
-
     this
       .service
       .postAnnouncements(search, data)
