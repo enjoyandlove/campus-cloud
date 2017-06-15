@@ -172,6 +172,21 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     return this.types.filter(type => type.id === id)[0];
   }
 
+  isFormValid() {
+    let result = true;
+
+    result = this.form.valid;
+
+    if (this.state.isToLists) {
+      result = this.form.controls['list_ids'].value.length >= 1 && this.form.valid;
+    }
+    if (this.state.isToUsers) {
+      result = this.form.controls['user_ids'].value.length >= 1 && this.form.valid;
+    }
+
+    return !result;
+  }
+
   resetModal() {
     this.form.reset();
     this.teardown.emit();
@@ -228,7 +243,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       data = Object.assign(
         {},
         data,
-        { 'users_ids': this.form.value.user_ids }
+        { 'user_ids': this.form.value.user_ids }
       );
     }
 
@@ -236,7 +251,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       data = Object.assign(
         {},
         data,
-        { 'lists_ids': this.form.value.lists_ids }
+        { 'list_ids': this.form.value.list_ids }
       );
     }
 
@@ -293,7 +308,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       this.form.controls['user_ids'].setValue(ids);
     }
     if (this.state.isToLists) {
-      this.form.controls['lists_ids'].setValue(ids);
+      this.form.controls['list_ids'].setValue(ids);
     }
   }
 
@@ -343,8 +358,8 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
     this.form = this.fb.group({
       'store_id': [null, Validators.required],
-      'user_ids': [null],
-      'lists_ids': [null],
+      'user_ids': [[]],
+      'list_ids': [[]],
       'subject': [null, [Validators.required, Validators.maxLength(128)]],
       'message': [null, [Validators.required, Validators.maxLength(400)]],
       'priority': [this.types[0].action, Validators.required]
