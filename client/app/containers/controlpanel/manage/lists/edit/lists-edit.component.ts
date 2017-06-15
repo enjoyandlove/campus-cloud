@@ -15,7 +15,8 @@ export class ListsEditComponent implements OnInit {
   @Output() edited: EventEmitter<any> = new EventEmitter();
   @Output() reset: EventEmitter<null> = new EventEmitter();
 
- form: FormGroup;
+  chipOptions;
+  form: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -33,7 +34,48 @@ export class ListsEditComponent implements OnInit {
     this.reset.emit();
   }
 
+  onHandleRemove(id) {
+    this.list = Object.assign(
+      {},
+      this.list,
+      {
+        users: this.list.users.filter(user => user.id !== id)
+      }
+    );
+  }
+
+  buildChips() {
+    let chips = [];
+
+    this.list.users.map(user => {
+      chips.push(
+        {
+          'label': `${user.firstname} ${user.lastname}`,
+          'id': user.id
+        }
+      );
+    });
+
+    return chips;
+  }
+
   ngOnInit() {
+    this.chipOptions = {
+      icon: 'account_box',
+      withClose: true,
+      withAvatar: true
+    };
+
+    if (this.list.users.length) {
+      this.list = Object.assign(
+        {},
+        this.list,
+        {
+          users: this.buildChips()
+        }
+      );
+    }
+
     this.form = this.fb.group({
       'id': [this.list.id, Validators.required],
       'store_id': [this.list.store_id, Validators.required],

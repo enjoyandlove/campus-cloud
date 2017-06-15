@@ -2,7 +2,7 @@
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-xs-12 text-center">
-        <span i18n><strong>Create New List</strong></span>
+        <span i18n><strong>Edit List</strong></span>
 
         <span
           data-dismiss="modal"
@@ -38,11 +38,15 @@
 
           <div class="form-group">
             <label i18n>Users</label>
-            <textarea
-              class="form-control"
-              formControlName="users"
-              placeholder="Enter name or email address" >
-            </textarea>
+            <div class="cpInput">
+              <cp-chip
+                [chip]="chip"
+                [props]="chipOptions"
+                class="typeahead__input-wrapper__chip"
+                (handleClose)="onHandleRemove($event)"
+                *ngFor="let chip of list.users">
+              </cp-chip>
+            </div>
           </div>
         </form>
       </div>

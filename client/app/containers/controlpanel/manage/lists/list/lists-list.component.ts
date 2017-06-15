@@ -1,14 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import { URLSearchParams } from '@angular/http';
 
 import { ListsService } from '../lists.service';
+import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base/base.component';
 
 interface IState {
   lists: Array<any>;
+  search_str: string;
 }
 
 const state: IState = {
-  lists: []
+  lists: [],
+  search_str: null
 };
 
 declare var $: any;
@@ -28,6 +32,7 @@ export class ListsListComponent extends BaseComponent implements OnInit {
   state: IState = state;
 
   constructor(
+    private session: CPSession,
     private listsService: ListsService
   ) {
     super();
@@ -37,14 +42,25 @@ export class ListsListComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
+    let search = new URLSearchParams();
+    search.append('search_str', this.state.search_str);
+    search.append('school_id', this.session.school.id.toString());
+
     super
-      .fetchData(this.listsService.getLists())
+      .fetchData(this.listsService.getLists(search, this.startRange, this.endRange))
       .then(res => this.state = Object.assign({}, this.state, { lists: res.data }))
       .catch(err => console.log(err));
   }
 
   onSearch(query) {
     console.log(query);
+    this.state = Object.assign(
+      {},
+      this.state,
+      { search_str: query }
+    );
+
+    this.fetch();
   }
 
   onPaginationNext() {
@@ -63,8 +79,15 @@ export class ListsListComponent extends BaseComponent implements OnInit {
   }
 
   onCreatedList(list) {
+    list = Object.assign(
+      {},
+      list,
+      { users: list.user_ids }
+    );
+
     this.isListsCreate = false;
     this.state.lists = [list, ...this.state.lists];
+    console.log(this.state.lists);
   }
 
   onLaunchCreateModal(users?: Array<any>) {

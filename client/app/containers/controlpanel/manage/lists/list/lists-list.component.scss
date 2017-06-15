@@ -1,7 +1,12 @@
 @import '~styles/core/colors';
-@import '~styles/components/form';
-@import '~styles/components/button';
 @import '~bootstrap/variables';
+@import '~styles/components/form';
+@import '~styles/components/card';
+@import '~styles/components/button';
+
+.no-content {
+  @include card-margin();
+}
 
 .delete-list {
   font-size: 2em;

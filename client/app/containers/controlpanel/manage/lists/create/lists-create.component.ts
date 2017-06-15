@@ -40,9 +40,18 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
   ) { }
 
   doSubmit() {
-    console.log(this.form.value);
-    // this.created.emit(this.form.value);
-    // this.resetModal();
+    let search = new URLSearchParams();
+    search.append('school_id', this.session.school.id.toString());
+    this
+      .service
+      .createList(this.form.value, search)
+      .subscribe(
+      _ => {
+        this.created.emit(this.form.value);
+        this.resetModal();
+      },
+      err => console.log(err)
+      );
   }
 
   resetModal() {
@@ -103,18 +112,18 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
 
   onTypeAheadChange(ids) {
     if (!ids.length) {
-      this.form.controls['user_emails'].setValue(null);
+      this.form.controls['user_ids'].setValue(null);
       return;
     }
 
-    this.form.controls['user_emails'].setValue(ids);
+    this.form.controls['user_ids'].setValue(ids);
   }
 
   ngOnInit() {
     this.form = this.fb.group({
       'name': [null, Validators.required],
       'description': [null],
-      'user_emails': [null, Validators.required],
+      'user_ids': [null, Validators.required],
     });
 
     if (this.users) {
@@ -130,7 +139,7 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
         };
       });
 
-      this.form.controls['user_emails'].setValue(emails);
+      this.form.controls['user_ids'].setValue(emails);
     }
 
     if (this.state.isPristine) {

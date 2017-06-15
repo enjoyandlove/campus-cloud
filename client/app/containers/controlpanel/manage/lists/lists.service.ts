@@ -27,14 +27,23 @@ export class ListsService extends BaseService {
     return super.get(url, { search }).map(res => res.json());
   }
 
-  getLists(search?: URLSearchParams) {
-    if (search) { console.log(search); }
+  getLists(search: URLSearchParams, startRange: number, endRange: number) {
+    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER_LIST}`;
+    const url = `${common}/${startRange};${endRange}`;
 
-    const promise = new Promise(resolve => {
-      setTimeout(() => { resolve(mockLists); }, 700);
-    });
+    return super.get(url, { search }).map(res => res.json());
+  }
 
-    return Observable.fromPromise(promise).map(res => res);
+  removeList(id: number, search: URLSearchParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER_LIST}/${id}`;
+
+    return super.delete(url, { search }).map(res => res);
+  }
+
+  createList(body: any, search: URLSearchParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER_LIST}/`;
+
+    return super.post(url, body, { search }).map(res => res.json());
   }
 
   getMessageById(messageId) {
