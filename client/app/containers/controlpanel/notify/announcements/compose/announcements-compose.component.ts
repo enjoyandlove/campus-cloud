@@ -40,6 +40,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   sendAsName;
   typeAheadOpts;
   form: FormGroup;
+  isFormValid = false;
   resetChips$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   resetCustomFields$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
@@ -172,21 +173,6 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     return this.types.filter(type => type.id === id)[0];
   }
 
-  isFormValid() {
-    let result = true;
-
-    result = this.form.valid;
-
-    if (this.state.isToLists) {
-      result = this.form.controls['list_ids'].value.length >= 1 && this.form.valid;
-    }
-    if (this.state.isToUsers) {
-      result = this.form.controls['user_ids'].value.length >= 1 && this.form.valid;
-    }
-
-    return !result;
-  }
-
   resetModal() {
     this.form.reset();
     this.teardown.emit();
@@ -224,6 +210,15 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
         isToUsers: status ? false : true
       }
     );
+
+    this.typeAheadOpts = Object.assign(
+      {},
+      this.typeAheadOpts,
+      { reset: this.resetChips$.next(true) }
+    );
+
+    this.form.controls['user_ids'].setValue([]);
+    this.form.controls['list_ids'].setValue([]);
   }
 
   doSubmit() {
@@ -339,6 +334,9 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       this.typeAheadOpts,
       { reset: this.resetChips$.next(true) }
     );
+
+    this.form.controls['user_ids'].setValue([]);
+    this.form.controls['list_ids'].setValue([]);
   }
 
   ngOnInit() {
@@ -363,6 +361,27 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       'subject': [null, [Validators.required, Validators.maxLength(128)]],
       'message': [null, [Validators.required, Validators.maxLength(400)]],
       'priority': [this.types[0].action, Validators.required]
+    });
+
+
+    this.form.valueChanges.subscribe(_ => {
+      let isValid = true;
+
+      isValid = this.form.valid;
+
+      if (this.state.isToLists) {
+        if (this.form.controls['list_ids'].value) {
+          isValid = this.form.controls['list_ids'].value.length >= 1 && this.form.valid;
+        }
+      }
+
+      if (this.state.isToUsers) {
+        if (this.form.controls['user_ids'].value) {
+          isValid = this.form.controls['user_ids'].value.length >= 1 && this.form.valid;
+        }
+      }
+
+      this.isFormValid = isValid;
     });
   }
 }
