@@ -103,18 +103,18 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
 
   onTypeAheadChange(ids) {
     if (!ids.length) {
-      this.form.controls['user_ids'].setValue(null);
+      this.form.controls['user_emails'].setValue(null);
       return;
     }
 
-    this.form.controls['user_ids'].setValue(ids);
+    this.form.controls['user_emails'].setValue(ids);
   }
 
   ngOnInit() {
     this.form = this.fb.group({
       'name': [null, Validators.required],
       'description': [null],
-      'user_ids': [null, Validators.required],
+      'user_emails': [null, Validators.required],
     });
 
     if (this.users) {
@@ -130,7 +130,7 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
         };
       });
 
-      this.form.controls['user_ids'].setValue(emails);
+      this.form.controls['user_emails'].setValue(emails);
     }
 
     if (this.state.isPristine) {

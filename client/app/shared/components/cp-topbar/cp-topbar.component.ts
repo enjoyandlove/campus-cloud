@@ -34,7 +34,13 @@ export class CPTopBarComponent implements OnInit {
     this.school = this.session.school;
     let schoolPrivileges = this.user.school_level_privileges[this.school.id];
 
-    this.canNotify = schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements].r;
+
+    try {
+      this.canNotify = schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements].r;
+    } catch (error) {
+      this.canNotify = false;
+    }
+    // this.canNotify = schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements].r;
     // let schoolPrivileges = this.user.school_level_privileges[this.school.id];
 
   //   let manageItems = [
