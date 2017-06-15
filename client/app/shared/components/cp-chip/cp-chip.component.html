@@ -1,15 +1,15 @@
 <div class="chip">
   <i
-    *ngIf="withAvatar"
+    *ngIf="props.withAvatar"
     class="chip__avatar material-icons">
-    {{ icon }}
+    {{ props.icon }}
   </i>
 
   <span>{{ chip.label }}</span>
 
   <button
     type="button"
-    *ngIf="withClose"
+    *ngIf="props.withClose"
     (click)="onHandleClose(chip)"
     class="cpbtn cpbtn--cancel cpbtn--no-border">
       &times;

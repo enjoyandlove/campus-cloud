@@ -45,17 +45,15 @@
       display: inline-block;
 
       .promote-badge {
-        top: -11px;
-        right: -25px;
+        top: -5px;
+        right: -22px;
         padding: 3px;
         line-height: 1;
         font-size: 7px;
+        color: #ff0000;
         border-radius: 2px;
         position: absolute;
-        color: $color-white;
-        // background: #F1B5B1;
         text-transform: uppercase;
-        // border: 1px solid #ff0000;
         transition: color 300ms ease-in-out;
       }
 

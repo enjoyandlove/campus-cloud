@@ -89,7 +89,21 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
       );
   }
 
+  onHandleRemove(id) {
+    console.log(id);
+  }
+
   ngOnInit() {
+    // let users = [];
+    // for (let i = 1; i < 30; i++) {
+    //   users.push(
+    //     {
+    //       'email': `${i}@oohlalamboile.com`
+    //     }
+    //   );
+    // }
+    // this.users = users;
+
     if (this.users) {
       this.state.isPristine = false;
 
@@ -113,8 +127,9 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
 
     this.chipOptions = {
       icon: 'account_box',
-      withClose: true,
+      withClose: false,
       withAvatar: true
     };
+    console.log(this);
   }
 }

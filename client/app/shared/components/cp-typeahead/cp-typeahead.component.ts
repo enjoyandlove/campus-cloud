@@ -32,8 +32,8 @@ const state: IState = {
 export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('input') input: ElementRef;
 
-  @Input() reset: Observable<boolean>;
   @Input() suggestions: Array<any>;
+  @Input() reset: Observable<boolean>;
 
   @Output() query: EventEmitter<string> = new EventEmitter();
   @Output() selection: EventEmitter<Array<any>> = new EventEmitter();
@@ -135,19 +135,10 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.chipOptions = {
-      close: true,
-      avatar: true,
+      withClose: true,
+      withAvatar: true,
       icon: 'account_box'
     };
-
-    // if (this.preSelected) {
-    //   this.state.canSearch = false;
-
-      // this.preSelected.forEach(selection => {
-      //   this.state.selected.set(selection.id, selection);
-      //   this.state.selectedJson = this.state.selected.toJSON();
-      // });
-    // }
 
     if (!this.reset) {
       this.reset = Observable.of(false);

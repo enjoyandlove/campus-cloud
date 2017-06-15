@@ -8,9 +8,7 @@
           class="typeahead__input-wrapper__padding">
           <cp-chip
             [chip]="chip"
-            [icon]="chipOptions.icon"
-            [withClose]="chipOptions.close"
-            [withAvatar]="chipOptions.avatar"
+            [props]="chipOptions"
             class="typeahead__input-wrapper__chip"
             (handleClose)="onHandleRemove($event)"
             *ngFor="let chip of state.chips">

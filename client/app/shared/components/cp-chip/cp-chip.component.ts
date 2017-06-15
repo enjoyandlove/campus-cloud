@@ -5,6 +5,12 @@ interface IChip {
   label: string;
 }
 
+interface IProps {
+  icon: string;
+  withClose: boolean;
+  withAvatar: boolean;
+}
+
 @Component({
   selector: 'cp-chip',
   templateUrl: './cp-chip.component.html',
@@ -12,9 +18,7 @@ interface IChip {
 })
 export class CPChipComponent implements OnInit {
   @Input() chip: IChip;
-  @Input() icon: string;
-  @Input() withClose: boolean;
-  @Input() withAvatar: boolean;
+  @Input() props: IProps;
   @Output() handleClose: EventEmitter<number> = new EventEmitter();
 
   constructor() { }
@@ -28,7 +32,7 @@ export class CPChipComponent implements OnInit {
     if (!this.chip) {
       console.warn('Missing Chip input');
     }
-    if (this.withAvatar && !this.icon) {
+    if (this.props.withAvatar && !this.props.icon) {
       console.warn('Missing Icon for Avatar');
     }
   }
