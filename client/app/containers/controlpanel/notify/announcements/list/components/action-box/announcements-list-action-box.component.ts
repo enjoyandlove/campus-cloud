@@ -1,5 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
+import { CPSession } from '../../../../../../../session';
+import { CP_PRIVILEGES_MAP } from '../../../../../../../shared/utils/privileges';
+
 interface IState {
   query: string;
   type: number;
@@ -18,10 +21,14 @@ const state: IState = {
 export class AnnouncementsListActionBoxComponent implements OnInit {
   @Output() filter: EventEmitter<IState> = new EventEmitter();
   @Output() launchModal: EventEmitter<null> = new EventEmitter();
+
   types;
+  canCompose;
   state: IState = state;
 
-  constructor() { }
+  constructor(
+    private session: CPSession
+  ) { }
 
   onSearch(query) {
     this.state = Object.assign({}, this.state, { query });
@@ -34,6 +41,10 @@ export class AnnouncementsListActionBoxComponent implements OnInit {
   }
 
   ngOnInit() {
+    let schoolPrivilege = this.session.user.school_level_privileges[this.session.school.id];
+
+    this.canCompose = schoolPrivilege[CP_PRIVILEGES_MAP.campus_announcements].w;
+
     this.types = [
       {
         'label': 'All',

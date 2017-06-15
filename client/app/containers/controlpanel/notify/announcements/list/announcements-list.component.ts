@@ -30,6 +30,7 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
   messageType;
   suggestions = [];
   state: IState = state;
+  deleteAnnoucement = null;
   dateFormat = FORMAT.DATETIME;
 
   constructor(
@@ -57,6 +58,16 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
 
   onLaunchCreateModal() {
     $('#composeModal').modal();
+  }
+
+  onDeleted(id) {
+    this.state = Object.assign(
+      {},
+      this.state,
+      {
+        messages: this.state.messages.filter(message => message.id !== id)
+      }
+    );
   }
 
   private fetch() {

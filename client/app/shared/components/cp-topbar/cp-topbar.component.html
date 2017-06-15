@@ -17,6 +17,7 @@
             <a [routerLink]="['/manage']">Manage</a>
           </li>
           <li
+            *ngIf="canNotify"
             (click)="isOpen = false"
             routerLinkActive="active">
             <a [routerLink]="['/notify']">Notify</a>

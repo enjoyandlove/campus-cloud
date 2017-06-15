@@ -28,6 +28,7 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
   @Output() resetChips$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   chipOptions;
+  typeAheadOpts;
   form: FormGroup;
   suggestions = [];
   state: IState = state;
@@ -47,8 +48,12 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
     this.users = [];
     this.form.reset();
     this.reset.emit();
-    this.resetChips$.next(true);
     $('#listsCreate').modal('hide');
+    this.typeAheadOpts = Object.assign(
+      {},
+      this.typeAheadOpts,
+      { reset: this.resetChips$.next(true) }
+    );
   }
 
   onRemoveUser(id) {
@@ -84,12 +89,28 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
         return _users;
       })
       .subscribe(
-      res => this.suggestions = res,
+      suggestions => {
+        this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, { suggestions });
+      },
       err => console.log(err)
       );
   }
 
+  onHandleRemove(id) {
+    console.log(id);
+  }
+
   ngOnInit() {
+    // let users = [];
+    // for (let i = 1; i < 30; i++) {
+    //   users.push(
+    //     {
+    //       'email': `${i}@oohlalamboile.com`
+    //     }
+    //   );
+    // }
+    // this.users = users;
+
     if (this.users) {
       this.state.isPristine = false;
 
@@ -102,7 +123,11 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
     }
 
     if (this.state.isPristine) {
-      this.resetChips$.next(true);
+      this.typeAheadOpts = Object.assign(
+        {},
+        this.typeAheadOpts,
+        { reset: this.resetChips$.next(true) }
+      );
     }
 
     this.form = this.fb.group({
@@ -113,8 +138,13 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
 
     this.chipOptions = {
       icon: 'account_box',
-      withClose: true,
+      withClose: false,
       withAvatar: true
+    };
+
+    this.typeAheadOpts = {
+      reset: this.resetChips$,
+      suggestions: this.suggestions
     };
   }
 }

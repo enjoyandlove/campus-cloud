@@ -50,10 +50,9 @@
             </span>
 
             <span
-              (click)="deleteList = list;"
-              (click)="islistsDelete = true"
-              data-toggle="modal" data-target="#listsDelete"
-              class="col-xs-1 hover delete-message">
+              (click)="deleteAnnoucement = message"
+              class="col-xs-1 text-center hover delete-message"
+              data-toggle="modal" data-target="#deleteAnnouncementModal">
               &times;
             </span>
           </div>
@@ -75,4 +74,12 @@
   <cp-announcements-compose
     (created)="onCreated($event)">
   </cp-announcements-compose>
+</cp-modal>
+
+<cp-modal
+  modalId="deleteAnnouncementModal">
+  <cp-announcements-delete
+    [item]="deleteAnnoucement"
+    (deleted)="onDeleted($event)">
+  </cp-announcements-delete>
 </cp-modal>

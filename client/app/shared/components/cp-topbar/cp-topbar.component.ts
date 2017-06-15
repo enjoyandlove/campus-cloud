@@ -1,7 +1,7 @@
 import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
 
 import { CPSession, IUser, ISchool } from '../../../session';
-// import { CP_PRIVILEGES_MAP } from '../../../shared/utils/privileges';
+import { CP_PRIVILEGES_MAP } from '../../../shared/utils/privileges';
 
 @Component({
   selector: 'cp-topbar',
@@ -32,6 +32,9 @@ export class CPTopBarComponent implements OnInit {
   ngOnInit() {
     this.user = this.session.user;
     this.school = this.session.school;
+    let schoolPrivileges = this.user.school_level_privileges[this.school.id];
+
+    this.canNotify = schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements].r;
     // let schoolPrivileges = this.user.school_level_privileges[this.school.id];
 
   //   let manageItems = [

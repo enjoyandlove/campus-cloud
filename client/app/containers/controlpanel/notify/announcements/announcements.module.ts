@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../../shared/shared.module';
 
 import { AnnouncementsListComponent } from './list';
+import { AnnouncementDeleteComponent } from './delete';
 import { AnnouncementsConfirmComponent } from './confirm';
 import { AnnouncementsComposeComponent } from './compose';
 
@@ -17,7 +18,7 @@ import { AnnouncementsService } from './announcements.service';
 
 @NgModule({
   declarations: [ AnnouncementsListComponent, AnnouncementsListActionBoxComponent,
-  AnnouncementsComposeComponent, AnnouncementsConfirmComponent ],
+  AnnouncementsComposeComponent, AnnouncementsConfirmComponent, AnnouncementDeleteComponent ],
 
   imports: [ CommonModule, SharedModule, AnnouncementsRoutingModule, ReactiveFormsModule ],
 

@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { isDev } from '../../../../../config/env';
 import { STATUS } from '../../../../../shared/constants';
@@ -13,76 +14,50 @@ declare var $: any;
 })
 export class ListsImportComponent implements OnInit {
   @Output() launchCreateModal: EventEmitter<any> = new EventEmitter();
-  @Output() teardown: EventEmitter<any> = new EventEmitter();
 
-  error;
-  uploaded;
-  downloadLink;
+  options;
+  fileName;
 
   constructor(
-    private fileService: FileUploadService
-  ) {
-    this.downloadLink = !isDev ?
-    '/dist/templates/mass_user_upload.csv' :
-    '/templates/mass_user_upload.csv';
-  }
+    private router: Router,
+    private fileService: FileUploadService,
+  ) { }
 
-  fileIsValid(file) {
-    let result = [];
-    let validators = [
-      {
-        'exp': file.name.split('.').pop() === 'csv',
-        'error': STATUS.WRONG_EXTENSION,
-        'isError': false
-      },
-      {
-        'exp': file.size < 5000,
-        'error': STATUS.FILE_IS_TOO_BIG,
-        'isError': false
+  parser(file) {
+    const url = !isDev ?
+      '/announcements/import' :
+      'http://localhost:8000/announcements/import';
+    return this
+      .fileService
+      .uploadFile(file, url)
+      .toPromise()
+      .then(
+      res => {
+        $('#listsImport').modal('hide');
+        this.launchCreateModal.emit(res);
       }
-    ];
-
-    validators.map(validator => {
-      if (!validator.exp) {
-        validator.isError = true;
-        result.push(validator);
+      )
+      .catch(
+      err => {
+        let serverError = err.json().error;
+        return Promise.reject(serverError ? serverError : STATUS.SOMETHING_WENT_WRONG);
       }
-      return validator;
-    });
-    return result;
-  }
-
-  doReset() {
-    this.teardown.emit();
+      );
   }
 
   onNavigate() {
-    // this.router.navigate(['/manage/clubs/import/excel']);
+    this.router.navigate(['/manage/clubs/import/excel']);
   }
 
-  onFileUpload(file) {
-    const validation = this.fileIsValid(file);
-    this.error = '';
+  ngOnInit() {
+    this.fileName = 'mass_user_upload.csv';
 
-    if (!validation.length) {
-      const url = !isDev ?
-        '/announcements/import' :
-        'http://localhost:8000/announcements/import';
-      this
-      .fileService
-      .uploadFile(file, url)
-      .subscribe(
-        res => {
-          this.doReset();
-          this.uploaded = true;
-          $('#listsImport').modal('hide');
-          this.launchCreateModal.emit(res);
-        });
-      return;
-    }
+    let templateUrl = isDev ? `/templates/${this.fileName}` : `/dist/templates/${this.fileName}`;
 
-    this.error = validation[0].error;
+    this.options = {
+      templateUrl,
+      validExtensions: ['csv'],
+      parser: this.parser.bind(this)
+    };
   }
-
-  ngOnInit() { }
 }

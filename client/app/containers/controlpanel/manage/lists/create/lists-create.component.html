@@ -39,17 +39,21 @@
             <label i18n>Users</label>
             <div class="row">
               <div class="col-xs-12">
-                <cp-typeahead
-                  [preSelected]="users"
-                  [reset]="resetChips$"
-                  *ngIf="!state.isPristine">
-                </cp-typeahead>
+
+                <div class="cpInput" *ngIf="!state.isPristine">
+                  <cp-chip
+                    [chip]="chip"
+                    [props]="chipOptions"
+                    class="typeahead__input-wrapper__chip"
+                    (handleClose)="onHandleRemove($event)"
+                    *ngFor="let chip of users">
+                  </cp-chip>
+                </div>
 
                 <cp-typeahead
-                  [reset]="resetChips$"
+                  [props]="typeAheadOpts"
                   *ngIf="state.isPristine"
-                  (query)="onSearch($event)"
-                  [suggestions]="suggestions">
+                  (query)="onSearch($event)">
                 </cp-typeahead>
               </div>
             </div>
