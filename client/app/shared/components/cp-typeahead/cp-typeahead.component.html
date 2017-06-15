@@ -6,18 +6,40 @@
         <div
           (click)="shouldFocusInput()"
           class="typeahead__input-wrapper__padding">
-          <cp-chip
-            [chip]="chip"
-            [props]="chipOptions"
-            class="typeahead__input-wrapper__chip"
-            (handleClose)="onHandleRemove($event)"
-            *ngFor="let chip of state.chips">
-          </cp-chip>
-          <input
-            #input
-            type="text"
-            *ngIf="state.canSearch"
-            class="typeahead__input-wrapper__input">
+          <div class="row">
+            <div [class]="[ props.withSwitcher ? 'col-xs-10 no-right-padding' : 'col-xs-12' ]">
+              <cp-chip
+              [chip]="chip"
+              [props]="chipOptions"
+              class="typeahead__input-wrapper__chip"
+              (handleClose)="onHandleRemove($event)"
+              *ngFor="let chip of state.chips">
+            </cp-chip>
+            <input
+              #input
+              type="text"
+              *ngIf="state.canSearch"
+              class="typeahead__input-wrapper__input">
+            </div>
+            <div
+              *ngIf="props.withSwitcher"
+              class="col-xs-2 switcherMenu no-left-padding">
+              <button
+                type="button"
+                data-toggle="dropdown"
+                class="switcherMenu__button cpbtn--no-border cpbtn cpbtn--cancel">
+                {{ state.isUsers ? 'Users' : 'Lists' }}
+                <i class="material-icons">keyboard_arrow_down</i>
+              </button>
+              <ul class="switcherMenu__list dropdown-menu dropdown-menu-right">
+                <li
+                  (click)="onSwitchChange(item)"
+                  *ngFor="let item of switcherMenu">
+                  {{ item.label }}
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
 

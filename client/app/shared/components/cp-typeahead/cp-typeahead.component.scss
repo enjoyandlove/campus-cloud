@@ -1,6 +1,35 @@
 @import '~styles/core/colors';
 @import '~styles/components/form';
+@import '~styles/components/button';
 @import '~styles/components/dropdown';
+
+.switcherMenu {
+  margin-top: 6px;
+  position: relative;
+
+  &__button {
+    i {
+      top: 5px;
+      right: 22px;
+      line-height: 1;
+      font-size: 18px;
+      position: absolute;
+      transition: transform 200ms ease-in-out;
+    }
+  }
+
+  &__list {
+    @include cpDropdownMenu();
+
+    top: 118%;
+    z-index: 9;
+    right: 15px;
+    min-width: 120px;
+    position: absolute;
+    border-radius: 4px;
+
+  }
+}
 
 textarea {
   height: 38px;

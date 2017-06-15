@@ -13,15 +13,19 @@ import {
 } from '@angular/core';
 
 interface IState {
+  isLists: boolean;
+  isUsers: boolean;
   ids: Array<number>;
   canSearch: boolean;
-  chips: Array<{'label': string; 'id': number}>;
+  chips: Array<{ 'label': string; 'id': number }>;
 }
 
 const state: IState = {
   ids: [],
   chips: [],
-  canSearch: true
+  isLists: false,
+  isUsers: false,
+  canSearch: true,
 };
 
 interface IProps {
@@ -38,15 +42,15 @@ interface IProps {
 export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('input') input: ElementRef;
 
-  // @Input() suggestions: Array<any>;
-  // @Input() reset: Observable<boolean>;
   @Input() props: IProps;
 
   @Output() query: EventEmitter<string> = new EventEmitter();
   @Output() selection: EventEmitter<Array<any>> = new EventEmitter();
+  @Output() typeChange: EventEmitter<number> = new EventEmitter();
 
   el;
   chipOptions;
+  switcherMenu;
   state: IState = state;
 
   constructor() { }
@@ -140,6 +144,31 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
     this.teardown();
   }
 
+  onSwitchChange(selection) {
+    switch (selection.id) {
+      case 1:
+        this.state = Object.assign(
+          {},
+          this.state,
+          {
+            isUsers: true,
+            isLists: false,
+          });
+        break;
+      case 2:
+        this.state = Object.assign(
+          {},
+          this.state,
+          {
+            isUsers: false,
+            isLists: true,
+          });
+        break;
+    }
+
+    this.typeChange.emit(selection.id);
+  }
+
   ngOnInit() {
     this.chipOptions = {
       withClose: true,
@@ -147,9 +176,24 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
       icon: 'account_box'
     };
 
+    if (this.props.withSwitcher) {
+      this.state = Object.assign({}, this.state, { isUsers: true });
+    }
+
     if (!this.props.reset) {
       this.props.reset = Observable.of(false);
     }
+
+    this.switcherMenu = [
+      {
+        'label': 'Users',
+        'id': 1
+      },
+      {
+        'label': 'Lists',
+        'id': 2,
+      }
+    ];
 
     this.props.reset.subscribe(reset => {
       if (reset) {
