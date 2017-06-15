@@ -1,5 +1,4 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { isDev } from '../../../../../config/env';
 import { STATUS } from '../../../../../shared/constants';
@@ -15,13 +14,11 @@ declare var $: any;
 export class ListsImportComponent implements OnInit {
   @Output() launchCreateModal: EventEmitter<any> = new EventEmitter();
 
+  users;
   options;
   fileName;
 
-  constructor(
-    private router: Router,
-    private fileService: FileUploadService,
-  ) { }
+  constructor(private fileService: FileUploadService) { }
 
   parser(file) {
     const url = !isDev ?
@@ -33,8 +30,8 @@ export class ListsImportComponent implements OnInit {
       .toPromise()
       .then(
       res => {
-        $('#listsImport').modal('hide');
-        this.launchCreateModal.emit(res);
+        this.users = res;
+        return Promise.resolve();
       }
       )
       .catch(
@@ -46,7 +43,8 @@ export class ListsImportComponent implements OnInit {
   }
 
   onNavigate() {
-    this.router.navigate(['/manage/clubs/import/excel']);
+    $('#listsImport').modal('hide');
+    this.launchCreateModal.emit(this.users);
   }
 
   ngOnInit() {
