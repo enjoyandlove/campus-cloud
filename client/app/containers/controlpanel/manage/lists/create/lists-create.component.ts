@@ -40,8 +40,9 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
   ) { }
 
   doSubmit() {
-    this.created.emit(this.form.value);
-    this.resetModal();
+    console.log(this.form.value);
+    // this.created.emit(this.form.value);
+    // this.resetModal();
   }
 
   resetModal() {
@@ -100,19 +101,37 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
     console.log(id);
   }
 
+  onTypeAheadChange(ids) {
+    if (!ids.length) {
+      this.form.controls['user_ids'].setValue(null);
+      return;
+    }
+
+    this.form.controls['user_ids'].setValue(ids);
+  }
+
   ngOnInit() {
-    // let users = [];
-    // for (let i = 1; i < 30; i++) {
-    //   users.push(
-    //     {
-    //       'email': `${i}@oohlalamboile.com`
-    //     }
-    //   );
-    // }
-    // this.users = users;
+    let users = [];
+    for (let i = 1; i < 30; i++) {
+      users.push(
+        {
+          'email': `${i}@oohlalamboile.com`
+        }
+      );
+    }
+    this.users = users;
+
+    this.form = this.fb.group({
+      'name': [null, Validators.required],
+      'description': [null],
+      'user_ids': [null, Validators.required],
+    });
 
     if (this.users) {
       this.state.isPristine = false;
+      let emails = [];
+
+      this.users.forEach(user => { emails.push(user.email); });
 
       this.users = this.users.map((user, index) => {
         return {
@@ -120,6 +139,8 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
           'id': index,
         };
       });
+
+      this.form.controls['user_ids'].setValue(emails);
     }
 
     if (this.state.isPristine) {
@@ -129,12 +150,6 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
         { reset: this.resetChips$.next(true) }
       );
     }
-
-    this.form = this.fb.group({
-      'name': [null, Validators.required],
-      'description': [null],
-      'users': [null, Validators.required],
-    });
 
     this.chipOptions = {
       icon: 'account_box',
