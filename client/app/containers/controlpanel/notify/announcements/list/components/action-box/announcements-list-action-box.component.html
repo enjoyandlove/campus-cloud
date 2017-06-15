@@ -9,7 +9,7 @@
         (selected)="onSelectedType($event)">
       </cp-dropdown>
     </div>
-    <div class="col-xs-3 pull-right text-right">
+    <div class="col-xs-3 pull-right text-right" *ngIf="canCompose">
       <button
         (click)="launchModal.emit()"
         class="cpbtn cpbtn--primary" i18n>

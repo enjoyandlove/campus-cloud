@@ -19,7 +19,7 @@
       <div class="row">
         <div class="col-xs-12">
           <form [formGroup]="form">
-            <div class="form-group campus-switch" [class.isActive]="isCampusWide">
+            <div class="form-group campus-switch" [class.isActive]="state.isCampusWide">
               <div class="row">
                 <div class="col-xs-8">
                   <p class="title" i18n>Campus Wide</p>
@@ -28,22 +28,22 @@
                 <div class="col-xs-4">
                   <div class="pull-right">
                     <cp-switch
-                      (toggle)="isCampusWide = !isCampusWide"
-                      [isChecked]="isCampusWide">
+                      (toggle)="state.isCampusWide = !state.isCampusWide"
+                      [isChecked]="state.isCampusWide">
                     </cp-switch>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="form-group" *ngIf="!isCampusWide">
+            <div class="form-group" *ngIf="!state.isCampusWide">
               <label i18n>To</label>
               <div class="row">
                 <div class="col-xs-12">
                   <cp-typeahead
-                    [reset]="resetChips$"
                     (query)="onSearch($event)"
-                    [suggestions]="suggestions">
+                    [suggestions]="suggestions"
+                    [reset]="resetCustomFields$">
                   </cp-typeahead>
                 </div>
               </div>
@@ -57,6 +57,7 @@
                     <div class="col-xs-12">
                       <cp-check-dropdown
                         [items]="types"
+                        [reset]="resetCustomFields$"
                         buttonClass="cpbtn cpbtn--cancel"
                         (selected)="onTypeChanged($event)">
                       </cp-check-dropdown>
@@ -69,6 +70,7 @@
                       <label i18n>From</label>
                       <cp-dropdown
                         [items]="stores$ | async"
+                        [reset]="resetCustomFields$"
                         (selected)="onSelectedStore($event)">
                       </cp-dropdown>
                     </div>

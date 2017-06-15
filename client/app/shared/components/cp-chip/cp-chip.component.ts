@@ -28,7 +28,6 @@ export class CPChipComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this);
     if (!this.chip) {
       console.warn('Missing Chip input');
     }

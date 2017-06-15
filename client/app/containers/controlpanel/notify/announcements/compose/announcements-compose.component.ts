@@ -6,6 +6,7 @@ import { CPSession } from '../../../../../session';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { StoreService } from '../../../../../shared/services';
 import { AnnouncementsService } from '../announcements.service';
+import { CP_PRIVILEGES_MAP } from '../../../../../shared/utils';
 
 declare var $: any;
 
@@ -33,11 +34,10 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   @Output() teardown: EventEmitter<null> = new EventEmitter();
 
   stores$;
-  isCampusWide;
 
   sendAsName;
   form: FormGroup;
-  resetChips$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  resetCustomFields$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   URGENT_TYPE = 1;
   EMERGENCY_TYPE = 0;
@@ -52,7 +52,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     type: null
   };
 
-  types = require('./announcement-types').types;
+  types;
 
   constructor(
     private fb: FormBuilder,
@@ -121,8 +121,10 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   }
 
   resetModal() {
+    console.log('reset modal');
+    this.form.reset();
     this.teardown.emit();
-    this.resetChips$.next(true);
+    this.resetCustomFields$.next(true);
     $('#composeModal').modal('hide');
   }
 
@@ -132,11 +134,10 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   }
 
   doValidate() {
-    if (this.isCampusWide) {
+    if (this.state.isCampusWide) {
       this.shouldConfirm = true;
       return;
     }
-
     this.doSubmit();
   }
 
@@ -152,7 +153,9 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       'message': `${this.form.value.message} \n ${this.sendAsName}`,
       'priority': this.form.value.priority
     };
-
+    console.log(data);
+    // console.log(data);
+    // return;
     this
       .service
       .postAnnouncements(search, data)
@@ -202,6 +205,16 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    console.log(this.session);
+    let schoolPrivileges = this.session.user.school_level_privileges[this.session.school.id];
+
+    let canDoEmergency = schoolPrivileges[CP_PRIVILEGES_MAP.emergency_announcement].w;
+    this.types = require('./announcement-types').types;
+
+    if (!canDoEmergency) {
+      this.types = this.types.filter(type => type.action !== this.EMERGENCY_TYPE);
+    }
+
     this.form = this.fb.group({
       'store_id': [null, Validators.required],
       'subject': [null, [Validators.required, Validators.maxLength(128)]],
