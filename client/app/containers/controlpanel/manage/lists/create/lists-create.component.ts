@@ -111,16 +111,6 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    let users = [];
-    for (let i = 1; i < 30; i++) {
-      users.push(
-        {
-          'email': `${i}@oohlalamboile.com`
-        }
-      );
-    }
-    this.users = users;
-
     this.form = this.fb.group({
       'name': [null, Validators.required],
       'description': [null],
