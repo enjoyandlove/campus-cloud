@@ -154,6 +154,11 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
             isUsers: true,
             isLists: false,
           });
+          this.chipOptions = Object.assign(
+            {},
+            this.chipOptions,
+            { icon: 'account_box' }
+          );
         break;
       case 2:
         this.state = Object.assign(
@@ -163,6 +168,11 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
             isUsers: false,
             isLists: true,
           });
+          this.chipOptions = Object.assign(
+            {},
+            this.chipOptions,
+            { icon: 'list' }
+          );
         break;
     }
 

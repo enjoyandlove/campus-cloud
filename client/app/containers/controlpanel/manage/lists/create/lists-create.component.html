@@ -53,7 +53,8 @@
                 <cp-typeahead
                   [props]="typeAheadOpts"
                   *ngIf="state.isPristine"
-                  (query)="onSearch($event)">
+                  (query)="onSearch($event)"
+                  (selection)="onTypeAheadChange($event)">
                 </cp-typeahead>
               </div>
             </div>
