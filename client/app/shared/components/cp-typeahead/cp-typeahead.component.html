@@ -22,12 +22,12 @@
       </div>
 
       <ul
-        *ngIf="suggestions && suggestions.length"
+        *ngIf="props.suggestions && props.suggestions.length"
         class="typeahead__list">
         <li
           class="typeahead__item"
           (click)="onHandleClick(suggestion)"
-          *ngFor="let suggestion of suggestions">
+          *ngFor="let suggestion of props.suggestions">
           {{ suggestion.label }}
         </li>
       </ul>

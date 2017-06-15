@@ -24,6 +24,12 @@ const state: IState = {
   canSearch: true
 };
 
+interface IProps {
+  suggestions: Array<any>;
+  reset: Observable<boolean>;
+  withSwitcher: boolean;
+}
+
 @Component({
   selector: 'cp-typeahead',
   templateUrl: './cp-typeahead.component.html',
@@ -32,8 +38,9 @@ const state: IState = {
 export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('input') input: ElementRef;
 
-  @Input() suggestions: Array<any>;
-  @Input() reset: Observable<boolean>;
+  // @Input() suggestions: Array<any>;
+  // @Input() reset: Observable<boolean>;
+  @Input() props: IProps;
 
   @Output() query: EventEmitter<string> = new EventEmitter();
   @Output() selection: EventEmitter<Array<any>> = new EventEmitter();
@@ -46,7 +53,7 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @HostListener('document:click', ['$event'])
   onClick() {
-    setTimeout(() => { this.suggestions = []; }, 100);
+    setTimeout(() => { this.props.suggestions = []; }, 100);
   }
 
   listenForKeyChanges() {
@@ -102,7 +109,7 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   resetList() {
-    this.suggestions = [];
+    this.props.suggestions = [];
   }
 
 
@@ -140,11 +147,11 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
       icon: 'account_box'
     };
 
-    if (!this.reset) {
-      this.reset = Observable.of(false);
+    if (!this.props.reset) {
+      this.props.reset = Observable.of(false);
     }
 
-    this.reset.subscribe(reset => {
+    this.props.reset.subscribe(reset => {
       if (reset) {
         this.teardown();
       }

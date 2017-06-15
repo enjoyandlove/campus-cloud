@@ -28,6 +28,7 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
   @Output() resetChips$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   chipOptions;
+  typeAheadOpts;
   form: FormGroup;
   suggestions = [];
   state: IState = state;
@@ -47,8 +48,12 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
     this.users = [];
     this.form.reset();
     this.reset.emit();
-    this.resetChips$.next(true);
     $('#listsCreate').modal('hide');
+    this.typeAheadOpts = Object.assign(
+      {},
+      this.typeAheadOpts,
+      { reset: this.resetChips$.next(true) }
+    );
   }
 
   onRemoveUser(id) {
@@ -84,7 +89,9 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
         return _users;
       })
       .subscribe(
-      res => this.suggestions = res,
+      suggestions => {
+        this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, { suggestions });
+      },
       err => console.log(err)
       );
   }
@@ -116,7 +123,11 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
     }
 
     if (this.state.isPristine) {
-      this.resetChips$.next(true);
+      this.typeAheadOpts = Object.assign(
+        {},
+        this.typeAheadOpts,
+        { reset: this.resetChips$.next(true) }
+      );
     }
 
     this.form = this.fb.group({
@@ -130,6 +141,10 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
       withClose: false,
       withAvatar: true
     };
-    console.log(this);
+
+    this.typeAheadOpts = {
+      reset: this.resetChips$,
+      suggestions: this.suggestions
+    };
   }
 }

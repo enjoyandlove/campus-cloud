@@ -51,10 +51,9 @@
                 </div>
 
                 <cp-typeahead
-                  [reset]="resetChips$"
+                  [props]="typeAheadOpts"
                   *ngIf="state.isPristine"
-                  (query)="onSearch($event)"
-                  [suggestions]="suggestions">
+                  (query)="onSearch($event)">
                 </cp-typeahead>
               </div>
             </div>

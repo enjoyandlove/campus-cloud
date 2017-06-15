@@ -13,6 +13,8 @@ declare var $: any;
 interface IState {
   isUrgent: boolean;
   userSerch: boolean;
+  isToUsers: boolean;
+  isToLists: boolean;
   isEmergency: boolean;
   isCampusWide: boolean;
 }
@@ -20,6 +22,8 @@ interface IState {
 const state: IState = {
   userSerch: true,
   isUrgent: false,
+  isToUsers: true,
+  isToLists: false,
   isEmergency: false,
   isCampusWide: false
 };
@@ -36,6 +40,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   stores$;
 
   sendAsName;
+  typeAheadOpts;
   form: FormGroup;
   resetCustomFields$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
@@ -92,7 +97,13 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
         return _users;
       })
       .subscribe(
-      res => this.suggestions = res,
+      suggestions => {
+        this.typeAheadOpts = Object.assign(
+          {},
+          this.typeAheadOpts,
+          { suggestions }
+        );
+      },
       err => console.log(err)
       );
   }
@@ -121,7 +132,6 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   }
 
   resetModal() {
-    console.log('reset modal');
     this.form.reset();
     this.teardown.emit();
     this.resetCustomFields$.next(true);
@@ -153,9 +163,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       'message': `${this.form.value.message} \n ${this.sendAsName}`,
       'priority': this.form.value.priority
     };
-    console.log(data);
-    // console.log(data);
-    // return;
+
     this
       .service
       .postAnnouncements(search, data)
@@ -204,8 +212,15 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     this.resetModal();
   }
 
+  onTypeAheadChange(list) {
+    console.log(list);
+  }
+
   ngOnInit() {
-    console.log(this.session);
+    this.typeAheadOpts = {
+      suggestions: this.suggestions,
+      reset: this.resetCustomFields$
+    };
     let schoolPrivileges = this.session.user.school_level_privileges[this.session.school.id];
 
     let canDoEmergency = schoolPrivileges[CP_PRIVILEGES_MAP.emergency_announcement].w;
