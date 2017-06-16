@@ -77,15 +77,8 @@ export class ListsListComponent extends BaseComponent implements OnInit {
     this.isListsCreate = false;
   }
 
-  onCreatedList(list) {
-    list = Object.assign(
-      {},
-      list,
-      { users: list.user_ids }
-    );
-
-    this.isListsCreate = false;
-    this.state.lists = [list, ...this.state.lists];
+  onCreatedList() {
+    this.fetch();
   }
 
   onLaunchCreateModal(users?: Array<any>) {
@@ -99,18 +92,8 @@ export class ListsListComponent extends BaseComponent implements OnInit {
     setTimeout(() => { $('#listsImport').modal(); }, 1);
   }
 
-  onEditedList(editedList) {
-    this.isListsEdit = false;
-    let _state = Object.assign({}, this.state, {
-      lists: this.state.lists.map(list => {
-        if (list.id === editedList.id) {
-          return list = editedList;
-        }
-        return list;
-      })
-    });
-
-    this.state = Object.assign({}, this.state, _state);
+  onEditedList() {
+    this.fetch();
   }
 
   onDeletedList(listId: number) {
