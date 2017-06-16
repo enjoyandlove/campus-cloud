@@ -31,6 +31,7 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
   typeAheadOpts;
   form: FormGroup;
   suggestions = [];
+  isFormValid = false;
   state: IState = state;
 
   constructor(
@@ -40,9 +41,29 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
   ) { }
 
   doSubmit() {
-    console.log(this.form.value);
-    // this.created.emit(this.form.value);
-    // this.resetModal();
+    let search = new URLSearchParams();
+    search.append('school_id', this.session.school.id.toString());
+
+    let data = Object.assign({}, this.form.value);
+
+    if (this.state.isPristine) {
+      delete data.user_emails;
+    }
+
+    if (!this.state.isPristine) {
+      delete data.user_ids;
+    }
+
+    this
+      .service
+      .createList(data, search)
+      .subscribe(
+      _ => {
+        this.created.emit(data);
+        this.resetModal();
+      },
+      err => console.log(err)
+      );
   }
 
   resetModal() {
@@ -97,24 +118,45 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
       );
   }
 
-  onHandleRemove(id) {
-    console.log(id);
-  }
-
   onTypeAheadChange(ids) {
     if (!ids.length) {
-      this.form.controls['user_emails'].setValue(null);
+      this.form.controls['user_ids'].setValue(null);
       return;
     }
 
-    this.form.controls['user_emails'].setValue(ids);
+    this.form.controls['user_ids'].setValue(ids);
   }
 
   ngOnInit() {
     this.form = this.fb.group({
       'name': [null, Validators.required],
       'description': [null],
-      'user_emails': [null, Validators.required],
+      'user_ids': [null],
+      'user_emails': [null]
+    });
+
+    this.form.valueChanges.subscribe(_ => {
+      let valid = true;
+
+      valid = this.form.valid;
+
+      if (!this.state.isPristine) {
+        valid = false;
+
+        if (this.form.controls['user_emails'].value) {
+          valid = this.form.controls['user_emails'].value.length > 0 && this.form.valid;
+        }
+      }
+
+      if (this.state.isPristine) {
+        valid = false;
+
+        if (this.form.controls['user_ids'].value) {
+          valid = this.form.controls['user_ids'].value.length > 0 && this.form.valid;
+        }
+      }
+
+      this.isFormValid = valid;
     });
 
     if (this.users) {

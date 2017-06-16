@@ -29,9 +29,10 @@ const state: IState = {
 };
 
 interface IProps {
+  withSwitcher: boolean;
   suggestions: Array<any>;
   reset: Observable<boolean>;
-  withSwitcher: boolean;
+  defaultValues: Array<{ 'label': string; 'id': number }>;
 }
 
 @Component({
@@ -204,6 +205,13 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
         'id': 2,
       }
     ];
+
+    if (this.props.defaultValues) {
+      this.props.defaultValues.map(value => {
+        this.state.ids.push(value.id);
+        this.state.chips.push(value);
+      });
+    }
 
     this.props.reset.subscribe(reset => {
       if (reset) {

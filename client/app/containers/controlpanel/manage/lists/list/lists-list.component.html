@@ -14,6 +14,7 @@
 
   <div *ngSwitchCase="false">
     <cp-no-content
+      class="no-content"
       *ngIf="!state.lists.length"
       noContentText="No lists found...">
     </cp-no-content>
@@ -23,8 +24,8 @@
         <li class="cp-form__header col-xs-12">
           <div class="row">
             <span class="col-xs-5" i18n>Name</span>
-            <span class="col-xs-6" i18n>Users</span>
-            <span class="col-xs-1"></span>
+            <span class="col-xs-2 text-center" i18n>Users</span>
+            <span class="col-xs-1 col-xs-offset-4"></span>
           </div>
         </li>
 
@@ -46,15 +47,15 @@
               {{ list.description }}
             </span>
 
-            <span class="col-xs-6" i18n>
-              No Content
+            <span class="col-xs-2 text-center" i18n>
+              {{ list.users.length }}
             </span>
 
             <span
               (click)="deleteList = list;"
               (click)="islistsDelete = true"
               data-toggle="modal" data-target="#listsDelete"
-              class="col-xs-1 hover delete-list">
+              class="col-xs-1 col-xs-offset-4 hover delete-list text-center">
               &times;
             </span>
           </div>

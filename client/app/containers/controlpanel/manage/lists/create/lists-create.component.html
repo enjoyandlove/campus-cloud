@@ -44,9 +44,8 @@
                   <cp-chip
                     [chip]="chip"
                     [props]="chipOptions"
-                    class="typeahead__input-wrapper__chip"
-                    (handleClose)="onHandleRemove($event)"
-                    *ngFor="let chip of users">
+                    *ngFor="let chip of users"
+                    class="typeahead__input-wrapper__chip">
                   </cp-chip>
                 </div>
 
@@ -78,7 +77,7 @@
         <button
           type="button"
           (click)="doSubmit()"
-          [disabled]="!form.valid"
+          [disabled]="!isFormValid"
           class="cpbtn cpbtn--primary"i18n>
           Create List
         </button>
