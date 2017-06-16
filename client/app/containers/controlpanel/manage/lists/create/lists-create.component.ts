@@ -31,6 +31,7 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
   typeAheadOpts;
   form: FormGroup;
   suggestions = [];
+  isFormValid = false;
   state: IState = state;
 
   constructor(
@@ -42,12 +43,23 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
   doSubmit() {
     let search = new URLSearchParams();
     search.append('school_id', this.session.school.id.toString());
+
+    let data = Object.assign({}, this.form.value);
+
+    if (this.state.isPristine) {
+      delete data.email_ids;
+    }
+
+    if (!this.state.isPristine) {
+      delete data.user_ids;
+    }
+
     this
       .service
-      .createList(this.form.value, search)
+      .createList(data, search)
       .subscribe(
       _ => {
-        this.created.emit(this.form.value);
+        this.created.emit(data);
         this.resetModal();
       },
       err => console.log(err)
@@ -123,7 +135,32 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
     this.form = this.fb.group({
       'name': [null, Validators.required],
       'description': [null],
-      'user_ids': [null, Validators.required],
+      'user_ids': [null],
+      'email_ids': [null]
+    });
+
+    this.form.valueChanges.subscribe(_ => {
+      let valid = true;
+
+      valid = this.form.valid;
+
+      if (!this.state.isPristine) {
+        valid = false;
+
+        if (this.form.controls['email_ids'].value) {
+          valid = this.form.controls['email_ids'].value.length > 0 && this.form.valid;
+        }
+      }
+
+      if (this.state.isPristine) {
+        valid = false;
+
+        if (this.form.controls['user_ids'].value) {
+          valid = this.form.controls['user_ids'].value.length > 0 && this.form.valid;
+        }
+      }
+
+      this.isFormValid = valid;
     });
 
     if (this.users) {
@@ -139,7 +176,7 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
         };
       });
 
-      this.form.controls['user_ids'].setValue(emails);
+      this.form.controls['email_ids'].setValue(emails);
     }
 
     if (this.state.isPristine) {
