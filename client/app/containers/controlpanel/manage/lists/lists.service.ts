@@ -46,6 +46,12 @@ export class ListsService extends BaseService {
     return super.post(url, body, { search }).map(res => res.json());
   }
 
+  updateList(listId: number, body: any, search: URLSearchParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER_LIST}/${listId}`;
+
+    return super.update(url, body, { search }).map(res => res.json());
+  }
+
   getMessageById(messageId) {
     const promise = new Promise(resolve => {
       resolve(mockLists.filter(list => {

@@ -1,7 +1,9 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { URLSearchParams } from '@angular/http';
 
-// import { ListsService } from '../lists.service';
+import { ListsService } from '../lists.service';
+import { CPSession } from '../../../../../session';
 
 declare var $: any;
 
@@ -20,13 +22,33 @@ export class ListsEditComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    // private service: ListsService,
+    private session: CPSession,
+    private service: ListsService,
   ) { }
 
   doSubmit() {
-    $('#listsEdit').modal('hide');
-    this.edited.emit(this.form.value);
-    this.resetModal();
+    let search = new URLSearchParams();
+    search.append('school_id', this.session.school.id.toString());
+
+    let data = Object.assign(
+      {},
+      this.form.value,
+      {
+        user_ids: this.form.value.user_ids.map(user => user.id)
+      }
+    );
+
+    this
+      .service
+      .updateList(this.list.id, data, search)
+      .subscribe(
+      _ => {
+        $('#listsEdit').modal('hide');
+        this.edited.emit(this.form.value);
+        this.resetModal();
+      },
+      err => console.log(err)
+      );
   }
 
   resetModal() {
@@ -42,6 +64,8 @@ export class ListsEditComponent implements OnInit {
         users: this.list.users.filter(user => user.id !== id)
       }
     );
+
+    this.form.controls['user_ids'].setValue(this.list.users);
   }
 
   buildChips() {
@@ -75,13 +99,11 @@ export class ListsEditComponent implements OnInit {
         }
       );
     }
-
+    console.log(this.list);
     this.form = this.fb.group({
-      'id': [this.list.id, Validators.required],
-      'store_id': [this.list.store_id, Validators.required],
       'name': [this.list.name, Validators.required],
-      'description': [this.list.description],
-      'users': [this.list.users, Validators.required],
+      'description': [this.list.description || null],
+      'user_ids': [this.list.users, Validators.required],
     });
   }
 }
