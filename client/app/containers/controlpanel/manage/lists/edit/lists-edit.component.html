@@ -38,15 +38,11 @@
 
           <div class="form-group">
             <label i18n>Users</label>
-            <div class="cpInput">
-              <cp-chip
-                [chip]="chip"
-                [props]="chipOptions"
-                class="typeahead__input-wrapper__chip"
-                (handleClose)="onHandleRemove($event)"
-                *ngFor="let chip of list.users">
-              </cp-chip>
-            </div>
+            <cp-typeahead
+              [props]="typeAheadOpts"
+              (query)="onSearch($event)"
+              (selection)="onSelection($event)">
+            </cp-typeahead>
           </div>
         </form>
       </div>
