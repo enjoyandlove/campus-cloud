@@ -118,10 +118,6 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
       );
   }
 
-  onHandleRemove(id) {
-    console.log(id);
-  }
-
   onTypeAheadChange(ids) {
     if (!ids.length) {
       this.form.controls['user_ids'].setValue(null);

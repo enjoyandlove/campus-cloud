@@ -44,9 +44,8 @@
                   <cp-chip
                     [chip]="chip"
                     [props]="chipOptions"
-                    class="typeahead__input-wrapper__chip"
-                    (handleClose)="onHandleRemove($event)"
-                    *ngFor="let chip of users">
+                    *ngFor="let chip of users"
+                    class="typeahead__input-wrapper__chip">
                   </cp-chip>
                 </div>
 
