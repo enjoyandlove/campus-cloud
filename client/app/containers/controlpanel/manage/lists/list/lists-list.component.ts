@@ -53,7 +53,6 @@ export class ListsListComponent extends BaseComponent implements OnInit {
   }
 
   onSearch(query) {
-    console.log(query);
     this.state = Object.assign(
       {},
       this.state,
@@ -87,7 +86,6 @@ export class ListsListComponent extends BaseComponent implements OnInit {
 
     this.isListsCreate = false;
     this.state.lists = [list, ...this.state.lists];
-    console.log(this.state.lists);
   }
 
   onLaunchCreateModal(users?: Array<any>) {
