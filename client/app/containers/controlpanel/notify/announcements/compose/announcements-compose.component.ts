@@ -140,22 +140,22 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
     this
       .service
-      .getUsers(search)
-      .map(users => {
-        let _users = [];
+      .getLists(search, 1, 400)
+      .map(lists => {
+        let _lists = [];
 
-        users.forEach(user => {
-          _users.push({
-            'label': `${user.firstname} ${user.lastname}`,
-            'id': user.id
+        lists.forEach(list => {
+          _lists.push({
+            'label': `${list.name}`,
+            'id': list.id
           });
         });
 
-        if (!_users.length) {
-          _users.push({ 'label': 'No Results...' });
+        if (!_lists.length) {
+          _lists.push({ 'label': 'No Results...' });
         }
 
-        return _users;
+        return _lists;
       })
       .subscribe(
       suggestions => {

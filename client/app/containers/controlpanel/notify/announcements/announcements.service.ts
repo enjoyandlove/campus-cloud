@@ -27,6 +27,13 @@ export class AnnouncementsService extends BaseService {
     return super.get(url, { search }).map(res => res.json());
   }
 
+  getLists(search: URLSearchParams, startRange: number, endRange: number) {
+    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER_LIST}`;
+    const url = `${common}/${startRange};${endRange}`;
+
+    return super.get(url, { search }).map(res => res.json());
+  }
+
   getAnnouncements(search: URLSearchParams, startRange: number, endRange: number) {
     const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ANNOUNCEMENT}`;
     const url = `${common}/${startRange};${endRange}`;
