@@ -47,7 +47,7 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
     let data = Object.assign({}, this.form.value);
 
     if (this.state.isPristine) {
-      delete data.email_ids;
+      delete data.user_emails;
     }
 
     if (!this.state.isPristine) {
@@ -136,7 +136,7 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
       'name': [null, Validators.required],
       'description': [null],
       'user_ids': [null],
-      'email_ids': [null]
+      'user_emails': [null]
     });
 
     this.form.valueChanges.subscribe(_ => {
@@ -147,8 +147,8 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
       if (!this.state.isPristine) {
         valid = false;
 
-        if (this.form.controls['email_ids'].value) {
-          valid = this.form.controls['email_ids'].value.length > 0 && this.form.valid;
+        if (this.form.controls['user_emails'].value) {
+          valid = this.form.controls['user_emails'].value.length > 0 && this.form.valid;
         }
       }
 
@@ -176,7 +176,7 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
         };
       });
 
-      this.form.controls['email_ids'].setValue(emails);
+      this.form.controls['user_emails'].setValue(emails);
     }
 
     if (this.state.isPristine) {
