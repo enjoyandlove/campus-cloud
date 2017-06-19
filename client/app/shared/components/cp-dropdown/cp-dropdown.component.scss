@@ -13,12 +13,6 @@
   display: inline-block;
   vertical-align: middle;
 
-  &.open {
-    button {
-      border: 1px solid $color-brand;
-    }
-  }
-
   &__button {
     width: 100%;
     text-align: left;
