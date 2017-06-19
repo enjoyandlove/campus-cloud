@@ -42,59 +42,86 @@ Parse Excel Mass Event Invite
 
 @csrf_exempt
 def import_excel_event(request):
-    input_excel = request.FILES['file']
+    csv_file = request.FILES['file']
+    decoded_file = csv_file.read().decode('utf-8')
+    io_string = io.StringIO(decoded_file)
 
-    wb = load_workbook(filename=input_excel)
+    parser = CSVParser(io_string)
+    parsed_data = parser.all_fields_required()
 
-    ws = wb.get_active_sheet()
+    for item in parsed_data:
+        date_columns = ['start_date', 'end_date']
 
-    event_dict = []
+        for column in date_columns:
+            if parser.validate_date_format(item[column]) is not None:
+                return JsonResponse({"error": '%s not in valid format' % column},
+                                    safe=False, status=400)
 
-    for row in ws.rows:
-        event_info = []
-        for col in row:
-            if col.value is not None:
-                event_info.append(col.value)
-        if len(event_info):
-            event_dict.append(event_info)
 
-    events = event_dict[1:]
-    column_titles = event_dict[:1]
+        if parser.date_not_in_past(item['start_date']) is False:
+            return JsonResponse({"error": 'Start date can not be in the past'},
+                                safe=False, status=400)
 
-    column_titles = [title.lower() for title in column_titles[0]]
+        if parser.future_dates_is_greater_than_past(item['end_date'],
+                                                    item['start_date']) is False:
+            return JsonResponse({"error": 'Start date can not be greater than end date'},
+                                safe=False, status=400)
 
-    event_dict = []
 
-    for i in events:
-        # all fields are required
-        if len(i) is not len(column_titles):
-            return JsonResponse({"error": "All fields are required"},
-                                safe=False, status=500)
+    return JsonResponse(json.dumps(parsed_data), safe=False)
+    # input_excel = request.FILES['file']
 
-        # end date is not greater than start date
-        if i[3] < i[2]:
-            return JsonResponse({"error": "Start date can not be greater than end date"},
-                                safe=False, status=500)
+    # wb = load_workbook(filename=input_excel)
 
-        # start date is not in the past
-        if i[2] < datetime.datetime.now():
-            return JsonResponse({"error": "Start date can not be in the past"},
-                                safe=False, status=500)
+    # ws = wb.get_active_sheet()
 
-        # check date time format (2017-05-12 09:00:00)
-        try:
-            datetime.datetime.strptime(str(i[2]), "%Y-%m-%d %H:%M:%S")
-            datetime.datetime.strptime(str(i[3]), "%Y-%m-%d %H:%M:%S")
-        except ValueError:
-            return JsonResponse({"error": "Invalid date format"},
-                                safe=False, status=500)
+    # event_dict = []
 
-        i[2] = str(i[2])
-        i[3] = str(i[3])
+    # for row in ws.rows:
+    #     event_info = []
+    #     for col in row:
+    #         if col.value is not None:
+    #             event_info.append(col.value)
+    #     if len(event_info):
+    #         event_dict.append(event_info)
 
-        event_dict.append(dict(zip(column_titles, i)))
+    # events = event_dict[1:]
+    # column_titles = event_dict[:1]
 
-    return JsonResponse(json.dumps(event_dict), safe=False)
+    # column_titles = [title.lower() for title in column_titles[0]]
+
+    # event_dict = []
+
+    # for i in events:
+    #     # all fields are required
+    #     if len(i) is not len(column_titles):
+    #         return JsonResponse({"error": "All fields are required"},
+    #                             safe=False, status=500)
+
+    #     # end date is not greater than start date
+    #     if i[3] < i[2]:
+    #         return JsonResponse({"error": "Start date can not be greater than end date"},
+    #                             safe=False, status=500)
+
+    #     # start date is not in the past
+    #     if i[2] < datetime.datetime.now():
+    #         return JsonResponse({"error": "Start date can not be in the past"},
+    #                             safe=False, status=500)
+
+    #     # check date time format (2017-05-12 09:00:00)
+    #     try:
+    #         datetime.datetime.strptime(str(i[2]), "%Y-%m-%d %H:%M:%S")
+    #         datetime.datetime.strptime(str(i[3]), "%Y-%m-%d %H:%M:%S")
+    #     except ValueError:
+    #         return JsonResponse({"error": "Invalid date format"},
+    #                             safe=False, status=500)
+
+    #     i[2] = str(i[2])
+    #     i[3] = str(i[3])
+
+    #     event_dict.append(dict(zip(column_titles, i)))
+
+    # return JsonResponse(json.dumps(event_dict), safe=False)
 
 '''
 Parse Excel Mass Announcements Import
@@ -106,7 +133,7 @@ def import_list(request):
     io_string = io.StringIO(decoded_file)
 
     parser = CSVParser(io_string)
-    parsed_data = parser.parse()
+    parsed_data = parser.all_fields_required()
 
     return JsonResponse(parsed_data, safe=False)
 
@@ -120,7 +147,7 @@ def import_clubs(request):
     io_string = io.StringIO(decoded_file)
 
     parser = CSVParser(io_string)
-    parsed_data = parser.parse()
+    parsed_data = parser.all_fields_required()
     return JsonResponse(parsed_data, safe=False)
 
 '''

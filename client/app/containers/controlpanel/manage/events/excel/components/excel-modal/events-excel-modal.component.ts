@@ -65,13 +65,13 @@ export class EventsExcelModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.fileName = 'mass_event_invite_sample.xlsx';
+    this.fileName = 'mass_event_invite_sample.csv';
 
     let templateUrl = isDev ? `/templates/${this.fileName}` : `/dist/templates/${this.fileName}`;
 
     this.options = {
       templateUrl,
-      validExtensions: ['xlsx'],
+      validExtensions: ['csv'],
       parser: this.parser.bind(this)
     };
   }
