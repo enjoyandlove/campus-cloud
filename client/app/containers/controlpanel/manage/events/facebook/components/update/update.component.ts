@@ -97,6 +97,7 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
 
   private fetch() {
     this.loading = true;
+    this.isEdited = false;
     let search = new URLSearchParams();
     search.append('school_id', this.session.school.id.toString());
 
