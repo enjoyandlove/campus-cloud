@@ -38,6 +38,8 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   stores$;
 
   sendAsName;
+  selectedHost;
+  selectedType;
   typeAheadOpts;
   form: FormGroup;
   isFormValid = false;
@@ -178,16 +180,15 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     this.teardown.emit();
     this.resetCustomFields$.next(true);
 
+    this.state.isCampusWide = false;
+
     $('#composeModal').modal('hide');
 
-    this.typeAheadOpts = Object.assign(
-      {},
-      this.typeAheadOpts,
-      { reset: this.resetChips$.next(true) }
-    );
+    this.resetChips();
   }
 
   onSelectedStore(store) {
+    this.selectedHost = store;
     this.sendAsName = store.label;
     this.form.controls['store_id'].setValue(store.value);
   }
@@ -205,17 +206,15 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       {},
       this.state,
       {
-        isCampusWide: !this.state.isCampusWide,
         isToLists: false,
-        isToUsers: status ? false : true
+        isToUsers: status ? false : true,
+        isCampusWide: !this.state.isCampusWide
       }
     );
 
-    this.typeAheadOpts = Object.assign(
-      {},
-      this.typeAheadOpts,
-      { reset: this.resetChips$.next(true) }
-    );
+    if (status) {
+      this.resetChips();
+    }
 
     this.form.controls['user_ids'].setValue([]);
     this.form.controls['list_ids'].setValue([]);
@@ -292,6 +291,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     }
 
     this.form.controls['priority'].setValue(type.action);
+    this.selectedType = this.getObjectFromTypesArray(type.action);
   }
 
   ngOnDestroy() {
@@ -305,6 +305,14 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     if (this.state.isToLists) {
       this.form.controls['list_ids'].setValue(ids);
     }
+  }
+
+  resetChips() {
+    this.typeAheadOpts = Object.assign(
+      {},
+      this.typeAheadOpts,
+      { reset: this.resetChips$.next(true) }
+    );
   }
 
   onSwitchSearchType(type) {
@@ -329,14 +337,22 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
         break;
     }
 
-    this.typeAheadOpts = Object.assign(
-      {},
-      this.typeAheadOpts,
-      { reset: this.resetChips$.next(true) }
-    );
+    this.resetChips();
 
     this.form.controls['user_ids'].setValue([]);
     this.form.controls['list_ids'].setValue([]);
+  }
+
+  getObjectFromTypesArray(id) {
+    let result;
+
+    this.types.forEach(type => {
+      if (type.action === id) {
+        result = type;
+      }
+    });
+
+    return result;
   }
 
   ngOnInit() {
@@ -348,6 +364,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     let schoolPrivileges = this.session.user.school_level_privileges[this.session.school.id];
 
     let canDoEmergency = schoolPrivileges[CP_PRIVILEGES_MAP.emergency_announcement].w;
+
     this.types = require('./announcement-types').types;
 
     if (!canDoEmergency) {

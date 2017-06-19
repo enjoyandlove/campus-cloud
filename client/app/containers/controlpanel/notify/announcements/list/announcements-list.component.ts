@@ -44,6 +44,10 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
   }
 
   doFilter(filter) {
+    if (filter.type) {
+      super.resetPagination();
+    }
+
     this.state = Object.assign(
       {},
       this.state,
@@ -84,8 +88,8 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
       .catch(err => console.log(err));
   }
 
-  onCreated(notification) {
-    console.log('I am pushing this to the array', notification);
+  onCreated() {
+    this.fetch();
     // this.state.messages = Object.assign(
     //   {},
     //   this.state.messages,
@@ -107,7 +111,7 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
     this.messageType = {
       0: 'Emergency',
       1: 'Urgent',
-      2: 'Normal',
+      2: 'Regular',
     };
   }
 }

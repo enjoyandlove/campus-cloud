@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { STATUS } from '../../../shared/constants';
 
-const FIVE_MB = 5000000;
+const FIVE_MB = 5e6;
 
 interface IOptions {
   parser: Function; // Promise
@@ -76,6 +76,9 @@ export class CPUploadModalComponent implements OnInit {
 
     this.fileName = _file.name;
     this.processing = true;
+
+    // reset input value
+    file.target.value = null;
 
     this.props.parser(_file)
       .then(_ => {

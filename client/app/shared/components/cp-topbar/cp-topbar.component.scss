@@ -50,6 +50,20 @@ nav {
 
   li {
     display: inline-block;
+    position: relative;
+
+    .promote-badge {
+      top: -5px;
+      right: -45px;
+      padding: 3px;
+      line-height: 1;
+      font-size: 7px;
+      border-radius: 2px;
+      position: absolute;
+      text-transform: uppercase;
+      color: #ff0000 !important;
+      transition: color 300ms ease-in-out;
+    }
 
     a,
     span {

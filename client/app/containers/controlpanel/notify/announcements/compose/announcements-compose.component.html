@@ -59,6 +59,7 @@
                       <cp-check-dropdown
                         [items]="types"
                         [reset]="resetCustomFields$"
+                        [selectedItem]="selectedType"
                         buttonClass="cpbtn cpbtn--cancel"
                         (selected)="onTypeChanged($event)">
                       </cp-check-dropdown>
@@ -72,6 +73,7 @@
                       <cp-dropdown
                         [items]="stores$ | async"
                         [reset]="resetCustomFields$"
+                        [selectedItem]="selectedHost"
                         (selected)="onSelectedStore($event)">
                       </cp-dropdown>
                     </div>
