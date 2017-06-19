@@ -8,9 +8,9 @@ urlpatterns = [
 
     url(r'^clubs/excel$', views.import_clubs),
 
-    url(r'^events/excel$', views.import_excel_event),
+    url(r'^events/excel$', views.import_events),
 
-    url(r'^services/excel$', views.import_excel_service),
+    url(r'^services/excel$', views.import_services),
 
-    url(r'^announcements/import$', views.import_list)
+    url(r'^announcements/import$', views.import_lists)
 ]
