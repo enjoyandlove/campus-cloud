@@ -59,6 +59,12 @@ export class BaseComponent implements OnInit {
     this.endRange = this.endRange + this.resultsPerPage;
   }
 
+  resetPagination(): void {
+    this.pageNumber = 1;
+    this.startRange = 1;
+    this.endRange = 100;
+  }
+
   goToPrevious(): void {
     if (this.pageNumber === 1) { return; };
     this.pageNumber -= 1;
