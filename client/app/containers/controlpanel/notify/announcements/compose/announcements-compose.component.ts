@@ -322,9 +322,11 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   onTypeAheadChange(ids) {
     if (this.state.isToUsers) {
       this.form.controls['user_ids'].setValue(ids);
+      this.form.controls['list_ids'].setValue([]);
     }
     if (this.state.isToLists) {
       this.form.controls['list_ids'].setValue(ids);
+      this.form.controls['user_ids'].setValue([]);
     }
   }
 
