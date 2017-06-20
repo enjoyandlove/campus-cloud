@@ -82,7 +82,9 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
     this.users = [];
     this.form.reset();
     this.reset.emit();
+    this.isError = false;
     $('#listsCreate').modal('hide');
+
     this.typeAheadOpts = Object.assign(
       {},
       this.typeAheadOpts,
