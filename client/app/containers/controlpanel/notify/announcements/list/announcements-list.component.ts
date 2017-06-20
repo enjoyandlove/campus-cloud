@@ -28,6 +28,7 @@ declare var $: any;
 export class AnnouncementsListComponent extends BaseComponent implements OnInit {
   loading;
   messageType;
+  isDeleteModal;
   suggestions = [];
   state: IState = state;
   deleteAnnouncement = null;
@@ -41,6 +42,13 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
     super.isLoading().subscribe(res => this.loading = res);
 
     this.fetch();
+  }
+
+  onLauncDeleteModal(item) {
+    this.isDeleteModal = true;
+    this.deleteAnnouncement = item;
+
+    setTimeout(() => { $('#deleteAnnouncementModal').modal(); }, 1);
   }
 
   doFilter(filter) {

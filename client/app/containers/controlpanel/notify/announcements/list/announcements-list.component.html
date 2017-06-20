@@ -51,9 +51,8 @@
             </span>
 
             <span
-              (click)="deleteannouncement = message"
-              class="col-xs-1 text-center hover delete-message"
-              data-toggle="modal" data-target="#deleteAnnouncementModal">
+              (click)="onLauncDeleteModal(message)"
+              class="col-xs-1 text-center hover delete-message">
               &times;
             </span>
           </div>
@@ -78,9 +77,11 @@
 </cp-modal>
 
 <cp-modal
+  *ngIf="isDeleteModal"
   modalId="deleteAnnouncementModal">
   <cp-announcements-delete
     [item]="deleteAnnouncement"
-    (deleted)="onDeleted($event)">
+    (deleted)="onDeleted($event)"
+    (teardown)="isDeleteModal = false">
   </cp-announcements-delete>
 </cp-modal>
