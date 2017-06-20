@@ -1,0 +1,40 @@
+@import '~styles/core/colors';
+@import '~styles/components/button';
+
+.recipients {
+
+  &__more,
+  &__names {
+    display: inline-block;
+  }
+
+  &__more {
+    position: relative;
+    button {
+      padding: 0;
+      border: none;
+      box-shadow: none;
+      margin-left: 8px;
+      background: transparent;
+
+      &:focus,
+      &:active {
+        outline: none;
+      }
+    }
+  }
+
+  &__list {
+    top: 110%;
+    left: 7px;
+    margin: 0;
+    padding: 0;
+    overflow: scroll;
+    min-width: 115px;
+    max-height: 150px;
+  }
+
+  &__item {
+    padding: 5px 10px;
+  }
+}

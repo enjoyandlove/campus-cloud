@@ -9,7 +9,8 @@ import { AnnouncementsConfirmComponent } from './confirm';
 import { AnnouncementsComposeComponent } from './compose';
 
 import {
-  AnnouncementsListActionBoxComponent
+  AnnouncementsListActionBoxComponent,
+  AnnouncementsListRecipientsComponent
 } from './list/components';
 
 import { AnnouncementsRoutingModule } from './announcements.routing.module';
@@ -18,7 +19,8 @@ import { AnnouncementsService } from './announcements.service';
 
 @NgModule({
   declarations: [ AnnouncementsListComponent, AnnouncementsListActionBoxComponent,
-  AnnouncementsComposeComponent, AnnouncementsConfirmComponent, AnnouncementDeleteComponent ],
+  AnnouncementsComposeComponent, AnnouncementsConfirmComponent, AnnouncementDeleteComponent,
+  AnnouncementsListRecipientsComponent ],
 
   imports: [ CommonModule, SharedModule, AnnouncementsRoutingModule, ReactiveFormsModule ],
 

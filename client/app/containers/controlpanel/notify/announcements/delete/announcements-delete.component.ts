@@ -37,7 +37,7 @@ export class AnnouncementDeleteComponent implements OnInit {
 
     this
       .service
-      .deleteAnnoucement(this.item.id, search)
+      .deleteAnnouncement(this.item.id, search)
       .subscribe(
         _ => {
           this.teardown.emit();

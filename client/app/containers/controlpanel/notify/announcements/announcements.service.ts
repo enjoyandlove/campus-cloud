@@ -42,7 +42,7 @@ export class AnnouncementsService extends BaseService {
     return super.post(url, body, { search }).map(res => res.json());
   }
 
-  deleteAnnoucement(id: number, search: URLSearchParams) {
+  deleteAnnouncement(id: number, search: URLSearchParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ANNOUNCEMENT}/${id}`;
 
     return super.delete(url, { search }).map(res => res);

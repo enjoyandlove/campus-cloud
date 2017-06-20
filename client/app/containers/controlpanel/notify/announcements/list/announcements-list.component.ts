@@ -98,11 +98,6 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
 
   onCreated() {
     this.fetch();
-    // this.state.messages = Object.assign(
-    //   {},
-    //   this.state.messages,
-    //   { notification, ...this.state.messages }
-    // );
   }
 
   onPaginationNext() {
