@@ -207,6 +207,7 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
     ];
 
     if (this.props.defaultValues) {
+      this.teardown();
       this.props.defaultValues.map(value => {
         this.state.ids.push(value.id);
         this.state.chips.push(value);

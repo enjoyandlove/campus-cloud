@@ -4,6 +4,7 @@ import { URLSearchParams } from '@angular/http';
 
 import { CPSession } from '../../../../../session';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { STATUS } from '../../../../../shared/constants';
 import { StoreService } from '../../../../../shared/services';
 import { AnnouncementsService } from '../announcements.service';
 import { CP_PRIVILEGES_MAP } from '../../../../../shared/utils';
@@ -26,6 +27,8 @@ const state: IState = {
   isCampusWide: false
 };
 
+const THROTTLED_STATUS = 1;
+
 @Component({
   selector: 'cp-announcements-compose',
   templateUrl: './announcements-compose.component.html',
@@ -37,7 +40,9 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
   stores$;
 
+  isError;
   sendAsName;
+  errorMessage;
   selectedHost;
   selectedType;
   typeAheadOpts;
@@ -178,9 +183,15 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   resetModal() {
     this.form.reset();
     this.teardown.emit();
+    this.isError = false;
+    this.shouldConfirm = false;
+    this.state.isCampusWide = false;
     this.resetCustomFields$.next(true);
 
-    this.state.isCampusWide = false;
+    this.subject_prefix = {
+      label: null,
+      type: null
+    };
 
     $('#composeModal').modal('hide');
 
@@ -218,9 +229,11 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
     this.form.controls['user_ids'].setValue([]);
     this.form.controls['list_ids'].setValue([]);
+    this.form.controls['is_school_wide'].setValue(status);
   }
 
   doSubmit() {
+    this.isError = false;
     let search = new URLSearchParams();
     search.append('school_id', this.session.school.id.toString());
 
@@ -228,6 +241,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
     let data = {
       'store_id': this.form.value.store_id,
+      'is_school_wide': this.form.value.is_school_wide,
       'subject': `${prefix} ${this.form.value.subject}`,
       'message': `${this.form.value.message} \n ${this.sendAsName}`,
       'priority': this.form.value.priority
@@ -253,12 +267,21 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       .service
       .postAnnouncements(search, data)
       .subscribe(
-      _ => {
+      res => {
+        if (res.status === THROTTLED_STATUS) {
+          this.isError = true;
+          this.errorMessage = `Message not sent, \n
+          please wait ${(res.timeout / 60).toFixed()} minutes before trying again`;
+          return;
+        }
         this.form.reset();
         this.created.emit(this.form.value);
         this.resetModal();
       },
-      err => console.log(err)
+      _ => {
+        this.isError = true;
+        this.errorMessage = STATUS.SOMETHING_WENT_WRONG;
+      }
       );
   }
 
@@ -375,6 +398,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       'store_id': [null, Validators.required],
       'user_ids': [[]],
       'list_ids': [[]],
+      'is_school_wide': false,
       'subject': [null, [Validators.required, Validators.maxLength(128)]],
       'message': [null, [Validators.required, Validators.maxLength(400)]],
       'priority': [this.types[0].action, Validators.required]

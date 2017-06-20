@@ -6,6 +6,7 @@
 
         <span
           data-dismiss="modal"
+          (click)="doReset()"
           class="pull-right hover cpmodal__header__close">
           &times;
         </span>
@@ -25,9 +26,11 @@
 
   <div class="cpmodal__footer">
     <div class="row">
-      <div class="col-xs-6 col-xs-offset-6 text-right">
+      <div class="col-xs-12 text-right">
+        <label class="error" *ngIf="isError">{{ errorMessage }}</label>
         <button
           type="button"
+          (click)="doReset()"
           class="cpbtn cpbtn--cancel"
           data-dismiss="modal" i18n>
           Cancel
