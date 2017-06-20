@@ -75,14 +75,14 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       }
     } else {
       children = [
-        {
-          'label': 'Info',
-          'url': `${this.buildUrlPrefix()}/${this.eventId}/info`
-        },
-        {
-          'label': res.event_attendance === 1 ? 'Assessment' : 'Event',
-          'url': `${this.buildUrlPrefix()}/${this.eventId}`
-        }
+        // {
+        //   'label': 'Info',
+        //   'url': `${this.buildUrlPrefix()}/${this.eventId}/info`
+        // },
+        // {
+        //   'label': res.event_attendance === 1 ? 'Assessment' : 'Event',
+        //   'url': `${this.buildUrlPrefix()}/${this.eventId}`
+        // }
       ];
     }
 
