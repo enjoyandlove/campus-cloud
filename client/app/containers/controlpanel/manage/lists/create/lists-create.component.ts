@@ -5,6 +5,7 @@ import { URLSearchParams } from '@angular/http';
 
 import { ListsService } from '../lists.service';
 import { CPSession } from '../../../../../session';
+import { STATUS } from '../../../../../shared/constants';
 
 declare var $: any;
 
@@ -27,7 +28,9 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
   @Output() created: EventEmitter<any> = new EventEmitter();
   @Output() resetChips$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
+  isError;
   chipOptions;
+  errorMessage;
   typeAheadOpts;
   form: FormGroup;
   suggestions = [];
@@ -41,6 +44,7 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
   ) { }
 
   doSubmit() {
+    this.isError = false;
     let search = new URLSearchParams();
     search.append('school_id', this.session.school.id.toString());
 
@@ -62,7 +66,15 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
         this.created.emit(data);
         this.resetModal();
       },
-      err => console.log(err)
+      err => {
+        this.isError = true;
+        let error = JSON.parse(err._body).error;
+        if (error === 'Database Error') {
+          this.errorMessage = 'A list with that name already exists';
+          return;
+        }
+        this.errorMessage = STATUS.SOMETHING_WENT_WRONG;
+      }
       );
   }
 
