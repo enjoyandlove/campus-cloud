@@ -18,7 +18,7 @@ export class AnnouncementsListRecipientsComponent implements OnInit {
   ngOnInit() {
     if (this.lists.length) {
       this.lists.map((item, index) => {
-        if (index + 1 <= this.maxAllowed) {
+        if (index <= this.maxAllowed) {
           this.recipients.push(item.name);
           return;
         }
@@ -27,7 +27,7 @@ export class AnnouncementsListRecipientsComponent implements OnInit {
     }
     if (this.users.length) {
       this.users.map((item, index) => {
-        if (index + 1 < this.maxAllowed) {
+        if (index <= this.maxAllowed) {
           this.recipients.push(`${item.firstname} ${item.lastname}`);
           return;
         }
