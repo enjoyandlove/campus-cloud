@@ -137,8 +137,15 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   teardown() {
-    this.state.ids = [];
-    this.state.chips = [];
+    this.state = Object.assign(
+      {},
+      this.state,
+      {
+        ids: [],
+        chips: []
+      }
+    );
+    console.log(this.state.chips);
   }
 
   ngOnDestroy() {
@@ -146,6 +153,8 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onSwitchChange(selection) {
+    this.teardown();
+
     switch (selection.id) {
       case 1:
         this.state = Object.assign(

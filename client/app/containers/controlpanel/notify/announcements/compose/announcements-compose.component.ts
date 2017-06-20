@@ -223,9 +223,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       }
     );
 
-    if (status) {
-      this.resetChips();
-    }
+    this.resetChips();
 
     this.form.controls['user_ids'].setValue([]);
     this.form.controls['list_ids'].setValue([]);
