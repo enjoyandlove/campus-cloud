@@ -178,9 +178,9 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   resetModal() {
     this.form.reset();
     this.teardown.emit();
-    this.resetCustomFields$.next(true);
-
+    this.shouldConfirm = false;
     this.state.isCampusWide = false;
+    this.resetCustomFields$.next(true);
 
     this.subject_prefix = {
       label: null,
