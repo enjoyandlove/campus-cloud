@@ -145,7 +145,6 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
         chips: []
       }
     );
-    console.log(this.state.chips);
   }
 
   ngOnDestroy() {

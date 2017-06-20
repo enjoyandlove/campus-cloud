@@ -329,11 +329,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   }
 
   resetChips() {
-    this.typeAheadOpts = Object.assign(
-      {},
-      this.typeAheadOpts,
-      { reset: this.resetChips$.next(true) }
-    );
+    this.resetChips$.next(true);
   }
 
   onSwitchSearchType(type) {
