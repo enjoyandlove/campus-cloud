@@ -51,7 +51,7 @@
             </span>
 
             <span
-              (click)="deleteAnnoucement = message"
+              (click)="deleteannouncement = message"
               class="col-xs-1 text-center hover delete-message"
               data-toggle="modal" data-target="#deleteAnnouncementModal">
               &times;
@@ -80,7 +80,7 @@
 <cp-modal
   modalId="deleteAnnouncementModal">
   <cp-announcements-delete
-    [item]="deleteAnnoucement"
+    [item]="deleteAnnouncement"
     (deleted)="onDeleted($event)">
   </cp-announcements-delete>
 </cp-modal>

@@ -30,7 +30,7 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
   messageType;
   suggestions = [];
   state: IState = state;
-  deleteAnnoucement = null;
+  deleteAnnouncement = null;
   dateFormat = FORMAT.DATETIME;
 
   constructor(
