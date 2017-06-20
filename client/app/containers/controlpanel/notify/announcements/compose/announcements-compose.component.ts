@@ -223,6 +223,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
     this.form.controls['user_ids'].setValue([]);
     this.form.controls['list_ids'].setValue([]);
+    this.form.controls['is_school_wide'].setValue(status);
   }
 
   doSubmit() {
@@ -233,6 +234,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
     let data = {
       'store_id': this.form.value.store_id,
+      'is_school_wide': this.form.value.is_school_wide,
       'subject': `${prefix} ${this.form.value.subject}`,
       'message': `${this.form.value.message} \n ${this.sendAsName}`,
       'priority': this.form.value.priority
@@ -380,6 +382,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       'store_id': [null, Validators.required],
       'user_ids': [[]],
       'list_ids': [[]],
+      'is_school_wide': false,
       'subject': [null, [Validators.required, Validators.maxLength(128)]],
       'message': [null, [Validators.required, Validators.maxLength(400)]],
       'priority': [this.types[0].action, Validators.required]
