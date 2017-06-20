@@ -182,6 +182,11 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
     this.state.isCampusWide = false;
 
+    this.subject_prefix = {
+      label: null,
+      type: null
+    };
+
     $('#composeModal').modal('hide');
 
     this.resetChips();
