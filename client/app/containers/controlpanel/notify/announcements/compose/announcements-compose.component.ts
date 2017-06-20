@@ -268,11 +268,10 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       .postAnnouncements(search, data)
       .subscribe(
       res => {
-        console.log(res);
         if (res.status === THROTTLED_STATUS) {
           this.isError = true;
           this.errorMessage = `Message not sent, \n
-          please wait ${res.timeout} seconds before trying again`;
+          please wait ${(res.timeout / 60).toFixed()} minutes before trying again`;
           return;
         }
         this.form.reset();
