@@ -9,7 +9,7 @@ export class AnnouncementsListRecipientsComponent implements OnInit {
   @Input() lists: Array<{ id: number, name: string }>;
   @Input() users: Array<{ id: number, firstname: string, lastname: string }>;
 
-  maxAllowed = 2;
+  maxAllowed = 3;
   recipients: Array<string> = [];
   recipients_more: Array<string> = [];
 
@@ -18,7 +18,7 @@ export class AnnouncementsListRecipientsComponent implements OnInit {
   ngOnInit() {
     if (this.lists.length) {
       this.lists.map((item, index) => {
-        if (index <= this.maxAllowed) {
+        if (index + 1 <= this.maxAllowed) {
           this.recipients.push(item.name);
           return;
         }
@@ -27,7 +27,7 @@ export class AnnouncementsListRecipientsComponent implements OnInit {
     }
     if (this.users.length) {
       this.users.map((item, index) => {
-        if (index <= this.maxAllowed) {
+        if (index + 1 <= this.maxAllowed) {
           this.recipients.push(`${item.firstname} ${item.lastname}`);
           return;
         }
