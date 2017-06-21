@@ -30,6 +30,10 @@ class CSVParser:
             column_titles[index] = column_titles[index].lower(
                 ).replace(" ", "_")
 
+
+        if not data:
+            raise KeyError()
+
         # zip data with columns
         result = []
         for item in data:
