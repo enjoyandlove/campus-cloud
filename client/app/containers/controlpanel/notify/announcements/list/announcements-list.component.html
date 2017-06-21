@@ -74,9 +74,12 @@
   </ng-container>
 </ng-container>
 
-<cp-modal modalId="composeModal">
+<cp-modal
+  modalId="composeModal"
+  *ngIf="isComposeModal">
   <cp-announcements-compose
-    (created)="onCreated($event)">
+    (created)="onCreated($event)"
+    (teardown)="isComposeModal = false">
   </cp-announcements-compose>
 </cp-modal>
 

@@ -29,6 +29,7 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
   loading;
   messageType;
   isDeleteModal;
+  isComposeModal;
   suggestions = [];
   state: IState = state;
   deleteAnnouncement = null;
@@ -69,7 +70,8 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
   }
 
   onLaunchCreateModal() {
-    $('#composeModal').modal();
+    this.isComposeModal = true;
+    setTimeout(() => { $('#composeModal').modal(); }, 1);
   }
 
   onDeleted(id) {
