@@ -81,7 +81,7 @@ textarea {
   &__list {
     @include cpDropdownMenu();
 
-    top: 115%;
+    top: 100%;
     left: 15px;
     z-index: 9;
     position: absolute;
