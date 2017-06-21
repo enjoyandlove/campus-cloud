@@ -32,11 +32,14 @@ class CSVParser:
 
 
         if not data:
-            raise KeyError()
+            raise KeyError('File is Empty')
 
         # zip data with columns
         result = []
         for item in data:
+            for i in item:
+                if not i:
+                    raise KeyError('All fields are required')
             result.append(dict(zip(column_titles, item)))
 
         return result

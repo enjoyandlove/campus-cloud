@@ -76,7 +76,7 @@ def import_lists(request):
     try:
         parsed_data = parser.all_fields_required()
     except KeyError as e:
-        return JsonResponse({"error": 'List is empty'},
+        return JsonResponse({"error": e.args[0]},
                                 safe=False, status=400)
 
     return JsonResponse(parsed_data, safe=False)
