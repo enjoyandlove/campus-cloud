@@ -182,7 +182,6 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
   resetModal() {
     this.form.reset();
-    this.teardown.emit();
     this.isError = false;
     this.shouldConfirm = false;
     this.state.isCampusWide = false;
@@ -196,6 +195,8 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     $('#composeModal').modal('hide');
 
     this.resetChips();
+
+    this.teardown.emit();
   }
 
   onSelectedStore(store) {

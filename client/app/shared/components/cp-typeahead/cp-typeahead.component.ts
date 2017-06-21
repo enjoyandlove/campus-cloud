@@ -20,14 +20,6 @@ interface IState {
   chips: Array<{ 'label': string; 'id': number }>;
 }
 
-const state: IState = {
-  ids: [],
-  chips: [],
-  isLists: false,
-  isUsers: false,
-  canSearch: true,
-};
-
 interface IProps {
   withSwitcher: boolean;
   suggestions: Array<any>;
@@ -52,7 +44,13 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
   el;
   chipOptions;
   switcherMenu;
-  state: IState = state;
+  state: IState = {
+    ids: [],
+    chips: [],
+    isLists: false,
+    isUsers: false,
+    canSearch: true
+  };
 
   constructor() { }
 
@@ -163,11 +161,11 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
             isUsers: true,
             isLists: false,
           });
-          this.chipOptions = Object.assign(
-            {},
-            this.chipOptions,
-            { icon: 'account_box' }
-          );
+        this.chipOptions = Object.assign(
+          {},
+          this.chipOptions,
+          { icon: 'account_box' }
+        );
         break;
       case 2:
         this.state = Object.assign(
@@ -177,11 +175,11 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
             isUsers: false,
             isLists: true,
           });
-          this.chipOptions = Object.assign(
-            {},
-            this.chipOptions,
-            { icon: 'list' }
-          );
+        this.chipOptions = Object.assign(
+          {},
+          this.chipOptions,
+          { icon: 'list' }
+        );
         break;
     }
 
