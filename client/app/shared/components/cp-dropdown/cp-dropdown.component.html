@@ -4,8 +4,14 @@
     data-toggle="dropdown"
     [class.cpbtn--cancel--error]="isRequiredError"
     class="cpbtn cpbtn--cancel cp-dropdown__button text-truncate">
-    {{ selectedItem ? selectedItem.label : items[0].label }}
-    <i class="material-icons">keyboard_arrow_down</i>
+    <div class="row">
+      <div class="col-xs-10 no-right-padding text-truncate">
+        {{ selectedItem ? selectedItem.label : items[0].label }}
+      </div>
+      <div class="col-xs-2 no-right-padding cp-dropdown__icon-wrapper">
+        <i class="material-icons">keyboard_arrow_down</i>
+      </div>
+    </div>
   </button>
   <ul class="cp-dropdown__list dropdown-menu" *ngIf="items.length > 1">
     <li
