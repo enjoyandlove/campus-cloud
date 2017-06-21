@@ -18,6 +18,9 @@
         outline: none;
         border: none;
       }
+      &::-ms-clear {
+        display: none;
+      }
     }
   }
 

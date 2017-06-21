@@ -9,4 +9,15 @@
 
     margin-bottom: 0;
   }
+
+  &__section {
+    @include font-semi-bold();
+
+    margin-top: 25px;
+  }
+}
+
+li {
+  @include font-14px();
+  margin-bottom: 14px;
 }
