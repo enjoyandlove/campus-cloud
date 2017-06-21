@@ -65,6 +65,11 @@ label {
   border: 1px solid $border-color;
   transition: all 200ms ease-in-out;
 
+  &__toggle {
+    top: 5px;
+    position: relative;
+  }
+
   .title {
     @include font-16px();
     @include font-semi-bold();
