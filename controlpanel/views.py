@@ -73,7 +73,11 @@ def import_lists(request):
     io_string = io.StringIO(decoded_file)
 
     parser = CSVParser(io_string)
-    parsed_data = parser.all_fields_required()
+    try:
+        parsed_data = parser.all_fields_required()
+    except KeyError as e:
+        return JsonResponse({"error": 'List is empty'},
+                                safe=False, status=400)
 
     return JsonResponse(parsed_data, safe=False)
 
