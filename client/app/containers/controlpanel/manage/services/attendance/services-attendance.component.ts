@@ -62,12 +62,12 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
   private buildHeader() {
     let children = [
       {
-        'label': 'Events',
-        'url': `/manage/services/${this.serviceId}/events`
-      },
-      {
         'label': 'Info',
         'url': `/manage/services/${this.serviceId}/info`
+      },
+      {
+        'label': 'Events',
+        'url': `/manage/services/${this.serviceId}/events`
       }
     ];
 
@@ -77,7 +77,7 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
         'url': `/manage/services/${this.serviceId}`
       };
 
-      children = [attendance, ...children];
+      children = [...children, attendance];
     }
 
     this.store.dispatch({
