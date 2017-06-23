@@ -111,7 +111,7 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
 
         users.forEach(user => {
           _users.push({
-            'label': `${user.firstname} ${user.lastname}`,
+            'label': `${user.email}`,
             'id': user.id
           });
         });
