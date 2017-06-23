@@ -90,7 +90,7 @@ export class ListsEditComponent implements OnInit {
     this.list.users.map(user => {
       chips.push(
         {
-          'label': `${user.firstname} ${user.lastname}`,
+          'label': `${user.email}`,
           'id': user.id
         }
       );
@@ -117,7 +117,7 @@ export class ListsEditComponent implements OnInit {
 
         users.forEach(user => {
           _users.push({
-            'label': `${user.firstname} ${user.lastname}`,
+            'label': `${user.email}`,
             'id': user.id
           });
         });
