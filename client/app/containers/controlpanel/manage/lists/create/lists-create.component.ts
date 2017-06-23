@@ -13,10 +13,6 @@ interface IState {
   isPristine: boolean;
 }
 
-const state: IState = {
-  isPristine: true
-};
-
 @Component({
   selector: 'cp-lists-create',
   templateUrl: './lists-create.component.html',
@@ -35,7 +31,9 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
   form: FormGroup;
   suggestions = [];
   isFormValid = false;
-  state: IState = state;
+  state: IState = {
+    isPristine: true
+  };
 
   constructor(
     private fb: FormBuilder,
