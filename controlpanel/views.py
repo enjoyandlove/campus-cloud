@@ -38,7 +38,13 @@ def import_events(request):
     io_string = io.StringIO(decoded_file)
 
     parser = CSVParser(io_string)
-    parsed_data = parser.all_fields_required()
+
+    try:
+        parsed_data = parser.all_fields_required()
+    except KeyError as e:
+        return JsonResponse({"error": e.args[0]},
+                                safe=False, status=400)
+
 
     for item in parsed_data:
         date_columns = ['start_date', 'end_date']
@@ -73,6 +79,7 @@ def import_lists(request):
     io_string = io.StringIO(decoded_file)
 
     parser = CSVParser(io_string)
+
     try:
         parsed_data = parser.all_fields_required()
     except KeyError as e:
@@ -92,7 +99,13 @@ def import_clubs(request):
     io_string = io.StringIO(decoded_file)
 
     parser = CSVParser(io_string)
-    parsed_data = parser.all_fields_required()
+
+    try:
+        parsed_data = parser.all_fields_required()
+    except KeyError as e:
+        return JsonResponse({"error": e.args[0]},
+                                safe=False, status=400)
+
     return JsonResponse(json.dumps(parsed_data), safe=False)
 
 
@@ -106,5 +119,11 @@ def import_services(request):
     io_string = io.StringIO(decoded_file)
 
     parser = CSVParser(io_string)
-    parsed_data = parser.all_fields_required()
+
+    try:
+        parsed_data = parser.all_fields_required()
+    except KeyError as e:
+        return JsonResponse({"error": e.args[0]},
+                                safe=False, status=400)
+
     return JsonResponse(json.dumps(parsed_data), safe=False)
