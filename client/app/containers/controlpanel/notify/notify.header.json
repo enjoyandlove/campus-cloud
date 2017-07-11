@@ -1,0 +1,11 @@
+{
+  "heading": "Notify",
+  "subheading": "",
+  "em": null,
+  "children": [
+    {
+      "label": "Announcements",
+      "url": "/notify"
+    }
+  ]
+}

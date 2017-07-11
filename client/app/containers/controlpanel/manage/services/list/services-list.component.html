@@ -1,0 +1,88 @@
+<div class="row">
+  <div class="col-xs-12">
+    <cp-services-list-action-box
+      (listAction)="doFilter($event)">
+    </cp-services-list-action-box>
+  </div>
+</div>
+
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div *ngSwitchCase="false">
+    <cp-no-content
+      class="add-card-margin"
+      *ngIf="!state.services.length"
+      noContentText="No services found...">
+    </cp-no-content>
+
+    <ul class="services cp-form" *ngIf="state.services.length">
+      <li class="cp-form__header col-xs-12">
+        <div class="row">
+          <span class="col-xs-4" i18n>Name</span>
+          <span class="col-xs-2 text-center" i18n>Visits</span>
+          <span class="col-xs-2 text-center" i18n>Ratings</span>
+          <span class="col-xs-3 text-center" i18n>Average Rating</span>
+          <span class="col-xs-1"></span>
+        </div>
+      </li>
+
+      <li class="cp-form__item col-xs-12" *ngFor="let service of state.services">
+        <div class="row">
+          <span class="col-xs-4" i18n>
+            <div class="row">
+              <div class="col-xs-2 services__thumbnail">
+                <img class="img-rounded" [src]="service.logo_url">
+              </div>
+              <div class="col-xs-8 text-truncate no-left-padding">
+                <strong>
+                  <a [routerLink]="[service.service_attendance ? service.id : service.id + '/info']">{{ service.name }}</a>
+                </strong>
+                <br>
+                {{ service.description }}
+              </div>
+            </div>
+          </span>
+          <span class="col-xs-2 text-center" i18n>{{ service.total_visits }}</span>
+          <span class="col-xs-2 text-center" i18n>{{ service.num_ratings }}</span>
+          <span class="col-xs-3 text-center" i18n>
+            <cp-stars
+            *ngIf="service.service_attendance === 1"
+            [maxRate]="service.rating_scale_maximum"
+            [avgRate]="service.avg_rating_percent">
+          </cp-stars>
+          </span>
+          <span
+            (click)="onDelete(service)"
+            data-toggle="modal" data-target="#deleteServicesModal"
+            class="col-xs-1 hover text-truncate delete-service text-center">
+            &times;
+          </span>
+        </div>
+      </li>
+    </ul>
+
+    <div class="row" *ngIf="state.services.length">
+      <div class="col-xs-12">
+        <cp-pagination
+          [pageNext]="pageNext"
+          [pagePrev]="pagePrev"
+          [pageNumber]="pageNumber"
+          (next)="onPaginationNext()"
+          (previous)="onPaginationPrevious()">
+        </cp-pagination>
+      </div>
+    </div>
+  </div>
+</div>
+
+<cp-modal modalId="excelServicesModal">
+  <cp-services-excel-modal></cp-services-excel-modal>
+</cp-modal>
+
+<cp-modal modalId="deleteServicesModal">
+  <cp-services-delete
+    [service]="deleteService"
+    (deleted)="onDeleted($event)">
+  </cp-services-delete>
+</cp-modal>

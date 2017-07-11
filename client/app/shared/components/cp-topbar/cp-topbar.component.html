@@ -16,12 +16,13 @@
             routerLinkActive="active">
             <a [routerLink]="['/manage']">Manage</a>
           </li>
-          <!--<li
+          <li
             *ngIf="canNotify"
             (click)="isOpen = false"
             routerLinkActive="active">
+            <span class="promote-badge">new</span>
             <a [routerLink]="['/notify']">Notify</a>
-          </li>-->
+          </li>
         </ul>
 
         <div

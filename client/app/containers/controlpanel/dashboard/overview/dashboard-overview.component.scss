@@ -1,0 +1,23 @@
+@import '~styles/components/card';
+@import '~styles/components/button';
+@import '~styles/core/typography';
+
+.page {
+  &__title {
+    @include font-24px();
+    @include font-bold();
+
+    margin-bottom: 0;
+  }
+
+  &__section {
+    @include font-semi-bold();
+
+    margin-top: 25px;
+  }
+}
+
+li {
+  @include font-14px();
+  margin-bottom: 14px;
+}

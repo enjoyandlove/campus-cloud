@@ -4,14 +4,13 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { CPMapsComponent, CPModalComponent, CPTopBarComponent, CPAvatarComponent,
-  CPSpinnerComponent, CPDropdownComponent, CPCheckboxComponent,
-  CPHamburgerComponent, CPPlaceAutoCompleteComponent,
+  CPSpinnerComponent, CPDropdownComponent, CPCheckboxComponent, CPPlaceAutoCompleteComponent,
   CPPageHeaderComponent, CPSearchBoxComponent, CPStarsComponent,
-  CPAlertComponent, CPAnimatedButtonComponent,
-  CPDatePickerComponent, CPSwitchComponent, CPSmallDatePickerComponent,
-  CPUploadButtonComponent, CPPaginationComponent, CPNoContentComponent,
-  CPCheckDropdownComponent, CPImageUploadComponent, SchoolSwitchComponent,
-  CPIntercommComponent, CPTrackersComponent
+  CPAlertComponent, CPDatePickerComponent, CPSwitchComponent,
+  CPSmallDatePickerComponent, CPUploadButtonComponent, CPPaginationComponent,
+  CPNoContentComponent, CPCheckDropdownComponent, CPImageUploadComponent,
+  SchoolSwitchComponent, CPIntercommComponent, CPTrackersComponent, CPChipComponent,
+  CPTypeAheadComponent, CPUploadModalComponent
 } from './components';
 
 import {
@@ -29,13 +28,12 @@ import {
   CPAvatarComponent, CPModalComponent,
   CPPlaceAutoCompleteComponent, CPUploadButtonComponent,
   CPSpinnerComponent, CPDropdownComponent,  CPCheckboxComponent,
-  CPPageHeaderComponent, CPHamburgerComponent, CPSearchBoxComponent,
-  CPDatePipe, CPStarsComponent, CPFilterPipe, CPAlertComponent,
-  CPAlertComponent, CPAnimatedButtonComponent, CPDatePickerComponent, CPSwitchComponent,
-  CPAnimatedButtonComponent, CPDatePickerComponent,
+  CPPageHeaderComponent, CPSearchBoxComponent, CPDatePipe,
+  CPStarsComponent, CPFilterPipe, CPAlertComponent,
+  CPAlertComponent, CPDatePickerComponent, CPSwitchComponent, CPDatePickerComponent,
   CPSmallDatePickerComponent, CPPaginationComponent, CPNoContentComponent,
   CPCheckDropdownComponent, CPImageUploadComponent, SchoolSwitchComponent, CPIntercommComponent,
-  CPTrackersComponent ],
+  CPTrackersComponent, CPUploadModalComponent, CPChipComponent, CPTypeAheadComponent ],
 
   imports: [ CommonModule, RouterModule, ReactiveFormsModule ],
 
@@ -45,12 +43,11 @@ import {
   CPAvatarComponent, CPModalComponent,
   CPPlaceAutoCompleteComponent, CPUploadButtonComponent,
   CPSpinnerComponent, CPDropdownComponent, CPCheckboxComponent,
-  CPPageHeaderComponent, CPHamburgerComponent, CPSearchBoxComponent,
-  CPDatePipe, CPStarsComponent, CPFilterPipe, CPAlertComponent,
-  CPAlertComponent, CPAnimatedButtonComponent, CPDatePickerComponent, CPSwitchComponent,
-  CPAnimatedButtonComponent, CPDatePickerComponent,
+  CPPageHeaderComponent, CPSearchBoxComponent, CPDatePipe,
+  CPStarsComponent, CPFilterPipe, CPAlertComponent,
+  CPAlertComponent, CPDatePickerComponent, CPSwitchComponent, CPDatePickerComponent,
   CPSmallDatePickerComponent, CPPaginationComponent, CPNoContentComponent,
   CPCheckDropdownComponent, CPImageUploadComponent, SchoolSwitchComponent, CPIntercommComponent,
-  CPTrackersComponent ]
+  CPTrackersComponent, CPUploadModalComponent, CPChipComponent, CPTypeAheadComponent ]
 })
 export class SharedModule { }

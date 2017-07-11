@@ -13,12 +13,6 @@
   display: inline-block;
   vertical-align: middle;
 
-  &.open {
-    button {
-      border: 1px solid $color-brand;
-    }
-  }
-
   &__button {
     width: 100%;
     text-align: left;
@@ -31,7 +25,7 @@
     }
 
     i {
-      top: 7px;
+      top: 8px;
       right: 12px;
       line-height: 1;
       font-size: 18px;

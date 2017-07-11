@@ -1,0 +1,44 @@
+@import '~styles/components/form';
+@import '~styles/components/modal';
+@import '~styles/components/button';
+
+.cpmodal__body {
+  margin-top: 15px;
+}
+
+.banner__wrapper {
+  height: 120px;
+  border-radius: 4px;
+  position: relative;
+  border: 1px solid $border-color;
+
+  img {
+    height: 100%;
+    margin-bottom: 15px;
+  }
+
+  &--no-border {
+    border: none;
+
+    button {
+      top: 0px;
+      padding: 0;
+      right: 10px;
+      border: none;
+      font-size: 2em;
+      box-shadow: none;
+      position: absolute;
+      background: transparent;
+      color: $color-light-grey;
+
+      &:focus,
+      &:active {
+        outline: none;
+      }
+    }
+  }
+
+  &__button {
+    margin-top: 45px;
+  }
+}

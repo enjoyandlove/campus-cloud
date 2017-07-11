@@ -1,0 +1,143 @@
+<div [ngSwitch]="isFormReady">
+  <cp-spinner *ngSwitchCase="false"></cp-spinner>
+
+  <div *ngSwitchCase="true">
+    <div class="row">
+      <cp-import-top-bar
+        [storeId]="storeId"
+        [clubId]="clubId"
+        [isClub]="isClub"
+        [serviceId]="serviceId"
+        [isService]="isService"
+        (bulkChange)="onBulkChange($event)"
+        (checkAll)="onCheckAll($event)"
+        (hostChange)="onHostBulkChange($event)"
+        (imageChange)="onImageBulkChange($event)">
+      </cp-import-top-bar>
+    </div>
+
+    <div class="row margin-bottom">
+      <div class="col-xs-12">
+        <form [formGroup]="form" class="form">
+          <div formArrayName="events">
+            <div class="row" *ngIf="!form.controls.events.controls.length">
+              <div class="col-xs-12">
+                <cp-no-content noContentText="No Events to Add..."></cp-no-content>
+              </div>
+            </div>
+            <div
+              class="row excel-form"
+              *ngFor="let event of form.controls.events.controls; let i=index">
+              <div [formGroupName]="i" class="col-xs-12">
+                <div class="row form__item">
+                  <div [class]="[storeId || clubId ? 'col-xs-5 text-truncate' : 'col-xs-3 text-truncate']">
+                    <div class="row margin-top">
+                      <div [class]="[storeId || clubId? 'col-xs-3 no-left-padding' : 'col-xs-4 no-left-padding']">
+                        <cp-checkbox
+                          class="checkbox pull-left"
+                          [isChecked]="isChecked[i].checked"
+                          (toggle)="onSingleCheck($event, i)">
+                        </cp-checkbox>
+
+                        <div class="event__avatar">
+                          <div
+                            *ngIf="!event.controls.poster_url.value"
+                            class="placeholder placeholder--small text-center"
+                            [class.isRequired]="formError && event.controls.poster_url.hasError('required')">
+                            <i class="material-icons">image</i>
+                          </div>
+                          <img
+                            *ngIf="event.controls.poster_url.value"
+                            class="img-responsive img-rounded"
+                            [src]="event.controls.poster_url.value">
+                        </div>
+                      </div>
+
+                      <div [class]="[storeId || clubId? 'col-xs-9 no-left-padding text-truncate' : 'col-xs-8 no-left-padding text-truncate']">
+                        <span class="event__title">
+                          <strong>{{ event.controls.title.value }}</strong>
+                        </span>
+                        <br>
+                        <span class="event__description">
+                          {{ event.controls.description.value }}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-2" *ngIf="!storeId && !clubId">
+                    <label i18n>Host</label>
+                    <cp-dropdown
+                      [items]="stores"
+                      (selected)="onSingleHostSelected($event, i)"
+                      [isRequiredError]="formError && event.controls.store_id.hasError('required')">
+                    </cp-dropdown>
+                  </div>
+                  <div class="col-xs-2">
+                    <label i18n>Assessment</label>
+                    <cp-switch
+                      [id]="i"
+                      [isChecked]="event.controls['event_attendance'].value"
+                      (toggle)="toggleSingleEventAttendance($event, i)">
+                    </cp-switch>
+
+                  </div>
+                  <div
+                    class="col-xs-5 no-left-padding" *ngIf="event.controls.event_attendance.value">
+                    <div class="row">
+                      <div class="col-xs-4 no-left-padding">
+                        <label i18n>Student Feedback</label>
+                        <cp-dropdown
+                          [items]="eventAttendanceFeedback"
+                          (selected)="updateAttendanceFeedback($event, i)"
+                          [isRequiredError]="formError && event.controls.event_feedback.hasError('required')">
+                        </cp-dropdown>
+                      </div>
+                      <div class="col-xs-4">
+                        <label i18n>Event Manager</label>
+                        <cp-dropdown
+                          [reset]="resetManagerDropdown$"
+                          [items]="event.controls['managers'].value"
+                          (selected)="updateEventManager($event, i)"
+                          [isRequiredError]="formError && event.controls.event_manager_id.hasError('required')">
+                        </cp-dropdown>
+                      </div>
+                      <div class="col-xs-4">
+                        <label i18n>Attd Manager</label>
+                        <input
+                          type="email"
+                          class="form-control"
+                          placeholder="john@example.com"
+                          formControlName="attendance_manager_email">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="cp-wrapper cp-wrapper--outer">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="pull-right">
+              <a [routerLink]="['/manage/events']"
+                class="cpbtn cpbtn--tall cpbtn--cancel" i18n>
+                Cancel
+              </a>
+              <button
+                type="button"
+                (click)="onSubmit()"
+                class="cpbtn cpbtn--tall cpbtn--primary" i18n>
+                Import {{ form.controls.events.controls.length }} Event(s)
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

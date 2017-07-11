@@ -1,0 +1,62 @@
+@import '~styles/core/colors';
+@import '~bootstrap/variables';
+@import '~styles/core/typography';
+@import '~styles/components/card';
+@import '~styles/components/form';
+@import '~styles/components/button';
+@import '~styles/components/dropdown';
+
+.actions {
+  label {
+    @include font-normal();
+
+    display: inline-block;
+    vertical-align: -8px;
+  }
+
+  .calendar {
+    height: 40px;
+  }
+
+  .checkbox {
+    margin-top: 5px;
+  }
+
+  & > div > * {
+    @media all and (max-width: $screen-md) {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.action-dropdown {
+  margin-left: -2px;
+  position: relative;
+
+  i {
+    padding: 4px;
+    font-size: 23px;
+  }
+
+  .dropdown-menu {
+    @include cpDropdownMenu();
+
+    top: 115%;
+    padding: 0;
+  }
+
+  a { padding: 0 };
+
+  li { padding: 12px; };
+
+  a,
+  li {
+    @include font-normal();
+    color: $color-text;
+
+    &:hover {
+      cursor: pointer;
+      background: none;
+    }
+  }
+}

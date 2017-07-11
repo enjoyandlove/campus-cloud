@@ -1,0 +1,20 @@
+<div class="cp-card">
+  <div class="row">
+    <div class="col-xs-3 pull-left">
+      <cp-searchbox (query)="onSearch($event)"></cp-searchbox>
+    </div>
+    <div class="col-xs-2 pull-left">
+      <cp-dropdown
+        [items]="types"
+        (selected)="onSelectedType($event)">
+      </cp-dropdown>
+    </div>
+    <div class="col-xs-3 pull-right text-right" *ngIf="canCompose">
+      <button
+        (click)="launchModal.emit()"
+        class="cpbtn cpbtn--primary" i18n>
+        Compose
+      </button>
+    </div>
+  </div>
+</div>

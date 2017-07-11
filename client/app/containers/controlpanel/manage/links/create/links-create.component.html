@@ -1,0 +1,94 @@
+<div class="cpmodal">
+  <div class="cpmodal__header">
+    <div class="row">
+      <div class="col-xs-12 text-center">
+        <span i18n><strong>Add Link</strong></span>
+
+        <span
+          data-dismiss="modal"
+          (click)="resetModal()"
+          class="pull-right hover cpmodal__header__close">
+          &times;
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cpmodal__body">
+    <form [formGroup]="form">
+      <div class="row form-group">
+        <div class="col-xs-6 no-right-padding">
+          <label i18n>Link Name</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="name">
+        </div>
+        <div class="col-xs-6">
+          <label i18n>Link URL</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="link_url"
+            placeholder="https://www.example.com">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-8 no-right-padding">
+          <label i18n>Link Description (Optional)</label>
+          <textarea
+            class="form-control"
+            formControlName="description">
+          </textarea>
+        </div>
+        <div class="col-xs-4">
+          <label i18n>Link Banner</label>
+          <div
+            *ngIf="form.controls['img_url'].value"
+            class="banner__wrapper banner__wrapper--no-border">
+            <img
+              alt=""
+              class="img-rounded img-responsive"
+              [src]="form.controls['img_url'].value">
+            <button
+              type="submit"
+              (click)="handleDeleteImage()">&times;</button>
+          </div>
+
+          <div
+            class="banner__wrapper text-center"
+            *ngIf="!form.controls['img_url'].value">
+            <cp-upload-button
+              class="banner__wrapper__button"
+              buttonClass="cpbtn cpbtn--link"
+              buttonText="Upload Picture"
+              (fileUpload)="onFileUpload($event)">
+            </cp-upload-button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="cpmodal__footer">
+    <div class="row">
+      <div class="col-xs-6 col-xs-offset-6 text-right">
+        <button
+          type="button"
+          data-dismiss="modal"
+          (click)="resetModal()"
+          class="cpbtn cpbtn--cancel" i18n>
+          Cancel
+        </button>
+
+        <button
+          type="button"
+          (click)="doSubmit()"
+          [disabled]="!form.valid"
+          class="cpbtn cpbtn--primary"i18n>
+          Add Link
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

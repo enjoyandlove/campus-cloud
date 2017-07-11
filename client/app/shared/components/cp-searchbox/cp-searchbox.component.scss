@@ -18,6 +18,9 @@
         outline: none;
         border: none;
       }
+      &::-ms-clear {
+        display: none;
+      }
     }
   }
 
@@ -25,6 +28,7 @@
     top: 7px;
     left: 10px;
     position: absolute;
+    color: $color-med-grey;
   }
 
   input {
