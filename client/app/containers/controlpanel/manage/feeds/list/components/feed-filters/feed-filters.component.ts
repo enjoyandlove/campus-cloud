@@ -141,6 +141,20 @@ export class FeedFiltersComponent implements OnInit {
     this.doFilter.emit(this.state);
   }
 
+  onUpdateWallSettings(wall) {
+    this.state = Object.assign(
+      {},
+      this.state,
+      {
+        postingMemberType: wall.min_posting_member_type,
+        commentingMemberType: wall.min_commenting_member_type,
+      }
+    );
+
+
+    this.doFilter.emit(this.state);
+  }
+
   onFilterSelected(item, type) {
     this.state = Object.assign(
       {},

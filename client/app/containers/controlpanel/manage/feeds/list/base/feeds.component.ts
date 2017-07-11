@@ -8,7 +8,6 @@ import { CPSession } from '../../../../../../session';
 import { BaseComponent } from '../../../../../../base/base.component';
 
 interface IState {
-  canPost: boolean;
   group_id: number;
   wall_type: number;
   feeds: Array<any>;
@@ -21,7 +20,6 @@ interface IState {
 
 const state: IState = {
   feeds: [],
-  canPost: true,
   group_id: null,
   wall_type: null,
   isCampusThread: true,
@@ -86,7 +84,6 @@ export class FeedsComponent extends BaseComponent implements OnInit {
       {},
       this.state,
       {
-        canPost: data.canPost,
         group_id: data.group_id,
         wall_type: data.wall_type,
         commentingMemberType: data.commentingMemberType,
