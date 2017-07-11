@@ -16,6 +16,11 @@ export class CPFilterPipe implements PipeTransform {
         });
       }
       );
+
+      if (!filterResults.length) {
+        filterResults.push({ noResults: true });
+      }
+
     } else {
       data.forEach(item => {
         let str: String = (item[filterBy]).toString().toLowerCase();
