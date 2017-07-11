@@ -12,7 +12,7 @@ export const types = [
   {
     action: 0,
     label: 'Emergency',
-    description: 'Overrides the push settings of the user and force users to \
-    dismiss the message'
+    description: 'Overrides the push settings of the user and forces users to \
+    acknowledge the message'
   }
 ];
