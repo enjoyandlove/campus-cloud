@@ -3,12 +3,13 @@
 @import '~styles/components/button';
 
 .remove-image {
-  left: 12px;
+  left: 1px;
   padding: 0;
-  font-size: 2em;
+  font-size: 1.5em;
   position: absolute;
   color: $color-white;
   background: transparent;
+  text-shadow: 0px 0px 2px rgba(0, 0, 0, .7);
 }
 
 p.maxLength {
@@ -55,8 +56,8 @@ p.maxLength {
   &__upload {
     left: 15px;
     bottom: 15px;
-    padding-top: 40px;
     height: 140px;
+    padding-top: 40px;
     position: relative;
 
     img {
