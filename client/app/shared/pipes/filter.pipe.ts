@@ -14,7 +14,13 @@ export class CPFilterPipe implements PipeTransform {
             filterResults.push(item);
           }
         });
-      });
+      }
+      );
+
+      if (!filterResults.length) {
+        filterResults.push({ noResults: true });
+      }
+
     } else {
       data.forEach(item => {
         let str: String = (item[filterBy]).toString().toLowerCase();
@@ -23,10 +29,10 @@ export class CPFilterPipe implements PipeTransform {
           filterResults.push(item);
         }
       });
-    }
 
-    if (!filterResults.length) {
-      filterResults.push({[filterBy]: 'No Results'});
+      if (!filterResults.length) {
+        filterResults.push({ [filterBy]: 'No Results' });
+      }
     }
 
     return filterResults;
