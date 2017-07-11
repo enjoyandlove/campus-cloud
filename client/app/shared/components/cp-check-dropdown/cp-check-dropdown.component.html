@@ -3,10 +3,14 @@
     type="button"
     data-toggle="dropdown"
     [class]="buttonClass" i18n>
-    {{ selectedItem.label }}
-    <span class="pull-right">
-      <i class="material-icons">keyboard_arrow_down</i>
-    </span>
+    <div class="row">
+      <div class="col-xs-10 no-right-padding text-truncate">
+        {{ selectedItem.label }}
+      </div>
+      <div class="col-xs-2 no-right-padding">
+        <i class="material-icons">keyboard_arrow_down</i>
+      </div>
+    </div>
   </button>
   <ul class="dropdown-menu dropdown__list">
     <li
