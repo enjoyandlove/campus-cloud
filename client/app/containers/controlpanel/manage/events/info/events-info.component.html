@@ -13,8 +13,8 @@
               </div>
 
               <div class="row">
-                <div class="col-xs-10">
-                  <p class="event__title text-truncate">{{ event.title }}</p>
+                <div [class]="!isPastEvent(event.end) ? 'col-xs-10' : 'col-xs-12'">
+                  <p class="event__title">{{ event.title }}</p>
                 </div>
                 <div class="col-xs-2" *ngIf="!isPastEvent(event.end)">
                   <a
