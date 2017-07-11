@@ -14,10 +14,16 @@
   </li>
 
   <div class="switch__left" *ngIf="!isSchoolPanel">
-    <li class="switch__item" (click)="close.emit()" *ngIf="canManageAdmins">
+    <li class="switch__item"
+      (click)="close.emit()"
+       *ngIf="canManageAdmins"
+      [class.isFirstItem]="schools.length === 1 && canManageAdmins">
       <a [routerLink]="['/manage/team']" i18n>Team Settings</a>
     </li>
-    <li class="switch__item" (click)="close.emit()">
+    <li
+      class="switch__item"
+      (click)="close.emit()"
+      [class.isFirstItem]="!schools.length === 1 && !canManageAdmins">
       <a [routerLink]="['/account/change-password']" i18n>Change Password</a>
     </li>
     <li class="switch__item" (click)="close.emit()">
