@@ -67,7 +67,7 @@
         *ngIf="isEdit"
         [groupId]="groupId"
         [member]="editMember"
-        (edited)="onEdited($event)"
+        (edited)="forceRefresh()"
         (teardown)="isEdit = false">
       </cp-members-edit>
     </cp-modal>
@@ -76,14 +76,14 @@
       <cp-members-delete
         [groupId]="groupId"
         [member]="deleteMember"
-        (deleted)="onDeleted($event)">
+        (deleted)="forceRefresh()">
       </cp-members-delete>
     </cp-modal>
 
     <cp-modal modalId="membersCreate">
       <cp-members-create
         [groupId]="groupId"
-        (added)="onAdded($event)">
+        (added)="forceRefresh()">
       </cp-members-create>
     </cp-modal>
   </div>
