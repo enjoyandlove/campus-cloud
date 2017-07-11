@@ -84,6 +84,16 @@ export class TeamCreateComponent implements OnInit {
       }
     };
 
+    const isEmpty = require('lodash').isEmpty;
+    const emptyAccountPrivileges = isEmpty(_data.account_level_privileges);
+    const emptySchoolPrivileges = isEmpty(_data.school_level_privileges[this.schoolId]);
+
+    if (emptyAccountPrivileges && emptySchoolPrivileges) {
+      this.formError = 'You have not granted any access';
+      this.isFormError = true;
+      return;
+    }
+
     this
       .teamService
       .createAdmin(_data)
@@ -103,7 +113,7 @@ export class TeamCreateComponent implements OnInit {
   }
 
   onManageAdminSelected(data) {
-    if (!data.action) {
+    if (!data.action && this.schoolPrivileges) {
       delete this.schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin];
       return;
     }
@@ -181,11 +191,11 @@ export class TeamCreateComponent implements OnInit {
         [CP_PRIVILEGES_MAP.membership]: {
           r: this.user.account_level_privileges[CP_PRIVILEGES_MAP.membership].r,
           w: this.user.account_level_privileges[CP_PRIVILEGES_MAP.membership].w
-         },
+        },
         [CP_PRIVILEGES_MAP.moderation]: {
           r: this.user.account_level_privileges[CP_PRIVILEGES_MAP.membership].r,
           w: this.user.account_level_privileges[CP_PRIVILEGES_MAP.membership].w
-         }
+        }
       }
     );
   }

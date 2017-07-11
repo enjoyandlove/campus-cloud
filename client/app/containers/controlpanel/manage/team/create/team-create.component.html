@@ -272,10 +272,9 @@
         <div class="cp-wrapper cp-wrapper--outer">
           <div class="row">
             <div class="col-xs-12">
-              <div class="pull-left" *ngIf="isFormError">
-                <label class="error">{{ formError }}</label>
-              </div>
               <div class="pull-right">
+                <label class="error" *ngIf="isFormError">{{ formError }}</label>
+
                 <a [routerLink]="['/manage/team']"
                   class="cpbtn cpbtn--tall cpbtn--cancel" i18n>
                   Cancel
