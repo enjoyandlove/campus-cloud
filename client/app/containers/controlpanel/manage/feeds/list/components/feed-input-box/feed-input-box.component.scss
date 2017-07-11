@@ -2,6 +2,11 @@
 @import '~styles/components/card';
 @import '~styles/components/button';
 
+label.error {
+  padding: 0;
+  margin-right: 10px;
+}
+
 .remove-image {
   left: 12px;
   padding: 0;
