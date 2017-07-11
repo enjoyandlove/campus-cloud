@@ -65,40 +65,8 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
       .catch(err => console.log(err));
   }
 
-  onDeleted(id) {
-    this.state = Object.assign(
-      {},
-      this.state,
-      {
-        members: this.state.members.filter(member => member.id !== id)
-      }
-    );
-  }
-
-  onEdited(member) {
-    this.state = Object.assign(
-      {},
-      this.state,
-      {
-        members: this.state.members.map(_member => {
-          if (_member.id === member.id) {
-            _member = member;
-            return _member;
-          }
-          return _member;
-        })
-      }
-    );
-  }
-
-  onAdded(member) {
-    this.state = Object.assign(
-      {},
-      this.state,
-      {
-        members: [member, ...this.state.members]
-      }
-    );
+  forceRefresh() {
+    this.fetch();
   }
 
   onFilter(query) {
