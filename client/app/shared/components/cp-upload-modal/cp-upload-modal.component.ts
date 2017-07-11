@@ -1,4 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Input,
+  OnInit,
+  Output,
+  Component,
+  ElementRef,
+  HostListener,
+  EventEmitter
+} from '@angular/core';
 
 import { STATUS } from '../../../shared/constants';
 
@@ -19,13 +27,24 @@ export class CPUploadModalComponent implements OnInit {
   @Input() props: IOptions;
   @Output() navigate: EventEmitter<null> = new EventEmitter();
 
+
   isError;
   isReady;
   fileName;
   processing;
   errorMessage;
 
-  constructor() { }
+  constructor(
+    private el: ElementRef,
+  ) { }
+
+  @HostListener('document:click', ['$event'])
+  onClick(event) {
+    if (!this.el.nativeElement.contains(event.target)) {
+      // we are outside of the modal so do reset
+      this.resetValues();
+    }
+  }
 
   resetValues() {
     this.isReady = false;
