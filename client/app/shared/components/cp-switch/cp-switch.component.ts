@@ -4,12 +4,14 @@ import {
   Output,
   Component,
   EventEmitter,
+  ChangeDetectionStrategy
 } from '@angular/core';
 
 @Component({
   selector: 'cp-switch',
   templateUrl: './cp-switch.component.html',
-  styleUrls: ['./cp-switch.component.scss']
+  styleUrls: ['./cp-switch.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CPSwitchComponent implements OnInit {
   @Input() id: string;

@@ -1,9 +1,17 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import {
+  Input,
+  OnInit,
+  Output,
+  Component,
+  EventEmitter,
+  ChangeDetectionStrategy
+} from '@angular/core';
 
 @Component({
   selector: 'cp-checkbox',
   templateUrl: './cp-checkbox.component.html',
-  styleUrls: ['./cp-checkbox.component.scss']
+  styleUrls: ['./cp-checkbox.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CPCheckboxComponent implements OnInit {
   @Input() isChecked: boolean;
