@@ -78,7 +78,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': 'Import Events from Excel',
+        'heading': 'Import Events',
         'em': `${this.events.length} calendar event(s) data information in the file`,
         'children': []
       }
