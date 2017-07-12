@@ -228,14 +228,14 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   onManageAdminSelected(data) {
-    if (!data.action) {
-      delete this.accountPrivileges[CP_PRIVILEGES_MAP.manage_admin];
+    if (!data.action && this.schoolPrivileges) {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin];
       return;
     }
 
-    this.accountPrivileges = Object.assign(
+    this.schoolPrivileges = Object.assign(
       {},
-      this.accountPrivileges,
+      this.schoolPrivileges,
       {
         [CP_PRIVILEGES_MAP.manage_admin]: {
           r: true,
