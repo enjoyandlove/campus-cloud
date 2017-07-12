@@ -45,14 +45,12 @@
           <label i18n>Link Banner</label>
           <div
             *ngIf="form.controls['img_url'].value"
-            class="banner__wrapper banner__wrapper--no-border">
-            <img
-              alt=""
-              class="img-rounded img-responsive"
-              [src]="form.controls['img_url'].value">
+            class="banner__wrapper banner__wrapper--with-image"
+            [ngStyle]="{'background-image': 'url(' + form.controls['img_url'].value + ')'}">
             <button
               type="submit"
-              (click)="handleDeleteImage()">&times;</button>
+              class="material-icons"
+              (click)="handleDeleteImage()">close</button>
           </div>
 
           <div
@@ -65,6 +63,11 @@
               (fileUpload)="onFileUpload($event)">
             </cp-upload-button>
           </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="imageError">
+        <div class="col-xs-12 text-center">
+          <label class="error">{{ imageError }}</label>
         </div>
       </div>
     </form>
