@@ -1,4 +1,12 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import {
+  Input,
+  OnInit,
+  Output,
+  Component,
+  EventEmitter,
+  ChangeDetectionStrategy
+} from '@angular/core';
+
 import { Observable } from 'rxjs/Observable';
 
 interface IItems {
@@ -9,7 +17,8 @@ interface IItems {
 @Component({
   selector: 'cp-dropdown',
   templateUrl: './cp-dropdown.component.html',
-  styleUrls: ['./cp-dropdown.component.scss']
+  styleUrls: ['./cp-dropdown.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CPDropdownComponent implements OnInit {
   @Input() items: IItems[];
