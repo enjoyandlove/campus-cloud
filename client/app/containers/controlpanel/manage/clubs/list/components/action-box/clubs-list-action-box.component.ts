@@ -41,6 +41,10 @@ export class ClubsListActionBoxComponent implements OnInit {
       {
         label: 'Inactive',
         action: 0
+      },
+      {
+        label: 'Pending',
+        action: 2
       }
     ];
   }
