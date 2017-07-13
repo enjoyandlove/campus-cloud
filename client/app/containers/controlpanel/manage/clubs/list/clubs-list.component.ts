@@ -26,6 +26,7 @@ const state: IState = {
 })
 export class ClubsListComponent extends BaseComponent implements OnInit {
   loading;
+  clubStatus;
   deleteClub = '';
   state: IState = state;
 
@@ -82,6 +83,12 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.clubStatus = {
+      0: 'Inactive',
+      1: 'Active',
+      2: 'Pending'
+    };
+
     this
       .store
       .dispatch({
