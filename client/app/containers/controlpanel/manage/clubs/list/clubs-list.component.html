@@ -42,7 +42,7 @@
               {{ club.description }}
             </span>
             <span class="col-xs-2 text-truncate text-center">
-              {{ club.status === 1 ? 'Active' : 'Inactive' }}
+              {{ clubStatus[club.status] }}
             </span>
             <span class="col-xs-2 text-truncate text-center">
               {{ club.member_count !== -1 ? club.member_count : 'Disabled' }}
