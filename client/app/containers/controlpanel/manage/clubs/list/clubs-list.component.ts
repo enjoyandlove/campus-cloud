@@ -28,6 +28,8 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
   loading;
   clubStatus;
   deleteClub = '';
+  ACTIVE_STATUS = 1;
+  PENDING_STATUS = 2;
   state: IState = state;
 
   constructor(
@@ -53,6 +55,30 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
         this.state = Object.assign({}, this.state, { clubs: res.data });
       })
       .catch(err => console.log(err));
+  }
+
+  onApproveClub(clubId: number) {
+    let search = new URLSearchParams();
+    search.append('school_id', this.session.school.id.toString());
+
+    this
+      .clubsService
+      .updateClub({ status: this.ACTIVE_STATUS }, clubId, search)
+      .subscribe(
+      res => {
+        let _state = Object.assign({}, this.state, {
+          clubs: this.state.clubs.map(_club => {
+            if (_club.id === res.id) {
+              return _club = res;
+            }
+            return _club;
+          })
+        });
+
+        this.state = Object.assign({}, this.state, _state);
+      },
+      err => console.log(err)
+      );
   }
 
   doFilter(filter) {

@@ -43,6 +43,14 @@
             </span>
             <span class="col-xs-2 text-truncate text-center">
               {{ clubStatus[club.status] }}
+              <ng-container *ngIf="club.status === PENDING_STATUS">
+                <button
+                  type="button"
+                  class="cpbtn cpbtn--link"
+                  (click)="onApproveClub(club.id)">
+                  (Approve)
+                </button>
+              </ng-container>
             </span>
             <span class="col-xs-2 text-truncate text-center">
               {{ club.member_count !== -1 ? club.member_count : 'Disabled' }}
