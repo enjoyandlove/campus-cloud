@@ -17,6 +17,8 @@ const appRoutes: Routes = [
 
       { path: 'notify', loadChildren: './notify/notify.module#NotifyModule' },
 
+      { path: 'assess', loadChildren: './assess/assess.module#AssessModule' },
+
       { path: 'account', loadChildren: './account/account.module#AccountModule' },
     ]
   },

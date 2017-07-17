@@ -20,8 +20,13 @@
             *ngIf="canNotify"
             (click)="isOpen = false"
             routerLinkActive="active">
-            <span class="promote-badge">new</span>
             <a [routerLink]="['/notify']">Notify</a>
+          </li>
+          <li
+            (click)="isOpen = false"
+            routerLinkActive="active">
+            <span class="promote-badge">new</span>
+            <a [routerLink]="['/assess']">Assess</a>
           </li>
         </ul>
 
