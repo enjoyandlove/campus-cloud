@@ -7,6 +7,13 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
+/**
+ * 7D: 7D
+ * last month: 30D
+ * 6W: 6W
+ * 3M: 12W...
+ */
+
 @Component({
   selector: 'cp-engagement-chart',
   templateUrl: './engagement-chart.component.html',
@@ -19,33 +26,73 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
 
   constructor() { }
 
+  buildLabels() {
+    let labels = [];
+
+    for (let i = 1; i <= 10; i++) {
+      labels.push(`Mar ${i}`);
+    }
+
+    return labels;
+  }
+
+  buildSeries() {
+    let series = [];
+
+    for (let i = 1; i <= 10; i++) {
+      series.push(Math.floor(Math.random() * 100));
+    }
+
+    return series;
+  }
+
   ngAfterViewInit() {
-    let Chartist = require('./lib/chartist.min.js');
+    // https://github.com/gionkunz/chartist-js
+    const Chartist = require('./lib/chartist.min.js');
 
-    new Chartist.Line(this.chart.nativeElement, {
-      labels: ['Mar 10', 'Mar 11', 'Mar 12', 'Mar 13', 'Mar 14', 'Mar 15', 'Mar 16'],
-      series: [
-        [64, 38, 60, 9, 18, 38, 24],
-      ]
-    }, {
-        lineSmooth: false,
+    const data = {
+      labels: this.buildLabels(),
 
-        classNames: {
-          grid: 'cp-grid',
+      series: [this.buildSeries()],
+    };
 
-          line: 'cp-line',
+    const options = {
+      lineSmooth: false,
 
-          point: 'cp-point',
+      classNames: {
+        grid: 'cp-grid',
 
-          label: 'cp-label',
+        line: 'cp-line',
+
+        point: 'cp-point',
+
+        label: 'cp-label',
+      },
+
+      fullWidth: true,
+
+      axisX: {
+        position: 'end',
+
+        showGrid: false,
+
+        labelInterpolationFnc: function skipLabels(value, index, labels) {
+          // skip labels if too many
+          if (labels.length === 30) {
+            return index % 5 === 0 ? value : null;
+          }
+
+          // if not too many skip last label
+          if (labels.length === index + 1) {
+            return null;
+          }
+
+          return value;
         },
+      }
+    };
 
-        fullWidth: false,
-
-        axisX: {
-          showGrid: false
-        }
-      });
+    new Chartist.Line(this.chart.nativeElement, data, options);
   }
 
   ngOnInit() { }

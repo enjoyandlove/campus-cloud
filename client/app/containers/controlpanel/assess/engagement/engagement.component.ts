@@ -5,13 +5,6 @@ const METRIC_TYPES = {
   1: 'Weekly'
 };
 
-/**
- * 7D: 7D
- * last month: 30D
- * 6W: 6W
- * 3M: 12W...
- */
-
 interface IState {
   metric: string;
   filterByScope: {
