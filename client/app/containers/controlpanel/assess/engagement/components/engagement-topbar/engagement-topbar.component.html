@@ -1,0 +1,26 @@
+<div class="topbar cp-card">
+  <div class="row">
+    <div class="col-xs-9">
+      <div class="row">
+        <div class="topbar--filter col-xs-4">
+          <cp-dropdown [items]="scopeFilter" class="topbar--dropdown"></cp-dropdown>
+          <span class="topbar--copy" i18n>for</span>
+        </div>
+
+        <div class="topbar--filter col-xs-3 no-left-padding">
+          <cp-dropdown [items]="studentsFilter" class="topbar--dropdown"></cp-dropdown>
+          <span class="topbar--copy" i18n>in</span>
+        </div>
+        <div class="topbar--filter col-xs-2 no-left-padding">
+          <cp-dropdown [items]="dateFilter" class="topbar--dropdown"></cp-dropdown>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-3">
+      <button class="cpbtn cpbtn--primary pull-right" i18n>
+        Download Engagement Data
+      </button>
+    </div>
+  </div>
+</div>

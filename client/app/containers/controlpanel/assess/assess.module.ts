@@ -6,10 +6,14 @@ import { AssessComponent }  from './assess.component';
 
 import { EngagementComponent } from './engagement/engagement.component';
 
+import {
+  EngagementTopBarComponent
+} from './engagement/components';
+
 import { AssessRoutingModule } from './assess.routing.module';
 
 @NgModule({
-  declarations: [ AssessComponent, EngagementComponent ],
+  declarations: [ AssessComponent, EngagementComponent, EngagementTopBarComponent ],
 
   imports: [ CommonModule, SharedModule, AssessRoutingModule ],
 
