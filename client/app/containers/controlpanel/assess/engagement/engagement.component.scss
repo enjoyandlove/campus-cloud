@@ -1,0 +1,18 @@
+@import '~styles/core/typography';
+@import '~styles/components/card';
+
+
+.chart {
+  @include card-margin();
+
+  height: 100%;
+  display: block;
+}
+
+.chart--title {
+  @include font-24px;
+  @include font-bold();
+
+  margin-bottom: 25px;
+  text-transform: capitalize;
+}
