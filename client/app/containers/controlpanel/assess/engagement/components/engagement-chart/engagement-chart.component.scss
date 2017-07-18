@@ -1,0 +1,60 @@
+@import '~styles/core/colors';
+@import '~styles/core/typography';
+
+.chart {
+  width: 100%;
+  height: 310px;
+}
+
+span.chartist-tooltip-value {
+  @include font-semi-bold();
+}
+
+span.tooltip-chip {
+  top: -1px;
+  width: 6px;
+  height: 6px;
+  margin-right: 5px;
+  border-radius: 50%;
+  position: relative;
+  display: inline-block;
+  background: $color-brand;
+}
+
+span.tooltip-val {
+  @include font-normal();
+
+  margin-right: 20px;
+}
+
+.cp-grid {
+  stroke-width: 1px;
+  stroke-opacity: 0.4;
+  stroke: $color-med-grey;
+}
+
+.cp-label {
+  font-size: 12px;
+  line-height: 1;
+  fill: $color-secondary-text;
+  color: $color-secondary-text;
+
+  &.ct-horizontal { white-space: nowrap; }
+}
+
+.cp-line {
+  fill: none;
+  stroke-width: 1px;
+  stroke: $color-brand;
+}
+
+.cp-point {
+  stroke-width: 7px;
+  stroke: $color-brand;
+  stroke-linecap: round;
+  transition: stroke-width .2s linear;
+
+  &.isHover {
+    stroke-width: 10px;
+  }
+}
