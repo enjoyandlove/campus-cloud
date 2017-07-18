@@ -1,78 +1,109 @@
-<div class="cp-card events">
-  <div class="row">
-    <div class="col-xs-12">
-      <p class="events--heading" i18n>Events</p>
+<ng-container [ngSwitch]="loading">
+  <div class="cp-card events events--no-data" *ngSwitchCase="true">
+    <div class="row">
+      <div class="col-xs-12">
+        <p class="events--heading" i18n>Events</p>
 
-      <div class="events--stats">
+        <div class="events--no-data-wrapper text-center">
+          <cp-spinner *ngSwitchCase="true"></cp-spinner>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngSwitchCase="false">
+    <ng-container [ngSwitch]="props.isDisable">
+      <div class="cp-card events events--no-data" *ngSwitchCase="true">
         <div class="row">
-          <div class="col-xs-4 events--stats--stat" *ngFor="let stat of stats">
-            <div class="row">
-              <div class="col-xs-4 events--stats--graph no-right-padding">
-                <img [src]="['/png/assess/' + stat.icon]" alt="total events">
-              </div>
-              <div class="col-xs-8 events--stats--data no-right-padding no-left-padding">
-                <p class="stat">{{ stat.value }}</p>
-                <p class="text-muted" i18n>{{ stat.label }}</p>
-              </div>
+          <div class="col-xs-12">
+            <p class="events--heading" i18n>Events</p>
+
+            <div class="events--no-data-wrapper text-center">
+              <p class="heading" i18n>No Event Data</p>
+              <p class="text-muted">To see Events data use the Engagement filter</p>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="events--ranking">
+      <div class="cp-card events" *ngSwitchCase="false">
         <div class="row">
-          <div class="col-xs-4">
-            <p class="events--heading" i18n>Top Events</p>
-          </div>
-          <div class="events--ranking--sorting col-xs-8">
-            <div class="row">
-              <div class="col-xs-4 text-right no-right-padding">
-                <p i18n>Sort By</p>
-              </div>
-              <div class="col-xs-8">
-                <cp-dropdown [items]="sortyBy"></cp-dropdown>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row events--table">
           <div class="col-xs-12">
-            <div class="row events--table--header">
-              <div class="col-xs-1">
-                <p>#</p>
-              </div>
-              <div class="col-xs-5 no-left-padding">
-                <p i18n>Title</p>
-              </div>
-              <div class="col-xs-2 no-left-padding">
-                <p i18n>Attendees</p>
-              </div>
-              <div class="col-xs-2 no-left-padding">
-                <p i18n>Feedback</p>
-              </div>
-              <div class="col-xs-2 text-right no-left-padding">
-                <p i18n>Rating</p>
+            <p class="events--heading" i18n>Events</p>
+
+            <div class="events--stats">
+              <div class="row">
+                <div class="col-xs-4 events--stats--stat" *ngFor="let stat of stats">
+                  <div class="row">
+                    <div class="col-xs-4 events--stats--graph no-right-padding">
+                      <img [src]="['/png/assess/' + stat.icon]" alt="total events">
+                    </div>
+                    <div class="col-xs-8 events--stats--data no-right-padding no-left-padding">
+                      <p class="stat">{{ stat.value }}</p>
+                      <p class="text-muted" i18n>{{ stat.label }}</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="row" *ngFor="let event of eventsRanking; last as last">
-              <div class="col-xs-12">
-                <div class="events--table--item" [class.isLast]="last">
+
+            <div class="events--ranking">
+              <div class="row">
+                <div class="col-xs-4">
+                  <p class="events--heading" i18n>Top Events</p>
+                </div>
+                <div class="events--ranking--sorting col-xs-8">
                   <div class="row">
+                    <div class="col-xs-4 text-right no-right-padding">
+                      <p i18n>Sort By</p>
+                    </div>
+                    <div class="col-xs-8">
+                      <cp-dropdown [items]="sortyBy"></cp-dropdown>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row events--table">
+                <div class="col-xs-12">
+                  <div class="row events--table--header">
                     <div class="col-xs-1">
-                      <p class="ranking">{{ event.ranking }}</p>
+                      <p>#</p>
                     </div>
-                    <div class="col-xs-5 no-left-padding text-truncate">
-                      <img [src]="[event.image + '&key=' + event.title]" alt="" class="event-avatar img-rounded">
-                      <p class="event-title">{{ event.title }}</p>
-                    </div>
-                    <div class="col-xs-2 no-left-padding">
-                      <p>{{ event.attendees }}</p>
+                    <div class="col-xs-5 no-left-padding">
+                      <p i18n>Title</p>
                     </div>
                     <div class="col-xs-2 no-left-padding">
-                      <p>{{ event.feedback }}</p>
+                      <p i18n>Attendees</p>
+                    </div>
+                    <div class="col-xs-2 no-left-padding">
+                      <p i18n>Feedback</p>
                     </div>
                     <div class="col-xs-2 text-right no-left-padding">
-                      <p>{{ event.rating }}</p>
+                      <p i18n>Rating</p>
+                    </div>
+                  </div>
+                  <div class="row" *ngFor="let event of eventsRanking; last as last">
+                    <div class="col-xs-12">
+                      <div class="events--table--item" [class.isLast]="last">
+                        <div class="row">
+                          <div class="col-xs-1">
+                            <p class="ranking">{{ event.ranking }}</p>
+                          </div>
+                          <div class="col-xs-5 no-left-padding text-truncate">
+                            <img [src]="[event.image + '&key=' + event.title]" alt="" class="event-avatar img-rounded">
+                            <p class="event-title">{{ event.title }}</p>
+                          </div>
+                          <div class="col-xs-2 no-left-padding">
+                            <p>{{ event.attendees }}</p>
+                          </div>
+                          <div class="col-xs-2 no-left-padding">
+                            <p>{{ event.feedback }}</p>
+                          </div>
+                          <div class="col-xs-2 text-right no-left-padding">
+                            <p>{{ event.rating }}</p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -81,6 +112,6 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </ng-container>
+  </ng-container>
+</ng-container>

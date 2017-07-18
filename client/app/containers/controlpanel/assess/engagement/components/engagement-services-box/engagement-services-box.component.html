@@ -1,78 +1,107 @@
-<div class="cp-card services">
-  <div class="row">
-    <div class="col-xs-12">
-      <p class="services--heading" i18n>Services</p>
+<ng-container [ngSwitch]="loading">
+  <div class="cp-card services services--no-data" *ngSwitchCase="true">
+    <div class="row">
+      <div class="col-xs-12">
+        <p class="services--heading" i18n>Services</p>
 
-      <div class="services--stats">
+        <div class="services--no-data-wrapper text-center">
+          <cp-spinner *ngSwitchCase="true"></cp-spinner>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngSwitchCase="false">
+    <ng-container [ngSwitch]="props.isDisable">
+      <div class="cp-card services services--no-data" *ngSwitchCase="true">
         <div class="row">
-          <div class="col-xs-4 services--stats--stat" *ngFor="let stat of stats">
-            <div class="row">
-              <div class="col-xs-4 services--stats--graph no-right-padding">
-                <img [src]="['/png/assess/' + stat.icon]" alt="total services">
-              </div>
-              <div class="col-xs-8 services--stats--data no-right-padding no-left-padding">
-                <p class="stat">{{ stat.value }}</p>
-                <p class="text-muted" i18n>{{ stat.label }}</p>
-              </div>
+          <div class="col-xs-12">
+            <p class="services--heading" i18n>Services</p>
+
+            <div class="services--no-data-wrapper text-center">
+              <p class="heading" i18n>No Service Data</p>
+              <p class="text-muted">To see Service data use the Engagement filter</p>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="services--ranking">
+      <div class="cp-card services" *ngSwitchCase="false">
         <div class="row">
-          <div class="col-xs-5">
-            <p class="services--heading" i18n>Top Services</p>
-          </div>
-          <div class="services--ranking--sorting col-xs-7">
-            <div class="row">
-              <div class="col-xs-4 text-right no-right-padding">
-                <p i18n>Sort By</p>
-              </div>
-              <div class="col-xs-8">
-                <cp-dropdown [items]="sortyBy"></cp-dropdown>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row services--table">
           <div class="col-xs-12">
-            <div class="row services--table--header">
-              <div class="col-xs-1">
-                <p>#</p>
-              </div>
-              <div class="col-xs-5 no-left-padding">
-                <p i18n>Title</p>
-              </div>
-              <div class="col-xs-2 no-left-padding">
-                <p i18n>Attendees</p>
-              </div>
-              <div class="col-xs-2 no-left-padding">
-                <p i18n>Feedback</p>
-              </div>
-              <div class="col-xs-2 text-right no-left-padding">
-                <p i18n>Rating</p>
+            <div class="services--stats">
+              <div class="row">
+                <div class="col-xs-4 services--stats--stat" *ngFor="let stat of stats">
+                  <div class="row">
+                    <div class="col-xs-4 services--stats--graph no-right-padding">
+                      <img [src]="['/png/assess/' + stat.icon]" alt="total services">
+                    </div>
+                    <div class="col-xs-8 services--stats--data no-right-padding no-left-padding">
+                      <p class="stat">{{ stat.value }}</p>
+                      <p class="text-muted" i18n>{{ stat.label }}</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="row" *ngFor="let service of servicesRanking; last as last">
-              <div class="col-xs-12">
-                <div class="services--table--item" [class.isLast]="last">
+
+            <div class="services--ranking">
+              <div class="row">
+                <div class="col-xs-5">
+                  <p class="services--heading" i18n>Top Services</p>
+                </div>
+                <div class="services--ranking--sorting col-xs-7">
                   <div class="row">
+                    <div class="col-xs-4 text-right no-right-padding">
+                      <p i18n>Sort By</p>
+                    </div>
+                    <div class="col-xs-8">
+                      <cp-dropdown [items]="sortyBy"></cp-dropdown>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row services--table">
+                <div class="col-xs-12">
+                  <div class="row services--table--header">
                     <div class="col-xs-1">
-                      <p class="ranking">{{ service.ranking }}</p>
+                      <p>#</p>
                     </div>
-                    <div class="col-xs-5 no-left-padding text-truncate">
-                      <img [src]="[service.image + '&key=' + service.ranking]" alt="" class="service-avatar img-rounded">
-                      <p class="service-title">{{ service.title }}</p>
-                    </div>
-                    <div class="col-xs-2 no-left-padding">
-                      <p>{{ service.attendees }}</p>
+                    <div class="col-xs-5 no-left-padding">
+                      <p i18n>Title</p>
                     </div>
                     <div class="col-xs-2 no-left-padding">
-                      <p>{{ service.feedback }}</p>
+                      <p i18n>Attendees</p>
+                    </div>
+                    <div class="col-xs-2 no-left-padding">
+                      <p i18n>Feedback</p>
                     </div>
                     <div class="col-xs-2 text-right no-left-padding">
-                      <p>{{ service.rating }}</p>
+                      <p i18n>Rating</p>
+                    </div>
+                  </div>
+                  <div class="row" *ngFor="let service of servicesRanking; last as last">
+                    <div class="col-xs-12">
+                      <div class="services--table--item" [class.isLast]="last">
+                        <div class="row">
+                          <div class="col-xs-1">
+                            <p class="ranking">{{ service.ranking }}</p>
+                          </div>
+                          <div class="col-xs-5 no-left-padding text-truncate">
+                            <img [src]="[service.image + '&key=' + service.ranking]" alt="" class="service-avatar img-rounded">
+                            <p class="service-title">{{ service.title }}</p>
+                          </div>
+                          <div class="col-xs-2 no-left-padding">
+                            <p>{{ service.attendees }}</p>
+                          </div>
+                          <div class="col-xs-2 no-left-padding">
+                            <p>{{ service.feedback }}</p>
+                          </div>
+                          <div class="col-xs-2 text-right no-left-padding">
+                            <p>{{ service.rating }}</p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -81,6 +110,6 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </ng-container>
+  </ng-container>
+</ng-container>
