@@ -11,13 +11,15 @@ import {
   EngagementChartComponent,
   EngagementTopBarComponent,
   EngagementEventsBoxComponent,
+  EngagementServicesBoxComponent
 } from './engagement/components';
 
 import { AssessRoutingModule } from './assess.routing.module';
 
 @NgModule({
   declarations: [ AssessComponent, EngagementComponent, EngagementTopBarComponent,
-    EngagementChartComponent, EngagementStatsComponent, EngagementEventsBoxComponent, ],
+    EngagementChartComponent, EngagementStatsComponent, EngagementEventsBoxComponent,
+    EngagementServicesBoxComponent ],
 
   imports: [ CommonModule, SharedModule, AssessRoutingModule ],
 
