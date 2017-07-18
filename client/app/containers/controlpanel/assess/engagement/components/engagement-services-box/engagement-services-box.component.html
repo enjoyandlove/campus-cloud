@@ -1,16 +1,16 @@
-<div class="cp-card events">
+<div class="cp-card services">
   <div class="row">
     <div class="col-xs-12">
-      <p class="events--heading" i18n>Events</p>
+      <p class="services--heading" i18n>Services</p>
 
-      <div class="events--stats">
+      <div class="services--stats">
         <div class="row">
-          <div class="col-xs-4 events--stats--stat" *ngFor="let stat of stats">
+          <div class="col-xs-4 services--stats--stat" *ngFor="let stat of stats">
             <div class="row">
-              <div class="col-xs-4 events--stats--graph no-right-padding">
-                <img [src]="['/png/assess/' + stat.icon]" alt="total events">
+              <div class="col-xs-4 services--stats--graph no-right-padding">
+                <img [src]="['/png/assess/' + stat.icon]" alt="total services">
               </div>
-              <div class="col-xs-8 events--stats--data no-right-padding no-left-padding">
+              <div class="col-xs-8 services--stats--data no-right-padding no-left-padding">
                 <p class="stat">{{ stat.value }}</p>
                 <p class="text-muted" i18n>{{ stat.label }}</p>
               </div>
@@ -19,12 +19,12 @@
         </div>
       </div>
 
-      <div class="events--ranking">
+      <div class="services--ranking">
         <div class="row">
-          <div class="col-xs-4">
-            <p class="events--heading" i18n>Top Events</p>
+          <div class="col-xs-5">
+            <p class="services--heading" i18n>Top Services</p>
           </div>
-          <div class="events--ranking--sorting col-xs-8">
+          <div class="services--ranking--sorting col-xs-7">
             <div class="row">
               <div class="col-xs-4 text-right no-right-padding">
                 <p i18n>Sort By</p>
@@ -35,9 +35,9 @@
             </div>
           </div>
         </div>
-        <div class="row events--table">
+        <div class="row services--table">
           <div class="col-xs-12">
-            <div class="row events--table--header">
+            <div class="row services--table--header">
               <div class="col-xs-1">
                 <p>#</p>
               </div>
@@ -54,25 +54,25 @@
                 <p i18n>Rating</p>
               </div>
             </div>
-            <div class="row" *ngFor="let event of eventsRanking; last as last">
+            <div class="row" *ngFor="let service of servicesRanking; last as last">
               <div class="col-xs-12">
-                <div class="events--table--item" [class.isLast]="last">
+                <div class="services--table--item" [class.isLast]="last">
                   <div class="row">
                     <div class="col-xs-1">
-                      <p class="ranking">{{ event.ranking }}</p>
+                      <p class="ranking">{{ service.ranking }}</p>
                     </div>
                     <div class="col-xs-5 no-left-padding text-truncate">
-                      <img [src]="[event.image + '&key=' + event.title]" alt="" class="event-avatar img-rounded">
-                      <p class="event-title">{{ event.title }}</p>
+                      <img [src]="[service.image + '&key=' + service.ranking]" alt="" class="service-avatar img-rounded">
+                      <p class="service-title">{{ service.title }}</p>
                     </div>
                     <div class="col-xs-2 no-left-padding">
-                      <p>{{ event.attendees }}</p>
+                      <p>{{ service.attendees }}</p>
                     </div>
                     <div class="col-xs-2 no-left-padding">
-                      <p>{{ event.feedback }}</p>
+                      <p>{{ service.feedback }}</p>
                     </div>
                     <div class="col-xs-2 text-right no-left-padding">
-                      <p>{{ event.rating }}</p>
+                      <p>{{ service.rating }}</p>
                     </div>
                   </div>
                 </div>

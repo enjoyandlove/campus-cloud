@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'cp-engagement-events-box',
-  templateUrl: './engagement-events-box.component.html',
-  styleUrls: ['./engagement-events-box.component.scss']
+  selector: 'cp-engagement-services-box',
+  templateUrl: './engagement-services-box.component.html',
+  styleUrls: ['./engagement-services-box.component.scss']
 })
-export class EngagementEventsBoxComponent implements OnInit {
+export class EngagementServicesBoxComponent implements OnInit {
   stats: Array<any>;
-  sortyBy: Array<{'label': string, 'action': number}>;
+  sortyBy: Array<{ 'label': string, 'action': number }>;
 
-  eventsRanking;
+  servicesRanking;
 
   constructor() { }
 
   ngOnInit() {
-    this.eventsRanking = [
+    this.servicesRanking = [
       {
         'ranking': 1,
         'image': 'https://source.unsplash.com/random/38x38',
@@ -74,27 +74,27 @@ export class EngagementEventsBoxComponent implements OnInit {
 
     this.stats = [
       {
-        value: 100,
-        label: 'Total Events',
-        icon: 'chart_event.png'
+        value: 20,
+        label: 'Total Services',
+        icon: 'chart_service.png'
       },
       {
-        value: 90,
-        label: 'Events Assessed',
-        icon: 'chart_event_assess.png'
+        value: 20,
+        label: 'Services Assessed',
+        icon: 'chart_service_assess.png'
       },
       {
-        value: 1000,
+        value: 305,
         label: 'Total Attendess',
         icon: 'chart_attendee.png'
       },
       {
-        value: 4.5,
+        value: 3.2,
         label: 'Average Rating',
         icon: 'chart_rating.png'
       },
       {
-        value: 200,
+        value: 173,
         label: 'Feedback Received',
         icon: 'chart_feedback.png'
       }
