@@ -1,19 +1,51 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+
+import { BaseComponent } from '../../../../../../base/base.component';
+
+interface IProps {
+  isDisable: boolean;
+}
 
 @Component({
   selector: 'cp-engagement-services-box',
   templateUrl: './engagement-services-box.component.html',
   styleUrls: ['./engagement-services-box.component.scss']
 })
-export class EngagementServicesBoxComponent implements OnInit {
+export class EngagementServicesBoxComponent extends BaseComponent implements OnInit {
+  @Input() props: IProps;
+
+  loading;
+  servicesRanking;
   stats: Array<any>;
   sortyBy: Array<{ 'label': string, 'action': number }>;
 
-  servicesRanking;
+  constructor() {
+    super();
+  }
 
-  constructor() { }
+  fakeDisable() {
+    setTimeout(() => {
+      this.props = Object.assign(
+        {},
+        this.props,
+        { isDisable: !this.props.isDisable });
+    }, 1000);
+  }
 
   ngOnInit() {
+    if (!this.props) {
+      this.props = {
+        isDisable: false
+      };
+    }
+
+    this.loading = true;
+
+    setTimeout(() => {
+      this.loading = false;
+      this.fakeDisable();
+    }, 3000);
+
     this.servicesRanking = [
       {
         'ranking': 1,
@@ -42,7 +74,7 @@ export class EngagementServicesBoxComponent implements OnInit {
       {
         'ranking': 4,
         'image': 'https://source.unsplash.com/random/38x38',
-        'title': 'Campus Cloud event',
+        'title': 'Campus Cloud service',
         'attendees': 8,
         'feedback': 8,
         'rating': 3.1

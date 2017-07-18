@@ -1,19 +1,52 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+
+import { BaseComponent } from '../../../../../../base/base.component';
+
+interface IProps {
+  isDisable: boolean;
+}
 
 @Component({
   selector: 'cp-engagement-events-box',
   templateUrl: './engagement-events-box.component.html',
   styleUrls: ['./engagement-events-box.component.scss']
 })
-export class EngagementEventsBoxComponent implements OnInit {
+export class EngagementEventsBoxComponent extends BaseComponent implements OnInit {
+  @Input() props: IProps;
+
+  loading;
   stats: Array<any>;
-  sortyBy: Array<{'label': string, 'action': number}>;
-
   eventsRanking;
+  sortyBy: Array<{ 'label': string, 'action': number }>;
 
-  constructor() { }
+  constructor() {
+    super();
+    // super.isLoading().subscribe(loading => this.loading = loading);
+  }
+
+  fakeDisable() {
+    setTimeout(() => {
+      this.props = Object.assign(
+        {},
+        this.props,
+        { isDisable: !this.props.isDisable });
+    }, 4000);
+  }
 
   ngOnInit() {
+    if (!this.props) {
+      this.props = {
+        isDisable: false
+      };
+    }
+
+    this.loading = true;
+
+    setTimeout(() => {
+      this.loading = false;
+      this.fakeDisable();
+    }, 2000);
+
     this.eventsRanking = [
       {
         'ranking': 1,
