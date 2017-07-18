@@ -25,6 +25,8 @@ declare var Chartist;
 export class EngagementChartComponent implements OnInit, AfterViewInit {
   @ViewChild('chart') chart: ElementRef;
 
+  data: Array<number>;
+
   constructor() { }
 
   buildLabels() {
@@ -52,12 +54,11 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
     return series;
   }
 
-  ngAfterViewInit() {
-    // https://github.com/gionkunz/chartist-js
+  drawChart() {
     const data = {
       labels: this.buildLabels(),
 
-      series: [this.buildSeries()],
+      series: [this.data],
     };
 
     const chipContent = `<span class="tooltip-chip"></span>
@@ -116,6 +117,12 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
     new Chartist.Line(this.chart.nativeElement, data, options);
   }
 
-  ngOnInit() { }
+  ngAfterViewInit() {
+    this.drawChart();
+  }
+
+  ngOnInit() {
+    this.data = this.buildSeries();
+  }
 }
 
