@@ -14,12 +14,13 @@ import {
  * 3M: 12W...
  */
 
+declare var Chartist;
+
 @Component({
   selector: 'cp-engagement-chart',
   templateUrl: './engagement-chart.component.html',
   styleUrls: ['./engagement-chart.component.scss'],
   encapsulation: ViewEncapsulation.None
-
 })
 export class EngagementChartComponent implements OnInit, AfterViewInit {
   @ViewChild('chart') chart: ElementRef;
@@ -40,7 +41,12 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
     let series = [];
 
     for (let i = 1; i <= 10; i++) {
-      series.push(Math.floor(Math.random() * 100));
+      series.push(
+        {
+          'meta': `Sun, Mar ${Math.floor(Math.random() * 100)}`,
+          'value': Math.floor(Math.random() * 100)
+        }
+      );
     }
 
     return series;
@@ -48,15 +54,30 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     // https://github.com/gionkunz/chartist-js
-    const Chartist = require('./lib/chartist.min.js');
-
     const data = {
       labels: this.buildLabels(),
 
       series: [this.buildSeries()],
     };
 
+    const chipContent = `<span class="tooltip-chip"></span>
+    <span class="tooltip-val">Engagement </span>`;
+
     const options = {
+      plugins: [
+        Chartist.plugins.tooltip(
+          {
+            currency: chipContent,
+
+            appendToBody: true,
+
+            anchorToPoint: true,
+
+            pointClass: 'cp-point',
+          }
+        )
+      ],
+
       lineSmooth: false,
 
       classNames: {
