@@ -15,9 +15,9 @@
         <li class="cp-form__header col-xs-12">
           <div class="row">
             <span class="col-xs-5" i18n>Name</span>
-            <span class="col-xs-2 text-center" i18n>Status</span>
-            <span class="col-xs-2 text-center" i18n>Members</span>
-            <span class="col-xs-2 text-center" i18n>Events</span>
+            <span class="col-xs-2" i18n>Status</span>
+            <span class="col-xs-2" i18n>Members</span>
+            <span class="col-xs-2" i18n>Events</span>
             <span class="col-xs-1"></span>
           </div>
         </li>
@@ -41,7 +41,7 @@
               <br>
               {{ club.description }}
             </span>
-            <span class="col-xs-2 text-truncate text-center">
+            <span class="col-xs-2 text-truncate">
               {{ clubStatus[club.status] }}
               <ng-container *ngIf="club.status === PENDING_STATUS">
                 <button
@@ -52,10 +52,10 @@
                 </button>
               </ng-container>
             </span>
-            <span class="col-xs-2 text-truncate text-center">
+            <span class="col-xs-2 text-truncate">
               {{ club.member_count !== -1 ? club.member_count : 'Disabled' }}
             </span>
-            <span class="col-xs-2 text-truncate text-center">
+            <span class="col-xs-2 text-truncate">
               {{ club.total_item_count }}
             </span>
 
