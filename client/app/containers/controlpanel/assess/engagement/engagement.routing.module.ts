@@ -1,20 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AuthGuard } from '../../../config/guards';
+import { AuthGuard } from '../../../../config/guards';
 
-import { AssessComponent } from './assess.component';
+import { EngagementComponent } from './engagement.component';
 
 
 const appRoutes: Routes = [
   {
     path: '',
-    component: AssessComponent,
+    component: EngagementComponent,
     canActivate: [ AuthGuard ],
-    children: [
-      { path: '', loadChildren: './engagement/engagement.module#EngagementModule' },
-
-    ]
   }
 ];
 @NgModule({
@@ -25,4 +21,4 @@ const appRoutes: Routes = [
     RouterModule
   ]
 })
-export class AssessRoutingModule {}
+export class EngagementRoutingModule { }
