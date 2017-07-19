@@ -49,8 +49,7 @@ export class EngagementComponent implements OnInit {
 
   constructor() { }
 
-  onDoCompose(users) {
-    console.log(users);
+  onDoCompose(): void {
     $('#composeModal').modal();
   }
 
