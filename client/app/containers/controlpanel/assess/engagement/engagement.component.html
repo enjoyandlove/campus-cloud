@@ -10,7 +10,9 @@
       <p class="chart--title" i18n>
         Unique Student Engagements
       </p>
-      <cp-engagement-stats></cp-engagement-stats>
+      <cp-engagement-stats
+        (doCompose)="onDoCompose($event)">
+      </cp-engagement-stats>
     </div>
     <div class="col-xs-7">
       <p class="chart--title" i18n>
@@ -32,3 +34,9 @@
     </div>
   </div>
 </div>
+
+<cp-modal modalId="composeModal">
+  <cp-engagement-compose
+    (teardown)="onComposeTeardown()">
+  </cp-engagement-compose>
+</cp-modal>

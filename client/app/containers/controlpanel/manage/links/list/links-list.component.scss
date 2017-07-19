@@ -1,7 +1,12 @@
 @import '~styles/core/colors';
-@import '~styles/components/form';
-@import '~styles/components/button';
 @import '~bootstrap/variables';
+@import '~styles/components/form';
+@import '~styles/components/card';
+@import '~styles/components/button';
+
+.no-content {
+  @include card-margin();
+}
 
 .delete-link {
   font-size: 2em;
@@ -21,10 +26,6 @@
 .links {
   padding: 0;
   list-style: none;
-
-  .no-content {
-    padding: 15px 0;
-  }
 
   &__thumbnail {
     img {

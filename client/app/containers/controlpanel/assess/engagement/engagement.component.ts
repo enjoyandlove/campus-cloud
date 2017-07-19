@@ -22,6 +22,8 @@ interface IState {
   };
 }
 
+declare var $;
+
 @Component({
   selector: 'cp-engagement',
   templateUrl: './engagement.component.html',
@@ -46,6 +48,15 @@ export class EngagementComponent implements OnInit {
   };
 
   constructor() { }
+
+  onDoCompose(users) {
+    console.log(users);
+    $('#composeModal').modal();
+  }
+
+  onComposeTeardown() {
+    console.log('teardown');
+  }
 
   resetFilter() {
     this.state = {
