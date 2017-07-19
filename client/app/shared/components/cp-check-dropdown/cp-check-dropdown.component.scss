@@ -47,9 +47,11 @@
     }
     &--title {
       @include font-semi-bold();
-      margin-bottom: 6px;
+
+      margin-bottom: 4px;
     }
     &--description {
+      margin-bottom: 0;
       color: $color-secondary-text;
     }
   }
