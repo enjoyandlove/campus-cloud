@@ -32,7 +32,7 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
   buildLabels() {
     let labels = [];
 
-    for (let i = 1; i <= 10; i++) {
+    for (let i = 1; i <= 30; i++) {
       labels.push(`Mar ${i}`);
     }
 
@@ -42,7 +42,7 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
   buildSeries() {
     let series = [];
 
-    for (let i = 1; i <= 10; i++) {
+    for (let i = 1; i <= 30; i++) {
       series.push(
         {
           'meta': `Sun, Mar ${Math.floor(Math.random() * 100)}`,
