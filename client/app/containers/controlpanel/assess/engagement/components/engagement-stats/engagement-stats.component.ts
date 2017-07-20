@@ -1,4 +1,5 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'cp-engagement-stats',
@@ -6,7 +7,10 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./engagement-stats.component.scss']
 })
 export class EngagementStatsComponent implements OnInit {
+  @Input() props: Observable<any>;
   @Output() doCompose: EventEmitter<Array<number>> = new EventEmitter();
+
+  loading;
 
   constructor() { }
 
@@ -14,5 +18,11 @@ export class EngagementStatsComponent implements OnInit {
     this.doCompose.emit(userList);
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.props.subscribe(filterBy => {
+      if (filterBy) {
+        console.log('filterBy ', filterBy);
+      }
+    });
+  }
 }

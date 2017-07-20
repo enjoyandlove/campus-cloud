@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
 import * as moment from 'moment';
@@ -6,15 +6,49 @@ import { CPSession } from '../../../../../../session';
 import { CPDate } from '../../../../../../shared/utils/date';
 import { EngagementService } from '../../engagement.service';
 
+interface IState {
+  engagement: {
+    'label': string,
+    'data': {
+      type: string,
+      value: number
+    }
+  };
+
+  for: {
+    'label': string,
+    'listId': number
+  };
+
+  range: {
+    'label': string,
+    'payload': {
+      'metric': string,
+      'range': {
+        start: number,
+        end: number
+      }
+    }
+  };
+}
+
 @Component({
   selector: 'cp-engagement-topbar',
   templateUrl: './engagement-topbar.component.html',
   styleUrls: ['./engagement-topbar.component.scss']
 })
 export class EngagementTopBarComponent implements OnInit {
-  dateFilter;
+  @Output() doFilter: EventEmitter<IState> = new EventEmitter();
 
   engageMentFilter$;
+
+  commonStudentFilter;
+
+  commonEngageMentFilter;
+
+  dateFilter;
+
+  state: IState;
 
   studentFilter$;
 
@@ -23,16 +57,42 @@ export class EngagementTopBarComponent implements OnInit {
     private service: EngagementService
   ) { }
 
-  onDateRangeChange(date) {
-    console.log(date);
+  onDateRangeChange(payload) {
+    this.updateState('range', payload);
   }
 
-  onScopeChange(scope) {
-    console.log(scope);
+  onScopeChange(payload) {
+    this.updateState('engagement', payload);
   }
 
-  onStudentChange(list) {
-    console.log(list);
+  onStudentChange(payload) {
+    this.updateState('for', payload);
+  }
+
+  updateState(key, payload) {
+    this.state = Object.assign(
+      {},
+      this.state,
+      { [key]: payload }
+    );
+
+    this.doFilter.emit(this.state);
+  }
+
+  initState() {
+    this.state = {
+      engagement: {
+        ...this.commonEngageMentFilter[0]
+      },
+
+      for: {
+        ...this.commonStudentFilter[0]
+      },
+
+      range: {
+        ...this.dateFilter[0]
+      }
+    };
   }
 
   ngOnInit() {
@@ -50,35 +110,47 @@ export class EngagementTopBarComponent implements OnInit {
     this.dateFilter = [
       {
         'label': '7 Days',
-        'range': {
-          start: now,
-          end: lastWeek
+        'payload': {
+          'metric': 'daily',
+          'range': {
+            start: now,
+            end: lastWeek
+          }
         }
       },
       {
         'label': 'Last Month',
-        'range': {
-          start: now,
-          end: lastMonth
+        'payload': {
+          'metric': 'daily',
+          'range': {
+            start: now,
+            end: lastMonth
+          }
         }
       },
       {
         'label': 'Last 6 Weeks',
-        'range': {
-          start: now,
-          end: sixWeeks
+        'payload': {
+          'metric': 'weekly',
+          'range': {
+            start: now,
+            end: sixWeeks
+          }
         }
       },
       {
         'label': 'Last 3 Months',
-        'range': {
-          start: now,
-          end: threeMonths
+        'payload': {
+          'metric': 'monthly',
+          'range': {
+            start: now,
+            end: threeMonths
+          }
         }
       }
     ];
 
-    let engagementFilter = [
+    this.commonEngageMentFilter = [
       {
         'label': 'All Engagements',
         'data': {
@@ -102,7 +174,7 @@ export class EngagementTopBarComponent implements OnInit {
       }
     ];
 
-    let studentsFilter = [
+    this.commonStudentFilter = [
       {
         'label': 'All Students',
         'listId': null
@@ -116,9 +188,9 @@ export class EngagementTopBarComponent implements OnInit {
     this.studentFilter$ = this
       .service
       .getLists(undefined, undefined, search)
-      .startWith([studentsFilter[0]])
+      .startWith([this.commonStudentFilter[0]])
       .map(lists => {
-        let _lists = [...studentsFilter];
+        let _lists = [...this.commonStudentFilter];
         lists.forEach(list => {
           _lists.push(
             {
@@ -133,9 +205,9 @@ export class EngagementTopBarComponent implements OnInit {
     this.engageMentFilter$ = this
       .service
       .getServices(undefined, undefined)
-      .startWith([engagementFilter[0]])
+      .startWith([this.commonEngageMentFilter[0]])
       .map(services => {
-        let _services = [...engagementFilter];
+        let _services = [...this.commonEngageMentFilter];
 
         services.forEach(service => {
           _services.push(
@@ -151,5 +223,7 @@ export class EngagementTopBarComponent implements OnInit {
 
         return _services;
       });
+
+    this.initState();
   }
 }

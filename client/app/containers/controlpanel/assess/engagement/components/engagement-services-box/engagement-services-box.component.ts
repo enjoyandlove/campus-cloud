@@ -30,6 +30,8 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
       };
     }
 
+    this.loading = false;
+
     this.servicesRanking = [
       {
         'ranking': 1,

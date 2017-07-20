@@ -8,6 +8,10 @@
   display: block;
 }
 
+.chart {
+  height: 416px;
+}
+
 .chart--title {
   @include font-24px;
   @include font-bold();

@@ -5,7 +5,7 @@
         <p class="services--heading" i18n>Services</p>
 
         <div class="services--no-data-wrapper text-center">
-          <cp-spinner *ngSwitchCase="true"></cp-spinner>
+          <cp-spinner></cp-spinner>
         </div>
       </div>
     </div>
@@ -29,6 +29,7 @@
       <div class="cp-card services" *ngSwitchCase="false">
         <div class="row">
           <div class="col-xs-12">
+            <p class="services--heading" i18n>Services</p>
             <div class="services--stats">
               <div class="row">
                 <div class="col-xs-4 services--stats--stat" *ngFor="let stat of stats">

@@ -1,4 +1,5 @@
 import { Http, URLSearchParams } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -25,6 +26,18 @@ export class EngagementService extends BaseService {
     const url = `${common}/${startRange};${endRange}`;
 
     return super.get(url, { search }).map(res => res.json());
+  }
+
+  getChartData(search: URLSearchParams) {
+    return Observable.of(search).delay(1000);
+  }
+
+  getEventsData(search: URLSearchParams) {
+    return Observable.of(search).delay(1000);
+  }
+
+  getServicesData(search: URLSearchParams) {
+    return Observable.of(search).delay(1000);
   }
 
 

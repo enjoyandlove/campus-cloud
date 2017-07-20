@@ -1,4 +1,10 @@
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
+import { URLSearchParams } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+
+import { EngagementService } from './engagement.service';
+import { BaseComponent } from '../../../../base/base.component';
 
 const METRIC_TYPES = {
   0: 'Daily',
@@ -29,7 +35,11 @@ declare var $;
   templateUrl: './engagement.component.html',
   styleUrls: ['./engagement.component.scss']
 })
-export class EngagementComponent implements OnInit {
+export class EngagementComponent extends BaseComponent implements OnInit {
+  loading;
+
+  filters$: BehaviorSubject<any> = new BehaviorSubject(null);
+
   state: IState = {
     metric: METRIC_TYPES[0],
     filterByScope: {
@@ -47,7 +57,35 @@ export class EngagementComponent implements OnInit {
     }
   };
 
-  constructor() { }
+  constructor(
+    private service: EngagementService
+  ) {
+    super();
+    super.isLoading().subscribe(loading => this.loading = loading);
+  }
+
+  onDoFilter(filterState) {
+    this.filters$.next(filterState);
+    this.fetch();
+  }
+
+  fetch() {
+    let search = new URLSearchParams();
+    search.append('hello', 'World');
+
+    const chart$ = this.service.getChartData(search);
+    const events$ = this.service.getEventsData(search);
+    const services$ = this.service.getServicesData(search);
+
+    const stream$ = Observable.combineLatest(chart$, events$, services$);
+
+    super
+      .fetchData(stream$)
+      .then(data => {
+        console.log(data);
+      })
+      .catch(err => console.log(err));
+  }
 
   onDoCompose(): void {
     $('#composeModal').modal();
@@ -78,6 +116,7 @@ export class EngagementComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.fetch();
     console.log('Engagement Component Init');
   }
 }
