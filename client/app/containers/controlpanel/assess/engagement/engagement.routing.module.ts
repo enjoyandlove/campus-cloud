@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AuthGuard } from '../../../../config/guards';
+// import { AuthGuard } from '../../../../config/guards';
 
 import { EngagementComponent } from './engagement.component';
 
@@ -9,8 +9,7 @@ import { EngagementComponent } from './engagement.component';
 const appRoutes: Routes = [
   {
     path: '',
-    component: EngagementComponent,
-    canActivate: [ AuthGuard ],
+    component: EngagementComponent
   }
 ];
 @NgModule({

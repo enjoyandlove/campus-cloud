@@ -225,5 +225,6 @@ export class EngagementTopBarComponent implements OnInit {
       });
 
     this.initState();
+    this.doFilter.emit(this.state);
   }
 }

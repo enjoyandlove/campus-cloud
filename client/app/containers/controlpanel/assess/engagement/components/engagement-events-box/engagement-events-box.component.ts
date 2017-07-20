@@ -1,10 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { URLSearchParams } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 
+import { EngagementService } from '../../engagement.service';
 import { BaseComponent } from '../../../../../../base/base.component';
-
-interface IProps {
-  isDisable: boolean;
-}
 
 @Component({
   selector: 'cp-engagement-events-box',
@@ -12,40 +11,46 @@ interface IProps {
   styleUrls: ['./engagement-events-box.component.scss']
 })
 export class EngagementEventsBoxComponent extends BaseComponent implements OnInit {
-  @Input() props: IProps;
+  @Input() props: Observable<any>;
 
   loading;
+  isDisable;
   stats: Array<any>;
   eventsRanking;
   sortyBy: Array<{ 'label': string, 'action': number }>;
 
-  constructor() {
+  constructor(
+    private service: EngagementService
+  ) {
     super();
     // super.isLoading().subscribe(loading => this.loading = loading);
   }
 
-  fakeDisable() {
-    setTimeout(() => {
-      this.props = Object.assign(
-        {},
-        this.props,
-        { isDisable: !this.props.isDisable });
-    }, 4000);
+  fetch() {
+    this.loading = true;
+    let search = new URLSearchParams();
+    search.append('hello', 'world');
+
+    super
+      .fetchData(this.service.getEventsData(search))
+      .then(
+      _ => {
+        this.loading = false;
+      },
+      _ => {
+        this.loading = false;
+      }
+      );
   }
 
   ngOnInit() {
-    if (!this.props) {
-      this.props = {
-        isDisable: false
-      };
-    }
+    this.props.subscribe(res => {
+      this.isDisable = res.engagement.data.type === 'services';
 
-    this.loading = true;
-
-    setTimeout(() => {
-      this.loading = false;
-      this.fakeDisable();
-    }, 2000);
+      if (!this.isDisable) {
+        this.fetch();
+      }
+    });
 
     this.eventsRanking = [
       {

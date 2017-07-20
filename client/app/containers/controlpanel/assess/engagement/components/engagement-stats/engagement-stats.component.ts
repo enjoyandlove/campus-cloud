@@ -21,7 +21,7 @@ export class EngagementStatsComponent implements OnInit {
   ngOnInit() {
     this.props.subscribe(filterBy => {
       if (filterBy) {
-        console.log('filterBy ', filterBy);
+        console.log('stats component ', filterBy);
       }
     });
   }
