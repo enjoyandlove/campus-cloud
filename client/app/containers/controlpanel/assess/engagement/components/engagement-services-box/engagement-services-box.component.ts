@@ -23,28 +23,12 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
     super();
   }
 
-  fakeDisable() {
-    setTimeout(() => {
-      this.props = Object.assign(
-        {},
-        this.props,
-        { isDisable: !this.props.isDisable });
-    }, 1000);
-  }
-
   ngOnInit() {
     if (!this.props) {
       this.props = {
         isDisable: false
       };
     }
-
-    this.loading = true;
-
-    setTimeout(() => {
-      this.loading = false;
-      this.fakeDisable();
-    }, 3000);
 
     this.servicesRanking = [
       {

@@ -14,6 +14,7 @@ import {
   EngagementServicesBoxComponent
 } from './components';
 
+import { EngagementService } from './engagement.service';
 import { EngagementRoutingModule } from './engagement.routing.module';
 
 @NgModule({
@@ -23,6 +24,6 @@ import { EngagementRoutingModule } from './engagement.routing.module';
 
   imports: [ ReactiveFormsModule, CommonModule, SharedModule, EngagementRoutingModule ],
 
-  providers: [ ],
+  providers: [ EngagementService ],
 })
 export class EngagementModule {}

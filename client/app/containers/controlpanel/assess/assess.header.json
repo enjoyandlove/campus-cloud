@@ -5,7 +5,7 @@
   "children": [
     {
       "label": "Engagement",
-      "url": "/assess"
+      "url": "/assess/dashboard"
     },
     {
       "label": "Students",

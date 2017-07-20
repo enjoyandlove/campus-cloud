@@ -7,13 +7,14 @@ import { AssessComponent } from './assess.component';
 
 
 const appRoutes: Routes = [
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+
   {
     path: '',
     component: AssessComponent,
     canActivate: [ AuthGuard ],
     children: [
-      { path: '', loadChildren: './engagement/engagement.module#EngagementModule' },
-
+      { path: 'dashboard', loadChildren: './engagement/engagement.module#EngagementModule' },
     ]
   }
 ];

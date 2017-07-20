@@ -3,8 +3,8 @@
     <div class="col-xs-9">
       <div class="row">
         <div class="topbar--filter col-xs-4">
-          <cp-dropdown
-            [items]="scopeFilter"
+           <cp-dropdown
+            [items]="engageMentFilter$ | async"
             class="topbar--dropdown"
             (selected)="onScopeChange($event)">
           </cp-dropdown>
@@ -12,8 +12,8 @@
         </div>
 
         <div class="topbar--filter col-xs-3 no-left-padding">
-          <cp-dropdown
-            [items]="studentsFilter"
+           <cp-dropdown
+            [items]="studentFilter$ | async"
             class="topbar--dropdown"
             (selected)="onStudentChange($event)">
           </cp-dropdown>
