@@ -111,7 +111,7 @@ export class EngagementTopBarComponent implements OnInit {
 
     this.dateFilter = [
       {
-        'label': '7 Days',
+        'label': 'Last 7 Days',
         'payload': {
           'metric': 'daily',
           'range': {

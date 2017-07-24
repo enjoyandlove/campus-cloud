@@ -3,6 +3,7 @@
 @import '~styles/components/button';
 
 
+
 .stats {
   padding-left: 0;
   list-style: none;
@@ -21,6 +22,18 @@
 
     p {
       margin-bottom: 0;
+      transition: color 300ms ease-in-out;
+
+      &.with-tooltip {
+        &:hover {
+          cursor: pointer;
+        }
+
+        i {
+          top: 5px;
+          position: relative;
+        }
+      }
     }
 
     &:first-child {
@@ -34,6 +47,13 @@
     .heading {
       @include font-semi-bold();
       @include font-24px;
+    }
+
+    &:hover {
+      p.with-tooltip,
+      p.with-tooltip i {
+        color: $color-text;
+      }
     }
   }
 }

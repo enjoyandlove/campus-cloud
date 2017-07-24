@@ -2,6 +2,8 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
 import * as moment from 'moment';
 
+declare var $;
+
 interface IProps {
   ends: number;
   starts: number;
@@ -18,7 +20,7 @@ interface IProps {
 })
 export class EngagementStatsComponent implements OnInit {
   @Input() props: IProps;
-  @Output() doCompose: EventEmitter<{name: string, userIds: Array<number>}> = new EventEmitter();
+  @Output() doCompose: EventEmitter<{ name: string, userIds: Array<number> }> = new EventEmitter();
 
   loading;
   noEngagementPercentage;
@@ -38,9 +40,11 @@ export class EngagementStatsComponent implements OnInit {
 
   getPercentage(key) {
     let { no_engagement, one_engagement, repeat_engagement } = this.props;
-    let total =  no_engagement.length + one_engagement.length + repeat_engagement.length;
+    let total = no_engagement.length + one_engagement.length + repeat_engagement.length;
 
-    return ((this.props[key].length * 100) / total).toFixed(1);
+    let percentage = (this.props[key].length * 100) / total;
+
+    return percentage === 0 ? percentage : percentage.toFixed(1);
   }
 
   onDownload(key) {
@@ -48,7 +52,9 @@ export class EngagementStatsComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.props = Object.assign({}, this.props, { no_engagement: [] });
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip();
+    });
 
     this.noEngagementPercentage = this.getPercentage('no_engagement');
     this.oneEngagementPercentage = this.getPercentage('one_engagement');
