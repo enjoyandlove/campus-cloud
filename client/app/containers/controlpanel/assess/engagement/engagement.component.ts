@@ -5,11 +5,6 @@ import { URLSearchParams } from '@angular/http';
 import { EngagementService } from './engagement.service';
 import { BaseComponent } from '../../../../base/base.component';
 
-const METRIC_TYPES = {
-  0: 'Daily',
-  1: 'Weekly'
-};
-
 declare var $;
 
 @Component({
@@ -18,8 +13,10 @@ declare var $;
   styleUrls: ['./engagement.component.scss']
 })
 export class EngagementComponent extends BaseComponent implements OnInit {
-  loading;
   chartData;
+  isComposeModal;
+  loading;
+  messageData;
 
   filters$: BehaviorSubject<any> = new BehaviorSubject(null);
 
@@ -67,12 +64,15 @@ export class EngagementComponent extends BaseComponent implements OnInit {
       .catch(err => console.log(err));
   }
 
-  onDoCompose(): void {
-    $('#composeModal').modal();
+  onDoCompose(data): void {
+    this.messageData = data;
+    this.isComposeModal = true;
+    setTimeout(() => { $('#composeModal').modal(); }, 1);
   }
 
   onComposeTeardown() {
-    console.log('teardown');
+    this.isComposeModal = false;
+    this.messageData = null;
   }
 
   ngOnInit() {

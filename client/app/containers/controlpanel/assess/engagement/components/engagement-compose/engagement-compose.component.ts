@@ -1,4 +1,12 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+  Input,
+  OnInit,
+  Output,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { URLSearchParams } from '@angular/http';
@@ -17,7 +25,7 @@ declare var $;
   styleUrls: ['./engagement-compose.component.scss']
 })
 export class EngagementComposeComponent implements OnInit {
-  @Input() props: { 'label': string, 'users': Array<number> };
+  @Input() props: { 'name': string, 'userIds': Array<number> };
   @Output() teardown: EventEmitter<null> = new EventEmitter();
 
   isError;
@@ -27,6 +35,7 @@ export class EngagementComposeComponent implements OnInit {
   resetStores$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
+    private el: ElementRef,
     private fb: FormBuilder,
     private session: CPSession,
     private storeService: StoreService
@@ -38,10 +47,20 @@ export class EngagementComposeComponent implements OnInit {
     this.stores$ = this.storeService.getStores(search);
   }
 
+  @HostListener('document:click', ['$event'])
+  onClick(event) {
+    // out of modal reset form
+    if (event.target.contains(this.el.nativeElement)) {
+      this.resetModal();
+    }
+  }
+
   doSubmit() {
     this.isError = false;
     let search = new URLSearchParams();
     search.append('school_id', this.session.school.id.toString());
+
+    console.log(this.form.value);
 
     // this
     //   .service
@@ -77,7 +96,7 @@ export class EngagementComposeComponent implements OnInit {
   ngOnInit() {
     this.form = this.fb.group(
       {
-        'user_ids': [[]],
+        'user_ids': [this.props.userIds],
         'is_school_wide': false,
         'store_id': [null, Validators.required],
         'subject': [null, [Validators.required, Validators.maxLength(128)]],
@@ -85,7 +104,5 @@ export class EngagementComposeComponent implements OnInit {
         'priority': [2, Validators.required]
       }
     );
-
-    this.form.controls['user_ids'].setValue([1, 2, 3]);
   }
 }

@@ -48,8 +48,11 @@
   </div>
 </div>
 
-<cp-modal modalId="composeModal">
+<cp-modal
+  *ngIf="isComposeModal"
+  modalId="composeModal">
   <cp-engagement-compose
+    [props]="messageData"
     (teardown)="onComposeTeardown()">
   </cp-engagement-compose>
 </cp-modal>

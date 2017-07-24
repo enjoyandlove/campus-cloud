@@ -1,5 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
+import * as moment from 'moment';
+
 interface IProps {
   ends: number;
   starts: number;
@@ -16,7 +18,7 @@ interface IProps {
 })
 export class EngagementStatsComponent implements OnInit {
   @Input() props: IProps;
-  @Output() doCompose: EventEmitter<Array<number>> = new EventEmitter();
+  @Output() doCompose: EventEmitter<{name: string, userIds: Array<number>}> = new EventEmitter();
 
   loading;
   noEngagementPercentage;
@@ -25,8 +27,13 @@ export class EngagementStatsComponent implements OnInit {
 
   constructor() { }
 
-  onCompose(userList = [1, 2, 3]) {
-    this.doCompose.emit(userList);
+  onCompose(listName, userIds) {
+    const { starts, ends } = this.props;
+    const startDate = moment.unix(starts).format('DD/MM');
+    const endDate = moment.unix(ends).format('DD/MM');
+    const name = `${listName} ${startDate} - ${endDate}`;
+
+    this.doCompose.emit({name, userIds });
   }
 
   getPercentage(key) {

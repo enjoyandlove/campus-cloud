@@ -16,9 +16,9 @@
 
         <button
           type="button"
-          (click)="onCompose()"
           class="cpbtn cpbtn--primary" i18n
-          [disabled]="!props.repeat_engagement.length">
+          [disabled]="!props.repeat_engagement.length"
+          (click)="onCompose('Repeat Engagement', props.repeat_engagement)">
           Message
         </button>
       </div>
@@ -41,9 +41,9 @@
 
         <button
           type="button"
-          (click)="onCompose()"
           class="cpbtn cpbtn--primary" i18n
-          [disabled]="!props.one_engagement.length">
+          [disabled]="!props.one_engagement.length"
+          (click)="onCompose('One Engagement', props.one_engagement)">
           Message
         </button>
       </div>
@@ -66,9 +66,9 @@
 
         <button
           type="button"
-          (click)="onCompose()"
           class="cpbtn cpbtn--primary" i18n
-          [disabled]="!props.no_engagement.length">
+          [disabled]="!props.no_engagement.length"
+          (click)="onCompose('No Engagement', props.no_engagement)">
           Message
         </button>
       </div>

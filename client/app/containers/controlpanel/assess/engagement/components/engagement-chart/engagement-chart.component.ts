@@ -45,7 +45,7 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
       let date = CPDate
         .toEpoch(moment().subtract(this.props.chart_data.length - i, 'days')
           .hours(0).minutes(0).seconds(0));
-      // console.log(moment.unix(date).format('MMM D'));
+
       labels.push(moment.unix(date).format('MMM D'));
     }
 
@@ -110,17 +110,24 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
 
       fullWidth: true,
 
+      axisY: {
+        labelOffset: {
+          y: 23,
+        },
+      },
+
       axisX: {
         position: 'end',
 
         showGrid: false,
 
+        labelOffset: {
+          x: -23,
+        },
+
         labelInterpolationFnc: function skipLabels(value, index, labels) {
           const DATE_TYPES = [30, 49, 90];
           const [MONTH, SIX_WEEKS, THREE_MONTHS] = DATE_TYPES;
-
-          console.log(index);
-          console.log(labels.length);
 
           if (labels.length === MONTH + 1) {
             return index % 3 === 0 ? value : null;
@@ -131,13 +138,7 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
           }
 
           if (labels.length === THREE_MONTHS + 1) {
-            return index % 7 === 0 ? value : null;
-          }
-
-          // if not too many skip last label
-          if (labels.length === index + 1) {
-            console.log('skipping last');
-            return null;
+            return index % 9 === 0 ? value : null;
           }
 
           return value;
@@ -147,7 +148,7 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
 
     const chart = new Chartist.Line(this.chart.nativeElement, data, options);
 
-    chart.on('created', function() {
+    chart.on('created', function () {
       this.isChartDataReady = true;
     }.bind(this));
   }
@@ -156,8 +157,6 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
     this.drawChart();
   }
 
-  ngOnInit() {
-    console.log('days ', this.props.chart_data.length);
-  }
+  ngOnInit() { }
 }
 
