@@ -33,7 +33,7 @@ export class EngagementStatsComponent implements OnInit {
     const endDate = moment.unix(ends).format('DD/MM');
     const name = `${listName} ${startDate} - ${endDate}`;
 
-    this.doCompose.emit({name, userIds });
+    this.doCompose.emit({ name, userIds });
   }
 
   getPercentage(key) {
