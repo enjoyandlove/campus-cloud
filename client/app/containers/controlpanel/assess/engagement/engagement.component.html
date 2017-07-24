@@ -7,33 +7,43 @@
 </div>
 
 <div class="chart cp-card">
-  <div class="row">
-    <div class="col-xs-5">
-      <p class="chart--title" i18n>
-        Unique Student Engagements
-      </p>
-      <cp-engagement-stats
-        [props]="filters$"
-        (doCompose)="onDoCompose($event)">
-      </cp-engagement-stats>
+  <ng-container [ngSwitch]="loading">
+    <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+    <div class="row" *ngSwitchCase="false">
+      <div class="col-xs-5">
+        <p class="chart--title" i18n>
+          Unique Student Engagements
+        </p>
+        <cp-engagement-stats
+          [props]="chartData"
+          (doCompose)="onDoCompose($event)">
+        </cp-engagement-stats>
+      </div>
+      <div class="col-xs-7">
+        <p class="chart--title" i18n>
+          Daily Total Enagements
+        </p>
+        <cp-engagement-chart
+          [props]="chartData">
+        </cp-engagement-chart>
+      </div>
     </div>
-    <div class="col-xs-7">
-      <p class="chart--title" i18n>
-        {{ state.metric }} Total Enagements
-      </p>
-      <cp-engagement-chart></cp-engagement-chart>
-    </div>
-  </div>
+  </ng-container>
 </div>
 
 <div class="boxes">
   <div class="row">
     <div class="col-xs-6">
-      <cp-engagement-events-box [props]="filters$"></cp-engagement-events-box>
+      <cp-engagement-events-box
+        [props]="filters$">
+      </cp-engagement-events-box>
     </div>
 
     <div class="col-xs-6">
-      <cp-engagement-services-box [props]="filters$"></cp-engagement-services-box>
+      <cp-engagement-services-box
+        [props]="filters$">
+      </cp-engagement-services-box>
     </div>
   </div>
 </div>

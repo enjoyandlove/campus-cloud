@@ -4,12 +4,8 @@
 .chart {
   @include card-margin();
 
-  height: 100%;
-  display: block;
-}
-
-.chart {
   height: 416px;
+  display: block;
 }
 
 .chart--title {

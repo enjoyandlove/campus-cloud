@@ -6,6 +6,8 @@ import { CPSession } from '../../../../../../session';
 import { CPDate } from '../../../../../../shared/utils/date';
 import { EngagementService } from '../../engagement.service';
 
+const SERVICE_WITH_ATTENDANCE = '1';
+
 interface IState {
   engagement: {
     'label': string,
@@ -171,6 +173,11 @@ export class EngagementTopBarComponent implements OnInit {
           type: 'services',
           value: null
         }
+      },
+      {
+        'label': 'Services',
+        'value': null,
+        'heading': true,
       }
     ];
 
@@ -202,9 +209,12 @@ export class EngagementTopBarComponent implements OnInit {
         return _lists;
       });
 
+    let serviceSearch = new URLSearchParams();
+    serviceSearch.append('attendance_only', SERVICE_WITH_ATTENDANCE);
+
     this.engageMentFilter$ = this
       .service
-      .getServices(undefined, undefined)
+      .getServices(undefined, undefined, serviceSearch)
       .startWith([this.commonEngageMentFilter[0]])
       .map(services => {
         let _services = [...this.commonEngageMentFilter];

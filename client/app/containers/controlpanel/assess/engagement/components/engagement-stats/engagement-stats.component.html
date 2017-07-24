@@ -2,20 +2,23 @@
   <li class="stats--item">
     <div class="row">
       <div class="col-xs-5">
-        <p class="heading">200 (40%)</p>
+        <p class="heading">{{ props.repeat_engagement.length }} ({{ repeatEngagementPercentage }}%)</p>
         <p class="text-muted" i18n>Repeat Engagement</p>
       </div>
       <div class="stats--buttons col-xs-7 text-right">
         <button
           type="button"
-          class="cpbtn cpbtn--primary" i18n>
+          class="cpbtn cpbtn--primary" i18n
+          (click)="onDownload('repeat_engagement')"
+          [disabled]="!props.repeat_engagement.length">
           Download
         </button>
 
         <button
           type="button"
           (click)="onCompose()"
-          class="cpbtn cpbtn--primary" i18n>
+          class="cpbtn cpbtn--primary" i18n
+          [disabled]="!props.repeat_engagement.length">
           Message
         </button>
       </div>
@@ -24,20 +27,23 @@
   <li class="stats--item">
     <div class="row">
       <div class="col-xs-5">
-        <p class="heading">0 (0%)</p>
+        <p class="heading">{{ props.one_engagement.length }} ({{ oneEngagementPercentage }}%)</p>
         <p class="text-muted" i18n>One Engagement</p>
       </div>
       <div class="stats--buttons col-xs-7 text-right">
         <button
           type="button"
-          class="cpbtn cpbtn--primary" i18n>
+          class="cpbtn cpbtn--primary" i18n
+          (click)="onDownload('one_engagement')"
+          [disabled]="!props.one_engagement.length">
           Download
         </button>
 
         <button
           type="button"
           (click)="onCompose()"
-          class="cpbtn cpbtn--primary" i18n>
+          class="cpbtn cpbtn--primary" i18n
+          [disabled]="!props.one_engagement.length">
           Message
         </button>
       </div>
@@ -46,20 +52,23 @@
   <li class="stats--item">
     <div class="row">
       <div class="col-xs-5">
-        <p class="heading">300 (60%)</p>
+        <p class="heading">{{ props.no_engagement.length }} ({{ noEngagementPercentage }}%)</p>
         <p class="text-muted" i18n>No Engagement</p>
       </div>
       <div class="stats--buttons col-xs-7 text-right">
         <button
           type="button"
-          class="cpbtn cpbtn--primary" i18n>
+          class="cpbtn cpbtn--primary" i18n
+          (click)="onDownload('no_engagement')"
+          [disabled]="!props.no_engagement.length">
           Download
         </button>
 
         <button
           type="button"
           (click)="onCompose()"
-          class="cpbtn cpbtn--primary" i18n>
+          class="cpbtn cpbtn--primary" i18n
+          [disabled]="!props.no_engagement.length">
           Message
         </button>
       </div>

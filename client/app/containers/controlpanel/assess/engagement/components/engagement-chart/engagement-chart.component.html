@@ -1,1 +1,5 @@
+<ng-container [ngSwitch]="isChartDataReady">
+  <cp-spinner *ngSwitchCase="false"></cp-spinner>
+</ng-container>
+
 <div #chart class="chart"></div>
