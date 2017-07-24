@@ -5,6 +5,17 @@ import { Observable } from 'rxjs/Observable';
 import { EngagementService } from '../../engagement.service';
 import { BaseComponent } from '../../../../../../base/base.component';
 
+const sortTypes = {
+  0: null,
+  1: 'feedback',
+  2: 'rating'
+};
+
+interface IState {
+  sortBy: string;
+}
+
+
 @Component({
   selector: 'cp-engagement-events-box',
   templateUrl: './engagement-events-box.component.html',
@@ -15,30 +26,49 @@ export class EngagementEventsBoxComponent extends BaseComponent implements OnIni
 
   loading;
   isDisable;
-  stats: Array<any>;
+  isSorting;
   eventsRanking;
+  stats: Array<any>;
+  state: IState = {
+    sortBy: sortTypes[0]
+  };
   sortyBy: Array<{ 'label': string, 'action': number }>;
 
   constructor(
     private service: EngagementService
   ) {
     super();
-    // super.isLoading().subscribe(loading => this.loading = loading);
+  }
+
+  onSortBy(sortBy) {
+    this.isSorting = true;
+    this.state = Object.assign(
+      {},
+      this.state,
+      { sortBy: sortTypes[sortBy.action] }
+    );
+
+    this.fetch();
   }
 
   fetch() {
-    this.loading = true;
+    if (!this.isSorting) {
+      this.loading = true;
+    }
+
     let search = new URLSearchParams();
-    search.append('hello', 'world');
+    search.append('sort_by', this.state.sortBy);
 
     super
       .fetchData(this.service.getEventsData(search))
       .then(
       _ => {
         this.loading = false;
+        this.isSorting = false;
       },
       _ => {
         this.loading = false;
+        this.isSorting = false;
       }
       );
   }

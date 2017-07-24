@@ -5,6 +5,16 @@ import { Observable } from 'rxjs/Observable';
 import { EngagementService } from '../../engagement.service';
 import { BaseComponent } from '../../../../../../base/base.component';
 
+const sortTypes = {
+  0: null,
+  1: 'feedback',
+  2: 'rating'
+};
+
+interface IState {
+  sortBy: string;
+}
+
 @Component({
   selector: 'cp-engagement-services-box',
   templateUrl: './engagement-services-box.component.html',
@@ -13,10 +23,13 @@ import { BaseComponent } from '../../../../../../base/base.component';
 export class EngagementServicesBoxComponent extends BaseComponent implements OnInit {
   @Input() props: Observable<any>;
 
-
   loading;
   isDisable;
+  isSorting;
   servicesRanking;
+  state: IState = {
+    sortBy: sortTypes[0]
+  };
   stats: Array<any>;
   sortyBy: Array<{ 'label': string, 'action': number }>;
 
@@ -26,19 +39,35 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
     super();
   }
 
+  onSortBy(sortBy) {
+    this.isSorting = true;
+    this.state = Object.assign(
+      {},
+      this.state,
+      { sortBy: sortTypes[sortBy.action] }
+    );
+
+    this.fetch();
+  }
+
   fetch() {
-    this.loading = true;
+    if (!this.isSorting) {
+      this.loading = true;
+    }
+
     let search = new URLSearchParams();
-    search.append('hello', 'world');
+    search.append('sort_by', this.state.sortBy);
 
     super
       .fetchData(this.service.getServicesData(search))
       .then(
         _ => {
           this.loading = false;
+          this.isSorting = false;
         },
         _ => {
           this.loading = false;
+          this.isSorting = false;
         }
       );
   }
