@@ -14,10 +14,10 @@ import { CPDate } from '../../../../../../shared/utils/date';
 interface IProps {
   ends: number;
   starts: number;
-  chart_data: Array<number>;
-  no_engagement: Array<number>;
-  one_engagement: Array<number>;
-  repeat_engagement: Array<number>;
+  series: Array<number>;
+  zero_engagements: Array<number>;
+  one_engagements: Array<number>;
+  repeat_engagements: Array<number>;
 }
 
 declare var Chartist;
@@ -41,9 +41,9 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
   buildLabels() {
     let labels = [];
 
-    for (let i = 0; i <= this.props.chart_data.length; i++) {
+    for (let i = 0; i <= this.props.series.length; i++) {
       let date = CPDate
-        .toEpoch(moment().subtract(this.props.chart_data.length - i, 'days')
+        .toEpoch(moment().subtract(this.props.series.length - i, 'days')
           .hours(0).minutes(0).seconds(0));
 
       labels.push(moment.unix(date).format('MMM D'));
@@ -55,15 +55,15 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
   buildSeries() {
     let series = [];
 
-    for (let i = 0; i <= this.props.chart_data.length; i++) {
+    for (let i = 0; i <= this.props.series.length; i++) {
       let date = CPDate
-        .toEpoch(moment().subtract(this.props.chart_data.length - i, 'days')
+        .toEpoch(moment().subtract(this.props.series.length - i, 'days')
           .hours(0).minutes(0).seconds(0));
 
       series.push(
         {
           'meta': moment.unix(date).format('ddd, MMM D'),
-          'value': this.props.chart_data[i]
+          'value': this.props.series[i]
         }
       );
     }

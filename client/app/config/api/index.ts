@@ -36,6 +36,7 @@ const API_ENDPOINTS = {
   CAMPUS_THREAD: 'campus_thread',
   CAMPUS_COMMENT: 'campus_comment',
   FB_EVENTS: 'facebook_event_link',
+  ENGAGEMENT: 'cc_assess_engagement',
   EVENT_ASSESMENT: 'event_assessment',
   SERVICE_PROVIDER: 'service_provider',
   SERVICE_ASSESSMENT: 'service_assessment',

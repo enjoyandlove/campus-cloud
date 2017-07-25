@@ -41,20 +41,20 @@ export class EngagementService extends BaseService {
   getChartData(search?: URLSearchParams) {
     const DATE_TYPES = [7, 30, 49, 90];
     // const DATE_TYPES = [7];
-    let no_engagement = this.getRandomNumber(Math.floor(Math.random() * 100));
-    let one_engagement = this.getRandomNumber(Math.floor(Math.random() * 100));
-    let repeat_engagement = this.getRandomNumber(Math.floor(Math.random() * 100));
+    let zero_engagements = this.getRandomNumber(Math.floor(Math.random() * 100));
+    let one_engagements = this.getRandomNumber(Math.floor(Math.random() * 100));
+    let repeat_engagements = this.getRandomNumber(Math.floor(Math.random() * 100));
 
-    let chart_data = this.getRandomNumber(
+    let series = this.getRandomNumber(
       DATE_TYPES[Math.floor(Math.random() * DATE_TYPES.length)],
       200
     );
 
     let data = {
-      chart_data,
-      no_engagement,
-      one_engagement,
-      repeat_engagement
+      series,
+      zero_engagements,
+      one_engagements,
+      repeat_engagements
     };
 
     return Observable.of(data).delay(1000);
