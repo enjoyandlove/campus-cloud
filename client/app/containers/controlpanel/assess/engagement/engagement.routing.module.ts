@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-// import { AuthGuard } from '../../../../config/guards';
+import { EngagementResolver } from './engagement.resolver';
 
 import { EngagementComponent } from './engagement.component';
 
@@ -9,7 +9,10 @@ import { EngagementComponent } from './engagement.component';
 const appRoutes: Routes = [
   {
     path: '',
-    component: EngagementComponent
+    component: EngagementComponent,
+    resolve: {
+      data: EngagementResolver
+    }
   }
 ];
 @NgModule({
@@ -18,6 +21,7 @@ const appRoutes: Routes = [
   ],
   exports: [
     RouterModule
-  ]
+  ],
+  providers: [ EngagementResolver ]
 })
 export class EngagementRoutingModule { }

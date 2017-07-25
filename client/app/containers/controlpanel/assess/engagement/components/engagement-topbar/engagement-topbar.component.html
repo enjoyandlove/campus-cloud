@@ -4,17 +4,19 @@
       <div class="row">
         <div class="topbar--filter col-xs-5">
            <cp-dropdown
-            [items]="engageMentFilter$ | async"
+            [items]="engageMentFilter"
             class="topbar--dropdown"
-            (selected)="onScopeChange($event)">
+            (selected)="onScopeChange($event)"
+            [selectedItem]="state.engagement">
           </cp-dropdown>
           <span class="topbar--copy" i18n>for</span>
         </div>
 
         <div class="topbar--filter col-xs-3 no-left-padding">
            <cp-dropdown
-            [items]="studentFilter$ | async"
+            [items]="studentFilter"
             class="topbar--dropdown"
+            [selectedItem]="state.for"
             (selected)="onStudentChange($event)">
           </cp-dropdown>
           <span class="topbar--copy" i18n>in</span>
@@ -23,6 +25,7 @@
           <cp-dropdown
             [items]="dateFilter"
             class="topbar--dropdown"
+            [selectedItem]="state.range"
             (selected)="onDateRangeChange($event)">
           </cp-dropdown>
         </div>

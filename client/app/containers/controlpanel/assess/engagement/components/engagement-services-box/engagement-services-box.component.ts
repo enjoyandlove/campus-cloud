@@ -23,9 +23,9 @@ interface IState {
 export class EngagementServicesBoxComponent extends BaseComponent implements OnInit {
   @Input() props: Observable<any>;
 
-  loading;
   isDisable;
   isSorting;
+  loading = false;
   servicesRanking;
   state: IState = {
     sortBy: sortTypes[0]

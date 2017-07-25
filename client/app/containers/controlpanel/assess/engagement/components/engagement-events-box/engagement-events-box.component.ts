@@ -24,10 +24,10 @@ interface IState {
 export class EngagementEventsBoxComponent extends BaseComponent implements OnInit {
   @Input() props: Observable<any>;
 
-  loading;
   isDisable;
   isSorting;
   eventsRanking;
+  loading = false;
   stats: Array<any>;
   state: IState = {
     sortBy: sortTypes[0]
