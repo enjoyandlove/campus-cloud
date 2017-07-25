@@ -28,7 +28,5 @@ export class AssessComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    console.log('Assess Component Init');
-  }
+  ngOnInit() { }
 }
