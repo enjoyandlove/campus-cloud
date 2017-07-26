@@ -17,6 +17,7 @@ import { ALERT_DEFAULT } from '../../../reducers/alert.reducer';
 })
 export class LoginComponent implements OnInit, OnDestroy {
   form: FormGroup;
+  logo = require('../../../../public/svg/full-logo.svg');
 
   constructor(
     private router: Router,

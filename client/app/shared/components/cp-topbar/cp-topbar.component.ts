@@ -15,6 +15,7 @@ export class CPTopBarComponent implements OnInit {
   canNotify = false;
   canManage = false;
   canAssess = false;
+  logo = require('../../../../public/svg/logo.svg');
 
   constructor(
     private el: ElementRef,
