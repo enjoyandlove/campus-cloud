@@ -39,9 +39,9 @@ export class SchoolSwitchComponent implements OnInit {
   ngOnInit() {
     this.schools = this.session.schools;
     this.selectedSchool = this.session.school;
-    console.log(this.schools.length);
 
     const user: IUser = this.session.user;
+
     let schoolPrivileges = user.school_level_privileges[this.session.school.id];
 
     this.canManageAdmins = false;

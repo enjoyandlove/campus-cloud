@@ -26,7 +26,7 @@
             (click)="isOpen = false"
             routerLinkActive="active">
             <span class="promote-badge">new</span>
-            <a [routerLink]="['/assess']">Assess</a>
+            <a [routerLink]="[canAssess ? '/assess' : '/demo/assess']">Assess</a>
           </li>
         </ul>
 
