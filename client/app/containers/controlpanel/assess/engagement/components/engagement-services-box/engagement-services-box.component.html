@@ -35,7 +35,7 @@
                 <div class="col-xs-4 services--stats--stat" *ngFor="let stat of stats">
                   <div class="row">
                     <div class="col-xs-4 services--stats--graph no-right-padding">
-                      <img [src]="['/png/assess/' + stat.icon]" alt="total services">
+                      <img [src]="[stat.icon]" alt="total services">
                     </div>
                     <div class="col-xs-8 services--stats--data no-right-padding no-left-padding">
                       <p class="stat">{{ stat.value }}</p>

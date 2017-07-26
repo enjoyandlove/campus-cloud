@@ -102,27 +102,27 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
           {
             value: res.data.total_services,
             label: 'Total Services',
-            icon: 'chart_service.png'
+            icon: require('../../../../../../../public/png/assess/chart_service.png')
           },
           {
             value: res.data.total_services_with_attendance,
             label: 'Services Assessed',
-            icon: 'chart_service_assess.png'
+            icon: require('../../../../../../../public/png/assess/chart_service_assess.png')
           },
           {
             value: res.data.total_attendees,
             label: 'Total Attendess',
-            icon: 'chart_attendee.png'
+            icon: require('../../../../../../../public/png/assess/chart_attendee.png')
           },
           {
             value: ((res.data.avg_feedbacks / 100) * 5).toFixed(1),
             label: 'Average Rating',
-            icon: 'chart_rating.png'
+            icon: require('../../../../../../../public/png/assess/chart_rating.png')
           },
           {
             value: res.data.total_feedbacks,
             label: 'Feedback Received',
-            icon: 'chart_feedback.png'
+            icon: require('../../../../../../../public/png/assess/chart_feedback.png')
           }
         ];
       },
