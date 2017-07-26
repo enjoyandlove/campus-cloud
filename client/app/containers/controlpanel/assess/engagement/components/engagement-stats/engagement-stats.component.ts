@@ -4,7 +4,6 @@ import {
   Output,
   Component,
   EventEmitter,
-  ChangeDetectionStrategy
 } from '@angular/core';
 
 import * as moment from 'moment';
@@ -24,7 +23,6 @@ interface IProps {
   selector: 'cp-engagement-stats',
   templateUrl: './engagement-stats.component.html',
   styleUrls: ['./engagement-stats.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EngagementStatsComponent implements OnInit {
   @Input() props: IProps;

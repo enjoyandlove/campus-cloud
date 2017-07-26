@@ -5,9 +5,7 @@ import {
   ViewChild,
   ElementRef,
   AfterViewInit,
-  ChangeDetectorRef,
   ViewEncapsulation,
-  ChangeDetectionStrategy
 } from '@angular/core';
 
 import * as moment from 'moment';
@@ -29,7 +27,6 @@ declare var Chartist;
   templateUrl: './engagement-chart.component.html',
   styleUrls: ['./engagement-chart.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EngagementChartComponent implements OnInit, AfterViewInit {
   @Input() props: IProps;
@@ -39,18 +36,14 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
 
   isChartDataReady = false;
 
-  constructor(
-    private ref: ChangeDetectorRef
-  ) { }
+  constructor() { }
 
   buildLabels() {
     let labels = [];
 
-    for (let i = 0; i <= this.props.series.length; i++) {
+    for (let i = 1; i <= this.props.series.length; i++) {
       let date = CPDate
-        .toEpoch(moment().subtract(this.props.series.length - i, 'days')
-          .hours(0).minutes(0).seconds(0));
-
+        .toEpoch(moment().subtract(this.props.series.length - i, 'days'));
       labels.push(moment.unix(date).format('MMM D'));
     }
 
@@ -60,15 +53,14 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
   buildSeries() {
     let series = [];
 
-    for (let i = 0; i <= this.props.series.length; i++) {
+    for (let i = 1; i <= this.props.series.length; i++) {
       let date = CPDate
-        .toEpoch(moment().subtract(this.props.series.length - i, 'days')
-          .hours(0).minutes(0).seconds(0));
+        .toEpoch(moment().subtract(this.props.series.length - i, 'days'));
 
       series.push(
         {
           'meta': moment.unix(date).format('ddd, MMM D'),
-          'value': this.props.series[i]
+          'value': this.props.series[i - 1]
         }
       );
     }
@@ -131,21 +123,17 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
         },
 
         labelInterpolationFnc: function skipLabels(value, index, labels) {
-          const DATE_TYPES = [30, 49, 90];
+          const DATE_TYPES = [28, 40, 80];
+
           const [MONTH, SIX_WEEKS, THREE_MONTHS] = DATE_TYPES;
 
-          if (labels.length === MONTH + 1) {
+          if (labels.length >= THREE_MONTHS + 1) {
+            return index % 9 === 0 ? value : null;
+          } else if (labels.length >= SIX_WEEKS + 1) {
+            return index % 5 === 0 ? value : null;
+          } else if (labels.length >= MONTH + 1) {
             return index % 3 === 0 ? value : null;
           }
-
-          if (labels.length === SIX_WEEKS + 1) {
-            return index % 5 === 0 ? value : null;
-          }
-
-          if (labels.length === THREE_MONTHS + 1) {
-            return index % 9 === 0 ? value : null;
-          }
-
           return value;
         },
       }
@@ -155,7 +143,6 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
 
     chart.on('created', function () {
       this.isChartDataReady = true;
-      this.ref.detectChanges();
     }.bind(this));
   }
 

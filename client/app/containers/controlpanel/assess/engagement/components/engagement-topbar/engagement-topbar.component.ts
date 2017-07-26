@@ -3,7 +3,6 @@ import {
   Output,
   Component,
   EventEmitter,
-  ChangeDetectionStrategy
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { URLSearchParams } from '@angular/http';
@@ -42,7 +41,6 @@ interface IState {
   selector: 'cp-engagement-topbar',
   templateUrl: './engagement-topbar.component.html',
   styleUrls: ['./engagement-topbar.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EngagementTopBarComponent implements OnInit {
   @Output() doFilter: EventEmitter<IState> = new EventEmitter();
@@ -137,7 +135,7 @@ export class EngagementTopBarComponent implements OnInit {
     search.append('school_id', this.session.school.id.toString());
 
     const now = CPDate.toEpoch(new Date());
-    const lastWeek = CPDate.toEpoch(moment().subtract(7, 'days').hours(0).minutes(0).seconds(0));
+    const lastWeek = CPDate.toEpoch(moment().subtract(6, 'days').hours(0).minutes(0).seconds(0));
     const lastMonth = CPDate.toEpoch(moment().subtract(1, 'months').hours(0).minutes(0).seconds(0));
     const sixWeeks = CPDate.toEpoch(moment().subtract(6, 'weeks').hours(0).minutes(0).seconds(0));
     const threeMonths = CPDate.toEpoch(
@@ -151,8 +149,8 @@ export class EngagementTopBarComponent implements OnInit {
         'payload': {
           'metric': 'daily',
           'range': {
-            start: now,
-            end: lastWeek
+            end: now,
+            start: lastWeek
           }
         }
       },
@@ -162,8 +160,8 @@ export class EngagementTopBarComponent implements OnInit {
         'payload': {
           'metric': 'daily',
           'range': {
-            start: now,
-            end: lastMonth
+            end: now,
+            start: lastMonth
           }
         }
       },
@@ -173,8 +171,8 @@ export class EngagementTopBarComponent implements OnInit {
         'payload': {
           'metric': 'weekly',
           'range': {
-            start: now,
-            end: sixWeeks
+            end: now,
+            start: sixWeeks
           }
         }
       },
@@ -184,8 +182,8 @@ export class EngagementTopBarComponent implements OnInit {
         'payload': {
           'metric': 'monthly',
           'range': {
-            start: now,
-            end: threeMonths
+            end: now,
+            start: threeMonths
           }
         }
       }
@@ -197,15 +195,8 @@ export class EngagementTopBarComponent implements OnInit {
         'label': 'All Engagements',
         'data': {
           type: null,
-          value: null
-        }
-      },
-      {
-        'route_id': 'all_events',
-        'label': 'All Events',
-        'data': {
-          type: 'events',
-          value: null
+          value: 0,
+          queryParam: 'scope'
         }
       },
       {
@@ -213,7 +204,17 @@ export class EngagementTopBarComponent implements OnInit {
         'label': 'All Services',
         'data': {
           type: 'services',
-          value: null
+          value: 1,
+          queryParam: 'scope'
+        }
+      },
+      {
+        'route_id': 'all_events',
+        'label': 'All Events',
+        'data': {
+          type: 'events',
+          value: 2,
+          queryParam: 'scope'
         }
       },
       {
@@ -253,7 +254,8 @@ export class EngagementTopBarComponent implements OnInit {
             'label': service.name,
             'data': {
               type: 'services',
-              value: service.id
+              value: service.id,
+              queryParam: 'service_id'
             }
           }
         );

@@ -1,3 +1,4 @@
+import { CPSession } from './../../../../session/index';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
@@ -22,6 +23,7 @@ export class EngagementComponent extends BaseComponent implements OnInit {
   filters$: BehaviorSubject<any> = new BehaviorSubject(null);
   constructor(
     private router: Router,
+    private session: CPSession,
     private service: EngagementService
   ) {
     super();
@@ -55,10 +57,11 @@ export class EngagementComponent extends BaseComponent implements OnInit {
 
   fetchChartData(filterState) {
     let search = new URLSearchParams();
-    search.append('scope', filterState.engagement.data.type);
+    search.append('school_id', this.session.school.id.toString());
+    search.append(filterState.engagement.data.queryParam, filterState.engagement.data.value);
     search.append('list_id', filterState.for.listId);
-    search.append('starts', `${filterState.range.payload.range.start}` );
-    search.append('ends', `${filterState.range.payload.range.end}` );
+    search.append('start', `${filterState.range.payload.range.start}` );
+    search.append('end', `${filterState.range.payload.range.end}`);
 
     super
       .fetchData(this.service.getChartData(search))

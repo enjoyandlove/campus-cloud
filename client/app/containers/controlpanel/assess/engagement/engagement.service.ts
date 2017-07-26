@@ -38,26 +38,30 @@ export class EngagementService extends BaseService {
     return super.get(url, { search }).map(res => res.json());
   }
 
-  getChartData(search?: URLSearchParams) {
-    const DATE_TYPES = [7, 30, 49, 90];
-    // const DATE_TYPES = [7];
-    let zero_engagements = this.getRandomNumber(Math.floor(Math.random() * 100));
-    let one_engagements = this.getRandomNumber(Math.floor(Math.random() * 100));
-    let repeat_engagements = this.getRandomNumber(Math.floor(Math.random() * 100));
+  getChartData(search: URLSearchParams) {
+    // const DATE_TYPES = [7, 30, 49, 90];
+    // // const DATE_TYPES = [7];
+    // let zero_engagements = this.getRandomNumber(Math.floor(Math.random() * 100));
+    // let one_engagements = this.getRandomNumber(Math.floor(Math.random() * 100));
+    // let repeat_engagements = this.getRandomNumber(Math.floor(Math.random() * 100));
 
-    let series = this.getRandomNumber(
-      DATE_TYPES[Math.floor(Math.random() * DATE_TYPES.length)],
-      200
-    );
+    // let series = this.getRandomNumber(
+    //   DATE_TYPES[Math.floor(Math.random() * DATE_TYPES.length)],
+    //   200
+    // );
 
-    let data = {
-      series,
-      zero_engagements,
-      one_engagements,
-      repeat_engagements
-    };
+    // let data = {
+    //   series,
+    //   zero_engagements,
+    //   one_engagements,
+    //   repeat_engagements
+    // };
 
-    return Observable.of(data).delay(1000);
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_ENGAGEMENT}`;
+
+    return super.get(url, { search }).map(res => res.json());
+
+    // return Observable.of(data).delay(1000);
   }
 
   getEventsData(search: URLSearchParams) {
