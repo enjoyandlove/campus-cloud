@@ -32,6 +32,7 @@ export class EngagementComposeComponent implements OnInit {
 
   isError;
   stores$;
+  sendAsName;
   errorMessage;
   form: FormGroup;
   resetStores$: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -58,11 +59,16 @@ export class EngagementComposeComponent implements OnInit {
   }
 
   doSubmit() {
+    let data = this.form.value;
     this.isError = false;
     let search = new URLSearchParams();
     search.append('school_id', this.session.school.id.toString());
 
-    console.log(this.form.value);
+    data = Object.assign(
+      {},
+      data,
+      { message: `${data.message} ${this.sendAsName}` }
+    );
 
     // this
     //   .service
@@ -87,6 +93,7 @@ export class EngagementComposeComponent implements OnInit {
 
   onSelectedHost(host) {
     this.form.controls['store_id'].setValue(host.value);
+    this.sendAsName = host.label;
   }
 
   resetModal() {
