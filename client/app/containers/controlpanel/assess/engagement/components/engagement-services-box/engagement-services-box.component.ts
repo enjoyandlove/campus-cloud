@@ -1,3 +1,4 @@
+import { CPSession } from './../../../../../../session/index';
 import {
   Input,
   OnInit,
@@ -10,14 +11,23 @@ import { EngagementService } from '../../engagement.service';
 import { BaseComponent } from '../../../../../../base/base.component';
 
 const sortTypes = {
-  0: null,
-  1: 'feedback',
-  2: 'rating'
+  0: 'engagements',
+  1: 'count',
+  2: 'average'
 };
 
 interface IState {
   sortBy: string;
+  list_id: number;
+  start: number;
+  end: number;
+  scope: {
+    queryParam: string;
+    type: string;
+    value: number;
+  };
 }
+
 
 @Component({
   selector: 'cp-engagement-services-box',
@@ -32,12 +42,17 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
   loading = false;
   servicesRanking;
   state: IState = {
-    sortBy: sortTypes[0]
+    sortBy: sortTypes[0],
+    list_id: null,
+    start: null,
+    end: null,
+    scope: null
   };
   stats: Array<any>;
   sortyBy: Array<{ 'label': string, 'action': number }>;
 
   constructor(
+    private session: CPSession,
     private service: EngagementService
   ) {
     super();
@@ -59,20 +74,63 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
       this.loading = true;
     }
 
+    let list_id = this.state.list_id ? this.state.list_id.toString() : null;
+
     let search = new URLSearchParams();
     search.append('sort_by', this.state.sortBy);
+    search.append('end', this.state.end.toString());
+    search.append('start', this.state.start.toString());
+    search.append('list_id', list_id);
+    search.append('school_id', this.session.school.id.toString());
+
+    if (this.state.scope.queryParam === 'scope') {
+      search.append('scope', this.state.scope.value.toString());
+    } else {
+      search.append('service_id', this.state.scope.value.toString());
+    }
 
     super
       .fetchData(this.service.getServicesData(search))
       .then(
-        _ => {
-          this.loading = false;
-          this.isSorting = false;
-        },
-        _ => {
-          this.loading = false;
-          this.isSorting = false;
-        }
+      res => {
+        this.loading = false;
+        this.isSorting = false;
+
+        this.servicesRanking = res.data.top_services;
+
+        this.stats = [
+          {
+            value: res.data.total_services,
+            label: 'Total Services',
+            icon: 'chart_service.png'
+          },
+          {
+            value: res.data.total_services_with_attendance,
+            label: 'Services Assessed',
+            icon: 'chart_service_assess.png'
+          },
+          {
+            value: res.data.total_attendees,
+            label: 'Total Attendess',
+            icon: 'chart_attendee.png'
+          },
+          {
+            value: ((res.data.avg_feedbacks / 100) * 5).toFixed(1),
+            label: 'Average Rating',
+            icon: 'chart_rating.png'
+          },
+          {
+            value: res.data.total_feedbacks,
+            label: 'Feedback Received',
+            icon: 'chart_feedback.png'
+          }
+        ];
+      },
+
+      _ => {
+        this.loading = false;
+        this.isSorting = false;
+      }
       );
   }
 
@@ -80,54 +138,22 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
     this.props.subscribe(res => {
       this.isDisable = res.engagement.data.type === 'events';
 
+      this.state = Object.assign(
+        {},
+        this.state,
+        {
+          end: res.range.payload.range.end,
+          scope: res.engagement.data,
+          start: res.range.payload.range.start,
+          list_id: res.for.listId
+        }
+      );
+
       if (!this.isDisable) {
         this.fetch();
       }
 
     });
-
-    this.servicesRanking = [
-      {
-        'ranking': 1,
-        'image': 'https://source.unsplash.com/random/38x38',
-        'title': 'Some title',
-        'attendees': 15,
-        'feedback': 13,
-        'rating': 4.3
-      },
-      {
-        'ranking': 2,
-        'image': 'https://source.unsplash.com/random/38x38',
-        'title': 'Another Title',
-        'attendees': 25,
-        'feedback': 25,
-        'rating': 4.1
-      },
-      {
-        'ranking': 3,
-        'image': 'https://source.unsplash.com/random/38x38',
-        'title': 'Hello World',
-        'attendees': 10,
-        'feedback': 6,
-        'rating': 3.6
-      },
-      {
-        'ranking': 4,
-        'image': 'https://source.unsplash.com/random/38x38',
-        'title': 'Campus Cloud service',
-        'attendees': 8,
-        'feedback': 8,
-        'rating': 3.1
-      },
-      {
-        'ranking': 5,
-        'image': 'https://source.unsplash.com/random/38x38',
-        'title': 'Some title',
-        'attendees': 15,
-        'feedback': 13,
-        'rating': 1.3
-      }
-    ];
 
     this.sortyBy = [
       {
@@ -141,34 +167,6 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
       {
         'label': 'Rating',
         'action': 2
-      }
-    ];
-
-    this.stats = [
-      {
-        value: 20,
-        label: 'Total Services',
-        icon: 'chart_service.png'
-      },
-      {
-        value: 20,
-        label: 'Services Assessed',
-        icon: 'chart_service_assess.png'
-      },
-      {
-        value: 305,
-        label: 'Total Attendess',
-        icon: 'chart_attendee.png'
-      },
-      {
-        value: 3.2,
-        label: 'Average Rating',
-        icon: 'chart_rating.png'
-      },
-      {
-        value: 173,
-        label: 'Feedback Received',
-        icon: 'chart_feedback.png'
       }
     ];
   }

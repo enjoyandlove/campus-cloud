@@ -87,25 +87,25 @@
                         <p i18n>Rating</p>
                       </div>
                     </div>
-                    <div class="row" *ngFor="let event of eventsRanking; last as last">
+                    <div class="row" *ngFor="let event of eventsRanking; index as index; last as last">
                       <div class="col-xs-12">
                         <div class="events--table--item" [class.isLast]="last">
                           <div class="row">
                             <div class="col-xs-1">
-                              <p class="ranking">{{ event.ranking }}</p>
+                              <p class="ranking">{{ index + 1 }}</p>
                             </div>
                             <div class="col-xs-5 no-left-padding text-truncate">
-                              <img [src]="[event.image + '&key=' + event.title]" alt="" class="event-avatar img-rounded">
-                              <p class="event-title">{{ event.title }}</p>
+                              <img [src]="[event.event_poster_thumb_url]" alt="" class="event-avatar img-rounded">
+                              <p class="event-title text-truncate">{{ event.event_title }}</p>
                             </div>
                             <div class="col-xs-2 no-left-padding">
-                              <p>{{ event.attendees }}</p>
+                              <p>{{ event.num_of_attendees }}</p>
                             </div>
                             <div class="col-xs-2 no-left-padding">
-                              <p>{{ event.feedback }}</p>
+                              <p>{{ event.num_of_feedbacks }}</p>
                             </div>
                             <div class="col-xs-2 text-right no-left-padding">
-                              <p>{{ event.rating }}</p>
+                              <p>{{ ((event.average_of_feedbacks / 100) * 5).toFixed(1) }}</p>
                             </div>
                           </div>
                         </div>

@@ -87,25 +87,25 @@
                         <p i18n>Rating</p>
                       </div>
                     </div>
-                    <div class="row" *ngFor="let service of servicesRanking; last as last">
+                    <div class="row" *ngFor="let service of servicesRanking; index as index last as last">
                       <div class="col-xs-12">
                         <div class="services--table--item" [class.isLast]="last">
                           <div class="row">
                             <div class="col-xs-1">
-                              <p class="ranking">{{ service.ranking }}</p>
+                              <p class="ranking">{{ index + 1 }}</p>
                             </div>
                             <div class="col-xs-5 no-left-padding text-truncate">
-                              <img [src]="[service.image + '&key=' + service.ranking]" alt="" class="service-avatar img-rounded">
-                              <p class="service-title">{{ service.title }}</p>
+                              <img [src]="[service.service_logo_url]" alt="" class="service-avatar img-rounded">
+                              <p class="service-title text-truncate">{{ service.service_name }}</p>
                             </div>
                             <div class="col-xs-2 no-left-padding">
-                              <p>{{ service.attendees }}</p>
+                              <p>{{ service.num_of_attendees }}</p>
                             </div>
                             <div class="col-xs-2 no-left-padding">
-                              <p>{{ service.feedback }}</p>
+                              <p>{{ service.num_of_feedbacks }}</p>
                             </div>
                             <div class="col-xs-2 text-right no-left-padding">
-                              <p>{{ service.rating }}</p>
+                              <p>{{ ((service.average_of_feedbacks / 100) * 5).toFixed(1) }}</p>
                             </div>
                           </div>
                         </div>
