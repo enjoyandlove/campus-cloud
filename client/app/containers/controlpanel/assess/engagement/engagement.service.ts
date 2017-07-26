@@ -1,5 +1,4 @@
 import { Http, URLSearchParams } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -29,6 +28,12 @@ export class EngagementService extends BaseService {
     const url = `${common}/${startRange};${endRange}`;
 
     return super.get(url, { search }).map(res => res.json());
+  }
+
+  postAnnouncements(search: URLSearchParams, body: any) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ANNOUNCEMENT}/`;
+
+    return super.post(url, body, { search }).map(res => res.json());
   }
 
   getLists(startRange = 1, endRange = 1000, search?: URLSearchParams) {

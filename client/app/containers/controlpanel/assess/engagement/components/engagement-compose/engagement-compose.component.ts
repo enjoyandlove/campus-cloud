@@ -1,3 +1,4 @@
+import { EngagementService } from './../../engagement.service';
 import {
   Input,
   OnInit,
@@ -39,6 +40,7 @@ export class EngagementComposeComponent implements OnInit {
     private el: ElementRef,
     private fb: FormBuilder,
     private session: CPSession,
+    private service: EngagementService,
     private storeService: StoreService
   ) {
     const school = this.session.school;
@@ -68,25 +70,27 @@ export class EngagementComposeComponent implements OnInit {
       { message: `${data.message} ${this.sendAsName}` }
     );
 
-    // this
-    //   .service
-    //   .postAnnouncements(search, data)
-    //   .subscribe(
-    //   res => {
-    //     if (res.status === THROTTLED_STATUS) {
-    //       this.isError = true;
-    //       this.errorMessage = `Message not sent, \n
-    //       please wait ${(res.timeout / 60).toFixed()} minutes before trying again`;
-    //       return;
-    //     }
-    //     this.resetModal();
-    //     $('#composeModal').modal('hide');
-    //   },
-    //   _ => {
-    //     this.isError = true;
-    //     this.errorMessage = STATUS.SOMETHING_WENT_WRONG;
-    //   }
-    //   );
+    console.log(data);
+
+    this
+      .service
+      .postAnnouncements(search, data)
+      .subscribe(
+      res => {
+        if (res.status === THROTTLED_STATUS) {
+          this.isError = true;
+          this.errorMessage = `Message not sent, \n
+          please wait ${(res.timeout / 60).toFixed()} minutes before trying again`;
+          return;
+        }
+        this.resetModal();
+        $('#composeModal').modal('hide');
+      },
+      _ => {
+        this.isError = true;
+        this.errorMessage = STATUS.SOMETHING_WENT_WRONG;
+      }
+      );
   }
 
   onSelectedHost(host) {

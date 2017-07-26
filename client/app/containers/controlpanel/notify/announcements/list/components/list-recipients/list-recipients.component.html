@@ -9,7 +9,7 @@
     <div
       class="recipients__more col-xs-3 no-left-padding"
       *ngIf="recipients_more.length">
-      <button type="button" class="cpbtn cpbtn--link cpbtn--no-border" data-toggle="dropdown">View More</button>
+      <button type="button" class="cpbtn cpbtn--link cpbtn--no-border" data-toggle="dropdown">View More ({{ recipients_more.length }})</button>
 
       <ul class="dropdown-menu recipients__list">
         <li *ngFor="let name of recipients_more" class="recipients__item">{{ name }}</li>
