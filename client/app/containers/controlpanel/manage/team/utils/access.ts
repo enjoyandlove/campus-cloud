@@ -14,6 +14,9 @@ const getMenu = function getMenu(privileges) {
     notify: {
       campus: false,
       emergency: false
+    },
+    assess: {
+      engagement: false
     }
   };
 
@@ -50,6 +53,9 @@ const getMenu = function getMenu(privileges) {
     }
     if (+p === 32) {
       form.notify.emergency = true;
+    }
+    if (+p === 34) {
+      form.assess.engagement = true;
     }
   });
 

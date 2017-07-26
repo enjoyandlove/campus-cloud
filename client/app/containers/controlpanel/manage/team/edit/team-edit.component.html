@@ -283,30 +283,30 @@
           </div>
           <!-- END Notify -->
 
-                 <!-- Assess -->
-        <div class="section__item">
-          <div class="row">
-            <div class="col-xs-12">
-              <p class="section-sub-title" i18n>Assess</p>
-              <p class="section-description" i18n>
-                View engagement and student attendance data
-              </p>
+          <!-- Assess -->
+          <div class="section__item">
+            <div class="row">
+              <div class="col-xs-12">
+                <p class="section-sub-title" i18n>Assess</p>
+                <p class="section-description" i18n>
+                  View engagement and student attendance data
+                </p>
+              </div>
+            </div>
+            <div class="row">
+              <div
+                class="col-xs-5 options-row"
+                [class.isDisabled]="!formData.assess.engagement">
+                <cp-checkbox
+                  class="cpcheckbox"
+                  [isDisabled]="!formData.assess.engagement"
+                  (toggle)="checkControl($event, CP_PRIVILEGES_MAP.assessment)">
+                </cp-checkbox>
+                <span i18n>Engagement Dashboard</span>
+              </div>
             </div>
           </div>
-          <div class="row">
-            <div
-              class="col-xs-5 options-row"
-              [class.isDisabled]="!formData.notify.campus">
-              <cp-checkbox
-                class="cpcheckbox"
-                [isDisabled]="!formData.notify.campus"
-                (toggle)="checkControl($event, CP_PRIVILEGES_MAP.campus_announcements)">
-              </cp-checkbox>
-              <span i18n>Engagement Dashboard</span>
-            </div>
-          </div>
-        </div>
-        <!-- END Assess -->
+          <!-- END Assess -->
         </div>
       </fieldset>
       <!-- END Permissions -->

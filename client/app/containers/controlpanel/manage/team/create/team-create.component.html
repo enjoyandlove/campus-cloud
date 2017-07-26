@@ -278,11 +278,11 @@
           <div class="row">
             <div
               class="col-xs-5 options-row"
-              [class.isDisabled]="!formData.notify.campus">
+              [class.isDisabled]="!formData.assess.engagement">
               <cp-checkbox
                 class="cpcheckbox"
-                [isDisabled]="!formData.notify.campus"
-                (toggle)="checkControl($event, CP_PRIVILEGES_MAP.campus_announcements)">
+                [isDisabled]="!formData.assess.engagement"
+                (toggle)="checkControl($event, CP_PRIVILEGES_MAP.assessment)">
               </cp-checkbox>
               <span i18n>Engagement Dashboard</span>
             </div>
