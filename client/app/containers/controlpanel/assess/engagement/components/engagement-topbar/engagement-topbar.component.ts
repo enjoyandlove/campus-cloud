@@ -1,4 +1,10 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+  OnInit,
+  Output,
+  Component,
+  EventEmitter,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { URLSearchParams } from '@angular/http';
 
@@ -35,7 +41,8 @@ interface IState {
 @Component({
   selector: 'cp-engagement-topbar',
   templateUrl: './engagement-topbar.component.html',
-  styleUrls: ['./engagement-topbar.component.scss']
+  styleUrls: ['./engagement-topbar.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EngagementTopBarComponent implements OnInit {
   @Output() doFilter: EventEmitter<IState> = new EventEmitter();

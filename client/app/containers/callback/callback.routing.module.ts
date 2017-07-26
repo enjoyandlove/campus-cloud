@@ -32,8 +32,6 @@ const appRoutes: Routes = [
 
       { path: 'checkin/e/:event', component: CheckinEventsComponent },
       { path: 'checkin/s/:service/:provider', component: CheckinServiceComponent },
-
-      { path: '**', redirectTo: '/login' },
     ]
   },
 ];

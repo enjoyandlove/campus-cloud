@@ -1,4 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Input,
+  OnInit,
+  Component,
+  ChangeDetectorRef,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
@@ -19,7 +25,8 @@ interface IState {
 @Component({
   selector: 'cp-engagement-events-box',
   templateUrl: './engagement-events-box.component.html',
-  styleUrls: ['./engagement-events-box.component.scss']
+  styleUrls: ['./engagement-events-box.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EngagementEventsBoxComponent extends BaseComponent implements OnInit {
   @Input() props: Observable<any>;
@@ -35,6 +42,7 @@ export class EngagementEventsBoxComponent extends BaseComponent implements OnIni
   sortyBy: Array<{ 'label': string, 'action': number }>;
 
   constructor(
+    private ref: ChangeDetectorRef,
     private service: EngagementService
   ) {
     super();
@@ -65,10 +73,12 @@ export class EngagementEventsBoxComponent extends BaseComponent implements OnIni
       _ => {
         this.loading = false;
         this.isSorting = false;
+        this.ref.detectChanges();
       },
       _ => {
         this.loading = false;
         this.isSorting = false;
+        this.ref.detectChanges();
       }
       );
   }

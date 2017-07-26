@@ -22,6 +22,8 @@ const appRoutes: Routes = [
       { path: 'account', loadChildren: './account/account.module#AccountModule' },
 
       { path: 'demo', loadChildren: './request-demo/request-demo.module#RequestDemoModule' },
+
+      { path: '**', redirectTo: '' },
     ]
   },
 ];

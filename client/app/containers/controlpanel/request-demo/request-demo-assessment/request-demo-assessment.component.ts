@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./request-demo-assessment.component.scss']
 })
 export class RequestDemoAssessmentComponent implements OnInit {
+  demoUrl = 'http://confirm.oohlalamobile.com/oohlala-assessment/';
+
   constructor( ) { }
 
   ngOnInit() { }

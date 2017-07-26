@@ -5,7 +5,8 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  HostListener
+  HostListener,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -22,7 +23,8 @@ declare var $;
 @Component({
   selector: 'cp-engagement-compose',
   templateUrl: './engagement-compose.component.html',
-  styleUrls: ['./engagement-compose.component.scss']
+  styleUrls: ['./engagement-compose.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EngagementComposeComponent implements OnInit {
   @Input() props: { 'name': string, 'userIds': Array<number> };

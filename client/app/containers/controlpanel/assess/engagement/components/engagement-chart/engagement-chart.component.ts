@@ -5,7 +5,9 @@ import {
   ViewChild,
   ElementRef,
   AfterViewInit,
-  ViewEncapsulation
+  ChangeDetectorRef,
+  ViewEncapsulation,
+  ChangeDetectionStrategy
 } from '@angular/core';
 
 import * as moment from 'moment';
@@ -26,7 +28,8 @@ declare var Chartist;
   selector: 'cp-engagement-chart',
   templateUrl: './engagement-chart.component.html',
   styleUrls: ['./engagement-chart.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EngagementChartComponent implements OnInit, AfterViewInit {
   @Input() props: IProps;
@@ -36,7 +39,9 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
 
   isChartDataReady = false;
 
-  constructor() { }
+  constructor(
+    private ref: ChangeDetectorRef
+  ) { }
 
   buildLabels() {
     let labels = [];
@@ -150,6 +155,7 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
 
     chart.on('created', function () {
       this.isChartDataReady = true;
+      this.ref.detectChanges();
     }.bind(this));
   }
 

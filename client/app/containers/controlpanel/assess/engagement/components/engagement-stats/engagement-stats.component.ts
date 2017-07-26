@@ -1,4 +1,11 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+  Input,
+  OnInit,
+  Output,
+  Component,
+  EventEmitter,
+  ChangeDetectionStrategy
+} from '@angular/core';
 
 import * as moment from 'moment';
 
@@ -16,7 +23,8 @@ interface IProps {
 @Component({
   selector: 'cp-engagement-stats',
   templateUrl: './engagement-stats.component.html',
-  styleUrls: ['./engagement-stats.component.scss']
+  styleUrls: ['./engagement-stats.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EngagementStatsComponent implements OnInit {
   @Input() props: IProps;
