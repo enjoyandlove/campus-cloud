@@ -1,8 +1,3 @@
-<cp-snackbar
-  *ngIf="displaySnack"
-  [props]="snackbarContent">
-</cp-snackbar>
-
 <div class="row">
   <div class="col-xs-12">
     <cp-engagement-topbar
@@ -58,6 +53,7 @@
   modalId="composeModal">
   <cp-engagement-compose
     [props]="messageData"
+    (success)="onFlashMessage()"
     (teardown)="onComposeTeardown()">
   </cp-engagement-compose>
 </cp-modal>

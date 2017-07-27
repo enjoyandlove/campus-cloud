@@ -1,11 +1,14 @@
-import { CPSession } from './../../../../session/index';
-import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 
+
+import { CPSession } from './../../../../session/index';
 import { EngagementService } from './engagement.service';
 import { BaseComponent } from '../../../../base/base.component';
+import { SNACKBAR_SHOW } from './../../../../reducers/snackbar.reducer';
 
 declare var $;
 
@@ -19,12 +22,11 @@ export class EngagementComponent extends BaseComponent implements OnInit {
   loading;
   messageData;
   isComposeModal;
-  snackbarContent;
-  displaySnack = false;
 
   filters$: BehaviorSubject<any> = new BehaviorSubject(null);
   constructor(
     private router: Router,
+    private store: Store<any>,
     private session: CPSession,
     private service: EngagementService
   ) {
@@ -86,12 +88,14 @@ export class EngagementComponent extends BaseComponent implements OnInit {
     this.messageData = null;
   }
 
-  ngOnInit() {
-    setTimeout(() => {
-      this.displaySnack = true;
-      this.snackbarContent = {
-        body: 'Success! Your message has been sent'
-      };
-    }, 2000);
+  onFlashMessage() {
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        body: 'Success! Your message has been sent',
+      }
+    });
   }
+
+  ngOnInit() { }
 }

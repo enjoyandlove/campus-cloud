@@ -1,42 +1,39 @@
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Store } from '@ngrx/store';
 
-interface IProps {
-  body: string;
-  class: string;
-  autoClose: boolean;
-  autoCloseDelay: number;
-}
-
+import { SNACKBAR_HIDE } from './../../../reducers/snackbar.reducer';
 @Component({
   selector: 'cp-snackbar',
   templateUrl: './cp-snackbar.component.html',
   styleUrls: ['./cp-snackbar.component.scss']
 })
-export class CPSnackBarComponent implements OnInit {
-  @Input() props: IProps;
+export class CPSnackBarComponent implements OnDestroy, OnInit {
+  snack;
 
-  isActive$: BehaviorSubject<boolean> = new BehaviorSubject(true);
+  constructor(
+    private store: Store<any>
+  ) {
+    this
+      .store
+      .select('SNACKBAR')
+      .subscribe(res => {
+        this.snack = res;
 
-  constructor() { }
-
-  onClose() {
-    this.isActive$.next(false);
+        if (this.snack.autoClose) {
+          setTimeout(() => {
+            this.doClose();
+          }, this.snack.autoCloseDelay);
+        }
+      });
   }
 
-  ngOnInit() {
-    this.props = Object.assign(
-      {},
-      this.props,
-      {
-        class: !this.props.class ? 'success' : this.props.class,
-        autoClose: !this.props.autoClose ? true : this.props.autoClose,
-        autoCloseDelay: !this.props.autoCloseDelay ? 2500 : this.props.autoCloseDelay,
-      }
-    );
+  doClose() {
+    this.store.dispatch({ type: SNACKBAR_HIDE });
+  }
 
-    if (this.props.autoClose) {
-      setTimeout(() => { this.isActive$.next(false); }, this.props.autoCloseDelay);
-    }
+  ngOnInit() { }
+
+  ngOnDestroy() {
+    this.store.dispatch({ type: SNACKBAR_HIDE });
   }
 }

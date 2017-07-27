@@ -1,4 +1,3 @@
-import { EngagementService } from './../../engagement.service';
 import {
   Input,
   OnInit,
@@ -8,12 +7,13 @@ import {
   EventEmitter,
   HostListener,
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { URLSearchParams } from '@angular/http';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { CPSession } from '../../../../../../session';
 import { STATUS } from '../../../../../../shared/constants';
+import { EngagementService } from './../../engagement.service';
 import { StoreService } from '../../../../../../shared/services';
 
 const THROTTLED_STATUS = 1;
@@ -28,6 +28,7 @@ declare var $;
 export class EngagementComposeComponent implements OnInit {
   @Input() props: { 'name': string, 'userIds': Array<number> };
   @Output() teardown: EventEmitter<null> = new EventEmitter();
+  @Output() success: EventEmitter<null> = new EventEmitter();
 
   isError;
   stores$;
@@ -84,6 +85,7 @@ export class EngagementComposeComponent implements OnInit {
           return;
         }
         this.resetModal();
+        this.success.emit();
         $('#composeModal').modal('hide');
       },
       _ => {
