@@ -9,7 +9,14 @@ import { isProd } from '../../config/env';
 })
 export class ControlPanelComponent implements OnInit {
   isProd = isProd;
+  snackbarContent;
+
   constructor() { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.snackbarContent = {
+      body: 'Your message has been sent!'
+    };
+  }
+
 }

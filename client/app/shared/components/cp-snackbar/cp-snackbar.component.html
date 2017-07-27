@@ -1,0 +1,20 @@
+<div class="bar" *ngIf="isActive$ | async">
+  <div class="cp-wrapper cp-wrapper--outer">
+    <div class="row">
+      <div class="col-xs-8 col-xs-offset-2">
+        <div [class]="['bar--wrapper ' + props.class]">
+          <p>
+            <span class="material-icons bar--wrapper--icon">check</span>
+            {{ props.body }}
+            <span
+              (click)="onClose()"
+              *ngIf="!props.autoClose"
+              class="material-icons bar--wrapper--close pull-right hover">
+              close
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
