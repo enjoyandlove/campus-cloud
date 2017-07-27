@@ -8,11 +8,11 @@ import { Component, OnInit } from '@angular/core';
 export class RequestDemoAssessmentComponent implements OnInit {
   demoUrl = 'http://confirm.oohlalamobile.com/oohlala-assessment/';
 
-  bgImage = require('../../../../../public/png/request-demo/assess/hero.jpg');
-  trackImage = require('../../../../../public/png/request-demo/assess/ic_track.png');
-  assessImage = require('../../../../../public/png/request-demo/assess/ic_assess.png');
-  insightImage = require('../../../../../public/png/request-demo/assess/ic_get.png');
-  identifyImage = require('../../../../../public/png/request-demo/assess/ic_identify.png');
+  bgImage = require('public/png/request-demo/assess/hero.jpg');
+  trackImage = require('public/png/request-demo/assess/ic_track.png');
+  assessImage = require('public/png/request-demo/assess/ic_assess.png');
+  insightImage = require('public/png/request-demo/assess/ic_get.png');
+  identifyImage = require('public/png/request-demo/assess/ic_identify.png');
 
 
   constructor( ) { }

@@ -72,6 +72,7 @@ module.exports = function makeWebpackConfig() {
     extensions: ['.ts', '.js', '.json', '.css', '.scss', '.html'],
     alias: {
       'root': path.join(__dirname, "client"),
+      'public': path.resolve(__dirname, "client/public/"),
       'styles': path.join(__dirname, "client", "style"),
       'node_modules': path.join(__dirname, "node_modules"),
       'bootstrap': path.join(__dirname, "node_modules", "bootstrap-sass", "assets", "stylesheets", "bootstrap")

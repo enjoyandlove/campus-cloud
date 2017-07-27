@@ -101,27 +101,27 @@ export class EngagementEventsBoxComponent extends BaseComponent implements OnIni
           {
             value: res.data.total_events,
             label: 'Total Events',
-            icon: require('../../../../../../../public/png/assess/chart_event.png')
+            icon: require('public/png/assess/chart_event.png')
           },
           {
             value: res.data.total_events_with_attendance,
             label: 'Events Assessed',
-            icon: require('../../../../../../../public/png/assess/chart_event_assess.png')
+            icon: require('public/png/assess/chart_event_assess.png')
           },
           {
             value: res.data.total_attendees,
             label: 'Total Attendess',
-            icon: require('../../../../../../../public/png/assess/chart_attendee.png')
+            icon: require('public/png/assess/chart_attendee.png')
           },
           {
             value: ((res.data.avg_feedbacks / 100) * 5).toFixed(1),
             label: 'Average Rating',
-            icon: require('../../../../../../../public/png/assess/chart_rating.png')
+            icon: require('public/png/assess/chart_rating.png')
           },
           {
             value: res.data.total_feedbacks,
             label: 'Feedback Received',
-            icon: require('../../../../../../../public/png/assess/chart_feedback.png')
+            icon: require('public/png/assess/chart_feedback.png')
           }
         ];
       },
