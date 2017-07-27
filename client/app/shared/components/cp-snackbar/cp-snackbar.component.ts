@@ -22,7 +22,6 @@ export class CPSnackBarComponent implements OnInit {
 
   onClose() {
     this.isActive$.next(false);
-    setTimeout(() => { this.isActive$.next(true); }, 1000);
   }
 
   ngOnInit() {
@@ -36,8 +35,8 @@ export class CPSnackBarComponent implements OnInit {
       }
     );
 
-    // if (this.props.autoClose) {
-    //   setTimeout(() => { this.isActive$.next(false); }, this.props.autoCloseDelay);
-    // }
+    if (this.props.autoClose) {
+      setTimeout(() => { this.isActive$.next(false); }, this.props.autoCloseDelay);
+    }
   }
 }

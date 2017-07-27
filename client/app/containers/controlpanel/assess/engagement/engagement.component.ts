@@ -16,9 +16,10 @@ declare var $;
 })
 export class EngagementComponent extends BaseComponent implements OnInit {
   chartData;
-  isComposeModal;
   loading;
   messageData;
+  isComposeModal;
+  snackbarContent;
 
   filters$: BehaviorSubject<any> = new BehaviorSubject(null);
   constructor(
@@ -51,9 +52,7 @@ export class EngagementComponent extends BaseComponent implements OnInit {
     this.filters$.next(filterState);
   }
 
-  buildSearchParam() {
-
-  }
+  buildSearchParam() { }
 
   fetchChartData(filterState) {
     let search = new URLSearchParams();
@@ -86,5 +85,9 @@ export class EngagementComponent extends BaseComponent implements OnInit {
     this.messageData = null;
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.snackbarContent = {
+      body: 'Success! Your message has been sent'
+    };
+  }
 }
