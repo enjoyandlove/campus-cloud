@@ -1,4 +1,7 @@
-<cp-snackbar [props]="snackbarContent"></cp-snackbar>
+<cp-snackbar
+  *ngIf="displaySnack"
+  [props]="snackbarContent">
+</cp-snackbar>
 
 <div class="row">
   <div class="col-xs-12">

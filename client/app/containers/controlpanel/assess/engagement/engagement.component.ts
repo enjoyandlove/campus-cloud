@@ -20,6 +20,7 @@ export class EngagementComponent extends BaseComponent implements OnInit {
   messageData;
   isComposeModal;
   snackbarContent;
+  displaySnack = false;
 
   filters$: BehaviorSubject<any> = new BehaviorSubject(null);
   constructor(
@@ -35,14 +36,14 @@ export class EngagementComponent extends BaseComponent implements OnInit {
     this
       .router
       .navigate(
-        ['/assess/dashboard'],
-        {
-          queryParams: {
-            'engagement': state.engagement.route_id,
-            'for': state.for.route_id,
-            'range': state.range.route_id
-          }
+      ['/assess/dashboard'],
+      {
+        queryParams: {
+          'engagement': state.engagement.route_id,
+          'for': state.for.route_id,
+          'range': state.range.route_id
         }
+      }
       );
   }
 
@@ -59,7 +60,7 @@ export class EngagementComponent extends BaseComponent implements OnInit {
     search.append('school_id', this.session.school.id.toString());
     search.append(filterState.engagement.data.queryParam, filterState.engagement.data.value);
     search.append('list_id', filterState.for.listId);
-    search.append('start', `${filterState.range.payload.range.start}` );
+    search.append('start', `${filterState.range.payload.range.start}`);
     search.append('end', `${filterState.range.payload.range.end}`);
 
     super
@@ -70,7 +71,7 @@ export class EngagementComponent extends BaseComponent implements OnInit {
           starts: filterState.range.payload.range.start,
           ends: filterState.range.payload.range.end,
         };
-       })
+      })
       .catch(err => console.log(err));
   }
 
@@ -86,8 +87,11 @@ export class EngagementComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.snackbarContent = {
-      body: 'Success! Your message has been sent'
-    };
+    setTimeout(() => {
+      this.displaySnack = true;
+      this.snackbarContent = {
+        body: 'Success! Your message has been sent'
+      };
+    }, 2000);
   }
 }
