@@ -34,6 +34,9 @@ class CSVParser:
         if not data:
             raise KeyError('File is Empty')
 
+        if len(data) > 100:
+            raise KeyError('File exceeds number of allowed rows')
+
         # zip data with columns
         result = []
         for item in data:
