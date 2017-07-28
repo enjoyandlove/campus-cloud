@@ -4,6 +4,10 @@
 
 $margin-top: 30px;
 
+.feedback-padding {
+  padding-left: 23px;
+}
+
 .services {
   height: 788px;
 
@@ -33,13 +37,6 @@ $margin-top: 30px;
 
     &--stat {
       margin-bottom: $margin-top;
-    }
-
-    &--graph {
-      img {
-        width: 35px;
-        height: 35px;
-      }
     }
 
     &--data {

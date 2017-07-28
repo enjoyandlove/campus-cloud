@@ -4,6 +4,10 @@
 
 $margin-top: 30px;
 
+.feedback-padding {
+  padding-left: 23px;
+}
+
 .events {
   height: 788px;
 
@@ -35,12 +39,6 @@ $margin-top: 30px;
       margin-bottom: $margin-top;
     }
 
-    &--graph {
-      img {
-        width: 35px;
-        height: 35px;
-      }
-    }
 
     &--data {
       p {
