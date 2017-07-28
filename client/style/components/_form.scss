@@ -32,6 +32,12 @@
 
   &__header {
     @include font-semi-bold();
+
+    background: $color-text-alt;
+
+    span {
+      color: $color-secondary-text;
+    }
   }
 
   li,
