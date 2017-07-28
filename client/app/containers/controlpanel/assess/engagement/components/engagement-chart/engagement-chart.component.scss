@@ -10,6 +10,12 @@ span.chartist-tooltip-value {
   @include font-semi-bold();
 }
 
+.cp-label.ct-vertical {
+  display: block;
+  text-align: center;
+  transform: translate(0%, 80%);
+}
+
 span.tooltip-chip {
   top: -1px;
   width: 6px;

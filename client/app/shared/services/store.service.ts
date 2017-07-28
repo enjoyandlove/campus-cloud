@@ -30,7 +30,7 @@ export class StoreService extends BaseService {
 
         let stores = [
           {
-            'label': 'All Hosts',
+            'label': 'Select Host',
             'value': null,
             'heading': false,
           }

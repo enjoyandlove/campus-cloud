@@ -78,28 +78,20 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
     const chipContent = `<span class="tooltip-chip"></span>
     <span class="tooltip-val">Engagement </span>`;
 
-    const highestInArray = Math.max.apply( Math, this.props.series );
+    const highestNoInArray = Math.max.apply(Math, this.props.series);
 
-    const high = (highestInArray + 5) - ((highestInArray + 5) % 5);
+    const high = (highestNoInArray + 5) - ((highestNoInArray + 5) % 5);
 
-    console.log('high #', high);
+    console.log('high ', high);
 
     const options = {
       low: 0,
 
-      // scaleMinSpace: 2,
-
-      // onlyInteger: true,
-
-      // referenceValue: 5,
-
-      // divisor: 2,
-
-      // ticks: [1, 2, 3, 4, 5],
-
       high: high,
 
       chartPadding: {
+        top: 5,
+
         right: 20,
       },
 
@@ -138,9 +130,11 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
           return value % 1 === 0 ? value : null;
         },
 
-        labelOffset: {
-          y: 10,
-        },
+        // offset: 30,
+
+        // labelOffset: {
+        //   y: 30,
+        // },
       },
 
       axisX: {
