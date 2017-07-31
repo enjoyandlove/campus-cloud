@@ -58,7 +58,7 @@ module.exports = function makeWebpackConfig() {
    */
   config.output = isTest ? {} : {
     path: root('_dist'),
-    publicPath: isProd ? '/dist/' : 'http://localhost:3030/',
+    publicPath: isProd ? '/dist' : 'http://localhost:3030',
     filename: isProd ? 'js/[name].[hash].js' : 'js/[name].js',
     chunkFilename: isProd ? '/js/[id].[hash].chunk.js' : '[id].chunk.js'
   };
@@ -248,6 +248,7 @@ module.exports = function makeWebpackConfig() {
 
   // Add build specific plugins
   if (isProd) {
+    console.log('prod plugins');
     config.plugins.push(
       // Reference: http://webpack.github.io/docs/list-of-plugins.html#noerrorsplugin
       // Only emit files when there are no errors
