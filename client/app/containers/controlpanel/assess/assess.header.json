@@ -7,10 +7,6 @@
       "label": "Engagement",
       "url": "/assess/dashboard",
       "hasParams": true
-    },
-    {
-      "label": "Students",
-      "url": "/assess/students"
     }
   ]
 }
