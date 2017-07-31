@@ -1,55 +1,103 @@
+import { CP_PRIVILEGES_MAP } from './../../../../../shared/utils/privileges';
+
 const getMenu = function getMenu(privileges) {
   let form = {
-    services: false,
-    clubs: false,
-    events: false,
+    services: {
+      active: false,
+      deps: []
+    },
+    clubs: {
+      active: false,
+      deps: []
+    },
+    events: {
+      active: false,
+      deps: []
+    },
     content: {
-      orientation: false,
-      calendars: false,
-      maps: false,
-      feeds: false,
-      links: false,
-      appCustomizaton: false,
+      orientation: {
+        active: false,
+        deps: []
+      },
+      calendars: {
+        active: false,
+        deps: []
+      },
+      maps: {
+        active: false,
+        deps: []
+      },
+      feeds: {
+        active: false,
+        deps: []
+      },
+      links: {
+        active: false,
+        deps: []
+      },
+      appCustomizaton: {
+        active: false,
+        deps: []
+      }
     },
     notify: {
-      campus: false,
-      emergency: false
+      campus: {
+        active: false,
+        deps: [],
+        disables: [
+          CP_PRIVILEGES_MAP.assessment,
+          CP_PRIVILEGES_MAP.emergency_announcement
+        ]
+      },
+      emergency: {
+        active: false,
+        deps: [CP_PRIVILEGES_MAP.campus_announcements]
+      }
+    },
+    assess: {
+      engagement: {
+        active: false,
+        deps: [CP_PRIVILEGES_MAP.campus_announcements]
+      }
     }
   };
 
   Object.keys(privileges).forEach(p => {
-    if (+p === 24) {
-      form.services = true;
+    if (+p === CP_PRIVILEGES_MAP.services) {
+      form.services.active = true;
     }
-    if (+p === 22) {
-      form.clubs = true;
+    if (+p === CP_PRIVILEGES_MAP.clubs) {
+      form.clubs.active = true;
     }
-    if (+p === 18) {
-      form.events = true;
+    if (+p === CP_PRIVILEGES_MAP.events) {
+      form.events.active = true;
     }
     if (+p === 17) {
-      form.content.orientation = true;
+      form.content.orientation.active = true;
     }
     if (+p === 16) {
-      form.content.calendars = true;
+      form.content.calendars.active = true;
     }
-    if (+p === 21) {
-      form.content.maps = true;
+    if (+p === CP_PRIVILEGES_MAP.campus_maps) {
+      form.content.maps.active = true;
     }
-    if (+p === 15) {
-      form.content.feeds = true;
+    if (+p === CP_PRIVILEGES_MAP.moderation) {
+      form.content.feeds.active = true;
     }
-    if (+p === 23) {
-      form.content.links = true;
+    if (+p === CP_PRIVILEGES_MAP.links) {
+      form.content.links.active = true;
     }
-    if (+p === 13) {
-      form.content.appCustomizaton = true;
+    if (+p === CP_PRIVILEGES_MAP.app_customization) {
+      form.content.appCustomizaton.active = true;
     }
-    if (+p === 12) {
-      form.notify.campus = true;
+    if (+p === CP_PRIVILEGES_MAP.campus_announcements) {
+      form.notify.campus.active = true;
     }
-    if (+p === 32) {
-      form.notify.emergency = true;
+    if (+p === CP_PRIVILEGES_MAP.emergency_announcement) {
+      form.notify.emergency.active = true;
+    }
+    if (+p === CP_PRIVILEGES_MAP.assessment) {
+      form.assess.engagement.active = true;
     }
   });
 

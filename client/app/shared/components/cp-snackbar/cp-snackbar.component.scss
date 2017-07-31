@@ -1,0 +1,56 @@
+@import '~styles/core/colors';
+@import '~styles/core/typography';
+
+.bar {
+  left: 0;
+  z-index: 9;
+  top: 200px;
+  width: 100%;
+  position: absolute;
+
+  &--wrapper {
+    padding: 12px 18px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.24);
+
+    &--icon {
+
+      top: 1x;
+      font-size: 1.3em;
+      margin-right: 4px;
+      position: relative;
+    }
+
+    &--close {
+      top: 3px;
+      font-size: 1.3em;
+      position: relative;
+    }
+
+    p,
+    span {
+      @include font-normal();
+
+      line-height: 1;
+      margin-bottom: 0;
+      color: $color-white;
+      vertical-align: bottom;
+    }
+
+    &.success {
+      background: $color-success;
+    }
+
+    &.danger {
+      background: $color-danger;
+    }
+
+    &.info {
+      background: $color-info;
+    }
+
+    &.warning {
+      background: $color-warning;
+    }
+  }
+}

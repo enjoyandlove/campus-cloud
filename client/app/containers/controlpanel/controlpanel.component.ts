@@ -9,7 +9,9 @@ import { isProd } from '../../config/env';
 })
 export class ControlPanelComponent implements OnInit {
   isProd = isProd;
+
   constructor() { }
 
   ngOnInit() { }
+
 }
