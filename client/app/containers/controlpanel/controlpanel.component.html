@@ -1,8 +1,15 @@
 <div class="content">
   <cp-topbar></cp-topbar>
+
+  <cp-snackbar></cp-snackbar>
+
   <router-outlet></router-outlet>
+
   <cp-alert></cp-alert>
-  <cp-intercomm *ngIf="isProd"></cp-intercomm>
-  <cp-trackers *ngIf="isProd"></cp-trackers>
+
+  <ng-container *ngIf="isProd">
+    <cp-intercomm></cp-intercomm>
+    <cp-trackers></cp-trackers>
+  </ng-container>
 </div>
 

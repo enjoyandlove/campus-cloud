@@ -72,6 +72,11 @@ p {
 
   &__item {
     margin-bottom: 45px;
+
+    &:last-child {
+      margin-bottom: 0;
+      padding-bottom: 24px;
+    }
   }
 
   &.isDisabled {

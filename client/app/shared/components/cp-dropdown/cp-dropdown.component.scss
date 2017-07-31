@@ -13,6 +13,15 @@
   display: inline-block;
   vertical-align: middle;
 
+  &--arrow {
+    top: 2px;
+    right: 8px;
+    line-height: 1;
+    font-size: 18px;
+    position: absolute;
+    transition: transform 200ms ease-in-out;
+  }
+
   &__button {
     width: 100%;
     text-align: left;
@@ -22,15 +31,6 @@
     &:hover {
       color: $color-text;
       border: 1px solid $color-text;
-    }
-
-    i {
-      top: 2px;
-      right: 8px;
-      line-height: 1;
-      font-size: 18px;
-      position: absolute;
-      transition: transform 200ms ease-in-out;
     }
   }
 

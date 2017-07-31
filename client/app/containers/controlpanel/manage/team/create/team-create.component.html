@@ -157,33 +157,33 @@
           <div class="row options-row">
             <div
               class="col-xs-4"
-              [class.isDisabled]="!formData.content.orientation">
+              [class.isDisabled]="!formData.content.orientation.active">
               <cp-checkbox
                 class="cpcheckbox"
-                (toggle)="checkControl($event, CP_PRIVILEGES_MAP.orientation)"
-                [isDisabled]="!formData.content.orientation">
+                (toggle)="checkControl($event, CP_PRIVILEGES_MAP.orientation, formData.content.orientation)"
+                [isDisabled]="!formData.content.orientation.active">
               </cp-checkbox>
               <span i18n>Orientation</span>
             </div>
 
             <div
               class="col-xs-4"
-              [class.isDisabled]="!formData.content.calendars">
+              [class.isDisabled]="!formData.content.calendars.active">
               <cp-checkbox
                 class="cpcheckbox"
-                (toggle)="checkControl($event, CP_PRIVILEGES_MAP.calendar)"
-                [isDisabled]="!formData.content.calendars">
+                (toggle)="checkControl($event, CP_PRIVILEGES_MAP.calendar, formData.content.calendars)"
+                [isDisabled]="!formData.content.calendars.active">
               </cp-checkbox>
               <span i18n>Calendar</span>
             </div>
 
             <div
               class="col-xs-4"
-              [class.isDisabled]="!formData.content.maps">
+              [class.isDisabled]="!formData.content.maps.active">
               <cp-checkbox
                 class="cpcheckbox"
-                (toggle)="checkControl($event, CP_PRIVILEGES_MAP.campus_maps)"
-                [isDisabled]="!formData.content.maps">
+                (toggle)="checkControl($event, CP_PRIVILEGES_MAP.campus_maps, formData.content.maps)"
+                [isDisabled]="!formData.content.maps.active">
               </cp-checkbox>
               <span i18n>Maps</span>
             </div>
@@ -192,33 +192,33 @@
           <div class="row options-row">
             <div
               class="col-xs-4"
-              [class.isDisabled]="!formData.content.feeds">
+              [class.isDisabled]="!formData.content.feeds.active">
               <cp-checkbox
                 class="cpcheckbox"
-                (toggle)="checkControl($event, CP_PRIVILEGES_MAP.moderation)"
-                [isDisabled]="!formData.content.feeds">
+                (toggle)="checkControl($event, CP_PRIVILEGES_MAP.moderation, formData.content.feeds)"
+                [isDisabled]="!formData.content.feeds.active">
               </cp-checkbox>
               <span i18n>Feeds</span>
             </div>
 
             <div
               class="col-xs-4"
-              [class.isDisabled]="!formData.content.links">
+              [class.isDisabled]="!formData.content.links.active">
               <cp-checkbox
                 class="cpcheckbox"
-                (toggle)="checkControl($event, CP_PRIVILEGES_MAP.links)"
-                [isDisabled]="!formData.content.links">
+                (toggle)="checkControl($event, CP_PRIVILEGES_MAP.links, formData.content.links)"
+                [isDisabled]="!formData.content.links.active">
               </cp-checkbox>
               <span i18n>Links</span>
             </div>
 
             <div
               class="col-xs-4"
-              [class.isDisabled]="!formData.content.appCustomizaton">
+              [class.isDisabled]="!formData.content.appCustomizaton.active">
               <cp-checkbox
                 class="cpcheckbox"
-                (toggle)="checkControl($event, CP_PRIVILEGES_MAP.app_customization)"
-                [isDisabled]="!formData.content.appCustomizaton">
+                (toggle)="checkControl($event, CP_PRIVILEGES_MAP.app_customization, formData.content.appCustomizaton)"
+                [isDisabled]="!formData.content.appCustomizaton.active">
               </cp-checkbox>
               <span i18n>App Customization</span>
             </div>
@@ -241,21 +241,23 @@
               <div class="row options-row">
                 <div
                   class="col-xs-5"
-                  [class.isDisabled]="!formData.notify.campus">
+                  [class.isDisabled]="!formData.notify.campus.active">
                   <cp-checkbox
                     class="cpcheckbox"
-                    [isDisabled]="!formData.notify.campus"
-                    (toggle)="checkControl($event, CP_PRIVILEGES_MAP.campus_announcements)">
+                    [isDisabled]="!formData.notify.campus.active"
+                    [isChecked]="schoolPrivileges && schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements]"
+                    (toggle)="checkControl($event, CP_PRIVILEGES_MAP.campus_announcements, formData.notify.campus)">
                   </cp-checkbox>
                   <span i18n>Campus Announcements</span>
                 </div>
                 <div
                   class="col-xs-5"
-                  [class.isDisabled]="!formData.notify.emergency">
+                  [class.isDisabled]="!formData.notify.emergency.active">
                   <cp-checkbox
                     class="cpcheckbox"
-                    [isDisabled]="!formData.notify.emergency"
-                    (toggle)="checkControl($event, CP_PRIVILEGES_MAP.emergency_announcement)">
+                    [isDisabled]="!formData.notify.emergency.active"
+                    [isChecked]="schoolPrivileges && schoolPrivileges[CP_PRIVILEGES_MAP.emergency_announcement]"
+                    (toggle)="checkControl($event, CP_PRIVILEGES_MAP.emergency_announcement, formData.notify.emergency)">
                   </cp-checkbox>
                   <span i18n>Emergency Announcements</span>
                 </div>
@@ -264,6 +266,32 @@
           </div>
         </div>
         <!-- END Notify -->
+
+        <!-- Assess -->
+        <div class="section__item">
+          <div class="row">
+            <div class="col-xs-12">
+              <p class="section-sub-title" i18n>Assess</p>
+              <p class="section-description" i18n>
+                View engagement and student attendance data
+              </p>
+            </div>
+          </div>
+          <div class="row">
+            <div
+              class="col-xs-5 options-row"
+              [class.isDisabled]="!formData.assess.engagement.active">
+              <cp-checkbox
+                class="cpcheckbox"
+                [isDisabled]="!formData.assess.engagement.active"
+                [isChecked]="schoolPrivileges && schoolPrivileges[CP_PRIVILEGES_MAP.assessment]"
+                (toggle)="checkControl($event, CP_PRIVILEGES_MAP.assessment, formData.assess.engagement)">
+              </cp-checkbox>
+              <span i18n>Engagement Dashboard</span>
+            </div>
+          </div>
+        </div>
+        <!-- END Assess -->
       </div>
       </fieldset>
       <!-- END Permissions -->

@@ -1,0 +1,106 @@
+@import '~styles/core/colors';
+@import '~styles/core/typography';
+@import '~styles/components/button';
+
+.demo-assess {
+  a {
+    font-size: 1.3em; // 18px;
+    padding: 16px 32px;
+  }
+
+  &--hero {
+    width: 100%;
+    height: 600px;
+    background-size: cover;
+
+    &:after {
+      content: '';
+      top: 60px;
+      z-index: 0;
+      width: 100%;
+      height: 600px;
+      width: 100%;
+      height: 600px;
+      position: absolute;
+      background-size: cover;
+      background: radial-gradient(farthest-side at left, #212121 20%, transparent),
+      linear-gradient(to right, rgba(31, 35, 50, 1) 50%, transparent);
+    }
+
+    &--wrapper {
+      top: 150px;
+      z-index: 1;
+      position: relative;
+    }
+
+    p {
+      color: $color-white;
+    }
+
+    p.heading {
+      @include font-bold();
+
+      font-size: 3em; // 48px;
+      margin-bottom: 18px;
+    }
+
+    p.sub-heading {
+      @include font-24px();
+    }
+
+    a {
+      margin-top: 30px;
+    }
+  }
+
+  &--features {
+    &--top,
+    &--bottom {
+      border-bottom: 1px solid $border-color;
+
+      .demo-assess--features--feature {
+        border-right: 1px solid $border-color;
+
+        &:last-child {
+          border-right: none;
+        }
+      }
+    }
+
+    &--feature {
+      padding: 65px 0 65px 10px;
+    }
+
+    &--image {
+      img {
+        top: -10px;
+        width: 104px;
+        height: 104px;
+        position: relative;
+      }
+    }
+
+    &--copy {
+      p {
+        @include font-16px();
+
+        &.heading {
+          font-size: 1.3em;
+          margin-bottom: 12px;
+        }
+      }
+    }
+  }
+
+  &--cta {
+    padding: 140px 0;
+
+    p {
+      @include font-24px();
+    }
+
+    button {
+      margin-top: 30px;
+    }
+  }
+}

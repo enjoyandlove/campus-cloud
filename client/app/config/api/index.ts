@@ -32,12 +32,17 @@ const API_ENDPOINTS = {
   USER_LIST: 'user_list',
   GROUP_THREAD: 'group_thread',
   ANNOUNCEMENT: 'announcement',
+  // Assess Dashboard
+  ASSESS_EVENT: 'assess_event',
   GROUP_COMMENT: 'group_comment',
   CAMPUS_THREAD: 'campus_thread',
   CAMPUS_COMMENT: 'campus_comment',
+  ASSESS_SERVICE: 'assess_service',
   FB_EVENTS: 'facebook_event_link',
+  // Event assessment
   EVENT_ASSESMENT: 'event_assessment',
   SERVICE_PROVIDER: 'service_provider',
+  ASSESS_ENGAGEMENT: 'assess_engagement',
   SERVICE_ASSESSMENT: 'service_assessment',
   SOCIAL_POST_CATEGORY: 'social_post_category',
   EXTERNAL_EVENT_CHECKIN: 'external_event_checkin',

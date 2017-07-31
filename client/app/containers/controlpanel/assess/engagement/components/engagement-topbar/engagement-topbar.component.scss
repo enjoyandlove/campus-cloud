@@ -1,0 +1,20 @@
+@import '~styles/components/card';
+@import '~styles/components/button';
+
+.topbar {
+  &--filter {
+    display: inline-block;
+  }
+
+  &--copy {
+    top: 7px;
+    // left: 6px;
+    font-style: italic;
+    position: relative;
+    display: inline-block;
+  }
+
+  // &--dropdown {
+  //   max-width: 85%;
+  // }
+}
