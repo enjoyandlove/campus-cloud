@@ -82,8 +82,6 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
 
     const high = (highestNoInArray + 5) - ((highestNoInArray + 5) % 5);
 
-    console.log('high ', high);
-
     const options = {
       low: 0,
 

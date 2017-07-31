@@ -15,6 +15,8 @@ const appRoutes: Routes = [
     canActivate: [ AuthGuard ],
     children: [
       { path: 'dashboard', loadChildren: './engagement/engagement.module#EngagementModule' },
+
+      { path: 'students', loadChildren: './students/students.module#EngagementStudentsModule' },
     ]
   }
 ];
