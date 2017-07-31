@@ -26,7 +26,6 @@
     {
       "privilege": 24,
       "label": "Lists",
-      "promote": true,
       "url": "/manage/lists"
     },
     {

@@ -248,7 +248,6 @@ module.exports = function makeWebpackConfig() {
 
   // Add build specific plugins
   if (isProd) {
-    console.log('prod plugins');
     config.plugins.push(
       // Reference: http://webpack.github.io/docs/list-of-plugins.html#noerrorsplugin
       // Only emit files when there are no errors
