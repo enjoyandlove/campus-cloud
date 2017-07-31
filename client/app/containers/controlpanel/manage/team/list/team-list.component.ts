@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
+
 import { AdminService } from '../../../../../shared/services';
+import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 
@@ -27,6 +30,7 @@ export class TeamListComponent extends BaseComponent implements OnInit {
   state: IState = state;
 
   constructor(
+    private session: CPSession,
     private store: Store<IHeader>,
     private adminService: AdminService
   ) {
@@ -37,8 +41,11 @@ export class TeamListComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
+    let search = new URLSearchParams();
+    search.append('school_id', this.session.school.id.toString());
+
     super
-      .fetchData(this.adminService.getAdmins(this.startRange, this.endRange))
+      .fetchData(this.adminService.getAdmins(this.startRange, this.endRange, search))
       .then(res => {
         this.state = Object.assign({}, this.state, { admins: res.data });
       })

@@ -15,6 +15,7 @@ import { BaseComponent } from '../../../../../base/base.component';
 export class ClubsInfoComponent extends BaseComponent implements OnInit {
   club;
   loading;
+  clubStatus;
   hasMetaData;
   clubId: number;
   mapCenter: BehaviorSubject<any>;
@@ -51,10 +52,20 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
           this.club.room_info ||
           this.club.location ||
           this.club.website ||
-          this.club.address;
+          this.club.address ||
+          this.club.constitution_url ||
+          this.club.advisor_firstname ||
+          this.club.advisor_lastname ||
+          this.club.advisor_email;
       })
       .catch(err => console.log(err));
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.clubStatus = {
+      0: 'Inactive',
+      1: 'Active',
+      2: 'Pending'
+    };
+  }
 }

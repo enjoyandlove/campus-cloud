@@ -9,11 +9,14 @@ import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { CP_PRIVILEGES_MAP } from '../../../../../shared/utils/privileges';
 
+const CLUB_PENDING_STATUS = 2;
+
 @Component({
   selector: 'cp-clubs-details',
   template: '<router-outlet></router-outlet>'
 })
 export class ClubsDetailsComponent extends BaseComponent implements OnInit {
+  club;
   loading;
   hasMembership;
   clubId: number;
@@ -36,6 +39,7 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
     super
       .fetchData(this.clubsService.getClubById(this.clubId, search))
       .then(club => {
+        this.club = club.data;
         this.hasMembership = club.data.has_membership;
 
         this.store.dispatch({
@@ -58,12 +62,14 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
     let links = [];
 
     if (schoolPrivileges) {
-      if (schoolPrivileges[CP_PRIVILEGES_MAP.events].r) {
+      if (schoolPrivileges[CP_PRIVILEGES_MAP.events].r
+        && this.club.status !== CLUB_PENDING_STATUS) {
         links = ['Events', ...links];
       }
 
       if (this.hasMembership) {
-        if (schoolPrivileges[CP_PRIVILEGES_MAP.moderation].r) {
+        if (schoolPrivileges[CP_PRIVILEGES_MAP.moderation].r
+          && this.club.status !== CLUB_PENDING_STATUS) {
           links = ['Wall', ...links];
         }
 
@@ -76,14 +82,16 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
     if (accountPrivileges) {
       if (links.indexOf('Events') === -1 &&
         accountPrivileges[CP_PRIVILEGES_MAP.events] &&
+        this.club.status !== CLUB_PENDING_STATUS &&
         accountPrivileges[CP_PRIVILEGES_MAP.events].r) {
         links = ['Events', ...links];
       }
 
       if (links.indexOf('Wall') === -1 &&
         this.hasMembership &&
-        accountPrivileges[CP_PRIVILEGES_MAP.moderation]
-        && accountPrivileges[CP_PRIVILEGES_MAP.moderation].r) {
+        accountPrivileges[CP_PRIVILEGES_MAP.moderation] &&
+        this.club.status !== CLUB_PENDING_STATUS &&
+        accountPrivileges[CP_PRIVILEGES_MAP.moderation].r) {
         links = ['Wall', ...links];
       }
 

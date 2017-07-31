@@ -32,6 +32,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   isFormError;
   manageAdmins;
   servicesMenu;
+  isCurrentUser;
   canReadEvents;
   isServiceModal;
   canReadServices;
@@ -66,9 +67,12 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     super
       .fetchData(admin$)
       .then(res => {
+        this.isCurrentUser = res.data.id === this.session.user.id;
+
         this.buildHeader(`${res.data.firstname} ${res.data.lastname}`);
 
         this.buildForm(res.data);
+
         this.schoolPrivileges = Object.assign(
           {},
           res.data.school_level_privileges[this.schoolId]
@@ -176,7 +180,6 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     }
 
     let _data = {
-      ...data,
       school_level_privileges: {
         [this.schoolId]: {
           ...this.schoolPrivileges
@@ -186,6 +189,25 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
         ...this.accountPrivileges
       }
     };
+
+    if (this.isCurrentUser) {
+      /**
+       * @data (firstname, lastname, email)
+       * this fields are only needed when updating the
+       * current user, if sent when updating another user the BE fails
+       */
+      _data = Object.assign({}, _data, ...data);
+    }
+
+    const isEmpty = require('lodash').isEmpty;
+    const emptyAccountPrivileges = isEmpty(_data.account_level_privileges);
+    const emptySchoolPrivileges = isEmpty(_data.school_level_privileges[this.schoolId]);
+
+    if (emptyAccountPrivileges && emptySchoolPrivileges) {
+      this.formError = 'You have not granted any access';
+      this.isFormError = true;
+      return;
+    }
 
     this
       .adminService
@@ -206,14 +228,14 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   onManageAdminSelected(data) {
-    if (!data.action) {
-      delete this.accountPrivileges[CP_PRIVILEGES_MAP.manage_admin];
+    if (!data.action && this.schoolPrivileges) {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin];
       return;
     }
 
-    this.accountPrivileges = Object.assign(
+    this.schoolPrivileges = Object.assign(
       {},
-      this.accountPrivileges,
+      this.schoolPrivileges,
       {
         [CP_PRIVILEGES_MAP.manage_admin]: {
           r: true,
@@ -345,7 +367,6 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     this.user = this.session.user;
     this.schoolId = this.session.school.id;
-    this.formData = TEAM_ACCESS.getMenu(this.user.school_level_privileges[this.schoolId]);
     let schoolPrivileges = this.user.school_level_privileges[this.schoolId];
 
     this.canReadEvents = schoolPrivileges[CP_PRIVILEGES_MAP.events];

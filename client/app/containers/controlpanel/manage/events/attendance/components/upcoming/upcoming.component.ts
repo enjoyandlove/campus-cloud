@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { FORMAT } from '../../../../../../../shared/pipes/date.pipe';
 
@@ -9,9 +10,20 @@ import { FORMAT } from '../../../../../../../shared/pipes/date.pipe';
 })
 export class AttendanceUpcomingComponent implements OnInit {
   @Input() event: any;
+
+  mapCenter;
+  dateFormat;
   format = FORMAT.DATETIME;
 
   constructor() { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.dateFormat = FORMAT.DATETIME;
+    this.mapCenter = new BehaviorSubject(
+    {
+      lat: this.event.latitude,
+      lng: this.event.longitude
+    }
+    );
+  }
 }

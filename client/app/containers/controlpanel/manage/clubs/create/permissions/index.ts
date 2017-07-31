@@ -2,12 +2,17 @@ export const statusTypes = [
   {
     action: 1,
     label: 'Active',
-    description: 'Club will be visible on the Campus App and the Campus Cloud<br>'
+    description: 'Club is approved and will be listed on the Campus App'
   },
   {
     action: 0,
     label: 'Inactive',
-    description: 'Club will be hidden on the Campus App but visible on the Campus Cloud'
+    description: 'Club is suspended and will be listed on the Campus App'
+  },
+  {
+    action: 2,
+    label: 'Pending',
+    description: 'Club is awating approval and will not be listed on the Campus App'
   }
 ];
 

@@ -19,6 +19,7 @@
             </p>
           </div>
           <div class="col-xs-6 text-right">
+            <label class="error" *ngIf="imageError">{{ imageError }}</label>
             <cp-upload-button
               buttonText="Add Photo"
               buttonClass="cpbtn cpbtn--link"
@@ -40,8 +41,8 @@
                 <button
                   type="button"
                   (click)="onDeleteImage()"
-                  class="cpbtn cpbtn--cancel cpbtn--no-border remove-image">
-                  &times;
+                  class="material-icons cpbtn cpbtn--cancel cpbtn--no-border remove-image">
+                  close
                 </button>
                 <img
                   class="img-responsive"

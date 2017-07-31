@@ -1,11 +1,6 @@
 {
   "heading": "Notify",
-  "subheading": "",
+  "subheading": null,
   "em": null,
-  "children": [
-    {
-      "label": "Announcements",
-      "url": "/notify"
-    }
-  ]
+  "children": []
 }

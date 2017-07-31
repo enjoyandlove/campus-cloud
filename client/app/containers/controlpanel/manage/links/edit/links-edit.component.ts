@@ -72,7 +72,8 @@ export class LinksEditComponent implements OnInit, OnChanges {
   }
 
   handleDeleteImage() {
-    this.form.controls['img_url'].setValue(null);
+    // empty string otherwise the BE wont know we want to delete it
+    this.form.controls['img_url'].setValue('');
   }
 
   doSubmit() {

@@ -1,5 +1,5 @@
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
 import { FeedsService } from '../../../feeds.service';
@@ -12,6 +12,7 @@ import { CPSession } from '../../../../../../../session';
 })
 export class FeedSettingsComponent implements OnInit {
   @Input() clubId: number;
+  @Output() updateWallSettings: EventEmitter<null> = new EventEmitter();
 
   walls;
   privileges;
@@ -52,9 +53,9 @@ export class FeedSettingsComponent implements OnInit {
         return _groups;
       })
       .subscribe(
-        walls => {
-          walls.forEach(wall => this.addFeedControl(wall));
-        });
+      walls => {
+        walls.forEach(wall => this.addFeedControl(wall));
+      });
   }
 
   createFeedControl(wall) {
@@ -97,7 +98,7 @@ export class FeedSettingsComponent implements OnInit {
       .feedsService
       .upodateSocialGroup(control.value.wall_id, control.value, search)
       .subscribe(
-        _ => { return; });
+      res => this.updateWallSettings.emit(res) );
   }
 
   getPrivilegeObj(privilege) {

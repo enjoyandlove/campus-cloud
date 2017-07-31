@@ -11,12 +11,13 @@
           <p class="section__title" i18n>Invitee</p>
           <div class="row">
             <div class="col-xs-4">
-              <label i18n>First Name</label>
+              <label i18n>First Name {{ isCurrentUser }}</label>
               <input
                 type="text"
-                class="form-control"
                 placeholder="John"
-                formControlName="firstname">
+                class="form-control"
+                formControlName="firstname"
+                [attr.disabled]="!isCurrentUser? '' :null">
             </div>
 
             <div class="col-xs-4">
@@ -25,20 +26,22 @@
                 type="text"
                 class="form-control"
                 placeholder="Smith"
-                formControlName="lastname">
+                formControlName="lastname"
+                [attr.disabled]="!isCurrentUser? '' :null">
             </div>
 
             <div class="col-xs-4">
               <label i18n>Email</label>
               <input
-                type="text"
+                type="email"
                 class="form-control"
+                [attr.disabled]="true"
                 formControlName="email"
                 placeholder="john@smith.com">
             </div>
           </div>
 
-          <div class="row">
+          <div class="row" *ngIf="!isCurrentUser">
             <div class="col-xs-12">
               <div
                 class="all-access"
@@ -66,10 +69,10 @@
         </div>
 
       <!-- Permissions -->
-      <fieldset [disabled]="isAllAccessEnabled">
+      <fieldset [disabled]="isAllAccessEnabled || isCurrentUser">
         <div
           class="section cp-card form-group"
-          [class.isDisabled]="isAllAccessEnabled">
+          [class.isDisabled]="isAllAccessEnabled || isCurrentUser">
           <!-- Manage Team Members -->
           <div class="section__item">
             <p class="section__title" i18n>Permissions</p>
@@ -188,7 +191,7 @@
 
               <div
                 class="col-xs-4"
-                [class.isDisabled]="!formData.content.campus_maps">
+                [class.isDisabled]="!formData.content.maps">
                 <cp-checkbox
                   class="cpcheckbox"
                   [isChecked]="schoolPrivileges[CP_PRIVILEGES_MAP.campus_maps]"
@@ -287,18 +290,16 @@
           <div class="cp-wrapper cp-wrapper--outer">
             <div class="row">
               <div class="col-xs-12">
-                <div class="pull-left" *ngIf="isFormError">
-                  <label class="error">{{ formError }}</label>
-                </div>
                 <div class="pull-right">
+                  <label *ngIf="isFormError"class="error">{{ formError }}</label>
                   <a [routerLink]="['/manage/team']"
                     class="cpbtn cpbtn--tall cpbtn--cancel" i18n>
                     Cancel
                   </a>
                   <button
                     type="submit"
-                    class="cpbtn cpbtn--tall cpbtn--primary" i18n
-                    [disabled]="!form.valid">
+                    [disabled]="!form.valid"
+                    class="cpbtn cpbtn--tall cpbtn--primary" i18n>
                     Update
                   </button>
                 </div>
