@@ -1,0 +1,23 @@
+@import '~styles/core/colors';
+@import '~styles/components/form';
+@import '~styles/core/typography';
+@import '~styles/components/modal';
+@import '~styles/components/button';
+
+label {
+  span {
+    @include font-normal();
+
+    color: $color-secondary-text;
+  }
+}
+
+
+.border {
+  top: 1px;
+  left: 1px;
+  height: 31px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid transparent;
+}

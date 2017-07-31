@@ -46,7 +46,7 @@
           <div
             *ngIf="school.logo_url === ''"
             class="switch__school__thumb"
-            [ngStyle]="{'background-image': 'url(/dist/default/user.png)'}">
+            [ngStyle]="{'background-image': 'url(' + defaultImage + ')'}">
           </div>
           <div class="switch__school__name text-truncate">
             {{ school.name }}

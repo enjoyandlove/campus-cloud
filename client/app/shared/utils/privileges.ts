@@ -55,7 +55,9 @@ export const CP_PRIVILEGES_MAP = {
 
   'emergency_announcement': 32, // 'Emergency Announcement',
 
-  'event_attendance': 33// 'Event Attendance'
+  'event_attendance': 33, // 'Event Attendance',
+
+  'assessment': 34
 };
 
 const PRIVILEGES = {
@@ -111,7 +113,9 @@ const PRIVILEGES = {
 
   32: 'Emergency Announcement',
 
-  33: 'Event Attendance'
+  33: 'Event Attendance',
+
+  34: 'Assessment'
 };
 
 export const CP_PRIVILEGES = PRIVILEGES;

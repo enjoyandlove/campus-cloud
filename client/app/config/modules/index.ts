@@ -14,6 +14,7 @@ import {
   alertReducer,
   mobileReducer,
   headerReducer,
+  snackBarReducer,
   eventsModalReducer,
   servicesModalReducer
 } from '../../reducers';
@@ -23,6 +24,7 @@ const APP_STATE_MODULE = StoreModule.provideStore({
   ALERT: alertReducer,
   HEADER: headerReducer,
   MOBILE: mobileReducer,
+  SNACKBAR: snackBarReducer,
   EVENTS_MODAL: eventsModalReducer,
   SERVICES_MODAL: servicesModalReducer
 });
