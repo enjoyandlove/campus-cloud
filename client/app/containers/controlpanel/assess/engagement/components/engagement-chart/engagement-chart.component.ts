@@ -20,17 +20,7 @@ interface IProps {
   repeat_engagements: Array<number>;
 }
 
-
 declare var Chartist;
-
-declare var document;
-declare var window;
-
-// Internet Explorer 6-11
-const isIE = /*@cc_on!@*/false || !!document.documentMode;
-
-// Edge 20+
-const isEdge = !isIE && !!window.StyleMedia;
 
 @Component({
   selector: 'cp-engagement-chart',
@@ -51,12 +41,10 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
   buildLabels() {
     let labels = [];
 
-    const dateFormat = isEdge || isIE ? 'M/D' : 'MMM D';
-
     for (let i = 1; i <= this.props.series.length; i++) {
       let date = CPDate
         .toEpoch(moment().subtract(this.props.series.length - i, 'days'));
-      labels.push(moment.unix(date).format(dateFormat));
+      labels.push(moment.unix(date).format('MMM D'));
     }
 
     return labels;
