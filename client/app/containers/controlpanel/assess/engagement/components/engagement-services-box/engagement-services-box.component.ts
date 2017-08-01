@@ -39,6 +39,7 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
 
   isDisable;
   isSorting;
+  sortingBy;
   loading = false;
   servicesRanking;
   state: IState = {
@@ -89,6 +90,8 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
       search.append('service_id', this.state.scope.value.toString());
     }
 
+    this.updateSortingLabel();
+
     super
       .fetchData(this.service.getServicesData(search))
       .then(
@@ -134,6 +137,18 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
       );
   }
 
+  updateSortingLabel() {
+    Object.keys(sortTypes).map(key => {
+      if (sortTypes[key] === this.state.sortBy && this.sortyBy) {
+        this.sortyBy.forEach(type => {
+          if (type.action === +key) {
+            this.sortingBy = type;
+          }
+        });
+      }
+    });
+  }
+
   ngOnInit() {
     this.props.subscribe(res => {
       this.isDisable = res.engagement.data.type === 'events';
@@ -158,7 +173,7 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
     this.sortyBy = [
       {
         'label': 'Attendees',
-        'action': null
+        'action': 0
       },
       {
         'label': 'Feedback',
@@ -169,5 +184,7 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
         'action': 2
       }
     ];
+
+    this.sortingBy = this.sortyBy[0];
   }
 }
