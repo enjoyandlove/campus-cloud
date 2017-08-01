@@ -51,14 +51,12 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
   buildLabels() {
     let labels = [];
 
-    console.log('isEdge ', isEdge);
-
-    console.log('isIE ', isIE);
+    const dateFormat = isEdge || isIE ? 'M/D' : 'MMM D';
 
     for (let i = 1; i <= this.props.series.length; i++) {
       let date = CPDate
         .toEpoch(moment().subtract(this.props.series.length - i, 'days'));
-      labels.push(moment.unix(date).format('MMM D'));
+      labels.push(moment.unix(date).format(dateFormat));
     }
 
     return labels;
