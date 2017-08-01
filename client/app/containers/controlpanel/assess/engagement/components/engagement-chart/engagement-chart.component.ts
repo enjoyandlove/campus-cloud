@@ -82,14 +82,10 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
 
     const high = (highestNoInArray + 5) - ((highestNoInArray + 5) % 5);
 
-    console.log('high ', high);
-
     const options = {
       low: 0,
 
       high: high,
-
-      stretch: true,
 
       chartPadding: {
         top: 5,
@@ -126,17 +122,9 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
       fullWidth: true,
 
       axisY: {
-        // type: Chartist.AutoScaleAxis,
-
         labelInterpolationFnc: function showLabelsOnlyForIntegers(value) {
           return value % 1 === 0 ? value : null;
         },
-
-        // offset: 30,
-
-        // labelOffset: {
-        //   y: 30,
-        // },
       },
 
       axisX: {
@@ -144,9 +132,9 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
 
         showGrid: false,
 
-        // labelOffset: {
-        //   x: -14,
-        // },
+        labelOffset: {
+          x: -14,
+        },
 
         labelInterpolationFnc: function skipLabels(value, index, labels) {
           const DATE_TYPES = [28, 40, 80];
