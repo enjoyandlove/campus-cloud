@@ -144,9 +144,9 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
 
         showGrid: false,
 
-        labelOffset: {
-          x: -14,
-        },
+        // labelOffset: {
+        //   x: -14,
+        // },
 
         labelInterpolationFnc: function skipLabels(value, index, labels) {
           const DATE_TYPES = [28, 40, 80];
