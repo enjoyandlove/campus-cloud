@@ -33,9 +33,12 @@ span.tooltip-val {
   margin-right: 20px;
 }
 
+div.chart,
 svg.ct-chart-line {
   width: 591px !important;
 }
+
+// width: 5.6 (three months && width: 100%)
 
 .cp-grid {
   stroke-width: 1px;
