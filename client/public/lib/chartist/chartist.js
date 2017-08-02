@@ -992,6 +992,13 @@ var Chartist = {
     positionalData[axis.units.len] = length;
     positionalData[axis.counterUnits.len] = Math.max(0, axisOffset - 10);
 
+    if (positionalData[axis.units.len] < 50) {
+      positionalData[axis.units.len] = 50;
+    }
+
+    // console.log(positionalData);
+    console.log(axis);
+
     if(useForeignObject) {
       // We need to set width and height explicitly to px as span will not expand with width and height being
       // 100% in all browsers
@@ -3066,6 +3073,8 @@ var Chartist = {
           chartOptions.classNames[this.units.dir]
         ], eventEmitter);
       }
+
+      console.log(this);
 
       if(axisOptions.showLabel) {
         Chartist.createLabel(projectedValue, labelLength, index, labelValues, this, axisOptions.offset, labelOffset, labelGroup, [
