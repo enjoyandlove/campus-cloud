@@ -336,7 +336,8 @@ var Chartist = {
     // Create svg object with width and height or use 100% as default
     svg = new Chartist.Svg('svg').attr({
       width: width,
-      height: height
+      height: height,
+      viewBox: "0 0 100% 100%"
     }).addClass(className);
 
     svg._node.style.width = width;
