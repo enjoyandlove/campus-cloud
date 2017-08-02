@@ -33,6 +33,13 @@ span.tooltip-val {
   margin-right: 20px;
 }
 
+.cp-label.ct-horizontal {
+  transform: rotate(-90deg) translateX(-100px);
+  transform-origin: 0% 0% 0px;
+  // text-align: right;
+  width: 100px;
+}
+
 // width: 5.6 (three months && width: 100%)
 
 .cp-grid {
