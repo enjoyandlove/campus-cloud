@@ -8,6 +8,9 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 
+const Chartist = require('chartist');
+require('chartist-plugin-tooltips');
+
 import * as moment from 'moment';
 import { CPDate } from '../../../../../../shared/utils/date';
 
@@ -19,8 +22,6 @@ interface IProps {
   one_engagements: Array<number>;
   repeat_engagements: Array<number>;
 }
-
-declare var Chartist;
 
 @Component({
   selector: 'cp-engagement-chart',

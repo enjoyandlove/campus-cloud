@@ -46,6 +46,8 @@
     "@angular/router": "4.0.0",
     "@ngrx/core": "^1.2.0",
     "@ngrx/store": "^2.2.1",
+    "chartist": "^0.11.0",
+    "chartist-plugin-tooltips": "0.0.17",
     "core-js": "^2.4.1",
     "croppie": "^2.4.1",
     "flatpickr": "2.4.4",
