@@ -13,7 +13,16 @@
   &__nav {
     padding: 14px;
     background: $color-black;
+
+    button {
+      margin-right: 8px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
   }
+
 
   &__title {
     @include font-16px();
