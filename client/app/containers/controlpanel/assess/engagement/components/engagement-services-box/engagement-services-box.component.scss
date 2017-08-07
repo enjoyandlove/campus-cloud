@@ -40,8 +40,10 @@ $margin-top: 30px;
     }
 
     &--data {
+      padding-left: 6px;
+
       p {
-        font-size: 0.9em;
+        font-size: 0.8em;
 
         &.stat {
           @include font-24px();
