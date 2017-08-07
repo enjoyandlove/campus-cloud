@@ -19,7 +19,6 @@ MYEEEkgggQQSCIEEEkgggQQSSCAEek+djl6GVboAAACwT3kB1UmGx0x3AAAAwK/J\
 2Gg3PLvg/buLAAMAlisbiA86/YUAAAAASUVORK5CYII=';
 
 declare var $;
-// declare var jsPDF;
 
 @Component({
   selector: 'cp-base-checkin',
