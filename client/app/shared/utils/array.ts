@@ -1,12 +1,12 @@
-const inArray = function inArray(item: any, arr: any[]) {
+function inArray(item: any, arr: any[]) {
   return arr.indexOf(item) > -1;
 };
 
-const last = function last(arr: any[]) {
+function last(arr: any[]) {
   return arr.pop();
 };
 
-const isObjectInArray = function isObjectInArray(key, arr, value) {
+function isObjectInArray(key, arr, value) {
   let result = false;
 
   arr.forEach(item => {
@@ -18,7 +18,7 @@ const isObjectInArray = function isObjectInArray(key, arr, value) {
   return result;
 };
 
-const removeByIndex = function removeByIndex(arr, index) {
+function removeByIndex(arr, index) {
   arr.splice(index, 1);
 };
 

@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 
 import { ClubsService } from '../clubs.service';
 import { CPSession } from '../../../../../session';
+import { ManageHeaderService } from './../../utils/header';
 import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
@@ -35,7 +36,8 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
   constructor(
     private store: Store<any>,
     private session: CPSession,
-    private clubsService: ClubsService
+    private clubsService: ClubsService,
+    private headerService: ManageHeaderService
   ) {
     super();
     super.isLoading().subscribe(res => this.loading = res);
@@ -54,7 +56,7 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
       .then(res => {
         this.state = Object.assign({}, this.state, { clubs: res.data });
       })
-      .catch(err => console.log(err));
+      .catch(_ => null);
   }
 
   onApproveClub(clubId: number) {
@@ -119,7 +121,7 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
       .store
       .dispatch({
         type: HEADER_UPDATE,
-        payload: require('../../manage.header.json')
+        payload: this.headerService.filterByPrivileges()
       });
   }
 }

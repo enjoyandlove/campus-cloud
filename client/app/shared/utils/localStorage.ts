@@ -6,7 +6,7 @@ const STORAGE_KEYS = {
   'DEFAULT_SCHOOL': 'default_school'
 };
 
-const storageAvailable = function storageAvailable() {
+ function storageAvailable() {
   const test = 'test';
   try {
     localStorage.setItem(test, test);
@@ -17,20 +17,20 @@ const storageAvailable = function storageAvailable() {
   }
 };
 
-const set = function set(key: string, value: string): void {
+function set(key: string, value: string): void {
   localStorage.setItem(base64.encode(key), base64.encode(value));
 };
 
-const get = function get(key: string) {
+function get(key: string) {
   const obj = localStorage.getItem(base64.encode(key));
   return obj ? base64.decode(obj) : null;
 };
 
-const remove = function remove(key: string) {
+function remove(key: string) {
   localStorage.removeItem(base64.encode(key));
 };
 
-const clear = function clear() {
+function clear() {
   localStorage.clear();
 };
 

@@ -136,7 +136,7 @@ export class FeedsComponent extends BaseComponent implements OnInit {
       .then(res => {
         this.state = Object.assign({}, this.state, { feeds: res.data });
       })
-      .catch(err => console.log(err));
+      .catch(_ => null);
   }
 
   doAdvancedSearch(search) {

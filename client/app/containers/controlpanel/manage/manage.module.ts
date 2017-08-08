@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../../shared/shared.module';
 
+import { ManageHeaderService } from './utils/header';
 import { ManageComponent }  from './manage.component';
 
 import { ManageRoutingModule } from './manage.routing.module';
@@ -11,6 +12,6 @@ import { ManageRoutingModule } from './manage.routing.module';
 
   imports: [ CommonModule, SharedModule, ManageRoutingModule ],
 
-  providers: [ ],
+  providers: [ ManageHeaderService ],
 })
 export class ManageModule {}
