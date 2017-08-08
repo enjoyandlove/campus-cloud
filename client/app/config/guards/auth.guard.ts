@@ -40,6 +40,7 @@ export class AuthGuard implements CanActivate {
           })
           .toPromise()
           .then(user => {
+            // console.log(user[0].account_mapping);
             this.session.user = user[0];
             this.session.createPrivilegeModel();
             return true;

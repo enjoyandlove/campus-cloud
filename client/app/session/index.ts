@@ -14,6 +14,14 @@ export * from './user.interface';
 export * from './school.interface';
 export * from './privileges.interface';
 
+/**
+ * Need to filter account_level_privileges for those
+ * stores that the user has access to for this particular school
+ */
+const storesInSchool = (accountPrivileges, accountsWithAccess: Array<number>) => {
+  return accountsWithAccess.map(store => accountPrivileges[store]);
+};
+
 @Injectable()
 export class CPSession {
   private _user: IUser;
@@ -102,26 +110,28 @@ export class CPSession {
 
   private canViewClubs(schoolId: number): boolean {
     let school = false;
+    let { account_level_privileges, account_mapping } = this.user;
 
     if (CP_PRIVILEGES_MAP.clubs in this.user.school_level_privileges[schoolId]) {
       school = this.user.school_level_privileges[schoolId][CP_PRIVILEGES_MAP.clubs].r;
     }
 
-    const account = accountLevelPrivilege(this.user.account_level_privileges,
-      CP_PRIVILEGES_MAP.clubs);
+    const accounts = storesInSchool(account_level_privileges, account_mapping[this.school.id]);
+    const account = accountLevelPrivilege(accounts, CP_PRIVILEGES_MAP.clubs);
 
     return school || account;
   }
 
   private canViewServices(schoolId: number): boolean {
     let school = false;
+    let { account_level_privileges, account_mapping } = this.user;
 
     if (CP_PRIVILEGES_MAP.services in this.user.school_level_privileges[schoolId]) {
       school = this.user.school_level_privileges[schoolId][CP_PRIVILEGES_MAP.services].r;
     }
 
-    const account = accountLevelPrivilege(this.user.account_level_privileges,
-      CP_PRIVILEGES_MAP.services);
+    const accounts = storesInSchool(account_level_privileges, account_mapping[this.school.id]);
+    const account = accountLevelPrivilege(accounts, CP_PRIVILEGES_MAP.services);
 
     return school || account;
   }
@@ -147,7 +157,6 @@ export class CPSession {
     return false;
   }
 };
-
 
 function accountLevelPrivilege(stores, privilege) {
   let hasAccountAccess = false;
