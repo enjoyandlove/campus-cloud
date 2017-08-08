@@ -18,6 +18,14 @@ import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
 declare var $: any;
 
+const FEEDBACK_ENABLED = 1;
+const FEEDBACK_DISABLED = 0;
+
+const SERVICE_FEEDBACK = {
+  [FEEDBACK_ENABLED]: 'Enabled',
+  [FEEDBACK_DISABLED]: 'Disabled'
+};
+
 @Component({
   selector: 'cp-services-edit',
   templateUrl: './services-edit.component.html',
@@ -41,6 +49,8 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     type: null,
     index: null
   };
+
+  serviceFeedback;
 
   constructor(
     private router: Router,
@@ -81,6 +91,14 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
         let providers = res.data[1];
 
         this.service = res.data[0];
+
+        this.serviceFeedback = [
+          {
+            label: SERVICE_FEEDBACK[this.service.service_feedback || FEEDBACK_DISABLED],
+            value: null
+          }
+        ];
+
         this.mapCenter = new BehaviorSubject(
           {
             lat: res.data[0].latitude,

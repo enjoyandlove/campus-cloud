@@ -144,8 +144,16 @@
               </div>
             </div>
 
-            <div *ngIf="form.controls.service_attendance.value">
-              <div formArrayName="providers">
+            <ng-container *ngIf="form.controls.service_attendance.value">
+              <fieldset disabled>
+                <div class="row">
+                  <div class="col-xs-6">
+                    <label i18n>Enable Service Feedback</label>
+                    <cp-dropdown [items]="serviceFeedback"></cp-dropdown>
+                  </div>
+                </div>
+              </fieldset>
+              <div formArrayName="providers" class="providers-list">
                 <div
                   class="row form-box"
                   *ngFor="let provider of form.controls.providers.controls; let i=index">
@@ -189,13 +197,8 @@
                     </div>
                   </div>
                 </div>
-
-                <!--<cp-services-edit-create-provider
-                  [serviceId]="serviceId"
-                  (created)="onProviderCreated($event)">
-                </cp-services-edit-create-provider>-->
               </div>
-            </div>
+            </ng-container>
           </div>
         </div>
       </form>
