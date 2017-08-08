@@ -68,7 +68,7 @@ export class CPSession {
     return this._privileges;
   }
 
-  createPrivilegeModel() {
+  updateSessionPrivileges() {
     this._privileges['readEvent'] = this.canViewEvents(this._school.id);
     this._privileges['readFeed'] = this.canViewFeeds(this._school.id);
     this._privileges['readClub'] = this.canViewClubs(this._school.id);
