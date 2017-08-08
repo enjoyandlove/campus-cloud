@@ -12,8 +12,10 @@
     position: relative;
 
     > span i {
-      top: -2px;
+      top: 1px;
+      font-size: 17px;
       position: absolute;
+      padding-left: 6px;
     }
   }
 }
@@ -40,12 +42,12 @@
     }
   }
 
-  @media all and (max-width: $screen-md) {
-    li {
-      > span:not(.events__thumbnail) {
-        text-align: center;
-        padding-bottom: 10px;
-      }
-    }
-  }
+  // @media all and (max-width: $screen-md) {
+  //   li {
+  //     > span:not(.events__thumbnail) {
+  //       text-align: center;
+  //       padding-bottom: 10px;
+  //     }
+  //   }
+  // }
 }

@@ -344,9 +344,39 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     );
   }
 
-  checkControl(_, type): void {
+  disableDependencies(deps: Array<number>) {
+    deps.forEach(dep => {
+      if (this.schoolPrivileges && this.schoolPrivileges[dep]) {
+        this.checkControl(undefined, dep, { deps: [] });
+      }
+    });
+  }
+
+  handleDependencies(permission, dependencies: Array<number>) {
+    if (!dependencies.length) { return; }
+
+    dependencies.forEach(dep => {
+
+      if (this.schoolPrivileges[dep]) {
+        return;
+      }
+
+      if (this.schoolPrivileges[permission]) {
+        this.checkControl(undefined, dep, { deps: [] });
+      }
+
+    });
+  }
+
+
+  checkControl(isChecked, type, control): void {
+    if (!isChecked && control.disables) {
+      this.disableDependencies(control.disables);
+    }
+
     if (this.schoolPrivileges && this.schoolPrivileges[type]) {
       delete this.schoolPrivileges[type];
+      this.handleDependencies(type, control.deps);
       return;
     }
 
@@ -361,7 +391,28 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
           w: privilege.w
         }
       });
+
+    this.handleDependencies(type, control.deps);
   }
+
+  // checkControl(_, type): void {
+  //   if (this.schoolPrivileges && this.schoolPrivileges[type]) {
+  //     delete this.schoolPrivileges[type];
+  //     return;
+  //   }
+
+  //   let privilege = this.user.school_level_privileges[this.schoolId][type];
+
+  //   this.schoolPrivileges = Object.assign(
+  //     {},
+  //     this.schoolPrivileges,
+  //     {
+  //       [type]: {
+  //         r: privilege.r,
+  //         w: privilege.w
+  //       }
+  //     });
+  // }
 
 
   ngOnInit() {

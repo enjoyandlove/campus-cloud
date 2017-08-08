@@ -58,7 +58,7 @@ module.exports = function makeWebpackConfig() {
    */
   config.output = isTest ? {} : {
     path: root('_dist'),
-    publicPath: isProd ? '/dist' : 'http://localhost:3030/',
+    publicPath: isProd ? '/dist/' : 'http://localhost:3030/',
     filename: isProd ? 'js/[name].[hash].js' : 'js/[name].js',
     chunkFilename: isProd ? '/js/[id].[hash].chunk.js' : '[id].chunk.js'
   };
@@ -72,6 +72,7 @@ module.exports = function makeWebpackConfig() {
     extensions: ['.ts', '.js', '.json', '.css', '.scss', '.html'],
     alias: {
       'root': path.join(__dirname, "client"),
+      'public': path.resolve(__dirname, "client/public/"),
       'styles': path.join(__dirname, "client", "style"),
       'node_modules': path.join(__dirname, "node_modules"),
       'bootstrap': path.join(__dirname, "node_modules", "bootstrap-sass", "assets", "stylesheets", "bootstrap")
@@ -102,7 +103,11 @@ module.exports = function makeWebpackConfig() {
       // copy those assets to output
       {
         test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'file-loader?name=fonts/[name].[hash].[ext]?'
+        loader: 'file-loader',
+
+        options: {
+          name: isProd ? 'assets/[name].[hash].[ext]' : '[name].[ext]'
+        }
       },
 
       // Support for *.json files.

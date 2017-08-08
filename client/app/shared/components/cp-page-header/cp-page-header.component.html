@@ -21,7 +21,7 @@
           <li
             routerLinkActive="active"
             *ngFor="let page of data.children"
-            [routerLinkActiveOptions]="{exact: true}">
+            [routerLinkActiveOptions]="{exact: page.hasParams ? false : true}">
             <span class="promote-badge" *ngIf="page.promote">new</span>
             <a
               [routerLink]="[page.url]">{{ page.label }}

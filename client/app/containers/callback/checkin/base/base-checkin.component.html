@@ -6,6 +6,11 @@
           <p class="page__title" i18n>Check In Instructions</p>
           <div class="pull-right">
             <button
+              (click)="handlePdf()"
+              class="cpbtn cpbtn--primary"i18n>
+              Download QR Code
+            </button>
+            <button
               data-toggle="modal"
               class="cpbtn cpbtn--primary"
               data-target="#checkinInstruction" i18n>
@@ -47,6 +52,16 @@
     </div>
   </div>
 </div>
+
+<cp-modal modalId="checkinInternalModal">
+  <cp-checkin-internal-modal
+    [data]="data"
+    [isEvent]="isEvent"
+    [isService]="isService"
+    (teardown)="onInternalModalTeardown()"
+    (updated)="onInternaleModalUpdate($event)">
+  </cp-checkin-internal-modal>
+</cp-modal>
 
 <cp-modal modalId="checkinInstruction">
   <cp-instructions-modal></cp-instructions-modal>

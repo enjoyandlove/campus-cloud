@@ -3,7 +3,7 @@
 
 .cpbtn,
 a.cpbtn, {
-  @include font-semi-bold();
+  @include font-normal();
 
   font-size: 1em;
   cursor: pointer;
