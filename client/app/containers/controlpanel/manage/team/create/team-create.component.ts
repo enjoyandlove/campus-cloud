@@ -186,8 +186,8 @@ export class TeamCreateComponent implements OnInit {
       }
     };
 
-    console.log(_data);
-    return;
+    // console.log(_data);
+    // return;
 
     const isEmpty = require('lodash').isEmpty;
     const emptyAccountPrivileges = isEmpty(_data.account_level_privileges);
