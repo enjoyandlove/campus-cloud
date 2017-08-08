@@ -1,6 +1,7 @@
 import { CP_PRIVILEGES_MAP } from './../../../../../shared/utils/privileges';
 
 function getMenu(privileges) {
+
   let form = {
     services: {
       active: false,

@@ -16,6 +16,7 @@ export class CPTopBarComponent implements OnInit {
   canManage = false;
   canAssess = false;
   manageHomePage: string;
+
   logo = require('public/svg/logo.svg');
 
   constructor(
@@ -76,6 +77,5 @@ export class CPTopBarComponent implements OnInit {
     this.canAssess = this.session.canViewAssess(this.school.id);
 
     this.logPrivileges();
-    console.log(this.user);
   }
 }
