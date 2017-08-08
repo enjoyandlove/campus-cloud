@@ -3,6 +3,7 @@ import { URLSearchParams } from '@angular/http';
 
 import { ILink } from '../link.interface';
 import { LinksService } from '../links.service';
+import { CPSession } from './../../../../../session/index';
 import { BaseComponent } from '../../../../../base/base.component';
 
 declare var $: any;
@@ -36,6 +37,7 @@ export class LinksListComponent extends BaseComponent implements OnInit {
   state: IState = state;
 
   constructor(
+    private session: CPSession,
     private service: LinksService
   ) {
     super();
@@ -69,6 +71,7 @@ export class LinksListComponent extends BaseComponent implements OnInit {
   private fetch() {
     let search = new URLSearchParams();
     search.append('search_str', this.state.search_str);
+    search.append('school_id', this.session.school.id.toString());
 
     let end = this.endRange;
     let start = this.startRange;

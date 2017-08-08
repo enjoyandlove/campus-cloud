@@ -16,17 +16,17 @@ export class ManageHeaderService {
 
       _children = this.privileges.children.filter(child => {
         if (child.privilege === CP_PRIVILEGES_MAP.events) {
-          return this.session.canViewEvents(this.session.school.id) ? child : null;
+          return this.session.privileges.readEvent ? child : null;
         } else if (child.privilege === CP_PRIVILEGES_MAP.moderation) {
-          return this.session.canViewFeeds(this.session.school.id) ? child : null;
+          return this.session.privileges.readFeed ? child : null;
         } else if (child.privilege === CP_PRIVILEGES_MAP.clubs) {
-          return this.session.canViewClubs(this.session.school.id) ? child : null;
+          return this.session.privileges.readClub ? child : null;
         } else if (child.privilege === CP_PRIVILEGES_MAP.services) {
-          return this.session.canViewServices(this.session.school.id) ? child : null;
+          return this.session.privileges.readService ? child : null;
         } else if (child.privilege === CP_PRIVILEGES_MAP.campus_announcements) {
-          return this.session.canViewLists(this.session.school.id) ? child : null;
+          return this.session.privileges.readNotify ? child : null;
         } else if (child.privilege === CP_PRIVILEGES_MAP.links) {
-          return this.session.canViewLinks(this.session.school.id) ? child : null;
+          return this.session.privileges.readLink ? child : null;
         }
       });
 

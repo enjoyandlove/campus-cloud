@@ -18,6 +18,7 @@ export class CPTopBarComponent implements OnInit {
   manageHomePage: string;
 
   logo = require('public/svg/logo.svg');
+  defaultImage = require('public/default/user.png');
 
   constructor(
     private el: ElementRef,
@@ -35,34 +36,22 @@ export class CPTopBarComponent implements OnInit {
 
   logPrivileges() {
     if (isDev) {
-      console.table(
-        [
-        [ 'canViewAssess', this.session.canViewAssess(this.school.id) ],
-        [ 'canViewClubs', this.session.canViewClubs(this.school.id) ],
-        [ 'canViewEvents', this.session.canViewEvents(this.school.id) ],
-        [ 'canViewFeeds', this.session.canViewFeeds(this.school.id) ],
-        [ 'canViewLinks', this.session.canViewLinks(this.school.id) ],
-        [ 'canViewLists', this.session.canViewLists(this.school.id) ],
-        [ 'canViewNotify', this.session.canViewNotify(this.school.id) ],
-        [ 'canViewServices', this.session.canViewServices(this.school.id) ],
-        [ 'canViewTeamSettings', this.session.canViewTeamSettings(this.school.id) ]
-        ]
-      );
+      console.table([this.session.privileges]);
     }
   }
 
   getManageHomePage() {
-    if (this.session.canViewEvents(this.school.id)) {
+    if (this.session.privileges.readEvent)  {
       return 'events';
-    } else if (this.session.canViewFeeds(this.school.id)) {
+    } else if (this.session.privileges.readFeed)  {
       return 'feeds';
-    } else if (this.session.canViewClubs(this.school.id)) {
+    } else if (this.session.privileges.readClub)  {
       return 'clubs';
-    } else if (this.session.canViewServices(this.school.id)) {
+    } else if (this.session.privileges.readService)  {
       return 'services';
-    } else if (this.session.canViewNotify(this.school.id)) {
+    } else if (this.session.privileges.readList)  {
       return 'lists';
-    } else if (this.session.canViewLinks(this.school.id)) {
+    } else if (this.session.privileges.readLink)  {
       return 'links';
     }
     return null;
@@ -73,8 +62,8 @@ export class CPTopBarComponent implements OnInit {
     this.school = this.session.school;
 
     this.manageHomePage = this.getManageHomePage();
-    this.canNotify = this.session.canViewNotify(this.school.id);
-    this.canAssess = this.session.canViewAssess(this.school.id);
+    this.canNotify = this.session.privileges.readNotify;
+    this.canAssess = this.session.privileges.readAssess;
 
     this.logPrivileges();
   }
