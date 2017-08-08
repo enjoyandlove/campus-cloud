@@ -54,7 +54,7 @@ function _utf8_decode(utftext) {
 }
 
 
-const encode = function encode(input) {
+function encode(input) {
   let output = '';
   let chr1, chr2, chr3, enc1, enc2, enc3, enc4;
   let i = 0;
@@ -86,7 +86,7 @@ const encode = function encode(input) {
   return output;
 };
 
-const decode = function decode(input) {
+function decode(input) {
   let output = '';
   let chr1, chr2, chr3;
   let enc1, enc2, enc3, enc4;

@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 
 import { EventsService } from '../events.service';
 import { CPSession } from '../../../../../session';
+import { ManageHeaderService } from '../../utils/header';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 
 import { EventsComponent } from './base/events.component';
@@ -24,7 +25,8 @@ export class EventsListComponent extends EventsComponent implements OnInit {
   constructor(
     public session: CPSession,
     private store: Store<IHeader>,
-    public service: EventsService
+    public service: EventsService,
+    private headerService: ManageHeaderService
   ) {
     super(session, service);
   }
@@ -32,7 +34,7 @@ export class EventsListComponent extends EventsComponent implements OnInit {
   private buildHeader() {
     this.store.dispatch({
       type: HEADER_UPDATE,
-      payload: require('../../manage.header.json')
+      payload: this.headerService.filterByPrivileges()
     });
   }
 

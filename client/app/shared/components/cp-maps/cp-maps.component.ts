@@ -31,18 +31,18 @@ export class CPMapsComponent implements OnInit, AfterViewInit {
   drawMap(center) {
     const el = this.map.nativeElement;
 
-    let map = new google.maps.Map(el, {
+    const map = new google.maps.Map(el, {
       zoom: 16,
       draggable: false,
       center: center,
       disableDefaultUI: true
     });
 
-    new google.maps.Marker({
+    const marker = new google.maps.Marker({
       position: center,
-      map: map,
     });
 
+    marker.setMap(map);
   }
 
   ngOnInit() { }

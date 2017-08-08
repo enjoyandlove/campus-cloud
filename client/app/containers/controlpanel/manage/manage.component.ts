@@ -2,12 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
-import {
-  IHeader,
-  HEADER_UPDATE
-} from '../../../reducers/header.reducer';
-
-import { CPSession, IUser } from '../../../session';
+import { IUser } from '../../../session';
+import { ManageHeaderService } from './utils/header';
+import { IHeader, HEADER_UPDATE } from '../../../reducers/header.reducer';
 
 @Component({
   selector: 'cp-manage',
@@ -18,19 +15,15 @@ export class ManageComponent implements OnInit {
   headerData$: Observable<IHeader>;
 
   constructor(
-    private session: CPSession,
-    private store: Store<IHeader>
+    private store: Store<IHeader>,
+    private headerService: ManageHeaderService
   ) {
     this.headerData$ = this.store.select('HEADER');
   }
-
   ngOnInit() {
-    this.user = this.session.user;
-    // let schooldId = this.session.school.id;
-
     this.store.dispatch({
       type: HEADER_UPDATE,
-      payload: require('./manage.header.json')
+      payload: this.headerService.filterByPrivileges()
     });
   }
 }

@@ -168,6 +168,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
     this.managers$ =
       this
         .selectedHost$
+        .asObservable()
         .flatMap(host => {
           if (host) {
             return this.getManagersByHostId(host);

@@ -3,6 +3,7 @@ import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
 import { ServicesService } from '../services.service';
+import { ManageHeaderService } from './../../utils/header';
 import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 
@@ -30,7 +31,8 @@ export class ServicesListComponent extends BaseComponent implements OnInit, OnDe
 
   constructor(
     private store: Store<IHeader>,
-    private service: ServicesService
+    private service: ServicesService,
+    private headerService: ManageHeaderService
   ) {
     super();
     this.buildHeader();
@@ -58,7 +60,7 @@ export class ServicesListComponent extends BaseComponent implements OnInit, OnDe
   private buildHeader() {
     this.store.dispatch({
       type: HEADER_UPDATE,
-      payload: require('../../manage.header.json')
+      payload: this.headerService.filterByPrivileges()
     });
   }
 

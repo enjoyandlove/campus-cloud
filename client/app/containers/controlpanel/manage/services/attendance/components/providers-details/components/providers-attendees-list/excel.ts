@@ -14,7 +14,7 @@ const check_in_method = {
 };
 
 
-export const generateExcelFile = function generateExcelFile(data: any[]) {
+export function generateExcelFile(data: any[]) {
   const array = typeof data !== 'object' ? JSON.parse(data) : data;
 
   let str = '';

@@ -218,12 +218,17 @@ export class TeamCreateComponent implements OnInit {
       this.schoolPrivileges,
       {
         [CP_PRIVILEGES_MAP.clubs]: {
-          r: club.action === 2 ? true : true,
+          r: true,
           w: club.action === 2 ? false : true
         },
 
         [CP_PRIVILEGES_MAP.moderation]: {
-          r: club.action === 2 ? true : true,
+          r: true,
+          w: club.action === 2 ? false : true
+        },
+
+        [CP_PRIVILEGES_MAP.membership]: {
+          r: true,
           w: club.action === 2 ? false : true
         }
       }

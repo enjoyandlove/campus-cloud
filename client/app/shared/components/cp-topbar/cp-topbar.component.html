@@ -12,9 +12,10 @@
             <a [routerLink]="['/welcome']">Welcome</a>
           </li>
           <li
+            *ngIf="manageHomePage"
             (click)="isOpen = false"
             routerLinkActive="active">
-            <a [routerLink]="['/manage']">Manage</a>
+            <a [routerLink]="['/manage/' + manageHomePage]">Manage</a>
           </li>
           <li
             *ngIf="canNotify"

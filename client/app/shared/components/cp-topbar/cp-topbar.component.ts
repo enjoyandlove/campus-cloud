@@ -1,7 +1,7 @@
 import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
 
 import { CPSession, IUser, ISchool } from '../../../session';
-import { CP_PRIVILEGES_MAP } from '../../../shared/utils/privileges';
+import { isDev } from './../../../config/env/index';
 
 @Component({
   selector: 'cp-topbar',
@@ -15,6 +15,7 @@ export class CPTopBarComponent implements OnInit {
   canNotify = false;
   canManage = false;
   canAssess = false;
+  manageHomePage: string;
   logo = require('public/svg/logo.svg');
 
   constructor(
@@ -31,45 +32,50 @@ export class CPTopBarComponent implements OnInit {
     }
   }
 
+  logPrivileges() {
+    if (isDev) {
+      console.table(
+        [
+        [ 'canViewAssess', this.session.canViewAssess(this.school.id) ],
+        [ 'canViewClubs', this.session.canViewClubs(this.school.id) ],
+        [ 'canViewEvents', this.session.canViewEvents(this.school.id) ],
+        [ 'canViewFeeds', this.session.canViewFeeds(this.school.id) ],
+        [ 'canViewLinks', this.session.canViewLinks(this.school.id) ],
+        [ 'canViewLists', this.session.canViewLists(this.school.id) ],
+        [ 'canViewNotify', this.session.canViewNotify(this.school.id) ],
+        [ 'canViewServices', this.session.canViewServices(this.school.id) ],
+        [ 'canViewTeamSettings', this.session.canViewTeamSettings(this.school.id) ]
+        ]
+      );
+    }
+  }
+
+  getManageHomePage() {
+    if (this.session.canViewEvents(this.school.id)) {
+      return 'events';
+    } else if (this.session.canViewFeeds(this.school.id)) {
+      return 'feeds';
+    } else if (this.session.canViewClubs(this.school.id)) {
+      return 'clubs';
+    } else if (this.session.canViewServices(this.school.id)) {
+      return 'services';
+    } else if (this.session.canViewNotify(this.school.id)) {
+      return 'lists';
+    } else if (this.session.canViewLinks(this.school.id)) {
+      return 'links';
+    }
+    return null;
+  }
+
   ngOnInit() {
     this.user = this.session.user;
     this.school = this.session.school;
-    let schoolPrivileges = this.user.school_level_privileges[this.school.id];
 
+    this.manageHomePage = this.getManageHomePage();
+    this.canNotify = this.session.canViewNotify(this.school.id);
+    this.canAssess = this.session.canViewAssess(this.school.id);
 
-    try {
-      this.canNotify = schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements].r;
-    } catch (error) {
-      this.canNotify = false;
-    }
-
-    try {
-      this.canAssess = schoolPrivileges[CP_PRIVILEGES_MAP.assessment].r;
-    } catch (error) {
-      this.canAssess = false;
-    }
-    // this.canNotify = schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements].r;
-    // let schoolPrivileges = this.user.school_level_privileges[this.school.id];
-
-  //   let manageItems = [
-  //     CP_PRIVILEGES_MAP.events,
-  //     CP_PRIVILEGES_MAP.moderation,
-  //     CP_PRIVILEGES_MAP.clubs,
-  //     CP_PRIVILEGES_MAP.services,
-  //     CP_PRIVILEGES_MAP.links,
-  //     CP_PRIVILEGES_MAP.app_customization,
-  //     CP_PRIVILEGES_MAP.campus_maps,
-  //   ];
-
-  //   if (schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements] ||
-  //     schoolPrivileges[CP_PRIVILEGES_MAP.emergency_announcement]) {
-  //     this.canNotify = true;
-  //   }
-
-  //   manageItems.forEach(privilege => {
-  //     if (schoolPrivileges[privilege]) {
-  //       this.canManage = true;
-  //     }
-  //   });
+    this.logPrivileges();
+    console.log(this.user);
   }
 }
