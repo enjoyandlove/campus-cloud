@@ -26,6 +26,7 @@ export class TeamCreateComponent implements OnInit {
   clubsMenu;
   eventsMenu;
   isFormError;
+  canReadClubs;
   manageAdmins;
   servicesMenu;
   canReadEvents;
@@ -83,6 +84,9 @@ export class TeamCreateComponent implements OnInit {
         ...this.accountPrivileges
       }
     };
+
+    console.log(_data);
+    return;
 
     const isEmpty = require('lodash').isEmpty;
     const emptyAccountPrivileges = isEmpty(_data.account_level_privileges);
@@ -256,7 +260,7 @@ export class TeamCreateComponent implements OnInit {
   handleDependencies(permission, dependencies: Array<number>) {
     if (!dependencies.length) { return; }
 
-    dependencies.forEach(dep => {
+    dependencies.map(dep => {
 
       if (this.schoolPrivileges[dep]) {
         return;
@@ -270,7 +274,7 @@ export class TeamCreateComponent implements OnInit {
   }
 
   disableDependencies(deps: Array<number>) {
-    deps.forEach(dep => {
+    deps.map(dep => {
       if (this.schoolPrivileges && this.schoolPrivileges[dep]) {
         this.checkControl(undefined, dep, {deps: []});
       }
@@ -307,10 +311,10 @@ export class TeamCreateComponent implements OnInit {
   ngOnInit() {
     this.user = this.session.user;
     this.schoolId = this.session.school.id;
-    let schoolPrivileges = this.user.school_level_privileges[this.schoolId];
 
-    this.canReadEvents = schoolPrivileges[CP_PRIVILEGES_MAP.events];
-    this.canReadServices = schoolPrivileges[CP_PRIVILEGES_MAP.services];
+    this.canReadClubs = this.session.privileges.readClub;
+    this.canReadEvents = this.session.privileges.readEvent;
+    this.canReadServices = this.session.privileges.readService;
     this.formData = TEAM_ACCESS.getMenu(this.user.school_level_privileges[this.schoolId]);
 
     this.buildHeader();
