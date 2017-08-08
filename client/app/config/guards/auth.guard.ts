@@ -31,7 +31,6 @@ export class AuthGuard implements CanActivate {
 
             this.session.schools = schools;
 
-            // global default school
             this.session.school = storedSchool || schools[0];
 
             search.append('school_id', this.session.school.id.toString());

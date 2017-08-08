@@ -11,6 +11,107 @@ import { ErrorService, AdminService } from '../../../../../shared/services';
 import { CP_PRIVILEGES, CP_PRIVILEGES_MAP } from '../../../../../shared/utils';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 
+// function concatIfAccess(common: Array<any>, prv: { r: boolean, w: boolean }, extra: Array<any>) {
+//   return prv.w ? [...common, extra] : common;
+// }
+
+const eventsDropdown = function (privilege: { r: boolean, w: boolean }) {
+  let items = [
+    {
+      'label': 'No Access',
+      'action': null
+    },
+    {
+      'label': 'Manage Events',
+      'action': 2
+    }
+  ];
+
+  if (privilege.w) {
+    items = [
+      ...items,
+      {
+        'label': 'Manage and Assess Events',
+        'action': 3
+      }
+    ];
+  }
+  return items;
+};
+
+const manageAdminDropdown = function (privilege: { r: boolean, w: boolean }) {
+  let items = [
+    {
+      'label': 'Disabled',
+      'action': null
+    }
+  ];
+
+  if (privilege.w) {
+    items = [
+      ...items,
+      {
+        'label': 'Enabled',
+        'action': 1
+      }
+    ];
+  }
+  return items;
+};
+
+const clubsDropdown = function (privilege: { r: boolean, w: boolean }) {
+  let items = [
+    {
+      'label': 'No Access',
+      'action': null
+    },
+    {
+      'label': 'Select Clubs',
+      'action': 2
+    }
+  ];
+
+  if (privilege.w) {
+    items = [
+      ...items,
+      {
+        'label': 'Select Clubs',
+        'action': 2
+      },
+      {
+        'label': 'All Clubs',
+        'action': 3
+      },
+    ];
+  }
+  return items;
+};
+
+const servicesDropdown = function (privilege: { r: boolean, w: boolean }) {
+  let items = [
+    {
+      'label': 'No Access',
+      'action': null
+    }
+  ];
+
+  if (privilege.w) {
+    items = [
+      ...items,
+      {
+        'label': 'Select Services',
+        'action': 2
+      },
+      {
+        'label': 'All Services',
+        'action': 3
+      },
+    ];
+  }
+  return items;
+};
+
+
 declare var $: any;
 
 @Component({
@@ -33,9 +134,9 @@ export class TeamCreateComponent implements OnInit {
   isServiceModal;
   canReadServices;
   form: FormGroup;
-  schoolPrivileges;
   accountPrivileges;
   isAllAccessEnabled;
+  schoolPrivileges = {};
   MODAL_TYPE = MODAL_TYPE.WIDE;
   CP_PRIVILEGES = CP_PRIVILEGES;
   CP_PRIVILEGES_MAP = CP_PRIVILEGES_MAP;
@@ -117,8 +218,10 @@ export class TeamCreateComponent implements OnInit {
   }
 
   onManageAdminSelected(data) {
-    if (!data.action && this.schoolPrivileges) {
-      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin];
+    if (!data.action) {
+      if (CP_PRIVILEGES_MAP.manage_admin in this.schoolPrivileges) {
+        delete this.schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin];
+      }
       return;
     }
 
@@ -211,9 +314,15 @@ export class TeamCreateComponent implements OnInit {
     }
 
     if (club.action === null) {
-      delete this.accountPrivileges[CP_PRIVILEGES_MAP.clubs];
-      delete this.accountPrivileges[CP_PRIVILEGES_MAP.membership];
-      delete this.accountPrivileges[CP_PRIVILEGES_MAP.moderation];
+      if (CP_PRIVILEGES_MAP.clubs in this.schoolPrivileges) {
+        delete this.schoolPrivileges[CP_PRIVILEGES_MAP.clubs];
+      }
+      if (CP_PRIVILEGES_MAP.membership in this.schoolPrivileges) {
+        delete this.schoolPrivileges[CP_PRIVILEGES_MAP.membership];
+      }
+      if (CP_PRIVILEGES_MAP.moderation in this.schoolPrivileges) {
+        delete this.schoolPrivileges[CP_PRIVILEGES_MAP.moderation];
+      }
       return;
     }
 
@@ -223,17 +332,17 @@ export class TeamCreateComponent implements OnInit {
       {
         [CP_PRIVILEGES_MAP.clubs]: {
           r: true,
-          w: club.action === 2 ? false : true
+          w: this.session.user.school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.clubs].w
         },
 
         [CP_PRIVILEGES_MAP.moderation]: {
           r: true,
-          w: club.action === 2 ? false : true
+          w: this.session.user.school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.clubs].w
         },
 
         [CP_PRIVILEGES_MAP.membership]: {
           r: true,
-          w: club.action === 2 ? false : true
+          w: this.session.user.school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.clubs].w
         }
       }
     );
@@ -241,7 +350,9 @@ export class TeamCreateComponent implements OnInit {
 
   onEventsSelected(event) {
     if (event.action === null) {
-      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.events];
+      if (CP_PRIVILEGES_MAP.events in this.schoolPrivileges) {
+        delete this.schoolPrivileges[CP_PRIVILEGES_MAP.events];
+      }
       return;
     }
 
@@ -257,7 +368,7 @@ export class TeamCreateComponent implements OnInit {
     );
   }
 
-  handleDependencies(permission, dependencies: Array<number>) {
+  handleDependencies(privilegeNo, dependencies: Array<number>) {
     if (!dependencies.length) { return; }
 
     dependencies.map(dep => {
@@ -266,8 +377,8 @@ export class TeamCreateComponent implements OnInit {
         return;
       }
 
-      if (this.schoolPrivileges[permission]) {
-        this.checkControl(undefined, dep, {deps: []});
+      if (this.schoolPrivileges[privilegeNo]) {
+        this.checkControl(undefined, dep, { deps: [] });
       }
 
     });
@@ -276,41 +387,44 @@ export class TeamCreateComponent implements OnInit {
   disableDependencies(deps: Array<number>) {
     deps.map(dep => {
       if (this.schoolPrivileges && this.schoolPrivileges[dep]) {
-        this.checkControl(undefined, dep, {deps: []});
+        this.checkControl(undefined, dep, { deps: [] });
       }
     });
   }
 
 
-  checkControl(isChecked, type, control): void {
-    if (!isChecked && control.disables) {
-      this.disableDependencies(control.disables);
+  checkControl(isChecked, privilegeNo, privilegeExtraData): void {
+    if (!isChecked && privilegeExtraData.disables) {
+      this.disableDependencies(privilegeExtraData.disables);
     }
 
-    if (this.schoolPrivileges && this.schoolPrivileges[type]) {
-      delete this.schoolPrivileges[type];
-      this.handleDependencies(type, control.deps);
+    if (this.schoolPrivileges && this.schoolPrivileges[privilegeNo]) {
+      delete this.schoolPrivileges[privilegeNo];
+      this.handleDependencies(privilegeNo, privilegeExtraData.deps);
       return;
     }
 
-    let privilege = this.user.school_level_privileges[this.schoolId][type];
+    let privilege = this.user.school_level_privileges[this.schoolId][privilegeNo];
 
     this.schoolPrivileges = Object.assign(
       {},
       this.schoolPrivileges,
       {
-        [type]: {
+        [privilegeNo]: {
           r: privilege.r,
           w: privilege.w
         }
       });
 
-    this.handleDependencies(type, control.deps);
+    this.handleDependencies(privilegeNo, privilegeExtraData.deps);
   }
 
   ngOnInit() {
+    let { school_level_privileges } = this.session.user;
+    const schoolPrivileges = school_level_privileges[this.session.school.id];
     this.user = this.session.user;
     this.schoolId = this.session.school.id;
+
 
     this.canReadClubs = this.session.privileges.readClub;
     this.canReadEvents = this.session.privileges.readEvent;
@@ -320,60 +434,16 @@ export class TeamCreateComponent implements OnInit {
     this.buildHeader();
     this.buildForm();
 
-    this.servicesMenu = [
-      {
-        'label': 'No Access',
-        'action': null
-      },
-      {
-        'label': 'Select Services',
-        'action': 2
-      },
-      {
-        'label': 'All Services',
-        'action': 3
-      },
-    ];
+    const clubsPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.clubs];
+    const eventsPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.events];
+    const servicesPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.services];
+    const manageAdminPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin];
 
-    this.manageAdmins = [
-      {
-        'label': 'Disabled',
-        'action': null
-      },
-      {
-        'label': 'Enabled',
-        'action': 1
-      }
-    ];
+    this.clubsMenu = clubsDropdown(clubsPrivilege);
+    this.eventsMenu = eventsDropdown(eventsPrivilege);
+    this.servicesMenu = servicesDropdown(servicesPrivilege);
+    this.manageAdmins = manageAdminDropdown(manageAdminPrivilege);
 
-    this.clubsMenu = [
-      {
-        'label': 'No Access',
-        'action': null
-      },
-      {
-        'label': 'Select Clubs',
-        'action': 2
-      },
-      {
-        'label': 'All Clubs',
-        'action': 3
-      },
-    ];
-
-    this.eventsMenu = [
-      {
-        'label': 'No Access',
-        'action': null
-      },
-      {
-        'label': 'Manage Events',
-        'action': 2
-      },
-      {
-        'label': 'Manage and Assess Events',
-        'action': 3
-      }
-    ];
   }
 }
+
