@@ -18,6 +18,7 @@ export class CPTopBarComponent implements OnInit {
   manageHomePage: string;
 
   logo = require('public/svg/logo.svg');
+  defaultImage = require('public/default/user.png');
 
   constructor(
     private el: ElementRef,
@@ -35,19 +36,7 @@ export class CPTopBarComponent implements OnInit {
 
   logPrivileges() {
     if (isDev) {
-      console.table(
-        [
-        [ 'canViewAssess', this.session.privileges.readAssess ],
-        [ 'canViewClubs', this.session.privileges.readClub ],
-        [ 'canViewEvents', this.session.privileges.readEvent ],
-        [ 'canViewFeeds', this.session.privileges.readFeed ],
-        [ 'canViewLinks', this.session.privileges.readLink ],
-        [ 'canViewLists', this.session.privileges.readList ],
-        [ 'canViewNotify', this.session.privileges.readNotify ],
-        [ 'canViewServices', this.session.privileges.readService ],
-        [ 'canViewTeamSettings', this.session.privileges.readAdmin  ]
-        ]
-      );
+      console.table([this.session.privileges]);
     }
   }
 
@@ -69,6 +58,7 @@ export class CPTopBarComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.defaultImage);
     this.user = this.session.user;
     this.school = this.session.school;
 

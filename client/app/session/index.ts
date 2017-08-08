@@ -18,8 +18,8 @@ export * from './privileges.interface';
  * Need to filter account_level_privileges for those
  * stores that the user has access to for this particular school
  */
-const storesInSchool = (accountPrivileges, accountsWithAccess: Array<number>) => {
-  return accountsWithAccess.map(store => accountPrivileges[store]);
+const storesInSchool = (privileges, stores: Array<number>) => {
+  return stores.map(store => privileges[store]);
 };
 
 @Injectable()

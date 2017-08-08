@@ -71,8 +71,6 @@ export class EngagementComposeComponent implements OnInit {
       { message: `${data.message} ${this.sendAsName}` }
     );
 
-    console.log(data);
-
     this
       .service
       .postAnnouncements(search, data)
