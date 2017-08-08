@@ -36,7 +36,7 @@ export class BaseCheckinComponent implements OnInit {
   constructor(
     private route: ActivatedRoute
   ) {
-    this.isInternal = Object.keys(this.route.snapshot.queryParams).length > 0;
+    this.isInternal = 'edit' in this.route.snapshot.queryParams;
 
     if (this.isInternal) {
       setTimeout(() => { $('#checkinInternalModal').modal(); }, 1);
