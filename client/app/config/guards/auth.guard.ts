@@ -3,8 +3,8 @@
  */
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import { CanActivate } from '@angular/router';
+import { URLSearchParams } from '@angular/http';
 
 import { CPSession } from '../../session';
 import { appStorage } from '../../shared/utils';
@@ -21,23 +21,27 @@ export class AuthGuard implements CanActivate {
 
   canActivate() {
     if (appStorage.get(appStorage.keys.SESSION)) {
-      const admins$ = this.adminService.getAdmins(1, 1);
       const school$ = this.schoolService.getSchools();
-      const stream$ = Observable.combineLatest(admins$, school$);
 
       if (!this.session.school || !this.session.user) {
-        return stream$
-          .toPromise()
-          .then(res => {
+        return school$
+          .switchMap(schools => {
+            let search = new URLSearchParams();
             let storedSchool = JSON.parse(appStorage.get(appStorage.keys.DEFAULT_SCHOOL));
-            // global user
-            this.session.user = res[0][0];
 
-            // global users array
-            this.session.schools = res[1];
+            this.session.schools = schools;
 
             // global default school
-            this.session.school =  storedSchool || res[1][0];
+            this.session.school = storedSchool || schools[0];
+
+            search.append('school_id', this.session.school.id.toString());
+
+            return this.adminService.getAdmins(1, 1, search);
+          })
+          .toPromise()
+          .then(user => {
+            this.session.user = user[0];
+            this.session.createPrivilegeModel();
             return true;
           })
           .catch(_ => false);

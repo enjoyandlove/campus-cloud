@@ -7,16 +7,30 @@ import { Injectable } from '@angular/core';
 
 import { IUser } from './user.interface';
 import { ISchool } from './school.interface';
+import { IPrivileges } from './privileges.interface';
 import { CP_PRIVILEGES_MAP } from './../shared/utils/privileges';
 
 export * from './user.interface';
 export * from './school.interface';
+export * from './privileges.interface';
 
 @Injectable()
 export class CPSession {
   private _user: IUser;
   private _school: ISchool;
   private _schools: Array<ISchool>;
+
+  private _privileges: IPrivileges = {
+    readEvent: false,
+    readFeed: false,
+    readClub: false,
+    readService: false,
+    readList: false,
+    readLink: false,
+    readNotify: false,
+    readAssess: false,
+    readAdmin: false
+  };
 
   get user(): IUser {
     return this._user;
@@ -42,35 +56,51 @@ export class CPSession {
     this._school = school;
   }
 
-  canViewNotify(schoolId: number): boolean {
+  get privileges() {
+    return this._privileges;
+  }
+
+  createPrivilegeModel() {
+    this._privileges['readEvent'] = this.canViewEvents(this._school.id);
+    this._privileges['readFeed'] = this.canViewFeeds(this._school.id);
+    this._privileges['readClub'] = this.canViewClubs(this._school.id);
+    this._privileges['readService'] = this.canViewServices(this._school.id);
+    this._privileges['readList'] = this.canViewLists(this._school.id);
+    this._privileges['readLink'] = this.canViewLinks(this._school.id);
+    this._privileges['readNotify'] = this.canViewNotify(this._school.id);
+    this._privileges['readAssess'] = this.canViewAssess(this._school.id);
+    this._privileges['readAdmin'] = this.canViewTeamSettings(this._school.id);
+  }
+
+  private canViewNotify(schoolId: number): boolean {
     if (CP_PRIVILEGES_MAP.campus_announcements in this.user.school_level_privileges[schoolId]) {
       return this.user.school_level_privileges[schoolId][CP_PRIVILEGES_MAP.campus_announcements].r;
     }
     return false;
   }
 
-  canViewAssess(schoolId: number): boolean {
+  private canViewAssess(schoolId: number): boolean {
     if (CP_PRIVILEGES_MAP.assessment in this.user.school_level_privileges[schoolId]) {
       return this.user.school_level_privileges[schoolId][CP_PRIVILEGES_MAP.assessment].r;
     }
     return false;
   }
 
-  canViewEvents(schoolId: number): boolean {
+  private canViewEvents(schoolId: number): boolean {
     if (CP_PRIVILEGES_MAP.events in this.user.school_level_privileges[schoolId]) {
       return this.user.school_level_privileges[schoolId][CP_PRIVILEGES_MAP.events].r;
     }
     return false;
   }
 
-  canViewFeeds(schoolId: number): boolean {
+  private canViewFeeds(schoolId: number): boolean {
     if (CP_PRIVILEGES_MAP.moderation in this.user.school_level_privileges[schoolId]) {
       return this.user.school_level_privileges[schoolId][CP_PRIVILEGES_MAP.moderation].r;
     }
     return false;
   }
 
-  canViewClubs(schoolId: number): boolean {
+  private canViewClubs(schoolId: number): boolean {
     let school = false;
 
     if (CP_PRIVILEGES_MAP.clubs in this.user.school_level_privileges[schoolId]) {
@@ -83,7 +113,7 @@ export class CPSession {
     return school || account;
   }
 
-  canViewServices(schoolId: number): boolean {
+  private canViewServices(schoolId: number): boolean {
     let school = false;
 
     if (CP_PRIVILEGES_MAP.services in this.user.school_level_privileges[schoolId]) {
@@ -96,21 +126,21 @@ export class CPSession {
     return school || account;
   }
 
-  canViewLists(schoolId: number): boolean {
+  private canViewLists(schoolId: number): boolean {
     if (CP_PRIVILEGES_MAP.campus_announcements in this.user.school_level_privileges[schoolId]) {
       return this.user.school_level_privileges[schoolId][CP_PRIVILEGES_MAP.campus_announcements].r;
     }
     return false;
   }
 
-  canViewLinks(schoolId: number): boolean {
+  private canViewLinks(schoolId: number): boolean {
     if (CP_PRIVILEGES_MAP.links in this.user.school_level_privileges[schoolId]) {
       return this.user.school_level_privileges[schoolId][CP_PRIVILEGES_MAP.links].r;
     }
     return false;
   }
 
-  canViewTeamSettings(schoolId: number): boolean {
+  private canViewTeamSettings(schoolId: number): boolean {
     if (CP_PRIVILEGES_MAP.manage_admin in this.user.school_level_privileges[schoolId]) {
       return this.user.school_level_privileges[schoolId][CP_PRIVILEGES_MAP.manage_admin].r;
     }
