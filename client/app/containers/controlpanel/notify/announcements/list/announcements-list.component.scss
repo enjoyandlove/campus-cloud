@@ -24,6 +24,8 @@
 }
 
 .messages {
+  @include card-margin();
+
   padding: 0;
   list-style: none;
 }

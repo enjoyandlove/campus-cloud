@@ -14,6 +14,8 @@ export class CPTopBarComponent implements OnInit {
   school: ISchool;
   canNotify = false;
   canManage = false;
+  canAssess = false;
+  logo = require('public/svg/logo.svg');
 
   constructor(
     private el: ElementRef,
@@ -39,6 +41,12 @@ export class CPTopBarComponent implements OnInit {
       this.canNotify = schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements].r;
     } catch (error) {
       this.canNotify = false;
+    }
+
+    try {
+      this.canAssess = schoolPrivileges[CP_PRIVILEGES_MAP.assessment].r;
+    } catch (error) {
+      this.canAssess = false;
     }
     // this.canNotify = schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements].r;
     // let schoolPrivileges = this.user.school_level_privileges[this.school.id];

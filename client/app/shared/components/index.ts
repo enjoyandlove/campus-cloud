@@ -7,6 +7,7 @@ export * from './cp-avatar';
 export * from './cp-topbar';
 export * from './cp-switch';
 export * from './cp-spinner';
+export * from './cp-snackbar';
 export * from './cp-trackers';
 export * from './cp-dropdown';
 export * from './cp-checkbox';
