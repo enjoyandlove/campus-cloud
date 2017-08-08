@@ -105,22 +105,24 @@
         <!-- END Service Owner -->
 
         <!-- Club Owner -->
-        <div class="section__item">
-          <div class="row">
-            <div class="col-xs-8">
-              <p class="section-sub-title" i18n>Club Owner</p>
-              <p class="section-description" i18n>
-                Manage club details, events and membership
-              </p>
-            </div>
-            <div class="col-xs-4">
-              <cp-dropdown
-                [items]="clubsMenu"
-                (selected)="onClubsSelected($event)">
-              </cp-dropdown>
+        <fieldset [disabled]="!canReadClubs">
+          <div class="section__item">
+            <div class="row">
+              <div class="col-xs-8">
+                <p class="section-sub-title" i18n>Club Owner</p>
+                <p class="section-description" i18n>
+                  Manage club details, events and membership
+                </p>
+              </div>
+              <div class="col-xs-4">
+                <cp-dropdown
+                  [items]="clubsMenu"
+                  (selected)="onClubsSelected($event)">
+                </cp-dropdown>
+              </div>
             </div>
           </div>
-        </div>
+        </fieldset>
         <!-- END Club Owner -->
 
         <!-- Events -->
