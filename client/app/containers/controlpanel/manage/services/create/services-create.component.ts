@@ -10,6 +10,12 @@ import { ServicesService } from '../services.service';
 import { CPSession, ISchool } from '../../../../../session';
 import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
+const ATTENDANCE_ENABLED = 1;
+const ATTENDANCE_DISABLED = 0;
+
+const FEEDBACK_ENABLED = 1;
+const FEEDBACK_DISABLED = 0;
+
 @Component({
   selector: 'cp-services-create',
   templateUrl: './services-create.component.html',
@@ -23,6 +29,17 @@ export class ServicesCreateComponent implements OnInit {
   attendance = false;
   mapCenter: BehaviorSubject<any>;
   categories = [{ label: '---', action: null }];
+
+  feedbackOptions = [
+    {
+      'label': 'Enabled',
+      'value': FEEDBACK_ENABLED
+    },
+    {
+      'label': 'Disabled',
+      'value': FEEDBACK_DISABLED
+    }
+  ];
 
   constructor(
     private router: Router,
@@ -48,6 +65,10 @@ export class ServicesCreateComponent implements OnInit {
     this.mapCenter.next(data.geometry.location.toJSON());
   }
 
+  onSelectedFeedback(feedback) {
+    this.form.controls['service_feedback'].setValue(feedback.value);
+  }
+
   buildHeader() {
     this.store.dispatch({
       type: HEADER_UPDATE,
@@ -69,6 +90,12 @@ export class ServicesCreateComponent implements OnInit {
     }
 
     let data = Object.assign(this.form.value);
+
+    let { service_attendance } = data;
+
+    if (service_attendance === ATTENDANCE_DISABLED || service_attendance == null) {
+      data.service_feedback = null;
+    }
 
     this
       .servicesService
@@ -92,6 +119,7 @@ export class ServicesCreateComponent implements OnInit {
         longitude: data.longitude,
         location: data.location,
         room_data: data.room_data,
+        service_feedback: data.service_feedback,
         service_attendance: data.service_attendance,
         rating_scale_maximum: data.rating_scale_maximum,
         default_basic_feedback_label: data.default_basic_feedback_label,
@@ -114,7 +142,10 @@ export class ServicesCreateComponent implements OnInit {
       this.form.controls['default_basic_feedback_label'].setValue(null);
     }
 
-    this.form.controls['service_attendance'].setValue(event ? 1 : 0);
+    this
+      .form
+      .controls['service_attendance']
+      .setValue(event ? ATTENDANCE_ENABLED : ATTENDANCE_DISABLED);
   }
 
   ngOnInit() {
@@ -148,7 +179,8 @@ export class ServicesCreateComponent implements OnInit {
       'longitude': [this.school.longitude],
       'service_attendance': [null],
       'rating_scale_maximum': [null],
-      'default_basic_feedback_label': [null]
+      'default_basic_feedback_label': [null],
+      'service_feedback': [FEEDBACK_ENABLED]
     });
 
     let categories = require('../categories.json');
