@@ -68,29 +68,20 @@ export class CPSession {
     return this._privileges;
   }
 
-  updateSessionPrivileges() {
-    this._privileges['readEvent'] = this.canViewEvents(this._school.id);
-    this._privileges['readFeed'] = this.canViewFeeds(this._school.id);
-    this._privileges['readClub'] = this.canViewClubs(this._school.id);
-    this._privileges['readService'] = this.canViewServices(this._school.id);
-    this._privileges['readList'] = this.canViewLists(this._school.id);
-    this._privileges['readLink'] = this.canViewLinks(this._school.id);
-    this._privileges['readNotify'] = this.canViewNotify(this._school.id);
-    this._privileges['readAssess'] = this.canViewAssess(this._school.id);
-    this._privileges['readAdmin'] = this.canViewTeamSettings(this._school.id);
-    // return new Promise(resolve => {
-    //   this._privileges['readEvent'] = this.canViewEvents(this._school.id);
-    //   this._privileges['readFeed'] = this.canViewFeeds(this._school.id);
-    //   this._privileges['readClub'] = this.canViewClubs(this._school.id);
-    //   this._privileges['readService'] = this.canViewServices(this._school.id);
-    //   this._privileges['readList'] = this.canViewLists(this._school.id);
-    //   this._privileges['readLink'] = this.canViewLinks(this._school.id);
-    //   this._privileges['readNotify'] = this.canViewNotify(this._school.id);
-    //   this._privileges['readAssess'] = this.canViewAssess(this._school.id);
-    //   this._privileges['readAdmin'] = this.canViewTeamSettings(this._school.id);
+  updateSessionPrivileges(): Promise<null> {
+    return new Promise(resolve => {
+      this._privileges['readEvent'] = this.canViewEvents(this._school.id);
+      this._privileges['readFeed'] = this.canViewFeeds(this._school.id);
+      this._privileges['readClub'] = this.canViewClubs(this._school.id);
+      this._privileges['readService'] = this.canViewServices(this._school.id);
+      this._privileges['readList'] = this.canViewLists(this._school.id);
+      this._privileges['readLink'] = this.canViewLinks(this._school.id);
+      this._privileges['readNotify'] = this.canViewNotify(this._school.id);
+      this._privileges['readAssess'] = this.canViewAssess(this._school.id);
+      this._privileges['readAdmin'] = this.canViewTeamSettings(this._school.id);
 
-    //   return resolve();
-    // });
+      return resolve();
+    });
   }
 
   private canViewNotify(schoolId: number): boolean {
