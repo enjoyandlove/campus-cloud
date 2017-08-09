@@ -66,7 +66,7 @@ export class ServicesCreateComponent implements OnInit {
   }
 
   onSelectedFeedback(feedback) {
-    this.form.controls['service_feedback'].setValue(feedback.value);
+    this.form.controls['enable_feedback'].setValue(feedback.value);
   }
 
   buildHeader() {
@@ -94,7 +94,7 @@ export class ServicesCreateComponent implements OnInit {
     let { service_attendance } = data;
 
     if (service_attendance === ATTENDANCE_DISABLED || service_attendance == null) {
-      data.service_feedback = null;
+      data.enable_feedback = null;
     }
 
     this
@@ -119,7 +119,7 @@ export class ServicesCreateComponent implements OnInit {
         longitude: data.longitude,
         location: data.location,
         room_data: data.room_data,
-        service_feedback: data.service_feedback,
+        enable_feedback: data.enable_feedback,
         service_attendance: data.service_attendance,
         rating_scale_maximum: data.rating_scale_maximum,
         default_basic_feedback_label: data.default_basic_feedback_label,
@@ -180,7 +180,7 @@ export class ServicesCreateComponent implements OnInit {
       'service_attendance': [null],
       'rating_scale_maximum': [null],
       'default_basic_feedback_label': [null],
-      'service_feedback': [FEEDBACK_ENABLED]
+      'enable_feedback': [FEEDBACK_ENABLED]
     });
 
     let categories = require('../categories.json');
