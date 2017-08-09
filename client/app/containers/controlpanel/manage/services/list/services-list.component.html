@@ -47,10 +47,10 @@
           <span class="col-xs-2" i18n>{{ service.num_ratings }}</span>
           <span class="col-xs-3" i18n>
             <cp-stars
-            *ngIf="service.enable_feedback === 1"
-            [maxRate]="service.rating_scale_maximum"
-            [avgRate]="service.avg_rating_percent">
-          </cp-stars>
+              *ngIf="service.enable_feedback === 1"
+              [maxRate]="service.rating_scale_maximum"
+              [avgRate]="service.avg_rating_percent">
+            </cp-stars>
           </span>
           <span
             (click)="onDelete(service)"
