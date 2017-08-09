@@ -37,8 +37,6 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
 
   constructor() {
     super();
-    super.isLoading().subscribe(res => this.loading = res);
-
     this.privileges = permissions;
   }
 
@@ -66,7 +64,7 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
 
     _state.map(item => {
       if (item.checked) {
-        _item[item.data.store_id] = {
+        _item['store_id' in item.data ? item.data.store_id : item.data.id] = {
           [this.privilegeType]: {
             r: true,
             w: item.type === 1 ? false : true
@@ -89,12 +87,12 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
         data: item
       });
     });
-
     this.state = Object.assign({}, this.state, {selected: _selected});
   }
 
   ngOnInit() {
     this.data.subscribe(res => {
+      this.loading = 'data' in res;
       if (res.data) {
         this.updateState(res.data);
       }

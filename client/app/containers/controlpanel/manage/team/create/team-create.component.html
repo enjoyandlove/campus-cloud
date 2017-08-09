@@ -335,6 +335,7 @@
 
 <cp-modal
   [type]="MODAL_TYPE"
+  *ngIf="isClubsModal"
   modalId="selectClubsModal">
   <cp-select-clubs-modal
     (selected)="onClubsModalSelected($event)">

@@ -64,10 +64,6 @@ const clubsDropdown = function (privilege: { r: boolean, w: boolean }) {
     {
       'label': 'No Access',
       'action': null
-    },
-    {
-      'label': 'Select Clubs',
-      'action': 2
     }
   ];
 
@@ -130,6 +126,7 @@ export class TeamCreateComponent implements OnInit {
   canReadClubs;
   manageAdmins;
   servicesMenu;
+  isClubsModal;
   canReadEvents;
   isServiceModal;
   canReadServices;
@@ -256,6 +253,7 @@ export class TeamCreateComponent implements OnInit {
   }
 
   onServicesModalSelected(services) {
+    console.log('services from Modal', services);
     this.accountPrivileges = Object.assign(
       {},
       this.accountPrivileges,
@@ -289,6 +287,8 @@ export class TeamCreateComponent implements OnInit {
   }
 
   onClubsModalSelected(clubs) {
+    console.log(clubs);
+    return;
     this.accountPrivileges = Object.assign(
       {},
       this.accountPrivileges,
@@ -309,7 +309,8 @@ export class TeamCreateComponent implements OnInit {
 
   onClubsSelected(club) {
     if (club.action === 2) {
-      $('#selectClubsModal').modal();
+      this.isClubsModal = true;
+      setTimeout(() => { $('#selectClubsModal').modal() }, 1);
       return;
     }
 
