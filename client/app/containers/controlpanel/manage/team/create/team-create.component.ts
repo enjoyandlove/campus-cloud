@@ -261,6 +261,8 @@ export class TeamCreateComponent implements OnInit {
   }
 
   onServicesSelected(service) {
+    this.doServicesCleanUp();
+
     if (service.action === 2) {
       this.isServiceModal = true;
 
@@ -294,7 +296,19 @@ export class TeamCreateComponent implements OnInit {
     );
   }
 
+  doClubsCleanUp() {
+    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.clubs);
+    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.membership);
+    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.moderation);
+  }
+
+  doServicesCleanUp() {
+    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.services);
+  }
+
   onClubsSelected(club) {
+    this.doClubsCleanUp();
+
     if (club.action === 2) {
       this.isClubsModal = true;
       setTimeout(() => { $('#selectClubsModal').modal() }, 1);
@@ -311,6 +325,7 @@ export class TeamCreateComponent implements OnInit {
       if (CP_PRIVILEGES_MAP.moderation in this.schoolPrivileges) {
         delete this.schoolPrivileges[CP_PRIVILEGES_MAP.moderation];
       }
+
       return;
     }
 
@@ -435,3 +450,18 @@ export class TeamCreateComponent implements OnInit {
   }
 }
 
+function accountCleanUp(accountPrivileges, privilegeNo: number) {
+  Object.keys(accountPrivileges).map(store => {
+    if (privilegeNo in accountPrivileges[store]) {
+      delete accountPrivileges[store][privilegeNo]
+    }
+  })
+
+  return accountPrivileges;
+}
+
+// function containsDependencies() {
+//   const PRIVILEGES_WITH_DEPENDENCIES = [
+//     CP_
+//   ]
+// }
