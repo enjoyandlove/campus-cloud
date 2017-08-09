@@ -46,13 +46,26 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
       .fetchData(this.serviceService.getServiceById(this.serviceId))
       .then(res => {
         this.service = res.data;
+
+        if (!('enable_feedback' in this.service)) {
+          this.setDefaultFeedback();
+        }
+
         if (!this.service.service_attendance) {
-          this.router.navigate(['/manage/services/' + this.serviceId + '/info']);
+          this.redirectOnDisabledAttendance();
           return;
         }
         this.buildHeader();
       })
       .catch(err => console.error(err));
+  }
+
+  setDefaultFeedback() {
+    this.service = Object.assign({}, this.service, { 'enable_feedback': 0 } );
+  }
+
+  redirectOnDisabledAttendance() {
+    this.router.navigate(['/manage/services/' + this.serviceId + '/info']);
   }
 
   onSearch(search_text) {
