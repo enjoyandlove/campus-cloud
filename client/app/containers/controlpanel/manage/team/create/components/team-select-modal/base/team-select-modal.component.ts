@@ -1,3 +1,4 @@
+import { CP_PRIVILEGES_MAP } from './../../../../../../../../shared/utils/privileges';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { permissions } from '../permissions';
@@ -70,6 +71,24 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
             w: item.type === 1 ? false : true
           }
         };
+
+        // if its a club we grant them access to extra privileges
+        if (!('store_id' in item.data)) {
+          _item[item.data.id] = Object.assign(
+            {},
+            _item[item.data.id],
+            {
+              [CP_PRIVILEGES_MAP.moderation]: {
+                r: true,
+                w: true,
+              },
+              [CP_PRIVILEGES_MAP.membership]: {
+                r: true,
+                w: true,
+              }
+            }
+          );
+        }
       }
     });
 
@@ -87,7 +106,7 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
         data: item
       });
     });
-    this.state = Object.assign({}, this.state, {selected: _selected});
+    this.state = Object.assign({}, this.state, { selected: _selected });
   }
 
   ngOnInit() {

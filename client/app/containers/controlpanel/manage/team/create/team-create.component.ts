@@ -183,8 +183,8 @@ export class TeamCreateComponent implements OnInit {
       }
     };
 
-    // console.log(_data);
-    // return;
+    console.log(_data);
+    return;
 
     const isEmpty = require('lodash').isEmpty;
     const emptyAccountPrivileges = isEmpty(_data.account_level_privileges);
@@ -253,7 +253,6 @@ export class TeamCreateComponent implements OnInit {
   }
 
   onServicesModalSelected(services) {
-    console.log('services from Modal', services);
     this.accountPrivileges = Object.assign(
       {},
       this.accountPrivileges,
@@ -288,22 +287,10 @@ export class TeamCreateComponent implements OnInit {
 
   onClubsModalSelected(clubs) {
     console.log(clubs);
-    return;
     this.accountPrivileges = Object.assign(
       {},
       this.accountPrivileges,
-      {
-        [CP_PRIVILEGES_MAP.clubs]: { ...clubs },
-
-        [CP_PRIVILEGES_MAP.membership]: {
-          r: this.user.account_level_privileges[CP_PRIVILEGES_MAP.membership].r,
-          w: this.user.account_level_privileges[CP_PRIVILEGES_MAP.membership].w
-        },
-        [CP_PRIVILEGES_MAP.moderation]: {
-          r: this.user.account_level_privileges[CP_PRIVILEGES_MAP.membership].r,
-          w: this.user.account_level_privileges[CP_PRIVILEGES_MAP.membership].w
-        }
-      }
+      ...clubs
     );
   }
 
