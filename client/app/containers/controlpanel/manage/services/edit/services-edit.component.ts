@@ -94,7 +94,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
 
         this.serviceFeedback = [
           {
-            label: SERVICE_FEEDBACK[this.service.service_feedback || FEEDBACK_DISABLED],
+            label: SERVICE_FEEDBACK[this.service.enable_feedback || FEEDBACK_DISABLED],
             value: null
           }
         ];
