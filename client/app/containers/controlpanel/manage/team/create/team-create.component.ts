@@ -1,3 +1,4 @@
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -64,10 +65,6 @@ const clubsDropdown = function (privilege: { r: boolean, w: boolean }) {
     {
       'label': 'No Access',
       'action': null
-    },
-    {
-      'label': 'Select Clubs',
-      'action': 2
     }
   ];
 
@@ -130,6 +127,7 @@ export class TeamCreateComponent implements OnInit {
   canReadClubs;
   manageAdmins;
   servicesMenu;
+  isClubsModal;
   canReadEvents;
   isServiceModal;
   canReadServices;
@@ -140,6 +138,9 @@ export class TeamCreateComponent implements OnInit {
   MODAL_TYPE = MODAL_TYPE.WIDE;
   CP_PRIVILEGES = CP_PRIVILEGES;
   CP_PRIVILEGES_MAP = CP_PRIVILEGES_MAP;
+
+  resetClubsModal$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  resetServiceModal$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
     private router: Router,
@@ -185,9 +186,6 @@ export class TeamCreateComponent implements OnInit {
         ...this.accountPrivileges
       }
     };
-
-    // console.log(_data);
-    // return;
 
     const isEmpty = require('lodash').isEmpty;
     const emptyAccountPrivileges = isEmpty(_data.account_level_privileges);
@@ -264,6 +262,8 @@ export class TeamCreateComponent implements OnInit {
   }
 
   onServicesSelected(service) {
+    this.doServicesCleanUp();
+
     if (service.action === 2) {
       this.isServiceModal = true;
 
@@ -272,9 +272,17 @@ export class TeamCreateComponent implements OnInit {
     }
 
     if (service.action === null) {
-      delete this.accountPrivileges[CP_PRIVILEGES_MAP.services];
+      this.resetServiceModal$.next(true);
+
+      if (this.accountPrivileges) {
+        if (CP_PRIVILEGES_MAP.services in this.accountPrivileges) {
+          delete this.accountPrivileges[CP_PRIVILEGES_MAP.services];
+        }
+      }
       return;
     }
+
+    this.resetServiceModal$.next(true);
 
     this.schoolPrivileges = Object.assign(
       {},
@@ -292,28 +300,32 @@ export class TeamCreateComponent implements OnInit {
     this.accountPrivileges = Object.assign(
       {},
       this.accountPrivileges,
-      {
-        [CP_PRIVILEGES_MAP.clubs]: { ...clubs },
-
-        [CP_PRIVILEGES_MAP.membership]: {
-          r: this.user.account_level_privileges[CP_PRIVILEGES_MAP.membership].r,
-          w: this.user.account_level_privileges[CP_PRIVILEGES_MAP.membership].w
-        },
-        [CP_PRIVILEGES_MAP.moderation]: {
-          r: this.user.account_level_privileges[CP_PRIVILEGES_MAP.membership].r,
-          w: this.user.account_level_privileges[CP_PRIVILEGES_MAP.membership].w
-        }
-      }
+      ...clubs
     );
   }
 
+  doClubsCleanUp() {
+    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.clubs);
+    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.membership);
+    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.moderation);
+  }
+
+  doServicesCleanUp() {
+    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.services);
+  }
+
   onClubsSelected(club) {
+    this.doClubsCleanUp();
+
     if (club.action === 2) {
-      $('#selectClubsModal').modal();
+      this.isClubsModal = true;
+      setTimeout(() => { $('#selectClubsModal').modal() }, 1);
       return;
     }
 
     if (club.action === null) {
+      this.resetClubsModal$.next(true);
+
       if (CP_PRIVILEGES_MAP.clubs in this.schoolPrivileges) {
         delete this.schoolPrivileges[CP_PRIVILEGES_MAP.clubs];
       }
@@ -323,8 +335,11 @@ export class TeamCreateComponent implements OnInit {
       if (CP_PRIVILEGES_MAP.moderation in this.schoolPrivileges) {
         delete this.schoolPrivileges[CP_PRIVILEGES_MAP.moderation];
       }
+
       return;
     }
+
+    this.resetClubsModal$.next(true);
 
     this.schoolPrivileges = Object.assign(
       {},
@@ -447,3 +462,13 @@ export class TeamCreateComponent implements OnInit {
   }
 }
 
+function accountCleanUp(accountPrivileges, privilegeNo: number) {
+  if (accountPrivileges) {
+    Object.keys(accountPrivileges).map(store => {
+      if (privilegeNo in accountPrivileges[store]) {
+        delete accountPrivileges[store][privilegeNo]
+      }
+    })
+  }
+  return accountPrivileges;
+}
