@@ -12,10 +12,6 @@ import { ErrorService, AdminService } from '../../../../../shared/services';
 import { CP_PRIVILEGES, CP_PRIVILEGES_MAP } from '../../../../../shared/utils';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 
-// function concatIfAccess(common: Array<any>, prv: { r: boolean, w: boolean }, extra: Array<any>) {
-//   return prv.w ? [...common, extra] : common;
-// }
-
 const eventsDropdown = function (privilege: { r: boolean, w: boolean }) {
   let items = [
     {
