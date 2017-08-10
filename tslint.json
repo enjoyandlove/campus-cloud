@@ -117,7 +117,7 @@
     "no-attribute-parameter-decorator": true,
     "no-forward-ref": true,
     "import-destructuring-spacing": true,
-    "no-access-missing-member": true,
+    "no-access-missing-member": false,
     "templates-use-public": true,
     "invoke-injectable": true
   }
