@@ -1,7 +1,6 @@
 import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
 
 import { CPSession, IUser, ISchool } from '../../../session';
-import { isDev } from './../../../config/env/index';
 
 @Component({
   selector: 'cp-topbar',
@@ -34,12 +33,6 @@ export class CPTopBarComponent implements OnInit {
     }
   }
 
-  logPrivileges() {
-    if (isDev) {
-      console.table([this.session.privileges]);
-    }
-  }
-
   getManageHomePage() {
     if (this.session.privileges.readEvent)  {
       return 'events';
@@ -64,7 +57,5 @@ export class CPTopBarComponent implements OnInit {
     this.manageHomePage = this.getManageHomePage();
     this.canNotify = this.session.privileges.readNotify;
     this.canAssess = this.session.privileges.readAssess;
-
-    this.logPrivileges();
   }
 }
