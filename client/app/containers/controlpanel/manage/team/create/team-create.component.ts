@@ -1,3 +1,4 @@
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -138,6 +139,9 @@ export class TeamCreateComponent implements OnInit {
   CP_PRIVILEGES = CP_PRIVILEGES;
   CP_PRIVILEGES_MAP = CP_PRIVILEGES_MAP;
 
+  resetClubsModal$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  resetServiceModal$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -182,9 +186,6 @@ export class TeamCreateComponent implements OnInit {
         ...this.accountPrivileges
       }
     };
-
-    console.log(_data);
-    return;
 
     const isEmpty = require('lodash').isEmpty;
     const emptyAccountPrivileges = isEmpty(_data.account_level_privileges);
@@ -271,9 +272,17 @@ export class TeamCreateComponent implements OnInit {
     }
 
     if (service.action === null) {
-      delete this.accountPrivileges[CP_PRIVILEGES_MAP.services];
+      this.resetServiceModal$.next(true);
+
+      if (this.accountPrivileges) {
+        if (CP_PRIVILEGES_MAP.services in this.accountPrivileges) {
+          delete this.accountPrivileges[CP_PRIVILEGES_MAP.services];
+        }
+      }
       return;
     }
+
+    this.resetServiceModal$.next(true);
 
     this.schoolPrivileges = Object.assign(
       {},
@@ -288,7 +297,6 @@ export class TeamCreateComponent implements OnInit {
   }
 
   onClubsModalSelected(clubs) {
-    console.log(clubs);
     this.accountPrivileges = Object.assign(
       {},
       this.accountPrivileges,
@@ -316,6 +324,8 @@ export class TeamCreateComponent implements OnInit {
     }
 
     if (club.action === null) {
+      this.resetClubsModal$.next(true);
+
       if (CP_PRIVILEGES_MAP.clubs in this.schoolPrivileges) {
         delete this.schoolPrivileges[CP_PRIVILEGES_MAP.clubs];
       }
@@ -328,6 +338,8 @@ export class TeamCreateComponent implements OnInit {
 
       return;
     }
+
+    this.resetClubsModal$.next(true);
 
     this.schoolPrivileges = Object.assign(
       {},
@@ -451,17 +463,12 @@ export class TeamCreateComponent implements OnInit {
 }
 
 function accountCleanUp(accountPrivileges, privilegeNo: number) {
-  Object.keys(accountPrivileges).map(store => {
-    if (privilegeNo in accountPrivileges[store]) {
-      delete accountPrivileges[store][privilegeNo]
-    }
-  })
-
+  if (accountPrivileges) {
+    Object.keys(accountPrivileges).map(store => {
+      if (privilegeNo in accountPrivileges[store]) {
+        delete accountPrivileges[store][privilegeNo]
+      }
+    })
+  }
   return accountPrivileges;
 }
-
-// function containsDependencies() {
-//   const PRIVILEGES_WITH_DEPENDENCIES = [
-//     CP_
-//   ]
-// }

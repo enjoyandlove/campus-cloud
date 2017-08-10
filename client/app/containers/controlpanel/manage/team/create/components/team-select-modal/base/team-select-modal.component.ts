@@ -29,6 +29,7 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
   @Input() defaultState: any;
   @Input() data: Observable<any>;
   @Input() privilegeType: number;
+  @Input() reset: Observable<boolean>;
   @Output() submit: EventEmitter<any> = new EventEmitter();
 
   loading;
@@ -109,7 +110,26 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
     this.state = Object.assign({}, this.state, { selected: _selected });
   }
 
+  doReset() {
+    this.state = Object.assign(
+      {},
+      this.state,
+      { selected: this.state.selected.map(item => {
+        item.checked = false;
+        return item;
+      }) }
+    )
+  }
+
   ngOnInit() {
+    this
+      .reset
+      .subscribe(reset => {
+        if (reset) {
+          this.doReset();
+        }
+      });
+
     this.data.subscribe(res => {
       this.loading = 'data' in res;
       if (res.data) {

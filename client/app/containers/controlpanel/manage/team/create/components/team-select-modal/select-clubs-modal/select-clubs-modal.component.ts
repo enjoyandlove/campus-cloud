@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { URLSearchParams } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 
 import { CPSession } from '../../../../../../../../session';
 import { ClubsService } from '../../../../../clubs/clubs.service';
@@ -14,6 +15,7 @@ import { BaseTeamSelectModalComponent } from '../base/team-select-modal.componen
 export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent
   implements OnInit {
   @Input() selectedClubs: any;
+  @Input() reset: Observable<boolean>;
   @Output() selected: EventEmitter<any> = new EventEmitter();
   @Output() teardown: EventEmitter<null> = new EventEmitter();
   data$: BehaviorSubject<any> = new BehaviorSubject({});

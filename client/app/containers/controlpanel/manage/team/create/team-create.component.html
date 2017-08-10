@@ -329,6 +329,7 @@
   *ngIf="isServiceModal"
   modalId="selectServicesModal">
   <cp-select-services-modal
+    [reset]="resetServiceModal$"
     (selected)="onServicesModalSelected($event)">
   </cp-select-services-modal>
 </cp-modal>
@@ -338,6 +339,7 @@
   *ngIf="isClubsModal"
   modalId="selectClubsModal">
   <cp-select-clubs-modal
+    [reset]="resetClubsModal$"
     (selected)="onClubsModalSelected($event)">
   </cp-select-clubs-modal>
 </cp-modal>

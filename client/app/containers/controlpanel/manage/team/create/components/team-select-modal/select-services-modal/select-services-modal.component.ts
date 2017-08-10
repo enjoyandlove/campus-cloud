@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
 
 import { CP_PRIVILEGES_MAP } from '../../../../../../../../shared/utils';
 import { ServicesService } from '../../../../../services/services.service';
@@ -12,6 +13,7 @@ import { BaseTeamSelectModalComponent } from '../base/team-select-modal.componen
 export class SelectTeamServicesModalComponent extends BaseTeamSelectModalComponent
   implements OnInit {
   @Input() selectedServices: any;
+  @Input() reset: Observable<boolean>;
   @Output() selected: EventEmitter<any> = new EventEmitter();
   @Output() teardown: EventEmitter<any> = new EventEmitter();
   data$: BehaviorSubject<any> = new BehaviorSubject({});
@@ -31,10 +33,6 @@ export class SelectTeamServicesModalComponent extends BaseTeamSelectModalCompone
       }
     });
     return _selectedServices;
-  }
-
-  doReset() {
-    this.teardown.emit();
   }
 
   ngOnInit() {
