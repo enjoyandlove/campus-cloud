@@ -23,6 +23,8 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
   deleteTemplate;
   isTemplateDelete;
 
+  isTemplate = true;
+
   isTemplateComposeModal = false;
 
   state: IState = {

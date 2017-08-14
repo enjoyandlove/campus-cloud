@@ -146,7 +146,7 @@
             (click)="doValidate()"
             [disabled]="!isFormValid"
             class="cpbtn cpbtn--primary"i18n>
-            Announce
+            {{ isTemplate ? 'Save' : 'Announce' }}
           </button>
         </div>
       </div>

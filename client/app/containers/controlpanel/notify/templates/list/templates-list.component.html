@@ -77,6 +77,7 @@
   modalId="templateComposeModal"
   *ngIf="isTemplateComposeModal">
   <cp-announcements-compose
+    [isTemplate]="isTemplate"
     (created)="onCreated($event)"
     (teardown)="isTemplateComposeModal = false">
   </cp-announcements-compose>

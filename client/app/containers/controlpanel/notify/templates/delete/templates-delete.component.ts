@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 
 import { CPSession } from './../../../../../session/index';
-import { STATUS } from './../../../../../shared/constants/status';
+// import { STATUS } from './../../../../../shared/constants/status';
 
 declare var $;
 
