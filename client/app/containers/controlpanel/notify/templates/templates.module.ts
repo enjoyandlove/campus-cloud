@@ -5,15 +5,19 @@ import { SharedModule } from '../../../../shared/shared.module';
 
 import { TemplatesListComponent } from './list';
 
+import { TemplatesTopBarComponent } from './list/components';
+
 import { TemplatesRoutingModule } from './templates.routing.module';
 
+import { TemplatesService } from './templates.service';
+
 @NgModule({
-  declarations: [ TemplatesListComponent ],
+  declarations: [ TemplatesListComponent, TemplatesTopBarComponent ],
 
   exports: [ ],
 
   imports: [ CommonModule, SharedModule, ReactiveFormsModule, TemplatesRoutingModule ],
 
-  providers: [ ],
+  providers: [ TemplatesService ],
 })
 export class TemplatesModule {}
