@@ -101,6 +101,7 @@
 <cp-modal modalId="createProvider">
   <cp-providers-add
     [serviceId]="serviceId"
-    (created)="reload$.next(true)">
+    (created)="reload$.next(true)"
+    [serviceWithFeedback]="enableFeedback$">
   </cp-providers-add>
 </cp-modal>
