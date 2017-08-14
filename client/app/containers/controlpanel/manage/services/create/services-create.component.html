@@ -140,6 +140,17 @@
             </span>
           </div>
         </div>
+        <ng-container *ngIf="attendance">
+          <div class="row">
+            <div class="col-xs-6">
+              <label i18n>Enable Service Feedback</label>
+              <cp-dropdown
+                [items]="feedbackOptions"
+                (selected)="onSelectedFeedback($event)">
+              </cp-dropdown>
+            </div>
+          </div>
+        </ng-container>
       </div>
     </div>
   </form>

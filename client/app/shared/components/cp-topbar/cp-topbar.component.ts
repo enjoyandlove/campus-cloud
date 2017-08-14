@@ -1,7 +1,6 @@
 import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
 
 import { CPSession, IUser, ISchool } from '../../../session';
-import { CP_PRIVILEGES_MAP } from '../../../shared/utils/privileges';
 
 @Component({
   selector: 'cp-topbar',
@@ -15,7 +14,10 @@ export class CPTopBarComponent implements OnInit {
   canNotify = false;
   canManage = false;
   canAssess = false;
+  manageHomePage: string;
+
   logo = require('public/svg/logo.svg');
+  defaultImage = require('public/default/user.png');
 
   constructor(
     private el: ElementRef,
@@ -31,45 +33,29 @@ export class CPTopBarComponent implements OnInit {
     }
   }
 
+  getManageHomePage() {
+    if (this.session.privileges.readEvent)  {
+      return 'events';
+    } else if (this.session.privileges.readFeed)  {
+      return 'feeds';
+    } else if (this.session.privileges.readClub)  {
+      return 'clubs';
+    } else if (this.session.privileges.readService)  {
+      return 'services';
+    } else if (this.session.privileges.readList)  {
+      return 'lists';
+    } else if (this.session.privileges.readLink)  {
+      return 'links';
+    }
+    return null;
+  }
+
   ngOnInit() {
     this.user = this.session.user;
     this.school = this.session.school;
-    let schoolPrivileges = this.user.school_level_privileges[this.school.id];
 
-
-    try {
-      this.canNotify = schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements].r;
-    } catch (error) {
-      this.canNotify = false;
-    }
-
-    try {
-      this.canAssess = schoolPrivileges[CP_PRIVILEGES_MAP.assessment].r;
-    } catch (error) {
-      this.canAssess = false;
-    }
-    // this.canNotify = schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements].r;
-    // let schoolPrivileges = this.user.school_level_privileges[this.school.id];
-
-  //   let manageItems = [
-  //     CP_PRIVILEGES_MAP.events,
-  //     CP_PRIVILEGES_MAP.moderation,
-  //     CP_PRIVILEGES_MAP.clubs,
-  //     CP_PRIVILEGES_MAP.services,
-  //     CP_PRIVILEGES_MAP.links,
-  //     CP_PRIVILEGES_MAP.app_customization,
-  //     CP_PRIVILEGES_MAP.campus_maps,
-  //   ];
-
-  //   if (schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements] ||
-  //     schoolPrivileges[CP_PRIVILEGES_MAP.emergency_announcement]) {
-  //     this.canNotify = true;
-  //   }
-
-  //   manageItems.forEach(privilege => {
-  //     if (schoolPrivileges[privilege]) {
-  //       this.canManage = true;
-  //     }
-  //   });
+    this.manageHomePage = this.getManageHomePage();
+    this.canNotify = this.session.privileges.readNotify;
+    this.canAssess = this.session.privileges.readAssess;
   }
 }

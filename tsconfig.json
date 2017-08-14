@@ -8,7 +8,11 @@
     "noEmitHelpers": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "lib": ["es2015", "dom"]
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "typeRoots": [
+      "node_modules/@types"
+    ]
   },
   "compileOnSave": false,
   "buildOnSave": false,

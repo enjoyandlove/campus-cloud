@@ -12,9 +12,10 @@
             <a [routerLink]="['/welcome']">Welcome</a>
           </li>
           <li
+            *ngIf="manageHomePage"
             (click)="isOpen = false"
             routerLinkActive="active">
-            <a [routerLink]="['/manage']">Manage</a>
+            <a [routerLink]="['/manage/' + manageHomePage]">Manage</a>
           </li>
           <li
             *ngIf="canNotify"
@@ -42,7 +43,7 @@
           <div
             *ngIf="school.logo_url === ''"
             class="nav__school__thumb pull-left img-rounded"
-            [ngStyle]="{'background-image': 'url(/dist/default/user.png)'}">
+            [ngStyle]="{'background-image': 'url( ' + defaultImage + ')'}">
           </div>
           <div class="nav__school__user">
             <span>{{ user.firstname }}</span>

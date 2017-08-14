@@ -32,7 +32,7 @@ export class StoreService extends BaseService {
           {
             'label': 'Select Host',
             'value': null,
-            'heading': false,
+            'heading': true,
           }
         ];
 
