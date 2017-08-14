@@ -32,7 +32,11 @@
 
           <div class="row">
             <span class="col-xs-3">
-              <strong>{{ template.name }}</strong>
+              <strong
+                class="hover"
+                (click)="onLaunchComposeModal(template)">
+                {{ template.name }}
+              </strong>
             </span>
 
             <span class="col-xs-2">
@@ -76,11 +80,20 @@
 <cp-modal
   modalId="templateComposeModal"
   *ngIf="isTemplateComposeModal">
-  <cp-announcements-compose
-    [isTemplate]="isTemplate"
+  <cp-templates-compose
+    [data]="templateData"
     (created)="onCreated($event)"
     (teardown)="isTemplateComposeModal = false">
-  </cp-announcements-compose>
+  </cp-templates-compose>
+</cp-modal>
+
+<cp-modal
+  modalId="templateCreateModal"
+  *ngIf="isTemplateCreateModal">
+  <cp-templates-create
+    (created)="onCreated($event)"
+    (teardown)="isTemplateCreateModal = false">
+  </cp-templates-create>
 </cp-modal>
 
 <cp-modal

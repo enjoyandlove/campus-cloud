@@ -1,4 +1,4 @@
-import { Input, Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
 
@@ -35,9 +35,6 @@ const THROTTLED_STATUS = 1;
   styleUrls: ['./announcements-compose.component.scss']
 })
 export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
-  @Input() templateData;
-  @Input() isTemplate: Boolean;
-
   @Output() created: EventEmitter<any> = new EventEmitter();
   @Output() teardown: EventEmitter<null> = new EventEmitter();
 
@@ -73,10 +70,10 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   types;
 
   constructor(
-    private fb: FormBuilder,
-    private session: CPSession,
-    private storeService: StoreService,
-    private service: AnnouncementsService
+    public fb: FormBuilder,
+    public session: CPSession,
+    public storeService: StoreService,
+    public service: AnnouncementsService
   ) {
     const school = this.session.school;
     let search: URLSearchParams = new URLSearchParams();
@@ -85,7 +82,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     this.stores$ = this.storeService.getStores(search);
   }
 
-  private doUserSearch(query) {
+  doUserSearch(query) {
     let search = new URLSearchParams();
     search.append('search_str', query);
     search.append('school_id', this.session.school.id.toString());
@@ -121,7 +118,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       );
   }
 
-  getSubjectLength() {
+  getSubjectLength(): number {
     let length = 0;
 
     if (this.subject_prefix.label) {
@@ -378,10 +375,6 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     return result;
   }
 
-  updateFormWithTemplateData() {
-    console.log('updating template data');
-  }
-
   ngOnInit() {
     this.typeAheadOpts = {
       withSwitcher: true,
@@ -407,10 +400,6 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       'message': [null, [Validators.required, Validators.maxLength(400)]],
       'priority': [this.types[0].action, Validators.required]
     });
-
-    if (this.templateData) {
-      this.updateFormWithTemplateData();
-    }
 
     this.form.valueChanges.subscribe(_ => {
       let isValid = true;

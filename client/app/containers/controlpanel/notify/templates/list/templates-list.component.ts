@@ -21,10 +21,11 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
   loading;
 
   deleteTemplate;
+  templateData;
+
   isTemplateDelete;
 
-  isTemplate = true;
-
+  isTemplateCreateModal = false;
   isTemplateComposeModal = false;
 
   state: IState = {
@@ -96,7 +97,13 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
   }
 
   onLaunchCreateModal() {
+    this.isTemplateCreateModal = true;
+    setTimeout(() => { $('#templateCreateModal').modal(); }, 1);
+  }
+
+  onLaunchComposeModal(templateData) {
     this.isTemplateComposeModal = true;
+    this.templateData = templateData;
     setTimeout(() => { $('#templateComposeModal').modal(); }, 1);
   }
 
