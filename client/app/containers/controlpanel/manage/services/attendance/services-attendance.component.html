@@ -26,7 +26,7 @@
         </div>
         <div class="col-xs-4 text-center">
           <div class="cp-card cp-card--half-padding">
-            <p class="header__digit">{{ service.num_ratings || '---' }}</p>
+            <p class="header__digit">{{ service.num_ratings || 'N/A' }}</p>
             <p i18n>Total Responses</p>
           </div>
         </div>
@@ -35,7 +35,7 @@
             <p
               class="header__digit"
               *ngIf="service.enable_feedback === 0">
-              ---
+              N/A
             </p>
             <p
               class="header__digit"
@@ -90,6 +90,7 @@
           [download]="download$"
           [query]="search_text$"
           [serviceId]="serviceId"
+          [serviceWithFeedback]="enableFeedback$"
           (providersLength$)="onProvidersResult($event)">
         </cp-providers-list>
       </div>
@@ -101,6 +102,7 @@
 <cp-modal modalId="createProvider">
   <cp-providers-add
     [serviceId]="serviceId"
-    (created)="reload$.next(true)">
+    (created)="reload$.next(true)"
+    [serviceWithFeedback]="enableFeedback$">
   </cp-providers-add>
 </cp-modal>

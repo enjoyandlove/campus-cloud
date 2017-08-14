@@ -12,6 +12,7 @@ import { CPSession } from './../../../../../session/index';
 import { BaseComponent } from '../../../../../base/base.component';
 import { STAR_SIZE } from '../../../../../shared/components/cp-stars';
 
+const FEEDBACK_ENABLED = 1;
 
 @Component({
   selector: 'cp-services-attendance',
@@ -28,6 +29,7 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
   reload$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   download$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   search_text$: BehaviorSubject<string> = new BehaviorSubject(null);
+  enableFeedback$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
     private router: Router,
@@ -48,6 +50,12 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
       .fetchData(this.serviceService.getServiceById(this.serviceId))
       .then(res => {
         this.service = res.data;
+
+        if ('enable_feedback' in this.service) {
+          this.enableFeedback$.next(this.service.enable_feedback === FEEDBACK_ENABLED)
+        } else {
+          this.enableFeedback$.next(true);
+        }
 
         if (!('enable_feedback' in this.service)) {
           this.setDefaultFeedback();
