@@ -15,6 +15,8 @@ const appRoutes: Routes = [
     canActivate: [ AuthGuard ],
     children: [
       { path: '', loadChildren: './announcements/announcements.module#AnnouncementsModule' },
+
+      { path: 'templates', loadChildren: './templates/templates.module#TemplatesModule' },
     ]
   }
 ];
