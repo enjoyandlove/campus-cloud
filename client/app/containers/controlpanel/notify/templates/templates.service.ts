@@ -22,12 +22,14 @@ export class TemplatesService extends BaseService {
 
     const mockResponse = Observable.of([
       {
+        id: 1,
         name: 'Active Shooter',
         to: 'Campus-Wide',
         subject: 'Active Shooter on Campus',
         body: 'Shelter in place immediately'
       },
       {
+        id: 2,
         name: 'Severe Weather on Warning',
         to: 'McDonald Campus',
         subject: 'Weather Warning',

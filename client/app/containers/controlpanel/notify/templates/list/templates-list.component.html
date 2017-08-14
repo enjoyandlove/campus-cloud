@@ -50,6 +50,7 @@
             <span
               data-toggle="modal"
               data-target="#templatesDelete"
+              (click)="onLauncDeleteModal(template)"
               class="col-xs-1 text-center delete-template hover">
               &times;
             </span>
@@ -71,3 +72,22 @@
     </div>
   </div>
 </div>
+
+<cp-modal
+  modalId="templateComposeModal"
+  *ngIf="isTemplateComposeModal">
+  <cp-announcements-compose
+    (created)="onCreated($event)"
+    (teardown)="isTemplateComposeModal = false">
+  </cp-announcements-compose>
+</cp-modal>
+
+<cp-modal
+  *ngIf="isTemplateDelete"
+  modalId="deleteAnnouncementModal">
+  <cp-templates-delete
+    [item]="deleteTemplate"
+    (deleted)="onDeleted($event)"
+    (teardown)="isTemplateDelete = false">
+  </cp-templates-delete>
+</cp-modal>

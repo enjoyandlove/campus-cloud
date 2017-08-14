@@ -9,6 +9,8 @@ interface IState {
   templates: Array<any>;
 }
 
+declare var $;
+
 @Component({
   selector: 'cp-templates-list',
   templateUrl: './templates-list.component.html',
@@ -17,6 +19,12 @@ interface IState {
 
 export class TemplatesListComponent extends BaseComponent implements OnInit {
   loading;
+
+  deleteTemplate;
+  isTemplateDelete;
+
+  isTemplateComposeModal = false;
+
   state: IState = {
     search_str: null,
     templates: []
@@ -64,8 +72,30 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
     this.fetch();
   }
 
+  onDeleted(id) {
+    this.state = Object.assign(
+      {},
+      this.state,
+      {
+        templates: this.state.templates.filter(template => template.id !== id)
+      }
+    );
+  }
+
+  onLauncDeleteModal(template) {
+    this.isTemplateDelete = true;
+    this.deleteTemplate = template;
+
+    setTimeout(() => { $('#deleteAnnouncementModal').modal(); }, 1);
+  }
+
+  onCreated() {
+    this.fetch();
+  }
+
   onLaunchCreateModal() {
-    console.log('launching modal');
+    this.isTemplateComposeModal = true;
+    setTimeout(() => { $('#templateComposeModal').modal(); }, 1);
   }
 
   ngOnInit() {

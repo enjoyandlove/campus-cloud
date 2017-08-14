@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Input, Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
 
@@ -35,6 +35,9 @@ const THROTTLED_STATUS = 1;
   styleUrls: ['./announcements-compose.component.scss']
 })
 export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
+  @Input() templateData;
+  @Input() isTemplate: Boolean;
+
   @Output() created: EventEmitter<any> = new EventEmitter();
   @Output() teardown: EventEmitter<null> = new EventEmitter();
 
@@ -375,6 +378,10 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     return result;
   }
 
+  updateFormWithTemplateData() {
+    console.log('updating template data');
+  }
+
   ngOnInit() {
     this.typeAheadOpts = {
       withSwitcher: true,
@@ -401,6 +408,9 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       'priority': [this.types[0].action, Validators.required]
     });
 
+    if (this.templateData) {
+      this.updateFormWithTemplateData();
+    }
 
     this.form.valueChanges.subscribe(_ => {
       let isValid = true;
