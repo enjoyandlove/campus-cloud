@@ -27,11 +27,13 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
   @Input() query: Observable<string>;
   @Input() reload: Observable<boolean>;
   @Input() download: Observable<boolean>;
+  @Input() serviceWithFeedback: Observable<boolean>;
   @Output() providersLength$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   loading;
   deleteProvider = '';
   state: IState = state;
+  displayRatingColumn = true;
 
   constructor(
     private providersService: ProvidersService
@@ -73,6 +75,8 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
   }
 
   ngOnInit() {
+    this.serviceWithFeedback.subscribe(withRating => this.displayRatingColumn = withRating);
+
     this.query.subscribe(search_text => {
       this.state = Object.assign({}, this.state, { search_text });
       this.fetch();
