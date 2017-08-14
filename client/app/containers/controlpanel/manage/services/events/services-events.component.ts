@@ -53,12 +53,17 @@ export class ServicesEventsComponent extends EventsComponent implements OnInit {
       {
         'label': 'Info',
         'url': `/manage/services/${this.serviceId}/info`
-      },
-      {
+      }
+    ];
+
+    if (this.session.privileges.readEvent) {
+      const events = {
         'label': 'Events',
         'url': `/manage/services/${this.serviceId}/events`
       }
-    ];
+
+      children = [...children, events];
+    }
 
     if (this.service.service_attendance) {
       let attendance = {

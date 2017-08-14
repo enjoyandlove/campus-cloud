@@ -8,6 +8,7 @@ import {
   HEADER_UPDATE
 } from '../../../../../reducers/header.reducer';
 import { ServicesService } from '../services.service';
+import { CPSession } from './../../../../../session/index';
 import { BaseComponent } from '../../../../../base/base.component';
 import { STAR_SIZE } from '../../../../../shared/components/cp-stars';
 
@@ -30,8 +31,9 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
+    private session: CPSession,
     private store: Store<IHeader>,
+    private route: ActivatedRoute,
     private serviceService: ServicesService
   ) {
     super();
@@ -77,12 +79,17 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
       {
         'label': 'Info',
         'url': `/manage/services/${this.serviceId}/info`
-      },
-      {
+      }
+    ];
+
+    if (this.session.privileges.readEvent) {
+      const events = {
         'label': 'Events',
         'url': `/manage/services/${this.serviceId}/events`
       }
-    ];
+
+      children = [...children, events];
+    }
 
     if (this.service.service_attendance) {
       let attendance = {
