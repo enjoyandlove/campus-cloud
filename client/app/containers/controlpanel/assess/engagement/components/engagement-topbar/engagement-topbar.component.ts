@@ -216,11 +216,6 @@ export class EngagementTopBarComponent implements OnInit {
           value: 2,
           queryParam: 'scope'
         }
-      },
-      {
-        'label': 'Services',
-        'value': null,
-        'heading': true,
       }
     ];
 
@@ -236,6 +231,16 @@ export class EngagementTopBarComponent implements OnInit {
       // @data [services, lists]
       let _lists = [...this.commonStudentFilter];
       let _engagements = [...this.commonEngageMentFilter];
+
+      if (res.data[0].length) {
+        _engagements.push(
+          {
+            'label': 'Services',
+            'value': null,
+            'heading': true,
+          }
+        )
+      }
 
       res.data[1].forEach(list => {
         _lists.push(
