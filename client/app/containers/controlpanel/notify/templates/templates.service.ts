@@ -3,7 +3,7 @@ import { Http, URLSearchParams } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-// import { API } from '../../../../config/api';
+import { API } from '../../../../config/api';
 import { BaseService } from '../../../../base/base.service';
 
 @Injectable()
@@ -15,6 +15,12 @@ export class TemplatesService extends BaseService {
     super(http, router);
 
     Object.setPrototypeOf(this, TemplatesService.prototype);
+  }
+
+  postTemplate(search: URLSearchParams, body: any) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ANNOUNCEMENT}/`;
+
+    return super.post(url, body, { search }).map(res => res.json());
   }
 
   getTemplates(startRange: number, endRange: number, search: URLSearchParams) {

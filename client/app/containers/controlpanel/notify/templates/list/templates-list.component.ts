@@ -94,6 +94,7 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
 
   onCreated() {
     this.fetch();
+    $('#templateComposeModal').modal('hide');
   }
 
   onLaunchCreateModal() {

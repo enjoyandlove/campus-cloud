@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { CPSession } from './../../../../../session/index';
 import { StoreService } from './../../../../../shared/services/store.service';
@@ -74,7 +74,7 @@ export class TemplatesComposeComponent extends AnnouncementsComposeComponent
   }
 
   doSubmit() {
-    console.log(this.form.value);
+    super.doSubmit();
   }
 
   onConfirmed() {
@@ -103,16 +103,11 @@ export class TemplatesComposeComponent extends AnnouncementsComposeComponent
 
   updateFormWithTemplateData() {
     this.form.controls['subject'].setValue(this.data.subject);
-    this.form.controls['template_name'].setValue(this.data.name);
     this.form.controls['message'].setValue(this.data.body);
   }
 
   ngOnInit() {
     super.ngOnInit();
-
-    const control = new FormControl(null, Validators.required);
-
-    this.form.addControl('template_name', control);
 
     this.updateFormWithTemplateData();
   }

@@ -1,13 +1,17 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { URLSearchParams } from '@angular/http';
 
+import { TemplatesService } from './../templates.service';
 import { CPSession } from './../../../../../session/index';
+import { STATUS } from './../../../../../shared/constants/status';
 import { StoreService } from './../../../../../shared/services/store.service';
 import { AnnouncementsService } from './../../announcements/announcements.service';
 
 import {
   AnnouncementsComposeComponent
 } from './../../announcements/compose/announcements-compose.component';
+
 
 @Component({
   selector: 'cp-templates-create',
@@ -23,7 +27,8 @@ export class TemplatesCreateComponent extends AnnouncementsComposeComponent
     public fb: FormBuilder,
     public session: CPSession,
     public storeService: StoreService,
-    public service: AnnouncementsService
+    public service: AnnouncementsService,
+    private childService: TemplatesService
   ) {
     super(fb, session, storeService, service);
   }
@@ -64,13 +69,53 @@ export class TemplatesCreateComponent extends AnnouncementsComposeComponent
     super.onSelectedStore(store);
   }
 
-  doValidate() {
-    super.doValidate();
+  doSubmit() {
+    this.isError = false;
+
+    let search = new URLSearchParams();
+    search.append('school_id', this.session.school.id.toString());
+
+    let data = {
+      'store_id': this.form.value.store_id,
+      'template_name': this.form.value.template_name,
+      'is_school_wide': this.form.value.is_school_wide,
+      'subject': this.form.value.subject,
+      'message': this.form.value.message,
+      'priority': this.form.value.priority
+    };
+
+    if (this.state.isToUsers && !this.state.isCampusWide) {
+      data = Object.assign(
+        {},
+        data,
+        { 'user_ids': this.form.value.user_ids }
+      );
+    }
+
+    if (this.state.isToLists && !this.state.isCampusWide) {
+      data = Object.assign(
+        {},
+        data,
+        { 'list_ids': this.form.value.list_ids }
+      );
+    }
+
+    this
+      .childService
+      .postTemplate(search, data)
+      .subscribe(
+      _ => {
+        this.form.reset();
+        this.created.emit(this.form.value);
+        this.resetModal();
+      },
+      _ => {
+        this.isError = true;
+        this.errorMessage = STATUS.SOMETHING_WENT_WRONG;
+      }
+      );
   }
 
-  doSubmit() {
-    console.log(this.form.value);
-  }
 
   onConfirmed() {
     super.onConfirmed();
