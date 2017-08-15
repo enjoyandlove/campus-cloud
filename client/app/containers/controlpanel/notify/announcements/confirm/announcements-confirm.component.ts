@@ -21,6 +21,10 @@ export class AnnouncementsConfirmComponent implements OnInit {
   }
 
   getTitle() {
+    if (!this.state) {
+      return 'Campus Wide Announcement';
+    }
+
     if (this.state.isCampusWide && this.state.isEmergency) {
       return 'Campus Wide and Emergency Announcement'
     }
@@ -37,6 +41,9 @@ export class AnnouncementsConfirmComponent implements OnInit {
   }
 
   getBody() {
+    if (!this.state) {
+      return 'You are about to send a campus wide announcement.';
+    }
     if (this.state.isCampusWide && this.state.isEmergency) {
       return 'You are about to send a campus wide, emergency announcement.';
     }
@@ -55,7 +62,5 @@ export class AnnouncementsConfirmComponent implements OnInit {
   ngOnInit() {
     this.title = this.getTitle();
     this.body = this.getBody();
-
-    console.log(this.state);
   }
 }
