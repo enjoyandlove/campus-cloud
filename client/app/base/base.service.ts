@@ -3,15 +3,13 @@
  * Takes care of setting common headers
  * and catching errors
  */
-import { Http, RequestOptionsArgs, ResponseOptions } from '@angular/http';
+import { Http, RequestOptionsArgs } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { API } from '../config/api';
 import { CPObj, appStorage } from '../shared/utils';
-
-declare var Response;
 
 @Injectable()
 export class BaseService {
@@ -30,11 +28,7 @@ export class BaseService {
       .retry(1)
       .catch(err => {
         if (err.status === 403) {
-          const options = new ResponseOptions({
-            body: []
-          });
-          const response = new Response(options);
-          return Observable.of(response);
+          return Promise.reject([]);
         }
         return this.catchError(err);
       });
