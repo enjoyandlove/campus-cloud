@@ -24,11 +24,13 @@ export class EngagementResolver implements Resolve<any> {
 
     const servicesList$ = this
       .service
-      .getServices(undefined, undefined, serviceSearch);
+      .getServices(undefined, undefined, serviceSearch)
+      .catch(_ => Observable.of([]));
 
     const listsList$ = this
       .service
-      .getLists(undefined, undefined, search);
+      .getLists(undefined, undefined, search)
+      .catch(_ => Observable.of([]));
 
     const stream$ = Observable.combineLatest(servicesList$, listsList$);
 
