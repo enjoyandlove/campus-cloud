@@ -1,6 +1,6 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { AuthService } from '../auth.service';
@@ -16,6 +16,7 @@ import { ALERT_DEFAULT } from '../../../reducers/alert.reducer';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, OnDestroy {
+  goTo: string;
   form: FormGroup;
   logo = require('public/svg/full-logo.svg');
 
@@ -24,12 +25,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private store: Store<any>,
     private error: ErrorService,
-    private service: AuthService
+    private service: AuthService,
+    private route: ActivatedRoute
   ) {
-    this.form = this.fb.group({
-      'username': [null, [Validators.required]],
-      'password': [null, [Validators.required]],
-    });
+    this.goTo = this.route.snapshot.queryParams['goTo'];
   }
 
   onSubmit(data) {
@@ -42,22 +41,26 @@ export class LoginComponent implements OnInit, OnDestroy {
       .service
       .login(data.username, data.password)
       .subscribe(
-        res => {
-          if (appStorage.storageAvailable()) {
-            this.form.reset();
-            appStorage.set(appStorage.keys.SESSION, res.id);
-            this.router.navigate(['/']);
+      res => {
+        if (appStorage.storageAvailable()) {
+          this.form.reset();
+          appStorage.set(appStorage.keys.SESSION, res.id);
+          if (this.goTo) {
+            this.router.navigateByUrl(`/${decodeURIComponent(this.goTo)}`);
             return;
           }
-          console.warn('Local Storage is not supported');
-        },
-        err => {
-          if (err.status === 401) {
-            this.error.handleError({ reason: STATUS.NO_ACCOUNT_FOUND });
-            return;
-          }
-          console.error(err.json());
+          this.router.navigate(['/']);
+          return;
         }
+        console.warn('Local Storage is not supported');
+      },
+      err => {
+        if (err.status === 401) {
+          this.error.handleError({ reason: STATUS.NO_ACCOUNT_FOUND });
+          return;
+        }
+        console.error(err.json());
+      }
       );
   }
 
@@ -65,5 +68,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.store.dispatch({ type: ALERT_DEFAULT });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.form = this.fb.group({
+      'username': [null, [Validators.required]],
+      'password': [null, [Validators.required]],
+    });
+  }
 }

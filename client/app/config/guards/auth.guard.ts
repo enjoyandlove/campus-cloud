@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate {
     private schoolService: SchoolService
   ) { }
 
-  canActivate() {
+  canActivate(__, state) {
     if (appStorage.get(appStorage.keys.SESSION)) {
       const school$ = this.schoolService.getSchools();
 
@@ -48,7 +48,17 @@ export class AuthGuard implements CanActivate {
       return true;
     }
 
-    this.router.navigate(['/login']);
+    this.router.navigate(
+      ['/login'],
+      {
+        queryParams: {
+          goTo: encodeURIComponent(state.url),
+        }
+      }
+    );
+
     return false;
   }
 }
+
+
