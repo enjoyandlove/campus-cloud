@@ -164,6 +164,7 @@
 
     <cp-announcements-confirm
       *ngSwitchCase="true"
+      [state]="state"
       (confirmed)="onConfirmed()"
       (teardown)="shouldConfirm = false">
     </cp-announcements-confirm>
