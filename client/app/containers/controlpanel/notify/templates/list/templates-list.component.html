@@ -39,8 +39,15 @@
               </strong>
             </span>
 
-            <span class="col-xs-2">
-              {{ template.is_school_wide ? 'School Wide' : 'Not School Wide' }}
+            <span class="col-xs-2" *ngIf="template.is_school_wide" i18n>
+              School Wide
+            </span>
+
+            <span class="col-xs-2" *ngIf="!template.is_school_wide">
+              <cp-list-recipients
+                [lists]="template.list_details"
+                [users]="template.user_details">
+              </cp-list-recipients>
             </span>
 
             <span class="col-xs-3">
