@@ -1,3 +1,4 @@
+import { base64 } from './../../shared/utils/base64';
 /**
  * Guard to check if user is authenticated
  */
@@ -20,17 +21,36 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     private schoolService: SchoolService
   ) { }
 
-  preLoadUser() {
+  preLoadUser(activatedRoute) {
     const school$ = this.schoolService.getSchools();
 
     return school$
       .switchMap(schools => {
-        let search = new URLSearchParams();
-        let storedSchool = JSON.parse(appStorage.get(appStorage.keys.DEFAULT_SCHOOL));
+        let schoolIdInUrl;
+        let schoolObjFromUrl;
+        const search = new URLSearchParams();
+        const storedSchool = JSON.parse(appStorage.get(appStorage.keys.DEFAULT_SCHOOL));
+
+        try {
+          schoolIdInUrl = base64.decode(activatedRoute.queryParams.school);
+        } catch (error) {
+          schoolIdInUrl = null;
+        }
+
+        if (schoolIdInUrl) {
+          Object
+            .keys(schools)
+            .map((key: any) => {
+              console.log(schools[key]);
+              if (schools[key].id ===  +schoolIdInUrl) {
+                schoolObjFromUrl = schools[key];
+              }
+            });
+        }
 
         this.session.schools = schools;
 
-        this.session.school = storedSchool || schools[0];
+        this.session.school = storedSchool || schoolObjFromUrl || schools[0];
 
         search.append('school_id', this.session.school.id.toString());
 
@@ -39,48 +59,73 @@ export class AuthGuard implements CanActivate, CanActivateChild {
       .toPromise()
   }
 
-  checkGoToRedirectPrivileges(_) {
-    // const privilege = CP_PRIVILEGES[state.url.split('/')[state.url.split('/').length -1]];
-    return new Promise((resolve, reject) => {
-      if (this.session.privileges['readService']) {
-        resolve(true);
-        return;
-      }
-
-      this.router.navigate(['welcome']);
-      reject(false);
-    });
-  }
-
   canActivateChild(childRoute: ActivatedRouteSnapshot) {
-    const MANAGE_ROUTES = ['events', 'feeds', 'clubs', 'services', 'lists', 'links'];
+    const PROTECTED_ROUTES =
+    [
+      'events',
+      'feeds',
+      'clubs',
+      'services',
+      'lists',
+      'links',
+      'announcements',
+      'templates'
+    ];
+
+    const ROUTES_MAP = {
+      'events': {
+        privilege: 'readEvent'
+      },
+      'feeds': {
+        privilege: 'readFeed'
+      },
+      'clubs': {
+        privilege: 'readClub'
+      },
+      'services': {
+        privilege: 'readService'
+      },
+      'lists': {
+        privilege: 'readList'
+      },
+      'links': {
+        privilege: 'readLink'
+      },
+      'announcements': {
+        privilege: 'readNotify'
+      },
+      'templates': {
+        privilege: 'readNotify'
+      },
+    }
 
     if (childRoute.url.length) {
-      const routeName = childRoute.url[0].path;
+      const path = childRoute.url[0].path;
 
-      // if (MANAGE_ROUTES.includes(routeName)) {
+      if (PROTECTED_ROUTES.includes(path)) {
+        const canAccess = this.session.privileges[ROUTES_MAP[path].privilege];
 
-      // }
-      return true;
+        if (!canAccess) {
+          this.router.navigate(['/welcome']);
+        }
+        return canAccess;
+      }
     }
     return true;
   }
 
-  canActivate(__, state) {
+  canActivate(activatedRoute, state) {
     // are we logged in?
     if (appStorage.get(appStorage.keys.SESSION)) {
 
       // did we create the session object?
       if (!this.session.school || !this.session.user) {
-
-        return this.preLoadUser()
+        return this.preLoadUser(activatedRoute)
 
           .then(user => {
             this.session.user = user[0];
             return this.session.updateSessionPrivileges();
           })
-
-          .then(_ => this.checkGoToRedirectPrivileges(state))
 
           .then(_ => true)
 
@@ -94,8 +139,9 @@ export class AuthGuard implements CanActivate, CanActivateChild {
       ['/login'],
       {
         queryParams: {
-          goTo: encodeURIComponent(state.url),
-        }
+          goTo: encodeURIComponent(state.url)
+        },
+        queryParamsHandling: 'merge'
       }
     );
 
