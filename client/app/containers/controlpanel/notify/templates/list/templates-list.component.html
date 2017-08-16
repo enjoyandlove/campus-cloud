@@ -18,9 +18,9 @@
       <ul class="templates cp-form">
         <li class="cp-form__header col-xs-12">
           <div class="row">
-            <span class="col-xs-3" i18n>Name</span>
+            <span class="col-xs-2" i18n>Name</span>
             <span class="col-xs-2" i18n>To</span>
-            <span class="col-xs-2" i18n>Subject</span>
+            <span class="col-xs-3" i18n>Subject</span>
             <span class="col-xs-4" i18n>Body</span>
             <span class="col-xs-1"></span>
           </div>
@@ -31,7 +31,7 @@
           *ngFor="let template of state.templates">
 
           <div class="row">
-            <span class="col-xs-3">
+            <span class="col-xs-2">
               <strong
                 class="hover"
                 (click)="onLaunchComposeModal(template)">
@@ -40,15 +40,15 @@
             </span>
 
             <span class="col-xs-2">
-              {{ template.to }}
+              {{ template.is_school_wide ? 'School Wide' : 'Not School Wide' }}
             </span>
 
-            <span class="col-xs-2">
+            <span class="col-xs-3">
               {{ template.subject }}
             </span>
 
             <span class="col-xs-4 text-muted">
-              {{ template.body }}
+              {{ template.message }}
             </span>
 
             <span
@@ -98,7 +98,7 @@
 
 <cp-modal
   *ngIf="isTemplateDelete"
-  modalId="deleteAnnouncementModal">
+  modalId="deleteTemplateModal">
   <cp-templates-delete
     [item]="deleteTemplate"
     (deleted)="onDeleted($event)"

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
 import { TemplatesService } from './../templates.service';
+import { CPSession } from './../../../../../session/index';
 import { BaseComponent } from './../../../../../base/base.component';
 
 interface IState {
@@ -34,6 +35,7 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
   }
 
   constructor(
+    private session: CPSession,
     private service: TemplatesService
   ) {
     super();
@@ -53,6 +55,7 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
   fetch() {
     let search = new URLSearchParams();
     search.append('search_str', this.state.search_str);
+    search.append('school_id', this.session.school.id.toString());
 
     const stream$ = this.service.getTemplates(this.startRange, this.endRange, search);
 
@@ -89,7 +92,7 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
     this.isTemplateDelete = true;
     this.deleteTemplate = template;
 
-    setTimeout(() => { $('#deleteAnnouncementModal').modal(); }, 1);
+    setTimeout(() => { $('#deleteTemplateModal').modal(); }, 1);
   }
 
   onCreated() {
