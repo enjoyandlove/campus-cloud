@@ -21,6 +21,7 @@ interface IState {
 }
 
 interface IProps {
+  isUsers: boolean;
   withSwitcher: boolean;
   suggestions: Array<any>;
   reset: Observable<boolean>;
@@ -187,14 +188,18 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
+    if (!('isUsers' in this.props)) {
+      this.props.isUsers = true;
+    }
+
     this.chipOptions = {
       withClose: true,
       withAvatar: true,
-      icon: 'account_box'
+      icon: this.props.isUsers ? 'account_box' : 'list'
     };
 
     if (this.props.withSwitcher) {
-      this.state = Object.assign({}, this.state, { isUsers: true });
+      this.state = Object.assign({}, this.state, { isUsers: this.props.isUsers });
     }
 
     if (!this.props.reset) {

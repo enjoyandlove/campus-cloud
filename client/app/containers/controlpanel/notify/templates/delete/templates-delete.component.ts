@@ -1,7 +1,9 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
+import { URLSearchParams } from '@angular/http';
 
+import { TemplatesService } from './../templates.service';
 import { CPSession } from './../../../../../session/index';
-// import { STATUS } from './../../../../../shared/constants/status';
+import { STATUS } from './../../../../../shared/constants/status';
 
 declare var $;
 
@@ -19,7 +21,8 @@ export class TemplatesDeleteComponent implements OnInit {
   errorMessage;
 
   constructor(
-    private session: CPSession
+    private session: CPSession,
+    private service: TemplatesService
   ) { }
 
   doReset() {
@@ -32,24 +35,20 @@ export class TemplatesDeleteComponent implements OnInit {
     let search = new URLSearchParams();
     search.append('school_id', this.session.school.id.toString());
 
-    this.deleted.emit(this.item.id);
-    $('#deleteAnnouncementModal').modal('hide');
-    this.doReset();
-
-    // this
-    //   .service
-    //   .deleteAnnouncement(this.item.id, search)
-    //   .subscribe(
-    //     _ => {
-    //       this.teardown.emit();
-    //       this.deleted.emit(this.item.id);
-    //       $('#deleteAnnouncementModal').modal('hide');
-    //     },
-    //     _ => {
-    //       this.isError = true;
-    //       this.errorMessage = STATUS.SOMETHING_WENT_WRONG;
-    //     }
-    //   );
+    this
+      .service
+      .deleteTemplate(search, this.item.id)
+      .subscribe(
+        _ => {
+          this.teardown.emit();
+          this.deleted.emit(this.item.id);
+          $('#deleteTemplateModal').modal('hide');
+        },
+        _ => {
+          this.isError = true;
+          this.errorMessage = STATUS.SOMETHING_WENT_WRONG;
+        }
+      );
   }
 
   ngOnInit() { }

@@ -1,4 +1,3 @@
-import { Observable } from 'rxjs/Observable';
 import { Http, URLSearchParams } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -23,25 +22,29 @@ export class TemplatesService extends BaseService {
     return super.post(url, body, { search }).map(res => res.json());
   }
 
-  getTemplates(startRange: number, endRange: number, search: URLSearchParams) {
-    console.log(search, startRange, endRange);
+  createTemplate(search: URLSearchParams, body: any) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.TEMPLATE}/`;
 
-    const mockResponse = Observable.of([
-      {
-        id: 1,
-        name: 'Active Shooter',
-        to: 'Campus-Wide',
-        subject: 'Active Shooter on Campus',
-        body: 'Shelter in place immediately'
-      },
-      {
-        id: 2,
-        name: 'Severe Weather on Warning',
-        to: 'McDonald Campus',
-        subject: 'Weather Warning',
-        body: 'Campus wide closure due to [WEATHER CONDITION]'
-      }
-    ]);
-    return mockResponse.delay(1000);
+    return super.post(url, body, { search }).map(res => res.json());
+  }
+
+  getTemplateById(search: URLSearchParams, templateId: number) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.TEMPLATE}/${templateId}`;
+
+    return super.get(url, { search }).map(res => res.json());
+  }
+
+  deleteTemplate(search: URLSearchParams, templateId: number) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.TEMPLATE}/${templateId}`;
+
+    return super.delete(url, { search }).map(res => res);
+  }
+
+  getTemplates(startRange: number, endRange: number, search: URLSearchParams) {
+    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.TEMPLATE}`;
+
+    const url = `${common}/${startRange};${endRange}`
+
+    return super.get(url, { search }).map(res => res.json());
   }
 }

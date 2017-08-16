@@ -1,7 +1,10 @@
+import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
 import { TemplatesService } from './../templates.service';
+import { CPSession } from './../../../../../session/index';
+import { base64 } from './../../../../../shared/utils/base64';
 import { BaseComponent } from './../../../../../base/base.component';
 
 interface IState {
@@ -20,6 +23,9 @@ declare var $;
 export class TemplatesListComponent extends BaseComponent implements OnInit {
   loading;
 
+  schoolId;
+  templateId;
+
   deleteTemplate;
   templateData;
 
@@ -34,10 +40,16 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
   }
 
   constructor(
+    private router: Router,
+    private session: CPSession,
+    private route: ActivatedRoute,
     private service: TemplatesService
   ) {
     super();
     super.isLoading().subscribe(loading => this.loading = loading);
+
+    this.templateId = this.route.snapshot.queryParams['template'];
+    this.schoolId = this.route.snapshot.queryParams['school'];
   }
 
   onPaginationNext() {
@@ -53,6 +65,7 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
   fetch() {
     let search = new URLSearchParams();
     search.append('search_str', this.state.search_str);
+    search.append('school_id', this.session.school.id.toString());
 
     const stream$ = this.service.getTemplates(this.startRange, this.endRange, search);
 
@@ -89,7 +102,7 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
     this.isTemplateDelete = true;
     this.deleteTemplate = template;
 
-    setTimeout(() => { $('#deleteAnnouncementModal').modal(); }, 1);
+    setTimeout(() => { $('#deleteTemplateModal').modal(); }, 1);
   }
 
   onCreated() {
@@ -102,13 +115,55 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
     setTimeout(() => { $('#templateCreateModal').modal(); }, 1);
   }
 
+  updateURL(template) {
+    this
+      .router
+      .navigate(
+      ['/notify/templates'],
+      {
+        queryParams: {
+          'template': base64.encode(template.id.toString()),
+          'school': base64.encode(this.session.school.id.toString()),
+        }
+      }
+      );
+  }
+  doComposeModalTeardown() {
+    this.isTemplateComposeModal = false;
+
+    this.router.navigate(['/notify/templates']);
+  }
+
   onLaunchComposeModal(templateData) {
+    this.updateURL(templateData);
+    console.log(templateData);
     this.isTemplateComposeModal = true;
     this.templateData = templateData;
+
     setTimeout(() => { $('#templateComposeModal').modal(); }, 1);
+  }
+
+  loadTemplateFromId() {
+    const search = new URLSearchParams();
+    search.append('school_id', this.session.school.id.toString());
+
+    this
+      .service
+      .getTemplateById(search, +base64.decode(this.templateId))
+      .toPromise()
+      .then(template => {
+        this.isTemplateComposeModal = true;
+
+        this.templateData = template;
+        setTimeout(() => { $('#templateComposeModal').modal(); }, 1);
+      })
   }
 
   ngOnInit() {
     this.fetch();
+
+    if (this.templateId && this.schoolId) {
+      this.loadTemplateFromId();
+    }
   }
 }

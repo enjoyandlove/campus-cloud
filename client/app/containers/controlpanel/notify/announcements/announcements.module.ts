@@ -22,7 +22,8 @@ import { AnnouncementsService } from './announcements.service';
   AnnouncementsComposeComponent, AnnouncementsConfirmComponent, AnnouncementDeleteComponent,
   AnnouncementsListRecipientsComponent ],
 
-  exports: [ AnnouncementsComposeComponent,  AnnouncementsConfirmComponent],
+  exports: [ AnnouncementsComposeComponent,  AnnouncementsConfirmComponent,
+    AnnouncementsListRecipientsComponent],
 
   imports: [ CommonModule, SharedModule, AnnouncementsRoutingModule, ReactiveFormsModule ],
 
