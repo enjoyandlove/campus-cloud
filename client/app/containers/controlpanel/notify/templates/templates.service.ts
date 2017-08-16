@@ -28,6 +28,12 @@ export class TemplatesService extends BaseService {
     return super.post(url, body, { search }).map(res => res.json());
   }
 
+  getTemplateById(search: URLSearchParams, templateId: number) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.TEMPLATE}/${templateId}`;
+
+    return super.get(url, { search }).map(res => res.json());
+  }
+
   deleteTemplate(search: URLSearchParams, templateId: number) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.TEMPLATE}/${templateId}`;
 

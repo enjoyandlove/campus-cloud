@@ -40,13 +40,11 @@ export class TemplatesDeleteComponent implements OnInit {
       .deleteTemplate(search, this.item.id)
       .subscribe(
         _ => {
-          console.log(1);
           this.teardown.emit();
           this.deleted.emit(this.item.id);
           $('#deleteTemplateModal').modal('hide');
         },
         _ => {
-          console.log(2);
           this.isError = true;
           this.errorMessage = STATUS.SOMETHING_WENT_WRONG;
         }

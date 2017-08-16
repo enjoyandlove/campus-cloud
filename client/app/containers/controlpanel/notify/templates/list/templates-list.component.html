@@ -90,7 +90,7 @@
   <cp-templates-compose
     [data]="templateData"
     (created)="onCreated($event)"
-    (teardown)="isTemplateComposeModal = false">
+    (teardown)="doComposeModalTeardown()">
   </cp-templates-compose>
 </cp-modal>
 
