@@ -41,7 +41,6 @@ export class AuthGuard implements CanActivate, CanActivateChild {
           Object
             .keys(schools)
             .map((key: any) => {
-              console.log(schools[key]);
               if (schools[key].id ===  +schoolIdInUrl) {
                 schoolObjFromUrl = schools[key];
               }

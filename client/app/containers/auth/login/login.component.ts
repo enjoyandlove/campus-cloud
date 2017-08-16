@@ -48,11 +48,10 @@ export class LoginComponent implements OnInit, OnDestroy {
           appStorage.set(appStorage.keys.SESSION, res.id);
 
           if (this.goTo) {
-            console.log('goTo ', this.goTo);
             this.router.navigateByUrl(`/${decodeURIComponent(this.goTo)}`);
             return;
           }
-          console.log('navigating');
+
           this.router.navigate(['/']);
           return;
         }
