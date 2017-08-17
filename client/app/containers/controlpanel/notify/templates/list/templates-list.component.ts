@@ -136,7 +136,7 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
 
   onLaunchComposeModal(templateData) {
     this.updateURL(templateData);
-    console.log(templateData);
+
     this.isTemplateComposeModal = true;
     this.templateData = templateData;
 

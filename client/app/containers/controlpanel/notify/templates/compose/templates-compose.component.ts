@@ -75,6 +75,7 @@ export class TemplatesComposeComponent extends AnnouncementsComposeComponent
   }
 
   doSubmit() {
+    console.log(this.form.value);
     super.doSubmit();
   }
 
@@ -145,6 +146,16 @@ export class TemplatesComposeComponent extends AnnouncementsComposeComponent
     this.form.controls['subject'].setValue(this.data.subject);
     this.form.controls['message'].setValue(this.data.message);
     this.form.controls['store_id'].setValue(this.data.store_id);
+
+    if ('list_details' in this.data) {
+      const list_ids = this.data.list_details.map(list => list.id);
+      this.form.controls['list_ids'].setValue(list_ids);
+    }
+
+    if ('user_details' in this.data) {
+      const user_ids = this.data.user_details.map(user => user.id);
+      this.form.controls['user_ids'].setValue(user_ids);
+    }
   }
 
   updateTypeAheadDefaultValues() {
