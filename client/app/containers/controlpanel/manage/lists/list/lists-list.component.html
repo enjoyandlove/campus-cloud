@@ -34,15 +34,13 @@
           *ngFor="let list of state.lists">
           <div class="row">
             <span class="col-xs-5 text-truncate">
-              <strong>
-                <button
-                  (click)="editList = list"
-                  class="cpbtn cpbtn--link-dark"
-                  (click)="isListsEdit = true"
-                  data-toggle="modal" data-target="#listsEdit">
-                  {{ list.name }}
-                </button>
-              </strong>
+              <button
+                (click)="editList = list"
+                class="cpbtn cpbtn--link-dark"
+                (click)="isListsEdit = true"
+                data-toggle="modal" data-target="#listsEdit">
+                <strong>{{ list.name }}</strong>
+              </button>
               <br>
               {{ list.description }}
             </span>

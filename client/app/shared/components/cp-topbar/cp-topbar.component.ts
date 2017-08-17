@@ -1,4 +1,5 @@
 import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 
 import { CPSession, IUser, ISchool } from '../../../session';
 
@@ -16,12 +17,15 @@ export class CPTopBarComponent implements OnInit {
   canAssess = false;
   manageHomePage: string;
 
+  isManageActiveRoute;
+
   logo = require('public/svg/logo.svg');
   defaultImage = require('public/default/user.png');
 
   constructor(
     private el: ElementRef,
-    private session: CPSession
+    private session: CPSession,
+    private router: Router
   ) { }
 
   @HostListener('document:click', ['$event'])
@@ -50,6 +54,10 @@ export class CPTopBarComponent implements OnInit {
     return null;
   }
 
+  isManage(url) {
+    return url.split('/').includes('manage');
+  }
+
   ngOnInit() {
     this.user = this.session.user;
     this.school = this.session.school;
@@ -57,5 +65,17 @@ export class CPTopBarComponent implements OnInit {
     this.manageHomePage = this.getManageHomePage();
     this.canNotify = this.session.privileges.readNotify;
     this.canAssess = this.session.privileges.readAssess;
+
+    this.isManageActiveRoute = this.isManage(this.router.url);
+
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        if (this.isManage(event.url)) {
+          this.isManageActiveRoute = true;
+        } else {
+          this.isManageActiveRoute = false;
+        }
+      }
+    })
   }
 }
