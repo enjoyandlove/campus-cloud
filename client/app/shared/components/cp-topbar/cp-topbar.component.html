@@ -14,7 +14,7 @@
           <li
             *ngIf="manageHomePage"
             (click)="isOpen = false"
-            routerLinkActive="active">
+            [class.active]="isManageActiveRoute">
             <a [routerLink]="['/manage/' + manageHomePage]">Manage</a>
           </li>
           <li
