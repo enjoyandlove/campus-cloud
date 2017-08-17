@@ -22,6 +22,16 @@
     &.isOpen {
       border: 1px solid $color-black;
     }
+
+    &.isSelected {
+      background: $color-brand;
+      border: 1px solid $color-brand;
+
+      i {
+        color: $color-white;
+      }
+    }
+
     i {
       padding: 5px;
       font-size: 21px;
