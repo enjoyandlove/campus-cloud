@@ -1,11 +1,13 @@
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
+import { Store } from '@ngrx/store';
 
 import { TemplatesService } from './../templates.service';
 import { CPSession } from './../../../../../session/index';
 import { base64 } from './../../../../../shared/utils/base64';
 import { BaseComponent } from './../../../../../base/base.component';
+import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
 
 interface IState {
   search_str: string;
@@ -41,6 +43,7 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private store: Store<any>,
     private session: CPSession,
     private route: ActivatedRoute,
     private service: TemplatesService
@@ -105,9 +108,20 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
     setTimeout(() => { $('#deleteTemplateModal').modal(); }, 1);
   }
 
+  onComposed() {
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        body: 'Success! Your message has been sent',
+      }
+    });
+
+    $('#templateComposeModal').modal('hide');
+  }
   onCreated() {
     this.fetch();
-    $('#templateComposeModal').modal('hide');
+
+    $('#templateCreateModal').modal('hide');
   }
 
   onLaunchCreateModal() {

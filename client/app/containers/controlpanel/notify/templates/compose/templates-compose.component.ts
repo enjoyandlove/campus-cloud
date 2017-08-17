@@ -75,7 +75,6 @@ export class TemplatesComposeComponent extends AnnouncementsComposeComponent
   }
 
   doSubmit() {
-    console.log(this.form.value);
     super.doSubmit();
   }
 

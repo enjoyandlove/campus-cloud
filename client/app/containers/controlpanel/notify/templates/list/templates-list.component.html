@@ -89,7 +89,7 @@
   *ngIf="isTemplateComposeModal">
   <cp-templates-compose
     [data]="templateData"
-    (created)="onCreated($event)"
+    (created)="onComposed($event)"
     (teardown)="doComposeModalTeardown()">
   </cp-templates-compose>
 </cp-modal>
