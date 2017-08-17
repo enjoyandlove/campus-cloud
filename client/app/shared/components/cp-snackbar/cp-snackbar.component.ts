@@ -16,7 +16,8 @@ export class CPSnackBarComponent implements OnDestroy, OnInit {
     this
       .store
       .select('SNACKBAR')
-      .subscribe(res => {
+      .subscribe((res: any) => {
+
         this.snack = res;
 
         if (this.snack.autoClose) {
@@ -31,9 +32,9 @@ export class CPSnackBarComponent implements OnDestroy, OnInit {
     this.store.dispatch({ type: SNACKBAR_HIDE });
   }
 
-  ngOnInit() { }
-
   ngOnDestroy() {
-    this.store.dispatch({ type: SNACKBAR_HIDE });
+    this.doClose();
   }
+
+  ngOnInit() { }
 }

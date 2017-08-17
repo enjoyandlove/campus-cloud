@@ -93,6 +93,7 @@ export class EngagementComponent extends BaseComponent implements OnInit {
       type: SNACKBAR_SHOW,
       payload: {
         body: 'Success! Your message has been sent',
+        autoClose: true,
       }
     });
   }

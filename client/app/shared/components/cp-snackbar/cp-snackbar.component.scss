@@ -15,16 +15,21 @@
 
     &--icon {
 
-      top: 1x;
-      font-size: 1.3em;
-      margin-right: 4px;
+      top: 4px;
+      font-size: 1.4em;
+      margin-right: 2px;
       position: relative;
     }
 
     &--close {
-      top: 3px;
-      font-size: 1.3em;
+      top: 2px;
+      font-size: 1.4em;
       position: relative;
+    }
+
+    p {
+      font-size: 1.1em;
+      letter-spacing: .1px;
     }
 
     p,
@@ -34,7 +39,7 @@
       line-height: 1;
       margin-bottom: 0;
       color: $color-white;
-      vertical-align: bottom;
+      vertical-align: -4px;
     }
 
     &.success {
