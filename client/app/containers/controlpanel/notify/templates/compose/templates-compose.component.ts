@@ -143,6 +143,7 @@ export class TemplatesComposeComponent extends AnnouncementsComposeComponent
 
   updateFormWithTemplateData() {
     this.form.controls['subject'].setValue(this.data.subject);
+    this.form.controls['priority'].setValue(this.data.priority);
     this.form.controls['message'].setValue(this.data.message);
     this.form.controls['store_id'].setValue(this.data.store_id);
 
