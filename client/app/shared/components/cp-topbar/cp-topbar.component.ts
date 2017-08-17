@@ -77,7 +77,5 @@ export class CPTopBarComponent implements OnInit {
         }
       }
     })
-
-    // console.log(this.router.isActive('manage', false));
   }
 }
