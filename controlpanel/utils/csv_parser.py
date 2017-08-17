@@ -1,11 +1,11 @@
 import csv
 import datetime
+from dateutil.parser import parse
 
 
 class CSVParser:
-    def __init__(self, csv_file, date_format="%Y-%m-%d %H:%M:%S"):
+    def __init__(self, csv_file):
         self.csv_file = csv_file
-        self.date_format = date_format
 
 
     def all_fields_required(self):
@@ -52,7 +52,7 @@ class CSVParser:
         error = None
 
         try:
-            datetime.datetime.strptime(date_input, self.date_format)
+            parse(date_input)
         except ValueError:
             error = "%s is not a valid date format" % date_input
 
@@ -60,13 +60,13 @@ class CSVParser:
 
 
     def date_not_in_past(self, date_value):
-        date_value = datetime.datetime.strptime(date_value, self.date_format)
+        date_value = parse(date_value)
         return date_value > datetime.datetime.now()
 
 
     def future_dates_is_greater_than_past(self, past_date, future_date):
-        past_date = datetime.datetime.strptime(past_date, self.date_format)
-        future_date = datetime.datetime.strptime(future_date, self.date_format)
+        past_date = parse(past_date)
+        future_date = parse(future_date)
         return past_date > future_date
 
 
