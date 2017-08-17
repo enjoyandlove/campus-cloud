@@ -13,6 +13,8 @@ import {
 } from './../../announcements/compose/announcements-compose.component';
 
 
+declare var $;
+
 @Component({
   selector: 'cp-templates-create',
   templateUrl: './templates-create.component.html',
@@ -58,7 +60,22 @@ export class TemplatesCreateComponent extends AnnouncementsComposeComponent
   }
 
   resetModal() {
-    super.resetModal();
+    this.form.reset();
+    this.isError = false;
+    this.shouldConfirm = false;
+    this.state.isCampusWide = false;
+    this.resetCustomFields$.next(true);
+
+    this.subject_prefix = {
+      label: null,
+      type: null
+    };
+
+    $('#templateCreateModal').modal('hide');
+
+    this.resetChips();
+
+    this.teardown.emit();
   }
 
   onHandleToggle(status) {
@@ -77,7 +94,7 @@ export class TemplatesCreateComponent extends AnnouncementsComposeComponent
 
     let data = {
       'store_id': this.form.value.store_id,
-      'template_name': this.form.value.template_name,
+      'name': this.form.value.name,
       'is_school_wide': this.form.value.is_school_wide,
       'subject': this.form.value.subject,
       'message': this.form.value.message,
@@ -102,9 +119,10 @@ export class TemplatesCreateComponent extends AnnouncementsComposeComponent
 
     this
       .childService
-      .postTemplate(search, data)
+      .createTemplate(search, data)
       .subscribe(
-      _ => {
+      res => {
+        console.log(res);
         this.form.reset();
         this.created.emit(this.form.value);
         this.resetModal();
@@ -145,6 +163,6 @@ export class TemplatesCreateComponent extends AnnouncementsComposeComponent
     super.ngOnInit();
     const control = new FormControl(null, Validators.required);
 
-    this.form.addControl('template_name', control);
+    this.form.addControl('name', control);
   }
 }

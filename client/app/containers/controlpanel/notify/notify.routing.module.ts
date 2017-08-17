@@ -13,6 +13,7 @@ const appRoutes: Routes = [
     path: '',
     component: NotifyComponent,
     canActivate: [ AuthGuard ],
+    canActivateChild: [ AuthGuard ],
     children: [
       { path: '', loadChildren: './announcements/announcements.module#AnnouncementsModule' },
 

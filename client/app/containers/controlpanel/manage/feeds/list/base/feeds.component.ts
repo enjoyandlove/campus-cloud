@@ -40,9 +40,9 @@ export class FeedsComponent extends BaseComponent implements OnInit {
 
   feeds;
   groups;
-  loading;
   isSimple;
   channels;
+  loading = true;
   state: IState = state;
   isFilteredByRemovedPosts$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   isFilteredByFlaggedPosts$: BehaviorSubject<boolean> = new BehaviorSubject(false);

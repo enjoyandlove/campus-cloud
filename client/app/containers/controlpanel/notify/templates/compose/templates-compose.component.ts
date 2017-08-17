@@ -31,6 +31,7 @@ export class TemplatesComposeComponent extends AnnouncementsComposeComponent
 
   onTypeChanged(type) {
     super.onTypeChanged(type);
+    this.selectedType = super.getObjectFromTypesArray(type.action);
   }
 
   doUserSearch(query) {
@@ -101,14 +102,96 @@ export class TemplatesComposeComponent extends AnnouncementsComposeComponent
     super.ngOnDestroy();
   }
 
+  updateStateFromInputData() {
+    this.state = Object.assign(
+      {},
+      this.state,
+      {
+        isToLists: 'list_details' in this.data,
+        isToUsers: 'user_details' in this.data,
+        isCampusWide: this.data.is_school_wide,
+        isUrgent: this.data.priority === this.URGENT_TYPE,
+        isEmergency: this.data.priority === this.EMERGENCY_TYPE,
+      }
+    )
+  }
+
+  updateLabel() {
+    switch (this.data.priority) {
+      case this.EMERGENCY_TYPE:
+        this.subject_prefix = {
+          label: 'Emergency',
+          type: 'danger'
+        };
+        break;
+      case this.URGENT_TYPE:
+        this.subject_prefix = {
+          label: 'Urgent',
+          type: 'warning'
+        };
+        break;
+      default:
+        this.subject_prefix = {
+          label: null,
+          type: null
+        };
+        break;
+    }
+
+    this.selectedType = super.getObjectFromTypesArray(this.data.priority);
+  }
+
   updateFormWithTemplateData() {
     this.form.controls['subject'].setValue(this.data.subject);
-    this.form.controls['message'].setValue(this.data.body);
+    this.form.controls['message'].setValue(this.data.message);
+    this.form.controls['store_id'].setValue(this.data.store_id);
+  }
+
+  updateTypeAheadDefaultValues() {
+    this.typeAheadOpts.isUsers = 'user_details' in this.data;
+
+    if ('list_details' in this.data) {
+      this.typeAheadOpts = Object.assign(
+        {},
+        this.typeAheadOpts,
+        {
+          defaultValues: this.data.list_details.map(list => {
+            return {
+              id: list.id,
+              label: list.name
+            }
+          })
+        }
+      );
+    }
+
+    if ('user_details' in this.data) {
+      this.typeAheadOpts = Object.assign(
+        {},
+        this.typeAheadOpts,
+        {
+          defaultValues: this.data.user_details.map(user => {
+            return {
+              id: user.id,
+              label: user.email
+            }
+          })
+        }
+      );
+    }
   }
 
   ngOnInit() {
     super.ngOnInit();
 
+    this.updateLabel();
+    this.updateStateFromInputData();
     this.updateFormWithTemplateData();
+    this.updateTypeAheadDefaultValues();
+
+    this.selectedHost = {
+      label: this.data.store_name,
+      value: this.data.store_id
+    }
   }
 }

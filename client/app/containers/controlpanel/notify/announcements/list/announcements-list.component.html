@@ -35,11 +35,13 @@
             <span class="col-xs-5">
               <strong *ngIf="message.is_school_wide">Campus Wide<br></strong>
 
-              <cp-list-recipients
-                [lists]="message.list_details"
-                [users]="message.user_details"
-                *ngIf="!message.is_school_wide">
-              </cp-list-recipients>
+              <strong>
+                <cp-list-recipients
+                  [lists]="message.list_details"
+                  [users]="message.user_details"
+                  *ngIf="!message.is_school_wide">
+                </cp-list-recipients>
+              </strong>
 
               {{ message.subject }}
               <br>
