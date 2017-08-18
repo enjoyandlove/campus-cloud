@@ -1,9 +1,8 @@
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Headers } from '@angular/http';
 
 import { API } from '../../../../../../../config/api';
-import { ServicesService } from './../../../services.service';
 import { FileUploadService } from '../../../../../../../shared/services';
 import { CPImage, CPArray, appStorage } from '../../../../../../../shared/utils';
 
@@ -13,6 +12,8 @@ import { CPImage, CPArray, appStorage } from '../../../../../../../shared/utils'
   styleUrls: ['./import-top-bar.component.scss']
 })
 export class ServicesImportTopBarComponent implements OnInit {
+  @Input() categories: Observable<any>;
+
   @Output() checkAll: EventEmitter<boolean> = new EventEmitter();
   @Output() imageChange: EventEmitter<string> = new EventEmitter();
   @Output() deleteServices: EventEmitter<any> = new EventEmitter();
@@ -21,34 +22,10 @@ export class ServicesImportTopBarComponent implements OnInit {
   stores;
   imageError;
   loading = true;
-  categories$: Observable<any>;
 
   constructor(
-    private servicesService: ServicesService,
     private fileUploadService: FileUploadService
-  ) {
-    this.categories$ = this
-      .servicesService
-      .getCategories()
-      .startWith([{ label: '---', action: null }])
-      .map(categories => {
-        let _categories = [
-          {
-            label: '---',
-            action: null
-          }
-        ]
-        categories.map(category => {
-          _categories.push(
-            {
-              action: category.id,
-              label: category.name
-            }
-          )
-        })
-        return _categories;
-      });
-  }
+  ) { }
 
   onFileUpload(file) {
     this.imageError = null;

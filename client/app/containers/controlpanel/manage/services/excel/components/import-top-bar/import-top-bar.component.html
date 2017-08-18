@@ -13,7 +13,7 @@
 
   <div class="col-xs-2 no-left-padding">
     <cp-dropdown
-      [items]="categories$ | async"
+      [items]="categories"
       (selected)="categoryChange.emit($event)">
     </cp-dropdown>
   </div>
