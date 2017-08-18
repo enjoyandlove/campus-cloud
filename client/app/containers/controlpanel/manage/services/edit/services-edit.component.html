@@ -38,7 +38,8 @@
                     <label i18n>Select Category</label>
                     <cp-dropdown
                       [items]="categories"
-                      (selected)="form.controls['category'].setValue($event.action)"
+                      [selectedItem]="selectedCategory"
+                      (selected)="onCategoryUpdate($event)"
                       [isRequiredError]="formError && form.controls['category'].hasError('required')">
                     </cp-dropdown>
                   </div>
