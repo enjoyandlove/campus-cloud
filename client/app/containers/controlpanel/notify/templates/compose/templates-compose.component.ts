@@ -146,6 +146,7 @@ export class TemplatesComposeComponent extends AnnouncementsComposeComponent
     this.form.controls['priority'].setValue(this.data.priority);
     this.form.controls['message'].setValue(this.data.message);
     this.form.controls['store_id'].setValue(this.data.store_id);
+    this.form.controls['is_school_wide'].setValue(this.data.is_school_wide);
 
     if ('list_details' in this.data) {
       const list_ids = this.data.list_details.map(list => list.id);
