@@ -147,7 +147,7 @@ export class TemplatesComposeComponent extends AnnouncementsComposeComponent
     this.form.controls['message'].setValue(this.data.message);
     this.form.controls['store_id'].setValue(this.data.store_id);
     this.form.controls['is_school_wide'].setValue(this.data.is_school_wide);
-    console.log('hello');
+
     if ('list_details' in this.data) {
       const list_ids = this.data.list_details.map(list => list.id);
       this.form.controls['list_ids'].setValue(list_ids);
@@ -200,6 +200,8 @@ export class TemplatesComposeComponent extends AnnouncementsComposeComponent
     this.updateStateFromInputData();
     this.updateFormWithTemplateData();
     this.updateTypeAheadDefaultValues();
+
+    this.sendAsName = this.data.store_name;
 
     this.selectedHost = {
       label: this.data.store_name,
