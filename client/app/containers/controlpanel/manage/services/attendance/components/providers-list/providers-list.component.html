@@ -15,13 +15,13 @@
               <div class="col-xs-3">
                 <span i18n>Service Provider</span>
               </div>
-              <div class="col-xs-4">
+              <div class="col-xs-4" *ngIf="displayRatingColumn">
                 <span i18n>Average Rating</span>
               </div>
-              <div class="col-xs-1">
+              <div class="col-xs-1" *ngIf="displayRatingColumn">
                 <span i18n>Ratings</span>
               </div>
-              <div class="col-xs-1">
+              <div [class]="[displayRatingColumn ? 'col-xs-1' : 'col-xs-1 col-xs-offset-5']">
                 <span i18n>Visits</span>
               </div>
               <div class="col-xs-2">
@@ -42,17 +42,17 @@
                   </span>
                 </a>
               </div>
-              <div class="col-xs-4">
+              <div class="col-xs-4" *ngIf="displayRatingColumn">
                 <cp-stars
                   [size]="listStarSize"
                   [avgRate]="provider.avg_rating_percent"
                   [maxRate]="5">
                 </cp-stars>
               </div>
-              <div class="col-xs-1">
+              <div class="col-xs-1" *ngIf="displayRatingColumn">
                 <span>{{ provider.num_ratings }}</span>
               </div>
-              <div class="col-xs-1">
+              <div [class]="[displayRatingColumn ? 'col-xs-1' : 'col-xs-1 col-xs-offset-5']">
                 <span>{{ provider.total_visits }}</span>
               </div>
               <div class="col-xs-2">

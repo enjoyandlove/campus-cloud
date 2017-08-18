@@ -339,8 +339,10 @@
 
   <cp-modal
     [type]="MODAL_TYPE"
+    *ngIf="isServiceModal"
     modalId="selectServicesModal">
     <cp-select-services-modal
+      [reset]="resetServiceModal$"
       (selected)="onServicesModalSelected($event)"
       [selectedServices]="accountPrivileges">
     </cp-select-services-modal>
@@ -348,8 +350,10 @@
 
   <cp-modal
     [type]="MODAL_TYPE"
+    *ngIf="isClubsModal"
     modalId="selectClubsModal">
     <cp-select-clubs-modal
+      [reset]="resetClubsModal$"
       (selected)="onClubsModalSelected($event)"
       [selectedClubs]="accountPrivileges">
     </cp-select-clubs-modal>

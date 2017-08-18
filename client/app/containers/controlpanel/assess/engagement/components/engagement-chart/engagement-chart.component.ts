@@ -8,6 +8,9 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 
+const Chartist = require('chartist');
+require('chartist-plugin-tooltips');
+
 import * as moment from 'moment';
 import { CPDate } from '../../../../../../shared/utils/date';
 
@@ -19,8 +22,6 @@ interface IProps {
   one_engagements: Array<number>;
   repeat_engagements: Array<number>;
 }
-
-declare var Chartist;
 
 @Component({
   selector: 'cp-engagement-chart',
@@ -76,7 +77,7 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
     };
 
     const chipContent = `<span class="tooltip-chip"></span>
-    <span class="tooltip-val">Engagement </span>`;
+    <span class="tooltip-val">Engagement(s) </span>`;
 
     const highestNoInArray = Math.max.apply(Math, this.props.series);
 
@@ -122,17 +123,9 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
       fullWidth: true,
 
       axisY: {
-        // type: Chartist.AutoScaleAxis,
-
         labelInterpolationFnc: function showLabelsOnlyForIntegers(value) {
           return value % 1 === 0 ? value : null;
         },
-
-        // offset: 30,
-
-        // labelOffset: {
-        //   y: 30,
-        // },
       },
 
       axisX: {

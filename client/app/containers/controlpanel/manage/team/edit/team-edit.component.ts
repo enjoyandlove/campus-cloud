@@ -1,5 +1,6 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
@@ -11,6 +12,99 @@ import { AdminService, ErrorService } from '../../../../../shared/services';
 import { CPSession } from '../../../../../session';
 import { CP_PRIVILEGES, CP_PRIVILEGES_MAP } from '../../../../../shared/utils';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+
+const eventsDropdown = function (privilege: { r: boolean, w: boolean }) {
+  let items = [
+    {
+      'label': 'No Access',
+      'action': null
+    },
+    {
+      'label': 'Manage Events',
+      'action': 2
+    }
+  ];
+
+  if (privilege.w) {
+    items = [
+      ...items,
+      {
+        'label': 'Manage and Assess Events',
+        'action': 3
+      }
+    ];
+  }
+  return items;
+};
+
+const manageAdminDropdown = function (privilege: { r: boolean, w: boolean }) {
+  let items = [
+    {
+      'label': 'Disabled',
+      'action': null
+    }
+  ];
+
+  if (privilege.w) {
+    items = [
+      ...items,
+      {
+        'label': 'Enabled',
+        'action': 1
+      }
+    ];
+  }
+  return items;
+};
+
+const clubsDropdown = function (privilege: { r: boolean, w: boolean }) {
+  let items = [
+    {
+      'label': 'No Access',
+      'action': null
+    }
+  ];
+
+  if (privilege.w) {
+    items = [
+      ...items,
+      {
+        'label': 'Select Clubs',
+        'action': 2
+      },
+      {
+        'label': 'All Clubs',
+        'action': 3
+      },
+    ];
+  }
+  return items;
+};
+
+const servicesDropdown = function (privilege: { r: boolean, w: boolean }) {
+  let items = [
+    {
+      'label': 'No Access',
+      'action': null
+    }
+  ];
+
+  if (privilege.w) {
+    items = [
+      ...items,
+      {
+        'label': 'Select Services',
+        'action': 2
+      },
+      {
+        'label': 'All Services',
+        'action': 3
+      },
+    ];
+  }
+  return items;
+};
+
 
 declare var $: any;
 
@@ -32,6 +126,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   isFormError;
   manageAdmins;
   servicesMenu;
+  isClubsModal;
   isCurrentUser;
   canReadEvents;
   isServiceModal;
@@ -43,6 +138,9 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   MODAL_TYPE = MODAL_TYPE.WIDE;
   CP_PRIVILEGES = CP_PRIVILEGES;
   CP_PRIVILEGES_MAP = CP_PRIVILEGES_MAP;
+
+  resetClubsModal$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  resetServiceModal$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
     private router: Router,
@@ -305,7 +403,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
   onClubsSelected(club) {
     if (club.action === 2) {
-      $('#selectClubsModal').modal();
+      this.isClubsModal = true;
+      setTimeout(() => { $('#selectClubsModal').modal() }, 1);
       return;
     }
 
@@ -424,60 +523,14 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     this.canReadServices = schoolPrivileges[CP_PRIVILEGES_MAP.services];
     this.formData = TEAM_ACCESS.getMenu(this.user.school_level_privileges[this.schoolId]);
 
-    this.servicesMenu = [
-      {
-        'label': 'No Access',
-        'action': null
-      },
-      {
-        'label': 'Select Services',
-        'action': 2
-      },
-      {
-        'label': 'All Services',
-        'action': 3
-      },
-    ];
+    const clubsPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.clubs];
+    const eventsPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.events];
+    const servicesPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.services];
+    const manageAdminPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin];
 
-    this.manageAdmins = [
-      {
-        'label': 'Disabled',
-        'action': null
-      },
-      {
-        'label': 'Enabled',
-        'action': 1
-      }
-    ];
-
-    this.clubsMenu = [
-      {
-        'label': 'No Access',
-        'action': null
-      },
-      {
-        'label': 'Select Clubs',
-        'action': 2
-      },
-      {
-        'label': 'All Clubs',
-        'action': 3
-      },
-    ];
-
-    this.eventsMenu = [
-      {
-        'label': 'No Access',
-        'action': null
-      },
-      {
-        'label': 'Manage Events',
-        'action': 2
-      },
-      {
-        'label': 'Manage and Assess Events',
-        'action': 3
-      }
-    ];
+    this.clubsMenu = clubsDropdown(clubsPrivilege);
+    this.eventsMenu = eventsDropdown(eventsPrivilege);
+    this.servicesMenu = servicesDropdown(servicesPrivilege);
+    this.manageAdmins = manageAdminDropdown(manageAdminPrivilege);
   }
 }

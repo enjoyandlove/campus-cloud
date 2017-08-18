@@ -20,7 +20,7 @@ const rsvp = {
   0: 'No'
 };
 
-export const generateExcelFile = function generateExcelFile(data: any[]) {
+export function generateExcelFile(data: any[]) {
   const array = typeof data !== 'object' ? JSON.parse(data) : data;
 
   let str = '';

@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { URLSearchParams } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 
 import { CPSession } from '../../../../../../../../session';
 import { ClubsService } from '../../../../../clubs/clubs.service';
@@ -14,7 +15,9 @@ import { BaseTeamSelectModalComponent } from '../base/team-select-modal.componen
 export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent
   implements OnInit {
   @Input() selectedClubs: any;
+  @Input() reset: Observable<boolean>;
   @Output() selected: EventEmitter<any> = new EventEmitter();
+  @Output() teardown: EventEmitter<null> = new EventEmitter();
   data$: BehaviorSubject<any> = new BehaviorSubject({});
 
   constructor(
@@ -37,6 +40,10 @@ export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent
     return _selectedClubs;
   }
 
+  doReset() {
+    this.teardown.emit();
+  }
+
   ngOnInit() {
     let search = new URLSearchParams();
     search.append('school_id', this.session.school.id.toString());
@@ -48,22 +55,22 @@ export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent
         let res = {};
         let selected = {};
 
-        // if (this.selectedClubs) {
-        //   selected = this.filterClubDataFromAccountPrivilege();
+        if (this.selectedClubs) {
+          selected = this.filterClubDataFromAccountPrivilege();
 
-        //   clubs.map(club => {
-        //     if (selected[club.store_id]) {
-        //       club.checked = true;
-        //       // we pass the id to the selected object
-        //       // to populate the modal state....
-        //       selected[club.store_id] = Object.assign(
-        //         {},
-        //         selected[club.store_id],
-        //         { id: club.id }
-        //       );
-        //     }
-        //   });
-        // }
+          clubs.map(club => {
+            if (selected[club.store_id]) {
+              club.checked = true;
+              // we pass the id to the selected object
+              // to populate the modal state....
+              selected[club.store_id] = Object.assign(
+                {},
+                selected[club.store_id],
+                { id: club.id }
+              );
+            }
+          });
+        }
         res = {
           data: clubs,
           selected: selected

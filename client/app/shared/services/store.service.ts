@@ -22,7 +22,9 @@ export class StoreService extends BaseService {
 
     return super
       .get(url, { search })
-      .map(res => res.json())
+      .map(res => {
+        return res.json();
+      })
       .startWith([{ 'label': 'All Hosts' }])
       .map(res => {
         const CLUBS_CATEGORY = 0;
@@ -32,7 +34,7 @@ export class StoreService extends BaseService {
           {
             'label': 'Select Host',
             'value': null,
-            'heading': false,
+            'heading': true,
           }
         ];
 

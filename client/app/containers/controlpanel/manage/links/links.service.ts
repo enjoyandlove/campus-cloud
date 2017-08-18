@@ -17,8 +17,7 @@ export class LinksService extends BaseService {
     return `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
   }
 
-  getLinks(startRage: number, endRage: number) {
-    let search = new URLSearchParams();
+  getLinks(startRage: number, endRage: number, search?: URLSearchParams) {
     search.append('is_system', '0');
 
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LINKS}/${startRage};${endRage}`;

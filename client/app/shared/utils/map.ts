@@ -17,7 +17,7 @@ const map = {
   'province': 'administrative_area_level_1',
 };
 
-const locationAsObject = function locationAsObject(location) {
+function locationAsObject(location) {
   let googleCords = location.toJSON();
 
   return {
@@ -26,8 +26,7 @@ const locationAsObject = function locationAsObject(location) {
   };
 };
 
-const getValueFromAddressComponent =
-  function getValueFromAddressComponent(addressComp: any[], field: string, long?: boolean) {
+function getValueFromAddressComponent(addressComp: any[], field: string, long?: boolean) {
     let result = null;
 
     addressComp.map(data => {
@@ -46,7 +45,7 @@ const getValueFromAddressComponent =
     return result;
   };
 
-const getBaseMapObject = function getBaseMapObject(data) {
+function getBaseMapObject(data) {
   let obj: ICPMap = {
     city: null,
     country: null,

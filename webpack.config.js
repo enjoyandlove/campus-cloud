@@ -46,11 +46,13 @@ module.exports = function makeWebpackConfig() {
    * Entry
    * Reference: http://webpack.github.io/docs/configuration.html#entry
    */
-  config.entry = isTest ? {} : {
-    'polyfills': './client/polyfills.ts',
-    'vendor': './client/vendor.ts',
-    'app': './client/main.ts' // our angular app
-  };
+  if (!isTest) {
+    config.entry = isTest ? {} : {
+      'polyfills': './client/polyfills.ts',
+      'vendor': './client/vendor.ts',
+      'app': './client/main.ts' // our angular app
+    };
+  }
 
   /**
    * Output
@@ -60,7 +62,7 @@ module.exports = function makeWebpackConfig() {
     path: root('_dist'),
     publicPath: isProd ? '/dist/' : 'http://localhost:3030/',
     filename: isProd ? 'js/[name].[hash].js' : 'js/[name].js',
-    chunkFilename: isProd ? '/js/[id].[hash].chunk.js' : '[id].chunk.js'
+    chunkFilename: isProd ? 'js/[id].[hash].chunk.js' : '[id].chunk.js'
   };
 
   /**

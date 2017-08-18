@@ -376,6 +376,8 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    let canDoEmergency;
+
     this.typeAheadOpts = {
       withSwitcher: true,
       suggestions: this.suggestions,
@@ -383,7 +385,11 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     };
     let schoolPrivileges = this.session.user.school_level_privileges[this.session.school.id];
 
-    let canDoEmergency = schoolPrivileges[CP_PRIVILEGES_MAP.emergency_announcement].w;
+    try {
+      canDoEmergency = schoolPrivileges[CP_PRIVILEGES_MAP.emergency_announcement].w;
+    } catch (error) {
+      canDoEmergency = false;
+    }
 
     this.types = require('./announcement-types').types;
 
