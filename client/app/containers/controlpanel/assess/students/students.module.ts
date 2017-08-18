@@ -5,17 +5,22 @@ import { SharedModule } from '../../../../shared/shared.module';
 
 import { EngagementStudentsListComponent } from './list';
 
+import {
+  StudentsTopBarComponent
+} from './list/components';
+
 // import { EngagementComponent } from './engagement.component';
 
 
-// import { EngagementService } from './engagement.service';
+import { StudentsService } from './students.service';
+
 import { EngagementStudentsRoutingModule } from './students.routing.module';
 
 @NgModule({
-  declarations: [ EngagementStudentsListComponent ],
+  declarations: [ EngagementStudentsListComponent, StudentsTopBarComponent ],
 
   imports: [ ReactiveFormsModule, CommonModule, SharedModule, EngagementStudentsRoutingModule ],
 
-  // providers: [ EngagementService ],
+  providers: [ StudentsService ],
 })
 export class EngagementStudentsModule {}
