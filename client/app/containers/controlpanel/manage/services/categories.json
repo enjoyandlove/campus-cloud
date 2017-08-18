@@ -1,106 +1,570 @@
-[{
-	"id": 0,
-	"name": "Campus Stores",
-	"is_active": 1,
-	"description": "",
-	"paymentinfo": 1,
-	"image_url": "http://d38h7mnlv8qddx.cloudfront.net/category_0_100nnnn.png"
-}, {
-	"id": 1,
-	"name": "Entertainment",
-	"is_active": 1,
-	"description": "",
-	"paymentinfo": 1,
-	"image_url": "http://d38h7mnlv8qddx.cloudfront.net/category_1_100nnnn.png"
-}, {
-	"id": 2,
-	"name": "Fashion",
-	"is_active": 1,
-	"description": "",
-	"paymentinfo": 1,
-	"image_url": "http://d38h7mnlv8qddx.cloudfront.net/category_2_100nnnn.png"
-}, {
-	"id": 3,
-	"name": "Activities",
-	"is_active": 1,
-	"description": "",
-	"paymentinfo": 1,
-	"image_url": "http://d38h7mnlv8qddx.cloudfront.net/category_3_100nnnn.png"
-}, {
-	"id": 6,
-	"name": "Food",
-	"is_active": 1,
-	"description": "",
-	"paymentinfo": 1,
-	"image_url": "http://d38h7mnlv8qddx.cloudfront.net/category_6_100nnnn.png"
-}, {
-	"id": 7,
-	"name": "Nightlife",
-	"is_active": 1,
-	"description": "",
-	"paymentinfo": 1,
-	"image_url": "http://d38h7mnlv8qddx.cloudfront.net/category_7_100nnnn.png"
-}, {
-	"id": 9,
-	"name": "Arts and Culture",
-	"is_active": 1,
-	"description": "",
-	"paymentinfo": 1,
-	"image_url": "http://d38h7mnlv8qddx.cloudfront.net/category_9_100nnnn.png"
-}, {
-	"id": 10,
-	"name": "Bars & Pubs",
-	"is_active": 1,
-	"description": "",
-	"paymentinfo": 1,
-	"image_url": "http://d38h7mnlv8qddx.cloudfront.net/category_10_100nnnn.png"
-}, {
-	"id": 11,
-	"name": "Travel by Gap Adventures",
-	"is_active": 1,
-	"description": "",
-	"paymentinfo": 1,
-	"image_url": "http://d38h7mnlv8qddx.cloudfront.net/GZ1GqA3j4bERiCMlVeyWY6gl3oJ6bVuWlwfhdjkRJ6EX6edtjI1WeM4aqewR51OB.png"
-}, {
-	"id": 12,
-	"name": "Studentsaver",
-	"is_active": 1,
-	"description": "A valid student ID is required to redeem these promotion",
-	"paymentinfo": 1,
-	"image_url": "http://d38h7mnlv8qddx.cloudfront.net/category_12_100nnnn.png"
-}, {
-	"id": 13,
-	"name": "Kembrel",
-	"is_active": 1,
-	"description": "",
-	"paymentinfo": 0,
-	"image_url": "http://d38h7mnlv8qddx.cloudfront.net/category_13_100.png"
-}, {
-	"id": 16,
-	"name": "Athletics",
-	"is_active": 1,
-	"description": "",
-	"paymentinfo": 1,
-	"image_url": ""
-}, {
-	"id": 17,
-	"name": "ISIC",
-	"is_active": 1,
-	"description": "A valid ISIC card (free) is required to use these promotion",
-	"paymentinfo": 1,
-	"image_url": "http://d38h7mnlv8qddx.cloudfront.net/category_0_100nnnn.png"
-}, {
-	"id": 18,
-	"name": "Employers",
-	"is_active": 1,
-	"description": "",
-	"paymentinfo": 1,
-	"image_url": "http://d38h7mnlv8qddx.cloudfront.net/category_0_100nnnn.png"
-}, {
-	"id": 19,
-	"name": "Services",
-	"is_active": 1,
-	"description": "",
-	"paymentinfo": 1,
-	"image_url": "http://d38h7mnlv8qddx.cloudfront.net/category_0_100nnnn.png"
-}]
+[
+    {
+        "id": 100,
+        "name": "1"
+    },
+    {
+        "id": 101,
+        "name": "2"
+    },
+    {
+        "id": 102,
+        "name": "3"
+    },
+    {
+        "id": 103,
+        "name": "4"
+    },
+    {
+        "id": 89,
+        "name": "911"
+    },
+    {
+        "id": 1,
+        "name": "Academic"
+    },
+    {
+        "id": 143,
+        "name": "academic achievement day"
+    },
+    {
+        "id": 110,
+        "name": "Academic Services"
+    },
+    {
+        "id": 85,
+        "name": "accessibility"
+    },
+    {
+        "id": 15,
+        "name": "Accommodation"
+    },
+    {
+        "id": 60,
+        "name": "Accompaniment"
+    },
+    {
+        "id": 16,
+        "name": "Administration"
+    },
+    {
+        "id": 73,
+        "name": "Admissions"
+    },
+    {
+        "id": 75,
+        "name": "Adventure"
+    },
+    {
+        "id": 86,
+        "name": "Advisor"
+    },
+    {
+        "id": 87,
+        "name": "Advisor"
+    },
+    {
+        "id": 46,
+        "name": "Alumni"
+    },
+    {
+        "id": 47,
+        "name": "Alumni"
+    },
+    {
+        "id": 141,
+        "name": "Ambassadors"
+    },
+    {
+        "id": 129,
+        "name": "Appel de candidatures"
+    },
+    {
+        "id": 74,
+        "name": "Aquatics"
+    },
+    {
+        "id": 4,
+        "name": "Arts"
+    },
+    {
+        "id": 123,
+        "name": "athletic teams"
+    },
+    {
+        "id": 39,
+        "name": "Athletics"
+    },
+    {
+        "id": 104,
+        "name": "Augsburg A-Club Members"
+    },
+    {
+        "id": 99,
+        "name": "Autumn"
+    },
+    {
+        "id": 50,
+        "name": "Benefits"
+    },
+    {
+        "id": 49,
+        "name": "Board of Directors"
+    },
+    {
+        "id": 128,
+        "name": "Bourses et concours"
+    },
+    {
+        "id": 132,
+        "name": "Broome"
+    },
+    {
+        "id": 29,
+        "name": "Business"
+    },
+    {
+        "id": 121,
+        "name": "Campaign"
+    },
+    {
+        "id": 62,
+        "name": "Campus Business"
+    },
+    {
+        "id": 23,
+        "name": "Campus Security"
+    },
+    {
+        "id": 72,
+        "name": "Campus Services"
+    },
+    {
+        "id": 111,
+        "name": "Campus Services"
+    },
+    {
+        "id": 21,
+        "name": "Career"
+    },
+    {
+        "id": 112,
+        "name": "CFS"
+    },
+    {
+        "id": 113,
+        "name": "CFS Service"
+    },
+    {
+        "id": 137,
+        "name": "CHAMPLAIN"
+    },
+    {
+        "id": 7,
+        "name": "Charity"
+    },
+    {
+        "id": 134,
+        "name": "Cinema"
+    },
+    {
+        "id": 133,
+        "name": "Cinematography"
+    },
+    {
+        "id": 119,
+        "name": "Clubs"
+    },
+    {
+        "id": 115,
+        "name": "Communication"
+    },
+    {
+        "id": 82,
+        "name": "Community"
+    },
+    {
+        "id": 30,
+        "name": "Community Services"
+    },
+    {
+        "id": 92,
+        "name": "Conseiller Virtuel"
+    },
+    {
+        "id": 48,
+        "name": "Contact"
+    },
+    {
+        "id": 97,
+        "name": "Council"
+    },
+    {
+        "id": 127,
+        "name": "Courses"
+    },
+    {
+        "id": 25,
+        "name": "CP Clinical Requirements"
+    },
+    {
+        "id": 11,
+        "name": "Cultural"
+    },
+    {
+        "id": 24,
+        "name": "Directory"
+    },
+    {
+        "id": 54,
+        "name": "Donations"
+    },
+    {
+        "id": 55,
+        "name": "Donations"
+    },
+    {
+        "id": 35,
+        "name": "Elections"
+    },
+    {
+        "id": 66,
+        "name": "Emergency"
+    },
+    {
+        "id": 126,
+        "name": "Engineering"
+    },
+    {
+        "id": 12,
+        "name": "Environmental"
+    },
+    {
+        "id": 53,
+        "name": "Events"
+    },
+    {
+        "id": 98,
+        "name": "Executives"
+    },
+    {
+        "id": 36,
+        "name": "Faculty"
+    },
+    {
+        "id": 19,
+        "name": "Faith"
+    },
+    {
+        "id": 83,
+        "name": "FAQ"
+    },
+    {
+        "id": 57,
+        "name": "Federated Body"
+    },
+    {
+        "id": 84,
+        "name": "Finance"
+    },
+    {
+        "id": 38,
+        "name": "Fitness"
+    },
+    {
+        "id": 5,
+        "name": "Food"
+    },
+    {
+        "id": 144,
+        "name": "Formation régulière"
+    },
+    {
+        "id": 70,
+        "name": "Forms"
+    },
+    {
+        "id": 91,
+        "name": "Fourwaves"
+    },
+    {
+        "id": 130,
+        "name": "Fremantle"
+    },
+    {
+        "id": 65,
+        "name": "Get Home Safe"
+    },
+    {
+        "id": 52,
+        "name": "Get Involved"
+    },
+    {
+        "id": 96,
+        "name": "Graduate"
+    },
+    {
+        "id": 140,
+        "name": "GZOWSKI"
+    },
+    {
+        "id": 88,
+        "name": "Halls"
+    },
+    {
+        "id": 17,
+        "name": "Health"
+    },
+    {
+        "id": 6,
+        "name": "Holidays"
+    },
+    {
+        "id": 56,
+        "name": "Hours"
+    },
+    {
+        "id": 77,
+        "name": "Housing"
+    },
+    {
+        "id": 94,
+        "name": "Implication"
+    },
+    {
+        "id": 95,
+        "name": "Insurance"
+    },
+    {
+        "id": 40,
+        "name": "Intramurals"
+    },
+    {
+        "id": 20,
+        "name": "IT"
+    },
+    {
+        "id": 138,
+        "name": "LADY EATON"
+    },
+    {
+        "id": 90,
+        "name": "Le Collectif"
+    },
+    {
+        "id": 22,
+        "name": "Leadership"
+    },
+    {
+        "id": 114,
+        "name": "Les Études supérieures... et après?"
+    },
+    {
+        "id": 80,
+        "name": "Library"
+    },
+    {
+        "id": 68,
+        "name": "Lost & Found"
+    },
+    {
+        "id": 44,
+        "name": "Men's Athletics"
+    },
+    {
+        "id": 58,
+        "name": "Mental Health"
+    },
+    {
+        "id": 64,
+        "name": "Message"
+    },
+    {
+        "id": 9,
+        "name": "Miscellaneous"
+    },
+    {
+        "id": 135,
+        "name": "Music"
+    },
+    {
+        "id": 10,
+        "name": "Networking & Leadership Dev Clubs"
+    },
+    {
+        "id": 108,
+        "name": "Off campus Title IX"
+    },
+    {
+        "id": 18,
+        "name": "Off-Campus"
+    },
+    {
+        "id": 107,
+        "name": "On campus Title IX"
+    },
+    {
+        "id": 109,
+        "name": "Online Title IX"
+    },
+    {
+        "id": 63,
+        "name": "Orientation"
+    },
+    {
+        "id": 136,
+        "name": "OTONABEE"
+    },
+    {
+        "id": 67,
+        "name": "Physical Health"
+    },
+    {
+        "id": 8,
+        "name": "Political"
+    },
+    {
+        "id": 34,
+        "name": "Post-Secondary Preparation"
+    },
+    {
+        "id": 61,
+        "name": "Procedures"
+    },
+    {
+        "id": 3,
+        "name": "Publications"
+    },
+    {
+        "id": 59,
+        "name": "Questions"
+    },
+    {
+        "id": 13,
+        "name": "Recreation"
+    },
+    {
+        "id": 120,
+        "name": "Religious Life"
+    },
+    {
+        "id": 41,
+        "name": "Residences"
+    },
+    {
+        "id": 81,
+        "name": "Resources"
+    },
+    {
+        "id": 105,
+        "name": "Rock Academy"
+    },
+    {
+        "id": 106,
+        "name": "Rock Academy Courses"
+    },
+    {
+        "id": 122,
+        "name": "SMC Success Program"
+    },
+    {
+        "id": 76,
+        "name": "Social Media"
+    },
+    {
+        "id": 93,
+        "name": "Soutien à la recherche"
+    },
+    {
+        "id": 2,
+        "name": "Sports"
+    },
+    {
+        "id": 125,
+        "name": "Spring"
+    },
+    {
+        "id": 51,
+        "name": "Staff"
+    },
+    {
+        "id": 116,
+        "name": "Student Life and Developement"
+    },
+    {
+        "id": 117,
+        "name": "Student Life and Developement"
+    },
+    {
+        "id": 14,
+        "name": "Student Services"
+    },
+    {
+        "id": 145,
+        "name": "Student Success"
+    },
+    {
+        "id": 146,
+        "name": "Student Success"
+    },
+    {
+        "id": 42,
+        "name": "Student Support"
+    },
+    {
+        "id": 79,
+        "name": "Summer"
+    },
+    {
+        "id": 142,
+        "name": "Supplemental Instruction"
+    },
+    {
+        "id": 131,
+        "name": "Sydney"
+    },
+    {
+        "id": 71,
+        "name": "Tips"
+    },
+    {
+        "id": 78,
+        "name": "Title IX"
+    },
+    {
+        "id": 31,
+        "name": "Trades & Tech"
+    },
+    {
+        "id": 139,
+        "name": "TRAIL"
+    },
+    {
+        "id": 69,
+        "name": "Transportation"
+    },
+    {
+        "id": 118,
+        "name": "Trucs et astuces pour réussir ses études supérieures"
+    },
+    {
+        "id": 32,
+        "name": "Veterinary"
+    },
+    {
+        "id": 33,
+        "name": "Welding"
+    },
+    {
+        "id": 37,
+        "name": "Wellness"
+    },
+    {
+        "id": 124,
+        "name": "Winter"
+    },
+    {
+        "id": 43,
+        "name": "Women's Athletics"
+    }
+]

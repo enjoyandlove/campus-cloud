@@ -39,6 +39,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   storeId: number;
   categories = [];
   form: FormGroup;
+  selectedCategory;
   formError = false;
   serviceId: number;
   attendance = false;
@@ -92,10 +93,16 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
 
         this.service = res.data[0];
 
+        this.categories.map(category => {
+          if (category.action === +this.service.category) {
+            this.selectedCategory = category;
+          }
+        })
+
         const label = SERVICE_FEEDBACK['enable_feedback' in this.service ?
           this.service.enable_feedback : FEEDBACK_ENABLED];
 
-          this.serviceFeedback = [
+        this.serviceFeedback = [
           {
             label,
             value: null
@@ -248,6 +255,10 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     });
   }
 
+  onCategoryUpdate(category) {
+    this.form.controls['category'].setValue(category.action);
+  }
+
   onSubmit() {
     this.formError = false;
 
@@ -270,7 +281,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    let data = Object.assign(this.form.value);
+    let data = Object.assign({}, this.form.value);
 
     this
       .servicesService
