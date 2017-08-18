@@ -201,6 +201,8 @@ export class TemplatesComposeComponent extends AnnouncementsComposeComponent
     this.updateFormWithTemplateData();
     this.updateTypeAheadDefaultValues();
 
+    this.sendAsName = this.data.store_name;
+
     this.selectedHost = {
       label: this.data.store_name,
       value: this.data.store_id
