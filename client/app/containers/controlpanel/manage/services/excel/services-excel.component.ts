@@ -18,12 +18,12 @@ import { HEADER_UPDATE, HEADER_DEFAULT } from '../../../../../reducers/header.re
 export class ServicesExcelComponent extends BaseComponent implements OnInit, OnDestroy {
   stores;
   services;
+  categories;
   isChecked = [];
   loading = false;
   form: FormGroup;
   isFormReady = false;
   eventAttendanceFeedback;
-  categories = [{ label: '---', action: null }];
 
   constructor(
     private router: Router,
@@ -39,7 +39,7 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
       .store
       .select('SERVICES_MODAL')
       .subscribe(
-      (res) => {
+      res => {
         // this.services = res;
         this.services = !isDev ? res : require('./mock.json');
         this.buildForm();
@@ -47,7 +47,7 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
       });
   }
 
-  private buildHeader() {
+  buildHeader() {
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
@@ -58,22 +58,54 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
     });
   }
 
-  private buildForm() {
+  buildForm() {
     this.form = this.fb.group({
       'services': this.fb.array([])
     });
     this.buildGroup();
   }
 
-  private buildGroup() {
+  loadCategories(): Promise<any> {
+    return this
+      .servicesService
+      .getCategories()
+      .startWith([{ label: '---', action: null }])
+      .map(categories => {
+        let _categories = [
+          {
+            label: '---',
+            action: null
+          }
+        ]
+        categories.map(category => {
+          _categories.push(
+            {
+              action: category.id,
+              label: category.name
+            }
+          )
+        })
+        return _categories;
+      })
+      .toPromise()
+  }
+
+  buildGroup() {
     const control = <FormArray>this.form.controls['services'];
 
-    this.services.forEach((service, index) => {
-      control.push(this.buildServiceControl(service));
-      this.isChecked.push({ index, checked: false });
-    });
+    this
+      .services
+      .forEach((service, index) => {
+        control.push(this.buildServiceControl(service));
+        this.isChecked.push({ index, checked: false });
+      });
 
-    this.isFormReady = true;
+    this
+      .loadCategories()
+      .then(res => {
+        this.categories = res;
+        this.isFormReady = true;
+      })
   }
 
   removeControl(index) {
@@ -176,8 +208,8 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
       .servicesService
       .createService(parsedServices)
       .subscribe(
-        _ => this.router.navigate(['/manage/services']),
-        err => console.error(err)
+      _ => this.router.navigate(['/manage/services']),
+      err => console.error(err)
       );
   }
 
@@ -186,14 +218,5 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
     this.store.dispatch({ type: SERVICES_MODAL_RESET });
   }
 
-  ngOnInit() {
-    let categories = require('../categories.json');
-
-    categories.map(category => {
-      this.categories.push({
-        label: category.name,
-        action: category.id
-      });
-    });
-  }
+  ngOnInit() { }
 }
