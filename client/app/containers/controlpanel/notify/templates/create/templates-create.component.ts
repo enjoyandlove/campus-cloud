@@ -1,5 +1,5 @@
+import { Component, OnInit, OnDestroy, HostListener, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { Component, OnInit, OnDestroy } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
 import { TemplatesService } from './../templates.service';
@@ -23,9 +23,10 @@ declare var $;
 export class TemplatesCreateComponent extends AnnouncementsComposeComponent
   implements OnInit, OnDestroy {
 
-    form: FormGroup;
+  form: FormGroup;
 
   constructor(
+    private el: ElementRef,
     public fb: FormBuilder,
     public session: CPSession,
     public storeService: StoreService,
@@ -33,6 +34,14 @@ export class TemplatesCreateComponent extends AnnouncementsComposeComponent
     private childService: TemplatesService
   ) {
     super(fb, session, storeService, service);
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClick(event) {
+    // out of modal reset form
+    if (event.target.contains(this.el.nativeElement)) {
+      this.resetModal();
+    }
   }
 
   onTypeChanged(type) {
