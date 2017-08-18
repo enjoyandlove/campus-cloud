@@ -25,6 +25,12 @@ export class ServicesService extends BaseService {
     return super.get(url, { search }).map(res => res.json());
   }
 
+  getCategories() {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES_CATEGORY}/1;1000`;
+
+    return super.get(url).map(res => res.json());
+  }
+
   getServiceById(serviceId: number) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}/${serviceId}`;
 

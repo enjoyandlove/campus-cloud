@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, HostListener, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { CPSession } from './../../../../../session/index';
@@ -21,12 +21,21 @@ export class TemplatesComposeComponent extends AnnouncementsComposeComponent
 
   form: FormGroup;
   constructor(
+    private el: ElementRef,
     public fb: FormBuilder,
     public session: CPSession,
     public storeService: StoreService,
     public service: AnnouncementsService
   ) {
     super(fb, session, storeService, service);
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClick(event) {
+    // out of modal reset form
+    if (event.target.contains(this.el.nativeElement)) {
+      this.resetModal();
+    }
   }
 
   onTypeChanged(type) {
@@ -200,6 +209,8 @@ export class TemplatesComposeComponent extends AnnouncementsComposeComponent
     this.updateStateFromInputData();
     this.updateFormWithTemplateData();
     this.updateTypeAheadDefaultValues();
+
+    this.sendAsName = this.data.store_name;
 
     this.selectedHost = {
       label: this.data.store_name,
