@@ -50,6 +50,7 @@ export class ListActionBoxComponent implements OnInit {
   isCalendar;
   eventFilter;
   dateFilterOpts;
+  isFilteredByDate;
   state: IState = state;
   stores$: Observable<any>;
 
@@ -82,19 +83,43 @@ export class ListActionBoxComponent implements OnInit {
   }
 
   private resetDateRange() {
-    if (this.state.upcoming) {
-      this.state = Object.assign({}, this.state,
-        { start: CPDate.toEpoch(new Date()), end: CPDate.toEpoch(threeYearsFromNow) });
+    this.isFilteredByDate = false;
 
-      this.dateFilterOpts = Object.assign({},
-        this.dateFilterOpts, { minDate: new Date(), maxDate: null }
+    if (this.state.upcoming) {
+      this.state = Object.assign(
+        {},
+        this.state,
+        {
+          start: CPDate.toEpoch(new Date()),
+          end: CPDate.toEpoch(threeYearsFromNow)
+        });
+
+      this.dateFilterOpts = Object.assign(
+        {},
+        this.dateFilterOpts,
+        {
+          minDate: new Date(),
+          maxDate: null
+        }
       );
       return;
     }
-    this.state = Object.assign({}, this.state,
-      { start: 0, end: CPDate.toEpoch(new Date()) });
-    this.dateFilterOpts = Object.assign({},
-      this.dateFilterOpts, { minDate: null, maxDate: new Date() }
+
+    this.state = Object.assign(
+      {},
+      this.state,
+      {
+        start: 0,
+        end: CPDate.toEpoch(new Date())
+      });
+
+    this.dateFilterOpts = Object.assign(
+      {},
+      this.dateFilterOpts,
+      {
+        minDate: null,
+        maxDate: new Date()
+      }
     );
   }
 
@@ -117,8 +142,15 @@ export class ListActionBoxComponent implements OnInit {
   }
 
   onDateRange(dates) {
-    this.state = Object.assign({}, this.state,
-      { start: CPDate.toEpoch(dates[0]), end: CPDate.toEpoch(dates[1]) });
+    this.isFilteredByDate = true;
+
+    this.state = Object.assign(
+      {},
+      this.state,
+      {
+        start: CPDate.toEpoch(dates[0]),
+        end: CPDate.toEpoch(dates[1])
+      });
 
     this.listAction.emit(this.state);
   }

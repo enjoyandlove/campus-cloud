@@ -13,8 +13,11 @@ const appRoutes: Routes = [
     path: '',
     component: NotifyComponent,
     canActivate: [ AuthGuard ],
+    canActivateChild: [ AuthGuard ],
     children: [
       { path: '', loadChildren: './announcements/announcements.module#AnnouncementsModule' },
+
+      { path: 'templates', loadChildren: './templates/templates.module#TemplatesModule' },
     ]
   }
 ];

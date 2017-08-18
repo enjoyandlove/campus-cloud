@@ -4,8 +4,17 @@
       <div class="col-xs-8 col-xs-offset-2">
         <div [class]="['bar--wrapper ' + snack.class]">
           <p>
-            <span class="material-icons bar--wrapper--icon">check</span>
-            {{ snack.body }}
+            <span
+              *ngIf="snack.class === 'success'"
+              class="material-icons bar--wrapper--icon">
+              check
+            </span>
+            <span
+              *ngIf="snack.class === 'danger'"
+              class="material-icons bar--wrapper--icon">
+              close
+            </span>
+            <span [innerHTML]="snack.body"></span>
             <span
               (click)="doClose()"
               *ngIf="!snack.autoClose"

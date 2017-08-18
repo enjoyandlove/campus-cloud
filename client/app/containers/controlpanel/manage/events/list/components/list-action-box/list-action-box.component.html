@@ -19,6 +19,7 @@
           <button
             type="button"
             [class.isOpen]="isCalendar"
+            [class.isSelected]="isFilteredByDate"
             (click)="onToggleCalendar($event)"
             class="cpbtn cpbtn--cancel cpbtn--no-padding calendar">
             <i class="material-icons hover">date_range</i>

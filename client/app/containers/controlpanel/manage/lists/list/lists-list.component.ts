@@ -42,21 +42,23 @@ export class ListsListComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('search_str', this.state.search_str);
     search.append('school_id', this.session.school.id.toString());
 
+    const stream$ = this.listsService.getLists(search, this.startRange, this.endRange);
+
     super
-      .fetchData(this.listsService.getLists(search, this.startRange, this.endRange))
+      .fetchData(stream$)
       .then(res => this.state = Object.assign({}, this.state, { lists: res.data }))
       .catch(err => console.log(err));
   }
 
-  onSearch(query) {
+  onSearch(search_str) {
     this.state = Object.assign(
       {},
       this.state,
-      { search_str: query }
+      { search_str }
     );
 
     this.fetch();

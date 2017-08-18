@@ -2,5 +2,15 @@
   "heading": "Notify",
   "subheading": null,
   "em": null,
-  "children": []
+  "children": [
+    {
+      "label": "Announcements",
+      "url": "/notify"
+    },
+    {
+      "label": "Templates",
+      "new": true,
+      "url": "/notify/templates"
+    }
+  ]
 }
