@@ -1,7 +1,9 @@
+import { Observable } from 'rxjs/Observable';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Headers } from '@angular/http';
 
 import { API } from '../../../../../../../config/api';
+import { ServicesService } from './../../../services.service';
 import { FileUploadService } from '../../../../../../../shared/services';
 import { CPImage, CPArray, appStorage } from '../../../../../../../shared/utils';
 
@@ -19,9 +21,34 @@ export class ServicesImportTopBarComponent implements OnInit {
   stores;
   imageError;
   loading = true;
-  categories = [{ label: 'Select a Category', action: null }];
+  categories$: Observable<any>;
 
-  constructor(private fileUploadService: FileUploadService) { }
+  constructor(
+    private servicesService: ServicesService,
+    private fileUploadService: FileUploadService
+  ) {
+    this.categories$ = this
+      .servicesService
+      .getCategories()
+      .startWith([{ label: '---', action: null }])
+      .map(categories => {
+        let _categories = [
+          {
+            label: '---',
+            action: null
+          }
+        ]
+        categories.map(category => {
+          _categories.push(
+            {
+              action: category.id,
+              label: category.name
+            }
+          )
+        })
+        return _categories;
+      });
+  }
 
   onFileUpload(file) {
     this.imageError = null;
@@ -52,14 +79,5 @@ export class ServicesImportTopBarComponent implements OnInit {
       );
   }
 
-  ngOnInit() {
-    let categories = require('../../../categories.json');
-
-    categories.map(category => {
-      this.categories.push({
-        label: category.name,
-        action: category.id
-      });
-    });
-  }
+  ngOnInit() {}
 }
