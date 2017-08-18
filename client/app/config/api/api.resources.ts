@@ -42,6 +42,8 @@ export const API_ENDPOINTS = {
 
   FB_EVENTS: 'facebook_event_link',
 
+  SERVICES_CATEGORY: 'org_category',
+
   TEMPLATE: 'announcement_template',
   // Event assessment
 
