@@ -34,10 +34,10 @@ const SERVICE_FEEDBACK = {
 export class ServicesEditComponent extends BaseComponent implements OnInit {
   loading;
   service;
+  categories;
   withAttendance;
   school: ISchool;
   storeId: number;
-  categories = [];
   form: FormGroup;
   selectedCategory;
   formError = false;
@@ -83,8 +83,19 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
 
     const service$ = this.servicesService.getServiceById(this.serviceId);
     const providers$ = this.providersService.getProviders(1, 1000, searchProviders);
+    const categories$ = this
+      .servicesService
+      .getCategories()
+      .map(categories => {
+        return categories.map(category => {
+          return {
+            action: category.id,
+            label: category.name
+          }
+        })
+      });
 
-    const stream$ = Observable.combineLatest(service$, providers$);
+    const stream$ = Observable.combineLatest(service$, providers$, categories$);
     super
       .fetchData(stream$)
       .then(res => {
@@ -92,6 +103,8 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
         let providers = res.data[1];
 
         this.service = res.data[0];
+
+        this.categories = res.data[2];
 
         this.categories.map(category => {
           if (category.action === +this.service.category) {
@@ -341,14 +354,5 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       });
   }
 
-  ngOnInit() {
-    let categories = require('../categories.json');
-
-    categories.map(category => {
-      this.categories.push({
-        label: category.name,
-        action: category.id
-      });
-    });
-  }
+  ngOnInit() {}
 }
