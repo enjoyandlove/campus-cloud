@@ -70,3 +70,13 @@
     </div>
   </div>
 </ng-container>
+
+<cp-modal
+  *ngIf="isStudentComposeModal"
+  modalId="studentsComposeModal">
+  <cp-students-compose
+    [props]="messageData"
+    (success)="onFlashMessage()"
+    (teardown)="onComposeTeardown()">
+  </cp-students-compose>
+</cp-modal>

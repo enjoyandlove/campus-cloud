@@ -21,6 +21,12 @@ export class StudentsService extends BaseService {
     return super.get(url, { search }).map(res => res.json());
   }
 
+  postAnnouncements(search: URLSearchParams, body: any) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ANNOUNCEMENT}/`;
+
+    return super.post(url, body, { search }).map(res => res.json());
+  }
+
   getStudentsByList(search: URLSearchParams, startRange: number, endRange: number) {
     console.log(search, startRange, endRange);
 

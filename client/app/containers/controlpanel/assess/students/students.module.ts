@@ -9,15 +9,15 @@ import {
   StudentsTopBarComponent
 } from './list/components';
 
-// import { EngagementComponent } from './engagement.component';
-
+import { StudentsComposeComponent } from './compose/students-compose.component';
 
 import { StudentsService } from './students.service';
 
 import { EngagementStudentsRoutingModule } from './students.routing.module';
 
 @NgModule({
-  declarations: [ EngagementStudentsListComponent, StudentsTopBarComponent ],
+  declarations: [ EngagementStudentsListComponent, StudentsTopBarComponent,
+    StudentsComposeComponent ],
 
   imports: [ ReactiveFormsModule, CommonModule, SharedModule, EngagementStudentsRoutingModule ],
 
