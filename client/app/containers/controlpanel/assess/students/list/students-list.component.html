@@ -35,7 +35,9 @@
                   <img src="https://unsplash.it/40/40" class="img-rounded">
                 </div>
                 <div class="col-xs-9 no-left-padding">
-                  <strong>{{ student.first_name }} {{ student.last_name }}</strong>
+                  <a [routerLink]="[student.id]">
+                    <strong>{{ student.first_name }} {{ student.last_name }}</strong>
+                  </a>
                 </div>
               </div>
             </span>

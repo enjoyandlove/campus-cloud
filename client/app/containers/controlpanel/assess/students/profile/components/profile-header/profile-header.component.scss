@@ -1,0 +1,25 @@
+@import '~styles/core/colors';
+@import '~styles/components/card';
+@import '~styles/components/button';
+@import '~styles/core/typography';
+
+.card {
+  height: 240px;
+  position: relative;
+}
+
+.student {
+  p {
+    margin-bottom: 0;
+  }
+
+  &__name {
+    @include font-24px();
+    @include font-bold();
+  }
+
+  &__message {
+    top: 157px;
+    position: absolute;
+  }
+}

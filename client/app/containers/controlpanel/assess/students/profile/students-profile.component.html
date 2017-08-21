@@ -1,0 +1,22 @@
+<div class="page">
+  <div class="cp-wrapper cp-wrapper--outer">
+    <div class="row">
+      <div class="col-xs-8 col-xs-offset-2">
+        <cp-profile-header
+          (message)="launchMessageModal()">
+        </cp-profile-header>
+      </div>
+    </div>
+  </div>
+
+  <div class="cp-wrapper cp-wrapper--outer">
+    <div class="row">
+      <div class="col-xs-8 col-xs-offset-2">
+        <cp-profile-top-bar
+          (download)="onDownload()"
+          (filter)="onFilter($event)">
+        </cp-profile-top-bar>
+      </div>
+    </div>
+  </div>
+</div>

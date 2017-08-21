@@ -16,11 +16,11 @@ interface IState {
 declare var $;
 
 @Component({
-  selector: 'cp-engagement-students-list',
-  templateUrl: './engagement-students-list.component.html',
-  styleUrls: ['./engagement-students-list.component.scss']
+  selector: 'cp-students-list',
+  templateUrl: './students-list.component.html',
+  styleUrls: ['./students-list.component.scss']
 })
-export class EngagementStudentsListComponent extends BaseComponent implements OnInit {
+export class StudentsListComponent extends BaseComponent implements OnInit {
   loading;
   students = [];
 
