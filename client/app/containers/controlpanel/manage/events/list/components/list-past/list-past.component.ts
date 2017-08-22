@@ -24,7 +24,7 @@ export class ListPastComponent implements OnInit {
   @Output() sortList: EventEmitter<ISort> = new EventEmitter();
 
   sort: ISort = sort;
-  dateFormat = FORMAT.LONG;
+  dateFormat = FORMAT.SHORT;
 
   constructor() { }
 

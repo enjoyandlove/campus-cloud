@@ -7,7 +7,10 @@ import { CPSession } from './../../../../../session/index';
 import { FORMAT } from './../../../../../shared/pipes/date.pipe';
 import { BaseComponent } from './../../../../../base/base.component';
 import { HEADER_UPDATE } from './../../../../../reducers/header.reducer';
+import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
 import { STAR_SIZE } from './../../../../../shared/components/cp-stars/cp-stars.component';
+
+declare var $;
 
 @Component({
   selector: 'cp-students-profile',
@@ -16,7 +19,9 @@ import { STAR_SIZE } from './../../../../../shared/components/cp-stars/cp-stars.
 })
 export class StudentsProfileComponent extends BaseComponent implements OnInit {
   loading;
+  messageData;
   engagements = [];
+  isStudentComposeModal;
   engagementsArray = [];
   dateFormat = FORMAT.LONG;
   timeFormat = FORMAT.TIME;
@@ -43,22 +48,43 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
       .fetchData(stream$)
       .then(res => {
         this.engagements = res.data;
-        console.log(res.data);
         this.engagementsArray = Object.keys(res.data).map(engagement => engagement);
       })
       .catch(err => console.log(err))
   }
 
-  launchMessageModal() {
-    console.log('messaging');
-  }
-
   onFilter(filterBy) {
     console.log('filtering by', filterBy);
+    this.fetch();
   }
 
   onDownload() {
     console.log('doing download');
+  }
+
+  onComposeTeardown() {
+    this.messageData = null;
+    this.isStudentComposeModal = false;
+  }
+
+  launchMessageModal() {
+    this.messageData = {
+      name: 'Peter Cen',
+      userIds: [16776]
+    };
+
+    this.isStudentComposeModal = true;
+    setTimeout(() => { $('#studentsComposeModal').modal(); }, 1);
+  }
+
+  onFlashMessage() {
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        body: 'Success! Your message has been sent',
+        autoClose: true,
+      }
+    });
   }
 
   ngOnInit() {

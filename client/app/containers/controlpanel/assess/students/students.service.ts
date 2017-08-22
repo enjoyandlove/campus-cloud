@@ -31,6 +31,16 @@ export class StudentsService extends BaseService {
     console.log(search, startRange, endRange);
 
     return Observable.of(
+      // [
+      //   {
+      //     time: 1503337756,
+      //     is_event: false,
+      //     title: 'Academic Counselling',
+      //     avg_rating_percent: 80,
+      //     rating_scale_maximum: 5,
+      //     feedback_text: 'pretty good watermelon'
+      //   }
+      // ]
       {
         1503337756: [
           {
