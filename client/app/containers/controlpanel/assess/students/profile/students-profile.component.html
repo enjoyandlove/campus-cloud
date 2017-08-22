@@ -85,6 +85,18 @@
             </div>
           </div>
         </div>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <cp-pagination
+              [pageNext]="pageNext"
+              [pagePrev]="pagePrev"
+              [pageNumber]="pageNumber"
+              (next)="onPaginationNext()"
+              (previous)="onPaginationPrevious()">
+            </cp-pagination>
+          </div>
+        </div>
       </ng-container>
     </ng-container>
   </div>
@@ -93,9 +105,9 @@
 <cp-modal
   *ngIf="isStudentComposeModal"
   modalId="studentsComposeModal">
-<cp-students-compose
-  [props]="messageData"
-  (success)="onFlashMessage()"
-  (teardown)="onComposeTeardown()">
-</cp-students-compose>
+  <cp-students-compose
+    [props]="messageData"
+    (success)="onFlashMessage()"
+    (teardown)="onComposeTeardown()">
+  </cp-students-compose>
 </cp-modal>

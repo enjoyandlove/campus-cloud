@@ -73,6 +73,16 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
     this.fetch();
   }
 
+  onPaginationNext() {
+    super.goToNext();
+    this.fetch();
+  }
+
+  onPaginationPrevious() {
+    super.goToPrevious();
+    this.fetch();
+  }
+
   buildHeader(student) {
     this.store.dispatch({
       type: HEADER_UPDATE,
