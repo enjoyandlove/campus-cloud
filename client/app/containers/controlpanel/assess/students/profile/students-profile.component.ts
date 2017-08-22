@@ -18,13 +18,15 @@ declare var $;
   styleUrls: ['./students-profile.component.scss']
 })
 export class StudentsProfileComponent extends BaseComponent implements OnInit {
-  loading;
+
   messageData;
   engagements = [];
+  loadingEngagementData;
   isStudentComposeModal;
   engagementsArray = [];
   dateFormat = FORMAT.LONG;
   timeFormat = FORMAT.TIME;
+  loadingStudentData = true;
   starSize = STAR_SIZE.SMALL;
 
   constructor(
@@ -33,9 +35,22 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
     private service: StudentsService
   ) {
     super();
-    super.isLoading().subscribe(loading => this.loading = loading);
+    super.isLoading().subscribe(loading => this.loadingEngagementData = loading);
 
-    this.fetch();
+    this.fetchStudentData();
+  }
+
+  fetchStudentData() {
+    setTimeout(() => {
+      this.buildHeader({
+        firstname: 'Peter',
+        lastname: 'Cen'
+      });
+
+      this.loadingStudentData = false;
+
+      this.fetch();
+    }, 1700)
   }
 
   fetch() {
@@ -56,6 +71,19 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
   onFilter(filterBy) {
     console.log('filtering by', filterBy);
     this.fetch();
+  }
+
+  buildHeader(student) {
+    this.store.dispatch({
+      type: HEADER_UPDATE,
+      payload:
+      {
+        'heading': `${student.firstname} ${student.lastname}`,
+        'subheading': null,
+        'em': null,
+        'children': []
+      }
+    });
   }
 
   onDownload() {
@@ -87,16 +115,5 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.store.dispatch({
-      type: HEADER_UPDATE,
-      payload:
-      {
-        'heading': 'Peter Cen',
-        'subheading': null,
-        'em': null,
-        'children': []
-      }
-    });
-  }
+  ngOnInit() { }
 }

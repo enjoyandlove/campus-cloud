@@ -6,6 +6,7 @@ import { StudentsService } from './../students.service';
 import { CPSession } from './../../../../../session/index';
 import { FORMAT } from './../../../../../shared/pipes/date.pipe';
 import { BaseComponent } from './../../../../../base/base.component';
+import { HEADER_UPDATE } from './../../../../../reducers/header.reducer';
 import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
 
 interface IState {
@@ -106,5 +107,10 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.fetch();
+
+    this.store.dispatch({
+      type: HEADER_UPDATE,
+      payload: require('../../assess.header.json')
+    });
   }
 }

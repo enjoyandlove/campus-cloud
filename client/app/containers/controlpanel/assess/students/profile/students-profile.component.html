@@ -1,90 +1,94 @@
-<div class="page">
-  <div class="cp-wrapper cp-wrapper--outer">
-    <div class="row">
-      <div class="col-xs-8 col-xs-offset-2">
-        <cp-profile-header
-          (message)="launchMessageModal()">
-        </cp-profile-header>
+<ng-container [ngSwitch]="loadingStudentData">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div class="page" *ngSwitchCase="false">
+    <div class="cp-wrapper cp-wrapper--outer">
+      <div class="row">
+        <div class="col-xs-8 col-xs-offset-2">
+          <cp-profile-header
+            (message)="launchMessageModal()">
+          </cp-profile-header>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="cp-wrapper cp-wrapper--outer">
-    <div class="row">
-      <div class="col-xs-8 col-xs-offset-2">
-        <cp-profile-top-bar
-          (download)="onDownload()"
-          (filter)="onFilter($event)">
-        </cp-profile-top-bar>
+    <div class="cp-wrapper cp-wrapper--outer">
+      <div class="row">
+        <div class="col-xs-8 col-xs-offset-2">
+          <cp-profile-top-bar
+            (download)="onDownload()"
+            (filter)="onFilter($event)">
+          </cp-profile-top-bar>
+        </div>
       </div>
     </div>
-  </div>
 
-  <ng-container [ngSwitch]="loading">
-    <cp-spinner *ngSwitchCase="true"></cp-spinner>
+    <ng-container [ngSwitch]="loadingEngagementData">
+      <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
-    <ng-container *ngSwitchCase="false" class="feed">
-      <div class="cp-wrapper cp-wrapper--outer">
-        <div class="row">
-          <div class="col-xs-8 col-xs-offset-2">
-            <div class="feed__wrapper">
-              <ng-container
-                class="feed__item"
-                *ngFor="let engagement of engagementsArray">
-                <div class="feed__header">
-                  <div class="row">
-                    <div class="col-xs-12">
-                      <div class="feed__header__bg">
-                          <p>{{ engagement | cpDatePipe:dateFormat }}</p>
+      <ng-container *ngSwitchCase="false" class="feed">
+        <div class="cp-wrapper cp-wrapper--outer">
+          <div class="row">
+            <div class="col-xs-8 col-xs-offset-2">
+              <div class="feed__wrapper">
+                <ng-container
+                  class="feed__item"
+                  *ngFor="let engagement of engagementsArray">
+                  <div class="feed__header">
+                    <div class="row">
+                      <div class="col-xs-12">
+                        <div class="feed__header__bg">
+                            <p>{{ engagement | cpDatePipe:dateFormat }}</p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div class="feed__body">
-                  <div class="row">
-                    <div class="col-xs-12">
-                      <div class="feed__body__wrapper engagement">
-                        <ng-container *ngFor="let data of engagements[engagement]">
-                          <div class="row engagement__item">
-                            <div class="col-xs-2">
-                              <p class="engagement__time">
-                                <strong>{{ engagement | cpDatePipe:timeFormat }}</strong>
-                              </p>
-                            </div>
-                            <div class="col-xs-10 engagement__meta no-left-padding">
-                              <p class="engagement__meta__title">
-                                <strong>{{ data.title }}</strong>
-                              </p>
-
-                              <p class="text-muted engagement__meta__type">
-                                <span class="icon">
-                                  <i class="material-icons">{{ data.is_event ? 'event' : 'info_outline' }}</i>
-                                </span>
-                                {{ data.is_event ? 'Event' : 'Service' }}
-                              </p>
-                              <div class="engagement__rating">
-                                <cp-stars
-                                  [size]="starSize"
-                                  [maxRate]="data.rating_scale_maximum"
-                                  [avgRate]="data.avg_rating_percent">
-                                </cp-stars>
+                  <div class="feed__body">
+                    <div class="row">
+                      <div class="col-xs-12">
+                        <div class="feed__body__wrapper engagement">
+                          <ng-container *ngFor="let data of engagements[engagement]">
+                            <div class="row engagement__item">
+                              <div class="col-xs-2">
+                                <p class="engagement__time">
+                                  <strong>{{ engagement | cpDatePipe:timeFormat }}</strong>
+                                </p>
                               </div>
-                              <p class="engagement__feedback">{{ data.feedback_text }}</p>
+                              <div class="col-xs-10 engagement__meta no-left-padding">
+                                <p class="engagement__meta__title">
+                                  <strong>{{ data.title }}</strong>
+                                </p>
+
+                                <p class="text-muted engagement__meta__type">
+                                  <span class="icon">
+                                    <i class="material-icons">{{ data.is_event ? 'event' : 'info_outline' }}</i>
+                                  </span>
+                                  {{ data.is_event ? 'Event' : 'Service' }}
+                                </p>
+                                <div class="engagement__rating">
+                                  <cp-stars
+                                    [size]="starSize"
+                                    [maxRate]="data.rating_scale_maximum"
+                                    [avgRate]="data.avg_rating_percent">
+                                  </cp-stars>
+                                </div>
+                                <p class="engagement__feedback">{{ data.feedback_text }}</p>
+                              </div>
                             </div>
-                          </div>
-                        </ng-container>
+                          </ng-container>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </ng-container>
+                </ng-container>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </ng-container>
     </ng-container>
-  </ng-container>
-</div>
+  </div>
+</ng-container>
 
 <cp-modal
   *ngIf="isStudentComposeModal"
