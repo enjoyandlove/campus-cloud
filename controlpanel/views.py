@@ -34,7 +34,13 @@ Parse Mass Event Invite
 @csrf_exempt
 def import_events(request):
     csv_file = request.FILES['file']
-    decoded_file = csv_file.read().decode('utf-8')
+
+    try:
+        decoded_file = csv_file.read().decode('utf-8')
+    except UnicodeError as e:
+        return JsonResponse({"error": "Unable to parse data in file"},
+                                safe=False, status=400)
+
     io_string = io.StringIO(decoded_file)
 
     parser = CSVParser(io_string)
