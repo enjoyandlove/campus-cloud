@@ -27,6 +27,49 @@ export class StudentsService extends BaseService {
     return super.post(url, body, { search }).map(res => res.json());
   }
 
+  getEngagements(search: URLSearchParams, startRange: number, endRange: number) {
+    console.log(search, startRange, endRange);
+
+    return Observable.of(
+      {
+        1503337756: [
+          {
+            is_event: false,
+            title: 'Academic Counselling',
+            avg_rating_percent: 80,
+            rating_scale_maximum: 5,
+            feedback_text: 'pretty good watermelon'
+          },
+          {
+            is_event: true,
+            title: 'Academic Service',
+            avg_rating_percent: 20,
+            rating_scale_maximum: 5,
+            feedback_text: 'service feedback'
+          }
+        ],
+        1503338060: [
+          {
+            is_event: true,
+            title: 'Archery Tag',
+            avg_rating_percent: 30,
+            rating_scale_maximum: 5,
+            feedback_text: 'More Text here'
+          }
+        ],
+          1503251662: [
+          {
+            is_event: true,
+            title: 'Archery Tag 2',
+            avg_rating_percent: 30,
+            rating_scale_maximum: 5,
+            feedback_text: 'More Text here'
+          }
+        ]
+      }
+    ).delay(1000);
+  }
+
   getStudentsByList(search: URLSearchParams, startRange: number, endRange: number) {
     console.log(search, startRange, endRange);
 
@@ -52,6 +95,6 @@ export class StudentsService extends BaseService {
         last_engagement: 1503083268
       }
     ])
-    .delay(1200);
+      .delay(1200);
   }
 }
