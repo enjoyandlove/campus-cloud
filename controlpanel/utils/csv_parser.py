@@ -3,6 +3,8 @@ import datetime
 from operator import itemgetter
 from dateutil.parser import parse
 
+class CPParseError(KeyError):
+    pass
 
 class CSVParser:
     def __init__(self, csv_file):
@@ -22,9 +24,8 @@ class CSVParser:
 
             data.append(row)
 
-        # parse column titles to match front end
-        for index, title in enumerate(column_titles):
-            column_titles[index] = column_titles[index].lower().replace(" ", "_")
+        column_titles = [title.lower().replace(" ", "_") for title in column_titles]
+
 
 
         if not data:
@@ -45,7 +46,7 @@ class CSVParser:
                 if '' in mandatory_values:
                     for mandatory_field in args:
                         if entry[mandatory_field] == '':
-                            raise KeyError( ('Line {}, is missing {}').format(index + 1, mandatory_field))
+                            raise KeyError(('Line {}, is missing {}').format(index + 1, mandatory_field))
 
             result.append(entry)
 
