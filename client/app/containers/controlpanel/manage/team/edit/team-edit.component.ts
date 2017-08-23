@@ -289,6 +289,9 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       }
     };
 
+    // console.log(_data);
+    // return;
+
     if (this.isCurrentUser) {
       /**
        * @data (firstname, lastname, email)
@@ -391,10 +394,9 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
     if (service.action === null) {
       this.resetServiceModal$.next(true);
-
-      if (this.accountPrivileges) {
-        if (CP_PRIVILEGES_MAP.services in this.accountPrivileges) {
-          delete this.accountPrivileges[CP_PRIVILEGES_MAP.services];
+      if (this.schoolPrivileges) {
+        if (CP_PRIVILEGES_MAP.services in this.schoolPrivileges) {
+          delete this.schoolPrivileges[CP_PRIVILEGES_MAP.services];
         }
       }
 

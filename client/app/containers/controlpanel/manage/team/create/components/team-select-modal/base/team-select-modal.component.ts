@@ -69,7 +69,7 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
         _item['store_id' in item.data ? item.data.store_id : item.data.id] = {
           [this.privilegeType]: {
             r: true,
-            w: item.type === 1 ? false : true
+            w: true
           }
         };
 
