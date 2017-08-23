@@ -206,7 +206,7 @@ export class TeamCreateComponent implements OnInit {
           return;
         }
 
-        this.formError = 'Something went wrong';
+        this.formError = STATUS.SOMETHING_WENT_WRONG;
       }
       );
   }

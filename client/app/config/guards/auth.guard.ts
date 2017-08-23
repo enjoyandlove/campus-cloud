@@ -128,6 +128,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
           .then(user => {
             this.session.user = user[0];
+            console.log(this.session.user);
             return true;
           })
           .catch(_ => false);
