@@ -10,6 +10,8 @@ from django.http import HttpResponseRedirect
 
 from controlpanel.utils.csv_parser import CSVParser
 
+DECODE_ERROR = 'Unable to parse data in file'
+
 
 def handle_404(request):
   return HttpResponseRedirect("/")
@@ -34,13 +36,18 @@ Parse Mass Event Invite
 @csrf_exempt
 def import_events(request):
     csv_file = request.FILES['file']
-    decoded_file = csv_file.read().decode('utf-8')
+
+    try:
+        decoded_file = csv_file.read().decode('utf-8')
+    except UnicodeError as e:
+        return JsonResponse({"error": DECODE_ERROR}, safe=False, status=400)
+
     io_string = io.StringIO(decoded_file)
 
     parser = CSVParser(io_string)
 
     try:
-        parsed_data = parser.all_fields_required()
+        parsed_data = parser.all_fields_required('title', 'start_date', 'end_date')
     except KeyError as e:
         return JsonResponse({"error": e.args[0]},
                                 safe=False, status=400)
@@ -75,13 +82,18 @@ Parse Mass Announcements Import
 @csrf_exempt
 def import_lists(request):
     csv_file = request.FILES['file']
-    decoded_file = csv_file.read().decode('utf-8')
+
+    try:
+        decoded_file = csv_file.read().decode('utf-8')
+    except UnicodeError as e:
+        return JsonResponse({"error": DECODE_ERROR}, safe=False, status=400)
+
     io_string = io.StringIO(decoded_file)
 
     parser = CSVParser(io_string)
 
     try:
-        parsed_data = parser.all_fields_required()
+        parsed_data = parser.all_fields_required('email')
     except KeyError as e:
         return JsonResponse({"error": e.args[0]},
                                 safe=False, status=400)
@@ -95,13 +107,18 @@ Parse Clubs Mass Upload
 @csrf_exempt
 def import_clubs(request):
     csv_file = request.FILES['file']
-    decoded_file = csv_file.read().decode('utf-8')
+
+    try:
+        decoded_file = csv_file.read().decode('utf-8')
+    except UnicodeError as e:
+        return JsonResponse({"error": DECODE_ERROR}, safe=False, status=400)
+
     io_string = io.StringIO(decoded_file)
 
     parser = CSVParser(io_string)
 
     try:
-        parsed_data = parser.all_fields_required()
+        parsed_data = parser.all_fields_required('name')
     except KeyError as e:
         return JsonResponse({"error": e.args[0]},
                                 safe=False, status=400)
@@ -115,13 +132,18 @@ Parse Services Mass Upload
 @csrf_exempt
 def import_services(request):
     csv_file = request.FILES['file']
-    decoded_file = csv_file.read().decode('utf-8')
+
+    try:
+        decoded_file = csv_file.read().decode('utf-8')
+    except UnicodeError as e:
+        return JsonResponse({"error": DECODE_ERROR}, safe=False, status=400)
+
     io_string = io.StringIO(decoded_file)
 
     parser = CSVParser(io_string)
 
     try:
-        parsed_data = parser.all_fields_required()
+        parsed_data = parser.all_fields_required('service_name')
     except KeyError as e:
         return JsonResponse({"error": e.args[0]},
                                 safe=False, status=400)
