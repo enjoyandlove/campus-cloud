@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 
 import { CPSession } from '../../session';
 import { appStorage } from '../../shared/utils';
-// import { CP_PRIVILEGES } from './../../shared/utils/privileges';
+import { CP_PRIVILEGES_MAP } from './../../shared/utils/privileges';
 import { AdminService, SchoolService } from '../../shared/services';
 
 @Injectable()
@@ -73,28 +73,28 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
     const ROUTES_MAP = {
       'events': {
-        privilege: 'readEvent'
+        privilege: CP_PRIVILEGES_MAP.events
       },
       'feeds': {
-        privilege: 'readFeed'
+        privilege: CP_PRIVILEGES_MAP.moderation
       },
       'clubs': {
-        privilege: 'readClub'
+        privilege: CP_PRIVILEGES_MAP.clubs
       },
       'services': {
-        privilege: 'readService'
+        privilege: CP_PRIVILEGES_MAP.services
       },
       'lists': {
-        privilege: 'readList'
+        privilege: CP_PRIVILEGES_MAP.campus_announcements
       },
       'links': {
-        privilege: 'readLink'
+        privilege: CP_PRIVILEGES_MAP.links
       },
       'announcements': {
-        privilege: 'readNotify'
+        privilege: CP_PRIVILEGES_MAP.campus_announcements
       },
       'templates': {
-        privilege: 'readNotify'
+        privilege: CP_PRIVILEGES_MAP.campus_announcements
       },
     }
 
@@ -102,7 +102,16 @@ export class AuthGuard implements CanActivate, CanActivateChild {
       const path = childRoute.url[0].path;
 
       if (PROTECTED_ROUTES.includes(path)) {
-        const canAccess = this.session.privileges[ROUTES_MAP[path].privilege];
+        let canAccess;
+
+        const schoolLevel = this.session.canSchoolReadResource(ROUTES_MAP[path].privilege);
+        const accountLevel = this.session.canAccountLevelReadResource(ROUTES_MAP[path].privilege);
+
+        if (path === 'services' || path === 'events') {
+          canAccess = schoolLevel || accountLevel
+        } else {
+          canAccess = schoolLevel
+        }
 
         if (!canAccess) {
           this.router.navigate(['/welcome']);
@@ -123,11 +132,8 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
           .then(user => {
             this.session.user = user[0];
-            return this.session.updateSessionPrivileges();
+            return true;
           })
-
-          .then(_ => true)
-
           .catch(_ => false);
       }
 
