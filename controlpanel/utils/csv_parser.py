@@ -39,14 +39,10 @@ class CSVParser:
 
         for index, item in enumerate(data):
             entry = dict(zip(column_titles, item))
+            error = [k for k,v in entry.items() if k in args and v == '']
 
-            if args:
-                mandatory_values = itemgetter(*args)(entry)
-
-                if '' in mandatory_values:
-                    for mandatory_field in args:
-                        if entry[mandatory_field] == '':
-                            raise KeyError(('Line {}, is missing {}').format(index + 1, mandatory_field))
+            if error:
+                raise KeyError(('Line {}, is missing {}').format(index + 1, error[0]))
 
             result.append(entry)
 

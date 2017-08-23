@@ -93,7 +93,7 @@ def import_lists(request):
     parser = CSVParser(io_string)
 
     try:
-        parsed_data = parser.all_fields_required()
+        parsed_data = parser.all_fields_required('email')
     except KeyError as e:
         return JsonResponse({"error": e.args[0]},
                                 safe=False, status=400)
@@ -118,7 +118,7 @@ def import_clubs(request):
     parser = CSVParser(io_string)
 
     try:
-        parsed_data = parser.all_fields_required()
+        parsed_data = parser.all_fields_required('name')
     except KeyError as e:
         return JsonResponse({"error": e.args[0]},
                                 safe=False, status=400)
@@ -143,7 +143,7 @@ def import_services(request):
     parser = CSVParser(io_string)
 
     try:
-        parsed_data = parser.all_fields_required()
+        parsed_data = parser.all_fields_required('service_name')
     except KeyError as e:
         return JsonResponse({"error": e.args[0]},
                                 safe=False, status=400)
