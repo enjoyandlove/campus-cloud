@@ -2,6 +2,7 @@ import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
 import { CPSession, IUser, ISchool } from '../../../session';
+import { CP_PRIVILEGES_MAP } from './../../utils/privileges';
 
 @Component({
   selector: 'cp-topbar',
@@ -38,17 +39,17 @@ export class CPTopBarComponent implements OnInit {
   }
 
   getManageHomePage() {
-    if (this.session.privileges.readEvent)  {
+    if (this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.events))  {
       return 'events';
-    } else if (this.session.privileges.readFeed)  {
+    } else if (this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.moderation))  {
       return 'feeds';
-    } else if (this.session.privileges.readClub)  {
+    } else if (this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.clubs))  {
       return 'clubs';
-    } else if (this.session.privileges.readService)  {
+    } else if (this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.services))  {
       return 'services';
-    } else if (this.session.privileges.readList)  {
+    } else if (this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.campus_announcements))  {
       return 'lists';
-    } else if (this.session.privileges.readLink)  {
+    } else if (this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.links))  {
       return 'links';
     }
     return null;
@@ -63,8 +64,9 @@ export class CPTopBarComponent implements OnInit {
     this.school = this.session.school;
 
     this.manageHomePage = this.getManageHomePage();
-    this.canNotify = this.session.privileges.readNotify;
-    this.canAssess = this.session.privileges.readAssess;
+
+    this.canNotify = this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.campus_announcements);
+    this.canAssess = this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.assessment);
 
     this.isManageActiveRoute = this.isManage(this.router.url);
 

@@ -68,7 +68,30 @@ export class CPSession {
     return this._privileges;
   }
 
+  canAccountManageResource(storeId: number, privilegeType: number) {
+    return privilegeType in this.user.account_level_privileges[storeId];
+  }
+
+  canSchoolReadResource(privilegeType: number) {
+    const schoolPrivileges = this.user.school_level_privileges[this.school.id];
+
+    if (privilegeType in schoolPrivileges) {
+      return schoolPrivileges[privilegeType].r
+    }
+    return false;
+  }
+
+  canSchoolWriteResource(privilegeType: number) {
+    const schoolPrivileges = this.user.school_level_privileges[this.school.id];
+
+    if (privilegeType in schoolPrivileges) {
+      return schoolPrivileges[privilegeType].w
+    }
+    return false;
+  }
+
   updateSessionPrivileges(): Promise<null> {
+    console.log(this.user);
     return new Promise(resolve => {
       this._privileges['readEvent'] = this.canViewEvents(this._school.id);
       this._privileges['readFeed'] = this.canViewFeeds(this._school.id);
@@ -83,6 +106,10 @@ export class CPSession {
       return resolve();
     });
   }
+
+  // canSchoolEvents() {
+
+  // }
 
   private canViewNotify(schoolId: number): boolean {
     if (CP_PRIVILEGES_MAP.campus_announcements in this.user.school_level_privileges[schoolId]) {
