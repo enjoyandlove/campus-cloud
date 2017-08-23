@@ -1,3 +1,4 @@
+import { CP_PRIVILEGES_MAP } from './../../../../../shared/utils/privileges';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
@@ -22,6 +23,7 @@ const FEEDBACK_ENABLED = 1;
 export class ServicesAttendanceComponent extends BaseComponent implements OnInit {
   loading;
   service;
+  storeId;
   noProviders;
   serviceId: number;
   detailStarSize = STAR_SIZE.LARGE;
@@ -50,6 +52,7 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
       .fetchData(this.serviceService.getServiceById(this.serviceId))
       .then(res => {
         this.service = res.data;
+        this.storeId = this.service.store_id;
 
         if ('enable_feedback' in this.service) {
           this.enableFeedback$.next(this.service.enable_feedback === FEEDBACK_ENABLED)
@@ -89,8 +92,11 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
         'url': `/manage/services/${this.serviceId}/info`
       }
     ];
+    const eventsSchoolLevel = this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.events);
+    const eventsAccountLevel = this.
+      session.canStoreReadAndWriteResource(this.storeId, CP_PRIVILEGES_MAP.events);
 
-    if (this.session.privileges.readEvent) {
+    if (eventsSchoolLevel || eventsAccountLevel) {
       const events = {
         'label': 'Events',
         'url': `/manage/services/${this.serviceId}/events`

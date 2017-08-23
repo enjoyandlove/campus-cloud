@@ -193,6 +193,9 @@ export class TeamCreateComponent implements OnInit {
       return;
     }
 
+    // console.log(_data);
+    // return;
+
     this
       .teamService
       .createAdmin(_data)
@@ -206,7 +209,7 @@ export class TeamCreateComponent implements OnInit {
           return;
         }
 
-        this.formError = 'Something went wrong';
+        this.formError = STATUS.SOMETHING_WENT_WRONG;
       }
       );
   }
@@ -270,9 +273,9 @@ export class TeamCreateComponent implements OnInit {
     if (service.action === null) {
       this.resetServiceModal$.next(true);
 
-      if (this.accountPrivileges) {
-        if (CP_PRIVILEGES_MAP.services in this.accountPrivileges) {
-          delete this.accountPrivileges[CP_PRIVILEGES_MAP.services];
+      if (this.schoolPrivileges) {
+        if (CP_PRIVILEGES_MAP.services in this.schoolPrivileges) {
+          delete this.schoolPrivileges[CP_PRIVILEGES_MAP.services];
         }
       }
       return;
@@ -383,7 +386,6 @@ export class TeamCreateComponent implements OnInit {
     if (!dependencies.length) { return; }
 
     dependencies.map(dep => {
-
       if (this.schoolPrivileges[dep]) {
         return;
       }
@@ -391,7 +393,6 @@ export class TeamCreateComponent implements OnInit {
       if (this.schoolPrivileges[privilegeNo]) {
         this.checkControl(undefined, dep, { deps: [] });
       }
-
     });
   }
 
@@ -431,15 +432,20 @@ export class TeamCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    let { school_level_privileges } = this.session.user;
+    const { school_level_privileges } = this.session.user;
     const schoolPrivileges = school_level_privileges[this.session.school.id];
     this.user = this.session.user;
     this.schoolId = this.session.school.id;
 
 
-    this.canReadClubs = this.session.privileges.readClub;
-    this.canReadEvents = this.session.privileges.readEvent;
-    this.canReadServices = this.session.privileges.readService;
+    this.canReadClubs = this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.clubs) ||
+      this.session.canAccountLevelReadResource(CP_PRIVILEGES_MAP.clubs);
+
+    this.canReadEvents = this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.events);
+
+    this.canReadServices = this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.services) ||
+      this.session.canAccountLevelReadResource(CP_PRIVILEGES_MAP.services);
+
     this.formData = TEAM_ACCESS.getMenu(this.user.school_level_privileges[this.schoolId]);
 
     this.buildHeader();

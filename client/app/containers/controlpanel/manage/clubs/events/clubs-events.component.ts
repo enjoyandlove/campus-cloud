@@ -9,12 +9,14 @@ import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { CP_PRIVILEGES_MAP } from '../../../../../shared/utils/privileges';
 
+const CLUB_PENDING_STATUS = 2;
 
 @Component({
   selector: 'cp-clubs-events',
   templateUrl: './clubs-events.component.html',
 })
 export class ClubsEventsComponent extends BaseComponent implements OnInit {
+  club;
   loading;
   isClub = true;
   hasMembership;
@@ -38,6 +40,7 @@ export class ClubsEventsComponent extends BaseComponent implements OnInit {
     super
       .fetchData(this.clubsService.getClubById(this.clubId, search))
       .then(club => {
+        this.club = club.data;
         this.hasMembership = club.data.has_membership;
 
         this.store.dispatch({
@@ -48,8 +51,6 @@ export class ClubsEventsComponent extends BaseComponent implements OnInit {
   }
 
   buildHeader(name) {
-    let schoolPrivileges = this.session.user.school_level_privileges[this.session.school.id];
-    let accountPrivileges = this.session.user.account_level_privileges[this.clubId];
     let menu = {
       heading: name,
       subheading: null,
@@ -59,40 +60,21 @@ export class ClubsEventsComponent extends BaseComponent implements OnInit {
 
     let links = [];
 
-    if (schoolPrivileges) {
-      if (schoolPrivileges[CP_PRIVILEGES_MAP.events].r) {
-        links = ['Events', ...links];
-      }
-
-      if (this.hasMembership) {
-        if (schoolPrivileges[CP_PRIVILEGES_MAP.moderation].r) {
-          links = ['Wall', ...links];
-        }
-
-        if (schoolPrivileges[CP_PRIVILEGES_MAP.membership].r) {
-          links = ['Members', ...links];
-        }
-      }
+    if (this.club.status !== CLUB_PENDING_STATUS &&
+      (this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.events) ||
+        this.session.canStoreReadAndWriteResource(this.clubId, CP_PRIVILEGES_MAP.events))) {
+      links = ['Events', ...links];
     }
 
-    if (accountPrivileges) {
-      if (links.indexOf('Events') === -1 &&
-        accountPrivileges[CP_PRIVILEGES_MAP.events] &&
-        accountPrivileges[CP_PRIVILEGES_MAP.events].r) {
-        links = ['Events', ...links];
-      }
-
-      if (links.indexOf('Wall') === -1 &&
-        this.hasMembership &&
-        accountPrivileges[CP_PRIVILEGES_MAP.moderation]
-        && accountPrivileges[CP_PRIVILEGES_MAP.moderation].r) {
+    if (this.hasMembership) {
+      if (this.club.status !== CLUB_PENDING_STATUS &&
+        (this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.moderation) ||
+          this.session.canStoreReadAndWriteResource(this.clubId, CP_PRIVILEGES_MAP.moderation))) {
         links = ['Wall', ...links];
       }
 
-      if (links.indexOf('Members') === -1 &&
-        this.hasMembership &&
-        accountPrivileges[CP_PRIVILEGES_MAP.membership]
-        && accountPrivileges[CP_PRIVILEGES_MAP.membership].r) {
+      if (this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.membership) ||
+        this.session.canStoreReadAndWriteResource(this.clubId, CP_PRIVILEGES_MAP.membership)) {
         links = ['Members', ...links];
       }
     }
