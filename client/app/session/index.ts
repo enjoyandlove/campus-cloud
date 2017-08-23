@@ -72,6 +72,20 @@ export class CPSession {
     return privilegeType in this.user.account_level_privileges[storeId];
   }
 
+  canUserReadResource(privilegeType: number) {
+    let hasAccountAccess = false;
+
+    this.user.account_mapping[this.school.id].forEach(store => {
+      Object.keys(this.user.account_level_privileges[store]).forEach(p => {
+        if (privilegeType === +p) {
+          hasAccountAccess = true;
+        }
+      });
+    });
+
+    return hasAccountAccess;
+  }
+
   canSchoolReadResource(privilegeType: number) {
     const schoolPrivileges = this.user.school_level_privileges[this.school.id];
 
