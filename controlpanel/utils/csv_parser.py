@@ -3,9 +3,6 @@ import datetime
 from operator import itemgetter
 from dateutil.parser import parse
 
-class CPParseError(KeyError):
-    pass
-
 class CSVParser:
     def __init__(self, csv_file):
         self.csv_file = csv_file
