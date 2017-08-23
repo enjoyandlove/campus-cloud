@@ -94,7 +94,7 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
     ];
     const eventsSchoolLevel = this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.events);
     const eventsAccountLevel = this.
-      session.canAccountManageResource(this.storeId, CP_PRIVILEGES_MAP.events);
+      session.canStoreReadAndWriteResource(this.storeId, CP_PRIVILEGES_MAP.events);
 
     if (eventsSchoolLevel || eventsAccountLevel) {
       const events = {

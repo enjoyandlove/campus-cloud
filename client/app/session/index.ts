@@ -41,7 +41,7 @@ export class CPSession {
     this._school = school;
   }
 
-  canAccountManageResource(storeId: number, privilegeType: number) {
+  canStoreReadAndWriteResource(storeId: number, privilegeType: number) {
     return privilegeType in this.user.account_level_privileges[storeId];
   }
 

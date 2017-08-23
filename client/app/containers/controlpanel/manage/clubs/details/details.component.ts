@@ -61,19 +61,19 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
 
     if (this.club.status !== CLUB_PENDING_STATUS &&
       (this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.events) ||
-        this.session.canAccountManageResource(this.clubId, CP_PRIVILEGES_MAP.events))) {
+        this.session.canStoreReadAndWriteResource(this.clubId, CP_PRIVILEGES_MAP.events))) {
       links = ['Events', ...links];
     }
 
     if (this.hasMembership) {
       if (this.club.status !== CLUB_PENDING_STATUS &&
         (this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.moderation) ||
-          this.session.canAccountManageResource(this.clubId, CP_PRIVILEGES_MAP.moderation))) {
+          this.session.canStoreReadAndWriteResource(this.clubId, CP_PRIVILEGES_MAP.moderation))) {
         links = ['Wall', ...links];
       }
 
       if (this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.membership) ||
-        this.session.canAccountManageResource(this.clubId, CP_PRIVILEGES_MAP.membership)) {
+        this.session.canStoreReadAndWriteResource(this.clubId, CP_PRIVILEGES_MAP.membership)) {
         links = ['Members', ...links];
       }
     }

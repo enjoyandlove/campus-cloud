@@ -61,7 +61,7 @@ export class ServicesEventsComponent extends EventsComponent implements OnInit {
 
     const eventsSchoolLevel = this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.events);
     const eventsAccountLevel = this.
-      session.canAccountManageResource(this.serviceStoreId, CP_PRIVILEGES_MAP.events);
+      session.canStoreReadAndWriteResource(this.serviceStoreId, CP_PRIVILEGES_MAP.events);
 
     if (eventsSchoolLevel || eventsAccountLevel) {
       const events = {
