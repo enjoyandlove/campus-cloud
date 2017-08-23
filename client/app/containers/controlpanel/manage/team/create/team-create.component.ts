@@ -431,15 +431,20 @@ export class TeamCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    let { school_level_privileges } = this.session.user;
+    const { school_level_privileges } = this.session.user;
     const schoolPrivileges = school_level_privileges[this.session.school.id];
     this.user = this.session.user;
     this.schoolId = this.session.school.id;
 
 
-    this.canReadClubs = this.session.privileges.readClub;
-    this.canReadEvents = this.session.privileges.readEvent;
-    this.canReadServices = this.session.privileges.readService;
+    this.canReadClubs = this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.clubs) ||
+      this.session.canAccountLevelReadResource(CP_PRIVILEGES_MAP.clubs);
+
+    this.canReadEvents = this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.events);
+
+    this.canReadServices = this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.services) ||
+      this.session.canAccountLevelReadResource(CP_PRIVILEGES_MAP.services);
+
     this.formData = TEAM_ACCESS.getMenu(this.user.school_level_privileges[this.schoolId]);
 
     this.buildHeader();

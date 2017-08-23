@@ -23,12 +23,12 @@ export class ManageHeaderService {
         return this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.moderation) ? child : null;
       } else if (child.privilege === CP_PRIVILEGES_MAP.clubs) {
         const schoolLevel = this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.clubs);
-        const accountLevel = this.session.canUserReadResource(CP_PRIVILEGES_MAP.clubs);
+        const accountLevel = this.session.canAccountLevelReadResource(CP_PRIVILEGES_MAP.clubs);
 
         return schoolLevel || accountLevel ? child : null;
       } else if (child.privilege === CP_PRIVILEGES_MAP.services) {
         const schoolLevel = this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.services);
-        const accountLevel = this.session.canUserReadResource(CP_PRIVILEGES_MAP.services);
+        const accountLevel = this.session.canAccountLevelReadResource(CP_PRIVILEGES_MAP.services);
 
         return schoolLevel || accountLevel ? child : null;
       } else if (child.privilege === CP_PRIVILEGES_MAP.campus_announcements) {

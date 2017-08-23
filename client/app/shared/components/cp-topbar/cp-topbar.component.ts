@@ -44,12 +44,12 @@ export class CPTopBarComponent implements OnInit {
     } else if (this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.moderation))  {
       return 'feeds';
     } else if (
-      this.session.canUserReadResource(CP_PRIVILEGES_MAP.clubs) ||
+      this.session.canAccountLevelReadResource(CP_PRIVILEGES_MAP.clubs) ||
       this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.clubs)
     )  {
       return 'clubs';
     } else if (
-      this.session.canUserReadResource(CP_PRIVILEGES_MAP.services) ||
+      this.session.canAccountLevelReadResource(CP_PRIVILEGES_MAP.services) ||
       this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.services)
     )  {
       return 'services';

@@ -10,6 +10,7 @@ import { CPSession } from '../../../../../session';
 import { ServicesService } from '../services.service';
 import { EventsService } from '../../events/events.service';
 import { EventsComponent } from '../../events/list/base/events.component';
+import { CP_PRIVILEGES_MAP } from './../../../../../shared/utils/privileges';
 
 @Component({
   selector: 'cp-services-events',
@@ -21,6 +22,7 @@ export class ServicesEventsComponent extends EventsComponent implements OnInit {
   loading = true;
   isService = true;
   serviceId: number;
+  serviceStoreId;
 
 
   constructor(
@@ -43,6 +45,7 @@ export class ServicesEventsComponent extends EventsComponent implements OnInit {
       .subscribe(
         res => {
           this.service = res;
+          this.serviceStoreId = this.service.store_id;
           this.buildHeader();
           this.loading = false;
         });
@@ -56,7 +59,11 @@ export class ServicesEventsComponent extends EventsComponent implements OnInit {
       }
     ];
 
-    if (this.session.privileges.readEvent) {
+    const eventsSchoolLevel = this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.events);
+    const eventsAccountLevel = this.
+      session.canAccountManageResource(this.serviceStoreId, CP_PRIVILEGES_MAP.events);
+
+    if (eventsSchoolLevel || eventsAccountLevel) {
       const events = {
         'label': 'Events',
         'url': `/manage/services/${this.serviceId}/events`
