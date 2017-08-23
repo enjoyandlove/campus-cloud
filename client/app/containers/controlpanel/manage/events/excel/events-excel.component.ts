@@ -370,8 +370,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       .select('EVENTS_MODAL')
       .subscribe(
       res => {
-        // this.events = !isDev ? res : require('./mock.json');
-        this.events = res;
+        this.events = !isDev ? res : require('./mock.json');
 
         if (!this.storeId && !this.clubId) {
           this.fetch();
