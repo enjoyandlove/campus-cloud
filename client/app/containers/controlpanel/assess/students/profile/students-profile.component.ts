@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { StudentsService } from './../students.service';
 import { CPSession } from './../../../../../session/index';
 import { FORMAT } from './../../../../../shared/pipes/date.pipe';
+import { STATUS } from './../../../../../shared/constants/status';
 import { BaseComponent } from './../../../../../base/base.component';
 import { HEADER_UPDATE } from './../../../../../reducers/header.reducer';
 import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
@@ -119,7 +120,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
     this.store.dispatch({
       type: SNACKBAR_SHOW,
       payload: {
-        body: 'Success! Your message has been sent',
+        body: STATUS.MESSAGE_SENT,
         autoClose: true,
       }
     });
