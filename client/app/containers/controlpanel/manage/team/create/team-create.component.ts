@@ -386,7 +386,6 @@ export class TeamCreateComponent implements OnInit {
     if (!dependencies.length) { return; }
 
     dependencies.map(dep => {
-      console.log(this.schoolPrivileges);
       if (this.schoolPrivileges[dep]) {
         return;
       }
@@ -407,9 +406,6 @@ export class TeamCreateComponent implements OnInit {
 
 
   checkControl(isChecked, privilegeNo, privilegeExtraData): void {
-    console.log(isChecked);
-    console.log(privilegeExtraData);
-
     if (!isChecked && privilegeExtraData.disables) {
       this.disableDependencies(privilegeExtraData.disables);
     }
