@@ -14,6 +14,7 @@ import { DATE_FILTER } from './events-filters';
 import { CPSession } from '../../../../../../../session';
 import { CPDate } from '../../../../../../../shared/utils/date';
 import { StoreService } from '../../../../../../../shared/services';
+import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/utils/privileges';
 
 interface IState {
   end: number;
@@ -51,6 +52,7 @@ export class ListActionBoxComponent implements OnInit {
   eventFilter;
   dateFilterOpts;
   isFilteredByDate;
+  canWriteSchoolWide;
   state: IState = state;
   stores$: Observable<any>;
 
@@ -168,6 +170,7 @@ export class ListActionBoxComponent implements OnInit {
 
   ngOnInit() {
     this.getStores();
+    this.canWriteSchoolWide = this.session.canSchoolWriteResource(CP_PRIVILEGES_MAP.events);
 
     this.eventFilter = DATE_FILTER;
 

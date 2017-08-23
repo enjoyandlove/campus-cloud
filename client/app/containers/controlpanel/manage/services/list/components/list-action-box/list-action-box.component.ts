@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
-// import { StoreService } from '../../../../../../../shared/services';
+import { CPSession } from './../../../../../../../session/index';
+import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/utils/privileges';
 
 interface IState {
   search_text: string;
@@ -23,9 +24,12 @@ export class ServicesListActionBoxComponent implements OnInit {
   @Output() listAction: EventEmitter<IState> = new EventEmitter();
 
   loading;
+  canWriteSchoolWide;
   state: IState = state;
 
-  constructor() { }
+  constructor(
+    private session: CPSession
+  ) { }
 
   onSearch(search_text): void {
     this.state = Object.assign({}, this.state, { search_text });
@@ -43,5 +47,7 @@ export class ServicesListActionBoxComponent implements OnInit {
     $('#excelServicesModal').modal();
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.canWriteSchoolWide = this.session.canSchoolWriteResource(CP_PRIVILEGES_MAP.services);
+  }
 }
