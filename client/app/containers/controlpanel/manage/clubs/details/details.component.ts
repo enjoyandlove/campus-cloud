@@ -50,8 +50,6 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
   }
 
   buildHeader(name) {
-    let schoolPrivileges = this.session.user.school_level_privileges[this.session.school.id];
-    let accountPrivileges = this.session.user.account_level_privileges[this.clubId];
     let menu = {
       heading: name,
       subheading: null,
@@ -61,44 +59,21 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
 
     let links = [];
 
-    if (schoolPrivileges) {
-      if (schoolPrivileges[CP_PRIVILEGES_MAP.events].r
-        && this.club.status !== CLUB_PENDING_STATUS) {
-        links = ['Events', ...links];
-      }
-
-      if (this.hasMembership) {
-        if (schoolPrivileges[CP_PRIVILEGES_MAP.moderation].r
-          && this.club.status !== CLUB_PENDING_STATUS) {
-          links = ['Wall', ...links];
-        }
-
-        if (schoolPrivileges[CP_PRIVILEGES_MAP.membership].r) {
-          links = ['Members', ...links];
-        }
-      }
+    if (this.club.status !== CLUB_PENDING_STATUS &&
+      (this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.events) ||
+        this.session.canAccountManageResource(this.clubId, CP_PRIVILEGES_MAP.events))) {
+      links = ['Events', ...links];
     }
 
-    if (accountPrivileges) {
-      if (links.indexOf('Events') === -1 &&
-        accountPrivileges[CP_PRIVILEGES_MAP.events] &&
-        this.club.status !== CLUB_PENDING_STATUS &&
-        accountPrivileges[CP_PRIVILEGES_MAP.events].r) {
-        links = ['Events', ...links];
-      }
-
-      if (links.indexOf('Wall') === -1 &&
-        this.hasMembership &&
-        accountPrivileges[CP_PRIVILEGES_MAP.moderation] &&
-        this.club.status !== CLUB_PENDING_STATUS &&
-        accountPrivileges[CP_PRIVILEGES_MAP.moderation].r) {
+    if (this.hasMembership) {
+      if (this.club.status !== CLUB_PENDING_STATUS &&
+        (this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.moderation) ||
+          this.session.canAccountManageResource(this.clubId, CP_PRIVILEGES_MAP.moderation))) {
         links = ['Wall', ...links];
       }
 
-      if (links.indexOf('Members') === -1 &&
-        this.hasMembership &&
-        accountPrivileges[CP_PRIVILEGES_MAP.membership]
-        && accountPrivileges[CP_PRIVILEGES_MAP.membership].r) {
+      if (this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.membership) ||
+        this.session.canAccountManageResource(this.clubId, CP_PRIVILEGES_MAP.membership)) {
         links = ['Members', ...links];
       }
     }

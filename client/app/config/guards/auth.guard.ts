@@ -107,11 +107,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
         const schoolLevel = this.session.canSchoolReadResource(ROUTES_MAP[path].privilege);
         const accountLevel = this.session.canAccountLevelReadResource(ROUTES_MAP[path].privilege);
 
-        if (path === 'services' || path === 'events') {
-          canAccess = schoolLevel || accountLevel
-        } else {
-          canAccess = schoolLevel
-        }
+        canAccess = schoolLevel || accountLevel
 
         if (!canAccess) {
           this.router.navigate(['/welcome']);
