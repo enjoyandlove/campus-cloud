@@ -1,0 +1,6 @@
+@import '~styles/components/card';
+@import '~styles/components/button';
+
+.cp-card {
+  @include card-margin();
+}

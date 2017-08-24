@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { TemplatesService } from './../templates.service';
 import { CPSession } from './../../../../../session/index';
 import { base64 } from './../../../../../shared/utils/base64';
+import { STATUS } from './../../../../../shared/constants/status';
 import { BaseComponent } from './../../../../../base/base.component';
 import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
 
@@ -112,7 +113,7 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
     this.store.dispatch({
       type: SNACKBAR_SHOW,
       payload: {
-        body: 'Success! Your message has been sent',
+        body: STATUS.MESSAGE_SENT,
         autoClose: true,
       }
     });

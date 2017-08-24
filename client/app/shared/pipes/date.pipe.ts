@@ -3,9 +3,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 import * as moment from 'moment';
 
 export const FORMAT = {
-  'LONG': 'MMM Do YY',
   'SHORT': 'MMM Do YY',
-  'DATETIME': 'MMMM Do YYYY, h:mm a'
+  'LONG': 'dddd, MMMM D, YYYY',
+  'DATETIME': 'MMMM Do YYYY, h:mm a',
+  'TIME': 'h:mm A'
 };
 
 @Pipe({name: 'cpDatePipe'})
