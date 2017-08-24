@@ -42,7 +42,10 @@ export class CPSession {
   }
 
   canStoreReadAndWriteResource(storeId: number, privilegeType: number) {
-    return privilegeType in this.user.account_level_privileges[storeId];
+    if (storeId in this.user.account_level_privileges) {
+      return privilegeType in this.user.account_level_privileges[storeId]
+    }
+    return false;
   }
 
   canAccountLevelReadResource(privilegeType: number) {
