@@ -30,7 +30,9 @@ function getMenu(privileges) {
       },
       feeds: {
         active: false,
-        deps: []
+        deps: [
+          CP_PRIVILEGES_MAP.membership,
+        ]
       },
       links: {
         active: false,

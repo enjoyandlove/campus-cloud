@@ -26,6 +26,7 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
   loading = true;
   school: ISchool;
   serviceId: number;
+  storeId;
   mapCenter: BehaviorSubject<any>;
 
   constructor(
@@ -70,6 +71,7 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
       .then(res => {
         this.admins = res.data[1];
         this.service = res.data[0];
+        this.storeId = this.service.store_id;
 
         this.buildHeader();
 
@@ -90,8 +92,11 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
         'url': `/manage/services/${this.serviceId}/info`
       }
     ];
+    const eventsSchoolLevel = this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.events);
+    const eventsAccountLevel = this.
+      session.canStoreReadAndWriteResource(this.storeId, CP_PRIVILEGES_MAP.events);
 
-    if (this.session.privileges.readEvent) {
+    if (eventsSchoolLevel || eventsAccountLevel) {
       const events = {
         'label': 'Events',
         'url': `/manage/services/${this.serviceId}/events`

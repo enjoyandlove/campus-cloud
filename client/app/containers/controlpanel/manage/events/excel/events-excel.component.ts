@@ -147,7 +147,6 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   }
 
   updateEventManager(manager, index) {
-    console.log(manager);
     const controls = <FormArray>this.form.controls['events'];
     const control = <FormGroup>controls.controls[index];
 

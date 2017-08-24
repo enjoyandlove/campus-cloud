@@ -233,6 +233,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
   doSubmit() {
     this.isError = false;
+
     let search = new URLSearchParams();
     search.append('school_id', this.session.school.id.toString());
 
@@ -268,6 +269,8 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       .subscribe(
       res => {
         if (res.status === THROTTLED_STATUS) {
+          this.shouldConfirm = false;
+
           this.isError = true;
           this.errorMessage = `Message not sent, \n
           please wait ${(res.timeout / 60).toFixed()} minutes before trying again`;
@@ -279,6 +282,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       },
       _ => {
         this.isError = true;
+        this.shouldConfirm = false;
         this.errorMessage = STATUS.SOMETHING_WENT_WRONG;
       }
       );

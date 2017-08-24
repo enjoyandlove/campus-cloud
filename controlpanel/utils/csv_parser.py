@@ -1,34 +1,28 @@
 import csv
 import datetime
+from operator import itemgetter
 from dateutil.parser import parse
-
 
 class CSVParser:
     def __init__(self, csv_file):
         self.csv_file = csv_file
 
 
-    def all_fields_required(self):
+    def all_fields_required(self, *args):
         data = []
         column_titles = None
         reader = csv.reader(self.csv_file)
 
+        # get column titles
         for index, row in enumerate(reader):
             if index == 0:
                 column_titles = row
                 continue
 
-            if not row[0]:
-                continue
-
             data.append(row)
 
-        for index, title in enumerate(column_titles):
-            if column_titles[index] is None:
-                raise KeyError("All fields are required")
+        column_titles = [title.lower().replace(" ", "_") for title in column_titles]
 
-            column_titles[index] = column_titles[index].lower(
-                ).replace(" ", "_")
 
 
         if not data:
@@ -39,11 +33,15 @@ class CSVParser:
 
         # zip data with columns
         result = []
-        for item in data:
-            for i in item:
-                if not i:
-                    raise KeyError('All fields are required')
-            result.append(dict(zip(column_titles, item)))
+
+        for index, item in enumerate(data):
+            entry = dict(zip(column_titles, item))
+            error = [k for k,v in entry.items() if k in args and v == '']
+
+            if error:
+                raise KeyError(('Line {}, is missing {}').format(index + 1, error[0]))
+
+            result.append(entry)
 
         return result
 
