@@ -35,7 +35,6 @@ Parse Mass Event Invite
 '''
 @csrf_exempt
 def import_events(request):
-    print('ehhs')
     csv_file = request.FILES['file']
     csv_as_string = ''
 
