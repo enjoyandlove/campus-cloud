@@ -32,6 +32,9 @@ function getMenu(privileges) {
         active: false,
         deps: [
           CP_PRIVILEGES_MAP.membership,
+        ],
+        disables: [
+          CP_PRIVILEGES_MAP.membership,
         ]
       },
       links: {

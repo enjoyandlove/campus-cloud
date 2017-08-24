@@ -307,10 +307,24 @@ export class TeamCreateComponent implements OnInit {
     accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.clubs);
     accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.membership);
     accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.moderation);
+
+    if (CP_PRIVILEGES_MAP.clubs in this.schoolPrivileges) {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.clubs];
+    }
+    if (CP_PRIVILEGES_MAP.membership in this.schoolPrivileges) {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.membership];
+    }
+    if (CP_PRIVILEGES_MAP.moderation in this.schoolPrivileges) {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.moderation];
+    }
   }
 
   doServicesCleanUp() {
     accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.services);
+
+    if (CP_PRIVILEGES_MAP.services in this.schoolPrivileges) {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.services];
+    }
   }
 
   onClubsSelected(club) {
@@ -324,17 +338,6 @@ export class TeamCreateComponent implements OnInit {
 
     if (club.action === null) {
       this.resetClubsModal$.next(true);
-
-      if (CP_PRIVILEGES_MAP.clubs in this.schoolPrivileges) {
-        delete this.schoolPrivileges[CP_PRIVILEGES_MAP.clubs];
-      }
-      if (CP_PRIVILEGES_MAP.membership in this.schoolPrivileges) {
-        delete this.schoolPrivileges[CP_PRIVILEGES_MAP.membership];
-      }
-      if (CP_PRIVILEGES_MAP.moderation in this.schoolPrivileges) {
-        delete this.schoolPrivileges[CP_PRIVILEGES_MAP.moderation];
-      }
-
       return;
     }
 
@@ -469,6 +472,10 @@ function accountCleanUp(accountPrivileges, privilegeNo: number) {
     Object.keys(accountPrivileges).map(store => {
       if (privilegeNo in accountPrivileges[store]) {
         delete accountPrivileges[store][privilegeNo]
+
+        if (!(Object.keys(accountPrivileges[store]).length)) {
+          delete accountPrivileges[store];
+        }
       }
     })
   }
