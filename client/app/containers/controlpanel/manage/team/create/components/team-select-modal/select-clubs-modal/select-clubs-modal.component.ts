@@ -30,18 +30,6 @@ export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent
     this.privilegeType = CP_PRIVILEGES_MAP.clubs;
   }
 
-  filterClubDataFromAccountPrivilege() {
-    let _selectedClubs = {};
-    Object.keys(this.selectedClubs).forEach(storeId => {
-      if (this.selectedClubs[storeId][CP_PRIVILEGES_MAP.clubs]) {
-        _selectedClubs[storeId] = {
-          ...this.selectedClubs[storeId][CP_PRIVILEGES_MAP.clubs]
-        };
-      }
-    });
-    return _selectedClubs;
-  }
-
   doReset() {
     this.teardown.emit();
   }
@@ -59,17 +47,18 @@ export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent
         let selected = {};
 
         if (this.selectedClubs) {
-          console.log('this.selectedClubs ', this.selectedClubs);
-          selected = this.filterClubDataFromAccountPrivilege();
-
           clubs.map(club => {
-            if (selected[club.store_id]) {
+            if (Object.keys(this.selectedClubs).includes(club.id.toString())) {
+              selected[club.id] = club;
+            }
+
+            if (selected[club.id]) {
               club.checked = true;
               // we pass the id to the selected object
               // to populate the modal state....
-              selected[club.store_id] = Object.assign(
+              selected[club.id] = Object.assign(
                 {},
-                selected[club.store_id],
+                selected[club.id],
                 { id: club.id }
               );
             }
