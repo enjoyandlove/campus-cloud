@@ -329,10 +329,6 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       );
   }
 
-  doServicesCleanUp() {
-    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.services);
-  }
-
   onManageAdminSelected(data) {
     if (!data.action && this.schoolPrivileges) {
       delete this.schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin];
@@ -381,6 +377,24 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.clubs);
     accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.membership);
     accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.moderation);
+
+    if (CP_PRIVILEGES_MAP.clubs in this.schoolPrivileges) {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.clubs];
+    }
+    if (CP_PRIVILEGES_MAP.membership in this.schoolPrivileges) {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.membership];
+    }
+    if (CP_PRIVILEGES_MAP.moderation in this.schoolPrivileges) {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.moderation];
+    }
+  }
+
+  doServicesCleanUp() {
+    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.services);
+
+    if (CP_PRIVILEGES_MAP.services in this.schoolPrivileges) {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.services];
+    }
   }
 
   onServicesSelected(service) {
@@ -578,6 +592,10 @@ function accountCleanUp(accountPrivileges, privilegeNo: number) {
     Object.keys(accountPrivileges).map(store => {
       if (privilegeNo in accountPrivileges[store]) {
         delete accountPrivileges[store][privilegeNo]
+      }
+
+      if (!(Object.keys(accountPrivileges[store]).length)) {
+        delete accountPrivileges[store];
       }
     })
   }
