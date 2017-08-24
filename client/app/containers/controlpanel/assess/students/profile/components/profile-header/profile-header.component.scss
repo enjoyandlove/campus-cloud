@@ -1,0 +1,31 @@
+@import '~styles/core/colors';
+@import '~styles/components/card';
+@import '~styles/components/button';
+@import '~styles/core/typography';
+
+.card {
+  height: 215px;
+  position: relative;
+}
+
+.student {
+  p {
+    margin-bottom: 0;
+  }
+
+  &__profile {
+    img {
+      max-width: 100%;
+    }
+  }
+
+  &__name {
+    @include font-24px();
+    @include font-bold();
+  }
+
+  &__message {
+    top: 135px;
+    position: absolute;
+  }
+}

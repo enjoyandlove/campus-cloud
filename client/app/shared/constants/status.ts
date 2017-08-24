@@ -35,6 +35,11 @@ export const STATUS = {
   SOMETHING_WENT_WRONG: 'Something went wrong',
 
   /**
+   * SNACKBAR
+   */
+  MESSAGE_SENT: 'Success! Your message has been sent',
+
+  /**
    * IMAGE
    */
   FILE_IS_TOO_BIG: 'File is too big',

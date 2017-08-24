@@ -12,6 +12,8 @@ const STAR_STATE = {
   full: 'star'
 };
 
+const DISABLED = -1;
+
 @Component({
   selector: 'cp-stars',
   templateUrl: './cp-stars.component.html',
@@ -49,12 +51,12 @@ export class CPStarsComponent implements OnInit {
 
   drawStars() {
      this.stars = Array(this.maxRate).fill('').map((_, index) => {
-      return { index, state: STAR_STATE.empty, filled: false };
+      return { index, state: STAR_STATE.full, filled: false };
     });
   }
 
   ngOnInit() {
-    if (this.maxRate === -1) {
+    if (this.maxRate === DISABLED) {
       /**
        *  event does not support the
        *  new basic feedback system
