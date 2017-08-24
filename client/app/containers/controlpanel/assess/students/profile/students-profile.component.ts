@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 
 import { StudentsService } from './../students.service';
 import { CPSession } from './../../../../../session/index';
+import { CPDate } from './../../../../../shared/utils/date';
 import { FORMAT } from './../../../../../shared/pipes/date.pipe';
 import { STATUS } from './../../../../../shared/constants/status';
 import { BaseComponent } from './../../../../../base/base.component';
@@ -11,7 +12,24 @@ import { HEADER_UPDATE } from './../../../../../reducers/header.reducer';
 import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
 import { STAR_SIZE } from './../../../../../shared/components/cp-stars/cp-stars.component';
 
+import * as moment from 'moment';
+
 declare var $;
+
+const isSameDay = (dateOne, dateTwo): boolean => {
+  dateOne = moment(CPDate.fromEpoch(dateOne)).toObject();
+  dateTwo = moment(CPDate.fromEpoch(dateTwo)).toObject();
+
+  return dateOne.date === dateTwo.date &&
+         dateOne.months === dateTwo.months &&
+         dateOne.years === dateTwo.years;
+}
+
+const setTimeDataToZero = unixTimeStamp => {
+  return CPDate
+    .toEpoch(moment(CPDate.fromEpoch(unixTimeStamp))
+    .hours(0).minutes(0).seconds(0).toDate())
+}
 
 @Component({
   selector: 'cp-students-profile',
@@ -21,10 +39,10 @@ declare var $;
 export class StudentsProfileComponent extends BaseComponent implements OnInit {
 
   messageData;
-  engagements = [];
+  engagementData = [];
+  engagementsByDay = [];
   loadingEngagementData;
   isStudentComposeModal;
-  engagementsArray = [];
   dateFormat = FORMAT.LONG;
   timeFormat = FORMAT.TIME;
   loadingStudentData = true;
@@ -63,8 +81,23 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
     super
       .fetchData(stream$)
       .then(res => {
-        this.engagements = res.data;
-        this.engagementsArray = Object.keys(res.data).map(engagement => engagement);
+        this.engagementData = res.data.reduce((result, current) => {
+          if (isSameDay(current.epoch_time, current.epoch_time)) {
+            if (setTimeDataToZero(current.epoch_time) in result) {
+              result[setTimeDataToZero(current.epoch_time)] = [
+                ...result[setTimeDataToZero(current.epoch_time)],
+                current
+              ]
+            } else {
+              result[setTimeDataToZero(current.epoch_time)] = [current]
+            }
+          } else {
+            result[setTimeDataToZero(current.epoch_time)] = [current]
+          }
+          return result;
+        }, {})
+
+        this.engagementsByDay = Object.keys(this.engagementData);
       })
       .catch(err => console.log(err))
   }

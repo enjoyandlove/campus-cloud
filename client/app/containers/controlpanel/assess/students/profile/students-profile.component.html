@@ -33,12 +33,12 @@
               <div class="feed__wrapper">
                 <ng-container
                   class="feed__item"
-                  *ngFor="let engagement of engagementsArray">
+                  *ngFor="let day of engagementsByDay">
                   <div class="feed__header">
                     <div class="row">
                       <div class="col-xs-12">
                         <div class="feed__header__bg">
-                            <p>{{ engagement | cpDatePipe:dateFormat }}</p>
+                            <p>{{ day | cpDatePipe:dateFormat }}</p>
                         </div>
                       </div>
                     </div>
@@ -47,32 +47,32 @@
                     <div class="row">
                       <div class="col-xs-12">
                         <div class="feed__body__wrapper engagement">
-                          <ng-container *ngFor="let data of engagements[engagement]">
+                          <ng-container *ngFor="let engagement of engagementData[day]">
                             <div class="row engagement__item">
                               <div class="col-xs-2">
                                 <p class="engagement__time">
-                                  <strong>{{ engagement | cpDatePipe:timeFormat }}</strong>
+                                  <strong>{{ engagement.epoch_time | cpDatePipe:timeFormat }}</strong>
                                 </p>
                               </div>
                               <div class="col-xs-10 engagement__meta no-left-padding">
                                 <p class="engagement__meta__title">
-                                  <strong>{{ data.title }}</strong>
+                                  <strong>{{ engagement.title }}</strong>
                                 </p>
 
                                 <p class="text-muted engagement__meta__type">
                                   <span class="icon">
-                                    <i class="material-icons">{{ data.is_event ? 'event' : 'info_outline' }}</i>
+                                    <i class="material-icons">{{ engagement.is_event ? 'event' : 'info_outline' }}</i>
                                   </span>
-                                  {{ data.is_event ? 'Event' : 'Service' }}
+                                  {{ engagement.is_event ? 'Event' : 'Service' }}
                                 </p>
                                 <div class="engagement__rating">
                                   <cp-stars
                                     [size]="starSize"
-                                    [maxRate]="data.rating_scale_maximum"
-                                    [avgRate]="data.avg_rating_percent">
+                                    [maxRate]="engagement.rating_scale_maximum"
+                                    [avgRate]="engagement.avg_rating_percent">
                                   </cp-stars>
                                 </div>
-                                <p class="engagement__feedback">{{ data.feedback_text }}</p>
+                                <p class="engagement__feedback">{{ engagement.feedback_text }}</p>
                               </div>
                             </div>
                           </ng-container>
