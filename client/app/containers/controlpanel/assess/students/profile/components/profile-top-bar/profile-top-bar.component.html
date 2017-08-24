@@ -1,0 +1,22 @@
+<div class="row">
+    <div class="col-xs-12">
+      <div class="cp-card">
+        <div class="row">
+          <div class="col-xs-4">
+            <cp-dropdown
+              [items]="dropdown"
+              (selected)="filter.emit($event.action)">
+            </cp-dropdown>
+          </div>
+          <div class="col-xs-3 pull-right">
+            <button
+              type="button"
+              (click)="download.emit()"
+              class="cpbtn cpbtn--primary pull-right" i18n>
+              Download Transcript
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -27,7 +27,7 @@ export class ListUpcomingComponent implements OnInit {
 
   sort: ISort = sort;
   canWriteSchoolWide;
-  dateFormat = FORMAT.LONG;
+  dateFormat = FORMAT.SHORT;
 
   constructor(
     private session: CPSession

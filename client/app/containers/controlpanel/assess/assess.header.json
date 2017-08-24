@@ -7,6 +7,11 @@
       "label": "Engagement",
       "url": "/assess/dashboard",
       "hasParams": true
+    },
+    {
+      "new": true,
+      "label": "Students",
+      "url": "/assess/students"
     }
   ]
 }
