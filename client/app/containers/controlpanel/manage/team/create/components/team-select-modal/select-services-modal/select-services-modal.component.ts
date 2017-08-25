@@ -38,12 +38,15 @@ export class SelectTeamServicesModalComponent extends BaseTeamSelectModalCompone
       .subscribe(services => {
         let res = {};
         let selected = {};
-
         if (this.selectedServices) {
           services.map(service => {
+
             if (Object.keys(this.selectedServices).includes(service.store_id.toString())) {
-              selected[service.store_id] = service;
+              if (CP_PRIVILEGES_MAP.services in this.selectedServices[service.store_id]) {
+                selected[service.store_id] = service;
+              }
             }
+
             if (selected[service.store_id]) {
               service.checked = true;
               selected[service.store_id] = Object.assign(
