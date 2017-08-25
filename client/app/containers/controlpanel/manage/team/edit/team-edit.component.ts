@@ -166,6 +166,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     super
       .fetchData(admin$)
       .then(res => {
+
         this.isCurrentUser = res.data.id === this.session.user.id;
 
         this.buildHeader(`${res.data.firstname} ${res.data.lastname}`);
@@ -398,13 +399,13 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   onServicesSelected(service) {
-    this.doServicesCleanUp();
-
     if (service.action === 2) {
       this.isServiceModal = true;
       setTimeout(() => { $('#selectServicesModal').modal(); }, 1);
       return;
     }
+
+    this.doServicesCleanUp();
 
     if (service.action === null) {
       this.resetServiceModal$.next(true);
@@ -440,13 +441,13 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   onClubsSelected(club) {
-    this.doClubsCleanUp();
-
     if (club.action === 2) {
       this.isClubsModal = true;
       setTimeout(() => { $('#selectClubsModal').modal() }, 1);
       return;
     }
+
+    this.doClubsCleanUp();
 
     if (club.action === null) {
       this.resetClubsModal$.next(true);
