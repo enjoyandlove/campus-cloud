@@ -173,6 +173,7 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
         this.templateData = template;
         setTimeout(() => { $('#templateComposeModal').modal(); }, 1);
       })
+      .catch(_ => null);
   }
 
   ngOnInit() {
