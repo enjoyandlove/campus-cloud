@@ -297,8 +297,16 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     return result;
   }
 
+  enableStudentFeedbackOnAttendanceToggle(value) {
+    this.form.controls['event_feedback'].setValue(value);
+    this.originalAttnFeedback = this
+      .getFromArray(this.booleanOptions, 'action', value);
+  }
+
   toggleEventAttendance(value) {
     value = value ? 1 : 0;
+
+    this.enableStudentFeedbackOnAttendanceToggle(value);
 
     this.form.controls['event_attendance'].setValue(value);
   }
