@@ -42,7 +42,10 @@ export class CPSession {
   }
 
   canStoreReadAndWriteResource(storeId: number, privilegeType: number) {
-    return privilegeType in this.user.account_level_privileges[storeId];
+    if (storeId in this.user.account_level_privileges) {
+      return privilegeType in this.user.account_level_privileges[storeId]
+    }
+    return false;
   }
 
   canAccountLevelReadResource(privilegeType: number) {
@@ -61,6 +64,14 @@ export class CPSession {
   }
 
   canSchoolReadResource(privilegeType: number) {
+    if (!(Object.keys(this.user.school_level_privileges).length)) {
+      return false;
+    }
+
+    if (!(this.school.id in this.user.school_level_privileges)) {
+      return false;
+    }
+
     const schoolPrivileges = this.user.school_level_privileges[this.school.id];
 
     if (privilegeType in schoolPrivileges) {
@@ -70,6 +81,14 @@ export class CPSession {
   }
 
   canSchoolWriteResource(privilegeType: number) {
+    if (!(Object.keys(this.user.school_level_privileges).length)) {
+      return false;
+    }
+
+    if (!(this.school.id in this.user.school_level_privileges)) {
+      return false;
+    }
+
     const schoolPrivileges = this.user.school_level_privileges[this.school.id];
 
     if (privilegeType in schoolPrivileges) {

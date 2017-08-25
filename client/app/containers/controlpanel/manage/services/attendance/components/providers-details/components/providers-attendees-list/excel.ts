@@ -1,9 +1,10 @@
-import { CPDate } from '../../../../../../../../../shared/utils/date';
+import * as moment from 'moment';
 
 const columns = [
   'Attendee Name',
   'Email',
   'Average Rating',
+  'Feedback',
   'Checked-in Method',
   'Checked-in Time',
 ];
@@ -32,8 +33,9 @@ export function generateExcelFile(data: any[]) {
     line += array[i]['firstname'] + array[i]['lastname'] + ',';
     line += array[i]['email'] + ',';
     line += array[i]['feedback_rating'] === -1 ? 0 : array[i]['feedback_rating'] + ',';
+    line += array[i]['feedback_text'] + ',';
     line += check_in_method[array[i]['check_in_method']] + ',';
-    line += CPDate.fromEpoch(array[i]['check_in_time']) + ',';
+    line += moment.unix(array[i]['check_in_time']).format('MMMM Do YYYY - h:mm a') + ',';
 
     line.slice(0, line.length - 1);
 

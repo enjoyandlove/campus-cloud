@@ -10,6 +10,7 @@
     {
       "label": "Templates",
       "new": true,
+      "hasParams": true,
       "url": "/notify/templates"
     }
   ]

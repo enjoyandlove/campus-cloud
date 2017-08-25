@@ -166,6 +166,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     super
       .fetchData(admin$)
       .then(res => {
+
         this.isCurrentUser = res.data.id === this.session.user.id;
 
         this.buildHeader(`${res.data.firstname} ${res.data.lastname}`);
@@ -329,10 +330,6 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       );
   }
 
-  doServicesCleanUp() {
-    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.services);
-  }
-
   onManageAdminSelected(data) {
     if (!data.action && this.schoolPrivileges) {
       delete this.schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin];
@@ -381,16 +378,34 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.clubs);
     accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.membership);
     accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.moderation);
+
+    if (CP_PRIVILEGES_MAP.clubs in this.schoolPrivileges) {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.clubs];
+    }
+    if (CP_PRIVILEGES_MAP.membership in this.schoolPrivileges) {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.membership];
+    }
+    if (CP_PRIVILEGES_MAP.moderation in this.schoolPrivileges) {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.moderation];
+    }
+  }
+
+  doServicesCleanUp() {
+    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.services);
+
+    if (CP_PRIVILEGES_MAP.services in this.schoolPrivileges) {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.services];
+    }
   }
 
   onServicesSelected(service) {
-    this.doServicesCleanUp();
-
     if (service.action === 2) {
       this.isServiceModal = true;
       setTimeout(() => { $('#selectServicesModal').modal(); }, 1);
       return;
     }
+
+    this.doServicesCleanUp();
 
     if (service.action === null) {
       this.resetServiceModal$.next(true);
@@ -426,13 +441,13 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   onClubsSelected(club) {
-    this.doClubsCleanUp();
-
     if (club.action === 2) {
       this.isClubsModal = true;
       setTimeout(() => { $('#selectClubsModal').modal() }, 1);
       return;
     }
+
+    this.doClubsCleanUp();
 
     if (club.action === null) {
       this.resetClubsModal$.next(true);
@@ -578,6 +593,10 @@ function accountCleanUp(accountPrivileges, privilegeNo: number) {
     Object.keys(accountPrivileges).map(store => {
       if (privilegeNo in accountPrivileges[store]) {
         delete accountPrivileges[store][privilegeNo]
+      }
+
+      if (!(Object.keys(accountPrivileges[store]).length)) {
+        delete accountPrivileges[store];
       }
     })
   }

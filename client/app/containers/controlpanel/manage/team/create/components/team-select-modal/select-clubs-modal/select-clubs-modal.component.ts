@@ -8,6 +8,8 @@ import { ClubsService } from '../../../../../clubs/clubs.service';
 import { CP_PRIVILEGES_MAP } from '../../../../../../../../shared/utils';
 import { BaseTeamSelectModalComponent } from '../base/team-select-modal.component';
 
+const PENDING_STATUS = 2;
+
 @Component({
   selector: 'cp-select-clubs-modal',
   templateUrl: './select-clubs-modal.component.html'
@@ -28,18 +30,6 @@ export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent
     this.privilegeType = CP_PRIVILEGES_MAP.clubs;
   }
 
-  filterClubDataFromAccountPrivilege() {
-    let _selectedClubs = {};
-    Object.keys(this.selectedClubs).forEach(storeId => {
-      if (this.selectedClubs[storeId][CP_PRIVILEGES_MAP.clubs]) {
-        _selectedClubs[storeId] = {
-          ...this.selectedClubs[storeId][CP_PRIVILEGES_MAP.clubs]
-        };
-      }
-    });
-    return _selectedClubs;
-  }
-
   doReset() {
     this.teardown.emit();
   }
@@ -51,21 +41,26 @@ export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent
     this
       .service
       .getClubs(search, 1, 1000)
+      .map(clubs => clubs.filter(club => club.status !== PENDING_STATUS))
       .subscribe(clubs => {
         let res = {};
         let selected = {};
 
         if (this.selectedClubs) {
-          selected = this.filterClubDataFromAccountPrivilege();
-
           clubs.map(club => {
-            if (selected[club.store_id]) {
+            if (Object.keys(this.selectedClubs).includes(club.id.toString())) {
+              if (CP_PRIVILEGES_MAP.clubs in this.selectedClubs[club.id]) {
+                selected[club.id] = club;
+              }
+            }
+
+            if (selected[club.id]) {
               club.checked = true;
               // we pass the id to the selected object
               // to populate the modal state....
-              selected[club.store_id] = Object.assign(
+              selected[club.id] = Object.assign(
                 {},
-                selected[club.store_id],
+                selected[club.id],
                 { id: club.id }
               );
             }
