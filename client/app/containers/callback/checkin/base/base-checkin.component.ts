@@ -32,11 +32,13 @@ export class BaseCheckinComponent implements OnInit {
   @Output() send: EventEmitter<any> = new EventEmitter();
 
   isInternal;
+  isDownload;
 
   constructor(
     private route: ActivatedRoute
   ) {
     this.isInternal = 'edit' in this.route.snapshot.queryParams;
+    this.isDownload = 'download' in this.route.snapshot.queryParams;
 
     if (this.isInternal) {
       setTimeout(() => { $('#checkinInternalModal').modal(); }, 1);
@@ -232,6 +234,10 @@ export class BaseCheckinComponent implements OnInit {
     if (!this.isEvent && !this.isService) {
       console.warn('BaseCheckinComponent requires an isEvent or isService input');
       return;
+    }
+
+    if (this.isDownload) {
+      this.handlePdf();
     }
   }
 }
