@@ -25,6 +25,10 @@ const eventsDropdown = function (privilege: { r: boolean, w: boolean }) {
     }
   ];
 
+  if (!privilege) {
+    return items;
+  }
+
   if (privilege.w) {
     items = [
       ...items,
@@ -45,6 +49,10 @@ const manageAdminDropdown = function (privilege: { r: boolean, w: boolean }) {
     }
   ];
 
+  if (!privilege) {
+    return items;
+  }
+
   if (privilege.w) {
     items = [
       ...items,
@@ -64,6 +72,10 @@ const clubsDropdown = function (privilege: { r: boolean, w: boolean }) {
       'action': null
     }
   ];
+
+  if (!privilege) {
+    return items;
+  }
 
   if (privilege.w) {
     items = [
@@ -88,6 +100,10 @@ const servicesDropdown = function (privilege: { r: boolean, w: boolean }) {
       'action': null
     }
   ];
+
+  if (!privilege) {
+    return items;
+  }
 
   if (privilege.w) {
     items = [
@@ -124,7 +140,6 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   eventsMenu;
   privileges;
   isFormError;
-  canReadClubs;
   manageAdmins;
   servicesMenu;
   isClubsModal;
@@ -166,7 +181,6 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     super
       .fetchData(admin$)
       .then(res => {
-
         this.isCurrentUser = res.data.id === this.session.user.id;
 
         this.buildHeader(`${res.data.firstname} ${res.data.lastname}`);
@@ -290,9 +304,6 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       }
     };
 
-    // console.log(_data);
-    // return;
-
     if (this.isCurrentUser) {
       /**
        * @data (firstname, lastname, email)
@@ -374,30 +385,6 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     );
   }
 
-  doClubsCleanUp() {
-    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.clubs);
-    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.membership);
-    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.moderation);
-
-    if (CP_PRIVILEGES_MAP.clubs in this.schoolPrivileges) {
-      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.clubs];
-    }
-    if (CP_PRIVILEGES_MAP.membership in this.schoolPrivileges) {
-      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.membership];
-    }
-    if (CP_PRIVILEGES_MAP.moderation in this.schoolPrivileges) {
-      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.moderation];
-    }
-  }
-
-  doServicesCleanUp() {
-    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.services);
-
-    if (CP_PRIVILEGES_MAP.services in this.schoolPrivileges) {
-      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.services];
-    }
-  }
-
   onServicesSelected(service) {
     if (service.action === 2) {
       this.isServiceModal = true;
@@ -405,20 +392,10 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    this.doServicesCleanUp();
-
     if (service.action === null) {
-      this.resetServiceModal$.next(true);
-      if (this.schoolPrivileges) {
-        if (CP_PRIVILEGES_MAP.services in this.schoolPrivileges) {
-          delete this.schoolPrivileges[CP_PRIVILEGES_MAP.services];
-        }
-      }
-
+      delete this.accountPrivileges[CP_PRIVILEGES_MAP.services];
       return;
     }
-
-    this.resetServiceModal$.next(true);
 
     this.schoolPrivileges = Object.assign(
       {},
@@ -447,43 +424,18 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    this.doClubsCleanUp();
-
     if (club.action === null) {
-      this.resetClubsModal$.next(true);
-
-      if (CP_PRIVILEGES_MAP.clubs in this.schoolPrivileges) {
-        delete this.schoolPrivileges[CP_PRIVILEGES_MAP.clubs];
-      }
-      if (CP_PRIVILEGES_MAP.membership in this.schoolPrivileges) {
-        delete this.schoolPrivileges[CP_PRIVILEGES_MAP.membership];
-      }
-      if (CP_PRIVILEGES_MAP.moderation in this.schoolPrivileges) {
-        delete this.schoolPrivileges[CP_PRIVILEGES_MAP.moderation];
-      }
-
+      delete this.accountPrivileges[CP_PRIVILEGES_MAP.clubs];
       return;
     }
-
-    this.resetClubsModal$.next(true);
 
     this.schoolPrivileges = Object.assign(
       {},
       this.schoolPrivileges,
       {
         [CP_PRIVILEGES_MAP.clubs]: {
-          r: true,
-          w: this.session.user.school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.clubs].w
-        },
-
-        [CP_PRIVILEGES_MAP.moderation]: {
-          r: true,
-          w: this.session.user.school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.clubs].w
-        },
-
-        [CP_PRIVILEGES_MAP.membership]: {
-          r: true,
-          w: this.session.user.school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.clubs].w
+          r: club.action === 2 ? true : true,
+          w: club.action === 2 ? false : true
         }
       }
     );
@@ -491,18 +443,16 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
   onEventsSelected(event) {
     if (event.action === null) {
-      if (CP_PRIVILEGES_MAP.events in this.schoolPrivileges) {
-        delete this.schoolPrivileges[CP_PRIVILEGES_MAP.events];
-      }
+      delete this.accountPrivileges[CP_PRIVILEGES_MAP.events];
       return;
     }
 
-    this.schoolPrivileges = Object.assign(
+    this.accountPrivileges = Object.assign(
       {},
-      this.schoolPrivileges,
+      this.accountPrivileges,
       {
         [CP_PRIVILEGES_MAP.events]: {
-          r: true,
+          r: event.action === 2 ? true : true,
           w: event.action === 2 ? false : true
         }
       }
@@ -510,23 +460,23 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   disableDependencies(deps: Array<number>) {
-    deps.map(dep => {
+    deps.forEach(dep => {
       if (this.schoolPrivileges && this.schoolPrivileges[dep]) {
         this.checkControl(undefined, dep, { deps: [] });
       }
     });
   }
 
-  handleDependencies(privilegeNo, dependencies: Array<number>) {
+  handleDependencies(permission, dependencies: Array<number>) {
     if (!dependencies.length) { return; }
 
-    dependencies.map(dep => {
+    dependencies.forEach(dep => {
 
       if (this.schoolPrivileges[dep]) {
         return;
       }
 
-      if (this.schoolPrivileges[privilegeNo]) {
+      if (this.schoolPrivileges[permission]) {
         this.checkControl(undefined, dep, { deps: [] });
       }
 
@@ -534,31 +484,50 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
 
-  checkControl(isChecked, privilegeNo, privilegeExtraData): void {
-    if (!isChecked && privilegeExtraData.disables) {
-      this.disableDependencies(privilegeExtraData.disables);
+  checkControl(isChecked, type, control): void {
+    if (!isChecked && control.disables) {
+      this.disableDependencies(control.disables);
     }
 
-    if (this.schoolPrivileges && this.schoolPrivileges[privilegeNo]) {
-      delete this.schoolPrivileges[privilegeNo];
-      this.handleDependencies(privilegeNo, privilegeExtraData.deps);
+    if (this.schoolPrivileges && this.schoolPrivileges[type]) {
+      delete this.schoolPrivileges[type];
+      this.handleDependencies(type, control.deps);
       return;
     }
 
-    let privilege = this.user.school_level_privileges[this.schoolId][privilegeNo];
+    let privilege = this.user.school_level_privileges[this.schoolId][type];
 
     this.schoolPrivileges = Object.assign(
       {},
       this.schoolPrivileges,
       {
-        [privilegeNo]: {
+        [type]: {
           r: privilege.r,
           w: privilege.w
         }
       });
 
-    this.handleDependencies(privilegeNo, privilegeExtraData.deps);
+    this.handleDependencies(type, control.deps);
   }
+
+  // checkControl(_, type): void {
+  //   if (this.schoolPrivileges && this.schoolPrivileges[type]) {
+  //     delete this.schoolPrivileges[type];
+  //     return;
+  //   }
+
+  //   let privilege = this.user.school_level_privileges[this.schoolId][type];
+
+  //   this.schoolPrivileges = Object.assign(
+  //     {},
+  //     this.schoolPrivileges,
+  //     {
+  //       [type]: {
+  //         r: privilege.r,
+  //         w: privilege.w
+  //       }
+  //     });
+  // }
 
 
   ngOnInit() {
@@ -566,14 +535,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     this.schoolId = this.session.school.id;
     let schoolPrivileges = this.user.school_level_privileges[this.schoolId];
 
-    this.canReadClubs = this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.clubs) ||
-      this.session.canAccountLevelReadResource(CP_PRIVILEGES_MAP.clubs);
-
-    this.canReadEvents = this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.events);
-
-    this.canReadServices = this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.services) ||
-      this.session.canAccountLevelReadResource(CP_PRIVILEGES_MAP.services);
-
+    this.canReadEvents = schoolPrivileges[CP_PRIVILEGES_MAP.events];
+    this.canReadServices = schoolPrivileges[CP_PRIVILEGES_MAP.services];
     this.formData = TEAM_ACCESS.getMenu(this.user.school_level_privileges[this.schoolId]);
 
     const clubsPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.clubs];
@@ -586,19 +549,4 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     this.servicesMenu = servicesDropdown(servicesPrivilege);
     this.manageAdmins = manageAdminDropdown(manageAdminPrivilege);
   }
-}
-
-function accountCleanUp(accountPrivileges, privilegeNo: number) {
-  if (accountPrivileges) {
-    Object.keys(accountPrivileges).map(store => {
-      if (privilegeNo in accountPrivileges[store]) {
-        delete accountPrivileges[store][privilegeNo]
-      }
-
-      if (!(Object.keys(accountPrivileges[store]).length)) {
-        delete accountPrivileges[store];
-      }
-    })
-  }
-  return accountPrivileges;
 }
