@@ -1,16 +1,24 @@
 import { Headers } from '@angular/http';
-import { isProd } from '../../config/env';
+
+import { isProd, isCanada, isSea } from '../../config/env';
 import { appStorage } from '../../shared/utils/localStorage';
 
 import * as RESOURCES from './api.resources';
 
 let API_BASE_URL;
+
 const API_VERSION = {
   'V1': 'v1'
 };
 
 if (isProd) {
-  API_BASE_URL = `https://api.studentlifemobile.com/cc`;
+  if (isCanada) {
+    API_BASE_URL = `https://canapi.studentlifemobile.com/cc`;
+  } else if (isSea) {
+    API_BASE_URL = `https://seaapi.studentlifemobile.com/cc`;
+  } else {
+    API_BASE_URL = `https://api.studentlifemobile.com/cc`;
+  }
 } else {
   API_BASE_URL = 'https://usstagingapi.studentlifemobile.com/cc';
   // API_BASE_URL = 'http://ec2-54-234-212-53.compute-1.amazonaws.com:5002/cc';
