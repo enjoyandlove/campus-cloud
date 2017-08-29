@@ -293,7 +293,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    let _data = {
+    let _data: any = {
       school_level_privileges: {
         [this.schoolId]: {
           ...this.schoolPrivileges
@@ -304,15 +304,6 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       }
     };
 
-    if (this.isCurrentUser) {
-      /**
-       * @data (firstname, lastname, email)
-       * this fields are only needed when updating the
-       * current user, if sent when updating another user the BE fails
-       */
-      _data = Object.assign({}, _data, ...data);
-    }
-
     const isEmpty = require('lodash').isEmpty;
     const emptyAccountPrivileges = isEmpty(_data.account_level_privileges);
     const emptySchoolPrivileges = isEmpty(_data.school_level_privileges[this.schoolId]);
@@ -321,6 +312,17 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       this.formError = 'You have not granted any access';
       this.isFormError = true;
       return;
+    }
+
+    if (this.isCurrentUser) {
+      /**
+       * @data (firstname, lastname, email)
+       * this fields are only needed when updating the
+       * current user, if sent when updating another user the BE fails
+       */
+      const { firstname, lastname } = data;
+
+      _data = { firstname, lastname };
     }
 
     this
