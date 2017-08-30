@@ -34,19 +34,19 @@ export class EngagementService extends BaseService {
   }
 
   getChartData(search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_ENGAGEMENT}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_ENGAGEMENT}/`;
 
     return super.get(url, { search }).map(res => res.json());
   }
 
   getEventsData(search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_EVENT}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_EVENT}/`;
 
     return super.get(url, { search }).map(res => res.json());
   }
 
   getServicesData(search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_SERVICE}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_SERVICE}/`;
 
     return super.get(url, { search }).map(res => res.json());
   }
