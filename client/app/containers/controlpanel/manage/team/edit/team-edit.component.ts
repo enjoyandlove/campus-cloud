@@ -445,13 +445,15 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
   onEventsSelected(event) {
     if (event.action === null) {
-      delete this.accountPrivileges[CP_PRIVILEGES_MAP.events];
+      if (CP_PRIVILEGES_MAP.events in this.schoolPrivileges) {
+        delete this.schoolPrivileges[CP_PRIVILEGES_MAP.events];
+      }
       return;
     }
 
-    this.accountPrivileges = Object.assign(
+    this.schoolPrivileges = Object.assign(
       {},
-      this.accountPrivileges,
+      this.schoolPrivileges,
       {
         [CP_PRIVILEGES_MAP.events]: {
           r: event.action === 2 ? true : true,
