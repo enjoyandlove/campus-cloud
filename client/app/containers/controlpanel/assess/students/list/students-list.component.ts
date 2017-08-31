@@ -1,5 +1,6 @@
-import { URLSearchParams } from '@angular/http';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
 import { StudentsService } from './../students.service';
@@ -37,8 +38,10 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
   defaultImage = require('public/default/user.png');
 
   constructor(
+    private router: Router,
     private store: Store<any>,
     private session: CPSession,
+    private route: ActivatedRoute,
     private service: StudentsService
   ) {
     super();
@@ -69,6 +72,31 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
 
   onPaginationPrevious(): void {
     super.goToPrevious();
+    this.fetch();
+  }
+
+  updateUrl() {
+    this
+      .router
+      .navigate(
+        ['/assess/students'],
+        {
+          queryParams: {
+            list_id: this.state.user_list_id
+          }
+        }
+      )
+  }
+
+  readStateFromUrl() {
+    this.state = Object.assign(
+      {},
+      this.state,
+      {
+        user_list_id: this.route.snapshot.queryParams['list_id']
+      }
+    )
+
     this.fetch();
   }
 
@@ -106,6 +134,8 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
         user_list_id: filterBy.list_id,
       }
     )
+    this.updateUrl();
+
     this.fetch();
   }
 
@@ -116,5 +146,9 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
       type: HEADER_UPDATE,
       payload: require('../../assess.header.json')
     });
+
+    if ('list_id' in this.route.snapshot.queryParams) {
+      this.readStateFromUrl();
+    }
   }
 }
