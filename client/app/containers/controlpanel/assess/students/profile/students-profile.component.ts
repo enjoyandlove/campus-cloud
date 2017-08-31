@@ -169,10 +169,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
 
     stream$
       .toPromise()
-      .then(data => {
-        console.log(data);
-        generateExcelFile(data, 'andres_roget');
-      })
+      .then(data => generateExcelFile(data, 'andres_roget'))
   }
 
   onComposeTeardown() {

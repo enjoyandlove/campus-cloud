@@ -10,7 +10,10 @@ const columns = [
   'Response',
 ];
 
-
+const type = {
+  'event': 'Event',
+  'service': 'Service'
+};
 
 export function generateExcelFile(data: any[], fullName = 'download') {
   const array = typeof data !== 'object' ? JSON.parse(data) : data;
@@ -37,12 +40,12 @@ export function generateExcelFile(data: any[], fullName = 'download') {
 
     line += name + ',';
 
-    line += array[i]['type'] + ',';
+    line += type[array[i]['type']] + ',';
 
     line += moment.unix(array[i]['time_epoch']).format('MMMM Do YYYY - h:mm a') + ',';
 
     line += array[i]['feedback_time_epoch'] === 0
-      ? 'No Feedback Provided'
+      ? 'No Feedback Provided' + ','
       : moment.unix(array[i]['feedback_time_epoch']).format('MMMM Do YYYY - h:mm a') + ',';
 
     line += array[i]['user_rating_percent'] === -1
