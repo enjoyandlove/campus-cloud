@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
+import { generateExcelFile } from './utils';
 import { StudentsService } from './../students.service';
 import { CPSession } from './../../../../../session/index';
 import { CPDate } from './../../../../../shared/utils/date';
@@ -31,13 +33,16 @@ const setTimeDataToZero = unixTimeStamp => {
     .hours(0).minutes(0).seconds(0).toDate())
 }
 
+const ALL_ENGAGEMENTS = 0;
+const DOWNLOAD_ALL_RECORDS = 1;
+
 @Component({
   selector: 'cp-students-profile',
   templateUrl: './students-profile.component.html',
   styleUrls: ['./students-profile.component.scss']
 })
 export class StudentsProfileComponent extends BaseComponent implements OnInit {
-
+  studentId;
   messageData;
   engagementData = [];
   engagementsByDay = [];
@@ -47,19 +52,35 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
   timeFormat = FORMAT.TIME;
   loadingStudentData = true;
   starSize = STAR_SIZE.SMALL;
+  isEvent = 'event';
+
+  state = {
+    scope: ALL_ENGAGEMENTS
+  }
 
   constructor(
     private store: Store<any>,
     private session: CPSession,
+    private route: ActivatedRoute,
     private service: StudentsService
   ) {
     super();
     super.isLoading().subscribe(loading => this.loadingEngagementData = loading);
 
+    this.studentId = this.route.snapshot.params['studentId'];
+
     this.fetchStudentData();
   }
 
   fetchStudentData() {
+    const search = new URLSearchParams();
+    search.append('school_id', this.session.school.id.toString());
+
+    // this
+    //   .service
+    //   .getStudentById(search, this.studentId)
+    //   .subscribe(res => console.log(res));
+
     setTimeout(() => {
       this.buildHeader({
         firstname: 'Peter',
@@ -74,25 +95,27 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
 
   fetch() {
     const search = new URLSearchParams();
+    search.append('scope', this.state.scope.toString());
     search.append('school_id', this.session.school.id.toString());
 
-    const stream$ = this.service.getEngagements(search, this.startRange, this.endRange);
+    const stream$ = this
+      .service.getEngagements(search, this.studentId, this.startRange, this.endRange);
 
     super
       .fetchData(stream$)
       .then(res => {
         this.engagementData = res.data.reduce((result, current) => {
-          if (isSameDay(current.epoch_time, current.epoch_time)) {
-            if (setTimeDataToZero(current.epoch_time) in result) {
-              result[setTimeDataToZero(current.epoch_time)] = [
-                ...result[setTimeDataToZero(current.epoch_time)],
+          if (isSameDay(current.time_epoch, current.time_epoch)) {
+            if (setTimeDataToZero(current.time_epoch) in result) {
+              result[setTimeDataToZero(current.time_epoch)] = [
+                ...result[setTimeDataToZero(current.time_epoch)],
                 current
               ]
             } else {
-              result[setTimeDataToZero(current.epoch_time)] = [current]
+              result[setTimeDataToZero(current.time_epoch)] = [current]
             }
           } else {
-            result[setTimeDataToZero(current.epoch_time)] = [current]
+            result[setTimeDataToZero(current.time_epoch)] = [current]
           }
           return result;
         }, {})
@@ -102,8 +125,13 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
       .catch(err => console.log(err))
   }
 
-  onFilter(filterBy) {
-    console.log('filtering by', filterBy);
+  onFilter(scope) {
+    this.state = Object.assign(
+      {},
+      this.state,
+      { scope }
+    );
+
     this.fetch();
   }
 
@@ -131,7 +159,20 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
   }
 
   onDownload() {
-    console.log('doing download');
+    const search = new URLSearchParams();
+    search.append('scope', this.state.scope.toString());
+    search.append('all', DOWNLOAD_ALL_RECORDS.toString());
+    search.append('school_id', this.session.school.id.toString());
+
+    const stream$ = this
+      .service.getEngagements(search, this.studentId, this.startRange, this.endRange);
+
+    stream$
+      .toPromise()
+      .then(data => {
+        console.log(data);
+        generateExcelFile(data, 'andres_roget');
+      })
   }
 
   onComposeTeardown() {

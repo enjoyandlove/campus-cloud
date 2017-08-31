@@ -12,7 +12,7 @@ import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
 
 interface IState {
   search_str: string,
-  list_id: number
+  user_list_id: number
 }
 
 declare var $;
@@ -28,11 +28,13 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
 
   state: IState = {
     search_str: null,
-    list_id: null,
+    user_list_id: null,
   }
   messageData;
   dateFormat = FORMAT.DATETIME;
   isStudentComposeModal = false;
+  avatarCustomCodeThreshold = 3;
+  defaultImage = require('public/default/user.png');
 
   constructor(
     private store: Store<any>,
@@ -45,17 +47,18 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
 
   fetch() {
     const search = new URLSearchParams();
-    const list_id = this.state.list_id ? this.state.list_id.toString() : null;
+    const user_list_id = this.state.user_list_id ? this.state.user_list_id.toString() : null;
 
     search.append('school_id', this.session.school.id.toString());
     search.append('search_str', this.state.search_str);
-    search.append('list_id', list_id);
+    search.append('user_list_id', user_list_id);
 
     const stream$ = this.service.getStudentsByList(search, this.startRange, this.endRange);
+
     super
       .fetchData(stream$)
       .then(res => this.students = res.data)
-      .catch(err => console.log(err));
+      .catch(err => { throw new Error(err) });
 
   }
 
@@ -86,7 +89,7 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
 
   messageStudent(student) {
     this.messageData = {
-      name: `${student.first_name} ${student.last_name}`,
+      name: `${student.firstname} ${student.lastname}`,
       userIds: [student.id]
     };
 
@@ -100,7 +103,7 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
       this.state,
       {
         search_str: filterBy.search_str,
-        list_id: filterBy.list_id,
+        user_list_id: filterBy.list_id,
       }
     )
     this.fetch();

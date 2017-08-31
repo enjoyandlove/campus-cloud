@@ -32,22 +32,30 @@
             <span class="col-xs-3 text-truncate students__thumbnail">
               <div class="row">
                 <div class="col-xs-3 no-right-padding">
-                  <img src="https://unsplash.it/40/40" class="img-rounded">
+                  <img [src]="student.avatar <= avatarCustomCodeThreshold ? defaultImage : student.avatar_url" class="img-rounded">
                 </div>
                 <div class="col-xs-9 no-left-padding">
                   <a [routerLink]="[student.id]">
-                    <strong>{{ student.first_name }} {{ student.last_name }}</strong>
+                    <strong>{{ student.firstname }} {{ student.lastname }}</strong>
                   </a>
                 </div>
               </div>
             </span>
 
             <span class="col-xs-3">
-              {{ student.last_seven_days.events }} Events and {{ student.last_seven_days.services }} Services
+              {{ student.events }} Events and {{ student.services }} Services
             </span>
 
             <span class="col-xs-3">
-              {{ student.last_engagement | cpDatePipe:dateFormat }}
+              <ng-container *ngIf="student.last_event === 0 && student.last_service === 0">No engagement data</ng-container>
+              <ng-container *ngIf="student.last_event !== 0 || student.last_service !== 0">
+                <ng-container *ngIf="student.last_service >= student.last_event">
+                  {{ student.last_service | cpDatePipe:dateFormat }}
+                </ng-container>
+                <ng-container *ngIf="student.last_event > student.last_service">
+                  {{ student.last_event | cpDatePipe:dateFormat }}
+                </ng-container>
+              </ng-container>
             </span>
 
             <span class="col-xs-3 text-right">

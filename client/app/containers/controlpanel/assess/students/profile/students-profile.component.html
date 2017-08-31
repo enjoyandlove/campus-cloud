@@ -51,28 +51,28 @@
                             <div class="row engagement__item">
                               <div class="col-xs-2">
                                 <p class="engagement__time">
-                                  <strong>{{ engagement.epoch_time | cpDatePipe:timeFormat }}</strong>
+                                  <strong>{{ engagement.time_epoch | cpDatePipe:timeFormat }}</strong>
                                 </p>
                               </div>
                               <div class="col-xs-10 engagement__meta no-left-padding">
                                 <p class="engagement__meta__title">
-                                  <strong>{{ engagement.title }}</strong>
+                                  <strong>{{ engagement.name }}</strong>
                                 </p>
 
                                 <p class="text-muted engagement__meta__type">
                                   <span class="icon">
-                                    <i class="material-icons">{{ engagement.is_event ? 'event' : 'info_outline' }}</i>
+                                    <i class="material-icons">{{ engagement.type === isEvent ? 'event' : 'info_outline' }}</i>
                                   </span>
-                                  {{ engagement.is_event ? 'Event' : 'Service' }}
+                                  {{ engagement.type === isEvent ? 'Event' : 'Service' }}
                                 </p>
-                                <div class="engagement__rating">
+                                <div class="engagement__rating" *ngIf="engagement.feedback_time_epoch > 0">
                                   <cp-stars
                                     [size]="starSize"
                                     [maxRate]="engagement.rating_scale_maximum"
-                                    [avgRate]="engagement.avg_rating_percent">
+                                    [avgRate]="engagement.user_rating_percent">
                                   </cp-stars>
                                 </div>
-                                <p class="engagement__feedback">{{ engagement.feedback_text }}</p>
+                                <p class="engagement__feedback" *ngIf="engagement.feedback_time_epoch > 0">{{ engagement.user_feedback_text }}</p>
                               </div>
                             </div>
                           </ng-container>
