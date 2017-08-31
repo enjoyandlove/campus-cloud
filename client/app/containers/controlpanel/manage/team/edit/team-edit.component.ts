@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import { TEAM_ACCESS } from '../utils';
 import { STATUS } from '../../../../../shared/constants';
 import { BaseComponent } from '../../../../../base/base.component';
+import { accountsToStoreMap } from './../../../../../session/index';
 import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
 import { AdminService, ErrorService } from '../../../../../shared/services';
 import { CPSession } from '../../../../../session';
@@ -365,7 +366,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     if (checked) {
       this.accountPrivileges = Object.assign(
         {},
-        this.user.account_level_privileges
+        accountsToStoreMap(this.session.user.account_mapping[this.schoolId],
+                           this.user.account_level_privileges)
       );
 
       this.schoolPrivileges = Object.assign(
