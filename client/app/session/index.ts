@@ -11,6 +11,17 @@ import { ISchool } from './school.interface';
 export * from './user.interface';
 export * from './school.interface';
 
+export const accountsToStoreMap = (accountsMap: Array<number>, accountPrivileges) => {
+  let accounts = {};
+
+  accountsMap.map(storeId => {
+    if (storeId in accountPrivileges) {
+      accounts[storeId] = accountPrivileges[storeId];
+    }
+  });
+  return accounts;
+}
+
 @Injectable()
 export class CPSession {
   private _user: IUser;

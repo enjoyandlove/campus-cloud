@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import { TEAM_ACCESS } from '../utils';
 import { CPSession } from '../../../../../session';
 import { STATUS } from '../../../../../shared/constants';
+import { accountsToStoreMap } from './../../../../../session';
 import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
 import { ErrorService, AdminService } from '../../../../../shared/services';
 import { CP_PRIVILEGES, CP_PRIVILEGES_MAP } from '../../../../../shared/utils';
@@ -238,18 +239,20 @@ export class TeamCreateComponent implements OnInit {
     if (checked) {
       this.accountPrivileges = Object.assign(
         {},
-        this.user.account_level_privileges
+        accountsToStoreMap(this.session.user.account_mapping[this.schoolId],
+                           this.user.account_level_privileges)
       );
 
       this.schoolPrivileges = Object.assign(
         {},
         this.user.school_level_privileges[this.schoolId]
       );
+
       return;
     }
 
-    this.accountPrivileges = {};
     this.schoolPrivileges = {};
+    this.accountPrivileges = {};
   }
 
   onServicesModalSelected(services) {
