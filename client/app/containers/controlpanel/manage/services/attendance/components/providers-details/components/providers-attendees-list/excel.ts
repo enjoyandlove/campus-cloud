@@ -38,7 +38,7 @@ export function generateExcelFile(data: any[]) {
       ? 0 + ','
       : ((array[i]['feedback_rating'] / 100) * 5) + ',';
 
-    line += array[i]['feedback_text'] + ',';
+    line += array[i]['feedback_text'].trim().replace(/[ ]*,[ ]*|[ ]+/g, ' ') + ',';
 
     line += check_in_method[array[i]['check_in_method']] + ',';
 
