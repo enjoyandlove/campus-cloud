@@ -231,6 +231,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   }
 
   buildForm() {
+    console.log(this.service);
     this.form = this.fb.group({
       'name': [this.service.name, Validators.required],
       'logo_url': [this.service.logo_url, Validators.required],
@@ -241,7 +242,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       'description': [this.service.description],
       'email': [this.service.email],
       'website': [this.service.website],
-      'phone': [this.service.phone],
+      'contactphone': [this.service.contactphone],
       'secondary_name': [this.service.secondary_name],
       'city': [this.service.city],
       'province': [this.service.province],
@@ -308,7 +309,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
         secondary_name: data.secondary_name,
         email: data.email,
         website: data.website,
-        phone: data.phone,
+        contactphone: data.contactphone,
         address: data.address,
         city: data.city,
         province: data.province,
