@@ -141,7 +141,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       .catch(err => console.error(err));
   }
 
-  onPlaceChange(data) {
+  onPlaceChanged(data) {
     let cpMap = CPMap.getBaseMapObject(data);
 
     if (!data) {
