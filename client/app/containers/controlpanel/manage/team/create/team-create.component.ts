@@ -25,6 +25,10 @@ const eventsDropdown = function (privilege: { r: boolean, w: boolean }) {
     }
   ];
 
+  if (!privilege) {
+    return items;
+  }
+
   if (privilege.w) {
     items = [
       ...items,
@@ -45,6 +49,10 @@ const manageAdminDropdown = function (privilege: { r: boolean, w: boolean }) {
     }
   ];
 
+  if (!privilege) {
+    return items;
+  }
+
   if (privilege.w) {
     items = [
       ...items,
@@ -64,6 +72,10 @@ const clubsDropdown = function (privilege: { r: boolean, w: boolean }) {
       'action': null
     }
   ];
+
+  if (!privilege) {
+    return items;
+  }
 
   if (privilege.w) {
     items = [
@@ -88,6 +100,10 @@ const servicesDropdown = function (privilege: { r: boolean, w: boolean }) {
       'action': null
     }
   ];
+
+  if (!privilege) {
+    return items;
+  }
 
   if (privilege.w) {
     items = [
@@ -470,7 +486,7 @@ export class TeamCreateComponent implements OnInit {
   }
 }
 
-function accountCleanUp(accountPrivileges, privilegeNo: number) {
+export const accountCleanUp = function(accountPrivileges, privilegeNo: number) {
   if (accountPrivileges) {
     Object.keys(accountPrivileges).map(store => {
       if (privilegeNo in accountPrivileges[store]) {
