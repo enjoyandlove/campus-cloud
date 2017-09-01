@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 
 import { TEAM_ACCESS } from '../utils';
 import { STATUS } from '../../../../../shared/constants';
+import { accountCleanUp } from './../create/team-create.component';
 import { BaseComponent } from '../../../../../base/base.component';
 import { accountsToStoreMap } from './../../../../../session/index';
 import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
@@ -345,8 +346,10 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   onManageAdminSelected(data) {
-    if (!data.action && this.schoolPrivileges) {
-      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin];
+    if (!data.action) {
+      if (CP_PRIVILEGES_MAP.manage_admin in this.schoolPrivileges) {
+        delete this.schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin];
+      }
       return;
     }
 
@@ -377,16 +380,26 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    this.accountPrivileges = {};
     this.schoolPrivileges = {};
+    this.accountPrivileges = {};
   }
 
   onServicesModalSelected(services) {
+    this.doServicesCleanUp();
+
     this.accountPrivileges = Object.assign(
       {},
       this.accountPrivileges,
       ...services
     );
+  }
+
+  doServicesCleanUp() {
+    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.services);
+
+    if (CP_PRIVILEGES_MAP.services in this.schoolPrivileges) {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.services];
+    }
   }
 
   onServicesSelected(service) {
@@ -396,8 +409,16 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
+    this.doServicesCleanUp();
+    this.resetServiceModal$.next(true);
+
     if (service.action === null) {
-      delete this.accountPrivileges[CP_PRIVILEGES_MAP.services];
+
+      if (this.schoolPrivileges) {
+        if (CP_PRIVILEGES_MAP.services in this.schoolPrivileges) {
+          delete this.schoolPrivileges[CP_PRIVILEGES_MAP.services];
+        }
+      }
       return;
     }
 
@@ -413,7 +434,25 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     );
   }
 
+  doClubsCleanUp() {
+    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.clubs);
+    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.membership);
+    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.moderation);
+
+    if (CP_PRIVILEGES_MAP.clubs in this.schoolPrivileges) {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.clubs];
+    }
+    if (CP_PRIVILEGES_MAP.membership in this.schoolPrivileges) {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.membership];
+    }
+    if (CP_PRIVILEGES_MAP.moderation in this.schoolPrivileges) {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.moderation];
+    }
+  }
+
   onClubsModalSelected(clubs) {
+    this.doClubsCleanUp();
+
     this.accountPrivileges = Object.assign(
       {},
       this.accountPrivileges,
@@ -428,7 +467,11 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
+    this.doClubsCleanUp();
+    this.resetClubsModal$.next(true);
+
     if (club.action === null) {
+      this.resetClubsModal$.next(true);
       delete this.accountPrivileges[CP_PRIVILEGES_MAP.clubs];
       return;
     }
@@ -438,8 +481,18 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       this.schoolPrivileges,
       {
         [CP_PRIVILEGES_MAP.clubs]: {
-          r: club.action === 2 ? true : true,
-          w: club.action === 2 ? false : true
+          r: true,
+          w: this.session.user.school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.clubs].w
+        },
+
+        [CP_PRIVILEGES_MAP.moderation]: {
+          r: true,
+          w: this.session.user.school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.clubs].w
+        },
+
+        [CP_PRIVILEGES_MAP.membership]: {
+          r: true,
+          w: this.session.user.school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.clubs].w
         }
       }
     );
@@ -473,7 +526,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     });
   }
 
-  handleDependencies(permission, dependencies: Array<number>) {
+  handleDependencies(privilegeNo, dependencies: Array<number>) {
     if (!dependencies.length) { return; }
 
     dependencies.forEach(dep => {
@@ -482,59 +535,38 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
         return;
       }
 
-      if (this.schoolPrivileges[permission]) {
+      if (this.schoolPrivileges[privilegeNo]) {
         this.checkControl(undefined, dep, { deps: [] });
       }
 
     });
   }
 
-
-  checkControl(isChecked, type, control): void {
-    if (!isChecked && control.disables) {
-      this.disableDependencies(control.disables);
+  checkControl(isChecked, privilegeNo, privilegeExtraData): void {
+    if (!isChecked && privilegeExtraData.disables) {
+      this.disableDependencies(privilegeExtraData.disables);
     }
 
-    if (this.schoolPrivileges && this.schoolPrivileges[type]) {
-      delete this.schoolPrivileges[type];
-      this.handleDependencies(type, control.deps);
+    if (this.schoolPrivileges && this.schoolPrivileges[privilegeNo]) {
+      delete this.schoolPrivileges[privilegeNo];
+      this.handleDependencies(privilegeNo, privilegeExtraData.deps);
       return;
     }
 
-    let privilege = this.user.school_level_privileges[this.schoolId][type];
+    let privilege = this.user.school_level_privileges[this.schoolId][privilegeNo];
 
     this.schoolPrivileges = Object.assign(
       {},
       this.schoolPrivileges,
       {
-        [type]: {
+        [privilegeNo]: {
           r: privilege.r,
           w: privilege.w
         }
       });
 
-    this.handleDependencies(type, control.deps);
+    this.handleDependencies(privilegeNo, privilegeExtraData.deps);
   }
-
-  // checkControl(_, type): void {
-  //   if (this.schoolPrivileges && this.schoolPrivileges[type]) {
-  //     delete this.schoolPrivileges[type];
-  //     return;
-  //   }
-
-  //   let privilege = this.user.school_level_privileges[this.schoolId][type];
-
-  //   this.schoolPrivileges = Object.assign(
-  //     {},
-  //     this.schoolPrivileges,
-  //     {
-  //       [type]: {
-  //         r: privilege.r,
-  //         w: privilege.w
-  //       }
-  //     });
-  // }
-
 
   ngOnInit() {
     this.user = this.session.user;
