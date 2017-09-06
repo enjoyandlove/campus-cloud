@@ -15,7 +15,7 @@
     "production-canada": "webpack --progress --profile --bail && rimraf dist && mv _dist dist",
     "production-sea": "webpack --progress --profile --bail && rimraf dist && mv _dist dist",
     "staging": "webpack --progress --profile --bail && rimraf dist && mv _dist dist",
-    "build:prod-usa": "yarn run production",
+    "build:prod-usa": "yarn run production-usa",
     "build:prod-can": "yarn run production-canada",
     "build:prod-sea": "yarn run production-sea",
     "build:staging": "yarn run staging",
