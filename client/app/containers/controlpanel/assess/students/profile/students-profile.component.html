@@ -6,6 +6,7 @@
       <div class="row">
         <div class="col-xs-8 col-xs-offset-2">
           <cp-profile-header
+            [student]="student"
             (message)="launchMessageModal()">
           </cp-profile-header>
         </div>
@@ -27,76 +28,91 @@
       <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
       <ng-container *ngSwitchCase="false" class="feed">
-        <div class="cp-wrapper cp-wrapper--outer">
-          <div class="row">
-            <div class="col-xs-8 col-xs-offset-2">
-              <div class="feed__wrapper">
-                <ng-container
-                  class="feed__item"
-                  *ngFor="let day of engagementsByDay">
-                  <div class="feed__header">
-                    <div class="row">
-                      <div class="col-xs-12">
-                        <div class="feed__header__bg">
-                            <p>{{ day | cpDatePipe:dateFormat }}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="feed__body">
-                    <div class="row">
-                      <div class="col-xs-12">
-                        <div class="feed__body__wrapper engagement">
-                          <ng-container *ngFor="let engagement of engagementData[day]">
-                            <div class="row engagement__item">
-                              <div class="col-xs-2">
-                                <p class="engagement__time">
-                                  <strong>{{ engagement.time_epoch | cpDatePipe:timeFormat }}</strong>
-                                </p>
-                              </div>
-                              <div class="col-xs-10 engagement__meta no-left-padding">
-                                <p class="engagement__meta__title">
-                                  <strong>{{ engagement.name }}</strong>
-                                </p>
-
-                                <p class="text-muted engagement__meta__type">
-                                  <span class="icon">
-                                    <i class="material-icons">{{ engagement.type === isEvent ? 'event' : 'info_outline' }}</i>
-                                  </span>
-                                  {{ engagement.type === isEvent ? 'Event' : 'Service' }}
-                                </p>
-                                <div class="engagement__rating" *ngIf="engagement.feedback_time_epoch > 0">
-                                  <cp-stars
-                                    [size]="starSize"
-                                    [maxRate]="engagement.rating_scale_maximum"
-                                    [avgRate]="engagement.user_rating_percent">
-                                  </cp-stars>
-                                </div>
-                                <p class="engagement__feedback" *ngIf="engagement.feedback_time_epoch > 0">{{ engagement.user_feedback_text }}</p>
-                              </div>
-                            </div>
-                          </ng-container>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </ng-container>
+        <ng-container *ngIf="!engagementsByDay.length">
+          <div class="cp-wrapper cp-wrapper--outer">
+            <div class="row">
+              <div class="col-xs-8 col-xs-offset-2">
+                <cp-no-content
+                  class="no-content"
+                  noContentText="No Engagements Found...">
+                </cp-no-content>
               </div>
             </div>
           </div>
-        </div>
+        </ng-container>
 
-        <div class="row">
-          <div class="col-xs-12">
-            <cp-pagination
-              [pageNext]="pageNext"
-              [pagePrev]="pagePrev"
-              [pageNumber]="pageNumber"
-              (next)="onPaginationNext()"
-              (previous)="onPaginationPrevious()">
-            </cp-pagination>
+        <ng-container *ngIf="engagementsByDay.length">
+          <div class="cp-wrapper cp-wrapper--outer">
+            <div class="row">
+              <div class="col-xs-8 col-xs-offset-2">
+                <div class="feed__wrapper">
+                  <ng-container
+                    class="feed__item"
+                    *ngFor="let day of engagementsByDay">
+                    <div class="feed__header">
+                      <div class="row">
+                        <div class="col-xs-12">
+                          <div class="feed__header__bg">
+                              <p>{{ day | cpDatePipe:dateFormat }}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="feed__body">
+                      <div class="row">
+                        <div class="col-xs-12">
+                          <div class="feed__body__wrapper engagement">
+                            <ng-container *ngFor="let engagement of engagementData[day]">
+                              <div class="row engagement__item">
+                                <div class="col-xs-2">
+                                  <p class="engagement__time">
+                                    <strong>{{ engagement.time_epoch | cpDatePipe:timeFormat }}</strong>
+                                  </p>
+                                </div>
+                                <div class="col-xs-10 engagement__meta no-left-padding">
+                                  <p class="engagement__meta__title">
+                                    <strong>{{ engagement.name }}</strong>
+                                  </p>
+
+                                  <p class="text-muted engagement__meta__type">
+                                    <span class="icon">
+                                      <i class="material-icons">{{ engagement.type === isEvent ? 'event' : 'info_outline' }}</i>
+                                    </span>
+                                    {{ engagement.type === isEvent ? 'Event' : 'Service' }}
+                                  </p>
+                                  <div class="engagement__rating" *ngIf="engagement.feedback_time_epoch > 0">
+                                    <cp-stars
+                                      [size]="starSize"
+                                      [maxRate]="engagement.rating_scale_maximum"
+                                      [avgRate]="engagement.user_rating_percent">
+                                    </cp-stars>
+                                  </div>
+                                  <p class="engagement__feedback" *ngIf="engagement.feedback_time_epoch > 0">{{ engagement.user_feedback_text }}</p>
+                                </div>
+                              </div>
+                            </ng-container>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+
+          <div class="row">
+            <div class="col-xs-12">
+              <cp-pagination
+                [pageNext]="pageNext"
+                [pagePrev]="pagePrev"
+                [pageNumber]="pageNumber"
+                (next)="onPaginationNext()"
+                (previous)="onPaginationPrevious()">
+              </cp-pagination>
+            </div>
+          </div>
+        </ng-container>
       </ng-container>
     </ng-container>
   </div>

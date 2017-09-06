@@ -42,6 +42,7 @@ const DOWNLOAD_ALL_RECORDS = 1;
   styleUrls: ['./students-profile.component.scss']
 })
 export class StudentsProfileComponent extends BaseComponent implements OnInit {
+  student;
   studentId;
   messageData;
   engagementData = [];
@@ -76,21 +77,21 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
     const search = new URLSearchParams();
     search.append('school_id', this.session.school.id.toString());
 
-    // this
-    //   .service
-    //   .getStudentById(search, this.studentId)
-    //   .subscribe(res => console.log(res));
+    this
+      .service
+      .getStudentById(search, this.studentId)
+      .subscribe(res => {
+        this.student = res[0];
 
-    setTimeout(() => {
-      this.buildHeader({
-        firstname: 'Peter',
-        lastname: 'Cen'
+        this.buildHeader({
+          firstname: this.student.firstname,
+          lastname: this.student.lastname
+        })
+
+        this.loadingStudentData = false;
+
+        this.fetch();
       });
-
-      this.loadingStudentData = false;
-
-      this.fetch();
-    }, 1700)
   }
 
   fetch() {
@@ -169,7 +170,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
 
     stream$
       .toPromise()
-      .then(data => generateExcelFile(data, 'andres_roget'))
+      .then(data => generateExcelFile(data, `${this.student.firstname} ${this.student.lastname}`))
   }
 
   onComposeTeardown() {
