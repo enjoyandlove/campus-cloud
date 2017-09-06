@@ -6,6 +6,8 @@
 
 .no-content {
   @include card-margin();
+
+  margin-top: 0;
 }
 
 .cp-form__header {
