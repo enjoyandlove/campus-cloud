@@ -79,6 +79,10 @@ export class StoreService extends BaseService {
           stores.push(...services);
         }
 
+        if (clubs.length === 1 && services.length === 1) {
+          stores[0].label = 'No Hosts Available'
+        }
+
         return stores;
       });
   }
