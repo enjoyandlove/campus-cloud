@@ -53,7 +53,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
   }
 
   private fetch() {
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('search_text', this.state.search_text );
     search.append('service_id', this.serviceId.toString());
 
@@ -90,7 +90,13 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
 
     this.download.subscribe(download => {
       if (download) {
-        generateExcelFile(this.state.providers);
+        const search = new URLSearchParams();
+        search.append('service_id', this.serviceId.toString());
+        search.append('all', '1');
+
+        const stream$ = this.providersService.getProviders(this.startRange, this.endRange, search);
+
+        stream$.toPromise().then(providers => generateExcelFile(providers));
       }
     });
 

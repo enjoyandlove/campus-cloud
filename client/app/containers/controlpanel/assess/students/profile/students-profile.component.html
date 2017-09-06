@@ -27,7 +27,8 @@
     <ng-container [ngSwitch]="loadingEngagementData">
       <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
-      <ng-container *ngSwitchCase="false" class="feed">
+
+      <ng-container *ngSwitchCase="false">
         <ng-container *ngIf="!engagementsByDay.length">
           <div class="cp-wrapper cp-wrapper--outer">
             <div class="row">
@@ -41,7 +42,7 @@
           </div>
         </ng-container>
 
-        <ng-container *ngIf="engagementsByDay.length">
+        <ng-container *ngIf="engagementsByDay.length" class="feed">
           <div class="cp-wrapper cp-wrapper--outer">
             <div class="row">
               <div class="col-xs-8 col-xs-offset-2">
