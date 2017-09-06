@@ -1,5 +1,9 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 
+const ALL_ENGAGEMENTS = 0;
+const SERVICES_ENGAGEMENTS = 1;
+const EVENTS_ENGAGEMENTS = 2;
+
 @Component({
   selector: 'cp-profile-top-bar',
   templateUrl: './profile-top-bar.component.html',
@@ -12,15 +16,15 @@ export class StudentsProfileTopBarComponent implements OnInit {
   dropdown = [
     {
       'label': 'All Engagements',
-      'action': null
+      'action': ALL_ENGAGEMENTS
     },
     {
       'label': 'All Events',
-      'action': 1
+      'action': EVENTS_ENGAGEMENTS
     },
     {
       'label': 'All Services',
-      'action': 2
+      'action': SERVICES_ENGAGEMENTS
     }
   ]
 

@@ -44,6 +44,9 @@ export const API_ENDPOINTS = {
 
   SERVICES_CATEGORY: 'org_category',
 
+  STUDENT_PROFILE: 'student_profile',
+
+
   TEMPLATE: 'announcement_template',
   // Event assessment
 
@@ -52,6 +55,8 @@ export const API_ENDPOINTS = {
   SERVICE_PROVIDER: 'service_provider',
 
   ASSESS_ENGAGEMENT: 'assess_engagement',
+
+  STUDENT_ENGAGEMENT: 'student_engagement',
 
   SERVICE_ASSESSMENT: 'service_assessment',
 
