@@ -141,6 +141,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   clubsMenu;
   eventsMenu;
   privileges;
+  editingUser;
   isFormError;
   manageAdmins;
   servicesMenu;
@@ -183,20 +184,23 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     super
       .fetchData(admin$)
       .then(res => {
-        this.isCurrentUser = res.data.id === this.session.user.id;
+        this.editingUser = res.data;
 
-        this.buildHeader(`${res.data.firstname} ${res.data.lastname}`);
+        this.isCurrentUser = this.editingUser.id === this.session.user.id;
 
-        this.buildForm(res.data);
+
+        this.buildHeader(`${this.editingUser.firstname} ${this.editingUser.lastname}`);
+
+        this.buildForm(this.editingUser);
 
         this.schoolPrivileges = Object.assign(
           {},
-          res.data.school_level_privileges[this.schoolId]
+          this.editingUser.school_level_privileges[this.schoolId]
         );
 
         this.accountPrivileges = Object.assign(
           {},
-          res.data.account_level_privileges
+          this.editingUser.account_level_privileges
         );
 
         this.isAllAccessEnabled = _.isEqual(this.schoolPrivileges,
@@ -347,6 +351,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
   onManageAdminSelected(data) {
     if (!data.action) {
+      this.removePrivilegeFromRandomAccount(CP_PRIVILEGES_MAP.manage_admin);
+
       if (CP_PRIVILEGES_MAP.manage_admin in this.schoolPrivileges) {
         delete this.schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin];
       }
@@ -411,6 +417,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
     this.doServicesCleanUp();
     this.resetServiceModal$.next(true);
+    this.removePrivilegeFromRandomAccount(CP_PRIVILEGES_MAP.services);
 
     if (service.action === null) {
 
@@ -469,6 +476,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
     this.doClubsCleanUp();
     this.resetClubsModal$.next(true);
+    this.removePrivilegeFromRandomAccount(CP_PRIVILEGES_MAP.clubs);
 
     if (club.action === null) {
       this.resetClubsModal$.next(true);
@@ -542,7 +550,20 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     });
   }
 
+  removePrivilegeFromRandomAccount(privilegeType: number) {
+    const stores = accountsToStoreMap(this.editingUser.account_mapping[this.schoolId],
+                                        this.editingUser.account_level_privileges);
+
+    Object.keys(stores).map(storeId => {
+      if (privilegeType in stores[storeId].account_level_privileges) {
+        accountCleanUp(stores[storeId].account_level_privileges, privilegeType);
+      }
+    });
+  }
+
   checkControl(isChecked, privilegeNo, privilegeExtraData): void {
+    this.removePrivilegeFromRandomAccount(privilegeNo);
+
     if (!isChecked && privilegeExtraData.disables) {
       this.disableDependencies(privilegeExtraData.disables);
     }
