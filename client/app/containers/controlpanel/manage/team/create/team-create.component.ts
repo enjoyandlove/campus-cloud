@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import { TEAM_ACCESS } from '../utils';
 import { CPSession } from '../../../../../session';
 import { STATUS } from '../../../../../shared/constants';
+import { accountsToStoreMap } from './../../../../../session';
 import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
 import { ErrorService, AdminService } from '../../../../../shared/services';
 import { CP_PRIVILEGES, CP_PRIVILEGES_MAP } from '../../../../../shared/utils';
@@ -23,6 +24,10 @@ const eventsDropdown = function (privilege: { r: boolean, w: boolean }) {
       'action': 2
     }
   ];
+
+  if (!privilege) {
+    return items;
+  }
 
   if (privilege.w) {
     items = [
@@ -44,6 +49,10 @@ const manageAdminDropdown = function (privilege: { r: boolean, w: boolean }) {
     }
   ];
 
+  if (!privilege) {
+    return items;
+  }
+
   if (privilege.w) {
     items = [
       ...items,
@@ -63,6 +72,10 @@ const clubsDropdown = function (privilege: { r: boolean, w: boolean }) {
       'action': null
     }
   ];
+
+  if (!privilege) {
+    return items;
+  }
 
   if (privilege.w) {
     items = [
@@ -87,6 +100,10 @@ const servicesDropdown = function (privilege: { r: boolean, w: boolean }) {
       'action': null
     }
   ];
+
+  if (!privilege) {
+    return items;
+  }
 
   if (privilege.w) {
     items = [
@@ -238,18 +255,20 @@ export class TeamCreateComponent implements OnInit {
     if (checked) {
       this.accountPrivileges = Object.assign(
         {},
-        this.user.account_level_privileges
+        accountsToStoreMap(this.session.user.account_mapping[this.schoolId],
+                           this.user.account_level_privileges)
       );
 
       this.schoolPrivileges = Object.assign(
         {},
         this.user.school_level_privileges[this.schoolId]
       );
+
       return;
     }
 
-    this.accountPrivileges = {};
     this.schoolPrivileges = {};
+    this.accountPrivileges = {};
   }
 
   onServicesModalSelected(services) {
@@ -467,7 +486,7 @@ export class TeamCreateComponent implements OnInit {
   }
 }
 
-function accountCleanUp(accountPrivileges, privilegeNo: number) {
+export const accountCleanUp = function(accountPrivileges, privilegeNo: number) {
   if (accountPrivileges) {
     Object.keys(accountPrivileges).map(store => {
       if (privilegeNo in accountPrivileges[store]) {
