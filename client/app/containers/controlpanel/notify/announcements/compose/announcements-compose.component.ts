@@ -70,10 +70,10 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   types;
 
   constructor(
-    private fb: FormBuilder,
-    private session: CPSession,
-    private storeService: StoreService,
-    private service: AnnouncementsService
+    public fb: FormBuilder,
+    public session: CPSession,
+    public storeService: StoreService,
+    public service: AnnouncementsService
   ) {
     const school = this.session.school;
     let search: URLSearchParams = new URLSearchParams();
@@ -82,7 +82,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     this.stores$ = this.storeService.getStores(search);
   }
 
-  private doUserSearch(query) {
+  doUserSearch(query) {
     let search = new URLSearchParams();
     search.append('search_str', query);
     search.append('school_id', this.session.school.id.toString());
@@ -118,7 +118,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       );
   }
 
-  getSubjectLength() {
+  getSubjectLength(): number {
     let length = 0;
 
     if (this.subject_prefix.label) {
@@ -233,6 +233,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
   doSubmit() {
     this.isError = false;
+
     let search = new URLSearchParams();
     search.append('school_id', this.session.school.id.toString());
 
@@ -268,6 +269,8 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       .subscribe(
       res => {
         if (res.status === THROTTLED_STATUS) {
+          this.shouldConfirm = false;
+
           this.isError = true;
           this.errorMessage = `Message not sent, \n
           please wait ${(res.timeout / 60).toFixed()} minutes before trying again`;
@@ -279,6 +282,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       },
       _ => {
         this.isError = true;
+        this.shouldConfirm = false;
         this.errorMessage = STATUS.SOMETHING_WENT_WRONG;
       }
       );
@@ -406,7 +410,6 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       'message': [null, [Validators.required, Validators.maxLength(400)]],
       'priority': [this.types[0].action, Validators.required]
     });
-
 
     this.form.valueChanges.subscribe(_ => {
       let isValid = true;

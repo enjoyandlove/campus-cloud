@@ -28,7 +28,7 @@ export class ServicesCreateComponent implements OnInit {
   formError = false;
   attendance = false;
   mapCenter: BehaviorSubject<any>;
-  categories = [{ label: '---', action: null }];
+  categories$: Observable<any>;
 
   feedbackOptions = [
     {
@@ -49,6 +49,27 @@ export class ServicesCreateComponent implements OnInit {
     private servicesService: ServicesService
   ) {
     this.buildHeader();
+    this.categories$ = this
+      .servicesService
+      .getCategories()
+      .startWith([{ label: '---', action: null }])
+      .map(categories => {
+        let _categories = [
+          {
+            label: '---',
+            action: null
+          }
+        ]
+        categories.map(category => {
+          _categories.push(
+            {
+              action: category.id,
+              label: category.name
+            }
+          )
+        })
+        return _categories;
+      });
   }
 
   onPlaceChanged(data) {
@@ -109,7 +130,7 @@ export class ServicesCreateComponent implements OnInit {
         secondary_name: data.secondary_name,
         email: data.email,
         website: data.website,
-        phone: data.phone,
+        contactphone: data.contactphone,
         address: data.address,
         city: data.city,
         province: data.province,
@@ -169,7 +190,7 @@ export class ServicesCreateComponent implements OnInit {
       'description': [null],
       'email': [null],
       'website': [null],
-      'phone': [null],
+      'contactphone': [null],
       'secondary_name': [null],
       'city': [null],
       'province': [null],
@@ -181,15 +202,6 @@ export class ServicesCreateComponent implements OnInit {
       'rating_scale_maximum': [null],
       'default_basic_feedback_label': [null],
       'enable_feedback': [FEEDBACK_ENABLED]
-    });
-
-    let categories = require('../categories.json');
-
-    categories.map(category => {
-      this.categories.push({
-        label: category.name,
-        action: category.id
-      });
     });
   }
 }

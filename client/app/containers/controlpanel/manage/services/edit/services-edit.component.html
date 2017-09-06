@@ -38,7 +38,8 @@
                     <label i18n>Select Category</label>
                     <cp-dropdown
                       [items]="categories"
-                      (selected)="form.controls['category'].setValue($event.action)"
+                      [selectedItem]="selectedCategory"
+                      (selected)="onCategoryUpdate($event)"
                       [isRequiredError]="formError && form.controls['category'].hasError('required')">
                     </cp-dropdown>
                   </div>
@@ -50,7 +51,7 @@
                     <input
                       type="text"
                       class="form-control"
-                      formControlName="phone">
+                      formControlName="contactphone">
                   </div>
                 </div>
 
@@ -88,7 +89,7 @@
                     <div class="row form-group">
                       <div class="col-xs-12">
                         <cp-place-autocomplete
-                          [defaultValue]="form.controls.location.value"
+                          [defaultValue]="form.controls.address.value"
                           (placeChange)="onPlaceChanged($event)">
                         </cp-place-autocomplete>
                       </div>

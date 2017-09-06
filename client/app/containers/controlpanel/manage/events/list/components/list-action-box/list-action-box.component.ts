@@ -14,6 +14,7 @@ import { DATE_FILTER } from './events-filters';
 import { CPSession } from '../../../../../../../session';
 import { CPDate } from '../../../../../../../shared/utils/date';
 import { StoreService } from '../../../../../../../shared/services';
+import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/utils/privileges';
 
 interface IState {
   end: number;
@@ -50,6 +51,8 @@ export class ListActionBoxComponent implements OnInit {
   isCalendar;
   eventFilter;
   dateFilterOpts;
+  isFilteredByDate;
+  canWriteSchoolWide;
   state: IState = state;
   stores$: Observable<any>;
 
@@ -82,19 +85,43 @@ export class ListActionBoxComponent implements OnInit {
   }
 
   private resetDateRange() {
-    if (this.state.upcoming) {
-      this.state = Object.assign({}, this.state,
-        { start: CPDate.toEpoch(new Date()), end: CPDate.toEpoch(threeYearsFromNow) });
+    this.isFilteredByDate = false;
 
-      this.dateFilterOpts = Object.assign({},
-        this.dateFilterOpts, { minDate: new Date(), maxDate: null }
+    if (this.state.upcoming) {
+      this.state = Object.assign(
+        {},
+        this.state,
+        {
+          start: CPDate.toEpoch(new Date()),
+          end: CPDate.toEpoch(threeYearsFromNow)
+        });
+
+      this.dateFilterOpts = Object.assign(
+        {},
+        this.dateFilterOpts,
+        {
+          minDate: new Date(),
+          maxDate: null
+        }
       );
       return;
     }
-    this.state = Object.assign({}, this.state,
-      { start: 0, end: CPDate.toEpoch(new Date()) });
-    this.dateFilterOpts = Object.assign({},
-      this.dateFilterOpts, { minDate: null, maxDate: new Date() }
+
+    this.state = Object.assign(
+      {},
+      this.state,
+      {
+        start: 0,
+        end: CPDate.toEpoch(new Date())
+      });
+
+    this.dateFilterOpts = Object.assign(
+      {},
+      this.dateFilterOpts,
+      {
+        minDate: null,
+        maxDate: new Date()
+      }
     );
   }
 
@@ -117,8 +144,15 @@ export class ListActionBoxComponent implements OnInit {
   }
 
   onDateRange(dates) {
-    this.state = Object.assign({}, this.state,
-      { start: CPDate.toEpoch(dates[0]), end: CPDate.toEpoch(dates[1]) });
+    this.isFilteredByDate = true;
+
+    this.state = Object.assign(
+      {},
+      this.state,
+      {
+        start: CPDate.toEpoch(dates[0]),
+        end: CPDate.toEpoch(dates[1])
+      });
 
     this.listAction.emit(this.state);
   }
@@ -136,6 +170,7 @@ export class ListActionBoxComponent implements OnInit {
 
   ngOnInit() {
     this.getStores();
+    this.canWriteSchoolWide = this.session.canSchoolWriteResource(CP_PRIVILEGES_MAP.events);
 
     this.eventFilter = DATE_FILTER;
 

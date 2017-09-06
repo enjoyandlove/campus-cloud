@@ -34,11 +34,12 @@ const SERVICE_FEEDBACK = {
 export class ServicesEditComponent extends BaseComponent implements OnInit {
   loading;
   service;
+  categories;
   withAttendance;
   school: ISchool;
   storeId: number;
-  categories = [];
   form: FormGroup;
+  selectedCategory;
   formError = false;
   serviceId: number;
   attendance = false;
@@ -82,8 +83,19 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
 
     const service$ = this.servicesService.getServiceById(this.serviceId);
     const providers$ = this.providersService.getProviders(1, 1000, searchProviders);
+    const categories$ = this
+      .servicesService
+      .getCategories()
+      .map(categories => {
+        return categories.map(category => {
+          return {
+            action: category.id,
+            label: category.name
+          }
+        })
+      });
 
-    const stream$ = Observable.combineLatest(service$, providers$);
+    const stream$ = Observable.combineLatest(service$, providers$, categories$);
     super
       .fetchData(stream$)
       .then(res => {
@@ -92,10 +104,18 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
 
         this.service = res.data[0];
 
+        this.categories = res.data[2];
+
+        this.categories.map(category => {
+          if (category.action === +this.service.category) {
+            this.selectedCategory = category;
+          }
+        })
+
         const label = SERVICE_FEEDBACK['enable_feedback' in this.service ?
           this.service.enable_feedback : FEEDBACK_ENABLED];
 
-          this.serviceFeedback = [
+        this.serviceFeedback = [
           {
             label,
             value: null
@@ -121,7 +141,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       .catch(err => console.error(err));
   }
 
-  onPlaceChange(data) {
+  onPlaceChanged(data) {
     let cpMap = CPMap.getBaseMapObject(data);
 
     if (!data) {
@@ -221,7 +241,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       'description': [this.service.description],
       'email': [this.service.email],
       'website': [this.service.website],
-      'phone': [this.service.phone],
+      'contactphone': [this.service.contactphone],
       'secondary_name': [this.service.secondary_name],
       'city': [this.service.city],
       'province': [this.service.province],
@@ -248,6 +268,10 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     });
   }
 
+  onCategoryUpdate(category) {
+    this.form.controls['category'].setValue(category.action);
+  }
+
   onSubmit() {
     this.formError = false;
 
@@ -270,7 +294,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    let data = Object.assign(this.form.value);
+    let data = Object.assign({}, this.form.value);
 
     this
       .servicesService
@@ -284,7 +308,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
         secondary_name: data.secondary_name,
         email: data.email,
         website: data.website,
-        phone: data.phone,
+        contactphone: data.contactphone,
         address: data.address,
         city: data.city,
         province: data.province,
@@ -330,14 +354,5 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       });
   }
 
-  ngOnInit() {
-    let categories = require('../categories.json');
-
-    categories.map(category => {
-      this.categories.push({
-        label: category.name,
-        action: category.id
-      });
-    });
-  }
+  ngOnInit() {}
 }

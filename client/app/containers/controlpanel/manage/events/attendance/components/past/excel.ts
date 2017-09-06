@@ -40,7 +40,7 @@ export function generateExcelFile(data: any[]) {
     line += rsvp[array[i]['rsvp']] + ',';
     line += CPDate.fromEpoch(array[i]['check_in_time']) + ',';
     line += ((array[i]['feedback_rating'] * 5) / 100).toFixed(2) + ',';
-    line += array[i]['feedback_text'] + ',';
+    line += array[i]['feedback_text'].trim().replace(/[ ]*,[ ]*|[ ]+/g, ' ') + ',';
     line += check_in_method[array[i]['check_in_method']];
 
     line.slice(0, line.length - 1);

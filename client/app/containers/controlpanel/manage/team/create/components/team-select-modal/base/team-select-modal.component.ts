@@ -69,7 +69,7 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
         _item['store_id' in item.data ? item.data.store_id : item.data.id] = {
           [this.privilegeType]: {
             r: true,
-            w: item.type === 1 ? false : true
+            w: true
           }
         };
 
@@ -132,9 +132,11 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
 
     this.data.subscribe(res => {
       this.loading = 'data' in res;
+
       if (res.data) {
         this.updateState(res.data);
       }
+
       if (res.selected) {
         Object.keys(res.selected).forEach(storeId => {
           let type = res.selected[storeId].w ? 2 : 1;

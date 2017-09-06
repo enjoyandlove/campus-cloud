@@ -78,6 +78,7 @@
 
       <span
         (click)="onDelete(event)"
+        *ngIf="this.canWriteSchoolWide"
         data-toggle="modal" data-target="#deleteEventsModal"
         class="col-xs-1 hover text-truncate delete-event text-center">
         &times;

@@ -6,7 +6,7 @@ import { EngagementResolver } from './engagement.resolver';
 import { EngagementComponent } from './engagement.component';
 
 
-const appRoutes: Routes = [
+const engagementRoutes: Routes = [
   {
     path: '',
     component: EngagementComponent,
@@ -17,7 +17,7 @@ const appRoutes: Routes = [
 ];
 @NgModule({
   imports: [
-    RouterModule.forChild(appRoutes)
+    RouterModule.forChild(engagementRoutes)
   ],
   exports: [
     RouterModule

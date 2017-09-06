@@ -34,7 +34,7 @@
               <div class="col-xs-6">
                 <label i18n>Select Category</label>
                 <cp-dropdown
-                  [items]="categories"
+                  [items]="categories$ | async"
                   (selected)="form.controls['category'].setValue($event.action)"
                   [isRequiredError]="formError && form.controls['category'].hasError('required')">
                 </cp-dropdown>
@@ -47,7 +47,7 @@
                 <input
                   type="text"
                   class="form-control"
-                  formControlName="phone">
+                  formControlName="contactphone">
               </div>
             </div>
 

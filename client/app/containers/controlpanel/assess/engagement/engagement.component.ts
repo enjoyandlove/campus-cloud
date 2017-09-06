@@ -7,7 +7,9 @@ import { Store } from '@ngrx/store';
 
 import { CPSession } from './../../../../session/index';
 import { EngagementService } from './engagement.service';
+import { STATUS } from './../../../../shared/constants/status';
 import { BaseComponent } from '../../../../base/base.component';
+import { HEADER_UPDATE } from './../../../../reducers/header.reducer';
 import { SNACKBAR_SHOW } from './../../../../reducers/snackbar.reducer';
 
 declare var $;
@@ -92,10 +94,16 @@ export class EngagementComponent extends BaseComponent implements OnInit {
     this.store.dispatch({
       type: SNACKBAR_SHOW,
       payload: {
-        body: 'Success! Your message has been sent',
+        body: STATUS.MESSAGE_SENT,
+        autoClose: true,
       }
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.store.dispatch({
+      type: HEADER_UPDATE,
+      payload: require('../assess.header.json')
+    });
+  }
 }

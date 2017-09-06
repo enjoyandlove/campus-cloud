@@ -19,6 +19,7 @@
           <button
             type="button"
             [class.isOpen]="isCalendar"
+            [class.isSelected]="isFilteredByDate"
             (click)="onToggleCalendar($event)"
             class="cpbtn cpbtn--cancel cpbtn--no-padding calendar">
             <i class="material-icons hover">date_range</i>
@@ -59,7 +60,7 @@
       </div>
     </div>
 
-    <div class="col-xs-2 text-right">
+    <div class="col-xs-2 text-right" *ngIf="canWriteSchoolWide">
       <a
         [routerLink]="['create']" i18n
         class="cpbtn cpbtn--primary cpbtn--square-right no-right-padding">

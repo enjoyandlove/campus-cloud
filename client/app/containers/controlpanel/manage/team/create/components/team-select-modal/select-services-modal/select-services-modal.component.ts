@@ -28,18 +28,6 @@ export class SelectTeamServicesModalComponent extends BaseTeamSelectModalCompone
     this.privilegeType = CP_PRIVILEGES_MAP.services;
   }
 
-  filterServiceDataFromAccountPrivilege() {
-    let _selectedServices = {};
-    Object.keys(this.selectedServices).forEach(storeId => {
-      if (this.selectedServices[storeId][CP_PRIVILEGES_MAP.services]) {
-        _selectedServices[storeId] = {
-          ...this.selectedServices[storeId][CP_PRIVILEGES_MAP.services]
-        };
-      }
-    });
-    return _selectedServices;
-  }
-
   ngOnInit() {
     let search = new URLSearchParams();
     search.append('school_id', this.session.school.id.toString());
@@ -50,11 +38,15 @@ export class SelectTeamServicesModalComponent extends BaseTeamSelectModalCompone
       .subscribe(services => {
         let res = {};
         let selected = {};
-
         if (this.selectedServices) {
-          selected = this.filterServiceDataFromAccountPrivilege();
-
           services.map(service => {
+
+            if (Object.keys(this.selectedServices).includes(service.store_id.toString())) {
+              if (CP_PRIVILEGES_MAP.services in this.selectedServices[service.store_id]) {
+                selected[service.store_id] = service;
+              }
+            }
+
             if (selected[service.store_id]) {
               service.checked = true;
               selected[service.store_id] = Object.assign(

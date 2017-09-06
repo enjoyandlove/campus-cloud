@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import { TEAM_ACCESS } from '../utils';
 import { CPSession } from '../../../../../session';
 import { STATUS } from '../../../../../shared/constants';
+import { accountsToStoreMap } from './../../../../../session';
 import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
 import { ErrorService, AdminService } from '../../../../../shared/services';
 import { CP_PRIVILEGES, CP_PRIVILEGES_MAP } from '../../../../../shared/utils';
@@ -23,6 +24,10 @@ const eventsDropdown = function (privilege: { r: boolean, w: boolean }) {
       'action': 2
     }
   ];
+
+  if (!privilege) {
+    return items;
+  }
 
   if (privilege.w) {
     items = [
@@ -44,6 +49,10 @@ const manageAdminDropdown = function (privilege: { r: boolean, w: boolean }) {
     }
   ];
 
+  if (!privilege) {
+    return items;
+  }
+
   if (privilege.w) {
     items = [
       ...items,
@@ -63,6 +72,10 @@ const clubsDropdown = function (privilege: { r: boolean, w: boolean }) {
       'action': null
     }
   ];
+
+  if (!privilege) {
+    return items;
+  }
 
   if (privilege.w) {
     items = [
@@ -87,6 +100,10 @@ const servicesDropdown = function (privilege: { r: boolean, w: boolean }) {
       'action': null
     }
   ];
+
+  if (!privilege) {
+    return items;
+  }
 
   if (privilege.w) {
     items = [
@@ -193,6 +210,9 @@ export class TeamCreateComponent implements OnInit {
       return;
     }
 
+    // console.log(_data);
+    // return;
+
     this
       .teamService
       .createAdmin(_data)
@@ -206,7 +226,7 @@ export class TeamCreateComponent implements OnInit {
           return;
         }
 
-        this.formError = 'Something went wrong';
+        this.formError = STATUS.SOMETHING_WENT_WRONG;
       }
       );
   }
@@ -235,18 +255,20 @@ export class TeamCreateComponent implements OnInit {
     if (checked) {
       this.accountPrivileges = Object.assign(
         {},
-        this.user.account_level_privileges
+        accountsToStoreMap(this.session.user.account_mapping[this.schoolId],
+                           this.user.account_level_privileges)
       );
 
       this.schoolPrivileges = Object.assign(
         {},
         this.user.school_level_privileges[this.schoolId]
       );
+
       return;
     }
 
-    this.accountPrivileges = {};
     this.schoolPrivileges = {};
+    this.accountPrivileges = {};
   }
 
   onServicesModalSelected(services) {
@@ -270,9 +292,9 @@ export class TeamCreateComponent implements OnInit {
     if (service.action === null) {
       this.resetServiceModal$.next(true);
 
-      if (this.accountPrivileges) {
-        if (CP_PRIVILEGES_MAP.services in this.accountPrivileges) {
-          delete this.accountPrivileges[CP_PRIVILEGES_MAP.services];
+      if (this.schoolPrivileges) {
+        if (CP_PRIVILEGES_MAP.services in this.schoolPrivileges) {
+          delete this.schoolPrivileges[CP_PRIVILEGES_MAP.services];
         }
       }
       return;
@@ -304,10 +326,24 @@ export class TeamCreateComponent implements OnInit {
     accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.clubs);
     accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.membership);
     accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.moderation);
+
+    if (CP_PRIVILEGES_MAP.clubs in this.schoolPrivileges) {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.clubs];
+    }
+    if (CP_PRIVILEGES_MAP.membership in this.schoolPrivileges) {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.membership];
+    }
+    if (CP_PRIVILEGES_MAP.moderation in this.schoolPrivileges) {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.moderation];
+    }
   }
 
   doServicesCleanUp() {
     accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.services);
+
+    if (CP_PRIVILEGES_MAP.services in this.schoolPrivileges) {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.services];
+    }
   }
 
   onClubsSelected(club) {
@@ -321,17 +357,6 @@ export class TeamCreateComponent implements OnInit {
 
     if (club.action === null) {
       this.resetClubsModal$.next(true);
-
-      if (CP_PRIVILEGES_MAP.clubs in this.schoolPrivileges) {
-        delete this.schoolPrivileges[CP_PRIVILEGES_MAP.clubs];
-      }
-      if (CP_PRIVILEGES_MAP.membership in this.schoolPrivileges) {
-        delete this.schoolPrivileges[CP_PRIVILEGES_MAP.membership];
-      }
-      if (CP_PRIVILEGES_MAP.moderation in this.schoolPrivileges) {
-        delete this.schoolPrivileges[CP_PRIVILEGES_MAP.moderation];
-      }
-
       return;
     }
 
@@ -383,7 +408,6 @@ export class TeamCreateComponent implements OnInit {
     if (!dependencies.length) { return; }
 
     dependencies.map(dep => {
-
       if (this.schoolPrivileges[dep]) {
         return;
       }
@@ -391,7 +415,6 @@ export class TeamCreateComponent implements OnInit {
       if (this.schoolPrivileges[privilegeNo]) {
         this.checkControl(undefined, dep, { deps: [] });
       }
-
     });
   }
 
@@ -431,15 +454,20 @@ export class TeamCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    let { school_level_privileges } = this.session.user;
+    const { school_level_privileges } = this.session.user;
     const schoolPrivileges = school_level_privileges[this.session.school.id];
     this.user = this.session.user;
     this.schoolId = this.session.school.id;
 
 
-    this.canReadClubs = this.session.privileges.readClub;
-    this.canReadEvents = this.session.privileges.readEvent;
-    this.canReadServices = this.session.privileges.readService;
+    this.canReadClubs = this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.clubs) ||
+      this.session.canAccountLevelReadResource(CP_PRIVILEGES_MAP.clubs);
+
+    this.canReadEvents = this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.events);
+
+    this.canReadServices = this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.services) ||
+      this.session.canAccountLevelReadResource(CP_PRIVILEGES_MAP.services);
+
     this.formData = TEAM_ACCESS.getMenu(this.user.school_level_privileges[this.schoolId]);
 
     this.buildHeader();
@@ -458,11 +486,15 @@ export class TeamCreateComponent implements OnInit {
   }
 }
 
-function accountCleanUp(accountPrivileges, privilegeNo: number) {
+export const accountCleanUp = function(accountPrivileges, privilegeNo: number) {
   if (accountPrivileges) {
     Object.keys(accountPrivileges).map(store => {
       if (privilegeNo in accountPrivileges[store]) {
         delete accountPrivileges[store][privilegeNo]
+
+        if (!(Object.keys(accountPrivileges[store]).length)) {
+          delete accountPrivileges[store];
+        }
       }
     })
   }

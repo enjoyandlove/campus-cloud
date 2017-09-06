@@ -12,7 +12,7 @@
       </cp-dropdown>
     </div>
 
-    <div class="col-xs-3 pull-right text-right">
+    <div class="col-xs-3 pull-right text-right" *ngIf="canWriteSchoolWide">
       <a
         [routerLink]="['create']" i18n
         class="cpbtn cpbtn--primary cpbtn--square-right no-right-padding">

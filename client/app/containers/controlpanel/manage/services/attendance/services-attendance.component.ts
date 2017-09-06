@@ -1,3 +1,4 @@
+import { CP_PRIVILEGES_MAP } from './../../../../../shared/utils/privileges';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
@@ -8,6 +9,7 @@ import {
   HEADER_UPDATE
 } from '../../../../../reducers/header.reducer';
 import { ServicesService } from '../services.service';
+import { CPSession } from './../../../../../session/index';
 import { BaseComponent } from '../../../../../base/base.component';
 import { STAR_SIZE } from '../../../../../shared/components/cp-stars';
 
@@ -21,6 +23,7 @@ const FEEDBACK_ENABLED = 1;
 export class ServicesAttendanceComponent extends BaseComponent implements OnInit {
   loading;
   service;
+  storeId;
   noProviders;
   serviceId: number;
   detailStarSize = STAR_SIZE.LARGE;
@@ -32,8 +35,9 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
+    private session: CPSession,
     private store: Store<IHeader>,
+    private route: ActivatedRoute,
     private serviceService: ServicesService
   ) {
     super();
@@ -48,6 +52,7 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
       .fetchData(this.serviceService.getServiceById(this.serviceId))
       .then(res => {
         this.service = res.data;
+        this.storeId = this.service.store_id;
 
         if ('enable_feedback' in this.service) {
           this.enableFeedback$.next(this.service.enable_feedback === FEEDBACK_ENABLED)
@@ -85,12 +90,20 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
       {
         'label': 'Info',
         'url': `/manage/services/${this.serviceId}/info`
-      },
-      {
+      }
+    ];
+    const eventsSchoolLevel = this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.events);
+    const eventsAccountLevel = this.
+      session.canStoreReadAndWriteResource(this.storeId, CP_PRIVILEGES_MAP.events);
+
+    if (eventsSchoolLevel || eventsAccountLevel) {
+      const events = {
         'label': 'Events',
         'url': `/manage/services/${this.serviceId}/events`
       }
-    ];
+
+      children = [...children, events];
+    }
 
     if (this.service.service_attendance) {
       let attendance = {

@@ -67,10 +67,27 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
     this.fetch();
   }
 
+  fetchAllRecords(): Promise<any> {
+    const search = new URLSearchParams();
+    search.append('all', 'true');
+    search.append('service_id', this.serviceId.toString());
+    search.append('service_provider_id', this.providerId.toString());
+
+    const stream$ = this
+      .providersService
+      .getProviderAssessments(1, 5000, search);
+
+    return stream$.toPromise()
+  }
+
   ngOnInit() {
     this.download.subscribe(download => {
       if (download && this.assessments.length) {
-        generateExcelFile(this.assessments);
+        this
+          .fetchAllRecords()
+          .then(assessments => generateExcelFile(assessments))
+          .catch(_ => console.log('no data'));
+        ;
       }
     });
 

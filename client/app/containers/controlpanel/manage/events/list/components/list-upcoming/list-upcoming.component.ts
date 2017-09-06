@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { FORMAT } from '../../../../../../../shared/pipes';
+import { CPSession } from './../../../../../../../session/index';
+import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/utils/privileges';
 
 interface ISort {
   sort_field: string;
@@ -24,9 +26,12 @@ export class ListUpcomingComponent implements OnInit {
   @Output() sortList: EventEmitter<ISort> = new EventEmitter();
 
   sort: ISort = sort;
-  dateFormat = FORMAT.LONG;
+  canWriteSchoolWide;
+  dateFormat = FORMAT.SHORT;
 
-  constructor() { }
+  constructor(
+    private session: CPSession
+  ) { }
 
   onDelete(event) {
     this.deleteEvent.emit(event);
@@ -44,5 +49,7 @@ export class ListUpcomingComponent implements OnInit {
     this.sortList.emit(this.sort);
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.canWriteSchoolWide = this.session.canSchoolWriteResource(CP_PRIVILEGES_MAP.events);
+  }
 }

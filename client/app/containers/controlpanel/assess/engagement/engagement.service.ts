@@ -13,16 +13,6 @@ export class EngagementService extends BaseService {
     Object.setPrototypeOf(this, EngagementService.prototype);
   }
 
-  getRandomNumber(upperlimit, maxAllowed = 1000) {
-    let arr = [];
-
-    for (let i = 1; i <= upperlimit; i++) {
-      arr.push(Math.floor(Math.random() * maxAllowed));
-    }
-
-    return arr;
-  }
-
   getServices(startRange = 1, endRange = 1000, search?: URLSearchParams) {
     const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}`;
     const url = `${common}/${startRange};${endRange}`;
@@ -44,19 +34,19 @@ export class EngagementService extends BaseService {
   }
 
   getChartData(search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_ENGAGEMENT}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_ENGAGEMENT}/`;
 
     return super.get(url, { search }).map(res => res.json());
   }
 
   getEventsData(search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_EVENT}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_EVENT}/`;
 
     return super.get(url, { search }).map(res => res.json());
   }
 
   getServicesData(search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_SERVICE}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_SERVICE}/`;
 
     return super.get(url, { search }).map(res => res.json());
   }

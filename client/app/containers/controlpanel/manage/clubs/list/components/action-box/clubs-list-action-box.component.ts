@@ -1,5 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
+import { CPSession } from './../../../../../../../session/index';
+import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/utils/privileges';
+
 interface IState {
   query: string;
   type: string;
@@ -19,9 +22,12 @@ export class ClubsListActionBoxComponent implements OnInit {
   @Output() filter: EventEmitter<IState> = new EventEmitter();
 
   clubFilter;
+  canWriteSchoolWide;
   state: IState = state;
 
-  constructor() { }
+  constructor(
+    private session: CPSession
+  ) { }
 
   onUpdateState(data, key: string): void {
     this.state = Object.assign({}, this.state, { [key]: data });
@@ -29,6 +35,8 @@ export class ClubsListActionBoxComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.canWriteSchoolWide = this.session.canSchoolWriteResource(CP_PRIVILEGES_MAP.clubs);
+
     this.clubFilter = [
       {
         label: 'All Clubs',

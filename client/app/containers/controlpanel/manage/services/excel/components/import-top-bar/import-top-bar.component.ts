@@ -1,4 +1,5 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { Headers } from '@angular/http';
 
 import { API } from '../../../../../../../config/api';
@@ -11,6 +12,8 @@ import { CPImage, CPArray, appStorage } from '../../../../../../../shared/utils'
   styleUrls: ['./import-top-bar.component.scss']
 })
 export class ServicesImportTopBarComponent implements OnInit {
+  @Input() categories: Observable<any>;
+
   @Output() checkAll: EventEmitter<boolean> = new EventEmitter();
   @Output() imageChange: EventEmitter<string> = new EventEmitter();
   @Output() deleteServices: EventEmitter<any> = new EventEmitter();
@@ -19,9 +22,10 @@ export class ServicesImportTopBarComponent implements OnInit {
   stores;
   imageError;
   loading = true;
-  categories = [{ label: 'Select a Category', action: null }];
 
-  constructor(private fileUploadService: FileUploadService) { }
+  constructor(
+    private fileUploadService: FileUploadService
+  ) { }
 
   onFileUpload(file) {
     this.imageError = null;
@@ -52,14 +56,5 @@ export class ServicesImportTopBarComponent implements OnInit {
       );
   }
 
-  ngOnInit() {
-    let categories = require('../../../categories.json');
-
-    categories.map(category => {
-      this.categories.push({
-        label: category.name,
-        action: category.id
-      });
-    });
-  }
+  ngOnInit() {}
 }

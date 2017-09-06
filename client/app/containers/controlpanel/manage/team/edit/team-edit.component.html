@@ -11,13 +11,13 @@
           <p class="section__title" i18n>Invitee</p>
           <div class="row">
             <div class="col-xs-4">
-              <label i18n>First Name {{ isCurrentUser }}</label>
+              <label i18n>First Name</label>
               <input
                 type="text"
                 placeholder="John"
                 class="form-control"
                 formControlName="firstname"
-                [attr.disabled]="!isCurrentUser? '' :null">
+                [attr.disabled]="!isCurrentUser ? '' : null">
             </div>
 
             <div class="col-xs-4">
@@ -27,7 +27,7 @@
                 class="form-control"
                 placeholder="Smith"
                 formControlName="lastname"
-                [attr.disabled]="!isCurrentUser? '' :null">
+                [attr.disabled]="!isCurrentUser ? '' : null">
             </div>
 
             <div class="col-xs-4">

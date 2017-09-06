@@ -7,38 +7,26 @@ import { Injectable } from '@angular/core';
 
 import { IUser } from './user.interface';
 import { ISchool } from './school.interface';
-import { IPrivileges } from './privileges.interface';
-import { CP_PRIVILEGES_MAP } from './../shared/utils/privileges';
 
 export * from './user.interface';
 export * from './school.interface';
-export * from './privileges.interface';
 
-/**
- * Need to filter account_level_privileges for those
- * stores that the user has access to for this particular school
- */
-const storesInSchool = (privileges, stores: Array<number>) => {
-  return stores.map(store => privileges[store]);
-};
+export const accountsToStoreMap = (accountsMap: Array<number>, accountPrivileges) => {
+  let accounts = {};
+
+  accountsMap.map(storeId => {
+    if (storeId in accountPrivileges) {
+      accounts[storeId] = accountPrivileges[storeId];
+    }
+  });
+  return accounts;
+}
 
 @Injectable()
 export class CPSession {
   private _user: IUser;
   private _school: ISchool;
   private _schools: Array<ISchool>;
-
-  private _privileges: IPrivileges = {
-    readEvent: false,
-    readFeed: false,
-    readClub: false,
-    readService: false,
-    readList: false,
-    readLink: false,
-    readNotify: false,
-    readAssess: false,
-    readAdmin: false
-  };
 
   get user(): IUser {
     return this._user;
@@ -64,114 +52,59 @@ export class CPSession {
     this._school = school;
   }
 
-  get privileges() {
-    return this._privileges;
+  canStoreReadAndWriteResource(storeId: number, privilegeType: number) {
+    if (storeId in this.user.account_level_privileges) {
+      return privilegeType in this.user.account_level_privileges[storeId]
+    }
+    return false;
   }
 
-  updateSessionPrivileges(): Promise<null> {
-    return new Promise(resolve => {
-      this._privileges['readEvent'] = this.canViewEvents(this._school.id);
-      this._privileges['readFeed'] = this.canViewFeeds(this._school.id);
-      this._privileges['readClub'] = this.canViewClubs(this._school.id);
-      this._privileges['readService'] = this.canViewServices(this._school.id);
-      this._privileges['readList'] = this.canViewLists(this._school.id);
-      this._privileges['readLink'] = this.canViewLinks(this._school.id);
-      this._privileges['readNotify'] = this.canViewNotify(this._school.id);
-      this._privileges['readAssess'] = this.canViewAssess(this._school.id);
-      this._privileges['readAdmin'] = this.canViewTeamSettings(this._school.id);
+  canAccountLevelReadResource(privilegeType: number) {
+    let hasAccountAccess = false;
 
-      return resolve();
+    this.user.account_mapping[this.school.id].forEach(store => {
+      Object.keys(this.user.account_level_privileges[store]).forEach(privilege => {
+
+        if (privilegeType === +privilege) {
+          hasAccountAccess = true;
+        }
+      });
     });
+
+    return hasAccountAccess;
   }
 
-  private canViewNotify(schoolId: number): boolean {
-    if (CP_PRIVILEGES_MAP.campus_announcements in this.user.school_level_privileges[schoolId]) {
-      return this.user.school_level_privileges[schoolId][CP_PRIVILEGES_MAP.campus_announcements].r;
+  canSchoolReadResource(privilegeType: number) {
+    if (!(Object.keys(this.user.school_level_privileges).length)) {
+      return false;
+    }
+
+    if (!(this.school.id in this.user.school_level_privileges)) {
+      return false;
+    }
+
+    const schoolPrivileges = this.user.school_level_privileges[this.school.id];
+
+    if (privilegeType in schoolPrivileges) {
+      return schoolPrivileges[privilegeType].r
     }
     return false;
   }
 
-  private canViewAssess(schoolId: number): boolean {
-    if (CP_PRIVILEGES_MAP.assessment in this.user.school_level_privileges[schoolId]) {
-      return this.user.school_level_privileges[schoolId][CP_PRIVILEGES_MAP.assessment].r;
-    }
-    return false;
-  }
-
-  private canViewEvents(schoolId: number): boolean {
-    if (CP_PRIVILEGES_MAP.events in this.user.school_level_privileges[schoolId]) {
-      return this.user.school_level_privileges[schoolId][CP_PRIVILEGES_MAP.events].r;
-    }
-    return false;
-  }
-
-  private canViewFeeds(schoolId: number): boolean {
-    if (CP_PRIVILEGES_MAP.moderation in this.user.school_level_privileges[schoolId]) {
-      return this.user.school_level_privileges[schoolId][CP_PRIVILEGES_MAP.moderation].r;
-    }
-    return false;
-  }
-
-  private canViewClubs(schoolId: number): boolean {
-    let school = false;
-    let { account_level_privileges, account_mapping } = this.user;
-
-    if (CP_PRIVILEGES_MAP.clubs in this.user.school_level_privileges[schoolId]) {
-      school = this.user.school_level_privileges[schoolId][CP_PRIVILEGES_MAP.clubs].r;
+  canSchoolWriteResource(privilegeType: number) {
+    if (!(Object.keys(this.user.school_level_privileges).length)) {
+      return false;
     }
 
-    const accounts = storesInSchool(account_level_privileges, account_mapping[this.school.id]);
-    const account = accountLevelPrivilege(accounts, CP_PRIVILEGES_MAP.clubs);
-
-    return school || account;
-  }
-
-  private canViewServices(schoolId: number): boolean {
-    let school = false;
-    let { account_level_privileges, account_mapping } = this.user;
-
-    if (CP_PRIVILEGES_MAP.services in this.user.school_level_privileges[schoolId]) {
-      school = this.user.school_level_privileges[schoolId][CP_PRIVILEGES_MAP.services].r;
+    if (!(this.school.id in this.user.school_level_privileges)) {
+      return false;
     }
 
-    const accounts = storesInSchool(account_level_privileges, account_mapping[this.school.id]);
-    const account = accountLevelPrivilege(accounts, CP_PRIVILEGES_MAP.services);
+    const schoolPrivileges = this.user.school_level_privileges[this.school.id];
 
-    return school || account;
-  }
-
-  private canViewLists(schoolId: number): boolean {
-    if (CP_PRIVILEGES_MAP.campus_announcements in this.user.school_level_privileges[schoolId]) {
-      return this.user.school_level_privileges[schoolId][CP_PRIVILEGES_MAP.campus_announcements].r;
-    }
-    return false;
-  }
-
-  private canViewLinks(schoolId: number): boolean {
-    if (CP_PRIVILEGES_MAP.links in this.user.school_level_privileges[schoolId]) {
-      return this.user.school_level_privileges[schoolId][CP_PRIVILEGES_MAP.links].r;
-    }
-    return false;
-  }
-
-  private canViewTeamSettings(schoolId: number): boolean {
-    if (CP_PRIVILEGES_MAP.manage_admin in this.user.school_level_privileges[schoolId]) {
-      return this.user.school_level_privileges[schoolId][CP_PRIVILEGES_MAP.manage_admin].r;
+    if (privilegeType in schoolPrivileges) {
+      return schoolPrivileges[privilegeType].w
     }
     return false;
   }
 };
-
-function accountLevelPrivilege(stores, privilege) {
-  let hasAccountAccess = false;
-
-  Object.keys(stores).forEach(store => {
-    Object.keys(stores[store]).forEach(p => {
-      if (privilege === +p) {
-        hasAccountAccess = true;
-      }
-    });
-  });
-
-  return hasAccountAccess;
-}
