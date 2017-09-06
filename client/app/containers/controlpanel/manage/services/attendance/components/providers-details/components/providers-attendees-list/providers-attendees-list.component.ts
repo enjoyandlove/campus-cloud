@@ -69,13 +69,13 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
 
   fetchAllRecords(): Promise<any> {
     const search = new URLSearchParams();
-    search.append('all', 'true');
+    search.append('all', '1');
     search.append('service_id', this.serviceId.toString());
     search.append('service_provider_id', this.providerId.toString());
 
     const stream$ = this
       .providersService
-      .getProviderAssessments(1, 5000, search);
+      .getProviderAssessments(this.startRange, this.endRange, search);
 
     return stream$.toPromise()
   }
