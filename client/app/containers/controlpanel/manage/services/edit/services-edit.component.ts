@@ -231,7 +231,6 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   }
 
   buildForm() {
-    console.log(this.service);
     this.form = this.fb.group({
       'name': [this.service.name, Validators.required],
       'logo_url': [this.service.logo_url, Validators.required],
