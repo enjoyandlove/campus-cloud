@@ -186,6 +186,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       .then(res => {
         this.editingUser = res.data;
 
+        console.log('editingUser ', this.editingUser);
+
         this.isCurrentUser = this.editingUser.id === this.session.user.id;
 
 
@@ -356,6 +358,12 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       if (CP_PRIVILEGES_MAP.manage_admin in this.schoolPrivileges) {
         delete this.schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin];
       }
+
+      Object.keys(this.accountPrivileges).forEach(storeId => {
+        if (!(Object.keys(this.accountPrivileges[storeId]).length)) {
+          delete this.accountPrivileges[storeId];
+        }
+      });
       return;
     }
 
@@ -419,6 +427,12 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     this.resetServiceModal$.next(true);
     this.removePrivilegeFromRandomAccount(CP_PRIVILEGES_MAP.services);
 
+    Object.keys(this.accountPrivileges).forEach(storeId => {
+      if (!(Object.keys(this.accountPrivileges[storeId]).length)) {
+        delete this.accountPrivileges[storeId];
+      }
+    });
+
     if (service.action === null) {
 
       if (this.schoolPrivileges) {
@@ -477,6 +491,12 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     this.doClubsCleanUp();
     this.resetClubsModal$.next(true);
     this.removePrivilegeFromRandomAccount(CP_PRIVILEGES_MAP.clubs);
+
+    Object.keys(this.accountPrivileges).forEach(storeId => {
+      if (!(Object.keys(this.accountPrivileges[storeId]).length)) {
+        delete this.accountPrivileges[storeId];
+      }
+    });
 
     if (club.action === null) {
       this.resetClubsModal$.next(true);
@@ -555,18 +575,37 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
                                         this.editingUser.account_level_privileges);
 
     Object.keys(stores).map(storeId => {
-      if (privilegeType in stores[storeId].account_level_privileges) {
-        accountCleanUp(stores[storeId].account_level_privileges, privilegeType);
+      if (privilegeType in stores[storeId]) {
+        delete stores[storeId][privilegeType];
+
+        if (!(Object.keys(stores[storeId]).length)) {
+         delete stores[storeId];
+        }
       }
     });
+
+    return stores;
   }
 
   checkControl(isChecked, privilegeNo, privilegeExtraData): void {
-    this.removePrivilegeFromRandomAccount(privilegeNo);
+    if (!isChecked) {
+      this.accountPrivileges = Object.assign(
+        {},
+        this.accountPrivileges,
+        { ...this.removePrivilegeFromRandomAccount(privilegeNo) }
+      )
+
+      Object.keys(this.accountPrivileges).forEach(storeId => {
+        if (!(Object.keys(this.accountPrivileges[storeId]).length)) {
+          delete this.accountPrivileges[storeId];
+        }
+      });
+    }
 
     if (!isChecked && privilegeExtraData.disables) {
       this.disableDependencies(privilegeExtraData.disables);
     }
+
 
     if (this.schoolPrivileges && this.schoolPrivileges[privilegeNo]) {
       delete this.schoolPrivileges[privilegeNo];
