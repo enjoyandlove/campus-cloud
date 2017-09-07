@@ -1,4 +1,13 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Input,
+  OnInit,
+  Output,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener
+} from '@angular/core';
+
 import { URLSearchParams } from '@angular/http';
 
 import { ListsService } from '../lists.service';
@@ -15,10 +24,26 @@ export class ListsDeleteComponent implements OnInit {
   @Input() list: any;
   @Output() deleteList: EventEmitter<number> = new EventEmitter();
 
+  templateConflict = false;
+
   constructor(
+    private el: ElementRef,
     private session: CPSession,
     private service: ListsService
   ) { }
+
+  @HostListener('document:click', ['$event'])
+  onClick(event) {
+    // out of modal
+    if (event.target.contains(this.el.nativeElement)) {
+      this.resetModal();
+    }
+  }
+
+  resetModal() {
+    $('#listsDelete').modal('hide');
+    this.templateConflict = false;
+  }
 
   onDelete() {
     let search = new URLSearchParams();
@@ -32,7 +57,14 @@ export class ListsDeleteComponent implements OnInit {
           $('#listsDelete').modal('hide');
           this.deleteList.emit(this.list.id);
         },
-        err => console.log(err)
+        err => {
+          if (err.status === 409) {
+            this.templateConflict = true;
+            return;
+          } else {
+            console.log(err);
+          }
+        }
       );
   }
 
