@@ -1,10 +1,19 @@
-import { Http, RequestOptionsArgs } from '@angular/http';
+import { API } from './../../config/api/index';
+import { Http, Headers, RequestOptionsArgs } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { API } from '../../config/api';
 import { CPObj } from '../../shared/utils';
 import { BaseService } from '../../base/base.service';
+
+const buildTokenHeaders = () => {
+  const auth = `${API.AUTH_HEADER.TOKEN} ${API.KEY}`;
+
+  return new Headers({
+    'Content-Type': 'application/json',
+    'Authorization': auth
+  });
+};
 
 @Injectable()
 export class CallbackService extends BaseService {
@@ -17,7 +26,7 @@ export class CallbackService extends BaseService {
   }
 
   get(url: string, opts?: RequestOptionsArgs) {
-    const headers = API.BUILD_TOKEN_HEADERS();
+    const headers = buildTokenHeaders();
 
     return this
       ._http
@@ -28,7 +37,7 @@ export class CallbackService extends BaseService {
   }
 
   post(url: string, data: any, opts?: RequestOptionsArgs) {
-    const headers = API.BUILD_TOKEN_HEADERS();
+    const headers = buildTokenHeaders();
 
     data = CPObj.cleanNullValues(data);
 
@@ -40,7 +49,7 @@ export class CallbackService extends BaseService {
   }
 
   update(url: string, data: any, opts?: RequestOptionsArgs) {
-    const headers = API.BUILD_TOKEN_HEADERS();
+    const headers = buildTokenHeaders();
 
     data = CPObj.cleanNullValues(data);
 
@@ -53,7 +62,7 @@ export class CallbackService extends BaseService {
   }
 
   delete(url: string, opts?: RequestOptionsArgs) {
-    const headers = API.BUILD_TOKEN_HEADERS();
+    const headers = buildTokenHeaders();
 
     return this
       ._http

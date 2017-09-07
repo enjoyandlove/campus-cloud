@@ -13,33 +13,62 @@
     </div>
   </div>
 
-  <div class="cpmodal__body">
-    <div class="row">
-      <div class="col-xs-12">
-        <p class="text-center" i18n>
-          Are you sure you want to delete {{ list.name }}?
-        </p>
+  <ng-container *ngIf="!templateConflict">
+    <div class="cpmodal__body">
+      <div class="row">
+        <div class="col-xs-12">
+          <p class="text-center" i18n>
+            Are you sure you want to delete {{ list.name }}?
+          </p>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="cpmodal__footer">
-    <div class="row">
-      <div class="col-xs-6 col-xs-offset-6 text-right">
-        <button
-          type="button"
-          class="cpbtn cpbtn--cancel"
-          data-dismiss="modal" i18n>
-          Cancel
-        </button>
+    <div class="cpmodal__footer">
+      <div class="row">
+        <div class="col-xs-6 col-xs-offset-6 text-right">
+          <button
+            type="button"
+            class="cpbtn cpbtn--cancel"
+            data-dismiss="modal" i18n>
+            Cancel
+          </button>
 
-        <button
-          type="button"
-          (click)="onDelete()"
-          class="cpbtn cpbtn--danger"i18n>
-          Delete
-        </button>
+          <button
+            type="button"
+            (click)="onDelete()"
+            class="cpbtn cpbtn--danger"i18n>
+            Delete
+          </button>
+        </div>
       </div>
     </div>
-  </div>
+  </ng-container>
+
+  <ng-container *ngIf="templateConflict">
+    <div class="cpmodal__body">
+      <div class="row">
+        <div class="col-xs-12">
+          <p class="text-center" i18n>
+            This list is being used in a notification template.
+            To delete this list, first delete all templates addressed to this list, and try again.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cpmodal__footer">
+      <div class="row">
+        <div class="col-xs-6 col-xs-offset-6 text-right">
+          <button
+            type="button"
+            data-dismiss="modal"
+            (click)="resetModal()"
+            class="cpbtn cpbtn--primary"i18n>
+            Got it
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
 </div>

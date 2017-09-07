@@ -12,6 +12,10 @@ export * from './user.interface';
 export * from './school.interface';
 
 export const accountsToStoreMap = (accountsMap: Array<number>, accountPrivileges) => {
+  /**
+   * @return obj similar to account_privielges but with
+   * only the storeId that the user has access to
+   */
   let accounts = {};
 
   accountsMap.map(storeId => {

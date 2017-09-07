@@ -79,7 +79,15 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
   }
 
   onCreateExcel() {
-    generateExcelFile(this.attendees);
+    const search = new URLSearchParams();
+    search.append('event_id', this.event.id);
+    search.append('all', '1');
+
+    const stream$ = this
+      .eventService
+      .getEventAttendanceByEventId(this.startRange, this.endRange, search);
+
+    stream$.toPromise().then(attendees => generateExcelFile(attendees));
   }
 
   onViewFeedback(attendee): void {

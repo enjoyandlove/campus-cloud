@@ -3,13 +3,22 @@
  * Takes care of setting common headers
  * and catching errors
  */
-import { Http, RequestOptionsArgs } from '@angular/http';
+import { Http, Headers, RequestOptionsArgs } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { API } from '../config/api';
+import { API } from './../config/api/index';
 import { CPObj, appStorage } from '../shared/utils';
+
+const buildCommonHeaders = () => {
+  const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
+
+  return new Headers({
+    'Content-Type': 'application/json',
+    'Authorization': auth
+  });
+};
 
 @Injectable()
 export class BaseService {
@@ -19,13 +28,11 @@ export class BaseService {
   ) { }
 
   get(url: string, opts?: RequestOptionsArgs) {
-    const headers = API.BUILD_COMMON_HEADERS();
+    const headers = buildCommonHeaders();
 
     return this
       .http
       .get(url, { headers, ...opts })
-      .delay(200)
-      .retry(1)
       .catch(err => {
         if (err.status === 403) {
           return Promise.reject([]);
@@ -35,7 +42,7 @@ export class BaseService {
   }
 
   post(url: string, data: any, opts?: RequestOptionsArgs) {
-    const headers = API.BUILD_COMMON_HEADERS();
+    const headers = buildCommonHeaders();
 
     data = CPObj.cleanNullValues(data);
 
@@ -47,7 +54,7 @@ export class BaseService {
   }
 
   update(url: string, data: any, opts?: RequestOptionsArgs) {
-    const headers = API.BUILD_COMMON_HEADERS();
+    const headers = buildCommonHeaders();
 
     data = CPObj.cleanNullValues(data);
 
@@ -60,13 +67,11 @@ export class BaseService {
   }
 
   delete(url: string, opts?: RequestOptionsArgs) {
-    const headers = API.BUILD_COMMON_HEADERS();
+    const headers = buildCommonHeaders();
 
     return this
       .http
       .delete(url, { headers, ...opts })
-      .delay(200)
-      .retry(1)
       .catch(err => this.catchError(err));
   }
 

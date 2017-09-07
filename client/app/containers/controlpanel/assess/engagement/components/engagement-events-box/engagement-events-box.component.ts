@@ -81,7 +81,7 @@ export class EngagementEventsBoxComponent extends BaseComponent implements OnIni
     search.append('sort_by', this.state.sortBy);
     search.append('end', this.state.end.toString());
     search.append('start', this.state.start.toString());
-    search.append('list_id', list_id);
+    search.append('user_list_id', list_id);
     search.append('school_id', this.session.school.id.toString());
 
     if (this.state.scope.queryParam === 'scope') {
