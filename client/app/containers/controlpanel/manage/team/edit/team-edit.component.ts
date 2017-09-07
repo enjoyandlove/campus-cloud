@@ -154,6 +154,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   schoolPrivileges;
   accountPrivileges;
   isAllAccessEnabled;
+  currentUserCanManage;
   MODAL_TYPE = MODAL_TYPE.WIDE;
   CP_PRIVILEGES = CP_PRIVILEGES;
   CP_PRIVILEGES_MAP = CP_PRIVILEGES_MAP;
@@ -335,7 +336,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       .adminService
       .updateAdmin(this.adminId, _data)
       .subscribe(
-      _ => this.router.navigate(['/manage/team']),
+      _ => this.router.navigate([this.currentUserCanManage ? '/manage/team' : '/welcome']),
       err => {
         this.isFormError = true;
 
@@ -629,7 +630,14 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     this.user = this.session.user;
     this.schoolId = this.session.school.id;
+
     let schoolPrivileges = this.user.school_level_privileges[this.schoolId];
+
+    if (CP_PRIVILEGES_MAP.manage_admin in schoolPrivileges) {
+      this.currentUserCanManage = schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin].w;
+    } else {
+      this.currentUserCanManage = false;
+    }
 
     this.canReadEvents = schoolPrivileges[CP_PRIVILEGES_MAP.events];
     this.canReadServices = schoolPrivileges[CP_PRIVILEGES_MAP.services];

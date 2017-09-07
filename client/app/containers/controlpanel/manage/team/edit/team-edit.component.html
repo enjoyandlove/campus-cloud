@@ -318,7 +318,7 @@
               <div class="col-xs-12">
                 <div class="pull-right">
                   <label *ngIf="isFormError"class="error">{{ formError }}</label>
-                  <a [routerLink]="['/manage/team']"
+                  <a [routerLink]="[currentUserCanManage ? '/manage/team' : '/welcome']"
                     class="cpbtn cpbtn--tall cpbtn--cancel" i18n>
                     Cancel
                   </a>
