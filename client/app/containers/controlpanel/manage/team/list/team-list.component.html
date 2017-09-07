@@ -1,3 +1,18 @@
+<div class="row">
+  <div class="col-xs-12">
+    <div class="cp-card">
+      <div class="row">
+        <div class="col-xs-4">
+          <cp-searchbox
+            (query)="onSearch($event)"
+            placeholder="Search by name or email...">
+          </cp-searchbox>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div [ngSwitch]="loading">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
@@ -10,8 +25,6 @@
       </li>
 
       <li class="cp-form__item row" *ngFor="let admin of state.admins">
-
-
         <span class="col-xs-5 text-truncate">
           <strong>
             <a [routerLink]="[admin.id + '/edit']">

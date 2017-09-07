@@ -19,7 +19,7 @@ export class SchoolSwitchComponent implements OnInit {
   defaultImage = require('../../../../public/default/user.png');
 
   constructor(
-    private session: CPSession
+    public session: CPSession
   ) { }
 
   onSwitchSchool(event, school) {

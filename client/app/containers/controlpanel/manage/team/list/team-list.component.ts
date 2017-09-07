@@ -10,10 +10,12 @@ import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 
 interface IState {
   admins: Array<any>;
+  search_str: string;
 }
 
 const state: IState = {
-  admins: []
+  admins: [],
+  search_str: null
 };
 
 declare var $: any;
@@ -40,8 +42,15 @@ export class TeamListComponent extends BaseComponent implements OnInit {
     this.fetch();
   }
 
+  onSearch(search_str) {
+    this.state = Object.assign({}, this.state, { search_str });
+
+    this.fetch();
+  }
+
   private fetch() {
     let search = new URLSearchParams();
+    search.append('search_str', this.state.search_str);
     search.append('school_id', this.session.school.id.toString());
 
     super
