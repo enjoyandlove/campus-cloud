@@ -16,7 +16,8 @@
   <div class="switch__left" *ngIf="!isSchoolPanel">
     <li
       (click)="close.emit()"
-      class="switch__item isFirstItem">
+      class="switch__item"
+      [class.isFirstItem]="schools.length === 1">
       <a [routerLink]="['/manage/team/' + session.user.id + '/edit' ]" i18n>Profile</a>
     </li>
 
