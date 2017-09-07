@@ -8,7 +8,7 @@ import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { API } from './../config/api/index';
+import API from './../config/api/index';
 import { CPObj, appStorage } from '../shared/utils';
 
 const buildCommonHeaders = () => {

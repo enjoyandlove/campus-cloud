@@ -1,37 +1,62 @@
 import { isProd, isCanada, isSea } from '../../config/env';
 
-import * as RESOURCES from './api.resources';
-
-let API_BASE_URL;
-
-const API_VERSION = {
-  'V1': 'v1'
-};
-
-if (isProd) {
-  if (isCanada) {
-    API_BASE_URL = `https://canapi.studentlifemobile.com/cc`;
-  } else if (isSea) {
-    API_BASE_URL = `https://seaapi.studentlifemobile.com/cc`;
-  } else {
-    API_BASE_URL = `https://api.studentlifemobile.com/cc`;
-  }
-} else {
-  API_BASE_URL = 'https://usstagingapi.studentlifemobile.com/cc';
-  // API_BASE_URL = 'http://ec2-54-234-212-53.compute-1.amazonaws.com:5002/cc';
+const CP_API_URL = {
+  USA: 'https://api.studentlifemobile.com/cc',
+  CAN: 'https://canapi.studentlifemobile.com/cc',
+  SEA: 'https://seaapi.studentlifemobile.com/cc',
+  DEV: 'https://usstagingapi.studentlifemobile.com/cc'
 }
 
-const API_KEY = 'IUm65kXecFWch54mzJjpy63spWZX3AVp';
+const fromEnvironment = () => {
+  if (isProd) {
+    if (isCanada) {
+      return CP_API_URL.CAN
+    } else if (isSea) {
+      return CP_API_URL.SEA
+    } else {
+      return CP_API_URL.USA
+    }
+  } else {
+    return CP_API_URL.DEV;
+  }
+}
 
-const API_AUTH_HEADER = {
-  TOKEN: 'CCToke',
-  SESSION: 'CCSess'
-};
+class BaseApi {
+  BASE_URL;
 
-export const API = {
-  KEY: API_KEY,
-  VERSION: API_VERSION,
-  BASE_URL: API_BASE_URL,
-  AUTH_HEADER: API_AUTH_HEADER,
-  ENDPOINTS: RESOURCES.API_ENDPOINTS
-};
+  KEY = 'IUm65kXecFWch54mzJjpy63spWZX3AVp';
+
+  VERSION = {
+    'V1': 'v1'
+  }
+
+  ENDPOINTS = require('./api.resources').API_ENDPOINTS;
+
+  AUTH_HEADER = {
+    TOKEN: 'CCToke',
+    SESSION: 'CCSess'
+  };
+
+  constructor(BASE_URL: string) {
+    this.BASE_URL = BASE_URL;
+  }
+}
+
+export const API = new BaseApi(fromEnvironment())
+
+// let API: BaseApi;
+
+// if (isProd) {
+//   if (isCanada) {
+//     API = new BaseApi(CP_API_URL.CAN);
+//   } else if (isSea) {
+//     API = new BaseApi(CP_API_URL.SEA);
+//   } else {
+//     API = new BaseApi(CP_API_URL.USA);
+//   }
+// } else {
+//   API = new BaseApi(CP_API_URL.DEV);
+//   // http://ec2-54-234-212-53.compute-1.amazonaws.com:5002/cc
+// }
+
+// export default API;
