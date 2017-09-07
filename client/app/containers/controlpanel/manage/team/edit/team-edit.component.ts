@@ -186,8 +186,6 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       .then(res => {
         this.editingUser = res.data;
 
-        console.log('editingUser ', this.editingUser);
-
         this.isCurrentUser = this.editingUser.id === this.session.user.id;
 
 
