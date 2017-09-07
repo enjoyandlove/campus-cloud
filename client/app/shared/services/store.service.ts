@@ -81,6 +81,14 @@ export class StoreService extends BaseService {
 
         if (clubs.length === 1 && services.length === 1) {
           stores[0].label = 'No Hosts Available'
+          stores[0] = Object.assign(
+            {},
+            stores[0],
+            {
+              disabled: true,
+              tooltipText: 'No Services or Clubs found, check your account privileges'
+            }
+          );
         }
 
         return stores;
