@@ -1,7 +1,7 @@
 const columns = [
   'Service Provider',
   'Email',
-  'Averate Rating',
+  'Average Rating',
   'Total Ratings',
   'Total Visits',
 ];
