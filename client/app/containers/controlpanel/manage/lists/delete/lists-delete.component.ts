@@ -15,6 +15,8 @@ import { CPSession } from '../../../../../session';
 
 declare var $: any;
 
+const LIST_USED_IN_TEMPLATE = 409;
+
 @Component({
   selector: 'cp-lists-delete',
   templateUrl: './lists-delete.component.html',
@@ -58,7 +60,7 @@ export class ListsDeleteComponent implements OnInit {
           this.deleteList.emit(this.list.id);
         },
         err => {
-          if (err.status === 409) {
+          if (err.status === LIST_USED_IN_TEMPLATE) {
             this.templateConflict = true;
             return;
           } else {
