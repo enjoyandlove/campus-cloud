@@ -63,6 +63,8 @@ export class ClubsCreateComponent implements OnInit {
   }
 
   onPlaceChange(data) {
+    if (!data) { return; }
+
     let cpMap = CPMap.getBaseMapObject(data);
 
     this.form.controls['city'].setValue(cpMap.city);
