@@ -32,7 +32,6 @@ export class CPDropdownComponent implements OnInit {
   query = null;
   tooltipText = null;
   searchFixed = true;
-  isDisabled = false;
   isSearching = false;
   MIN_RESULTS_FOR_SEARCH = 40;
 
@@ -56,7 +55,6 @@ export class CPDropdownComponent implements OnInit {
 
   ngOnInit() {
     if (this.items[0].disabled) {
-      this.isDisabled = true;
       this.tooltipText = this.items[0].tooltipText;
     }
 
