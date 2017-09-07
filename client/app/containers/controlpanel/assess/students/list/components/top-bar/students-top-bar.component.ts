@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
@@ -16,9 +16,11 @@ interface IState {
   styleUrls: ['./students-top-bar.component.scss']
 })
 export class StudentsTopBarComponent implements OnInit {
+  @Input() listIdFromUrl: number;
   @Output() filter: EventEmitter<IState> = new EventEmitter();
   @Output() query: EventEmitter<string> = new EventEmitter();
 
+  selectedList: number;
   lists$: Observable<any>;
 
   state: IState = {
@@ -63,23 +65,28 @@ export class StudentsTopBarComponent implements OnInit {
         }
       ])
       .map(lists => {
-      let items = [
-        {
-          'label': 'All Students',
-          'id': null
-        }
-      ];
-
-      lists.map(list => {
-        items.push(
+        let items = [
           {
+            'label': 'All Students',
+            'id': null
+          }
+        ];
+
+        lists.map(list => {
+          list = {
             'label': list.name,
             'id': list.id
           }
-        )
+
+          items.push(list);
+
+          if (list.id === +this.listIdFromUrl) {
+            this.selectedList = list;
+          }
+
+        });
+        return items;
       });
-      return items;
-    });
 
     this.lists$.subscribe();
   }

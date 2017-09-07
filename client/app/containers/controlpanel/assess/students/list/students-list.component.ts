@@ -32,6 +32,7 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
     user_list_id: null,
   }
   messageData;
+  listIdFromUrl;
   dateFormat = FORMAT.DATETIME;
   isStudentComposeModal = false;
   avatarCustomCodeThreshold = 3;
@@ -148,6 +149,7 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
     });
 
     if ('list_id' in this.route.snapshot.queryParams) {
+      this.listIdFromUrl = this.route.snapshot.queryParams['list_id'];
       this.readStateFromUrl();
     }
   }
