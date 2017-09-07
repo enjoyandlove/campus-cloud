@@ -80,8 +80,8 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
     this
       .service
       .getStudentById(search, this.studentId)
-      .subscribe(res => {
-        this.student = res[0];
+      .subscribe(student => {
+        this.student = student;
 
         this.buildHeader({
           firstname: this.student.firstname,
@@ -180,8 +180,8 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
 
   launchMessageModal() {
     this.messageData = {
-      name: 'Peter Cen',
-      userIds: [16776]
+      name: `${this.student.firstname} ${this.student.lastname}`,
+      userIds: [this.student.id]
     };
 
     this.isStudentComposeModal = true;
