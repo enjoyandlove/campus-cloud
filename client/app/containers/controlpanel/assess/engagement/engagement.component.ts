@@ -63,7 +63,7 @@ export class EngagementComponent extends BaseComponent implements OnInit {
     let search = new URLSearchParams();
     search.append('school_id', this.session.school.id.toString());
     search.append(filterState.engagement.data.queryParam, filterState.engagement.data.value);
-    search.append('list_id', filterState.for.listId);
+    search.append('user_list_id', filterState.for.listId);
     search.append('start', `${filterState.range.payload.range.start}`);
     search.append('end', `${filterState.range.payload.range.end}`);
 
