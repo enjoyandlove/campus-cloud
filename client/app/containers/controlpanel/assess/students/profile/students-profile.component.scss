@@ -9,6 +9,12 @@
   margin-bottom: 0;
 }
 
+.no-content {
+  @include card-margin();
+
+  margin-top: 0;
+}
+
 .feed {
   &__wrapper {
     border-radius: 4px;
@@ -69,15 +75,7 @@
     }
   }
 
-  &__time {
-
-  }
-
   &__meta {
-
-    &__title {
-
-    }
 
     &__type {
       font-size: 0.9em;
@@ -93,9 +91,5 @@
   &__rating {
     margin-top: 10px;
     margin-bottom: 10px;
-  }
-
-  &__feedback {
-
   }
 }

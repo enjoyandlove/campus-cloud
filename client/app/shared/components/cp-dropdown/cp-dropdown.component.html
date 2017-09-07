@@ -1,7 +1,10 @@
-<div class="cpbtn-group cp-dropdown">
+<div
+  class="cpbtn-group cp-dropdown">
   <button
     type="button"
     data-toggle="dropdown"
+    [disabled]="items[0].disabled"
+    [attr.title]="[items[0].disabled ? items[0].tooltipText : null]"
     [class.cpbtn--cancel--error]="isRequiredError"
     class="cpbtn cpbtn--cancel cp-dropdown__button text-truncate">
     <div class="row">
@@ -31,8 +34,8 @@
     <ng-container *ngIf="!isSearching">
       <li
         (click)="onClick(item)"
-        *ngFor="let item of items | cpFilterPipe: { query: query, filterBy: 'label' }"
-        class="cp-dropdown__list__item">
+        class="cp-dropdown__list__item"
+        *ngFor="let item of items | cpFilterPipe: { query: query, filterBy: 'label' }">
         <span [class.isLabel]="item.heading">{{ item.label }}</span>
       </li>
     </ng-container>
