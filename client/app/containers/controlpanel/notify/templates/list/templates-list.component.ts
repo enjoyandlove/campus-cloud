@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 
 import { TemplatesService } from './../templates.service';
 import { CPSession } from './../../../../../session/index';
-import { base64 } from './../../../../../shared/utils/base64';
+import { base64 } from './../../../../../shared/utils/encrypt';
 import { STATUS } from './../../../../../shared/constants/status';
 import { BaseComponent } from './../../../../../base/base.component';
 import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
