@@ -3,7 +3,7 @@
  * Takes care of setting common headers
  * and catching errors
  */
-import { Http, Headers, RequestOptionsArgs } from '@angular/http';
+import { Http, Headers, RequestOptionsArgs, Response, ResponseOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -35,7 +35,11 @@ export class BaseService {
       .get(url, { headers, ...opts })
       .catch(err => {
         if (err.status === 403) {
-          return Promise.reject([]);
+          return Observable.of(
+            new Response(
+              new ResponseOptions({ body: JSON.stringify([]) })
+            )
+          )
         }
         return this.catchError(err);
       });
