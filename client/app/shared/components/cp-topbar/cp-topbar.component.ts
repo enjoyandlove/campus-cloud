@@ -1,8 +1,8 @@
 import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
+import { CP_PRIVILEGES_MAP } from './../../constants';
 import { CPSession, IUser, ISchool } from '../../../session';
-import { CP_PRIVILEGES_MAP } from './../../utils/privileges';
 
 @Component({
   selector: 'cp-topbar',
