@@ -3,7 +3,6 @@ import { URLSearchParams } from '@angular/http';
 
 import { EventsService } from '../../events.service';
 import { CPSession } from '../../../../../../session';
-import { CPState } from '../../../../../../shared/utils';
 import { BaseComponent } from '../../../../../../base/base.component';
 
 interface IState {
@@ -163,9 +162,11 @@ export class EventsComponent extends BaseComponent implements OnInit, OnDestroy 
   }
 
   onDeletedEvent(eventId) {
-    const _state = CPState.deleteById(this.state, 'events', eventId);
-
-    this.state = Object.assign({}, this.state, _state);
+    this.state = Object.assign(
+      {},
+      this.state,
+      { events: this.state.events.filter(event => event.id !== eventId) }
+    );
   }
 
   onPaginationNext() {
