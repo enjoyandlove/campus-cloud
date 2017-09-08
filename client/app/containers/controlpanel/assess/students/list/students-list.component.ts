@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 
 import { StudentsService } from './../students.service';
 import { CPSession } from './../../../../../session/index';
-import { FORMAT } from './../../../../../shared/pipes/date.pipe';
+import { FORMAT } from './../../../../../shared/pipes/date';
 import { STATUS } from './../../../../../shared/constants/status';
 import { BaseComponent } from './../../../../../base/base.component';
 import { HEADER_UPDATE } from './../../../../../reducers/header.reducer';

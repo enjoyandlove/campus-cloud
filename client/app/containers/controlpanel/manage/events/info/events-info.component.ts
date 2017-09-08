@@ -9,7 +9,7 @@ import {
 } from '../../../../../reducers/header.reducer';
 import { EventDate } from '../utils';
 import { EventsService } from '../events.service';
-import { FORMAT } from '../../../../../shared/pipes/date.pipe';
+import { FORMAT } from '../../../../../shared/pipes/date';
 import { BaseComponent } from '../../../../../base/base.component';
 
 @Component({

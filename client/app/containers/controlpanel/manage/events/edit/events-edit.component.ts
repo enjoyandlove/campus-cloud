@@ -13,8 +13,8 @@ import {
 } from '../../../../../reducers/header.reducer';
 import { EventsService } from '../events.service';
 import { STATUS } from '../../../../../shared/constants';
+import { FORMAT } from '../../../../../shared/pipes/date';
 import { CPSession, ISchool } from '../../../../../session';
-import { FORMAT } from '../../../../../shared/pipes/date.pipe';
 import { BaseComponent } from '../../../../../base/base.component';
 import { CPMap, CPDate, CP_PRIVILEGES_MAP } from '../../../../../shared/utils';
 import { ErrorService, StoreService, AdminService } from '../../../../../shared/services';

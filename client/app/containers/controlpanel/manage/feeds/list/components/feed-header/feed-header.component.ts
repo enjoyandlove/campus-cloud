@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { CPDate } from '../../../../../../../shared/utils';
-import { FORMAT } from '../../../../../../../shared/pipes/date.pipe';
+import { FORMAT } from '../../../../../../../shared/pipes/date';
 
 @Component({
   selector: 'cp-feed-header',
