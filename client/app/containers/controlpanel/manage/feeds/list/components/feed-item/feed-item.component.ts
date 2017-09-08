@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
 import { CPDate } from '../../../../../../../shared/utils';
-import { FORMAT } from '../../../../../../../shared/pipes/date.pipe';
+import { FORMAT } from '../../../../../../../shared/pipes/date';
 
 declare var $: any;
 

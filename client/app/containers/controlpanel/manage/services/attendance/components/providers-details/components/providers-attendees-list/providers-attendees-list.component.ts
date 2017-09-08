@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { generateExcelFile } from './excel';
 import { ProvidersService } from '../../../../../providers.service';
-import { FORMAT } from '../../../../../../../../../shared/pipes/date.pipe';
+import { FORMAT } from '../../../../../../../../../shared/pipes/date';
 import { BaseComponent } from '../../../../../../../../../base/base.component';
 
 interface IState {
