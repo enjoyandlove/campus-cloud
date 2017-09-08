@@ -6,7 +6,7 @@ function isSizeOk(fileSize: number, maxSizeBytes: number) {
 };
 
 function isValidExtension( fileExtension: string, validExtensions: string[]) {
-  return validExtensions.indexOf(fileExtension.toLowerCase()) > -1;
+  return validExtensions.includes(fileExtension.toLowerCase());
 };
 
 export const CPImage = {
