@@ -10,8 +10,8 @@ import { STATUS } from '../../../../../shared/constants';
 import { accountsToStoreMap } from './../../../../../session';
 import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
 import { ErrorService, AdminService } from '../../../../../shared/services';
-import { CP_PRIVILEGES, CP_PRIVILEGES_MAP } from '../../../../../shared/utils';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+import { CP_PRIVILEGES, CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 
 const eventsDropdown = function (privilege: { r: boolean, w: boolean }) {
   let items = [

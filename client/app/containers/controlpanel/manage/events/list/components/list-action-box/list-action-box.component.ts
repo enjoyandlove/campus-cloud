@@ -14,7 +14,7 @@ import { DATE_FILTER } from './events-filters';
 import { CPSession } from '../../../../../../../session';
 import { CPDate } from '../../../../../../../shared/utils/date';
 import { StoreService } from '../../../../../../../shared/services';
-import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/utils/privileges';
+import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
 
 interface IState {
   end: number;

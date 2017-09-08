@@ -6,8 +6,8 @@ import { Store } from '@ngrx/store';
 import { ClubsService } from '../clubs.service';
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base/base.component';
+import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-import { CP_PRIVILEGES_MAP } from '../../../../../shared/utils/privileges';
 
 const CLUB_PENDING_STATUS = 2;
 

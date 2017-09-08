@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 
 import { CPSession } from '../../session';
 import { appStorage } from '../../shared/utils';
-import { CP_PRIVILEGES_MAP } from './../../shared/utils/privileges';
+import { CP_PRIVILEGES_MAP } from './../../shared/constants';
 import { AdminService, SchoolService } from '../../shared/services';
 
 @Injectable()

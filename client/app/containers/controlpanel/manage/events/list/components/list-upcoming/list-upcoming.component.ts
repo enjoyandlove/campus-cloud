@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { FORMAT } from '../../../../../../../shared/pipes';
 import { CPSession } from './../../../../../../../session/index';
-import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/utils/privileges';
+import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
 
 interface ISort {
   sort_field: string;

@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { STATUS } from '../../../../../shared/constants';
 import { StoreService } from '../../../../../shared/services';
 import { AnnouncementsService } from '../announcements.service';
-import { CP_PRIVILEGES_MAP } from '../../../../../shared/utils';
+import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 
 declare var $: any;
 

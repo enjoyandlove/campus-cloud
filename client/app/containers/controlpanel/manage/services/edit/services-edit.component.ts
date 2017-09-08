@@ -12,7 +12,7 @@ import { ServicesService } from '../services.service';
 import { ProvidersService } from '../providers.service';
 import { CPSession, ISchool } from '../../../../../session';
 import { BaseComponent } from '../../../../../base/base.component';
-import { CP_PRIVILEGES_MAP } from '../../../../../shared/utils/privileges';
+import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 import { IServiceDeleteModal } from './components/service-edit-delete-modal';
 import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 

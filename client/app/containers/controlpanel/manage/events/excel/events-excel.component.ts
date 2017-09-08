@@ -8,11 +8,12 @@ import { Store } from '@ngrx/store';
 
 import { EventsService } from '../events.service';
 import { isDev } from '../../../../../config/env';
+import { CPDate } from '../../../../../shared/utils';
 import { STATUS } from '../../../../../shared/constants';
 import { CPSession, ISchool } from '../../../../../session';
 import { BaseComponent } from '../../../../../base/base.component';
+import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-import { CPDate, CP_PRIVILEGES_MAP } from '../../../../../shared/utils';
 import { StoreService, AdminService } from '../../../../../shared/services';
 
 
