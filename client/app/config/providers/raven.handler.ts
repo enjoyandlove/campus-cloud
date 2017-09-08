@@ -19,6 +19,5 @@ export class RavenErrorHandler extends ErrorHandler {
     } else {
       super.handleError(err);
     }
-
   }
 }
