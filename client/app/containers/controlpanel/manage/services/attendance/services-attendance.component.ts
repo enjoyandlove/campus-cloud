@@ -1,4 +1,3 @@
-import { CP_PRIVILEGES_MAP } from './../../../../../shared/utils/privileges';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
@@ -12,6 +11,7 @@ import { ServicesService } from '../services.service';
 import { CPSession } from './../../../../../session/index';
 import { BaseComponent } from '../../../../../base/base.component';
 import { STAR_SIZE } from '../../../../../shared/components/cp-stars';
+import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants';
 
 const FEEDBACK_ENABLED = 1;
 

@@ -4,8 +4,8 @@ import { Headers } from '@angular/http';
 
 import { API } from '../../../../../config/api';
 import { LinksService } from '../links.service';
+import { CPImage, appStorage } from '../../../../../shared/utils';
 import { FileUploadService } from '../../../../../shared/services';
-import { CPImage, CPArray, appStorage } from '../../../../../shared/utils';
 
 import { ILink } from '../link.interface';
 
@@ -42,7 +42,7 @@ export class LinksEditComponent implements OnInit, OnChanges {
 
   onFileUpload(file) {
     this.imageError = null;
-    const fileExtension = CPArray.last(file.name.split('.'));
+    const fileExtension = file.name.split('.').pop();
 
     if (!CPImage.isSizeOk(file.size, CPImage.MAX_IMAGE_SIZE)) {
       this.imageError = 'File too Big';

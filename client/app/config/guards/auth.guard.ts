@@ -1,4 +1,3 @@
-import { base64 } from './../../shared/utils/base64';
 /**
  * Guard to check if user is authenticated
  */
@@ -9,7 +8,8 @@ import { Router } from '@angular/router';
 
 import { CPSession } from '../../session';
 import { appStorage } from '../../shared/utils';
-import { CP_PRIVILEGES_MAP } from './../../shared/utils/privileges';
+import { base64 } from './../../shared/utils/encrypt';
+import { CP_PRIVILEGES_MAP } from './../../shared/constants';
 import { AdminService, SchoolService } from '../../shared/services';
 
 @Injectable()

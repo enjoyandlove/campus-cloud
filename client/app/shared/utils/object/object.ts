@@ -1,4 +1,4 @@
-function cleanNullValues(obj: any) {
+function cleanNullValues(obj: any): any {
   if (Array.isArray(obj)) { return obj; }
 
   let _obj = {};

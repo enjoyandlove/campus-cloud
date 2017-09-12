@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { CPSession } from './../../../../../../../session/index';
-import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/utils/privileges';
+import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
 
 interface IState {
   query: string;

@@ -1,4 +1,4 @@
-import { base64 } from './base64';
+import { base64 } from '../encrypt';
 
 const STORAGE_KEYS = {
   'SESSION': 'session',

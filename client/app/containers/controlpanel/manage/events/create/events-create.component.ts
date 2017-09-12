@@ -8,7 +8,8 @@ import { Store } from '@ngrx/store';
 import { EventsService } from '../events.service';
 import { CPSession, ISchool } from '../../../../../session';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-import { CPMap, CPDate, CP_PRIVILEGES_MAP } from '../../../../../shared/utils';
+import { CPMap, CPDate } from '../../../../../shared/utils';
+import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants';
 import { ErrorService, StoreService, AdminService } from '../../../../../shared/services';
 
 const COMMON_DATE_PICKER_OPTIONS = {

@@ -1,4 +1,4 @@
-import { CP_PRIVILEGES } from '../../../../../shared/utils/privileges';
+import { CP_PRIVILEGES } from '../../../../../shared/constants';
 const IDs = [32, 12];
 
 function buildNotifyOptions(userPrivileges: number[]) {

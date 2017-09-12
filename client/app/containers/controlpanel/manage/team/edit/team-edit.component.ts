@@ -5,15 +5,15 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { TEAM_ACCESS } from '../utils';
+import { CPSession } from '../../../../../session';
 import { STATUS } from '../../../../../shared/constants';
 import { accountCleanUp } from './../create/team-create.component';
 import { BaseComponent } from '../../../../../base/base.component';
 import { accountsToStoreMap } from './../../../../../session/index';
 import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
 import { AdminService, ErrorService } from '../../../../../shared/services';
-import { CPSession } from '../../../../../session';
-import { CP_PRIVILEGES, CP_PRIVILEGES_MAP } from '../../../../../shared/utils';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+import { CP_PRIVILEGES, CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 
 const eventsDropdown = function (privilege: { r: boolean, w: boolean }) {
   let items = [

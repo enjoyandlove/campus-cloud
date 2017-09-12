@@ -1,0 +1,22 @@
+export const mockSchool = {
+  'app_url_android': '',
+  'is_configured': true,
+  'app_logo_url': '',
+  'main_union_store_id': 0,
+  'name': 'OOHLALA Mock University',
+  'short_name': 'OOHLALA  Mock University',
+  'wall_unlock_num': 25,
+  'has_multi_campus': false,
+  'longitude': 0,
+  'id': 2806,
+  'app_url_ios': '',
+  'has_guide_customization': true,
+  'premium_level': 0,
+  'wall_unlocked': false,
+  'branding_color': '',
+  'latitude': 0,
+  'is_config_validated': true,
+  'logo_url': '',
+  'is_verified': true,
+  'email': ''
+}

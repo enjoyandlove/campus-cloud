@@ -17,7 +17,7 @@ import { API } from '../../../../../../../config/api';
 import { FeedsService } from '../../../feeds.service';
 import { STATUS } from '../../../../../../../shared/constants';
 import { CPSession, ISchool } from '../../../../../../../session';
-import { CPArray, CPImage, appStorage } from '../../../../../../../shared/utils';
+import { CPImage, appStorage } from '../../../../../../../shared/utils';
 import { FileUploadService, StoreService } from '../../../../../../../shared/services';
 
 @Component({
@@ -161,7 +161,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
 
   onFileUpload(file) {
     this.imageError = null;
-    const fileExtension = CPArray.last(file.name.split('.'));
+    const fileExtension = file.name.split('.').pop();
 
     if (!CPImage.isSizeOk(file.size, CPImage.MAX_IMAGE_SIZE)) {
       this.imageError = STATUS.FILE_IS_TOO_BIG;

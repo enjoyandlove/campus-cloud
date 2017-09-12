@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { CPSession } from './../../../../session/index';
-import { CP_PRIVILEGES_MAP } from './../../../../shared/utils/privileges';
+import { CP_PRIVILEGES_MAP } from './../../../../shared/constants';
 
 @Injectable()
 export class ManageHeaderService {

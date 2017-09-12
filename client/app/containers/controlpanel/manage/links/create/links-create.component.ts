@@ -6,8 +6,8 @@ import { ILink } from '../link.interface';
 import { API } from '../../../../../config/api';
 import { LinksService } from '../links.service';
 import { CPSession } from '../../../../../session';
+import { CPImage, appStorage } from '../../../../../shared/utils';
 import { FileUploadService } from '../../../../../shared/services';
-import { CPImage, CPArray, appStorage } from '../../../../../shared/utils';
 
 declare var $: any;
 
@@ -43,7 +43,7 @@ export class LinksCreateComponent implements OnInit {
 
   onFileUpload(file) {
     this.imageError = null;
-    const fileExtension = CPArray.last(file.name.split('.'));
+    const fileExtension = file.name.split('.').pop();
 
     if (!CPImage.isSizeOk(file.size, CPImage.MAX_IMAGE_SIZE)) {
       this.imageError = 'File too Big';

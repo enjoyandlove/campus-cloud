@@ -15,8 +15,9 @@ import { EventsService } from '../events.service';
 import { STATUS } from '../../../../../shared/constants';
 import { FORMAT } from '../../../../../shared/pipes/date';
 import { CPSession, ISchool } from '../../../../../session';
+import { CPMap, CPDate } from '../../../../../shared/utils';
 import { BaseComponent } from '../../../../../base/base.component';
-import { CPMap, CPDate, CP_PRIVILEGES_MAP } from '../../../../../shared/utils';
+import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 import { ErrorService, StoreService, AdminService } from '../../../../../shared/services';
 
 const COMMON_DATE_PICKER_OPTIONS = {

@@ -1,8 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
+import { appStorage } from '../../../shared/utils/storage';
 import { CPSession, ISchool, IUser } from '../../../session';
-import { appStorage } from '../../../shared/utils/localStorage';
-import { CP_PRIVILEGES_MAP } from '../../../shared/utils/privileges';
+import { CP_PRIVILEGES_MAP } from '../../../shared/constants';
 
 @Component({
   selector: 'cp-school-switch',

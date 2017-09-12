@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { CPSession } from '../../../../../../../../session';
 import { ClubsService } from '../../../../../clubs/clubs.service';
-import { CP_PRIVILEGES_MAP } from '../../../../../../../../shared/utils';
+import { CP_PRIVILEGES_MAP } from '../../../../../../../../shared/constants';
 import { BaseTeamSelectModalComponent } from '../base/team-select-modal.component';
 
 const PENDING_STATUS = 2;

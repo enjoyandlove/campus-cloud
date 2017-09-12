@@ -9,8 +9,8 @@ import {
 import { CPSession } from '../../../../../session';
 import { ServicesService } from '../services.service';
 import { EventsService } from '../../events/events.service';
+import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants';
 import { EventsComponent } from '../../events/list/base/events.component';
-import { CP_PRIVILEGES_MAP } from './../../../../../shared/utils/privileges';
 
 @Component({
   selector: 'cp-services-events',

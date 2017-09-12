@@ -1,8 +1,8 @@
 import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
+import { CP_PRIVILEGES_MAP } from './../../constants';
 import { CPSession, IUser, ISchool } from '../../../session';
-import { CP_PRIVILEGES_MAP } from './../../utils/privileges';
 
 @Component({
   selector: 'cp-topbar',
@@ -24,9 +24,9 @@ export class CPTopBarComponent implements OnInit {
   defaultImage = require('public/default/user.png');
 
   constructor(
-    private el: ElementRef,
-    private session: CPSession,
-    private router: Router
+    public el: ElementRef,
+    public session: CPSession,
+    public router: Router
   ) { }
 
   @HostListener('document:click', ['$event'])

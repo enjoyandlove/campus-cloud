@@ -12,7 +12,7 @@ import {
 import { CPSession, ISchool } from '../../../../../session';
 import { ServicesService } from '../services.service';
 import { AdminService } from '../../../../../shared/services';
-import { CP_PRIVILEGES_MAP } from '../../../../../shared/utils';
+import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 import { BaseComponent } from '../../../../../base/base.component';
 
 @Component({

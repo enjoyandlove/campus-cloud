@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { CPSession, ISchool } from '../../../../../../../session';
 import { BaseComponent } from '../../../../../../../base/base.component';
-import { CP_PRIVILEGES_MAP } from '../../../../../../../shared/utils/privileges';
+import { CP_PRIVILEGES_MAP } from '../../../../../../../shared/constants';
 import { StoreService, AdminService } from '../../../../../../../shared/services';
 
 interface IState {

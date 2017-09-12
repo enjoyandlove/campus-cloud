@@ -1,7 +1,3 @@
-/**
- * Privileges Mapping as per DB
- */
-
 export const CP_PRIVILEGES_MAP = {
   'exec_profile': 1, // 'Exec Profile',
 
@@ -60,7 +56,7 @@ export const CP_PRIVILEGES_MAP = {
   'assessment': 34
 };
 
-const PRIVILEGES = {
+export const CP_PRIVILEGES = {
   1: 'Exec Profile',
 
   2: 'Deal Collector',
@@ -117,6 +113,4 @@ const PRIVILEGES = {
 
   34: 'Assessment'
 };
-
-export const CP_PRIVILEGES = PRIVILEGES;
 
