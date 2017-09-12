@@ -24,9 +24,9 @@ export class CPTopBarComponent implements OnInit {
   defaultImage = require('public/default/user.png');
 
   constructor(
-    private el: ElementRef,
-    private session: CPSession,
-    private router: Router
+    public el: ElementRef,
+    public session: CPSession,
+    public router: Router
   ) { }
 
   @HostListener('document:click', ['$event'])
