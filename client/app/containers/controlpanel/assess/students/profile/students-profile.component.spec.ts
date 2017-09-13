@@ -10,7 +10,7 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Store, StoreModule } from '@ngrx/store';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Http } from '@angular/Http';
+import { Http } from '@angular/http';
 
 // import { By } from '@angular/platform-browser';
 // import { DebugElement } from '@angular/core';
