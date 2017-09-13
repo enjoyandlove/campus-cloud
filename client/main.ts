@@ -1,12 +1,14 @@
 // import { TRANSLATIONS, TRANSLATIONS_FORMAT, LOCALE_ID  } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { enableProdMode } from '@angular/core';
+import { isProd } from './app/config/env/index';
+
 import { AppModule } from './app/app.module';
 
 // import { TRANSLATION_FR, TRANSLATION_EN } from '../locale';
 
 // depending on the env mode, enable prod mode or add debugging modules
-if (process.env.ENV === 'production') {
+if (isProd) {
   enableProdMode();
 }
 
