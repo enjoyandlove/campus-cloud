@@ -1,3 +1,4 @@
+import { mockUser } from './../../../../../session/mock/user';
 import mockSession from './../../../../../session/mock/session';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs';
@@ -14,11 +15,11 @@ import { Http } from '@angular/Http';
 // import { By } from '@angular/platform-browser';
 // import { DebugElement } from '@angular/core';
 
-import { headerReducer } from '../../../../../reducers';
 import { StudentsService } from './../students.service';
 import { CPSession } from './../../../../../session/index';
 import { SharedModule } from './../../../../../shared/shared.module';
 import { StudentsProfileComponent } from './students-profile.component';
+import { snackBarReducer, headerReducer } from '../../../../../reducers';
 
 class MockHttp {
 
@@ -26,20 +27,7 @@ class MockHttp {
 
 class MockStudentsService {
   getStudentById() {
-    return Observable.of(
-      {
-        'firstname': 'Mock',
-        'last_event': 0,
-        'lastname': 'User',
-        'email': 'mock@user.com',
-        'last_service': 0,
-        'avatar_url': 'http://mock.image.jpg',
-        'avatar': 7,
-        'services': 0,
-        'events': 0,
-        'id': 94667
-      }
-    );
+    return Observable.of(mockUser);
   }
 
   getEngagements() {
@@ -47,7 +35,7 @@ class MockStudentsService {
       [{
         'related_id': 168428,
         'user_feedback_text': 'safety',
-        'name': 'Family Day Weekend',
+        'name': 'Mock Name 1',
         'user_rating_percent': 100,
         'checkin_id': 1,
         'time_epoch': 1467907902,
@@ -57,7 +45,7 @@ class MockStudentsService {
       }, {
         'related_id': 1483825,
         'user_feedback_text': '',
-        'name': 'Hey SEB THIS IS IT ',
+        'name': 'Mock name 2',
         'user_rating_percent': 20,
         'checkin_id': 121,
         'time_epoch': 1471644492,
@@ -85,12 +73,12 @@ describe('StudentsProfileComponent', () => {
       imports: [
         SharedModule,
         StoreModule.provideStore({
-          HEADER: headerReducer
+          HEADER: headerReducer,
+          SNACKBAR: snackBarReducer
         })
       ],
       providers: [
         CPSession,
-        // StudentsService,
         { provide: CPSession, useValue: mockSession },
         { provide: Http, useClass: MockHttp },
         { provide: StudentsService, useClass: MockStudentsService },
@@ -113,24 +101,82 @@ describe('StudentsProfileComponent', () => {
 
     fixture = TestBed.createComponent(StudentsProfileComponent);
     comp = fixture.componentInstance;
+
+    comp.studentId = 1;
   });
 
-  it('Should get student data', (done) => {
-    console.log(comp.student);
+  it('should teardown compose', () => {
+    comp.onComposeTeardown();
+    fixture.detectChanges();
+    expect(comp.messageData).toBeFalsy();
+    expect(comp.isStudentComposeModal).toBeFalsy();
+  })
+
+  it('should flash success message', () => {
+    const expected = {
+      class: 'success',
+      autoClose: true,
+      autoCloseDelay: 4000,
+      body: 'Success! Your message has been sent',
+    }
+
+    comp.fetchStudentData();
+
+    comp.onFlashMessage();
+
+    store
+      .select('SNACKBAR')
+      .subscribe(payload => expect(payload).toEqual(expected))
+  })
+
+  it('should launchMessageModal', () => {
+    comp.fetchStudentData();
+    fixture.detectChanges();
+
+    const mockMessageData = {
+      name: `${mockUser.firstname} ${mockUser.lastname}`,
+      userIds: [mockUser.id]
+    }
+
+    comp.launchMessageModal();
+
+    expect(comp.messageData).toEqual(mockMessageData);
+    expect(comp.isStudentComposeModal).toBeTruthy();
+  })
+
+  it('loadingStudentData should be set', () => {
+    expect(comp.loadingStudentData).toBeTruthy();
+  })
+
+  it('should update stuent to match mocked service', () => {
+    comp.fetchStudentData();
+    fixture.detectChanges();
+    expect(comp.student).toEqual(mockUser);
+    expect(comp.loadingStudentData).toBeFalsy();
+  })
+
+  it('should populate header', () => {
+    const expected = {
+      heading: 'Mock User',
+      subheading: null,
+      em: null,
+      children: []
+    }
+    comp.fetchStudentData();
+
+    store
+      .select('HEADER')
+      .subscribe(payload => expect(payload).toEqual(expected));
+  })
+
+  xit('Spy on real service test', (done) => {
     const spy = spyOn(service, 'getStudentById').and.returnValue(Observable.of('Sopa'));
 
     fixture.detectChanges();
     spy.calls.mostRecent().returnValue.subscribe(() => {
       fixture.detectChanges();
-      console.log(comp.student);
       done();
     })
-
-    // spy.calls.mostRecent().returnValue.then(() => {
-    //   fixture.detectChanges();
-    //   console.log(comp);
-    //   done();
-    // })
   })
 
 });

@@ -74,7 +74,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
   fetchStudentData() {
     const search = new URLSearchParams();
     search.append('school_id', this.session.school.id.toString());
-    console.log('fetchStudentData');
+
     this
       .service
       .getStudentById(search, this.studentId)
@@ -88,7 +88,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
 
         this.loadingStudentData = false;
 
-        // this.fetch();
+        this.fetch();
       });
   }
 
@@ -99,11 +99,10 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
 
     const stream$ = this
       .service.getEngagements(search, this.studentId, this.startRange, this.endRange);
-    console.log(1);
+
     super
       .fetchData(stream$)
       .then(res => {
-        console.log(2, res.data.length);
         this.engagementData = res.data.reduce((result, current) => {
           if (isSameDay(current.time_epoch, current.time_epoch)) {
             if (setTimeDataToZero(current.time_epoch) in result) {
@@ -123,7 +122,6 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
         this.engagementsByDay = Object.keys(this.engagementData);
       })
       .catch(err => console.log(err))
-      console.log(3);
   }
 
   onFilter(scope) {
