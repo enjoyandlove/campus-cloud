@@ -69,8 +69,6 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
     super.isLoading().subscribe(loading => this.loadingEngagementData = loading);
 
     this.studentId = this.route.snapshot.params['studentId'];
-
-    this.fetchStudentData();
   }
 
   fetchStudentData() {
@@ -198,5 +196,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.fetchStudentData();
+  }
 }
