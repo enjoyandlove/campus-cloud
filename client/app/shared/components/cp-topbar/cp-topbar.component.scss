@@ -49,8 +49,8 @@ nav {
   }
 
   li {
-    display: inline-block;
     position: relative;
+    display: inline-block;
 
     .promote-badge {
       top: -5px;
@@ -104,7 +104,7 @@ nav {
 
   &--menu {
     top: 115%;
-    z-index: 1;
+    z-index: 2;
     right: 20px;
     position: absolute;
   }
@@ -112,15 +112,20 @@ nav {
   &:hover,
   &--active {
     cursor: pointer;
-    > *,
-    > * i {
+    .nav__school__user,
+    .nav__school__name,
+    .nav__school__arrow i {
       color: $color-white;
     }
   }
 
+  &__arrow i {
+    margin-top: 7px;
+  }
+
     &__name,
     &__user,
-    &__user i {
+    &__arrow i {
       display: block;
       color: $color-grey;
       transition: color 300ms ease-in-out;
