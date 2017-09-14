@@ -3,6 +3,7 @@ import { Router, NavigationEnd } from '@angular/router';
 
 import { CP_PRIVILEGES_MAP } from './../../constants';
 import { CPSession, IUser, ISchool } from '../../../session';
+import { CP_TRACK_TO } from './../../directives/tracking/tracking.directive';
 
 @Component({
   selector: 'cp-topbar',
@@ -17,6 +18,12 @@ export class CPTopBarComponent implements OnInit {
   canManage = false;
   canAssess = false;
   manageHomePage: string;
+
+  eventData = {
+    type: CP_TRACK_TO.GA,
+    eventCategory: 'CLick Event',
+    eventAction: 'Welcome button on top bar clicked'
+  };
 
   isManageActiveRoute;
 

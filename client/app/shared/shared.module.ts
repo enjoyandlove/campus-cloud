@@ -19,6 +19,10 @@ import {
 } from './pipes';
 
 import {
+  CPTrackerDirective
+} from './directives';
+
+import {
   StoreService,
   FileUploadService
 } from './services';
@@ -34,7 +38,7 @@ import {
   CPSmallDatePickerComponent, CPPaginationComponent, CPNoContentComponent,
   CPCheckDropdownComponent, CPImageUploadComponent, SchoolSwitchComponent, CPIntercommComponent,
   CPTrackersComponent, CPUploadModalComponent, CPChipComponent, CPTypeAheadComponent,
-  CPSnackBarComponent ],
+  CPSnackBarComponent, CPTrackerDirective ],
 
   imports: [ CommonModule, RouterModule, ReactiveFormsModule ],
 
@@ -50,6 +54,6 @@ import {
   CPSmallDatePickerComponent, CPPaginationComponent, CPNoContentComponent,
   CPCheckDropdownComponent, CPImageUploadComponent, SchoolSwitchComponent, CPIntercommComponent,
   CPTrackersComponent, CPUploadModalComponent, CPChipComponent, CPTypeAheadComponent,
-  CPSnackBarComponent ]
+  CPSnackBarComponent, CPTrackerDirective ]
 })
 export class SharedModule { }
