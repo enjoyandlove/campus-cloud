@@ -10,6 +10,13 @@ export class ErrorService {
     private store: Store<any>
   ) { }
 
+  trackException(err) {
+    ga('send', 'exception', {
+      'exDescription': err.message,
+      'exFatal': false
+    });
+  }
+
   handleResponse(res) {
     if (res.code.startsWith(4)) {
       this.handleError(res);

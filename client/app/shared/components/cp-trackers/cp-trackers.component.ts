@@ -12,12 +12,12 @@ export class CPTrackersComponent implements OnInit {
     private router: Router,
   ) { }
 
-  submitToGoogleAnalytics(pageName) {
+  emitPageViewToGoogleAnalytics(pageName) {
     ga('set', 'page', pageName);
     ga('send', 'pageview');
   }
 
-  submitToHotjar() {
+  emitPageRecording() {
     (function (h, o, t, j) {
       h.hj = h.hj || function () { (h.hj.q = h.hj.q || []).push(arguments); };
       h._hjSettings = { hjid: 514110, hjsv: 5 };
@@ -31,8 +31,8 @@ export class CPTrackersComponent implements OnInit {
   listenForRouteChanges() {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        this.submitToHotjar();
-        this.submitToGoogleAnalytics(event.urlAfterRedirects);
+        this.emitPageRecording();
+        this.emitPageViewToGoogleAnalytics(event.urlAfterRedirects);
       }
     })
   }
