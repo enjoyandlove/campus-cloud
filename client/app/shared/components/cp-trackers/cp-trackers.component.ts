@@ -1,3 +1,4 @@
+import { Router, NavigationEnd } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 declare var window: any;
@@ -7,9 +8,16 @@ declare var window: any;
   templateUrl: './cp-trackers.component.html',
 })
 export class CPTrackersComponent implements OnInit {
-  constructor() { }
+  constructor(
+    private router: Router,
+  ) { }
 
-  ngOnInit() {
+  submitToGoogleAnalytics(pageName) {
+    ga('set', 'page', pageName);
+    ga('send', 'pageview');
+  }
+
+  submitToHotjar() {
     (function (h, o, t, j) {
       h.hj = h.hj || function () { (h.hj.q = h.hj.q || []).push(arguments); };
       h._hjSettings = { hjid: 514110, hjsv: 5 };
@@ -18,5 +26,18 @@ export class CPTrackersComponent implements OnInit {
       r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
       a.appendChild(r);
     })(window, document, '//static.hotjar.com/c/hotjar-', '.js?sv=');
+  }
+
+  listenForRouteChanges() {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.submitToHotjar();
+        this.submitToGoogleAnalytics(event.urlAfterRedirects);
+      }
+    })
+  }
+
+  ngOnInit() {
+    this.listenForRouteChanges();
   }
 }

@@ -6,6 +6,7 @@ import { URLSearchParams } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { isProd } from './../env/index';
 import { CPSession } from '../../session';
 import { appStorage } from '../../shared/utils';
 import { base64 } from './../../shared/utils/encrypt';
@@ -118,22 +119,27 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     return true;
   }
 
+  trackInitialPageView(pageName) {
+    if (isProd) {
+      ga('set', 'page', pageName);
+      ga('send', 'pageview');
+    }
+  }
+
   canActivate(activatedRoute, state) {
     // are we logged in?
     if (appStorage.get(appStorage.keys.SESSION)) {
-
       // did we create the session object?
       if (!this.session.school || !this.session.user) {
         return this.preLoadUser(activatedRoute)
 
           .then(user => {
             this.session.user = user[0];
-
+            this.trackInitialPageView(state.url);
             return true;
           })
           .catch(_ => false);
       }
-
       return true
     }
 
