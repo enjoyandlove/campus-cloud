@@ -33,7 +33,7 @@
     "docs": "typedoc --options typedoc.json client/app/app.component.ts",
     "start": "yarn run server",
     "start:hmr": "yarn run server -- --hot",
-    "postinstall": "yarn run webdriver-update"
+    "postinstall": "npm rebuild node-sass --force && yarn run webdriver-update"
   },
   "author": "andres@oohlalamobile.com",
   "license": "ISC",
