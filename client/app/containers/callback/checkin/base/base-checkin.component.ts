@@ -42,7 +42,7 @@ export class BaseCheckinComponent implements OnInit {
 
     if (this.isInternal) {
       setTimeout(() => { $('#checkinInternalModal').modal(); }, 1);
-     }
+    }
   }
 
   onInternalModalTeardown() {
@@ -70,10 +70,14 @@ export class BaseCheckinComponent implements OnInit {
       decodeURIComponent(this.data.qr_img_base64)
         .split(',')[0].split('/')[1].split(';')[0].toUpperCase();
 
-    doc.addImage(
-      decodeURIComponent(this.data.qr_img_base64),
-      imageFormat,
-      60, 60, 90, 90);
+    try {
+      doc.addImage(
+        decodeURIComponent(this.data.qr_img_base64),
+        imageFormat,
+        60, 60, 90, 90);
+    } catch (error) {
+      throw new Error(error);
+    }
 
     doc.setFontSize(this.getPDFTitleFontSize());
     doc.setFontType('bold');
