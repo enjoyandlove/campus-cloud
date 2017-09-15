@@ -16,6 +16,7 @@ export class FeedDeleteModalComponent implements OnInit {
   @Output() teardown: EventEmitter<null> = new EventEmitter();
   @Output() deleted: EventEmitter<number> = new EventEmitter();
 
+  buttonData;
   _isCampusWallView;
 
   constructor(
@@ -32,11 +33,17 @@ export class FeedDeleteModalComponent implements OnInit {
         _ => {
           $('#deleteFeedModal').modal('hide');
           this.deleted.emit(this.feed.id);
+          this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
           this.teardown.emit();
         });
   }
 
   ngOnInit() {
+    this.buttonData = {
+      class: 'danger',
+      text: 'Delete'
+    };
+
     this.isCampusWallView.subscribe((res: any) => {
       this._isCampusWallView = res.type === 1 ? true : false;
     });

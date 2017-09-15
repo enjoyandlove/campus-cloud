@@ -35,6 +35,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   loading;
   service;
   categories;
+  buttonData;
   withAttendance;
   school: ISchool;
   storeId: number;
@@ -254,6 +255,10 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       'default_basic_feedback_label': [this.service.default_basic_feedback_label],
       'providers': this.fb.array([])
     });
+
+    this.form.valueChanges.subscribe(_ => {
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: !this.form.valid });
+    })
   }
 
   buildHeader() {
@@ -354,5 +359,10 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.buttonData = {
+      class: 'primary',
+      text: 'Save'
+    }
+  }
 }

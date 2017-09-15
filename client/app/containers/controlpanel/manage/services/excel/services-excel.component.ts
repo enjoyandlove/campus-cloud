@@ -18,6 +18,7 @@ import { HEADER_UPDATE, HEADER_DEFAULT } from '../../../../../reducers/header.re
 export class ServicesExcelComponent extends BaseComponent implements OnInit, OnDestroy {
   stores;
   services;
+  buttonData;
   categories;
   isChecked = [];
   loading = false;
@@ -63,6 +64,10 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
       'services': this.fb.array([])
     });
     this.buildGroup();
+
+    this.form.valueChanges.subscribe(_ => {
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: !this.form.valid });
+    })
   }
 
   loadCategories(): Promise<any> {
@@ -218,5 +223,11 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
     this.store.dispatch({ type: SERVICES_MODAL_RESET });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.buttonData = {
+      disabled: true,
+      class: 'primary',
+      text: 'Import Services'
+    }
+  }
 }

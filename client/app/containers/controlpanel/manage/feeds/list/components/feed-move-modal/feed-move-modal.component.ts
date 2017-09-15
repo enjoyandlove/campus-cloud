@@ -18,6 +18,7 @@ export class FeedMoveComponent implements OnInit {
   @Output() teardown: EventEmitter<null> = new EventEmitter();
 
   channels$;
+  buttonData;
   currentChannel;
   form: FormGroup;
 
@@ -75,5 +76,15 @@ export class FeedMoveComponent implements OnInit {
 
         return _channels;
       });
+
+      this.buttonData = {
+        class: 'primary',
+        text: 'Move',
+        disabled: true
+      };
+
+      this.form.valueChanges.subscribe(_ => {
+        this.buttonData = Object.assign({}, this.buttonData, { disabled: !this.form.valid });
+      })
   }
 }

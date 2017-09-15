@@ -44,13 +44,10 @@
           Cancel
         </button>
 
-        <button
-          type="button"
-          (click)="onSubmit()"
-          [disabled]="!form.valid"
-          class="cpbtn cpbtn--primary"i18n>
-          Move
-        </button>
+        <cp-button
+          [props]="buttonData"
+          (buttonClick)="onSubmit()">
+        </cp-button>
       </div>
     </div>
   </div>

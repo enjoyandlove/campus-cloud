@@ -15,14 +15,17 @@ export class FacebookEventsDeleteComponent implements OnInit {
   @Input() link: any;
   @Output() deleted: EventEmitter<null> = new EventEmitter();
 
+  buttonData;
+
   constructor(
     private session: CPSession,
     private eventsService: EventsService
   ) { }
 
   onDelete() {
+    const search = new URLSearchParams();
     const linkId = this.link.controls['id'].value;
-    let search = new URLSearchParams();
+
     search.append('school_id', this.session.school.id.toString());
 
     this
@@ -31,10 +34,16 @@ export class FacebookEventsDeleteComponent implements OnInit {
       .subscribe(
         _ => {
           this.deleted.emit();
+          this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
           $('#facebookDelete').modal('hide');
         }
       );
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.buttonData = {
+      class: 'danger',
+      text: 'Delete'
+    }
+  }
 }
