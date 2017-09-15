@@ -31,7 +31,7 @@ export class ServicesEventsCreateComponent extends BaseComponent implements OnIn
     super
       .fetchData(this.servicesService.getServiceById(this.serviceId))
       .then(res => this.storeId = res.data.store_id)
-      .catch(err => console.error(err));
+      .catch(err => { throw new Error(err) });
   }
 
   ngOnInit() { }

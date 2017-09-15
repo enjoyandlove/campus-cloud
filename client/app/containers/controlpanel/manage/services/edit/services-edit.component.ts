@@ -35,6 +35,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   loading;
   service;
   categories;
+  buttonData;
   withAttendance;
   school: ISchool;
   storeId: number;
@@ -138,7 +139,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
           providers.forEach(provider => control.push(this.buildServiceProviderControl(provider)));
         }
       })
-      .catch(err => console.error(err));
+      .catch(err => { throw new Error(err) });
   }
 
   onPlaceChanged(data) {
@@ -203,7 +204,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       .deleteProvider(data.id, search)
       .subscribe(
       _ => controls.removeAt(data.index),
-      err => console.error(err)
+      err => { throw new Error(err) }
       );
   }
 
@@ -254,6 +255,10 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       'default_basic_feedback_label': [this.service.default_basic_feedback_label],
       'providers': this.fb.array([])
     });
+
+    this.form.valueChanges.subscribe(_ => {
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: !this.form.valid });
+    })
   }
 
   buildHeader() {
@@ -354,5 +359,10 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.buttonData = {
+      class: 'primary',
+      text: 'Save'
+    }
+  }
 }

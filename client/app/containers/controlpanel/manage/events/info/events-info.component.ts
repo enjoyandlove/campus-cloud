@@ -57,7 +57,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
           }
         );
       })
-      .catch(err => console.error(err));
+      .catch(err => { throw new Error(err) });
   }
 
   private buildHeader(res) {

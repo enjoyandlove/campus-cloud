@@ -81,7 +81,7 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
         });
         this.state = Object.assign({}, this.state, { comments: _comments });
       })
-      .catch(err => console.log(err));
+      .catch(err => { throw new Error(err) });
   }
 
   ngOnInit() {

@@ -68,7 +68,7 @@ export class LinksCreateComponent implements OnInit {
       res => {
         this.form.controls['img_url'].setValue(res.image_url);
       },
-      err => console.error(err)
+      err => { throw new Error(err) }
       );
   }
 

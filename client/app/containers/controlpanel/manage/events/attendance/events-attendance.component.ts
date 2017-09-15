@@ -52,7 +52,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
         this.buildHeader(res.data);
         this.isUpcoming = this.isEventOver(this.event.end);
       })
-      .catch(err => console.error(err));
+      .catch(err => { throw new Error(err) });
   }
 
   private buildHeader(res) {

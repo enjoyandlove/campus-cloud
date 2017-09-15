@@ -39,6 +39,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
   event;
   stores;
+  buttonData;
   dateFormat;
   serverError;
   isDateError;
@@ -96,11 +97,13 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
       if (managerId.value === null) {
         this.formMissingFields = true;
+        this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
         managerId.setErrors({ 'required': true });
       }
 
       if (eventFeedback.value === null) {
         this.formMissingFields = true;
+        this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
         eventFeedback.setErrors({ 'required': true });
       }
     }
@@ -110,6 +113,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
         this.form.controls['poster_url'].setErrors({ 'required': true });
       }
       this.formMissingFields = true;
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       return;
     }
 
@@ -119,6 +123,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       this.form.controls['end'].setErrors({ 'required': true });
       this.form.controls['start'].setErrors({ 'required': true });
       this.dateErrorMessage = 'Event End Time must be after Event Start Time';
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       return;
     }
 
@@ -128,6 +133,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       this.form.controls['end'].setErrors({ 'required': true });
       this.form.controls['start'].setErrors({ 'required': true });
       this.dateErrorMessage = 'Event End Time must be greater than now';
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       return;
     }
 
@@ -146,7 +152,10 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
         }
         this.router.navigate(['/manage/events/' + this.eventId]);
       },
-      _ => this.serverError = true
+      _ => {
+        this.serverError = true;
+        this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
+      }
       );
   }
 
@@ -342,6 +351,11 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.buttonData = {
+      text: 'Save',
+      class: 'primary'
+    }
+
     this.dateFormat = FORMAT.DATETIME;
     this.booleanOptions = [
       {

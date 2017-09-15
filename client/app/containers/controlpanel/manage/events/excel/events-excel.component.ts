@@ -35,6 +35,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   events;
   stores;
   formError;
+  buttonData;
   mockDropdown;
   isChecked = [];
   school: ISchool;
@@ -72,7 +73,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
         this.buildHeader();
         this.stores = res.data;
       })
-      .catch(err => console.error(err));
+      .catch(err => { throw new Error(err) });
   }
 
   private buildHeader() {
@@ -98,6 +99,10 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     if (this.isClub) {
       this.updateManagersByStoreOrClubId(this.clubId);
     }
+
+    this.form.valueChanges.subscribe(_ => {
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: !this.form.valid });
+    })
   }
 
   private buildGroup() {
@@ -290,6 +295,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     if (requiredFieldsError || !this.form.valid) {
       this.formError = true;
       this.error = STATUS.ALL_FIELDS_ARE_REQUIRED;
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       return;
     }
 
@@ -346,6 +352,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       },
       err => {
         this.formError = true;
+        this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
 
         if (err.status === 400) {
           this.error = STATUS.ALL_FIELDS_ARE_REQUIRED;
@@ -366,6 +373,12 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.buttonData = {
+      text: 'Import Events',
+      class: 'primary',
+      disabled: true
+    }
+
     this
       .store
       .select('EVENTS_MODAL')

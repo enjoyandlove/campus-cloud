@@ -2,7 +2,7 @@
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
   <div *ngSwitchCase="false">
-    <form [formGroup]="form" (ngSubmit)="onBulkUpdate(form.value)">
+    <form [formGroup]="form">
       <div class="form-group" formArrayName="links">
         <div class="row"  *ngFor="let link of form.controls.links.controls; let i=index">
           <div class="col-xs-12">
@@ -45,16 +45,14 @@
                 <button
                   i18n
                   type="button"
-                  class="cpbtn cpbtn--tall cpbtn--cancel submit">
+                  class="cpbtn cpbtn--cancel submit">
                   Cancel
                 </button>
-                <button
-                  i18n
-                  type="submit"
-                  [disabled]="!isEdited || !form.controls.links.length"
-                  class="cpbtn cpbtn--tall cpbtn--primary submit">
-                  Update
-                </button>
+
+                <cp-button
+                  [props]="buttonData"
+                  (buttonClick)="onBulkUpdate(form.value)">
+                </cp-button>
               </div>
             </div>
           </div>

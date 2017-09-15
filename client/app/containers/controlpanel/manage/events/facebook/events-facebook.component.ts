@@ -54,7 +54,7 @@ export class EventsFacebookComponent extends BaseComponent implements OnInit {
       .then(res => {
         this.stores = res.data;
       })
-      .catch(err => console.log(err));
+      .catch(err => { throw new Error(err) });
   }
 
   private buildHeader() {

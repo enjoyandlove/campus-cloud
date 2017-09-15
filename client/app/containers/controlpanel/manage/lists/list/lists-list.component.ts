@@ -51,7 +51,7 @@ export class ListsListComponent extends BaseComponent implements OnInit {
     super
       .fetchData(stream$)
       .then(res => this.state = Object.assign({}, this.state, { lists: res.data }))
-      .catch(err => console.log(err));
+      .catch(err => { throw new Error(err) });
   }
 
   onSearch(search_str) {

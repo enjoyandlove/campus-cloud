@@ -121,7 +121,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
 
         this.engagementsByDay = Object.keys(this.engagementData);
       })
-      .catch(err => console.log(err))
+      .catch(err => { throw new Error(err) })
   }
 
   onFilter(scope) {

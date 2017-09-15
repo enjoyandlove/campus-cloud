@@ -208,7 +208,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
           this.user.school_level_privileges[this.schoolId]) && _.isEqual(this.accountPrivileges,
             this.user.account_level_privileges);
       })
-      .catch(err => console.log(err));
+      .catch(err => { throw new Error(err) });
   }
 
   servicesDefaultPermission() {

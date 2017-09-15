@@ -18,6 +18,7 @@ import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 })
 export class ClubsCreateComponent implements OnInit {
   formError;
+  buttonData;
   statusTypes;
   membershipTypes;
   form: FormGroup;
@@ -36,6 +37,7 @@ export class ClubsCreateComponent implements OnInit {
 
     if (!this.form.valid) {
       this.formError = true;
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       return;
     }
 
@@ -46,7 +48,10 @@ export class ClubsCreateComponent implements OnInit {
       .createClub(this.form.value, search)
       .subscribe(
         res => {this.router.navigate(['/manage/clubs/' + res.id + '/info']); },
-        err => console.log(err)
+        err => {
+          this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
+          throw new Error(err);
+         }
       );
   }
 
@@ -80,6 +85,11 @@ export class ClubsCreateComponent implements OnInit {
 
   ngOnInit() {
     let school = this.session.school;
+
+    this.buttonData = {
+      class: 'primary',
+      text: 'Create Club'
+    }
 
     this.mapCenter = new BehaviorSubject(
       {

@@ -79,7 +79,7 @@ export class ClubsMembersEditComponent implements OnInit {
           this.doTearDown();
 
         },
-        err => console.log(err)
+        err => { throw new Error(err) }
       );
   }
 

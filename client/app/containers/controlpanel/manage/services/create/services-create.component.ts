@@ -22,6 +22,7 @@ const FEEDBACK_DISABLED = 0;
   styleUrls: ['./services-create.component.scss']
 })
 export class ServicesCreateComponent implements OnInit {
+  buttonData;
   storeId: number;
   school: ISchool;
   form: FormGroup;
@@ -174,6 +175,12 @@ export class ServicesCreateComponent implements OnInit {
   ngOnInit() {
     this.school = this.session.school;
 
+    this.buttonData = {
+      disabled: true,
+      class: 'primary',
+      text: 'Create Service'
+    }
+
     this.storeId = this.school.main_union_store_id;
     this.mapCenter = new BehaviorSubject(
       {
@@ -205,5 +212,9 @@ export class ServicesCreateComponent implements OnInit {
       'default_basic_feedback_label': [null],
       'enable_feedback': [FEEDBACK_ENABLED]
     });
+
+    this.form.valueChanges.subscribe(_ => {
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: !this.form.valid });
+    })
   }
 }

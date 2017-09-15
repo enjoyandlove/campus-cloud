@@ -21,6 +21,7 @@ import { FileUploadService } from '../../../../../shared/services/file-upload.se
 export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDestroy {
   clubs;
   formError;
+  buttonData;
   form: FormGroup;
   isFormReady = false;
 
@@ -108,7 +109,7 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
         let control = <FormGroup>clubsControl.at(index);
         control.controls['logo_url'].setValue(res.image_url);
       })
-      .catch(err => console.log(err));
+      .catch(err => { throw new Error(err) });
   }
 
   onSubmit() {
@@ -127,9 +128,21 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
       .createClub(this.form.value.clubs, search)
       .subscribe(
         _ => this.router.navigate(['/manage/clubs']),
-        err => console.log(err)
+        err => { throw new Error(err) }
       );
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.buttonData = {
+      text: 'Import Clubs',
+      class: 'primary',
+      disabled: true
+    }
+
+    this.form.valueChanges.subscribe(_ => {
+      this.buttonData = Object.assign(
+        {},
+        this.buttonData, { disabled: !this.form.valid });
+    })
+  }
 }

@@ -186,7 +186,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
       res => {
         this.form.controls['message_image_url'].setValue(res.image_url);
       },
-      err => console.error(err)
+      err => { throw new Error(err) }
       );
   }
 

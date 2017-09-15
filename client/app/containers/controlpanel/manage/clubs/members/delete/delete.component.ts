@@ -13,6 +13,8 @@ export class ClubsMembersDeleteComponent implements OnInit {
   @Input() groupId: number;
   @Output() deleted: EventEmitter<number> = new EventEmitter();
 
+  buttonData;
+
   constructor(
     private service: MembersService,
   ) { }
@@ -28,10 +30,19 @@ export class ClubsMembersDeleteComponent implements OnInit {
         _ => {
           this.deleted.emit(this.member.id);
           $('#membersDelete').modal('hide');
+          this.buttonData = Object.assign({}, this.buttonData, { disabled: true });
         },
-        err => console.error(err)
+        err => {
+          this.buttonData = Object.assign({}, this.buttonData, { disabled: true });
+          throw new Error(err)
+        }
       );
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.buttonData = {
+      text: 'Delete',
+      class: 'danger'
+    }
+  }
 }

@@ -18,6 +18,7 @@ export class AnnouncementDeleteComponent implements OnInit {
   @Output() deleted: EventEmitter<number> = new EventEmitter();
 
   isError;
+  buttonData;
   errorMessage;
 
   constructor(
@@ -43,13 +44,20 @@ export class AnnouncementDeleteComponent implements OnInit {
           this.teardown.emit();
           this.deleted.emit(this.item.id);
           $('#deleteAnnouncementModal').modal('hide');
+          this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
         },
         _ => {
           this.isError = true;
           this.errorMessage = STATUS.SOMETHING_WENT_WRONG;
+          this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
         }
       );
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.buttonData = {
+      class: 'danger',
+      text: 'Archive'
+    }
+  }
 }

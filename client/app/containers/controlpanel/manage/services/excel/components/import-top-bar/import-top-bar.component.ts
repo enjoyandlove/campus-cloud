@@ -52,7 +52,7 @@ export class ServicesImportTopBarComponent implements OnInit {
       .uploadFile(file, url, headers)
       .subscribe(
       res => this.imageChange.emit(res.image_url),
-      err => console.error(err)
+      err => { throw new Error(err) }
       );
   }
 

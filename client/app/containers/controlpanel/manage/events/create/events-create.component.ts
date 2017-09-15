@@ -32,6 +32,7 @@ export class EventsCreateComponent implements OnInit {
   @Input() isService: boolean;
 
   stores$;
+  buttonData;
   isDateError;
   booleanOptions;
   school: ISchool;
@@ -110,7 +111,7 @@ export class EventsCreateComponent implements OnInit {
       return _admins;
     }).subscribe(
       res => this.managers = res,
-      err => console.log(err)
+      err => { throw new Error(err) }
     );
   }
 
@@ -149,6 +150,7 @@ export class EventsCreateComponent implements OnInit {
 
     if (!this.form.valid) {
       this.formError = true;
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       return;
     }
 
@@ -198,7 +200,10 @@ export class EventsCreateComponent implements OnInit {
         }
         this.router.navigate(['/manage/events/' + res.id]);
       },
-      err => this.errorService.handleError(err)
+      err => {
+        this.errorService.handleError(err);
+        this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
+      }
       );
   }
 
@@ -218,6 +223,11 @@ export class EventsCreateComponent implements OnInit {
     if (this.clubId) {
       store_id = this.clubId;
       this.fetchManagersBySelectedStore(this.clubId);
+    }
+
+    this.buttonData = {
+      class: 'primary',
+      text: 'Create Event'
     }
 
     this.booleanOptions = [

@@ -42,7 +42,7 @@ export class FeedbackServiceComponent extends BaseComponent implements OnInit {
       .doServiceFeedback(data, this.search)
       .subscribe(
         _ => this.isSubmitted$.next(true),
-        err => console.error(err)
+        err => { throw new Error(err) }
       );
   }
 

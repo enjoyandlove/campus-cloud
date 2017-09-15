@@ -42,7 +42,7 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
       .doEventCheckin(data, this.search)
       .subscribe(
       _ => this.updateAttendeesList(data),
-      err => console.error(err)
+      err => { throw new Error(err) }
       );
   }
 

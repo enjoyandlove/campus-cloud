@@ -49,7 +49,7 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
 
         this.buildHeader();
       })
-      .catch(err => console.error(err));
+      .catch(err => { throw new Error(err) });
   }
 
   buildHeader() {

@@ -15,6 +15,8 @@ export class LinksDeleteComponent implements OnInit {
   @Output() deleteLink: EventEmitter<number> = new EventEmitter();
   @Output() resetDeleteModal: EventEmitter<null> = new EventEmitter();
 
+  buttonData;
+
   constructor(
     private service: LinksService,
     private errorService: ErrorService
@@ -30,13 +32,22 @@ export class LinksDeleteComponent implements OnInit {
           this.deleteLink.emit(this.link.id);
           this.resetModal();
         },
-        err => this.errorService.handleError(err)
+        err => {
+          this.errorService.handleError(err);
+          this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
+        }
       );
   }
 
   resetModal() {
+    this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
     this.resetDeleteModal.emit();
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.buttonData = {
+      text: 'Delete',
+      class: 'danger'
+    }
+  }
 }

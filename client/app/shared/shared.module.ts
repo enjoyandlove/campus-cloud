@@ -3,6 +3,8 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { CPTrackingService } from './services/tracking.service';
+
 import { CPMapsComponent, CPModalComponent, CPTopBarComponent, CPAvatarComponent,
   CPSpinnerComponent, CPDropdownComponent, CPCheckboxComponent, CPPlaceAutoCompleteComponent,
   CPPageHeaderComponent, CPSearchBoxComponent, CPStarsComponent,
@@ -10,7 +12,7 @@ import { CPMapsComponent, CPModalComponent, CPTopBarComponent, CPAvatarComponent
   CPSmallDatePickerComponent, CPUploadButtonComponent, CPPaginationComponent,
   CPNoContentComponent, CPCheckDropdownComponent, CPImageUploadComponent,
   SchoolSwitchComponent, CPIntercommComponent, CPTrackersComponent, CPChipComponent,
-  CPTypeAheadComponent, CPUploadModalComponent, CPSnackBarComponent
+  CPTypeAheadComponent, CPUploadModalComponent, CPSnackBarComponent, CPButtonComponent
 } from './components';
 
 import {
@@ -38,11 +40,11 @@ import {
   CPSmallDatePickerComponent, CPPaginationComponent, CPNoContentComponent,
   CPCheckDropdownComponent, CPImageUploadComponent, SchoolSwitchComponent, CPIntercommComponent,
   CPTrackersComponent, CPUploadModalComponent, CPChipComponent, CPTypeAheadComponent,
-  CPSnackBarComponent, CPTrackerDirective ],
+  CPSnackBarComponent, CPTrackerDirective, CPButtonComponent ],
 
   imports: [ CommonModule, RouterModule, ReactiveFormsModule ],
 
-  providers: [ StoreService, FileUploadService ],
+  providers: [ StoreService, FileUploadService, CPTrackingService ],
 
   exports: [ CPTopBarComponent, CPMapsComponent,
   CPAvatarComponent, CPModalComponent,
@@ -54,6 +56,6 @@ import {
   CPSmallDatePickerComponent, CPPaginationComponent, CPNoContentComponent,
   CPCheckDropdownComponent, CPImageUploadComponent, SchoolSwitchComponent, CPIntercommComponent,
   CPTrackersComponent, CPUploadModalComponent, CPChipComponent, CPTypeAheadComponent,
-  CPSnackBarComponent, CPTrackerDirective ]
+  CPSnackBarComponent, CPTrackerDirective, CPButtonComponent ]
 })
 export class SharedModule { }

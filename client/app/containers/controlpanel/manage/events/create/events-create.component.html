@@ -181,15 +181,14 @@
                     <span>&#x26A0;</span>
                     {{ isDateError ? dateErrorMessage : 'Please fill out the marked fields' }}
                 </label>
-                 <a [routerLink]="['../']"
-                  class="cpbtn cpbtn--tall cpbtn--cancel" i18n>
+                <a [routerLink]="['../']"
+                  class="cpbtn cpbtn--cancel" i18n>
                   Cancel
                 </a>
-                <button
-                  type="submit"
-                  class="cpbtn cpbtn--tall cpbtn--primary" i18n>
-                  Create Event
-                </button>
+                <cp-button
+                  [props]="buttonData"
+                  (buttonClick)="onSubmit()">
+                </cp-button>
               </div>
             </div>
           </div>

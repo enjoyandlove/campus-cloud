@@ -55,7 +55,7 @@ export class ListsEditComponent implements OnInit {
         this.edited.emit(this.form.value);
         this.resetModal();
       },
-      err => console.log(err)
+      err => { throw new Error(err) }
       );
   }
 
@@ -132,7 +132,7 @@ export class ListsEditComponent implements OnInit {
       suggestions => {
         this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, { suggestions });
       },
-      err => console.log(err)
+      err => { throw new Error(err) }
       );
   }
 

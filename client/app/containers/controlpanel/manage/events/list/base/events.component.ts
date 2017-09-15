@@ -69,7 +69,7 @@ export class EventsComponent extends BaseComponent implements OnInit, OnDestroy 
       .then(res => {
         this.state = Object.assign({}, this.state, { events: res.data });
       })
-      .catch(err => console.error(err));
+      .catch(err => { throw new Error(err) });
   }
 
   onSortList(sort) {

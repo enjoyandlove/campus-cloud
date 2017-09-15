@@ -16,6 +16,7 @@ export class FeedApproveModalComponent implements OnInit {
   @Output() teardown: EventEmitter<null> = new EventEmitter();
   @Output() approved: EventEmitter<number> = new EventEmitter();
 
+  buttonData;
   _isCampusWallView;
 
   constructor(
@@ -32,6 +33,7 @@ export class FeedApproveModalComponent implements OnInit {
       .subscribe(
         _ => {
           $('#approveFeedModal').modal('hide');
+          this.buttonData = Object.assign({}, this.buttonData, { disabled: true });
           this.approved.emit(this.feed.id);
           this.teardown.emit();
         }
@@ -39,6 +41,11 @@ export class FeedApproveModalComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.buttonData = {
+      text: 'Approve',
+      class: 'primary'
+    }
+
     this.isCampusWallView.subscribe((res: any) => {
       this._isCampusWallView = res.type === 1 ? true : false;
     });

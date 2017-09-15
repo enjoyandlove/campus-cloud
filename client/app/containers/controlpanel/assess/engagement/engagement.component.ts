@@ -76,7 +76,7 @@ export class EngagementComponent extends BaseComponent implements OnInit {
           ends: filterState.range.payload.range.end,
         };
       })
-      .catch(err => console.log(err));
+      .catch(err => { throw new Error(err) });
   }
 
   onDoCompose(data): void {

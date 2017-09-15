@@ -17,7 +17,7 @@ export class RavenErrorHandler extends ErrorHandler {
     if (isProd) {
       Raven.captureException(err);
     } else {
-      super.handleError(err);
+      console.error(err);
     }
   }
 }
