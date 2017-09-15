@@ -139,6 +139,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   schoolId;
   formError;
   clubsMenu;
+  buttonData;
   eventsMenu;
   privileges;
   editingUser;
@@ -289,6 +290,10 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       'lastname': [profile.lastname, Validators.required],
       'email': [profile.email, Validators.required]
     });
+
+    this.form.valueChanges.subscribe(_ => {
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: true });
+    })
   }
 
   onSubmit(data) {
@@ -296,6 +301,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     this.isFormError = false;
 
     if (!this.form.valid) {
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       this.errorService.handleError({ reason: STATUS.ALL_FIELDS_ARE_REQUIRED });
       return;
     }
@@ -317,6 +323,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
     if (emptyAccountPrivileges && emptySchoolPrivileges) {
       this.formError = 'You have not granted any access';
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       this.isFormError = true;
       return;
     }
@@ -630,6 +637,11 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     this.user = this.session.user;
     this.schoolId = this.session.school.id;
+
+    this.buttonData = {
+      class: 'primary',
+      text: 'Update'
+    }
 
     let schoolPrivileges = this.user.school_level_privileges[this.schoolId];
 
