@@ -136,6 +136,7 @@ export class TeamCreateComponent implements OnInit {
   formError;
   clubsMenu;
   eventsMenu;
+  buttonData;
   isFormError;
   canReadClubs;
   manageAdmins;
@@ -177,6 +178,10 @@ export class TeamCreateComponent implements OnInit {
       'lastname': [null, Validators.required],
       'email': [null, Validators.required]
     });
+
+    this.form.valueChanges.subscribe(_ => {
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
+    })
   }
 
   onSubmit(data) {
@@ -184,6 +189,7 @@ export class TeamCreateComponent implements OnInit {
     this.isFormError = false;
 
     if (!this.form.valid) {
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       this.errorService.handleError({ reason: STATUS.ALL_FIELDS_ARE_REQUIRED });
       return;
     }
@@ -206,6 +212,7 @@ export class TeamCreateComponent implements OnInit {
 
     if (emptyAccountPrivileges && emptySchoolPrivileges) {
       this.formError = 'You have not granted any access';
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       this.isFormError = true;
       return;
     }
@@ -458,6 +465,12 @@ export class TeamCreateComponent implements OnInit {
     const schoolPrivileges = school_level_privileges[this.session.school.id];
     this.user = this.session.user;
     this.schoolId = this.session.school.id;
+
+    this.buttonData = {
+      disabled: true,
+      class: 'primary',
+      text: 'Send Invite'
+    }
 
 
     this.canReadClubs = this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.clubs) ||

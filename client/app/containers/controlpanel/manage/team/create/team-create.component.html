@@ -2,7 +2,6 @@
   <div class="row">
     <form
       [formGroup]="form"
-      (ngSubmit)="onSubmit(form.value)"
       class="col-xs-8 col-xs-offset-2 margin-bottom">
       <div class="section cp-card form-group">
         <p class="section__title" i18n>Invite</p>
@@ -306,15 +305,14 @@
                 <label class="error" *ngIf="isFormError">{{ formError }}</label>
 
                 <a [routerLink]="['/manage/team']"
-                  class="cpbtn cpbtn--tall cpbtn--cancel" i18n>
+                  class="cpbtn cpbtn--cancel" i18n>
                   Cancel
                 </a>
-                <button
-                  type="submit"
-                  class="cpbtn cpbtn--tall cpbtn--primary" i18n
-                  [disabled]="!form.valid">
-                  Send Invite
-                </button>
+
+                <cp-button
+                  [props]="buttonData"
+                  (buttonClick)="onSubmit(form.value)">
+                </cp-button>
               </div>
             </div>
           </div>
