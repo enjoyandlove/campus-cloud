@@ -14,6 +14,8 @@ export class TeamDeleteComponent implements OnInit {
   @Output() deleted: EventEmitter<any> = new EventEmitter();
   @Output() errorModal: EventEmitter<null> = new EventEmitter();
 
+  buttonData;
+
   constructor(
     private adminService: AdminService
   ) { }
@@ -27,8 +29,11 @@ export class TeamDeleteComponent implements OnInit {
         _ => {
           this.deleted.emit(this.admin.id);
           $('#teamDeleteModal').modal('hide');
+          this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
         },
         err => {
+          this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
+
           if (err.status === 503) {
             this.errorModal.emit();
           }
@@ -37,6 +42,11 @@ export class TeamDeleteComponent implements OnInit {
       );
 
   }
-  ngOnInit() { }
+  ngOnInit() {
+    this.buttonData = {
+      class: 'danger',
+      text: 'Delete'
+    }
+  }
 }
 
