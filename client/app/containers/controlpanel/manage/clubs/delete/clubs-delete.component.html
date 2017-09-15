@@ -33,12 +33,10 @@
           Cancel
         </button>
 
-        <button
-          type="button"
-          (click)="onDelete()"
-          class="cpbtn cpbtn--danger"i18n>
-          Delete
-        </button>
+        <cp-button
+          [props]="buttonData"
+          (buttonClick)="onDelete()">
+        </cp-button>
       </div>
     </div>
   </div>

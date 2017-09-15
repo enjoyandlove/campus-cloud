@@ -50,10 +50,5 @@ export class CPButtonComponent implements OnInit {
     this.buttonClick.emit(event);
   }
 
-  ngOnInit() {
-    this.props = {
-      text: 'Create',
-      class: 'secondary',
-    }
-  }
+  ngOnInit() { }
 }
