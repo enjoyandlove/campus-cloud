@@ -3,8 +3,7 @@
 
   <form
     [formGroup]="form"
-    *ngSwitchCase="true"
-    (ngSubmit)="onSubmit(form.value)">
+    *ngSwitchCase="true">
     <div class="col-xs-6">
       <div class="cp-card">
         <div class="row">
@@ -193,15 +192,14 @@
                 <label class="error" *ngIf="serverError;" i18n>
                     <span>&#x26A0;</span> {{ STATUS.SOMETHING_WENT_WRONG }}
                 </label>
-                 <a [routerLink]="['../']"
-                  class="cpbtn cpbtn--tall cpbtn--cancel" i18n>
+                <a [routerLink]="['../']"
+                  class="cpbtn cpbtn--cancel" i18n>
                   Cancel
                 </a>
-                <button
-                  type="submit"
-                  class="cpbtn cpbtn--tall cpbtn--primary" i18n>
-                  Save
-                </button>
+                <cp-button
+                  [props]="buttonData"
+                  (buttonClick)="onSubmit(form.value)">
+                </cp-button>
               </div>
             </div>
           </div>

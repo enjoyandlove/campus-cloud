@@ -33,6 +33,7 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
   @ViewChild('input') input: ElementRef;
   @Output() added: EventEmitter<any> = new EventEmitter();
 
+  buttonData;
   formErrors;
   memberTypes;
   members = [];
@@ -124,13 +125,23 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
           this.added.emit(member);
           $('#membersCreate').modal('hide');
           this.doReset();
+          this.buttonData = Object.assign({}, this.buttonData, { disabled: true });
           this.reset$.next(true);
         },
-        err => { throw new Error(err) }
+        err => {
+          this.buttonData = Object.assign({}, this.buttonData, { disabled: true });
+          throw new Error(err)
+        }
       );
   }
 
   ngOnInit() {
+    this.buttonData = {
+      text: 'Save',
+      disabled: true,
+      class: 'primary'
+    }
+
     this.memberTypes = [
       {
         label: 'Member',
@@ -146,5 +157,9 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
       'member': [null, Validators.required],
       'member_type': [this.memberTypes[0].action, Validators.required],
     });
+
+    this.form.valueChanges.subscribe(_ => {
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: !this.form.valid });
+    })
   }
 }

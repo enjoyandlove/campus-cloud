@@ -22,6 +22,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
   clubId;
   loading;
   formError;
+  buttonData;
   statusTypes;
   membershipTypes;
   form: FormGroup;
@@ -121,6 +122,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
 
     if (!this.form.valid) {
       this.formError = true;
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       return;
     }
 
@@ -132,7 +134,10 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
       .updateClub(this.form.value, this.clubId, search)
       .subscribe(
       res => { this.router.navigate(['/manage/clubs/' + res.id + '/info']); },
-      err => { throw new Error(err) }
+      err => {
+        this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
+        throw new Error(err)
+      }
       );
   }
 
@@ -175,6 +180,12 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.fetch();
+
+    this.buttonData = {
+      text: 'Save',
+      class: 'primary'
+    }
+
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload:
