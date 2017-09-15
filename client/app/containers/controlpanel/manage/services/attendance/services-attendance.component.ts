@@ -70,7 +70,7 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
         }
         this.buildHeader();
       })
-      .catch(err => console.error(err));
+      .catch(err => { throw new Error(err) });
   }
 
   setDefaultFeedback() {

@@ -89,7 +89,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
           }
         );
       })
-      .catch(err => console.log(err));
+      .catch(err => { throw new Error(err) });
   }
 
   buildForm() {
@@ -132,7 +132,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
       .updateClub(this.form.value, this.clubId, search)
       .subscribe(
       res => { this.router.navigate(['/manage/clubs/' + res.id + '/info']); },
-      err => console.log(err)
+      err => { throw new Error(err) }
       );
   }
 

@@ -42,7 +42,7 @@ export class FeedbackEventComponent extends BaseComponent implements OnInit {
       .doEventFeedback(data, this.search)
       .subscribe(
         _ => this.isSubmitted$.next(true),
-        err => console.error(err)
+        err => { throw new Error(err) }
       );
   }
 

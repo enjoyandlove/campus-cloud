@@ -29,7 +29,7 @@ export class ClubsMembersDeleteComponent implements OnInit {
           this.deleted.emit(this.member.id);
           $('#membersDelete').modal('hide');
         },
-        err => console.error(err)
+        err => { throw new Error(err) }
       );
   }
 

@@ -46,7 +46,7 @@ export class ClubsCreateComponent implements OnInit {
       .createClub(this.form.value, search)
       .subscribe(
         res => {this.router.navigate(['/manage/clubs/' + res.id + '/info']); },
-        err => console.log(err)
+        err => { throw new Error(err) }
       );
   }
 

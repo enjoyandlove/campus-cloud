@@ -138,7 +138,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
           providers.forEach(provider => control.push(this.buildServiceProviderControl(provider)));
         }
       })
-      .catch(err => console.error(err));
+      .catch(err => { throw new Error(err) });
   }
 
   onPlaceChanged(data) {
@@ -203,7 +203,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       .deleteProvider(data.id, search)
       .subscribe(
       _ => controls.removeAt(data.index),
-      err => console.error(err)
+      err => { throw new Error(err) }
       );
   }
 

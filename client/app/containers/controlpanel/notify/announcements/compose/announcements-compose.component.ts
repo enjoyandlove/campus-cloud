@@ -114,7 +114,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
           { suggestions }
         );
       },
-      err => console.log(err)
+      err => { throw new Error(err) }
       );
   }
 
@@ -172,7 +172,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
           { suggestions }
         );
       },
-      err => console.log(err)
+      err => { throw new Error(err) }
       );
   }
 

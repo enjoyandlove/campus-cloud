@@ -66,7 +66,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
       .then(res => {
         this.stores = res.data;
       })
-      .catch(err => console.error(err));
+      .catch(err => { throw new Error(err) });
   }
 
   onHostSelected(store_id) {

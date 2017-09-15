@@ -72,7 +72,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
         this.buildHeader();
         this.stores = res.data;
       })
-      .catch(err => console.error(err));
+      .catch(err => { throw new Error(err) });
   }
 
   private buildHeader() {

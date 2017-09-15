@@ -57,7 +57,7 @@ export class ServicesListComponent extends BaseComponent implements OnInit, OnDe
       .then(res => {
         this.state = Object.assign({}, this.state, { services: res.data });
       })
-      .catch(err => console.error(err));
+      .catch(err => { throw new Error(err) });
   }
 
   private buildHeader() {

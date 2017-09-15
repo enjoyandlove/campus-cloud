@@ -31,7 +31,7 @@ export class ServicesProviderDeleteComponent implements OnInit {
           $('#deleteProvider').modal('hide');
           this.deleted.emit(this.provider.id);
         },
-        err => console.error(err)
+        err => { throw new Error(err) }
       );
   }
 

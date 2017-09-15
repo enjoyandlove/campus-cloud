@@ -95,7 +95,7 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
     super
       .fetchData(this.service.getAnnouncements(search, this.startRange, this.endRange))
       .then(res => this.state = Object.assign({}, this.state, { messages: res.data }))
-      .catch(err => console.log(err));
+      .catch(err => { throw new Error(err) });
   }
 
   onCreated() {

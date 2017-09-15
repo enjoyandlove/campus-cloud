@@ -82,7 +82,7 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
           }
         );
       })
-      .catch(err => console.error(err));
+      .catch(err => { throw new Error(err) });
   }
 
   private buildHeader() {

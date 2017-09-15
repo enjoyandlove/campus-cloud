@@ -126,7 +126,7 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
           this.doReset();
           this.reset$.next(true);
         },
-        err => console.log(err)
+        err => { throw new Error(err) }
       );
   }
 

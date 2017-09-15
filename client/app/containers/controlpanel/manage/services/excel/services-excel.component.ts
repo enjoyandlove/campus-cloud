@@ -209,7 +209,7 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
       .createService(parsedServices)
       .subscribe(
       _ => this.router.navigate(['/manage/services']),
-      err => console.error(err)
+      err => { throw new Error(err) }
       );
   }
 

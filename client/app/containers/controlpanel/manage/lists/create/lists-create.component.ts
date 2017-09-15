@@ -126,7 +126,7 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
       suggestions => {
         this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, { suggestions });
       },
-      err => console.log(err)
+      err => { throw new Error(err) }
       );
   }
 

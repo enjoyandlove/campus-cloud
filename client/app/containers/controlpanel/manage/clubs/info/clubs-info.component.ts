@@ -58,7 +58,7 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
           this.club.advisor_lastname ||
           this.club.advisor_email;
       })
-      .catch(err => console.log(err));
+      .catch(err => { throw new Error(err) });
   }
 
   ngOnInit() {

@@ -54,7 +54,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
       .then(res => {
         this.assessments = res.data;
       })
-      .catch(err => console.log(err));
+      .catch(err => { throw new Error(err) });
   }
 
   onPaginationNext() {

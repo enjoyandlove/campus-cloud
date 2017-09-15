@@ -75,7 +75,7 @@ export class CustomizationListComponent implements OnInit {
 
         // // this.onFileUpload(res);
       })
-      .catch(err => console.log(err));
+      .catch(err => { throw new Error(err) });
   }
 
     onFileUpload(file) {

@@ -62,7 +62,7 @@ export class EventsImportTopBarComponent implements OnInit {
       res => {
         this.imageChange.emit(res.image_url);
       },
-      err => console.error(err)
+      err => { throw new Error(err) }
       );
   }
 

@@ -79,7 +79,7 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
 
         this.state = Object.assign({}, this.state, _state);
       },
-      err => console.log(err)
+      err => { throw new Error(err) }
       );
   }
 

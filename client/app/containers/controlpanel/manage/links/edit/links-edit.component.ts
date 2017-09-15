@@ -67,7 +67,7 @@ export class LinksEditComponent implements OnInit, OnChanges {
       res => {
         this.form.controls['img_url'].setValue(res.image_url);
       },
-      err => console.error(err)
+      err => { throw new Error(err) }
       );
   }
 
@@ -86,7 +86,7 @@ export class LinksEditComponent implements OnInit, OnChanges {
         $('#linksEdit').modal('hide');
         this.resetModal();
       },
-      err => console.error(err)
+      err => { throw new Error(err) }
       );
   }
 

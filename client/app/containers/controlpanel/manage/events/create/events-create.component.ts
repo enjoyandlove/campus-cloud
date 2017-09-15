@@ -110,7 +110,7 @@ export class EventsCreateComponent implements OnInit {
       return _admins;
     }).subscribe(
       res => this.managers = res,
-      err => console.log(err)
+      err => { throw new Error(err) }
     );
   }
 
