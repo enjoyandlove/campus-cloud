@@ -533,6 +533,12 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   onEventsSelected(event) {
+    this.accountPrivileges = Object.assign(
+      {},
+      this.accountPrivileges,
+      { ...this.removePrivilegeFromRandomAccount(CP_PRIVILEGES_MAP.events) }
+    )
+
     if (event.action === null) {
       if (CP_PRIVILEGES_MAP.events in this.schoolPrivileges) {
         delete this.schoolPrivileges[CP_PRIVILEGES_MAP.events];
