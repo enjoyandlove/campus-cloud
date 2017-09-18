@@ -48,6 +48,10 @@ export class EngagementStatsComponent implements OnInit {
     let { zero_engagements, one_engagements, repeat_engagements } = this.props;
     let total = zero_engagements.length + one_engagements.length + repeat_engagements.length;
 
+    if (total === 0) {
+      return 0;
+    }
+
     let percentage = (this.props[key].length * 100) / total;
 
     return percentage === 0 ? percentage : percentage.toFixed(1);
