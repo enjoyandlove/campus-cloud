@@ -37,14 +37,13 @@ export class StoreService extends BaseService {
             'heading': true,
           }
         ];
-        let _services = [];
 
-        res.forEach(store => {
-          _services.push({
+        let _services = res.map(store => {
+          return {
             'label': store.name,
             'value': store.store_id,
             'heading': false,
-          });
+          }
         });
 
         if (_services.length > 1) {
@@ -86,14 +85,13 @@ export class StoreService extends BaseService {
             'heading': true,
           }
         ];
-        let _clubs = [];
 
-        res.forEach(store => {
-          _clubs.push({
+        let _clubs = res.map(store => {
+          return {
             'label': store.name,
             'value': store.id,
             'heading': false,
-          });
+          }
         });
 
         if (_clubs.length > 1) {
