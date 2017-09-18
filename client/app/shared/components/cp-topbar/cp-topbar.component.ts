@@ -21,7 +21,7 @@ export class CPTopBarComponent implements OnInit {
 
   eventData = {
     type: CP_TRACK_TO.GA,
-    eventCategory: 'CLick Event',
+    eventCategory: 'Click Event',
     eventAction: 'Welcome button on top bar clicked'
   };
 
