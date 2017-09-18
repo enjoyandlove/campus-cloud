@@ -12,10 +12,6 @@ export class ControlPanelComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-    if (isProd) {
-      console.log('tracking enabled...');
-    }
-  }
+  ngOnInit() { }
 
 }
