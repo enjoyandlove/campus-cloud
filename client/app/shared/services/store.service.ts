@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { API } from '../../config/api';
 import { BaseService } from '../../base/base.service';
 
+
 @Injectable()
 export class StoreService extends BaseService {
   constructor(http: Http, router: Router) {
@@ -46,7 +47,7 @@ export class StoreService extends BaseService {
           }
         });
 
-        if (_services.length > 1) {
+        if (_services.length) {
           services.push(..._services);
         }
 
@@ -94,7 +95,8 @@ export class StoreService extends BaseService {
           }
         });
 
-        if (_clubs.length > 1) {
+
+        if (_clubs.length) {
           clubs.push(..._clubs);
         }
 
@@ -102,9 +104,9 @@ export class StoreService extends BaseService {
       });
   }
 
-  getStores(search: URLSearchParams, placeHolder = 'Select Host' ) {
-    const clubs$ = this.getServices(search);
-    const services$ = this.getClubs(search);
+  getStores(search: URLSearchParams, placeHolder = 'All Hosts') {
+    const clubs$ = this.getClubs(search);
+    const services$ = this.getServices(search);
 
     return Observable
       .combineLatest(services$, clubs$)
@@ -124,7 +126,7 @@ export class StoreService extends BaseService {
           {
             'label': placeHolder,
             'value': null,
-            'heading': true,
+            'heading': false,
           },
           ...res[0],
           ...res[1]
