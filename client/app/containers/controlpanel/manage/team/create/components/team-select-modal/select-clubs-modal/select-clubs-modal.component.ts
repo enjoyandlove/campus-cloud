@@ -8,7 +8,7 @@ import { ClubsService } from '../../../../../clubs/clubs.service';
 import { CP_PRIVILEGES_MAP } from '../../../../../../../../shared/constants';
 import { BaseTeamSelectModalComponent } from '../base/team-select-modal.component';
 
-const PENDING_STATUS = 2;
+const ACTIVE_STATUS = 1;
 
 @Component({
   selector: 'cp-select-clubs-modal',
@@ -41,7 +41,7 @@ export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent
     this
       .service
       .getClubs(search, 1, 1000)
-      .map(clubs => clubs.filter(club => club.status !== PENDING_STATUS))
+      .map(clubs => clubs.filter(club => club.status === ACTIVE_STATUS))
       .subscribe(clubs => {
         let res = {};
         let selected = {};
