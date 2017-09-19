@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 
 import {
   LoginComponent,
@@ -21,7 +21,13 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { useHash: true })
+    RouterModule.forRoot(
+      routes,
+      {
+        useHash: true,
+        preloadingStrategy: PreloadAllModules
+      }
+    )
   ],
   exports: [
     RouterModule
