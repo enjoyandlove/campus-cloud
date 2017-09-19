@@ -28,7 +28,7 @@ export class CPButtonComponent implements OnInit {
     const { eventCategory, eventAction  } = this.props.trackingData;
 
     if (isProd) {
-      this.track.emitGoogleAnaltics(eventCategory, eventAction);
+      this.track.gaEmitEvent(eventCategory, eventAction);
     }
   }
 

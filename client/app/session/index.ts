@@ -3,6 +3,8 @@
  * SCHOOLS => Array of schools that the logged in user has access to, this is often 1
  * SCHOOL => Currently selected school, this is the active school in the school switcher component
  */
+import { ActivatedRouteSnapshot } from '@angular/router';
+import { URLSearchParams } from '@angular/http';
 import { Injectable } from '@angular/core';
 
 // import { IUser } from './user.interface';
@@ -10,6 +12,11 @@ import { Injectable } from '@angular/core';
 
 export * from './user.interface';
 export * from './school.interface';
+
+import { base64 } from './../shared/utils/encrypt/encrypt';
+import { appStorage } from './../shared/utils/storage/storage';
+import { AdminService } from './../shared/services/admin.service';
+import { SchoolService } from './../shared/services/school.service';
 
 export const accountsToStoreMap = (accountsMap: Array<number>, accountPrivileges) => {
   /**
@@ -29,45 +36,49 @@ export const accountsToStoreMap = (accountsMap: Array<number>, accountPrivileges
 @Injectable()
 export class CPSession {
   public g = new Map();
-  // private _user: IUser;
-  // private _school: ISchool;
-  // private _schools: Array<ISchool>;
 
-  // set(key: string, value: any): void {
-  //   this._g[key] = value
-  // }
+  constructor(
+    private adminService: AdminService,
+    private schoolService: SchoolService
+  ) { }
 
-  // get(key = null) {
-  //   return key ? this._g[key] : this._g;
-  // }
+  preLoadUser(activatedRoute: ActivatedRouteSnapshot): Promise<any> {
+    const school$ = this.schoolService.getSchools();
 
-  // keys() {
-  //   return Object.keys(this._g);
-  // }
+    return school$
+    .switchMap(schools => {
+      let schoolIdInUrl;
+      let schoolObjFromUrl;
+      const search = new URLSearchParams();
+      const storedSchool = JSON.parse(appStorage.get(appStorage.keys.DEFAULT_SCHOOL));
 
-  // get user(): IUser {
-  //   return this._user;
-  // }
+      try {
+        schoolIdInUrl = base64.decode(activatedRoute.queryParams.school);
+      } catch (error) {
+        schoolIdInUrl = null;
+      }
 
-  // set user(user: IUser) {
-  //   this._user = user;
-  // }
+      if (schoolIdInUrl) {
+        Object
+          .keys(schools)
+          .map((key: any) => {
+            if (schools[key].id ===  +schoolIdInUrl) {
+              schoolObjFromUrl = schools[key];
+            }
+          });
+      }
 
-  // get schools(): Array<ISchool> {
-  //   return this._schools;
-  // }
+      this.g.set('schools', schools);
+      this.g.set('school', schools[0]);
 
-  // set schools(school: Array<ISchool>) {
-  //   this._schools = school;
-  // }
+      this.g.set('school', storedSchool || schoolObjFromUrl || schools[0]);
 
-  // get school(): ISchool {
-  //   return this._school;
-  // }
+      search.append('school_id', this.g.get('school').id.toString());
 
-  // set school(school: ISchool) {
-  //   this._school = school;
-  // }
+      return this.adminService.getAdmins(1, 1, search);
+    })
+    .toPromise()
+  }
 
   canStoreReadAndWriteResource(storeId: number, privilegeType: number) {
     if (storeId in this.g.get('user').account_level_privileges) {
