@@ -122,6 +122,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   trackInitialPageView(pageName) {
     if (isProd) {
       ga('set', 'page', pageName);
+      ga('set', 'userId', this.session.user.email);
       ga('send', 'pageview');
     }
   }
