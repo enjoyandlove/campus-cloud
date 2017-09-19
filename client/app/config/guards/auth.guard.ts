@@ -5,6 +5,7 @@ import { CanActivate, CanActivateChild, ActivatedRouteSnapshot } from '@angular/
 import { URLSearchParams } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import * as Raven from 'raven-js';
 
 import { isProd } from './../env/index';
 import { CPSession } from '../../session';
@@ -119,6 +120,14 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     return true;
   }
 
+  setUserContext() {
+    Raven.setUserContext({
+      id: this.session.user.id.toString(),
+      username: `${this.session.user.firstname} ${this.session.user.lastname}`,
+      email: this.session.user.email
+    });
+  }
+
   trackInitialPageView(pageName) {
     if (isProd) {
       ga('set', 'page', pageName);
@@ -136,6 +145,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
           .then(user => {
             this.session.user = user[0];
+            this.setUserContext();
             this.trackInitialPageView(state.url);
             return true;
           })
