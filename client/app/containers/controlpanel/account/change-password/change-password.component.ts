@@ -95,7 +95,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
 
     this
       .accountService
-      .resetPassword(body, this.session.user.id)
+      .resetPassword(body, this.session.g.get('user').id)
       .toPromise()
       .then(_ => {
         this.form.reset();

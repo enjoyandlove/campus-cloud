@@ -53,7 +53,7 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
     const search = new URLSearchParams();
     const user_list_id = this.state.user_list_id ? this.state.user_list_id.toString() : null;
 
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
     search.append('search_str', this.state.search_str);
     search.append('user_list_id', user_list_id);
 

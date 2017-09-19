@@ -54,8 +54,8 @@ describe('CPTopBarComponent', () => {
     component.school = mockSchool;
 
     mockSession = new CPSession();
-    mockSession.user = mockUser;
-    mockSession.school = mockSchool;
+    mockSession.g.set('user', mockUser);
+    mockSession.g.set('school', mockSchool);
 
     component.session = mockSession;
   });

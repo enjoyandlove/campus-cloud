@@ -44,7 +44,7 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
   doSubmit() {
     this.isError = false;
     let search = new URLSearchParams();
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     let data = Object.assign({}, this.form.value);
 
@@ -101,7 +101,7 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
   onSearch(query) {
     let search = new URLSearchParams();
     search.append('search_str', query);
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     this
       .service

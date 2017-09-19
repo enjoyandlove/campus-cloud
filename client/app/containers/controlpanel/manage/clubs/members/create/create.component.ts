@@ -65,7 +65,7 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
 
         let search = new URLSearchParams();
         search.append('search_str', query);
-        search.append('school_id', this.session.school.id.toString());
+        search.append('school_id', this.session.g.get('school').id.toString());
 
         return this.service.getMembers(search).map(members => {
           let _members = [];

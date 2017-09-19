@@ -44,7 +44,7 @@ export class ListsListComponent extends BaseComponent implements OnInit {
   private fetch() {
     const search = new URLSearchParams();
     search.append('search_str', this.state.search_str);
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     const stream$ = this.listsService.getLists(search, this.startRange, this.endRange);
 

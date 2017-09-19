@@ -73,7 +73,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
 
   fetchStudentData() {
     const search = new URLSearchParams();
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     this
       .service
@@ -95,7 +95,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
   fetch() {
     const search = new URLSearchParams();
     search.append('scope', this.state.scope.toString());
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     const stream$ = this
       .service.getEngagements(search, this.studentId, this.startRange, this.endRange);
@@ -161,7 +161,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
     const search = new URLSearchParams();
     search.append('scope', this.state.scope.toString());
     search.append('all', DOWNLOAD_ALL_RECORDS.toString());
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     const stream$ = this
       .service.getEngagements(search, this.studentId, this.startRange, this.endRange);

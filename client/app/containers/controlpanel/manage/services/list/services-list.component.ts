@@ -48,7 +48,7 @@ export class ServicesListComponent extends BaseComponent implements OnInit, OnDe
 
     search.append('attendance_only', attendance_only);
     search.append('search_text', this.state.search_text);
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     const stream$ = this.service.getServices(this.startRange, this.endRange, search);
 

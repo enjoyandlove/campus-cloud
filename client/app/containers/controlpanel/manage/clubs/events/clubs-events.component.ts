@@ -35,7 +35,7 @@ export class ClubsEventsComponent extends BaseComponent implements OnInit {
 
   private fetch() {
     let search = new URLSearchParams();
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     super
       .fetchData(this.clubsService.getClubById(this.clubId, search))

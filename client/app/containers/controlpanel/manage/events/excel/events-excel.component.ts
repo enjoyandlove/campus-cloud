@@ -56,7 +56,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     private eventsService: EventsService
   ) {
     super();
-    this.school = this.session.school;
+    this.school = this.session.g.get('school');
     super.isLoading().subscribe(res => this.loading = res);
   }
 

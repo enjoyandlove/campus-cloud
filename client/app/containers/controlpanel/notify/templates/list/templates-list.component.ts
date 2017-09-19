@@ -69,7 +69,7 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
   fetch() {
     let search = new URLSearchParams();
     search.append('search_str', this.state.search_str);
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     const stream$ = this.service.getTemplates(this.startRange, this.endRange, search);
 
@@ -139,7 +139,7 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
       {
         queryParams: {
           'template': base64.encode(template.id.toString()),
-          'school': base64.encode(this.session.school.id.toString()),
+          'school': base64.encode(this.session.g.get('school').id.toString()),
         }
       }
       );
@@ -161,7 +161,7 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
 
   loadTemplateFromId() {
     const search = new URLSearchParams();
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     this
       .service

@@ -43,7 +43,7 @@ export class EventsFacebookComponent extends BaseComponent implements OnInit {
 
   private fetch() {
 
-    const school = this.session.school;
+    const school = this.session.g.get('school');
     let search: URLSearchParams = new URLSearchParams();
     search.append('school_id', school.id.toString());
 

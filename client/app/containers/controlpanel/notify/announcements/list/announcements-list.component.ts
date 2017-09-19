@@ -90,7 +90,7 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
 
     search.append('priority', type);
     search.append('search_str', this.state.query);
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     super
       .fetchData(this.service.getAnnouncements(search, this.startRange, this.endRange))

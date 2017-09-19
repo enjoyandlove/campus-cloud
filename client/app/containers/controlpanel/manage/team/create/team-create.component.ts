@@ -262,7 +262,7 @@ export class TeamCreateComponent implements OnInit {
     if (checked) {
       this.accountPrivileges = Object.assign(
         {},
-        accountsToStoreMap(this.session.user.account_mapping[this.schoolId],
+        accountsToStoreMap(this.session.g.get('user').account_mapping[this.schoolId],
                            this.user.account_level_privileges)
       );
 
@@ -375,17 +375,20 @@ export class TeamCreateComponent implements OnInit {
       {
         [CP_PRIVILEGES_MAP.clubs]: {
           r: true,
-          w: this.session.user.school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.clubs].w
+          w: this.session.g.get('user')
+            .school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.clubs].w
         },
 
         [CP_PRIVILEGES_MAP.moderation]: {
           r: true,
-          w: this.session.user.school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.clubs].w
+          w: this.session.g.get('user')
+            .school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.clubs].w
         },
 
         [CP_PRIVILEGES_MAP.membership]: {
           r: true,
-          w: this.session.user.school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.clubs].w
+          w: this.session.g.get('user')
+            .school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.clubs].w
         }
       }
     );
@@ -461,10 +464,10 @@ export class TeamCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    const { school_level_privileges } = this.session.user;
-    const schoolPrivileges = school_level_privileges[this.session.school.id];
-    this.user = this.session.user;
-    this.schoolId = this.session.school.id;
+    const { school_level_privileges } = this.session.g.get('user');
+    const schoolPrivileges = school_level_privileges[this.session.g.get('school').id];
+    this.user = this.session.g.get('user');
+    this.schoolId = this.session.g.get('school').id;
 
     this.buttonData = {
       disabled: true,

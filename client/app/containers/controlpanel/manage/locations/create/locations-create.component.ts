@@ -50,7 +50,7 @@ export class LocationsCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.school = this.session.school;
+    this.school = this.session.g.get('school');
     this.mapCenter = new BehaviorSubject(
       {
         lat: this.school.latitude,

@@ -37,7 +37,7 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
     private serviceService: ServicesService
   ) {
     super();
-    this.school = this.session.school;
+    this.school = this.session.g.get('school');
     super.isLoading().subscribe(res => this.loading = res);
     this.serviceId = this.route.snapshot.params['serviceId'];
 

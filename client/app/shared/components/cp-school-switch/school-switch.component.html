@@ -18,7 +18,7 @@
       (click)="close.emit()"
       class="switch__item"
       [class.isFirstItem]="schools.length === 1">
-      <a [routerLink]="['/manage/team/' + session.user.id + '/edit' ]" i18n>Profile</a>
+      <a [routerLink]="['/manage/team/' + session.g.get('user').id + '/edit' ]" i18n>Profile</a>
     </li>
 
     <li

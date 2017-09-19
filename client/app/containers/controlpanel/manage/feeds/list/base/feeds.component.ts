@@ -124,7 +124,7 @@ export class FeedsComponent extends BaseComponent implements OnInit {
     search.append('removed_by_moderators_only', removed);
 
     if (this.state.isCampusThread) {
-      search.append('school_id', this.session.school.id.toString());
+      search.append('school_id', this.session.g.get('school').id.toString());
     } else {
       search.append('group_id', this.state.wall_type.toString());
     }
@@ -147,7 +147,7 @@ export class FeedsComponent extends BaseComponent implements OnInit {
 
     if (this.state.isCampusThread) {
       let _search = new URLSearchParams();
-      _search.append('school_id', this.session.school.id.toString());
+      _search.append('school_id', this.session.g.get('school').id.toString());
 
       let channels$ = this.service.getChannelsBySchoolId(1, 1000, _search);
 

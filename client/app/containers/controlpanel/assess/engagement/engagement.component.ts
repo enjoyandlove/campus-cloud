@@ -61,7 +61,7 @@ export class EngagementComponent extends BaseComponent implements OnInit {
 
   fetchChartData(filterState) {
     let search = new URLSearchParams();
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
     search.append(filterState.engagement.data.queryParam, filterState.engagement.data.value);
     search.append('user_list_id', filterState.for.listId);
     search.append('start', `${filterState.range.payload.range.start}`);

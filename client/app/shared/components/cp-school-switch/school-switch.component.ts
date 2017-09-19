@@ -38,19 +38,19 @@ export class SchoolSwitchComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.schools = this.session.schools;
-    this.selectedSchool = this.session.school;
+    this.schools = this.session.g.get('schools');
+    this.selectedSchool = this.session.g.get('school');
 
-    const user: IUser = this.session.user;
+    const user: IUser = this.session.g.get('user');
 
-    let schoolPrivileges = user.school_level_privileges[this.session.school.id];
+    let schoolPrivileges = user.school_level_privileges[this.session.g.get('school').id];
 
     this.canManageAdmins = false;
 
     if (schoolPrivileges) {
       let manage_admin = schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin];
 
-      schoolPrivileges = user.school_level_privileges[this.session.school.id];
+      schoolPrivileges = user.school_level_privileges[this.session.g.get('school').id];
 
       this.canManageAdmins = manage_admin ? manage_admin : false;
     }

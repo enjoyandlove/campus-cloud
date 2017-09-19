@@ -5,8 +5,8 @@
  */
 import { Injectable } from '@angular/core';
 
-import { IUser } from './user.interface';
-import { ISchool } from './school.interface';
+// import { IUser } from './user.interface';
+// import { ISchool } from './school.interface';
 
 export * from './user.interface';
 export * from './school.interface';
@@ -28,37 +28,50 @@ export const accountsToStoreMap = (accountsMap: Array<number>, accountPrivileges
 
 @Injectable()
 export class CPSession {
-  private _user: IUser;
-  private _school: ISchool;
-  private _schools: Array<ISchool>;
+  public g = new Map();
+  // private _user: IUser;
+  // private _school: ISchool;
+  // private _schools: Array<ISchool>;
 
-  get user(): IUser {
-    return this._user;
-  }
+  // set(key: string, value: any): void {
+  //   this._g[key] = value
+  // }
 
-  set user(user: IUser) {
-    this._user = user;
-  }
+  // get(key = null) {
+  //   return key ? this._g[key] : this._g;
+  // }
 
-  get schools(): Array<ISchool> {
-    return this._schools;
-  }
+  // keys() {
+  //   return Object.keys(this._g);
+  // }
 
-  set schools(school: Array<ISchool>) {
-    this._schools = school;
-  }
+  // get user(): IUser {
+  //   return this._user;
+  // }
 
-  get school(): ISchool {
-    return this._school;
-  }
+  // set user(user: IUser) {
+  //   this._user = user;
+  // }
 
-  set school(school: ISchool) {
-    this._school = school;
-  }
+  // get schools(): Array<ISchool> {
+  //   return this._schools;
+  // }
+
+  // set schools(school: Array<ISchool>) {
+  //   this._schools = school;
+  // }
+
+  // get school(): ISchool {
+  //   return this._school;
+  // }
+
+  // set school(school: ISchool) {
+  //   this._school = school;
+  // }
 
   canStoreReadAndWriteResource(storeId: number, privilegeType: number) {
-    if (storeId in this.user.account_level_privileges) {
-      return privilegeType in this.user.account_level_privileges[storeId]
+    if (storeId in this.g.get('user').account_level_privileges) {
+      return privilegeType in this.g.get('user').account_level_privileges[storeId]
     }
     return false;
   }
@@ -66,8 +79,8 @@ export class CPSession {
   canAccountLevelReadResource(privilegeType: number) {
     let hasAccountAccess = false;
 
-    this.user.account_mapping[this.school.id].forEach(store => {
-      Object.keys(this.user.account_level_privileges[store]).forEach(privilege => {
+    this.g.get('user').account_mapping[this.g.get('school').id].forEach(store => {
+      Object.keys(this.g.get('user').account_level_privileges[store]).forEach(privilege => {
 
         if (privilegeType === +privilege) {
           hasAccountAccess = true;
@@ -79,15 +92,15 @@ export class CPSession {
   }
 
   canSchoolReadResource(privilegeType: number) {
-    if (!(Object.keys(this.user.school_level_privileges).length)) {
+    if (!(Object.keys(this.g.get('user').school_level_privileges).length)) {
       return false;
     }
 
-    if (!(this.school.id in this.user.school_level_privileges)) {
+    if (!(this.g.get('school').id in this.g.get('user').school_level_privileges)) {
       return false;
     }
 
-    const schoolPrivileges = this.user.school_level_privileges[this.school.id];
+    const schoolPrivileges = this.g.get('user').school_level_privileges[this.g.get('school').id];
 
     if (privilegeType in schoolPrivileges) {
       return schoolPrivileges[privilegeType].r
@@ -96,15 +109,15 @@ export class CPSession {
   }
 
   canSchoolWriteResource(privilegeType: number) {
-    if (!(Object.keys(this.user.school_level_privileges).length)) {
+    if (!(Object.keys(this.g.get('user').school_level_privileges).length)) {
       return false;
     }
 
-    if (!(this.school.id in this.user.school_level_privileges)) {
+    if (!(this.g.get('school').id in this.g.get('user').school_level_privileges)) {
       return false;
     }
 
-    const schoolPrivileges = this.user.school_level_privileges[this.school.id];
+    const schoolPrivileges = this.g.get('user').school_level_privileges[this.g.get('school').id];
 
     if (privilegeType in schoolPrivileges) {
       return schoolPrivileges[privilegeType].w

@@ -120,7 +120,7 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
 
   buildServiceControl(service) {
     return this.fb.group({
-      'school_id': [this.session.school.id],
+      'school_id': [this.session.g.get('school').id],
       'name': [service.service_name, Validators.required],
       'description': [service.description],
       'email': [service.service_email],

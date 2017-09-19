@@ -47,7 +47,7 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
 
   private fetch() {
     let search = new URLSearchParams();
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
     search.append('status', this.state.type);
     search.append('search_str', this.state.query);
 
@@ -61,7 +61,7 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
 
   onApproveClub(clubId: number) {
     let search = new URLSearchParams();
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     this
       .clubsService

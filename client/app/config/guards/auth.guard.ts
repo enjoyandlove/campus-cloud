@@ -48,12 +48,12 @@ export class AuthGuard implements CanActivate, CanActivateChild {
               }
             });
         }
+        this.session.g.set('schools', schools);
+        this.session.g.set('school', schools[0]);
 
-        this.session.schools = schools;
+        this.session.g.set('school', storedSchool || schoolObjFromUrl || schools[0]);
 
-        this.session.school = storedSchool || schoolObjFromUrl || schools[0];
-
-        search.append('school_id', this.session.school.id.toString());
+        search.append('school_id', this.session.g.get('school').id.toString());
 
         return this.adminService.getAdmins(1, 1, search);
       })
@@ -122,16 +122,16 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
   setUserContext() {
     Raven.setUserContext({
-      id: this.session.user.id.toString(),
-      username: `${this.session.user.firstname} ${this.session.user.lastname}`,
-      email: this.session.user.email
+      id: this.session.g.get('user').id.toString(),
+      username: `${this.session.g.get('user').firstname} ${this.session.g.get('user').lastname}`,
+      email: this.session.g.get('user').email
     });
   }
 
   trackInitialPageView(pageName) {
     if (isProd) {
       ga('set', 'page', pageName);
-      ga('set', 'userId', this.session.user.email);
+      ga('set', 'userId', this.session.g.get('user').email);
       ga('send', 'pageview');
     }
   }
@@ -140,11 +140,11 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     // are we logged in?
     if (appStorage.get(appStorage.keys.SESSION)) {
       // did we create the session object?
-      if (!this.session.school || !this.session.user) {
+      if (!this.session.g.size) {
         return this.preLoadUser(activatedRoute)
 
           .then(user => {
-            this.session.user = user[0];
+            this.session.g.set('user', user[0])
             this.setUserContext();
             this.trackInitialPageView(state.url);
             return true;

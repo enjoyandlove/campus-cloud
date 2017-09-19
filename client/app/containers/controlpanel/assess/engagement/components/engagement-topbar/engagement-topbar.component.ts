@@ -132,7 +132,7 @@ export class EngagementTopBarComponent implements OnInit {
 
   ngOnInit() {
     let search = new URLSearchParams();
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     const now = CPDate.toEpoch(new Date());
     const lastWeek = CPDate.toEpoch(moment().subtract(6, 'days').hours(0).minutes(0).seconds(0));

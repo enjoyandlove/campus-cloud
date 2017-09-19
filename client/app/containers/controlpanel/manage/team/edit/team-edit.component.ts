@@ -188,7 +188,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       .then(res => {
         this.editingUser = res.data;
 
-        this.isCurrentUser = this.editingUser.id === this.session.user.id;
+        this.isCurrentUser = this.editingUser.id === this.session.g.get('user').id;
 
 
         this.buildHeader(`${this.editingUser.firstname} ${this.editingUser.lastname}`);
@@ -389,7 +389,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     if (checked) {
       this.accountPrivileges = Object.assign(
         {},
-        accountsToStoreMap(this.session.user.account_mapping[this.schoolId],
+        accountsToStoreMap(this.session.g.get('user').account_mapping[this.schoolId],
                            this.user.account_level_privileges)
       );
 
@@ -516,17 +516,20 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       {
         [CP_PRIVILEGES_MAP.clubs]: {
           r: true,
-          w: this.session.user.school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.clubs].w
+          w: this.session.g.get('user')
+            .school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.clubs].w
         },
 
         [CP_PRIVILEGES_MAP.moderation]: {
           r: true,
-          w: this.session.user.school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.clubs].w
+          w: this.session.g.get('user')
+            .school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.clubs].w
         },
 
         [CP_PRIVILEGES_MAP.membership]: {
           r: true,
-          w: this.session.user.school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.clubs].w
+          w: this.session.g.get('user')
+            .school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.clubs].w
         }
       }
     );
@@ -641,8 +644,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.user = this.session.user;
-    this.schoolId = this.session.school.id;
+    this.user = this.session.g.get('user');
+    this.schoolId = this.session.g.get('school').id;
 
     this.buttonData = {
       class: 'primary',

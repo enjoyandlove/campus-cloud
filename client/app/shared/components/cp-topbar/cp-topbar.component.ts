@@ -73,8 +73,8 @@ export class CPTopBarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.user = this.session.user;
-    this.school = this.session.school;
+    this.user = this.session.g.get('user');
+    this.school = this.session.g.get('school');
 
     this.manageHomePage = this.getManageHomePage();
 

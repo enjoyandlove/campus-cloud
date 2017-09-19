@@ -93,7 +93,7 @@ export class LinksCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.storeId = this.session.school.id;
+    this.storeId = this.session.g.get('school').id;
     this.buildForm();
   }
 }
