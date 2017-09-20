@@ -4,7 +4,7 @@ import { URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-
+import { generateCSV } from './utils';
 import { CPSession } from './../../../../session/index';
 import { EngagementService } from './engagement.service';
 import { STATUS } from './../../../../shared/constants/status';
@@ -23,9 +23,11 @@ export class EngagementComponent extends BaseComponent implements OnInit {
   chartData;
   loading;
   messageData;
+  filterState;
   isComposeModal;
 
   filters$: BehaviorSubject<any> = new BehaviorSubject(null);
+
   constructor(
     private router: Router,
     private store: Store<any>,
@@ -36,44 +38,55 @@ export class EngagementComponent extends BaseComponent implements OnInit {
     super.isLoading().subscribe(loading => this.loading = loading);
   }
 
-  updateUrl(state) {
+  updateUrl() {
     this
       .router
       .navigate(
       ['/assess/dashboard'],
       {
         queryParams: {
-          'engagement': state.engagement.route_id,
-          'for': state.for.route_id,
-          'range': state.range.route_id
+          'engagement': this.filterState.engagement.route_id,
+          'for': this.filterState.for.route_id,
+          'range': this.filterState.range.route_id
         }
       }
       );
   }
 
   onDoFilter(filterState) {
-    this.updateUrl(filterState);
-    this.fetchChartData(filterState);
-    this.filters$.next(filterState);
+    this.filterState = Object.assign({}, this.filterState, ...filterState);
+
+    this.updateUrl();
+
+    this.fetchChartData();
+
+    this.filters$.next(this.filterState);
   }
 
-  buildSearchParam() { }
-
-  fetchChartData(filterState) {
-    let search = new URLSearchParams();
+  buildSearchHeaders(): URLSearchParams {
+    const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
-    search.append(filterState.engagement.data.queryParam, filterState.engagement.data.value);
-    search.append('user_list_id', filterState.for.listId);
-    search.append('start', `${filterState.range.payload.range.start}`);
-    search.append('end', `${filterState.range.payload.range.end}`);
+
+    search.append(this.filterState.engagement.data.queryParam,
+      this.filterState.engagement.data.value);
+
+    search.append('user_list_id', this.filterState.for.listId);
+    search.append('start', `${this.filterState.range.payload.range.start}`);
+    search.append('end', `${this.filterState.range.payload.range.end}`);
+
+    return search;
+  }
+
+  fetchChartData() {
+    const search = this.buildSearchHeaders();
 
     super
       .fetchData(this.service.getChartData(search))
       .then(res => {
         this.chartData = {
           ...res.data,
-          starts: filterState.range.payload.range.start,
-          ends: filterState.range.payload.range.end,
+          starts: this.filterState.range.payload.range.start,
+          ends: this.filterState.range.payload.range.end,
         };
       })
       .catch(err => { throw new Error(err) });
@@ -83,6 +96,24 @@ export class EngagementComponent extends BaseComponent implements OnInit {
     this.messageData = data;
     this.isComposeModal = true;
     setTimeout(() => { $('#composeModal').modal(); }, 1);
+  }
+
+  onDownload(cohort) {
+    const search = this.buildSearchHeaders();
+    search.append('download', '1');
+
+    if (cohort) {
+      search.append('cohort', cohort);
+    }
+
+    this
+      .service
+      .getChartData(search)
+      .toPromise()
+      .then(data => {
+        generateCSV(data.download_data);
+      })
+      .catch(err => console.log(err));
   }
 
   onComposeTeardown() {
