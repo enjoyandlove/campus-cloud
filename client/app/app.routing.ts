@@ -1,11 +1,13 @@
+import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 
 import {
   LoginComponent,
   LogoutComponent,
   PasswordResetComponent
 } from './containers/auth';
+
+import { CPPreloadStrategy } from './config/strategies/preload.strategy';
 
 const routes: Routes = [
   { path: '', loadChildren: './containers/controlpanel/controlpanel.module#ControlPanelModule' },
@@ -25,7 +27,7 @@ const routes: Routes = [
       routes,
       {
         useHash: true,
-        preloadingStrategy: PreloadAllModules
+        preloadingStrategy: CPPreloadStrategy
       }
     )
   ],
