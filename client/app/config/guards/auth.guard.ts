@@ -1,7 +1,11 @@
+import { AdminService } from './../../shared/services/admin.service';
+import { URLSearchParams } from '@angular/http';
+import { base64 } from './../../shared/utils/encrypt/encrypt';
+import { SchoolService } from './../../shared/services/school.service';
 /**
  * Guard to check if user is authenticated
  */
-import { CanActivate, CanActivateChild, ActivatedRouteSnapshot } from '@angular/router';
+import { CanActivate, CanActivateChild, ActivatedRouteSnapshot, CanLoad } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import * as Raven from 'raven-js';
@@ -11,17 +15,72 @@ import { appStorage } from '../../shared/utils';
 import { CP_PRIVILEGES_MAP } from './../../shared/constants';
 
 @Injectable()
-export class AuthGuard implements CanActivate, CanActivateChild {
+export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
   constructor(
     private router: Router,
-    private session: CPSession
+    private session: CPSession,
+    private adminService: AdminService,
+    private schoolService: SchoolService
   ) { }
 
-  canActivateChild(childRoute: ActivatedRouteSnapshot) {
-    const PROTECTED_ROUTES = [ 'events', 'feeds', 'clubs', 'services', 'lists', 'links',
-                               'announcements', 'templates' ];
+  canLoad() {
+    // TODO
+    return true;
+  }
 
-    const ROUTES_MAP = {
+  preLoadUser(): Promise<any> {
+    const search = new URLSearchParams()
+    search.append('school_id', this.session.g.get('school').id.toString());
+
+    return this
+      .adminService
+      .getAdmins(1, 1, search)
+      .map(users => {
+        this.session.g.set('user', users[0]);
+        this.setUserContext();
+        return users;
+      })
+      .toPromise();
+  }
+
+  preLoadSchool(route: ActivatedRouteSnapshot): Promise<any> {
+    return this
+      .schoolService
+      .getSchools()
+      .map(schools => {
+        let schoolIdInUrl;
+        let schoolObjFromUrl;
+        const storedSchool = JSON.parse(appStorage.get(appStorage.keys.DEFAULT_SCHOOL));
+
+        try {
+          schoolIdInUrl = base64.decode(route.queryParams.school);
+        } catch (error) {
+          schoolIdInUrl = null;
+        }
+
+        if (schoolIdInUrl) {
+          Object
+            .keys(schools)
+            .map((key: any) => {
+              if (schools[key].id === +schoolIdInUrl) {
+                schoolObjFromUrl = schools[key];
+              }
+            });
+        }
+
+        this.session.g.set('schools', schools);
+
+        this.session.g.set('school', storedSchool || schoolObjFromUrl || schools[0]);
+      })
+      .toPromise()
+  }
+
+
+  canActivateChild(childRoute: ActivatedRouteSnapshot) {
+    const protectedRoutes = ['events', 'feeds', 'clubs', 'services', 'lists', 'links',
+                              'announcements', 'templates'];
+
+    const routeToPrivilege = {
       'events': CP_PRIVILEGES_MAP.events,
 
       'feeds': CP_PRIVILEGES_MAP.moderation,
@@ -42,11 +101,11 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     if (childRoute.url.length) {
       const path = childRoute.url[0].path;
 
-      if (PROTECTED_ROUTES.includes(path)) {
+      if (protectedRoutes.includes(path)) {
         let canAccess;
 
-        const schoolLevel = this.session.canSchoolReadResource(ROUTES_MAP[path]);
-        const accountLevel = this.session.canAccountLevelReadResource(ROUTES_MAP[path]);
+        const schoolLevel = this.session.canSchoolReadResource(routeToPrivilege[path]);
+        const accountLevel = this.session.canAccountLevelReadResource(routeToPrivilege[path]);
 
         canAccess = schoolLevel || accountLevel
 
@@ -83,19 +142,13 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
   canActivate(activatedRoute, state) {
     const sessionKey = appStorage.get(appStorage.keys.SESSION);
-    // are we logged in?
+
     if (sessionKey) {
-      // did we create the session object?
       if (!this.session.g.size) {
-        return this.session.preLoadUser(activatedRoute)
-          .then(user => {
-            this.session.g.set('user', user[0]);
-
-            this.setUserContext();
-
-            return true;
-          })
-          .catch(_ => false);
+        return this.preLoadSchool(activatedRoute)
+          .then(_ => this.preLoadUser())
+          .then(_ => true)
+          .catch(_ => false)
       }
       return true
     }
