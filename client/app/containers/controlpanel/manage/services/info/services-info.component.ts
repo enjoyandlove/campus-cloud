@@ -9,6 +9,13 @@ import {
   IHeader,
   HEADER_UPDATE
 } from '../../../../../reducers/header.reducer';
+
+import {
+  canSchoolReadResource,
+  canStoreReadAndWriteResource
+} from './../../../../../shared/utils/privileges';
+
+
 import { CPSession, ISchool } from '../../../../../session';
 import { ServicesService } from '../services.service';
 import { AdminService } from '../../../../../shared/services';
@@ -92,9 +99,9 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
         'url': `/manage/services/${this.serviceId}/info`
       }
     ];
-    const eventsSchoolLevel = this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.events);
-    const eventsAccountLevel = this.
-      session.canStoreReadAndWriteResource(this.storeId, CP_PRIVILEGES_MAP.events);
+    const eventsSchoolLevel = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.events);
+    const eventsAccountLevel = canStoreReadAndWriteResource(this.session.g,
+      this.storeId, CP_PRIVILEGES_MAP.events);
 
     if (eventsSchoolLevel || eventsAccountLevel) {
       const events = {

@@ -7,11 +7,16 @@ import { Store } from '@ngrx/store';
 import { TEAM_ACCESS } from '../utils';
 import { CPSession } from '../../../../../session';
 import { STATUS } from '../../../../../shared/constants';
-import { accountsToStoreMap } from './../../../../../session';
 import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
 import { ErrorService, AdminService } from '../../../../../shared/services';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 import { CP_PRIVILEGES, CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
+
+import {
+  accountsToStoreMap,
+  canSchoolReadResource,
+  canAccountLevelReadResource
+} from './../../../../../shared/utils/privileges/privileges';
 
 const eventsDropdown = function (privilege: { r: boolean, w: boolean }) {
   let items = [
@@ -476,13 +481,13 @@ export class TeamCreateComponent implements OnInit {
     }
 
 
-    this.canReadClubs = this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.clubs) ||
-      this.session.canAccountLevelReadResource(CP_PRIVILEGES_MAP.clubs);
+    this.canReadClubs = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.clubs) ||
+      canAccountLevelReadResource(this.session.g, CP_PRIVILEGES_MAP.clubs);
 
-    this.canReadEvents = this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.events);
+    this.canReadEvents = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.events);
 
-    this.canReadServices = this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.services) ||
-      this.session.canAccountLevelReadResource(CP_PRIVILEGES_MAP.services);
+    this.canReadServices = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.services) ||
+      canAccountLevelReadResource(this.session.g, CP_PRIVILEGES_MAP.services);
 
     this.formData = TEAM_ACCESS.getMenu(this.user.school_level_privileges[this.schoolId]);
 

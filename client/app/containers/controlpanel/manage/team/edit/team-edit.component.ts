@@ -9,11 +9,11 @@ import { CPSession } from '../../../../../session';
 import { STATUS } from '../../../../../shared/constants';
 import { accountCleanUp } from './../create/team-create.component';
 import { BaseComponent } from '../../../../../base/base.component';
-import { accountsToStoreMap } from './../../../../../session/index';
 import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
 import { AdminService, ErrorService } from '../../../../../shared/services';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 import { CP_PRIVILEGES, CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
+import { accountsToStoreMap } from './../../../../../shared/utils/privileges/privileges';
 
 const eventsDropdown = function (privilege: { r: boolean, w: boolean }) {
   let items = [

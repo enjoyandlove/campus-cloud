@@ -3,6 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
+import {
+  canSchoolReadResource,
+  canStoreReadAndWriteResource
+} from './../../../../../shared/utils/privileges';
+
 import { ClubsService } from '../clubs.service';
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base/base.component';
@@ -61,20 +66,23 @@ export class ClubsEventsComponent extends BaseComponent implements OnInit {
     let links = [];
 
     if (this.club.status !== CLUB_PENDING_STATUS &&
-      (this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.events) ||
-        this.session.canStoreReadAndWriteResource(this.clubId, CP_PRIVILEGES_MAP.events))) {
+      (canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.events) ||
+        canStoreReadAndWriteResource(this.session.g,
+          this.clubId, CP_PRIVILEGES_MAP.events))) {
       links = ['Events', ...links];
     }
 
     if (this.hasMembership) {
       if (this.club.status !== CLUB_PENDING_STATUS &&
-        (this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.moderation) ||
-          this.session.canStoreReadAndWriteResource(this.clubId, CP_PRIVILEGES_MAP.moderation))) {
+        (canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.moderation) ||
+          canStoreReadAndWriteResource(this.session.g,
+            this.clubId, CP_PRIVILEGES_MAP.moderation))) {
         links = ['Wall', ...links];
       }
 
-      if (this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.membership) ||
-        this.session.canStoreReadAndWriteResource(this.clubId, CP_PRIVILEGES_MAP.membership)) {
+      if (canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.membership) ||
+        canStoreReadAndWriteResource(this.session.g,
+          this.clubId, CP_PRIVILEGES_MAP.membership)) {
         links = ['Members', ...links];
       }
     }

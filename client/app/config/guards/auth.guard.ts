@@ -11,6 +11,10 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import * as Raven from 'raven-js';
 
+import {
+  canSchoolReadResource,
+  canAccountLevelReadResource
+} from './../../shared/utils/privileges';
 import { CPSession } from '../../session';
 import { appStorage } from '../../shared/utils';
 import { CP_PRIVILEGES_MAP } from './../../shared/constants';
@@ -108,8 +112,8 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
       if (protectedRoutes.includes(path)) {
         let canAccess;
 
-        const schoolLevel = this.session.canSchoolReadResource(routeToPrivilege[path]);
-        const accountLevel = this.session.canAccountLevelReadResource(routeToPrivilege[path]);
+        const schoolLevel = canSchoolReadResource(this.session.g, routeToPrivilege[path]);
+        const accountLevel = canAccountLevelReadResource(this.session.g, routeToPrivilege[path]);
 
         canAccess = schoolLevel || accountLevel
 
