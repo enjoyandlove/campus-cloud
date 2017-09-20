@@ -13,6 +13,9 @@ require('zone.js/dist/jasmine-patch');
 require('zone.js/dist/async-test');
 require('zone.js/dist/fake-async-test');
 
+import 'jquery';
+require('node_modules/bootstrap-sass/assets/javascripts/bootstrap.min');
+
 /*
  Ok, this is kinda crazy. We can use the the context method on
  require that webpack created in order to tell webpack

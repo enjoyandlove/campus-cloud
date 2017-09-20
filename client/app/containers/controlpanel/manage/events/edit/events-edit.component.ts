@@ -73,7 +73,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     private eventService: EventsService
   ) {
     super();
-    this.school = this.session.school;
+    this.school = this.session.g.get('school');
     this.eventId = this.route.snapshot.params['eventId'];
 
     super.isLoading().subscribe(res => this.loading = res);
@@ -259,7 +259,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    let school = this.session.school;
+    let school = this.session.g.get('school');
     let search: URLSearchParams = new URLSearchParams();
     search.append('school_id', school.id.toString());
 
@@ -328,17 +328,25 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       data = {};
       data.name = '';
       this.mapCenter.next({
-        lat: this.session.school.latitude,
-        lng: this.session.school.longitude
+        lat: this.session.g.get('school').latitude,
+        lng: this.session.g.get('school').longitude
       });
     }
 
     this.form.controls['city'].setValue(cpMap.city);
+
     this.form.controls['province'].setValue(cpMap.province);
+
     this.form.controls['country'].setValue(cpMap.country);
-    this.form.controls['latitude'].setValue(cpMap.latitude || this.session.school.latitude);
-    this.form.controls['longitude'].setValue(cpMap.longitude || this.session.school.longitude);
+
+    this.form.controls['latitude'].setValue(cpMap.latitude ||
+      this.session.g.get('school').latitude);
+
+    this.form.controls['longitude'].setValue(cpMap.longitude ||
+      this.session.g.get('school').longitude);
+
     this.form.controls['address'].setValue(data.name);
+
     this.form.controls['postal_code'].setValue(cpMap.postal_code);
 
     if (data.geometry) {

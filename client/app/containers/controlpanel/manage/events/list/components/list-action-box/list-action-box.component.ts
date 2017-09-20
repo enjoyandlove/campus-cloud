@@ -15,6 +15,7 @@ import { CPSession } from '../../../../../../../session';
 import { CPDate } from '../../../../../../../shared/utils/date';
 import { StoreService } from '../../../../../../../shared/services';
 import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
+import { canSchoolWriteResource } from './../../../../../../../shared/utils/privileges/privileges';
 
 interface IState {
   end: number;
@@ -63,7 +64,7 @@ export class ListActionBoxComponent implements OnInit {
   ) { }
 
   getStores() {
-    const school = this.session.school;
+    const school = this.session.g.get('school');
     let search: URLSearchParams = new URLSearchParams();
     search.append('school_id', school.id.toString());
 
@@ -170,7 +171,7 @@ export class ListActionBoxComponent implements OnInit {
 
   ngOnInit() {
     this.getStores();
-    this.canWriteSchoolWide = this.session.canSchoolWriteResource(CP_PRIVILEGES_MAP.events);
+    this.canWriteSchoolWide = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.events);
 
     this.eventFilter = DATE_FILTER;
 

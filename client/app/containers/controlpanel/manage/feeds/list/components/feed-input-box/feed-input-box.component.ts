@@ -51,7 +51,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
     private fileUploadService: FileUploadService
   ) {
     let search = new URLSearchParams();
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     this.stores$ = this.storeService.getStores(search);
 
@@ -102,7 +102,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
     let _data = {
       'post_type': data.post_type || null,
       'store_id': data.store_id,
-      'school_id': this.session.school.id,
+      'school_id': this.session.g.get('school').id,
       'message': data.message,
       'message_image_url': data.message_image_url
     };
@@ -195,7 +195,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit() {
-    this.school = this.session.school;
+    this.school = this.session.g.get('school');
     this.isCampusWallView.subscribe(res => {
       // Not Campus Wall
       if (res.type !== 1) {
@@ -216,7 +216,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
 
     this.form = this.fb.group({
       'group_id': [null],
-      'school_id': [this.session.school.id],
+      'school_id': [this.session.g.get('school').id],
       'store_id': [null, Validators.required],
       'post_type': [null, Validators.required],
       'message': [null, [Validators.required, Validators.maxLength(500)]],

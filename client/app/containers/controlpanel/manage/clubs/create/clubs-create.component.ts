@@ -42,7 +42,7 @@ export class ClubsCreateComponent implements OnInit {
     }
 
     let search = new URLSearchParams();
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
     this
       .clubsService
       .createClub(this.form.value, search)
@@ -84,7 +84,7 @@ export class ClubsCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    let school = this.session.school;
+    let school = this.session.g.get('school');
 
     this.buttonData = {
       class: 'primary',
@@ -122,8 +122,8 @@ export class ClubsCreateComponent implements OnInit {
       'country': [null],
       'postal_code': [null],
       'province': [null],
-      'latitude': [this.session.school.latitude],
-      'longitude': [this.session.school.longitude],
+      'latitude': [this.session.g.get('school').latitude],
+      'longitude': [this.session.g.get('school').longitude],
       'room_info': [null],
       'description': [null],
       'website': [null],

@@ -49,7 +49,7 @@ export class FeedFiltersComponent implements OnInit {
 
   private fetch() {
     let search = new URLSearchParams();
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     this.walls$ = this.feedsService.getSocialGroups(search)
       .startWith([
@@ -191,7 +191,7 @@ export class FeedFiltersComponent implements OnInit {
 
     if (this.clubId) {
       let search = new URLSearchParams();
-      search.append('school_id', this.session.school.id.toString());
+      search.append('school_id', this.session.g.get('school').id.toString());
       search.append('store_id', this.clubId.toString());
 
       let getGroup = this.feedsService.getSocialGroups(search).toPromise();

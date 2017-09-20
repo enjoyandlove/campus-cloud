@@ -75,7 +75,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     public storeService: StoreService,
     public service: AnnouncementsService
   ) {
-    const school = this.session.school;
+    const school = this.session.g.get('school');
     let search: URLSearchParams = new URLSearchParams();
     search.append('school_id', school.id.toString());
 
@@ -85,7 +85,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   doUserSearch(query) {
     let search = new URLSearchParams();
     search.append('search_str', query);
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     this
       .service
@@ -143,7 +143,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   doListsSearch(query) {
     let search = new URLSearchParams();
     search.append('search_str', query);
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     this
       .service
@@ -235,7 +235,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     this.isError = false;
 
     let search = new URLSearchParams();
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     let prefix = this.subject_prefix.label ? this.subject_prefix.label.toUpperCase() : '';
 
@@ -387,7 +387,8 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       suggestions: this.suggestions,
       reset: this.resetChips$
     };
-    let schoolPrivileges = this.session.user.school_level_privileges[this.session.school.id];
+    let schoolPrivileges = this.session.g.get('user')
+      .school_level_privileges[this.session.g.get('school').id];
 
     try {
       canDoEmergency = schoolPrivileges[CP_PRIVILEGES_MAP.emergency_announcement].w;

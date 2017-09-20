@@ -1,21 +1,29 @@
 /**
  * Guard to check if user is authenticated
  */
-import { CanActivate, CanActivateChild, ActivatedRouteSnapshot } from '@angular/router';
+import {
+  CanLoad,
+  CanActivate,
+  CanActivateChild,
+  ActivatedRouteSnapshot, } from '@angular/router';
 import { URLSearchParams } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import * as Raven from 'raven-js';
 
-import { isProd } from './../env/index';
+import {
+  canSchoolReadResource,
+  canAccountLevelReadResource
+} from './../../shared/utils/privileges';
 import { CPSession } from '../../session';
 import { appStorage } from '../../shared/utils';
-import { base64 } from './../../shared/utils/encrypt';
 import { CP_PRIVILEGES_MAP } from './../../shared/constants';
-import { AdminService, SchoolService } from '../../shared/services';
+import { base64 } from './../../shared/utils/encrypt/encrypt';
+import { AdminService } from './../../shared/services/admin.service';
+import { SchoolService } from './../../shared/services/school.service';
 
 @Injectable()
-export class AuthGuard implements CanActivate, CanActivateChild {
+export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
   constructor(
     private router: Router,
     private session: CPSession,
@@ -23,18 +31,37 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     private schoolService: SchoolService
   ) { }
 
-  preLoadUser(activatedRoute) {
-    const school$ = this.schoolService.getSchools();
+  canLoad() {
+    // TODO
+    return true;
+  }
 
-    return school$
-      .switchMap(schools => {
+  preLoadUser(): Promise<any> {
+    const search = new URLSearchParams()
+    search.append('school_id', this.session.g.get('school').id.toString());
+
+    return this
+      .adminService
+      .getAdmins(1, 1, search)
+      .map(users => {
+        this.session.g.set('user', users[0]);
+        this.setUserContext();
+        return users;
+      })
+      .toPromise();
+  }
+
+  preLoadSchool(route: ActivatedRouteSnapshot): Promise<any> {
+    return this
+      .schoolService
+      .getSchools()
+      .map(schools => {
         let schoolIdInUrl;
         let schoolObjFromUrl;
-        const search = new URLSearchParams();
         const storedSchool = JSON.parse(appStorage.get(appStorage.keys.DEFAULT_SCHOOL));
 
         try {
-          schoolIdInUrl = base64.decode(activatedRoute.queryParams.school);
+          schoolIdInUrl = base64.decode(route.queryParams.school);
         } catch (error) {
           schoolIdInUrl = null;
         }
@@ -43,71 +70,50 @@ export class AuthGuard implements CanActivate, CanActivateChild {
           Object
             .keys(schools)
             .map((key: any) => {
-              if (schools[key].id ===  +schoolIdInUrl) {
+              if (schools[key].id === +schoolIdInUrl) {
                 schoolObjFromUrl = schools[key];
               }
             });
         }
 
-        this.session.schools = schools;
+        this.session.g.set('schools', schools);
 
-        this.session.school = storedSchool || schoolObjFromUrl || schools[0];
-
-        search.append('school_id', this.session.school.id.toString());
-
-        return this.adminService.getAdmins(1, 1, search);
+        this.session.g.set('school', storedSchool || schoolObjFromUrl || schools[0]);
       })
       .toPromise()
   }
 
-  canActivateChild(childRoute: ActivatedRouteSnapshot) {
-    const PROTECTED_ROUTES =
-    [
-      'events',
-      'feeds',
-      'clubs',
-      'services',
-      'lists',
-      'links',
-      'announcements',
-      'templates'
-    ];
 
-    const ROUTES_MAP = {
-      'events': {
-        privilege: CP_PRIVILEGES_MAP.events
-      },
-      'feeds': {
-        privilege: CP_PRIVILEGES_MAP.moderation
-      },
-      'clubs': {
-        privilege: CP_PRIVILEGES_MAP.clubs
-      },
-      'services': {
-        privilege: CP_PRIVILEGES_MAP.services
-      },
-      'lists': {
-        privilege: CP_PRIVILEGES_MAP.campus_announcements
-      },
-      'links': {
-        privilege: CP_PRIVILEGES_MAP.links
-      },
-      'announcements': {
-        privilege: CP_PRIVILEGES_MAP.campus_announcements
-      },
-      'templates': {
-        privilege: CP_PRIVILEGES_MAP.campus_announcements
-      },
+  canActivateChild(childRoute: ActivatedRouteSnapshot) {
+    const protectedRoutes = ['events', 'feeds', 'clubs', 'services', 'lists', 'links',
+                             'announcements', 'templates'];
+
+    const routeToPrivilege = {
+      'events': CP_PRIVILEGES_MAP.events,
+
+      'feeds': CP_PRIVILEGES_MAP.moderation,
+
+      'clubs': CP_PRIVILEGES_MAP.clubs,
+
+      'services': CP_PRIVILEGES_MAP.services,
+
+      'lists': CP_PRIVILEGES_MAP.campus_announcements,
+
+      'links': CP_PRIVILEGES_MAP.links,
+
+      'announcements': CP_PRIVILEGES_MAP.campus_announcements,
+
+      'templates': CP_PRIVILEGES_MAP.campus_announcements,
     }
 
     if (childRoute.url.length) {
       const path = childRoute.url[0].path;
 
-      if (PROTECTED_ROUTES.includes(path)) {
+      if (protectedRoutes.includes(path)) {
         let canAccess;
 
-        const schoolLevel = this.session.canSchoolReadResource(ROUTES_MAP[path].privilege);
-        const accountLevel = this.session.canAccountLevelReadResource(ROUTES_MAP[path].privilege);
+        const schoolLevel = canSchoolReadResource(this.session.g, routeToPrivilege[path]);
+        const accountLevel = canAccountLevelReadResource(this.session.g, routeToPrivilege[path]);
 
         canAccess = schoolLevel || accountLevel
 
@@ -122,49 +128,40 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
   setUserContext() {
     Raven.setUserContext({
-      id: this.session.user.id.toString(),
-      username: `${this.session.user.firstname} ${this.session.user.lastname}`,
-      email: this.session.user.email
+      id: this.session.g.get('user').id.toString(),
+      username: `${this.session.g.get('user').firstname} ${this.session.g.get('user').lastname}`,
+      email: this.session.g.get('user').email
     });
   }
 
-  trackInitialPageView(pageName) {
-    if (isProd) {
-      ga('set', 'page', pageName);
-      ga('set', 'userId', this.session.user.email);
-      ga('send', 'pageview');
-    }
-  }
-
-  canActivate(activatedRoute, state) {
-    // are we logged in?
-    if (appStorage.get(appStorage.keys.SESSION)) {
-      // did we create the session object?
-      if (!this.session.school || !this.session.user) {
-        return this.preLoadUser(activatedRoute)
-
-          .then(user => {
-            this.session.user = user[0];
-            this.setUserContext();
-            this.trackInitialPageView(state.url);
-            return true;
-          })
-          .catch(_ => false);
-      }
-      return true
-    }
-
+  redirectAndSaveGoTo(url): boolean {
     this.router.navigate(
       ['/login'],
       {
         queryParams: {
-          goTo: encodeURIComponent(state.url)
+          goTo: encodeURIComponent(url)
         },
         queryParamsHandling: 'merge'
       }
     );
 
     return false;
+  }
+
+  canActivate(activatedRoute, state) {
+    const sessionKey = appStorage.get(appStorage.keys.SESSION);
+
+    if (sessionKey) {
+      if (!this.session.g.size) {
+        return this.preLoadSchool(activatedRoute)
+          .then(_ => this.preLoadUser())
+          .then(_ => true)
+          .catch(_ => false)
+      }
+      return true
+    }
+
+    return this.redirectAndSaveGoTo(state.url);
   }
 }
 

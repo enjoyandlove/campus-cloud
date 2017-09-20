@@ -50,12 +50,12 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
   ) {
     super();
     this.fetch();
-    this.school = this.session.school;
+    this.school = this.session.g.get('school');
     super.isLoading().subscribe(res => this.loading = res);
   }
 
   private fetch() {
-    let school = this.session.school;
+    let school = this.session.g.get('school');
     let search: URLSearchParams = new URLSearchParams();
     search.append('school_id', school.id.toString());
 

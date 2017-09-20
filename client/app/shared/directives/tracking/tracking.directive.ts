@@ -37,7 +37,7 @@ export class CPTrackerDirective {
   }
 
   emitGA() {
-    this.cpTracker.emitGoogleAnaltics(this.eventData.eventAction, this.eventData.eventCategory);
+    this.cpTracker.gaEmitEvent(this.eventData.eventAction, this.eventData.eventCategory);
   }
 
   emitAmplitude() {

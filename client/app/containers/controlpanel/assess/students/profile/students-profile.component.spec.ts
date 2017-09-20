@@ -21,9 +21,8 @@ import { SharedModule } from './../../../../../shared/shared.module';
 import { StudentsProfileComponent } from './students-profile.component';
 import { snackBarReducer, headerReducer } from '../../../../../reducers';
 
-class MockHttp {
 
-}
+class MockHttp {}
 
 class MockStudentsService {
   getStudentById() {

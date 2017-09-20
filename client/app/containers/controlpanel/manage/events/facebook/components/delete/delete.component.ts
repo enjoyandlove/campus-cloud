@@ -26,7 +26,7 @@ export class FacebookEventsDeleteComponent implements OnInit {
     const search = new URLSearchParams();
     const linkId = this.link.controls['id'].value;
 
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     this
       .eventsService

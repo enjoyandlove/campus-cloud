@@ -55,7 +55,7 @@ export class EventsCreateComponent implements OnInit {
     private errorService: ErrorService,
     private eventService: EventsService
   ) {
-    this.school = this.session.school;
+    this.school = this.session.g.get('school');
     let search: URLSearchParams = new URLSearchParams();
 
     this.buildHeader();

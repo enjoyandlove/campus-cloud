@@ -173,7 +173,7 @@ export class ServicesCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.school = this.session.school;
+    this.school = this.session.g.get('school');
 
     this.buttonData = {
       disabled: true,

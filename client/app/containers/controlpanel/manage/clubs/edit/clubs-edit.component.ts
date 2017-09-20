@@ -70,7 +70,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
 
   fetch() {
     let search = new URLSearchParams();
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     const stream$ = this.clubsService.getClubById(this.clubId, search);
 
@@ -127,7 +127,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
     }
 
     let search = new URLSearchParams();
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     this
       .clubsService
@@ -160,17 +160,25 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
       data = {};
       data.name = '';
       this.mapCenter.next({
-        lat: this.session.school.latitude,
-        lng: this.session.school.longitude
+        lat: this.session.g.get('school').latitude,
+        lng: this.session.g.get('school').longitude
       });
     }
 
     this.form.controls['city'].setValue(cpMap.city);
+
     this.form.controls['province'].setValue(cpMap.province);
+
     this.form.controls['country'].setValue(cpMap.country);
-    this.form.controls['latitude'].setValue(cpMap.latitude || this.session.school.latitude);
-    this.form.controls['longitude'].setValue(cpMap.longitude || this.session.school.longitude);
+
+    this.form.controls['latitude'].setValue(cpMap.latitude
+        || this.session.g.get('school').latitude);
+
+    this.form.controls['longitude'].setValue(cpMap.longitude
+      || this.session.g.get('school').longitude);
+
     this.form.controls['address'].setValue(data.name);
+
     this.form.controls['postal_code'].setValue(cpMap.postal_code);
 
     if (data.geometry) {

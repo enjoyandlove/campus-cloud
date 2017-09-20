@@ -31,7 +31,11 @@ import { ServicesExcelComponent } from './excel';
 const appRoutes: Routes = [
   { path: 'import', redirectTo: '', pathMatch: 'full' },
 
-  { path: '', component: ServicesListComponent },
+  {
+    path: '',
+    data: { preload: true },
+    component: ServicesListComponent
+  },
 
   { path: 'create', component: ServicesCreateComponent },
   { path: ':serviceId/info', component: ServicesInfoComponent },
