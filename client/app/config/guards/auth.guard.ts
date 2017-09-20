@@ -1,11 +1,12 @@
-import { AdminService } from './../../shared/services/admin.service';
-import { URLSearchParams } from '@angular/http';
-import { base64 } from './../../shared/utils/encrypt/encrypt';
-import { SchoolService } from './../../shared/services/school.service';
 /**
  * Guard to check if user is authenticated
  */
-import { CanActivate, CanActivateChild, ActivatedRouteSnapshot, CanLoad } from '@angular/router';
+import {
+  CanLoad,
+  CanActivate,
+  CanActivateChild,
+  ActivatedRouteSnapshot, } from '@angular/router';
+import { URLSearchParams } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import * as Raven from 'raven-js';
@@ -13,6 +14,9 @@ import * as Raven from 'raven-js';
 import { CPSession } from '../../session';
 import { appStorage } from '../../shared/utils';
 import { CP_PRIVILEGES_MAP } from './../../shared/constants';
+import { base64 } from './../../shared/utils/encrypt/encrypt';
+import { AdminService } from './../../shared/services/admin.service';
+import { SchoolService } from './../../shared/services/school.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
@@ -78,7 +82,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
 
   canActivateChild(childRoute: ActivatedRouteSnapshot) {
     const protectedRoutes = ['events', 'feeds', 'clubs', 'services', 'lists', 'links',
-                              'announcements', 'templates'];
+                             'announcements', 'templates'];
 
     const routeToPrivilege = {
       'events': CP_PRIVILEGES_MAP.events,
