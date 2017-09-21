@@ -34,6 +34,10 @@ export class EngagementStatsComponent implements OnInit {
   oneEngagementPercentage;
   repeatEngagementPercentage;
 
+  ONE_ENGAGEMENT = 2;
+  ZERO_ENGAGEMENT = 3;
+  REPEAT_ENGAGEMENT = 1;
+
   constructor() { }
 
   onCompose(listName, userIds) {

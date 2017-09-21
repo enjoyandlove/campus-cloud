@@ -18,7 +18,7 @@
         <button
           type="button"
           class="cpbtn cpbtn--primary" i18n
-          (click)="download.emit(1)"
+          (click)="download.emit(REPEAT_ENGAGEMENT)"
           [disabled]="!props.repeat_engagements.length">
           Download
         </button>
@@ -50,7 +50,7 @@
         <button
           type="button"
           class="cpbtn cpbtn--primary" i18n
-          (click)="download.emit(2)"
+          (click)="download.emit(ONE_ENGAGEMENT)"
           [disabled]="!props.one_engagements.length">
           Download
         </button>
@@ -82,7 +82,7 @@
         <button
           type="button"
           class="cpbtn cpbtn--primary" i18n
-          (click)="download.emit(3)"
+          (click)="download.emit(ZERO_ENGAGEMENT)"
           [disabled]="!props.zero_engagements.length">
           Download
         </button>

@@ -14,6 +14,10 @@ import { SNACKBAR_SHOW } from './../../../../reducers/snackbar.reducer';
 
 declare var $;
 
+const ONE_ENGAGEMENT = 2;
+const ZERO_ENGAGEMENT = 3;
+const REPEAT_ENGAGEMENT = 1;
+
 @Component({
   selector: 'cp-engagement',
   templateUrl: './engagement.component.html',
@@ -107,13 +111,13 @@ export class EngagementComponent extends BaseComponent implements OnInit {
       search.append('cohort', cohort);
 
       switch (cohort) {
-        case 1:
+        case REPEAT_ENGAGEMENT:
           fileName = 'repeat_engagement';
           break;
-        case 2:
+        case ONE_ENGAGEMENT:
           fileName = 'one_engagement';
           break;
-        case 3:
+        case ZERO_ENGAGEMENT:
           fileName = 'zero_engagement';
           break;
       }
