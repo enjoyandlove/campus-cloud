@@ -113,7 +113,7 @@ export class EngagementEventsBoxComponent extends BaseComponent implements OnIni
           },
           {
             value: res.data.total_attendees,
-            label: 'Total Attendess',
+            label: 'Total Attendees',
             icon: require('public/png/assess/chart_attendee.png')
           },
           {

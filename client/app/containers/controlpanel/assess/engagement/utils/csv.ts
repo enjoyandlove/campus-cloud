@@ -36,7 +36,7 @@ export function generateCSV(data: any[], fileName = 'download') {
 
     line += array[i]['total_responses'] + ',';
 
-    line += array[i]['total_response_rate'] + '%' + ',';
+    line += array[i]['total_response_rate'].toFixed(1) + '%' + ',';
 
     line += 'MISSING' + ',';
 
@@ -44,7 +44,7 @@ export function generateCSV(data: any[], fileName = 'download') {
 
     line += array[i]['event_responses'] + ',';
 
-    line += array[i]['event_response_rate'] + ',';
+    line += array[i]['event_response_rate'].toFixed(1) + '%' + ',';
 
     line += 'MISSING' + ',';
 
@@ -52,7 +52,7 @@ export function generateCSV(data: any[], fileName = 'download') {
 
     line += array[i]['service_responses'] + ',';
 
-    line += array[i]['service_response_rate'] + ',';
+    line += array[i]['service_response_rate'].toFixed(1) + '%' + ',';
 
     line += array[i]['service_ratings'] + ',';
 

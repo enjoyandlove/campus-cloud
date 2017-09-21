@@ -99,11 +99,24 @@ export class EngagementComponent extends BaseComponent implements OnInit {
   }
 
   onDownload(cohort) {
+    let fileName = 'all_download_data';
     const search = this.buildSearchHeaders();
     search.append('download', '1');
 
     if (cohort) {
       search.append('cohort', cohort);
+
+      switch (cohort) {
+        case 1:
+          fileName = 'repeat_engagement';
+          break;
+        case 2:
+          fileName = 'one_engagement';
+          break;
+        case 3:
+          fileName = 'zero_engagement';
+          break;
+      }
     }
 
     this
@@ -111,7 +124,7 @@ export class EngagementComponent extends BaseComponent implements OnInit {
       .getChartData(search)
       .toPromise()
       .then(data => {
-        generateCSV(data.download_data);
+        generateCSV(data.download_data, fileName);
       })
       .catch(err => console.log(err));
   }
