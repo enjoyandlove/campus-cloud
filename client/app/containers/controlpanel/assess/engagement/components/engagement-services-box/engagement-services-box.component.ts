@@ -114,7 +114,7 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
           },
           {
             value: res.data.total_attendees,
-            label: 'Total Attendess',
+            label: 'Total Attendees',
             icon: require('public/png/assess/chart_attendee.png')
           },
           {

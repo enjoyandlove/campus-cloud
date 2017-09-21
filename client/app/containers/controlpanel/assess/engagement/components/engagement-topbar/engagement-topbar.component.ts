@@ -44,6 +44,7 @@ interface IState {
 })
 export class EngagementTopBarComponent implements OnInit {
   @Output() doFilter: EventEmitter<IState> = new EventEmitter();
+  @Output() download: EventEmitter<boolean> = new EventEmitter();
 
   engageMentFilter;
 

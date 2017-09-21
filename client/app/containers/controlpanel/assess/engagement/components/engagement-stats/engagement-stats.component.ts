@@ -26,12 +26,17 @@ interface IProps {
 })
 export class EngagementStatsComponent implements OnInit {
   @Input() props: IProps;
+  @Output() download: EventEmitter<number> = new EventEmitter();
   @Output() doCompose: EventEmitter<{ name: string, userIds: Array<number> }> = new EventEmitter();
 
   loading;
   noEngagementPercentage;
   oneEngagementPercentage;
   repeatEngagementPercentage;
+
+  ONE_ENGAGEMENT = 2;
+  ZERO_ENGAGEMENT = 3;
+  REPEAT_ENGAGEMENT = 1;
 
   constructor() { }
 
@@ -55,10 +60,6 @@ export class EngagementStatsComponent implements OnInit {
     let percentage = (this.props[key].length * 100) / total;
 
     return percentage === 0 ? percentage : percentage.toFixed(1);
-  }
-
-  onDownload(key) {
-    console.log('downloading ', key);
   }
 
   ngOnInit() {
