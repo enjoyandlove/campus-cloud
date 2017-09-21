@@ -38,7 +38,7 @@ export function generateCSV(data: any[], fileName = 'download') {
 
     line += array[i]['total_response_rate'].toFixed(1) + '%' + ',';
 
-    line += 'MISSING' + ',';
+    line += (array[i]['event_ratings'] + array[i]['service_ratings']) / 2 + ',';
 
     line += array[i]['event_checkins'] + ',';
 
@@ -46,7 +46,7 @@ export function generateCSV(data: any[], fileName = 'download') {
 
     line += array[i]['event_response_rate'].toFixed(1) + '%' + ',';
 
-    line += 'MISSING' + ',';
+    line += array[i]['event_ratings'] + ',';
 
     line += array[i]['service_checkins'] + ',';
 
