@@ -1,10 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
-import { generateExcelFile } from './excel';
 import { EventsService } from '../../../events.service';
+// import { CPDate } from './../../../../../../../shared/utils/date/date';
 import { BaseComponent } from '../../../../../../../base/base.component';
 import { STAR_SIZE } from '../../../../../../../shared/components/cp-stars';
+import { createSpreadSheet } from './../../../../../../../shared/utils/csv/parser';
+
+import { unix } from 'moment';
 
 interface IState {
   sort_field: string;
@@ -87,7 +90,41 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
       .eventService
       .getEventAttendanceByEventId(this.startRange, this.endRange, search);
 
-    stream$.toPromise().then(attendees => generateExcelFile(attendees));
+    stream$.toPromise().then(attendees => {
+      const columns = [
+        'Attendant',
+        'Attendee Email',
+        'RSVP',
+        'Checked In Time',
+        'Rating',
+        'User Feedback',
+        'Checked-in Method'
+      ];
+
+      const check_in_method = {
+        1: 'Web',
+        3: 'QR Code'
+      };
+
+      const rsvp = {
+        1: 'Yes',
+        0: 'No'
+      };
+
+      attendees = attendees.map(item => {
+        return {
+          'Attendant': `${item.firstname} ${item.lastname}`,
+          'Attendee Email': item.email,
+          'RSVP': rsvp[item.rsvp],
+          'Checked-in Method': check_in_method[item.check_in_method],
+          'Checked In Time': unix(item.check_in_time).format('MMMM Do YYYY - h:mm a'),
+          'User Feedback': item.feedback_text,
+          'Rating': ((item.feedback_rating * 5) / 100).toFixed(2)
+        }
+      })
+
+      createSpreadSheet(attendees, columns)
+    });
   }
 
   onViewFeedback(attendee): void {
