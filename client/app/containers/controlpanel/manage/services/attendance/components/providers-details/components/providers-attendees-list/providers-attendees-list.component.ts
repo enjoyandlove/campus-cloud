@@ -2,10 +2,12 @@ import { Component, OnInit, Input } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { generateExcelFile } from './excel';
 import { ProvidersService } from '../../../../../providers.service';
 import { FORMAT } from '../../../../../../../../../shared/pipes/date';
 import { BaseComponent } from '../../../../../../../../../base/base.component';
+import { createSpreadSheet } from './../../../../../../../../../shared/utils/csv/parser';
+
+import { unix } from 'moment';
 
 interface IState {
   search_text: string;
@@ -85,7 +87,41 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
       if (download && this.assessments.length) {
         this
           .fetchAllRecords()
-          .then(assessments => generateExcelFile(assessments))
+          .then(assessments => {
+            const columns = [
+              'Attendee Name',
+              'Email',
+              'Average Rating',
+              'Feedback',
+              'Checked-in Method',
+              'Checked-in Time',
+            ];
+
+            const check_in_method = {
+              1: 'Web check-in',
+              3: 'App check-in'
+            };
+
+            assessments = assessments.map(item => {
+              return {
+                'Attendee Name': `${item.firstname} ${item.lastname} HEY`,
+
+                'Email': item.email,
+
+                'Average Rating': item.feedback_rating === -1 ?
+                  'N/A' :
+                  ((item.feedback_rating / 100) * 5),
+
+                'Feedback': item.feedback_text,
+
+                'Checked-in Method': check_in_method[item.check_in_method],
+
+                'Checked-in Time': unix(item.check_in_time).format('MMMM Do YYYY - h:mm a')
+              }
+            })
+
+            createSpreadSheet(assessments, columns)
+          })
           .catch(_ => console.log('no data'));
         ;
       }
