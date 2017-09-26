@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
 import { EventsService } from '../../../events.service';
-// import { CPDate } from './../../../../../../../shared/utils/date/date';
 import { BaseComponent } from '../../../../../../../base/base.component';
 import { STAR_SIZE } from '../../../../../../../shared/components/cp-stars';
 import { createSpreadSheet } from './../../../../../../../shared/utils/csv/parser';

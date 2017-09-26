@@ -1,8 +1,6 @@
 import { unparse } from 'papaparse';
 import { saveAs } from 'file-saver';
 
-// generateExcelFile
-
 export const createSpreadSheet = (data: any[], fields: Array<string>, filename = 'download') => {
   const parseData = unparse({
     fields,
