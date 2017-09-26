@@ -271,7 +271,11 @@ export class EngagementTopBarComponent implements OnInit {
       this.engageMentFilter = _engagements;
     });
 
-    this.hasRouteData = Object.keys(this.route.snapshot.queryParams).length > 0;
+    if (this.route.snapshot.queryParams['engagement'] &&
+        this.route.snapshot.queryParams['for'] &&
+        this.route.snapshot.queryParams['range']  ) {
+          this.hasRouteData = true;
+    }
 
     this.initState();
 
