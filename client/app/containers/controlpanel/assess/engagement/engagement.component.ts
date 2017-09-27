@@ -1,10 +1,10 @@
+import { createSpreadSheet } from './../../../../shared/utils/csv/parser';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { generateCSV } from './utils';
 import { CPSession } from './../../../../session/index';
 import { EngagementService } from './engagement.service';
 import { STATUS } from './../../../../shared/constants/status';
@@ -128,7 +128,42 @@ export class EngagementComponent extends BaseComponent implements OnInit {
       .getChartData(search)
       .toPromise()
       .then(data => {
-        generateCSV(data.download_data, fileName);
+
+        const columns = [
+          'Student Name',
+          '# of Check-ins',
+          '# of Responses',
+          'Response Rate',
+          'Average Rating',
+          '# of Event Check-Ins',
+          'Event Responses',
+          'Event Response Rate',
+          'Event Average Rating',
+          '# of Service Check-ins',
+          'Service Responses',
+          'Services Response Rate',
+          'Service Average Rating',
+        ];
+
+        const parsedData = data.download_data.map(item => {
+          return {
+            'Student Name': `${item.firstname} ${item.lastname}`,
+            '# of Check-ins': item.total_checkins,
+            '# of Responses': item.total_responses,
+            'Response Rate': `${item.total_response_rate.toFixed(1)}%`,
+            'Average Rating': (item.event_ratings + item.service_ratings) / 2,
+            '# of Event Check-Ins': item.event_checkins,
+            'Event Responses': item.event_responses,
+            'Event Response Rate': `${item.event_response_rate.toFixed(1)}%`,
+            'Event Average Rating': item.event_ratings,
+            '# of Service Check-ins': item.service_checkins,
+            'Service Responses': item.service_responses,
+            'Services Response Rate': `${item.service_response_rate.toFixed(1)}%`,
+            'Service Average Rating': item.service_ratings
+          }
+        })
+        createSpreadSheet(parsedData, columns, fileName)
+
       })
       .catch(err => console.log(err));
   }
