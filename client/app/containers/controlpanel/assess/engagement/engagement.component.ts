@@ -103,6 +103,7 @@ export class EngagementComponent extends BaseComponent implements OnInit {
   }
 
   onDownload(cohort) {
+    console.log('onDownload cb');
     let fileName = 'all_download_data';
     const search = this.buildSearchHeaders();
     search.append('download', '1');
@@ -128,7 +129,7 @@ export class EngagementComponent extends BaseComponent implements OnInit {
       .getChartData(search)
       .toPromise()
       .then(data => {
-
+        console.log('getChartData to download OK');
         const columns = [
           'Student Name',
           '# of Check-ins',
