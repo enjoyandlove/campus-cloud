@@ -8,6 +8,9 @@ export const createSpreadSheet = (data: any[], fields: Array<string>, filename =
     data: [...data]
   })
 
+  // Microsoft Edge does not
+  // yet support File, switching to Blob...
+
   // const file = new File(
   //   [parseData],
   //   `${filename}.csv`,
@@ -15,7 +18,7 @@ export const createSpreadSheet = (data: any[], fields: Array<string>, filename =
   // );
 
   const file = new Blob([parseData], { type: 'text/csv;charset=utf-8' });
-  console.log('Yo New', file);
+
   saveAs(file, `${filename}.csv`);
 };
 
