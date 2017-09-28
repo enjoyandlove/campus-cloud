@@ -344,7 +344,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
         }
 
         if (this.isService) {
-          this.router.navigate([`/manage/clubs/${this.serviceId}/events`]);
+          this.router.navigate([`/manage/services/${this.serviceId}/events`]);
           return;
         }
 
