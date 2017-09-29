@@ -14,10 +14,13 @@ import {
   ViewChild,
   OnChanges,
   ElementRef,
+  HostListener,
   EventEmitter,
   AfterViewInit,
   ViewEncapsulation
 } from '@angular/core';
+
+require('flatpickr');
 
 declare var $: any;
 
@@ -28,14 +31,25 @@ declare var $: any;
   encapsulation: ViewEncapsulation.None
 })
 export class CPSmallDatePickerComponent implements AfterViewInit, OnInit, OnChanges {
-  @Output() rangeChange: EventEmitter<string[]> = new EventEmitter();
-  @ViewChild('input') input: ElementRef;
   @Input() options: any;
+  @ViewChild('input') input: ElementRef;
+  @Output() reset: EventEmitter<null> = new EventEmitter();
+  @Output() rangeChange: EventEmitter<string[]> = new EventEmitter();
 
-  flatPicker;
+  flatPickerInstance = null;
 
-  constructor() {
-    this.flatPicker = require('flatpickr');
+  constructor(
+    private el: ElementRef
+  ) { }
+
+  @HostListener('document:click', ['$event'])
+  onClick(event) {
+    if (event.target.contains(this.el.nativeElement)) {
+      if (this.flatPickerInstance.selectedDates.length === 1) {
+        this.reset.emit();
+        this.flatPickerInstance.clear();
+      }
+    }
   }
 
   ngAfterViewInit() {
@@ -57,7 +71,8 @@ export class CPSmallDatePickerComponent implements AfterViewInit, OnInit, OnChan
         }
       }
     );
-    $(el).flatpickr(this.options);
+
+    this.flatPickerInstance = $(el).flatpickr(this.options);
   }
 
   ngOnChanges() {
