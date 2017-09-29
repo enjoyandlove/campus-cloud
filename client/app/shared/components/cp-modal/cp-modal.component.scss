@@ -4,10 +4,11 @@
   }
 }
 
-// .modal.in .modal-dialog {
-//   height: 100%;
-//   transform: translate(0, 80px);
-// }
+.modal.in .modal-dialog {
+  top: 40%;
+  position: relative;
+  transform: translateY(-50%);
+}
 
 .modal-body {
   padding: 0;
