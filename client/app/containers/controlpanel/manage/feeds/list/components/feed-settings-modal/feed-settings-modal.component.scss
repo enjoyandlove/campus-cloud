@@ -2,6 +2,16 @@
 @import '~styles/components/modal';
 @import '~styles/components/button';
 
+.cpmodal {
+  display: block;
+  overflow: visible;
+
+  &__body {
+    max-height: 250px;
+    overflow: scroll;
+  }
+}
+
 .feed-form {
   padding: 0 10px;
   padding-bottom: 0;
@@ -9,11 +19,6 @@
 
   &__header {
     margin-bottom: 15px;
-  }
-
-  &__body {
-    max-height: 200px;
-    // overflow: scroll;
   }
 
   &__item {
@@ -25,10 +30,6 @@
         margin-top: 5px;
         display: inline-block;
       }
-    }
-
-    &:last-child {
-      padding-bottom: 0;
     }
   }
 
