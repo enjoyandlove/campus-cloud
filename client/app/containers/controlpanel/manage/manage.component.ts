@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { IUser } from '../../../session';
@@ -15,12 +16,20 @@ export class ManageComponent implements OnInit {
   headerData$: Observable<IHeader>;
 
   constructor(
+    private router: Router,
     private store: Store<IHeader>,
     private headerService: ManageHeaderService
   ) {
     this.headerData$ = this.store.select('HEADER');
   }
   ngOnInit() {
+    if (this.router.url.split('/').includes('facebook')) {
+      /**
+       * we want to prevent updating the header when on /import/facebook
+       */
+      return;
+    }
+
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: this.headerService.filterByPrivileges()

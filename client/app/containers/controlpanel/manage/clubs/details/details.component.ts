@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
@@ -27,6 +27,7 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
   clubId: number;
 
   constructor(
+    private router: Router,
     private store: Store<any>,
     private session: CPSession,
     private route: ActivatedRoute,
@@ -55,6 +56,15 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
   }
 
   buildHeader(name) {
+    if (this.router.url.split('/').includes('facebook')) {
+      /**
+       * we want to prevent updating the header when on /import/facebook
+       * since the import/facebook page is inside the details module this
+       * will get exectuded last so we need so stop it
+       */
+      return;
+    }
+
     let menu = {
       heading: name,
       subheading: null,
