@@ -3,10 +3,7 @@ import {
   OnInit,
   Output,
   Component,
-  ViewChild,
-  ElementRef,
   EventEmitter,
-  AfterViewInit,
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -25,10 +22,9 @@ import { FileUploadService, StoreService } from '../../../../../../../shared/ser
   templateUrl: './feed-input-box.component.html',
   styleUrls: ['./feed-input-box.component.scss']
 })
-export class FeedInputBoxComponent implements AfterViewInit, OnInit {
+export class FeedInputBoxComponent implements OnInit {
   @Input() clubId: number;
   @Input() postingMemberType: number;
-  @ViewChild('textarea') textarea: ElementRef;
   @Input() isCampusWallView: Observable<any>;
   @Output() created: EventEmitter<null> = new EventEmitter();
 
@@ -41,6 +37,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
   _isCampusWallView;
   DISABLED_MEMBER_TYPE = 100;
   placeHolder = 'Add some text to this post...';
+  image$: BehaviorSubject<string> = new BehaviorSubject(null);
   reset$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
@@ -93,7 +90,6 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
         this.form.controls['message'].setValue(null);
         this.reset$.next(true);
         this.created.emit(res);
-        this.textarea.nativeElement.innerHTML = this.placeHolder;
       }
       );
   }
@@ -114,41 +110,9 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
     return _data;
   }
 
-  ngAfterViewInit() {
-    let el = this.textarea.nativeElement;
-
-    Observable
-      .fromEvent(el, 'click')
-      .subscribe((res: any) => {
-        if (res.target.textContent === this.placeHolder) {
-          res.target.textContent = null;
-          this.form.controls['message'].setValue(null);
-        }
-      });
-
-    Observable
-      .fromEvent(el, 'blur')
-      .subscribe((res: any) => {
-        if (!res.target.textContent) {
-          res.target.textContent = this.placeHolder;
-          this.form.controls['message'].setValue(null);
-        }
-      });
-
-    Observable
-      .fromEvent(el, 'keyup')
-      .subscribe((res: any) => {
-        if (!res.target.textContent) {
-          res.target.textContent = this.placeHolder;
-          this.form.controls['message'].setValue(null);
-          return;
-        }
-        this.form.controls['message'].setValue(res.target.textContent);
-      });
-  }
-
-  onDeleteImage() {
-    this.form.controls['message_image_url'].setValue(null);
+  onContentChange(data: { body: string, image: string }) {
+    this.form.controls['message'].setValue(data.body);
+    this.form.controls['message_image_url'].setValue(data.image);
   }
 
   onSelectedHost(host): void {
@@ -183,9 +147,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
       .fileUploadService
       .uploadFile(file, url, headers)
       .subscribe(
-      res => {
-        this.form.controls['message_image_url'].setValue(res.image_url);
-      },
+      res => this.image$.next(res.image_url),
       err => { throw new Error(err) }
       );
   }

@@ -15,6 +15,16 @@ import { Observable } from 'rxjs/Observable';
 import 'node_modules/quill/dist/quill.core.css';
 import 'node_modules/quill/dist/quill.snow.css';
 
+interface IState {
+  body: string,
+  image: string,
+}
+
+const state: IState = {
+  body: null,
+  image: null,
+}
+
 @Component({
   selector: 'cp-text-editor',
   templateUrl: './cp-text-editor.component.html',
@@ -23,31 +33,18 @@ import 'node_modules/quill/dist/quill.snow.css';
 })
 export class CPTextEditorComponent implements OnInit, AfterViewInit {
   @Input() image$: Observable<string>;
-  @Output() contentChange: EventEmitter<{ text: string, image: string }> = new EventEmitter()
+  @Output() contentChange: EventEmitter<IState> = new EventEmitter()
   @ViewChild('editor') editor: ElementRef;
 
   quillInstance;
+  state: IState = state;
+  imageContainer: Element;
+  imageElement: HTMLImageElement = new Image();
 
   constructor() { }
 
   ngAfterViewInit() {
     this.launch();
-  }
-
-  stripContent(data: Array<any>) {
-    let response = {
-      text: '',
-      image: null
-    };
-
-    data.map(line => {
-      if (typeof line.insert === 'string') {
-        response.text += line.insert.trim();
-      } else {
-        response.image = line.insert.image
-      }
-    })
-    return response;
   }
 
   launch() {
@@ -59,12 +56,25 @@ export class CPTextEditorComponent implements OnInit, AfterViewInit {
         toolbar: toolbarOptions
       },
       placeholder: 'Add some text to this post....',
-      theme: 'snow' // 'snow'
+      theme: 'snow'
     });
 
+    this.imageContainer = this.quillInstance.addContainer('cp-editor-image');
+    this.imageContainer.appendChild(this.imageElement);
+
     this.quillInstance.on('text-change', () => {
-      this.contentChange.emit(this.stripContent(this.quillInstance.getContents().ops));
+      this.state = Object.assign(
+        {},
+        this.state,
+        { body: this.quillInstance.getText().trim() }
+      )
+      this.contentChange.emit(this.state);
     })
+  }
+
+  reset() {
+    this.quillInstance.setText('');
+    this.imageElement.src = null;
   }
 
   ngOnInit() {
@@ -72,11 +82,14 @@ export class CPTextEditorComponent implements OnInit, AfterViewInit {
       return Observable.of(null);
     }
 
-    this.image$.subscribe(image => {
-      const index = this.quillInstance.getLength();
-
+    this.image$.subscribe((image: string) => {
       if (image) {
-        this.quillInstance.insertEmbed(index, 'image', image);
+        this.state = Object.assign(
+          {},
+          this.state,
+          { image }
+        )
+        this.imageElement.src = image;
       }
     })
   }

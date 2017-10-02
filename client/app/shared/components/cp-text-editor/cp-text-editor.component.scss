@@ -15,3 +15,11 @@
   font-size: inherit;
   font-family: inherit;
 }
+
+.cp-editor-image {
+  padding: 15px;
+
+  img {
+    max-width: 150px;
+  }
+}

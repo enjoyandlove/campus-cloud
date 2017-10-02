@@ -13,9 +13,6 @@
         [formGroup]="form"
         (ngSubmit)="onSubmit(form.value)">
         <div class="row form-group">
-          <div class="col-xs-12">
-            <cp-text-editor></cp-text-editor>
-          </div>
           <div class="col-xs-6 text-left">
             <p class="text-muted maxLength">
               {{ form.controls.message.value ? form.controls.message.value.length : 0 }}/500
@@ -32,26 +29,10 @@
         </div>
         <div class="row form-group">
           <div class="col-xs-12">
-            <div class="textarea">
-              <div
-                #textarea
-                class="textarea__input"
-                [innerHTML]="placeHolder" contenteditable>
-              </div>
-              <div
-                class="textarea__upload"
-                *ngIf="form.controls.message_image_url.value">
-                <button
-                  type="button"
-                  (click)="onDeleteImage()"
-                  class="material-icons cpbtn cpbtn--cancel cpbtn--no-border remove-image">
-                  close
-                </button>
-                <img
-                  class="img-responsive"
-                  [src]="form.controls.message_image_url.value">
-              </div>
-            </div>
+            <cp-text-editor
+              [image$]="image$"
+              (contentChange)="onContentChange($event)">
+            </cp-text-editor>
           </div>
         </div>
         <div class="row">
