@@ -13,6 +13,9 @@
         [formGroup]="form"
         (ngSubmit)="onSubmit(form.value)">
         <div class="row form-group">
+          <div class="col-xs-12">
+            <cp-text-editor></cp-text-editor>
+          </div>
           <div class="col-xs-6 text-left">
             <p class="text-muted maxLength">
               {{ form.controls.message.value ? form.controls.message.value.length : 0 }}/500
