@@ -1,11 +1,29 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import {
+  Input,
+  OnInit,
+  Output,
+  Component,
+  ViewChild,
+  ElementRef,
+  EventEmitter,
+  AfterViewInit,
+  ViewEncapsulation
+} from '@angular/core';
+
+import { Observable } from 'rxjs/Observable';
+
+import 'node_modules/quill/dist/quill.core.css';
+import 'node_modules/quill/dist/quill.snow.css';
 
 @Component({
   selector: 'cp-text-editor',
   templateUrl: './cp-text-editor.component.html',
-  styleUrls: ['./cp-text-editor.component.scss']
+  styleUrls: ['./cp-text-editor.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class CPTextEditorComponent implements OnInit, AfterViewInit {
+  @Input() image$: Observable<string>;
+  @Output() contentChange: EventEmitter<{ text: string, image: string }> = new EventEmitter()
   @ViewChild('editor') editor: ElementRef;
 
   quillInstance;
@@ -16,27 +34,50 @@ export class CPTextEditorComponent implements OnInit, AfterViewInit {
     this.launch();
   }
 
+  stripContent(data: Array<any>) {
+    let response = {
+      text: '',
+      image: null
+    };
+
+    data.map(line => {
+      if (typeof line.insert === 'string') {
+        response.text += line.insert.trim();
+      } else {
+        response.image = line.insert.image
+      }
+    })
+    return response;
+  }
+
   launch() {
     const Quill = require('quill');
-
-    // Quil.
+    const toolbarOptions = null;
 
     this.quillInstance = new Quill(this.editor.nativeElement, {
       modules: {
-        toolbar: [
-          ['image']
-        ]
+        toolbar: toolbarOptions
       },
-      placeholder: 'Sopa de Caracol...',
-      theme: 'snow'
+      placeholder: 'Add some text to this post....',
+      theme: 'snow' // 'snow'
     });
 
-    this.quillInstance.on('text-change', (delta, oldDelta, source) => {
-      console.log(delta);
-      console.log(oldDelta);
-      console.log(source);
+    this.quillInstance.on('text-change', () => {
+      this.contentChange.emit(this.stripContent(this.quillInstance.getContents().ops));
     })
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    if (!this.image$) {
+      return Observable.of(null);
+    }
+
+    this.image$.subscribe(image => {
+      const index = this.quillInstance.getLength();
+
+      if (image) {
+        this.quillInstance.insertEmbed(index, 'image', image);
+      }
+    })
+  }
 }

@@ -1,0 +1,17 @@
+@import '~styles/core/colors';
+
+.ql-container.ql-snow {
+  min-height: 80px;
+  border-radius: 4px;
+  border: 1px solid $border-color;
+}
+
+.ql-editor.ql-blank::before {
+  font-style: normal;
+  color: $color-med-grey;
+}
+
+.ql-container {
+  font-size: inherit;
+  font-family: inherit;
+}
