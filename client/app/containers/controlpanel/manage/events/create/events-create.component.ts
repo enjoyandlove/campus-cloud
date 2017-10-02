@@ -161,11 +161,13 @@ export class EventsCreateComponent implements OnInit {
       if (managerId.value === null) {
         this.formError = true;
         managerId.setErrors({'required': true});
+        this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       }
 
       if (eventFeedback.value === null) {
         this.formError = true;
         eventFeedback.setErrors({'required': true});
+        this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       }
     }
 
@@ -174,6 +176,7 @@ export class EventsCreateComponent implements OnInit {
       this.formError = true;
       this.form.controls['end'].setErrors({ 'required': true });
       this.dateErrorMessage = 'Event End Time must be after Event Start Time';
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       return;
     }
 
@@ -182,6 +185,7 @@ export class EventsCreateComponent implements OnInit {
       this.formError = true;
       this.form.controls['end'].setErrors({ 'required': true });
       this.dateErrorMessage = 'Event End Time must be greater than now';
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       return;
     }
 
