@@ -77,6 +77,8 @@ export class FeedInputBoxComponent implements OnInit {
 
   onSubmit(data) {
     let _data = this.parseData(data);
+    console.log(_data);
+    return;
     let groupWall$ = this.feedsService.postToGroupWall(_data);
     let campusWall$ = this.feedsService.postToCampusWall(_data);
     let stream$ = this._isCampusWallView ? groupWall$ : campusWall$;
@@ -147,7 +149,10 @@ export class FeedInputBoxComponent implements OnInit {
       .fileUploadService
       .uploadFile(file, url, headers)
       .subscribe(
-      res => this.image$.next(res.image_url),
+      res => {
+        this.image$.next(res.image_url);
+        this.form.controls['message_image_url'].setValue(res.image_url);
+      },
       err => { throw new Error(err) }
       );
   }

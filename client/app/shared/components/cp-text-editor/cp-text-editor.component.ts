@@ -40,11 +40,29 @@ export class CPTextEditorComponent implements OnInit, AfterViewInit {
   state: IState = state;
   imageContainer: Element;
   imageElement: HTMLImageElement = new Image();
+  deleteButtonElement;
 
   constructor() { }
 
+  createDeleteButton() {
+    const button = document.createElement('button');
+    button.className = 'material-icons cpbtn cpbtn--cancel cpbtn--no-border remove-image';
+    button.onclick = (e) => this.removeImage(e);
+    button.textContent = 'close';
+    button.style.display = 'none';
+    this.deleteButtonElement = button;
+    this.imageContainer.appendChild(button);
+  }
+
   ngAfterViewInit() {
     this.launch();
+
+    this.imageContainer = this.quillInstance.addContainer('cp-editor-image');
+    this.imageElement.style.display = 'none';
+
+    this.createDeleteButton();
+
+    this.imageContainer.appendChild(this.imageElement);
   }
 
   launch() {
@@ -59,9 +77,6 @@ export class CPTextEditorComponent implements OnInit, AfterViewInit {
       theme: 'snow'
     });
 
-    this.imageContainer = this.quillInstance.addContainer('cp-editor-image');
-    this.imageContainer.appendChild(this.imageElement);
-
     this.quillInstance.on('text-change', () => {
       this.state = Object.assign(
         {},
@@ -70,6 +85,18 @@ export class CPTextEditorComponent implements OnInit, AfterViewInit {
       )
       this.contentChange.emit(this.state);
     })
+  }
+
+  removeImage(e: MouseEvent) {
+    e.preventDefault();
+    this.state = Object.assign(
+      {},
+      this.state,
+      { image: null }
+    );
+    this.imageElement.src = null;
+    this.contentChange.emit(this.state);
+    this.deleteButtonElement.style.display = 'none';
   }
 
   reset() {
@@ -89,7 +116,10 @@ export class CPTextEditorComponent implements OnInit, AfterViewInit {
           this.state,
           { image }
         )
+
         this.imageElement.src = image;
+        this.imageElement.style.display = 'block';
+        this.deleteButtonElement.style.display = 'block';
       }
     })
   }
