@@ -101,6 +101,7 @@ export class CPTextEditorComponent implements OnInit, AfterViewInit {
     );
     this.imageElement.src = null;
     this.contentChange.emit(this.state);
+    this.imageElement.style.display = 'none';
     this.deleteButtonElement.style.display = 'none';
   }
 
