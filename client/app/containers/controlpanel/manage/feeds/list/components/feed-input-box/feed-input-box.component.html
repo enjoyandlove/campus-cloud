@@ -29,26 +29,11 @@
         </div>
         <div class="row form-group">
           <div class="col-xs-12">
-            <div class="textarea">
-              <div
-                #textarea
-                class="textarea__input"
-                [innerHTML]="placeHolder" contenteditable>
-              </div>
-              <div
-                class="textarea__upload"
-                *ngIf="form.controls.message_image_url.value">
-                <button
-                  type="button"
-                  (click)="onDeleteImage()"
-                  class="material-icons cpbtn cpbtn--cancel cpbtn--no-border remove-image">
-                  close
-                </button>
-                <img
-                  class="img-responsive"
-                  [src]="form.controls.message_image_url.value">
-              </div>
-            </div>
+            <cp-text-editor
+              [image$]="image$"
+              [reset$]="resetTextEditor$"
+              (contentChange)="onContentChange($event)">
+            </cp-text-editor>
           </div>
         </div>
         <div class="row">

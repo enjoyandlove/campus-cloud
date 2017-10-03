@@ -1,3 +1,4 @@
+import { CPTextEditorComponent } from './components/cp-text-editor/cp-text-editor.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -40,7 +41,7 @@ import {
   CPSmallDatePickerComponent, CPPaginationComponent, CPNoContentComponent,
   CPCheckDropdownComponent, CPImageUploadComponent, SchoolSwitchComponent, CPIntercommComponent,
   CPTrackersComponent, CPUploadModalComponent, CPChipComponent, CPTypeAheadComponent,
-  CPSnackBarComponent, CPTrackerDirective, CPButtonComponent ],
+  CPSnackBarComponent, CPTrackerDirective, CPButtonComponent, CPTextEditorComponent ],
 
   imports: [ CommonModule, RouterModule, ReactiveFormsModule ],
 
@@ -56,6 +57,6 @@ import {
   CPSmallDatePickerComponent, CPPaginationComponent, CPNoContentComponent,
   CPCheckDropdownComponent, CPImageUploadComponent, SchoolSwitchComponent, CPIntercommComponent,
   CPTrackersComponent, CPUploadModalComponent, CPChipComponent, CPTypeAheadComponent,
-  CPSnackBarComponent, CPTrackerDirective, CPButtonComponent ]
+  CPSnackBarComponent, CPTrackerDirective, CPButtonComponent, CPTextEditorComponent ]
 })
 export class SharedModule { }

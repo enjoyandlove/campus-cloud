@@ -19,6 +19,7 @@ export * from './cp-no-content';
 export * from './cp-datepicker';
 export * from './cp-pagination';
 export * from './cp-page-header';
+export * from './cp-text-editor';
 export * from './cp-image-upload';
 export * from './cp-upload-modal';
 export * from './cp-school-switch';
