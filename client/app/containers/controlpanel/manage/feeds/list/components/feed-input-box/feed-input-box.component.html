@@ -31,6 +31,7 @@
           <div class="col-xs-12">
             <cp-text-editor
               [image$]="image$"
+              [reset$]="resetTextEditor$"
               (contentChange)="onContentChange($event)">
             </cp-text-editor>
           </div>

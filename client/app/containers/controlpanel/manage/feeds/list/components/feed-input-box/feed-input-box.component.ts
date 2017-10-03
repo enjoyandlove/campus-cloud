@@ -39,6 +39,7 @@ export class FeedInputBoxComponent implements OnInit {
   placeHolder = 'Add some text to this post...';
   image$: BehaviorSubject<string> = new BehaviorSubject(null);
   reset$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  resetTextEditor$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
     private fb: FormBuilder,
@@ -77,8 +78,6 @@ export class FeedInputBoxComponent implements OnInit {
 
   onSubmit(data) {
     let _data = this.parseData(data);
-    console.log(_data);
-    return;
     let groupWall$ = this.feedsService.postToGroupWall(_data);
     let campusWall$ = this.feedsService.postToCampusWall(_data);
     let stream$ = this._isCampusWallView ? groupWall$ : campusWall$;
@@ -91,6 +90,7 @@ export class FeedInputBoxComponent implements OnInit {
         }
         this.form.controls['message'].setValue(null);
         this.reset$.next(true);
+        this.resetTextEditor$.next(true);
         this.created.emit(res);
       }
       );

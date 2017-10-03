@@ -1,3 +1,4 @@
+import { Subject } from 'rxjs/Subject';
 import {
   Input,
   OnInit,
@@ -33,6 +34,7 @@ const state: IState = {
 })
 export class CPTextEditorComponent implements OnInit, AfterViewInit {
   @Input() image$: Observable<string>;
+  @Input() reset$: Subject<boolean> = new Subject();
   @Output() contentChange: EventEmitter<IState> = new EventEmitter()
   @ViewChild('editor') editor: ElementRef;
 
@@ -87,8 +89,11 @@ export class CPTextEditorComponent implements OnInit, AfterViewInit {
     })
   }
 
-  removeImage(e: MouseEvent) {
-    e.preventDefault();
+  removeImage(e?: MouseEvent) {
+    if (e) {
+      e.preventDefault();
+    }
+
     this.state = Object.assign(
       {},
       this.state,
@@ -99,15 +104,30 @@ export class CPTextEditorComponent implements OnInit, AfterViewInit {
     this.deleteButtonElement.style.display = 'none';
   }
 
-  reset() {
+  removeText() {
+    this.state = Object.assign(
+      {},
+      this.state,
+      { body: null }
+    );
     this.quillInstance.setText('');
-    this.imageElement.src = null;
+  }
+
+  reset() {
+    this.removeImage();
+    this.removeText();
   }
 
   ngOnInit() {
     if (!this.image$) {
       return Observable.of(null);
     }
+
+    this.reset$.subscribe(reset => {
+      if (reset) {
+        this.reset();
+      }
+    })
 
     this.image$.subscribe((image: string) => {
       if (image) {
@@ -122,5 +142,9 @@ export class CPTextEditorComponent implements OnInit, AfterViewInit {
         this.deleteButtonElement.style.display = 'block';
       }
     })
+
+    setTimeout(() => {
+      this.reset$.next(true);
+    }, 9000)
   }
 }
