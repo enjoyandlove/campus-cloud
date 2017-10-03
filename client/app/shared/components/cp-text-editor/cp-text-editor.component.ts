@@ -1,4 +1,3 @@
-import { Subject } from 'rxjs/Subject';
 import {
   Input,
   OnInit,
@@ -11,6 +10,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
+import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 
 import 'node_modules/quill/dist/quill.core.css';
@@ -33,8 +33,8 @@ const state: IState = {
   encapsulation: ViewEncapsulation.None
 })
 export class CPTextEditorComponent implements OnInit, AfterViewInit {
-  @Input() image$: Observable<string>;
-  @Input() reset$: Subject<boolean> = new Subject();
+  @Input() image$: Subject<string>;
+  @Input() reset$: Subject<boolean>;
   @Output() contentChange: EventEmitter<IState> = new EventEmitter()
   @ViewChild('editor') editor: ElementRef;
 
@@ -142,9 +142,5 @@ export class CPTextEditorComponent implements OnInit, AfterViewInit {
         this.deleteButtonElement.style.display = 'block';
       }
     })
-
-    setTimeout(() => {
-      this.reset$.next(true);
-    }, 9000)
   }
 }
