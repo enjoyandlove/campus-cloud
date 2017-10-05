@@ -5,6 +5,16 @@ declare var window: any;
 
 @Injectable()
 export class CPTrackingService {
+
+  static loadAmplitude(userId) {
+    require('node_modules/amplitude-js/src/amplitude-snippet.js');
+
+    window
+      .amplitude
+      .getInstance()
+      .init('6c5441a7008b413b8d3d29f8130afae1', userId);
+  }
+
   hotJarRecordPage() {
     if (!isProd) { return; }
 
@@ -17,6 +27,12 @@ export class CPTrackingService {
       a.appendChild(r);
     })(window, document, '//static.hotjar.com/c/hotjar-', '.js?sv=');
 
+  }
+
+  amplitudeEmitEvent(eventType: string, extraData?: {}) {
+    if (!isProd) { return; }
+
+    window.amplitude.getInstance().logEvent(eventType, extraData);
   }
 
   gaTrackPage(pageName) {
