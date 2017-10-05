@@ -1,3 +1,4 @@
+import { CPSession } from './../../session/index';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
@@ -14,6 +15,7 @@ export class ControlPanelComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private session: CPSession,
     private cpTrackingService: CPTrackingService
   ) { }
 
@@ -22,6 +24,7 @@ export class ControlPanelComponent implements OnInit {
      * this gets initilized only once
      * so we track the first page load here
      */
+    CPTrackingService.loadAmplitude(this.session.g.get('user').email);
     this.cpTrackingService.gaTrackPage(this.router.url);
   }
 
