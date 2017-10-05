@@ -7,71 +7,7 @@ declare var window: any;
 export class CPTrackingService {
 
   static loadAmplitude(userId) {
-    (function (w, document) {
-      let amplitude = w.amplitude || { '_q': [], '_iq': {} };
-      let as = document.createElement('script');
-      as.type = 'text/javascript';
-      as.async = true;
-      as.src = 'https://d24n15hnbwhuhn.cloudfront.net/libs/amplitude-3.7.0-min.gz.js';
-      as.onload = function () {
-        if (w.amplitude.runQueuedFunctions) {
-          w.amplitude.runQueuedFunctions();
-        } else {
-          console.log('[Amplitude] Error: could not load SDK');
-        } };
-      let s = document.getElementsByTagName('script')[0];
-      s.parentNode.insertBefore(as, s);
-      function proxy(obj, fn) {
-        obj.prototype[fn] = function () {
-          this._q.push([fn].concat(Array.prototype.slice.call(arguments, 0))); return this;
-        };
-      }
-      let Identify = function () { this._q = []; return this; };
-      let identifyFuncs = ['add', 'append', 'clearAll', 'prepend', 'set', 'setOnce', 'unset'];
-      for (let i = 0; i < identifyFuncs.length; i++) { proxy(Identify, identifyFuncs[i]); }
-      amplitude.Identify = Identify;
-      let Revenue = function () { this._q = []; return this; };
-      const revenueFuncs = [
-        'setProductId',
-        'setQuantity',
-        'setPrice',
-        'setRevenueType',
-        'setEventProperties'
-      ];
-
-      for (let j = 0; j < revenueFuncs.length; j++) { proxy(Revenue, revenueFuncs[j]); }
-
-      amplitude.Revenue = Revenue;
-
-      let funcs = ['init', 'logEvent', 'logRevenue', 'setUserId', 'setUserProperties',
-        'setOptOut', 'setVersionName', 'setDomain', 'setDeviceId',
-        'setGlobalUserProperties', 'identify', 'clearUserProperties',
-        'setGroup', 'logRevenueV2', 'regenerateDeviceId',
-        'logEventWithTimestamp', 'logEventWithGroups', 'setSessionId'];
-
-      function setUpProxy(instance) {
-        function proxyMain(fn) {
-          instance[fn] = function () {
-            instance._q.push([fn].concat(Array.prototype.slice.call(arguments, 0)));
-          };
-        }
-        for (let k = 0; k < funcs.length; k++) { proxyMain(funcs[k]); }
-      }
-
-      setUpProxy(amplitude);
-
-      amplitude.getInstance = function (instance) {
-        instance = ((!instance || instance.length === 0)
-          ? '$default_instance' : instance).toLowerCase();
-        if (!amplitude._iq.hasOwnProperty(instance)) {
-          amplitude._iq[instance] = { '_q': [] }; setUpProxy(amplitude._iq[instance]);
-        }
-        return amplitude._iq[instance];
-      };
-
-      w.amplitude = amplitude;
-
-    })(window, document);
+    require('node_modules/amplitude-js/src/amplitude-snippet.js');
 
     window
       .amplitude
@@ -94,6 +30,8 @@ export class CPTrackingService {
   }
 
   amplitudeEmitEvent(eventType: string, extraData?: {}) {
+    if (!isProd) { return; }
+
     window.amplitude.getInstance().logEvent(eventType, extraData);
   }
 
