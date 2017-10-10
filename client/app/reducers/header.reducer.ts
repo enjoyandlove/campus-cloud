@@ -38,6 +38,7 @@ const initialState: IHeader = {
 export function reducer(state = initialState, action: Action): IHeader {
   switch (action.type) {
     case (HEADER_UPDATE):
+      console.log(action.payload);
       let payload = action.payload;
 
       if (!('crumbs' in payload)) {

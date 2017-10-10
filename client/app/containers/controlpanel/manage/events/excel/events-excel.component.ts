@@ -81,6 +81,10 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       type: HEADER_UPDATE,
       payload: {
         'heading': 'Import Events',
+        'crumbs': {
+          'url': 'events',
+          'label': 'Events'
+        },
         'em': `${this.events.length} calendar event(s) data information in the file`,
         'children': []
       }

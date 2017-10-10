@@ -16,6 +16,10 @@ export class DashboardComponent implements OnInit {
     this.user = this.session.g.get('user');
     this.headerData = {
       'heading': `Hello ${this.user.firstname}!`,
+      'crumbs': {
+        'url': null,
+        'label': null
+      },
       'subheading': null,
       'em': null,
       'children': []

@@ -96,6 +96,10 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
       payload: {
         'heading': res.title,
         'subheading': '',
+        'crumbs': {
+          'url': 'events',
+          'label': 'Events'
+        },
         'children': [...children]
       }
     });

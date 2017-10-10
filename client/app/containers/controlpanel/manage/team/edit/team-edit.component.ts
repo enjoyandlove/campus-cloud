@@ -277,6 +277,10 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       type: HEADER_UPDATE,
       payload: {
         'heading': `${name}`,
+        'crumbs': {
+          'url': 'team',
+          'label': 'Team'
+        },
         'subheading': null,
         'em': null,
         'children': []
