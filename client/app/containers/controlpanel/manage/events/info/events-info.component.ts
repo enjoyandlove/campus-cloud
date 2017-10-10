@@ -97,7 +97,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
         'heading': res.title,
         'subheading': '',
         'crumbs': {
-          'url': 'events',
+          'url': this.buildUrlPrefix(),
           'label': 'Events'
         },
         'children': [...children]

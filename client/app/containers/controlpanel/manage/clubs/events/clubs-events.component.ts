@@ -60,7 +60,7 @@ export class ClubsEventsComponent extends BaseComponent implements OnInit {
       heading: name,
       subheading: null,
       'crumbs': {
-        'url': 'clubs',
+        'url': `clubs/${this.clubId}`,
         'label': 'Clubs'
       },
       em: null,

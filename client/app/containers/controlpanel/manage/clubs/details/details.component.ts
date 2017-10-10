@@ -68,7 +68,7 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
     let menu = {
       heading: name,
       'crumbs': {
-        'url': 'clubs',
+        'url': `clubs`,
         'label': 'Clubs'
       },
       subheading: null,
