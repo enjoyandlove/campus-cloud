@@ -17,10 +17,10 @@ export class BaseComponent implements OnInit {
   private _isLoading$ = this._isLoading.asObservable();
 
   constructor(
-    public endRange = 100,
+    public endRange = 37,
     public startRange = 1,
     public pageNumber = 1,
-    public resultsPerPage = 100,
+    public resultsPerPage = 37,
   ) { }
 
   fetchData(service: Observable<any>) {
