@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
+const maxPerPage = 100;
+
 @Component({
   selector: 'cp-base-component',
   template: '',
@@ -17,10 +19,10 @@ export class BaseComponent implements OnInit {
   private _isLoading$ = this._isLoading.asObservable();
 
   constructor(
-    public endRange = 37,
+    public endRange = maxPerPage,
     public startRange = 1,
     public pageNumber = 1,
-    public resultsPerPage = 37,
+    public resultsPerPage = maxPerPage,
   ) { }
 
   fetchData(service: Observable<any>) {

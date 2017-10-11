@@ -60,6 +60,7 @@ export class ListsListComponent extends BaseComponent implements OnInit {
       this.state,
       { search_str }
     );
+    this.resetPagination();
 
     this.fetch();
   }
