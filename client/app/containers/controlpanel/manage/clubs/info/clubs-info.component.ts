@@ -65,7 +65,7 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
     this.clubStatus = {
       0: 'Inactive',
       1: 'Active',
-      2: 'Pending'
+      '-2': 'Pending'
     };
   }
 }
