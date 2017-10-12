@@ -66,6 +66,10 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
       }
     );
 
+    if (filter.query) {
+      this.resetPagination();
+    }
+
     this.fetch();
   }
 
@@ -82,6 +86,11 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
         messages: this.state.messages.filter(message => message.id !== id)
       }
     );
+
+    if (this.state.messages.length === 0 && this.pageNumber > 1) {
+      this.resetPagination();
+      this.fetch();
+    }
   }
 
   private fetch() {

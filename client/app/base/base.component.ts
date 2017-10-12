@@ -74,6 +74,4 @@ export class BaseComponent {
   isLoading(): Observable<boolean> {
     return this._isLoading$;
   }
-
-  // ngOnInit() { }
 }

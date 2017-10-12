@@ -137,6 +137,10 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
     )
     this.updateUrl();
 
+    if (filterBy.search_str) {
+      this.resetPagination();
+    }
+
     this.fetch();
   }
 
