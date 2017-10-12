@@ -53,7 +53,7 @@ export class ClubsListActionBoxComponent implements OnInit {
       },
       {
         label: 'Pending',
-        action: 2
+        action: -2
       }
     ];
   }
