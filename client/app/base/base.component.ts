@@ -2,17 +2,12 @@
  * Base Component
  * Loading State, Pagination....
  */
-import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
 const maxPerPage = 100;
 
-@Component({
-  selector: 'cp-base-component',
-  template: '',
-})
-export class BaseComponent implements OnInit {
+export class BaseComponent {
   pageNext;
   pagePrev;
   private _isLoading = new Subject<boolean>();
@@ -80,5 +75,5 @@ export class BaseComponent implements OnInit {
     return this._isLoading$;
   }
 
-  ngOnInit() { }
+  // ngOnInit() { }
 }
