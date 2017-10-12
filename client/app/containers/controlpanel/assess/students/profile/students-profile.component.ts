@@ -119,7 +119,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
           return result;
         }, {})
 
-        this.engagementsByDay = Object.keys(this.engagementData);
+        this.engagementsByDay = Object.keys(this.engagementData).reverse();
       })
       .catch(err => { throw new Error(err) })
   }
