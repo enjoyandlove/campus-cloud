@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Observable';
 import { BaseComponent } from './base.component';
 
 describe('BaseComponent', () => {
@@ -45,5 +46,26 @@ describe('BaseComponent', () => {
     expect(comp.pageNumber).toEqual(1);
     expect(comp.startRange).toEqual(1);
     expect(comp.endRange).toEqual(101);
+  })
+
+  it('fetchData', () => {
+    let arr = [];
+    for (let i = 1; i <= 200; i++) { arr.push(i); }
+
+    let fakeRequest = Observable.of(arr);
+
+    comp
+      .fetchData(fakeRequest)
+      .then(res => {
+        expect(comp.pageNext).toBeTruthy();
+        expect(comp.pagePrev).toBeFalsy();
+        expect(res.data.length).toBe(199);
+        console.log(res.data.length);
+      })
+      .catch(err => console.log(err));
+
+    // console.log(comp.pageNumber);
+    // console.log(comp.startRange);
+    // console.log(comp.endRange);
   })
 })
