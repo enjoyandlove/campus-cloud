@@ -33,10 +33,10 @@ export class EngagementComponent extends BaseComponent implements OnInit {
   filters$: BehaviorSubject<any> = new BehaviorSubject(null);
 
   constructor(
-    private router: Router,
-    private store: Store<any>,
-    private session: CPSession,
-    private service: EngagementService
+    public router: Router,
+    public store: Store<any>,
+    public session: CPSession,
+    public service: EngagementService
   ) {
     super();
     super.isLoading().subscribe(loading => this.loading = loading);
