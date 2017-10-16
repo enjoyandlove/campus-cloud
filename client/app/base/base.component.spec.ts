@@ -60,12 +60,6 @@ describe('BaseComponent', () => {
         expect(comp.pageNext).toBeTruthy();
         expect(comp.pagePrev).toBeFalsy();
         expect(res.data.length).toBe(199);
-        console.log(res.data.length);
       })
-      .catch(err => console.log(err));
-
-    // console.log(comp.pageNumber);
-    // console.log(comp.startRange);
-    // console.log(comp.endRange);
   })
 })
