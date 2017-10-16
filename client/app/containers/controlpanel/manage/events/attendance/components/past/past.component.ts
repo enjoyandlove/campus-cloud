@@ -138,6 +138,9 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
   doSearch(search_text): void {
     search_text = search_text === '' ? null : search_text;
     this.state = Object.assign({}, this.state, { search_text });
+
+    this.resetPagination();
+
     this.fetch();
   }
 

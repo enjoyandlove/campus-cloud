@@ -65,6 +65,9 @@ export class LinksListComponent extends BaseComponent implements OnInit {
       this.state,
       { search_str }
     );
+
+    this.resetPagination();
+
     this.fetch();
   }
 
@@ -120,6 +123,11 @@ export class LinksListComponent extends BaseComponent implements OnInit {
     });
 
     this.state = Object.assign({}, this.state, { links: _state.links });
+
+    if (this.state.links.length === 0 && this.pageNumber > 1) {
+      this.resetPagination();
+      this.fetch();
+    }
   }
 
   ngOnInit() { }

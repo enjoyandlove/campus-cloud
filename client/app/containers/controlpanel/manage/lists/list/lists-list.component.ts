@@ -60,6 +60,7 @@ export class ListsListComponent extends BaseComponent implements OnInit {
       this.state,
       { search_str }
     );
+    this.resetPagination();
 
     this.fetch();
   }
@@ -108,6 +109,11 @@ export class ListsListComponent extends BaseComponent implements OnInit {
     });
 
     this.state = Object.assign({}, this.state, { lists: _state.lists });
+
+    if (this.state.lists.length === 0 && this.pageNumber > 1) {
+      this.resetPagination();
+      this.fetch();
+    }
   }
 
   ngOnInit() { }

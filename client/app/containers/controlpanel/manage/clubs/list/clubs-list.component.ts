@@ -89,6 +89,10 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
       type: filter.type
     });
 
+    if (filter.query) {
+      this.resetPagination();
+    }
+
     this.fetch();
   }
 
@@ -98,6 +102,11 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
       this.state,
       { clubs: this.state.clubs.filter(club => club.id !== clubId) }
     );
+
+    if (this.state.clubs.length === 0 && this.pageNumber > 1) {
+      this.resetPagination();
+      this.fetch();
+    }
   }
 
   onPaginationNext() {
