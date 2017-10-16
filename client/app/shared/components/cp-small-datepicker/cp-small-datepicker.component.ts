@@ -22,6 +22,8 @@ import {
 
 require('flatpickr');
 
+import * as moment from 'moment';
+
 declare var $: any;
 
 @Component({
@@ -65,6 +67,10 @@ export class CPSmallDatePickerComponent implements AfterViewInit, OnInit, OnChan
       {
         onChange: function(dates) {
           if (dates.length === 2) {
+            dates = [
+              moment(dates[0]).hours(0).minutes(0).seconds(0).toDate(),
+              moment(dates[1]).hours(23).minutes(59).seconds(59).toDate()
+            ]
             self.rangeChange.emit(dates);
             return;
           }

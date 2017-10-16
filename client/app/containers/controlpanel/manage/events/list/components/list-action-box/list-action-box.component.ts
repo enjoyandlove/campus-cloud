@@ -160,7 +160,6 @@ export class ListActionBoxComponent implements OnInit {
         start: CPDate.toEpoch(dates[0]),
         end: CPDate.toEpoch(dates[1])
       });
-
     this.listAction.emit(this.state);
   }
 
