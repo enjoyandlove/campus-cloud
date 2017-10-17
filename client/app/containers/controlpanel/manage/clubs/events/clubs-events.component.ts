@@ -14,6 +14,7 @@ import { BaseComponent } from '../../../../../base/base.component';
 import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
+const CLUB_ACTIVE_STATUS = 1;
 const CLUB_PENDING_STATUS = 2;
 
 @Component({
@@ -64,25 +65,30 @@ export class ClubsEventsComponent extends BaseComponent implements OnInit {
     };
 
     let links = [];
+    const clubIsActive = this.club.status === CLUB_ACTIVE_STATUS;
+    const clubIsPending = this.club.status !== CLUB_PENDING_STATUS;
 
-    if (this.club.status !== CLUB_PENDING_STATUS &&
-      (canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.events) ||
-        canStoreReadAndWriteResource(this.session.g,
-          this.clubId, CP_PRIVILEGES_MAP.events))) {
+    const schoolAccess = (permission) => canSchoolReadResource(this.session.g, permission);
+
+    const storeAccess = (permission) => {
+      return canStoreReadAndWriteResource(this.session.g, this.clubId, permission);
+    }
+
+    if (clubIsActive &&
+        schoolAccess(CP_PRIVILEGES_MAP.events) ||
+        storeAccess(CP_PRIVILEGES_MAP.events)) {
       links = ['Events', ...links];
     }
 
     if (this.hasMembership) {
-      if (this.club.status !== CLUB_PENDING_STATUS &&
-        (canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.moderation) ||
-          canStoreReadAndWriteResource(this.session.g,
-            this.clubId, CP_PRIVILEGES_MAP.moderation))) {
+      if (clubIsPending &&
+          schoolAccess(CP_PRIVILEGES_MAP.moderation) ||
+          storeAccess(CP_PRIVILEGES_MAP.moderation)) {
         links = ['Wall', ...links];
       }
 
-      if (canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.membership) ||
-        canStoreReadAndWriteResource(this.session.g,
-          this.clubId, CP_PRIVILEGES_MAP.membership)) {
+      if (schoolAccess(CP_PRIVILEGES_MAP.membership) ||
+          storeAccess(CP_PRIVILEGES_MAP.membership)) {
         links = ['Members', ...links];
       }
     }
