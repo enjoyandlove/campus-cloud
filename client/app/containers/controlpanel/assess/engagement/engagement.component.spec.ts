@@ -1,7 +1,10 @@
+import { HEADER_UPDATE } from './../../../../reducers/header.reducer';
+import { STATUS } from './../../../../shared/constants/status';
+import { SNACKBAR_SHOW } from './../../../../reducers/snackbar.reducer';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Store, StoreModule } from '@ngrx/store';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 
 import { CPSession } from './../../../../session/index';
@@ -54,6 +57,7 @@ class MockRouter {
 };
 
 describe('EngagementComponent', () => {
+  let storeSpy;
   let store: Store<any>;
   // let session: CPSession;
   let component: EngagementComponent;
@@ -73,13 +77,6 @@ describe('EngagementComponent', () => {
         { provide: Router,  useClass: MockRouter },
         { provide: CPSession, useClass: MockSession },
         { provide: EngagementService, useClass: MockEngagementService },
-        {
-          provide: ActivatedRoute, useValue: {
-            'snapshot': {
-              'params': Observable.of({ studentId: 1 })
-            }
-          }
-        },
       ],
       schemas: [NO_ERRORS_SCHEMA]
     })
@@ -90,7 +87,7 @@ describe('EngagementComponent', () => {
     })
 
     store = TestBed.get(Store);
-    spyOn(store, 'dispatch').and.callThrough();
+    storeSpy = spyOn(store, 'dispatch').and.callThrough();
     fixture = TestBed.createComponent(EngagementComponent);
     component = fixture.componentInstance;
 
@@ -112,6 +109,29 @@ describe('EngagementComponent', () => {
     expect(component.messageData).toEqual(expected);
   })
 
+  it('onFlashMessage', () => {
+    component.onFlashMessage();
+
+    const expected = {
+      type: SNACKBAR_SHOW,
+      payload: {
+        body: STATUS.MESSAGE_SENT,
+        autoClose: true
+      }
+    };
+    expect(storeSpy).toHaveBeenCalledWith(expected);
+  })
+
+  it('ngOnInit', () => {
+    component.ngOnInit();
+
+    const expected = {
+      type: HEADER_UPDATE,
+      payload: require('../assess.header.json')
+    };
+    expect(storeSpy).toHaveBeenCalledWith(expected);
+  })
+
   it('onComposeTeardown', () => {
     component.onComposeTeardown();
 
@@ -119,7 +139,7 @@ describe('EngagementComponent', () => {
     expect(component.messageData).toBeNull();
   })
 
-  it('buildSearchHeaders', () => {
+  xit('buildSearchHeaders', () => {
     component.onDoFilter(mockFilterState);
     fixture.detectChanges();
     console.log(component.buildSearchHeaders().paramsMap.toJSON());
