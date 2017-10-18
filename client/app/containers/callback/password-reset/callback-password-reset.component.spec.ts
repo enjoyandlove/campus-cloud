@@ -34,7 +34,7 @@ class MockActivatedRoute {
   }
 }
 
-describe('Login', () => {
+describe('Password Reset', () => {
   let spyError;
   let spySubmit;
   let errorService: ErrorService;
