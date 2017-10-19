@@ -119,6 +119,10 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.pageHeader = {
       'heading': 'Change Password',
+      'crumbs': {
+        'url': null,
+        'label': null
+      },
       'subheading': null,
       'em': null,
       'children': [],

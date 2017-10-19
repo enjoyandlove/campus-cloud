@@ -57,6 +57,10 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
       type: HEADER_UPDATE,
       payload: {
         'heading': 'Import Clubs',
+        'crumbs': {
+          'url': 'clubs',
+          'label': 'Clubs'
+        },
         'em': `${this.clubs.length} valid student club(s) in the file`,
         'children': []
       }

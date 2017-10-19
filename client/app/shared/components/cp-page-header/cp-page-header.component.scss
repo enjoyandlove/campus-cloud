@@ -26,6 +26,20 @@
     position: relative;
   }
 
+  &__breadcrumb {
+    top: -20px;
+    position: absolute;
+
+    a {
+      @include font-semi-bold();
+
+      i {
+        font-size: 1.4em;
+        vertical-align: -4px;
+      }
+    }
+  }
+
   &__sub-title {
     font-size: 1.5em;
     color: $color-white;

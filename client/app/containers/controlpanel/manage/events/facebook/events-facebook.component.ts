@@ -62,6 +62,10 @@ export class EventsFacebookComponent extends BaseComponent implements OnInit {
       type: HEADER_UPDATE,
       payload: {
         'heading': 'Import Events from Facebook',
+        'crumbs': {
+          'url': 'events',
+          'label': 'Events'
+        },
         'subheading': '',
         'children': []
       }
