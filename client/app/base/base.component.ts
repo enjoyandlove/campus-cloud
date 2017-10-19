@@ -2,47 +2,44 @@
  * Base Component
  * Loading State, Pagination....
  */
-import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
-@Component({
-  selector: 'cp-base-component',
-  template: '',
-})
-export abstract class BaseComponent implements OnInit {
+const maxPerPage = 100;
+
+export abstract class BaseComponent {
   pageNext;
   pagePrev;
   private _isLoading = new Subject<boolean>();
   private _isLoading$ = this._isLoading.asObservable();
 
   constructor(
-    public endRange = 100,
-    public startRange = 1,
     public pageNumber = 1,
-    public resultsPerPage = 100,
+    public startRange = 1,
+    public endRange = maxPerPage + 1,
   ) { }
 
-  fetchData(service: Observable<any>) {
+  fetchData(request: Observable<any>) {
     this._isLoading.next(true);
-    return service
+    return request
       .toPromise()
-      .then(res => {
-        this.pageNext = true;
-        this.pagePrev = true;
+      .then(response => {
+        this.pageNext = false;
+        this.pagePrev = false;
 
-        if (this.pageNumber === 1) {
-          this.pagePrev = false;
+        if (this.pageNumber > 1) {
+          this.pagePrev = true;
         }
 
-        if (res.length < this.resultsPerPage) {
-          this.pageNext = false;
+        if (response.length > maxPerPage) {
+          this.pageNext = true;
+          response.pop();
         }
 
         this._isLoading.next(false);
 
         return Promise.resolve({
-          data: res,
+          data: response,
           pageNext: this.pageNext,
           pagePrev: this.pagePrev
         });
@@ -54,28 +51,27 @@ export abstract class BaseComponent implements OnInit {
   }
 
   goToNext(): void {
+    this.startRange = this.endRange;
+    this.endRange = this.endRange + maxPerPage;
+
     this.pageNumber += 1;
-    this.startRange = this.endRange + 1;
-    this.endRange = this.endRange + this.resultsPerPage;
   }
 
   resetPagination(): void {
     this.pageNumber = 1;
     this.startRange = 1;
-    this.endRange = 100;
+    this.endRange = maxPerPage + 1;
   }
 
   goToPrevious(): void {
     if (this.pageNumber === 1) { return; };
-    this.pageNumber -= 1;
+    this.endRange -= maxPerPage;
+    this.startRange -= maxPerPage;
 
-    this.endRange = this.startRange - 1;
-    this.startRange = (this.endRange - this.resultsPerPage) + 1;
+    this.pageNumber -= 1;
   }
 
   isLoading(): Observable<boolean> {
     return this._isLoading$;
   }
-
-  ngOnInit() { }
 }

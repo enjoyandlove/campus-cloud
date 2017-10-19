@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
 import { EventsService } from '../../events.service';
@@ -34,7 +34,7 @@ const state = {
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.scss']
 })
-export class EventsComponent extends BaseComponent implements OnInit, OnDestroy {
+export class EventsComponent extends BaseComponent {
   @Input() storeId: number;
 
   @Input() serviceId: number;
@@ -95,6 +95,10 @@ export class EventsComponent extends BaseComponent implements OnInit, OnDestroy 
 
     if (this.isService) {
       storeId = this.serviceId;
+    }
+
+    if (filter.search_str) {
+      this.resetPagination();
     }
 
     this.state = Object.assign(
@@ -167,6 +171,11 @@ export class EventsComponent extends BaseComponent implements OnInit, OnDestroy 
       this.state,
       { events: this.state.events.filter(event => event.id !== eventId) }
     );
+
+    if (this.state.events.length === 0 && this.pageNumber > 1) {
+      this.resetPagination();
+      this.buildHeaders();
+    }
   }
 
   onPaginationNext() {
@@ -179,13 +188,5 @@ export class EventsComponent extends BaseComponent implements OnInit, OnDestroy 
     super.goToPrevious();
 
     this.buildHeaders();
-  }
-
-  ngOnDestroy() {
-    // console.log('destroy');
-  }
-
-  ngOnInit() {
-    // console.log(this);
   }
 }

@@ -45,6 +45,8 @@ export class TeamListComponent extends BaseComponent implements OnInit {
   onSearch(search_str) {
     this.state = Object.assign({}, this.state, { search_str });
 
+    this.resetPagination();
+
     this.fetch();
   }
 
@@ -89,6 +91,11 @@ export class TeamListComponent extends BaseComponent implements OnInit {
       this.state,
       { admins: this.state.admins.filter(admin => admin.id !== adminId) }
     );
+
+    if (this.state.admins.length === 0 && this.pageNumber > 1) {
+      this.resetPagination();
+      this.fetch();
+    }
   }
 
   ngOnInit() {
