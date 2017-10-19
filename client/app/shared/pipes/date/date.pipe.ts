@@ -3,7 +3,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { unix }  from 'moment';
 
 export const FORMAT = {
-  'SHORT': 'MMM Do YY',
+  'SHORT': 'MMM D, YYYY',
   'LONG': 'dddd, MMMM D, YYYY',
   'DATETIME': 'MMMM Do YYYY, h:mm a',
   'TIME': 'h:mm A'

@@ -7,7 +7,7 @@ import { Subject } from 'rxjs/Subject';
 
 const maxPerPage = 100;
 
-export class BaseComponent {
+export abstract class BaseComponent {
   pageNext;
   pagePrev;
   private _isLoading = new Subject<boolean>();

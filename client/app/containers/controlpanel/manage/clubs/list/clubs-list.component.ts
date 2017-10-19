@@ -30,7 +30,7 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
   clubStatus;
   deleteClub = '';
   ACTIVE_STATUS = 1;
-  PENDING_STATUS = 2;
+  PENDING_STATUS = -2;
   state: IState = state;
 
   constructor(
@@ -123,7 +123,7 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
     this.clubStatus = {
       0: 'Inactive',
       1: 'Active',
-      2: 'Pending'
+      '-2': 'Pending'
     };
 
     this

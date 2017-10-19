@@ -21,7 +21,7 @@ const buildCommonHeaders = () => {
 };
 
 @Injectable()
-export class BaseService {
+export abstract class BaseService {
   constructor(
     private http: Http,
     private router: Router
@@ -33,6 +33,8 @@ export class BaseService {
     return this
       .http
       .get(url, { headers, ...opts })
+      .publishReplay(1)
+      .refCount()
       .catch(err => {
         if (err.status === 403) {
           return Observable.of(
