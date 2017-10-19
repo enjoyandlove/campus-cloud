@@ -61,7 +61,7 @@ export class EngagementTopBarComponent implements OnInit {
   studentFilter;
 
   constructor(
-    private session: CPSession,
+    public session: CPSession,
     private route: ActivatedRoute
   ) { }
 
