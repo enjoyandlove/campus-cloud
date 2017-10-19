@@ -7,10 +7,10 @@ export const statusTypes = [
   {
     action: 0,
     label: 'Inactive',
-    description: 'Club is suspended and will be listed on the Campus App'
+    description: 'Club is suspended and will not be listed on the Campus App'
   },
   {
-    action: 2,
+    action: -2,
     label: 'Pending',
     description: 'Club is awating approval and will not be listed on the Campus App'
   }
