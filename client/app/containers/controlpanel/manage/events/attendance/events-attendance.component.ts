@@ -86,12 +86,15 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       ];
     }
 
-
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
         'heading': res.title,
         'subheading': '',
+        'crumbs': {
+          'url': this.buildUrlPrefix(),
+          'label': 'Events'
+        },
         'children': [...children]
       }
     });

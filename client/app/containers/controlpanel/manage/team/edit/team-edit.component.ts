@@ -147,6 +147,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   manageAdmins;
   servicesMenu;
   isClubsModal;
+  isProfileView;
   isCurrentUser;
   canReadEvents;
   isServiceModal;
@@ -175,6 +176,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     super();
     super.isLoading().subscribe(res => this.loading = res);
     this.adminId = this.route.snapshot.params['adminId'];
+    this.isProfileView = this.route.snapshot.queryParams['profile'];
 
     this.fetch();
   }
@@ -273,10 +275,15 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   private buildHeader(name) {
+
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
         'heading': `${name}`,
+        'crumbs': {
+          'url': this.isProfileView ? null : 'team',
+          'label': this.isProfileView ? null : 'Team'
+        },
         'subheading': null,
         'em': null,
         'children': []

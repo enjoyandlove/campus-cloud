@@ -1,3 +1,4 @@
+import { ServicesService } from './../../../services.service';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -21,6 +22,7 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
   providerId;
   MAX_RATE = 5;
   eventRating;
+  serviceName: string;
   starSize = STAR_SIZE.LARGE;
   query$: BehaviorSubject<string> = new BehaviorSubject(null);
   download$: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -28,6 +30,7 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
   constructor(
     private route: ActivatedRoute,
     private store: Store<IHeader>,
+    private serviceService: ServicesService,
     private providersService: ProvidersService
   ) {
     super();
@@ -40,7 +43,15 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
     let search = new URLSearchParams();
     search.append('service_id', this.serviceId);
 
-    const stream$ = this.providersService.getProviderByProviderId(this.providerId, search);
+    const service$ = this.serviceService.getServiceById(this.serviceId)
+    const providers$ = this.providersService.getProviderByProviderId(this.providerId, search);
+
+    const stream$ = service$.
+      switchMap(service => {
+        this.serviceName = service.name;
+        return providers$
+      });
+
     super
       .fetchData(stream$)
       .then(res => {
@@ -57,6 +68,10 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
       type: HEADER_UPDATE,
       payload: {
         'heading': this.provider.provider_name,
+        'crumbs': {
+          'url': `services/${this.serviceId}`,
+          'label': this.serviceName
+        },
         'subheading': null,
         'em': null,
         'children': []

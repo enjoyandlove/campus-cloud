@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
@@ -29,6 +29,7 @@ export class ClubsEventsComponent extends BaseComponent implements OnInit {
   clubId: number;
 
   constructor(
+    private router: Router,
     private store: Store<any>,
     private session: CPSession,
     private route: ActivatedRoute,
@@ -60,6 +61,12 @@ export class ClubsEventsComponent extends BaseComponent implements OnInit {
     let menu = {
       heading: name,
       subheading: null,
+      'crumbs': {
+        'url': this.router.url === `/manage/clubs/${this.clubId}/events`
+          ? 'clubs'
+          : `clubs/${this.clubId}`,
+        'label': 'Clubs'
+      },
       em: null,
       children: []
     };
