@@ -1,11 +1,13 @@
 import { Observable } from 'rxjs/Observable';
 import { BaseComponent } from './base.component';
 
+class BaseComponentMock extends BaseComponent { }
+
 describe('BaseComponent', () => {
   let comp: BaseComponent;
 
   beforeEach(() => {
-    comp = new BaseComponent();
+    comp = new BaseComponentMock();
     comp.resetPagination();
   });
 
