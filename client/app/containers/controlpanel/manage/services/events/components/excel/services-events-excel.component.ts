@@ -27,7 +27,7 @@ export class ServicesEventsExcelComponent extends BaseComponent implements OnIni
       .then(res => {
         this.storeId = res.data.store_id;
       })
-      .catch(err => console.error(err));
+      .catch(err => { throw new Error(err) });
   }
 
   ngOnInit() {

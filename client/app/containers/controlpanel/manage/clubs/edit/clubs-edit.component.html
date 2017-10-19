@@ -167,14 +167,13 @@
                         <span>&#x26A0;</span> Please fill out the marked fields
                     </label>
                     <a [routerLink]="['../info']"
-                      class="cpbtn cpbtn--tall cpbtn--cancel" i18n>
+                      class="cpbtn cpbtn--cancel" i18n>
                       Cancel
                     </a>
-                    <button
-                      type="submit"
-                      class="cpbtn cpbtn--tall cpbtn--primary" i18n>
-                      Save
-                    </button>
+                    <cp-button
+                      [props]="buttonData"
+                      (buttonClick)="onSubmit()">
+                    </cp-button>
                   </div>
                 </div>
               </div>

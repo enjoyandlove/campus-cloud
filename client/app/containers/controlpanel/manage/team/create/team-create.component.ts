@@ -7,11 +7,16 @@ import { Store } from '@ngrx/store';
 import { TEAM_ACCESS } from '../utils';
 import { CPSession } from '../../../../../session';
 import { STATUS } from '../../../../../shared/constants';
-import { accountsToStoreMap } from './../../../../../session';
 import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
 import { ErrorService, AdminService } from '../../../../../shared/services';
-import { CP_PRIVILEGES, CP_PRIVILEGES_MAP } from '../../../../../shared/utils';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+import { CP_PRIVILEGES, CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
+
+import {
+  accountsToStoreMap,
+  canSchoolReadResource,
+  canAccountLevelReadResource
+} from './../../../../../shared/utils/privileges/privileges';
 
 const eventsDropdown = function (privilege: { r: boolean, w: boolean }) {
   let items = [
@@ -136,6 +141,7 @@ export class TeamCreateComponent implements OnInit {
   formError;
   clubsMenu;
   eventsMenu;
+  buttonData;
   isFormError;
   canReadClubs;
   manageAdmins;
@@ -177,6 +183,10 @@ export class TeamCreateComponent implements OnInit {
       'lastname': [null, Validators.required],
       'email': [null, Validators.required]
     });
+
+    this.form.valueChanges.subscribe(_ => {
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
+    })
   }
 
   onSubmit(data) {
@@ -184,6 +194,7 @@ export class TeamCreateComponent implements OnInit {
     this.isFormError = false;
 
     if (!this.form.valid) {
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       this.errorService.handleError({ reason: STATUS.ALL_FIELDS_ARE_REQUIRED });
       return;
     }
@@ -206,6 +217,7 @@ export class TeamCreateComponent implements OnInit {
 
     if (emptyAccountPrivileges && emptySchoolPrivileges) {
       this.formError = 'You have not granted any access';
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       this.isFormError = true;
       return;
     }
@@ -255,7 +267,7 @@ export class TeamCreateComponent implements OnInit {
     if (checked) {
       this.accountPrivileges = Object.assign(
         {},
-        accountsToStoreMap(this.session.user.account_mapping[this.schoolId],
+        accountsToStoreMap(this.session.g.get('user').account_mapping[this.schoolId],
                            this.user.account_level_privileges)
       );
 
@@ -368,17 +380,20 @@ export class TeamCreateComponent implements OnInit {
       {
         [CP_PRIVILEGES_MAP.clubs]: {
           r: true,
-          w: this.session.user.school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.clubs].w
+          w: this.session.g.get('user')
+            .school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.clubs].w
         },
 
         [CP_PRIVILEGES_MAP.moderation]: {
           r: true,
-          w: this.session.user.school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.clubs].w
+          w: this.session.g.get('user')
+            .school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.clubs].w
         },
 
         [CP_PRIVILEGES_MAP.membership]: {
           r: true,
-          w: this.session.user.school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.clubs].w
+          w: this.session.g.get('user')
+            .school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.clubs].w
         }
       }
     );
@@ -454,19 +469,25 @@ export class TeamCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    const { school_level_privileges } = this.session.user;
-    const schoolPrivileges = school_level_privileges[this.session.school.id];
-    this.user = this.session.user;
-    this.schoolId = this.session.school.id;
+    const { school_level_privileges } = this.session.g.get('user');
+    const schoolPrivileges = school_level_privileges[this.session.g.get('school').id];
+    this.user = this.session.g.get('user');
+    this.schoolId = this.session.g.get('school').id;
+
+    this.buttonData = {
+      disabled: true,
+      class: 'primary',
+      text: 'Send Invite'
+    }
 
 
-    this.canReadClubs = this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.clubs) ||
-      this.session.canAccountLevelReadResource(CP_PRIVILEGES_MAP.clubs);
+    this.canReadClubs = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.clubs) ||
+      canAccountLevelReadResource(this.session.g, CP_PRIVILEGES_MAP.clubs);
 
-    this.canReadEvents = this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.events);
+    this.canReadEvents = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.events);
 
-    this.canReadServices = this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.services) ||
-      this.session.canAccountLevelReadResource(CP_PRIVILEGES_MAP.services);
+    this.canReadServices = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.services) ||
+      canAccountLevelReadResource(this.session.g, CP_PRIVILEGES_MAP.services);
 
     this.formData = TEAM_ACCESS.getMenu(this.user.school_level_privileges[this.schoolId]);
 

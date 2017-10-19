@@ -13,10 +13,11 @@ import {
 } from '../../../../../reducers/header.reducer';
 import { EventsService } from '../events.service';
 import { STATUS } from '../../../../../shared/constants';
+import { FORMAT } from '../../../../../shared/pipes/date';
 import { CPSession, ISchool } from '../../../../../session';
-import { FORMAT } from '../../../../../shared/pipes/date.pipe';
+import { CPMap, CPDate } from '../../../../../shared/utils';
 import { BaseComponent } from '../../../../../base/base.component';
-import { CPMap, CPDate, CP_PRIVILEGES_MAP } from '../../../../../shared/utils';
+import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 import { ErrorService, StoreService, AdminService } from '../../../../../shared/services';
 
 const COMMON_DATE_PICKER_OPTIONS = {
@@ -38,6 +39,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
   event;
   stores;
+  buttonData;
   dateFormat;
   serverError;
   isDateError;
@@ -71,7 +73,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     private eventService: EventsService
   ) {
     super();
-    this.school = this.session.school;
+    this.school = this.session.g.get('school');
     this.eventId = this.route.snapshot.params['eventId'];
 
     super.isLoading().subscribe(res => this.loading = res);
@@ -95,11 +97,13 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
       if (managerId.value === null) {
         this.formMissingFields = true;
+        this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
         managerId.setErrors({ 'required': true });
       }
 
       if (eventFeedback.value === null) {
         this.formMissingFields = true;
+        this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
         eventFeedback.setErrors({ 'required': true });
       }
     }
@@ -109,6 +113,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
         this.form.controls['poster_url'].setErrors({ 'required': true });
       }
       this.formMissingFields = true;
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       return;
     }
 
@@ -118,6 +123,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       this.form.controls['end'].setErrors({ 'required': true });
       this.form.controls['start'].setErrors({ 'required': true });
       this.dateErrorMessage = 'Event End Time must be after Event Start Time';
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       return;
     }
 
@@ -127,6 +133,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       this.form.controls['end'].setErrors({ 'required': true });
       this.form.controls['start'].setErrors({ 'required': true });
       this.dateErrorMessage = 'Event End Time must be greater than now';
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       return;
     }
 
@@ -145,7 +152,10 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
         }
         this.router.navigate(['/manage/events/' + this.eventId]);
       },
-      _ => this.serverError = true
+      _ => {
+        this.serverError = true;
+        this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
+      }
       );
   }
 
@@ -249,7 +259,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    let school = this.session.school;
+    let school = this.session.g.get('school');
     let search: URLSearchParams = new URLSearchParams();
     search.append('school_id', school.id.toString());
 
@@ -318,17 +328,25 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       data = {};
       data.name = '';
       this.mapCenter.next({
-        lat: this.session.school.latitude,
-        lng: this.session.school.longitude
+        lat: this.session.g.get('school').latitude,
+        lng: this.session.g.get('school').longitude
       });
     }
 
     this.form.controls['city'].setValue(cpMap.city);
+
     this.form.controls['province'].setValue(cpMap.province);
+
     this.form.controls['country'].setValue(cpMap.country);
-    this.form.controls['latitude'].setValue(cpMap.latitude || this.session.school.latitude);
-    this.form.controls['longitude'].setValue(cpMap.longitude || this.session.school.longitude);
+
+    this.form.controls['latitude'].setValue(cpMap.latitude ||
+      this.session.g.get('school').latitude);
+
+    this.form.controls['longitude'].setValue(cpMap.longitude ||
+      this.session.g.get('school').longitude);
+
     this.form.controls['address'].setValue(data.name);
+
     this.form.controls['postal_code'].setValue(cpMap.postal_code);
 
     if (data.geometry) {
@@ -341,6 +359,11 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.buttonData = {
+      text: 'Save',
+      class: 'primary'
+    }
+
     this.dateFormat = FORMAT.DATETIME;
     this.booleanOptions = [
       {

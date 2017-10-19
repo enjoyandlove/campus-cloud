@@ -45,10 +45,10 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
     let groupSearch = new URLSearchParams();
     let memberSearch = new URLSearchParams();
 
-    memberSearch.append('school_id', this.session.school.id.toString());
+    memberSearch.append('school_id', this.session.g.get('school').id.toString());
 
     groupSearch.append('store_id', this.route.snapshot.parent.parent.parent.params['clubId']);
-    groupSearch.append('school_id', this.session.school.id.toString());
+    groupSearch.append('school_id', this.session.g.get('school').id.toString());
 
     let socialGroupDetails$ = this.membersService.getSocialGroupDetails(groupSearch);
 
@@ -62,7 +62,7 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
     super
       .fetchData(stream$)
       .then(res => this.state.members = res.data)
-      .catch(err => console.log(err));
+      .catch(err => { throw new Error(err) });
   }
 
   forceRefresh() {

@@ -20,6 +20,7 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
 
   links;
   isEdited;
+  buttonData;
   loading = true;
   form: FormGroup;
   deleteLink = '';
@@ -39,7 +40,10 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
 
     this.loading = false;
 
-    this.form.valueChanges.subscribe(_ => this.isEdited = true);
+    this.form.valueChanges.subscribe(_ => {
+      this.isEdited = true;
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: false })
+    });
   }
 
   buildEventControls() {
@@ -54,7 +58,7 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
 
   onBulkUpdate(data) {
     let search = new URLSearchParams();
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     let _links = [];
 
@@ -99,7 +103,7 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
     this.loading = true;
     this.isEdited = false;
     let search = new URLSearchParams();
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     if (this.storeId) {
       search.append('store_id', this.storeId.toString());
@@ -137,6 +141,12 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
 
   ngOnInit() {
     this.fetch();
+
+    this.buttonData = {
+      class: 'primary',
+      text: 'Update',
+      disabled: true
+    }
 
     this.reload.subscribe(res => {
       if (res) {

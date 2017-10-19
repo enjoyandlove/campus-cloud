@@ -8,7 +8,8 @@ import { Store } from '@ngrx/store';
 import { EventsService } from '../events.service';
 import { CPSession, ISchool } from '../../../../../session';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-import { CPMap, CPDate, CP_PRIVILEGES_MAP } from '../../../../../shared/utils';
+import { CPMap, CPDate } from '../../../../../shared/utils';
+import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants';
 import { ErrorService, StoreService, AdminService } from '../../../../../shared/services';
 
 const COMMON_DATE_PICKER_OPTIONS = {
@@ -31,6 +32,7 @@ export class EventsCreateComponent implements OnInit {
   @Input() isService: boolean;
 
   stores$;
+  buttonData;
   isDateError;
   booleanOptions;
   school: ISchool;
@@ -53,7 +55,7 @@ export class EventsCreateComponent implements OnInit {
     private errorService: ErrorService,
     private eventService: EventsService
   ) {
-    this.school = this.session.school;
+    this.school = this.session.g.get('school');
     let search: URLSearchParams = new URLSearchParams();
 
     this.buildHeader();
@@ -109,7 +111,7 @@ export class EventsCreateComponent implements OnInit {
       return _admins;
     }).subscribe(
       res => this.managers = res,
-      err => console.log(err)
+      err => { throw new Error(err) }
     );
   }
 
@@ -148,6 +150,7 @@ export class EventsCreateComponent implements OnInit {
 
     if (!this.form.valid) {
       this.formError = true;
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       return;
     }
 
@@ -158,11 +161,13 @@ export class EventsCreateComponent implements OnInit {
       if (managerId.value === null) {
         this.formError = true;
         managerId.setErrors({'required': true});
+        this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       }
 
       if (eventFeedback.value === null) {
         this.formError = true;
         eventFeedback.setErrors({'required': true});
+        this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       }
     }
 
@@ -171,6 +176,7 @@ export class EventsCreateComponent implements OnInit {
       this.formError = true;
       this.form.controls['end'].setErrors({ 'required': true });
       this.dateErrorMessage = 'Event End Time must be after Event Start Time';
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       return;
     }
 
@@ -179,6 +185,7 @@ export class EventsCreateComponent implements OnInit {
       this.formError = true;
       this.form.controls['end'].setErrors({ 'required': true });
       this.dateErrorMessage = 'Event End Time must be greater than now';
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       return;
     }
 
@@ -197,7 +204,10 @@ export class EventsCreateComponent implements OnInit {
         }
         this.router.navigate(['/manage/events/' + res.id]);
       },
-      err => this.errorService.handleError(err)
+      err => {
+        this.errorService.handleError(err);
+        this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
+      }
       );
   }
 
@@ -217,6 +227,11 @@ export class EventsCreateComponent implements OnInit {
     if (this.clubId) {
       store_id = this.clubId;
       this.fetchManagersBySelectedStore(this.clubId);
+    }
+
+    this.buttonData = {
+      class: 'primary',
+      text: 'Create Event'
     }
 
     this.booleanOptions = [

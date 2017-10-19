@@ -16,8 +16,8 @@ export class CPIntercommComponent implements OnInit {
   ngOnInit() {
     window.Intercom('boot', {
       app_id: 'v0k6hr06',
-      user_id: this.session.user.id,
-      email: this.session.user.email,
+      user_id: this.session.g.get('user').id,
+      email: this.session.g.get('user').email,
     });
   }
 }

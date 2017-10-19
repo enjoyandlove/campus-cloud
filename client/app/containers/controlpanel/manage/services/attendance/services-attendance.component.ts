@@ -1,4 +1,3 @@
-import { CP_PRIVILEGES_MAP } from './../../../../../shared/utils/privileges';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
@@ -8,10 +7,17 @@ import {
   IHeader,
   HEADER_UPDATE
 } from '../../../../../reducers/header.reducer';
+
+import {
+  canSchoolReadResource,
+  canStoreReadAndWriteResource
+} from './../../../../../shared/utils/privileges';
+
 import { ServicesService } from '../services.service';
 import { CPSession } from './../../../../../session/index';
 import { BaseComponent } from '../../../../../base/base.component';
 import { STAR_SIZE } from '../../../../../shared/components/cp-stars';
+import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants';
 
 const FEEDBACK_ENABLED = 1;
 
@@ -70,7 +76,7 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
         }
         this.buildHeader();
       })
-      .catch(err => console.error(err));
+      .catch(err => { throw new Error(err) });
   }
 
   setDefaultFeedback() {
@@ -92,9 +98,9 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
         'url': `/manage/services/${this.serviceId}/info`
       }
     ];
-    const eventsSchoolLevel = this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.events);
-    const eventsAccountLevel = this.
-      session.canStoreReadAndWriteResource(this.storeId, CP_PRIVILEGES_MAP.events);
+    const eventsSchoolLevel = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.events);
+    const eventsAccountLevel = canStoreReadAndWriteResource(this.session.g,
+      this.storeId, CP_PRIVILEGES_MAP.events);
 
     if (eventsSchoolLevel || eventsAccountLevel) {
       const events = {

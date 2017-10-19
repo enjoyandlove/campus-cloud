@@ -23,7 +23,11 @@ import { EventsAttendanceComponent }  from './attendance';
 const appRoutes: Routes = [
   { path: 'import', redirectTo: '', pathMatch: 'full' },
 
-  { path: '', component: EventsListComponent },
+  {
+    path: '',
+    data: { preload: true },
+    component: EventsListComponent
+  },
   { path: 'create', component: EventsCreateComponent },
   { path: ':eventId', component: EventsAttendanceComponent },
   { path: ':eventId/edit', component: EventsEditComponent },

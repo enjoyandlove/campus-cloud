@@ -3,10 +3,7 @@ import {
   OnInit,
   Output,
   Component,
-  ViewChild,
-  ElementRef,
   EventEmitter,
-  AfterViewInit,
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -17,7 +14,7 @@ import { API } from '../../../../../../../config/api';
 import { FeedsService } from '../../../feeds.service';
 import { STATUS } from '../../../../../../../shared/constants';
 import { CPSession, ISchool } from '../../../../../../../session';
-import { CPArray, CPImage, appStorage } from '../../../../../../../shared/utils';
+import { CPImage, appStorage } from '../../../../../../../shared/utils';
 import { FileUploadService, StoreService } from '../../../../../../../shared/services';
 
 @Component({
@@ -25,10 +22,9 @@ import { FileUploadService, StoreService } from '../../../../../../../shared/ser
   templateUrl: './feed-input-box.component.html',
   styleUrls: ['./feed-input-box.component.scss']
 })
-export class FeedInputBoxComponent implements AfterViewInit, OnInit {
+export class FeedInputBoxComponent implements OnInit {
   @Input() clubId: number;
   @Input() postingMemberType: number;
-  @ViewChild('textarea') textarea: ElementRef;
   @Input() isCampusWallView: Observable<any>;
   @Output() created: EventEmitter<null> = new EventEmitter();
 
@@ -41,7 +37,9 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
   _isCampusWallView;
   DISABLED_MEMBER_TYPE = 100;
   placeHolder = 'Add some text to this post...';
+  image$: BehaviorSubject<string> = new BehaviorSubject(null);
   reset$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  resetTextEditor$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
     private fb: FormBuilder,
@@ -51,7 +49,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
     private fileUploadService: FileUploadService
   ) {
     let search = new URLSearchParams();
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     this.stores$ = this.storeService.getStores(search);
 
@@ -92,8 +90,8 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
         }
         this.form.controls['message'].setValue(null);
         this.reset$.next(true);
+        this.resetTextEditor$.next(true);
         this.created.emit(res);
-        this.textarea.nativeElement.innerHTML = this.placeHolder;
       }
       );
   }
@@ -102,7 +100,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
     let _data = {
       'post_type': data.post_type || null,
       'store_id': data.store_id,
-      'school_id': this.session.school.id,
+      'school_id': this.session.g.get('school').id,
       'message': data.message,
       'message_image_url': data.message_image_url
     };
@@ -114,41 +112,9 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
     return _data;
   }
 
-  ngAfterViewInit() {
-    let el = this.textarea.nativeElement;
-
-    Observable
-      .fromEvent(el, 'click')
-      .subscribe((res: any) => {
-        if (res.target.textContent === this.placeHolder) {
-          res.target.textContent = null;
-          this.form.controls['message'].setValue(null);
-        }
-      });
-
-    Observable
-      .fromEvent(el, 'blur')
-      .subscribe((res: any) => {
-        if (!res.target.textContent) {
-          res.target.textContent = this.placeHolder;
-          this.form.controls['message'].setValue(null);
-        }
-      });
-
-    Observable
-      .fromEvent(el, 'keyup')
-      .subscribe((res: any) => {
-        if (!res.target.textContent) {
-          res.target.textContent = this.placeHolder;
-          this.form.controls['message'].setValue(null);
-          return;
-        }
-        this.form.controls['message'].setValue(res.target.textContent);
-      });
-  }
-
-  onDeleteImage() {
-    this.form.controls['message_image_url'].setValue(null);
+  onContentChange(data: { body: string, image: string }) {
+    this.form.controls['message'].setValue(data.body);
+    this.form.controls['message_image_url'].setValue(data.image);
   }
 
   onSelectedHost(host): void {
@@ -161,7 +127,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
 
   onFileUpload(file) {
     this.imageError = null;
-    const fileExtension = CPArray.last(file.name.split('.'));
+    const fileExtension = file.name.split('.').pop();
 
     if (!CPImage.isSizeOk(file.size, CPImage.MAX_IMAGE_SIZE)) {
       this.imageError = STATUS.FILE_IS_TOO_BIG;
@@ -184,9 +150,10 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
       .uploadFile(file, url, headers)
       .subscribe(
       res => {
+        this.image$.next(res.image_url);
         this.form.controls['message_image_url'].setValue(res.image_url);
       },
-      err => console.error(err)
+      err => { throw new Error(err) }
       );
   }
 
@@ -195,7 +162,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit() {
-    this.school = this.session.school;
+    this.school = this.session.g.get('school');
     this.isCampusWallView.subscribe(res => {
       // Not Campus Wall
       if (res.type !== 1) {
@@ -216,7 +183,7 @@ export class FeedInputBoxComponent implements AfterViewInit, OnInit {
 
     this.form = this.fb.group({
       'group_id': [null],
-      'school_id': [this.session.school.id],
+      'school_id': [this.session.g.get('school').id],
       'store_id': [null, Validators.required],
       'post_type': [null, Validators.required],
       'message': [null, [Validators.required, Validators.maxLength(500)]],

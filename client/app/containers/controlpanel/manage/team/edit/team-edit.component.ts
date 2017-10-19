@@ -5,15 +5,15 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { TEAM_ACCESS } from '../utils';
+import { CPSession } from '../../../../../session';
 import { STATUS } from '../../../../../shared/constants';
 import { accountCleanUp } from './../create/team-create.component';
 import { BaseComponent } from '../../../../../base/base.component';
-import { accountsToStoreMap } from './../../../../../session/index';
 import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
 import { AdminService, ErrorService } from '../../../../../shared/services';
-import { CPSession } from '../../../../../session';
-import { CP_PRIVILEGES, CP_PRIVILEGES_MAP } from '../../../../../shared/utils';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+import { CP_PRIVILEGES, CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
+import { accountsToStoreMap } from './../../../../../shared/utils/privileges/privileges';
 
 const eventsDropdown = function (privilege: { r: boolean, w: boolean }) {
   let items = [
@@ -139,6 +139,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   schoolId;
   formError;
   clubsMenu;
+  buttonData;
   eventsMenu;
   privileges;
   editingUser;
@@ -187,7 +188,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       .then(res => {
         this.editingUser = res.data;
 
-        this.isCurrentUser = this.editingUser.id === this.session.user.id;
+        this.isCurrentUser = this.editingUser.id === this.session.g.get('user').id;
 
 
         this.buildHeader(`${this.editingUser.firstname} ${this.editingUser.lastname}`);
@@ -208,7 +209,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
           this.user.school_level_privileges[this.schoolId]) && _.isEqual(this.accountPrivileges,
             this.user.account_level_privileges);
       })
-      .catch(err => console.log(err));
+      .catch(err => { throw new Error(err) });
   }
 
   servicesDefaultPermission() {
@@ -289,6 +290,10 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       'lastname': [profile.lastname, Validators.required],
       'email': [profile.email, Validators.required]
     });
+
+    this.form.valueChanges.subscribe(_ => {
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: true });
+    })
   }
 
   onSubmit(data) {
@@ -296,6 +301,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     this.isFormError = false;
 
     if (!this.form.valid) {
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       this.errorService.handleError({ reason: STATUS.ALL_FIELDS_ARE_REQUIRED });
       return;
     }
@@ -317,6 +323,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
     if (emptyAccountPrivileges && emptySchoolPrivileges) {
       this.formError = 'You have not granted any access';
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       this.isFormError = true;
       return;
     }
@@ -382,7 +389,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     if (checked) {
       this.accountPrivileges = Object.assign(
         {},
-        accountsToStoreMap(this.session.user.account_mapping[this.schoolId],
+        accountsToStoreMap(this.session.g.get('user').account_mapping[this.schoolId],
                            this.user.account_level_privileges)
       );
 
@@ -509,23 +516,32 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       {
         [CP_PRIVILEGES_MAP.clubs]: {
           r: true,
-          w: this.session.user.school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.clubs].w
+          w: this.session.g.get('user')
+            .school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.clubs].w
         },
 
         [CP_PRIVILEGES_MAP.moderation]: {
           r: true,
-          w: this.session.user.school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.clubs].w
+          w: this.session.g.get('user')
+            .school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.clubs].w
         },
 
         [CP_PRIVILEGES_MAP.membership]: {
           r: true,
-          w: this.session.user.school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.clubs].w
+          w: this.session.g.get('user')
+            .school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.clubs].w
         }
       }
     );
   }
 
   onEventsSelected(event) {
+    this.accountPrivileges = Object.assign(
+      {},
+      this.accountPrivileges,
+      { ...this.removePrivilegeFromRandomAccount(CP_PRIVILEGES_MAP.events) }
+    )
+
     if (event.action === null) {
       if (CP_PRIVILEGES_MAP.events in this.schoolPrivileges) {
         delete this.schoolPrivileges[CP_PRIVILEGES_MAP.events];
@@ -628,8 +644,13 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.user = this.session.user;
-    this.schoolId = this.session.school.id;
+    this.user = this.session.g.get('user');
+    this.schoolId = this.session.g.get('school').id;
+
+    this.buttonData = {
+      class: 'primary',
+      text: 'Update'
+    }
 
     let schoolPrivileges = this.user.school_level_privileges[this.schoolId];
 

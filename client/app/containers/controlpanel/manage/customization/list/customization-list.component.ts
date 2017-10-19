@@ -24,7 +24,7 @@ export class CustomizationListComponent implements OnInit {
     private session: CPSession,
     private fileUploadService: FileUploadService
   ) {
-    this.school = this.session.school;
+    this.school = this.session.g.get('school');
   }
 
   onError(error) {
@@ -75,7 +75,7 @@ export class CustomizationListComponent implements OnInit {
 
         // // this.onFileUpload(res);
       })
-      .catch(err => console.log(err));
+      .catch(err => { throw new Error(err) });
   }
 
     onFileUpload(file) {

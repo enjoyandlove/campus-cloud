@@ -14,10 +14,15 @@ import {
   ViewChild,
   OnChanges,
   ElementRef,
+  HostListener,
   EventEmitter,
   AfterViewInit,
   ViewEncapsulation
 } from '@angular/core';
+
+require('flatpickr');
+
+import * as moment from 'moment';
 
 declare var $: any;
 
@@ -28,14 +33,25 @@ declare var $: any;
   encapsulation: ViewEncapsulation.None
 })
 export class CPSmallDatePickerComponent implements AfterViewInit, OnInit, OnChanges {
-  @Output() rangeChange: EventEmitter<string[]> = new EventEmitter();
-  @ViewChild('input') input: ElementRef;
   @Input() options: any;
+  @ViewChild('input') input: ElementRef;
+  @Output() reset: EventEmitter<null> = new EventEmitter();
+  @Output() rangeChange: EventEmitter<string[]> = new EventEmitter();
 
-  flatPicker;
+  flatPickerInstance = null;
 
-  constructor() {
-    this.flatPicker = require('flatpickr');
+  constructor(
+    private el: ElementRef
+  ) { }
+
+  @HostListener('document:click', ['$event'])
+  onClick(event) {
+    if (event.target.contains(this.el.nativeElement)) {
+      if (this.flatPickerInstance.selectedDates.length === 1) {
+        this.reset.emit();
+        this.flatPickerInstance.clear();
+      }
+    }
   }
 
   ngAfterViewInit() {
@@ -51,13 +67,18 @@ export class CPSmallDatePickerComponent implements AfterViewInit, OnInit, OnChan
       {
         onChange: function(dates) {
           if (dates.length === 2) {
+            dates = [
+              moment(dates[0]).hours(0).minutes(0).seconds(0).toDate(),
+              moment(dates[1]).hours(23).minutes(59).seconds(59).toDate()
+            ]
             self.rangeChange.emit(dates);
             return;
           }
         }
       }
     );
-    $(el).flatpickr(this.options);
+
+    this.flatPickerInstance = $(el).flatpickr(this.options);
   }
 
   ngOnChanges() {

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
 import { CPSession } from '../../../../../session';
-import { FORMAT } from '../../../../../shared/pipes/date.pipe';
+import { FORMAT } from '../../../../../shared/pipes/date';
 import { AnnouncementsService } from '../announcements.service';
 import { BaseComponent } from '../../../../../base/base.component';
 
@@ -90,12 +90,12 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
 
     search.append('priority', type);
     search.append('search_str', this.state.query);
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     super
       .fetchData(this.service.getAnnouncements(search, this.startRange, this.endRange))
       .then(res => this.state = Object.assign({}, this.state, { messages: res.data }))
-      .catch(err => console.log(err));
+      .catch(err => { throw new Error(err) });
   }
 
   onCreated() {

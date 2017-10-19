@@ -22,6 +22,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
   clubId;
   loading;
   formError;
+  buttonData;
   statusTypes;
   membershipTypes;
   form: FormGroup;
@@ -69,7 +70,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
 
   fetch() {
     let search = new URLSearchParams();
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     const stream$ = this.clubsService.getClubById(this.clubId, search);
 
@@ -89,7 +90,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
           }
         );
       })
-      .catch(err => console.log(err));
+      .catch(err => { throw new Error(err) });
   }
 
   buildForm() {
@@ -121,18 +122,22 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
 
     if (!this.form.valid) {
       this.formError = true;
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       return;
     }
 
     let search = new URLSearchParams();
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     this
       .clubsService
       .updateClub(this.form.value, this.clubId, search)
       .subscribe(
       res => { this.router.navigate(['/manage/clubs/' + res.id + '/info']); },
-      err => console.log(err)
+      err => {
+        this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
+        throw new Error(err)
+      }
       );
   }
 
@@ -155,17 +160,25 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
       data = {};
       data.name = '';
       this.mapCenter.next({
-        lat: this.session.school.latitude,
-        lng: this.session.school.longitude
+        lat: this.session.g.get('school').latitude,
+        lng: this.session.g.get('school').longitude
       });
     }
 
     this.form.controls['city'].setValue(cpMap.city);
+
     this.form.controls['province'].setValue(cpMap.province);
+
     this.form.controls['country'].setValue(cpMap.country);
-    this.form.controls['latitude'].setValue(cpMap.latitude || this.session.school.latitude);
-    this.form.controls['longitude'].setValue(cpMap.longitude || this.session.school.longitude);
+
+    this.form.controls['latitude'].setValue(cpMap.latitude
+        || this.session.g.get('school').latitude);
+
+    this.form.controls['longitude'].setValue(cpMap.longitude
+      || this.session.g.get('school').longitude);
+
     this.form.controls['address'].setValue(data.name);
+
     this.form.controls['postal_code'].setValue(cpMap.postal_code);
 
     if (data.geometry) {
@@ -175,6 +188,12 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.fetch();
+
+    this.buttonData = {
+      text: 'Save',
+      class: 'primary'
+    }
+
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload:

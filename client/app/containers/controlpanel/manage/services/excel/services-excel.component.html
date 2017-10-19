@@ -25,7 +25,7 @@
               </div>
             </div>
             <div
-              class="row cp-form"
+              class="row form__wrapper"
               *ngFor="let service of form.controls.services.controls; let i=index">
               <div [formGroupName]="i" class="col-xs-12">
                 <div class="row form__item">
@@ -84,16 +84,13 @@
           <div class="col-xs-12">
             <div class="pull-right">
               <a [routerLink]="['/manage/services']"
-                class="cpbtn cpbtn--tall cpbtn--cancel" i18n>
+                class="cpbtn cpbtn--cancel" i18n>
                 Cancel
               </a>
-              <button
-                type="button"
-                (click)="onSubmit()"
-                class="cpbtn cpbtn--tall cpbtn--primary" i18n
-                [disabled]="!form.controls.services.controls.length || !form.valid">
-                Import Services
-              </button>
+              <cp-button
+                [props]="buttonData"
+                (buttonClick)="onSubmit()">
+              </cp-button>
             </div>
           </div>
         </div>

@@ -18,6 +18,7 @@ import { HEADER_UPDATE, HEADER_DEFAULT } from '../../../../../reducers/header.re
 export class ServicesExcelComponent extends BaseComponent implements OnInit, OnDestroy {
   stores;
   services;
+  buttonData;
   categories;
   isChecked = [];
   loading = false;
@@ -63,6 +64,10 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
       'services': this.fb.array([])
     });
     this.buildGroup();
+
+    this.form.valueChanges.subscribe(_ => {
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: !this.form.valid });
+    })
   }
 
   loadCategories(): Promise<any> {
@@ -115,7 +120,7 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
 
   buildServiceControl(service) {
     return this.fb.group({
-      'school_id': [this.session.school.id],
+      'school_id': [this.session.g.get('school').id],
       'name': [service.service_name, Validators.required],
       'description': [service.description],
       'email': [service.service_email],
@@ -209,7 +214,7 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
       .createService(parsedServices)
       .subscribe(
       _ => this.router.navigate(['/manage/services']),
-      err => console.error(err)
+      err => { throw new Error(err) }
       );
   }
 
@@ -218,5 +223,11 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
     this.store.dispatch({ type: SERVICES_MODAL_RESET });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.buttonData = {
+      disabled: true,
+      class: 'primary',
+      text: 'Import Services'
+    }
+  }
 }

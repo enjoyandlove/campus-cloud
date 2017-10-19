@@ -1,3 +1,4 @@
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import {
   Input,
   OnInit,
@@ -23,8 +24,15 @@ export class CPSearchBoxComponent implements AfterViewInit, OnInit {
   @Output() searching: EventEmitter<boolean> = new EventEmitter();
 
   stream$: Observable<string>;
+  isSearch$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor() { }
+
+  onClear() {
+    this.query.emit(null);
+    this.isSearch$.next(false);
+    this.q.nativeElement.value = '';
+  }
 
   ngAfterViewInit() {
     const input = this.q.nativeElement;
@@ -43,9 +51,12 @@ export class CPSearchBoxComponent implements AfterViewInit, OnInit {
         if (!query) {
           this.query.emit(null);
           this.searching.emit(false);
+          this.isSearch$.next(false);
           return;
         }
+
         this.query.emit(query);
+        this.isSearch$.next(true);
         this.searching.emit(false);
       });
   }

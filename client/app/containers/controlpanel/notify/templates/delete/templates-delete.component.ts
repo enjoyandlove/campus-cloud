@@ -18,6 +18,7 @@ export class TemplatesDeleteComponent implements OnInit {
   @Output() deleted: EventEmitter<number> = new EventEmitter();
 
   isError;
+  buttonData;
   errorMessage;
 
   constructor(
@@ -33,7 +34,7 @@ export class TemplatesDeleteComponent implements OnInit {
   onDelete() {
     this.isError = false;
     let search = new URLSearchParams();
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     this
       .service
@@ -43,13 +44,20 @@ export class TemplatesDeleteComponent implements OnInit {
           this.teardown.emit();
           this.deleted.emit(this.item.id);
           $('#deleteTemplateModal').modal('hide');
+          this.buttonData = Object.assign({}, this.buttonData, { disabled: true });
         },
         _ => {
           this.isError = true;
           this.errorMessage = STATUS.SOMETHING_WENT_WRONG;
+          this.buttonData = Object.assign({}, this.buttonData, { disabled: true });
         }
       );
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.buttonData = {
+      class: 'danger',
+      text: 'Delete'
+    }
+  }
 }

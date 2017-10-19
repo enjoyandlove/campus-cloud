@@ -22,7 +22,7 @@
       <span
         (click)="doSort('start')"
         class="col-xs-2 hover" i18n>
-        Date
+        Start Date
         <span *ngIf="state.sort_field === 'start'">
           <i
             class="material-icons"
@@ -36,7 +36,7 @@
           </i>
         </span>
       </span>
-      <span class="col-xs-3 text-center" i18n>Assessment</span>
+      <span class="col-xs-3" i18n>Assessment</span>
       <span class="col-xs-1"></span>
     </div>
   </li>
@@ -67,11 +67,11 @@
         {{ event.start | cpDatePipe:dateFormat }}
       </span>
 
-      <span class="col-xs-3 text-truncate text-center">
+      <span class="col-xs-3 text-truncate">
         <a
           [routerLink]="['/cb/checkin/e/' + event.encrypted_id]"
           *ngIf="event.event_attendance === 1"
-          class="cpbtn cpbtn--no-border cpbtn--secondary" i18n>
+          class="cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--secondary" i18n>
           Check-In Details
         </a>
       </span>

@@ -3,7 +3,6 @@ import { URLSearchParams } from '@angular/http';
 
 import { EventsService } from '../../events.service';
 import { CPSession } from '../../../../../../session';
-import { CPState } from '../../../../../../shared/utils';
 import { BaseComponent } from '../../../../../../base/base.component';
 
 interface IState {
@@ -59,7 +58,7 @@ export class EventsComponent extends BaseComponent implements OnInit, OnDestroy 
     public service: EventsService
   ) {
     super();
-    this.school = this.session.school;
+    this.school = this.session.g.get('school');
     super.isLoading().subscribe(res => this.loading = res);
   }
 
@@ -70,7 +69,7 @@ export class EventsComponent extends BaseComponent implements OnInit, OnDestroy 
       .then(res => {
         this.state = Object.assign({}, this.state, { events: res.data });
       })
-      .catch(err => console.error(err));
+      .catch(err => { throw new Error(err) });
   }
 
   onSortList(sort) {
@@ -147,7 +146,7 @@ export class EventsComponent extends BaseComponent implements OnInit, OnDestroy 
     search.append('start', (this.state.start).toString());
     search.append('end', (this.state.end).toString());
     search.append('store_id', store_id);
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
     search.append('search_str', this.state.search_str);
     search.append('exclude_current', exclude_current);
     search.append('attendance_only', (this.state.attendance_only).toString());
@@ -163,9 +162,11 @@ export class EventsComponent extends BaseComponent implements OnInit, OnDestroy 
   }
 
   onDeletedEvent(eventId) {
-    const _state = CPState.deleteById(this.state, 'events', eventId);
-
-    this.state = Object.assign({}, this.state, _state);
+    this.state = Object.assign(
+      {},
+      this.state,
+      { events: this.state.events.filter(event => event.id !== eventId) }
+    );
   }
 
   onPaginationNext() {

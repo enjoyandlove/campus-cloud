@@ -43,7 +43,7 @@ export class EventsFacebookComponent extends BaseComponent implements OnInit {
 
   private fetch() {
 
-    const school = this.session.school;
+    const school = this.session.g.get('school');
     let search: URLSearchParams = new URLSearchParams();
     search.append('school_id', school.id.toString());
 
@@ -54,7 +54,7 @@ export class EventsFacebookComponent extends BaseComponent implements OnInit {
       .then(res => {
         this.stores = res.data;
       })
-      .catch(err => console.log(err));
+      .catch(err => { throw new Error(err) });
   }
 
   private buildHeader() {

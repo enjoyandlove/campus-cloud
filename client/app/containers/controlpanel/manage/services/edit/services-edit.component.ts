@@ -12,7 +12,7 @@ import { ServicesService } from '../services.service';
 import { ProvidersService } from '../providers.service';
 import { CPSession, ISchool } from '../../../../../session';
 import { BaseComponent } from '../../../../../base/base.component';
-import { CP_PRIVILEGES_MAP } from '../../../../../shared/utils/privileges';
+import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 import { IServiceDeleteModal } from './components/service-edit-delete-modal';
 import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
@@ -35,6 +35,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   loading;
   service;
   categories;
+  buttonData;
   withAttendance;
   school: ISchool;
   storeId: number;
@@ -63,7 +64,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     private providersService: ProvidersService
   ) {
     super();
-    this.school = this.session.school;
+    this.school = this.session.g.get('school');
     super.isLoading().subscribe(res => this.loading = res);
     this.serviceId = this.route.snapshot.params['serviceId'];
 
@@ -138,7 +139,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
           providers.forEach(provider => control.push(this.buildServiceProviderControl(provider)));
         }
       })
-      .catch(err => console.error(err));
+      .catch(err => { throw new Error(err) });
   }
 
   onPlaceChanged(data) {
@@ -148,17 +149,25 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       data = {};
       data.name = '';
       this.mapCenter.next({
-        lat: this.session.school.latitude,
-        lng: this.session.school.longitude
+        lat: this.session.g.get('school').latitude,
+        lng: this.session.g.get('school').longitude
       });
     }
 
     this.form.controls['city'].setValue(cpMap.city);
+
     this.form.controls['province'].setValue(cpMap.province);
+
     this.form.controls['country'].setValue(cpMap.country);
-    this.form.controls['latitude'].setValue(cpMap.latitude || this.session.school.latitude);
-    this.form.controls['longitude'].setValue(cpMap.longitude || this.session.school.longitude);
+
+    this.form.controls['latitude'].setValue(cpMap.latitude ||
+      this.session.g.get('school').latitude);
+
+    this.form.controls['longitude'].setValue(cpMap.longitude ||
+      this.session.g.get('school').longitude);
+
     this.form.controls['address'].setValue(data.name);
+
     this.form.controls['postal_code'].setValue(cpMap.postal_code);
 
     if (data.geometry) {
@@ -203,7 +212,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       .deleteProvider(data.id, search)
       .subscribe(
       _ => controls.removeAt(data.index),
-      err => console.error(err)
+      err => { throw new Error(err) }
       );
   }
 
@@ -254,6 +263,10 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       'default_basic_feedback_label': [this.service.default_basic_feedback_label],
       'providers': this.fb.array([])
     });
+
+    this.form.valueChanges.subscribe(_ => {
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: !this.form.valid });
+    })
   }
 
   buildHeader() {
@@ -354,5 +367,10 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.buttonData = {
+      class: 'primary',
+      text: 'Save'
+    }
+  }
 }

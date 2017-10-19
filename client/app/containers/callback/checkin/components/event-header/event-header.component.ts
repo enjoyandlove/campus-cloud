@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { FORMAT } from '../../../../../shared/pipes/date.pipe';
+import { FORMAT } from '../../../../../shared/pipes/date';
 
 @Component({
   selector: 'cp-event-header',

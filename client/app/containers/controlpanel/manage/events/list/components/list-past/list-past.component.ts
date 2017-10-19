@@ -2,7 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { FORMAT } from '../../../../../../../shared/pipes';
 import { CPSession } from './../../../../../../../session/index';
-import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/utils/privileges';
+import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
+import { canSchoolWriteResource } from './../../../../../../../shared/utils/privileges/privileges';
 
 interface ISort {
   sort_field: string;
@@ -28,7 +29,7 @@ export class ListPastComponent implements OnInit {
   sort: ISort = sort;
 
   canWriteSchoolWide;
-  dateFormat = FORMAT.LONG;
+  dateFormat = FORMAT.SHORT;
 
   constructor(
     private session: CPSession
@@ -51,6 +52,6 @@ export class ListPastComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.canWriteSchoolWide = this.session.canSchoolWriteResource(CP_PRIVILEGES_MAP.events);
+    this.canWriteSchoolWide = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.events);
   }
 }

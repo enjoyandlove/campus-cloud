@@ -125,7 +125,7 @@ module.exports = function makeWebpackConfig() {
       {
         test: /\.css$/,
         exclude: root('client', 'app'),
-        loader: isTest ? 'null-loader' : ExtractTextPlugin.extract({ fallbackLoader: 'style-loader', loader: ['css-loader', 'postcss-loader'] })
+        loader: isTest ? 'null-loader' : ExtractTextPlugin.extract({ fallback: 'style-loader', loader: ['css-loader', 'postcss-loader'] })
       },
       // all css required in client/app files will be merged in js files
       { test: /\.css$/, include: root('client', 'app'), loader: 'raw-loader!postcss-loader' },
@@ -136,7 +136,7 @@ module.exports = function makeWebpackConfig() {
       {
         test: /\.(scss|sass)$/,
         exclude: root('client', 'app'),
-        loader: isTest ? 'null-loader' : ExtractTextPlugin.extract({ fallbackLoader: 'style-loader', loader: ['css-loader', 'postcss-loader', 'sass-loader'] })
+        loader: isTest ? 'null-loader' : ExtractTextPlugin.extract({ fallback: 'style-loader', loader: ['css-loader', 'postcss-loader', 'sass-loader'] })
       },
       // all css required in client/app files will be merged in js files
       { test: /\.(scss|sass)$/, exclude: root('client', 'style'), loader: 'raw-loader!postcss-loader!sass-loader' },
@@ -255,9 +255,9 @@ module.exports = function makeWebpackConfig() {
   // Add build specific plugins
   if (isProd) {
     config.plugins.push(
-      // Reference: http://webpack.github.io/docs/list-of-plugins.html#noerrorsplugin
+      // Reference: http://webpack.github.io/docs/list-of-plugins.html#NoEmitOnErrorsPlugin
       // Only emit files when there are no errors
-      new webpack.NoErrorsPlugin(),
+      new webpack.NoEmitOnErrorsPlugin(),
 
       // // Reference: http://webpack.github.io/docs/list-of-plugins.html#dedupeplugin
       // // Dedupe modules in the output

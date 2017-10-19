@@ -6,11 +6,17 @@ import {
   IHeader,
   HEADER_UPDATE
 } from '../../../../../reducers/header.reducer';
+
+import {
+  canSchoolReadResource,
+  canStoreReadAndWriteResource
+} from './../../../../../shared/utils/privileges';
+
 import { CPSession } from '../../../../../session';
 import { ServicesService } from '../services.service';
 import { EventsService } from '../../events/events.service';
+import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants';
 import { EventsComponent } from '../../events/list/base/events.component';
-import { CP_PRIVILEGES_MAP } from './../../../../../shared/utils/privileges';
 
 @Component({
   selector: 'cp-services-events',
@@ -59,9 +65,9 @@ export class ServicesEventsComponent extends EventsComponent implements OnInit {
       }
     ];
 
-    const eventsSchoolLevel = this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.events);
-    const eventsAccountLevel = this.
-      session.canStoreReadAndWriteResource(this.serviceStoreId, CP_PRIVILEGES_MAP.events);
+    const eventsSchoolLevel = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.events);
+    const eventsAccountLevel = canStoreReadAndWriteResource(this.session.g,
+      this.serviceStoreId, CP_PRIVILEGES_MAP.events);
 
     if (eventsSchoolLevel || eventsAccountLevel) {
       const events = {

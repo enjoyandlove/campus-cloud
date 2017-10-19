@@ -1,7 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { CPSession } from './../../../../../../../session/index';
-import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/utils/privileges';
+import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
+import { canSchoolWriteResource } from './../../../../../../../shared/utils/privileges/privileges';
 
 interface IState {
   query: string;
@@ -35,7 +36,7 @@ export class ClubsListActionBoxComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.canWriteSchoolWide = this.session.canSchoolWriteResource(CP_PRIVILEGES_MAP.clubs);
+    this.canWriteSchoolWide = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.clubs);
 
     this.clubFilter = [
       {
@@ -52,7 +53,7 @@ export class ClubsListActionBoxComponent implements OnInit {
       },
       {
         label: 'Pending',
-        action: 2
+        action: -2
       }
     ];
   }

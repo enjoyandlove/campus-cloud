@@ -1,14 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
+
+import {
+  canSchoolReadResource,
+  canStoreReadAndWriteResource
+} from './../../../../../shared/utils/privileges';
 
 import { ClubsService } from '../clubs.service';
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base/base.component';
+import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-import { CP_PRIVILEGES_MAP } from '../../../../../shared/utils/privileges';
 
+const CLUB_ACTIVE_STATUS = 1;
 const CLUB_PENDING_STATUS = 2;
 
 @Component({
@@ -22,6 +28,7 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
   clubId: number;
 
   constructor(
+    private router: Router,
     private store: Store<any>,
     private session: CPSession,
     private route: ActivatedRoute,
@@ -34,7 +41,7 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
 
   private fetch() {
     let search = new URLSearchParams();
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     super
       .fetchData(this.clubsService.getClubById(this.clubId, search))
@@ -50,6 +57,15 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
   }
 
   buildHeader(name) {
+    if (this.router.url.split('/').includes('facebook')) {
+      /**
+       * we want to prevent updating the header when on /import/facebook
+       * since the import/facebook page is inside the details module this
+       * will get exectuded last so we need so stop it
+       */
+      return;
+    }
+
     let menu = {
       heading: name,
       subheading: null,
@@ -58,22 +74,30 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
     };
 
     let links = [];
+    const clubIsActive = this.club.status === CLUB_ACTIVE_STATUS;
+    const clubIsPending = this.club.status !== CLUB_PENDING_STATUS;
 
-    if (this.club.status !== CLUB_PENDING_STATUS &&
-      (this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.events) ||
-        this.session.canStoreReadAndWriteResource(this.clubId, CP_PRIVILEGES_MAP.events))) {
+    const schoolAccess = (permission) => canSchoolReadResource(this.session.g, permission);
+
+    const storeAccess = (permission) => {
+      return canStoreReadAndWriteResource(this.session.g, this.clubId, permission);
+    }
+
+    if (clubIsActive &&
+        schoolAccess(CP_PRIVILEGES_MAP.events) ||
+        storeAccess(CP_PRIVILEGES_MAP.events)) {
       links = ['Events', ...links];
     }
 
     if (this.hasMembership) {
-      if (this.club.status !== CLUB_PENDING_STATUS &&
-        (this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.moderation) ||
-          this.session.canStoreReadAndWriteResource(this.clubId, CP_PRIVILEGES_MAP.moderation))) {
+      if (clubIsPending &&
+          schoolAccess(CP_PRIVILEGES_MAP.moderation) ||
+          storeAccess(CP_PRIVILEGES_MAP.moderation)) {
         links = ['Wall', ...links];
       }
 
-      if (this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.membership) ||
-        this.session.canStoreReadAndWriteResource(this.clubId, CP_PRIVILEGES_MAP.membership)) {
+      if (schoolAccess(CP_PRIVILEGES_MAP.membership) ||
+          storeAccess(CP_PRIVILEGES_MAP.membership)) {
         links = ['Members', ...links];
       }
     }

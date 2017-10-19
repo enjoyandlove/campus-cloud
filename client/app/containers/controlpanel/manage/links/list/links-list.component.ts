@@ -71,7 +71,7 @@ export class LinksListComponent extends BaseComponent implements OnInit {
   private fetch() {
     let search = new URLSearchParams();
     search.append('search_str', this.state.search_str);
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     let end = this.endRange;
     let start = this.startRange;
@@ -79,7 +79,7 @@ export class LinksListComponent extends BaseComponent implements OnInit {
     super
       .fetchData(this.service.getLinks(start, end, search))
       .then(res => this.state.links = res.data)
-      .catch(err => console.error(err));
+      .catch(err => { throw new Error(err) });
   }
 
   onLaunchCreateModal() {

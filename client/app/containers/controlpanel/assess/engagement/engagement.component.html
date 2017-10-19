@@ -1,6 +1,7 @@
 <div class="row">
   <div class="col-xs-12">
     <cp-engagement-topbar
+      (download)="onDownload()"
       (doFilter)="onDoFilter($event)">
     </cp-engagement-topbar>
   </div>
@@ -17,6 +18,7 @@
         </p>
         <cp-engagement-stats
           [props]="chartData"
+          (download)="onDownload($event)"
           (doCompose)="onDoCompose($event)">
         </cp-engagement-stats>
       </div>

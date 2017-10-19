@@ -9,10 +9,17 @@ import {
   IHeader,
   HEADER_UPDATE
 } from '../../../../../reducers/header.reducer';
+
+import {
+  canSchoolReadResource,
+  canStoreReadAndWriteResource
+} from './../../../../../shared/utils/privileges';
+
+
 import { CPSession, ISchool } from '../../../../../session';
 import { ServicesService } from '../services.service';
 import { AdminService } from '../../../../../shared/services';
-import { CP_PRIVILEGES_MAP } from '../../../../../shared/utils';
+import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 import { BaseComponent } from '../../../../../base/base.component';
 
 @Component({
@@ -37,7 +44,7 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
     private serviceService: ServicesService
   ) {
     super();
-    this.school = this.session.school;
+    this.school = this.session.g.get('school');
     super.isLoading().subscribe(res => this.loading = res);
     this.serviceId = this.route.snapshot.params['serviceId'];
 
@@ -82,7 +89,7 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
           }
         );
       })
-      .catch(err => console.error(err));
+      .catch(err => { throw new Error(err) });
   }
 
   private buildHeader() {
@@ -92,9 +99,9 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
         'url': `/manage/services/${this.serviceId}/info`
       }
     ];
-    const eventsSchoolLevel = this.session.canSchoolReadResource(CP_PRIVILEGES_MAP.events);
-    const eventsAccountLevel = this.
-      session.canStoreReadAndWriteResource(this.storeId, CP_PRIVILEGES_MAP.events);
+    const eventsSchoolLevel = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.events);
+    const eventsAccountLevel = canStoreReadAndWriteResource(this.session.g,
+      this.storeId, CP_PRIVILEGES_MAP.events);
 
     if (eventsSchoolLevel || eventsAccountLevel) {
       const events = {

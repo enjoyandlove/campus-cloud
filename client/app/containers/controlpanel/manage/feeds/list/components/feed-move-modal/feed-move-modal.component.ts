@@ -18,6 +18,7 @@ export class FeedMoveComponent implements OnInit {
   @Output() teardown: EventEmitter<null> = new EventEmitter();
 
   channels$;
+  buttonData;
   currentChannel;
   form: FormGroup;
 
@@ -48,7 +49,7 @@ export class FeedMoveComponent implements OnInit {
 
   ngOnInit() {
     let search = new URLSearchParams();
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     this.channels$ = this
       .feedsService.getChannelsBySchoolId(1, 1000, search)
@@ -75,5 +76,15 @@ export class FeedMoveComponent implements OnInit {
 
         return _channels;
       });
+
+      this.buttonData = {
+        class: 'primary',
+        text: 'Move',
+        disabled: true
+      };
+
+      this.form.valueChanges.subscribe(_ => {
+        this.buttonData = Object.assign({}, this.buttonData, { disabled: !this.form.valid });
+      })
   }
 }

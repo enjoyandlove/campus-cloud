@@ -52,7 +52,7 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
     search.append('thread_id', this.feedId.toString());
 
     if (this._isCampusWallView) {
-      search.append('school_id', this.session.school.id.toString());
+      search.append('school_id', this.session.g.get('school').id.toString());
     } else {
       search.append('group_id', this.groupId.toString());
     }
@@ -81,7 +81,7 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
         });
         this.state = Object.assign({}, this.state, { comments: _comments });
       })
-      .catch(err => console.log(err));
+      .catch(err => { throw new Error(err) });
   }
 
   ngOnInit() {

@@ -1,4 +1,4 @@
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
@@ -40,7 +40,7 @@ export class CheckinInternalModalComponent implements OnInit {
     this.name = this.isService ? 'service_name' : 'title';
 
     this.form = this.fb.group({
-      [this.name]: [this.data[this.name]],
+      [this.name]: [this.data[this.name], Validators.maxLength(120)],
       'provider_name': [this.data.provider_name || null],
       'school_name': [this.data.school_name]
     });

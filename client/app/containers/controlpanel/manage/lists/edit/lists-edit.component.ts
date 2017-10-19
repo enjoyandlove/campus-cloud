@@ -32,7 +32,7 @@ export class ListsEditComponent implements OnInit {
 
   doSubmit() {
     let search = new URLSearchParams();
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     let data = Object.assign({}, this.form.value);
 
@@ -55,7 +55,7 @@ export class ListsEditComponent implements OnInit {
         this.edited.emit(this.form.value);
         this.resetModal();
       },
-      err => console.log(err)
+      err => { throw new Error(err) }
       );
   }
 
@@ -107,7 +107,7 @@ export class ListsEditComponent implements OnInit {
   onSearch(query) {
     let search = new URLSearchParams();
     search.append('search_str', query);
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     this
       .service
@@ -132,7 +132,7 @@ export class ListsEditComponent implements OnInit {
       suggestions => {
         this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, { suggestions });
       },
-      err => console.log(err)
+      err => { throw new Error(err) }
       );
   }
 

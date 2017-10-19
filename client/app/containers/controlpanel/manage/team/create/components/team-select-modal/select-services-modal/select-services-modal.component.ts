@@ -4,8 +4,8 @@ import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 import { CPSession } from './../../../../../../../../session/index';
-import { CP_PRIVILEGES_MAP } from '../../../../../../../../shared/utils';
 import { ServicesService } from '../../../../../services/services.service';
+import { CP_PRIVILEGES_MAP } from '../../../../../../../../shared/constants';
 import { BaseTeamSelectModalComponent } from '../base/team-select-modal.component';
 
 @Component({
@@ -30,7 +30,7 @@ export class SelectTeamServicesModalComponent extends BaseTeamSelectModalCompone
 
   ngOnInit() {
     let search = new URLSearchParams();
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     this
       .service

@@ -3,8 +3,8 @@ import { Observable } from 'rxjs/Observable';
 import { Headers } from '@angular/http';
 
 import { API } from '../../../../../../../config/api';
+import { CPImage, appStorage } from '../../../../../../../shared/utils';
 import { FileUploadService } from '../../../../../../../shared/services';
-import { CPImage, CPArray, appStorage } from '../../../../../../../shared/utils';
 
 @Component({
   selector: 'cp-services-import-top-bar',
@@ -29,7 +29,7 @@ export class ServicesImportTopBarComponent implements OnInit {
 
   onFileUpload(file) {
     this.imageError = null;
-    const fileExtension = CPArray.last(file.name.split('.'));
+    const fileExtension = file.name.split('.').pop();
 
     if (!CPImage.isSizeOk(file.size, CPImage.MAX_IMAGE_SIZE)) {
       this.imageError = 'File too Big';
@@ -52,7 +52,7 @@ export class ServicesImportTopBarComponent implements OnInit {
       .uploadFile(file, url, headers)
       .subscribe(
       res => this.imageChange.emit(res.image_url),
-      err => console.error(err)
+      err => { throw new Error(err) }
       );
   }
 

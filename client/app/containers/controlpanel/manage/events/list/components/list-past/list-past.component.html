@@ -20,7 +20,7 @@
     <span
       (click)="doSort('end')"
       class="col-xs-2 hover" i18n>
-      Date
+      End Date
       <span *ngIf="state.sort_field === 'end'">
         <i
           class="material-icons"
@@ -65,7 +65,7 @@
       {{ event.store_name }}
     </span>
     <span class="col-xs-2 text-truncate">
-      {{ event.start | cpDatePipe:dateFormat }}
+      {{ event.end | cpDatePipe:dateFormat }}
     </span>
     <span class="col-xs-2 text-truncate">
       {{ event.verified_checkins }}

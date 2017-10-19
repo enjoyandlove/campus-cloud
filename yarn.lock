@@ -90,9 +90,24 @@
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/@ngrx/store/-/store-2.2.3.tgz#e7bd1149f1c44208f1cc4744353f0f98a0f1f57b"
 
+"@segment/top-domain@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@segment/top-domain/-/top-domain-3.0.0.tgz#02e5a5a4fd42a9f6cf886b05e82f104012a3c3a7"
+  dependencies:
+    component-cookie "^1.1.2"
+    component-url "^0.2.1"
+
+"@types/amplitude-js@^2.12.5":
+  version "2.12.5"
+  resolved "https://registry.yarnpkg.com/@types/amplitude-js/-/amplitude-js-2.12.5.tgz#68de3b966c4163b5b4b905c6b7677a3f4f697527"
+
 "@types/core-js@^0.9.0":
   version "0.9.42"
   resolved "https://registry.yarnpkg.com/@types/core-js/-/core-js-0.9.42.tgz#dd6da92cd7d5ab5ca0b4477524537c3e633b6bce"
+
+"@types/file-saver@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@types/file-saver/-/file-saver-0.0.1.tgz#3a3a37884b840e2c4c55770c9fa75a3e11784ef8"
 
 "@types/fs-extra@^4.0.0":
   version "4.0.0"
@@ -106,6 +121,10 @@
   dependencies:
     "@types/minimatch" "*"
     "@types/node" "*"
+
+"@types/google.analytics@0.0.35":
+  version "0.0.35"
+  resolved "https://registry.yarnpkg.com/@types/google.analytics/-/google.analytics-0.0.35.tgz#c55b5b6a4b4596841635cf4a385d1b4733f67088"
 
 "@types/handlebars@^4.0.31":
   version "4.0.35"
@@ -153,9 +172,17 @@
   version "6.0.85"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-6.0.85.tgz#ec02bfe54a61044f2be44f13b389c6a0e8ee05ae"
 
+"@types/papaparse@^4.1.31":
+  version "4.1.31"
+  resolved "https://registry.yarnpkg.com/@types/papaparse/-/papaparse-4.1.31.tgz#4cf1b3588f91f7f64d73bf9f14f5ff8754d43312"
+
 "@types/q@^0.0.32":
   version "0.0.32"
   resolved "https://registry.yarnpkg.com/@types/q/-/q-0.0.32.tgz#bd284e57c84f1325da702babfc82a5328190c0c5"
+
+"@types/quill@^1.3.3":
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/@types/quill/-/quill-1.3.3.tgz#06e08fb017d9493e3708c5c13fbb8bf33ad03d9e"
 
 "@types/selenium-webdriver@3.0.4":
   version "3.0.4"
@@ -259,6 +286,16 @@ alphanum-sort@^1.0.1, alphanum-sort@^1.0.2:
 amdefine@>=0.0.4, amdefine@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
+
+amplitude-js@^3.7.0:
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/amplitude-js/-/amplitude-js-3.7.0.tgz#a482d7e4d3e38841d153b22fce6baf53ae494992"
+  dependencies:
+    "@segment/top-domain" "^3.0.0"
+    blueimp-md5 "^2.10.0"
+    json3 "^3.3.2"
+    lodash "^4.17.4"
+    ua-parser-js amplitude/ua-parser-js#ed538f1
 
 angular2-router-loader@^0.3.4:
   version "0.3.5"
@@ -650,6 +687,10 @@ bluebird@^3.3.0, bluebird@^3.4.7:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.0.tgz#791420d7f551eea2897453a8a77653f96606d67c"
 
+blueimp-md5@^2.10.0:
+  version "2.10.0"
+  resolved "https://registry.yarnpkg.com/blueimp-md5/-/blueimp-md5-2.10.0.tgz#02f0843921f90dca14f5b8920a38593201d6964d"
+
 bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.4.0:
   version "4.11.8"
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.11.8.tgz#2cde09eb5ee341f484746bb0309b3253b1b1442f"
@@ -1016,6 +1057,10 @@ clone@^1.0.0, clone@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/clone/-/clone-1.0.2.tgz#260b7a99ebb1edfe247538175f783243cb19d149"
 
+clone@~2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/clone/-/clone-2.1.1.tgz#d217d1e961118e3ac9a4b8bba3285553bf647cdb"
+
 co@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/co/-/co-4.6.0.tgz#6ea6bdf3d853ae54ccb8e47bfa0bf3f9031fb184"
@@ -1105,6 +1150,12 @@ component-bind@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/component-bind/-/component-bind-1.0.0.tgz#00c608ab7dcd93897c0009651b1d3a8e1e73bbd1"
 
+component-cookie@^1.1.2:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/component-cookie/-/component-cookie-1.1.3.tgz#053e14a3bd7748154f55724fd39a60c01994ebed"
+  dependencies:
+    debug "*"
+
 component-emitter@1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/component-emitter/-/component-emitter-1.1.2.tgz#296594f2753daa63996d2af08d15a95116c9aec3"
@@ -1116,6 +1167,10 @@ component-emitter@1.2.1, component-emitter@^1.2.1:
 component-inherit@0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/component-inherit/-/component-inherit-0.0.3.tgz#645fc4adf58b72b649d5cae65135619db26ff143"
+
+component-url@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/component-url/-/component-url-0.2.1.tgz#4e4f4799c43ead9fd3ce91b5a305d220208fee47"
 
 compressible@~2.0.10:
   version "2.0.11"
@@ -1421,6 +1476,12 @@ dateformat@^1.0.11, dateformat@^1.0.6:
     get-stdin "^4.0.1"
     meow "^3.3.0"
 
+debug@*:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
+  dependencies:
+    ms "2.0.0"
+
 debug@2, debug@2.6.8, debug@^2.2.0, debug@^2.3.3, debug@^2.6.6, debug@^2.6.8:
   version "2.6.8"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.8.tgz#e731531ca2ede27d188222427da17821d68ff4fc"
@@ -1449,7 +1510,7 @@ decamelize@^1.0.0, decamelize@^1.1.1, decamelize@^1.1.2:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/decamelize/-/decamelize-1.2.0.tgz#f6534d15148269b20352e7bee26f501f9a191290"
 
-deep-equal@^1.0.1:
+deep-equal@^1.0.1, deep-equal@~1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/deep-equal/-/deep-equal-1.0.1.tgz#f5d260292b660e084eff4cdbc9f08ad3247448b5"
 
@@ -1877,6 +1938,10 @@ eventemitter3@1.x.x:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-1.2.0.tgz#1c86991d816ad1e504750e73874224ecf3bec508"
 
+eventemitter3@~2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-2.0.3.tgz#b5e1079b59fb5e1ba2771c0a993be060a58c99ba"
+
 events@^1.0.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/events/-/events-1.1.1.tgz#9ebdb7635ad099c70dcc4c2a1f5004288e8bd924"
@@ -1987,7 +2052,7 @@ extend-shallow@^2.0.1:
   dependencies:
     is-extendable "^0.1.0"
 
-extend@3, extend@^3.0.0, extend@~3.0.0:
+extend@3, extend@^3.0.0, extend@^3.0.1, extend@~3.0.0, extend@~3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.1.tgz#a755ea7bc1adfcc5a31ce7e762dbaadc5e636444"
 
@@ -2034,6 +2099,10 @@ fast-deep-equal@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-1.0.0.tgz#96256a3bc975595eb36d82e9929d060d893439ff"
 
+fast-diff@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/fast-diff/-/fast-diff-1.1.1.tgz#0aea0e4e605b6a2189f0e936d4b7fbaf1b7cfd9b"
+
 fast-levenshtein@~2.0.4:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/fast-levenshtein/-/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
@@ -2059,6 +2128,10 @@ file-loader@0.11.2:
   resolved "https://registry.yarnpkg.com/file-loader/-/file-loader-0.11.2.tgz#4ff1df28af38719a6098093b88c82c71d1794a34"
   dependencies:
     loader-utils "^1.0.2"
+
+file-saver@^1.3.3:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/file-saver/-/file-saver-1.3.3.tgz#cdd4c44d3aa264eac2f68ec165bc791c34af1232"
 
 filename-regex@^2.0.0:
   version "2.0.1"
@@ -4006,11 +4079,19 @@ pako@~0.2.0:
   version "0.2.9"
   resolved "https://registry.yarnpkg.com/pako/-/pako-0.2.9.tgz#f3f7522f4ef782348da8161bad9ecfd51bf83a75"
 
+papaparse@^4.3.6:
+  version "4.3.6"
+  resolved "https://registry.yarnpkg.com/papaparse/-/papaparse-4.3.6.tgz#9566eda0ecab13afcb740a62381c699f486cb145"
+
 param-case@2.1.x:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/param-case/-/param-case-2.1.1.tgz#df94fd8cf6531ecf75e6bef9a0858fbc72be2247"
   dependencies:
     no-case "^2.2.0"
+
+parchment@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/parchment/-/parchment-1.1.0.tgz#c79387a80fc4af4ba8947b94fc55a835f62850a5"
 
 parse-asn1@^5.0.0:
   version "5.1.0"
@@ -4573,6 +4654,25 @@ querystringify@0.0.x:
 querystringify@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-1.0.0.tgz#6286242112c5b712fa654e526652bf6a13ff05cb"
+
+quill-delta@3.6.1:
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/quill-delta/-/quill-delta-3.6.1.tgz#8f8f89ac1fb7b0b52ed3a31cf6554b1c4291b64d"
+  dependencies:
+    deep-equal "^1.0.1"
+    extend "^3.0.1"
+    fast-diff "1.1.1"
+
+quill@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/quill/-/quill-1.3.2.tgz#fe396b4fa1d1439d76956ff92218a0cb90c09f3f"
+  dependencies:
+    clone "~2.1.1"
+    deep-equal "~1.0.1"
+    eventemitter3 "~2.0.3"
+    extend "~3.0.1"
+    parchment "1.1.0"
+    quill-delta "3.6.1"
 
 randomatic@^1.1.3:
   version "1.1.7"
@@ -5730,6 +5830,10 @@ typescript@2.4.1:
 typescript@2.4.2:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.4.2.tgz#f8395f85d459276067c988aa41837a8f82870844"
+
+"ua-parser-js@github:amplitude/ua-parser-js#ed538f1":
+  version "0.7.10"
+  resolved "https://codeload.github.com/amplitude/ua-parser-js/tar.gz/ed538f16f5c6ecd8357da989b617d4f156dcf35d"
 
 uglify-js@3.0.x:
   version "3.0.27"

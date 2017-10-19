@@ -61,6 +61,7 @@
         <button
           type="button"
           (click)="onSubmit()"
+          [disabled]="!form.valid"
           class="cpbtn cpbtn--primary"i18n>
           Save Changes
         </button>

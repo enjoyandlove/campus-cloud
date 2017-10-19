@@ -9,7 +9,7 @@
           <li
             (click)="isOpen = false"
             routerLinkActive="active">
-            <a [routerLink]="['/welcome']">Welcome</a>
+            <a [routerLink]="['/welcome']" cpTracker [eventData]="eventData">Welcome</a>
           </li>
           <li
             *ngIf="manageHomePage"
@@ -34,22 +34,28 @@
           (click)="isOpen = !isOpen"
           [class.nav__school--active]="isOpen"
           class="nav__school pull-right noselect">
-          <div
-            *ngIf="school.logo_url !== ''"
-            class="nav__school__thumb pull-left img-rounded"
-            [ngStyle]="{'background-image': 'url(' + school.logo_url + ')'}">
-          </div>
-          <div
-            *ngIf="school.logo_url === ''"
-            class="nav__school__thumb pull-left img-rounded"
-            [ngStyle]="{'background-image': 'url( ' + defaultImage + ')'}">
-          </div>
-          <div class="nav__school__user">
-            <span>{{ user.firstname }}</span>
-            <i class="material-icons pull-right">expand_more</i>
-          </div>
-          <div class="nav__school__name text-truncate">
-            {{ school.name }}
+          <div class="row">
+            <div class="col-xs-10 no-left-padding no-right-padding">
+              <div
+                *ngIf="school.logo_url !== ''"
+                class="nav__school__thumb pull-left img-rounded"
+                [ngStyle]="{'background-image': 'url(' + school.logo_url + ')'}">
+              </div>
+              <div
+                *ngIf="school.logo_url === ''"
+                class="nav__school__thumb pull-left img-rounded"
+                [ngStyle]="{'background-image': 'url( ' + defaultImage + ')'}">
+              </div>
+              <div class="nav__school__user text-truncate">
+                <span>{{ user.firstname }}</span>
+              </div>
+              <div class="nav__school__name text-truncate">
+                {{ school.name }}
+              </div>
+            </div>
+            <div class="col-xs-2 no-left-padding text-right nav__school__arrow">
+              <i class="material-icons pull-right">expand_more</i>
+            </div>
           </div>
         </div>
         <div class="nav__school--menu" *ngIf="isOpen">

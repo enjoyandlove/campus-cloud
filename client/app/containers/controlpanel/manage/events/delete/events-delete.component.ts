@@ -13,6 +13,8 @@ export class EventsDeleteComponent implements OnInit {
   @Input() event: any;
   @Output() deletedEvent: EventEmitter<number> = new EventEmitter();
 
+  buttonData;
+
   constructor(
     private eventService: EventsService,
   ) { }
@@ -25,8 +27,14 @@ export class EventsDeleteComponent implements OnInit {
         _ => {
           this.deletedEvent.emit(this.event.id);
           $('#deleteEventsModal').modal('hide');
+          this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
         });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.buttonData = {
+      text: 'Delete',
+      class: 'danger'
+    }
+  }
 }

@@ -1,9 +1,9 @@
+import { createSpreadSheet } from './../../../../shared/utils/csv/parser';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-
 
 import { CPSession } from './../../../../session/index';
 import { EngagementService } from './engagement.service';
@@ -14,6 +14,10 @@ import { SNACKBAR_SHOW } from './../../../../reducers/snackbar.reducer';
 
 declare var $;
 
+const ONE_ENGAGEMENT = 2;
+const ZERO_ENGAGEMENT = 3;
+const REPEAT_ENGAGEMENT = 1;
+
 @Component({
   selector: 'cp-engagement',
   templateUrl: './engagement.component.html',
@@ -23,9 +27,11 @@ export class EngagementComponent extends BaseComponent implements OnInit {
   chartData;
   loading;
   messageData;
+  filterState;
   isComposeModal;
 
   filters$: BehaviorSubject<any> = new BehaviorSubject(null);
+
   constructor(
     private router: Router,
     private store: Store<any>,
@@ -36,53 +42,129 @@ export class EngagementComponent extends BaseComponent implements OnInit {
     super.isLoading().subscribe(loading => this.loading = loading);
   }
 
-  updateUrl(state) {
+  updateUrl() {
     this
       .router
       .navigate(
       ['/assess/dashboard'],
       {
         queryParams: {
-          'engagement': state.engagement.route_id,
-          'for': state.for.route_id,
-          'range': state.range.route_id
+          'engagement': this.filterState.engagement.route_id,
+          'for': this.filterState.for.route_id,
+          'range': this.filterState.range.route_id
         }
       }
       );
   }
 
   onDoFilter(filterState) {
-    this.updateUrl(filterState);
-    this.fetchChartData(filterState);
-    this.filters$.next(filterState);
+    this.filterState = Object.assign({}, this.filterState, ...filterState);
+
+    this.updateUrl();
+
+    this.fetchChartData();
+
+    this.filters$.next(this.filterState);
   }
 
-  buildSearchParam() { }
+  buildSearchHeaders(): URLSearchParams {
+    const search = new URLSearchParams();
+    search.append('school_id', this.session.g.get('school').id.toString());
 
-  fetchChartData(filterState) {
-    let search = new URLSearchParams();
-    search.append('school_id', this.session.school.id.toString());
-    search.append(filterState.engagement.data.queryParam, filterState.engagement.data.value);
-    search.append('user_list_id', filterState.for.listId);
-    search.append('start', `${filterState.range.payload.range.start}`);
-    search.append('end', `${filterState.range.payload.range.end}`);
+    search.append(this.filterState.engagement.data.queryParam,
+      this.filterState.engagement.data.value);
+
+    search.append('user_list_id', this.filterState.for.listId);
+    search.append('start', `${this.filterState.range.payload.range.start}`);
+    search.append('end', `${this.filterState.range.payload.range.end}`);
+
+    return search;
+  }
+
+  fetchChartData() {
+    const search = this.buildSearchHeaders();
 
     super
       .fetchData(this.service.getChartData(search))
       .then(res => {
         this.chartData = {
           ...res.data,
-          starts: filterState.range.payload.range.start,
-          ends: filterState.range.payload.range.end,
+          starts: this.filterState.range.payload.range.start,
+          ends: this.filterState.range.payload.range.end,
         };
       })
-      .catch(err => console.log(err));
+      .catch(err => { throw new Error(err) });
   }
 
   onDoCompose(data): void {
     this.messageData = data;
     this.isComposeModal = true;
     setTimeout(() => { $('#composeModal').modal(); }, 1);
+  }
+
+  onDownload(cohort) {
+    let fileName = 'all_download_data';
+    const search = this.buildSearchHeaders();
+    search.append('download', '1');
+
+    if (cohort) {
+      search.append('cohort', cohort);
+
+      switch (cohort) {
+        case REPEAT_ENGAGEMENT:
+          fileName = 'repeat_engagement';
+          break;
+        case ONE_ENGAGEMENT:
+          fileName = 'one_engagement';
+          break;
+        case ZERO_ENGAGEMENT:
+          fileName = 'zero_engagement';
+          break;
+      }
+    }
+
+    this
+      .service
+      .getChartData(search)
+      .toPromise()
+      .then(data => {
+        const columns = [
+          'Student Name',
+          '# of Check-ins',
+          '# of Responses',
+          'Response Rate',
+          'Average Rating',
+          '# of Event Check-Ins',
+          'Event Responses',
+          'Event Response Rate',
+          'Event Average Rating',
+          '# of Service Check-ins',
+          'Service Responses',
+          'Services Response Rate',
+          'Service Average Rating',
+        ];
+
+        const parsedData = data.download_data.map(item => {
+          return {
+            'Student Name': `${item.firstname} ${item.lastname}`,
+            '# of Check-ins': item.total_checkins,
+            '# of Responses': item.total_responses,
+            'Response Rate': `${item.total_response_rate.toFixed(1)}%`,
+            'Average Rating': (item.event_ratings + item.service_ratings) / 2,
+            '# of Event Check-Ins': item.event_checkins,
+            'Event Responses': item.event_responses,
+            'Event Response Rate': `${item.event_response_rate.toFixed(1)}%`,
+            'Event Average Rating': item.event_ratings,
+            '# of Service Check-ins': item.service_checkins,
+            'Service Responses': item.service_responses,
+            'Services Response Rate': `${item.service_response_rate.toFixed(1)}%`,
+            'Service Average Rating': item.service_ratings
+          }
+        })
+        createSpreadSheet(parsedData, columns, fileName)
+
+      })
+      .catch(err => console.log(err));
   }
 
   onComposeTeardown() {

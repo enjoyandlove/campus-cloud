@@ -26,6 +26,7 @@ export class ListsDeleteComponent implements OnInit {
   @Input() list: any;
   @Output() deleteList: EventEmitter<number> = new EventEmitter();
 
+  buttonData;
   templateConflict = false;
 
   constructor(
@@ -43,13 +44,14 @@ export class ListsDeleteComponent implements OnInit {
   }
 
   resetModal() {
-    $('#listsDelete').modal('hide');
     this.templateConflict = false;
+
+    $('#listsDelete').modal('hide');
   }
 
   onDelete() {
     let search = new URLSearchParams();
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     this
       .service
@@ -58,8 +60,11 @@ export class ListsDeleteComponent implements OnInit {
         _ => {
           $('#listsDelete').modal('hide');
           this.deleteList.emit(this.list.id);
+          this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
         },
         err => {
+          this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
+
           if (err.status === LIST_USED_IN_TEMPLATE) {
             this.templateConflict = true;
             return;
@@ -70,5 +75,10 @@ export class ListsDeleteComponent implements OnInit {
       );
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.buttonData = {
+      class: 'danger',
+      text: 'Delete'
+    }
+  }
 }

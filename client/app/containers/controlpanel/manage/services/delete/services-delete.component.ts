@@ -13,6 +13,8 @@ export class ServicesDeleteComponent implements OnInit {
   @Input() service: any;
   @Output() deleted: EventEmitter<number> = new EventEmitter();
 
+  buttonData;
+
   constructor(
     private servicesService: ServicesService
   ) { }
@@ -26,8 +28,14 @@ export class ServicesDeleteComponent implements OnInit {
         _ => {
           this.deleted.emit(this.service.id);
           $('#deleteServicesModal').modal('hide');
+          this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
         });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.buttonData = {
+      class: 'danger',
+      text: 'Delete'
+    }
+  }
 }

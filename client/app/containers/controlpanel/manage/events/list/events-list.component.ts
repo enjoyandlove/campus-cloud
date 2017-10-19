@@ -26,7 +26,7 @@ export class EventsListComponent extends EventsComponent implements OnInit {
     public session: CPSession,
     private store: Store<IHeader>,
     public service: EventsService,
-    private headerService: ManageHeaderService
+    private headerService: ManageHeaderService,
   ) {
     super(session, service);
   }

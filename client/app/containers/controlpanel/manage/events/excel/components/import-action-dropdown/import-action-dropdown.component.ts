@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { CPSession, ISchool } from '../../../../../../../session';
 import { BaseComponent } from '../../../../../../../base/base.component';
-import { CP_PRIVILEGES_MAP } from '../../../../../../../shared/utils/privileges';
+import { CP_PRIVILEGES_MAP } from '../../../../../../../shared/constants';
 import { StoreService, AdminService } from '../../../../../../../shared/services';
 
 interface IState {
@@ -50,12 +50,12 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
   ) {
     super();
     this.fetch();
-    this.school = this.session.school;
+    this.school = this.session.g.get('school');
     super.isLoading().subscribe(res => this.loading = res);
   }
 
   private fetch() {
-    let school = this.session.school;
+    let school = this.session.g.get('school');
     let search: URLSearchParams = new URLSearchParams();
     search.append('school_id', school.id.toString());
 
@@ -66,7 +66,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
       .then(res => {
         this.stores = res.data;
       })
-      .catch(err => console.error(err));
+      .catch(err => { throw new Error(err) });
   }
 
   onHostSelected(store_id) {

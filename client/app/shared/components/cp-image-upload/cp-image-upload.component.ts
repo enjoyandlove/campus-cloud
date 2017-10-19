@@ -3,7 +3,7 @@ import { Headers } from '@angular/http';
 
 import { API } from '../../../config/api';
 import { STATUS } from '../../../shared/constants';
-import { CPArray, CPImage, appStorage } from '../../../shared/utils';
+import { CPImage, appStorage } from '../../../shared/utils';
 import { FileUploadService } from '../../../shared/services/file-upload.service';
 
 @Component({
@@ -29,7 +29,7 @@ export class CPImageUploadComponent implements OnInit {
   ) { }
 
   validateImage(file) {
-    const fileExtension = CPArray.last(file.name.split('.'));
+    const fileExtension = file.name.split('.').pop();
 
     if (!CPImage.isSizeOk(file.size, CPImage.MAX_IMAGE_SIZE)) {
       this.errors.push(STATUS.FILE_IS_TOO_BIG);

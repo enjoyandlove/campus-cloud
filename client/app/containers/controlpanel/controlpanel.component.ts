@@ -1,6 +1,9 @@
+import { CPSession } from './../../session/index';
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 import { isProd } from '../../config/env';
+import { CPTrackingService } from './../../shared/services/tracking.service';
 
 @Component({
   selector: 'cp-controlpanel',
@@ -10,8 +13,19 @@ import { isProd } from '../../config/env';
 export class ControlPanelComponent implements OnInit {
   isProd = isProd;
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private session: CPSession,
+    private cpTrackingService: CPTrackingService
+  ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    /**
+     * this gets initilized only once
+     * so we track the first page load here
+     */
+    CPTrackingService.loadAmplitude(this.session.g.get('user').email);
+    this.cpTrackingService.gaTrackPage(this.router.url);
+  }
 
 }

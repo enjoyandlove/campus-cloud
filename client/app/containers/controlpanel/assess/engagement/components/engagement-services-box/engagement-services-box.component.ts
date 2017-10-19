@@ -82,7 +82,7 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
     search.append('end', this.state.end.toString());
     search.append('start', this.state.start.toString());
     search.append('user_list_id', list_id);
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     if (this.state.scope.queryParam === 'scope') {
       search.append('scope', this.state.scope.value.toString());
@@ -114,7 +114,7 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
           },
           {
             value: res.data.total_attendees,
-            label: 'Total Attendess',
+            label: 'Total Attendees',
             icon: require('public/png/assess/chart_attendee.png')
           },
           {

@@ -15,5 +15,5 @@ export interface ISchool {
   premium_level: number;
   short_name: string;
   wall_unlock_num: number;
-  wall_unlocked: number;
+  wall_unlocked: boolean;
 };

@@ -35,7 +35,7 @@ export class AdminInviteComponent implements OnInit, OnDestroy {
       .createInvitePassword(data)
       .subscribe(
         _ => this.handleSuccess(),
-        err => console.error(err)
+        err => { throw new Error(err) }
       );
   }
 

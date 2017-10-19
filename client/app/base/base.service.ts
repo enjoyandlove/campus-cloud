@@ -3,7 +3,7 @@
  * Takes care of setting common headers
  * and catching errors
  */
-import { Http, Headers, RequestOptionsArgs } from '@angular/http';
+import { Http, Headers, RequestOptionsArgs, Response, ResponseOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -21,7 +21,7 @@ const buildCommonHeaders = () => {
 };
 
 @Injectable()
-export class BaseService {
+export abstract class BaseService {
   constructor(
     private http: Http,
     private router: Router
@@ -33,9 +33,15 @@ export class BaseService {
     return this
       .http
       .get(url, { headers, ...opts })
+      .publishReplay(1)
+      .refCount()
       .catch(err => {
         if (err.status === 403) {
-          return Promise.reject([]);
+          return Observable.of(
+            new Response(
+              new ResponseOptions({ body: JSON.stringify([]) })
+            )
+          )
         }
         return this.catchError(err);
       });

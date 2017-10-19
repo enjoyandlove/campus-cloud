@@ -45,7 +45,7 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
       .doServiceCheckin(data, this.search)
       .subscribe(
         _ => this.updateAttendeesList(data),
-        err => console.error(err)
+        err => { throw new Error(err) }
       );
   }
 
@@ -63,7 +63,7 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
       .then(res => {
         this.state = Object.assign({}, this.state, { services: res.data });
       })
-      .catch(err => console.log(err));
+      .catch(err => { throw new Error(err) });
   }
 
   ngOnInit() {

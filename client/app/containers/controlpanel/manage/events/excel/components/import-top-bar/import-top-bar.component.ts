@@ -3,7 +3,7 @@ import { Headers } from '@angular/http';
 
 import { API } from '../../../../../../../config/api';
 import { EventsService } from '../../../events.service';
-import { CPImage, CPArray, appStorage } from '../../../../../../../shared/utils';
+import { CPImage, appStorage } from '../../../../../../../shared/utils';
 import { FileUploadService } from '../../../../../../../shared/services';
 
 @Component({
@@ -37,7 +37,7 @@ export class EventsImportTopBarComponent implements OnInit {
 
   onFileUpload(file) {
     this.imageError = null;
-    const fileExtension = CPArray.last(file.name.split('.'));
+    const fileExtension = file.name.split('.').pop();
 
     if (!CPImage.isSizeOk(file.size, CPImage.MAX_IMAGE_SIZE)) {
       this.imageError = 'File too Big';
@@ -62,7 +62,7 @@ export class EventsImportTopBarComponent implements OnInit {
       res => {
         this.imageChange.emit(res.image_url);
       },
-      err => console.error(err)
+      err => { throw new Error(err) }
       );
   }
 

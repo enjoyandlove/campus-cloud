@@ -30,7 +30,7 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
   clubStatus;
   deleteClub = '';
   ACTIVE_STATUS = 1;
-  PENDING_STATUS = 2;
+  PENDING_STATUS = -2;
   state: IState = state;
 
   constructor(
@@ -47,7 +47,7 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
 
   private fetch() {
     let search = new URLSearchParams();
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
     search.append('status', this.state.type);
     search.append('search_str', this.state.query);
 
@@ -61,7 +61,7 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
 
   onApproveClub(clubId: number) {
     let search = new URLSearchParams();
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     this
       .clubsService
@@ -79,7 +79,7 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
 
         this.state = Object.assign({}, this.state, _state);
       },
-      err => console.log(err)
+      err => { throw new Error(err) }
       );
   }
 
@@ -114,7 +114,7 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
     this.clubStatus = {
       0: 'Inactive',
       1: 'Active',
-      2: 'Pending'
+      '-2': 'Pending'
     };
 
     this

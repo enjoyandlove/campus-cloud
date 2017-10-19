@@ -35,7 +35,7 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
 
   private fetch() {
     let search = new URLSearchParams();
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     super
       .fetchData(this.clubsService.getClubById(this.clubId, search))
@@ -58,14 +58,14 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
           this.club.advisor_lastname ||
           this.club.advisor_email;
       })
-      .catch(err => console.log(err));
+      .catch(err => { throw new Error(err) });
   }
 
   ngOnInit() {
     this.clubStatus = {
       0: 'Inactive',
       1: 'Active',
-      2: 'Pending'
+      '-2': 'Pending'
     };
   }
 }

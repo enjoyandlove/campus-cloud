@@ -26,6 +26,7 @@
           </button>
           <cp-small-datepicker
             [hidden]="!isCalendar"
+            (reset)="onDateReset()"
             (rangeChange)="isCalendar = false"
             (rangeChange)="onDateRange($event)"
             [options]="dateFilterOpts">

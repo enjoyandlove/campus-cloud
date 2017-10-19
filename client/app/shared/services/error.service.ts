@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import {
-  ALERT_PUSH,
-  ALERT_CLASS,
-  ALERT_DEFAULT
-} from '../../reducers/alert.reducer';
+import { ALERT_PUSH, ALERT_CLASS, ALERT_DEFAULT } from '../../reducers/alert.reducer';
 
 @Injectable()
 export class ErrorService {
@@ -14,7 +10,14 @@ export class ErrorService {
     private store: Store<any>
   ) { }
 
-  public handleResponse(res) {
+  trackException(err) {
+    ga('send', 'exception', {
+      'exDescription': err.message,
+      'exFatal': false
+    });
+  }
+
+  handleResponse(res) {
     if (res.code.startsWith(4)) {
       this.handleError(res);
     } else {
@@ -23,7 +26,7 @@ export class ErrorService {
   }
 
   handleWarning(res) {
-     this.store.dispatch({
+    this.store.dispatch({
       type: ALERT_PUSH,
       payload: {
         body: res.reason,
@@ -33,7 +36,7 @@ export class ErrorService {
   }
 
   handleInfo(res) {
-     this.store.dispatch({
+    this.store.dispatch({
       type: ALERT_PUSH,
       payload: {
         body: res.reason,
@@ -62,7 +65,7 @@ export class ErrorService {
     });
   }
 
-  public clearErrors() {
+  clearErrors() {
     this.store.dispatch({ type: ALERT_DEFAULT });
   }
 }

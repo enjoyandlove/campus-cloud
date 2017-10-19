@@ -39,12 +39,10 @@
           Cancel
         </button>
 
-        <button
-          type="button"
-          (click)="onArchive()"
-          class="cpbtn cpbtn--danger"i18n>
-          Archive
-        </button>
+        <cp-button
+          [props]="buttonData"
+          (buttonClick)="onArchive()">
+        </cp-button>
       </div>
     </div>
   </div>

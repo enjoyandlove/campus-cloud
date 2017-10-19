@@ -3,15 +3,15 @@ import { ActivatedRoute } from '@angular/router';
 import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
-import { generateExcelFile } from './utils';
 import { StudentsService } from './../students.service';
 import { CPSession } from './../../../../../session/index';
 import { CPDate } from './../../../../../shared/utils/date';
-import { FORMAT } from './../../../../../shared/pipes/date.pipe';
+import { FORMAT } from './../../../../../shared/pipes/date';
 import { STATUS } from './../../../../../shared/constants/status';
 import { BaseComponent } from './../../../../../base/base.component';
 import { HEADER_UPDATE } from './../../../../../reducers/header.reducer';
 import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
+import { createSpreadSheet } from './../../../../../shared/utils/csv/parser';
 import { STAR_SIZE } from './../../../../../shared/components/cp-stars/cp-stars.component';
 
 import * as moment from 'moment';
@@ -23,14 +23,14 @@ const isSameDay = (dateOne, dateTwo): boolean => {
   dateTwo = moment(CPDate.fromEpoch(dateTwo)).toObject();
 
   return dateOne.date === dateTwo.date &&
-         dateOne.months === dateTwo.months &&
-         dateOne.years === dateTwo.years;
+    dateOne.months === dateTwo.months &&
+    dateOne.years === dateTwo.years;
 }
 
 const setTimeDataToZero = unixTimeStamp => {
   return CPDate
     .toEpoch(moment(CPDate.fromEpoch(unixTimeStamp))
-    .hours(0).minutes(0).seconds(0).toDate())
+      .hours(0).minutes(0).seconds(0).toDate())
 }
 
 const ALL_ENGAGEMENTS = 0;
@@ -69,13 +69,11 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
     super.isLoading().subscribe(loading => this.loadingEngagementData = loading);
 
     this.studentId = this.route.snapshot.params['studentId'];
-
-    this.fetchStudentData();
   }
 
   fetchStudentData() {
     const search = new URLSearchParams();
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     this
       .service
@@ -97,7 +95,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
   fetch() {
     const search = new URLSearchParams();
     search.append('scope', this.state.scope.toString());
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     const stream$ = this
       .service.getEngagements(search, this.studentId, this.startRange, this.endRange);
@@ -121,9 +119,9 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
           return result;
         }, {})
 
-        this.engagementsByDay = Object.keys(this.engagementData);
+        this.engagementsByDay = Object.keys(this.engagementData).reverse();
       })
-      .catch(err => console.log(err))
+      .catch(err => { throw new Error(err) })
   }
 
   onFilter(scope) {
@@ -163,14 +161,51 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
     const search = new URLSearchParams();
     search.append('scope', this.state.scope.toString());
     search.append('all', DOWNLOAD_ALL_RECORDS.toString());
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
 
     const stream$ = this
       .service.getEngagements(search, this.studentId, this.startRange, this.endRange);
 
+    const columns = [
+      'Check-In Item',
+      'Type',
+      'Check-In Date',
+      'Response Date',
+      'Rating',
+      'Response',
+    ];
+
+    const type = {
+      'event': 'Event',
+      'service': 'Service'
+    };
+
     stream$
       .toPromise()
-      .then(data => generateExcelFile(data, `${this.student.firstname} ${this.student.lastname}`))
+      .then(data => {
+        data = data.map(item => {
+          return {
+            'Check-In Item': item.name,
+
+            'Type': type[item.type],
+
+            'Check-In Date': moment.unix(item.time_epoch).format('MMMM Do YYYY - h:mm a'),
+
+            'Response Date': item.feedback_time_epoch === 0 ?
+              'No Feedback Provided' :
+              moment.unix(item.feedback_time_epoch).format('MMMM Do YYYY - h:mm a'),
+
+            'Rating': item.user_rating_percent === -1 ?
+              'No Rating Provided' :
+              ((item.user_rating_percent / 100) * 5).toFixed(1)
+            ,
+
+            'Response': item.user_feedback_text,
+          }
+        })
+
+        createSpreadSheet(data, columns, `${this.student.firstname} ${this.student.lastname}`)
+      })
   }
 
   onComposeTeardown() {
@@ -198,5 +233,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.fetchStudentData();
+  }
 }

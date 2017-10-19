@@ -10,7 +10,7 @@ import { Subject } from 'rxjs/Subject';
   selector: 'cp-base-component',
   template: '',
 })
-export class BaseComponent implements OnInit {
+export abstract class BaseComponent implements OnInit {
   pageNext;
   pagePrev;
   private _isLoading = new Subject<boolean>();

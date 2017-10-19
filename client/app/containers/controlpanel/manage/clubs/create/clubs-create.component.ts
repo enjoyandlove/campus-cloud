@@ -18,6 +18,7 @@ import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 })
 export class ClubsCreateComponent implements OnInit {
   formError;
+  buttonData;
   statusTypes;
   membershipTypes;
   form: FormGroup;
@@ -36,17 +37,21 @@ export class ClubsCreateComponent implements OnInit {
 
     if (!this.form.valid) {
       this.formError = true;
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       return;
     }
 
     let search = new URLSearchParams();
-    search.append('school_id', this.session.school.id.toString());
+    search.append('school_id', this.session.g.get('school').id.toString());
     this
       .clubsService
       .createClub(this.form.value, search)
       .subscribe(
         res => {this.router.navigate(['/manage/clubs/' + res.id + '/info']); },
-        err => console.log(err)
+        err => {
+          this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
+          throw new Error(err);
+         }
       );
   }
 
@@ -79,7 +84,12 @@ export class ClubsCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    let school = this.session.school;
+    let school = this.session.g.get('school');
+
+    this.buttonData = {
+      class: 'primary',
+      text: 'Create Club'
+    }
 
     this.mapCenter = new BehaviorSubject(
       {
@@ -112,8 +122,8 @@ export class ClubsCreateComponent implements OnInit {
       'country': [null],
       'postal_code': [null],
       'province': [null],
-      'latitude': [this.session.school.latitude],
-      'longitude': [this.session.school.longitude],
+      'latitude': [this.session.g.get('school').latitude],
+      'longitude': [this.session.g.get('school').longitude],
       'room_info': [null],
       'description': [null],
       'website': [null],
