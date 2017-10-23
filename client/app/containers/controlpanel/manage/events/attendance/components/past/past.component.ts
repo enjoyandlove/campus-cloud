@@ -118,7 +118,7 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
           'Checked-in Method': check_in_method[item.check_in_method],
           'Checked In Time': unix(item.check_in_time).format('MMMM Do YYYY - h:mm a'),
           'User Feedback': item.feedback_text,
-          'Rating': ((item.feedback_rating * 5) / 100).toFixed(2)
+          'Rating': item.feedback_rating === -1 ? '' : ((item.feedback_rating * 5) / 100).toFixed(2)
         }
       })
 
