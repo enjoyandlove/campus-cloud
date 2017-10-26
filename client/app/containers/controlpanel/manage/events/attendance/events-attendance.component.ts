@@ -3,9 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
-import { EventDate } from '../utils';
 import { EventsService } from '../events.service';
 import { CPDate } from '../../../../../shared/utils/date';
+import { EventUtilService } from './../events.utils.service';
 import { BaseComponent } from '../../../../../base/base.component';
 import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
@@ -27,11 +27,13 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   loading = true;
   eventId: number;
   search: URLSearchParams = new URLSearchParams();
+  urlPrefix = this.utils.buildUrlPrefix(this.clubId, this.serviceId);
 
   constructor(
     private store: Store<IHeader>,
     private route: ActivatedRoute,
-    private service: EventsService
+    private service: EventsService,
+    private utils: EventUtilService
   ) {
     super();
     this.eventId = this.route.snapshot.params['eventId'];
@@ -58,16 +60,16 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   private buildHeader(res) {
     let children;
 
-    if (EventDate.isPastEvent(res.end)) {
+    if (this.utils.isPastEvent(res.end)) {
       if (res.event_attendance === 1) {
         children = [
           {
             'label': 'Info',
-            'url': `${this.buildUrlPrefix()}/${this.eventId}/info`
+            'url': `${this.urlPrefix}/${this.eventId}/info`
           },
           {
             'label': 'Assessment',
-            'url': `${this.buildUrlPrefix()}/${this.eventId}`
+            'url': `${this.urlPrefix}/${this.eventId}`
           }
         ];
       } else {
@@ -77,11 +79,11 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       children = [
         // {
         //   'label': 'Info',
-        //   'url': `${this.buildUrlPrefix()}/${this.eventId}/info`
+        //   'url': `${this.urlPrefix}/${this.eventId}/info`
         // },
         // {
         //   'label': res.event_attendance === 1 ? 'Assessment' : 'Event',
-        //   'url': `${this.buildUrlPrefix()}/${this.eventId}`
+        //   'url': `${this.urlPrefix}/${this.eventId}`
         // }
       ];
     }
@@ -92,22 +94,13 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
         'heading': res.title,
         'subheading': '',
         'crumbs': {
-          'url': this.buildUrlPrefix(),
+          'url': this.urlPrefix,
           'label': 'Events'
         },
         'children': [...children]
       }
     });
   }
-
-   buildUrlPrefix() {
-     if (this.isClub) {
-       return `/manage/clubs/${this.clubId}/events`;
-     } else if (this.isService) {
-      return `/manage/services/${this.serviceId}/events`;
-     }
-     return '/manage/events';
-   }
 
   ngOnInit() { }
 }
