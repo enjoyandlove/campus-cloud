@@ -32,6 +32,7 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
   storeId;
   noProviders;
   serviceId: number;
+  isProviderAdd;
   detailStarSize = STAR_SIZE.LARGE;
   listStarSize = STAR_SIZE.DEFAULT;
   reload$: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -85,6 +86,15 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
 
   redirectOnDisabledAttendance() {
     this.router.navigate(['/manage/services/' + this.serviceId + '/info']);
+  }
+
+  onProviderAdded() {
+    this.reload$.next(true);
+    this.isProviderAdd = false;
+  }
+
+  onLaunchProviderAdd() {
+    this.isProviderAdd = true;
   }
 
   onSearch(search_text) {

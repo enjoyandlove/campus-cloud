@@ -74,6 +74,7 @@
               <button
                 type="button"
                 class="cpbtn cpbtn--primary"
+                (click)="onLaunchProviderAdd()"
                 data-toggle="modal" data-target="#createProvider" i18n>
                 Add Service Provider
               </button>
@@ -99,10 +100,10 @@
 </div>
 
 
-<cp-modal modalId="createProvider">
+<cp-modal modalId="createProvider" *ngIf="isProviderAdd">
   <cp-providers-add
     [serviceId]="serviceId"
-    (created)="reload$.next(true)"
+    (created)="onProviderAdded()"
     [serviceWithFeedback]="enableFeedback$">
   </cp-providers-add>
 </cp-modal>
