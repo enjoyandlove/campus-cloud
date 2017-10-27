@@ -56,17 +56,22 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   private buildHeader(event) {
     const children = this.utils.getSubNavChildren(event, this.urlPrefix);
 
+    const payload = {
+      'heading': event.title,
+
+      'subheading': '',
+
+      'crumbs': {
+        'url': this.urlPrefix,
+        'label': 'Events'
+      },
+
+      'children': [...children]
+    }
+
     this.store.dispatch({
       type: HEADER_UPDATE,
-      payload: {
-        'heading': event.title,
-        'subheading': '',
-        'crumbs': {
-          'url': this.urlPrefix,
-          'label': 'Events'
-        },
-        'children': [...children]
-      }
+      payload
     });
   }
 

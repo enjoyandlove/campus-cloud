@@ -49,15 +49,19 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
 
     super
       .fetchData(this.service.getEventById(this.eventId))
-      .then(res => {
-        this.event = res.data;
+      .then(event => {
+        this.event = event.data;
+
         this.isPastEvent = this.utils.isPastEvent(this.event);
+
         this.urlPrefix = this.utils.buildUrlPrefix(this.clubId, this.serviceId);
-        this.buildHeader(res.data);
+
+        this.buildHeader(event.data);
+
         this.mapCenter = new BehaviorSubject(
           {
-            lat: res.data.latitude,
-            lng: res.data.longitude
+            lat: event.data.latitude,
+            lng: event.data.longitude
           }
         );
       })
@@ -67,21 +71,21 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   private buildHeader(res) {
     const children = this.utils.getSubNavChildren(event, this.urlPrefix);
 
+    const payload = {
+      'heading': res.title,
+      'subheading': '',
+      'crumbs': {
+        'url': this.urlPrefix,
+        'label': 'Events'
+      },
+      'children': [...children]
+    }
+
     this.store.dispatch({
       type: HEADER_UPDATE,
-      payload: {
-        'heading': res.title,
-        'subheading': '',
-        'crumbs': {
-          'url': this.urlPrefix,
-          'label': 'Events'
-        },
-        'children': [...children]
-      }
+      payload
     });
   }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() { }
 }
