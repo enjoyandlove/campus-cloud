@@ -3,6 +3,7 @@ import IEvent from './event.interface';
 import { CPDate } from './../../../../shared/utils/date/date';
 
 import { Injectable } from '@angular/core';
+import { EventAttendance } from './event.status';
 
 @Injectable()
 export class EventUtilService {
@@ -21,5 +22,26 @@ export class EventUtilService {
       return `/manage/services/${serviceId}/events`;
     }
     return '/manage/events';
+  }
+
+  getSubNavChildren(event, urlPrefix) {
+    let children = [];
+
+    if (this.isPastEvent(event.end)) {
+      if (event.event_attendance === EventAttendance.enabled) {
+        children.push(
+          {
+            'label': 'Info',
+            'url': `${urlPrefix}/${event.id}/info`
+          },
+          {
+            'label': 'Assessment',
+            'url': `${urlPrefix}/${event.id}`
+          }
+        );
+      }
+    }
+
+    return children;
   }
 }

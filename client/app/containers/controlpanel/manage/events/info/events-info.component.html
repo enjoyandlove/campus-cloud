@@ -13,10 +13,10 @@
               </div>
 
               <div class="row">
-                <div [class]="!isPastEvent(event.end) ? 'col-xs-10' : 'col-xs-12'">
+                <div [class]="!utils.isPastEvent(event) ? 'col-xs-10' : 'col-xs-12'">
                   <p class="event__title">{{ event.title }}</p>
                 </div>
-                <div class="col-xs-2" *ngIf="!isPastEvent(event.end)">
+                <div class="col-xs-2" *ngIf="!utils.isPastEvent(event)">
                   <a
                     [routerLink]="['../edit']"
                     class="cpbtn cpbtn--primary pull-right" i18n>
@@ -30,12 +30,12 @@
 
               <div class="event__meta text-truncate">
                 <p>
-                  <strong i18n *ngIf="!isPastEvent(event.end)">Starts:</strong>
-                  <strong i18n *ngIf="isPastEvent(event.end)">Started:</strong>
+                  <strong i18n *ngIf="!utils.isPastEvent(event)">Starts:</strong>
+                  <strong i18n *ngIf="utils.isPastEvent(event)">Started:</strong>
                   {{ event.start | cpDatePipe:dateFormat }}
                   <br>
-                  <strong i18n *ngIf="!isPastEvent(event.end)">Ends:</strong>
-                  <strong i18n *ngIf="isPastEvent(event.end)">Ended:</strong>
+                  <strong i18n *ngIf="!utils.isPastEvent(event)">Ends:</strong>
+                  <strong i18n *ngIf="utils.isPastEvent(event)">Ended:</strong>
                   {{ event.end | cpDatePipe:dateFormat }}
                 </p>
 

@@ -24,18 +24,18 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   @Input() isService: boolean;
 
   event;
+  urlPrefix;
   dateFormat;
+  isPastEvent;
   loading = true;
   eventId: number;
   mapCenter: BehaviorSubject<any>;
-  isPastEvent = this.utils.isPastEvent(this.event);
-  urlPrefix = this.utils.buildUrlPrefix(this.clubId, this.serviceId);
 
   constructor(
     private store: Store<IHeader>,
     private route: ActivatedRoute,
     private service: EventsService,
-    private utils: EventUtilService
+    public utils: EventUtilService
   ) {
     super();
     this.dateFormat = FORMAT.DATETIME;
@@ -51,6 +51,8 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
       .fetchData(this.service.getEventById(this.eventId))
       .then(res => {
         this.event = res.data;
+        this.isPastEvent = this.utils.isPastEvent(this.event);
+        this.urlPrefix = this.utils.buildUrlPrefix(this.clubId, this.serviceId);
         this.buildHeader(res.data);
         this.mapCenter = new BehaviorSubject(
           {
@@ -63,35 +65,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   }
 
   private buildHeader(res) {
-    let children;
-
-    if (this.utils.isPastEvent(res.end)) {
-      if (res.event_attendance === 1) {
-        children = [
-          {
-            'label': 'Info',
-            'url': `${this.urlPrefix}/${this.eventId}/info`
-          },
-          {
-            'label': 'Assessment',
-            'url': `${this.urlPrefix}/${this.eventId}`
-          }
-        ];
-      } else {
-        children = [];
-      }
-    } else {
-      children = [
-        {
-          'label': 'Info',
-          'url': `${this.urlPrefix}/${this.eventId}/info`
-        },
-        {
-          'label': res.event_attendance === 1 ? 'Assessment' : 'Event',
-          'url': `${this.urlPrefix}/${this.eventId}`
-        }
-      ];
-    }
+    const children = this.utils.getSubNavChildren(event, this.urlPrefix);
 
     this.store.dispatch({
       type: HEADER_UPDATE,
