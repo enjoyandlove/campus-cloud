@@ -1,9 +1,8 @@
 import IEvent from './event.interface';
 
-import { CPDate } from './../../../../shared/utils/date/date';
-
 import { Injectable } from '@angular/core';
 import { EventAttendance } from './event.status';
+import { CPDate } from './../../../../shared/utils/date/date';
 
 @Injectable()
 export class EventUtilService {
@@ -25,23 +24,20 @@ export class EventUtilService {
   }
 
   getSubNavChildren(event, urlPrefix) {
-    let children = [];
+    const pastEvent = this.isPastEvent(event);
+    const attendanceEnabled = event.event_attendance === EventAttendance.enabled;
 
-    if (this.isPastEvent(event.end)) {
-      if (event.event_attendance === EventAttendance.enabled) {
-        children.push(
-          {
-            'label': 'Info',
-            'url': `${urlPrefix}/${event.id}/info`
-          },
-          {
-            'label': 'Assessment',
-            'url': `${urlPrefix}/${event.id}`
-          }
-        );
+    const children = [
+      {
+        'label': 'Info',
+        'url': `${urlPrefix}/${event.id}/info`
+      },
+      {
+        'label': 'Assessment',
+        'url': `${urlPrefix}/${event.id}`
       }
-    }
+    ];
 
-    return children;
+    return pastEvent && attendanceEnabled ? children : []
   }
 }
