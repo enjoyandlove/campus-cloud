@@ -12,6 +12,8 @@ import { CPMap, CPDate } from '../../../../../shared/utils';
 import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants';
 import { ErrorService, StoreService, AdminService } from '../../../../../shared/services';
 
+import { EventAttendance, EventFeedback } from '../event.status';
+
 const COMMON_DATE_PICKER_OPTIONS = {
   utc: true,
   altInput: true,
@@ -65,14 +67,16 @@ export class EventsCreateComponent implements OnInit {
   }
 
   buildHeader() {
+    const payload = {
+      'heading': 'Create Event',
+      'subheading': null,
+      'em': null,
+      'children': []
+    }
+
     this.storeHeader.dispatch({
       type: HEADER_UPDATE,
-      payload: {
-        'heading': 'Create Event',
-        'subheading': null,
-        'em': null,
-        'children': []
-      }
+      payload
     });
   }
 
@@ -82,35 +86,35 @@ export class EventsCreateComponent implements OnInit {
 
   onSelectedHost(host): void {
     this.fetchManagersBySelectedStore(host.value);
+
     this.form.controls['store_id'].setValue(host.value);
   }
 
   fetchManagersBySelectedStore(storeId) {
-    let search: URLSearchParams = new URLSearchParams();
+    const search: URLSearchParams = new URLSearchParams();
 
-    search.append('school_id', this.school.id.toString());
     search.append('store_id', storeId);
+    search.append('school_id', this.school.id.toString());
     search.append('privilege_type', CP_PRIVILEGES_MAP.events.toString());
 
     this
     .adminService
     .getAdminByStoreId(search)
     .map(admins => {
-      let _admins = [
+     return [
         {
           'label': '---',
           'value': null
-        }
+        },
+        ...admins.map(admin => {
+          return {
+            'label': `${admin.firstname} ${admin.lastname}`,
+            'value': admin.id
+          }
+        })
       ];
-      admins.forEach(admin => {
-        _admins.push({
-          'label': `${admin.firstname} ${admin.lastname}`,
-          'value': admin.id
-        });
-      });
-      return _admins;
     }).subscribe(
-      res => this.managers = res,
+      managers => this.managers = managers,
       err => { throw new Error(err) }
     );
   }
@@ -154,17 +158,17 @@ export class EventsCreateComponent implements OnInit {
       return;
     }
 
-    if (this.form.controls['event_attendance'].value === 1) {
+    if (this.form.controls['event_attendance'].value === EventAttendance.enabled) {
       let managerId = this.form.controls['event_manager_id'];
       let eventFeedback = this.form.controls['event_feedback'];
 
-      if (managerId.value === null) {
+      if (!(managerId.value)) {
         this.formError = true;
         managerId.setErrors({'required': true});
         this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       }
 
-      if (eventFeedback.value === null) {
+      if (!(eventFeedback.value)) {
         this.formError = true;
         eventFeedback.setErrors({'required': true});
         this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
@@ -237,11 +241,11 @@ export class EventsCreateComponent implements OnInit {
     this.booleanOptions = [
       {
         'label': 'Enabled',
-        'action': 1
+        'action': EventFeedback.enabled
       },
       {
         'label': 'Disabled',
-        'action': 0
+        'action': EventFeedback.disabled
       }
     ];
 
@@ -263,13 +267,13 @@ export class EventsCreateComponent implements OnInit {
       'postal_code': [null],
       'latitude': [this.school.latitude],
       'longitude': [this.school.longitude],
-      'event_attendance': [null], // 1 => Enabled
+      'event_attendance': [EventAttendance.disabled], // 1 => Enabled
       'start': [null, Validators.required],
       'poster_url': [null, Validators.required],
       'poster_thumb_url': [null, Validators.required],
       'end': [null, Validators.required],
       'description': [null],
-      'event_feedback': [1], // 1 => Enabled
+      'event_feedback': [EventFeedback.enabled],
       'event_manager_id': [null],
       'attendance_manager_email': [null],
       'custom_basic_feedback_label': [null]
