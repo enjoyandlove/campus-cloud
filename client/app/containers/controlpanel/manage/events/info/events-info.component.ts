@@ -56,7 +56,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
 
         this.urlPrefix = this.utils.buildUrlPrefix(this.clubId, this.serviceId);
 
-        this.buildHeader(event.data);
+        this.buildHeader(this.event);
 
         this.mapCenter = new BehaviorSubject(
           {
@@ -68,11 +68,11 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
       .catch(err => { throw new Error(err) });
   }
 
-  private buildHeader(res) {
+  private buildHeader(event) {
     const children = this.utils.getSubNavChildren(event, this.urlPrefix);
 
     const payload = {
-      'heading': res.title,
+      'heading': event.title,
       'subheading': '',
       'crumbs': {
         'url': this.urlPrefix,

@@ -15,6 +15,8 @@ const sort = {
   sort_direction: 'asc' // asc, desc
 };
 
+import { EventAttendance } from '../../../event.status';
+
 @Component({
   selector: 'cp-list-upcoming',
   templateUrl: './list-upcoming.component.html',
@@ -29,6 +31,7 @@ export class ListUpcomingComponent implements OnInit {
   sort: ISort = sort;
   canWriteSchoolWide;
   dateFormat = FORMAT.SHORT;
+  attendanceEnabled = EventAttendance.enabled;
 
   constructor(
     private session: CPSession

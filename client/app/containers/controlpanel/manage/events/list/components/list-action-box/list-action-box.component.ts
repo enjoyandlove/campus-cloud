@@ -17,6 +17,8 @@ import { StoreService } from '../../../../../../../shared/services';
 import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
 import { canSchoolWriteResource } from './../../../../../../../shared/utils/privileges/privileges';
 
+import { EventAttendance } from '../../../event.status';
+
 interface IState {
   end: number;
   start: number;
@@ -29,10 +31,10 @@ interface IState {
 const threeYearsFromNow = new Date(new Date().setFullYear(new Date().getFullYear() + 3));
 
 const state = {
-  upcoming: true,       // true -> upcoming false -> past
+  upcoming: true,
   search_str: null,
   store_id: null,       // all stores
-  attendance_only: 0,
+  attendance_only: EventAttendance.disabled,
   start: CPDate.toEpoch(new Date()),
   end: CPDate.toEpoch(threeYearsFromNow)
 };
@@ -87,7 +89,9 @@ export class ListActionBoxComponent implements OnInit {
 
   onDateReset() {
     this.isCalendar = false;
+
     this.resetDateRange();
+
     this.listAction.emit(this.state);
   }
 
@@ -134,12 +138,15 @@ export class ListActionBoxComponent implements OnInit {
 
   onSearch(search_str): void {
     this.state = Object.assign({}, this.state, { search_str });
+
     this.listAction.emit(this.state);
   }
 
   onFilterByHost(store_id): void {
     store_id = 0 ? null : store_id;
+
     this.state = Object.assign({}, this.state, { store_id });
+
     this.listAction.emit(this.state);
   }
 
@@ -147,6 +154,7 @@ export class ListActionBoxComponent implements OnInit {
     this.state = Object.assign({}, this.state, { upcoming });
 
     this.resetDateRange();
+
     this.listAction.emit(this.state);
   }
 
@@ -164,8 +172,9 @@ export class ListActionBoxComponent implements OnInit {
     this.listAction.emit(this.state);
   }
 
-  onAttendanceToggle(attendance_only) {
-    attendance_only = attendance_only ? 1 : 0;
+  onAttendanceToggle(checked) {
+    const attendance_only = checked ? EventAttendance.enabled : EventAttendance.disabled;
+
     this.state = Object.assign({}, this.state, { attendance_only });
 
     this.listAction.emit(this.state);
