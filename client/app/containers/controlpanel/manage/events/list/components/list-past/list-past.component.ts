@@ -35,9 +35,7 @@ export class ListPastComponent implements OnInit {
     private session: CPSession
   ) { }
 
-  onDelete(event) {
-    this.deleteEvent.emit(event);
-  }
+  onDelete(event) { this.deleteEvent.emit(event); }
 
   doSort(sort_field) {
     let sort_direction = this.state.sort_direction === 'asc' ? 'desc' : 'asc';
@@ -45,7 +43,7 @@ export class ListPastComponent implements OnInit {
     this.sort = Object.assign(
       {},
       this.sort,
-      { sort_field, sort_direction: sort_direction }
+      { sort_field, sort_direction }
     );
 
     this.sortList.emit(this.sort);
