@@ -267,7 +267,7 @@ export class EventsCreateComponent implements OnInit {
       'postal_code': [null],
       'latitude': [this.school.latitude],
       'longitude': [this.school.longitude],
-      'event_attendance': [EventAttendance.disabled], // 1 => Enabled
+      'event_attendance': [EventAttendance.disabled],
       'start': [null, Validators.required],
       'poster_url': [null, Validators.required],
       'poster_thumb_url': [null, Validators.required],
