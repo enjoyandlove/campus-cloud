@@ -9,7 +9,7 @@ export class AnnouncementsListRecipientsComponent implements OnInit {
   @Input() lists: Array<{ id: number, name: string }>;
   @Input() users: Array<{ id: number, firstname: string, lastname: string }>;
 
-  maxAllowed = 3;
+  maxAllowed = 1;
   recipients: Array<string> = [];
   recipients_more: Array<string> = [];
 

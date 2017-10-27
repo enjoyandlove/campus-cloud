@@ -22,5 +22,5 @@ export class CPPageHeaderComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() { }
+  ngOnInit() {}
 }

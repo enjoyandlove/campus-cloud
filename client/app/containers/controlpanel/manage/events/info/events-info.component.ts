@@ -7,9 +7,9 @@ import {
   IHeader,
   HEADER_UPDATE
 } from '../../../../../reducers/header.reducer';
-import { EventDate } from '../utils';
 import { EventsService } from '../events.service';
 import { FORMAT } from '../../../../../shared/pipes/date';
+import { EventUtilService } from './../events.utils.service';
 import { BaseComponent } from '../../../../../base/base.component';
 
 @Component({
@@ -24,16 +24,18 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   @Input() isService: boolean;
 
   event;
+  urlPrefix;
   dateFormat;
+  isPastEvent;
   loading = true;
   eventId: number;
   mapCenter: BehaviorSubject<any>;
-  isPastEvent = EventDate.isPastEvent;
 
   constructor(
     private store: Store<IHeader>,
     private route: ActivatedRoute,
-    private service: EventsService
+    private service: EventsService,
+    public utils: EventUtilService
   ) {
     super();
     this.dateFormat = FORMAT.DATETIME;
@@ -47,74 +49,43 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
 
     super
       .fetchData(this.service.getEventById(this.eventId))
-      .then(res => {
-        this.event = res.data;
-        this.buildHeader(res.data);
+      .then(event => {
+        this.event = event.data;
+
+        this.isPastEvent = this.utils.isPastEvent(this.event);
+
+        this.urlPrefix = this.utils.buildUrlPrefix(this.clubId, this.serviceId);
+
+        this.buildHeader(this.event);
+
         this.mapCenter = new BehaviorSubject(
           {
-            lat: res.data.latitude,
-            lng: res.data.longitude
+            lat: event.data.latitude,
+            lng: event.data.longitude
           }
         );
       })
       .catch(err => { throw new Error(err) });
   }
 
-  private buildHeader(res) {
-    let children;
+  private buildHeader(event) {
+    const children = this.utils.getSubNavChildren(event, this.urlPrefix);
 
-    if (EventDate.isPastEvent(res.end)) {
-      if (res.event_attendance === 1) {
-        children = [
-          {
-            'label': 'Info',
-            'url': `${this.buildUrlPrefix()}/${this.eventId}/info`
-          },
-          {
-            'label': 'Assessment',
-            'url': `${this.buildUrlPrefix()}/${this.eventId}`
-          }
-        ];
-      } else {
-        children = [];
-      }
-    } else {
-      children = [
-        {
-          'label': 'Info',
-          'url': `${this.buildUrlPrefix()}/${this.eventId}/info`
-        },
-        {
-          'label': res.event_attendance === 1 ? 'Assessment' : 'Event',
-          'url': `${this.buildUrlPrefix()}/${this.eventId}`
-        }
-      ];
+    const payload = {
+      'heading': event.title,
+      'subheading': '',
+      'crumbs': {
+        'url': this.urlPrefix,
+        'label': 'Events'
+      },
+      'children': [...children]
     }
 
     this.store.dispatch({
       type: HEADER_UPDATE,
-      payload: {
-        'heading': res.title,
-        'subheading': '',
-        'crumbs': {
-          'url': this.buildUrlPrefix(),
-          'label': 'Events'
-        },
-        'children': [...children]
-      }
+      payload
     });
   }
 
-  buildUrlPrefix() {
-    if (this.isClub) {
-      return `/manage/clubs/${this.clubId}/events`;
-    } else if (this.isService) {
-      return `/manage/services/${this.serviceId}/events`;
-    }
-    return '/manage/events';
-  }
-
-  ngOnInit() {
-
-  }
+  ngOnInit() { }
 }

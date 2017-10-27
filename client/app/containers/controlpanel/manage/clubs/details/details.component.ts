@@ -49,23 +49,16 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
         this.club = club.data;
         this.hasMembership = club.data.has_membership;
 
-        this.store.dispatch({
-          type: HEADER_UPDATE,
-          payload: this.buildHeader(club.data.name)
-        });
+        if (!((this.router.url.split('/').includes('facebook')))) {
+          this.store.dispatch({
+            type: HEADER_UPDATE,
+            payload: this.buildHeader(club.data.name)
+          });
+        }
       });
   }
 
   buildHeader(name) {
-    if (this.router.url.split('/').includes('facebook')) {
-      /**
-       * we want to prevent updating the header when on /import/facebook
-       * since the import/facebook page is inside the details module this
-       * will get exectuded last so we need so stop it
-       */
-      return;
-    }
-
     let menu = {
       heading: name,
       'crumbs': {

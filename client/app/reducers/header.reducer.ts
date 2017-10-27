@@ -15,24 +15,18 @@ export interface IHeader {
     label: string;
   }
 
-  children: [
-    {
-      url: string;
-      label: string;
-    }
-  ];
+  children: {url: string, label: string}[];
 }
 
 const initialState: IHeader = {
   heading: '',
   subheading: '',
   em: '',
-  children: [
-    {
-      url: '',
-      label: ''
-    }
-  ]
+  crumbs: {
+    url: null,
+    label: null
+  },
+  children: []
 };
 
 export function reducer(state = initialState, action: Action): IHeader {
@@ -52,7 +46,6 @@ export function reducer(state = initialState, action: Action): IHeader {
           }
         )
       }
-
       return Object.assign({}, state, payload);
     case (HEADER_DEFAULT):
       return initialState;

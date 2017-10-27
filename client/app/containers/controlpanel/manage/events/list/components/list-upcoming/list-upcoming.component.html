@@ -70,7 +70,7 @@
       <span class="col-xs-3 text-truncate">
         <a
           [routerLink]="['/cb/checkin/e/' + event.encrypted_id]"
-          *ngIf="event.event_attendance === 1"
+          *ngIf="event.event_attendance === attendanceEnabled"
           class="cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--secondary" i18n>
           Check-In Details
         </a>
