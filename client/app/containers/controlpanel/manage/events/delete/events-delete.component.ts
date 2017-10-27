@@ -24,9 +24,11 @@ export class EventsDeleteComponent implements OnInit {
       .eventService
       .deleteEventById(this.event.id)
       .subscribe(
-        _ => {
+        () => {
           this.deletedEvent.emit(this.event.id);
+
           $('#deleteEventsModal').modal('hide');
+
           this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
         });
   }
