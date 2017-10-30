@@ -26,13 +26,12 @@ export class ClubsDeleteComponent implements OnInit {
       .subscribe(
         _ => {
           this.deletedClub.emit(this.club.id);
+
           $('#deleteClubsModal').modal('hide');
+
           this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
         },
-        err => {
-          console.log(err);
-          this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
-        }
+        () => this.buttonData = Object.assign({}, this.buttonData, { disabled: false })
       );
   }
 

@@ -38,7 +38,7 @@
                 *ngIf="member.avatar_url !== ''">
               <img
                 class="img-rounded"
-                src="/dist/default/user.png"
+                [src]="defaultImage"
                 *ngIf="member.avatar_url === ''">
               <strong>
                   <button
@@ -53,7 +53,7 @@
               {{ member.role }}
             </span>
             <span class="col-xs-2 text-truncate">
-              {{ member.member_type === 2 ? 'Executive' : 'Member' }}
+              {{ member.member_type === excutiveType ? 'Executive' : 'Member' }}
             </span>
 
             <span

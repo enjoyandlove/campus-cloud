@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { URLSearchParams } from '@angular/http';
 
+import { MemberType } from '../member.status';
 import { MembersService } from '../members.service';
 import { CPSession } from '../../../../../../session';
 import { BaseComponent } from '../../../../../../base/base.component';
@@ -31,6 +32,8 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
   editMember = '';
   deleteMember = '';
   state: IState = state;
+  excutiveType = MemberType.executive;
+  defaultImage = require('public/default/user.png');
 
   constructor(
     private session: CPSession,
@@ -38,22 +41,26 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
     private membersService: MembersService
   ) {
     super();
-    super.isLoading().subscribe(res => this.loading = res);
+    super.isLoading().subscribe(loading => this.loading = loading);
   }
 
   private fetch() {
-    let groupSearch = new URLSearchParams();
-    let memberSearch = new URLSearchParams();
+    const groupSearch = new URLSearchParams();
+    const memberSearch = new URLSearchParams();
+    const schoolId = this.session.g.get('school').id.toString();
+    const clubId = this.route.snapshot.parent.parent.parent.params['clubId'];
 
-    memberSearch.append('school_id', this.session.g.get('school').id.toString());
+    memberSearch.append('school_id', schoolId);
 
-    groupSearch.append('store_id', this.route.snapshot.parent.parent.parent.params['clubId']);
-    groupSearch.append('school_id', this.session.g.get('school').id.toString());
+    groupSearch.append('store_id', clubId);
+    groupSearch.append('school_id', schoolId);
 
     let socialGroupDetails$ = this.membersService.getSocialGroupDetails(groupSearch);
 
-    let stream$ = socialGroupDetails$.flatMap((groups: any) => {
+    let stream$ = socialGroupDetails$
+      .flatMap((groups: any) => {
       memberSearch.append('group_id', groups[0].id.toString());
+
       this.groupId = groups[0].id;
 
       return this.membersService.getMembers(memberSearch);
@@ -65,24 +72,17 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
       .catch(err => { throw new Error(err) });
   }
 
-  forceRefresh() {
-    this.fetch();
-  }
+  forceRefresh() { this.fetch(); }
 
-  onFilter(query) {
-    this.query = query;
-  }
+  onFilter(query) { this.query = query; }
 
   onLaunchCreateModal() {
     this.isCreate = true;
+
     $('#membersCreate').modal();
   }
 
-  onTearDown(modal) {
-    this[modal] = false;
-  }
+  onTearDown(modal) { this[modal] = false; }
 
-  ngOnInit() {
-    this.fetch();
-  }
+  ngOnInit() { this.fetch(); }
 }

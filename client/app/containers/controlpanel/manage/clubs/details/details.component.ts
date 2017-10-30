@@ -3,28 +3,21 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
-import {
-  canSchoolReadResource,
-  canStoreReadAndWriteResource
-} from './../../../../../shared/utils/privileges';
 
+import { IClub } from '../club.interface';
 import { ClubsService } from '../clubs.service';
 import { CPSession } from '../../../../../session';
+import { ClubsUtilsService } from '../clubs.utils.service';
 import { BaseComponent } from '../../../../../base/base.component';
-import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-
-const CLUB_ACTIVE_STATUS = 1;
-const CLUB_PENDING_STATUS = 2;
 
 @Component({
   selector: 'cp-clubs-details',
   template: '<router-outlet></router-outlet>'
 })
 export class ClubsDetailsComponent extends BaseComponent implements OnInit {
-  club;
   loading;
-  hasMembership;
+  club: IClub;
   clubId: number;
 
   constructor(
@@ -32,22 +25,24 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
     private store: Store<any>,
     private session: CPSession,
     private route: ActivatedRoute,
+    private utils: ClubsUtilsService,
     private clubsService: ClubsService
   ) {
     super();
+
     this.clubId = this.route.snapshot.params['clubId'];
-    super.isLoading().subscribe(res => this.loading = res);
+
+    super.isLoading().subscribe(loading => this.loading = loading);
   }
 
   private fetch() {
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     super
       .fetchData(this.clubsService.getClubById(this.clubId, search))
       .then(club => {
         this.club = club.data;
-        this.hasMembership = club.data.has_membership;
 
         if (!((this.router.url.split('/').includes('facebook')))) {
           this.store.dispatch({
@@ -70,36 +65,7 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
       children: []
     };
 
-    let links = [];
-    const clubIsActive = this.club.status === CLUB_ACTIVE_STATUS;
-    const clubIsPending = this.club.status !== CLUB_PENDING_STATUS;
-
-    const schoolAccess = (permission) => canSchoolReadResource(this.session.g, permission);
-
-    const storeAccess = (permission) => {
-      return canStoreReadAndWriteResource(this.session.g, this.clubId, permission);
-    }
-
-    if (clubIsActive &&
-        schoolAccess(CP_PRIVILEGES_MAP.events) ||
-        storeAccess(CP_PRIVILEGES_MAP.events)) {
-      links = ['Events', ...links];
-    }
-
-    if (this.hasMembership) {
-      if (clubIsPending &&
-          schoolAccess(CP_PRIVILEGES_MAP.moderation) ||
-          storeAccess(CP_PRIVILEGES_MAP.moderation)) {
-        links = ['Wall', ...links];
-      }
-
-      if (schoolAccess(CP_PRIVILEGES_MAP.membership) ||
-          storeAccess(CP_PRIVILEGES_MAP.membership)) {
-        links = ['Members', ...links];
-      }
-    }
-
-    links = ['Info', ...links];
+    const links = this.utils.getSubNavChildren(this.club, this.session);
 
     links.forEach(link => {
       menu.children.push({
@@ -111,7 +77,5 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
     return menu;
   }
 
-  ngOnInit() {
-    this.fetch();
-  }
+  ngOnInit() { this.fetch(); }
 }
