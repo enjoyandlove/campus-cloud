@@ -69,17 +69,14 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
       .clubsService
       .updateClub({ status: this.ACTIVE_STATUS }, clubId, search)
       .subscribe(
-      res => {
-        let _state = Object.assign({}, this.state, {
-          clubs: this.state.clubs.map(_club => {
-            if (_club.id === res.id) {
-              return _club = res;
-            }
-            return _club;
-          })
-        });
-
-        this.state = Object.assign({}, this.state, _state);
+      updatedClub => {
+        this.state = {
+          ...this.state,
+          clubs: this
+            .state
+            .clubs
+            .map(oldClub => oldClub.id === updatedClub.id ? updatedClub : oldClub)
+        }
       },
       err => { throw new Error(err) }
       );
@@ -91,9 +88,7 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
       type: filter.type
     });
 
-    if (filter.query) {
-      this.resetPagination();
-    }
+    if (filter.query) { this.resetPagination(); }
 
     this.fetch();
   }
