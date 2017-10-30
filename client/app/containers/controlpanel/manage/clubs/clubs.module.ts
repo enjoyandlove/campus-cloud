@@ -29,6 +29,7 @@ import { FeedsModule } from '../feeds/feeds.module';
 import { EventsModule } from '../events/events.module';
 
 import { ClubsService } from './clubs.service';
+import { ClubsUtilsService } from './clubs.utils.service';
 import { ClubsRoutingModule } from './clubs.routing.module';
 
 @NgModule({
@@ -39,6 +40,6 @@ import { ClubsRoutingModule } from './clubs.routing.module';
   imports: [ CommonModule, SharedModule, RouterModule, ReactiveFormsModule, ClubsRoutingModule,
   FeedsModule, EventsModule ],
 
-  providers: [ ClubsService ],
+  providers: [ ClubsService, ClubsUtilsService ],
 })
 export class ClubsModule {}

@@ -5,6 +5,7 @@ import { URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
+import { ClubStatus } from '../club.status';
 import { ClubsService } from '../clubs.service';
 import { CPSession } from '../../../../../session';
 import { CPMap } from '../../../../../shared/utils';
@@ -18,11 +19,15 @@ import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 })
 export class ClubsCreateComponent implements OnInit {
   formError;
-  buttonData;
-  statusTypes;
-  membershipTypes;
   form: FormGroup;
+  statusTypes = statusTypes;
   mapCenter: BehaviorSubject<any>;
+  membershipTypes = membershipTypes;
+
+  buttonData = {
+    class: 'primary',
+    text: 'Create Club'
+  };
 
   constructor(
     private router: Router,
@@ -41,8 +46,9 @@ export class ClubsCreateComponent implements OnInit {
       return;
     }
 
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
+
     this
       .clubsService
       .createClub(this.form.value, search)
@@ -59,11 +65,11 @@ export class ClubsCreateComponent implements OnInit {
     this.form.controls['logo_url'].setValue(image);
   }
 
-  onSelectedMembership(type) {
+  onSelectedMembership(type): void {
     this.form.controls['has_membership'].setValue(type.action);
   }
 
-  onSelectedStatus(type) {
+  onSelectedStatus(type): void {
     this.form.controls['status'].setValue(type.action);
   }
 
@@ -86,11 +92,6 @@ export class ClubsCreateComponent implements OnInit {
   ngOnInit() {
     let school = this.session.g.get('school');
 
-    this.buttonData = {
-      class: 'primary',
-      text: 'Create Club'
-    }
-
     this.mapCenter = new BehaviorSubject(
       {
         lat: school.latitude,
@@ -108,13 +109,10 @@ export class ClubsCreateComponent implements OnInit {
       }
     });
 
-    this.statusTypes = statusTypes;
-    this.membershipTypes = membershipTypes;
-
     this.form = this.fb.group({
       'name': [null, Validators.required],
       'logo_url': [null, Validators.required],
-      'status': [1, Validators.required],
+      'status': [ClubStatus.active, Validators.required],
       'has_membership': [true, Validators.required],
       'location': [null],
       'address': [null],

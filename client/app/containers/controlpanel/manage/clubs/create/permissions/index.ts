@@ -1,16 +1,18 @@
+import { ClubStatus } from '../../club.status';
+
 export const statusTypes = [
   {
-    action: 1,
+    action: ClubStatus.active,
     label: 'Active',
     description: 'Club is approved and will be listed on the Campus App'
   },
   {
-    action: 0,
+    action: ClubStatus.inactive,
     label: 'Inactive',
     description: 'Club is suspended and will not be listed on the Campus App'
   },
   {
-    action: -2,
+    action: ClubStatus.pending,
     label: 'Pending',
     description: 'Club is awating approval and will not be listed on the Campus App'
   }
