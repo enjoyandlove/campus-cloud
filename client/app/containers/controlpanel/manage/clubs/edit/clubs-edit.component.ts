@@ -45,27 +45,11 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
   }
 
   getDefaultStatus(value) {
-    let result;
-
-    this.statusTypes.map(status => {
-      if (status.action === value) {
-        result = status;
-      }
-    });
-
-    return result;
+    return this.statusTypes.filter(status => status.action === value)[0];
   }
 
   getDefaultMembership(value) {
-    let result;
-
-    this.membershipTypes.map(membership => {
-      if (membership.action === value) {
-        result = membership;
-      }
-    });
-
-    return result;
+    return this.membershipTypes.filter(membership => membership.action === value)[0];
   }
 
   fetch() {
@@ -126,7 +110,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     this
