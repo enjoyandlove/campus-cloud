@@ -15,11 +15,9 @@ import {
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
+import { MemberType } from '../member.status';
 import { MembersService } from '../members.service';
 import { CPSession } from '../../../../../../session';
-
-const MEMBER_TYPE = 0;
-const EXECUTIVE_TYPE = 2;
 
 declare var $: any;
 
@@ -51,8 +49,8 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
     const blur$ = Observable.fromEvent(this.input.nativeElement, 'blur');
 
     blur$
-    .debounceTime(200)
-    .subscribe(_ => { if (this.members.length) { this.members = []; } });
+      .debounceTime(200)
+      .subscribe(_ => { if (this.members.length) { this.members = []; } });
 
     keyup$
       .debounceTime(400)
@@ -67,24 +65,23 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
         search.append('search_str', query);
         search.append('school_id', this.session.g.get('school').id.toString());
 
-        return this.service.getMembers(search).map(members => {
-          let _members = [];
+        return this
+          .service
+          .getMembers(search)
+          .map(members => {
+            if (!(members.length)) {
+              return [{ 'label': 'No Results...' }]
+            }
 
-          members.forEach(member => {
-            _members.push({
-              'label': `${member.firstname} ${member.lastname}`,
-              'id': member.id
-            });
+            return members.map(member => {
+              return {
+                'label': `${member.firstname} ${member.lastname}`,
+                'id': member.id
+              }
+            })
           });
-
-          if (!_members.length) {
-            _members.push({ 'label': 'No Results...' });
-          }
-
-          return _members;
-        });
       })
-      .subscribe(res => this.members = res);
+      .subscribe(members => this.members = members);
   }
 
   onMemberSelected(member) {
@@ -121,17 +118,17 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
       .service
       .addMember({ member_type, group_id }, this.form.value.member)
       .subscribe(
-        member => {
-          this.added.emit(member);
-          $('#membersCreate').modal('hide');
-          this.doReset();
-          this.buttonData = Object.assign({}, this.buttonData, { disabled: true });
-          this.reset$.next(true);
-        },
-        err => {
-          this.buttonData = Object.assign({}, this.buttonData, { disabled: true });
-          throw new Error(err)
-        }
+      member => {
+        this.added.emit(member);
+        $('#membersCreate').modal('hide');
+        this.doReset();
+        this.buttonData = Object.assign({}, this.buttonData, { disabled: true });
+        this.reset$.next(true);
+      },
+      err => {
+        this.buttonData = Object.assign({}, this.buttonData, { disabled: true });
+        throw new Error(err)
+      }
       );
   }
 
@@ -145,11 +142,11 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
     this.memberTypes = [
       {
         label: 'Member',
-        action: MEMBER_TYPE
+        action: MemberType.member
       },
       {
         label: 'Executive',
-        action: EXECUTIVE_TYPE
+        action: MemberType.executive
       }
     ];
 

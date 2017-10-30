@@ -8,14 +8,12 @@ import {
   canStoreReadAndWriteResource
 } from './../../../../../shared/utils/privileges';
 
+import { ClubStatus } from '../club.status';
 import { ClubsService } from '../clubs.service';
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base/base.component';
 import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-
-const CLUB_ACTIVE_STATUS = 1;
-const CLUB_PENDING_STATUS = 2;
 
 @Component({
   selector: 'cp-clubs-events',
@@ -36,18 +34,21 @@ export class ClubsEventsComponent extends BaseComponent implements OnInit {
     private clubsService: ClubsService
   ) {
     super();
+
     this.clubId = this.route.parent.snapshot.parent.params['clubId'];
-    super.isLoading().subscribe(res => this.loading = res);
+
+    super.isLoading().subscribe(loading => this.loading = loading);
   }
 
   private fetch() {
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     super
       .fetchData(this.clubsService.getClubById(this.clubId, search))
       .then(club => {
         this.club = club.data;
+
         this.hasMembership = club.data.has_membership;
 
         this.store.dispatch({
@@ -62,7 +63,7 @@ export class ClubsEventsComponent extends BaseComponent implements OnInit {
       heading: name,
       subheading: null,
       'crumbs': {
-        'url': this.router.url === `/manage/clubs/${this.clubId}/events`
+        'url': this.router.url === `/manage/clubs/${this.clubId}/events/here`
           ? 'clubs'
           : `clubs/${this.clubId}`,
         'label': 'Clubs'
@@ -72,8 +73,10 @@ export class ClubsEventsComponent extends BaseComponent implements OnInit {
     };
 
     let links = [];
-    const clubIsActive = this.club.status === CLUB_ACTIVE_STATUS;
-    const clubIsPending = this.club.status !== CLUB_PENDING_STATUS;
+
+    const clubIsActive = this.club.status === ClubStatus.active;
+
+    const clubIsPending = this.club.status !== ClubStatus.pending;
 
     const schoolAccess = (permission) => canSchoolReadResource(this.session.g, permission);
 
