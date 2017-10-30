@@ -2,14 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
+import { IClub } from '../club.interface';
 import { ClubsService } from '../clubs.service';
 import { CPSession } from '../../../../../session';
 import { ManageHeaderService } from './../../utils/header';
+import { ClubStatus, ClubSocialGroup } from '../club.status';
 import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
 interface IState {
-  clubs: Array<any>;
+  clubs: IClub[];
   query: string;
   type: string;
 }
@@ -29,9 +31,11 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
   loading;
   clubStatus;
   deleteClub = '';
-  ACTIVE_STATUS = 1;
-  PENDING_STATUS = -2;
   state: IState = state;
+  ACTIVE_STATUS = ClubStatus.active;
+  PENDING_STATUS = ClubStatus.pending;
+  disabledWall = ClubSocialGroup.disabled;
+  defaultImage = require('public/default/user.png');
 
   constructor(
     private store: Store<any>,
@@ -53,9 +57,7 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
 
     super
       .fetchData(this.clubsService.getClubs(search, this.startRange, this.endRange))
-      .then(res => {
-        this.state = Object.assign({}, this.state, { clubs: res.data });
-      })
+      .then(res => this.state = Object.assign({}, this.state, { clubs: res.data }))
       .catch(_ => null);
   }
 
@@ -121,9 +123,9 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.clubStatus = {
-      0: 'Inactive',
-      1: 'Active',
-      '-2': 'Pending'
+      [ClubStatus.inactive] : 'Inactive',
+      [ClubStatus.active] : 'Active',
+      [ClubStatus.pending] : 'Pending'
     };
 
     this

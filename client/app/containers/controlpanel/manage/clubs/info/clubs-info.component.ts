@@ -6,6 +6,7 @@ import { URLSearchParams } from '@angular/http';
 import { ClubsService } from '../clubs.service';
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base/base.component';
+import { ClubStatus } from '../club.status';
 
 @Component({
   selector: 'cp-clubs-info',
@@ -16,8 +17,8 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
   club;
   loading;
   clubStatus;
-  hasMetaData;
   clubId: number;
+  hasMetaData = false;
   mapCenter: BehaviorSubject<any>;
 
   constructor(
@@ -63,9 +64,9 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.clubStatus = {
-      0: 'Inactive',
-      1: 'Active',
-      '-2': 'Pending'
+      [ClubStatus.inactive] : 'Inactive',
+      [ClubStatus.active] : 'Active',
+      [ClubStatus.pending] : 'Pending'
     };
   }
 }

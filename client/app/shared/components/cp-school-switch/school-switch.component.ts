@@ -16,7 +16,7 @@ export class SchoolSwitchComponent implements OnInit {
   canManageAdmins;
   selectedSchool: ISchool;
   schools: Array<ISchool> = [];
-  defaultImage = require('../../../../public/default/user.png');
+  defaultImage = require('public/default/user.png');
 
   constructor(
     public session: CPSession

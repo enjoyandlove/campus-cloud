@@ -27,7 +27,7 @@
             <span class="col-xs-5 text-truncate clubs__thumbnail">
               <img class="img-rounded" [src]="club.logo_url" *ngIf="club.logo_url !== ''">
 
-              <img class="img-rounded" src="/dist/default/user.png" *ngIf="club.logo_url === ''">
+              <img class="img-rounded" src="defaultImage" *ngIf="club.logo_url === ''">
 
               <strong><a [routerLink]="[club.id + '/info']">{{ club.name }}</a></strong>
               <br>
