@@ -1,4 +1,3 @@
-import { CPTextEditorComponent } from './components/cp-text-editor/cp-text-editor.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -13,7 +12,8 @@ import { CPMapsComponent, CPModalComponent, CPTopBarComponent, CPAvatarComponent
   CPSmallDatePickerComponent, CPUploadButtonComponent, CPPaginationComponent,
   CPNoContentComponent, CPCheckDropdownComponent, CPImageUploadComponent,
   SchoolSwitchComponent, CPIntercommComponent, CPTrackersComponent, CPChipComponent,
-  CPTypeAheadComponent, CPUploadModalComponent, CPSnackBarComponent, CPButtonComponent
+  CPTypeAheadComponent, CPUploadModalComponent, CPSnackBarComponent, CPButtonComponent,
+  CPTextEditorComponent
 } from './components';
 
 import {
