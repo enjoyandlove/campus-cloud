@@ -100,6 +100,7 @@ export class EngagementEventsBoxComponent extends BaseComponent implements OnIni
         this.isSorting = false;
 
         this.eventsRanking = res.data.top_events;
+
         this.stats = [
           {
             value: res.data.total_events,
