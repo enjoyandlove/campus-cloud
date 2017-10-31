@@ -104,7 +104,7 @@ export class StoreService extends BaseService {
       });
   }
 
-  getStores(search: URLSearchParams, placeHolder = 'Select Hosts') {
+  getStores(search: URLSearchParams, placeHolder = 'Select Host') {
     const clubs$ = this.getClubs(search);
     const services$ = this.getServices(search);
 
