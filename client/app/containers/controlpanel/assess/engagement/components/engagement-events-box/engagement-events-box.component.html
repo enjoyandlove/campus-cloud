@@ -72,8 +72,7 @@
                 <div class="row events--table" *ngSwitchCase="false">
                   <ng-container *ngIf="!eventsRanking.length">
                     <div class="col-xs-12 text-center events--not_found">
-                        <p class="events--not_found--title" i18n>No Events Found</p>
-                        <p class="text-muted" i18n>Refine your search to try again</p>
+                        <p class="events--not_found--title" i18n>No {{ sortingBy.label }}</p>
                     </div>
                   </ng-container>
                   <ng-container *ngIf="eventsRanking.length">
