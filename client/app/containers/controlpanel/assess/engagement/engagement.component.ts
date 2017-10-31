@@ -142,6 +142,7 @@ export class EngagementComponent extends BaseComponent implements OnInit {
           'Service Responses',
           'Services Response Rate',
           'Service Average Rating',
+          'Student ID'
         ];
 
         const parsedData = data.download_data.map(item => {
@@ -150,7 +151,7 @@ export class EngagementComponent extends BaseComponent implements OnInit {
             '# of Check-ins': item.total_checkins,
             '# of Responses': item.total_responses,
             'Response Rate': `${item.total_response_rate.toFixed(1)}%`,
-            'Average Rating': (item.event_ratings + item.service_ratings) / 2,
+            'Average Rating': `${(item.event_ratings + item.service_ratings) / 2}%`,
             '# of Event Check-Ins': item.event_checkins,
             'Event Responses': item.event_responses,
             'Event Response Rate': `${item.event_response_rate.toFixed(1)}%`,
@@ -158,7 +159,8 @@ export class EngagementComponent extends BaseComponent implements OnInit {
             '# of Service Check-ins': item.service_checkins,
             'Service Responses': item.service_responses,
             'Services Response Rate': `${item.service_response_rate.toFixed(1)}%`,
-            'Service Average Rating': item.service_ratings
+            'Service Average Rating': item.service_ratings,
+            'Student ID': item.sso_id,
           }
         })
         createSpreadSheet(parsedData, columns, fileName)
