@@ -71,7 +71,7 @@ describe('StudentsProfileComponent', () => {
       ],
       imports: [
         SharedModule,
-        StoreModule.provideStore({
+        StoreModule.forRoot({
           HEADER: headerReducer,
           SNACKBAR: snackBarReducer
         })

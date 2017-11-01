@@ -17,7 +17,7 @@ import { HEADER_UPDATE } from './../../../reducers/header.reducer';
 export class AssessComponent implements OnInit {
   headerData$: Observable<IHeader>;
 
-  constructor(private store: Store<IHeader>) {
+  constructor(private store: Store<any>) {
     this.headerData$ = this.store.select('HEADER');
 
     this.store.dispatch({

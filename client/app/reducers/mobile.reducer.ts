@@ -1,5 +1,3 @@
-import { Action } from '@ngrx/store';
-
 export const TOGGLE = 'TOGGLE';
 
 export interface IMobile {
@@ -10,7 +8,7 @@ const initialState = {
   isOpen: false
 };
 
-export function reducer(state: IMobile = initialState, action: Action) {
+export function reducer(state: IMobile = initialState, action) {
   switch (action.type) {
     case TOGGLE:
       return Object.assign({}, state, { isOpen: !state.isOpen });

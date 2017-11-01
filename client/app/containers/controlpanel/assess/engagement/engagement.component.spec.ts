@@ -67,7 +67,7 @@ describe('EngagementComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         // EngagementModule,
-        StoreModule.provideStore({
+        StoreModule.forRoot({
           HEADER: headerReducer,
           SNACKBAR: snackBarReducer
         })
