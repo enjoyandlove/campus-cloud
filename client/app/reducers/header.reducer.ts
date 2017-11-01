@@ -1,5 +1,3 @@
-import { Action } from '@ngrx/store';
-
 export const HEADER_UPDATE = 'HEADER_UPDATE';
 export const HEADER_DEFAULT = 'HEADER_DEFAULT';
 
@@ -29,7 +27,7 @@ const initialState: IHeader = {
   children: []
 };
 
-export function reducer(state = initialState, action: Action): IHeader {
+export function reducer(state = initialState, action) {
   switch (action.type) {
     case (HEADER_UPDATE):
       let payload = action.payload;

@@ -46,7 +46,7 @@ describe('Password Reset', () => {
     TestBed.configureTestingModule({
      imports: [
        FormsModule,
-       StoreModule.provideStore({ 'ALERT': ALERT_DEFAULT }),
+       StoreModule.forRoot({ 'ALERT': ALERT_DEFAULT }),
      ],
      declarations: [ CallbackPasswordResetComponent ],
      providers: [

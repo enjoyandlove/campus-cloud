@@ -1,5 +1,3 @@
-import { Action } from '@ngrx/store';
-
 export const SNACKBAR_SHOW = 'SNACKBAR_SHOW';
 export const SNACKBAR_HIDE = 'SNACKBAR_HIDE';
 
@@ -17,7 +15,7 @@ const initialState: ISnackbar = {
   autoCloseDelay: 4000
 };
 
-export function reducer(state = initialState, action: Action): ISnackbar {
+export function reducer(state = initialState, action): ISnackbar {
   switch (action.type) {
     case (SNACKBAR_SHOW):
       return Object.assign({}, state, ...action.payload);

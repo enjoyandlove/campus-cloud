@@ -19,7 +19,7 @@ import {
   servicesModalReducer
 } from '../../reducers';
 
-const APP_STATE_MODULE = StoreModule.provideStore({
+const APP_STATE_MODULE = StoreModule.forRoot({
   CLUBS: clubsReducer,
   ALERT: alertReducer,
   HEADER: headerReducer,
