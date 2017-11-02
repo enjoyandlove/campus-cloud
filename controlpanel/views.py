@@ -3,6 +3,7 @@ import csv
 import json
 import datetime
 
+from bs4 import UnicodeDammit
 from django.shortcuts import render_to_response
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -36,24 +37,21 @@ Parse Mass Event Invite
 @csrf_exempt
 def import_events(request):
     csv_file = request.FILES['file']
-    csv_as_string = ''
 
+    csv_as_string = []
     for index, row in enumerate(csv_file):
         try:
-            csv_as_string += row.decode('utf-8')
+            csv_as_string.append(UnicodeDammit(row).unicode_markup)
         except UnicodeError as e:
             return JsonResponse({"error": DECODE_ERROR + '. At line {}'.format(index + 1)}, safe=False, status=400)
 
-
-    io_string = io.StringIO(csv_as_string)
-
-    parser = CSVParser(io_string)
+    parser = CSVParser(csv_as_string)
 
     try:
         parsed_data = parser.all_fields_required('title', 'start_date', 'end_date')
     except KeyError as e:
         return JsonResponse({"error": e.args[0]},
-                                safe=False, status=400)
+                             safe=False, status=400)
 
 
     for item in parsed_data:
