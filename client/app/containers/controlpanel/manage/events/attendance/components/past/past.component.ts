@@ -122,7 +122,7 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
           'Rating': item.feedback_rating === -1
             ? ''
             : ((item.feedback_rating * 5) / 100).toFixed(2),
-          'Student ID': item.sso_id,
+          'Student ID': item.student_identifier,
         }
       })
 

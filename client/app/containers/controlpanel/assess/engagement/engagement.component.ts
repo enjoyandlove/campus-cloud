@@ -160,7 +160,7 @@ export class EngagementComponent extends BaseComponent implements OnInit {
             'Service Responses': item.service_responses,
             'Services Response Rate': `${item.service_response_rate.toFixed(1)}%`,
             'Service Average Rating': item.service_ratings,
-            'Student ID': item.sso_id,
+            'Student ID': item.student_identifier,
           }
         })
         createSpreadSheet(parsedData, columns, fileName)
