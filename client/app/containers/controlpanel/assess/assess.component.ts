@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
 import { IHeader } from '../../../reducers/header.reducer';
+import { HEADER_UPDATE } from './../../../reducers/header.reducer';
 
 @Component({
   selector: 'cp-assess',
@@ -16,8 +17,13 @@ import { IHeader } from '../../../reducers/header.reducer';
 export class AssessComponent implements OnInit {
   headerData$: Observable<IHeader>;
 
-  constructor(private store: Store<IHeader>) {
+  constructor(private store: Store<any>) {
     this.headerData$ = this.store.select('HEADER');
+
+    this.store.dispatch({
+      type: HEADER_UPDATE,
+      payload: require('./assess.header.json')
+    });
   }
 
   ngOnInit() { }

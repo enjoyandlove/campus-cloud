@@ -44,7 +44,7 @@ export class LinksListComponent extends BaseComponent implements OnInit {
 
     this.fetch();
 
-    super.isLoading().subscribe(res => this.loading = res);
+    super.isLoading().subscribe(loading => this.loading = loading);
   }
 
   onPaginationNext() {
@@ -65,20 +65,23 @@ export class LinksListComponent extends BaseComponent implements OnInit {
       this.state,
       { search_str }
     );
+
+    this.resetPagination();
+
     this.fetch();
   }
 
   private fetch() {
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('search_str', this.state.search_str);
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    let end = this.endRange;
-    let start = this.startRange;
+    const end = this.endRange;
+    const start = this.startRange;
 
     super
       .fetchData(this.service.getLinks(start, end, search))
-      .then(res => this.state.links = res.data)
+      .then(res => this.state = { ...this.state, links: res.data })
       .catch(err => { throw new Error(err) });
   }
 
@@ -96,30 +99,30 @@ export class LinksListComponent extends BaseComponent implements OnInit {
   onEditedLink(editedLink) {
     this.isLinksEdit = false;
 
-    let _state = Object.assign({}, this.state, {
-      links: this.state.links.map(link => {
-        if (link.id === editedLink.id) {
-          return link = editedLink;
-        }
-        return link;
-      })
-    });
-
-    this.state = Object.assign({}, this.state, _state);
+    this.state = Object.assign(
+      {},
+      this.state,
+      {
+        links: this.state.links.map(link => link.id === editedLink.id ? editedLink : link)
+      }
+    )
   }
 
   onDeletedLink(linkId: number) {
     this.isLinksDelete = false;
 
-    let _state = Object.assign({}, this.state);
+    this.state = Object.assign(
+      {},
+      this.state,
+      {
+        links: this.state.links.filter(link => link.id !== linkId)
+      }
+    );
 
-    _state.links = _state.links.filter(link => {
-      if (link.id !== linkId) { return link; }
-
-      return;
-    });
-
-    this.state = Object.assign({}, this.state, { links: _state.links });
+    if (this.state.links.length === 0 && this.pageNumber > 1) {
+      this.resetPagination();
+      this.fetch();
+    }
   }
 
   ngOnInit() { }

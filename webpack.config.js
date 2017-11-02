@@ -8,6 +8,7 @@ var autoprefixer = require('autoprefixer');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 /**
  * Env
@@ -173,6 +174,7 @@ module.exports = function makeWebpackConfig() {
    * List: http://webpack.github.io/docs/list-of-plugins.html
    */
   config.plugins = [
+    // new BundleAnalyzerPlugin(),
     // Define env variables to help with builds
     // Reference: https://webpack.github.io/docs/list-of-plugins.html#defineplugin
     new webpack.DefinePlugin({

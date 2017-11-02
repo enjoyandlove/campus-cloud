@@ -6,12 +6,13 @@
   background-color: $color-white;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.12);
 
-  overflow: -moz-scrollbars-none;
-  -ms-overflow-style: none;
+  // https://oohlalaproduct.atlassian.net/browse/WEB-962
+  // overflow: -moz-scrollbars-none;
+  // -ms-overflow-style: none;
 
-  &::-webkit-scrollbar {
-      width: 0 !important;
-  }
+  // &::-webkit-scrollbar {
+  //     width: 0 !important;
+  // }
 
   li {
     padding: 10px;

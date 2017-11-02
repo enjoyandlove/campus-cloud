@@ -10,10 +10,8 @@ import {
   EventEmitter,
 } from '@angular/core';
 
+import { MemberType } from '../member.status';
 import { MembersService } from '../members.service';
-
-const MEMBER_TYPE = 0;
-const EXECUTIVE_TYPE = 2;
 
 declare var $: any;
 
@@ -87,11 +85,11 @@ export class ClubsMembersEditComponent implements OnInit {
     this.memberTypes = [
       {
         label: 'Member',
-        action: MEMBER_TYPE
+        action: MemberType.member
       },
       {
         label: 'Executive',
-        action: EXECUTIVE_TYPE
+        action: MemberType.executive
       }
     ];
 

@@ -1,5 +1,3 @@
-import { Action } from '@ngrx/store';
-
 export const ALERT_PUSH = 'ALERT_PUSH';
 export const ALERT_DEFAULT = 'ALERT_DEFAULT';
 
@@ -22,7 +20,7 @@ const initialState: IAlert = {
   isShow: false
 };
 
-export function reducer(state = initialState, action: Action): IAlert {
+export function reducer(state = initialState, action): IAlert {
   switch (action.type) {
     case (ALERT_PUSH):
       return Object.assign({}, state, {

@@ -56,6 +56,15 @@ $margin-top: 30px;
     }
   }
 
+  &--not_found {
+    margin-top: 150px;
+
+    &--title {
+      @include font-16px();
+      @include font-semi-bold();
+    }
+  }
+
   &--ranking {
     // margin-top: $margin-top;
     padding-top: $margin-top;

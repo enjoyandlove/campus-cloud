@@ -20,6 +20,8 @@ import { BaseComponent } from '../../../../../base/base.component';
 import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 import { ErrorService, StoreService, AdminService } from '../../../../../shared/services';
 
+import { EventAttendance } from '../event.status';
+
 const COMMON_DATE_PICKER_OPTIONS = {
   altInput: true,
   enableTime: true,
@@ -236,25 +238,18 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       .adminService
       .getAdminByStoreId(search)
       .map(admins => {
-        let _admins = [
+        return [
           {
             'label': '---',
-            'value': null,
-          }
-        ];
-        admins.forEach(admin => {
-          if (admin.id === this.form.controls['event_manager_id'].value) {
-            this.selectedManager = {
+            'value': null
+          },
+          ...admins.map(admin => {
+            return {
               'label': `${admin.firstname} ${admin.lastname}`,
               'value': admin.id
-            };
-          }
-          _admins.push({
-            'label': `${admin.firstname} ${admin.lastname}`,
-            'value': admin.id
-          });
-        });
-        return _admins;
+            }
+          })
+        ];
       }).subscribe(res => this.managers = res);
   }
 
@@ -274,6 +269,9 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
         this.stores = res.data[1];
         this.event = res.data[0];
         this.buildForm(res.data[0]);
+        this.selectedManager = this.event.attendance_manager_email ?
+          { 'label': this.event.attendance_manager_email } : null;
+
         this.mapCenter = new BehaviorSubject(
           {
             lat: res.data[0].latitude,
@@ -296,15 +294,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   getFromArray(arr: Array<any>, key: string, val: any) {
-    let result;
-
-    arr.forEach(item => {
-      if (item[key] === val) {
-        result = item;
-      }
-    });
-
-    return result;
+    return arr.filter(item => item[key] === val)[0];
   }
 
   enableStudentFeedbackOnAttendanceToggle(value) {
@@ -368,11 +358,11 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.booleanOptions = [
       {
         'label': 'Enabled',
-        'action': 1
+        'action': EventAttendance.enabled
       },
       {
         'label': 'Disabled',
-        'action': 0
+        'action': EventAttendance.disabled
       }
     ];
   }

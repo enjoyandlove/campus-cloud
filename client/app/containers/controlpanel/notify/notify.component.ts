@@ -19,7 +19,7 @@ import {
 export class NotifyComponent implements OnInit {
   headerData$: Observable<IHeader>;
 
-  constructor(private store: Store<IHeader>) {
+  constructor(private store: Store<any>) {
     this.headerData$ = this.store.select('HEADER');
 
     this.store.dispatch({

@@ -17,7 +17,7 @@ export class ManageComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private store: Store<IHeader>,
+    private store: Store<any>,
     private headerService: ManageHeaderService
   ) {
     this.headerData$ = this.store.select('HEADER');

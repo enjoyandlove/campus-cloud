@@ -27,7 +27,7 @@
             <span class="col-xs-5 text-truncate clubs__thumbnail">
               <img class="img-rounded" [src]="club.logo_url" *ngIf="club.logo_url !== ''">
 
-              <img class="img-rounded" src="/dist/default/user.png" *ngIf="club.logo_url === ''">
+              <img class="img-rounded" src="defaultImage" *ngIf="club.logo_url === ''">
 
               <strong><a [routerLink]="[club.id + '/info']">{{ club.name }}</a></strong>
               <br>
@@ -45,7 +45,7 @@
               </ng-container>
             </span>
             <span class="col-xs-2 text-truncate">
-              {{ club.member_count !== -1 ? club.member_count : 'Disabled' }}
+              {{ club.member_count === disabledWall ? 'Disabled' : club.member_count }}
             </span>
             <span class="col-xs-2 text-truncate">
               {{ club.total_item_count }}

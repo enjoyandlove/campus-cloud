@@ -89,6 +89,9 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
 
   onFilter(search_str) {
     this.state = Object.assign({}, this.state, { search_str });
+
+    this.resetPagination();
+
     this.fetch();
   }
 
@@ -100,6 +103,11 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
         templates: this.state.templates.filter(template => template.id !== id)
       }
     );
+
+    if (this.state.templates.length === 0 && this.pageNumber > 1) {
+      this.resetPagination();
+      this.fetch();
+    }
   }
 
   onLauncDeleteModal(template) {

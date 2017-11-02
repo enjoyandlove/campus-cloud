@@ -104,7 +104,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
 
             assessments = assessments.map(item => {
               return {
-                'Attendee Name': `${item.firstname} ${item.lastname} HEY`,
+                'Attendee Name': `${item.firstname} ${item.lastname}`,
 
                 'Email': item.email,
 

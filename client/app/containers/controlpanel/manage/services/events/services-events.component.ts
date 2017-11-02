@@ -92,6 +92,10 @@ export class ServicesEventsComponent extends EventsComponent implements OnInit {
       payload: {
         'heading': this.service.name,
         'subheading': '',
+        'crumbs': {
+          'url': 'services',
+          'label': 'Services'
+        },
         'children': [...children]
       }
     });

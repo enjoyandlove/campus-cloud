@@ -14,6 +14,7 @@ import { EventsFacebookComponent }  from './facebook';
 import { EventsAttendanceComponent }  from './attendance';
 
 import { EventsService } from './events.service';
+import { EventUtilService } from './events.utils.service';
 import { EventsRoutingModule } from './events.routing.module';
 
 import {
@@ -54,7 +55,7 @@ import { EventsComponent } from './list/base/events.component';
 
   imports: [ CommonModule, SharedModule, EventsRoutingModule, RouterModule, ReactiveFormsModule ],
 
-  providers: [ EventsService ],
+  providers: [ EventsService, EventUtilService ],
 
   exports: [ EventsListComponent, EventsCreateComponent, EventsAttendanceComponent,
   EventsDeleteComponent, EventsInfoComponent, EventsEditComponent, EventsExcelModalComponent,

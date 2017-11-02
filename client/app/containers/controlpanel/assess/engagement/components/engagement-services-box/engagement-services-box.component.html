@@ -70,49 +70,56 @@
                 <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
                 <div class="row services--table" *ngSwitchCase="false">
-                  <div class="col-xs-12">
-                    <div class="row services--table--header">
-                      <div class="col-xs-1">
-                        <p>#</p>
-                      </div>
-                      <div class="col-xs-5 no-left-padding">
-                        <p i18n>Title</p>
-                      </div>
-                      <div class="col-xs-2 no-left-padding">
-                        <p i18n>Attendees</p>
-                      </div>
-                      <div class="col-xs-2 no-right-padding">
-                        <p i18n>Feedback</p>
-                      </div>
-                      <div class="col-xs-2 text-right no-left-padding">
-                        <p i18n>Rating</p>
-                      </div>
+                  <ng-container *ngIf="!servicesRanking.length">
+                    <div class="col-xs-12 text-center services--not_found">
+                      <p class="services--not_found--title" i18n>No {{ sortingBy.label }}</p>
                     </div>
-                    <div class="row" *ngFor="let service of servicesRanking; index as index last as last">
+                  </ng-container>
+                  <ng-container *ngIf="servicesRanking.length">
                       <div class="col-xs-12">
-                        <div class="services--table--item" [class.isLast]="last">
-                          <div class="row">
-                            <div class="col-xs-1">
-                              <p class="ranking">{{ index + 1 }}</p>
-                            </div>
-                            <div class="col-xs-5 no-left-padding text-truncate">
-                              <img [src]="[service.service_logo_url]" alt="" class="service-avatar img-rounded">
-                              <p class="service-title text-truncate">{{ service.service_name }}</p>
-                            </div>
-                            <div class="col-xs-2 no-left-padding">
-                              <p>{{ service.num_of_attendees }}</p>
-                            </div>
-                            <div class="col-xs-2 no-right-padding">
-                              <p>{{ service.num_of_feedbacks }}</p>
-                            </div>
-                            <div class="col-xs-2 text-right no-left-padding">
-                              <p>{{ ((service.average_of_feedbacks / 100) * 5).toFixed(1) }}</p>
+                        <div class="row services--table--header">
+                          <div class="col-xs-1">
+                            <p>#</p>
+                          </div>
+                          <div class="col-xs-5 no-left-padding">
+                            <p i18n>Title</p>
+                          </div>
+                          <div class="col-xs-2 no-left-padding">
+                            <p i18n>Attendees</p>
+                          </div>
+                          <div class="col-xs-2 no-right-padding">
+                            <p i18n>Feedback</p>
+                          </div>
+                          <div class="col-xs-2 text-right no-left-padding">
+                            <p i18n>Rating</p>
+                          </div>
+                        </div>
+                        <div class="row" *ngFor="let service of servicesRanking; index as index last as last">
+                          <div class="col-xs-12">
+                            <div class="services--table--item" [class.isLast]="last">
+                              <div class="row">
+                                <div class="col-xs-1">
+                                  <p class="ranking">{{ index + 1 }}</p>
+                                </div>
+                                <div class="col-xs-5 no-left-padding text-truncate">
+                                  <img [src]="[service.service_logo_url]" alt="" class="service-avatar img-rounded">
+                                  <p class="service-title text-truncate">{{ service.service_name }}</p>
+                                </div>
+                                <div class="col-xs-2 no-left-padding">
+                                  <p>{{ service.num_of_attendees }}</p>
+                                </div>
+                                <div class="col-xs-2 no-right-padding">
+                                  <p>{{ service.num_of_feedbacks }}</p>
+                                </div>
+                                <div class="col-xs-2 text-right no-left-padding">
+                                  <p>{{ ((service.average_of_feedbacks / 100) * 5).toFixed(1) }}</p>
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
+                  </ng-container>
                 </div>
               </ng-container>
             </div>

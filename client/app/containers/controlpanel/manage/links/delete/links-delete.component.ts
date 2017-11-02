@@ -27,13 +27,16 @@ export class LinksDeleteComponent implements OnInit {
       .service
       .deleteLink(this.link.id)
       .subscribe(
-        _ => {
+        () => {
           $('#linksDelete').modal('hide');
+
           this.deleteLink.emit(this.link.id);
+
           this.resetModal();
         },
         err => {
           this.errorService.handleError(err);
+
           this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
         }
       );
@@ -41,6 +44,7 @@ export class LinksDeleteComponent implements OnInit {
 
   resetModal() {
     this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
+
     this.resetDeleteModal.emit();
   }
 

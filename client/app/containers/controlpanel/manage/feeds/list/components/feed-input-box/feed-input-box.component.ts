@@ -77,10 +77,10 @@ export class FeedInputBoxComponent implements OnInit {
   }
 
   onSubmit(data) {
-    let _data = this.parseData(data);
-    let groupWall$ = this.feedsService.postToGroupWall(_data);
-    let campusWall$ = this.feedsService.postToCampusWall(_data);
-    let stream$ = this._isCampusWallView ? groupWall$ : campusWall$;
+    const _data = this.parseData(data);
+    const groupWall$ = this.feedsService.postToGroupWall(_data);
+    const campusWall$ = this.feedsService.postToCampusWall(_data);
+    const stream$ = this._isCampusWallView ? groupWall$ : campusWall$;
 
     stream$
       .subscribe(

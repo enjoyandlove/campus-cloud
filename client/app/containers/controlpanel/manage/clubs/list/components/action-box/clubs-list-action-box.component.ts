@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
+import { ClubStatus } from '../../../club.status';
 import { CPSession } from './../../../../../../../session/index';
 import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
 import { canSchoolWriteResource } from './../../../../../../../shared/utils/privileges/privileges';
@@ -45,15 +46,15 @@ export class ClubsListActionBoxComponent implements OnInit {
       },
       {
         label: 'Active',
-        action: 1
+        action: ClubStatus.active
       },
       {
         label: 'Inactive',
-        action: 0
+        action: ClubStatus.inactive
       },
       {
         label: 'Pending',
-        action: -2
+        action: ClubStatus.pending
       }
     ];
   }

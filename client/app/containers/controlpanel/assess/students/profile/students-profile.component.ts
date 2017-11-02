@@ -151,6 +151,10 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
       {
         'heading': `${student.firstname} ${student.lastname}`,
         'subheading': null,
+        'crumbs': {
+          'url': 'students',
+          'label': 'Students'
+        },
         'em': null,
         'children': []
       }

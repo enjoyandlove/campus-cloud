@@ -1,3 +1,4 @@
+import { EventUtilService } from './../events.utils.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { URLSearchParams } from '@angular/http';
@@ -29,20 +30,17 @@ export class EventsFacebookComponent extends BaseComponent implements OnInit {
   constructor(
     private session: CPSession,
     private store: Store<IHeader>,
-    private storeService: StoreService
+    private storeService: StoreService,
+    private utils: EventUtilService
   ) {
     super();
-    this.buildHeader();
 
     super.isLoading().subscribe(res => this.loading = res);
   }
 
-  onCreated() {
-    this.reload$.next(true);
-  }
+  onCreated() { this.reload$.next(true); }
 
   private fetch() {
-
     const school = this.session.g.get('school');
     let search: URLSearchParams = new URLSearchParams();
     search.append('school_id', school.id.toString());
@@ -51,17 +49,21 @@ export class EventsFacebookComponent extends BaseComponent implements OnInit {
 
     super
       .fetchData(stores$)
-      .then(res => {
-        this.stores = res.data;
-      })
+      .then(res => this.stores = res.data)
       .catch(err => { throw new Error(err) });
   }
 
   private buildHeader() {
+    const backToEvents = this.utils.buildUrlPrefix(this.clubId, this.serviceId);
+
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
         'heading': 'Import Events from Facebook',
+        'crumbs': {
+          'url': backToEvents,
+          'label': 'Events'
+        },
         'subheading': '',
         'children': []
       }
@@ -69,11 +71,10 @@ export class EventsFacebookComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-     if (this.storeId || this.clubId) {
-      this.loading = false;
-      return;
-    }
+    this.buildHeader();
 
-    this.fetch();
+    const isClubOrService = this.storeId || this.clubId;
+
+    return isClubOrService ? this.loading = false : this.fetch();
   }
 }

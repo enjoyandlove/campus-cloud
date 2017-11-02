@@ -59,6 +59,7 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
     super();
   }
 
+
   onSortBy(sortBy) {
     this.isSorting = true;
     this.state = Object.assign(

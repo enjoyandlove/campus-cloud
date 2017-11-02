@@ -125,6 +125,10 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
       type: HEADER_UPDATE,
       payload: {
         'heading': this.service.name,
+        'crumbs': {
+          'url': 'services',
+          'label': 'Services'
+        },
         'subheading': '',
         'children': [...children]
       }

@@ -3,8 +3,8 @@ import { CPDatePipe, FORMAT } from './date.pipe';
 describe('Date Pipe', () => {
   let pipe = new CPDatePipe();
 
-  it('Short format should look like "MMM Do YY"', () => {
-    expect(pipe.transform(1504881271, FORMAT.SHORT)).toContain('Sep 8th 17');
+  it('Short format should look like "MMM D, YYYY"', () => {
+    expect(pipe.transform(1504881271, FORMAT.SHORT)).toContain('Sep 8, 2017');
   });
 
   it('Long format should look like "dddd, MMMM D, YYYY"', () => {

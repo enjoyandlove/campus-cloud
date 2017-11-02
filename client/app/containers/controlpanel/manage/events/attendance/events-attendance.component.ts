@@ -1,11 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
-import { EventDate } from '../utils';
 import { EventsService } from '../events.service';
 import { CPDate } from '../../../../../shared/utils/date';
+import { EventUtilService } from './../events.utils.service';
 import { BaseComponent } from '../../../../../base/base.component';
 import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
@@ -22,16 +21,16 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   @Input() isService: boolean;
 
   event;
-  attendees;
   isUpcoming;
   loading = true;
   eventId: number;
-  search: URLSearchParams = new URLSearchParams();
+  urlPrefix = this.utils.buildUrlPrefix(this.clubId, this.serviceId);
 
   constructor(
     private store: Store<IHeader>,
     private route: ActivatedRoute,
-    private service: EventsService
+    private service: EventsService,
+    private utils: EventUtilService
   ) {
     super();
     this.eventId = this.route.snapshot.params['eventId'];
@@ -40,71 +39,41 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     this.fetch();
   }
 
-  private isEventOver(endDate) {
-    return endDate > CPDate.toEpoch(new Date());
-  }
 
   private fetch() {
     super
       .fetchData(this.service.getEventById(this.eventId))
-      .then(res => {
-        this.event = res.data;
-        this.buildHeader(res.data);
-        this.isUpcoming = this.isEventOver(this.event.end);
+      .then(event => {
+        this.event = event.data;
+
+        this.buildHeader(event.data);
+
+        this.isUpcoming = this.event.end > CPDate.toEpoch(new Date());
       })
       .catch(err => { throw new Error(err) });
   }
 
-  private buildHeader(res) {
-    let children;
+  private buildHeader(event) {
+    const children = this.utils.getSubNavChildren(event, this.urlPrefix);
 
-    if (EventDate.isPastEvent(res.end)) {
-      if (res.event_attendance === 1) {
-        children = [
-          {
-            'label': 'Info',
-            'url': `${this.buildUrlPrefix()}/${this.eventId}/info`
-          },
-          {
-            'label': 'Assessment',
-            'url': `${this.buildUrlPrefix()}/${this.eventId}`
-          }
-        ];
-      } else {
-        children = [];
-      }
-    } else {
-      children = [
-        // {
-        //   'label': 'Info',
-        //   'url': `${this.buildUrlPrefix()}/${this.eventId}/info`
-        // },
-        // {
-        //   'label': res.event_attendance === 1 ? 'Assessment' : 'Event',
-        //   'url': `${this.buildUrlPrefix()}/${this.eventId}`
-        // }
-      ];
+    const payload = {
+      'heading': event.title,
+
+      'subheading': '',
+
+      'crumbs': {
+        'url': this.urlPrefix,
+        'label': 'Events'
+      },
+
+      'children': [...children]
     }
-
 
     this.store.dispatch({
       type: HEADER_UPDATE,
-      payload: {
-        'heading': res.title,
-        'subheading': '',
-        'children': [...children]
-      }
+      payload
     });
   }
-
-   buildUrlPrefix() {
-     if (this.isClub) {
-       return `/manage/clubs/${this.clubId}/events`;
-     } else if (this.isService) {
-      return `/manage/services/${this.serviceId}/events`;
-     }
-     return '/manage/events';
-   }
 
   ngOnInit() { }
 }
