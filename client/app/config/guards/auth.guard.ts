@@ -127,11 +127,14 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
   }
 
   setUserContext() {
-    Raven.setUserContext({
-      id: this.session.g.get('user').id.toString(),
-      username: `${this.session.g.get('user').firstname} ${this.session.g.get('user').lastname}`,
-      email: this.session.g.get('user').email
-    });
+    const email = this.session.g.get('user').email;
+    const id = this.session.g.get('user').id.toString();
+    const username =
+      `${this.session.g.get('user').firstname} ${this.session.g.get('user').lastname}`;
+
+    ga('set', 'userId', email);
+
+    Raven.setUserContext({id, username, email });
   }
 
   redirectAndSaveGoTo(url): boolean {
