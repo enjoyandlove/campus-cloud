@@ -104,6 +104,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
             'Average Rating',
             'Total Ratings',
             'Total Visits',
+            'Student ID',
           ];
 
           providers = providers.map(data => {
@@ -112,7 +113,8 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
               'Email': data.email,
               'Average Rating': ((data.avg_rating_percent * 5) / 100).toFixed(1),
               'Total Ratings': data.num_ratings,
-              'Total Visits': data.total_visits
+              'Total Visits': data.total_visits,
+              'Student ID': data.student_identifier
             }
           })
 
