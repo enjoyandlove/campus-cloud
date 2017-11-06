@@ -31,11 +31,18 @@
     position: absolute;
 
     a {
-      @include font-semi-bold();
+      @include font-normal();
+
+      color: $color-grey;
+      transition: color 300ms ease-in-out;
 
       i {
         font-size: 1.4em;
         vertical-align: -4px;
+      }
+
+      &:hover {
+        color: $color-white;
       }
     }
   }
