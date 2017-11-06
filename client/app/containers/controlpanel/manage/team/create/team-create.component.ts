@@ -153,6 +153,8 @@ export class TeamCreateComponent implements OnInit {
   form: FormGroup;
   accountPrivileges;
   isAllAccessEnabled;
+  clubsCount = null;
+  servicesCount = null;
   schoolPrivileges = {};
   MODAL_TYPE = MODAL_TYPE.WIDE;
   CP_PRIVILEGES = CP_PRIVILEGES;
@@ -284,6 +286,9 @@ export class TeamCreateComponent implements OnInit {
   }
 
   onServicesModalSelected(services) {
+    const servicesLength = Object.keys(services).length;
+    this.servicesCount = servicesLength ? {label: `${servicesLength} Service(s)`} : null;
+
     this.accountPrivileges = Object.assign(
       {},
       this.accountPrivileges,
@@ -327,6 +332,9 @@ export class TeamCreateComponent implements OnInit {
   }
 
   onClubsModalSelected(clubs) {
+    const clubsLength = Object.keys(clubs).length;
+    this.clubsCount = clubsLength ? {label: `${clubsLength} Club(s)`} : null;
+
     this.accountPrivileges = Object.assign(
       {},
       this.accountPrivileges,
