@@ -595,7 +595,6 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   removePrivilegeFromRandomAccount(privilegeType: number) {
     const stores = accountsToStoreMap(this.editingUser.account_mapping[this.schoolId],
                                       this.editingUser.account_level_privileges);
-
     Object.keys(stores).map(storeId => {
       if (privilegeType in stores[storeId]) {
         delete stores[storeId][privilegeType];

@@ -1,4 +1,4 @@
-export const accountsToStoreMap = (accountsMap: Array<number>, accountPrivileges) => {
+export const accountsToStoreMap = (accountsMap: Array<number> = [], accountPrivileges) => {
   let accounts = {};
 
   accountsMap.map(storeId => {
