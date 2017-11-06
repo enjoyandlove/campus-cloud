@@ -333,7 +333,6 @@ export class TeamCreateComponent implements OnInit {
 
   onClubsModalSelected(clubs) {
     const clubsLength = Object.keys(clubs).length;
-
     this.clubsCount = clubsLength ? {label: `${clubsLength} Club(s)`} : null;
 
     this.accountPrivileges = Object.assign(

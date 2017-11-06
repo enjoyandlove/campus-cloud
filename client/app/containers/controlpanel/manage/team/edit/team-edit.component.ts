@@ -154,9 +154,11 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   canReadServices;
   form: FormGroup;
   schoolPrivileges;
+  clubsCount = null;
   accountPrivileges;
   isAllAccessEnabled;
   currentUserCanManage;
+  servicesCount = null;
   MODAL_TYPE = MODAL_TYPE.WIDE;
   CP_PRIVILEGES = CP_PRIVILEGES;
   CP_PRIVILEGES_MAP = CP_PRIVILEGES_MAP;
@@ -215,6 +217,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   servicesDefaultPermission() {
+    if (this.servicesCount) { return this.servicesCount; }
+
     let selected;
     let school_level_privileges = this.schoolPrivileges;
     let service_privilege = school_level_privileges[CP_PRIVILEGES_MAP.services];
@@ -236,6 +240,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   clubsDefaultPermission() {
+    if (this.clubsCount) { return this.clubsCount; }
+
     let selected;
     let school_level_privileges = this.schoolPrivileges;
     let club_privilege = school_level_privileges[CP_PRIVILEGES_MAP.clubs];
@@ -414,6 +420,9 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   onServicesModalSelected(services) {
     this.doServicesCleanUp();
 
+    const servicesLength = Object.keys(services).length;
+    this.servicesCount = servicesLength ? {label: `${servicesLength} Service(s)`} : null;
+
     this.accountPrivileges = Object.assign(
       {},
       this.accountPrivileges,
@@ -486,6 +495,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
   onClubsModalSelected(clubs) {
     this.doClubsCleanUp();
+    const clubsLength = Object.keys(clubs).length;
+    this.clubsCount = clubsLength ? {label: `${clubsLength} Club(s)`} : null;
 
     this.accountPrivileges = Object.assign(
       {},
