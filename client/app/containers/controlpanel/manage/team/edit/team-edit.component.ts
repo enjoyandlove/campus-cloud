@@ -184,13 +184,13 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    const _ = require('lodash');
+    const isEqual = require('lodash').isEqual;
     const admin$ = this.adminService.getAdminById(this.adminId);
 
     super
       .fetchData(admin$)
-      .then(res => {
-        this.editingUser = res.data;
+      .then(user => {
+        this.editingUser = user.data;
 
         this.isCurrentUser = this.editingUser.id === this.session.g.get('user').id;
 
@@ -209,8 +209,18 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
           this.editingUser.account_level_privileges
         );
 
-        this.isAllAccessEnabled = _.isEqual(this.schoolPrivileges,
-          this.user.school_level_privileges[this.schoolId]) && _.isEqual(this.accountPrivileges,
+        const numberOfClubs = this.getNumberOf(CP_PRIVILEGES_MAP.clubs, this.accountPrivileges);
+        const numberOfServices = this.getNumberOf(CP_PRIVILEGES_MAP.services,
+                                                  this.accountPrivileges);
+
+        this.clubsCount = numberOfClubs ? {label : `${numberOfClubs} Club(s)`} : null;
+        this.servicesCount = numberOfServices ?
+                             {label : `${numberOfServices} Service(s)`} :
+                             null;
+
+
+        this.isAllAccessEnabled = isEqual(this.schoolPrivileges,
+          this.user.school_level_privileges[this.schoolId]) && isEqual(this.accountPrivileges,
             this.user.account_level_privileges);
       })
       .catch(err => { throw new Error(err) });
@@ -491,6 +501,20 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     if (CP_PRIVILEGES_MAP.moderation in this.schoolPrivileges) {
       delete this.schoolPrivileges[CP_PRIVILEGES_MAP.moderation];
     }
+  }
+
+  getNumberOf(privilegeType: number, accountPrivileges = {}) {
+    let counter = 0;
+
+    Object
+      .keys(accountPrivileges)
+      .forEach(storeId => {
+        if (accountPrivileges[storeId][privilegeType]) {
+          counter += 1;
+        }
+      })
+
+    return counter;
   }
 
   onClubsModalSelected(clubs) {
