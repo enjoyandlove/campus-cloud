@@ -61,6 +61,10 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
     this.updateItem(service.id, 'checked', false);
   }
 
+  emitAndClose() {
+    this.onSubmit();
+  }
+
   onSubmit() {
     let _item = {};
     let _state = [...this.state.selected];
