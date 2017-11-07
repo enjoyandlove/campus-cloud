@@ -2,6 +2,21 @@
   "app_name": {
     "message": "App Name"
   },
+  "auth_pwd_reset_heading": {
+    "message": "Follow these simple steps to reset your account"
+  },
+  "auth_pwd_reset_step_one": {
+    "message": "Enter your email address"
+  },
+  "auth_pwd_reset_step_three": {
+    "message": "Follow instructions to regain access to your account"
+  },
+  "auth_pwd_reset_step_two": {
+    "message": "Wait for your recovery details to be sent"
+  },
+  "auth_reset_password": {
+    "message": "Reset Password"
+  },
   "cancel": {
     "message": "Cancel"
   },
@@ -76,6 +91,12 @@
   },
   "link_label_link_banner": {
     "message": "Link Banner"
+  },
+  "login": {
+    "message": "Login"
+  },
+  "lost_password": {
+    "message": "Lost Password"
   },
   "name": {
     "message": "Name"
