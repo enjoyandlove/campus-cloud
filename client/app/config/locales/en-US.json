@@ -1,4 +1,13 @@
 {
+  "admin_create_account": {
+    "message": "Create Account"
+  },
+  "admin_invite_heading": {
+    "message": "Create your Campus Cloud Account"
+  },
+  "admin_password_sucess_redirect": {
+    "message": "Password saved, redirecting you to the login page"
+  },
   "app_name": {
     "message": "App Name"
   },
@@ -26,6 +35,12 @@
   "checkin_button_pdf_kit": {
     "message": "PDF Kit Tool"
   },
+  "checkin_download_qr_code": {
+    "message": "Download QR Code"
+  },
+  "checkin_header_title": {
+    "message": "Check In Instructions"
+  },
   "checkin_instructions_one": {
     "message": "We use QR codes to help attendees check in to an event. Be sure to print or share the QR  code with your event attendance organizer."
   },
@@ -38,8 +53,17 @@
   "checkin_list": {
     "message": "Check-In List"
   },
+  "checkin_manual_checkin": {
+    "message": "Manual Check In"
+  },
+  "checkin_scannable_qr_code": {
+    "message": "Scannable QR Code"
+  },
   "confirm": {
     "message": "Confirm"
+  },
+  "confirm_password": {
+    "message": "Confirm Password"
   },
   "delete": {
     "message": "Delete"
@@ -55,6 +79,9 @@
   },
   "event": {
     "message": "Event"
+  },
+  "feedback_thank_you": {
+    "message": "Thanks for your feedback"
   },
   "first_name": {
     "message": "First Name"
@@ -98,8 +125,26 @@
   "lost_password": {
     "message": "Lost Password"
   },
+  "lost_password_question": {
+    "message": "Lost your password?"
+  },
   "name": {
     "message": "Name"
+  },
+  "new_password": {
+    "message": "New Password"
+  },
+  "password": {
+    "message": "Password"
+  },
+  "password_requirements_length": {
+    "message": "Your password must contain at least 6 characters."
+  },
+  "password_requirements_special_char": {
+    "message": "For added security, use numbers, letters and special characters such as @, #, $, &amp;, etc"
+  },
+  "password_reset_success": {
+    "message": "Password saved, redirecting you to the login page"
   },
   "qr_code": {
     "message": "QR Code"
