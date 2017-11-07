@@ -1,0 +1,11 @@
+{
+  "checkin_attendance_list": {
+    "message": "Bonjour again"
+  },
+  "checkin_instructions_one": {
+    "message": "Bonjour instruction"
+  },
+  "delete": {
+    "message": "Annuler"
+  }
+}

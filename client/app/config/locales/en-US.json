@@ -1,0 +1,107 @@
+{
+  "app_name": {
+    "message": "App Name"
+  },
+  "cancel": {
+    "message": "Cancel"
+  },
+  "checkin_attendance_list": {
+    "message": "Attendance List"
+  },
+  "checkin_button_pdf_kit": {
+    "message": "PDF Kit Tool"
+  },
+  "checkin_instructions_one": {
+    "message": "We use QR codes to help attendees check in to an event. Be sure to print or share the QR  code with your event attendance organizer."
+  },
+  "checkin_instructions_three": {
+    "message": "You can view attendance statistics on your control panel. Be sure to come back to view attendee feedback and event ratings."
+  },
+  "checkin_instructions_two": {
+    "message": "Attendees can check in by scanning the QR code with the app. QR Codes can be printed or shown directly on a laptop, phone or tablet screen"
+  },
+  "checkin_list": {
+    "message": "Check-In List"
+  },
+  "confirm": {
+    "message": "Confirm"
+  },
+  "delete": {
+    "message": "Delete"
+  },
+  "description": {
+    "message": "Description"
+  },
+  "email": {
+    "message": "Email"
+  },
+  "event": {
+    "message": "Event"
+  },
+  "first_name": {
+    "message": "First Name"
+  },
+  "instructions": {
+    "message": "Instructions"
+  },
+  "last_name": {
+    "message": "Last Name"
+  },
+  "links": {
+    "message": "Links"
+  },
+  "links_add_modal_title": {
+    "message": "Add Link"
+  },
+  "links_button_new": {
+    "message": "Add Link"
+  },
+  "links_delete_modal_body": {
+    "message": "Are you sure you want to delete link name?"
+  },
+  "links_delete_modal_title": {
+    "message": "Delete Link"
+  },
+  "links_label_link_name": {
+    "message": "Link Name"
+  },
+  "links_label_link_url": {
+    "message": "Link URL"
+  },
+  "link_label_description": {
+    "message": "Link Description (Optional)"
+  },
+  "link_label_link_banner": {
+    "message": "Link Banner"
+  },
+  "name": {
+    "message": "Name"
+  },
+  "qr_code": {
+    "message": "QR Code"
+  },
+  "results": {
+    "message": "Results"
+  },
+  "save": {
+    "message": "Save"
+  },
+  "save_changes": {
+    "message": "Save Changes"
+  },
+  "search": {
+    "message": "Search"
+  },
+  "service": {
+    "message": "Service"
+  },
+  "service_provider": {
+    "message": "Service Provider"
+  },
+  "service_provider_name": {
+    "message": "Service Provider Name"
+  },
+  "upload_picture": {
+    "message": "Upload Picture"
+  }
+}
