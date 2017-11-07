@@ -32,6 +32,9 @@
   "description": {
     "message": "Description"
   },
+  "done": {
+    "message": "Done"
+  },
   "email": {
     "message": "Email"
   },

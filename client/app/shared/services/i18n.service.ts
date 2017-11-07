@@ -13,8 +13,12 @@ export class CPI18nService {
   translate(key: string) {
     const translatedString = sourceFile(locale)[key];
 
-    return translatedString ?
-      translatedString.message :
-      sourceFile(defaultLocale)[key].message;
+    if (translatedString) {
+      return translatedString.message;
+    } else if (sourceFile(defaultLocale)[key]) {
+      return sourceFile(defaultLocale)[key].message
+    }
+
+    return key;
   }
 }
