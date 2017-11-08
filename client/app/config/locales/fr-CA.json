@@ -17,6 +17,9 @@
   "all_fields_are_required": {
     "message": "All fields are required"
   },
+  "and": {
+    "message": "and"
+  },
   "announce": {
     "message": "Announce"
   },
@@ -86,6 +89,9 @@
   "assess_button_download_engagement_data": {
     "message": "Download Engagement Data"
   },
+  "assess_engagements_last_seven_days": {
+    "message": "Engagement (Last 7 Days)"
+  },
   "assess_events_assessed": {
     "message": "Events Assessed"
   },
@@ -101,6 +107,9 @@
   "assess_feedback_received": {
     "message": "Feedback Received"
   },
+  "assess_last_engagement": {
+    "message": "Last Engagement"
+  },
   "assess_last_month": {
     "message": "Last Month"
   },
@@ -112,6 +121,9 @@
   },
   "assess_last_three_months": {
     "message": "Last 3 Months"
+  },
+  "assess_message_student": {
+    "message": "Message Student"
   },
   "assess_new_message": {
     "message": "New Message"
@@ -311,6 +323,9 @@
   "instructions": {
     "message": "Instructions"
   },
+  "invite_team_members": {
+    "message": "Invite Team Members"
+  },
   "last_name": {
     "message": "Last Name"
   },
@@ -358,6 +373,9 @@
   },
   "manage": {
     "message": "Manage"
+  },
+  "manage_team_members": {
+    "message": "Manage Team Members"
   },
   "message": {
     "message": "Message"

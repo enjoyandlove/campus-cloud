@@ -79,7 +79,7 @@
                                     <span class="icon">
                                       <i class="material-icons">{{ engagement.type === isEvent ? 'event' : 'info_outline' }}</i>
                                     </span>
-                                    {{ engagement.type === isEvent ? 'Event' : 'Service' }}
+                                    {{ engagement.type === isEvent ? cpI18n.translate('event') : cpI18n.translate('service') }}
                                   </p>
                                   <div class="engagement__rating" *ngIf="engagement.feedback_time_epoch > 0">
                                     <cp-stars
