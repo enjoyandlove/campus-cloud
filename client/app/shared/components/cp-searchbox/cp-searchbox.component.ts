@@ -10,6 +10,7 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { CPI18nService } from './../../services/i18n.service';
 
 @Component({
   selector: 'cp-searchbox',
@@ -26,7 +27,9 @@ export class CPSearchBoxComponent implements AfterViewInit, OnInit {
   stream$: Observable<string>;
   isSearch$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
-  constructor() { }
+  constructor(
+    public cpI18n: CPI18nService
+  ) { }
 
   onClear() {
     this.query.emit(null);

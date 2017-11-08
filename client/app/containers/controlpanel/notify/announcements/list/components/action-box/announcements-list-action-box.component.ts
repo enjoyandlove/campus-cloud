@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { CPSession } from '../../../../../../../session';
 import { CP_PRIVILEGES_MAP } from '../../../../../../../shared/constants';
+import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 
 interface IState {
   query: string;
@@ -27,7 +28,8 @@ export class AnnouncementsListActionBoxComponent implements OnInit {
   state: IState = state;
 
   constructor(
-    private session: CPSession
+    private session: CPSession,
+    private cpI18n: CPI18nService
   ) { }
 
   onSearch(query) {
@@ -48,19 +50,19 @@ export class AnnouncementsListActionBoxComponent implements OnInit {
 
     this.types = [
       {
-        'label': 'All',
+        'label': this.cpI18n.translate('all'),
         'action': null
       },
       {
-        'label': 'Regular',
+        'label': this.cpI18n.translate('regular'),
         'action': 2
       },
       {
-        'label': 'Urgent',
+        'label': this.cpI18n.translate('urgent'),
         'action': 1
       },
       {
-        'label': 'Emergency',
+        'label': this.cpI18n.translate('emergency'),
         'action': 0
       }
     ];

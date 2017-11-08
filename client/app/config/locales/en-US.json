@@ -11,11 +11,59 @@
   "admin_password_sucess_redirect": {
     "message": "Password saved, redirecting you to the login page"
   },
+  "all": {
+    "message": "All"
+  },
   "all_fields_are_required": {
     "message": "All fields are required"
   },
+  "announce": {
+    "message": "Announce"
+  },
+  "announcements": {
+    "message": "Announcements"
+  },
+  "announcements_delete_modal_body": {
+    "message": "Are you sure you want to archive this announcement?"
+  },
+  "announcements_delete_modal_body_warning": {
+    "message": "Archiving your notification means no more students will receive it."
+  },
+  "announcements_delete_modal_title": {
+    "message": "Archive Announcement"
+  },
+  "announcements_type": {
+    "message": "Announcement Type"
+  },
+  "announcement_confirm_campus_wide": {
+    "message": "Campus Wide Announcement"
+  },
+  "announcement_confirm_campus_wide_and_emergency": {
+    "message": "Campus Wide and Emergency Announcement"
+  },
+  "announcement_confirm_campus_wide_and_emergency_body": {
+    "message": "You are about to send a campus wide, emergency announcement."
+  },
+  "announcement_confirm_campus_wide_body": {
+    "message": "You are about to send a campus wide announcement."
+  },
+  "announcement_confirm_emergency": {
+    "message": "Emergency Announcement"
+  },
+  "announcement_success_sent": {
+    "message": "Success! Your message has been sent"
+  },
   "app_name": {
     "message": "App Name"
+  },
+  "archive": {
+    "message": "Archive"
+  },
+  "are_you_sure?": {
+    "message": "Are you Sure?"
+  },
+  "assess": {
+    "message": "Assess"
   },
   "auth_pwd_reset_heading": {
     "message": "Follow these simple steps to reset your account"
@@ -32,8 +80,20 @@
   "auth_reset_password": {
     "message": "Reset Password"
   },
+  "body": {
+    "message": "Body"
+  },
+  "campus_wide": {
+    "message": "Campus Wide"
+  },
   "cancel": {
     "message": "Cancel"
+  },
+  "change_password": {
+    "message": "Change Password"
+  },
+  "change_school": {
+    "message": "Change School"
   },
   "checkin_attendance_list": {
     "message": "Attendance List"
@@ -65,6 +125,9 @@
   "checkin_scannable_qr_code": {
     "message": "Scannable QR Code"
   },
+  "compose": {
+    "message": "Compose"
+  },
   "confirm": {
     "message": "Confirm"
   },
@@ -86,6 +149,9 @@
   "email_does_not_exist": {
     "message": "I'm sorry, but we weren't able to find a user with that login information"
   },
+  "emergency": {
+    "message": "Emergency"
+  },
   "event": {
     "message": "Event"
   },
@@ -94,6 +160,9 @@
   },
   "first_name": {
     "message": "First Name"
+  },
+  "from": {
+    "message": "From"
   },
   "instructions": {
     "message": "Instructions"
@@ -131,6 +200,9 @@
   "login": {
     "message": "Login"
   },
+  "logout": {
+    "message": "Logout"
+  },
   "lost_password": {
     "message": "Lost Password"
   },
@@ -140,11 +212,20 @@
   "lost_password_success": {
     "message": "Thanks! Please check %s for a link to reset your password."
   },
+  "manage": {
+    "message": "Manage"
+  },
+  "message": {
+    "message": "Message"
+  },
   "name": {
     "message": "Name"
   },
   "new_password": {
     "message": "New Password"
+  },
+  "notify": {
+    "message": "Notify"
   },
   "password": {
     "message": "Password"
@@ -161,8 +242,14 @@
   "password_reset_success": {
     "message": "Password saved, redirecting you to the login page"
   },
+  "profile": {
+    "message": "Profile"
+  },
   "qr_code": {
     "message": "QR Code"
+  },
+  "regular": {
+    "message": "Regular"
   },
   "results": {
     "message": "Results"
@@ -176,6 +263,9 @@
   "search": {
     "message": "Search"
   },
+  "sent": {
+    "message": "Sent"
+  },
   "service": {
     "message": "Service"
   },
@@ -188,7 +278,49 @@
   "something_went_wrong": {
     "message": "Something went wrong"
   },
+  "subject": {
+    "message": "Subject"
+  },
+  "team_settings": {
+    "message": "Team Settings"
+  },
+  "templates": {
+    "message": "Templates"
+  },
+  "templates_button_new": {
+    "message": "New Template"
+  },
+  "templates_crate_label_template_name": {
+    "message": "Template Name"
+  },
+  "templates_crate_modal_title": {
+    "message": "New Template"
+  },
+  "templates_create_label_all_students": {
+    "message": "Announce to all students"
+  },
+  "templates_delete_modal_body": {
+    "message": "Are you sure you want to delete this template?"
+  },
+  "templates_delete_modal_title": {
+    "message": "Delete Template"
+  },
+  "to": {
+    "message": "To"
+  },
   "upload_picture": {
     "message": "Upload Picture"
+  },
+  "urgent": {
+    "message": "Urgent"
+  },
+  "view_more": {
+    "message": "View More"
+  },
+  "welcome": {
+    "message": "Welcome"
+  },
+  "yes_i_am_sure": {
+    "message": "Yes, I'm Sure"
   }
 }

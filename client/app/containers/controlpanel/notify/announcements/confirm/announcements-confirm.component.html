@@ -2,7 +2,7 @@
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-xs-12 text-center">
-        <span i18n><strong>Confirm</strong></span>
+        <span i18n><strong>{{ 'confirm' | cpI18n }}</strong></span>
 
         <span
           (click)="teardown.emit()"
@@ -20,7 +20,7 @@
           {{ title }}
         </p>
         <p class="text-muted">
-          {{ body }}<br> Are you Sure?
+          {{ body }}<br> {{ 'are_you_sure?' | cpI18n }}
         </p>
       </div>
     </div>
@@ -33,14 +33,14 @@
           type="button"
           class="cpbtn cpbtn--cancel"
           (click)="teardown.emit()" i18n>
-          Cancel
+          {{ 'cancel' | cpI18n }}
         </button>
 
         <button
           type="button"
           (click)="onCofirm()"
           class="cpbtn cpbtn--primary"i18n>
-          Yes, I'm Sure
+          {{ 'yes_i_am_sure' | cpI18n }}
         </button>
       </div>
     </div>

@@ -4,6 +4,7 @@ import { URLSearchParams } from '@angular/http';
 import { CPSession } from '../../../../../session';
 import { STATUS } from '../../../../../shared/constants';
 import { AnnouncementsService } from '../announcements.service';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 declare var $: any;
 
@@ -23,6 +24,7 @@ export class AnnouncementDeleteComponent implements OnInit {
 
   constructor(
     private session: CPSession,
+    private cpI18n: CPI18nService,
     private service: AnnouncementsService
   ) { }
 
@@ -57,7 +59,7 @@ export class AnnouncementDeleteComponent implements OnInit {
   ngOnInit() {
     this.buttonData = {
       class: 'danger',
-      text: 'Archive'
+      text: this.cpI18n.translate('archive'),
     }
   }
 }

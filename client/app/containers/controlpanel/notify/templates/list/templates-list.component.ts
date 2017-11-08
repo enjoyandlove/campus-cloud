@@ -6,9 +6,9 @@ import { Store } from '@ngrx/store';
 import { TemplatesService } from './../templates.service';
 import { CPSession } from './../../../../../session/index';
 import { base64 } from './../../../../../shared/utils/encrypt';
-import { STATUS } from './../../../../../shared/constants/status';
 import { BaseComponent } from './../../../../../base/base.component';
 import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 interface IState {
   search_str: string;
@@ -47,6 +47,7 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
     private store: Store<any>,
     private session: CPSession,
     private route: ActivatedRoute,
+    private cpI18n: CPI18nService,
     private service: TemplatesService
   ) {
     super();
@@ -121,7 +122,7 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
     this.store.dispatch({
       type: SNACKBAR_SHOW,
       payload: {
-        body: STATUS.MESSAGE_SENT,
+        body: this.cpI18n.translate('announcement_success_sent'),
         autoClose: true,
       }
     });

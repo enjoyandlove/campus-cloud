@@ -12,14 +12,14 @@
         </div>
         <p
           class="header__title text-truncate">
-          {{ data.heading }}
+          {{ data.heading | cpI18n }}
         </p>
         <p
           class="header__sub-title"
           *ngIf="data.subheading">
-          {{ data.subheading }}
+          {{ data.subheading | cpI18n }}
         </p>
-        <em *ngIf="data.em">{{ data.em }}</em>
+        <em *ngIf="data.em">{{ data.em | cpI18n }}</em>
       </div>
     </div>
 
@@ -32,7 +32,7 @@
             [routerLinkActiveOptions]="{exact: page.hasParams ? false : true}">
             <span class="promote-badge" *ngIf="page.new">new</span>
             <a
-              [routerLink]="[page.url]">{{ page.label }}
+              [routerLink]="[page.url]">{{ page.label | cpI18n }}
             </a>
           </li>
         </ul>
