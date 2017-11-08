@@ -183,6 +183,21 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     this.fetch();
   }
 
+  updateServicesDropdownLabel() {
+    const numberOfServices = this.getNumberOf(CP_PRIVILEGES_MAP.services,
+                                              this.accountPrivileges);
+
+    this.servicesCount = numberOfServices ?
+                         {label : `${numberOfServices} Service(s)`} :
+                          null;
+  }
+
+  updateClubsDropdownLabel() {
+    const numberOfClubs = this.getNumberOf(CP_PRIVILEGES_MAP.clubs, this.accountPrivileges);
+
+    this.clubsCount = numberOfClubs ? {label : `${numberOfClubs} Club(s)`} : null;
+  }
+
   private fetch() {
     const isEqual = require('lodash').isEqual;
     const admin$ = this.adminService.getAdminById(this.adminId);
@@ -209,15 +224,13 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
           this.editingUser.account_level_privileges
         );
 
-        const numberOfClubs = this.getNumberOf(CP_PRIVILEGES_MAP.clubs, this.accountPrivileges);
-        const numberOfServices = this.getNumberOf(CP_PRIVILEGES_MAP.services,
-                                                  this.accountPrivileges);
+        if (!(this.schoolPrivileges[CP_PRIVILEGES_MAP.services])) {
+          this.updateServicesDropdownLabel();
+        }
 
-        this.clubsCount = numberOfClubs ? {label : `${numberOfClubs} Club(s)`} : null;
-        this.servicesCount = numberOfServices ?
-                             {label : `${numberOfServices} Service(s)`} :
-                             null;
-
+        if (!(this.schoolPrivileges[CP_PRIVILEGES_MAP.clubs])) {
+          this.updateClubsDropdownLabel();
+        }
 
         this.isAllAccessEnabled = isEqual(this.schoolPrivileges,
           this.user.school_level_privileges[this.schoolId]) && isEqual(this.accountPrivileges,
