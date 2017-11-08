@@ -1,14 +1,14 @@
 {
-  "heading": "Team Settings",
+  "heading": "team_settings",
   "subheading": null,
   "em": null,
   "children": [
     {
-      "label": "Manage Team Members",
+      "label": "manage_team_members",
       "url": "/manage/team"
     },
     {
-      "label": "Invite Team Members",
+      "label": "invite_team_members",
       "url": "/manage/team/invite"
     }
   ]

@@ -2,7 +2,7 @@
   <div class="cp-card events events--no-data" *ngSwitchCase="true">
     <div class="row">
       <div class="col-xs-12">
-        <p class="events--heading" i18n>Events</p>
+        <p class="events--heading" i18n>{{ 'events' | cpI18n }}</p>
 
         <div class="events--no-data-wrapper text-center">
           <cp-spinner *ngSwitchCase="true"></cp-spinner>
@@ -16,11 +16,11 @@
       <div class="cp-card events events--no-data" *ngSwitchCase="true">
         <div class="row">
           <div class="col-xs-12">
-            <p class="events--heading" i18n>Events</p>
+            <p class="events--heading" i18n>{{ 'events' | cpI18n }}</p>
 
             <div class="events--no-data-wrapper text-center">
-              <p class="heading" i18n>No Event Data</p>
-              <p class="text-muted">To see Events data use the Engagement filter</p>
+              <p class="heading" i18n>{{ 'assess_no_event_data' | cpI18n }}</p>
+              <p class="text-muted">{{ 'assess_no_event_data_help' | cpI18n }}</p>
             </div>
           </div>
         </div>
@@ -29,7 +29,7 @@
       <div class="cp-card events" *ngSwitchCase="false">
         <div class="row">
           <div class="col-xs-12">
-            <p class="events--heading" i18n>Events</p>
+            <p class="events--heading" i18n>{{ 'events' | cpI18n }}</p>
 
             <div class="events--stats">
               <div class="row">
@@ -50,12 +50,12 @@
             <div class="events--ranking">
               <div class="row">
                 <div class="col-xs-4">
-                  <p class="events--heading" i18n>Top Events</p>
+                  <p class="events--heading" i18n>{{ 'assess_top_events' | cpI18n }}</p>
                 </div>
                 <div class="events--ranking--sorting col-xs-8">
                   <div class="row">
                     <div class="col-xs-4 text-right no-right-padding">
-                      <p i18n>Sort By</p>
+                      <p i18n>{{ 'assess_sort_by' | cpI18n }}</p>
                     </div>
                     <div class="col-xs-8">
                       <cp-dropdown
@@ -82,16 +82,16 @@
                             <p>#</p>
                           </div>
                           <div class="col-xs-5 no-left-padding">
-                            <p i18n>Title</p>
+                            <p i18n>{{ 'title' | cpI18n }}</p>
                           </div>
                           <div class="col-xs-2 no-left-padding">
-                            <p i18n>Attendees</p>
+                            <p i18n>{{ 'attendees' | cpI18n }}</p>
                           </div>
                           <div class="col-xs-2 no-right-padding">
-                            <p i18n>Feedback</p>
+                            <p i18n>{{ 'feedback' | cpI18n }}</p>
                           </div>
                           <div class="col-xs-2 text-right no-left-padding">
-                            <p i18n>Rating</p>
+                            <p i18n>{{ 'rating' | cpI18n }}</p>
                           </div>
                         </div>
                         <div class="row" *ngFor="let event of eventsRanking; index as index; last as last">
