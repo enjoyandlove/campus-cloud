@@ -1,4 +1,7 @@
 {
+  "account_not_found": {
+    "message": "Please check your credentials and try again."
+  },
   "admin_create_account": {
     "message": "Create Account"
   },
@@ -7,6 +10,9 @@
   },
   "admin_password_sucess_redirect": {
     "message": "Password saved, redirecting you to the login page"
+  },
+  "all_fields_are_required": {
+    "message": "All fields are required"
   },
   "app_name": {
     "message": "App Name"
@@ -77,6 +83,9 @@
   "email": {
     "message": "Email"
   },
+  "email_does_not_exist": {
+    "message": "I'm sorry, but we weren't able to find a user with that login information"
+  },
   "event": {
     "message": "Event"
   },
@@ -140,6 +149,9 @@
   "password": {
     "message": "Password"
   },
+  "passwords_do_not_match": {
+    "message": "Passwords do not match"
+  },
   "password_requirements_length": {
     "message": "Your password must contain at least 6 characters."
   },
@@ -172,6 +184,9 @@
   },
   "service_provider_name": {
     "message": "Service Provider Name"
+  },
+  "something_went_wrong": {
+    "message": "Something went wrong"
   },
   "upload_picture": {
     "message": "Upload Picture"
