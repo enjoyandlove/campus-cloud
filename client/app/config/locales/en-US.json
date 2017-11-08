@@ -128,6 +128,9 @@
   "lost_password_question": {
     "message": "Lost your password?"
   },
+  "lost_password_success": {
+    "message": "Thanks! Please check %s for a link to reset your password."
+  },
   "name": {
     "message": "Name"
   },
