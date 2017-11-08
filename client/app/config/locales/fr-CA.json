@@ -11,6 +11,9 @@
   "admin_password_sucess_redirect": {
     "message": "Password saved, redirecting you to the login page"
   },
+  "all": {
+    "message": "All"
+  },
   "all_fields_are_required": {
     "message": "All fields are required"
   },
@@ -20,14 +23,44 @@
   "announcements": {
     "message": "Announcements"
   },
+  "announcements_delete_modal_body": {
+    "message": "Are you sure you want to archive this announcement?"
+  },
+  "announcements_delete_modal_body_warning": {
+    "message": "Archiving your notification means no more students will receive it."
+  },
+  "announcements_delete_modal_title": {
+    "message": "Archive Announcement"
+  },
   "announcements_type": {
     "message": "Announcement Type"
+  },
+  "announcement_confirm_campus_wide": {
+    "message": "Campus Wide Announcement"
+  },
+  "announcement_confirm_campus_wide_and_emergency": {
+    "message": "Campus Wide and Emergency Announcement"
+  },
+  "announcement_confirm_campus_wide_and_emergency_body": {
+    "message": "You are about to send a campus wide, emergency announcement."
+  },
+  "announcement_confirm_campus_wide_body": {
+    "message": "You are about to send a campus wide announcement."
+  },
+  "announcement_confirm_emergency": {
+    "message": "Emergency Announcement"
   },
   "announcement_success_sent": {
     "message": "Success! Your message has been sent"
   },
   "app_name": {
     "message": "App Name"
+  },
+  "archive": {
+    "message": "Archive"
+  },
+  "are_you_sure?": {
+    "message": "Are you Sure?"
   },
   "assess": {
     "message": "Assess"
@@ -91,6 +124,9 @@
   },
   "checkin_scannable_qr_code": {
     "message": "Scannable QR Code"
+  },
+  "compose": {
+    "message": "Compose"
   },
   "confirm": {
     "message": "Confirm"
@@ -212,6 +248,9 @@
   "qr_code": {
     "message": "QR Code"
   },
+  "regular": {
+    "message": "Regular"
+  },
   "results": {
     "message": "Results"
   },
@@ -223,6 +262,9 @@
   },
   "search": {
     "message": "Search"
+  },
+  "sent": {
+    "message": "Sent"
   },
   "service": {
     "message": "Service"
@@ -272,7 +314,13 @@
   "urgent": {
     "message": "Urgent"
   },
+  "view_more": {
+    "message": "View More"
+  },
   "welcome": {
     "message": "Welcome"
+  },
+  "yes_i_am_sure": {
+    "message": "Yes, I'm Sure"
   }
 }
