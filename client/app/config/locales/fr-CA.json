@@ -32,6 +32,9 @@
   "announcements_delete_modal_title": {
     "message": "Archive Announcement"
   },
+  "announcements_not_sent": {
+    "message": "Message not sent, please wait %s minutes before trying again"
+  },
   "announcements_type": {
     "message": "Announcement Type"
   },
@@ -83,6 +86,9 @@
   "assess_button_download_engagement_data": {
     "message": "Download Engagement Data"
   },
+  "assess_events_assessed": {
+    "message": "Events Assessed"
+  },
   "assess_event_rating_average": {
     "message": "Event Average Rating"
   },
@@ -91,6 +97,9 @@
   },
   "assess_event_responses_rate": {
     "message": "Event Response Rate"
+  },
+  "assess_feedback_received": {
+    "message": "Feedback Received"
   },
   "assess_last_month": {
     "message": "Last Month"
@@ -104,8 +113,17 @@
   "assess_last_three_months": {
     "message": "Last 3 Months"
   },
+  "assess_new_message": {
+    "message": "New Message"
+  },
   "assess_no_engagement": {
     "message": "No Engagement"
+  },
+  "assess_no_event_data": {
+    "message": "No Event Data"
+  },
+  "assess_no_event_data_help": {
+    "message": "To see Events data use the Engagement filter"
   },
   "assess_no_service_data": {
     "message": "No Service Data"
@@ -131,6 +149,9 @@
   "assess_response_rate": {
     "message": "Response Rate"
   },
+  "assess_services_assessed": {
+    "message": "ervices Assessed"
+  },
   "assess_service_checkins": {
     "message": "# of Service Check-ins"
   },
@@ -152,8 +173,20 @@
   "assess_student_name": {
     "message": "Student Name"
   },
+  "assess_top_events": {
+    "message": "Top Events"
+  },
   "assess_top_services": {
     "message": "Top Services"
+  },
+  "assess_total_attendees": {
+    "message": "Total Attendees"
+  },
+  "assess_total_events": {
+    "message": "Total Events"
+  },
+  "assess_total_services": {
+    "message": "Total Services"
   },
   "attendees": {
     "message": "Attendees"
@@ -253,6 +286,9 @@
   },
   "event": {
     "message": "Event"
+  },
+  "events": {
+    "message": "Events"
   },
   "feedback": {
     "message": "Feedback"

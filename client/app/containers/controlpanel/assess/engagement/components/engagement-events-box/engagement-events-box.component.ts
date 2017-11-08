@@ -1,4 +1,3 @@
-import { CPSession } from './../../../../../../session/index';
 import {
   Input,
   OnInit,
@@ -8,7 +7,9 @@ import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 import { EngagementService } from '../../engagement.service';
+import { CPSession } from './../../../../../../session/index';
 import { BaseComponent } from '../../../../../../base/base.component';
+import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 
 const sortTypes = {
   0: 'engagements',
@@ -53,8 +54,9 @@ export class EngagementEventsBoxComponent extends BaseComponent implements OnIni
   sortyBy: Array<{ 'label': string, 'action': number }>;
 
   constructor(
-    private session: CPSession,
-    private service: EngagementService
+    public session: CPSession,
+    public cpI18n: CPI18nService,
+    public service: EngagementService
   ) {
     super();
   }
@@ -104,27 +106,27 @@ export class EngagementEventsBoxComponent extends BaseComponent implements OnIni
         this.stats = [
           {
             value: res.data.total_events,
-            label: 'Total Events',
+            label: this.cpI18n.translate('assess_total_events'),
             icon: require('public/png/assess/chart_event.png')
           },
           {
             value: res.data.total_events_with_attendance,
-            label: 'Events Assessed',
+            label: this.cpI18n.translate('assess_events_assessed'),
             icon: require('public/png/assess/chart_event_assess.png')
           },
           {
             value: res.data.total_attendees,
-            label: 'Total Attendees',
+            label: this.cpI18n.translate('assess_total_attendees'),
             icon: require('public/png/assess/chart_attendee.png')
           },
           {
             value: ((res.data.avg_feedbacks / 100) * 5).toFixed(1),
-            label: 'Average Rating',
+            label: this.cpI18n.translate('assess_average_rating'),
             icon: require('public/png/assess/chart_rating.png')
           },
           {
             value: res.data.total_feedbacks,
-            label: 'Feedback Received',
+            label: this.cpI18n.translate('assess_feedback_received'),
             icon: require('public/png/assess/chart_feedback.png')
           }
         ];
@@ -171,15 +173,15 @@ export class EngagementEventsBoxComponent extends BaseComponent implements OnIni
 
     this.sortyBy = [
       {
-        'label': 'Attendees',
+        'label': this.cpI18n.translate('attendees'),
         'action': 0
       },
       {
-        'label': 'Feedback',
+        'label': this.cpI18n.translate('feedback'),
         'action': 1
       },
       {
-        'label': 'Rating',
+        'label': this.cpI18n.translate('rating'),
         'action': 2
       }
     ];
