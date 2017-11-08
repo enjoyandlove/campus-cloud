@@ -1,4 +1,3 @@
-import { CPSession } from './../../../../../../session/index';
 import {
   Input,
   OnInit,
@@ -8,6 +7,7 @@ import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 import { EngagementService } from '../../engagement.service';
+import { CPSession } from './../../../../../../session/index';
 import { BaseComponent } from '../../../../../../base/base.component';
 
 const sortTypes = {

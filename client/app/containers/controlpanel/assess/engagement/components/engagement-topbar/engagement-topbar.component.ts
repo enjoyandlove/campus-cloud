@@ -1,3 +1,4 @@
+import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 import {
   OnInit,
   Output,
@@ -62,6 +63,7 @@ export class EngagementTopBarComponent implements OnInit {
 
   constructor(
     public session: CPSession,
+    public cpI18n: CPI18nService,
     private route: ActivatedRoute
   ) { }
 
@@ -146,7 +148,7 @@ export class EngagementTopBarComponent implements OnInit {
     this.dateFilter = [
       {
         'route_id': 'last_week',
-        'label': 'Last 7 Days',
+        'label': this.cpI18n.translate('assess_last_seven_days'),
         'payload': {
           'metric': 'daily',
           'range': {
@@ -157,7 +159,7 @@ export class EngagementTopBarComponent implements OnInit {
       },
       {
         'route_id': 'last_month',
-        'label': 'Last Month',
+        'label': this.cpI18n.translate('assess_last_month'),
         'payload': {
           'metric': 'daily',
           'range': {
@@ -168,7 +170,7 @@ export class EngagementTopBarComponent implements OnInit {
       },
       {
         'route_id': 'last_six_weeks',
-        'label': 'Last 6 Weeks',
+        'label': this.cpI18n.translate('assess_last_six_weeks'),
         'payload': {
           'metric': 'weekly',
           'range': {
@@ -179,7 +181,7 @@ export class EngagementTopBarComponent implements OnInit {
       },
       {
         'route_id': 'last_three_months',
-        'label': 'Last 3 Months',
+        'label': this.cpI18n.translate('assess_last_three_months'),
         'payload': {
           'metric': 'monthly',
           'range': {
@@ -193,7 +195,7 @@ export class EngagementTopBarComponent implements OnInit {
     this.commonEngageMentFilter = [
       {
         'route_id': 'all',
-        'label': 'All Engagements',
+        'label': this.cpI18n.translate('assess_all_engagements'),
         'data': {
           type: null,
           value: 0,
@@ -202,7 +204,7 @@ export class EngagementTopBarComponent implements OnInit {
       },
       {
         'route_id': 'all_services',
-        'label': 'All Services',
+        'label': this.cpI18n.translate('assess_all_services'),
         'data': {
           type: 'services',
           value: 1,
@@ -211,7 +213,7 @@ export class EngagementTopBarComponent implements OnInit {
       },
       {
         'route_id': 'all_events',
-        'label': 'All Events',
+        'label': this.cpI18n.translate('assess_all_events'),
         'data': {
           type: 'events',
           value: 2,
@@ -223,7 +225,7 @@ export class EngagementTopBarComponent implements OnInit {
     this.commonStudentFilter = [
       {
         'route_id': 'all_students',
-        'label': 'All Students',
+        'label': this.cpI18n.translate('assess_all_students'),
         'listId': null
       }
     ];
@@ -236,7 +238,7 @@ export class EngagementTopBarComponent implements OnInit {
       if (res.data[0].length) {
         _engagements.push(
           {
-            'label': 'Services',
+            'label': this.cpI18n.translate('services'),
             'value': null,
             'heading': true,
           }

@@ -1,16 +1,16 @@
 {
-  "heading": "Assess",
+  "heading": "assess",
   "subheading": null,
   "em": null,
   "children": [
     {
-      "label": "Engagement",
+      "label": "engagement",
       "url": "/assess/dashboard",
       "hasParams": true
     },
     {
       "new": true,
-      "label": "Students",
+      "label": "students",
       "url": "/assess/students"
     }
   ]

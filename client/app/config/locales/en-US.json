@@ -65,6 +65,99 @@
   "assess": {
     "message": "Assess"
   },
+  "assess_all_engagements": {
+    "message": "All Engagements"
+  },
+  "assess_all_events": {
+    "message": "All Events"
+  },
+  "assess_all_services": {
+    "message": "All Services"
+  },
+  "assess_all_students": {
+    "message": "All Students"
+  },
+  "assess_average_rating": {
+    "message": "Average Rating"
+  },
+  "assess_button_download_engagement_data": {
+    "message": "Download Engagement Data"
+  },
+  "assess_event_rating_average": {
+    "message": "Event Average Rating"
+  },
+  "assess_event_responses": {
+    "message": "Event Responses"
+  },
+  "assess_event_responses_rate": {
+    "message": "Event Response Rate"
+  },
+  "assess_last_month": {
+    "message": "Last Month"
+  },
+  "assess_last_seven_days": {
+    "message": "Last 7 Days"
+  },
+  "assess_last_six_weeks": {
+    "message": "Last 6 Weeks"
+  },
+  "assess_last_three_months": {
+    "message": "Last 3 Months"
+  },
+  "assess_no_engagement": {
+    "message": "No Engagement"
+  },
+  "assess_no_service_data": {
+    "message": "No Service Data"
+  },
+  "assess_no_service_data_help": {
+    "message": "To see Service data use the Engagement filter"
+  },
+  "assess_number_of_checkins": {
+    "message": "# of Check-ins"
+  },
+  "assess_number_of_event_checkins": {
+    "message": "# of Event Check-Ins"
+  },
+  "assess_number_of_responses": {
+    "message": "# of Responses"
+  },
+  "assess_one_engagement": {
+    "message": "One Engagement"
+  },
+  "assess_repeat_engagement": {
+    "message": "Repeat Engagement"
+  },
+  "assess_response_rate": {
+    "message": "Response Rate"
+  },
+  "assess_service_checkins": {
+    "message": "# of Service Check-ins"
+  },
+  "assess_service_rating_average": {
+    "message": "Service Average Rating"
+  },
+  "assess_service_responses": {
+    "message": "Service Responses"
+  },
+  "assess_service_responses_rate": {
+    "message": "Services Response Rate"
+  },
+  "assess_sort_by": {
+    "message": "Sort By"
+  },
+  "assess_student_id": {
+    "message": "Student ID"
+  },
+  "assess_student_name": {
+    "message": "Student Name"
+  },
+  "assess_top_services": {
+    "message": "Top Services"
+  },
+  "attendees": {
+    "message": "Attendees"
+  },
   "auth_pwd_reset_heading": {
     "message": "Follow these simple steps to reset your account"
   },
@@ -143,6 +236,9 @@
   "done": {
     "message": "Done"
   },
+  "download": {
+    "message": "Download"
+  },
   "email": {
     "message": "Email"
   },
@@ -152,8 +248,14 @@
   "emergency": {
     "message": "Emergency"
   },
+  "engagement": {
+    "message": "Engagement"
+  },
   "event": {
     "message": "Event"
+  },
+  "feedback": {
+    "message": "Feedback"
   },
   "feedback_thank_you": {
     "message": "Thanks for your feedback"
@@ -161,8 +263,14 @@
   "first_name": {
     "message": "First Name"
   },
+  "for": {
+    "message": "For"
+  },
   "from": {
     "message": "From"
+  },
+  "in": {
+    "message": "In"
   },
   "instructions": {
     "message": "Instructions"
@@ -248,6 +356,9 @@
   "qr_code": {
     "message": "QR Code"
   },
+  "rating": {
+    "message": "Rating"
+  },
   "regular": {
     "message": "Regular"
   },
@@ -269,6 +380,9 @@
   "service": {
     "message": "Service"
   },
+  "services": {
+    "message": "Services"
+  },
   "service_provider": {
     "message": "Service Provider"
   },
@@ -277,6 +391,12 @@
   },
   "something_went_wrong": {
     "message": "Something went wrong"
+  },
+  "students": {
+    "message": "Students"
+  },
+  "student_engagements": {
+    "message": "Student Engagements"
   },
   "subject": {
     "message": "Subject"
@@ -304,6 +424,9 @@
   },
   "templates_delete_modal_title": {
     "message": "Delete Template"
+  },
+  "title": {
+    "message": "Title"
   },
   "to": {
     "message": "To"

@@ -10,7 +10,7 @@
           data-placement="bottom"
           class="text-muted with-tooltip" i18n
           title="Students who attended more than one engagement for the period selected">
-          Repeat Engagement
+          {{ 'assess_repeat_engagement' | cpI18n }}
           <i class="material-icons">info_outline</i>
         </p>
       </div>
@@ -20,7 +20,7 @@
           class="cpbtn cpbtn--primary" i18n
           (click)="download.emit(REPEAT_ENGAGEMENT)"
           [disabled]="!props.repeat_engagements.length">
-          Download
+          {{ 'download' | cpI18n }}
         </button>
 
         <button
@@ -28,7 +28,7 @@
           class="cpbtn cpbtn--primary" i18n
           [disabled]="!props.repeat_engagements.length"
           (click)="onCompose('Repeat Engagement', props.repeat_engagements)">
-          Message
+          {{ 'message' | cpI18n }}
         </button>
       </div>
     </div>
@@ -42,7 +42,7 @@
           data-placement="bottom"
           class="text-muted with-tooltip" i18n
           title="Students who attended one engagement for the period selected">
-          One Engagement
+          {{ 'assess_one_engagement' | cpI18n }}
           <i class="material-icons">info_outline</i>
         </p>
       </div>
@@ -52,7 +52,7 @@
           class="cpbtn cpbtn--primary" i18n
           (click)="download.emit(ONE_ENGAGEMENT)"
           [disabled]="!props.one_engagements.length">
-          Download
+          {{ 'download' | cpI18n }}
         </button>
 
         <button
@@ -60,7 +60,7 @@
           class="cpbtn cpbtn--primary" i18n
           [disabled]="!props.one_engagements.length"
           (click)="onCompose('One Engagement', props.one_engagements)">
-          Message
+          {{ 'message' | cpI18n }}
         </button>
       </div>
     </div>
@@ -74,7 +74,7 @@
           data-placement="bottom"
           class="text-muted with-tooltip" i18n
           title="Students who had no attendance for the period selected">
-          No Engagement
+          {{ 'assess_no_engagement' | cpI18n }}
           <i class="material-icons">info_outline</i>
         </p>
       </div>
@@ -84,7 +84,7 @@
           class="cpbtn cpbtn--primary" i18n
           (click)="download.emit(ZERO_ENGAGEMENT)"
           [disabled]="!props.zero_engagements.length">
-          Download
+          {{ 'download' | cpI18n }}
         </button>
 
         <button
@@ -92,7 +92,7 @@
           class="cpbtn cpbtn--primary" i18n
           [disabled]="!props.zero_engagements.length"
           (click)="onCompose('No Engagement', props.zero_engagements)">
-          Message
+          {{ 'message' | cpI18n }}
         </button>
       </div>
     </div>
