@@ -4,8 +4,7 @@ import { URLSearchParams } from '@angular/http';
 
 import { TemplatesService } from './../templates.service';
 import { CPSession } from './../../../../../session/index';
-import { STATUS } from './../../../../../shared/constants/status';
-import { StoreService } from './../../../../../shared/services/store.service';
+import { CPI18nService, StoreService } from './../../../../../shared/services';
 import { AnnouncementsService } from './../../announcements/announcements.service';
 
 import {
@@ -29,6 +28,7 @@ export class TemplatesCreateComponent extends AnnouncementsComposeComponent
     private el: ElementRef,
     public fb: FormBuilder,
     public session: CPSession,
+    public cpI18n: CPI18nService,
     public storeService: StoreService,
     public service: AnnouncementsService,
     private childService: TemplatesService
@@ -130,15 +130,14 @@ export class TemplatesCreateComponent extends AnnouncementsComposeComponent
       .childService
       .createTemplate(search, data)
       .subscribe(
-      res => {
-        console.log(res);
+      () => {
         this.form.reset();
         this.created.emit(this.form.value);
         this.resetModal();
       },
       _ => {
         this.isError = true;
-        this.errorMessage = STATUS.SOMETHING_WENT_WRONG;
+        this.errorMessage = this.cpI18n.translate('something_went_wrong');
       }
       );
   }

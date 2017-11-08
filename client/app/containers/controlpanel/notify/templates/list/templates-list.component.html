@@ -18,10 +18,10 @@
       <ul class="templates cp-form">
         <li class="cp-form__header col-xs-12">
           <div class="row">
-            <span class="col-xs-2" i18n>Name</span>
-            <span class="col-xs-2" i18n>To</span>
-            <span class="col-xs-3" i18n>Subject</span>
-            <span class="col-xs-4" i18n>Body</span>
+            <span class="col-xs-2" i18n>{{ 'name' | cpI18n }}</span>
+            <span class="col-xs-2" i18n>{{ 'to' | cpI18n }}</span>
+            <span class="col-xs-3" i18n>{{ 'subject' | cpI18n }}</span>
+            <span class="col-xs-4" i18n>{{ 'body' | cpI18n }}</span>
             <span class="col-xs-1"></span>
           </div>
         </li>
@@ -40,7 +40,7 @@
             </span>
 
             <span class="col-xs-2" *ngIf="template.is_school_wide" i18n>
-              Campus wide
+              {{ 'campus_wide' | cpI18n }}
             </span>
 
             <span class="col-xs-2" *ngIf="!template.is_school_wide">
