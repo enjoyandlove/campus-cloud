@@ -14,8 +14,14 @@
   "all_fields_are_required": {
     "message": "All fields are required"
   },
+  "announcements": {
+    "message": "Announcements"
+  },
   "app_name": {
     "message": "App Name"
+  },
+  "assess": {
+    "message": "Assess"
   },
   "auth_pwd_reset_heading": {
     "message": "Follow these simple steps to reset your account"
@@ -34,6 +40,12 @@
   },
   "cancel": {
     "message": "Cancel"
+  },
+  "change_password": {
+    "message": "Change Password"
+  },
+  "change_school": {
+    "message": "Change School"
   },
   "checkin_attendance_list": {
     "message": "Attendance List"
@@ -131,6 +143,9 @@
   "login": {
     "message": "Login"
   },
+  "logout": {
+    "message": "Logout"
+  },
   "lost_password": {
     "message": "Lost Password"
   },
@@ -140,11 +155,17 @@
   "lost_password_success": {
     "message": "Thanks! Please check %s for a link to reset your password."
   },
+  "manage": {
+    "message": "Manage"
+  },
   "name": {
     "message": "Name"
   },
   "new_password": {
     "message": "New Password"
+  },
+  "notify": {
+    "message": "Notify"
   },
   "password": {
     "message": "Password"
@@ -160,6 +181,9 @@
   },
   "password_reset_success": {
     "message": "Password saved, redirecting you to the login page"
+  },
+  "profile": {
+    "message": "Profile"
   },
   "qr_code": {
     "message": "QR Code"
@@ -188,7 +212,16 @@
   "something_went_wrong": {
     "message": "Something went wrong"
   },
+  "team_settings": {
+    "message": "Team Settings"
+  },
+  "templates": {
+    "message": "Templates"
+  },
   "upload_picture": {
     "message": "Upload Picture"
+  },
+  "welcome": {
+    "message": "Welcome"
   }
 }
