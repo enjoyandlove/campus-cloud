@@ -15,10 +15,13 @@
   // }
 
   li {
-    padding: 10px;
     text-align: left;
     color: $color-secondary-text;
     transition: background 100ms ease-in;
+
+    a {
+      padding: 10px;
+    }
 
     &:hover:not(.no-hover) {
       cursor: pointer;
