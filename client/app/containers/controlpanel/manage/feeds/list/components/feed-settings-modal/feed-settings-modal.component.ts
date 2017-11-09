@@ -1,3 +1,4 @@
+import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
@@ -21,6 +22,7 @@ export class FeedSettingsComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private session: CPSession,
+    private cpI18n: CPI18nService,
     private feedsService: FeedsService
   ) {
     this.feedsService.getSocialGroups();
@@ -121,15 +123,15 @@ export class FeedSettingsComponent implements OnInit {
 
     this.privileges = [
       {
-        label: 'Disabled',
+        label: this.cpI18n.translate('disabled'),
         action: 100
       },
       {
-        label: 'Team Members',
+        label: this.cpI18n.translate('feeds_team_members'),
         action: 3
       },
       {
-        label: 'Everyone',
+        label: this.cpI18n.translate('feeds_everyone'),
         action: 0
       }
     ];

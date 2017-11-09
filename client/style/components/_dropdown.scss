@@ -19,6 +19,10 @@
     color: $color-secondary-text;
     transition: background 100ms ease-in;
 
+    &.list-as-anchor {
+      padding: 10px;
+    }
+
     a {
       padding: 10px;
     }

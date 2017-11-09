@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
+import { CPI18nService } from '../../../../../../../shared/services/index';
+
 
 @Component({
   selector: 'cp-feed-dropdown',
@@ -17,7 +19,9 @@ export class FeedDropdownComponent implements OnInit {
   _isCampusWallView;
   _requiresApproval;
 
-  constructor() { }
+  constructor(
+    public cpI18n: CPI18nService
+  ) { }
 
   removeApproveOption() {
     this.options = this.options.filter(option => option.action !== 1);
@@ -27,7 +31,7 @@ export class FeedDropdownComponent implements OnInit {
     if (!this.requiresApproval) { return this.requiresApproval.startWith(false); }
 
     this.isCampusWallView.subscribe((res: any) => {
-      this._isCampusWallView = res.type === 1 ? true : false;
+      this._isCampusWallView = res.type === 1;
     });
 
     this.requiresApproval.subscribe(requiresApproval => {
@@ -42,14 +46,16 @@ export class FeedDropdownComponent implements OnInit {
       {
         action: 3,
         isPostOnly: false,
-        label: `Delete ${this.isComment ? 'Comment' : 'Post'}`
+        label: this.cpI18n.translate(this.isComment ?
+                                    'feeds_delete_comment' :
+                                    'feeds_delete_post')
       }
     ];
 
     if (this._isCampusWallView) {
       let approveMenu = {
         action: 2,
-        label: 'Move Post',
+        label: this.cpI18n.translate('feeds_move_post'),
         isPostOnly: true,
       };
 
@@ -60,7 +66,9 @@ export class FeedDropdownComponent implements OnInit {
       const flaggedMenu = {
         action: 1,
         isPostOnly: false,
-        label: `Approve ${this.isComment ? 'Comment' : 'Post'}`
+        label: this.cpI18n.translate(this.isComment ?
+                                     'feeds_approve_comment' :
+                                     'feeds_approve_post')
       };
 
       items = [flaggedMenu, ...items];

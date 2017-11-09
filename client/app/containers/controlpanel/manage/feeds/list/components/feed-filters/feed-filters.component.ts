@@ -1,3 +1,4 @@
+import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -42,6 +43,7 @@ export class FeedFiltersComponent implements OnInit {
 
   constructor(
     private session: CPSession,
+    private cpI18n: CPI18nService,
     private feedsService: FeedsService,
   ) {
     this.state = state;
@@ -54,14 +56,14 @@ export class FeedFiltersComponent implements OnInit {
     this.walls$ = this.feedsService.getSocialGroups(search)
       .startWith([
         {
-          label: 'Campus Wall',
+          label: this.cpI18n.translate('campus_wall'),
           action: 1
         }
       ])
       .map(groupWalls => {
         let _walls = [
           {
-            label: 'Campus Wall',
+            label: this.cpI18n.translate('campus_wall'),
             action: 1
           }
         ];
@@ -82,11 +84,11 @@ export class FeedFiltersComponent implements OnInit {
       });
 
     this.channels$ = this.feedsService.getChannelsBySchoolId(1, 1000, search)
-      .startWith([{ label: 'All' }])
+      .startWith([{ label: this.cpI18n.translate('all') }])
       .map(channels => {
         let _channels = [
           {
-            label: 'All',
+            label:  this.cpI18n.translate('all'),
             action: null
           }
         ];
@@ -176,15 +178,15 @@ export class FeedFiltersComponent implements OnInit {
   ngOnInit() {
     this.posts = [
       {
-        label: 'All Posts',
+        label: this.cpI18n.translate('feeds_all_posts'),
         action: null
       },
       {
-        label: 'Flagged Posts',
+        label: this.cpI18n.translate('feeds_flagged_posts'),
         action: 1
       },
       {
-        label: 'Removed Posts',
+        label: this.cpI18n.translate('feeds_removed_posts'),
         action: 2
       }
     ];

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { CPDate } from '../../../../../../../shared/utils';
 import { FORMAT } from '../../../../../../../shared/pipes/date';
@@ -8,16 +8,10 @@ import { FORMAT } from '../../../../../../../shared/pipes/date';
   templateUrl: './feed-header.component.html',
   styleUrls: ['./feed-header.component.scss']
 })
-export class FeeHeaderComponent implements OnInit {
+export class FeeHeaderComponent {
   @Input() feed: any;
   @Input() isComment: boolean;
 
   CPDate = CPDate;
   FORMAT = FORMAT.DATETIME;
-
-  constructor() { }
-
-  ngOnInit() {
-    // console.log(this);
-  }
 }

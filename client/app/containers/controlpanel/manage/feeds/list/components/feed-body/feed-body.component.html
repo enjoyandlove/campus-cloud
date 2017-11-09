@@ -38,9 +38,9 @@
               (click)="viewComments.emit(isCommentsOpen)">
               <i class="material-icons" *ngIf="!isCommentsOpen">chevron_right</i>
               <i class="material-icons" *ngIf="isCommentsOpen">expand_more</i>
-              {{ isCommentsOpen ? 'Hide' : 'Show' }}
+              {{ isCommentsOpen ? cpI18n.translate('hide') : cpI18n.translate('show') }}
               {{ feed.comment_count }}
-              {{ feed.comment_count > 1 ? 'Comments' : 'Comment' }}
+              {{ feed.comment_count > 1 ? cpI18n.translate('comments') : cpI18n.translate('comment') }}
             </button>
           </div>
         </div>

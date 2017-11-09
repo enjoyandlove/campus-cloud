@@ -2,7 +2,7 @@
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-xs-12 text-center">
-        <span i18n><strong>Approve Comment</strong></span>
+        <span i18n><strong>{{ 'feeds_approve_comment_modal_title' | cpI18n }}</strong></span>
 
         <span
           data-dismiss="modal"
@@ -18,7 +18,7 @@
     <div class="row">
       <div class="col-xs-12">
         <p class="text-center" i18n>
-          Are you sure you want to approve this post?
+          {{ 'feeds_approve_comment_modal_body' | cpI18n }}
         </p>
       </div>
     </div>
@@ -32,7 +32,7 @@
           class="cpbtn cpbtn--cancel"
           data-dismiss="modal" i18n
           (click)="teardown.emit()">
-          Cancel
+          {{ 'cancel' | cpI18n }}
         </button>
 
         <cp-button

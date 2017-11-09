@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { FeedsService } from '../../../feeds.service';
+import { CPI18nService } from '../../../../../../../shared/services/index';
 
 declare var $: any;
 
@@ -20,6 +21,7 @@ export class FeedDeleteCommentModalComponent implements OnInit {
   _isCampusWallView;
 
   constructor(
+    private cpI18n: CPI18nService,
     private feedsService: FeedsService
   ) { }
 
@@ -42,11 +44,11 @@ export class FeedDeleteCommentModalComponent implements OnInit {
   ngOnInit() {
     this.buttonData = {
       class: 'danger',
-      text: 'Delete'
+      text: this.cpI18n.translate('delete')
     };
 
     this.isCampusWallView.subscribe((res: any) => {
-      this._isCampusWallView = res.type === 1 ? true : false;
+      this._isCampusWallView = res.type === 1;
     });
   }
 }
