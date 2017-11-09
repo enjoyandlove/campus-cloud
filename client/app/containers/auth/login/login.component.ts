@@ -58,10 +58,11 @@ export class LoginComponent implements OnInit, OnDestroy {
         console.warn('Local Storage is not supported');
       },
       err => {
-        if (err.status === 401) {
+        if (err.status === 401 || err.status === 403) {
           this.error.handleError({ reason: this.cpI18n.translate('account_not_found') });
           return;
         }
+
         console.error(err.json());
       }
       );

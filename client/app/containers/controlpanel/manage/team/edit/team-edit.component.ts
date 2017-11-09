@@ -6,14 +6,13 @@ import { Store } from '@ngrx/store';
 
 import { TEAM_ACCESS } from '../utils';
 import { CPSession } from '../../../../../session';
-import { STATUS } from '../../../../../shared/constants';
 import { accountCleanUp } from './../create/team-create.component';
 import { BaseComponent } from '../../../../../base/base.component';
 import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
-import { AdminService, ErrorService } from '../../../../../shared/services';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 import { CP_PRIVILEGES, CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 import { accountsToStoreMap } from './../../../../../shared/utils/privileges/privileges';
+import { AdminService, ErrorService, CPI18nService } from '../../../../../shared/services';
 
 const eventsDropdown = function (privilege: { r: boolean, w: boolean }) {
   let items = [
@@ -170,6 +169,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     private session: CPSession,
     private route: ActivatedRoute,
     private store: Store<IHeader>,
+    private cpI18n: CPI18nService,
     private adminService: AdminService,
     private errorService: ErrorService
   ) {
@@ -182,7 +182,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    const _ = require('lodash');
+    const isEqual = require('lodash').isEqual;
     const admin$ = this.adminService.getAdminById(this.adminId);
 
     super
@@ -207,8 +207,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
           this.editingUser.account_level_privileges
         );
 
-        this.isAllAccessEnabled = _.isEqual(this.schoolPrivileges,
-          this.user.school_level_privileges[this.schoolId]) && _.isEqual(this.accountPrivileges,
+        this.isAllAccessEnabled = isEqual(this.schoolPrivileges,
+          this.user.school_level_privileges[this.schoolId]) && isEqual(this.accountPrivileges,
             this.user.account_level_privileges);
       })
       .catch(err => { throw new Error(err) });
@@ -309,7 +309,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
     if (!this.form.valid) {
       this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
-      this.errorService.handleError({ reason: STATUS.ALL_FIELDS_ARE_REQUIRED });
+      this.errorService.handleError({ reason: this.cpI18n.translate('all_fields_are_required') });
       return;
     }
 
@@ -355,11 +355,11 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
         this.isFormError = true;
 
         if (err.status === 409) {
-          this.formError = STATUS.DUPLICATE_ENTRY;
+          this.formError = this.cpI18n.translate('duplicate_entry');
           return;
         }
 
-        this.formError = STATUS.SOMETHING_WENT_WRONG;
+        this.formError = this.cpI18n.translate('all_fields_are_required');
       }
       );
   }
@@ -656,7 +656,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
     this.buttonData = {
       class: 'primary',
-      text: 'Update'
+      text: this.cpI18n.translate('update')
     }
 
     let schoolPrivileges = this.user.school_level_privileges[this.schoolId];

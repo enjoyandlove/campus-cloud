@@ -6,11 +6,10 @@ import { Store } from '@ngrx/store';
 
 import { TEAM_ACCESS } from '../utils';
 import { CPSession } from '../../../../../session';
-import { STATUS } from '../../../../../shared/constants';
 import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
-import { ErrorService, AdminService } from '../../../../../shared/services';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 import { CP_PRIVILEGES, CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
+import { ErrorService, AdminService, CPI18nService } from '../../../../../shared/services';
 
 import {
   accountsToStoreMap,
@@ -166,6 +165,7 @@ export class TeamCreateComponent implements OnInit {
     private fb: FormBuilder,
     private session: CPSession,
     private store: Store<IHeader>,
+    private cpI18n: CPI18nService,
     private teamService: AdminService,
     private errorService: ErrorService
   ) { }
@@ -195,7 +195,7 @@ export class TeamCreateComponent implements OnInit {
 
     if (!this.form.valid) {
       this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
-      this.errorService.handleError({ reason: STATUS.ALL_FIELDS_ARE_REQUIRED });
+      this.errorService.handleError({ reason: this.cpI18n.translate('all_fields_are_required') });
       return;
     }
 
@@ -234,11 +234,11 @@ export class TeamCreateComponent implements OnInit {
         this.isFormError = true;
 
         if (err.status === 409) {
-          this.formError = STATUS.DUPLICATE_ENTRY;
+          this.formError = this.cpI18n.translate('duplicate_entry');
           return;
         }
 
-        this.formError = STATUS.SOMETHING_WENT_WRONG;
+        this.formError = this.cpI18n.translate('something_went_wrong');
       }
       );
   }
@@ -477,7 +477,7 @@ export class TeamCreateComponent implements OnInit {
     this.buttonData = {
       disabled: true,
       class: 'primary',
-      text: 'Send Invite'
+      text: this.cpI18n.translate('admin_create_button')
     }
 
 

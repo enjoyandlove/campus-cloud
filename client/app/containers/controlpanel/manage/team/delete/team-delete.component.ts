@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { AdminService } from '../../../../../shared/services';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 declare var $: any;
 
@@ -17,11 +18,11 @@ export class TeamDeleteComponent implements OnInit {
   buttonData;
 
   constructor(
-    private adminService: AdminService
+    public cpI18n: CPI18nService,
+    public adminService: AdminService
   ) { }
 
   onDelete() {
-
     this
       .adminService
       .deleteAdminById(this.admin.id)
@@ -45,7 +46,7 @@ export class TeamDeleteComponent implements OnInit {
   ngOnInit() {
     this.buttonData = {
       class: 'danger',
-      text: 'Delete'
+      text: this.cpI18n.translate('delete')
     }
   }
 }
