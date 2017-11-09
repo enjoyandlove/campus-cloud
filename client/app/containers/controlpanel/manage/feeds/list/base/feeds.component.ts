@@ -91,7 +91,7 @@ export class FeedsComponent extends BaseComponent implements OnInit {
         post_types: data.post_types,
         commentingMemberType: data.commentingMemberType,
         postingMemberType: data.postingMemberType,
-        isCampusThread: data.wall_type === 1 ? true : false,
+        isCampusThread: data.wall_type === 1,
         flagged_by_users_only: data.flagged_by_users_only,
         removed_by_moderators_only: data.removed_by_moderators_only
       }

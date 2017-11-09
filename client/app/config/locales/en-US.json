@@ -131,6 +131,9 @@
   "announcement_success_sent": {
     "message": "Success! Your message has been sent"
   },
+  "approve": {
+    "message": "Approve"
+  },
   "app_customization": {
     "message": "App Customization"
   },
@@ -317,8 +320,14 @@
   "body": {
     "message": "Body"
   },
+  "button_add_photo": {
+    "message": "Add Photo"
+  },
   "calendar": {
     "message": "Calendar"
+  },
+  "campus_wall": {
+    "message": "Campus Wall"
   },
   "campus_wide": {
     "message": "Campus Wide"
@@ -365,6 +374,12 @@
   "clubs_and_groups": {
     "message": "Clubs & Groups"
   },
+  "comment": {
+    "message": "Comment"
+  },
+  "comments": {
+    "message": "Comments"
+  },
   "compose": {
     "message": "Compose"
   },
@@ -379,6 +394,9 @@
   },
   "description": {
     "message": "Description"
+  },
+  "disabled": {
+    "message": "Disabled"
   },
   "done": {
     "message": "Done"
@@ -428,6 +446,87 @@
   "feeds": {
     "message": "Feeds"
   },
+  "feeds_all_posts": {
+    "message": "All Posts"
+  },
+  "feeds_approve_comment": {
+    "message": "Approve Comment"
+  },
+  "feeds_approve_comment_modal_body": {
+    "message": "Are you sure you want to approve this post?"
+  },
+  "feeds_approve_comment_modal_title": {
+    "message": "Approve Comment"
+  },
+  "feeds_approve_post": {
+    "message": "Approve Post"
+  },
+  "feeds_approve_post_modal_body": {
+    "message": "Are you sure you want to approve this post?"
+  },
+  "feeds_approve_post_modal_title": {
+    "message": "Approve Post"
+  },
+  "feeds_can_comment": {
+    "message": "Can Comment"
+  },
+  "feeds_can_post": {
+    "message": "Can Post"
+  },
+  "feeds_delete_comment": {
+    "message": "Delete Comment"
+  },
+  "feeds_delete_comment_modal_body": {
+    "message": "Are you sure you want to delete this comment?"
+  },
+  "feeds_delete_comment_modal_title": {
+    "message": "Delete Comment"
+  },
+  "feeds_delete_post": {
+    "message": "Delete Post"
+  },
+  "feeds_delete_post_modal_body": {
+    "message": "Are you sure you want to delete this post?"
+  },
+  "feeds_delete_post_modal_title": {
+    "message": "Delete Post"
+  },
+  "feeds_error_wall_is_disabled": {
+    "message": "To enable posting, change the settings for this wall"
+  },
+  "feeds_everyone": {
+    "message": "Everyone"
+  },
+  "feeds_flagged_posts": {
+    "message": "Flagged Posts"
+  },
+  "feeds_move_post": {
+    "message": "Move Post"
+  },
+  "feeds_move_post_from": {
+    "message": "Move post from"
+  },
+  "feeds_posted_in": {
+    "message": "posted in"
+  },
+  "feeds_post_as": {
+    "message": "Post as"
+  },
+  "feeds_post_to": {
+    "message": "Post to"
+  },
+  "feeds_removed_posts": {
+    "message": "Removed Posts"
+  },
+  "feeds_team_members": {
+    "message": "Team Members"
+  },
+  "feeds_wall_name": {
+    "message": "Wall Name"
+  },
+  "feeds_wall_settings_modal_title": {
+    "message": "Wall Settings"
+  },
   "first_name": {
     "message": "First Name"
   },
@@ -436,6 +535,9 @@
   },
   "from": {
     "message": "From"
+  },
+  "hide": {
+    "message": "Hide"
   },
   "import_from_csv": {
     "message": "Import from CSV"
@@ -536,6 +638,9 @@
   "message": {
     "message": "Message"
   },
+  "move": {
+    "message": "Move"
+  },
   "name": {
     "message": "Name"
   },
@@ -574,6 +679,9 @@
   },
   "pending": {
     "message": "Pending"
+  },
+  "post": {
+    "message": "Post"
   },
   "profile": {
     "message": "Profile"
@@ -616,6 +724,9 @@
   },
   "service_provider_name": {
     "message": "Service Provider Name"
+  },
+  "show": {
+    "message": "Show"
   },
   "something_went_wrong": {
     "message": "Something went wrong"

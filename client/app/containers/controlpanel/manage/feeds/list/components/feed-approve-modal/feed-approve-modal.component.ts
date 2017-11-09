@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { FeedsService } from '../../../feeds.service';
+import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 
 declare var $: any;
 
@@ -20,14 +21,20 @@ export class FeedApproveModalComponent implements OnInit {
   _isCampusWallView;
 
   constructor(
+    private cpI18n: CPI18nService,
     private feedsService: FeedsService
   ) { }
 
   onSubmit() {
     let data = { flag: 2 };
+
     const approveCampusWallThread$ = this.feedsService.approveCampusWallThread(this.feed.id, data);
+
     const approveGroupWallThread$ = this.feedsService.approveGroupWallThread(this.feed.id, data);
-    const stream$ = this._isCampusWallView ? approveCampusWallThread$ : approveGroupWallThread$;
+
+    const stream$ = this._isCampusWallView ?
+                    approveCampusWallThread$ :
+                    approveGroupWallThread$;
 
     stream$
       .subscribe(
@@ -42,7 +49,7 @@ export class FeedApproveModalComponent implements OnInit {
 
   ngOnInit() {
     this.buttonData = {
-      text: 'Approve',
+      text: this.cpI18n.translate('approve'),
       class: 'primary'
     }
 

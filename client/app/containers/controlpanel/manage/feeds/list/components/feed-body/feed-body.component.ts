@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
+import { CPI18nService } from '../../../../../../../shared/services/index';
+
 @Component({
   selector: 'cp-feed-body',
   templateUrl: './feed-body.component.html',
@@ -10,7 +12,9 @@ export class FeedBodyComponent implements OnInit {
   @Input() isRemovedPosts: boolean;
   @Output() viewComments: EventEmitter<boolean> = new EventEmitter();
 
-  constructor() { }
+  constructor(
+    public cpI18n: CPI18nService
+  ) { }
 
   ngOnInit() { }
 }

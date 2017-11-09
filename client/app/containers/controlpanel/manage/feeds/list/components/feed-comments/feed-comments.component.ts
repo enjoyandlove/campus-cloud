@@ -87,7 +87,7 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     this.isCampusWallView.subscribe((res: any) => {
       this.groupId = res.type;
-      this._isCampusWallView = res.type === 1 ? true : false;
+      this._isCampusWallView = res.type === 1;
     });
     this.fetch();
   }

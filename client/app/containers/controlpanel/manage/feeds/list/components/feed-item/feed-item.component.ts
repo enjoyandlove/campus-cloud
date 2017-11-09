@@ -66,6 +66,7 @@ export class FeedItemComponent implements OnInit {
 
   ngOnInit() {
     this.requiresApproval$.next(this.feed.dislikes > 0 && this.feed.flag !== 2);
+
     this.isCampusWallView.subscribe(res => this._isCampusWallView = res.type);
 
     this.isFilteredByRemovedPosts.subscribe(res => this.isRemovedPosts = res);
