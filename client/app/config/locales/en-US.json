@@ -437,6 +437,9 @@
   "from": {
     "message": "From"
   },
+  "import_from_csv": {
+    "message": "Import from CSV"
+  },
   "in": {
     "message": "In"
   },
@@ -482,6 +485,30 @@
   "lists": {
     "message": "Lists"
   },
+  "lists_button_create": {
+    "message": "Create List"
+  },
+  "lists_create_modal_title": {
+    "message": "Create New List"
+  },
+  "lists_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "lists_delete_modal_title": {
+    "message": "Delete List"
+  },
+  "lists_edit_modal_title": {
+    "message": "Edit List"
+  },
+  "lists_error_template_conflict": {
+    "message": "This list is being used in a notification template. To delete this list, first delete all templates addressed to this list, and try again."
+  },
+  "lists_label_list_description": {
+    "message": "List Description"
+  },
+  "lists_label_list_name": {
+    "message": "List Name"
+  },
   "login": {
     "message": "Login"
   },
@@ -517,6 +544,9 @@
   },
   "notify": {
     "message": "Notify"
+  },
+  "no_results": {
+    "message": "No Results"
   },
   "ok": {
     "message": "Ok"
@@ -643,6 +673,9 @@
   },
   "urgent": {
     "message": "Urgent"
+  },
+  "users": {
+    "message": "Users"
   },
   "validate_password_min_length": {
     "message": "Make sure your password is at least 6 characters long"
