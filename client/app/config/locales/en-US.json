@@ -2,14 +2,29 @@
   "account_not_found": {
     "message": "Please check your credentials and try again."
   },
+  "active": {
+    "message": "Active"
+  },
   "admin_create_account": {
     "message": "Create Account"
+  },
+  "admin_delete_user_error": {
+    "message": "We could not delete the selected user"
   },
   "admin_invite_heading": {
     "message": "Create your Campus Cloud Account"
   },
+  "admin_modal_delete_body": {
+    "message": "Are you sure you want to remove %s?"
+  },
+  "admin_modal_delete_title": {
+    "message": "Remove Team Member"
+  },
   "admin_password_sucess_redirect": {
     "message": "Password saved, redirecting you to the login page"
+  },
+  "admin_search_by_email_or_email": {
+    "message": "Search by name or email..."
   },
   "all": {
     "message": "All"
@@ -89,6 +104,15 @@
   "assess_button_download_engagement_data": {
     "message": "Download Engagement Data"
   },
+  "assess_checkin_date": {
+    "message": "Check-In Date"
+  },
+  "assess_check_in_time": {
+    "message": "Check-In Item"
+  },
+  "assess_download_transcript": {
+    "message": "Download Transcript"
+  },
   "assess_engagements_last_seven_days": {
     "message": "Engagement (Last 7 Days)"
   },
@@ -158,6 +182,9 @@
   "assess_repeat_engagement": {
     "message": "Repeat Engagement"
   },
+  "assess_response_date": {
+    "message": "Response Date"
+  },
   "assess_response_rate": {
     "message": "Response Rate"
   },
@@ -202,6 +229,15 @@
   },
   "attendees": {
     "message": "Attendees"
+  },
+  "auth_confirm_new_password": {
+    "message": "Confirm New Password"
+  },
+  "auth_old_password": {
+    "message": "Old Password"
+  },
+  "auth_password_reset_success": {
+    "message": "Your password has been changed!"
   },
   "auth_pwd_reset_heading": {
     "message": "Follow these simple steps to reset your account"
@@ -263,6 +299,9 @@
   "checkin_scannable_qr_code": {
     "message": "Scannable QR Code"
   },
+  "clubs_and_groups": {
+    "message": "Clubs & Groups"
+  },
   "compose": {
     "message": "Compose"
   },
@@ -296,6 +335,9 @@
   "engagement": {
     "message": "Engagement"
   },
+  "error": {
+    "message": "Error"
+  },
   "event": {
     "message": "Event"
   },
@@ -307,6 +349,9 @@
   },
   "feedback_thank_you": {
     "message": "Thanks for your feedback"
+  },
+  "feeds": {
+    "message": "Feeds"
   },
   "first_name": {
     "message": "First Name"
@@ -356,6 +401,9 @@
   "link_label_link_banner": {
     "message": "Link Banner"
   },
+  "lists": {
+    "message": "Lists"
+  },
   "login": {
     "message": "Login"
   },
@@ -389,6 +437,9 @@
   "notify": {
     "message": "Notify"
   },
+  "ok": {
+    "message": "Ok"
+  },
   "password": {
     "message": "Password"
   },
@@ -404,6 +455,9 @@
   "password_reset_success": {
     "message": "Password saved, redirecting you to the login page"
   },
+  "pending": {
+    "message": "Pending"
+  },
   "profile": {
     "message": "Profile"
   },
@@ -415,6 +469,9 @@
   },
   "regular": {
     "message": "Regular"
+  },
+  "response": {
+    "message": "Response"
   },
   "results": {
     "message": "Results"
@@ -445,6 +502,9 @@
   },
   "something_went_wrong": {
     "message": "Something went wrong"
+  },
+  "status": {
+    "message": "Status"
   },
   "students": {
     "message": "Students"
@@ -485,11 +545,17 @@
   "to": {
     "message": "To"
   },
+  "type": {
+    "message": "Type"
+  },
   "upload_picture": {
     "message": "Upload Picture"
   },
   "urgent": {
     "message": "Urgent"
+  },
+  "validate_password_min_length": {
+    "message": "Make sure your password is at least 6 characters long"
   },
   "view_more": {
     "message": "View More"
@@ -499,5 +565,8 @@
   },
   "yes_i_am_sure": {
     "message": "Yes, I'm Sure"
+  },
+  "you": {
+    "message": "You"
   }
 }

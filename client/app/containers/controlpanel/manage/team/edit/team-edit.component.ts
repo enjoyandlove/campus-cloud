@@ -182,7 +182,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    const _ = require('lodash');
+    const isEqual = require('lodash').isEqual;
     const admin$ = this.adminService.getAdminById(this.adminId);
 
     super
@@ -207,8 +207,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
           this.editingUser.account_level_privileges
         );
 
-        this.isAllAccessEnabled = _.isEqual(this.schoolPrivileges,
-          this.user.school_level_privileges[this.schoolId]) && _.isEqual(this.accountPrivileges,
+        this.isAllAccessEnabled = isEqual(this.schoolPrivileges,
+          this.user.school_level_privileges[this.schoolId]) && isEqual(this.accountPrivileges,
             this.user.account_level_privileges);
       })
       .catch(err => { throw new Error(err) });
