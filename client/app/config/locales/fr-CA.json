@@ -5,11 +5,50 @@
   "active": {
     "message": "Active"
   },
+  "admin_all_acceess_help": {
+    "message": "Give access to all of the Services, Clubs and App Content"
+  },
+  "admin_all_access": {
+    "message": "All Access"
+  },
+  "admin_app_content": {
+    "message": "App Content"
+  },
+  "admin_app_content_help": {
+    "message": "Select the content that you want your invitee to access"
+  },
+  "admin_assess_help": {
+    "message": "View engagement and student attendance data"
+  },
+  "admin_campus_announcements": {
+    "message": "Campus Announcements"
+  },
+  "admin_club_owner": {
+    "message": "Club Owner"
+  },
+  "admin_club_owner_help": {
+    "message": "Manage club details, events and membership"
+  },
   "admin_create_account": {
     "message": "Create Account"
   },
   "admin_delete_user_error": {
     "message": "We could not delete the selected user"
+  },
+  "admin_emergency_announcements": {
+    "message": "Emergency Announcements"
+  },
+  "admin_engagement_dashboard": {
+    "message": "Engagement Dashboard"
+  },
+  "admin_events_help": {
+    "message": "Manage and assess events"
+  },
+  "admin_grant_permissions": {
+    "message": "Grant Permissions"
+  },
+  "admin_invitee": {
+    "message": "Invitee"
   },
   "admin_invite_heading": {
     "message": "Create your Campus Cloud Account"
@@ -20,11 +59,23 @@
   "admin_modal_delete_title": {
     "message": "Remove Team Member"
   },
+  "admin_notify_help": {
+    "message": "Select push notifications"
+  },
   "admin_password_sucess_redirect": {
     "message": "Password saved, redirecting you to the login page"
   },
+  "admin_permissions": {
+    "message": "Permissions"
+  },
   "admin_search_by_email_or_email": {
     "message": "Search by name or email..."
+  },
+  "admin_service_owner": {
+    "message": "Service Owner"
+  },
+  "admin_service_owner_help": {
+    "message": "Manage service details, events and assessment"
   },
   "all": {
     "message": "All"
@@ -73,6 +124,9 @@
   },
   "announcement_success_sent": {
     "message": "Success! Your message has been sent"
+  },
+  "app_customization": {
+    "message": "App Customization"
   },
   "app_name": {
     "message": "App Name"
@@ -257,6 +311,9 @@
   "body": {
     "message": "Body"
   },
+  "calendar": {
+    "message": "Calendar"
+  },
   "campus_wide": {
     "message": "Campus Wide"
   },
@@ -425,6 +482,9 @@
   "manage_team_members": {
     "message": "Manage Team Members"
   },
+  "maps": {
+    "message": "Maps"
+  },
   "message": {
     "message": "Message"
   },
@@ -439,6 +499,9 @@
   },
   "ok": {
     "message": "Ok"
+  },
+  "orientation": {
+    "message": "Orientation"
   },
   "password": {
     "message": "Password"
