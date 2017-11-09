@@ -32,6 +32,9 @@
   "admin_create_account": {
     "message": "Create Account"
   },
+  "admin_create_button": {
+    "message": "Send Invite"
+  },
   "admin_delete_user_error": {
     "message": "We could not delete the selected user"
   },
@@ -46,6 +49,9 @@
   },
   "admin_grant_permissions": {
     "message": "Grant Permissions"
+  },
+  "admin_invite": {
+    "message": "Invite"
   },
   "admin_invitee": {
     "message": "Invitee"
@@ -380,6 +386,12 @@
   "download": {
     "message": "Download"
   },
+  "duplicate_entry": {
+    "message": "An entry like that already exists"
+  },
+  "edit": {
+    "message": "Edit"
+  },
   "email": {
     "message": "Email"
   },
@@ -394,6 +406,12 @@
   },
   "error": {
     "message": "Error"
+  },
+  "error_file_is_too_big": {
+    "message": "File too Big"
+  },
+  "error_invalid_extension": {
+    "message": "Invalid Extension"
   },
   "event": {
     "message": "Event"
@@ -441,10 +459,13 @@
     "message": "Add Link"
   },
   "links_delete_modal_body": {
-    "message": "Are you sure you want to delete link name?"
+    "message": "Are you sure you want to delete %s?"
   },
   "links_delete_modal_title": {
     "message": "Delete Link"
+  },
+  "links_edit_modal_title": {
+    "message": "Edit Link"
   },
   "links_label_link_name": {
     "message": "Link Name"
@@ -453,7 +474,7 @@
     "message": "Link URL"
   },
   "link_label_description": {
-    "message": "Link Description (Optional)"
+    "message": "Link Description"
   },
   "link_label_link_banner": {
     "message": "Link Banner"
@@ -499,6 +520,9 @@
   },
   "ok": {
     "message": "Ok"
+  },
+  "optional": {
+    "message": "Optional"
   },
   "orientation": {
     "message": "Orientation"
@@ -610,6 +634,9 @@
   },
   "type": {
     "message": "Type"
+  },
+  "update": {
+    "message": "Update"
   },
   "upload_picture": {
     "message": "Upload Picture"

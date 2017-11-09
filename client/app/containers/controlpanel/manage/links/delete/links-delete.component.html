@@ -2,7 +2,7 @@
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-xs-12 text-center">
-        <span i18n><strong>Delete Link</strong></span>
+        <span i18n><strong>{{ 'links_delete_modal_title' | cpI18n }}</strong></span>
 
         <span
           data-dismiss="modal"
@@ -18,7 +18,7 @@
     <div class="row">
       <div class="col-xs-12">
         <p class="text-center" i18n>
-          Are you sure you want to delete {{ link.name }}?
+          {{ 'links_delete_modal_body' | cpI18n: link.name  }}?
         </p>
       </div>
     </div>
@@ -32,7 +32,7 @@
           data-dismiss="modal"
           (click)="resetModal()"
           class="cpbtn cpbtn--cancel" i18n>
-          Cancel
+          {{ 'cancel' | cpI18n }}
         </button>
 
         <cp-button

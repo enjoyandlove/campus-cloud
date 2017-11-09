@@ -7,7 +7,7 @@ import { API } from '../../../../../config/api';
 import { LinksService } from '../links.service';
 import { CPSession } from '../../../../../session';
 import { CPImage, appStorage } from '../../../../../shared/utils';
-import { FileUploadService } from '../../../../../shared/services';
+import { FileUploadService, CPI18nService } from '../../../../../shared/services';
 
 declare var $: any;
 
@@ -28,6 +28,7 @@ export class LinksCreateComponent implements OnInit {
     private fb: FormBuilder,
     private session: CPSession,
     private service: LinksService,
+    private cpI18n: CPI18nService,
     private fileUploadService: FileUploadService
   ) { }
 
@@ -46,12 +47,12 @@ export class LinksCreateComponent implements OnInit {
     const fileExtension = file.name.split('.').pop();
 
     if (!CPImage.isSizeOk(file.size, CPImage.MAX_IMAGE_SIZE)) {
-      this.imageError = 'File too Big';
+      this.imageError = this.cpI18n.translate('error_file_is_too_big');
       return;
     }
 
     if (!CPImage.isValidExtension(fileExtension, CPImage.VALID_EXTENSIONS)) {
-      this.imageError = 'Invalid Extension';
+      this.imageError = this.cpI18n.translate('error_invalid_extension');
       return;
     }
 
