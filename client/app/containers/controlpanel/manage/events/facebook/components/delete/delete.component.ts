@@ -3,6 +3,7 @@ import { EventsService } from '../../../events.service';
 import { URLSearchParams } from '@angular/http';
 
 import { CPSession } from '../../../../../../../session';
+import { CPI18nService } from '../../../../../../../shared/services/index';
 
 declare var $: any;
 
@@ -19,6 +20,7 @@ export class FacebookEventsDeleteComponent implements OnInit {
 
   constructor(
     private session: CPSession,
+    private cpI18n: CPI18nService,
     private eventsService: EventsService
   ) { }
 
@@ -43,7 +45,7 @@ export class FacebookEventsDeleteComponent implements OnInit {
   ngOnInit() {
     this.buttonData = {
       class: 'danger',
-      text: 'Delete'
+      text: this.cpI18n.translate('delete')
     }
   }
 }

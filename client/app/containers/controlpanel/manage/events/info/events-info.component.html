@@ -20,22 +20,22 @@
                   <a
                     [routerLink]="['../edit']"
                     class="cpbtn cpbtn--primary pull-right" i18n>
-                    Edit
+                    {{ 'edit' | cpI18n }}
                   </a>
                 </div>
               </div>
               <p>
-                <span i18n>Hosted by </span> {{ event.store_name }}
+                <span i18n>{{ 'events_hosted_by' | cpI18n }} </span> {{ event.store_name }}
               </p>
 
               <div class="event__meta text-truncate">
                 <p>
-                  <strong i18n *ngIf="!utils.isPastEvent(event)">Starts:</strong>
-                  <strong i18n *ngIf="utils.isPastEvent(event)">Started:</strong>
+                  <strong i18n *ngIf="!utils.isPastEvent(event)">{{ 'starts' | cpI18n }}:</strong>
+                  <strong i18n *ngIf="utils.isPastEvent(event)">{{ 'started' | cpI18n }}:</strong>
                   {{ event.start | cpDatePipe:dateFormat }}
                   <br>
-                  <strong i18n *ngIf="!utils.isPastEvent(event)">Ends:</strong>
-                  <strong i18n *ngIf="utils.isPastEvent(event)">Ended:</strong>
+                  <strong i18n *ngIf="!utils.isPastEvent(event)">{{ 'ends' | cpI18n }}:</strong>
+                  <strong i18n *ngIf="utils.isPastEvent(event)">{{ 'ended' | cpI18n }}:</strong>
                   {{ event.end | cpDatePipe:dateFormat }}
                 </p>
 
