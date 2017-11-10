@@ -296,6 +296,9 @@
   "assess_total_services": {
     "message": "Total Services"
   },
+  "attendee": {
+    "message": "Attendee"
+  },
   "attendees": {
     "message": "Attendees"
   },
@@ -416,6 +419,9 @@
   "download": {
     "message": "Download"
   },
+  "download_csv": {
+    "message": "Download CSV File"
+  },
   "duplicate_entry": {
     "message": "An entry like that already exists"
   },
@@ -473,11 +479,29 @@
   "events_attendance_manager_full": {
     "message": "Attendance Manager"
   },
+  "events_attendant": {
+    "message": "Attendant"
+  },
+  "events_attendee_email": {
+    "message": "Attendee Email"
+  },
   "events_button_new": {
     "message": "Create Event"
   },
+  "events_checked_in_method": {
+    "message": "Checked-in Method"
+  },
+  "events_checked_in_time": {
+    "message": "Checked In Time"
+  },
+  "events_check_in": {
+    "message": "Check-In"
+  },
   "events_check_in_details": {
     "message": "Check-In Details"
+  },
+  "events_create_heading": {
+    "message": "Create Event"
   },
   "events_default_question": {
     "message": "Default Question"
@@ -547,6 +571,9 @@
   },
   "events_no_events_found": {
     "message": "No events found"
+  },
+  "events_user_feedback": {
+    "message": "User Feedback"
   },
   "feedback": {
     "message": "Feedback"
@@ -659,6 +686,9 @@
   "in": {
     "message": "In"
   },
+  "info": {
+    "message": "Info"
+  },
   "instructions": {
     "message": "Instructions"
   },
@@ -764,8 +794,14 @@
   "new_password": {
     "message": "New Password"
   },
+  "no": {
+    "message": "No"
+  },
   "notify": {
     "message": "Notify"
+  },
+  "no_admins_found": {
+    "message": "No Admins found"
   },
   "no_results": {
     "message": "No Results"
@@ -809,14 +845,23 @@
   "rating": {
     "message": "Rating"
   },
+  "ratings": {
+    "message": "Ratings"
+  },
   "regular": {
     "message": "Regular"
   },
   "response": {
     "message": "Response"
   },
+  "responses": {
+    "message": "Responses"
+  },
   "results": {
     "message": "Results"
+  },
+  "rsvp": {
+    "message": "RSVP"
   },
   "save": {
     "message": "Save"
@@ -838,6 +883,15 @@
   },
   "services": {
     "message": "Services"
+  },
+  "services_admin": {
+    "message": "Admin"
+  },
+  "services_button_create": {
+    "message": "Create Service"
+  },
+  "services_visits": {
+    "message": "Visits"
   },
   "service_provider": {
     "message": "Service Provider"
@@ -871,6 +925,9 @@
   },
   "student_feedback": {
     "message": "Student Feedback"
+  },
+  "student_id": {
+    "message": "Student ID"
   },
   "subject": {
     "message": "Subject"
@@ -928,6 +985,9 @@
   },
   "welcome": {
     "message": "Welcome"
+  },
+  "yes": {
+    "message": "yes"
   },
   "yes_i_am_sure": {
     "message": "Yes, I'm Sure"

@@ -18,9 +18,9 @@ import {
 
 import { CPSession, ISchool } from '../../../../../session';
 import { ServicesService } from '../services.service';
-import { AdminService } from '../../../../../shared/services';
-import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 import { BaseComponent } from '../../../../../base/base.component';
+import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
+import { AdminService, CPI18nService } from '../../../../../shared/services';
 
 @Component({
   selector: 'cp-services-info',
@@ -40,6 +40,7 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
     private session: CPSession,
     private store: Store<IHeader>,
     private route: ActivatedRoute,
+    private cpI18n: CPI18nService,
     private adminService: AdminService,
     private serviceService: ServicesService
   ) {
@@ -95,7 +96,7 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
   private buildHeader() {
     let children = [
       {
-        'label': 'Info',
+        'label': this.cpI18n.translate('info'),
         'url': `/manage/services/${this.serviceId}/info`
       }
     ];
@@ -105,7 +106,7 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
 
     if (eventsSchoolLevel || eventsAccountLevel) {
       const events = {
-        'label': 'Events',
+        'label': this.cpI18n.translate('events'),
         'url': `/manage/services/${this.serviceId}/events`
       }
 
@@ -114,7 +115,7 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
 
     if (this.service.service_attendance) {
       let attendance = {
-        'label': 'Assessment',
+        'label': this.cpI18n.translate('assessment'),
         'url': `/manage/services/${this.serviceId}`
       };
 
@@ -127,7 +128,7 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
         'heading': this.service.name,
         'crumbs': {
           'url': 'services',
-          'label': 'Services'
+          'label': this.cpI18n.translate('services'),
         },
         'subheading': '',
         'children': [...children]
