@@ -2,7 +2,7 @@
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-xs-12 text-center">
-        <span i18n><strong>User Feedback</strong></span>
+        <span i18n><strong>{{ 'student_feedback' | cpI18n }}</strong></span>
 
         <span
           (click)="doModalReset()"
@@ -43,7 +43,7 @@
           type="button"
           (click)="doModalReset()"
           class="cpbtn cpbtn--primary"i18n>
-          Done
+          {{ 'done' | cpI18n }}
         </button>
       </div>
     </div>

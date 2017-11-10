@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 
 @Component({
@@ -6,19 +6,11 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   templateUrl: './past-events-action-box.component.html',
   styleUrls: ['./past-events-action-box.component.scss']
 })
-export class EventsPastActionBoxComponent implements OnInit {
+export class EventsPastActionBoxComponent {
   @Output() querySearch: EventEmitter<string> = new EventEmitter();
   @Output() createExcel: EventEmitter<null> = new EventEmitter();
 
-  constructor() { }
+  onSearch(query) { this.querySearch.emit(query); }
 
-  onSearch(query) {
-    this.querySearch.emit(query);
-  }
-
-  downloadExcel() {
-    this.createExcel.emit();
-  }
-
-  ngOnInit() { }
+  downloadExcel() { this.createExcel.emit(); }
 }

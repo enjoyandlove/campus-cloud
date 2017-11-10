@@ -131,6 +131,9 @@
   "announcement_success_sent": {
     "message": "Success! Your message has been sent"
   },
+  "apply": {
+    "message": "Apply"
+  },
   "approve": {
     "message": "Approve"
   },
@@ -428,6 +431,9 @@
   "emergency": {
     "message": "Emergency"
   },
+  "enabled": {
+    "message": "Enabled"
+  },
   "ended": {
     "message": "Ended"
   },
@@ -446,6 +452,9 @@
   "error_file_is_too_big": {
     "message": "File too Big"
   },
+  "error_fill_out_marked_fields": {
+    "message": "Please fill out the marked fields"
+  },
   "error_invalid_extension": {
     "message": "Invalid Extension"
   },
@@ -455,11 +464,56 @@
   "events": {
     "message": "Events"
   },
+  "events_attendance_feedback": {
+    "message": "Attendance Feedback"
+  },
+  "events_attendance_manager": {
+    "message": "Attd Manager"
+  },
+  "events_attendance_manager_full": {
+    "message": "Attendance Manager"
+  },
   "events_button_new": {
     "message": "Create Event"
   },
   "events_check_in_details": {
     "message": "Check-In Details"
+  },
+  "events_default_question": {
+    "message": "Default Question"
+  },
+  "events_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "events_delete_modal_title": {
+    "message": "Delete Event"
+  },
+  "events_edit_event": {
+    "message": "Edit Event"
+  },
+  "events_error_end_date_after_now": {
+    "message": "Event End Time must be greater than now"
+  },
+  "events_error_end_date_before_start": {
+    "message": "Event End Time must be after Event Start Time"
+  },
+  "events_event_attendance": {
+    "message": "Event Attendance"
+  },
+  "events_event_banner": {
+    "message": "Event Banner"
+  },
+  "events_event_description": {
+    "message": "Event Description"
+  },
+  "events_event_details": {
+    "message": "Event Details"
+  },
+  "events_event_manager": {
+    "message": "Event Manager"
+  },
+  "events_event_name": {
+    "message": "Event Name"
   },
   "events_facebook_add_button": {
     "message": "Add Link"
@@ -484,6 +538,9 @@
   },
   "events_hosted_by": {
     "message": "Hosted by"
+  },
+  "events_import_bulk_update": {
+    "message": "Bulk Update"
   },
   "events_import_from_facebook": {
     "message": "Import from Facebook"
@@ -668,6 +725,9 @@
   "lists_label_list_name": {
     "message": "List Name"
   },
+  "location": {
+    "message": "Location"
+  },
   "login": {
     "message": "Login"
   },
@@ -767,6 +827,9 @@
   "search": {
     "message": "Search"
   },
+  "select_host": {
+    "message": "Select Host"
+  },
   "sent": {
     "message": "Sent"
   },
@@ -805,6 +868,9 @@
   },
   "student_engagements": {
     "message": "Student Engagements"
+  },
+  "student_feedback": {
+    "message": "Student Feedback"
   },
   "subject": {
     "message": "Subject"
