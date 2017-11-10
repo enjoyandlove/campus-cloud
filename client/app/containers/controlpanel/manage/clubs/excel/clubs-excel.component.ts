@@ -9,9 +9,9 @@ import { isDev } from '../../../../../config/env';
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base/base.component';
 import { CLUBS_MODAL_RESET } from '../../../../../reducers/clubs.reducer';
-import { HEADER_UPDATE, HEADER_DEFAULT } from '../../../../../reducers/header.reducer';
 import { CPImageUploadComponent } from '../../../../../shared/components';
-import { FileUploadService } from '../../../../../shared/services/file-upload.service';
+import { FileUploadService, CPI18nService } from '../../../../../shared/services';
+import { HEADER_UPDATE, HEADER_DEFAULT } from '../../../../../reducers/header.reducer';
 
 @Component({
   selector: 'cp-clubs-excel',
@@ -30,6 +30,7 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
     private fb: FormBuilder,
     private store: Store<any>,
     private session: CPSession,
+    private cpI18n: CPI18nService,
     private clubService: ClubsService,
     private fileUploadService: FileUploadService
   ) {
@@ -56,12 +57,12 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': 'Import Clubs',
+        'heading': this.cpI18n.translate('clubs_import_heading'),
         'crumbs': {
           'url': 'clubs',
-          'label': 'Clubs'
+          'label': this.cpI18n.translate('clubs')
         },
-        'em': `${this.clubs.length} valid student club(s) in the file`,
+        'em': `${this.clubs.length} ${this.cpI18n.translate('clubs_import_items_to_import')}`,
         'children': []
       }
     });
@@ -138,7 +139,7 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
 
   ngOnInit() {
     this.buttonData = {
-      text: 'Import Clubs',
+      text: this.cpI18n.translate('clubs_import_button_submit'),
       class: 'primary',
       disabled: true
     }

@@ -1,3 +1,4 @@
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { URLSearchParams } from '@angular/http';
@@ -25,6 +26,7 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
     private store: Store<any>,
     private session: CPSession,
     private route: ActivatedRoute,
+    private cpI18n: CPI18nService,
     private utils: ClubsUtilsService,
     private clubsService: ClubsService
   ) {
@@ -58,7 +60,7 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
       heading: name,
       'crumbs': {
         'url': `clubs`,
-        'label': 'Clubs'
+        'label': this.cpI18n.translate('clubs')
       },
       subheading: null,
       em: null,

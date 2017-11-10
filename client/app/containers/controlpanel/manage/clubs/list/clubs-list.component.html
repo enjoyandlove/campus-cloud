@@ -14,10 +14,10 @@
       <ul class="cp-form clubs">
         <li class="cp-form__header col-xs-12">
           <div class="row">
-            <span class="col-xs-5" i18n>Name</span>
-            <span class="col-xs-2" i18n>Status</span>
-            <span class="col-xs-2" i18n>Members</span>
-            <span class="col-xs-2" i18n>Events</span>
+            <span class="col-xs-5" i18n>{{ 'name' | cpI18n }}</span>
+            <span class="col-xs-2" i18n>{{ 'status' | cpI18n }}</span>
+            <span class="col-xs-2" i18n>{{ 'members' | cpI18n }}</span>
+            <span class="col-xs-2" i18n>{{ 'events' | cpI18n }}</span>
             <span class="col-xs-1"></span>
           </div>
         </li>
@@ -40,12 +40,12 @@
                   type="button"
                   class="cpbtn cpbtn--link"
                   (click)="onApproveClub(club.id)">
-                  (Approve)
+                  ({{ 'approve' | cpI18n }})
                 </button>
               </ng-container>
             </span>
             <span class="col-xs-2 text-truncate">
-              {{ club.member_count === disabledWall ? 'Disabled' : club.member_count }}
+              {{ club.member_count === disabledWall ? cpI18n.translate('disabled') : club.member_count }}
             </span>
             <span class="col-xs-2 text-truncate">
               {{ club.total_item_count }}

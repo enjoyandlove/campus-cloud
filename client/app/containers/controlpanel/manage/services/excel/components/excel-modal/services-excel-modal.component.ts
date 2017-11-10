@@ -27,14 +27,12 @@ export class ServicesExcelModalComponent implements OnInit {
       .fileService
       .uploadFile(file, url)
       .toPromise()
-      .then(
-      res => {
+      .then(res => {
         this.service.setModalServices(JSON.parse(res));
         return Promise.resolve();
       }
       )
-      .catch(
-      err => {
+      .catch(err => {
         let serverError = err.json().error;
         return Promise.reject(serverError ?
                               serverError :

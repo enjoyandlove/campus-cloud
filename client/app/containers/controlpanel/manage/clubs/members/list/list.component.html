@@ -16,8 +16,8 @@
       <ul class="members cp-form">
         <li class="cp-form__header col-xs-12">
           <div class="row">
-            <span class="col-xs-3" i18n>Name</span>
-            <span class="col-xs-2" i18n>Member Type</span>
+            <span class="col-xs-3" i18n>{{ 'name' | cpI18n }}</span>
+            <span class="col-xs-2" i18n>{{ 'clubs_label_member_type' | cpI18n }}</span>
             <span class="col-xs-2 col-xs-2-offset-3"></span>
           </div>
         </li>
@@ -27,7 +27,7 @@
           *ngFor="let member of state.members | cpFilterPipe: { query: query, filterBy: ['firstname', 'lastname'] }">
 
           <div class="row" *ngIf="member.noResults">
-            <p class="text-center"><strong>No Members Found...</strong></p>
+            <p class="text-center"><strong>{{ 'clubs_no_members_found' | cpI18n }}...</strong></p>
           </div>
 
           <div class="row" *ngIf="!member.noResults">

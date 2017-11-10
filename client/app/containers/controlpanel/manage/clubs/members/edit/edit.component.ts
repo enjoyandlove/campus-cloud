@@ -12,6 +12,7 @@ import {
 
 import { MemberType } from '../member.status';
 import { MembersService } from '../members.service';
+import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 
 declare var $: any;
 
@@ -36,6 +37,7 @@ export class ClubsMembersEditComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private cpI18n: CPI18nService,
     private service: MembersService,
   ) { }
 
@@ -84,11 +86,11 @@ export class ClubsMembersEditComponent implements OnInit {
   ngOnInit() {
     this.memberTypes = [
       {
-        label: 'Member',
+        label: this.cpI18n.translate('member'),
         action: MemberType.member
       },
       {
-        label: 'Executive',
+        label: this.cpI18n.translate('executive'),
         action: MemberType.executive
       }
     ];
@@ -101,9 +103,7 @@ export class ClubsMembersEditComponent implements OnInit {
     });
 
     this.form.valueChanges.subscribe(value => {
-      if (value.member_type !== this.member.member_type) {
-        this.isTouched = true;
-      }
+      this.isTouched = value.member_type !== this.member.member_type;
     });
   }
 }

@@ -332,6 +332,9 @@
   "body": {
     "message": "Body"
   },
+  "building": {
+    "message": "Building"
+  },
   "button_add_photo": {
     "message": "Add Photo"
   },
@@ -389,8 +392,89 @@
   "checkin_scannable_qr_code": {
     "message": "Scannable QR Code"
   },
+  "clubs": {
+    "message": "Clubs"
+  },
+  "clubs_all_clubs": {
+    "message": "All Clubs"
+  },
   "clubs_and_groups": {
     "message": "Clubs & Groups"
+  },
+  "clubs_button_create": {
+    "message": "Create Club"
+  },
+  "clubs_create_heading": {
+    "message": "Create Club"
+  },
+  "clubs_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "clubs_delete_modal_title": {
+    "message": "Delete Club"
+  },
+  "clubs_edit_heading": {
+    "message": "Edit Club"
+  },
+  "clubs_import_button_submit": {
+    "message": "Import Clubs"
+  },
+  "clubs_import_heading": {
+    "message": "Import Clubs"
+  },
+  "clubs_import_items_to_import": {
+    "message": "valid student club(s) in the file"
+  },
+  "clubs_label_advisor": {
+    "message": "Advisor"
+  },
+  "clubs_label_club_banner": {
+    "message": "Club Banner"
+  },
+  "clubs_label_club_description": {
+    "message": "Club Description"
+  },
+  "clubs_label_club_details": {
+    "message": "Club Details"
+  },
+  "clubs_label_club_membership": {
+    "message": "Club Membership"
+  },
+  "clubs_label_club_name": {
+    "message": "Club Name"
+  },
+  "clubs_label_club_status": {
+    "message": "Club Status"
+  },
+  "clubs_label_constitution": {
+    "message": "Constitution"
+  },
+  "clubs_label_edit_club": {
+    "message": "Edit Club"
+  },
+  "clubs_label_member_type": {
+    "message": "Member Type"
+  },
+  "clubs_member_button_create": {
+    "message": "Add Member"
+  },
+  "clubs_member_create_modal_title": {
+    "message": "Add Member"
+  },
+  "clubs_member_delete_modal_body": {
+    "message": "Are you sure you want to remove %s?"
+  },
+  "clubs_member_delete_modal_title": {
+    "message": "Remove Member"
+  },
+  "clubs_member_edit_modal_title": {
+    "message": "Edit Member"
+  },
+  "clubs_member_label_name": {
+    "message": "Name (need a mobile app account)"
+  },
+  "clubs_no_members_found": {
+    "message": "No Members Found"
   },
   "comment": {
     "message": "Comment"
@@ -406,6 +490,9 @@
   },
   "confirm_password": {
     "message": "Confirm Password"
+  },
+  "contact_details": {
+    "message": "Contact Details"
   },
   "delete": {
     "message": "Delete"
@@ -578,6 +665,9 @@
   "events_user_feedback": {
     "message": "User Feedback"
   },
+  "executive": {
+    "message": "Executive"
+  },
   "feedback": {
     "message": "Feedback"
   },
@@ -689,6 +779,9 @@
   "in": {
     "message": "In"
   },
+  "inactive": {
+    "message": "Inactive"
+  },
   "info": {
     "message": "Info"
   },
@@ -785,6 +878,12 @@
   "maps": {
     "message": "Maps"
   },
+  "member": {
+    "message": "Member"
+  },
+  "members": {
+    "message": "Members"
+  },
   "message": {
     "message": "Message"
   },
@@ -865,6 +964,9 @@
   },
   "results": {
     "message": "Results"
+  },
+  "room": {
+    "message": "Room"
   },
   "rsvp": {
     "message": "RSVP"

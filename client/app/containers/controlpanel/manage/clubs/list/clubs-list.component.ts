@@ -7,6 +7,7 @@ import { ClubsService } from '../clubs.service';
 import { CPSession } from '../../../../../session';
 import { ManageHeaderService } from './../../utils/header';
 import { ClubStatus, ClubSocialGroup } from '../club.status';
+import { CPI18nService } from '../../../../../shared/services';
 import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
@@ -40,6 +41,7 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
   constructor(
     private store: Store<any>,
     private session: CPSession,
+    private cpI18n: CPI18nService,
     private clubsService: ClubsService,
     private headerService: ManageHeaderService
   ) {
@@ -118,9 +120,9 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.clubStatus = {
-      [ClubStatus.inactive] : 'Inactive',
-      [ClubStatus.active] : 'Active',
-      [ClubStatus.pending] : 'Pending'
+      [ClubStatus.inactive] : this.cpI18n.translate('inactive'),
+      [ClubStatus.active] : this.cpI18n.translate('active'),
+      [ClubStatus.pending] : this.cpI18n.translate('pending'),
     };
 
     this
