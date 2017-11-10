@@ -347,6 +347,9 @@
   "cancel": {
     "message": "Cancel"
   },
+  "category": {
+    "message": "Category"
+  },
   "change_password": {
     "message": "Change Password"
   },
@@ -833,6 +836,9 @@
   "pending": {
     "message": "Pending"
   },
+  "phone_number": {
+    "message": "Phone Number"
+  },
   "post": {
     "message": "Post"
   },
@@ -872,6 +878,9 @@
   "search": {
     "message": "Search"
   },
+  "select_category": {
+    "message": "Select Category"
+  },
   "select_host": {
     "message": "Select Host"
   },
@@ -887,8 +896,107 @@
   "services_admin": {
     "message": "Admin"
   },
+  "services_button_add_service_provider": {
+    "message": "Add Service Provider"
+  },
   "services_button_create": {
     "message": "Create Service"
+  },
+  "services_button_download_assessment_data": {
+    "message": "Download Assessment Data"
+  },
+  "services_button_download_attendance_data": {
+    "message": "Download Attendance Data"
+  },
+  "services_create_button_create": {
+    "message": "Create Service"
+  },
+  "services_create_heading": {
+    "message": "Create Service"
+  },
+  "services_default_feedback_question": {
+    "message": "How did you like the service?"
+  },
+  "services_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "services_delete_modal_title": {
+    "message": "Delete Service"
+  },
+  "services_imports_heading": {
+    "message": "Import Services"
+  },
+  "services_import_button": {
+    "message": "Import Services"
+  },
+  "services_label_all_checkin_methods": {
+    "message": "All check-in methods"
+  },
+  "services_label_attendee_name": {
+    "message": "Attendee Name"
+  },
+  "services_label_banner": {
+    "message": "Service Banner"
+  },
+  "services_label_checked_in_method": {
+    "message": "Checked-in Method"
+  },
+  "services_label_checked_in_time": {
+    "message": "Checked-in Time"
+  },
+  "services_label_checkin_time": {
+    "message": "Checked-in time"
+  },
+  "services_label_check_in_details": {
+    "message": "Check-In Details"
+  },
+  "services_label_default_question": {
+    "message": "Default Question"
+  },
+  "services_label_description": {
+    "message": "Service Description"
+  },
+  "services_label_details": {
+    "message": "Service Details"
+  },
+  "services_label_enable_service_feedback": {
+    "message": "Enable Service Feedback"
+  },
+  "services_label_name": {
+    "message": "Service Name"
+  },
+  "services_label_service_assessment": {
+    "message": "Service Assessment"
+  },
+  "services_label_service_attendance": {
+    "message": "Service Attendance"
+  },
+  "services_provider_button_add_another": {
+    "message": "Add Another Service Provider"
+  },
+  "services_provider_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "services_provider_delete_modal_title": {
+    "message": "Are you sure?"
+  },
+  "services_provider_label_add_service_provider": {
+    "message": "Add Service Provider"
+  },
+  "services_provider_label_default_question": {
+    "message": "Default Question"
+  },
+  "services_repeat_visits": {
+    "message": "Repeat Visits"
+  },
+  "services_total_responses": {
+    "message": "Total Responses"
+  },
+  "services_total_visits": {
+    "message": "Total Visits"
+  },
+  "services_unique_visits": {
+    "message": "Unique Visits"
   },
   "services_visits": {
     "message": "Visits"
@@ -962,6 +1070,9 @@
   "to": {
     "message": "To"
   },
+  "total_ratings": {
+    "message": "Total Ratings"
+  },
   "type": {
     "message": "Type"
   },
@@ -982,6 +1093,9 @@
   },
   "view_more": {
     "message": "View More"
+  },
+  "website": {
+    "message": "Website"
   },
   "welcome": {
     "message": "Welcome"

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 export interface IServiceDeleteModal {
   id: number;
@@ -12,11 +12,7 @@ export interface IServiceDeleteModal {
   templateUrl: './service-edit-delete-modal.component.html',
   styleUrls: ['./service-edit-delete-modal.component.scss']
 })
-export class ServicesEditDeleteModalComponent implements OnInit {
+export class ServicesEditDeleteModalComponent {
   @Input() item: IServiceDeleteModal;
   @Output() confirmed: EventEmitter<IServiceDeleteModal> = new EventEmitter();
-
-  constructor() { }
-
-  ngOnInit() { }
 }

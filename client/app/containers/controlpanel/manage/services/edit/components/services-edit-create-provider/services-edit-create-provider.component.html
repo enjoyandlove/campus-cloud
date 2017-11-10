@@ -2,14 +2,14 @@
   <div class="cp-card cp-card--alt cp-card--half-padding cp-card--no-shadow">
     <div class="row form-group">
       <div class="col-xs-6">
-        <label i18n>Name</label>
+        <label i18n>{{ 'name' | cpI18n }}</label>
         <input
           type="text"
           formControlName="provider_name"
           [class.error]="formError && !admin.pristine && admin.controls['provider_name'].hasError('required')">
       </div>
       <div class="col-xs-6">
-        <label i18n>Email</label>
+        <label i18n>{{ 'email' | cpI18n }}</label>
         <input
           type="email"
           formControlName="email"
@@ -19,7 +19,7 @@
 
     <div class="row form-group">
       <div class="col-xs-12">
-        <label i18n>Default Question</label>
+        <label i18n>{{ 'services_provider_label_default_question' | cpI18n }}</label>
         <input
           type="text"
           placeholder="How did you like the service?"
@@ -35,7 +35,7 @@
         type="submit"
         [disabled]="!form.valid"
         class="cpbtn cpbtn--secondary" i18n>
-        Add Another Service Provider
+          {{ 'services_provider_button_add_another' | cpI18n }}
         </button>
     </div>
   </div>

@@ -63,7 +63,7 @@
                     </div>
                   </div>
                   <div class="col-xs-3">
-                    <label i18n>Category</label>
+                    <label i18n>{{ 'category' | cpI18n }}</label>
                     <cp-dropdown
                       [items]="categories"
                       (selected)="onSingleCategorySelected($event, i)"
@@ -85,7 +85,7 @@
             <div class="pull-right">
               <a [routerLink]="['/manage/services']"
                 class="cpbtn cpbtn--cancel" i18n>
-                Cancel
+                {{ 'cancel' | cpI18n }}
               </a>
               <cp-button
                 [props]="buttonData"

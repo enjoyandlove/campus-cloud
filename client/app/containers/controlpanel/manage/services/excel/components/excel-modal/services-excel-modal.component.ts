@@ -3,8 +3,7 @@ import { Router } from '@angular/router';
 
 import { isDev } from '../../../../../../../config/env';
 import { ServicesService } from '../../../services.service';
-import { STATUS } from '../../../../../../../shared/constants';
-import { FileUploadService } from '../../../../../../../shared/services';
+import { FileUploadService, CPI18nService } from '../../../../../../../shared/services';
 
 @Component({
   selector: 'cp-services-excel-modal',
@@ -12,11 +11,12 @@ import { FileUploadService } from '../../../../../../../shared/services';
   styleUrls: ['./services-excel-modal.component.scss']
 })
 export class ServicesExcelModalComponent implements OnInit {
-    options;
+  options;
   fileName;
 
   constructor(
     private router: Router,
+    private cpI18n: CPI18nService,
     private service: ServicesService,
     private fileService: FileUploadService,
   ) { }
@@ -36,7 +36,9 @@ export class ServicesExcelModalComponent implements OnInit {
       .catch(
       err => {
         let serverError = err.json().error;
-        return Promise.reject(serverError ? serverError : STATUS.SOMETHING_WENT_WRONG);
+        return Promise.reject(serverError ?
+                              serverError :
+                              this.cpI18n.translate('something_went_wrong'));
       }
       );
   }
