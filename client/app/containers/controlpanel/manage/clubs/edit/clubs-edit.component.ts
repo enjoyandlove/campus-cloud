@@ -1,3 +1,4 @@
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -36,6 +37,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
     private fb: FormBuilder,
     private store: Store<any>,
     private session: CPSession,
+    private cpI18n: CPI18nService,
     private route: ActivatedRoute,
     private clubsService: ClubsService,
   ) {
@@ -174,7 +176,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
     this.fetch();
 
     this.buttonData = {
-      text: 'Save',
+      text: this.cpI18n.translate('save'),
       class: 'primary'
     }
 
@@ -182,7 +184,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
       type: HEADER_UPDATE,
       payload:
       {
-        'heading': 'Edit Club',
+        'heading': this.cpI18n.translate('clubs_edit_heading'),
         'subheading': null,
         'em': null,
         'children': []

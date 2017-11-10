@@ -1,4 +1,5 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
@@ -13,11 +14,10 @@ import {
   AfterViewInit
 } from '@angular/core';
 
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-
 import { MemberType } from '../member.status';
 import { MembersService } from '../members.service';
 import { CPSession } from '../../../../../../session';
+import { CPI18nService } from '../../../../../../shared/services/index';
 
 declare var $: any;
 
@@ -41,7 +41,8 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
   constructor(
     private fb: FormBuilder,
     private session: CPSession,
-    private service: MembersService,
+    private cpI18n: CPI18nService,
+    private service: MembersService
   ) { }
 
   ngAfterViewInit() {
@@ -70,7 +71,7 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
           .getMembers(search)
           .map(members => {
             if (!(members.length)) {
-              return [{ 'label': 'No Results...' }]
+              return [{ 'label': this.cpI18n.translate('no_results') }]
             }
 
             return members.map(member => {
@@ -134,18 +135,18 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.buttonData = {
-      text: 'Save',
+      text: this.cpI18n.translate('save'),
       disabled: true,
       class: 'primary'
     }
 
     this.memberTypes = [
       {
-        label: 'Member',
+        label: this.cpI18n.translate('member'),
         action: MemberType.member
       },
       {
-        label: 'Executive',
+        label: this.cpI18n.translate('executive'),
         action: MemberType.executive
       }
     ];

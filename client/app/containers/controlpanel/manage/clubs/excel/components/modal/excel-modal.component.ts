@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 
 import { isDev } from '../../../../../../../config/env';
 import { ClubsService } from '../../../clubs.service';
-import { STATUS } from '../../../../../../../shared/constants';
 import { FileUploadService } from '../../../../../../../shared/services';
+import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 
 @Component({
   selector: 'cp-clubs-excel-modal',
@@ -19,6 +19,7 @@ export class ClubsExcelModalComponent implements OnInit {
   constructor(
     private router: Router,
     private service: ClubsService,
+    private cpI18n: CPI18nService,
     private fileService: FileUploadService,
   ) { }
 
@@ -37,7 +38,9 @@ export class ClubsExcelModalComponent implements OnInit {
       .catch(
       err => {
         let serverError = err.json().error;
-        return Promise.reject(serverError ? serverError : STATUS.SOMETHING_WENT_WRONG);
+        return Promise.reject(serverError ?
+                              serverError :
+                              this.cpI18n.translate('something_went_wrong'));
       }
       );
   }

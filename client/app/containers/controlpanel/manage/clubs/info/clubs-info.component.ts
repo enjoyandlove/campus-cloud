@@ -3,10 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { URLSearchParams } from '@angular/http';
 
+import { ClubStatus } from '../club.status';
 import { ClubsService } from '../clubs.service';
 import { CPSession } from '../../../../../session';
+import { CPI18nService } from '../../../../../shared/services';
 import { BaseComponent } from '../../../../../base/base.component';
-import { ClubStatus } from '../club.status';
 
 @Component({
   selector: 'cp-clubs-info',
@@ -24,6 +25,7 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
   constructor(
     private session: CPSession,
     private route: ActivatedRoute,
+    private cpI18n: CPI18nService,
     private clubsService: ClubsService
   ) {
     super();
@@ -64,9 +66,9 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.clubStatus = {
-      [ClubStatus.inactive] : 'Inactive',
-      [ClubStatus.active] : 'Active',
-      [ClubStatus.pending] : 'Pending'
+      [ClubStatus.inactive] : this.cpI18n.translate('inactive'),
+      [ClubStatus.active] : this.cpI18n.translate('active'),
+      [ClubStatus.pending] : this.cpI18n.translate('pending'),
     };
   }
 }
