@@ -20,7 +20,7 @@
                 <div class="col-xs-3 pull-right">
                   <a routerLink="../edit"
                     class="cpbtn cpbtn--primary" i18n>
-                    Edit Club
+                    {{ 'clubs_label_edit_club' | cpI18n }}
                   </a>
                 </div>
               </div>
@@ -40,12 +40,12 @@
         <div class="cp-card meta">
           <div class="row meta__item" *ngIf="club.constitution_url">
             <div class="col-xs-3 meta__type" i18n>
-              Constitution
+              {{ 'clubs_label_constitution' | cpI18n }}
             </div>
             <div class="col-xs-9">
               <span>
                 <a [attr.href]="club.constitution_url" download class="cpbtn cpbtn--link" i18n>
-                  Download
+                    {{ 'download' | cpI18n }}
                 </a>
               </span>
             </div>
@@ -53,7 +53,7 @@
 
           <div class="row meta__item" *ngIf="club.advisor_firstname">
             <div class="col-xs-3 meta__type" i18n>
-              Advisor
+                {{ 'clubs_label_advisor' | cpI18n }}
             </div>
             <div class="col-xs-9">
               <span>
@@ -68,7 +68,7 @@
 
           <div class="row meta__item" *ngIf="club.phone">
             <div class="col-xs-3 meta__type" i18n>
-              Phone
+                {{ 'phone_number' | cpI18n }}
             </div>
             <div class="col-xs-9">
               <span>{{ club.phone }}</span>
@@ -76,7 +76,7 @@
           </div>
           <div class="row meta__item" *ngIf="club.email">
             <div class="col-xs-3 meta__type" i18n>
-              Email
+                {{ 'email' | cpI18n }}
             </div>
             <div class="col-xs-9">
               <span>{{ club.email }}</span>
@@ -84,7 +84,7 @@
           </div>
           <div class="row meta__item" *ngIf="club.website">
             <div class="col-xs-3 meta__type" i18n>
-              Website
+                {{ 'website' | cpI18n }}
             </div>
             <div class="col-xs-9">
               <span>{{ club.website }}</span>
@@ -92,7 +92,7 @@
           </div>
           <div class="row meta__item" *ngIf="club.address">
             <div class="col-xs-3 meta__type" i18n>
-              Location
+                {{ 'location' | cpI18n }}
             </div>
             <div class="col-xs-9">
               <span>{{ club.address }}</span>
@@ -100,7 +100,7 @@
           </div>
           <div class="row meta__item" *ngIf="club.location">
             <div class="col-xs-3 meta__type" i18n>
-              Building
+                {{ 'building' | cpI18n }}
             </div>
             <div class="col-xs-9">
               <span>{{ club.location }}</span>
@@ -108,7 +108,7 @@
           </div>
           <div class="row meta__item" *ngIf="club.room_info">
             <div class="col-xs-3 meta__type" i18n>
-              Room
+                {{ 'room' | cpI18n }}
             </div>
             <div class="col-xs-9">
               <span>{{ club.room_info }}</span>
