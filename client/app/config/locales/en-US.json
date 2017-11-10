@@ -404,6 +404,9 @@
   "clubs_button_create": {
     "message": "Create Club"
   },
+  "clubs_create_heading": {
+    "message": "Create Club"
+  },
   "clubs_delete_modal_body": {
     "message": "Are you sure you want to delete %s?"
   },
