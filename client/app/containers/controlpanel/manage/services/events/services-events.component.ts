@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import {
@@ -24,7 +24,7 @@ import { CPI18nService } from '../../../../../shared/services/index';
   templateUrl: './services-events.component.html',
   styleUrls: ['./services-events.component.scss']
 })
-export class ServicesEventsComponent extends EventsComponent implements OnInit {
+export class ServicesEventsComponent extends EventsComponent {
   service;
   loading = true;
   isService = true;
@@ -62,7 +62,7 @@ export class ServicesEventsComponent extends EventsComponent implements OnInit {
   private buildHeader() {
     let children = [
       {
-        'label': 'Info',
+        'label': this.cpI18n.translate('info'),
         'url': `/manage/services/${this.serviceId}/info`
       }
     ];
@@ -73,7 +73,7 @@ export class ServicesEventsComponent extends EventsComponent implements OnInit {
 
     if (eventsSchoolLevel || eventsAccountLevel) {
       const events = {
-        'label': 'Events',
+        'label': this.cpI18n.translate('events'),
         'url': `/manage/services/${this.serviceId}/events`
       }
 
@@ -82,7 +82,7 @@ export class ServicesEventsComponent extends EventsComponent implements OnInit {
 
     if (this.service.service_attendance) {
       let attendance = {
-        'label': 'Assessment',
+        'label': this.cpI18n.translate('assessment'),
         'url': `/manage/services/${this.serviceId}`
       };
 
@@ -96,14 +96,10 @@ export class ServicesEventsComponent extends EventsComponent implements OnInit {
         'subheading': '',
         'crumbs': {
           'url': 'services',
-          'label': 'Services'
+          'label': this.cpI18n.translate('services'),
         },
         'children': [...children]
       }
     });
-  }
-
-  ngOnInit() {
-    // super.fetchData()
   }
 }

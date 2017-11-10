@@ -19,10 +19,10 @@
     <ul class="services cp-form" *ngIf="state.services.length">
       <li class="cp-form__header col-xs-12">
         <div class="row">
-          <span class="col-xs-4" i18n>Name</span>
-          <span class="col-xs-2" i18n>Visits</span>
-          <span class="col-xs-2" i18n>Ratings</span>
-          <span class="col-xs-3" i18n>Average Rating</span>
+          <span class="col-xs-4" i18n>{{ 'name' | cpI18n }}</span>
+          <span class="col-xs-2" i18n>{{ 'services_visits' | cpI18n }}</span>
+          <span class="col-xs-2" i18n>{{ 'ratings' | cpI18n }}</span>
+          <span class="col-xs-3" i18n>{{ 'average_rating' | cpI18n }}</span>
           <span class="col-xs-1"></span>
         </div>
       </li>

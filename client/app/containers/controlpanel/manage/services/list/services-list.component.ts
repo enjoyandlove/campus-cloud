@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
@@ -25,7 +25,7 @@ const state: IState = {
   templateUrl: './services-list.component.html',
   styleUrls: ['./services-list.component.scss']
 })
-export class ServicesListComponent extends BaseComponent implements OnInit, OnDestroy {
+export class ServicesListComponent extends BaseComponent implements OnInit {
   loading;
   deleteService = '';
   state: IState = state;
@@ -97,10 +97,6 @@ export class ServicesListComponent extends BaseComponent implements OnInit, OnDe
     _state.services = _state.services.filter(service => service.id !== serviceId);
 
     this.state = Object.assign({}, this.state, { services: _state.services });
-  }
-
-  ngOnDestroy() {
-    // console.log('destroy');
   }
 
   ngOnInit() {

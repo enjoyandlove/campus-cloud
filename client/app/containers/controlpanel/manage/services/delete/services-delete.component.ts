@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { ServicesService } from '../services.service';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 declare var $: any;
 
@@ -16,6 +17,7 @@ export class ServicesDeleteComponent implements OnInit {
   buttonData;
 
   constructor(
+    private cpI18n: CPI18nService,
     private servicesService: ServicesService
   ) { }
 
@@ -35,7 +37,7 @@ export class ServicesDeleteComponent implements OnInit {
   ngOnInit() {
     this.buttonData = {
       class: 'danger',
-      text: 'Delete'
+      text: this.cpI18n.translate('delete')
     }
   }
 }

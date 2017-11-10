@@ -18,6 +18,7 @@ import { CPSession } from './../../../../../session/index';
 import { BaseComponent } from '../../../../../base/base.component';
 import { STAR_SIZE } from '../../../../../shared/components/cp-stars';
 import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants';
+import { CPI18nService } from '../../../../../shared/services/index';
 
 const FEEDBACK_ENABLED = 1;
 
@@ -45,6 +46,7 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
     private session: CPSession,
     private store: Store<IHeader>,
     private route: ActivatedRoute,
+    private cpI18n: CPI18nService,
     private serviceService: ServicesService
   ) {
     super();
@@ -104,7 +106,7 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
   private buildHeader() {
     let children = [
       {
-        'label': 'Info',
+        'label': this.cpI18n.translate('info'),
         'url': `/manage/services/${this.serviceId}/info`
       }
     ];
@@ -114,7 +116,7 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
 
     if (eventsSchoolLevel || eventsAccountLevel) {
       const events = {
-        'label': 'Events',
+        'label': this.cpI18n.translate('events'),
         'url': `/manage/services/${this.serviceId}/events`
       }
 
@@ -123,7 +125,7 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
 
     if (this.service.service_attendance) {
       let attendance = {
-        'label': 'Assessment',
+        'label': this.cpI18n.translate('assessment'),
         'url': `/manage/services/${this.serviceId}`
       };
 
@@ -137,7 +139,7 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
         'subheading': '',
         'crumbs': {
           'url': 'services',
-          'label': 'Services'
+          'label': this.cpI18n.translate('services')
         },
         'children': [...children]
       }
