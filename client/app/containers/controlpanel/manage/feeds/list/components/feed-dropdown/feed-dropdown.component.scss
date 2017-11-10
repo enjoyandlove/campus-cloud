@@ -9,3 +9,7 @@
     @include cpDropdownMenu();
   }
 }
+
+.dropdown-menu {
+  min-width: 170px;
+}

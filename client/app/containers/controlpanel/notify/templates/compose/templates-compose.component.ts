@@ -24,11 +24,11 @@ export class TemplatesComposeComponent extends AnnouncementsComposeComponent
     private el: ElementRef,
     public fb: FormBuilder,
     public session: CPSession,
-    private cpI18n: CPI18nService,
+    public cpI18n: CPI18nService,
     public storeService: StoreService,
     public service: AnnouncementsService
   ) {
-    super(fb, session, storeService, service);
+    super(fb, session, cpI18n, storeService, service);
   }
 
   @HostListener('document:click', ['$event'])
