@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { CPSession, ISchool } from '../../../../../../../session';
 import { BaseComponent } from '../../../../../../../base/base.component';
 import { CP_PRIVILEGES_MAP } from '../../../../../../../shared/constants';
-import { StoreService, AdminService } from '../../../../../../../shared/services';
+import { StoreService, AdminService, CPI18nService } from '../../../../../../../shared/services';
 
 interface IState {
   store_id: any;
@@ -45,6 +45,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
 
   constructor(
     private session: CPSession,
+    private cpI18n: CPI18nService,
     private adminService: AdminService,
     private storeService: StoreService
   ) {
@@ -63,9 +64,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
 
     super
       .fetchData(stores$)
-      .then(res => {
-        this.stores = res.data;
-      })
+      .then(res => this.stores = res.data)
       .catch(err => { throw new Error(err) });
   }
 
@@ -200,11 +199,11 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
 
     this.eventAttendanceFeedback = [
       {
-        'label': 'Enabled',
+        'label': this.cpI18n.translate('enabled'),
         'event': 1
       },
       {
-        'label': 'Disabled',
+        'label': this.cpI18n.translate('disabled'),
         'event': 0
       }
     ];

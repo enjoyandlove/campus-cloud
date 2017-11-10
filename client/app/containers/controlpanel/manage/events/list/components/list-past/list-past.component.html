@@ -3,7 +3,7 @@
     <span
       (click)="doSort('title')"
       class="col-xs-4 hover" i18n>
-      Name
+      {{ 'name' | cpI18n }}
       <span *ngIf="state.sort_field === 'title'">
         <i
           class="material-icons"
@@ -20,7 +20,7 @@
     <span
       (click)="doSort('end')"
       class="col-xs-2 hover" i18n>
-      End Date
+      {{ 'end_date' | cpI18n }}
       <span *ngIf="state.sort_field === 'end'">
         <i
           class="material-icons"
@@ -34,8 +34,8 @@
         </i>
       </span>
     </span>
-    <span class="col-xs-2" i18n>Check-Ins</span>
-    <span class="col-xs-3" i18n>Average Rating</span>
+    <span class="col-xs-2" i18n>{{ 'checkins' | cpI18n }}</span>
+    <span class="col-xs-3" i18n>{{ 'average_rating' | cpI18n }}</span>
     <span class="col-xs-1"></span>
   </li>
 

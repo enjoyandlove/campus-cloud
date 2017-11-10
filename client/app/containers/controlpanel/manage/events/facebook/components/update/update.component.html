@@ -9,14 +9,14 @@
             <div class="link-group">
               <div [formGroupName]="i">
                 <div class="col-xs-5 no-left-padding">
-                  <label i18n>Facebook Event Link</label>
+                  <label i18n>{{ 'events_facebook_label_link' | cpI18n }}</label>
                   <input
                     type="text"
                     class="form-control"
                     formControlName="url">
                 </div>
                 <div class="col-xs-3" *ngIf="!storeId && !clubId">
-                  <label i18n>Select Host</label>
+                  <label i18n>{{ 'events_facebook_label_host' | cpI18n }}</label>
                   <cp-dropdown
                     [items]="stores"
                     [selectedItem]="link.controls.selected.value"
@@ -46,7 +46,7 @@
                   i18n
                   type="button"
                   class="cpbtn cpbtn--cancel submit">
-                  Cancel
+                  {{ 'cancel' | cpI18n }}
                 </button>
 
                 <cp-button

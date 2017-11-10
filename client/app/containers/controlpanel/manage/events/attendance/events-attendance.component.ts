@@ -6,6 +6,7 @@ import { EventsService } from '../events.service';
 import { CPDate } from '../../../../../shared/utils/date';
 import { EventUtilService } from './../events.utils.service';
 import { BaseComponent } from '../../../../../base/base.component';
+import { CPI18nService } from '../../../../../shared/services/index';
 import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
 
@@ -29,6 +30,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   constructor(
     private store: Store<IHeader>,
     private route: ActivatedRoute,
+    private cpI18n: CPI18nService,
     private service: EventsService,
     private utils: EventUtilService
   ) {
@@ -63,7 +65,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
 
       'crumbs': {
         'url': this.urlPrefix,
-        'label': 'Events'
+        'label': this.cpI18n.translate('events')
       },
 
       'children': [...children]

@@ -131,6 +131,9 @@
   "announcement_success_sent": {
     "message": "Success! Your message has been sent"
   },
+  "apply": {
+    "message": "Apply"
+  },
   "approve": {
     "message": "Approve"
   },
@@ -148,6 +151,9 @@
   },
   "assess": {
     "message": "Assess"
+  },
+  "assessment": {
+    "message": "Assessment"
   },
   "assess_all_engagements": {
     "message": "All Engagements"
@@ -317,6 +323,9 @@
   "auth_reset_password": {
     "message": "Reset Password"
   },
+  "average_rating": {
+    "message": "Average Rating"
+  },
   "body": {
     "message": "Body"
   },
@@ -340,6 +349,9 @@
   },
   "change_school": {
     "message": "Change School"
+  },
+  "checkins": {
+    "message": "Check-Ins"
   },
   "checkin_attendance_list": {
     "message": "Bonjour again"
@@ -419,6 +431,18 @@
   "emergency": {
     "message": "Emergency"
   },
+  "enabled": {
+    "message": "Enabled"
+  },
+  "ended": {
+    "message": "Ended"
+  },
+  "ends": {
+    "message": "Ends"
+  },
+  "end_date": {
+    "message": "End Date"
+  },
   "engagement": {
     "message": "Engagement"
   },
@@ -428,6 +452,9 @@
   "error_file_is_too_big": {
     "message": "File too Big"
   },
+  "error_fill_out_marked_fields": {
+    "message": "Please fill out the marked fields"
+  },
   "error_invalid_extension": {
     "message": "Invalid Extension"
   },
@@ -436,6 +463,90 @@
   },
   "events": {
     "message": "Events"
+  },
+  "events_attendance_feedback": {
+    "message": "Attendance Feedback"
+  },
+  "events_attendance_manager": {
+    "message": "Attd Manager"
+  },
+  "events_attendance_manager_full": {
+    "message": "Attendance Manager"
+  },
+  "events_button_new": {
+    "message": "Create Event"
+  },
+  "events_check_in_details": {
+    "message": "Check-In Details"
+  },
+  "events_default_question": {
+    "message": "Default Question"
+  },
+  "events_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "events_delete_modal_title": {
+    "message": "Delete Event"
+  },
+  "events_edit_event": {
+    "message": "Edit Event"
+  },
+  "events_error_end_date_after_now": {
+    "message": "Event End Time must be greater than now"
+  },
+  "events_error_end_date_before_start": {
+    "message": "Event End Time must be after Event Start Time"
+  },
+  "events_event_attendance": {
+    "message": "Event Attendance"
+  },
+  "events_event_banner": {
+    "message": "Event Banner"
+  },
+  "events_event_description": {
+    "message": "Event Description"
+  },
+  "events_event_details": {
+    "message": "Event Details"
+  },
+  "events_event_manager": {
+    "message": "Event Manager"
+  },
+  "events_event_name": {
+    "message": "Event Name"
+  },
+  "events_facebook_add_button": {
+    "message": "Add Link"
+  },
+  "events_facebook_heading": {
+    "message": "Import Events from Facebook"
+  },
+  "events_facebook_help": {
+    "message": "To import events from Facebook, input your Facebook page's event link below eg.https://www.facebook.com/oohlalamobileapp/events/"
+  },
+  "events_facebook_label_host": {
+    "message": "Select Host"
+  },
+  "events_facebook_label_link": {
+    "message": "Facebook Event Link"
+  },
+  "events_facebook_link_delete_modal_body": {
+    "message": "Are you sure you want to delete this link?"
+  },
+  "events_facebook_link_delete_modal_title": {
+    "message": "Are you sure?"
+  },
+  "events_hosted_by": {
+    "message": "Hosted by"
+  },
+  "events_import_bulk_update": {
+    "message": "Bulk Update"
+  },
+  "events_import_from_facebook": {
+    "message": "Import from Facebook"
+  },
+  "events_no_events_found": {
+    "message": "No events found"
   },
   "feedback": {
     "message": "Feedback"
@@ -539,6 +650,9 @@
   "hide": {
     "message": "Hide"
   },
+  "host": {
+    "message": "Host"
+  },
   "import_from_csv": {
     "message": "Import from CSV"
   },
@@ -610,6 +724,9 @@
   },
   "lists_label_list_name": {
     "message": "List Name"
+  },
+  "location": {
+    "message": "Location"
   },
   "login": {
     "message": "Login"
@@ -710,6 +827,9 @@
   "search": {
     "message": "Search"
   },
+  "select_host": {
+    "message": "Select Host"
+  },
   "sent": {
     "message": "Sent"
   },
@@ -731,6 +851,15 @@
   "something_went_wrong": {
     "message": "Something went wrong"
   },
+  "started": {
+    "message": "Started"
+  },
+  "starts": {
+    "message": "Starts"
+  },
+  "start_date": {
+    "message": "Start Date"
+  },
   "status": {
     "message": "Status"
   },
@@ -739,6 +868,9 @@
   },
   "student_engagements": {
     "message": "Student Engagements"
+  },
+  "student_feedback": {
+    "message": "Student Feedback"
   },
   "subject": {
     "message": "Subject"

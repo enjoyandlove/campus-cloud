@@ -17,6 +17,7 @@ import { ServicesService } from '../services.service';
 import { EventsService } from '../../events/events.service';
 import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants';
 import { EventsComponent } from '../../events/list/base/events.component';
+import { CPI18nService } from '../../../../../shared/services/index';
 
 @Component({
   selector: 'cp-services-events',
@@ -33,12 +34,13 @@ export class ServicesEventsComponent extends EventsComponent implements OnInit {
 
   constructor(
     public session: CPSession,
+    public cpI18n: CPI18nService,
     private route: ActivatedRoute,
     private store: Store<IHeader>,
     public eventsService: EventsService,
     private serviceService: ServicesService
   ) {
-    super(session, eventsService);
+    super(session, cpI18n, eventsService);
     this.serviceId = this.route.snapshot.params['serviceId'];
 
     this.fetchServiceData();

@@ -65,7 +65,7 @@
                     </div>
                   </div>
                   <div class="col-xs-2" *ngIf="!storeId && !clubId">
-                    <label i18n>Host</label>
+                    <label i18n>{{ 'host' | cpI18n }}</label>
                     <cp-dropdown
                       [items]="stores"
                       (selected)="onSingleHostSelected($event, i)"
@@ -73,7 +73,7 @@
                     </cp-dropdown>
                   </div>
                   <div class="col-xs-2">
-                    <label i18n>Assessment</label>
+                    <label i18n>{{ 'assessment' | cpI18n }}</label>
                     <cp-switch
                       [id]="i"
                       [isChecked]="event.controls['event_attendance'].value"
@@ -85,7 +85,7 @@
                     class="col-xs-5 no-left-padding" *ngIf="event.controls.event_attendance.value">
                     <div class="row">
                       <div class="col-xs-4 no-left-padding">
-                        <label i18n>Student Feedback</label>
+                        <label i18n>{{ 'student_feedback' | cpI18n }}</label>
                         <cp-dropdown
                           [items]="eventAttendanceFeedback"
                           (selected)="updateAttendanceFeedback($event, i)"
@@ -93,7 +93,7 @@
                         </cp-dropdown>
                       </div>
                       <div class="col-xs-4">
-                        <label i18n>Event Manager</label>
+                        <label i18n>{{ 'events_event_manager' | cpI18n }}</label>
                         <cp-dropdown
                           [reset]="resetManagerDropdown$"
                           [items]="event.controls['managers'].value"
@@ -102,7 +102,7 @@
                         </cp-dropdown>
                       </div>
                       <div class="col-xs-4">
-                        <label i18n>Attd Manager</label>
+                        <label i18n>{{ 'events_attendance_manager' | cpI18n }}</label>
                         <input
                           type="email"
                           class="form-control"
@@ -126,7 +126,7 @@
             <div class="pull-right">
               <a [routerLink]="['/manage/events']"
                 class="cpbtn cpbtn--cancel" i18n>
-                Cancel
+                {{ 'cancel' | cpI18n }}
               </a>
               <cp-button
                 [props]="buttonData"

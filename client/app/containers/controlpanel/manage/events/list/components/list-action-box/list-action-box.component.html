@@ -49,7 +49,7 @@
         </div>
         <div class="col-xs-6">
           <div class="col-xs-9 text-truncate text-right">
-              <label i18n>Assessment</label>
+              <label i18n>{{ 'assessment' | cpI18n }}</label>
             </div>
             <div class="col-xs-3 no-left-padding">
               <cp-checkbox
@@ -65,7 +65,7 @@
       <a
         [routerLink]="['create']" i18n
         class="cpbtn cpbtn--primary cpbtn--square-right no-right-padding">
-        Create Event
+        {{ 'events_button_new' | cpI18n }}
       </a>
       <div
         class="cpbtn cpbtn--square-left cpbtn--no-padding cpbtn--primary no-left-padding hover action-dropdown">
@@ -73,10 +73,10 @@
         <ul class="dropdown-menu dropdown-menu-right text-left action-dropdown-list">
           <li i18n>
             <a [routerLink]="['import/facebook']">
-              Import from Facebook
+              {{ 'events_import_from_facebook' | cpI18n }}
             </a>
           </li>
-          <li i18n (click)="launchModal()">Import from CSV</li>
+          <li i18n (click)="launchModal()">{{ 'import_from_csv' | cpI18n }}</li>
         </ul>
       </div>
     </div>

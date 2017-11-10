@@ -5,6 +5,7 @@ import { EventsService } from '../../../events.service';
 import { BaseComponent } from '../../../../../../../base/base.component';
 import { STAR_SIZE } from '../../../../../../../shared/components/cp-stars';
 import { createSpreadSheet } from './../../../../../../../shared/utils/csv/parser';
+import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 
 import { unix } from 'moment';
 
@@ -35,6 +36,7 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
   detailStarSize = STAR_SIZE.LARGE;
 
   constructor(
+    private cpI18n: CPI18nService,
     private eventService: EventsService
   ) {
     super();
@@ -91,14 +93,14 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
 
     stream$.toPromise().then(attendees => {
       const columns = [
-        'Attendant',
-        'Attendee Email',
-        'RSVP',
-        'Checked In Time',
-        'Rating',
-        'User Feedback',
-        'Checked-in Method',
-        'Student ID',
+        this.cpI18n.translate('events_attendant'),
+        this.cpI18n.translate('events_attendee_email'),
+        this.cpI18n.translate('rsvp'),
+        this.cpI18n.translate('events_checked_in_time'),
+        this.cpI18n.translate('rating'),
+        this.cpI18n.translate('events_user_feedback'),
+        this.cpI18n.translate('events_checked_in_method'),
+        this.cpI18n.translate('student_id')
       ];
 
       const check_in_method = {
@@ -107,22 +109,30 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
       };
 
       const rsvp = {
-        1: 'Yes',
-        0: 'No'
+        1: this.cpI18n.translate('yes'),
+        0: this.cpI18n.translate('no'),
       };
 
       attendees = attendees.map(item => {
         return {
-          'Attendant': `${item.firstname} ${item.lastname}`,
-          'Attendee Email': item.email,
-          'RSVP': rsvp[item.rsvp],
-          'Checked-in Method': check_in_method[item.check_in_method],
-          'Checked In Time': unix(item.check_in_time).format('MMMM Do YYYY - h:mm a'),
-          'User Feedback': item.feedback_text,
-          'Rating': item.feedback_rating === -1
+          [this.cpI18n.translate('events_attendant')]: `${item.firstname} ${item.lastname}`,
+
+          [this.cpI18n.translate('events_attendee_email')]: item.email,
+
+          [this.cpI18n.translate('rsvp')]: rsvp[item.rsvp],
+
+          [this.cpI18n.translate('events_checked_in_time')]: check_in_method[item.check_in_method],
+
+          [this.cpI18n.translate('rating')]:
+            unix(item.check_in_time).format('MMMM Do YYYY - h:mm a'),
+
+          [this.cpI18n.translate('events_user_feedback')]: item.feedback_text,
+
+          [this.cpI18n.translate('events_checked_in_method')]: item.feedback_rating === -1
             ? ''
             : ((item.feedback_rating * 5) / 100).toFixed(2),
-          'Student ID': item.student_identifier,
+
+          [this.cpI18n.translate('student_id')]: item.student_identifier,
         }
       })
 

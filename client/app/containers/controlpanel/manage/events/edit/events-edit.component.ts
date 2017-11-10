@@ -1,3 +1,4 @@
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -12,7 +13,6 @@ import {
   HEADER_UPDATE
 } from '../../../../../reducers/header.reducer';
 import { EventsService } from '../events.service';
-import { STATUS } from '../../../../../shared/constants';
 import { FORMAT } from '../../../../../shared/pipes/date';
 import { CPSession, ISchool } from '../../../../../session';
 import { CPMap, CPDate } from '../../../../../shared/utils';
@@ -52,7 +52,6 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   eventId: number;
   form: FormGroup;
   selectedManager;
-  STATUS = STATUS;
   dateErrorMessage;
   enddatePickerOpts;
   attendance = false;
@@ -67,6 +66,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private session: CPSession,
+    public cpI18n: CPI18nService,
     private store: Store<IHeader>,
     private route: ActivatedRoute,
     private adminService: AdminService,
@@ -124,7 +124,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       this.formMissingFields = true;
       this.form.controls['end'].setErrors({ 'required': true });
       this.form.controls['start'].setErrors({ 'required': true });
-      this.dateErrorMessage = 'Event End Time must be after Event Start Time';
+      this.dateErrorMessage = this.cpI18n.translate('events_error_end_date_before_start');
       this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       return;
     }
@@ -134,7 +134,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       this.formMissingFields = true;
       this.form.controls['end'].setErrors({ 'required': true });
       this.form.controls['start'].setErrors({ 'required': true });
-      this.dateErrorMessage = 'Event End Time must be greater than now';
+      this.dateErrorMessage = this.cpI18n.translate('events_error_end_date_after_now');
       this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       return;
     }
@@ -286,7 +286,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': 'Edit Event',
+        'heading': this.cpI18n.translate('events_edit_event'),
         'subheading': '',
         'children': []
       }
@@ -350,18 +350,18 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.buttonData = {
-      text: 'Save',
+      text: this.cpI18n.translate('save'),
       class: 'primary'
     }
 
     this.dateFormat = FORMAT.DATETIME;
     this.booleanOptions = [
       {
-        'label': 'Enabled',
+        'label': this.cpI18n.translate('enabled'),
         'action': EventAttendance.enabled
       },
       {
-        'label': 'Disabled',
+        'label': this.cpI18n.translate('disabled'),
         'action': EventAttendance.disabled
       }
     ];
