@@ -4,7 +4,7 @@
       <div class="cp-card">
         <div class="row">
           <div class="col-xs-12">
-            <p class="title" i18n>Club Banner</p>
+            <p class="title" i18n>{{ 'clubs_label_club_banner' | cpI18n }}</p>
             <div class="row">
               <cp-image-upload
                 (uploaded)="onUploadedImage($event)"
@@ -18,13 +18,13 @@
         <div class="form-group club-details">
           <div class="row">
             <div class="col-xs-12">
-              <p class="title" i18n>Club Details</p>
+              <p class="title" i18n>{{ 'clubs_label_club_details' | cpI18n }}</p>
             </div>
           </div>
 
           <div class="row">
             <div class="col-xs-12">
-              <label i18n>Club Name</label>
+              <label i18n>{{ 'clubs_label_club_name' | cpI18n }}</label>
               <input
                 type="text"
                 class="form-control"
@@ -37,7 +37,7 @@
 
         <div class="row form-group">
           <div class="col-xs-12">
-            <label i18n>Club Description</label>
+            <label i18n>{{ 'clubs_label_club_description' | cpI18n }}</label>
             <textarea
               class="form-control"
               formControlName="description"
@@ -48,7 +48,7 @@
 
         <div class="row form-group">
           <div class="col-xs-6">
-            <label i18n>Club Status</label>
+            <label i18n>{{ 'clubs_label_club_status' | cpI18n }}</label>
             <div class="row">
               <div class="col-xs-12">
                 <cp-check-dropdown
@@ -60,7 +60,7 @@
             </div>
           </div>
           <div class="col-xs-6">
-            <label i18n>Club Membership</label>
+            <label i18n>{{ 'clubs_label_club_membership' | cpI18n }}</label>
             <div class="row">
               <div class="col-xs-12">
                 <cp-check-dropdown
@@ -75,7 +75,7 @@
 
         <div class="row form-group">
           <div class="col-xs-12">
-            <label i18n>Location</label>
+            <label i18n>{{ 'location' | cpI18n }}</label>
             <div class="row form-group">
               <div class="col-xs-12">
                 <cp-place-autocomplete
@@ -115,11 +115,11 @@
       <div class="cp-card">
         <div class="row form-group">
           <div class="col-xs-12">
-            <p class="title" i18n>Contact Details</p>
+            <p class="title" i18n>{{ 'contact_details' | cpI18n }}</p>
 
             <div class="row form--group">
               <div class="col-xs-6">
-                <label i18n>Website</label>
+                <label i18n>{{ 'website' | cpI18n }}</label>
                 <input
                   type="text"
                   class="form-control"
@@ -127,7 +127,7 @@
               </div>
 
               <div class="col-xs-6">
-                <label i18n>Phone Number</label>
+                <label i18n>{{ 'phone_number' | cpI18n }}</label>
                 <input
                   type="text"
                   class="form-control"
@@ -137,7 +137,7 @@
 
             <div class="row">
               <div class="col-xs-12">
-                <label i18n>Email</label>
+                <label i18n>{{ 'email' | cpI18n }}</label>
                 <input
                   type="text"
                   class="form-control"
@@ -156,11 +156,11 @@
             <div class="col-xs-12">
               <div class="text-right">
                 <label class="error" *ngIf="formError" i18n>
-                    <span>&#x26A0;</span> Please fill out the marked fields
+                    <span>&#x26A0;</span> {{ 'error_fill_out_marked_fields' | cpI18n }}
                 </label>
                  <a [routerLink]="['../']"
                   class="cpbtn cpbtn--cancel" i18n>
-                  Cancel
+                  {{ 'cancel' | cpI18n }}
                 </a>
                 <cp-button
                   [props]="buttonData"
