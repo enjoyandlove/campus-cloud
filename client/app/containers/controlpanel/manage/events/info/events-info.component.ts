@@ -74,11 +74,11 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
     const children = this.utils.getSubNavChildren(event, this.urlPrefix);
 
     const payload = {
-      'heading': event.title,
+      'heading': `[NOTRANSLATE]${event.title}[NOTRANSLATE]`,
       'subheading': '',
       'crumbs': {
         'url': this.urlPrefix,
-        'label': this.cpI18n.translate('events')
+        'label': 'events'
       },
       'children': [...children]
     }

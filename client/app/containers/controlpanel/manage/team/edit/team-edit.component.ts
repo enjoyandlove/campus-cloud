@@ -153,9 +153,11 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   canReadServices;
   form: FormGroup;
   schoolPrivileges;
+  clubsCount = null;
   accountPrivileges;
   isAllAccessEnabled;
   currentUserCanManage;
+  servicesCount = null;
   MODAL_TYPE = MODAL_TYPE.WIDE;
   CP_PRIVILEGES = CP_PRIVILEGES;
   CP_PRIVILEGES_MAP = CP_PRIVILEGES_MAP;
@@ -181,14 +183,29 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     this.fetch();
   }
 
+  updateServicesDropdownLabel() {
+    const numberOfServices = this.getNumberOf(CP_PRIVILEGES_MAP.services,
+                                              this.accountPrivileges);
+
+    this.servicesCount = numberOfServices ?
+                         {label : `${numberOfServices} Service(s)`} :
+                          null;
+  }
+
+  updateClubsDropdownLabel() {
+    const numberOfClubs = this.getNumberOf(CP_PRIVILEGES_MAP.clubs, this.accountPrivileges);
+
+    this.clubsCount = numberOfClubs ? {label : `${numberOfClubs} Club(s)`} : null;
+  }
+
   private fetch() {
     const isEqual = require('lodash').isEqual;
     const admin$ = this.adminService.getAdminById(this.adminId);
 
     super
       .fetchData(admin$)
-      .then(res => {
-        this.editingUser = res.data;
+      .then(user => {
+        this.editingUser = user.data;
 
         this.isCurrentUser = this.editingUser.id === this.session.g.get('user').id;
 
@@ -207,6 +224,14 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
           this.editingUser.account_level_privileges
         );
 
+        if (!(this.schoolPrivileges[CP_PRIVILEGES_MAP.services])) {
+          this.updateServicesDropdownLabel();
+        }
+
+        if (!(this.schoolPrivileges[CP_PRIVILEGES_MAP.clubs])) {
+          this.updateClubsDropdownLabel();
+        }
+
         this.isAllAccessEnabled = isEqual(this.schoolPrivileges,
           this.user.school_level_privileges[this.schoolId]) && isEqual(this.accountPrivileges,
             this.user.account_level_privileges);
@@ -215,6 +240,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   servicesDefaultPermission() {
+    if (this.servicesCount) { return this.servicesCount; }
+
     let selected;
     let school_level_privileges = this.schoolPrivileges;
     let service_privilege = school_level_privileges[CP_PRIVILEGES_MAP.services];
@@ -236,6 +263,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   clubsDefaultPermission() {
+    if (this.clubsCount) { return this.clubsCount; }
+
     let selected;
     let school_level_privileges = this.schoolPrivileges;
     let club_privilege = school_level_privileges[CP_PRIVILEGES_MAP.clubs];
@@ -282,7 +311,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
         'heading': `[NOTRANSLATE]${name}[NOTRANSLATE]`,
         'crumbs': {
           'url': this.isProfileView ? null : 'team',
-          'label': this.isProfileView ? null : 'Team'
+          'label': this.isProfileView ? null : 'team_settings'
         },
         'subheading': null,
         'em': null,
@@ -414,6 +443,9 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   onServicesModalSelected(services) {
     this.doServicesCleanUp();
 
+    const servicesLength = Object.keys(services).length;
+    this.servicesCount = servicesLength ? {label: `${servicesLength} Service(s)`} : null;
+
     this.accountPrivileges = Object.assign(
       {},
       this.accountPrivileges,
@@ -484,8 +516,24 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     }
   }
 
+  getNumberOf(privilegeType: number, accountPrivileges = {}) {
+    let counter = 0;
+
+    Object
+      .keys(accountPrivileges)
+      .forEach(storeId => {
+        if (accountPrivileges[storeId][privilegeType]) {
+          counter += 1;
+        }
+      })
+
+    return counter;
+  }
+
   onClubsModalSelected(clubs) {
     this.doClubsCleanUp();
+    const clubsLength = Object.keys(clubs).length;
+    this.clubsCount = clubsLength ? {label: `${clubsLength} Club(s)`} : null;
 
     this.accountPrivileges = Object.assign(
       {},
@@ -594,8 +642,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
   removePrivilegeFromRandomAccount(privilegeType: number) {
     const stores = accountsToStoreMap(this.editingUser.account_mapping[this.schoolId],
-                                        this.editingUser.account_level_privileges);
-
+                                      this.editingUser.account_level_privileges);
     Object.keys(stores).map(storeId => {
       if (privilegeType in stores[storeId]) {
         delete stores[storeId][privilegeType];

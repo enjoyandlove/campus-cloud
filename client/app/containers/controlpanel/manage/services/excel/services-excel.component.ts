@@ -130,7 +130,7 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
       'name': [service.service_name, Validators.required],
       'description': [service.description],
       'email': [service.service_email],
-      'phone': [service.phone_number],
+      'contactphone': [service.phone_number],
       'website': [service.website],
       'category': [null, Validators.required],
       'logo_url': [null, Validators.required],
