@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Headers } from '@angular/http';
 
 import { API } from '../../../config/api';
-import { STATUS } from '../../../shared/constants';
+import { CPI18nService } from '../../services';
 import { CPImage, appStorage } from '../../../shared/utils';
 import { FileUploadService } from '../../../shared/services/file-upload.service';
 
@@ -21,10 +21,11 @@ export class CPImageUploadComponent implements OnInit {
   image;
   fileName;
   isLoading;
+  buttonText;
   errors = [];
-  buttonText = 'Upload Picture';
 
   constructor(
+    public cpI18n: CPI18nService,
     private fileUploadService: FileUploadService
   ) { }
 
@@ -32,11 +33,11 @@ export class CPImageUploadComponent implements OnInit {
     const fileExtension = file.name.split('.').pop();
 
     if (!CPImage.isSizeOk(file.size, CPImage.MAX_IMAGE_SIZE)) {
-      this.errors.push(STATUS.FILE_IS_TOO_BIG);
+      this.errors.push(this.cpI18n.translate('error_file_is_too_big'));
     }
 
     if (!CPImage.isValidExtension(fileExtension, CPImage.VALID_EXTENSIONS)) {
-      this.errors.push(STATUS.WRONG_EXTENSION_IMAGE);
+      this.errors.push(this.cpI18n.translate('error_invalid_extension'));
       return;
     }
 
@@ -75,15 +76,15 @@ export class CPImageUploadComponent implements OnInit {
       .fileUploadService
       .uploadFile(file, url, headers)
       .subscribe(
-        res => {
-          this.isLoading = false;
-          this.image = res.image_url;
-          this.uploaded.emit(res.image_url);
-        },
-        _ => {
-          this.isLoading = false;
-          this.errors.push(STATUS.SOMETHING_WENT_WRONG);
-        }
+      res => {
+        this.isLoading = false;
+        this.image = res.image_url;
+        this.uploaded.emit(res.image_url);
+      },
+      _ => {
+        this.isLoading = false;
+        this.errors.push(this.cpI18n.translate('something_went_wrong'));
+      }
       );
   }
 
@@ -93,7 +94,11 @@ export class CPImageUploadComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (!this.description) { this.description = 'Upload your picture'; }
+    this.buttonText = this.cpI18n.translate('upload_picture');
+
+    if (!this.description) {
+      this.description = this.cpI18n.translate('component_cpimage_description');
+    }
 
     if (this.defaultImage) {
       this.image = this.defaultImage;

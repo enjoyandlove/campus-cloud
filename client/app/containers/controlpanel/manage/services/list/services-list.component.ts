@@ -6,6 +6,7 @@ import { ServicesService } from '../services.service';
 import { CPSession } from './../../../../../session/index';
 import { ManageHeaderService } from './../../utils/header';
 import { BaseComponent } from '../../../../../base/base.component';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 
 interface IState {
@@ -32,6 +33,7 @@ export class ServicesListComponent extends BaseComponent implements OnInit {
 
   constructor(
     private session: CPSession,
+    public cpI18n: CPI18nService,
     private store: Store<IHeader>,
     private service: ServicesService,
     private headerService: ManageHeaderService

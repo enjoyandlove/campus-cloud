@@ -77,7 +77,7 @@
     <cp-no-content
       class="no-content"
       *ngIf="!state.clubs.length"
-      noContentText="No clubs found...">
+      [noContentText]="cpI18n.translate('clubs_no_results')">
     </cp-no-content>
   </div>
 </div>

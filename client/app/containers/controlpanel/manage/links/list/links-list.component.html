@@ -14,7 +14,7 @@
     <cp-no-content
       class="no-content"
       *ngIf="!state.links.length"
-      noContentText="No Links...">
+      [noContentText]="cpI18n.translate('links_no_results_found')">
     </cp-no-content>
 
     <div *ngIf="state.links.length">
