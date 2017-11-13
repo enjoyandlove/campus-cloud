@@ -4,7 +4,7 @@
   <div *ngSwitchCase="false">
     <cp-no-content
       *ngIf="!state.providers.length"
-      noContentText="No service provider yet, use the button above to create a provider.">
+      [noContentText]="cpI18n.translate('services_providers_no_results')">
     </cp-no-content>
 
     <div class="row" *ngIf="state.providers.length">

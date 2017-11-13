@@ -5,6 +5,9 @@
   "active": {
     "message": "Active"
   },
+  "admins_error_no_access_granted": {
+    "message": "You have not granted any access"
+  },
   "admin_all_acceess_help": {
     "message": "Give access to all of the Services, Clubs and App Content"
   },
@@ -98,6 +101,9 @@
   "announcements": {
     "message": "Announcements"
   },
+  "announcements_compose_modal_help": {
+    "message": "Announce to all students"
+  },
   "announcements_delete_modal_body": {
     "message": "Are you sure you want to archive this announcement?"
   },
@@ -107,11 +113,23 @@
   "announcements_delete_modal_title": {
     "message": "Archive Announcement"
   },
+  "announcements_emergency_help": {
+    "message": "Overrides the push settings of the user and forces users to acknowledge the message"
+  },
   "announcements_not_sent": {
     "message": "Message not sent, please wait %s minutes before trying again"
   },
+  "announcements_no_engagement_data": {
+    "message": "No engagement data"
+  },
+  "announcements_regular_help": {
+    "message": "Delivered as a regular push notification"
+  },
   "announcements_type": {
     "message": "Announcement Type"
+  },
+  "announcements_urgent_help": {
+    "message": "Overrides the push settings of the user"
   },
   "announcement_confirm_campus_wide": {
     "message": "Campus Wide Announcement"
@@ -224,6 +242,9 @@
   "assess_no_engagement": {
     "message": "No Engagement"
   },
+  "assess_no_engagement_tooltip": {
+    "message": "Students who had no attendance for the period selected"
+  },
   "assess_no_event_data": {
     "message": "No Event Data"
   },
@@ -248,8 +269,14 @@
   "assess_one_engagement": {
     "message": "One Engagement"
   },
+  "assess_one_engagement_tooltip": {
+    "message": "Students who attended one engagement for the period selected"
+  },
   "assess_repeat_engagement": {
     "message": "Repeat Engagement"
+  },
+  "assess_repeat_engagement_tooltip": {
+    "message": "Students who attended more than one engagement for the period selected"
   },
   "assess_response_date": {
     "message": "Response Date"
@@ -476,14 +503,26 @@
   "clubs_no_members_found": {
     "message": "No Members Found"
   },
+  "clubs_no_results": {
+    "message": "No clubs found"
+  },
   "comment": {
     "message": "Comment"
   },
   "comments": {
     "message": "Comments"
   },
+  "component_cpimage_description": {
+    "message": "Upload your picture"
+  },
+  "component_cpimage_help": {
+    "message": "JPG or PNG. Max size of 5MB"
+  },
   "compose": {
     "message": "Compose"
+  },
+  "Compose": {
+    "message": "announcements_compose_modal_title"
   },
   "confirm": {
     "message": "Confirm"
@@ -493,6 +532,21 @@
   },
   "contact_details": {
     "message": "Contact Details"
+  },
+  "csv_modal_anchor_text": {
+    "message": "Download CSV Sample File"
+  },
+  "csv_modal_body": {
+    "message": "Upload your CSV file or"
+  },
+  "csv_modal_button_text": {
+    "message": "Click to select a CSV file here"
+  },
+  "csv_modal_instruction": {
+    "message": "Limit of 100 items to import at a time."
+  },
+  "csv_modal_title": {
+    "message": "Upload CSV File"
   },
   "delete": {
     "message": "Delete"
@@ -553,6 +607,9 @@
   },
   "error_invalid_extension": {
     "message": "Invalid Extension"
+  },
+  "error_no_hosts_found_help": {
+    "message": "No Services or Clubs found, check your account privileges"
   },
   "event": {
     "message": "Event"
@@ -659,6 +716,15 @@
   "events_import_from_facebook": {
     "message": "Import from Facebook"
   },
+  "events_label_past_events": {
+    "message": "Past Events"
+  },
+  "events_label_upcoming_events": {
+    "message": "Upcoming Events"
+  },
+  "events_no_attendees": {
+    "message": "No Attendees"
+  },
   "events_no_events_found": {
     "message": "No events found"
   },
@@ -731,6 +797,9 @@
   "feeds_flagged_posts": {
     "message": "Flagged Posts"
   },
+  "feeds_input_placeholder": {
+    "message": "Add some text to this post...."
+  },
   "feeds_move_post": {
     "message": "Move Post"
   },
@@ -767,11 +836,17 @@
   "from": {
     "message": "From"
   },
+  "hello": {
+    "message": "Hello"
+  },
   "hide": {
     "message": "Hide"
   },
   "host": {
     "message": "Host"
+  },
+  "import": {
+    "message": "Import"
   },
   "import_from_csv": {
     "message": "Import from CSV"
@@ -818,6 +893,9 @@
   "links_label_link_url": {
     "message": "Link URL"
   },
+  "links_no_results_found": {
+    "message": "No Links found"
+  },
   "link_label_description": {
     "message": "Link Description"
   },
@@ -850,6 +928,9 @@
   },
   "lists_label_list_name": {
     "message": "List Name"
+  },
+  "lists_no_results_found": {
+    "message": "No lists found"
   },
   "location": {
     "message": "Location"
@@ -904,6 +985,9 @@
   },
   "no_admins_found": {
     "message": "No Admins found"
+  },
+  "no_hosts_available": {
+    "message": "No Hosts Available"
   },
   "no_results": {
     "message": "No Results"
@@ -985,6 +1069,9 @@
   },
   "select_host": {
     "message": "Select Host"
+  },
+  "send": {
+    "message": "Send"
   },
   "sent": {
     "message": "Sent"
@@ -1073,6 +1160,12 @@
   "services_label_service_attendance": {
     "message": "Service Attendance"
   },
+  "services_no_service_found": {
+    "message": "No services found"
+  },
+  "services_providers_no_results": {
+    "message": "No service provider yet, use the button above to create a provider."
+  },
   "services_provider_button_add_another": {
     "message": "Add Another Service Provider"
   },
@@ -1087,6 +1180,9 @@
   },
   "services_provider_label_default_question": {
     "message": "Default Question"
+  },
+  "services_provider_search_tootlip": {
+    "message": "Search Service Provider"
   },
   "services_repeat_visits": {
     "message": "Repeat Visits"

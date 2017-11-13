@@ -105,7 +105,7 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
   }
 
   onImageUpload(image, index) {
-    let imageUpload = new CPImageUploadComponent(this.fileUploadService);
+    let imageUpload = new CPImageUploadComponent(this.cpI18n, this.fileUploadService);
     let promise = imageUpload.onFileUpload(image, true);
 
     promise

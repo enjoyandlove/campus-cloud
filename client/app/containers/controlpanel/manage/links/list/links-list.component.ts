@@ -5,6 +5,7 @@ import { ILink } from '../link.interface';
 import { LinksService } from '../links.service';
 import { CPSession } from './../../../../../session/index';
 import { BaseComponent } from '../../../../../base/base.component';
+import { CPI18nService } from '../../../../../shared/services/index';
 
 declare var $: any;
 
@@ -38,6 +39,7 @@ export class LinksListComponent extends BaseComponent implements OnInit {
 
   constructor(
     private session: CPSession,
+    public cpI18n: CPI18nService,
     private service: LinksService
   ) {
     super();

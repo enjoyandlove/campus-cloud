@@ -16,7 +16,7 @@
     <cp-no-content
       class="no-content"
       *ngIf="!state.lists.length"
-      noContentText="No lists found...">
+      [noContentText]="cpI18n.translate('lists_no_results_found')">
     </cp-no-content>
 
     <div *ngIf="state.lists.length">

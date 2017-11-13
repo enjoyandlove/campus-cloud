@@ -34,11 +34,11 @@ export class ServicesCreateComponent implements OnInit {
 
   feedbackOptions = [
     {
-      'label': 'Enabled',
+      'label': this.cpI18n.translate('enabled'),
       'value': FEEDBACK_ENABLED
     },
     {
-      'label': 'Disabled',
+      'label': this.cpI18n.translate('disabled'),
       'value': FEEDBACK_DISABLED
     }
   ];

@@ -16,11 +16,11 @@ import {
 } from './../../../../../shared/utils/privileges';
 
 
-import { CPSession, ISchool } from '../../../../../session';
 import { ServicesService } from '../services.service';
+import { CPSession, ISchool } from '../../../../../session';
+import { AdminService } from '../../../../../shared/services';
 import { BaseComponent } from '../../../../../base/base.component';
 import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
-import { AdminService, CPI18nService } from '../../../../../shared/services';
 
 @Component({
   selector: 'cp-services-info',
@@ -40,7 +40,6 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
     private session: CPSession,
     private store: Store<IHeader>,
     private route: ActivatedRoute,
-    private cpI18n: CPI18nService,
     private adminService: AdminService,
     private serviceService: ServicesService
   ) {
@@ -96,7 +95,7 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
   private buildHeader() {
     let children = [
       {
-        'label': this.cpI18n.translate('info'),
+        'label': 'info',
         'url': `/manage/services/${this.serviceId}/info`
       }
     ];
@@ -106,7 +105,7 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
 
     if (eventsSchoolLevel || eventsAccountLevel) {
       const events = {
-        'label': this.cpI18n.translate('events'),
+        'label': 'events',
         'url': `/manage/services/${this.serviceId}/events`
       }
 
@@ -115,7 +114,7 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
 
     if (this.service.service_attendance) {
       let attendance = {
-        'label': this.cpI18n.translate('assessment'),
+        'label': 'assessment',
         'url': `/manage/services/${this.serviceId}`
       };
 
@@ -125,10 +124,10 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': this.service.name,
+        'heading': `[NOTRANSLATE]${this.service.name}[NOTRANSLATE]`,
         'crumbs': {
           'url': 'services',
-          'label': this.cpI18n.translate('services'),
+          'label': 'services',
         },
         'subheading': '',
         'children': [...children]

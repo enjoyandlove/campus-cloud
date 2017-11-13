@@ -216,7 +216,7 @@ export class TeamCreateComponent implements OnInit {
     const emptySchoolPrivileges = isEmpty(_data.school_level_privileges[this.schoolId]);
 
     if (emptyAccountPrivileges && emptySchoolPrivileges) {
-      this.formError = 'You have not granted any access';
+      this.formError = this.cpI18n.translate('admins_error_no_access_granted');
       this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       this.isFormError = true;
       return;

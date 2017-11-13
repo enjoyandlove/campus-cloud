@@ -50,7 +50,7 @@
             </span>
 
             <span class="col-xs-3">
-              <ng-container *ngIf="student.last_event === 0 && student.last_service === 0">No engagement data</ng-container>
+              <ng-container *ngIf="student.last_event === 0 && student.last_service === 0">{{ cpI18n.translate('announcements_no_engagement_data') }}</ng-container>
               <ng-container *ngIf="student.last_event !== 0 || student.last_service !== 0">
                 <ng-container *ngIf="student.last_service >= student.last_event">
                   {{ student.last_service | cpDatePipe:dateFormat }}

@@ -13,7 +13,7 @@
     <cp-no-content
       class="add-card-margin"
       *ngIf="!state.services.length"
-      noContentText="No services found...">
+      [noContentText]="cpI18n.translate('services_no_service_found')">
     </cp-no-content>
 
     <ul class="services cp-form" *ngIf="state.services.length">

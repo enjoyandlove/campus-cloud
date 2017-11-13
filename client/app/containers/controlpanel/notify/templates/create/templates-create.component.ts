@@ -33,7 +33,7 @@ export class TemplatesCreateComponent extends AnnouncementsComposeComponent
     public service: AnnouncementsService,
     private childService: TemplatesService
   ) {
-    super(fb, session, storeService, service);
+    super(fb, session, cpI18n, storeService, service);
   }
 
   @HostListener('document:click', ['$event'])

@@ -8,7 +8,7 @@ import {
   EventEmitter
 } from '@angular/core';
 
-import { STATUS } from '../../../shared/constants';
+import { CPI18nService } from '../../services/index';
 
 const FIVE_MB = 5e6;
 
@@ -36,6 +36,7 @@ export class CPUploadModalComponent implements OnInit {
 
   constructor(
     private el: ElementRef,
+    private cpI18n: CPI18nService
   ) { }
 
   @HostListener('document:click', ['$event'])
@@ -58,12 +59,12 @@ export class CPUploadModalComponent implements OnInit {
     let validators = [
       {
         'exp': this.props.validExtensions.indexOf(file.name.split('.').pop()) === -1,
-        'error': STATUS.WRONG_EXTENSION,
+        'error': this.cpI18n.translate('error_invalid_extension'),
         'isError': false
       },
       {
         'exp': file.size > FIVE_MB,
-        'error': STATUS.FILE_IS_TOO_BIG,
+        'error': this.cpI18n.translate('error_file_is_too_big'),
         'isError': false
       }
     ];

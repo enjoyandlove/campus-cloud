@@ -150,7 +150,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
       type: HEADER_UPDATE,
       payload:
       {
-        'heading': `${student.firstname} ${student.lastname}`,
+        'heading': `[NOTRANSLATE]${student.firstname} ${student.lastname}[NOTRANSLATE]`,
         'subheading': null,
         'crumbs': {
           'url': 'students',

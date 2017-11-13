@@ -5,7 +5,7 @@ import { URLSearchParams } from '@angular/http';
 import { CPSession } from '../../../../../session';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { STATUS } from '../../../../../shared/constants';
-import { StoreService } from '../../../../../shared/services';
+import { StoreService, CPI18nService } from '../../../../../shared/services';
 import { AnnouncementsService } from '../announcements.service';
 import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 
@@ -72,6 +72,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   constructor(
     public fb: FormBuilder,
     public session: CPSession,
+    public cpI18n: CPI18nService,
     public storeService: StoreService,
     public service: AnnouncementsService
   ) {
@@ -101,7 +102,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
         });
 
         if (!_users.length) {
-          _users.push({ 'label': 'No Results...' });
+          _users.push({ 'label': this.cpI18n.translate('no_results') });
         }
 
         return _users;
@@ -159,7 +160,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
         });
 
         if (!_lists.length) {
-          _lists.push({ 'label': 'No Results...' });
+          _lists.push({ 'label': this.cpI18n.translate('no_results') });
         }
 
         return _lists;
@@ -303,7 +304,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     if (type.action === this.EMERGENCY_TYPE) {
       this.state.isEmergency = true;
       this.subject_prefix = {
-        label: 'Emergency',
+        label: this.cpI18n.translate('emergency'),
         type: 'danger'
       };
     }
@@ -311,7 +312,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     if (type.action === this.URGENT_TYPE) {
       this.state.isUrgent = true;
       this.subject_prefix = {
-        label: 'Urgent',
+        label: this.cpI18n.translate('urgent'),
         type: 'warning'
       };
     }

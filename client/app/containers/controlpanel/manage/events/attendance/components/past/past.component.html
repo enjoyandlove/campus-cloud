@@ -50,7 +50,7 @@
     <cp-no-content
       *ngIf="!attendees.length"
       class="add-card-margin"
-      noContentText="No Attendees...">
+      [noContentText]="cpI18n.translate('events_no_attendees')">
     </cp-no-content>
 
     <div class="row add-card-margin" *ngIf="attendees.length">

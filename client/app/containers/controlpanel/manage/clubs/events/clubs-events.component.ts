@@ -1,6 +1,5 @@
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
@@ -26,7 +25,6 @@ export class ClubsEventsComponent extends BaseComponent implements OnInit {
     private store: Store<any>,
     private session: CPSession,
     private route: ActivatedRoute,
-    private cpI18n: CPI18nService,
     private utils: ClubsUtilsService,
     private clubsService: ClubsService
   ) {
@@ -60,13 +58,13 @@ export class ClubsEventsComponent extends BaseComponent implements OnInit {
 
   buildPayload() {
     let menu = {
-      heading: this.club.name,
+      heading: `[NOTRANSLATE]${this.club.name}[NOTRANSLATE]`,
       subheading: null,
       'crumbs': {
         'url': this.router.url === `/manage/clubs/${this.clubId}/events`
           ? 'clubs'
           : `clubs/${this.clubId}`,
-        'label': this.cpI18n.translate('clubs')
+        'label': 'clubs'
       },
       em: null,
       children: []
@@ -76,7 +74,7 @@ export class ClubsEventsComponent extends BaseComponent implements OnInit {
 
     links.forEach(link => {
       menu.children.push({
-        label: link,
+        label: `[NOTRANSLATE]${link}[NOTRANSLATE]`,
         url: `/manage/clubs/${this.clubId}/${link.toLocaleLowerCase()}`
       });
     });

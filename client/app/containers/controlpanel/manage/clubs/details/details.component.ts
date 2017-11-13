@@ -1,6 +1,5 @@
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
@@ -26,7 +25,6 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
     private store: Store<any>,
     private session: CPSession,
     private route: ActivatedRoute,
-    private cpI18n: CPI18nService,
     private utils: ClubsUtilsService,
     private clubsService: ClubsService
   ) {
@@ -57,10 +55,10 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
 
   buildHeader(name) {
     let menu = {
-      heading: name,
+      heading: `[NOTRANSLATE]${name}[NOTRANSLATE]`,
       'crumbs': {
         'url': `clubs`,
-        'label': this.cpI18n.translate('clubs')
+        'label': 'clubs'
       },
       subheading: null,
       em: null,
@@ -71,7 +69,7 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
 
     links.forEach(link => {
       menu.children.push({
-        label: link,
+        label: `[NOTRANSLATE]${link}[NOTRANSLATE]`,
         url: `/manage/clubs/${this.clubId}/${link.toLocaleLowerCase()}`
       });
     });
