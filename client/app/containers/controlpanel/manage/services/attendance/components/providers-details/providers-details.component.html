@@ -37,10 +37,7 @@
         <div class="cp-card actions">
           <div class="row">
             <div class="col-xs-4">
-              <cp-searchbox
-                (query)=query$.next($event)
-                placeholder="Search Attendees...">
-              </cp-searchbox>
+              <cp-searchbox (query)=query$.next($event)></cp-searchbox>
             </div>
             <div class="col-xs-6 col-xs-offset-2 text-right">
               <button

@@ -279,7 +279,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': `${name}`,
+        'heading': `[NOTRANSLATE]${name}[NOTRANSLATE]`,
         'crumbs': {
           'url': this.isProfileView ? null : 'team',
           'label': this.isProfileView ? null : 'Team'

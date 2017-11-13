@@ -62,7 +62,7 @@ export class ServicesEventsComponent extends EventsComponent {
   private buildHeader() {
     let children = [
       {
-        'label': this.cpI18n.translate('info'),
+        'label': 'info',
         'url': `/manage/services/${this.serviceId}/info`
       }
     ];
@@ -73,7 +73,7 @@ export class ServicesEventsComponent extends EventsComponent {
 
     if (eventsSchoolLevel || eventsAccountLevel) {
       const events = {
-        'label': this.cpI18n.translate('events'),
+        'label': 'events',
         'url': `/manage/services/${this.serviceId}/events`
       }
 
@@ -82,7 +82,7 @@ export class ServicesEventsComponent extends EventsComponent {
 
     if (this.service.service_attendance) {
       let attendance = {
-        'label': this.cpI18n.translate('assessment'),
+        'label': 'assessment',
         'url': `/manage/services/${this.serviceId}`
       };
 
@@ -92,11 +92,11 @@ export class ServicesEventsComponent extends EventsComponent {
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': this.service.name,
+        'heading': `[NOTRANSLATE]${this.service.name}[NOTRANSLATE]`,
         'subheading': '',
         'crumbs': {
           'url': 'services',
-          'label': this.cpI18n.translate('services'),
+          'label': 'services',
         },
         'children': [...children]
       }
