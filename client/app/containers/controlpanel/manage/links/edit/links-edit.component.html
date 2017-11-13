@@ -59,7 +59,7 @@
             <cp-upload-button
               class="banner__wrapper__button"
               buttonClass="cpbtn cpbtn--link"
-              buttonText="Upload Picture"
+              [buttonText]="cpI18n.translate('upload_picture')"
               (fileUpload)="onFileUpload($event)">
             </cp-upload-button>
           </div>

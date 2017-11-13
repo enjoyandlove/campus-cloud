@@ -6,10 +6,10 @@ import { Store } from '@ngrx/store';
 import { StudentsService } from './../students.service';
 import { CPSession } from './../../../../../session/index';
 import { FORMAT } from './../../../../../shared/pipes/date';
-import { STATUS } from './../../../../../shared/constants/status';
 import { BaseComponent } from './../../../../../base/base.component';
 import { HEADER_UPDATE } from './../../../../../reducers/header.reducer';
 import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 interface IState {
   search_str: string,
@@ -42,6 +42,7 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
     private router: Router,
     private store: Store<any>,
     private session: CPSession,
+    public cpI18n: CPI18nService,
     private route: ActivatedRoute,
     private service: StudentsService
   ) {
@@ -105,7 +106,7 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
     this.store.dispatch({
       type: SNACKBAR_SHOW,
       payload: {
-        body: STATUS.MESSAGE_SENT,
+        body: this.cpI18n.translate('announcement_success_sent'),
         autoClose: true,
       }
     });

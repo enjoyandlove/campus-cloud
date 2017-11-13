@@ -7,19 +7,19 @@
             [routerLink]="data.crumbs.url"
             class="text-muted">
             <i class="material-icons">arrow_back</i>
-            {{ data.crumbs.label | cpI18n }}
+            {{ data.crumbs.label }}
           </a>
         </div>
         <p
           class="header__title text-truncate">
-          {{ data.heading | cpI18n }}
+          {{ data.heading }}
         </p>
         <p
           class="header__sub-title"
           *ngIf="data.subheading">
-          {{ data.subheading | cpI18n }}
+          {{ data.subheading }}
         </p>
-        <em *ngIf="data.em">{{ data.em | cpI18n }}</em>
+        <em *ngIf="data.em">{{ data.em }}</em>
       </div>
     </div>
 
@@ -32,7 +32,7 @@
             [routerLinkActiveOptions]="{exact: page.hasParams ? false : true}">
             <span class="promote-badge" *ngIf="page.new">new</span>
             <a
-              [routerLink]="[page.url]">{{ page.label | cpI18n }}
+              [routerLink]="[page.url]">{{ page.label }}
             </a>
           </li>
         </ul>

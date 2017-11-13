@@ -9,7 +9,7 @@
           data-toggle="tooltip"
           data-placement="bottom"
           class="text-muted with-tooltip" i18n
-          title="Students who attended more than one engagement for the period selected">
+          [title]="cpI18n.translate('assess_repeat_engagement_tooltip')">
           {{ 'assess_repeat_engagement' | cpI18n }}
           <i class="material-icons">info_outline</i>
         </p>
@@ -41,7 +41,7 @@
           data-toggle="tooltip"
           data-placement="bottom"
           class="text-muted with-tooltip" i18n
-          title="Students who attended one engagement for the period selected">
+          [title]="cpI18n.translate('assess_one_engagement_tooltip')">
           {{ 'assess_one_engagement' | cpI18n }}
           <i class="material-icons">info_outline</i>
         </p>
@@ -73,7 +73,7 @@
           data-toggle="tooltip"
           data-placement="bottom"
           class="text-muted with-tooltip" i18n
-          title="Students who had no attendance for the period selected">
+          [title]="cpI18n.translate('assess_no_engagement_tooltip')">
           {{ 'assess_no_engagement' | cpI18n }}
           <i class="material-icons">info_outline</i>
         </p>
