@@ -74,7 +74,7 @@ const manageAdminDropdown = function (privilege: { r: boolean, w: boolean }) {
 const clubsDropdown = function (privilege: { r: boolean, w: boolean }) {
   let items = [
     {
-      'label': _cpI18n.translate('no_access'),
+      'label': _cpI18n.translate('admin_no_access'),
       'action': null
     }
   ];
@@ -102,7 +102,7 @@ const clubsDropdown = function (privilege: { r: boolean, w: boolean }) {
 const servicesDropdown = function (privilege: { r: boolean, w: boolean }) {
   let items = [
     {
-      'label': _cpI18n.translate('no_access'),
+      'label': _cpI18n.translate('admin_no_access'),
       'action': null
     }
   ];

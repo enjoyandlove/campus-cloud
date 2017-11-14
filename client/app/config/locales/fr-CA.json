@@ -32,11 +32,20 @@
   "admin_campus_announcements": {
     "message": "Campus Announcements"
   },
+  "admin_can_edit": {
+    "message": "Can Edit"
+  },
+  "admin_can_edit_help": {
+    "message": "See content created by other team members and create your own content"
+  },
   "admin_club_owner": {
     "message": "Club Owner"
   },
   "admin_club_owner_help": {
     "message": "Manage club details, events and membership"
+  },
+  "admin_club_service_modal_title": {
+    "message": "Select %s"
   },
   "admin_create_account": {
     "message": "Create Account"
@@ -1105,6 +1114,9 @@
   },
   "search": {
     "message": "Search"
+  },
+  "selected": {
+    "message": "Selected"
   },
   "select_category": {
     "message": "Select Category"
