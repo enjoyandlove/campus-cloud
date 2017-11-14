@@ -737,6 +737,27 @@
   "feedback": {
     "message": "Feedback"
   },
+  "feedback_form_event_help": {
+    "message": "Please click a star to rate the event"
+  },
+  "feedback_form_placeholder": {
+    "message": "Tells us what you think"
+  },
+  "feedback_form_service_help": {
+    "message": "Please click a star to rate the service"
+  },
+  "feedback_label_event_feedback": {
+    "message": "Event Feedback"
+  },
+  "feedback_label_rate_event": {
+    "message": "Rate Event"
+  },
+  "feedback_label_rate_service": {
+    "message": "Rate Service"
+  },
+  "feedback_label_service_feedback": {
+    "message": "Service Feedback"
+  },
   "feedback_thank_you": {
     "message": "Thanks for your feedback"
   },
