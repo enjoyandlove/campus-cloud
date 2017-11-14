@@ -241,7 +241,6 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
   servicesDefaultPermission() {
     if (this.servicesCount) { return this.servicesCount; }
-
     let selected;
     let school_level_privileges = this.schoolPrivileges;
     let service_privilege = school_level_privileges[CP_PRIVILEGES_MAP.services];
