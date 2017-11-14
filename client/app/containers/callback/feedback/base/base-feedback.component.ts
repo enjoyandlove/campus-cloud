@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { CPI18nService } from '../../../../shared/services/index';
 
 @Component({
   selector: 'cp-base-feedback',
@@ -13,7 +14,9 @@ export class BaseFeedbackComponent implements OnInit {
   @Input() isSubmitted: Observable<boolean>;
   @Output() send: EventEmitter<any> = new EventEmitter();
 
-  constructor() { }
+  constructor(
+    public cpI18n: CPI18nService
+  ) { }
 
   ngOnInit() {
     if (!this.isEvent && !this.isService) {

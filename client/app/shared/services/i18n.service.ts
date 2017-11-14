@@ -11,6 +11,9 @@ const locale = browserLanguage.toLowerCase().startsWith('fr') ? 'fr-CA' : 'en-US
 
 @Injectable()
 export class CPI18nService {
+  static getLocale() {
+    return locale;
+  }
 
   translate(key: string) {
     const doNotTranslate = noTranslateRegex.test(key);

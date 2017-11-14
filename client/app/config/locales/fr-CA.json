@@ -14,6 +14,12 @@
   "admin_all_access": {
     "message": "All Access"
   },
+  "admin_all_clubs": {
+    "message": "All Clubs"
+  },
+  "admin_all_services": {
+    "message": "All Services"
+  },
   "admin_app_content": {
     "message": "App Content"
   },
@@ -26,11 +32,20 @@
   "admin_campus_announcements": {
     "message": "Campus Announcements"
   },
+  "admin_can_edit": {
+    "message": "Can Edit"
+  },
+  "admin_can_edit_help": {
+    "message": "See content created by other team members and create your own content"
+  },
   "admin_club_owner": {
     "message": "Club Owner"
   },
   "admin_club_owner_help": {
     "message": "Manage club details, events and membership"
+  },
+  "admin_club_service_modal_title": {
+    "message": "Select %s"
   },
   "admin_create_account": {
     "message": "Create Account"
@@ -62,6 +77,12 @@
   "admin_invite_heading": {
     "message": "Create your Campus Cloud Account"
   },
+  "admin_manage_and_assess_events": {
+    "message": "Manage and Assess Events"
+  },
+  "admin_manage_events": {
+    "message": "Manage Events"
+  },
   "admin_modal_delete_body": {
     "message": "Are you sure you want to remove %s?"
   },
@@ -71,6 +92,9 @@
   "admin_notify_help": {
     "message": "Select push notifications"
   },
+  "admin_no_access": {
+    "message": "No Access"
+  },
   "admin_password_sucess_redirect": {
     "message": "Password saved, redirecting you to the login page"
   },
@@ -79,6 +103,12 @@
   },
   "admin_search_by_email_or_email": {
     "message": "Search by name or email..."
+  },
+  "admin_select_clubs": {
+    "message": "Select Clubs"
+  },
+  "admin_select_services": {
+    "message": "Select Services"
   },
   "admin_service_owner": {
     "message": "Service Owner"
@@ -737,6 +767,27 @@
   "feedback": {
     "message": "Feedback"
   },
+  "feedback_form_event_help": {
+    "message": "Please click a star to rate the event"
+  },
+  "feedback_form_placeholder": {
+    "message": "Tells us what you think"
+  },
+  "feedback_form_service_help": {
+    "message": "Please click a star to rate the service"
+  },
+  "feedback_label_event_feedback": {
+    "message": "Event Feedback"
+  },
+  "feedback_label_rate_event": {
+    "message": "Rate Event"
+  },
+  "feedback_label_rate_service": {
+    "message": "Rate Service"
+  },
+  "feedback_label_service_feedback": {
+    "message": "Service Feedback"
+  },
   "feedback_thank_you": {
     "message": "Thanks for your feedback"
   },
@@ -1063,6 +1114,9 @@
   },
   "search": {
     "message": "Search"
+  },
+  "selected": {
+    "message": "Selected"
   },
   "select_category": {
     "message": "Select Category"

@@ -1,3 +1,7 @@
+import { CPI18nService } from '../../../../../../../../shared/services';
+
+const cpI18n = new CPI18nService();
+
 export const permissions = [
   // {
   //   type: 1,
@@ -6,9 +10,8 @@ export const permissions = [
   // },
   {
     type: 2,
-    title: 'Can Edit',
-    description: 'See content created by other team members<br>\
-    and create your own content'
+    title: cpI18n.translate('admin_can_edit'),
+    description: cpI18n.translate('admin_can_edit_help')
   }
 ];
 

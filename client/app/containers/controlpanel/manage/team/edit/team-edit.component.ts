@@ -14,14 +14,16 @@ import { CP_PRIVILEGES, CP_PRIVILEGES_MAP } from '../../../../../shared/constant
 import { accountsToStoreMap } from './../../../../../shared/utils/privileges/privileges';
 import { AdminService, ErrorService, CPI18nService } from '../../../../../shared/services';
 
+const _cpI18n = new CPI18nService();
+
 const eventsDropdown = function (privilege: { r: boolean, w: boolean }) {
   let items = [
     {
-      'label': 'No Access',
+      'label': _cpI18n.translate('admin_no_access'),
       'action': null
     },
     {
-      'label': 'Manage Events',
+      'label': _cpI18n.translate('admin_manage_events'),
       'action': 2
     }
   ];
@@ -34,7 +36,7 @@ const eventsDropdown = function (privilege: { r: boolean, w: boolean }) {
     items = [
       ...items,
       {
-        'label': 'Manage and Assess Events',
+        'label': _cpI18n.translate('admin_manage_and_assess_events'),
         'action': 3
       }
     ];
@@ -45,7 +47,7 @@ const eventsDropdown = function (privilege: { r: boolean, w: boolean }) {
 const manageAdminDropdown = function (privilege: { r: boolean, w: boolean }) {
   let items = [
     {
-      'label': 'Disabled',
+      'label': _cpI18n.translate('disabled'),
       'action': null
     }
   ];
@@ -58,7 +60,7 @@ const manageAdminDropdown = function (privilege: { r: boolean, w: boolean }) {
     items = [
       ...items,
       {
-        'label': 'Enabled',
+        'label': _cpI18n.translate('enabled'),
         'action': 1
       }
     ];
@@ -69,7 +71,7 @@ const manageAdminDropdown = function (privilege: { r: boolean, w: boolean }) {
 const clubsDropdown = function (privilege: { r: boolean, w: boolean }) {
   let items = [
     {
-      'label': 'No Access',
+      'label': _cpI18n.translate('admin_no_access'),
       'action': null
     }
   ];
@@ -82,11 +84,11 @@ const clubsDropdown = function (privilege: { r: boolean, w: boolean }) {
     items = [
       ...items,
       {
-        'label': 'Select Clubs',
+        'label': _cpI18n.translate('admin_select_clubs'),
         'action': 2
       },
       {
-        'label': 'All Clubs',
+        'label': _cpI18n.translate('admin_all_clubs'),
         'action': 3
       },
     ];
@@ -97,7 +99,7 @@ const clubsDropdown = function (privilege: { r: boolean, w: boolean }) {
 const servicesDropdown = function (privilege: { r: boolean, w: boolean }) {
   let items = [
     {
-      'label': 'No Access',
+      'label': _cpI18n.translate('admin_no_access'),
       'action': null
     }
   ];
@@ -110,18 +112,17 @@ const servicesDropdown = function (privilege: { r: boolean, w: boolean }) {
     items = [
       ...items,
       {
-        'label': 'Select Services',
+        'label': _cpI18n.translate('admin_select_services'),
         'action': 2
       },
       {
-        'label': 'All Services',
+        'label': _cpI18n.translate('admin_all_services'),
         'action': 3
       },
     ];
   }
   return items;
 };
-
 
 declare var $: any;
 
