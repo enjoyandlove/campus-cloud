@@ -273,7 +273,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': 'Edit Service',
+        'heading': 'services_edit_heading',
         'subheading': null,
         'em': null,
         'children': []

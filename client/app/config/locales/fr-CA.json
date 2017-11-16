@@ -1253,6 +1253,9 @@
   "services_delete_modal_title": {
     "message": "Delete Service"
   },
+  "services_edit_heading": {
+    "message": "Edit Service"
+  },
   "services_imports_heading": {
     "message": "Import Services"
   },

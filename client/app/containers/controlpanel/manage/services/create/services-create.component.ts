@@ -99,7 +99,7 @@ export class ServicesCreateComponent implements OnInit {
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': this.cpI18n.translate('services_create_heading'),
+        'heading': 'services_create_heading',
         'subheading': null,
         'em': null,
         'children': []

@@ -73,7 +73,7 @@ export class EventsCreateComponent implements OnInit {
 
   buildHeader() {
     const payload = {
-      'heading': this.cpI18n.translate('events_create_heading'),
+      'heading': 'events_create_heading',
       'subheading': null,
       'em': null,
       'children': []
