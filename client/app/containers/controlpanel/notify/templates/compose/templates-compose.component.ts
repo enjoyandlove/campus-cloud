@@ -2,7 +2,7 @@ import { Component, Input, OnInit, OnDestroy, HostListener, ElementRef } from '@
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { CPSession } from './../../../../../session/index';
-import { StoreService } from './../../../../../shared/services/store.service';
+import { StoreService, CPI18nService } from './../../../../../shared/services';
 import { AnnouncementsService } from './../../announcements/announcements.service';
 
 import {
@@ -24,10 +24,11 @@ export class TemplatesComposeComponent extends AnnouncementsComposeComponent
     private el: ElementRef,
     public fb: FormBuilder,
     public session: CPSession,
+    public cpI18n: CPI18nService,
     public storeService: StoreService,
     public service: AnnouncementsService
   ) {
-    super(fb, session, storeService, service);
+    super(fb, session, cpI18n, storeService, service);
   }
 
   @HostListener('document:click', ['$event'])
@@ -129,13 +130,13 @@ export class TemplatesComposeComponent extends AnnouncementsComposeComponent
     switch (this.data.priority) {
       case this.EMERGENCY_TYPE:
         this.subject_prefix = {
-          label: 'Emergency',
+          label: this.cpI18n.translate('emergency'),
           type: 'danger'
         };
         break;
       case this.URGENT_TYPE:
         this.subject_prefix = {
-          label: 'Urgent',
+          label: this.cpI18n.translate('urgent'),
           type: 'warning'
         };
         break;

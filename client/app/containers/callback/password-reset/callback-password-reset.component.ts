@@ -3,11 +3,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { STATUS } from '../../../shared/constants';
 import { AuthService } from '../../auth/auth.service';
 import { ErrorService } from '../../../shared/services';
-
 import { ALERT_DEFAULT } from '../../../reducers/alert.reducer';
+import { CPI18nService } from './../../../shared/services/i18n.service';
 
 @Component({
   selector: 'cp-callback-password-reset',
@@ -17,7 +16,7 @@ import { ALERT_DEFAULT } from '../../../reducers/alert.reducer';
 export class CallbackPasswordResetComponent implements OnDestroy, OnInit {
   key: string;
   form: FormGroup;
-  isSubmitted;
+  isSubmitted = false;
 
   constructor(
     private router: Router,
@@ -25,7 +24,8 @@ export class CallbackPasswordResetComponent implements OnDestroy, OnInit {
     private store: Store<any>,
     private error: ErrorService,
     private service: AuthService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cpI18n: CPI18nService
   ) {
     this.key = this.route.snapshot.params['key'];
 
@@ -52,7 +52,7 @@ export class CallbackPasswordResetComponent implements OnDestroy, OnInit {
     const confirmPassword = this.form.controls['confirmPassword'];
 
     if (new_password.value !== confirmPassword.value || !this.form.valid) {
-      this.error.handleError({ reason: STATUS.PASSWORDS_DO_NOT_MATCH });
+      this.error.handleError({ reason: this.cpI18n.translate('passwords_do_not_match') });
       return;
     }
 
@@ -61,7 +61,7 @@ export class CallbackPasswordResetComponent implements OnDestroy, OnInit {
       .submitPasswordReset(body)
       .subscribe(
         _ => this.handleSuccess(),
-        _ => this.error.handleError({ reason: STATUS.SOMETHING_WENT_WRONG })
+        _ => this.error.handleError({ reason: this.cpI18n.translate('something_went_wrong') })
       );
   }
 

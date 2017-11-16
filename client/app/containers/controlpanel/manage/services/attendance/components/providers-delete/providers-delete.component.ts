@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
 import { ProvidersService } from '../../../providers.service';
@@ -10,7 +10,7 @@ declare var $: any;
   templateUrl: './providers-delete.component.html',
   styleUrls: ['./providers-delete.component.scss']
 })
-export class ServicesProviderDeleteComponent implements OnInit {
+export class ServicesProviderDeleteComponent {
   @Input() provider: any;
   @Input() serviceId: number;
   @Output() deleted: EventEmitter<number> = new EventEmitter();
@@ -34,6 +34,4 @@ export class ServicesProviderDeleteComponent implements OnInit {
         err => { throw new Error(err) }
       );
   }
-
-  ngOnInit() { }
 }

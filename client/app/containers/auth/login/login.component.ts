@@ -5,10 +5,9 @@ import { Store } from '@ngrx/store';
 
 import { AuthService } from '../auth.service';
 import { appStorage } from '../../../shared/utils';
-import { STATUS } from '../../../shared/constants';
 import { ErrorService } from '../../../shared/services';
-
 import { ALERT_DEFAULT } from '../../../reducers/alert.reducer';
+import { CPI18nService } from './../../../shared/services/i18n.service';
 
 @Component({
   selector: 'cp-login',
@@ -26,14 +25,15 @@ export class LoginComponent implements OnInit, OnDestroy {
     private store: Store<any>,
     private error: ErrorService,
     private service: AuthService,
-    private route: ActivatedRoute
+    private cpI18n: CPI18nService,
+    private route: ActivatedRoute,
   ) {
     this.goTo = this.route.snapshot.queryParams['goTo'];
   }
 
   onSubmit(data) {
     if (!this.form.valid) {
-      this.error.handleWarning({ reason: STATUS.ALL_FIELDS_ARE_REQUIRED });
+      this.error.handleWarning({ reason: this.cpI18n.translate('all_fields_are_required') });
       return;
     }
 
@@ -58,10 +58,11 @@ export class LoginComponent implements OnInit, OnDestroy {
         console.warn('Local Storage is not supported');
       },
       err => {
-        if (err.status === 401) {
-          this.error.handleError({ reason: STATUS.NO_ACCOUNT_FOUND });
+        if (err.status === 401 || err.status === 403) {
+          this.error.handleError({ reason: this.cpI18n.translate('account_not_found') });
           return;
         }
+
         console.error(err.json());
       }
       );

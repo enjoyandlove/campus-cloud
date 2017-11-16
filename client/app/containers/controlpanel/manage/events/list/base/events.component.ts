@@ -4,6 +4,7 @@ import { URLSearchParams } from '@angular/http';
 import { EventsService } from '../../events.service';
 import { CPSession } from '../../../../../../session';
 import { BaseComponent } from '../../../../../../base/base.component';
+import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 
 interface IState {
   start: number;
@@ -55,6 +56,7 @@ export class EventsComponent extends BaseComponent {
 
   constructor(
     public session: CPSession,
+    public cpI18n: CPI18nService,
     public service: EventsService
   ) {
     super();

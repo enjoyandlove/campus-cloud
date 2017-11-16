@@ -2,7 +2,7 @@
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-xs-12 text-center">
-        <span i18n><strong>Add Link</strong></span>
+        <span i18n><strong>{{ 'links_edit_modal_title' | cpI18n }}</strong></span>
 
         <span
           data-dismiss="modal"
@@ -18,14 +18,14 @@
     <form [formGroup]="form">
       <div class="row form-group">
         <div class="col-xs-6 no-right-padding">
-          <label i18n>Link Name</label>
+          <label i18n>{{ 'links_edit_modal_title' | cpI18n }}</label>
           <input
             type="text"
             class="form-control"
             formControlName="name">
         </div>
         <div class="col-xs-6">
-          <label i18n>Link URL</label>
+          <label i18n>{{ 'links_label_link_url' | cpI18n }}</label>
           <input
             type="text"
             class="form-control"
@@ -35,14 +35,14 @@
       </div>
       <div class="row">
         <div class="col-xs-8 no-right-padding">
-          <label i18n>Link Description (Optional)</label>
+          <label i18n>{{ 'link_label_description' | cpI18n }} ({{ 'optional' | cpI18n }})</label>
           <textarea
             class="form-control"
             formControlName="description">
           </textarea>
         </div>
         <div class="col-xs-4">
-          <label i18n>Link Banner</label>
+          <label i18n>{{ 'link_label_link_banner' | cpI18n  }}</label>
           <div
             *ngIf="form.controls['img_url'].value"
             class="banner__wrapper banner__wrapper--with-image"
@@ -59,7 +59,7 @@
             <cp-upload-button
               class="banner__wrapper__button"
               buttonClass="cpbtn cpbtn--link"
-              buttonText="Upload Picture"
+              [buttonText]="cpI18n.translate('upload_picture')"
               (fileUpload)="onFileUpload($event)">
             </cp-upload-button>
           </div>
@@ -81,7 +81,7 @@
           data-dismiss="modal"
           (click)="resetModal()"
           class="cpbtn cpbtn--cancel" i18n>
-          Cancel
+          {{ 'cancel' | cpI18n }}
         </button>
 
         <button
@@ -89,7 +89,7 @@
           (click)="doSubmit()"
           [disabled]="!form.valid"
           class="cpbtn cpbtn--primary"i18n>
-          Save
+          {{ 'save' | cpI18n }}
         </button>
       </div>
     </div>

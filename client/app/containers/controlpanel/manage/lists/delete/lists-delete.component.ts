@@ -12,6 +12,7 @@ import { URLSearchParams } from '@angular/http';
 
 import { ListsService } from '../lists.service';
 import { CPSession } from '../../../../../session';
+import { CPI18nService } from '../../../../../shared/services/index';
 
 declare var $: any;
 
@@ -32,7 +33,8 @@ export class ListsDeleteComponent implements OnInit {
   constructor(
     private el: ElementRef,
     private session: CPSession,
-    private service: ListsService
+    private service: ListsService,
+    private cpI18n: CPI18nService
   ) { }
 
   @HostListener('document:click', ['$event'])
@@ -78,7 +80,7 @@ export class ListsDeleteComponent implements OnInit {
   ngOnInit() {
     this.buttonData = {
       class: 'danger',
-      text: 'Delete'
+      text: this.cpI18n.translate('delete')
     }
   }
 }

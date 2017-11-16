@@ -1,0 +1,25 @@
+phraseapp:
+  access_token: ba10b2c2fc63b6498c42ef6528ae1806307131eb1c04a6023fab44fdc4ac6e42
+  project_id: d948cd691ed0911393456d90729647d1
+  push:
+    sources:
+    - file: ./client/app/config/locales/en-US.json
+      params:
+        file_format: json
+        locale_id: 2e536a7f1c09753241b8bc8d0fca3923
+    - file: ./client/app/config/locales/fr-CA.json
+      params:
+        file_format: json
+        locale_id: 2a321e373ca3e611f32dff0f1efb2ac2
+  pull:
+    targets:
+    - file: ./client/app/config/locales/en-US.json
+      params:
+        file_format: json
+        locale_id: 2e536a7f1c09753241b8bc8d0fca3923
+    - file: ./client/app/config/locales/fr-CA.json
+      params:
+        file_format: json
+        include_empty_translations: true
+        locale_id: 2a321e373ca3e611f32dff0f1efb2ac2
+        fallback_locale_id: 2e536a7f1c09753241b8bc8d0fca3923

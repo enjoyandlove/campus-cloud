@@ -2,7 +2,7 @@
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-xs-12 text-center">
-        <span i18n><strong>PDF Kit Tool</strong></span>
+        <span i18n><strong>{{ 'checkin_button_pdf_kit' | cpI18n }}</strong></span>
         <span
           data-dismiss="modal"
           (click)="resetModal()"
@@ -27,7 +27,7 @@
 
       <div class="row form-group" *ngIf="isService">
         <div class="col-xs-12">
-          <label>Service Provider Name</label>
+          <label>{{ 'service_provider_name' | cpI18n }}</label>
           <input
             type="text"
             class="form-control"
@@ -37,7 +37,7 @@
 
       <div class="row form-group">
         <div class="col-xs-12">
-          <label>App Name</label>
+          <label>{{ 'app_name' | cpI18n }}</label>
           <input
             type="text"
             class="form-control"
@@ -55,7 +55,7 @@
           data-dismiss="modal"
           (click)="resetModal()"
           class="cpbtn cpbtn--cancel" i18n>
-          Cancel
+          {{ 'cancel' | cpI18n }}
         </button>
 
         <button
@@ -63,7 +63,7 @@
           (click)="onSubmit()"
           [disabled]="!form.valid"
           class="cpbtn cpbtn--primary"i18n>
-          Save Changes
+          {{ 'save_changes' | cpI18n }}
         </button>
       </div>
     </div>

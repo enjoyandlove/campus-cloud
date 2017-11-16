@@ -11,6 +11,7 @@ import { CPSession } from '../../../../../session';
 import { CPMap } from '../../../../../shared/utils';
 import { membershipTypes, statusTypes } from './permissions';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 @Component({
   selector: 'cp-clubs-create',
@@ -19,21 +20,18 @@ import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 })
 export class ClubsCreateComponent implements OnInit {
   formError;
+  buttonData;
   form: FormGroup;
   statusTypes = statusTypes;
   mapCenter: BehaviorSubject<any>;
   membershipTypes = membershipTypes;
-
-  buttonData = {
-    class: 'primary',
-    text: 'Create Club'
-  };
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private store: Store<any>,
     private session: CPSession,
+    private cpI18n: CPI18nService,
     private clubsService: ClubsService,
   ) { }
 
@@ -102,12 +100,17 @@ export class ClubsCreateComponent implements OnInit {
       type: HEADER_UPDATE,
       payload:
       {
-        'heading': 'Create Club',
+        'heading': this.cpI18n.translate('clubs_button_create'),
         'subheading': null,
         'em': null,
         'children': []
       }
     });
+
+    this.buttonData = {
+      class: 'primary',
+      text: this.cpI18n.translate('clubs_button_create')
+    };
 
     this.form = this.fb.group({
       'name': [null, Validators.required],

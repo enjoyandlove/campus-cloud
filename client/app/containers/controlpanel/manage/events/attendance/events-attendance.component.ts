@@ -55,13 +55,13 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     const children = this.utils.getSubNavChildren(event, this.urlPrefix);
 
     const payload = {
-      'heading': event.title,
+      'heading': `[NOTRANSLATE]${event.title}[NOTRANSLATE]`,
 
       'subheading': '',
 
       'crumbs': {
         'url': this.urlPrefix,
-        'label': 'Events'
+        'label': 'events'
       },
 
       'children': [...children]

@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 
 import * as moment from 'moment';
+import { CPI18nService } from '../../../../../../shared/services';
 
 declare var $;
 
@@ -38,7 +39,9 @@ export class EngagementStatsComponent implements OnInit {
   ZERO_ENGAGEMENT = 3;
   REPEAT_ENGAGEMENT = 1;
 
-  constructor() { }
+  constructor(
+    public cpI18n: CPI18nService
+  ) { }
 
   onCompose(listName, userIds) {
     const { starts, ends } = this.props;

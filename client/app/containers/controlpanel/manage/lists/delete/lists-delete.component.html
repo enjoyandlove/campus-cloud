@@ -2,7 +2,7 @@
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-xs-12 text-center">
-        <span i18n><strong>Delete List</strong></span>
+        <span i18n><strong>{{ 'lists_delete_modal_title' | cpI18n }}</strong></span>
 
         <span
           data-dismiss="modal"
@@ -18,7 +18,7 @@
       <div class="row">
         <div class="col-xs-12">
           <p class="text-center" i18n>
-            Are you sure you want to delete {{ list.name }}?
+            {{ 'lists_delete_modal_body' | cpI18n: list.name }}
           </p>
         </div>
       </div>
@@ -31,7 +31,7 @@
             type="button"
             class="cpbtn cpbtn--cancel"
             data-dismiss="modal" i18n>
-            Cancel
+            {{ 'cancel' | cpI18n }}
           </button>
 
           <cp-button
@@ -48,8 +48,7 @@
       <div class="row">
         <div class="col-xs-12">
           <p class="text-center" i18n>
-            This list is being used in a notification template.
-            To delete this list, first delete all templates addressed to this list, and try again.
+            {{ 'lists_error_template_conflict' | cpI18n }}
           </p>
         </div>
       </div>
@@ -63,7 +62,7 @@
             data-dismiss="modal"
             (click)="resetModal()"
             class="cpbtn cpbtn--primary"i18n>
-            Got it
+            {{ 'ok' | cpI18n }}
           </button>
         </div>
       </div>

@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { isDev } from '../../../../../config/env';
 import { CPSession } from '../../../../../session';
 import { ServicesService } from '../services.service';
+import { CPI18nService } from '../../../../../shared/services';
 import { BaseComponent } from '../../../../../base/base.component';
 import { SERVICES_MODAL_RESET } from '../../../../../reducers/services-modal.reducer';
 import { HEADER_UPDATE, HEADER_DEFAULT } from '../../../../../reducers/header.reducer';
@@ -31,6 +32,7 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
     private fb: FormBuilder,
     private store: Store<any>,
     private session: CPSession,
+    private cpI18n: CPI18nService,
     private servicesService: ServicesService
   ) {
     super();
@@ -52,10 +54,10 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': 'Import Services from Excel',
+        'heading': this.cpI18n.translate('services_imports_heading'),
         'crumbs': {
           'url': 'services',
-          'label': 'Services'
+          'label': this.cpI18n.translate('services')
         },
         'em': `${this.services.length} student service(s) data information in the file`,
         'children': []
@@ -231,7 +233,7 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
     this.buttonData = {
       disabled: true,
       class: 'primary',
-      text: 'Import Services'
+      text: this.cpI18n.translate('services_import_button')
     }
   }
 }

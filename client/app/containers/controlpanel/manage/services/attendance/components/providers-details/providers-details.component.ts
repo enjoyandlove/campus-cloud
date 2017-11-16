@@ -67,10 +67,10 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': this.provider.provider_name,
+        'heading': `[NOTRANSLATE]${this.provider.provider_name}[NOTRANSLATE]`,
         'crumbs': {
           'url': `services/${this.serviceId}`,
-          'label': this.serviceName
+          'label': `[NOTRANSLATE]${this.serviceName}[NOTRANSLATE]`
         },
         'subheading': null,
         'em': null,

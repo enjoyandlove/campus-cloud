@@ -5,7 +5,7 @@
         <div class="col-xs-4">
           <cp-searchbox
             (query)="onSearch($event)"
-            placeholder="Search by name or email...">
+            [placeholder]="cpI18n.translate('admin_search_by_email_or_email')">
           </cp-searchbox>
         </div>
       </div>
@@ -18,29 +18,26 @@
 
   <div *ngSwitchCase="false">
     <ul class="cp-form">
-      <li class="cp-form__header col-xs-12">
-        <div class="row">
-          <span class="col-xs-5" i18n>Name</span>
-          <span class="col-xs-5" i18n>Status</span>
-          <span class="col-xs-2"></span>
-        </div>
+      <li class="cp-form__header row">
+        <span class="col-xs-5" i18n>{{ 'name' | cpI18n }}</span>
+        <span class="col-xs-5" i18n>{{ 'status' | cpI18n }}</span>
+        <span class="col-xs-2"></span>
       </li>
 
-      <li class="cp-form__item col-xs-12" *ngFor="let admin of state.admins">
-        <div class="row">
-          <span class="col-xs-5 text-truncate">
-            <strong>
-              <a [routerLink]="[admin.id + '/edit']">
-                {{ admin.firstname }} {{ admin.lastname }}
-                <span *ngIf="admin.is_current_user" i18n>(You)</span>
-              </a>
-            </strong>
-            <br>
-            <small class="text-muted">{{ admin.email }}</small>
-          </span>
-          <span class="col-xs-5 text-truncate">
-            {{ admin.account_activated ? 'Active' : 'Pending' }}
-          </span>
+      <li class="cp-form__item row" *ngFor="let admin of state.admins">
+        <span class="col-xs-5 text-truncate">
+          <strong>
+            <a [routerLink]="[admin.id + '/edit']">
+              {{ admin.firstname }} {{ admin.lastname }}
+              <span *ngIf="admin.is_current_user" i18n>({{ 'you' | cpI18n }})</span>
+            </a>
+          </strong>
+          <br>
+          <small class="text-muted">{{ admin.email }}</small>
+        </span>
+        <span class="col-xs-5 text-truncate">
+          {{ admin.account_activated ? cpI18n.translate('active') : cpI18n.translate('pending') }}
+        </span>
 
           <span class="col-xs-1 col-xs-offset-1 text-center">
             <button

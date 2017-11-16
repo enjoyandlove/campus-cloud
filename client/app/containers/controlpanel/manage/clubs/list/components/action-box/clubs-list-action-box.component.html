@@ -16,13 +16,13 @@
       <a
         [routerLink]="['create']" i18n
         class="cpbtn cpbtn--primary cpbtn--square-right no-right-padding">
-        Create Club
+        {{ 'clubs_button_create' | cpI18n }}
       </a>
       <div
         class="cpbtn cpbtn--square-left cpbtn--no-padding cpbtn--primary no-left-padding hover action-dropdown">
         <i class="material-icons" data-toggle="dropdown">expand_more</i>
         <ul class="dropdown-menu dropdown-menu-right text-left">
-          <li data-toggle="modal" data-target="#excelClubssModal" i18n>Import from CSV</li>
+          <li data-toggle="modal" data-target="#excelClubssModal" i18n>{{ 'import_from_csv' | cpI18n }}</li>
         </ul>
       </div>
     </div>

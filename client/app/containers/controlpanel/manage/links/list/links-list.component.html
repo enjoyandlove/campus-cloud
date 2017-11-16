@@ -14,7 +14,7 @@
     <cp-no-content
       class="no-content"
       *ngIf="!state.links.length"
-      noContentText="No Links...">
+      [noContentText]="cpI18n.translate('links_no_results_found')">
     </cp-no-content>
 
     <div *ngIf="state.links.length">
@@ -22,9 +22,9 @@
         <li class="cp-form__header col-xs-12">
           <div class="row">
             <span class="col-xs-5" i18n>
-              Name
+              {{ 'name' | cpI18n }}
             </span>
-            <span class="col-xs-6" i18n>Description</span>
+            <span class="col-xs-6" i18n>{{ 'description' | cpI18n }}</span>
             <span class="col-xs-1"></span>
           </div>
         </li>

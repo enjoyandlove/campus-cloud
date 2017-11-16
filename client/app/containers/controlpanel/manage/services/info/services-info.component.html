@@ -20,7 +20,7 @@
                   <a
                     [routerLink]="['../edit']"
                     class="cpbtn cpbtn--primary pull-right" i18n>
-                    Edit
+                    {{ 'edit' | cpI18n }}
                   </a>
                 </div>
               </div>
@@ -56,9 +56,9 @@
               <div class="row">
                 <div class="col-xs-12">
                   <div class="service__admins">
-                    <p class="service__admins__title i18n">Admin</p>
+                    <p class="service__admins__title i18n">{{ 'services_admin' | cpI18n }}</p>
 
-                    <p *ngIf="!admins.length" i18n>No Admins found...</p>
+                    <p *ngIf="!admins.length" i18n>{{ 'no_admins_found' | cpI18n }}...</p>
 
                     <ul class="service__admins__list" *ngIf="admins.length">
                       <li

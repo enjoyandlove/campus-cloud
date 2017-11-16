@@ -8,6 +8,7 @@ import { Store } from '@ngrx/store';
 import { CPMap } from '../../../../../shared/utils';
 import { ServicesService } from '../services.service';
 import { CPSession, ISchool } from '../../../../../session';
+import { CPI18nService } from '../../../../../shared/services';
 import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
 const ATTENDANCE_ENABLED = 1;
@@ -33,11 +34,11 @@ export class ServicesCreateComponent implements OnInit {
 
   feedbackOptions = [
     {
-      'label': 'Enabled',
+      'label': this.cpI18n.translate('enabled'),
       'value': FEEDBACK_ENABLED
     },
     {
-      'label': 'Disabled',
+      'label': this.cpI18n.translate('disabled'),
       'value': FEEDBACK_DISABLED
     }
   ];
@@ -47,6 +48,7 @@ export class ServicesCreateComponent implements OnInit {
     private fb: FormBuilder,
     private session: CPSession,
     private store: Store<IHeader>,
+    private cpI18n: CPI18nService,
     private servicesService: ServicesService
   ) {
     this.buildHeader();
@@ -97,7 +99,7 @@ export class ServicesCreateComponent implements OnInit {
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': 'Create Service',
+        'heading': this.cpI18n.translate('services_create_heading'),
         'subheading': null,
         'em': null,
         'children': []
@@ -161,7 +163,10 @@ export class ServicesCreateComponent implements OnInit {
 
   onToggleAttendance(event) {
     if (event) {
-      this.form.controls['default_basic_feedback_label'].setValue('How did you like the service?');
+      this
+        .form
+        .controls['default_basic_feedback_label']
+        .setValue(this.cpI18n.translate('services_default_feedback_question'));
     } else {
       this.form.controls['default_basic_feedback_label'].setValue(null);
     }
@@ -178,7 +183,7 @@ export class ServicesCreateComponent implements OnInit {
     this.buttonData = {
       disabled: true,
       class: 'primary',
-      text: 'Create Service'
+      text: this.cpI18n.translate('services_create_button_create')
     }
 
     this.storeId = this.school.main_union_store_id;

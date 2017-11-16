@@ -8,7 +8,7 @@
       <div class="cp-card">
         <div class="row">
           <div class="col-xs-12">
-            <p class="title" i18n>Event Banner</p>
+            <p class="title" i18n>{{ 'events_event_banner' | cpI18n }}</p>
             <div class="row margin-top">
               <cp-image-upload
                 (uploaded)="onUploadedImage($event)"
@@ -22,9 +22,9 @@
 
         <div class="row event-details">
           <div class="col-xs-12">
-            <p class="title" i18n>Event Details</p>
+            <p class="title" i18n>{{ 'events_event_details' | cpI18n }}</p>
             <div class="form-group margin-top">
-              <label i18n>Event Name</label>
+              <label i18n>{{ 'events_event_name' | cpI18n }}</label>
               <input
                 type="text"
                 class="form-control"
@@ -35,7 +35,7 @@
 
             <div class="row form-group" *ngIf="!isClub && !isService">
               <div class="col-xs-12">
-                <label i18n>Select a Host</label>
+                <label i18n>{{ 'select_host' | cpI18n }}</label>
                 <cp-dropdown
                   [items]="stores"
                   [selectedItem]="originalHost"
@@ -47,14 +47,14 @@
 
             <div class="row form-group">
               <div class="col-xs-6">
-                <label i18n>Start Date</label>
+                <label i18n>{{ 'start_date' | cpI18n }}</label>
                 <cp-datepicker
                   [options]="startdatePickerOpts"
                   [error]="formMissingFields && form.controls['start'].hasError('required')">
                 </cp-datepicker>
               </div>
               <div class="col-xs-6">
-                <label i18n>End Date</label>
+                <label i18n>{{ 'end_date' | cpI18n }}</label>
                 <cp-datepicker
                   [options]="enddatePickerOpts"
                   [error]="formMissingFields && form.controls['end'].hasError('required')">
@@ -63,7 +63,7 @@
             </div>
 
             <div class="form-group">
-              <label i18n>Event Description</label>
+              <label i18n>{{ 'events_event_description' | cpI18n }}</label>
               <textarea
                 formControlName="description"
                 placeholder="Tell people more about the event">
@@ -72,7 +72,7 @@
 
             <div class="row">
               <div class="col-xs-12">
-                <label i18n>Location</label>
+                <label i18n>{{ 'location' | cpI18n }}</label>
                 <div class="row form-group">
                   <div class="col-xs-12">
                     <cp-place-autocomplete
@@ -118,7 +118,7 @@
       <div class="cp-card">
         <div class="row">
           <div class="col-xs-12">
-            <p class="title" i18n>Assessment</p>
+            <p class="title" i18n>{{ 'assessment' | cpI18n }}</p>
             <span class="pull-right">
               <cp-switch
                 (toggle)="toggleEventAttendance($event)"
@@ -132,7 +132,7 @@
           <div class="row margin-top">
             <div class="col-xs-6">
               <div class="form-group">
-                <label i18n>Event Manager</label>
+                <label i18n>{{ 'events_event_manager' | cpI18n }}</label>
                 <cp-dropdown
                   [items]="managers"
                   [selectedItem]="selectedManager"
@@ -143,7 +143,7 @@
             </div>
             <div class="col-xs-6">
               <div class="form-group">
-                <label i18n>Attendance Manager (Optional)</label>
+                <label i18n>{{ 'events_attendance_manager_full' | cpI18n }} ({{ 'optional' | cpI18n }})</label>
                 <input
                   type="text"
                   class="form-control"
@@ -155,7 +155,7 @@
 
           <div class="row form-group">
             <div class="col-xs-6">
-              <label i18n>Student Feedback</label>
+              <label i18n>{{ 'student_feedback' | cpI18n }}</label>
               <cp-dropdown
                 [items]="booleanOptions"
                 [selectedItem]="originalAttnFeedback"
@@ -167,7 +167,7 @@
 
           <div class="row form-group" *ngIf="form.controls['event_feedback'].value === 1">
             <div class="col-xs-12">
-              <label i18n>Default Question</label>
+              <label i18n>{{ 'events_default_question' | cpI18n }}</label>
               <input
                 type="text"
                 class="form-control"
@@ -187,14 +187,14 @@
               <div class="text-right">
                 <label class="error" *ngIf="formMissingFields" i18n>
                     <span>&#x26A0;</span>
-                    {{ isDateError ? dateErrorMessage : 'Please fill out the marked fields' }}
+                    {{ isDateError ? dateErrorMessage : cpI18n.translate('error_fill_out_marked_fields') }}
                 </label>
                 <label class="error" *ngIf="serverError;" i18n>
-                    <span>&#x26A0;</span> {{ STATUS.SOMETHING_WENT_WRONG }}
+                    <span>&#x26A0;</span> {{ cpI18n.translate('something_went_wrong') }}
                 </label>
                 <a [routerLink]="['../']"
                   class="cpbtn cpbtn--cancel" i18n>
-                  Cancel
+                  {{ 'cancel' | cpI18n }}
                 </a>
                 <cp-button
                   [props]="buttonData"

@@ -4,7 +4,7 @@
       <span
         (click)="doSort('title')"
         class="col-xs-4 hover" i18n>
-        Name
+        {{ 'name' | cpI18n }}
         <span *ngIf="state.sort_field === 'title'">
           <i
             class="material-icons"
@@ -18,11 +18,11 @@
           </i>
         </span>
       </span>
-      <span class="col-xs-2" i18n>Host</span>
+      <span class="col-xs-2" i18n>{{ 'host' | cpI18n }}</span>
       <span
         (click)="doSort('start')"
         class="col-xs-2 hover" i18n>
-        Start Date
+        {{ 'start_date' | cpI18n }}
         <span *ngIf="state.sort_field === 'start'">
           <i
             class="material-icons"
@@ -36,7 +36,7 @@
           </i>
         </span>
       </span>
-      <span class="col-xs-3" i18n>Assessment</span>
+      <span class="col-xs-3" i18n>{{ 'assessment' | cpI18n }}</span>
       <span class="col-xs-1"></span>
     </div>
   </li>
@@ -72,7 +72,7 @@
           [routerLink]="['/cb/checkin/e/' + event.encrypted_id]"
           *ngIf="event.event_attendance === attendanceEnabled"
           class="cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--secondary" i18n>
-          Check-In Details
+          {{ 'events_check_in_details' | cpI18n }}
         </a>
       </span>
 

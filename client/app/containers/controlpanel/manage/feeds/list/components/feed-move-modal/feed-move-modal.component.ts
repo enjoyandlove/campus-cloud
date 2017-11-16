@@ -4,6 +4,7 @@ import { URLSearchParams } from '@angular/http';
 
 import { FeedsService } from '../../../feeds.service';
 import { CPSession } from '../../../../../../../session';
+import { CPI18nService } from '../../../../../../../shared/services/index';
 
 declare var $: any;
 
@@ -25,6 +26,7 @@ export class FeedMoveComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private session: CPSession,
+    private cpI18n: CPI18nService,
     private feedsService: FeedsService
   ) {
     this.form = this.fb.group({
@@ -79,7 +81,7 @@ export class FeedMoveComponent implements OnInit {
 
       this.buttonData = {
         class: 'primary',
-        text: 'Move',
+        text: this.cpI18n.translate('move'),
         disabled: true
       };
 

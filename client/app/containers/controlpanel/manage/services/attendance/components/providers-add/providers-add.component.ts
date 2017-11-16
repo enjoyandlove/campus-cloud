@@ -4,6 +4,7 @@ import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 import { ProvidersService } from '../../../providers.service';
+import { CPI18nService } from '../../../../../../../shared/services';
 
 declare var $: any;
 
@@ -23,6 +24,7 @@ export class ServicesProviderAddComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private cpI18n: CPI18nService,
     private providersService: ProvidersService
   ) { }
 
@@ -62,7 +64,7 @@ export class ServicesProviderAddComponent implements OnInit {
           this
             .form
             .controls['custom_basic_feedback_label']
-            .setValue('How did you like the service?');
+            .setValue(this.cpI18n.translate('services_default_feedback_question'));
         }
       });
   }

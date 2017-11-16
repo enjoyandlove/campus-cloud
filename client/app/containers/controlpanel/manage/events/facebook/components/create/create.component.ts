@@ -4,6 +4,7 @@ import { URLSearchParams } from '@angular/http';
 
 import { EventsService } from '../../../events.service';
 import { CPSession } from '../../../../../../../session';
+import { CPI18nService } from '../../../../../../../shared/services';
 
 @Component({
   selector: 'cp-facebook-events-create',
@@ -22,6 +23,7 @@ export class FacebookEventsCreateComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private session: CPSession,
+    private cpI18n: CPI18nService,
     private eventsService: EventsService
   ) { }
 
@@ -40,7 +42,7 @@ export class FacebookEventsCreateComponent implements OnInit {
         },
         err => {
           if (err.status === 400) {
-            this.errors.push('Duplicate event for host');
+            this.errors.push(this.cpI18n.translate('duplicate_entry'));
             return;
           }
           console.log(err);

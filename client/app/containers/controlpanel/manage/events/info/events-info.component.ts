@@ -11,6 +11,7 @@ import { EventsService } from '../events.service';
 import { FORMAT } from '../../../../../shared/pipes/date';
 import { EventUtilService } from './../events.utils.service';
 import { BaseComponent } from '../../../../../base/base.component';
+import { CPI18nService } from '../../../../../shared/services/index';
 
 @Component({
   selector: 'cp-events-info',
@@ -32,6 +33,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   mapCenter: BehaviorSubject<any>;
 
   constructor(
+    public cpI18n: CPI18nService,
     private store: Store<IHeader>,
     private route: ActivatedRoute,
     private service: EventsService,
@@ -72,11 +74,11 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
     const children = this.utils.getSubNavChildren(event, this.urlPrefix);
 
     const payload = {
-      'heading': event.title,
+      'heading': `[NOTRANSLATE]${event.title}[NOTRANSLATE]`,
       'subheading': '',
       'crumbs': {
         'url': this.urlPrefix,
-        'label': 'Events'
+        'label': 'events'
       },
       'children': [...children]
     }

@@ -1,8 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { isDev } from '../../../../../config/env';
-import { STATUS } from '../../../../../shared/constants';
-import { FileUploadService } from '../../../../../shared/services';
+import { FileUploadService, CPI18nService } from '../../../../../shared/services';
 
 declare var $: any;
 
@@ -18,7 +17,10 @@ export class ListsImportComponent implements OnInit {
   options;
   fileName;
 
-  constructor(private fileService: FileUploadService) { }
+  constructor(
+    private cpI18n: CPI18nService,
+    private fileService: FileUploadService
+  ) { }
 
   parser(file) {
     const url = !isDev ?
@@ -37,7 +39,9 @@ export class ListsImportComponent implements OnInit {
       .catch(
       err => {
         let serverError = err.json().error;
-        return Promise.reject(serverError ? serverError : STATUS.SOMETHING_WENT_WRONG);
+        return Promise.reject(serverError ?
+                              serverError :
+                              this.cpI18n.translate('something_went_wrong'));
       }
       );
   }

@@ -2,14 +2,14 @@
   <div class="form-group">
     <div class="row">
       <div class="col-xs-5">
-        <label i18n>Facebook Event Link</label>
+        <label i18n>{{ 'events_facebook_label_link' | cpI18n }}</label>
         <input
           type="text"
           class="form-control"
           formControlName="url">
       </div>
       <div class="col-xs-3" *ngIf="!storeId && !clubId">
-        <label i18n>Select Host</label>
+        <label i18n>{{ 'events_facebook_label_host' | cpI18n }}</label>
         <cp-dropdown
           [items]="stores"
           (selected)="onSelectedStore($event)">
@@ -21,7 +21,7 @@
           type="submit"
           [disabled]="!form.valid"
           class="cpbtn cpbtn--primary"i18n>
-          Add Link
+          {{ 'events_facebook_add_button' | cpI18n }}
         </button>
       </div>
       <div class="col-xs-3 pull-right">

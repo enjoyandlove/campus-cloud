@@ -5,6 +5,7 @@ import { CPSession } from '../../../../../session';
 import { FORMAT } from '../../../../../shared/pipes/date';
 import { AnnouncementsService } from '../announcements.service';
 import { BaseComponent } from '../../../../../base/base.component';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 interface IState {
   messages: Array<any>;
@@ -37,6 +38,7 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
 
   constructor(
     private session: CPSession,
+    private cpI18n: CPI18nService,
     private service: AnnouncementsService
   ) {
     super();
@@ -123,9 +125,9 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
 
   ngOnInit() {
     this.messageType = {
-      0: 'Emergency',
-      1: 'Urgent',
-      2: 'Regular',
+      0: this.cpI18n.translate('emergency'),
+      1: this.cpI18n.translate('urgent'),
+      2: this.cpI18n.translate('regular')
     };
   }
 }

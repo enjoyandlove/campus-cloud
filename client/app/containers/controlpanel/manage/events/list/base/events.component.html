@@ -44,7 +44,7 @@
     <cp-no-content
       class="add-margin"
       *ngIf="!state.events.length"
-      noContentText="No events found...">
+      [noContentText]="cpI18n.translate('events_no_events_found')">
     </cp-no-content>
   </div>
 </div>

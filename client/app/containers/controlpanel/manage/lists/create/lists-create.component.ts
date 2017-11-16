@@ -6,6 +6,7 @@ import { URLSearchParams } from '@angular/http';
 import { ListsService } from '../lists.service';
 import { CPSession } from '../../../../../session';
 import { STATUS } from '../../../../../shared/constants';
+import { CPI18nService } from '../../../../../shared/services/index';
 
 declare var $: any;
 
@@ -39,6 +40,7 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private session: CPSession,
     private service: ListsService,
+    private cpI18n: CPI18nService
   ) { }
 
   doSubmit() {
@@ -117,7 +119,7 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
         });
 
         if (!_users.length) {
-          _users.push({ 'label': 'No Results...' });
+          _users.push({ 'label': `${this.cpI18n.translate('no_results')}...` });
         }
 
         return _users;

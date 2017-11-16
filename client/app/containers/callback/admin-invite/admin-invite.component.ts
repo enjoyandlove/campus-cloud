@@ -3,10 +3,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-// import { STATUS } from '../../../shared/constants';
 import { AuthService } from '../../auth/auth.service';
-// import { ErrorService } from '../../../shared/services';
-
 import { ALERT_DEFAULT } from '../../../reducers/alert.reducer';
 
 @Component({

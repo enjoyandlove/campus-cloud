@@ -3,8 +3,8 @@
     <div class="row">
       <div class="col-xs-12">
         <div class="row">
-          <div class="col-xs-6"><span i18n>Scannable QR Code</span></div>
-          <div class="col-xs-6"><span i18n>Manual Check In</span></div>
+          <div class="col-xs-6"><span i18n>{{ 'checkin_scannable_qr_code' | cpI18n }}</span></div>
+          <div class="col-xs-6"><span i18n>{{ 'checkin_manual_checkin' | cpI18n }}</span></div>
         </div>
       </div>
     </div>
@@ -19,17 +19,17 @@
       <div class="col-xs-6">
         <form [formGroup]="registrationForm" (ngSubmit)="onSubmit(registrationForm.value)">
           <div class="form-group">
-            <label i18n>First Name</label>
+            <label i18n>{{ 'first_name' | cpI18n }}</label>
             <input type="text" class="form-control" formControlName="firstname">
           </div>
 
           <div class="form-group">
-            <label i18n>Last Name</label>
+            <label i18n>{{ 'last_name' | cpI18n }}</label>
             <input type="text" class="form-control" formControlName="lastname">
           </div>
 
           <div class="form-group">
-            <label i18n>Email</label>
+            <label i18n>{{ 'email' | cpI18n }}</label>
             <input type="email" class="form-control" formControlName="email">
           </div>
 
@@ -40,7 +40,7 @@
                   type="submit"
                   [disabled]="!registrationForm.valid"
                   class="cpbtn cpbtn--tall cpbtn--full-width cpbtn--primary" i18n>
-                  Confirm
+                  {{ 'confirm' | cpI18n }}
                 </button>
               </div>
             </div>

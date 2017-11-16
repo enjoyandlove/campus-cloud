@@ -6,23 +6,24 @@ import { Store } from '@ngrx/store';
 
 import { TEAM_ACCESS } from '../utils';
 import { CPSession } from '../../../../../session';
-import { STATUS } from '../../../../../shared/constants';
 import { accountCleanUp } from './../create/team-create.component';
 import { BaseComponent } from '../../../../../base/base.component';
 import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
-import { AdminService, ErrorService } from '../../../../../shared/services';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 import { CP_PRIVILEGES, CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 import { accountsToStoreMap } from './../../../../../shared/utils/privileges/privileges';
+import { AdminService, ErrorService, CPI18nService } from '../../../../../shared/services';
+
+const _cpI18n = new CPI18nService();
 
 const eventsDropdown = function (privilege: { r: boolean, w: boolean }) {
   let items = [
     {
-      'label': 'No Access',
+      'label': _cpI18n.translate('admin_no_access'),
       'action': null
     },
     {
-      'label': 'Manage Events',
+      'label': _cpI18n.translate('admin_manage_events'),
       'action': 2
     }
   ];
@@ -35,7 +36,7 @@ const eventsDropdown = function (privilege: { r: boolean, w: boolean }) {
     items = [
       ...items,
       {
-        'label': 'Manage and Assess Events',
+        'label': _cpI18n.translate('admin_manage_and_assess_events'),
         'action': 3
       }
     ];
@@ -46,7 +47,7 @@ const eventsDropdown = function (privilege: { r: boolean, w: boolean }) {
 const manageAdminDropdown = function (privilege: { r: boolean, w: boolean }) {
   let items = [
     {
-      'label': 'Disabled',
+      'label': _cpI18n.translate('disabled'),
       'action': null
     }
   ];
@@ -59,7 +60,7 @@ const manageAdminDropdown = function (privilege: { r: boolean, w: boolean }) {
     items = [
       ...items,
       {
-        'label': 'Enabled',
+        'label': _cpI18n.translate('enabled'),
         'action': 1
       }
     ];
@@ -70,7 +71,7 @@ const manageAdminDropdown = function (privilege: { r: boolean, w: boolean }) {
 const clubsDropdown = function (privilege: { r: boolean, w: boolean }) {
   let items = [
     {
-      'label': 'No Access',
+      'label': _cpI18n.translate('admin_no_access'),
       'action': null
     }
   ];
@@ -83,11 +84,11 @@ const clubsDropdown = function (privilege: { r: boolean, w: boolean }) {
     items = [
       ...items,
       {
-        'label': 'Select Clubs',
+        'label': _cpI18n.translate('admin_select_clubs'),
         'action': 2
       },
       {
-        'label': 'All Clubs',
+        'label': _cpI18n.translate('admin_all_clubs'),
         'action': 3
       },
     ];
@@ -98,7 +99,7 @@ const clubsDropdown = function (privilege: { r: boolean, w: boolean }) {
 const servicesDropdown = function (privilege: { r: boolean, w: boolean }) {
   let items = [
     {
-      'label': 'No Access',
+      'label': _cpI18n.translate('admin_no_access'),
       'action': null
     }
   ];
@@ -111,18 +112,17 @@ const servicesDropdown = function (privilege: { r: boolean, w: boolean }) {
     items = [
       ...items,
       {
-        'label': 'Select Services',
+        'label': _cpI18n.translate('admin_select_services'),
         'action': 2
       },
       {
-        'label': 'All Services',
+        'label': _cpI18n.translate('admin_all_services'),
         'action': 3
       },
     ];
   }
   return items;
 };
-
 
 declare var $: any;
 
@@ -172,6 +172,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     private session: CPSession,
     private route: ActivatedRoute,
     private store: Store<IHeader>,
+    private cpI18n: CPI18nService,
     private adminService: AdminService,
     private errorService: ErrorService
   ) {
@@ -307,10 +308,10 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': `${name}`,
+        'heading': `[NOTRANSLATE]${name}[NOTRANSLATE]`,
         'crumbs': {
           'url': this.isProfileView ? null : 'team',
-          'label': this.isProfileView ? null : 'Team Settings'
+          'label': this.isProfileView ? null : 'team_settings'
         },
         'subheading': null,
         'em': null,
@@ -337,7 +338,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
     if (!this.form.valid) {
       this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
-      this.errorService.handleError({ reason: STATUS.ALL_FIELDS_ARE_REQUIRED });
+      this.errorService.handleError({ reason: this.cpI18n.translate('all_fields_are_required') });
       return;
     }
 
@@ -357,7 +358,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     const emptySchoolPrivileges = isEmpty(_data.school_level_privileges[this.schoolId]);
 
     if (emptyAccountPrivileges && emptySchoolPrivileges) {
-      this.formError = 'You have not granted any access';
+      this.formError = this.cpI18n.translate('admins_error_no_access_granted');
       this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       this.isFormError = true;
       return;
@@ -383,11 +384,11 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
         this.isFormError = true;
 
         if (err.status === 409) {
-          this.formError = STATUS.DUPLICATE_ENTRY;
+          this.formError = this.cpI18n.translate('duplicate_entry');
           return;
         }
 
-        this.formError = STATUS.SOMETHING_WENT_WRONG;
+        this.formError = this.cpI18n.translate('all_fields_are_required');
       }
       );
   }
@@ -702,7 +703,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
     this.buttonData = {
       class: 'primary',
-      text: 'Update'
+      text: this.cpI18n.translate('update')
     }
 
     let schoolPrivileges = this.user.school_level_privileges[this.schoolId];

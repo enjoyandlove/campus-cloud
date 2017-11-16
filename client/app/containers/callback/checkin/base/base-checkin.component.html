@@ -3,18 +3,18 @@
     <div class="cp-wrapper cp-wrapper--outer">
       <div class="row">
         <div class="col-xs-8 col-xs-offset-2">
-          <p class="page__title" i18n>Check In Instructions</p>
+          <p class="page__title" i18n>{{ 'checkin_header_title' | cpI18n }}</p>
           <div class="pull-right">
             <button
               (click)="handlePdf()"
               class="cpbtn cpbtn--primary"i18n>
-              Download QR Code
+              {{ 'checkin_download_qr_code' | cpI18n }}
             </button>
             <button
               data-toggle="modal"
               class="cpbtn cpbtn--primary"
               data-target="#checkinInstruction" i18n>
-              Instructions
+              {{ 'instructions' | cpI18n }}
             </button>
           </div>
         </div>

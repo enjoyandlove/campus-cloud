@@ -4,6 +4,7 @@ import { URLSearchParams } from '@angular/http';
 import { ListsService } from '../lists.service';
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base/base.component';
+import { CPI18nService } from '../../../../../shared/services/index';
 
 interface IState {
   lists: Array<any>;
@@ -33,6 +34,7 @@ export class ListsListComponent extends BaseComponent implements OnInit {
 
   constructor(
     private session: CPSession,
+    public cpI18n: CPI18nService,
     private listsService: ListsService
   ) {
     super();

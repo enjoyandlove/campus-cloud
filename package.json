@@ -6,7 +6,7 @@
     "node": ">=8.2.1"
   },
   "scripts": {
-    "i18n": "ng-xi18n -p ",
+    "i18n": "phraseapp pull",
     "clean": "rimraf node_modules doc dist && yarn run cache clean",
     "clean-install": "yarn run clean && yarn run install",
     "clean-start": "yarn run clean-install && yarn start",

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
+import { CPI18nService } from '../../../../../shared/services/index';
 
 @Component({
   selector: 'cp-feedback-form',
@@ -18,7 +19,8 @@ export class FeedbackFormComponent implements OnInit {
   feedbackForm: FormGroup;
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public cpI18n: CPI18nService
   ) { }
 
   onRated(rating: number): void {

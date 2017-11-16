@@ -4,15 +4,13 @@
       <div class="row">
         <div class="col-xs-12">
           <div class="header">
-            <p class="title" i18n>Create your Campus Cloud Account</p>
+            <p class="title" i18n>{{ 'admin_invite_heading' | cpI18n }}</p>
           </div>
         </div>
       </div>
       <div class="row" *ngIf="isSubmitted">
         <div class="col-xs-12">
-          <p i18n>
-            Password saved, redirecting you to the login page
-          </p>
+          <p i18n>{{ 'admin_password_sucess_redirect' | cpI18n }}</p>
         </div>
       </div>
 
@@ -36,7 +34,7 @@
                 </div>-->
 
                 <div class="form-group">
-                  <label i18n>Password</label>
+                  <label i18n>{{ 'password' | cpI18n }}</label>
                   <input type="password" formControlName="new_password">
                 </div>
 
@@ -46,7 +44,7 @@
                       type="submit"
                       [disabled]="!form.valid"
                       class="cpbtn cpbtn--primary" i18n>
-                      Create Account
+                      {{ 'admin_create_account' | cpI18n }}
                     </button>
                   </div>
                 </div>
@@ -64,7 +62,7 @@
             <div class="col-xs-4 col-xs-offset-4">
               <div class="row">
                 <div class="col-xs-12">
-                  <a [routerLink]="['/login']" i18n>Login</a>
+                  <a [routerLink]="['/login']" i18n>{{ 'login' | cpI18n }}</a>
                 </div>
               </div>
             </div>

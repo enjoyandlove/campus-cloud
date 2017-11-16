@@ -29,11 +29,11 @@ export class EventUtilService {
 
     const children = [
       {
-        'label': 'Info',
+        'label': 'info',
         'url': `${urlPrefix}/${event.id}/info`
       },
       {
-        'label': 'Assessment',
+        'label': 'assessment',
         'url': `${urlPrefix}/${event.id}`
       }
     ];

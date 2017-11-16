@@ -1,3 +1,4 @@
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { URLSearchParams } from '@angular/http';
@@ -7,7 +8,6 @@ import { StudentsService } from './../students.service';
 import { CPSession } from './../../../../../session/index';
 import { CPDate } from './../../../../../shared/utils/date';
 import { FORMAT } from './../../../../../shared/pipes/date';
-import { STATUS } from './../../../../../shared/constants/status';
 import { BaseComponent } from './../../../../../base/base.component';
 import { HEADER_UPDATE } from './../../../../../reducers/header.reducer';
 import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
@@ -60,10 +60,11 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
   }
 
   constructor(
-    private store: Store<any>,
-    private session: CPSession,
-    private route: ActivatedRoute,
-    private service: StudentsService
+    public store: Store<any>,
+    public session: CPSession,
+    public route: ActivatedRoute,
+    public cpI18n: CPI18nService,
+    public service: StudentsService
   ) {
     super();
     super.isLoading().subscribe(loading => this.loadingEngagementData = loading);
@@ -149,11 +150,11 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
       type: HEADER_UPDATE,
       payload:
       {
-        'heading': `${student.firstname} ${student.lastname}`,
+        'heading': `[NOTRANSLATE]${student.firstname} ${student.lastname}[NOTRANSLATE]`,
         'subheading': null,
         'crumbs': {
           'url': 'students',
-          'label': 'Students'
+          'label': 'students'
         },
         'em': null,
         'children': []
@@ -171,17 +172,17 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
       .service.getEngagements(search, this.studentId, this.startRange, this.endRange);
 
     const columns = [
-      'Check-In Item',
-      'Type',
-      'Check-In Date',
-      'Response Date',
-      'Rating',
-      'Response',
+      this.cpI18n.translate('assess_check_in_time'),
+      this.cpI18n.translate('type'),
+      this.cpI18n.translate('assess_checkin_date'),
+      this.cpI18n.translate('assess_response_date'),
+      this.cpI18n.translate('rating'),
+      this.cpI18n.translate('response'),
     ];
 
     const type = {
-      'event': 'Event',
-      'service': 'Service'
+      'event': this.cpI18n.translate('event'),
+      'service': this.cpI18n.translate('service')
     };
 
     stream$
@@ -189,22 +190,24 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
       .then(data => {
         data = data.map(item => {
           return {
-            'Check-In Item': item.name,
+            [this.cpI18n.translate('assess_check_in_time')]: item.name,
 
-            'Type': type[item.type],
+            [this.cpI18n.translate('type')]: type[item.type],
 
-            'Check-In Date': moment.unix(item.time_epoch).format('MMMM Do YYYY - h:mm a'),
+            [this.cpI18n.translate('assess_checkin_date')]
+              : moment.unix(item.time_epoch).format('MMMM Do YYYY - h:mm a'),
 
-            'Response Date': item.feedback_time_epoch === 0 ?
+            [this.cpI18n.translate('assess_response_date')]
+              : item.feedback_time_epoch === 0 ?
               'No Feedback Provided' :
               moment.unix(item.feedback_time_epoch).format('MMMM Do YYYY - h:mm a'),
 
-            'Rating': item.user_rating_percent === -1 ?
+            [this.cpI18n.translate('rating')]: item.user_rating_percent === -1 ?
               'No Rating Provided' :
               ((item.user_rating_percent / 100) * 5).toFixed(1)
             ,
 
-            'Response': item.user_feedback_text,
+            [this.cpI18n.translate('response')]: item.user_feedback_text,
           }
         })
 
@@ -231,7 +234,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
     this.store.dispatch({
       type: SNACKBAR_SHOW,
       payload: {
-        body: STATUS.MESSAGE_SENT,
+        body: this.cpI18n.translate('announcement_success_sent'),
         autoClose: true,
       }
     });

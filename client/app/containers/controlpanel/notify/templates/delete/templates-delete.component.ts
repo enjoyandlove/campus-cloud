@@ -3,7 +3,7 @@ import { URLSearchParams } from '@angular/http';
 
 import { TemplatesService } from './../templates.service';
 import { CPSession } from './../../../../../session/index';
-import { STATUS } from './../../../../../shared/constants/status';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 declare var $;
 
@@ -23,6 +23,7 @@ export class TemplatesDeleteComponent implements OnInit {
 
   constructor(
     private session: CPSession,
+    private cpI18n: CPI18nService,
     private service: TemplatesService
   ) { }
 
@@ -48,7 +49,7 @@ export class TemplatesDeleteComponent implements OnInit {
         },
         _ => {
           this.isError = true;
-          this.errorMessage = STATUS.SOMETHING_WENT_WRONG;
+          this.errorMessage =  this.cpI18n.translate('something_went_wrong');
           this.buttonData = Object.assign({}, this.buttonData, { disabled: true });
         }
       );
@@ -57,7 +58,7 @@ export class TemplatesDeleteComponent implements OnInit {
   ngOnInit() {
     this.buttonData = {
       class: 'danger',
-      text: 'Delete'
+      text: this.cpI18n.translate('delete')
     }
   }
 }

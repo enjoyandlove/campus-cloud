@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { EventsService } from '../../../events.service';
 import { CPSession } from '../../../../../../../session';
 import { BaseComponent } from '../../../../../../../base/base.component';
+import { CPI18nService } from '../../../../../../../shared/services/index';
 
 @Component({
   selector: 'cp-facebook-update',
@@ -28,6 +29,7 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
   constructor(
     private fb: FormBuilder,
     private session: CPSession,
+    private cpI18n: CPI18nService,
     private eventsService: EventsService
   ) {
     super();
@@ -144,7 +146,7 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
 
     this.buttonData = {
       class: 'primary',
-      text: 'Update',
+      text: this.cpI18n.translate('update'),
       disabled: true
     }
 

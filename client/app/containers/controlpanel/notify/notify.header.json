@@ -1,14 +1,14 @@
 {
-  "heading": "Notify",
+  "heading": "notify",
   "subheading": null,
   "em": null,
   "children": [
     {
-      "label": "Announcements",
+      "label": "announcements",
       "url": "/notify"
     },
     {
-      "label": "Templates",
+      "label": "templates",
       "new": true,
       "hasParams": true,
       "url": "/notify/templates"

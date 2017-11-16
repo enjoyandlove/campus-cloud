@@ -21,9 +21,9 @@
       <ul class="students cp-form">
         <li class="cp-form__header col-xs-12">
           <div class="row">
-            <span class="col-xs-3" i18n>Name</span>
-            <span class="col-xs-3" i18n>Engagement (Last 7 Days)</span>
-            <span class="col-xs-3" i18n>Last Engagement</span>
+            <span class="col-xs-3" i18n>{{ 'name' | cpI18n }}</span>
+            <span class="col-xs-3" i18n>{{ 'assess_engagements_last_seven_days' | cpI18n }}</span>
+            <span class="col-xs-3" i18n>{{ 'assess_last_engagement' | cpI18n }}</span>
             <span class="col-xs-3"></span>
           </div>
         </li>
@@ -46,11 +46,11 @@
             </span>
 
             <span class="col-xs-3">
-              {{ student.events }} Events and {{ student.services }} Services
+              {{ student.events }} {{ 'events' | cpI18n }} {{ 'and' | cpI18n }} {{ student.services }} {{ 'services' | cpI18n }}
             </span>
 
             <span class="col-xs-3">
-              <ng-container *ngIf="student.last_event === 0 && student.last_service === 0">No engagement data</ng-container>
+              <ng-container *ngIf="student.last_event === 0 && student.last_service === 0">{{ cpI18n.translate('announcements_no_engagement_data') }}</ng-container>
               <ng-container *ngIf="student.last_event !== 0 || student.last_service !== 0">
                 <ng-container *ngIf="student.last_service >= student.last_event">
                   {{ student.last_service | cpDatePipe:dateFormat }}
@@ -66,7 +66,7 @@
                 type="button"
                 class="cpbtn cpbtn--link" i18n
                 (click)="messageStudent(student)">
-                Message Student
+                {{ 'assess_message_student' | cpI18n }}
               </button>
             </span>
           </div>

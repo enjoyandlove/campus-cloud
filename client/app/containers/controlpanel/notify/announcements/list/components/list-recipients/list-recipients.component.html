@@ -1,18 +1,31 @@
 <div class="recipients">
   <div class="row">
-    <div [class]="recipients_more.length ? 'recipients__names col-xs-6 no-right-padding text-truncate' : 'recipients__names col-xs-12 text-truncate'">
+    <div [class]="recipients_more.length ?
+                 'recipients__names col-xs-6 no-right-padding text-truncate' :
+                 'recipients__names col-xs-12 text-truncate'">
       <span
         *ngFor="let name of recipients; let last = last">
-        {{ name }}<span *ngIf="!last">, </span><span *ngIf="recipients_more.length && last">...</span>
+        {{ name }}
+        <span *ngIf="!last">, </span>
+        <span *ngIf="recipients_more.length && last">...</span>
       </span>
     </div>
     <div
       class="recipients__more col-xs-6 no-left-padding"
       *ngIf="recipients_more.length">
-      <button type="button" class="cpbtn cpbtn--link cpbtn--no-border" data-toggle="dropdown">View More ({{ recipients_more.length }})</button>
+      <button
+        type="button"
+        data-toggle="dropdown"
+        class="cpbtn cpbtn--link cpbtn--no-border">
+        {{ 'view_more' | cpI18n }} ({{ recipients_more.length }})
+      </button>
 
       <ul class="dropdown-menu recipients__list">
-        <li *ngFor="let name of recipients_more" class="recipients__item">{{ name }}</li>
+        <li
+        class="recipients__item"
+          *ngFor="let name of recipients_more">
+          {{ name }}
+        </li>
       </ul>
     </div>
   </div>

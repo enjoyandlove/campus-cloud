@@ -12,7 +12,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label i18n>Email</label>
+          <label i18n>{{ 'email' | cpI18n }}</label>
           <input
             autofocus
             type="email"
@@ -21,7 +21,7 @@
             formControlName="username">
         </div>
         <div class="form-group">
-          <label i18n>Password</label>
+          <label i18n>{{ 'password' | cpI18n }}</label>
           <input
             type="password"
             name="password"
@@ -34,7 +34,7 @@
             <button
               type="submit"
               class="cpbtn cpbtn--primary">
-              Login
+              {{ 'login' | cpI18n }}
             </button>
           </div>
         </div>
@@ -51,7 +51,7 @@
     <div class="col-xs-4 col-xs-offset-4">
       <div class="row">
         <div class="col-xs-12">
-          <a [routerLink]="['/password-reset']" i18n>Lost your password?</a>
+          <a [routerLink]="['/lost-password']" i18n>{{ 'lost_password_question' | cpI18n }}</a>
         </div>
       </div>
     </div>

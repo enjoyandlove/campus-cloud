@@ -2,7 +2,7 @@
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-xs-12 text-center">
-        <span i18n><strong>Edit Member</strong></span>
+        <span i18n><strong>{{ 'clubs_member_edit_modal_title' | cpI18n }}</strong></span>
 
         <span
           data-dismiss="modal"
@@ -19,7 +19,7 @@
       <div class="col-xs-12">
         <form [formGroup]="form">
           <div class="form-group dropdown">
-            <label i18n>Name (need a mobile app account)</label>
+            <label i18n>{{ 'clubs_member_label_name' | cpI18n }}</label>
             <input
               disabled
               type="text"
@@ -37,7 +37,7 @@
           </div>
           <div class="row form-group">
             <div class="col-xs-6">
-              <label i18n>Member Type</label>
+              <label i18n>{{ 'clubs_label_member_type' | cpI18n }}</label>
               <cp-dropdown
                 [items]="memberTypes"
                 [selectedItem]="defaultType"
@@ -58,7 +58,7 @@
           (click)="doTearDown()"
           class="cpbtn cpbtn--cancel"
           data-dismiss="modal" i18n>
-          Cancel
+          {{ 'cancel' | cpI18n }}
         </button>
 
         <button
@@ -66,7 +66,7 @@
           (click)="onSave()"
           [disabled]="!isTouched"
           class="cpbtn cpbtn--primary"i18n>
-          Save
+          {{ 'save' | cpI18n }}
         </button>
       </div>
     </div>

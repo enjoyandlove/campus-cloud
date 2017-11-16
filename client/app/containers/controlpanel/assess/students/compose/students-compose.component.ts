@@ -13,8 +13,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { CPSession } from '../../../../../session';
 import { StudentsService } from './../students.service';
-import { STATUS } from '../../../../../shared/constants';
 import { StoreService } from '../../../../../shared/services';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 const THROTTLED_STATUS = 1;
 
@@ -41,6 +41,7 @@ export class StudentsComposeComponent implements OnInit {
     private el: ElementRef,
     private fb: FormBuilder,
     private session: CPSession,
+    private cpI18n: CPI18nService,
     private service: StudentsService,
     private storeService: StoreService
   ) {
@@ -88,7 +89,7 @@ export class StudentsComposeComponent implements OnInit {
       },
       _ => {
         this.isError = true;
-        this.errorMessage = STATUS.SOMETHING_WENT_WRONG;
+        this.errorMessage = this.cpI18n.translate('something_went_wrong');
       }
       );
   }

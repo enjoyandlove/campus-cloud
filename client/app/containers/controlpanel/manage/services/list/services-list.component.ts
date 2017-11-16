@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
@@ -6,6 +6,7 @@ import { ServicesService } from '../services.service';
 import { CPSession } from './../../../../../session/index';
 import { ManageHeaderService } from './../../utils/header';
 import { BaseComponent } from '../../../../../base/base.component';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 
 interface IState {
@@ -25,13 +26,14 @@ const state: IState = {
   templateUrl: './services-list.component.html',
   styleUrls: ['./services-list.component.scss']
 })
-export class ServicesListComponent extends BaseComponent implements OnInit, OnDestroy {
+export class ServicesListComponent extends BaseComponent implements OnInit {
   loading;
   deleteService = '';
   state: IState = state;
 
   constructor(
     private session: CPSession,
+    public cpI18n: CPI18nService,
     private store: Store<IHeader>,
     private service: ServicesService,
     private headerService: ManageHeaderService
@@ -97,10 +99,6 @@ export class ServicesListComponent extends BaseComponent implements OnInit, OnDe
     _state.services = _state.services.filter(service => service.id !== serviceId);
 
     this.state = Object.assign({}, this.state, { services: _state.services });
-  }
-
-  ngOnDestroy() {
-    // console.log('destroy');
   }
 
   ngOnInit() {

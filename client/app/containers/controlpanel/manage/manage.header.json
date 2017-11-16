@@ -1,36 +1,36 @@
 {
-  "heading": "Manage",
+  "heading": "manage",
   "subheading": "",
   "em": null,
   "children": [
     {
       "privilege": 18,
-      "label": "Events",
+      "label": "events",
       "url": "/manage/events"
     },
     {
       "privilege": 15,
-      "label": "Feeds",
+      "label": "feeds",
       "url": "/manage/feeds"
     },
     {
       "privilege": 22,
-      "label": "Clubs & Groups",
+      "label": "clubs_and_groups",
       "url": "/manage/clubs"
     },
     {
       "privilege": 24,
-      "label": "Services",
+      "label": "services",
       "url": "/manage/services"
     },
     {
       "privilege": 12,
-      "label": "Lists",
+      "label": "lists",
       "url": "/manage/lists"
     },
     {
       "privilege": 23,
-      "label": "Links",
+      "label": "links",
       "url": "/manage/links"
     }
   ]

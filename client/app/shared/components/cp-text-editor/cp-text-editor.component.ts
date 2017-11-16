@@ -16,6 +16,8 @@ import { Observable } from 'rxjs/Observable';
 import 'node_modules/quill/dist/quill.core.css';
 import 'node_modules/quill/dist/quill.snow.css';
 
+import { CPI18nService } from '../../services/index';
+
 interface IState {
   body: string,
   image: string,
@@ -44,7 +46,9 @@ export class CPTextEditorComponent implements OnInit, AfterViewInit {
   imageElement: HTMLImageElement = new Image();
   deleteButtonElement;
 
-  constructor() { }
+  constructor(
+    private cpI18n: CPI18nService
+  ) { }
 
   createDeleteButton() {
     const button = document.createElement('button');
@@ -75,7 +79,7 @@ export class CPTextEditorComponent implements OnInit, AfterViewInit {
       modules: {
         toolbar: toolbarOptions
       },
-      placeholder: 'Add some text to this post....',
+      placeholder: this.cpI18n.translate('feeds_input_placeholder'),
       theme: 'snow'
     });
 

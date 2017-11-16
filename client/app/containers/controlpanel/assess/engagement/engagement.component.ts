@@ -1,4 +1,3 @@
-import { createSpreadSheet } from './../../../../shared/utils/csv/parser';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
@@ -7,10 +6,11 @@ import { Store } from '@ngrx/store';
 
 import { CPSession } from './../../../../session/index';
 import { EngagementService } from './engagement.service';
-import { STATUS } from './../../../../shared/constants/status';
 import { BaseComponent } from '../../../../base/base.component';
 import { HEADER_UPDATE } from './../../../../reducers/header.reducer';
 import { SNACKBAR_SHOW } from './../../../../reducers/snackbar.reducer';
+import { createSpreadSheet } from './../../../../shared/utils/csv/parser';
+import { CPI18nService } from './../../../../shared/services/i18n.service';
 
 declare var $;
 
@@ -36,6 +36,7 @@ export class EngagementComponent extends BaseComponent implements OnInit {
     public router: Router,
     public store: Store<any>,
     public session: CPSession,
+    public cpI18n: CPI18nService,
     public service: EngagementService
   ) {
     super();
@@ -129,38 +130,55 @@ export class EngagementComponent extends BaseComponent implements OnInit {
       .toPromise()
       .then(data => {
         const columns = [
-          'Student Name',
-          '# of Check-ins',
-          '# of Responses',
-          'Response Rate',
-          'Average Rating',
-          '# of Event Check-Ins',
-          'Event Responses',
-          'Event Response Rate',
-          'Event Average Rating',
-          '# of Service Check-ins',
-          'Service Responses',
-          'Services Response Rate',
-          'Service Average Rating',
-          'Student ID'
+          this.cpI18n.translate('assess_student_name'),
+          this.cpI18n.translate('assess_number_of_checkins'),
+          this.cpI18n.translate('assess_number_of_responses'),
+          this.cpI18n.translate('assess_response_rate'),
+          this.cpI18n.translate('assess_average_rating'),
+          this.cpI18n.translate('assess_number_of_event_checkins'),
+          this.cpI18n.translate('assess_event_responses'),
+          this.cpI18n.translate('assess_event_responses_rate'),
+          this.cpI18n.translate('assess_event_rating_average'),
+          this.cpI18n.translate('assess_service_checkins'),
+          this.cpI18n.translate('assess_service_responses'),
+          this.cpI18n.translate('assess_service_responses_rate'),
+          this.cpI18n.translate('assess_service_rating_average'),
+          this.cpI18n.translate('assess_student_id')
         ];
 
         const parsedData = data.download_data.map(item => {
           return {
-            'Student Name': `${item.firstname} ${item.lastname}`,
-            '# of Check-ins': item.total_checkins,
-            '# of Responses': item.total_responses,
-            'Response Rate': `${item.total_response_rate.toFixed(1)}%`,
-            'Average Rating': `${(item.event_ratings + item.service_ratings) / 2}%`,
-            '# of Event Check-Ins': item.event_checkins,
-            'Event Responses': item.event_responses,
-            'Event Response Rate': `${item.event_response_rate.toFixed(1)}%`,
-            'Event Average Rating': item.event_ratings,
-            '# of Service Check-ins': item.service_checkins,
-            'Service Responses': item.service_responses,
-            'Services Response Rate': `${item.service_response_rate.toFixed(1)}%`,
-            'Service Average Rating': item.service_ratings,
-            'Student ID': item.student_identifier,
+            [this.cpI18n.translate('assess_student_name')]: `${item.firstname} ${item.lastname}`,
+
+            [this.cpI18n.translate('assess_number_of_checkins')]: item.total_checkins,
+
+            [this.cpI18n.translate('assess_number_of_responses')]: item.total_responses,
+
+            [this.cpI18n.translate('assess_response_rate')]:
+              `${item.total_response_rate.toFixed(1)}%`,
+
+              [this.cpI18n.translate('assess_average_rating')]:
+              `${(item.event_ratings + item.service_ratings) / 2}%`,
+
+              [this.cpI18n.translate('assess_number_of_event_checkins')]: item.event_checkins,
+
+            [this.cpI18n.translate('assess_event_responses')]: item.event_responses,
+
+            [this.cpI18n.translate('assess_event_responses_rate')]:
+              `${item.event_response_rate.toFixed(1)}%`,
+
+            [this.cpI18n.translate('assess_event_rating_average')]: item.event_ratings,
+
+            [this.cpI18n.translate('assess_service_checkins')]: item.service_checkins,
+
+            [this.cpI18n.translate('assess_service_responses')]: item.service_responses,
+
+            [this.cpI18n.translate('assess_service_responses_rate')]:
+              `${item.service_response_rate.toFixed(1)}%`,
+
+            [this.cpI18n.translate('assess_service_rating_average')]: item.service_ratings,
+
+            [this.cpI18n.translate('assess_student_id')]: item.student_identifier,
           }
         })
         createSpreadSheet(parsedData, columns, fileName)
@@ -178,7 +196,7 @@ export class EngagementComponent extends BaseComponent implements OnInit {
     this.store.dispatch({
       type: SNACKBAR_SHOW,
       payload: {
-        body: STATUS.MESSAGE_SENT,
+        body: this.cpI18n.translate('announcement_success_sent'),
         autoClose: true,
       }
     });

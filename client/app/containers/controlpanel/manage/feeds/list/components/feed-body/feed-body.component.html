@@ -19,7 +19,7 @@
       <div
         [class]="[feed.image_thumb_url !== '' ? 'feed__footer feed__footer--absolute' : 'feed__footer']">
         <div class="row">
-          <div class="col-xs-8">
+          <div class="col-xs-6">
             <span>
               <i class="material-icons">thumb_up</i>
               {{ feed.likes }}
@@ -31,16 +31,16 @@
           </div>
           <div
             *ngIf="feed.comment_count > 0 && !isRemovedPosts"
-            class="col-xs-4 pull-right text-right">
+            class="col-xs-6 pull-right text-right">
             <button
               class="cpbtn cpbtn--link-dark"
               (click)="isCommentsOpen = !isCommentsOpen"
               (click)="viewComments.emit(isCommentsOpen)">
               <i class="material-icons" *ngIf="!isCommentsOpen">chevron_right</i>
               <i class="material-icons" *ngIf="isCommentsOpen">expand_more</i>
-              {{ isCommentsOpen ? 'Hide' : 'Show' }}
+              {{ isCommentsOpen ? cpI18n.translate('hide') : cpI18n.translate('show') }}
               {{ feed.comment_count }}
-              {{ feed.comment_count > 1 ? 'Comments' : 'Comment' }}
+              {{ feed.comment_count > 1 ? cpI18n.translate('comments') : cpI18n.translate('comment') }}
             </button>
           </div>
         </div>

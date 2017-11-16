@@ -16,11 +16,11 @@ import {
 } from './../../../../../shared/utils/privileges';
 
 
-import { CPSession, ISchool } from '../../../../../session';
 import { ServicesService } from '../services.service';
+import { CPSession, ISchool } from '../../../../../session';
 import { AdminService } from '../../../../../shared/services';
-import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 import { BaseComponent } from '../../../../../base/base.component';
+import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 
 @Component({
   selector: 'cp-services-info',
@@ -95,7 +95,7 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
   private buildHeader() {
     let children = [
       {
-        'label': 'Info',
+        'label': 'info',
         'url': `/manage/services/${this.serviceId}/info`
       }
     ];
@@ -105,7 +105,7 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
 
     if (eventsSchoolLevel || eventsAccountLevel) {
       const events = {
-        'label': 'Events',
+        'label': 'events',
         'url': `/manage/services/${this.serviceId}/events`
       }
 
@@ -114,7 +114,7 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
 
     if (this.service.service_attendance) {
       let attendance = {
-        'label': 'Assessment',
+        'label': 'assessment',
         'url': `/manage/services/${this.serviceId}`
       };
 
@@ -124,10 +124,10 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': this.service.name,
+        'heading': `[NOTRANSLATE]${this.service.name}[NOTRANSLATE]`,
         'crumbs': {
           'url': 'services',
-          'label': 'Services'
+          'label': 'services',
         },
         'subheading': '',
         'children': [...children]

@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { FeedsService } from '../../../feeds.service';
+import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 
 declare var $: any;
 
@@ -20,15 +21,21 @@ export class FeedApproveCommentModalComponent implements OnInit {
   _isCampusWallView;
 
   constructor(
+    private cpI18n: CPI18nService,
     private feedsService: FeedsService
   ) { }
 
   onSubmit() {
     let data = { flag: 2 };
+
     const approveCampusWallComment$ = this
       .feedsService.approveCampusWallComment(this.feed.id, data);
+
     const approveGroupWallComment$ = this.feedsService.approveGroupWallComment(this.feed.id, data);
-    const stream$ = this._isCampusWallView ? approveCampusWallComment$ : approveGroupWallComment$;
+
+    const stream$ = this._isCampusWallView ?
+                    approveCampusWallComment$ :
+                    approveGroupWallComment$;
 
     stream$
       .subscribe(
@@ -44,7 +51,7 @@ export class FeedApproveCommentModalComponent implements OnInit {
   ngOnInit() {
     this.buttonData = {
       class: 'primary',
-      text: 'Approve'
+      text: this.cpI18n.translate('approve')
     }
     this.isCampusWallView.subscribe((res: any) => {
       this._isCampusWallView = res.type === 1 ? true : false;
