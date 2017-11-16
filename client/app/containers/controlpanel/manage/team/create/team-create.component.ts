@@ -71,7 +71,8 @@ const manageAdminDropdown = function (privilege: { r: boolean, w: boolean }) {
   return items;
 };
 
-const clubsDropdown = function (privilege: { r: boolean, w: boolean }) {
+const clubsDropdown = (privilege = { r: false, w: false },
+                       canAccountReadResource = false)  => {
   let items = [
     {
       'label': _cpI18n.translate('admin_no_access'),
@@ -79,7 +80,7 @@ const clubsDropdown = function (privilege: { r: boolean, w: boolean }) {
     }
   ];
 
-  if (!privilege) {
+  if (!privilege.w && !canAccountReadResource) {
     return items;
   }
 
@@ -89,17 +90,27 @@ const clubsDropdown = function (privilege: { r: boolean, w: boolean }) {
       {
         'label': _cpI18n.translate('admin_select_clubs'),
         'action': 2
-      },
+      }
+    ];
+  }
+
+
+  if (canAccountReadResource) {
+    items = [
+      ...items,
       {
         'label': _cpI18n.translate('admin_all_clubs'),
         'action': 3
-      },
-    ];
+      }
+    ]
   }
+
   return items;
 };
 
-const servicesDropdown = function (privilege: { r: boolean, w: boolean }) {
+const servicesDropdown = function (privilege = { r: false, w: false },
+                                   canAccountReadResource = false) {
+
   let items = [
     {
       'label': _cpI18n.translate('admin_no_access'),
@@ -107,7 +118,7 @@ const servicesDropdown = function (privilege: { r: boolean, w: boolean }) {
     }
   ];
 
-  if (!privilege) {
+  if (!privilege.w && !canAccountReadResource) {
     return items;
   }
 
@@ -118,11 +129,18 @@ const servicesDropdown = function (privilege: { r: boolean, w: boolean }) {
         'label': _cpI18n.translate('admin_select_services'),
         'action': 2
       },
+    ];
+  }
+
+
+  if (canAccountReadResource) {
+    items =  [
+      ...items,
       {
         'label': _cpI18n.translate('admin_all_services'),
         'action': 3
       },
-    ];
+    ]
   }
   return items;
 };
@@ -479,10 +497,11 @@ export class TeamCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    const { school_level_privileges } = this.session.g.get('user');
-    const schoolPrivileges = school_level_privileges[this.session.g.get('school').id];
-    this.user = this.session.g.get('user');
-    this.schoolId = this.session.g.get('school').id;
+    const session = this.session.g;
+    const { school_level_privileges	 } = session.get('user');
+    const schoolPrivileges = school_level_privileges[session.get('school').id];
+    this.user = session.get('user');
+    this.schoolId = session.get('school').id;
 
     this.buttonData = {
       disabled: true,
@@ -491,29 +510,36 @@ export class TeamCreateComponent implements OnInit {
     }
 
 
-    this.canReadClubs = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.clubs) ||
-      canAccountLevelReadResource(this.session.g, CP_PRIVILEGES_MAP.clubs);
+    this.canReadClubs = canSchoolReadResource(session, CP_PRIVILEGES_MAP.clubs) ||
+      canAccountLevelReadResource(session, CP_PRIVILEGES_MAP.clubs);
 
-    this.canReadEvents = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.events);
+    this.canReadEvents = canSchoolReadResource(session, CP_PRIVILEGES_MAP.events);
 
-    this.canReadServices = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.services) ||
-      canAccountLevelReadResource(this.session.g, CP_PRIVILEGES_MAP.services);
+    this.canReadServices = canSchoolReadResource(session, CP_PRIVILEGES_MAP.services) ||
+      canAccountLevelReadResource(session, CP_PRIVILEGES_MAP.services);
 
     this.formData = TEAM_ACCESS.getMenu(this.user.school_level_privileges[this.schoolId]);
 
     this.buildHeader();
     this.buildForm();
 
-    const clubsPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.clubs];
+    const clubsPrivilegeSchool = schoolPrivileges[CP_PRIVILEGES_MAP.clubs];
+
+    const clubsPrivilegeAccount = canAccountLevelReadResource(session, CP_PRIVILEGES_MAP.clubs);
+
     const eventsPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.events];
-    const servicesPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.services];
+
+    const servicesPrivilegeSchool = schoolPrivileges[CP_PRIVILEGES_MAP.services];
+
+    const servicesPrivilegeAccount = canAccountLevelReadResource(session,
+        CP_PRIVILEGES_MAP.services);
+
     const manageAdminPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin];
 
-    this.clubsMenu = clubsDropdown(clubsPrivilege);
     this.eventsMenu = eventsDropdown(eventsPrivilege);
-    this.servicesMenu = servicesDropdown(servicesPrivilege);
+    this.clubsMenu = clubsDropdown(clubsPrivilegeSchool, clubsPrivilegeAccount);
+    this.servicesMenu = servicesDropdown(servicesPrivilegeSchool, servicesPrivilegeAccount);
     this.manageAdmins = manageAdminDropdown(manageAdminPrivilege);
-
   }
 }
 

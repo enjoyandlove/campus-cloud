@@ -39,16 +39,17 @@
           {{ admin.account_activated ? cpI18n.translate('active') : cpI18n.translate('pending') }}
         </span>
 
-        <span class="col-xs-1 col-xs-offset-1 text-center">
-          <button
-            type="button"
-            (click)="deleteAdmin = admin"
-            *ngIf="!admin.is_current_user"
-            class="cpbtn cpbtn--link-dark deletebutton"
-            data-toggle="modal" data-target="#teamDeleteModal">
-            &times;
-          </button>
-        </span>
+          <span class="col-xs-1 col-xs-offset-1 text-center">
+            <button
+              type="button"
+              (click)="deleteAdmin = admin"
+              *ngIf="!admin.is_current_user"
+              class="cpbtn cpbtn--link-dark deletebutton"
+              data-toggle="modal" data-target="#teamDeleteModal">
+              &times;
+            </button>
+          </span>
+        </div>
       </li>
     </ul>
 
