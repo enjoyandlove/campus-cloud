@@ -1,7 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 import {
-  canSchoolWriteResource,
   canAccountLevelWriteResource
 } from './../../../../../../../shared/utils/privileges/privileges';
 
@@ -41,10 +40,7 @@ export class ClubsListActionBoxComponent implements OnInit {
   }
 
   ngOnInit() {
-    const schoolAccess = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.clubs);
-    const accountAccess = canAccountLevelWriteResource(this.session.g, CP_PRIVILEGES_MAP.clubs);
-
-    this.canCreate = schoolAccess || accountAccess;
+    this.canCreate = canAccountLevelWriteResource(this.session.g, CP_PRIVILEGES_MAP.clubs);
 
     this.clubFilter = [
       {

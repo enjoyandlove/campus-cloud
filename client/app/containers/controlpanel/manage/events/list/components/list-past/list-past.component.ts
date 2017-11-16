@@ -1,9 +1,13 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
+import {
+  canSchoolWriteResource,
+  canAccountLevelReadResource
+} from './../../../../../../../shared/utils/privileges/privileges';
+
 import { FORMAT } from '../../../../../../../shared/pipes';
 import { CPSession } from './../../../../../../../session/index';
 import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
-import { canSchoolWriteResource } from './../../../../../../../shared/utils/privileges/privileges';
 
 interface ISort {
   sort_field: string;
@@ -27,8 +31,7 @@ export class ListPastComponent implements OnInit {
   @Output() sortList: EventEmitter<ISort> = new EventEmitter();
 
   sort: ISort = sort;
-
-  canWriteSchoolWide;
+  canDelete = false;
   dateFormat = FORMAT.SHORT;
 
   constructor(
@@ -50,6 +53,8 @@ export class ListPastComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.canWriteSchoolWide = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.events);
+    const scholAccess = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.events);
+    const accountAccess = canAccountLevelReadResource(this.session.g, CP_PRIVILEGES_MAP.events);
+    this.canDelete = scholAccess || accountAccess;
   }
 }

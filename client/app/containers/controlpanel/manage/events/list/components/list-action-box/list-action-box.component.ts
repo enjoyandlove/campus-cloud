@@ -7,17 +7,21 @@ import {
   EventEmitter,
   HostListener
 } from '@angular/core';
+
 import { URLSearchParams } from '@angular/http';
+
+import {
+  canSchoolWriteResource,
+  canAccountLevelWriteResource
+} from './../../../../../../../shared/utils/privileges/privileges';
 
 import { Observable } from 'rxjs/Observable';
 import { DATE_FILTER } from './events-filters';
+import { EventAttendance } from '../../../event.status';
 import { CPSession } from '../../../../../../../session';
 import { CPDate } from '../../../../../../../shared/utils/date';
 import { StoreService } from '../../../../../../../shared/services';
 import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
-import { canSchoolWriteResource } from './../../../../../../../shared/utils/privileges/privileges';
-
-import { EventAttendance } from '../../../event.status';
 
 interface IState {
   end: number;
@@ -54,8 +58,8 @@ export class ListActionBoxComponent implements OnInit {
   isCalendar;
   eventFilter;
   dateFilterOpts;
+  canCreateEvent;
   isFilteredByDate;
-  canWriteSchoolWide;
   state: IState = state;
   stores$: Observable<any>;
 
@@ -186,7 +190,10 @@ export class ListActionBoxComponent implements OnInit {
 
   ngOnInit() {
     this.getStores();
-    this.canWriteSchoolWide = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.events);
+    const canSchoolWrite = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.events);
+    const canAccountWrite = canAccountLevelWriteResource(this.session.g, CP_PRIVILEGES_MAP.events);
+
+    this.canCreateEvent = canSchoolWrite || canAccountWrite;
 
     this.eventFilter = DATE_FILTER;
 
