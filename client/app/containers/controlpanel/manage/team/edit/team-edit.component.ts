@@ -706,7 +706,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       text: this.cpI18n.translate('update')
     }
 
-    let schoolPrivileges = this.user.school_level_privileges[this.schoolId];
+    let schoolPrivileges = this.user.school_level_privileges[this.schoolId] || {};
 
     if (CP_PRIVILEGES_MAP.manage_admin in schoolPrivileges) {
       this.currentUserCanManage = schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin].w;
@@ -714,8 +714,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       this.currentUserCanManage = false;
     }
 
-    this.canReadEvents = schoolPrivileges[CP_PRIVILEGES_MAP.events];
-    this.canReadServices = schoolPrivileges[CP_PRIVILEGES_MAP.services];
+    this.canReadEvents = schoolPrivileges[CP_PRIVILEGES_MAP.events] || false;
+    this.canReadServices = schoolPrivileges[CP_PRIVILEGES_MAP.services] || false;
     this.formData = TEAM_ACCESS.getMenu(this.user.school_level_privileges[this.schoolId]);
 
     const clubsPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.clubs];
