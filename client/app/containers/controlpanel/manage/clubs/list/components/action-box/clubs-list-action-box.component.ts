@@ -1,7 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 import {
-  canSchoolWriteResource,
   canAccountLevelWriteResource
 } from './../../../../../../../shared/utils/privileges/privileges';
 

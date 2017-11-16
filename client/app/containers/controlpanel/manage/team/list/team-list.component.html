@@ -18,26 +18,30 @@
 
   <div *ngSwitchCase="false">
     <ul class="cp-form">
-      <li class="cp-form__header row">
-        <span class="col-xs-5" i18n>{{ 'name' | cpI18n }}</span>
-        <span class="col-xs-5" i18n>{{ 'status' | cpI18n }}</span>
-        <span class="col-xs-2"></span>
+      <li class="cp-form__header col-xs-12">
+        <div class="row">
+          <span class="col-xs-5" i18n>{{ 'name' | cpI18n }}</span>
+          <span class="col-xs-5" i18n>{{ 'status' | cpI18n }}</span>
+          <span class="col-xs-2"></span>
+        </div>
       </li>
 
-      <li class="cp-form__item row" *ngFor="let admin of state.admins">
-        <span class="col-xs-5 text-truncate">
-          <strong>
-            <a [routerLink]="[admin.id + '/edit']">
-              {{ admin.firstname }} {{ admin.lastname }}
-              <span *ngIf="admin.is_current_user" i18n>({{ 'you' | cpI18n }})</span>
-            </a>
-          </strong>
-          <br>
-          <small class="text-muted">{{ admin.email }}</small>
-        </span>
-        <span class="col-xs-5 text-truncate">
-          {{ admin.account_activated ? cpI18n.translate('active') : cpI18n.translate('pending') }}
-        </span>
+      <li class="cp-form__item col-xs-12" *ngFor="let admin of state.admins">
+        <div class="row">
+          <span class="col-xs-5 text-truncate">
+            <strong>
+              <a [routerLink]="[admin.id + '/edit']">
+                {{ admin.firstname }} {{ admin.lastname }}
+                <span *ngIf="admin.is_current_user" i18n>({{ 'you' | cpI18n }})</span>
+              </a>
+            </strong>
+            <br>
+            <small class="text-muted">{{ admin.email }}</small>
+          </span>
+
+          <span class="col-xs-5 text-truncate">
+            {{ admin.account_activated ? cpI18n.translate('active') : cpI18n.translate('pending') }}
+          </span>
 
           <span class="col-xs-1 col-xs-offset-1 text-center">
             <button
@@ -52,17 +56,17 @@
         </div>
       </li>
     </ul>
+  </div>
 
-    <div class="row">
-      <div class="col-xs-12">
-        <cp-pagination
-          [pageNext]="pageNext"
-          [pagePrev]="pagePrev"
-          [pageNumber]="pageNumber"
-          (next)="onPaginationNext()"
-          (previous)="onPaginationPrevious()">
-        </cp-pagination>
-      </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <cp-pagination
+        [pageNext]="pageNext"
+        [pagePrev]="pagePrev"
+        [pageNumber]="pageNumber"
+        (next)="onPaginationNext()"
+        (previous)="onPaginationPrevious()">
+      </cp-pagination>
     </div>
   </div>
 </div>
