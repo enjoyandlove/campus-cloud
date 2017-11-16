@@ -62,8 +62,6 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.error.handleError({ reason: this.cpI18n.translate('account_not_found') });
           return;
         }
-
-        console.error(err.json());
       }
       );
   }

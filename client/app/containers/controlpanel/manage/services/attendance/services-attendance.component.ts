@@ -110,7 +110,7 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
         'url': `/manage/services/${this.serviceId}/info`
       }
     ];
-    console.log(this.session.g.get('user'))
+
     const eventsSchoolLevel = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.events);
     const eventsAccountLevel = canStoreReadAndWriteResource(this.session.g,
       this.storeId, CP_PRIVILEGES_MAP.events);
