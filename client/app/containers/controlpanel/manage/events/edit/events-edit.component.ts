@@ -286,7 +286,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': this.cpI18n.translate('events_edit_event'),
+        'heading': 'events_edit_event',
         'subheading': '',
         'children': []
       }

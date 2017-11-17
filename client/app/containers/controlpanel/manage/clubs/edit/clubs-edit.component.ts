@@ -184,7 +184,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
       type: HEADER_UPDATE,
       payload:
       {
-        'heading': this.cpI18n.translate('clubs_edit_heading'),
+        'heading': 'clubs_edit_heading',
         'subheading': null,
         'em': null,
         'children': []

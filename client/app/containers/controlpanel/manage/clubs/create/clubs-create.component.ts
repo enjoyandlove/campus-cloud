@@ -100,7 +100,7 @@ export class ClubsCreateComponent implements OnInit {
       type: HEADER_UPDATE,
       payload:
       {
-        'heading': this.cpI18n.translate('clubs_button_create'),
+        'heading': 'clubs_button_create',
         'subheading': null,
         'em': null,
         'children': []

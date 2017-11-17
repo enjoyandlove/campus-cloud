@@ -29,6 +29,7 @@
 
               <ul class="membersBox" *ngIf="members.length">
                 <li
+                  class="list-as-anchor"
                   (click)="onMemberSelected(member)"
                   *ngFor="let member of members">
                   {{ member.label }}
