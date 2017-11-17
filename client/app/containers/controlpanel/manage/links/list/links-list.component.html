@@ -33,7 +33,7 @@
           <div class="row">
             <span class="col-xs-5 text-truncate links__thumbnail">
               <img *ngIf="link.img_url !== ''" class="img-rounded" [src]="link.img_url">
-              <img *ngIf="link.img_url === ''" class="img-rounded" src="/dist/default/user.png">
+              <img *ngIf="link.img_url === ''" class="img-rounded" [src]="defaultImage">
 
               <strong>
                 <button

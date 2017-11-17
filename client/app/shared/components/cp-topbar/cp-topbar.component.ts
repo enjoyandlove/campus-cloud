@@ -8,7 +8,6 @@ import {
 
 import { CP_PRIVILEGES_MAP } from './../../constants';
 import { CPSession, IUser, ISchool } from '../../../session';
-import { CP_TRACK_TO } from './../../directives/tracking/tracking.directive';
 
 @Component({
   selector: 'cp-topbar',
@@ -24,14 +23,7 @@ export class CPTopBarComponent implements OnInit {
   canAssess = false;
   manageHomePage: string;
 
-  eventData = {
-    type: CP_TRACK_TO.GA,
-    eventCategory: 'Click Event',
-    eventAction: 'Welcome button on top bar clicked'
-  };
-
   isManageActiveRoute;
-
   logo = require('public/svg/logo.svg');
   defaultImage = require('public/default/user.png');
 

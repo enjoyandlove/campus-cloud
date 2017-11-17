@@ -36,6 +36,7 @@ export class LinksListComponent extends BaseComponent implements OnInit {
   loading = true;
   deleteLink = '';
   state: IState = state;
+  defaultImage = require('public/default/user.png');
 
   constructor(
     private session: CPSession,

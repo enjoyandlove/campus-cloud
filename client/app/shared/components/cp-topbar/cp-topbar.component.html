@@ -9,7 +9,7 @@
           <li
             (click)="isOpen = false"
             routerLinkActive="active">
-            <a [routerLink]="['/welcome']" cpTracker [eventData]="eventData">{{ 'welcome' | cpI18n }}</a>
+            <a [routerLink]="['/welcome']">{{ 'welcome' | cpI18n }}</a>
           </li>
           <li
             *ngIf="manageHomePage"

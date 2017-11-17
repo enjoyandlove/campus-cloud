@@ -33,7 +33,6 @@
               </button>
               <ul class="switcherMenu__list dropdown-menu dropdown-menu-right">
                 <li
-                  class="list-as-anchor"
                   (click)="onSwitchChange(item)"
                   *ngFor="let item of switcherMenu">
                   {{ item.label }}
@@ -48,7 +47,7 @@
         *ngIf="props.suggestions && props.suggestions.length"
         class="typeahead__list">
         <li
-          class="typeahead__item"
+          class="typeahead__item list-as-anchor"
           (click)="onHandleClick(suggestion)"
           *ngFor="let suggestion of props.suggestions">
           {{ suggestion.label }}
