@@ -554,6 +554,9 @@
   "clubs_label_edit_club": {
     "message": "Edit Club"
   },
+  "clubs_label_executive_position": {
+    "message": "Position"
+  },
   "clubs_label_member_type": {
     "message": "Member Type"
   },
