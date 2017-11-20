@@ -34,6 +34,7 @@ export class ClubsMembersEditComponent implements OnInit {
   members = [];
   form: FormGroup;
   isTouched = false;
+  isExecutive = MemberType.executive;
 
   constructor(
     private fb: FormBuilder,
@@ -99,7 +100,8 @@ export class ClubsMembersEditComponent implements OnInit {
 
     this.form = this.fb.group({
       'member': [null],
-      'member_type': [this.memberTypes[0].action, Validators.required],
+      'position': [null, this.member.position],
+      'member_type': [this.defaultType.action, Validators.required],
     });
 
     this.form.valueChanges.subscribe(value => {
