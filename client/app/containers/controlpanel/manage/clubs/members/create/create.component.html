@@ -24,8 +24,7 @@
             <input
               #input
               type="text"
-              class="form-control"
-              placeholder="Enter a name">
+              class="form-control">
 
               <ul class="membersBox" *ngIf="members.length">
                 <li
@@ -45,6 +44,14 @@
                 [reset]="reset$"
                 (selected)="onTypeChange($event.action)">
               </cp-dropdown>
+            </div>
+            <div class="col-xs-6"
+              *ngIf="form.controls['member_type'].value === isExecutive">
+              <label i18n>{{ 'clubs_label_executive_position' | cpI18n }}</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="member_position">
             </div>
           </div>
         </form>

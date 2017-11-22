@@ -36,6 +36,7 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
   memberTypes;
   members = [];
   form: FormGroup;
+  isExecutive = MemberType.executive;
   reset$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
@@ -112,12 +113,17 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    let member_type = this.form.value.member_type;
+    if (this.form.value.member_type !== MemberType.executive) {
+      this.form.controls['member_position'].setValue(null);
+    }
+
     let group_id = this.groupId;
+    let member_position = this.form.value.member_position;
+    let member_type = this.form.value.member_type;
 
     this
       .service
-      .addMember({ member_type, group_id }, this.form.value.member)
+      .addMember({ member_type, group_id, member_position }, this.form.value.member)
       .subscribe(
       member => {
         this.added.emit(member);
@@ -154,6 +160,7 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
     this.form = this.fb.group({
       'member': [null, Validators.required],
       'member_type': [this.memberTypes[0].action, Validators.required],
+      'member_position': [null]
     });
 
     this.form.valueChanges.subscribe(_ => {
