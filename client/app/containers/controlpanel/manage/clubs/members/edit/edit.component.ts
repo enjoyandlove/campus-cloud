@@ -33,7 +33,6 @@ export class ClubsMembersEditComponent implements OnInit {
   defaultType;
   members = [];
   form: FormGroup;
-  isTouched = false;
   isExecutive = MemberType.executive;
 
   constructor(
@@ -66,12 +65,14 @@ export class ClubsMembersEditComponent implements OnInit {
       return;
     }
 
-    let member_type = this.form.value.member_type;
     let group_id = this.groupId;
+    let member_type = this.form.value.member_type;
+    let member_position = this.form.value.member_type === MemberType.executive ?
+                          this.form.value.member_position : '';
 
     this
       .service
-      .addMember({ member_type, group_id }, this.member.id)
+      .addMember({ member_type, group_id, member_position }, this.member.id)
       .subscribe(
         member => {
           this.edited.emit(member);
@@ -100,12 +101,8 @@ export class ClubsMembersEditComponent implements OnInit {
 
     this.form = this.fb.group({
       'member': [null],
-      'position': [null, this.member.position],
+      'member_position': [this.member.member_position],
       'member_type': [this.defaultType.action, Validators.required],
-    });
-
-    this.form.valueChanges.subscribe(value => {
-      this.isTouched = value.member_type !== this.member.member_type;
     });
   }
 }

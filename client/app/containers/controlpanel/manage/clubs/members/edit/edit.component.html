@@ -50,7 +50,7 @@
               <input
                 type="text"
                 class="form-control"
-                formControlName="position">
+                formControlName="member_position">
             </div>
           </div>
         </form>
@@ -72,7 +72,6 @@
         <button
           type="button"
           (click)="onSave()"
-          [disabled]="!isTouched"
           class="cpbtn cpbtn--primary"i18n>
           {{ 'save' | cpI18n }}
         </button>

@@ -114,16 +114,16 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
     }
 
     if (this.form.value.member_type !== MemberType.executive) {
-      this.form.controls['position'].setValue(null);
+      this.form.controls['member_position'].setValue(null);
     }
 
     let group_id = this.groupId;
-    let position = this.form.value.position;
+    let member_position = this.form.value.member_position;
     let member_type = this.form.value.member_type;
 
     this
       .service
-      .addMember({ member_type, group_id, position }, this.form.value.member)
+      .addMember({ member_type, group_id, member_position }, this.form.value.member)
       .subscribe(
       member => {
         this.added.emit(member);
@@ -160,7 +160,7 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
     this.form = this.fb.group({
       'member': [null, Validators.required],
       'member_type': [this.memberTypes[0].action, Validators.required],
-      'position': [null]
+      'member_position': [null]
     });
 
     this.form.valueChanges.subscribe(_ => {
