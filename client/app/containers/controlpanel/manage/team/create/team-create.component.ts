@@ -71,8 +71,9 @@ const manageAdminDropdown = function (privilege: { r: boolean, w: boolean }) {
   return items;
 };
 
-const clubsDropdown = (privilege = { r: false, w: false },
-                       canAccountReadResource = false)  => {
+const clubsDropdown = (schoolLevel = { r: false, w: false },
+                       accountLevel = false)  => {
+
   let items = [
     {
       'label': _cpI18n.translate('admin_no_access'),
@@ -80,11 +81,11 @@ const clubsDropdown = (privilege = { r: false, w: false },
     }
   ];
 
-  if (!privilege.w && !canAccountReadResource) {
+  if (!schoolLevel.w && !accountLevel) {
     return items;
   }
 
-  if (privilege.w) {
+  if (accountLevel) {
     items = [
       ...items,
       {
@@ -95,7 +96,7 @@ const clubsDropdown = (privilege = { r: false, w: false },
   }
 
 
-  if (canAccountReadResource) {
+  if (schoolLevel.w) {
     items = [
       ...items,
       {
@@ -108,9 +109,8 @@ const clubsDropdown = (privilege = { r: false, w: false },
   return items;
 };
 
-const servicesDropdown = function (privilege = { r: false, w: false },
-                                   canAccountReadResource = false) {
-
+const servicesDropdown = function (schoolLevel = { r: false, w: false },
+                                   accountLevel = false) {
   let items = [
     {
       'label': _cpI18n.translate('admin_no_access'),
@@ -118,11 +118,11 @@ const servicesDropdown = function (privilege = { r: false, w: false },
     }
   ];
 
-  if (!privilege.w && !canAccountReadResource) {
+  if (!schoolLevel.w && !accountLevel) {
     return items;
   }
 
-  if (privilege.w) {
+  if (accountLevel) {
     items = [
       ...items,
       {
@@ -133,7 +133,7 @@ const servicesDropdown = function (privilege = { r: false, w: false },
   }
 
 
-  if (canAccountReadResource) {
+  if (schoolLevel.w) {
     items =  [
       ...items,
       {
