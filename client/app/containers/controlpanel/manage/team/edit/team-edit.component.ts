@@ -68,7 +68,9 @@ const manageAdminDropdown = function (privilege: { r: boolean, w: boolean }) {
   return items;
 };
 
-const clubsDropdown = function (privilege: { r: boolean, w: boolean }) {
+const clubsDropdown = (schoolLevel = { r: false, w: false },
+  accountLevel = false) => {
+
   let items = [
     {
       'label': _cpI18n.translate('admin_no_access'),
@@ -76,27 +78,36 @@ const clubsDropdown = function (privilege: { r: boolean, w: boolean }) {
     }
   ];
 
-  if (!privilege) {
+  if (!schoolLevel.w && !accountLevel) {
     return items;
   }
 
-  if (privilege.w) {
+  if (accountLevel) {
     items = [
       ...items,
       {
         'label': _cpI18n.translate('admin_select_clubs'),
         'action': 2
-      },
+      }
+    ];
+  }
+
+
+  if (schoolLevel.w) {
+    items = [
+      ...items,
       {
         'label': _cpI18n.translate('admin_all_clubs'),
         'action': 3
-      },
-    ];
+      }
+    ]
   }
+
   return items;
 };
 
-const servicesDropdown = function (privilege: { r: boolean, w: boolean }) {
+const servicesDropdown = function (schoolLevel = { r: false, w: false },
+  accountLevel = false) {
   let items = [
     {
       'label': _cpI18n.translate('admin_no_access'),
@@ -104,26 +115,32 @@ const servicesDropdown = function (privilege: { r: boolean, w: boolean }) {
     }
   ];
 
-  if (!privilege) {
+  if (!schoolLevel.w && !accountLevel) {
     return items;
   }
 
-  if (privilege.w) {
+  if (accountLevel) {
     items = [
       ...items,
       {
         'label': _cpI18n.translate('admin_select_services'),
         'action': 2
       },
+    ];
+  }
+
+
+  if (schoolLevel.w) {
+    items = [
+      ...items,
       {
         'label': _cpI18n.translate('admin_all_services'),
         'action': 3
       },
-    ];
+    ]
   }
   return items;
 };
-
 declare var $: any;
 
 @Component({
@@ -186,17 +203,17 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
   updateServicesDropdownLabel() {
     const numberOfServices = this.getNumberOf(CP_PRIVILEGES_MAP.services,
-                                              this.accountPrivileges);
+      this.accountPrivileges);
 
     this.servicesCount = numberOfServices ?
-                         {label : `${numberOfServices} Service(s)`} :
-                          null;
+      { label: `${numberOfServices} Service(s)` } :
+      null;
   }
 
   updateClubsDropdownLabel() {
     const numberOfClubs = this.getNumberOf(CP_PRIVILEGES_MAP.clubs, this.accountPrivileges);
 
-    this.clubsCount = numberOfClubs ? {label : `${numberOfClubs} Club(s)`} : null;
+    this.clubsCount = numberOfClubs ? { label: `${numberOfClubs} Club(s)` } : null;
   }
 
   private fetch() {
@@ -426,7 +443,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       this.accountPrivileges = Object.assign(
         {},
         accountsToStoreMap(this.session.g.get('user').account_mapping[this.schoolId],
-                           this.user.account_level_privileges)
+          this.user.account_level_privileges)
       );
 
       this.schoolPrivileges = Object.assign(
@@ -444,7 +461,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     this.doServicesCleanUp();
 
     const servicesLength = Object.keys(services).length;
-    this.servicesCount = servicesLength ? {label: `${servicesLength} Service(s)`} : null;
+    this.servicesCount = servicesLength ? { label: `${servicesLength} Service(s)` } : null;
 
     this.accountPrivileges = Object.assign(
       {},
@@ -533,7 +550,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   onClubsModalSelected(clubs) {
     this.doClubsCleanUp();
     const clubsLength = Object.keys(clubs).length;
-    this.clubsCount = clubsLength ? {label: `${clubsLength} Club(s)`} : null;
+    this.clubsCount = clubsLength ? { label: `${clubsLength} Club(s)` } : null;
 
     this.accountPrivileges = Object.assign(
       {},
@@ -642,13 +659,13 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
   removePrivilegeFromRandomAccount(privilegeType: number) {
     const stores = accountsToStoreMap(this.editingUser.account_mapping[this.schoolId],
-                                      this.editingUser.account_level_privileges);
+      this.editingUser.account_level_privileges);
     Object.keys(stores).map(storeId => {
       if (privilegeType in stores[storeId]) {
         delete stores[storeId][privilegeType];
 
         if (!(Object.keys(stores[storeId]).length)) {
-         delete stores[storeId];
+          delete stores[storeId];
         }
       }
     });

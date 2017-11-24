@@ -431,6 +431,12 @@
   "average_rating": {
     "message": "Average Rating"
   },
+  "beta_banner_go_back": {
+    "message": "Revert to Previous Version"
+  },
+  "beta_banner_thank_you": {
+    "message": "Thank you for trying out the beta."
+  },
   "body": {
     "message": "Body"
   },
