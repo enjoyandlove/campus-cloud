@@ -328,7 +328,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     });
 
     this.form.valueChanges.subscribe(_ => {
-      this.buttonData = Object.assign({}, this.buttonData, { disabled: true });
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: this.form.valid });
     })
   }
 
