@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-xs-5 no-right-padding">
         <p class="heading">
-          {{ props.repeat_engagements.length }} ({{ repeatEngagementPercentage }}%)
+          {{ props.repeat_engagements.length | cpStatsFormatter }} ({{ repeatEngagementPercentage }}%)
         </p>
          <p
           data-toggle="tooltip"
@@ -36,7 +36,7 @@
   <li class="stats--item">
     <div class="row">
       <div class="col-xs-5 no-right-padding">
-        <p class="heading">{{ props.one_engagements.length }} ({{ oneEngagementPercentage }}%)</p>
+        <p class="heading">{{ props.one_engagements.length | cpStatsFormatter }} ({{ oneEngagementPercentage }}%)</p>
         <p
           data-toggle="tooltip"
           data-placement="bottom"
@@ -68,7 +68,7 @@
   <li class="stats--item">
     <div class="row">
       <div class="col-xs-5 no-right-padding">
-        <p class="heading">{{ props.zero_engagements.length }} ({{ noEngagementPercentage }}%)</p>
+        <p class="heading">{{ props.zero_engagements.length | cpStatsFormatter }} ({{ noEngagementPercentage }}%)</p>
         <p
           data-toggle="tooltip"
           data-placement="bottom"
