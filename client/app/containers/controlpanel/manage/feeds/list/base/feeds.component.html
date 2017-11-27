@@ -9,7 +9,7 @@
       <cp-feed-input-box
         [clubId]="clubId"
         [isCampusWallView]="isCampusWallView$"
-        [postingMemberType]="state.postingMemberType"
+        [disablePost]="state.currentView.postingMemberType === disablePost"
         (created)="onCreated($event)">
       </cp-feed-input-box>
 
@@ -18,7 +18,7 @@
       <ng-container *ngSwitchCase="false">
         <cp-feed-item
           [feed]="feed"
-          (moved)="onDeleted($event)"
+          (moved)="fetch()"
           (deleted)="onDeleted($event)"
           *ngFor="let feed of state.feeds"
           [isCampusWallView]="isCampusWallView$"
