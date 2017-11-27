@@ -76,6 +76,7 @@ function getBaseMapObject(data) {
   });
 
   obj = Object.assign({}, obj, {...locationAsObject(data.geometry.location)});
+
   return obj;
 };
 

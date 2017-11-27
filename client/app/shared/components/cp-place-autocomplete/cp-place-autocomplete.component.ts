@@ -72,7 +72,7 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
     this.setInput(location.full_label);
 
     if (location.isGoogle) {
-      this.fetchGoogleDetails(location.value);
+      this.fetchGoogleDetails(location);
       return;
     }
   }
@@ -82,11 +82,18 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
     this.resetSuggestions();
   }
 
-  fetchGoogleDetails(locationId: string) {
+  fetchGoogleDetails(location) {
     service
-      .getLocationDetails(locationId, this.hostEl.nativeElement)
+      .getLocationDetails(location.value, this.hostEl.nativeElement)
       .subscribe(
-      details => this.placeChange.emit(details),
+      details => {
+        details = Object.assign(
+          {},
+          details,
+          { name: location.full_label }
+        )
+        this.placeChange.emit(details);
+      },
       () => this.placeChange.emit(null)
       )
   }
@@ -112,5 +119,9 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
     this.state = Object.assign({}, this.state, { suggestions: [] });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    if (this.defaultValue) {
+      this.setInput(this.defaultValue);
+    }
+  }
 }
