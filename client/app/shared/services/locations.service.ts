@@ -10,23 +10,20 @@ const defaultOptions: google.maps.places.AutocompletionRequest = {
 
 @Injectable()
 export class CPLocationsService {
-  // placesServices: google.maps.places.PlacesService;
-  defaultOptions: google.maps.places.AutocompletionRequest;
-  autoCompleteService = new google.maps.places.AutocompleteService();
-
   constructor() { }
 
   getLocations() {
-    return Observable.empty();
+    return Observable.of([]);
   }
 
-  getGoogleSuggestions(input: string) {
+  getGoogleSuggestions(input: string, lat: number, lng: number) {
+    const location = new google.maps.LatLng(lat, lng);
     const service = new google.maps.places.AutocompleteService();
 
     const options: google.maps.places.AutocompletionRequest = Object.assign(
       {},
       defaultOptions,
-      { input }
+      { input, location }
     );
 
     let results: Array<any> = [
@@ -36,39 +33,41 @@ export class CPLocationsService {
         'value': null,
         'isGoogle': false
       }
-    ]
+    ];
 
-    service.getPlacePredictions(options, (suggestions, status) => {
-      if (!(status === google.maps.places.PlacesServiceStatus.OK)) {
-        return [];
-      }
+    const promise = new Promise(resolve => {
+      service.getPlacePredictions(options, (suggestions, status) => {
+        if (!(status === google.maps.places.PlacesServiceStatus.OK)) {
+          return resolve([]);
+        }
 
-      suggestions.map((suggestion: any) => {
-        const mainText = `${suggestion.structured_formatting.main_text}`;
-        const secondaryText = `${suggestion.structured_formatting.secondary_text}`;
+        suggestions.map((suggestion: any) => {
+          const mainText = `${suggestion.structured_formatting.main_text}`;
+          const secondaryText = `${suggestion.structured_formatting.secondary_text}`;
 
-        results.push(
-          {
-            'label_dark': `${mainText}`,
-            'label_medium': `${secondaryText}`,
-            'full_label': `${mainText}, ${secondaryText}`,
-            'heading': false,
-            'value': suggestion.place_id,
-            'isGoogle': true
-          }
-        )
+          results.push(
+            {
+              'label_dark': `${mainText}`,
+              'label_medium': `${secondaryText}`,
+              'full_label': `${mainText}, ${secondaryText}`,
+              'heading': false,
+              'value': suggestion.place_id,
+              'isGoogle': true
+            }
+          )
+        })
+        resolve(results);
       })
-      return results;
     })
-    return Observable.of(results);
+
+    return Observable.fromPromise(promise);
   }
 
-  getAllSuggestions(input: string) {
-    const google$ = this.getGoogleSuggestions(input);
+  getAllSuggestions(input: string, lat: number, lng: number) {
+    const google$ = this.getGoogleSuggestions(input, lat, lng);
     const locations$ = this.getLocations();
 
     return Observable.combineLatest(locations$, google$);
-
   }
 
   getLocationDetails(placeId: string, el: HTMLDivElement) {
