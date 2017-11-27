@@ -12,7 +12,6 @@ import {
 import { Observable } from 'rxjs/Observable';
 import { CPSession } from './../../../session';
 import { CPLocationsService } from '../../services/locations.service';
-import { CPMap } from '../../utils/index';
 
 interface IState {
   input: string;
@@ -50,6 +49,12 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
     stream$
       .switchMap((event: any) => {
         let query = event.target.value;
+
+        if (!query) {
+          this.placeChange.emit(null);
+          return Observable.empty();
+        }
+
         this.setInput(query);
         return service.getAllSuggestions(query, lat, lng)
       })
@@ -73,7 +78,6 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
   }
 
   reset() {
-    // this.clear.emit(true);
     this.resetInput();
     this.resetSuggestions();
   }
@@ -82,19 +86,10 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
     service
       .getLocationDetails(locationId, this.hostEl.nativeElement)
       .subscribe(
-      details => {
-        let formattedData = CPMap.getBaseMapObject(details);
-        formattedData = Object.assign(
-          {},
-          formattedData,
-          { address: this.state.input }
-        );
-        this.placeChange.emit(formattedData);
-      },
-      () => this.state = Object.assign({}, this.state, { error: true })
+      details => this.placeChange.emit(details),
+      () => this.placeChange.emit(null)
       )
   }
-
 
   noResultsIfEmpty(results: Array<any>) {
     return results.length === 1 ?
@@ -119,45 +114,3 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
 
   ngOnInit() { }
 }
-
-// export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
-//   @Input() placeHolder: string;
-//   @Input() defaultValue: string;
-//   @Output() placeChange: EventEmitter<any> = new EventEmitter();
-//   @ViewChild('hostEl') hostEl: ElementRef;
-
-//   constructor(
-//     private zone: NgZone,
-//   ) { }
-
-//   ngAfterViewInit() {
-//     const input = this.hostEl.nativeElement;
-
-//     const stream$ = Observable.fromEvent(input, 'keyup');
-
-//     stream$.subscribe((res: any) => {
-//       let query = res.target.value;
-
-//       if (!query) {
-//         this.placeChange.emit(null);
-//       }
-//     });
-
-//     const options = {
-//       'types': ['establishment']
-//     };
-
-//     const autocomplete = new google.maps.places.Autocomplete(input, options);
-
-
-//     input.value = this.defaultValue ? this.defaultValue : null;
-
-//     autocomplete.addListener('place_changed', () => {
-//       this.zone.run(() => {
-//         this.placeChange.emit(autocomplete.getPlace());
-//       });
-//     });
-//   }
-
-//   ngOnInit() { }
-// }
