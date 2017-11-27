@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 
 const defaultOptions: google.maps.places.AutocompletionRequest = {
-  offset: 3,
+  offset: 5,
   input: null,
   radius: 500
 }

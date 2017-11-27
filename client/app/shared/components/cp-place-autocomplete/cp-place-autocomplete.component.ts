@@ -43,10 +43,12 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     const input = this.hostEl.nativeElement;
     const stream$ = Observable.fromEvent(input, 'keyup');
-    const lng = this.cpSession.g.get('school').longite;
     const lat = this.cpSession.g.get('school').latitude;
+    const lng = this.cpSession.g.get('school').longitude;
 
     stream$
+      .debounceTime(300)
+      .distinctUntilChanged()
       .switchMap((event: any) => {
         let query = event.target.value;
 
@@ -80,6 +82,7 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
   reset() {
     this.resetInput();
     this.resetSuggestions();
+    this.placeChange.emit(null);
   }
 
   fetchGoogleDetails(location) {
