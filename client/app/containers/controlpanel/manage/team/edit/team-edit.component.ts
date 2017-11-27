@@ -412,7 +412,6 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
   onManageAdminSelected(data) {
     if (!data.action) {
-      this.removePrivilegeFromRandomAccount(CP_PRIVILEGES_MAP.manage_admin);
 
       if (CP_PRIVILEGES_MAP.manage_admin in this.schoolPrivileges) {
         delete this.schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin];
@@ -487,7 +486,6 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
     this.doServicesCleanUp();
     this.resetServiceModal$.next(true);
-    this.removePrivilegeFromRandomAccount(CP_PRIVILEGES_MAP.services);
 
     Object.keys(this.accountPrivileges).forEach(storeId => {
       if (!(Object.keys(this.accountPrivileges[storeId]).length)) {
@@ -568,7 +566,6 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
     this.doClubsCleanUp();
     this.resetClubsModal$.next(true);
-    this.removePrivilegeFromRandomAccount(CP_PRIVILEGES_MAP.clubs);
 
     Object.keys(this.accountPrivileges).forEach(storeId => {
       if (!(Object.keys(this.accountPrivileges[storeId]).length)) {
@@ -608,12 +605,6 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   onEventsSelected(event) {
-    this.accountPrivileges = Object.assign(
-      {},
-      this.accountPrivileges,
-      { ...this.removePrivilegeFromRandomAccount(CP_PRIVILEGES_MAP.events) }
-    )
-
     if (event.action === null) {
       if (CP_PRIVILEGES_MAP.events in this.schoolPrivileges) {
         delete this.schoolPrivileges[CP_PRIVILEGES_MAP.events];
@@ -657,30 +648,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     });
   }
 
-  removePrivilegeFromRandomAccount(privilegeType: number) {
-    const stores = accountsToStoreMap(this.editingUser.account_mapping[this.schoolId],
-      this.editingUser.account_level_privileges);
-    Object.keys(stores).map(storeId => {
-      if (privilegeType in stores[storeId]) {
-        delete stores[storeId][privilegeType];
-
-        if (!(Object.keys(stores[storeId]).length)) {
-          delete stores[storeId];
-        }
-      }
-    });
-
-    return stores;
-  }
-
   checkControl(isChecked, privilegeNo, privilegeExtraData): void {
     if (!isChecked) {
-      this.accountPrivileges = Object.assign(
-        {},
-        this.accountPrivileges,
-        { ...this.removePrivilegeFromRandomAccount(privilegeNo) }
-      )
-
       Object.keys(this.accountPrivileges).forEach(storeId => {
         if (!(Object.keys(this.accountPrivileges[storeId]).length)) {
           delete this.accountPrivileges[storeId];
