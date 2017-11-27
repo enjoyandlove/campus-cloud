@@ -2,13 +2,13 @@
   <div class="col-xs-12">
     <cp-no-content
       class="no-content"
-        *ngIf="postingMemberType === DISABLED_MEMBER_TYPE"
+        *ngIf="disablePost"
         [noContentText]="cpI18n.translate('feeds_error_wall_is_disabled')">
     </cp-no-content>
 
     <div
       class="cp-card"
-      *ngIf="postingMemberType !== DISABLED_MEMBER_TYPE">
+      *ngIf="!disablePost">
       <form
         [formGroup]="form"
         (ngSubmit)="onSubmit(form.value)">

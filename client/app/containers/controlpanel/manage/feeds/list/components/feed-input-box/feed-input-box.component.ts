@@ -28,7 +28,7 @@ import { CPImage, appStorage } from '../../../../../../../shared/utils';
 })
 export class FeedInputBoxComponent implements OnInit {
   @Input() clubId: number;
-  @Input() postingMemberType: number;
+  @Input() disablePost: boolean;
   @Input() isCampusWallView: Observable<any>;
   @Output() created: EventEmitter<null> = new EventEmitter();
 
