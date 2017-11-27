@@ -8,8 +8,9 @@ import {
 } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
+import { CPMapsService } from './../../services/maps.service';
 
-declare var google: any;
+const cpMapsService = new CPMapsService();
 
 @Component({
   selector: 'cp-maps',
@@ -17,32 +18,29 @@ declare var google: any;
   styleUrls: ['./cp-maps.component.scss']
 })
 export class CPMapsComponent implements OnInit, AfterViewInit {
+  @Input() doubleClick = true;
   @Input() center: Observable<any>;
-  @ViewChild('map') map: ElementRef;
+  @ViewChild('hostEl') hostEl: ElementRef;
+
+  map: google.maps.Map;
+  marker: google.maps.Marker;
 
   constructor() { }
 
   ngAfterViewInit() {
-    this.center.subscribe(center => {
-      this.drawMap(center);
+    this
+      .center
+      .subscribe(center => {
+        const el = this.hostEl.nativeElement;
+        this.map = cpMapsService.init(el, center);
+        this.marker = cpMapsService.setMarker(this.map, center);
+
+        if (this.doubleClick) {
+          this.map.addListener('dblclick', (event) => {
+            cpMapsService.setMarkerPosition(this.marker, event.latLng.toJSON());
+          })
+        }
     });
-  }
-
-  drawMap(center) {
-    const el = this.map.nativeElement;
-
-    const map = new google.maps.Map(el, {
-      zoom: 16,
-      draggable: false,
-      center: center,
-      disableDefaultUI: true
-    });
-
-    const marker = new google.maps.Marker({
-      position: center,
-    });
-
-    marker.setMap(map);
   }
 
   ngOnInit() { }
