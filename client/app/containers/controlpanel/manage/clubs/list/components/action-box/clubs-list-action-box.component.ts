@@ -1,13 +1,10 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
-import {
-  canAccountLevelWriteResource
-} from './../../../../../../../shared/utils/privileges/privileges';
-
 import { ClubStatus } from '../../../club.status';
 import { CPSession } from './../../../../../../../session/index';
 import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
+import { canSchoolWriteResource } from '../../../../../../../shared/utils/privileges/index';
 
 interface IState {
   query: string;
@@ -42,7 +39,7 @@ export class ClubsListActionBoxComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.canCreate = canAccountLevelWriteResource(this.session.g, CP_PRIVILEGES_MAP.clubs);
+    this.canCreate = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.clubs);
 
     this.clubFilter = [
       {

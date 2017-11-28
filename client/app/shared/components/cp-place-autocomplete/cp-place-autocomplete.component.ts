@@ -1,6 +1,5 @@
 import {
   Input,
-  NgZone,
   OnInit,
   Output,
   Component,
@@ -11,8 +10,15 @@ import {
 } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
+import { CPSession } from './../../../session';
+import { CPLocationsService } from '../../services/locations.service';
 
-declare var google: any;
+interface IState {
+  input: string;
+  suggestions: Array<any>;
+}
+
+const service = new CPLocationsService();
 
 @Component({
   selector: 'cp-place-autocomplete',
@@ -22,41 +28,110 @@ declare var google: any;
 export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
   @Input() placeHolder: string;
   @Input() defaultValue: string;
+  @ViewChild('hostEl') hostEl: ElementRef;
   @Output() placeChange: EventEmitter<any> = new EventEmitter();
-  @ViewChild('input') input: ElementRef;
+  @Output() backToDefault: EventEmitter<null> = new EventEmitter();
+
+  // @Input()
+  // set defaultValue(defaultValue: string) {
+  //   this.setInput(defaultValue);
+  // }
+
+  state: IState = {
+    input: null,
+    suggestions: []
+  }
 
   constructor(
-    private zone: NgZone,
+    private cpSession: CPSession
   ) { }
 
   ngAfterViewInit() {
-    const input = this.input.nativeElement;
-
+    const input = this.hostEl.nativeElement;
     const stream$ = Observable.fromEvent(input, 'keyup');
+    const lat = this.cpSession.g.get('school').latitude;
+    const lng = this.cpSession.g.get('school').longitude;
 
-    stream$.subscribe((res: any) => {
-      let query = res.target.value;
+    stream$
+      .debounceTime(300)
+      .distinctUntilChanged()
+      .switchMap((event: any) => {
+        let query = event.target.value;
 
-      if (!query) {
-        this.placeChange.emit(null);
-      }
-    });
+        if (!query) {
+          this.placeChange.emit(null);
+          return Observable.empty();
+        }
 
-    const options = {
-      'types': ['establishment']
-    };
-
-    const autocomplete = new google.maps.places.Autocomplete(input, options);
-
-
-    input.value = this.defaultValue ? this.defaultValue : null;
-
-    autocomplete.addListener('place_changed', () => {
-      this.zone.run(() => {
-        this.placeChange.emit(autocomplete.getPlace());
-      });
-    });
+        this.setInput(query);
+        return service.getAllSuggestions(query, lat, lng)
+      })
+      .subscribe(
+        res => this.setSuggestions(res[1]),
+        err => console.log(err)
+      )
   }
 
-  ngOnInit() { }
+
+  handleClick(location) {
+    if (!location.value) { return; }
+
+    this.resetSuggestions();
+    this.setInput(location.full_label);
+
+    if (location.isGoogle) {
+      this.fetchGoogleDetails(location);
+      return;
+    }
+  }
+
+  reset() {
+    this.resetInput();
+    this.resetSuggestions();
+    this.backToDefault.emit();
+    this.placeChange.emit(null);
+  }
+
+  fetchGoogleDetails(location) {
+    service
+      .getLocationDetails(location.value, this.hostEl.nativeElement)
+      .subscribe(
+      details => {
+        details = Object.assign(
+          {},
+          details,
+          { name: location.full_label }
+        )
+        this.placeChange.emit(details);
+      },
+      () => this.placeChange.emit(null)
+      )
+  }
+
+  noResultsIfEmpty(results: Array<any>) {
+    return results.length === 1 ?
+      [...results, { 'label_medium': 'No Results', 'value': null }] : results
+  }
+
+  setInput(input): void {
+    this.state = Object.assign({}, this.state, { input });
+  }
+
+  resetInput(): void {
+    this.state = Object.assign({}, this.state, { input: null });
+  }
+
+  setSuggestions(suggestions): void {
+    this.state = Object.assign({}, this.state, { suggestions });
+  }
+
+  resetSuggestions(): void {
+    this.state = Object.assign({}, this.state, { suggestions: [] });
+  }
+
+  ngOnInit() {
+    if (this.defaultValue) {
+      this.setInput(this.defaultValue);
+    }
+  }
 }
