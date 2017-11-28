@@ -9,7 +9,6 @@
     },
     {
       "label": "templates",
-      "new": true,
       "hasParams": true,
       "url": "/notify/templates"
     }

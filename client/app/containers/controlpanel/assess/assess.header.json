@@ -9,7 +9,6 @@
       "hasParams": true
     },
     {
-      "new": true,
       "label": "students",
       "url": "/assess/students"
     }
