@@ -23,6 +23,7 @@ const locationService = new CPLocationsService();
 })
 export class CPMapsComponent implements OnInit, AfterViewInit {
   @Input() doubleClick = true;
+  @Input() draggable = true;
   @Input() center: Observable<any>;
   @ViewChild('hostEl') hostEl: ElementRef;
   @Output() mapSelection: EventEmitter<any> = new EventEmitter();
@@ -37,7 +38,7 @@ export class CPMapsComponent implements OnInit, AfterViewInit {
       .center
       .subscribe(center => {
         const el = this.hostEl.nativeElement;
-        this.map = cpMapsService.init(el, center);
+        this.map = cpMapsService.init(el, center, this.draggable);
         this.marker = cpMapsService.setMarker(this.map, center);
 
         if (this.doubleClick) {

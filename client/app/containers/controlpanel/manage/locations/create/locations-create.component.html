@@ -49,7 +49,7 @@
                   [newAddress]="newAddress"
                   (backToDefault)="onResetMap()"
                   (placeChange)="onPlaceChange($event)"
-                  [defaultValue]="form.controls.address.value">
+                  [defaultValue]="form.controls['address'].value">
                 </cp-place-autocomplete>
               </div>
             </div>
@@ -59,6 +59,7 @@
             <div class="row">
               <div class="col-xs-12">
                 <cp-maps
+                  class="map"
                   [center]="mapCenter"
                   (mapSelection)="onMapSelection($event)">
                 </cp-maps>

@@ -121,7 +121,11 @@
     <div class="row">
       <div class="col-xs-8 col-xs-offset-2">
         <div class="cp-card map">
-          <cp-maps class="map__container" [center]="mapCenter"></cp-maps>
+          <cp-maps
+            [center]="mapCenter"
+            class="map__container"
+            [draggable]="draggable">
+          </cp-maps>
         </div>
       </div>
     </div>
