@@ -24,7 +24,7 @@
                   </a>
                 </div>
               </div>
-              <p class="text-muted section">
+              <p class="text-muted section" *ngIf="service.description">
                 {{ service.description }}
               </p>
 
@@ -41,7 +41,7 @@
                   <i class="material-icons">web</i>{{ service.website }}
                 </p>
 
-                <p *ngIf="service.location">
+                <p *ngIf="service.address">
                   <i class="material-icons">place</i>
                   {{ service.address }} {{ service.location }}
                 </p>
