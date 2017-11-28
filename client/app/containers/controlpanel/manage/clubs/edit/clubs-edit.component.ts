@@ -20,6 +20,7 @@ import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 })
 export class ClubsEditComponent extends BaseComponent implements OnInit {
   club;
+  school;
   clubId;
   loading;
   formError;
@@ -139,41 +140,52 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
     this.form.controls['status'].setValue(type.action);
   }
 
-  onPlaceChange(data) {
+  onResetMap() {
+    this.form.controls['city'].setValue('');
+    this.form.controls['province'].setValue('');
+    this.form.controls['country'].setValue('');
+    this.form.controls['latitude'].setValue(this.school.latitude);
+    this.form.controls['longitude'].setValue(this.school.longitude);
+    this.form.controls['address'].setValue('');
+    this.form.controls['postal_code'].setValue('');
+
+    this.mapCenter.next({
+      lat: this.school.latitude,
+      lng: this.school.longitude
+    });
+  }
+
+  onMapSelection(data) {
     let cpMap = CPMap.getBaseMapObject(data);
 
-    if (!data) {
-      data = {};
-      data.name = '';
-      this.mapCenter.next({
-        lat: this.session.g.get('school').latitude,
-        lng: this.session.g.get('school').longitude
-      });
-    }
+    this.form.controls['city'].setValue(cpMap.city);
+    this.form.controls['province'].setValue(cpMap.province);
+    this.form.controls['country'].setValue(cpMap.country);
+    this.form.controls['latitude'].setValue(cpMap.latitude);
+    this.form.controls['longitude'].setValue(cpMap.longitude);
+    this.form.controls['address'].setValue(data.formatted_address);
+    this.form.controls['postal_code'].setValue(cpMap.postal_code);
+  }
+
+  onPlaceChange(data) {
+    if (!data) { return; }
+
+    let cpMap = CPMap.getBaseMapObject(data);
 
     this.form.controls['city'].setValue(cpMap.city);
-
     this.form.controls['province'].setValue(cpMap.province);
-
     this.form.controls['country'].setValue(cpMap.country);
-
-    this.form.controls['latitude'].setValue(cpMap.latitude
-        || this.session.g.get('school').latitude);
-
-    this.form.controls['longitude'].setValue(cpMap.longitude
-      || this.session.g.get('school').longitude);
-
+    this.form.controls['latitude'].setValue(cpMap.latitude);
+    this.form.controls['longitude'].setValue(cpMap.longitude);
     this.form.controls['address'].setValue(data.name);
-
     this.form.controls['postal_code'].setValue(cpMap.postal_code);
 
-    if (data.geometry) {
-      this.mapCenter.next(data.geometry.location.toJSON());
-    }
+    this.mapCenter.next(data.geometry.location.toJSON());
   }
 
   ngOnInit() {
     this.fetch();
+    this.school = this.session.g.get('school');
 
     this.buttonData = {
       text: this.cpI18n.translate('save'),
