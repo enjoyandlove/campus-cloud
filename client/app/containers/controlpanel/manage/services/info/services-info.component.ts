@@ -30,10 +30,11 @@ import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 export class ServicesInfoComponent extends BaseComponent implements OnInit {
   admins;
   service;
+  storeId;
   loading = true;
   school: ISchool;
   serviceId: number;
-  storeId;
+  draggable = false;
   mapCenter: BehaviorSubject<any>;
 
   constructor(

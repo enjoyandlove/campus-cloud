@@ -5,15 +5,14 @@ import { Injectable } from '@angular/core';
 
 const defaultOptions: google.maps.MapOptions = {
   zoom: 16,
-  draggable: true,
   disableDefaultUI: true,
   disableDoubleClickZoom: true
 }
 
 @Injectable()
 export class CPMapsService {
-  init(el: Element, center: google.maps.LatLngLiteral) {
-    const options = Object.assign({}, defaultOptions, { center });
+  init(el: Element, center: google.maps.LatLngLiteral, draggable = true) {
+    const options = Object.assign({}, defaultOptions, { center, draggable });
 
     return new google.maps.Map(el, options);
   }

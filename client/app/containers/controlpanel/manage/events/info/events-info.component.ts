@@ -30,6 +30,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   isPastEvent;
   loading = true;
   eventId: number;
+  draggable = false;
   mapCenter: BehaviorSubject<any>;
 
   constructor(

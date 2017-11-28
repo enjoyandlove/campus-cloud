@@ -19,6 +19,7 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
   loading;
   clubStatus;
   clubId: number;
+  draggable = false;
   hasMetaData = false;
   mapCenter: BehaviorSubject<any>;
 
