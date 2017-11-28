@@ -28,8 +28,14 @@ const service = new CPLocationsService();
 export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
   @Input() placeHolder: string;
   @Input() defaultValue: string;
-  @Output() placeChange: EventEmitter<any> = new EventEmitter();
   @ViewChild('hostEl') hostEl: ElementRef;
+  @Output() placeChange: EventEmitter<any> = new EventEmitter();
+  @Output() backToDefault: EventEmitter<null> = new EventEmitter();
+
+  // @Input()
+  // set defaultValue(defaultValue: string) {
+  //   this.setInput(defaultValue);
+  // }
 
   state: IState = {
     input: null,
@@ -82,6 +88,7 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
   reset() {
     this.resetInput();
     this.resetSuggestions();
+    this.backToDefault.emit();
     this.placeChange.emit(null);
   }
 

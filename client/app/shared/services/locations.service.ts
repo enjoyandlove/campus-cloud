@@ -16,6 +16,16 @@ export class CPLocationsService {
     return Observable.of([]);
   }
 
+  geoCode(location) {
+    return new Promise((resolve, reject) => {
+      const service = new google.maps.Geocoder();
+
+      service.geocode({ location }, (data, status) => {
+        status === google.maps.GeocoderStatus.OK ? resolve(data[0]) : reject(status);
+      })
+    })
+  }
+
   getGoogleSuggestions(input: string, lat: number, lng: number) {
     const location = new google.maps.LatLng(lat, lng);
     const service = new google.maps.places.AutocompleteService();

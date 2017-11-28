@@ -135,6 +135,33 @@ export class EventsCreateComponent implements OnInit {
     this.form.controls['event_attendance'].setValue(value);
   }
 
+  onResetMap() {
+    this.form.controls['city'].setValue('');
+    this.form.controls['province'].setValue('');
+    this.form.controls['country'].setValue('');
+    this.form.controls['latitude'].setValue(this.school.latitude);
+    this.form.controls['longitude'].setValue(this.school.longitude);
+    this.form.controls['address'].setValue('');
+    this.form.controls['postal_code'].setValue('');
+
+    this.mapCenter.next({
+      lat: this.school.latitude,
+      lng: this.school.longitude
+    });
+  }
+
+  onMapSelection(data) {
+    let cpMap = CPMap.getBaseMapObject(data);
+
+    this.form.controls['city'].setValue(cpMap.city);
+    this.form.controls['province'].setValue(cpMap.province);
+    this.form.controls['country'].setValue(cpMap.country);
+    this.form.controls['latitude'].setValue(cpMap.latitude);
+    this.form.controls['longitude'].setValue(cpMap.longitude);
+    this.form.controls['address'].setValue(data.formatted_address);
+    this.form.controls['postal_code'].setValue(cpMap.postal_code);
+  }
+
   onPlaceChange(data) {
     if (!data) { return; }
 
