@@ -71,6 +71,7 @@
                   <div class="col-xs-12">
                     <cp-place-autocomplete
                       placeHolder="Address..."
+                      [newAddress]="newAddress"
                       (backToDefault)="onResetMap()"
                       (placeChange)="onPlaceChange($event)"
                       [defaultValue]="form.controls.address.value">

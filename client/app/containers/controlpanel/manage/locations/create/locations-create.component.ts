@@ -19,6 +19,7 @@ export class LocationsCreateComponent implements OnInit {
   form: FormGroup;
   school: ISchool;
   mapCenter: BehaviorSubject<any>;
+  newAddress = new BehaviorSubject(null);
 
   constructor(
     private fb: FormBuilder,
@@ -50,6 +51,7 @@ export class LocationsCreateComponent implements OnInit {
     this.form.controls['longitude'].setValue(cpMap.longitude);
     this.form.controls['address'].setValue(data.formatted_address);
     this.form.controls['postal_code'].setValue(cpMap.postal_code);
+    this.newAddress.next(this.form.controls['address'].value);
   }
 
   onPlaceChange(data) {

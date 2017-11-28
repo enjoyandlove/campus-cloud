@@ -26,12 +26,13 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
   formError;
   buttonData;
   statusTypes;
+  defaultStatus;
   membershipTypes;
   form: FormGroup;
-  isFormReady = false;
-  defaultStatus;
   defaultMembership;
+  isFormReady = false;
   mapCenter: BehaviorSubject<any>;
+  newAddress = new BehaviorSubject(null);
 
   constructor(
     private router: Router,
@@ -165,6 +166,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
     this.form.controls['longitude'].setValue(cpMap.longitude);
     this.form.controls['address'].setValue(data.formatted_address);
     this.form.controls['postal_code'].setValue(cpMap.postal_code);
+    this.newAddress.next(this.form.controls['address'].value);
   }
 
   onPlaceChange(data) {

@@ -37,6 +37,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   categories;
   buttonData;
   withAttendance;
+  serviceFeedback;
   school: ISchool;
   storeId: number;
   form: FormGroup;
@@ -45,14 +46,14 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   serviceId: number;
   attendance = false;
   mapCenter: BehaviorSubject<any>;
+  newAddress = new BehaviorSubject(null);
+
   deletedItem: IServiceDeleteModal = {
     id: null,
     name: null,
     type: null,
     index: null
   };
-
-  serviceFeedback;
 
   constructor(
     private router: Router,
@@ -167,6 +168,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     this.form.controls['longitude'].setValue(cpMap.longitude);
     this.form.controls['address'].setValue(data.formatted_address);
     this.form.controls['postal_code'].setValue(cpMap.postal_code);
+    this.newAddress.next(this.form.controls['address'].value);
   }
 
   onPlaceChange(data) {

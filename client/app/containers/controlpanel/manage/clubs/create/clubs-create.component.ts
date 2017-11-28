@@ -26,6 +26,7 @@ export class ClubsCreateComponent implements OnInit {
   statusTypes = statusTypes;
   mapCenter: BehaviorSubject<any>;
   membershipTypes = membershipTypes;
+  newAddress = new BehaviorSubject(null);
 
   constructor(
     private router: Router,
@@ -97,6 +98,8 @@ export class ClubsCreateComponent implements OnInit {
     this.form.controls['longitude'].setValue(cpMap.longitude);
     this.form.controls['address'].setValue(data.formatted_address);
     this.form.controls['postal_code'].setValue(cpMap.postal_code);
+
+    this.newAddress.next(this.form.controls['address'].value);
   }
 
   onPlaceChange(data) {
