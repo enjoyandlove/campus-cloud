@@ -85,11 +85,12 @@
 
                 <div class="row">
                   <div class="col-xs-12">
-                    <label i18n>{{ 'location' | cpI18n }} (({{ 'optional' | cpI18n }}))</label>
+                    <label i18n>{{ 'location' | cpI18n }} ({{ 'optional' | cpI18n }})</label>
                     <div class="row form-group">
                       <div class="col-xs-12">
                         <cp-place-autocomplete
                           placeHolder="Address..."
+                          [newAddress]="newAddress"
                           (backToDefault)="onResetMap()"
                           (placeChange)="onPlaceChange($event)"
                           [defaultValue]="form.controls.address.value">

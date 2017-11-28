@@ -21,6 +21,7 @@ export class LocationsUpdateComponent implements OnInit {
   form: FormGroup;
   isFormReady = false;
   mapCenter: BehaviorSubject<any>;
+  newAddress = new BehaviorSubject(null);
 
   constructor(
     private fb: FormBuilder,
@@ -61,6 +62,7 @@ export class LocationsUpdateComponent implements OnInit {
     this.form.controls['longitude'].setValue(cpMap.longitude);
     this.form.controls['address'].setValue(data.formatted_address);
     this.form.controls['postal_code'].setValue(cpMap.postal_code);
+    this.newAddress.next(this.form.controls['address'].value);
   }
 
   onPlaceChange(data) {

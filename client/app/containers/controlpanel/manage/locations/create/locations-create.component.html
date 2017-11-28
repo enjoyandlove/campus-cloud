@@ -46,6 +46,7 @@
                 <label i18n>Address</label>
                 <cp-place-autocomplete
                   placeHolder="Address..."
+                  [newAddress]="newAddress"
                   (backToDefault)="onResetMap()"
                   (placeChange)="onPlaceChange($event)"
                   [defaultValue]="form.controls.address.value">

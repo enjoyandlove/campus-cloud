@@ -6,7 +6,8 @@ import {
   ViewChild,
   ElementRef,
   EventEmitter,
-  AfterViewInit
+  AfterViewInit,
+  ChangeDetectorRef
 } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
@@ -26,16 +27,14 @@ const service = new CPLocationsService();
   styleUrls: ['./cp-place-autocomplete.component.scss']
 })
 export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
+  @ViewChild('hostEl') hostEl: ElementRef;
+
   @Input() placeHolder: string;
   @Input() defaultValue: string;
-  @ViewChild('hostEl') hostEl: ElementRef;
+  @Input() newAddress: Observable<string>;
+
   @Output() placeChange: EventEmitter<any> = new EventEmitter();
   @Output() backToDefault: EventEmitter<null> = new EventEmitter();
-
-  // @Input()
-  // set defaultValue(defaultValue: string) {
-  //   this.setInput(defaultValue);
-  // }
 
   state: IState = {
     input: null,
@@ -43,7 +42,8 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
   }
 
   constructor(
-    private cpSession: CPSession
+    private cpSession: CPSession,
+    private ref: ChangeDetectorRef
   ) { }
 
   ngAfterViewInit() {
@@ -133,5 +133,12 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
     if (this.defaultValue) {
       this.setInput(this.defaultValue);
     }
+
+    this.newAddress.subscribe(address => {
+      if (address) {
+        this.setInput(address);
+        this.ref.detectChanges();
+      }
+    })
   }
 }
