@@ -69,7 +69,7 @@ const manageAdminDropdown = function (privilege: { r: boolean, w: boolean }) {
 };
 
 const clubsDropdown = (schoolLevel = { r: false, w: false },
-  accountLevel = false) => {
+                       accountLevel = false)  => {
 
   let items = [
     {
@@ -82,7 +82,7 @@ const clubsDropdown = (schoolLevel = { r: false, w: false },
     return items;
   }
 
-  if (accountLevel) {
+  if (accountLevel && !schoolLevel.w) {
     items = [
       ...items,
       {
@@ -92,10 +92,13 @@ const clubsDropdown = (schoolLevel = { r: false, w: false },
     ];
   }
 
-
   if (schoolLevel.w) {
     items = [
       ...items,
+      {
+        'label': _cpI18n.translate('admin_select_clubs'),
+        'action': 2
+      },
       {
         'label': _cpI18n.translate('admin_all_clubs'),
         'action': 3
@@ -107,7 +110,7 @@ const clubsDropdown = (schoolLevel = { r: false, w: false },
 };
 
 const servicesDropdown = function (schoolLevel = { r: false, w: false },
-  accountLevel = false) {
+                                   accountLevel = false) {
   let items = [
     {
       'label': _cpI18n.translate('admin_no_access'),
@@ -119,7 +122,7 @@ const servicesDropdown = function (schoolLevel = { r: false, w: false },
     return items;
   }
 
-  if (accountLevel) {
+  if (accountLevel && !schoolLevel.w) {
     items = [
       ...items,
       {
@@ -129,10 +132,13 @@ const servicesDropdown = function (schoolLevel = { r: false, w: false },
     ];
   }
 
-
   if (schoolLevel.w) {
-    items = [
+    items =  [
       ...items,
+      {
+        'label': _cpI18n.translate('admin_select_services'),
+        'action': 2
+      },
       {
         'label': _cpI18n.translate('admin_all_services'),
         'action': 3
@@ -141,6 +147,7 @@ const servicesDropdown = function (schoolLevel = { r: false, w: false },
   }
   return items;
 };
+
 declare var $: any;
 
 @Component({
