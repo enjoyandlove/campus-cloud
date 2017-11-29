@@ -449,6 +449,15 @@
   "calendar": {
     "message": "Calendar"
   },
+  "calendars": {
+    "message": "Calendars"
+  },
+  "calendars_button_new": {
+    "message": "Add Calendar"
+  },
+  "calendars_no_results_found": {
+    "message": "No Calendars found"
+  },
   "campus_wall": {
     "message": "Campus Wall"
   },
@@ -471,7 +480,7 @@
     "message": "Check-Ins"
   },
   "checkin_attendance_list": {
-    "message": "Bonjour again"
+    "message": "Attendance List"
   },
   "checkin_button_pdf_kit": {
     "message": "PDF Kit Tool"
@@ -483,7 +492,7 @@
     "message": "Check In Instructions"
   },
   "checkin_instructions_one": {
-    "message": "Bonjour instruction"
+    "message": "We use QR codes to help attendees check in to an event. Be sure to print or share the QR  code with your event attendance organizer."
   },
   "checkin_instructions_three": {
     "message": "You can view attendance statistics on your control panel. Be sure to come back to view attendee feedback and event ratings."
@@ -633,7 +642,7 @@
     "message": "Upload CSV File"
   },
   "delete": {
-    "message": "Annuler"
+    "message": "Delete"
   },
   "description": {
     "message": "Description"

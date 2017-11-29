@@ -449,6 +449,15 @@
   "calendar": {
     "message": "Calendar"
   },
+  "calendars": {
+    "message": "Calendars"
+  },
+  "calendars_button_new": {
+    "message": "Add Calendar"
+  },
+  "calendars_no_results_found": {
+    "message": "No Calendars found"
+  },
   "campus_wall": {
     "message": "Campus Wall"
   },
