@@ -14,6 +14,7 @@ export class TeamDeleteComponent implements OnInit {
   @Input() admin: any;
   @Output() deleted: EventEmitter<any> = new EventEmitter();
   @Output() errorModal: EventEmitter<null> = new EventEmitter();
+  @Output() unauthorized: EventEmitter<null> = new EventEmitter();
 
   buttonData;
 
@@ -27,17 +28,24 @@ export class TeamDeleteComponent implements OnInit {
       .adminService
       .deleteAdminById(this.admin.id)
       .subscribe(
-        _ => {
+        res => {
+          console.log('DELETE RES CB', res);
           this.deleted.emit(this.admin.id);
           $('#teamDeleteModal').modal('hide');
           this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
         },
         err => {
+          console.log('DELETE CB ERROR', err);
           this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
 
           if (err.status === 503) {
             this.errorModal.emit();
           }
+
+          if (err.status === 403) {
+            this.unauthorized.emit();
+          }
+
           $('#teamDeleteModal').modal('hide');
         }
       );

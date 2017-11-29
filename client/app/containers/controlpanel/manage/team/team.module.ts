@@ -9,6 +9,7 @@ import { TeamEditComponent } from './edit';
 import { TeamDeleteComponent } from './delete';
 import { TeamCreateComponent } from './create';
 import { TeamErrorModalComponent } from './error';
+import { TeamUnauthorizedComponent } from './unauthorized';
 
 import { ClubsService } from '../clubs/clubs.service';
 import { AdminService } from '../../../../shared/services';
@@ -27,7 +28,8 @@ import { TeamRoutingModule } from './team.routing.module';
 @NgModule({
   declarations: [ TeamListComponent, TeamCreateComponent, BaseTeamSelectModalComponent,
   TeamSelectedPipe, TeamFilterPipe, SelectTeamServicesModalComponent,
-  SelectTeamClubsModalComponent, TeamDeleteComponent, TeamEditComponent, TeamErrorModalComponent ],
+  SelectTeamClubsModalComponent, TeamDeleteComponent, TeamEditComponent,
+  TeamErrorModalComponent, TeamUnauthorizedComponent ],
 
   imports: [ CommonModule, SharedModule, RouterModule, ReactiveFormsModule, TeamRoutingModule ],
 
