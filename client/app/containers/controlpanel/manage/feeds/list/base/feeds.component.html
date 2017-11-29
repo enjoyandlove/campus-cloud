@@ -9,7 +9,7 @@
       <cp-feed-input-box
         [clubId]="clubId"
         [isCampusWallView]="isCampusWallView$"
-        [disablePost]="state.currentView.postingMemberType === disablePost"
+        [disablePost]="state.currentView ? state.currentView.postingMemberType === disablePost : false"
         (created)="onCreated($event)">
       </cp-feed-input-box>
 
