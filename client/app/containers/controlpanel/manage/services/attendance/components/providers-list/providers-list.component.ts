@@ -104,8 +104,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
             this.cpI18n.translate('email'),
             this.cpI18n.translate('average_rating'),
             this.cpI18n.translate('total_ratings'),
-            this.cpI18n.translate('services_total_visits'),
-            this.cpI18n.translate('student_id')
+            this.cpI18n.translate('services_total_visits')
           ];
 
           providers = providers.map(data => {
@@ -120,8 +119,6 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
               [this.cpI18n.translate('total_ratings')]: data.num_ratings,
 
               [this.cpI18n.translate('services_total_visits')]: data.total_visits,
-
-              [this.cpI18n.translate('student_id')]: data.student_identifier
             }
           })
 

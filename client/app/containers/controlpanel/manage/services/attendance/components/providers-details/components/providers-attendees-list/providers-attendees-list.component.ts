@@ -96,7 +96,8 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
               this.cpI18n.translate('average_rating'),
               this.cpI18n.translate('feedback'),
               this.cpI18n.translate('services_label_checked_in_method'),
-              this.cpI18n.translate('services_label_checked_in_time')
+              this.cpI18n.translate('services_label_checked_in_time'),
+              this.cpI18n.translate('student_id')
             ];
 
             const check_in_method = {
@@ -121,7 +122,9 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
                   check_in_method[item.check_in_method],
 
                 [this.cpI18n.translate('services_label_checked_in_time')]:
-                  unix(item.check_in_time).format('MMMM Do YYYY - h:mm a')
+                  unix(item.check_in_time).format('MMMM Do YYYY - h:mm a'),
+
+                [this.cpI18n.translate('student_id')]: item.student_identifier
               }
             })
 
