@@ -479,6 +479,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   doServicesCleanUp() {
     accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.events);
     accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.services);
+    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.event_attendance);
 
     if (CP_PRIVILEGES_MAP.services in this.schoolPrivileges) {
       delete this.schoolPrivileges[CP_PRIVILEGES_MAP.services];
@@ -528,6 +529,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.events);
     accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.membership);
     accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.moderation);
+    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.event_attendance);
 
     if (CP_PRIVILEGES_MAP.clubs in this.schoolPrivileges) {
       delete this.schoolPrivileges[CP_PRIVILEGES_MAP.clubs];
