@@ -213,7 +213,7 @@ export class TeamCreateComponent implements OnInit {
     });
 
     this.form.valueChanges.subscribe(_ => {
-      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: !this.form.valid });
     })
   }
 
@@ -249,9 +249,6 @@ export class TeamCreateComponent implements OnInit {
       this.isFormError = true;
       return;
     }
-
-    // console.log(_data);
-    // return;
 
     this
       .teamService
@@ -370,6 +367,7 @@ export class TeamCreateComponent implements OnInit {
 
   doClubsCleanUp() {
     accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.clubs);
+    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.events);
     accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.membership);
     accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.moderation);
 
@@ -385,6 +383,7 @@ export class TeamCreateComponent implements OnInit {
   }
 
   doServicesCleanUp() {
+    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.events);
     accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.services);
 
     if (CP_PRIVILEGES_MAP.services in this.schoolPrivileges) {
