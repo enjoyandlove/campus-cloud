@@ -16,23 +16,30 @@ import { AdminService, ErrorService, CPI18nService } from '../../../../../shared
 
 const _cpI18n = new CPI18nService();
 
-const eventsDropdown = function (privilege: { r: boolean, w: boolean }) {
+const eventsDropdown = function (eventPrivilege = { r: false, w: false },
+                                 eventAssessmentPrivilege = { r: false, w: false }): Array<any> {
   let items = [
     {
       'label': _cpI18n.translate('admin_no_access'),
       'action': null
-    },
-    {
-      'label': _cpI18n.translate('admin_manage_events'),
-      'action': 2
     }
   ];
 
-  if (!privilege) {
+  if (!eventPrivilege.r) {
     return items;
   }
 
-  if (privilege.w) {
+  if (eventPrivilege.w) {
+    items = [
+      ...items,
+      {
+        'label': _cpI18n.translate('admin_manage_events'),
+        'action': 2
+      }
+    ];
+  }
+
+  if (eventAssessmentPrivilege.w) {
     items = [
       ...items,
       {
@@ -44,7 +51,7 @@ const eventsDropdown = function (privilege: { r: boolean, w: boolean }) {
   return items;
 };
 
-const manageAdminDropdown = function (privilege: { r: boolean, w: boolean }) {
+const manageAdminDropdown = function (privilege = { r: false, w: false }) {
   let items = [
     {
       'label': _cpI18n.translate('disabled'),
@@ -69,7 +76,7 @@ const manageAdminDropdown = function (privilege: { r: boolean, w: boolean }) {
 };
 
 const clubsDropdown = (schoolLevel = { r: false, w: false },
-                       accountLevel = false)  => {
+  accountLevel = false) => {
 
   let items = [
     {
@@ -110,7 +117,7 @@ const clubsDropdown = (schoolLevel = { r: false, w: false },
 };
 
 const servicesDropdown = function (schoolLevel = { r: false, w: false },
-                                   accountLevel = false) {
+  accountLevel = false) {
   let items = [
     {
       'label': _cpI18n.translate('admin_no_access'),
@@ -133,7 +140,7 @@ const servicesDropdown = function (schoolLevel = { r: false, w: false },
   }
 
   if (schoolLevel.w) {
-    items =  [
+    items = [
       ...items,
       {
         'label': _cpI18n.translate('admin_select_services'),
@@ -310,21 +317,21 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   eventsDefaultPermission() {
-    let selected;
-    let school_level_privileges = this.schoolPrivileges;
-    let event_privilege = school_level_privileges[CP_PRIVILEGES_MAP.events];
+    const school_level_privileges = this.schoolPrivileges;
 
-    if (!event_privilege) {
-      selected = this.eventsMenu[0];
-    } else if (event_privilege.r && event_privilege.w) {
-      selected = this.eventsMenu[2];
-    } else if (event_privilege.r && !event_privilege.w) {
-      selected = this.eventsMenu[1];
-    } else {
-      selected = this.eventsMenu[0];
+    const eventPrivilege = school_level_privileges[CP_PRIVILEGES_MAP.events]
+      || {r: false, w: false};
+
+    const eventAssessmentPrivilege = school_level_privileges[CP_PRIVILEGES_MAP.event_attendance]
+      || {r: false, w: false};
+
+    if (eventPrivilege.w && eventAssessmentPrivilege.w) {
+      return this.eventsMenu.filter(item => item.action === 3)[0];
+    } else if (eventPrivilege.w) {
+      return this.eventsMenu.filter(item => item.action === 2)[0];
     }
 
-    return selected;
+    return this.eventsMenu.filter(item => item.action === null)[0];
   }
 
   private buildHeader(name) {
@@ -479,6 +486,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   doServicesCleanUp() {
     accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.events);
     accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.services);
+    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.event_attendance);
 
     if (CP_PRIVILEGES_MAP.services in this.schoolPrivileges) {
       delete this.schoolPrivileges[CP_PRIVILEGES_MAP.services];
@@ -528,6 +536,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.events);
     accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.membership);
     accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.moderation);
+    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.event_attendance);
 
     if (CP_PRIVILEGES_MAP.clubs in this.schoolPrivileges) {
       delete this.schoolPrivileges[CP_PRIVILEGES_MAP.clubs];
@@ -618,19 +627,46 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       if (CP_PRIVILEGES_MAP.events in this.schoolPrivileges) {
         delete this.schoolPrivileges[CP_PRIVILEGES_MAP.events];
       }
+      if (CP_PRIVILEGES_MAP.event_attendance in this.schoolPrivileges) {
+        delete this.schoolPrivileges[CP_PRIVILEGES_MAP.event_attendance];
+      }
       return;
     }
 
-    this.schoolPrivileges = Object.assign(
-      {},
-      this.schoolPrivileges,
-      {
-        [CP_PRIVILEGES_MAP.events]: {
-          r: event.action === 2 ? true : true,
-          w: event.action === 2 ? false : true
-        }
+    if (event.action === 2) {
+      if (CP_PRIVILEGES_MAP.event_attendance in this.schoolPrivileges) {
+        delete this.schoolPrivileges[CP_PRIVILEGES_MAP.event_attendance];
       }
-    );
+
+      this.schoolPrivileges = Object.assign(
+        {},
+        this.schoolPrivileges,
+        {
+          [CP_PRIVILEGES_MAP.events]: {
+            r: true,
+            w: true,
+          }
+        }
+      );
+    }
+
+    if (event.action === 3) {
+      this.schoolPrivileges = Object.assign(
+        {},
+        this.schoolPrivileges,
+        {
+          [CP_PRIVILEGES_MAP.events]: {
+            r: true,
+            w: true,
+          },
+
+          [CP_PRIVILEGES_MAP.event_attendance]: {
+            r: true,
+            w: true,
+          }
+        }
+      );
+    }
   }
 
   disableDependencies(deps: Array<number>) {
@@ -717,10 +753,11 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     const eventsPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.events];
     const servicesPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.services];
     const manageAdminPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin];
+    const eventsAssessmentPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.event_attendance];
 
     this.clubsMenu = clubsDropdown(clubsPrivilege);
-    this.eventsMenu = eventsDropdown(eventsPrivilege);
     this.servicesMenu = servicesDropdown(servicesPrivilege);
     this.manageAdmins = manageAdminDropdown(manageAdminPrivilege);
+    this.eventsMenu = eventsDropdown(eventsPrivilege, eventsAssessmentPrivilege);
   }
 }
