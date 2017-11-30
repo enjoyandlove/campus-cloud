@@ -412,6 +412,11 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       .subscribe(
       _ => this.router.navigate([this.currentUserCanManage ? '/manage/team' : '/welcome']),
       err => {
+        if (err.status === 403) {
+          $('#teamUnauthorziedModal').modal();
+          return;
+        }
+
         this.isFormError = true;
 
         if (err.status === 409) {
