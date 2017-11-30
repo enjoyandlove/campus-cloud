@@ -79,6 +79,10 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
           [CP_PRIVILEGES_MAP.events]: {
             r: true,
             w: true,
+          },
+          [CP_PRIVILEGES_MAP.event_attendance]: {
+            r: true,
+            w: true,
           }
         };
 
