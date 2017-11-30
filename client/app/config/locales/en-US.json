@@ -8,6 +8,9 @@
   "admins_error_no_access_granted": {
     "message": "You have not granted any access"
   },
+  "admin_action_unauthorized": {
+    "message": "You do not have sufficient privileges to perform this action."
+  },
   "admin_all_acceess_help": {
     "message": "Give access to all of the Services, Clubs and App Content"
   },
@@ -411,7 +414,7 @@
     "message": "Old Password"
   },
   "auth_password_reset_success": {
-    "message": "Your password has been changed!"
+    "message": "Your password has been changed"
   },
   "auth_pwd_reset_heading": {
     "message": "Follow these simple steps to reset your account"
@@ -452,8 +455,17 @@
   "calendars": {
     "message": "Calendars"
   },
+  "calendars_add_modal_title": {
+    "message": "Add Calendar"
+  },
   "calendars_button_new": {
     "message": "Add Calendar"
+  },
+  "calendars_label_description": {
+    "message": "Description"
+  },
+  "calendars_label_name": {
+    "message": "Name"
   },
   "calendars_no_results_found": {
     "message": "No Calendars found"

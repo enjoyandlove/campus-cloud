@@ -84,7 +84,7 @@ export class TeamListComponent extends BaseComponent implements OnInit {
   }
 
   onForbidden() {
-    $('#teamErrorModal').modal();
+    $('#teamUnauthorziedModal').modal();
   }
 
   onDeleted(adminId) {

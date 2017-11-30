@@ -74,11 +74,11 @@
 <cp-modal modalId="teamDeleteModal">
   <cp-team-delete
     [admin]="deleteAdmin"
-    (errorModal)="onForbidden()"
+    (unauthorized)="onForbidden()"
     (deleted)="onDeleted($event)">
   </cp-team-delete>
 </cp-modal>
 
-<cp-modal modalId="teamErrorModal">
-  <cp-team-error-modal></cp-team-error-modal>
+<cp-modal modalId="teamUnauthorziedModal">
+  <cp-team-unauthorized></cp-team-unauthorized>
 </cp-modal>
