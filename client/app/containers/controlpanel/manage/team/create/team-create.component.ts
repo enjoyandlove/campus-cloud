@@ -19,23 +19,30 @@ import {
 
 const _cpI18n = new CPI18nService();
 
-const eventsDropdown = function (privilege: { r: boolean, w: boolean }) {
+const eventsDropdown = function (eventPrivilege = { r: false, w: false },
+                                 eventAssessmentPrivilege = { r: false, w: false }) {
   let items = [
     {
       'label': _cpI18n.translate('admin_no_access'),
       'action': null
-    },
-    {
-      'label': _cpI18n.translate('admin_manage_events'),
-      'action': 2
     }
   ];
 
-  if (!privilege) {
+  if (!eventPrivilege.r) {
     return items;
   }
 
-  if (privilege.w) {
+  if (eventPrivilege.w) {
+    items = [
+      ...items,
+      {
+        'label': _cpI18n.translate('admin_manage_events'),
+        'action': 2
+      }
+    ];
+  }
+
+  if (eventAssessmentPrivilege.w) {
     items = [
       ...items,
       {
@@ -409,26 +416,26 @@ export class TeamCreateComponent implements OnInit {
 
     this.resetClubsModal$.next(true);
 
+    const clubPrivilege = this.session.g.get('user')
+      .school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.clubs];
+
     this.schoolPrivileges = Object.assign(
       {},
       this.schoolPrivileges,
       {
         [CP_PRIVILEGES_MAP.clubs]: {
           r: true,
-          w: this.session.g.get('user')
-            .school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.clubs].w
+          w: clubPrivilege.w
         },
 
         [CP_PRIVILEGES_MAP.moderation]: {
           r: true,
-          w: this.session.g.get('user')
-            .school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.clubs].w
+          w: clubPrivilege.w
         },
 
         [CP_PRIVILEGES_MAP.membership]: {
           r: true,
-          w: this.session.g.get('user')
-            .school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.clubs].w
+          w: clubPrivilege.w
         }
       }
     );
@@ -439,19 +446,46 @@ export class TeamCreateComponent implements OnInit {
       if (CP_PRIVILEGES_MAP.events in this.schoolPrivileges) {
         delete this.schoolPrivileges[CP_PRIVILEGES_MAP.events];
       }
+      if (CP_PRIVILEGES_MAP.event_attendance in this.schoolPrivileges) {
+        delete this.schoolPrivileges[CP_PRIVILEGES_MAP.event_attendance];
+      }
       return;
     }
 
-    this.schoolPrivileges = Object.assign(
-      {},
-      this.schoolPrivileges,
-      {
-        [CP_PRIVILEGES_MAP.events]: {
-          r: event.action === 2 ? true : true,
-          w: event.action === 2 ? false : true
-        }
+    if (event.action === 2) {
+      if (CP_PRIVILEGES_MAP.event_attendance in this.schoolPrivileges) {
+        delete this.schoolPrivileges[CP_PRIVILEGES_MAP.event_attendance];
       }
-    );
+
+      this.schoolPrivileges = Object.assign(
+        {},
+        this.schoolPrivileges,
+        {
+          [CP_PRIVILEGES_MAP.events]: {
+            r: true,
+            w: true,
+          }
+        }
+      );
+    }
+
+    if (event.action === 3) {
+      this.schoolPrivileges = Object.assign(
+        {},
+        this.schoolPrivileges,
+        {
+          [CP_PRIVILEGES_MAP.events]: {
+            r: true,
+            w: true,
+          },
+
+          [CP_PRIVILEGES_MAP.event_attendance]: {
+            r: true,
+            w: true,
+          }
+        }
+      );
+    }
   }
 
   handleDependencies(privilegeNo, dependencies: Array<number>) {
@@ -536,6 +570,8 @@ export class TeamCreateComponent implements OnInit {
 
     const eventsPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.events];
 
+    const eventsAssessmentPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.event_attendance];
+
     const servicesPrivilegeSchool = schoolPrivileges[CP_PRIVILEGES_MAP.services];
 
     const servicesPrivilegeAccount = canAccountLevelReadResource(session,
@@ -543,8 +579,8 @@ export class TeamCreateComponent implements OnInit {
 
     const manageAdminPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin];
 
-    this.eventsMenu = eventsDropdown(eventsPrivilege);
     this.clubsMenu = clubsDropdown(clubsPrivilegeSchool, clubsPrivilegeAccount);
+    this.eventsMenu = eventsDropdown(eventsPrivilege, eventsAssessmentPrivilege);
     this.servicesMenu = servicesDropdown(servicesPrivilegeSchool, servicesPrivilegeAccount);
     this.manageAdmins = manageAdminDropdown(manageAdminPrivilege);
   }
