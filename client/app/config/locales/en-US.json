@@ -137,6 +137,9 @@
   "announcements_compose_modal_help": {
     "message": "Announce to all students"
   },
+  "announcements_compose_modal_title": {
+    "message": "Compose"
+  },
   "announcements_delete_modal_body": {
     "message": "Are you sure you want to archive this announcement?"
   },
@@ -625,9 +628,6 @@
   },
   "compose": {
     "message": "Compose"
-  },
-  "Compose": {
-    "message": "announcements_compose_modal_title"
   },
   "confirm": {
     "message": "Confirm"
