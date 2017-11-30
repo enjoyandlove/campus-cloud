@@ -8,7 +8,6 @@ import { TeamListComponent } from './list';
 import { TeamEditComponent } from './edit';
 import { TeamDeleteComponent } from './delete';
 import { TeamCreateComponent } from './create';
-import { TeamErrorModalComponent } from './error';
 import { TeamUnauthorizedComponent } from './unauthorized';
 
 import { ClubsService } from '../clubs/clubs.service';
@@ -29,7 +28,7 @@ import { TeamRoutingModule } from './team.routing.module';
   declarations: [ TeamListComponent, TeamCreateComponent, BaseTeamSelectModalComponent,
   TeamSelectedPipe, TeamFilterPipe, SelectTeamServicesModalComponent,
   SelectTeamClubsModalComponent, TeamDeleteComponent, TeamEditComponent,
-  TeamErrorModalComponent, TeamUnauthorizedComponent ],
+  TeamUnauthorizedComponent ],
 
   imports: [ CommonModule, SharedModule, RouterModule, ReactiveFormsModule, TeamRoutingModule ],
 

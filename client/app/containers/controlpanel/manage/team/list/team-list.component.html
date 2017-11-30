@@ -74,14 +74,9 @@
 <cp-modal modalId="teamDeleteModal">
   <cp-team-delete
     [admin]="deleteAdmin"
-    (unauthorized)="on403()"
-    (errorModal)="onForbidden()"
+    (unauthorized)="onForbidden()"
     (deleted)="onDeleted($event)">
   </cp-team-delete>
-</cp-modal>
-
-<cp-modal modalId="teamErrorModal">
-  <cp-team-error-modal></cp-team-error-modal>
 </cp-modal>
 
 <cp-modal modalId="teamUnauthorziedModal">

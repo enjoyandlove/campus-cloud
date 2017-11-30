@@ -59,7 +59,7 @@ export abstract class BaseService {
       .catch(err => this.catchError(err));
   }
 
-  update(url: string, data: any, opts?: RequestOptionsArgs) {
+  update(url: string, data: any, opts?: RequestOptionsArgs, silent = false) {
     const headers = buildCommonHeaders();
 
     data = CPObj.cleanNullValues(data);
@@ -69,7 +69,7 @@ export abstract class BaseService {
       .put(url, data, { headers, ...opts })
       .delay(200)
       .retry(1)
-      .catch(err => this.catchError(err));
+      .catch(err => silent ? Observable.throw(err) : this.catchError(err));
   }
 
   delete(url: string, opts?: RequestOptionsArgs, silent = false) {
@@ -78,9 +78,7 @@ export abstract class BaseService {
     return this
       .http
       .delete(url, { headers, ...opts })
-      .catch(err => {
-        return silent ? Observable.throw(err) : this.catchError(err);
-      });
+      .catch(err => silent ? Observable.throw(err) : this.catchError(err));
   }
 
   catchError(err) {
