@@ -28,14 +28,13 @@ export class TeamDeleteComponent implements OnInit {
       .adminService
       .deleteAdminById(this.admin.id)
       .subscribe(
-        res => {
-          console.log('DELETE RES CB', res);
+        () => {
           this.deleted.emit(this.admin.id);
           $('#teamDeleteModal').modal('hide');
           this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
         },
         err => {
-          console.log('DELETE CB ERROR', err);
+          $('#teamDeleteModal').modal('hide');
           this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
 
           if (err.status === 503) {
@@ -43,10 +42,9 @@ export class TeamDeleteComponent implements OnInit {
           }
 
           if (err.status === 403) {
+            console.log('hey 403');
             this.unauthorized.emit();
           }
-
-          $('#teamDeleteModal').modal('hide');
         }
       );
 

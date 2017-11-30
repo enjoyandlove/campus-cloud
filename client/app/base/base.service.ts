@@ -72,13 +72,15 @@ export abstract class BaseService {
       .catch(err => this.catchError(err));
   }
 
-  delete(url: string, opts?: RequestOptionsArgs) {
+  delete(url: string, opts?: RequestOptionsArgs, silent = false) {
     const headers = buildCommonHeaders();
 
     return this
       .http
       .delete(url, { headers, ...opts })
-      .catch(err => this.catchError(err));
+      .catch(err => {
+        return silent ? Observable.throw(err) : this.catchError(err);
+      });
   }
 
   catchError(err) {
@@ -94,7 +96,6 @@ export abstract class BaseService {
 
       case 403:
         this.router.navigate(['../']);
-        console.log('BASE SERVICE 403');
         break;
 
       case 500:

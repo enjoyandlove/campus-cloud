@@ -37,12 +37,9 @@ export class AdminService extends BaseService {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/${adminId}`;
 
     return super
-      .delete(url)
+      .delete(url, null, true)
       .map(res => res.json())
-      .catch(err => {
-        console.log('err', err);
-        return Observable.empty();
-      });
+      .catch(err => Observable.throw(err));
   }
 
   createAdmin(data: any) {
