@@ -13,7 +13,6 @@ declare var $: any;
 export class TeamDeleteComponent implements OnInit {
   @Input() admin: any;
   @Output() deleted: EventEmitter<any> = new EventEmitter();
-  @Output() errorModal: EventEmitter<null> = new EventEmitter();
   @Output() unauthorized: EventEmitter<null> = new EventEmitter();
 
   buttonData;
@@ -37,12 +36,7 @@ export class TeamDeleteComponent implements OnInit {
           $('#teamDeleteModal').modal('hide');
           this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
 
-          if (err.status === 503) {
-            this.errorModal.emit();
-          }
-
           if (err.status === 403) {
-            console.log('hey 403');
             this.unauthorized.emit();
           }
         }
