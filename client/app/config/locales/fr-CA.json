@@ -1190,11 +1190,17 @@
   "release_notes_june_2_title": {
     "message": "New as of June 2, 2017:"
   },
+  "release_notes_p_four": {
+    "message": "The OOHLALA Team."
+  },
   "release_notes_p_one": {
-    "message": "Our team is hard at work on a new, improved version of Campus Cloud. We hope to get valuable feedback by allowing certain customers such as yourself to use it at this early stage."
+    "message": "As part of the build up to 2018, we’ve rebuilt the Campus Cloud from the ground up. You’ll find the new Campus Cloud to be faster, more intuitive and user-friendly than the previous version. Please note that we are still refining some of the features from the old version and will be releasing them over the next few weeks. The first of these updated features will be a brand new dashboard that is more insightful!"
+  },
+  "release_notes_p_three": {
+    "message": "We hope your experience with the new Campus Cloud proves to be an easy and enjoyable one, and we look forward to hearing your feedback!"
   },
   "release_notes_p_two": {
-    "message": "This early preview may not have all the features you expect (yet!), but we're adding new features regularly."
+    "message": "Should you wish to return to the old Campus Cloud, you can always do so by clicking on the banner at the top of the screen. If you wish to provide any feedback on your experience with the new Campus Cloud, please contact us at "
   },
   "release_notes_sept_6_item_one": {
     "message": "Student comments are now included in downloaded Assessment data"
@@ -1206,7 +1212,7 @@
     "message": "New as of September 6, 2017:"
   },
   "release_notes_title": {
-    "message": "Welcome to a sneak-preview of the new Campus Cloud!"
+    "message": "Welcome to the brand new Campus Cloud!"
   },
   "response": {
     "message": "Response"
