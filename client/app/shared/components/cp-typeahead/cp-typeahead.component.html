@@ -33,6 +33,7 @@
               </button>
               <ul class="switcherMenu__list dropdown-menu dropdown-menu-right">
                 <li
+                  class="list-as-anchor"
                   (click)="onSwitchChange(item)"
                   *ngFor="let item of switcherMenu">
                   {{ item.label }}
