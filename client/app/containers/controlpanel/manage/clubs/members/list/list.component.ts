@@ -44,6 +44,16 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
     super.isLoading().subscribe(loading => this.loading = loading);
   }
 
+  onPaginationNext() {
+    super.goToNext();
+    this.fetch();
+  }
+
+  onPaginationPrevious() {
+    super.goToPrevious();
+    this.fetch();
+  }
+
   private fetch() {
     const groupSearch = new URLSearchParams();
     const memberSearch = new URLSearchParams();
@@ -63,7 +73,7 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
 
       this.groupId = groups[0].id;
 
-      return this.membersService.getMembers(memberSearch);
+      return this.membersService.getMembers(memberSearch, this.startRange, this.endRange);
     });
 
     super

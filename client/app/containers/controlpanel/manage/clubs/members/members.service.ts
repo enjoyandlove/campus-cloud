@@ -13,8 +13,9 @@ export class MembersService extends BaseService {
     Object.setPrototypeOf(this, MembersService.prototype);
   }
 
-  getMembers(search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER}/`;
+  getMembers(search: URLSearchParams, startRange: number, endRange: number) {
+    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER}`;
+    const url = `${common}/${startRange};${endRange}`;
 
     return super.get(url, { search }).map(res => res.json());
   }
