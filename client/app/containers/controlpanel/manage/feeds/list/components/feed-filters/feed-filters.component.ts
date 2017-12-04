@@ -1,3 +1,4 @@
+import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -5,12 +6,27 @@ import { Observable } from 'rxjs/Observable';
 import { FeedsService } from '../../../feeds.service';
 import { CPSession } from '../../../../../../../session';
 
+const campusWall = {
+  label: 'Campus Wall',
+  action: 1,
+  group_id: null,
+  commentingMemberType: null,
+  postingMemberType: null,
+}
+
+interface ICurrentView {
+  label: string;
+  action: number;
+  group_id: number;
+  commentingMemberType: number;
+  postingMemberType: number;
+}
+
 interface IState {
   group_id: number;
   wall_type: number;
   post_types: number;
-  postingMemberType: number;
-  commentingMemberType: number;
+  currentView?: ICurrentView;
   flagged_by_users_only: number;
   removed_by_moderators_only: number;
 }
@@ -19,8 +35,7 @@ const state: IState = {
   wall_type: 1,
   group_id: null,
   post_types: null,
-  postingMemberType: null,
-  commentingMemberType: null,
+  currentView: campusWall,
   flagged_by_users_only: null,
   removed_by_moderators_only: null
 };
@@ -38,10 +53,12 @@ export class FeedFiltersComponent implements OnInit {
   channels;
   channels$;
   state: IState;
+  socialGroups = [];
   walls$: Observable<any>;
 
   constructor(
     private session: CPSession,
+    private cpI18n: CPI18nService,
     private feedsService: FeedsService,
   ) {
     this.state = state;
@@ -54,14 +71,14 @@ export class FeedFiltersComponent implements OnInit {
     this.walls$ = this.feedsService.getSocialGroups(search)
       .startWith([
         {
-          label: 'Campus Wall',
+          label: this.cpI18n.translate('campus_wall'),
           action: 1
         }
       ])
       .map(groupWalls => {
         let _walls = [
           {
-            label: 'Campus Wall',
+            label: this.cpI18n.translate('campus_wall'),
             action: 1
           }
         ];
@@ -74,7 +91,7 @@ export class FeedFiltersComponent implements OnInit {
             postingMemberType: wall.min_posting_member_type,
             group_id: wall.related_obj_id
           };
-
+          this.socialGroups.push(_wall);
           _walls.push(_wall);
         });
 
@@ -82,11 +99,11 @@ export class FeedFiltersComponent implements OnInit {
       });
 
     this.channels$ = this.feedsService.getChannelsBySchoolId(1, 1000, search)
-      .startWith([{ label: 'All' }])
+      .startWith([{ label: this.cpI18n.translate('all') }])
       .map(channels => {
         let _channels = [
           {
-            label: 'All',
+            label:  this.cpI18n.translate('all'),
             action: null
           }
         ];
@@ -141,28 +158,51 @@ export class FeedFiltersComponent implements OnInit {
     this.doFilter.emit(this.state);
   }
 
-  onUpdateWallSettings(wall) {
-    this.state = Object.assign(
+  getWallSettings(id: number) {
+    return this.socialGroups.filter(group => group.action === id)[0];
+  }
+
+  updateGroup(group, wall) {
+    return Object.assign(
       {},
-      this.state,
+      group,
       {
-        postingMemberType: wall.min_posting_member_type,
         commentingMemberType: wall.min_commenting_member_type,
+        postingMemberType: wall.min_posting_member_type,
       }
-    );
+    )
+  }
 
+  onUpdateWallSettings(wall) {
+    this.socialGroups = this
+      .socialGroups
+      .map(group => {
+        return group.action === wall.id ? this.updateGroup(group, wall) : group
+    });
 
-    this.doFilter.emit(this.state);
+    if (this.state.currentView.action === wall.id) {
+      this.state = Object.assign(
+        {},
+        this.state,
+        { currentView: this.getWallSettings(wall.id) }
+      )
+
+      this.doFilter.emit(this.state);
+    }
   }
 
   onFilterSelected(item, type) {
     this.state = Object.assign(
       {},
       this.state,
+      { currentView: item.action === 1 ? campusWall : this.getWallSettings(item.action) }
+    )
+
+    this.state = Object.assign(
+      {},
+      this.state,
       {
         group_id: item.group_id ? item.group_id : null,
-        postingMemberType: item.postingMemberType ? item.postingMemberType : true,
-        commentingMemberType: item.commentingMemberType ? item.commentingMemberType : true,
       }
     );
     this.updateState(type, item.action);
@@ -176,15 +216,15 @@ export class FeedFiltersComponent implements OnInit {
   ngOnInit() {
     this.posts = [
       {
-        label: 'All Posts',
+        label: this.cpI18n.translate('feeds_all_posts'),
         action: null
       },
       {
-        label: 'Flagged Posts',
+        label: this.cpI18n.translate('feeds_flagged_posts'),
         action: 1
       },
       {
-        label: 'Removed Posts',
+        label: this.cpI18n.translate('feeds_removed_posts'),
         action: 2
       }
     ];

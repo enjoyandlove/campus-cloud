@@ -17,10 +17,10 @@
           <ul class="col-xs-12 cp-form" formArrayName="clubs">
             <div class="clubs">
               <li class="cp-form__header row">
-                <span class="col-xs-4" i18n>Club Name</span>
-                <span class="col-xs-3" i18n>Email</span>
-                <span class="col-xs-2" i18n>Phone Number</span>
-                <span class="col-xs-2" i18n>Website</span>
+                <span class="col-xs-4" i18n>{{ 'clubs_label_club_name' | cpI18n }}</span>
+                <span class="col-xs-3" i18n>{{ 'email' | cpI18n }}</span>
+                <span class="col-xs-2" i18n>{{ 'phone_number' | cpI18n }}</span>
+                <span class="col-xs-2" i18n>{{ 'website' | cpI18n }}</span>
                 <span class="col-xs-1"></span>
               </li>
 
@@ -76,11 +76,11 @@
             <div class="pull-right">
               <a [routerLink]="['/manage/clubs']"
                 class="cpbtn cpbtn--cancel" i18n>
-                Cancel
+                {{ 'cancel' | cpI18n }}
               </a>
               <cp-button
                 [props]="buttonData"
-                (buttonClick)="onSubmit">
+                (buttonClick)="onSubmit()">
               </cp-button>
               <!-- <button
                 type="button"

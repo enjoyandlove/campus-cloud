@@ -10,12 +10,16 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Headers, URLSearchParams } from '@angular/http';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
+import {
+  StoreService,
+  CPI18nService,
+  FileUploadService
+} from '../../../../../../../shared/services';
+
 import { API } from '../../../../../../../config/api';
 import { FeedsService } from '../../../feeds.service';
-import { STATUS } from '../../../../../../../shared/constants';
 import { CPSession, ISchool } from '../../../../../../../session';
 import { CPImage, appStorage } from '../../../../../../../shared/utils';
-import { FileUploadService, StoreService } from '../../../../../../../shared/services';
 
 @Component({
   selector: 'cp-feed-input-box',
@@ -24,7 +28,7 @@ import { FileUploadService, StoreService } from '../../../../../../../shared/ser
 })
 export class FeedInputBoxComponent implements OnInit {
   @Input() clubId: number;
-  @Input() postingMemberType: number;
+  @Input() disablePost: boolean;
   @Input() isCampusWallView: Observable<any>;
   @Output() created: EventEmitter<null> = new EventEmitter();
 
@@ -36,7 +40,6 @@ export class FeedInputBoxComponent implements OnInit {
   school: ISchool;
   _isCampusWallView;
   DISABLED_MEMBER_TYPE = 100;
-  placeHolder = 'Add some text to this post...';
   image$: BehaviorSubject<string> = new BehaviorSubject(null);
   reset$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   resetTextEditor$: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -44,6 +47,7 @@ export class FeedInputBoxComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private session: CPSession,
+    private cpI18n: CPI18nService,
     private feedsService: FeedsService,
     private storeService: StoreService,
     private fileUploadService: FileUploadService
@@ -130,12 +134,12 @@ export class FeedInputBoxComponent implements OnInit {
     const fileExtension = file.name.split('.').pop();
 
     if (!CPImage.isSizeOk(file.size, CPImage.MAX_IMAGE_SIZE)) {
-      this.imageError = STATUS.FILE_IS_TOO_BIG;
+      this.imageError = this.cpI18n.translate('error_file_is_too_big');
       return;
     }
 
     if (!CPImage.isValidExtension(fileExtension, CPImage.VALID_EXTENSIONS)) {
-      this.imageError = STATUS.WRONG_EXTENSION_IMAGE;
+      this.imageError = this.cpI18n.translate('error_invalid_extension');
       return;
     }
 

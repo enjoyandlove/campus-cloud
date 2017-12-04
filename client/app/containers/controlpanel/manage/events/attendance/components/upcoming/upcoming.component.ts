@@ -13,6 +13,7 @@ export class AttendanceUpcomingComponent implements OnInit {
 
   mapCenter;
   dateFormat;
+  draggable = false;
   format = FORMAT.DATETIME;
 
   constructor() { }

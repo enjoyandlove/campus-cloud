@@ -1,4 +1,12 @@
-export const accountsToStoreMap = (accountsMap: Array<number>, accountPrivileges) => {
+const accountLevelEmpty = (user) => {
+  return Object.keys(user.account_level_privileges).length === 0;
+}
+
+const schoolLevelEmpty = (user) => {
+  return Object.keys(user.school_level_privileges).length === 0;
+}
+
+export const accountsToStoreMap = (accountsMap: Array<number> = [], accountPrivileges) => {
   let accounts = {};
 
   accountsMap.map(storeId => {
@@ -21,6 +29,25 @@ export const canStoreReadAndWriteResource = (session: Map<any, any>,
 export const canAccountLevelReadResource = (session: Map<any, any>, privilegeType: number) => {
   let hasAccountAccess = false;
 
+  if (accountLevelEmpty(session.get('user'))) { return false; }
+
+  session.get('user').account_mapping[session.get('school').id].forEach(store => {
+    Object.keys(session.get('user').account_level_privileges[store]).forEach(privilege => {
+
+      if (privilegeType === +privilege) {
+        hasAccountAccess = true;
+      }
+    });
+  });
+
+  return hasAccountAccess;
+}
+
+export const canAccountLevelWriteResource = (session: Map<any, any>, privilegeType: number) => {
+  let hasAccountAccess = false;
+
+  if (accountLevelEmpty(session.get('user'))) { return false; }
+
   session.get('user').account_mapping[session.get('school').id].forEach(store => {
     Object.keys(session.get('user').account_level_privileges[store]).forEach(privilege => {
 
@@ -34,9 +61,7 @@ export const canAccountLevelReadResource = (session: Map<any, any>, privilegeTyp
 }
 
 export const canSchoolReadResource = (session: Map<any, any>, privilegeType: number) => {
-  if (!(Object.keys(session.get('user').school_level_privileges).length)) {
-    return false;
-  }
+  if (schoolLevelEmpty(session.get('user'))) { return false; }
 
   if (!(session.get('school').id in session.get('user').school_level_privileges)) {
     return false;

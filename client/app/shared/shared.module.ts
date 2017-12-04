@@ -13,10 +13,11 @@ import { CPMapsComponent, CPModalComponent, CPTopBarComponent, CPAvatarComponent
   CPNoContentComponent, CPCheckDropdownComponent, CPImageUploadComponent,
   SchoolSwitchComponent, CPIntercommComponent, CPTrackersComponent, CPChipComponent,
   CPTypeAheadComponent, CPUploadModalComponent, CPSnackBarComponent, CPButtonComponent,
-  CPTextEditorComponent
+  CPTextEditorComponent, CPTopBanerComponent
 } from './components';
 
 import {
+  CPI18nPipe,
   CPDatePipe,
   CPFilterPipe
 } from './pipes';
@@ -41,7 +42,8 @@ import {
   CPSmallDatePickerComponent, CPPaginationComponent, CPNoContentComponent,
   CPCheckDropdownComponent, CPImageUploadComponent, SchoolSwitchComponent, CPIntercommComponent,
   CPTrackersComponent, CPUploadModalComponent, CPChipComponent, CPTypeAheadComponent,
-  CPSnackBarComponent, CPTrackerDirective, CPButtonComponent, CPTextEditorComponent ],
+  CPSnackBarComponent, CPTrackerDirective, CPButtonComponent, CPTextEditorComponent,
+  CPI18nPipe, CPTopBanerComponent ],
 
   imports: [ CommonModule, RouterModule, ReactiveFormsModule ],
 
@@ -57,6 +59,7 @@ import {
   CPSmallDatePickerComponent, CPPaginationComponent, CPNoContentComponent,
   CPCheckDropdownComponent, CPImageUploadComponent, SchoolSwitchComponent, CPIntercommComponent,
   CPTrackersComponent, CPUploadModalComponent, CPChipComponent, CPTypeAheadComponent,
-  CPSnackBarComponent, CPTrackerDirective, CPButtonComponent, CPTextEditorComponent ]
+  CPSnackBarComponent, CPTrackerDirective, CPButtonComponent, CPTextEditorComponent, CPI18nPipe,
+  CPTopBanerComponent ]
 })
 export class SharedModule { }

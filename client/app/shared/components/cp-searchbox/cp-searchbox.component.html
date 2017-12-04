@@ -4,7 +4,7 @@
     #q
     type="text"
     id="search-disable-lastpass"
-    [placeholder]="placeholder ? placeholder : 'Search...'">
+    [placeholder]="placeholder ? placeholder : cpI18n.translate('search') + '...'">
   <ng-container *ngIf="isSearch$ | async">
     <button
       (click)="onClear()"

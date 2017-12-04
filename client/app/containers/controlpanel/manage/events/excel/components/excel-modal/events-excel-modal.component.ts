@@ -3,9 +3,8 @@ import { Router } from '@angular/router';
 
 import { isDev } from '../../../../../../../config/env';
 import { EventsService } from '../../../events.service';
-import { STATUS } from '../../../../../../../shared/constants';
 import { FileUploadService } from '../../../../../../../shared/services';
-
+import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 
 @Component({
   selector: 'cp-events-excel-modal',
@@ -26,6 +25,7 @@ export class EventsExcelModalComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private cpI18n: CPI18nService,
     private service: EventsService,
     private fileService: FileUploadService,
   ) { }
@@ -45,7 +45,9 @@ export class EventsExcelModalComponent implements OnInit {
       .catch(
       err => {
         let serverError = err.json().error;
-        return Promise.reject(serverError ? serverError : STATUS.SOMETHING_WENT_WRONG);
+        return Promise.reject(serverError ?
+                              serverError :
+                              this.cpI18n.translate('something_went_wrong'));
       }
       );
   }

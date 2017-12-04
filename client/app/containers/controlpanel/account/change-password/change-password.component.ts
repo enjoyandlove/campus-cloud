@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { CPSession } from '../../../../session';
 import { AccountService } from '../account.service';
 import { ErrorService } from '../../../../shared/services';
-import { STATUS } from '../../../../shared/constants/status';
+import { CPI18nService } from './../../../../shared/services/i18n.service';
 import { ALERT_DEFAULT, IAlert } from '../../../../reducers/alert.reducer';
 
 @Component({
@@ -22,6 +22,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private session: CPSession,
     private store: Store<IAlert>,
+    private cpI18n: CPI18nService,
     private errorService: ErrorService,
     private accountService: AccountService
   ) {
@@ -51,37 +52,51 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
     if (!this.form.valid) {
       if (this.form.controls['current'].errors) {
         if (this.form.controls['current'].errors['required']) {
-          this.errorService.handleError({ reason: STATUS.ALL_FIELDS_ARE_REQUIRED });
+          this
+            .errorService
+            .handleError({ reason: this.cpI18n.translate('all_fields_are_required') });
           return;
         }
         if (this.form.controls['current'].errors['minlength']) {
-          this.errorService.handleError({ reason: STATUS.PASSWORD_MIN_LENGTH });
+          this
+            .errorService
+            .handleError({ reason: this.cpI18n.translate('validate_password_min_length') });
           return;
         }
       }
 
       if (this.form.controls['password'].errors) {
         if (this.form.controls['password'].errors['required']) {
-          this.errorService.handleError({ reason: STATUS.ALL_FIELDS_ARE_REQUIRED });
+          this
+            .errorService
+            .handleError({ reason: this.cpI18n.translate('all_fields_are_required') });
           return;
         }
         if (this.form.controls['password'].errors['minlength']) {
-          this.errorService.handleError({ reason: STATUS.PASSWORD_MIN_LENGTH });
+          this
+            .errorService
+            .handleError({ reason: this.cpI18n.translate('validate_password_min_length') });
           return;
         }
       }
 
       if (this.form.controls['confirmation'].errors) {
         if (this.form.controls['confirmation'].errors['required']) {
-          this.errorService.handleError({ reason: STATUS.ALL_FIELDS_ARE_REQUIRED });
+          this
+            .errorService
+            .handleError({ reason: this.cpI18n.translate('all_fields_are_required') });
           return;
         }
         if (this.form.controls['confirmation'].errors['minlength']) {
-          this.errorService.handleError({ reason: STATUS.PASSWORD_MIN_LENGTH });
+          this
+            .errorService
+            .handleError({ reason: this.cpI18n.translate('validate_password_min_length') });
           return;
         }
         if (this.form.controls['confirmation'].errors['passwordsMatch']) {
-          this.errorService.handleError({ reason: STATUS.PASSWORDS_DO_NOT_MATCH });
+          this
+            .errorService
+            .handleError({ reason: this.cpI18n.translate('passwords_do_not_match') });
           return;
         }
       }
@@ -118,7 +133,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.pageHeader = {
-      'heading': 'Change Password',
+      'heading': 'change_password',
       'crumbs': {
         'url': null,
         'label': null

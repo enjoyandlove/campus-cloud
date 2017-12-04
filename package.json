@@ -6,7 +6,7 @@
     "node": ">=8.2.1"
   },
   "scripts": {
-    "i18n": "ng-xi18n -p ",
+    "i18n": "phraseapp pull",
     "clean": "rimraf node_modules doc dist && yarn run cache clean",
     "clean-install": "yarn run clean && yarn run install",
     "clean-start": "yarn run clean-install && yarn start",
@@ -76,6 +76,7 @@
     "@types/core-js": "^0.9.0",
     "@types/file-saver": "^0.0.1",
     "@types/google.analytics": "0.0.35",
+    "@types/googlemaps": "^3.30.0",
     "@types/jasmine": "^2.5.42",
     "@types/jspdf": "^1.1.31",
     "@types/lodash": "4.14.72",

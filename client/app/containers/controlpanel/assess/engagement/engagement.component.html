@@ -14,7 +14,7 @@
     <div class="row" *ngSwitchCase="false">
       <div class="col-xs-5">
         <p class="chart--title" i18n>
-          Students
+          {{ 'students' | cpI18n }}
         </p>
         <cp-engagement-stats
           [props]="chartData"
@@ -24,7 +24,7 @@
       </div>
       <div class="col-xs-7">
         <p class="chart--title" i18n>
-          Student Engagements
+          {{ 'student_engagements' | cpI18n }}
         </p>
         <cp-engagement-chart
           [props]="chartData">

@@ -4,7 +4,7 @@ import { Headers } from '@angular/http';
 import { API } from '../../../../../../../config/api';
 import { EventsService } from '../../../events.service';
 import { CPImage, appStorage } from '../../../../../../../shared/utils';
-import { FileUploadService } from '../../../../../../../shared/services';
+import { FileUploadService, CPI18nService } from '../../../../../../../shared/services';
 
 @Component({
   selector: 'cp-import-top-bar',
@@ -31,6 +31,7 @@ export class EventsImportTopBarComponent implements OnInit {
 
   constructor(
     // private storeService: StoreService,
+    private cpI18n: CPI18nService,
     private eventService: EventsService,
     private fileUploadService: FileUploadService
   ) { }
@@ -40,12 +41,12 @@ export class EventsImportTopBarComponent implements OnInit {
     const fileExtension = file.name.split('.').pop();
 
     if (!CPImage.isSizeOk(file.size, CPImage.MAX_IMAGE_SIZE)) {
-      this.imageError = 'File too Big';
+      this.imageError = this.cpI18n.translate('error_file_is_too_big');
       return;
     }
 
     if (!CPImage.isValidExtension(fileExtension, CPImage.VALID_EXTENSIONS)) {
-      this.imageError = 'Invalid Extension';
+      this.imageError = this.cpI18n.translate('error_invalid_extension');
       return;
     }
 
@@ -59,9 +60,7 @@ export class EventsImportTopBarComponent implements OnInit {
       .fileUploadService
       .uploadFile(file, url, headers)
       .subscribe(
-      res => {
-        this.imageChange.emit(res.image_url);
-      },
+      res => this.imageChange.emit(res.image_url),
       err => { throw new Error(err) }
       );
   }

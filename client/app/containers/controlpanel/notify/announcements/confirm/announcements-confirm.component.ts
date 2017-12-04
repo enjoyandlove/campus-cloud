@@ -1,5 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
+
 @Component({
   selector: 'cp-announcements-confirm',
   templateUrl: './announcements-confirm.component.html',
@@ -14,7 +16,9 @@ export class AnnouncementsConfirmComponent implements OnInit {
   title;
   body;
 
-  constructor() { }
+  constructor(
+    private cpI18n: CPI18nService
+  ) { }
 
   onCofirm() {
     this.confirmed.emit();
@@ -22,41 +26,41 @@ export class AnnouncementsConfirmComponent implements OnInit {
 
   getTitle() {
     if (!this.state) {
-      return 'Campus Wide Announcement';
+      return this.cpI18n.translate('announcement_confirm_campus_wide');
     }
 
     if (this.state.isCampusWide && this.state.isEmergency) {
-      return 'Campus Wide and Emergency Announcement'
+      return this.cpI18n.translate('announcement_confirm_campus_wide_and_emergency');
     }
 
     if (this.state.isCampusWide && !this.state.isEmergency) {
-      return 'Campus Wide Announcement'
+      return this.cpI18n.translate('announcement_confirm_campus_wide');
     }
 
     if (!this.state.isCampusWide && this.state.isEmergency) {
-      return 'Emergency Announcement'
+      return this.cpI18n.translate('announcement_confirm_emergency');
     }
 
-    return 'Campus Wide Announcement';
+    return this.cpI18n.translate('announcement_confirm_campus_wide');
   }
 
   getBody() {
     if (!this.state) {
-      return 'You are about to send a campus wide announcement.';
+      return this.cpI18n.translate('announcement_confirm_campus_wide_body');
     }
     if (this.state.isCampusWide && this.state.isEmergency) {
-      return 'You are about to send a campus wide, emergency announcement.';
+      return this.cpI18n.translate('announcement_confirm_campus_wide_and_emergency_body');
     }
 
     if (this.state.isCampusWide && !this.state.isEmergency) {
-      return 'You are about to send a campus wide announcement.';
+      return this.cpI18n.translate('announcement_confirm_campus_wide_body');
     }
 
     if (!this.state.isCampusWide && this.state.isEmergency) {
-      return 'You are about to send an emergency announcement.';
+      return this.cpI18n.translate('announcement_confirm_campus_wide_body');
     }
 
-    return 'You are about to send a campus wide announcement.';
+    return this.cpI18n.translate('announcement_confirm_campus_wide_body');
   }
 
   ngOnInit() {

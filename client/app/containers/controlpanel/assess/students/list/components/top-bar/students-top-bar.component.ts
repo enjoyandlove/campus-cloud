@@ -2,8 +2,9 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
+import { CPSession } from './../../../../../../../session';
 import { StudentsService } from './../../../students.service';
-import { CPSession } from './../../../../../../../session/index';
+import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 
 interface IState {
   search_str: string,
@@ -29,8 +30,9 @@ export class StudentsTopBarComponent implements OnInit {
   }
 
   constructor(
-    private session: CPSession,
-    private service: StudentsService
+    public session: CPSession,
+    public cpI18n: CPI18nService,
+    public service: StudentsService
   ) { }
 
   onListSelected(list_id) {
@@ -60,14 +62,14 @@ export class StudentsTopBarComponent implements OnInit {
       .getLists(search, 1, 1000)
       .startWith([
         {
-          'label': 'All Students',
+          'label': this.cpI18n.translate('assess_all_students'),
           'id': null
         }
       ])
       .map(lists => {
         let items = [
           {
-            'label': 'All Students',
+            'label': this.cpI18n.translate('assess_all_students'),
             'id': null
           }
         ];

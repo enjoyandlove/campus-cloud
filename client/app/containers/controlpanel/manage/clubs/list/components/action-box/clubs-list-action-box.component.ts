@@ -3,7 +3,8 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ClubStatus } from '../../../club.status';
 import { CPSession } from './../../../../../../../session/index';
 import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
-import { canSchoolWriteResource } from './../../../../../../../shared/utils/privileges/privileges';
+import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
+import { canSchoolWriteResource } from '../../../../../../../shared/utils/privileges/index';
 
 interface IState {
   query: string;
@@ -24,11 +25,12 @@ export class ClubsListActionBoxComponent implements OnInit {
   @Output() filter: EventEmitter<IState> = new EventEmitter();
 
   clubFilter;
-  canWriteSchoolWide;
+  canCreate;
   state: IState = state;
 
   constructor(
-    private session: CPSession
+    private session: CPSession,
+    private cpI18n: CPI18nService
   ) { }
 
   onUpdateState(data, key: string): void {
@@ -37,23 +39,23 @@ export class ClubsListActionBoxComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.canWriteSchoolWide = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.clubs);
+    this.canCreate = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.clubs);
 
     this.clubFilter = [
       {
-        label: 'All Clubs',
+        label: this.cpI18n.translate('clubs_all_clubs'),
         action: null
       },
       {
-        label: 'Active',
+        label: this.cpI18n.translate('active'),
         action: ClubStatus.active
       },
       {
-        label: 'Inactive',
+        label: this.cpI18n.translate('inactive'),
         action: ClubStatus.inactive
       },
       {
-        label: 'Pending',
+        label: this.cpI18n.translate('pending'),
         action: ClubStatus.pending
       }
     ];

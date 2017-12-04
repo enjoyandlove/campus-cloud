@@ -6,6 +6,7 @@ import { ProvidersService } from '../../../../../providers.service';
 import { FORMAT } from '../../../../../../../../../shared/pipes/date';
 import { BaseComponent } from '../../../../../../../../../base/base.component';
 import { createSpreadSheet } from './../../../../../../../../../shared/utils/csv/parser';
+import { CPI18nService } from './../../../../../../../../../shared/services/i18n.service';
 
 import { unix } from 'moment';
 
@@ -35,6 +36,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
   dateFormat = FORMAT.DATETIME;
 
   constructor(
+    private cpI18n: CPI18nService,
     private providersService: ProvidersService
   ) {
     super();
@@ -89,12 +91,13 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
           .fetchAllRecords()
           .then(assessments => {
             const columns = [
-              'Attendee Name',
-              'Email',
-              'Average Rating',
-              'Feedback',
-              'Checked-in Method',
-              'Checked-in Time',
+              this.cpI18n.translate('services_label_attendee_name'),
+              this.cpI18n.translate('email'),
+              this.cpI18n.translate('average_rating'),
+              this.cpI18n.translate('feedback'),
+              this.cpI18n.translate('services_label_checked_in_method'),
+              this.cpI18n.translate('services_label_checked_in_time'),
+              this.cpI18n.translate('student_id')
             ];
 
             const check_in_method = {
@@ -104,19 +107,24 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
 
             assessments = assessments.map(item => {
               return {
-                'Attendee Name': `${item.firstname} ${item.lastname}`,
+                [this.cpI18n.translate('services_label_attendee_name')]:
+                  `${item.firstname} ${item.lastname}`,
 
-                'Email': item.email,
+                [this.cpI18n.translate('email')]: item.email,
 
-                'Average Rating': item.feedback_rating === -1 ?
+                [this.cpI18n.translate('average_rating')]: item.feedback_rating === -1 ?
                   'N/A' :
                   ((item.feedback_rating / 100) * 5),
 
-                'Feedback': item.feedback_text,
+                [this.cpI18n.translate('feedback')]: item.feedback_text,
 
-                'Checked-in Method': check_in_method[item.check_in_method],
+                [this.cpI18n.translate('services_label_checked_in_method')]:
+                  check_in_method[item.check_in_method],
 
-                'Checked-in Time': unix(item.check_in_time).format('MMMM Do YYYY - h:mm a')
+                [this.cpI18n.translate('services_label_checked_in_time')]:
+                  unix(item.check_in_time).format('MMMM Do YYYY - h:mm a'),
+
+                [this.cpI18n.translate('student_id')]: item.student_identifier
               }
             })
 

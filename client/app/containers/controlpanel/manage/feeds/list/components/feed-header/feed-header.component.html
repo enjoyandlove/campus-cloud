@@ -11,7 +11,7 @@
   </span>
   <span *ngIf="!isComment && feed.channelName">
     <span class="text-muted" i18n>
-      posted in
+      {{ 'feeds_posted_in' | cpI18n }}
     </span>
     <span class="cpbtn cpbtn--link-dark cpbtn--no-hover">
       {{ feed.channelName }}

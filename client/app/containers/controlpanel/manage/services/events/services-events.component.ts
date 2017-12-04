@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import {
@@ -17,13 +17,14 @@ import { ServicesService } from '../services.service';
 import { EventsService } from '../../events/events.service';
 import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants';
 import { EventsComponent } from '../../events/list/base/events.component';
+import { CPI18nService } from '../../../../../shared/services/index';
 
 @Component({
   selector: 'cp-services-events',
   templateUrl: './services-events.component.html',
   styleUrls: ['./services-events.component.scss']
 })
-export class ServicesEventsComponent extends EventsComponent implements OnInit {
+export class ServicesEventsComponent extends EventsComponent {
   service;
   loading = true;
   isService = true;
@@ -33,12 +34,13 @@ export class ServicesEventsComponent extends EventsComponent implements OnInit {
 
   constructor(
     public session: CPSession,
+    public cpI18n: CPI18nService,
     private route: ActivatedRoute,
     private store: Store<IHeader>,
     public eventsService: EventsService,
     private serviceService: ServicesService
   ) {
-    super(session, eventsService);
+    super(session, cpI18n, eventsService);
     this.serviceId = this.route.snapshot.params['serviceId'];
 
     this.fetchServiceData();
@@ -60,7 +62,7 @@ export class ServicesEventsComponent extends EventsComponent implements OnInit {
   private buildHeader() {
     let children = [
       {
-        'label': 'Info',
+        'label': 'info',
         'url': `/manage/services/${this.serviceId}/info`
       }
     ];
@@ -71,7 +73,7 @@ export class ServicesEventsComponent extends EventsComponent implements OnInit {
 
     if (eventsSchoolLevel || eventsAccountLevel) {
       const events = {
-        'label': 'Events',
+        'label': 'events',
         'url': `/manage/services/${this.serviceId}/events`
       }
 
@@ -80,7 +82,7 @@ export class ServicesEventsComponent extends EventsComponent implements OnInit {
 
     if (this.service.service_attendance) {
       let attendance = {
-        'label': 'Assessment',
+        'label': 'assessment',
         'url': `/manage/services/${this.serviceId}`
       };
 
@@ -90,18 +92,14 @@ export class ServicesEventsComponent extends EventsComponent implements OnInit {
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': this.service.name,
+        'heading': `[NOTRANSLATE]${this.service.name}[NOTRANSLATE]`,
         'subheading': '',
         'crumbs': {
           'url': 'services',
-          'label': 'Services'
+          'label': 'services',
         },
         'children': [...children]
       }
     });
-  }
-
-  ngOnInit() {
-    // super.fetchData()
   }
 }

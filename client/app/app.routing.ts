@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import {
   LoginComponent,
   LogoutComponent,
-  PasswordResetComponent
+  LostPasswordComponent
 } from './containers/auth';
 
 import { CPPreloadStrategy } from './config/strategies/preload.strategy';
@@ -14,7 +14,7 @@ const routes: Routes = [
 
   { path: 'login', component: LoginComponent },
 
-  { path: 'password-reset', component: PasswordResetComponent },
+  { path: 'lost-password', component: LostPasswordComponent },
 
   { path: 'cb', loadChildren: './containers/callback/callback.module#CallbackModule' },
 

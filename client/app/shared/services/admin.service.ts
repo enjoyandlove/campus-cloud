@@ -1,4 +1,5 @@
 import { URLSearchParams } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Http } from '@angular/http';
@@ -35,7 +36,10 @@ export class AdminService extends BaseService {
   deleteAdminById(adminId: number) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/${adminId}`;
 
-    return super.delete(url).map(res => res.json());
+    return super
+      .delete(url, null, true)
+      .map(res => res.json())
+      .catch(err => Observable.throw(err));
   }
 
   createAdmin(data: any) {
@@ -47,6 +51,6 @@ export class AdminService extends BaseService {
   updateAdmin(adminId: number, data: any) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/${adminId}`;
 
-    return super.update(url, data).map(res => res.json());
+    return super.update(url, data, null, true).map(res => res.json());
   }
 }

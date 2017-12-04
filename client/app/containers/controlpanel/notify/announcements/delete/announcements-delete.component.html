@@ -2,7 +2,7 @@
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-xs-12 text-center">
-        <span i18n><strong>Archive Announcement</strong></span>
+        <span i18n><strong>{{ 'announcements_delete_modal_title' | cpI18n }}</strong></span>
 
         <span
           data-dismiss="modal"
@@ -18,10 +18,10 @@
     <div class="row">
       <div class="col-xs-12">
         <p class="text-center" i18n>
-          Are you sure you want to archive this announcement?
+          {{ 'announcements_delete_modal_body' | cpI18n }}
         </p>
         <p class="text-center" i18n>
-          Archiving your notification means no more students will receive it.
+          {{ 'announcements_delete_modal_body_warning' | cpI18n }}
         </p>
       </div>
     </div>
@@ -36,7 +36,7 @@
           (click)="doReset()"
           class="cpbtn cpbtn--cancel"
           data-dismiss="modal" i18n>
-          Cancel
+          {{ 'cancel' | cpI18n }}
         </button>
 
         <cp-button

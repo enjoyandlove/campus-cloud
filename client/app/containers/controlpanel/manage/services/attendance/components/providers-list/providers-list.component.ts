@@ -1,4 +1,3 @@
-
 import { Component, OnInit, Input, Output } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { URLSearchParams } from '@angular/http';
@@ -7,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { ProvidersService } from '../../../providers.service';
 import { BaseComponent } from '../../../../../../../base/base.component';
 import { createSpreadSheet } from './../../../../../../../shared/utils/csv/parser';
+import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 
 interface IState {
   search_text: string;
@@ -37,6 +37,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
   displayRatingColumn = true;
 
   constructor(
+    private cpI18n: CPI18nService,
     private providersService: ProvidersService
   ) {
     super();
@@ -99,22 +100,25 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
 
         stream$.toPromise().then(providers => {
           const columns = [
-            'Service Provider',
-            'Email',
-            'Average Rating',
-            'Total Ratings',
-            'Total Visits',
-            'Student ID',
+            this.cpI18n.translate('service_provider'),
+            this.cpI18n.translate('email'),
+            this.cpI18n.translate('average_rating'),
+            this.cpI18n.translate('total_ratings'),
+            this.cpI18n.translate('services_total_visits')
           ];
 
           providers = providers.map(data => {
             return {
-              'Service Provider': data.provider_name,
-              'Email': data.email,
-              'Average Rating': ((data.avg_rating_percent * 5) / 100).toFixed(1),
-              'Total Ratings': data.num_ratings,
-              'Total Visits': data.total_visits,
-              'Student ID': data.student_identifier
+              [this.cpI18n.translate('service_provider')]: data.provider_name,
+
+              [this.cpI18n.translate('email')]: data.email,
+
+              [this.cpI18n.translate('average_rating')]:
+                ((data.avg_rating_percent * 5) / 100).toFixed(1),
+
+              [this.cpI18n.translate('total_ratings')]: data.num_ratings,
+
+              [this.cpI18n.translate('services_total_visits')]: data.total_visits,
             }
           })
 

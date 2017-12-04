@@ -23,7 +23,7 @@
       </div>
       <div class="col-xs-9 wrapper__right-side">
         <label class="no-margin dark" i18n>{{ description }}</label>
-        <span class="text-muted" i18n>JPG or PNG. Max size of 5MB</span>
+        <span class="text-muted" i18n>{{ 'component_cpimage_help' | cpI18n }}</span>
         <div class="row" *ngIf="errors.length">
           <div class="col-xs-12">
             <label

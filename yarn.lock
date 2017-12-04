@@ -121,6 +121,10 @@
   version "0.0.35"
   resolved "https://registry.yarnpkg.com/@types/google.analytics/-/google.analytics-0.0.35.tgz#c55b5b6a4b4596841635cf4a385d1b4733f67088"
 
+"@types/googlemaps@^3.30.0":
+  version "3.30.0"
+  resolved "https://registry.yarnpkg.com/@types/googlemaps/-/googlemaps-3.30.0.tgz#ca99a74b97d581b1cdbccf2973d05f26633d1975"
+
 "@types/handlebars@^4.0.31":
   version "4.0.35"
   resolved "https://registry.yarnpkg.com/@types/handlebars/-/handlebars-4.0.35.tgz#409eb97a3ad6970daba4d586cb6afe3f5e082c01"

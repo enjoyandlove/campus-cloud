@@ -3,9 +3,10 @@ import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
 
-import { AdminService } from '../../../../../shared/services';
 import { CPSession } from '../../../../../session';
+import { AdminService } from '../../../../../shared/services';
 import { BaseComponent } from '../../../../../base/base.component';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 
 interface IState {
@@ -32,9 +33,10 @@ export class TeamListComponent extends BaseComponent implements OnInit {
   state: IState = state;
 
   constructor(
-    private session: CPSession,
-    private store: Store<IHeader>,
-    private adminService: AdminService
+    public session: CPSession,
+    public store: Store<IHeader>,
+    public cpI18n: CPI18nService,
+    public adminService: AdminService
   ) {
     super();
     super.isLoading().subscribe(res => this.loading = res);
@@ -82,7 +84,7 @@ export class TeamListComponent extends BaseComponent implements OnInit {
   }
 
   onForbidden() {
-    $('#teamErrorModal').modal();
+    $('#teamUnauthorziedModal').modal();
   }
 
   onDeleted(adminId) {

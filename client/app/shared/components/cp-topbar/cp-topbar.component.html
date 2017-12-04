@@ -9,24 +9,24 @@
           <li
             (click)="isOpen = false"
             routerLinkActive="active">
-            <a [routerLink]="['/welcome']" cpTracker [eventData]="eventData">Welcome</a>
+            <a [routerLink]="['/welcome']">{{ 'welcome' | cpI18n }}</a>
           </li>
           <li
             *ngIf="manageHomePage"
             (click)="isOpen = false"
             [class.active]="isManageActiveRoute">
-            <a [routerLink]="['/manage/' + manageHomePage]">Manage</a>
+            <a [routerLink]="['/manage/' + manageHomePage]">{{ 'manage' | cpI18n }}</a>
           </li>
           <li
             *ngIf="canNotify"
             (click)="isOpen = false"
             routerLinkActive="active">
-            <a [routerLink]="['/notify']">Notify</a>
+            <a [routerLink]="['/notify']">{{ 'notify' | cpI18n }}</a>
           </li>
           <li
             (click)="isOpen = false"
             routerLinkActive="active">
-            <a [routerLink]="[canAssess ? '/assess' : '/demo/assess']">Assess</a>
+            <a [routerLink]="[canAssess ? '/assess' : '/demo/assess']">{{ 'assess' | cpI18n }}</a>
           </li>
         </ul>
 

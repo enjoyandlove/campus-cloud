@@ -8,7 +8,7 @@
       <i class="material-icons pull-left">chevron_left</i><span i18n>Back</span>
     </a>
     <a href="#" *ngIf="!isSchoolPanel" (click)="onGoToSchools($event)">
-      <span i18n>Change School</span>
+      <span i18n>{{ 'change_school' | cpI18n }}</span>
       <i class="material-icons pull-right">chevron_right</i>
     </a>
   </li>
@@ -20,7 +20,7 @@
       [class.isFirstItem]="schools.length === 1">
       <a
         [routerLink]="['/manage/team/' + session.g.get('user').id + '/edit']" [queryParams]="{profile: true}" i18n>
-        Profile
+        {{ 'profile' | cpI18n }}
     </a>
     </li>
 
@@ -28,15 +28,15 @@
       class="switch__item"
       (click)="close.emit()"
       *ngIf="canManageAdmins">
-      <a [routerLink]="['/manage/team']" i18n>Team Settings</a>
+      <a [routerLink]="['/manage/team']" i18n>{{ 'team_settings' | cpI18n }}</a>
     </li>
     <li
       class="switch__item"
       (click)="close.emit()">
-      <a [routerLink]="['/account/change-password']" i18n>Change Password</a>
+      <a [routerLink]="['/account/change-password']" i18n>{{ 'change_password' | cpI18n }}</a>
     </li>
     <li class="switch__item" (click)="close.emit()">
-      <a [routerLink]="['/logout']" i18n>Logout</a>
+      <a [routerLink]="['/logout']" i18n>{{ 'logout' | cpI18n }}</a>
     </li>
   </div>
 

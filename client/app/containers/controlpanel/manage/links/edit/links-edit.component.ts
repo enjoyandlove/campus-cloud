@@ -6,6 +6,7 @@ import { API } from '../../../../../config/api';
 import { LinksService } from '../links.service';
 import { CPImage, appStorage } from '../../../../../shared/utils';
 import { FileUploadService } from '../../../../../shared/services';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 import { ILink } from '../link.interface';
 
@@ -27,6 +28,7 @@ export class LinksEditComponent implements OnInit, OnChanges {
   constructor(
     private fb: FormBuilder,
     private service: LinksService,
+    private cpI18n: CPI18nService,
     private fileUploadService: FileUploadService
   ) { }
 
@@ -45,12 +47,12 @@ export class LinksEditComponent implements OnInit, OnChanges {
     const fileExtension = file.name.split('.').pop();
 
     if (!CPImage.isSizeOk(file.size, CPImage.MAX_IMAGE_SIZE)) {
-      this.imageError = 'File too Big';
+      this.imageError = this.cpI18n.translate('error_file_is_too_big');
       return;
     }
 
     if (!CPImage.isValidExtension(fileExtension, CPImage.VALID_EXTENSIONS)) {
-      this.imageError = 'Invalid Extension';
+      this.imageError = this.cpI18n.translate('error_invalid_extension');
       return;
     }
 

@@ -12,6 +12,7 @@ import {
 
 import { MemberType } from '../member.status';
 import { MembersService } from '../members.service';
+import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 
 declare var $: any;
 
@@ -32,10 +33,11 @@ export class ClubsMembersEditComponent implements OnInit {
   defaultType;
   members = [];
   form: FormGroup;
-  isTouched = false;
+  isExecutive = MemberType.executive;
 
   constructor(
     private fb: FormBuilder,
+    private cpI18n: CPI18nService,
     private service: MembersService,
   ) { }
 
@@ -63,12 +65,14 @@ export class ClubsMembersEditComponent implements OnInit {
       return;
     }
 
-    let member_type = this.form.value.member_type;
     let group_id = this.groupId;
+    let member_type = this.form.value.member_type;
+    let member_position = this.form.value.member_type === MemberType.executive ?
+                          this.form.value.member_position : '';
 
     this
       .service
-      .addMember({ member_type, group_id }, this.member.id)
+      .addMember({ member_type, group_id, member_position }, this.member.id)
       .subscribe(
         member => {
           this.edited.emit(member);
@@ -84,11 +88,11 @@ export class ClubsMembersEditComponent implements OnInit {
   ngOnInit() {
     this.memberTypes = [
       {
-        label: 'Member',
+        label: this.cpI18n.translate('member'),
         action: MemberType.member
       },
       {
-        label: 'Executive',
+        label: this.cpI18n.translate('executive'),
         action: MemberType.executive
       }
     ];
@@ -97,13 +101,8 @@ export class ClubsMembersEditComponent implements OnInit {
 
     this.form = this.fb.group({
       'member': [null],
-      'member_type': [this.memberTypes[0].action, Validators.required],
-    });
-
-    this.form.valueChanges.subscribe(value => {
-      if (value.member_type !== this.member.member_type) {
-        this.isTouched = true;
-      }
+      'member_position': [this.member.member_position],
+      'member_type': [this.defaultType.action, Validators.required],
     });
   }
 }

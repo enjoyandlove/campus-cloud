@@ -2,7 +2,7 @@
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-xs-12">
-        <span i18n><strong>Upload CSV File</strong></span>
+        <span i18n><strong>{{ 'csv_modal_title' | cpI18n }}</strong></span>
 
         <span
           data-dismiss="modal"
@@ -18,14 +18,14 @@
     <div class="row">
       <div class="col-xs-12">
         <p i18n>
-          Upload your CSV file or
+          {{ 'csv_modal_body' | cpI18n }}
           <a [href]="props.templateUrl" download
             class="cpbtn cpbtn--link" i18n>
-            Download CSV Sample File
+            {{ 'csv_modal_anchor_text' | cpI18n }}
           </a>
         </p>
 
-        <small i18n>Limit of 100 items to import at a time.</small>
+        <small i18n>{{ 'csv_modal_instruction' | cpI18n }}</small>
       </div>
     </div>
     <div class="row">
@@ -43,7 +43,7 @@
           *ngIf="!processing">
           <i class="material-icons">cloud_upload</i>
           <span *ngIf="!isError">
-            {{ fileName ? fileName : 'Click to select a CSV file here' }}
+            {{ fileName ? fileName : cpI18n.translate('csv_modal_button_text') }}
           </span>
 
           <span *ngIf="isError">{{ errorMessage }}</span>
@@ -69,7 +69,7 @@
           (click)="resetValues()"
           class="cpbtn cpbtn--cancel"
           data-dismiss="modal" i18n>
-          Cancel
+          {{ 'cancel' | cpI18n }}
         </button>
 
         <button
@@ -78,7 +78,7 @@
           [disabled]="!isReady"
           class="cpbtn cpbtn--primary"
           data-dismiss="modal" i18n>
-          Import
+          {{ 'import' | cpI18n }}
         </button>
       </div>
     </div>

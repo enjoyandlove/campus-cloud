@@ -7,14 +7,21 @@ import { FeedsService } from '../../feeds.service';
 import { CPSession } from '../../../../../../session';
 import { BaseComponent } from '../../../../../../base/base.component';
 
+interface ICurrentView {
+  label: string;
+  action: number;
+  group_id: number;
+  commentingMemberType: number;
+  postingMemberType: number;
+}
+
 interface IState {
   group_id: number;
   wall_type: number;
   feeds: Array<any>;
   post_types: number;
   isCampusThread: boolean;
-  postingMemberType: number;
-  commentingMemberType: boolean;
+  currentView?: ICurrentView;
   flagged_by_users_only: number;
   removed_by_moderators_only: number;
 }
@@ -24,9 +31,8 @@ const state: IState = {
   post_types: 1,
   group_id: null,
   wall_type: null,
+  currentView: null,
   isCampusThread: true,
-  postingMemberType: null,
-  commentingMemberType: true,
   flagged_by_users_only: null,
   removed_by_moderators_only: null
 };
@@ -45,6 +51,7 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   isSimple;
   channels;
   loading = true;
+  disablePost = 100;
   state: IState = state;
   isFilteredByRemovedPosts$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   isFilteredByFlaggedPosts$: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -89,9 +96,8 @@ export class FeedsComponent extends BaseComponent implements OnInit {
         group_id: data.group_id,
         wall_type: data.wall_type,
         post_types: data.post_types,
-        commentingMemberType: data.commentingMemberType,
-        postingMemberType: data.postingMemberType,
-        isCampusThread: data.wall_type === 1 ? true : false,
+        currentView: data.currentView,
+        isCampusThread: data.wall_type === 1,
         flagged_by_users_only: data.flagged_by_users_only,
         removed_by_moderators_only: data.removed_by_moderators_only
       }

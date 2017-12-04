@@ -61,6 +61,10 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
     this.updateItem(service.id, 'checked', false);
   }
 
+  emitAndClose() {
+    this.onSubmit();
+  }
+
   onSubmit() {
     let _item = {};
     let _state = [...this.state.selected];
@@ -71,6 +75,14 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
           [this.privilegeType]: {
             r: true,
             w: true
+          },
+          [CP_PRIVILEGES_MAP.events]: {
+            r: true,
+            w: true,
+          },
+          [CP_PRIVILEGES_MAP.event_attendance]: {
+            r: true,
+            w: true,
           }
         };
 
@@ -85,10 +97,6 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
                 w: true,
               },
               [CP_PRIVILEGES_MAP.membership]: {
-                r: true,
-                w: true,
-              },
-              [CP_PRIVILEGES_MAP.events]: {
                 r: true,
                 w: true,
               }

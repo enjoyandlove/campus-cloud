@@ -1,3 +1,4 @@
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -19,23 +20,26 @@ import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 })
 export class ClubsEditComponent extends BaseComponent implements OnInit {
   club;
+  school;
   clubId;
   loading;
   formError;
   buttonData;
   statusTypes;
+  defaultStatus;
   membershipTypes;
   form: FormGroup;
-  isFormReady = false;
-  defaultStatus;
   defaultMembership;
+  isFormReady = false;
   mapCenter: BehaviorSubject<any>;
+  newAddress = new BehaviorSubject(null);
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private store: Store<any>,
     private session: CPSession,
+    private cpI18n: CPI18nService,
     private route: ActivatedRoute,
     private clubsService: ClubsService,
   ) {
@@ -137,44 +141,56 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
     this.form.controls['status'].setValue(type.action);
   }
 
-  onPlaceChange(data) {
+  onResetMap() {
+    this.form.controls['city'].setValue('');
+    this.form.controls['province'].setValue('');
+    this.form.controls['country'].setValue('');
+    this.form.controls['latitude'].setValue(this.school.latitude);
+    this.form.controls['longitude'].setValue(this.school.longitude);
+    this.form.controls['address'].setValue('');
+    this.form.controls['postal_code'].setValue('');
+
+    this.mapCenter.next({
+      lat: this.school.latitude,
+      lng: this.school.longitude
+    });
+  }
+
+  onMapSelection(data) {
     let cpMap = CPMap.getBaseMapObject(data);
 
-    if (!data) {
-      data = {};
-      data.name = '';
-      this.mapCenter.next({
-        lat: this.session.g.get('school').latitude,
-        lng: this.session.g.get('school').longitude
-      });
-    }
+    this.form.controls['city'].setValue(cpMap.city);
+    this.form.controls['province'].setValue(cpMap.province);
+    this.form.controls['country'].setValue(cpMap.country);
+    this.form.controls['latitude'].setValue(cpMap.latitude);
+    this.form.controls['longitude'].setValue(cpMap.longitude);
+    this.form.controls['address'].setValue(data.formatted_address);
+    this.form.controls['postal_code'].setValue(cpMap.postal_code);
+    this.newAddress.next(this.form.controls['address'].value);
+  }
+
+  onPlaceChange(data) {
+    if (!data) { return; }
+
+    let cpMap = CPMap.getBaseMapObject(data);
 
     this.form.controls['city'].setValue(cpMap.city);
-
     this.form.controls['province'].setValue(cpMap.province);
-
     this.form.controls['country'].setValue(cpMap.country);
-
-    this.form.controls['latitude'].setValue(cpMap.latitude
-        || this.session.g.get('school').latitude);
-
-    this.form.controls['longitude'].setValue(cpMap.longitude
-      || this.session.g.get('school').longitude);
-
+    this.form.controls['latitude'].setValue(cpMap.latitude);
+    this.form.controls['longitude'].setValue(cpMap.longitude);
     this.form.controls['address'].setValue(data.name);
-
     this.form.controls['postal_code'].setValue(cpMap.postal_code);
 
-    if (data.geometry) {
-      this.mapCenter.next(data.geometry.location.toJSON());
-    }
+    this.mapCenter.next(data.geometry.location.toJSON());
   }
 
   ngOnInit() {
     this.fetch();
+    this.school = this.session.g.get('school');
 
     this.buttonData = {
-      text: 'Save',
+      text: this.cpI18n.translate('save'),
       class: 'primary'
     }
 
@@ -182,7 +198,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
       type: HEADER_UPDATE,
       payload:
       {
-        'heading': 'Edit Club',
+        'heading': 'clubs_edit_heading',
         'subheading': null,
         'em': null,
         'children': []

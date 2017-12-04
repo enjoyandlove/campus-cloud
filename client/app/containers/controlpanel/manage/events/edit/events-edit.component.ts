@@ -1,3 +1,4 @@
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -12,7 +13,6 @@ import {
   HEADER_UPDATE
 } from '../../../../../reducers/header.reducer';
 import { EventsService } from '../events.service';
-import { STATUS } from '../../../../../shared/constants';
 import { FORMAT } from '../../../../../shared/pipes/date';
 import { CPSession, ISchool } from '../../../../../session';
 import { CPMap, CPDate } from '../../../../../shared/utils';
@@ -52,7 +52,6 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   eventId: number;
   form: FormGroup;
   selectedManager;
-  STATUS = STATUS;
   dateErrorMessage;
   enddatePickerOpts;
   attendance = false;
@@ -61,12 +60,14 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   originalAttnFeedback;
   formMissingFields = false;
   mapCenter: BehaviorSubject<any>;
+  newAddress = new BehaviorSubject(null);
   managers: Array<any> = [{ 'label': '---' }];
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private session: CPSession,
+    public cpI18n: CPI18nService,
     private store: Store<IHeader>,
     private route: ActivatedRoute,
     private adminService: AdminService,
@@ -124,7 +125,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       this.formMissingFields = true;
       this.form.controls['end'].setErrors({ 'required': true });
       this.form.controls['start'].setErrors({ 'required': true });
-      this.dateErrorMessage = 'Event End Time must be after Event Start Time';
+      this.dateErrorMessage = this.cpI18n.translate('events_error_end_date_before_start');
       this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       return;
     }
@@ -134,7 +135,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       this.formMissingFields = true;
       this.form.controls['end'].setErrors({ 'required': true });
       this.form.controls['start'].setErrors({ 'required': true });
-      this.dateErrorMessage = 'Event End Time must be greater than now';
+      this.dateErrorMessage = this.cpI18n.translate('events_error_end_date_after_now');
       this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       return;
     }
@@ -286,7 +287,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': 'Edit Event',
+        'heading': 'events_edit_event',
         'subheading': '',
         'children': []
       }
@@ -311,37 +312,48 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.form.controls['event_attendance'].setValue(value);
   }
 
-  onPlaceChange(data) {
+  onResetMap() {
+    this.form.controls['city'].setValue('');
+    this.form.controls['province'].setValue('');
+    this.form.controls['country'].setValue('');
+    this.form.controls['latitude'].setValue(this.school.latitude);
+    this.form.controls['longitude'].setValue(this.school.longitude);
+    this.form.controls['address'].setValue('');
+    this.form.controls['postal_code'].setValue('');
+
+    this.mapCenter.next({
+      lat: this.school.latitude,
+      lng: this.school.longitude
+    });
+  }
+
+  onMapSelection(data) {
     let cpMap = CPMap.getBaseMapObject(data);
 
-    if (!data) {
-      data = {};
-      data.name = '';
-      this.mapCenter.next({
-        lat: this.session.g.get('school').latitude,
-        lng: this.session.g.get('school').longitude
-      });
-    }
+    this.form.controls['city'].setValue(cpMap.city);
+    this.form.controls['province'].setValue(cpMap.province);
+    this.form.controls['country'].setValue(cpMap.country);
+    this.form.controls['latitude'].setValue(cpMap.latitude);
+    this.form.controls['longitude'].setValue(cpMap.longitude);
+    this.form.controls['address'].setValue(data.formatted_address);
+    this.form.controls['postal_code'].setValue(cpMap.postal_code);
+    this.newAddress.next(this.form.controls['address'].value);
+  }
+
+  onPlaceChange(data) {
+    if (!data) { return; }
+
+    let cpMap = CPMap.getBaseMapObject(data);
 
     this.form.controls['city'].setValue(cpMap.city);
-
     this.form.controls['province'].setValue(cpMap.province);
-
     this.form.controls['country'].setValue(cpMap.country);
-
-    this.form.controls['latitude'].setValue(cpMap.latitude ||
-      this.session.g.get('school').latitude);
-
-    this.form.controls['longitude'].setValue(cpMap.longitude ||
-      this.session.g.get('school').longitude);
-
+    this.form.controls['latitude'].setValue(cpMap.latitude);
+    this.form.controls['longitude'].setValue(cpMap.longitude);
     this.form.controls['address'].setValue(data.name);
-
     this.form.controls['postal_code'].setValue(cpMap.postal_code);
 
-    if (data.geometry) {
-      this.mapCenter.next(data.geometry.location.toJSON());
-    }
+    this.mapCenter.next(data.geometry.location.toJSON());
   }
 
   onEventFeedbackChange(option) {
@@ -350,18 +362,18 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.buttonData = {
-      text: 'Save',
+      text: this.cpI18n.translate('save'),
       class: 'primary'
     }
 
     this.dateFormat = FORMAT.DATETIME;
     this.booleanOptions = [
       {
-        'label': 'Enabled',
+        'label': this.cpI18n.translate('enabled'),
         'action': EventAttendance.enabled
       },
       {
-        'label': 'Disabled',
+        'label': this.cpI18n.translate('disabled'),
         'action': EventAttendance.disabled
       }
     ];

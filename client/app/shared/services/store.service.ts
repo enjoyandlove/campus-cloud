@@ -4,8 +4,10 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { API } from '../../config/api';
+import { CPI18nService } from './i18n.service';
 import { BaseService } from '../../base/base.service';
 
+const cpI18n = new CPI18nService();
 
 @Injectable()
 export class StoreService extends BaseService {
@@ -24,7 +26,7 @@ export class StoreService extends BaseService {
       .startWith(
       [
         {
-          'label': 'Services',
+          'label': cpI18n.translate('services'),
           'value': null,
           'heading': true,
         }
@@ -33,7 +35,7 @@ export class StoreService extends BaseService {
       .map(res => {
         let services = [
           {
-            'label': 'Services',
+            'label': cpI18n.translate('services'),
             'value': null,
             'heading': true,
           }
@@ -72,7 +74,7 @@ export class StoreService extends BaseService {
       .startWith(
       [
         {
-          'label': 'Clubs',
+          'label': cpI18n.translate('clubs'),
           'value': null,
           'heading': true,
         }
@@ -81,7 +83,7 @@ export class StoreService extends BaseService {
       .map(res => {
         let clubs = [
           {
-            'label': 'Clubs',
+            'label': cpI18n.translate('clubs'),
             'value': null,
             'heading': true,
           }
@@ -104,7 +106,7 @@ export class StoreService extends BaseService {
       });
   }
 
-  getStores(search: URLSearchParams, placeHolder = 'Select Host') {
+  getStores(search: URLSearchParams, placeHolder = cpI18n.translate('select_host')) {
     const clubs$ = this.getClubs(search);
     const services$ = this.getServices(search);
 
@@ -117,8 +119,8 @@ export class StoreService extends BaseService {
               'value': null,
               'heading': true,
               'disabled': true,
-              'label': 'No Hosts Available',
-              'tooltipText': 'No Services or Clubs found, check your account privileges'
+              'label': cpI18n.translate('select_host'),
+              'tooltipText': cpI18n.translate('error_no_hosts_found_help')
             }
           ]
         }

@@ -1,6 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 import { unix }  from 'moment';
+import * as moment from 'moment';
+import { CPI18nService } from '../../services/index';
 
 export const FORMAT = {
   'SHORT': 'MMM D, YYYY',
@@ -12,6 +14,7 @@ export const FORMAT = {
 @Pipe({name: 'cpDatePipe'})
 export class CPDatePipe implements PipeTransform {
   transform(date: number, format: string) {
+    moment.locale(CPI18nService.getLocale());
     return unix(date).format(format);
   }
 }

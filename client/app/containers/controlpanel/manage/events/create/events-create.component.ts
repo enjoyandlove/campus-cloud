@@ -5,14 +5,18 @@ import { URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
+import {
+  ErrorService,
+  StoreService,
+  AdminService,
+  CPI18nService } from '../../../../../shared/services';
+
 import { EventsService } from '../events.service';
 import { CPSession, ISchool } from '../../../../../session';
-import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { CPMap, CPDate } from '../../../../../shared/utils';
-import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants';
-import { ErrorService, StoreService, AdminService } from '../../../../../shared/services';
-
 import { EventAttendance, EventFeedback } from '../event.status';
+import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants';
+import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
 const COMMON_DATE_PICKER_OPTIONS = {
   utc: true,
@@ -44,13 +48,15 @@ export class EventsCreateComponent implements OnInit {
   attendance = false;
   enddatePickerOpts;
   startdatePickerOpts;
-  managers: Array<any> = [{'label': '---'}];
   mapCenter: BehaviorSubject<any>;
+  newAddress = new BehaviorSubject(null);
+  managers: Array<any> = [{'label': '---'}];
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private session: CPSession,
+    public cpI18n: CPI18nService,
     private storeHeader: Store<any>,
     private adminService: AdminService,
     private storeService: StoreService,
@@ -68,7 +74,7 @@ export class EventsCreateComponent implements OnInit {
 
   buildHeader() {
     const payload = {
-      'heading': 'Create Event',
+      'heading': 'events_create_heading',
       'subheading': null,
       'em': null,
       'children': []
@@ -130,6 +136,34 @@ export class EventsCreateComponent implements OnInit {
     this.form.controls['event_attendance'].setValue(value);
   }
 
+  onResetMap() {
+    this.form.controls['city'].setValue('');
+    this.form.controls['province'].setValue('');
+    this.form.controls['country'].setValue('');
+    this.form.controls['latitude'].setValue(this.school.latitude);
+    this.form.controls['longitude'].setValue(this.school.longitude);
+    this.form.controls['address'].setValue('');
+    this.form.controls['postal_code'].setValue('');
+
+    this.mapCenter.next({
+      lat: this.school.latitude,
+      lng: this.school.longitude
+    });
+  }
+
+  onMapSelection(data) {
+    let cpMap = CPMap.getBaseMapObject(data);
+
+    this.form.controls['city'].setValue(cpMap.city);
+    this.form.controls['province'].setValue(cpMap.province);
+    this.form.controls['country'].setValue(cpMap.country);
+    this.form.controls['latitude'].setValue(cpMap.latitude);
+    this.form.controls['longitude'].setValue(cpMap.longitude);
+    this.form.controls['address'].setValue(data.formatted_address);
+    this.form.controls['postal_code'].setValue(cpMap.postal_code);
+    this.newAddress.next(this.form.controls['address'].value);
+  }
+
   onPlaceChange(data) {
     if (!data) { return; }
 
@@ -179,7 +213,7 @@ export class EventsCreateComponent implements OnInit {
       this.isDateError = true;
       this.formError = true;
       this.form.controls['end'].setErrors({ 'required': true });
-      this.dateErrorMessage = 'Event End Time must be after Event Start Time';
+      this.dateErrorMessage = this.cpI18n.translate('events_error_end_date_before_start');
       this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       return;
     }
@@ -188,7 +222,7 @@ export class EventsCreateComponent implements OnInit {
       this.isDateError = true;
       this.formError = true;
       this.form.controls['end'].setErrors({ 'required': true });
-      this.dateErrorMessage = 'Event End Time must be greater than now';
+      this.dateErrorMessage = this.cpI18n.translate('events_error_end_date_after_now');
       this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       return;
     }
@@ -235,16 +269,16 @@ export class EventsCreateComponent implements OnInit {
 
     this.buttonData = {
       class: 'primary',
-      text: 'Create Event'
+      text: this.cpI18n.translate('events_button_new')
     }
 
     this.booleanOptions = [
       {
-        'label': 'Enabled',
+        'label': this.cpI18n.translate('enabled'),
         'action': EventFeedback.enabled
       },
       {
-        'label': 'Disabled',
+        'label': this.cpI18n.translate('disabled'),
         'action': EventFeedback.disabled
       }
     ];

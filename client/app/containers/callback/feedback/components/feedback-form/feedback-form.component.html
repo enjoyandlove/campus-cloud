@@ -3,7 +3,6 @@
     <div class="cp-card">
       <div class="row">
         <div class="col-xs-8 col-xs-offset-2">
-
           <cp-feedback-confirmation
             *ngIf="_isSubmitted">
           </cp-feedback-confirmation>
@@ -14,7 +13,7 @@
             [formGroup]="feedbackForm">
             <div class="form-group">
               <p class="title text-center" *ngIf="!defaultQuestion" i18n>
-                Please click a star to rate the {{ isEvent ? 'event' : 'service' }}
+                {{ isEvent ? cpI18n.translate('feedback_form_event_help') : cpI18n.translate('feedback_form_service_help') }}
               </p>
               <p class="title text-center" *ngIf="defaultQuestion" i18n>
                 {{ defaultQuestion }}
@@ -29,7 +28,7 @@
               <textarea
                 class="form-control"
                 formControlName="user_feedback_text"
-                placeholder="Tells us what you think...">
+                [placeholder]="cpI18n.translate('feedback_form_placeholder')">
               </textarea>
             </div>
 
@@ -39,7 +38,7 @@
                   type="submit"
                   [disabled]="!feedbackForm.valid"
                   class="cpbtn cpbtn--tall cpbtn--full-width cpbtn--primary" i18n>
-                  Rate {{ isEvent ? 'event' : 'service' }}
+                  {{ isEvent ? cpI18n.translate('feedback_label_rate_event') : cpI18n.translate('feedback_label_rate_service') }}
                 </button>
               </div>
             </div>

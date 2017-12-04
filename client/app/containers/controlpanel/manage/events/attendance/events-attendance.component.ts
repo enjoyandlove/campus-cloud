@@ -21,10 +21,10 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   @Input() isService: boolean;
 
   event;
+  urlPrefix;
   isUpcoming;
   loading = true;
   eventId: number;
-  urlPrefix = this.utils.buildUrlPrefix(this.clubId, this.serviceId);
 
   constructor(
     private store: Store<IHeader>,
@@ -35,8 +35,6 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     super();
     this.eventId = this.route.snapshot.params['eventId'];
     super.isLoading().subscribe(res => this.loading = res);
-
-    this.fetch();
   }
 
 
@@ -57,13 +55,13 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     const children = this.utils.getSubNavChildren(event, this.urlPrefix);
 
     const payload = {
-      'heading': event.title,
+      'heading': `[NOTRANSLATE]${event.title}[NOTRANSLATE]`,
 
       'subheading': '',
 
       'crumbs': {
         'url': this.urlPrefix,
-        'label': 'Events'
+        'label': 'events'
       },
 
       'children': [...children]
@@ -75,5 +73,8 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.urlPrefix = this.utils.buildUrlPrefix(this.clubId, this.serviceId);
+    this.fetch()
+  }
 }

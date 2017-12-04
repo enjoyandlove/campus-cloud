@@ -2,13 +2,13 @@
   <div class="col-xs-12">
     <cp-no-content
       class="no-content"
-        *ngIf="postingMemberType === DISABLED_MEMBER_TYPE"
-      noContentText="To enable posting, change the settings for this wall">
+        *ngIf="disablePost"
+        [noContentText]="cpI18n.translate('feeds_error_wall_is_disabled')">
     </cp-no-content>
 
     <div
       class="cp-card"
-      *ngIf="postingMemberType !== DISABLED_MEMBER_TYPE">
+      *ngIf="!disablePost">
       <form
         [formGroup]="form"
         (ngSubmit)="onSubmit(form.value)">
@@ -21,7 +21,7 @@
           <div class="col-xs-6 text-right">
             <label class="error" *ngIf="imageError">{{ imageError }}</label>
             <cp-upload-button
-              buttonText="Add Photo"
+              [buttonText]="cpI18n.translate('button_add_photo')"
               buttonClass="cpbtn cpbtn--link"
               (fileUpload)="onFileUpload($event)">
             </cp-upload-button>
@@ -39,14 +39,14 @@
         <div class="row">
           <div
             *ngIf="!clubId && !_isCampusWallView;"
-            class="col-xs-9 channel-dropdown no-right-padding">
+            class="col-xs-10 channel-dropdown no-right-padding">
             <div class="row">
               <div class="col-xs-6">
                 <div class="row">
-                  <div class="col-xs-3 no-right-padding">
-                    <span i18n>Post as</span>
+                  <div class="col-xs-5 no-right-padding">
+                    <span i18n>{{ 'feeds_post_as' | cpI18n }}</span>
                   </div>
-                  <div class="col-xs-9 no-left-padding">
+                  <div class="col-xs-7 no-left-padding">
                     <cp-dropdown
                       [reset]="reset$"
                       class="dropdown"
@@ -58,10 +58,10 @@
               </div>
               <div class="col-xs-6">
                 <div class="row">
-                  <div class="col-xs-3 no-right-padding">
-                    <span i18n>Post to</span>
+                  <div class="col-xs-4 no-right-padding">
+                    <span i18n>{{ 'feeds_post_to' | cpI18n }}</span>
                   </div>
-                  <div class="col-xs-9 no-left-padding">
+                  <div class="col-xs-8 no-left-padding">
                     <cp-dropdown
                       [reset]="reset$"
                       class="dropdown"
@@ -73,12 +73,12 @@
               </div>
             </div>
           </div>
-          <div class="col-xs-3 pull-right text-right">
+          <div class="col-xs-2 pull-right text-right">
             <button
               type="submit"
               [disabled]="!form.valid"
               class="cpbtn cpbtn--primary text-right" i18n>
-              Post
+              {{ 'post' | cpI18n }}
             </button>
           </div>
         </div>

@@ -2,7 +2,7 @@
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-xs-12 text-center">
-        <span i18n><strong>Move Post</strong></span>
+        <span i18n><strong>{{ 'feeds_move_post' | cpI18n }}</strong></span>
 
         <span
           data-dismiss="modal"
@@ -19,7 +19,7 @@
       <div class="col-xs-12">
         <div class="row text-center">
           <div class="col-xs-offset-2 vertical-align pull-left">
-            <span i18n>Move post from <strong>{{ currentChannel }}</strong> to</span>
+            <span i18n>{{ 'feeds_move_post_from' | cpI18n }} <strong>{{ currentChannel }}</strong> {{ 'to' | cpI18n }}</span>
           </div>
           <div class="col-xs-4">
             <cp-dropdown
@@ -41,7 +41,7 @@
           class="cpbtn cpbtn--cancel"
           data-dismiss="modal" i18n
           (click)="teardown.emit()">
-          Cancel
+          {{ 'cancel' | cpI18n }}
         </button>
 
         <cp-button

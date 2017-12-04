@@ -4,7 +4,7 @@
   <div *ngSwitchCase="false">
     <cp-no-content
       *ngIf="!state.providers.length"
-      noContentText="No service provider yet, use the button above to create a provider.">
+      [noContentText]="cpI18n.translate('services_providers_no_results')">
     </cp-no-content>
 
     <div class="row" *ngIf="state.providers.length">
@@ -13,19 +13,19 @@
           <div class="cp-table__header">
             <div class="row">
               <div class="col-xs-3">
-                <span i18n>Service Provider</span>
+                <span i18n>{{ 'service_provider' | cpI18n }}</span>
               </div>
               <div class="col-xs-4" *ngIf="displayRatingColumn">
-                <span i18n>Average Rating</span>
+                <span i18n>{{ 'average_rating' | cpI18n }}</span>
               </div>
               <div class="col-xs-1" *ngIf="displayRatingColumn">
-                <span i18n>Ratings</span>
+                <span i18n>{{ 'rating' | cpI18n }}</span>
               </div>
               <div [class]="[displayRatingColumn ? 'col-xs-1' : 'col-xs-1 col-xs-offset-5']">
-                <span i18n>Visits</span>
+                <span i18n>{{ 'services_visits' | cpI18n }}</span>
               </div>
               <div class="col-xs-2">
-                <span i18n>Assessment</span>
+                <span i18n>{{ 'assessment' | cpI18n }}</span>
               </div>
               <div class="col-xs-1"></div>
             </div>
@@ -51,7 +51,7 @@
                 <a
                   [routerLink]="['/cb/checkin/s/' + provider.encrypted_campus_service_id + '/' + provider.encrypted_id]"
                   class="startcheckin cpbtn cpbtn--no-border cpbtn--secondary" i18n>
-                  Check-In Details
+                  {{ 'services_label_check_in_details' | cpI18n }}
                 </a>
               </div>
               <div class="col-xs-1">

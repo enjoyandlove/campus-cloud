@@ -49,9 +49,11 @@
                   <div class="col-xs-12">
                     <label i18n>Address</label>
                     <cp-place-autocomplete
-                      placeHolder="Address"
+                      placeHolder="Address..."
+                      [newAddress]="newAddress"
+                      (backToDefault)="onResetMap()"
                       (placeChange)="onPlaceChange($event)"
-                      [defaultValue]="form.controls.address.value">
+                      [defaultValue]="form.controls['address'].value">
                     </cp-place-autocomplete>
                   </div>
                 </div>
@@ -60,7 +62,11 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-xs-12">
-                    <cp-maps class="map" [center]="mapCenter"></cp-maps>
+                    <cp-maps
+                      class="map"
+                      [center]="mapCenter"
+                      (mapSelection)="onMapSelection($event)">
+                    </cp-maps>
                   </div>
                 </div>
               </div>

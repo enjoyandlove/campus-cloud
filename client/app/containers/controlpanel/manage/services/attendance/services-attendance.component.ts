@@ -18,6 +18,7 @@ import { CPSession } from './../../../../../session/index';
 import { BaseComponent } from '../../../../../base/base.component';
 import { STAR_SIZE } from '../../../../../shared/components/cp-stars';
 import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants';
+import { CPI18nService } from '../../../../../shared/services/index';
 
 const FEEDBACK_ENABLED = 1;
 
@@ -43,6 +44,7 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
   constructor(
     private router: Router,
     private session: CPSession,
+    public cpI18n: CPI18nService,
     private store: Store<IHeader>,
     private route: ActivatedRoute,
     private serviceService: ServicesService
@@ -104,17 +106,18 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
   private buildHeader() {
     let children = [
       {
-        'label': 'Info',
+        'label': 'info',
         'url': `/manage/services/${this.serviceId}/info`
       }
     ];
+
     const eventsSchoolLevel = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.events);
     const eventsAccountLevel = canStoreReadAndWriteResource(this.session.g,
       this.storeId, CP_PRIVILEGES_MAP.events);
 
     if (eventsSchoolLevel || eventsAccountLevel) {
       const events = {
-        'label': 'Events',
+        'label': 'events',
         'url': `/manage/services/${this.serviceId}/events`
       }
 
@@ -123,7 +126,7 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
 
     if (this.service.service_attendance) {
       let attendance = {
-        'label': 'Assessment',
+        'label': 'assessment',
         'url': `/manage/services/${this.serviceId}`
       };
 
@@ -133,11 +136,11 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': this.service.name,
+        'heading': `[NOTRANSLATE]${this.service.name}[NOTRANSLATE]`,
         'subheading': '',
         'crumbs': {
           'url': 'services',
-          'label': 'Services'
+          'label': 'services'
         },
         'children': [...children]
       }

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { IHeader } from '../../../reducers/header.reducer';
@@ -14,7 +14,7 @@ import { HEADER_UPDATE } from './../../../reducers/header.reducer';
   </div>
   `,
 })
-export class AssessComponent implements OnInit {
+export class AssessComponent {
   headerData$: Observable<IHeader>;
 
   constructor(private store: Store<any>) {
@@ -25,6 +25,4 @@ export class AssessComponent implements OnInit {
       payload: require('./assess.header.json')
     });
   }
-
-  ngOnInit() { }
 }
