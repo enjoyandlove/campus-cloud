@@ -1,0 +1,38 @@
+@import '~styles/core/typography';
+@import '~styles/components/button';
+
+.picker {
+  &--master-button {
+
+  }
+
+  &--content {
+    padding: 20px;
+  }
+
+  &--calendars {
+    width: 500px;
+    height: 300px;
+    margin-bottom: 30px;
+
+    &.calendar {
+      margin-right: 15px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
+  &--controls {
+    button {
+      @include font-semi-bold();
+
+      margin-right: 18px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
