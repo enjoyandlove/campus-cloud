@@ -2,11 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { CPSession, IUser } from '../../../session';
 import { CPI18nService } from '../../../shared/services/index';
-
-// interface IState {
-//   startDate: number,
-//   endDate: number,
-// }
+import { DashboardUtilsService } from './dashboard.utils.service';
 
 @Component({
   selector: 'cp-dashboard',
@@ -15,15 +11,22 @@ import { CPI18nService } from '../../../shared/services/index';
 export class DashboardComponent implements OnInit {
   user: IUser;
   headerData;
+  currentDate = null;
 
   constructor(
     private session: CPSession,
     private cpI18n: CPI18nService,
+    private helper: DashboardUtilsService
   ) {
     this.user = this.session.g.get('user');
   }
 
-  ngOnInit() {
+  onDateChange(newDate) {
+    this.currentDate = newDate;
+    console.log('date changed', this.currentDate);
+  }
+
+  updateHeader() {
     const hello = this.cpI18n.translate('hello')
     const username = `[NOTRANSLATE]${this.user.firstname}[NOTRANSLATE]`;
     const heading = `${hello} ${username}!`;
@@ -38,5 +41,11 @@ export class DashboardComponent implements OnInit {
       'em': null,
       'children': []
     };
+  }
+
+  ngOnInit() {
+    this.currentDate = this.helper.last30Days();
+
+    this.updateHeader();
   }
 }

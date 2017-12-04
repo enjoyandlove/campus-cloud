@@ -2,7 +2,9 @@
 <div class="cp-wrapper cp-wrapper--outer">
   <div class="row">
     <div class="col-xs-12">
-      <cp-dashboard-date-picker></cp-dashboard-date-picker>
+      <cp-dashboard-date-picker
+        (dateChange)="onDateChange($event)">
+      </cp-dashboard-date-picker>
     </div>
   </div>
 
