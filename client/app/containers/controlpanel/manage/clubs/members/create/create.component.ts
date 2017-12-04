@@ -69,7 +69,7 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
 
         return this
           .service
-          .getMembers(search)
+          .getMembers(search, 1, 1000)
           .map(members => {
             if (!(members.length)) {
               return [{ 'label': this.cpI18n.translate('no_results') }]
