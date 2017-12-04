@@ -3,6 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { CPSession, IUser } from '../../../session';
 import { CPI18nService } from '../../../shared/services/index';
 
+// interface IState {
+//   startDate: number,
+//   endDate: number,
+// }
+
 @Component({
   selector: 'cp-dashboard',
   templateUrl: './dashboard.component.html'
