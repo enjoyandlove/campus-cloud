@@ -3,6 +3,7 @@ import {
   Output,
   ViewChild,
   Component,
+  OnDestroy,
   ElementRef,
   EventEmitter,
   AfterViewInit,
@@ -40,7 +41,7 @@ const datePipe = new CPDatePipe();
   styleUrls: ['./dashboard-date-picker.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class DashboardDatePickerComponent implements OnInit, AfterViewInit {
+export class DashboardDatePickerComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('calendarEl') calendarEl: ElementRef;
   @Output() dateChange: EventEmitter<IDateChange> = new EventEmitter();
 
@@ -97,6 +98,10 @@ export class DashboardDatePickerComponent implements OnInit, AfterViewInit {
 
   setLabel(date) {
     this.selected = date;
+  }
+
+  ngOnDestroy() {
+    this.picker.destroy();
   }
 
   ngOnInit() {

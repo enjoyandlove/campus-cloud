@@ -7,7 +7,9 @@
       class="picker--master-button cpbtn cpbtn--primary dropdown-toggle">
       {{ selected.label }}
     </button>
-    <div class="dropdown-menu picker--content" aria-labelledby="dropdownMenuButton">
+    <div
+      aria-labelledby="dropdownMenuButton"
+      class="dropdown-menu picker--content">
       <div class="row">
         <div class="col-xs-12">
           <div class="picker--calendars" (click)="$event.stopPropagation()">
@@ -17,6 +19,7 @@
           </div>
         </div>
       </div>
+
       <div class="row">
         <div class="col-xs-12">
           <div class="picker--controls">

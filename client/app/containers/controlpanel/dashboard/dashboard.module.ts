@@ -7,7 +7,8 @@ import { DashboardUtilsService } from './dashboard.utils.service';
 
 import {
   DashboardDatePickerComponent,
-  DashboardDownloadsChartComponent
+  DashboardDownloadsChartComponent,
+  DashboardGeneralInformationComponent
 } from './components';
 
 import { DashboardComponent }  from './dashboard.component';
@@ -15,7 +16,7 @@ import { DashboardRoutingModule } from './dashboard.routing.module';
 
 @NgModule({
   declarations: [ DashboardComponent, DashboardDatePickerComponent,
-  DashboardDownloadsChartComponent ],
+  DashboardDownloadsChartComponent, DashboardGeneralInformationComponent ],
 
   imports: [ CommonModule, SharedModule, DashboardRoutingModule ],
 
