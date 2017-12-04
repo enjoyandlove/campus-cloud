@@ -656,6 +656,18 @@
   "dashboard_all_time": {
     "message": "All Time"
   },
+  "dashboard_announcements": {
+    "message": "Announcements"
+  },
+  "dashboard_club_views": {
+    "message": "Club Views"
+  },
+  "dashboard_event_views": {
+    "message": "Event Views"
+  },
+  "dashboard_general_information": {
+    "message": "General Information"
+  },
   "dashboard_last_30_days": {
     "message": "Last 30 Days"
   },
@@ -664,6 +676,9 @@
   },
   "dashboard_last_year": {
     "message": "Last Year"
+  },
+  "dashboard_service_clicks": {
+    "message": "Service Clicks"
   },
   "delete": {
     "message": "Delete"

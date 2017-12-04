@@ -7,4 +7,9 @@ export class DashboardService {
     console.log(startRange, endRange);
     return Observable.of([]);
   }
+
+  getGeneralInformation(startRange: number, endRange: number) {
+    console.log(startRange, endRange);
+    return Observable.of([]).delay(2300);
+  }
 }
