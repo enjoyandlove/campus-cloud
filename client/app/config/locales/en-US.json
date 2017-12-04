@@ -653,6 +653,18 @@
   "csv_modal_title": {
     "message": "Upload CSV File"
   },
+  "dashboard_all_time": {
+    "message": "All Time"
+  },
+  "dashboard_last_30_days": {
+    "message": "Last 30 Days"
+  },
+  "dashboard_last_90_days": {
+    "message": "Last 90 Days"
+  },
+  "dashboard_last_year": {
+    "message": "Last Year"
+  },
   "delete": {
     "message": "Delete"
   },
