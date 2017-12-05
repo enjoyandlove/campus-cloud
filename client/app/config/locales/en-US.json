@@ -66,7 +66,7 @@
     "message": "Engagement Dashboard"
   },
   "admin_events_help": {
-    "message": "View events and event assessment"
+    "message": "View events; view event assessment"
   },
   "admin_grant_permissions": {
     "message": "Invite new team members and assign permissions"
@@ -84,7 +84,7 @@
     "message": "View events and event assessment"
   },
   "admin_manage_events": {
-    "message": "Manage Events"
+    "message": "View Events"
   },
   "admin_modal_delete_body": {
     "message": "Are you sure you want to remove %s?"
@@ -834,10 +834,10 @@
     "message": "Edit Event"
   },
   "events_error_end_date_after_now": {
-    "message": "Event End Time must be greater than now"
+    "message": "The event's end time must be in the future."
   },
   "events_error_end_date_before_start": {
-    "message": "Event End Time must be after Event Start Time"
+    "message": "The event's end time must be later than its start time."
   },
   "events_event_attendance": {
     "message": "Event Attendance"
@@ -864,7 +864,7 @@
     "message": "Import Events from Facebook"
   },
   "events_facebook_help": {
-    "message": "To import events from Facebook, enter the link to your page of Facebook event. E.g., https://www.facebook.com/oohlalamobileapp/events/"
+    "message": "To import events from Facebook, enter the link to the page of your Facebook event. E.g., https://www.facebook.com/oohlalamobileapp/events/"
   },
   "events_facebook_label_host": {
     "message": "Select Host"
