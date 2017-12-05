@@ -14,7 +14,10 @@ import { CPSession, ISchool } from '../../../../../session';
 import { BaseComponent } from '../../../../../base/base.component';
 import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { CPI18nPipe } from './../../../../../shared/pipes/i18n/i18n.pipe';
 import { StoreService, AdminService } from '../../../../../shared/services';
+
+const i18n = new CPI18nPipe();
 
 
 @Component({
@@ -77,15 +80,16 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   }
 
   private buildHeader() {
+    const subheading = i18n.transform('events_import_csv_sub_heading', this.events.length);
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': 'Import Events',
+        'heading': 'events_import_csv_heading',
         'crumbs': {
           'url': 'events',
-          'label': 'Events'
+          'label': 'events'
         },
-        'em': `${this.events.length} calendar event(s) data information in the file`,
+        'em': `[NOTRANSLATE]${subheading}[NOTRANSLATE]`,
         'children': []
       }
     });

@@ -8,8 +8,10 @@ import { DashboardUtilsService } from './dashboard.utils.service';
 import {
   DashboardTopEventsComponent,
   DashboardDatePickerComponent,
+  DashboardAssessmentComponent,
   DashboardTopResourceComponent,
   DashboardTopServicesComponent,
+  DashboardIntegrationsComponent,
   DashboardDownloadsChartComponent,
   DashboardGeneralInformationComponent
 } from './components';
@@ -21,7 +23,8 @@ import { DashboardRoutingModule } from './dashboard.routing.module';
   declarations: [ DashboardComponent, DashboardDatePickerComponent,
   DashboardDownloadsChartComponent, DashboardGeneralInformationComponent,
   DashboardTopEventsComponent, DashboardTopServicesComponent,
-  DashboardTopResourceComponent ],
+  DashboardTopResourceComponent, DashboardAssessmentComponent,
+  DashboardIntegrationsComponent ],
 
   imports: [ CommonModule, SharedModule, DashboardRoutingModule ],
 

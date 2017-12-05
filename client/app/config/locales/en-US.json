@@ -12,10 +12,10 @@
     "message": "You do not have sufficient privileges to perform this action."
   },
   "admin_all_acceess_help": {
-    "message": "Give access to all of the Services, Clubs and App Content"
+    "message": "Grant the new team member the same Campus Cloud permissions as me."
   },
   "admin_all_access": {
-    "message": "All Access"
+    "message": "Copy my Campus Cloud Permissions"
   },
   "admin_all_clubs": {
     "message": "All Clubs"
@@ -24,13 +24,13 @@
     "message": "All Services"
   },
   "admin_app_content": {
-    "message": "App Content"
+    "message": "Other"
   },
   "admin_app_content_help": {
     "message": "Select the content that you want your invitee to access"
   },
   "admin_assess_help": {
-    "message": "View engagement and student attendance data"
+    "message": "View the Engagement Dashboard and Student Transcript."
   },
   "admin_campus_announcements": {
     "message": "Campus Announcements"
@@ -45,7 +45,7 @@
     "message": "Club Owner"
   },
   "admin_club_owner_help": {
-    "message": "Manage club details, events and membership"
+    "message": "Create new clubs; manage information, events and membership for all clubs or select clubs"
   },
   "admin_club_service_modal_title": {
     "message": "Select %s"
@@ -69,10 +69,10 @@
     "message": "Manage and assess events"
   },
   "admin_grant_permissions": {
-    "message": "Grant Permissions"
+    "message": "Invite new team members and assign permissions"
   },
   "admin_invite": {
-    "message": "Invite"
+    "message": "Create New Team Member"
   },
   "admin_invitee": {
     "message": "Invitee"
@@ -81,7 +81,7 @@
     "message": "Create your Campus Cloud Account"
   },
   "admin_manage_and_assess_events": {
-    "message": "Manage and Assess Events"
+    "message": "View events and/or event assessment"
   },
   "admin_manage_events": {
     "message": "Manage Events"
@@ -93,7 +93,7 @@
     "message": "Remove Team Member"
   },
   "admin_notify_help": {
-    "message": "Select push notifications"
+    "message": "Manage other kinds of app content"
   },
   "admin_no_access": {
     "message": "No Access"
@@ -117,10 +117,10 @@
     "message": "Service Owner"
   },
   "admin_service_owner_help": {
-    "message": "Manage service details, events and assessment"
+    "message": "Create new services; manage information, events and assessment for all services or select services"
   },
   "all": {
-    "message": "All"
+    "message": "All Categories"
   },
   "all_fields_are_required": {
     "message": "All fields are required"
@@ -138,7 +138,7 @@
     "message": "Announce to all students"
   },
   "announcements_compose_modal_title": {
-    "message": "Compose"
+    "message": "Create New Announcement"
   },
   "announcements_delete_modal_body": {
     "message": "Are you sure you want to archive this announcement?"
@@ -162,7 +162,7 @@
     "message": "Delivered as a regular push notification"
   },
   "announcements_type": {
-    "message": "Announcement Type"
+    "message": "Type"
   },
   "announcements_urgent_help": {
     "message": "Overrides the push settings of the user"
@@ -228,10 +228,10 @@
     "message": "Download Engagement Data"
   },
   "assess_checkin_date": {
-    "message": "Check-In Date"
+    "message": "Check-in Date"
   },
   "assess_check_in_time": {
-    "message": "Check-In Item"
+    "message": "Check-in Item"
   },
   "assess_demo_feature_four_description": {
     "message": "Assessment enables you to easily identify which students are disengaged and send them targeted communications via the mobile app."
@@ -342,7 +342,7 @@
     "message": "# of Check-ins"
   },
   "assess_number_of_event_checkins": {
-    "message": "# of Event Check-Ins"
+    "message": "# of Event Check-ins"
   },
   "assess_number_of_responses": {
     "message": "# of Responses"
@@ -369,7 +369,7 @@
     "message": "Services Assessed"
   },
   "assess_service_checkins": {
-    "message": "# of Service Check-ins"
+    "message": "# of  Service Check-ins"
   },
   "assess_service_rating_average": {
     "message": "Service Average Rating"
@@ -450,7 +450,7 @@
     "message": "Building"
   },
   "button_add_photo": {
-    "message": "Add Photo"
+    "message": "Upload Picture"
   },
   "calendar": {
     "message": "Calendar"
@@ -504,7 +504,7 @@
     "message": "Download QR Code"
   },
   "checkin_header_title": {
-    "message": "Check In Instructions"
+    "message": "Check-in Instructions"
   },
   "checkin_instructions_one": {
     "message": "We use QR codes to help attendees check in to an event. Be sure to print or share the QR  code with your event attendance organizer."
@@ -627,7 +627,7 @@
     "message": "JPG or PNG. Max size of 5MB"
   },
   "compose": {
-    "message": "Compose"
+    "message": "Create New Announcement"
   },
   "confirm": {
     "message": "Confirm"
@@ -659,6 +659,27 @@
   "dashboard_announcements": {
     "message": "Announcements"
   },
+  "dashboard_assessment_event_checkins": {
+    "message": "Event Check-Ins"
+  },
+  "dashboard_assessment_feedback_rate": {
+    "message": "Feedback Rate"
+  },
+  "dashboard_assessment_lms": {
+    "message": "LMS"
+  },
+  "dashboard_assessment_service_checkins": {
+    "message": "Service Check-Ins"
+  },
+  "dashboard_assessment_student": {
+    "message": "Student"
+  },
+  "dashboard_assessment_student_feedback": {
+    "message": "Student Feedback"
+  },
+  "dashboard_assessment_title": {
+    "message": "Assessment"
+  },
   "dashboard_club_views": {
     "message": "Club Views"
   },
@@ -668,6 +689,15 @@
   "dashboard_general_information": {
     "message": "General Information"
   },
+  "dashboard_integrations_courses": {
+    "message": "Courses"
+  },
+  "dashboard_integrations_sso": {
+    "message": "SSO"
+  },
+  "dashboard_integrations_title": {
+    "message": "Integrations"
+  },
   "dashboard_last_30_days": {
     "message": "Last 30 Days"
   },
@@ -676,6 +706,9 @@
   },
   "dashboard_last_year": {
     "message": "Last Year"
+  },
+  "dashboard_no_data_found": {
+    "message": "No Results Found"
   },
   "dashboard_service_clicks": {
     "message": "Service Clicks"
@@ -777,19 +810,19 @@
     "message": "Checked-in Method"
   },
   "events_checked_in_time": {
-    "message": "Checked In Time"
+    "message": "Check-in Time"
   },
   "events_check_in": {
-    "message": "Check-In"
+    "message": "Check-in"
   },
   "events_check_in_details": {
-    "message": "Check-In Details"
+    "message": "Check-in Instructions"
   },
   "events_create_heading": {
     "message": "Create Event"
   },
   "events_default_question": {
-    "message": "Default Question"
+    "message": "Feedback Question"
   },
   "events_delete_modal_body": {
     "message": "Are you sure you want to delete %s?"
@@ -825,13 +858,13 @@
     "message": "Event Name"
   },
   "events_facebook_add_button": {
-    "message": "Add Link"
+    "message": "Create Link"
   },
   "events_facebook_heading": {
     "message": "Import Events from Facebook"
   },
   "events_facebook_help": {
-    "message": "To import events from Facebook, input your Facebook page's event link below eg.https://www.facebook.com/oohlalamobileapp/events/"
+    "message": "To import events from Facebook, enter the link to your page of Facebook event. E.g., https://www.facebook.com/oohlalamobileapp/events/"
   },
   "events_facebook_label_host": {
     "message": "Select Host"
@@ -851,8 +884,14 @@
   "events_import_bulk_update": {
     "message": "Bulk Update"
   },
+  "events_import_csv_heading": {
+    "message": "Import Events from File"
+  },
+  "events_import_csv_sub_heading": {
+    "message": "File contains data for %s calendar event(s)"
+  },
   "events_import_from_facebook": {
-    "message": "Import from Facebook"
+    "message": "Import Events from Facebook"
   },
   "events_label_past_events": {
     "message": "Past Events"
@@ -924,10 +963,10 @@
     "message": "Approve Post"
   },
   "feeds_can_comment": {
-    "message": "Can Comment"
+    "message": "Who can comment?"
   },
   "feeds_can_post": {
-    "message": "Can Post"
+    "message": "Who can post?"
   },
   "feeds_delete_comment": {
     "message": "Delete Comment"
@@ -969,7 +1008,7 @@
     "message": "posted in"
   },
   "feeds_post_as": {
-    "message": "Post as"
+    "message": "Post as:"
   },
   "feeds_post_to": {
     "message": "Post to"
@@ -981,7 +1020,7 @@
     "message": "Team Members"
   },
   "feeds_wall_name": {
-    "message": "Wall Name"
+    "message": "Club Name"
   },
   "feeds_wall_settings_modal_title": {
     "message": "Wall Settings"
@@ -990,7 +1029,7 @@
     "message": "First Name"
   },
   "for": {
-    "message": "For"
+    "message": "for"
   },
   "from": {
     "message": "From"
@@ -1011,7 +1050,7 @@
     "message": "Import from CSV"
   },
   "in": {
-    "message": "In"
+    "message": "in"
   },
   "inactive": {
     "message": "Inactive"
@@ -1023,7 +1062,7 @@
     "message": "Instructions"
   },
   "invite_team_members": {
-    "message": "Invite Team Members"
+    "message": "Team Members"
   },
   "last_name": {
     "message": "Last Name"
@@ -1032,10 +1071,10 @@
     "message": "Links"
   },
   "links_add_modal_title": {
-    "message": "Add Link"
+    "message": "Create Link"
   },
   "links_button_new": {
-    "message": "Add Link"
+    "message": "Create Link"
   },
   "links_delete_modal_body": {
     "message": "Are you sure you want to delete %s?"
@@ -1113,7 +1152,7 @@
     "message": "Manage"
   },
   "manage_team_members": {
-    "message": "Manage Team Members"
+    "message": "Manage"
   },
   "maps": {
     "message": "Maps"
@@ -1278,7 +1317,7 @@
     "message": "Select Category"
   },
   "select_host": {
-    "message": "Select Host"
+    "message": "Filter by host"
   },
   "send": {
     "message": "Send"
@@ -1296,7 +1335,7 @@
     "message": "Admin"
   },
   "services_button_add_service_provider": {
-    "message": "Add Service Provider"
+    "message": "Create Service Provider"
   },
   "services_button_create": {
     "message": "Create Service"
@@ -1332,7 +1371,7 @@
     "message": "Import Services"
   },
   "services_label_all_checkin_methods": {
-    "message": "All check-in methods"
+    "message": "Check-in method"
   },
   "services_label_attendee_name": {
     "message": "Attendee Name"
@@ -1344,16 +1383,16 @@
     "message": "Checked-in Method"
   },
   "services_label_checked_in_time": {
-    "message": "Checked-in Time"
+    "message": "Check-in Time"
   },
   "services_label_checkin_time": {
-    "message": "Checked-in time"
+    "message": "Check-in Time"
   },
   "services_label_check_in_details": {
-    "message": "Check-In Details"
+    "message": "Check-in Instructions"
   },
   "services_label_default_question": {
-    "message": "Default Question"
+    "message": "Feedback Question"
   },
   "services_label_description": {
     "message": "Service Description"
@@ -1377,7 +1416,7 @@
     "message": "No services found"
   },
   "services_providers_no_results": {
-    "message": "No service provider yet, use the button above to create a provider."
+    "message": "There are no service providers for this service.  Use \"Create Service Provider\" to create one. \n\nService Providers are used to track attendance check-ins and gather student feedback."
   },
   "services_provider_button_add_another": {
     "message": "Add Another Service Provider"
@@ -1389,28 +1428,28 @@
     "message": "Are you sure?"
   },
   "services_provider_label_add_service_provider": {
-    "message": "Add Service Provider"
+    "message": "Create Service Provider"
   },
   "services_provider_label_default_question": {
-    "message": "Default Question"
+    "message": "Feedback Question"
   },
   "services_provider_search_tootlip": {
-    "message": "Search Service Provider"
+    "message": "Search Service Providers"
   },
   "services_repeat_visits": {
-    "message": "Repeat Visits"
+    "message": "Repeat Visitors"
   },
   "services_total_responses": {
     "message": "Total Responses"
   },
   "services_total_visits": {
-    "message": "Total Visits"
+    "message": "Total Check-ins to Service"
   },
   "services_unique_visits": {
-    "message": "Unique Visits"
+    "message": "Unique Visitors"
   },
   "services_visits": {
-    "message": "Visits"
+    "message": "Check-ins"
   },
   "service_provider": {
     "message": "Service Provider"
@@ -1458,13 +1497,13 @@
     "message": "Templates"
   },
   "templates_button_new": {
-    "message": "New Template"
+    "message": "Create New Template"
   },
   "templates_crate_label_template_name": {
     "message": "Template Name"
   },
   "templates_crate_modal_title": {
-    "message": "New Template"
+    "message": "Create New Template"
   },
   "templates_create_label_all_students": {
     "message": "Announce to all students"
@@ -1479,7 +1518,7 @@
     "message": "Title"
   },
   "to": {
-    "message": "To"
+    "message": "to"
   },
   "total_ratings": {
     "message": "Total Ratings"
