@@ -722,6 +722,9 @@
   "dashboard_top_events": {
     "message": "Top Events"
   },
+  "dashboard_top_five_clubs_title": {
+    "message": "Top 5 Active Clubs"
+  },
   "dashboard_top_services": {
     "message": "Top Services"
   },
