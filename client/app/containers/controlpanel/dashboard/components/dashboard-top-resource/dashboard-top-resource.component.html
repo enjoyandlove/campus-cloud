@@ -1,0 +1,45 @@
+<div class="row table">
+  <div class="col-xs-12">
+    <div class="row table--header">
+      <div class="col-xs-1">
+        <p>#</p>
+      </div>
+      <div class="col-xs-5 no-left-padding">
+        <p i18n>{{ 'title' | cpI18n }}</p>
+      </div>
+      <div class="col-xs-2 no-left-padding">
+        <p i18n>{{ 'attendees' | cpI18n }}</p>
+      </div>
+      <div class="col-xs-2 no-right-padding">
+        <p i18n>{{ 'feedback' | cpI18n }}</p>
+      </div>
+      <div class="col-xs-2 text-right no-left-padding">
+        <p i18n>{{ 'rating' | cpI18n }}</p>
+      </div>
+    </div>
+    <div class="row" *ngFor="let item of resources; index as index last as last">
+      <div class="col-xs-12">
+        <div class="table--item" [class.isLast]="last">
+          <div class="row">
+            <div class="col-xs-1">
+              <p class="ranking">{{ index + 1 }}</p>
+            </div>
+            <div class="col-xs-5 no-left-padding text-truncate">
+              <img [src]="[item.service_logo_url]" alt="" class="avatar img-rounded">
+              <p class="service-title text-truncate">{{ item.service_name }}</p>
+            </div>
+            <div class="col-xs-2 no-left-padding">
+              <p>{{ item.num_of_attendees }}</p>
+            </div>
+            <div class="col-xs-2 no-right-padding">
+              <p>{{ item.num_of_feedbacks }}</p>
+            </div>
+            <div class="col-xs-2 text-right no-left-padding">
+              <p>{{ ((item.average_of_feedbacks / 100) * 5).toFixed(1) }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

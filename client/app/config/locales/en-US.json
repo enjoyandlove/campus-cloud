@@ -680,6 +680,12 @@
   "dashboard_service_clicks": {
     "message": "Service Clicks"
   },
+  "dashboard_top_events": {
+    "message": "Top Events"
+  },
+  "dashboard_top_services": {
+    "message": "Top Services"
+  },
   "delete": {
     "message": "Delete"
   },
@@ -1041,16 +1047,16 @@
     "message": "Edit Link"
   },
   "links_label_link_name": {
-    "message": "Link Name"
+    "message": "Name"
   },
   "links_label_link_url": {
-    "message": "Link URL"
+    "message": "URL"
   },
   "links_no_results_found": {
     "message": "No Links found"
   },
   "link_label_description": {
-    "message": "Link Description"
+    "message": "Description"
   },
   "link_label_link_banner": {
     "message": "Link Banner"
@@ -1062,7 +1068,7 @@
     "message": "Create List"
   },
   "lists_create_modal_title": {
-    "message": "Create New List"
+    "message": "Create List"
   },
   "lists_delete_modal_body": {
     "message": "Are you sure you want to delete %s?"
@@ -1077,10 +1083,10 @@
     "message": "This list is being used in a notification template. To delete this list, first delete all templates addressed to this list, and try again."
   },
   "lists_label_list_description": {
-    "message": "List Description"
+    "message": "Description"
   },
   "lists_label_list_name": {
-    "message": "List Name"
+    "message": "Name"
   },
   "lists_no_results_found": {
     "message": "No lists found"
