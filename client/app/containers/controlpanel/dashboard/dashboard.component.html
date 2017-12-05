@@ -19,4 +19,13 @@
       <cp-dashboard-general-information></cp-dashboard-general-information>
     </div>
   </div>
+
+  <div class="row tile" *ngIf="canAssess">
+    <div class="col-xs-6">
+      <cp-dashboard-top-events [dates]="currentDate"></cp-dashboard-top-events>
+    </div>
+    <div class="col-xs-6">
+      <cp-dashboard-top-services [dates]="currentDate"></cp-dashboard-top-services>
+    </div>
+  </div>
 </div>

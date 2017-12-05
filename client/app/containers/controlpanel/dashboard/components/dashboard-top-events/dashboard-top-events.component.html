@@ -1,0 +1,8 @@
+<ng-container [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <ng-container *ngSwitchCase="false">
+    <p>{{ 'dashboard_top_events' | cpI18n }}</p>
+    <cp-dashboard-top-resource [items]="items"></cp-dashboard-top-resource>
+  </ng-container>
+</ng-container>
