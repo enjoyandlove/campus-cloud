@@ -61,10 +61,10 @@ export class EventsFacebookComponent extends BaseComponent implements OnInit {
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': this.cpI18n.translate('events_facebook_heading'),
+        'heading': 'events_facebook_heading',
         'crumbs': {
           'url': backToEvents,
-          'label': this.cpI18n.translate('events')
+          'label': 'events'
         },
         'subheading': '',
         'children': []

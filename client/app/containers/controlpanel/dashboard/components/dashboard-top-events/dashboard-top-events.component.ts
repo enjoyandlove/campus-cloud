@@ -46,7 +46,7 @@ export class DashboardTopEventsComponent extends BaseComponent implements OnInit
 
   fetch() {
     const search = new URLSearchParams();
-    // search.append('sort_by', this.state.sortBy);
+    search.append('sort_by', 'engagements');
     search.append('end', this._dates.end.toString());
     search.append('start', this._dates.start.toString());
     search.append('school_id', this.session.g.get('school').id.toString());
