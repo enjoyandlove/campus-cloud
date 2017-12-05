@@ -27,10 +27,10 @@
     "message": "Other"
   },
   "admin_app_content_help": {
-    "message": "Select the content that you want your invitee to access"
+    "message": "Manage other kinds of app content"
   },
   "admin_assess_help": {
-    "message": "View the Engagement Dashboard and Student Transcript."
+    "message": "View the Engagement Dashboard and Student Transcript"
   },
   "admin_campus_announcements": {
     "message": "Campus Announcements"
@@ -66,7 +66,7 @@
     "message": "Engagement Dashboard"
   },
   "admin_events_help": {
-    "message": "Manage and assess events"
+    "message": "View events and event assessment"
   },
   "admin_grant_permissions": {
     "message": "Invite new team members and assign permissions"
@@ -81,7 +81,7 @@
     "message": "Create your Campus Cloud Account"
   },
   "admin_manage_and_assess_events": {
-    "message": "View events and/or event assessment"
+    "message": "View events and event assessment"
   },
   "admin_manage_events": {
     "message": "Manage Events"
@@ -93,7 +93,7 @@
     "message": "Remove Team Member"
   },
   "admin_notify_help": {
-    "message": "Manage other kinds of app content"
+    "message": "Send messages to students' phones and/or send emergency announcements"
   },
   "admin_no_access": {
     "message": "No Access"
@@ -519,10 +519,10 @@
     "message": "Check-In List"
   },
   "checkin_manual_checkin": {
-    "message": "Manual Check In"
+    "message": "Manual Check-in"
   },
   "checkin_scannable_qr_code": {
-    "message": "Scannable QR Code"
+    "message": "Automatic Check-in (Scan QR Code)"
   },
   "clubs": {
     "message": "Clubs"
@@ -606,7 +606,7 @@
     "message": "Edit Member"
   },
   "clubs_member_label_name": {
-    "message": "Name (need a mobile app account)"
+    "message": "Name (needs a mobile app account)"
   },
   "clubs_no_members_found": {
     "message": "No Members Found"
@@ -780,7 +780,7 @@
     "message": "Invalid Extension"
   },
   "error_no_hosts_found_help": {
-    "message": "No Services or Clubs found, check your account privileges"
+    "message": "You do not have sufficient privileges to associate this new event with a host (a service or a club). "
   },
   "event": {
     "message": "Event"
@@ -1152,7 +1152,7 @@
     "message": "Manage"
   },
   "manage_team_members": {
-    "message": "Manage"
+    "message": "Team Manager"
   },
   "maps": {
     "message": "Maps"
@@ -1257,7 +1257,7 @@
     "message": "Students can post messages to Club Feeds. Executives and Administrators can moderate these Feeds."
   },
   "release_notes_june_2_item_two": {
-    "message": "Executives of Clubs and Groups can create Events and Services within those groups"
+    "message": "Executives of a club can create events and services hosted by that club."
   },
   "release_notes_june_2_title": {
     "message": "New as of June 2, 2017:"
