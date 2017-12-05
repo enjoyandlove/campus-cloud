@@ -3,14 +3,11 @@
     <div class="row">
       <div class="col-xs-12">
         <div class="avatar pull-left">
-          <img class="img-rounded" [src]="logo" alt="Campus Cloud">
+          <a [routerLink]="['/dashboard']">
+            <img class="img-rounded" [src]="logo" alt="Campus Cloud">
+          </a>
         </div>
         <ul class="nav__links pull-left">
-          <li
-            (click)="isOpen = false"
-            routerLinkActive="active">
-            <a [routerLink]="['/welcome']">{{ 'welcome' | cpI18n }}</a>
-          </li>
           <li
             *ngIf="manageHomePage"
             (click)="isOpen = false"

@@ -1,0 +1,49 @@
+<ng-container [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div class="tile" *ngSwitchCase="false">
+    <div class="row">
+      <div class="col-xs-12">
+        <p class="tile--title">{{ 'dashboard_general_information' | cpI18n }}</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-5">
+        <div class="row">
+          <div class="col-xs-9 tile--stat">
+            <p>{{ 'dashboard_event_views' | cpI18n }}</p>
+          </div>
+          <div class="col-xs-3 text-right tile--amount">123</div>
+        </div>
+      </div>
+      <div class="col-xs-5 col-xs-offset-1">
+        <div class="row">
+          <div class="col-xs-9 tile--stat">
+            <p>{{ 'dashboard_service_clicks' | cpI18n }}</p>
+          </div>
+          <div class="col-xs-3 text-right tile--amount">78</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-5">
+        <div class="row">
+          <div class="col-xs-9 tile--stat">
+            <p>{{ 'dashboard_club_views' | cpI18n }}</p>
+          </div>
+          <div class="col-xs-3 text-right tile--amount">123</div>
+        </div>
+      </div>
+      <div class="col-xs-5 col-xs-offset-1">
+        <div class="row">
+          <div class="col-xs-9 tile--stat">
+            <p>{{ 'dashboard_announcements' | cpI18n }}</p>
+          </div>
+          <div class="col-xs-3 text-right tile--amount">78</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

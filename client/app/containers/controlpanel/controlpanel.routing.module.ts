@@ -6,14 +6,14 @@ import { ControlPanelComponent } from './controlpanel.component';
 import { CPPreloadStrategy } from './../../config/strategies/preload.strategy';
 
 const appRoutes: Routes = [
-  // HOME PAGE
-  { path: '', redirectTo: 'welcome', pathMatch: 'full' },
+  // // HOME PAGE
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
 
   {
     path: '',
     component: ControlPanelComponent,
     children: [
-      { path: 'welcome', loadChildren: './dashboard/dashboard.module#DashboardModule' },
+      { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
 
       { path: 'manage', loadChildren: './manage/manage.module#ManageModule'},
 
