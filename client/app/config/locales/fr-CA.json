@@ -300,7 +300,7 @@
     "message": "Feedback Received"
   },
   "assess_last_engagement": {
-    "message": "Last Engagement"
+    "message": "Time of Last Engagement"
   },
   "assess_last_month": {
     "message": "Last Month"
@@ -864,7 +864,7 @@
     "message": "Import Events from Facebook"
   },
   "events_facebook_help": {
-    "message": "To import events from Facebook, enter the link to the page of your Facebook event. E.g., https://www.facebook.com/oohlalamobileapp/events/"
+    "message": "Provide the link (e.g., https://www.facebook.com/oohlalamobileapp/events/) to the Facebook event page."
   },
   "events_facebook_label_host": {
     "message": "Select Host"
@@ -1098,7 +1098,7 @@
     "message": "Description"
   },
   "link_label_link_banner": {
-    "message": "Link Banner"
+    "message": "Image"
   },
   "lists": {
     "message": "Lists"
@@ -1317,7 +1317,7 @@
     "message": "Select Category"
   },
   "select_host": {
-    "message": "Filter by host"
+    "message": "Select a host"
   },
   "send": {
     "message": "Send"
@@ -1419,7 +1419,7 @@
     "message": "There are no service providers for this service.  Use \"Create Service Provider\" to create one. \n\nService Providers are used to track attendance check-ins and gather student feedback."
   },
   "services_provider_button_add_another": {
-    "message": "Add Another Service Provider"
+    "message": "Add another Service Provider"
   },
   "services_provider_delete_modal_body": {
     "message": "Are you sure you want to delete %s?"
@@ -1449,7 +1449,7 @@
     "message": "Unique Visitors"
   },
   "services_visits": {
-    "message": "Check-ins"
+    "message": "Visits"
   },
   "service_provider": {
     "message": "Service Provider"
