@@ -1,7 +1,7 @@
 <div class="row table">
   <div class="col-xs-12">
     <ng-container *ngIf="!items.length">
-      <p class="table--no-results text-center">No Data Found</p>
+      <p class="table--no-results text-center">{{ 'dashboard_no_data_found' | cpI18n }}</p>
     </ng-container>
     <ng-container *ngIf="items.length">
       <div class="row table--header">

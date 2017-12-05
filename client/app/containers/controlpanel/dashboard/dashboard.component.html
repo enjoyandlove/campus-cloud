@@ -20,7 +20,7 @@
     </div>
   </div>
 
-  <div class="row tile">
+  <div class="row tile" *ngIf="canAssess">
     <div class="col-xs-6">
       <cp-dashboard-top-events [dates]="currentDate"></cp-dashboard-top-events>
     </div>

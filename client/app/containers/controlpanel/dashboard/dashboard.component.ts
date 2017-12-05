@@ -1,17 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 
 import { CPSession, IUser } from '../../../session';
-import { CPI18nService } from '../../../shared/services/index';
+import { CPI18nService } from '../../../shared/services';
+import { CP_PRIVILEGES_MAP } from '../../../shared/constants';
 import { DashboardUtilsService } from './dashboard.utils.service';
+import { canSchoolReadResource } from '../../../shared/utils/privileges/index';
 
 @Component({
   selector: 'cp-dashboard',
-  templateUrl: './dashboard.component.html'
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  user: IUser;
   headerData;
+  user: IUser;
+  canAssess = false;
   currentDate = null;
+  isSuperAdmin = false;
 
   constructor(
     private session: CPSession,
@@ -23,7 +28,6 @@ export class DashboardComponent implements OnInit {
 
   onDateChange(newDate) {
     this.currentDate = newDate;
-    console.log('date changed', this.currentDate);
   }
 
   updateHeader() {
@@ -44,6 +48,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.canAssess = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.assessment);
     this.currentDate = this.helper.last30Days();
 
     this.updateHeader();

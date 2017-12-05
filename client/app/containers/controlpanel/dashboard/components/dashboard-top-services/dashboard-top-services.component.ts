@@ -11,10 +11,15 @@ import { DashboardService } from './../../dashboard.service';
   styleUrls: ['./dashboard-top-services.component.scss']
 })
 export class DashboardTopServicesComponent extends BaseComponent implements OnInit {
-  @Input() dates;
-
+  _dates;
   loading;
   items = [];
+
+  @Input()
+  set dates(dates) {
+    this._dates = dates;
+    this.fetch();
+  }
 
   constructor(
     private session: CPSession,
@@ -42,8 +47,8 @@ export class DashboardTopServicesComponent extends BaseComponent implements OnIn
   fetch() {
     const search = new URLSearchParams();
     // search.append('sort_by', this.state.sortBy);
-    search.append('end', this.dates.end.toString());
-    search.append('start', this.dates.start.toString());
+    search.append('end', this._dates.end.toString());
+    search.append('start', this._dates.start.toString());
     search.append('school_id', this.session.g.get('school').id.toString());
 
     const stream$ = this.service.getTopServices(search);
