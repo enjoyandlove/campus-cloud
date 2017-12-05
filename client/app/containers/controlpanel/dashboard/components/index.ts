@@ -1,3 +1,4 @@
+export * from './dashboard-assessment';
 export * from './dashboard-top-events';
 export * from './dashboard-date-picker';
 export * from './dashboard-top-resource';

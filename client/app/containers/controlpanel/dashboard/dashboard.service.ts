@@ -19,6 +19,11 @@ export class DashboardService extends BaseService {
     return Observable.of([]);
   }
 
+  getAssessment(startRange: number, endRange: number) {
+    console.log(startRange, endRange);
+    return Observable.of([]).delay(560);
+  }
+
   getGeneralInformation(startRange: number, endRange: number) {
     console.log(startRange, endRange);
     return Observable.of([]).delay(2300);

@@ -45,7 +45,7 @@ export class DashboardUtilsService {
   allTime() {
     return {
       end: today,
-      start: 0,
+      start: 1,
       label: cpI18n.translate('dashboard_all_time')
     }
   }
