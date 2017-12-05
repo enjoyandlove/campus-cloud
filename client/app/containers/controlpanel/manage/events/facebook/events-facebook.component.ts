@@ -12,7 +12,6 @@ import {
   IHeader,
   HEADER_UPDATE
 } from '../../../../../reducers/header.reducer';
-import { CPI18nService } from '../../../../../shared/services/index';
 
 @Component({
   selector: 'cp-events-facebook',
@@ -31,7 +30,6 @@ export class EventsFacebookComponent extends BaseComponent implements OnInit {
   constructor(
     private session: CPSession,
     private store: Store<IHeader>,
-    private cpI18n: CPI18nService,
     private utils: EventUtilService,
     private storeService: StoreService
   ) {
