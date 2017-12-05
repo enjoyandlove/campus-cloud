@@ -1,0 +1,9 @@
+<ng-container [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <ng-container *ngSwitchCase="false">
+    <cp-dashboard-downloads-chart
+      [data]="chartData">
+    </cp-dashboard-downloads-chart>
+  </ng-container>
+</ng-container>

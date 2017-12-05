@@ -8,15 +8,11 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 
-import { URLSearchParams } from '@angular/http';
-
 const Chartist = require('chartist');
 require('chartist-plugin-tooltips');
 
 import * as moment from 'moment';
-import { CPSession } from '../../../../../session';
 import { CPDate } from '../../../../../shared/utils';
-import { DashboardService } from './../../dashboard.service';
 
 
 @Component({
@@ -26,52 +22,21 @@ import { DashboardService } from './../../dashboard.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class DashboardDownloadsChartComponent implements OnInit, AfterViewInit {
-  _dates;
-  props = {
-    series: []
-  };
-
-  isChartDataReady = false;
-
   @ViewChild('chartHost') chartHost: ElementRef;
+  @Input() data;
 
-  @Input()
-  set dates(dates) {
-    this._dates = dates;
-    this.fetch();
-  }
-
-  constructor(
-    private session: CPSession,
-    private service: DashboardService
-  ) { }
-
-  fetch() {
-    this.isChartDataReady = false;
-
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
-    search.append('start', this._dates.start);
-    search.append('end', this._dates.end);
-    this
-      .service
-      .getDownloads(search)
-      .subscribe(res => {
-        this.props = res;
-        this.drawChart();
-      })
-  }
+  constructor() { }
 
   ngAfterViewInit() {
-    this.fetch();
+    // this.fetch();
   }
 
   buildLabels() {
     let labels = [];
 
-    for (let i = 1; i <= this.props.series.length; i++) {
+    for (let i = 1; i <= this.data.series.length; i++) {
       let date = CPDate
-        .toEpoch(moment().subtract(this.props.series.length - i, 'days'));
+        .toEpoch(moment().subtract(this.data.series.length - i, 'days'));
       labels.push(moment.unix(date).format('MMM D'));
     }
 
@@ -81,14 +46,14 @@ export class DashboardDownloadsChartComponent implements OnInit, AfterViewInit {
   buildSeries() {
     let series = [];
 
-    for (let i = 1; i <= this.props.series.length; i++) {
+    for (let i = 1; i <= this.data.series.length; i++) {
       let date = CPDate
-        .toEpoch(moment().subtract(this.props.series.length - i, 'days'));
+        .toEpoch(moment().subtract(this.data.series.length - i, 'days'));
 
       series.push(
         {
           'meta': moment.unix(date).format('ddd, MMM D'),
-          'value': this.props.series[i - 1]
+          'value': this.data.series[i - 1]
         }
       );
     }
@@ -106,7 +71,7 @@ export class DashboardDownloadsChartComponent implements OnInit, AfterViewInit {
     const chipContent = `<span class="tooltip-chip"></span>
     <span class="tooltip-val">Engagement(s) </span>`;
 
-    const highestNoInArray = Math.max.apply(Math, this.props.series);
+    const highestNoInArray = Math.max.apply(Math, this.data.series);
 
     const high = (highestNoInArray + 5) - ((highestNoInArray + 5) % 5);
 

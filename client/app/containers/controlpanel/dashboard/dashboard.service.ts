@@ -25,13 +25,13 @@ export class DashboardService extends BaseService {
     return Observable.of(mockCampuTile()).delay(400);
   }
 
-  getAssessment(startRange: number, endRange: number) {
-    console.log(startRange, endRange);
+  getAssessment(search: URLSearchParams) {
+    console.log(search);
     return Observable.of([]).delay(560);
   }
 
-  getIntegrations(startRange: number, endRange: number) {
-    console.log(startRange, endRange);
+  getIntegrations(search: URLSearchParams) {
+    console.log(search);
     return Observable.of([]).delay(560);
   }
 
@@ -40,8 +40,8 @@ export class DashboardService extends BaseService {
     return Observable.of(mockTopClubsTile()).delay(400);
   }
 
-  getGeneralInformation(startRange: number, endRange: number) {
-    console.log(startRange, endRange);
+  getGeneralInformation(search: URLSearchParams) {
+    console.log(search);
     return Observable.of([]).delay(2300);
   }
 
