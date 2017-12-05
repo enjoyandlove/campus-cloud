@@ -6,9 +6,13 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./dashboard-top-resource.component.scss']
 })
 export class DashboardTopResourceComponent implements OnInit {
-  @Input() data;
+  @Input() items;
+
+  defaultImage = require('public/default/user.png');
 
   constructor() { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    console.log(this.items);
+  }
 }

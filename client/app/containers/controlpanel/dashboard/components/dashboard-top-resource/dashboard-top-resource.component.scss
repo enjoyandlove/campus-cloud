@@ -4,91 +4,51 @@
 
 $margin-top: 30px;
 
-.feedback-padding {
-  padding-left: 23px;
-}
-
 .table {
-  height: 803px;
+  height: 320px;
+  margin-top: $margin-top;
 
-  // &--no-data-wrapper {
-  //   margin-top: 300px;
-
-  //   p {
-  //     line-height: 1;
-  //     margin-bottom: 0;
-  //   }
-
-  //   p.heading {
-  //     @include font-24px();
-  //     @include font-semi-bold();
-
-  //     margin-bottom: 12px;
-  //   }
-  // }
-
-  &--heading {
-    @include font-24px();
-    @include font-bold();
+  p {
+    margin-bottom: 0;
   }
 
-  // &--not_found {
-  //   margin-top: 150px;
+  &--no-results {
+    @include font-16px();
+    @include font-semi-bold();
 
-  //   &--title {
-  //     @include font-16px();
-  //     @include font-semi-bold();
-  //   }
-  // }
+    margin-top: 180px;
+  }
 
-  &--ranking {
-    // margin-top: $margin-top;
-    padding-top: $margin-top;
+  &--header {
+    padding: 16px 0;
+    p {
+      color: $color-secondary-text;
+    }
+  }
+
+  &--item {
+    padding: 15px 0;
     border-top: 1px solid $border-color;
 
-    // &--table {
-    //   margin-top: $margin-top;
-    // }
-  }
-
-  &--table {
-    margin-top: $margin-top;
-
     p {
-      margin-bottom: 0;
+      top: 12px;
+      position: relative;
     }
 
-    &--header {
-      padding: 16px 0;
-      p {
-        color: $color-secondary-text;
-      }
+    p.ranking {
+      color: $color-secondary-text;
     }
 
-    &--item {
-      padding: 15px 0;
-      border-top: 1px solid $border-color;
+    img.avatar {
+      float: left;
+      width: 38px;
+      height: 38px;
+      margin-top: 5px;
+      margin-right: 10px;
+    }
 
-      p {
-        top: 12px;
-        position: relative;
-      }
-
-      p.ranking {
-        color: $color-secondary-text;
-      }
-
-      img.service-avatar {
-        float: left;
-        width: 38px;
-        height: 38px;
-        margin-top: 5px;
-        margin-right: 10px;
-      }
-
-      &.isLast {
-        padding-bottom: 0;
-      }
+    &.isLast {
+      border-bottom: 1px solid $border-color;
     }
   }
 }
