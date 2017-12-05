@@ -1,3 +1,7 @@
+/**
+ * Common Table shared
+ * between top-events and top services
+ */
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({

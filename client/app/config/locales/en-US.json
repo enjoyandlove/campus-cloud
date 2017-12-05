@@ -524,6 +524,9 @@
   "checkin_scannable_qr_code": {
     "message": "Automatic Check-in (Scan QR Code)"
   },
+  "clicks": {
+    "message": "Clicks"
+  },
   "clubs": {
     "message": "Clubs"
   },
@@ -679,6 +682,9 @@
   },
   "dashboard_assessment_title": {
     "message": "Assessment"
+  },
+  "dashboard_campus_tile_title": {
+    "message": "Campus Tile Activity"
   },
   "dashboard_club_views": {
     "message": "Club Views"
