@@ -14,9 +14,10 @@ export class DashboardService extends BaseService {
     Object.setPrototypeOf(this, DashboardService.prototype);
   }
 
-  getDownloads(startRange: number, endRange: number) {
-    console.log(startRange, endRange);
-    return Observable.of([]).delay(600);
+  getDownloads(search: URLSearchParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_ENGAGEMENT}/`;
+
+    return super.get(url, { search }).map(res => res.json());
   }
 
   getCampusTile(search: URLSearchParams) {
