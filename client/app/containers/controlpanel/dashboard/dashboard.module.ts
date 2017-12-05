@@ -6,6 +6,8 @@ import { DashboardService } from './dashboard.service';
 import { DashboardUtilsService } from './dashboard.utils.service';
 
 import {
+  DashboardTopClubsComponent,
+  DashboardCampuTileComponent,
   DashboardTopEventsComponent,
   DashboardDatePickerComponent,
   DashboardAssessmentComponent,
@@ -24,7 +26,8 @@ import { DashboardRoutingModule } from './dashboard.routing.module';
   DashboardDownloadsChartComponent, DashboardGeneralInformationComponent,
   DashboardTopEventsComponent, DashboardTopServicesComponent,
   DashboardTopResourceComponent, DashboardAssessmentComponent,
-  DashboardIntegrationsComponent ],
+  DashboardIntegrationsComponent, DashboardCampuTileComponent,
+  DashboardTopClubsComponent ],
 
   imports: [ CommonModule, SharedModule, DashboardRoutingModule ],
 

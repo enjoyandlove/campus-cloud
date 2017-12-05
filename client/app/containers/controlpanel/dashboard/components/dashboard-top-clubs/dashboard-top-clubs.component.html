@@ -1,0 +1,52 @@
+<ng-container [ngSwitch]="loading">
+    <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+    <div class="tile" *ngSwitchCase="false">
+      <div class="row">
+        <div class="col-xs-12">
+          <p class="tile--title">{{ 'dashboard_top_five_clubs_title' | cpI18n }}</p>
+        </div>
+      </div>
+
+      <div class="row table">
+        <div class="col-xs-12">
+          <ng-container *ngIf="!items.length">
+            <p class="table--no-results text-center">{{ 'dashboard_no_data_found' | cpI18n }}</p>
+          </ng-container>
+          <ng-container *ngIf="items.length">
+            <div class="row table--header">
+              <div class="col-xs-1">
+                <p>#</p>
+              </div>
+              <div class="col-xs-9 no-left-padding">
+                <p i18n>{{ 'title' | cpI18n }}</p>
+              </div>
+              <div class="col-xs-2 no-left-padding">
+                <p i18n>{{ 'members' | cpI18n }}</p>
+              </div>
+            </div>
+            <div class="row" *ngFor="let item of items; index as index last as last">
+              <div class="col-xs-12">
+                <div class="table--item" [class.isLast]="last">
+                  <div class="row">
+                    <div class="col-xs-1">
+                      <p class="ranking">{{ index + 1 }}</p>
+                    </div>
+                    <div class="col-xs-9 no-left-padding text-truncate">
+                      <img
+                        class="avatar img-rounded"
+                        [src]="item.avatar === '' ? defaultImage : item.avatar">
+                      <p class="title text-truncate">{{ item.title }}</p>
+                    </div>
+                    <div class="col-xs-2 no-left-padding">
+                      <p>{{ item.members }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </ng-container>

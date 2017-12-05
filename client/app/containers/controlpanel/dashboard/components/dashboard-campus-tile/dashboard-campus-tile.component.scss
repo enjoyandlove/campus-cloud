@@ -1,11 +1,21 @@
 @import '~styles/core/colors';
 @import '~styles/core/typography';
 
-$margin-top: 30px;
+.tile {
+  padding: 24px 0;
+
+  &--title {
+    @include font-24px();
+    @include font-bold();
+
+    margin-bottom: 30px;
+  }
+}
 
 .table {
   height: 373px;
-  margin-top: $margin-top;
+  max-height: 373px;
+  overflow-y: scroll;
 
   p {
     margin-bottom: 0;
