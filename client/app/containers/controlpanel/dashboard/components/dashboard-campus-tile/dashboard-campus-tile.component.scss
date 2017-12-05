@@ -29,7 +29,13 @@
   }
 
   &--header {
+    top: 0;
+    z-index: 2;
     padding: 16px 0;
+    position: sticky;
+    background: $body-bg;
+    box-shadow: -3px 0 2px rgba(0, 0, 0, .1);
+
     p {
       color: $color-secondary-text;
     }
