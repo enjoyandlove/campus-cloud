@@ -665,8 +665,14 @@
   "dashboard_assessment_feedback_rate": {
     "message": "Feedback Rate"
   },
+  "dashboard_assessment_lms": {
+    "message": "LMS"
+  },
   "dashboard_assessment_service_checkins": {
     "message": "Service Check-Ins"
+  },
+  "dashboard_assessment_student": {
+    "message": "Student"
   },
   "dashboard_assessment_student_feedback": {
     "message": "Student Feedback"
@@ -682,6 +688,15 @@
   },
   "dashboard_general_information": {
     "message": "General Information"
+  },
+  "dashboard_integrations_courses": {
+    "message": "Courses"
+  },
+  "dashboard_integrations_sso": {
+    "message": "SSO"
+  },
+  "dashboard_integrations_title": {
+    "message": "Integrations"
   },
   "dashboard_last_30_days": {
     "message": "Last 30 Days"
@@ -868,6 +883,12 @@
   },
   "events_import_bulk_update": {
     "message": "Bulk Update"
+  },
+  "events_import_csv_heading": {
+    "message": "Import Events from File"
+  },
+  "events_import_csv_sub_heading": {
+    "message": "File contains data for %s calendar event(s)"
   },
   "events_import_from_facebook": {
     "message": "Import Events from Facebook"
@@ -1497,7 +1518,7 @@
     "message": "Title"
   },
   "to": {
-    "message": "To"
+    "message": "to"
   },
   "total_ratings": {
     "message": "Total Ratings"

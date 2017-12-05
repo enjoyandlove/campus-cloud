@@ -1,0 +1,51 @@
+@import '~styles/core/colors';
+@import '~styles/core/typography';
+
+.tile {
+  padding: 24px 0;
+
+  &--title {
+    @include font-24px();
+    @include font-bold();
+
+    margin-bottom: 30px;
+  }
+
+  &--stat {
+    color: $color-secondary-text;
+  }
+
+  &--item {
+    margin-bottom: 10px;
+  }
+
+  &--badge {
+    @include font-semi-bold();
+
+    width: 60px;
+    padding: 3px 5px;
+    border-radius: 4px;
+    text-align: center;
+    position: relative;
+    color: $color-text;
+
+    &:before {
+      top: 9px;
+      left: 6px;
+      width: 8px;
+      height: 8px;
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      background: inherit;
+    }
+
+    &.active {
+      background-color: rgba(112, 189, 30, 0.4);
+    }
+
+    &.disable {
+      background-color: rgba(255, 38, 0, 0.4);
+    }
+  }
+}
