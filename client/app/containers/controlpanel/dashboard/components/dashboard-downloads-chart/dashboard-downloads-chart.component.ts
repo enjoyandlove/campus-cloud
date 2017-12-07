@@ -4,7 +4,6 @@ import {
   Component,
   ViewChild,
   ElementRef,
-  AfterViewInit,
   ViewEncapsulation,
 } from '@angular/core';
 
@@ -21,57 +20,54 @@ import { CPDate } from '../../../../../shared/utils';
   styleUrls: ['./dashboard-downloads-chart.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class DashboardDownloadsChartComponent implements OnInit, AfterViewInit {
+export class DashboardDownloadsChartComponent implements OnInit {
   @ViewChild('chartHost') chartHost: ElementRef;
-  @Input() data;
+  series;
+
+  @Input()
+  set data(data) {
+    this.series = data;
+    this.drawChart();
+    console.log('new series', this.series);
+  }
 
   constructor() { }
-
-  ngAfterViewInit() {
-    // this.fetch();
-  }
 
   buildLabels() {
     let labels = [];
 
-    for (let i = 1; i <= this.data.series.length; i++) {
+    for (let i = 1; i <= this.series[0].length; i++) {
       let date = CPDate
-        .toEpoch(moment().subtract(this.data.series.length - i, 'days'));
+        .toEpoch(moment().subtract(this.series.length - i, 'days'));
       labels.push(moment.unix(date).format('MMM D'));
     }
-
+    console.log('labels', labels);
     return labels;
   }
 
   buildSeries() {
-    let series = [];
-
-    for (let i = 1; i <= this.data.series.length; i++) {
-      let date = CPDate
-        .toEpoch(moment().subtract(this.data.series.length - i, 'days'));
-
-      series.push(
-        {
+    return this.series.map(serie => {
+      return serie.map((item, index) => {
+        let date = CPDate.toEpoch(moment().subtract(serie.length - index, 'days'));
+        return {
           'meta': moment.unix(date).format('ddd, MMM D'),
-          'value': this.data.series[i - 1]
+          'value': item
         }
-      );
-    }
-
-    return series;
+      })
+    })
   }
 
   drawChart() {
     const data = {
       labels: this.buildLabels(),
 
-      series: [this.buildSeries()],
+      series: this.buildSeries(),
     };
 
     const chipContent = `<span class="tooltip-chip"></span>
     <span class="tooltip-val">Engagement(s) </span>`;
 
-    const highestNoInArray = Math.max.apply(Math, this.data.series);
+    const highestNoInArray = Math.max.apply(Math, this.series);
 
     const high = (highestNoInArray + 5) - ((highestNoInArray + 5) % 5);
 
