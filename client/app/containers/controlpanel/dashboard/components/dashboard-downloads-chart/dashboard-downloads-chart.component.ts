@@ -12,6 +12,9 @@ require('chartist-plugin-tooltips');
 
 import * as moment from 'moment';
 import { CPDate } from '../../../../../shared/utils';
+import {
+  DivideBy
+} from './../dashboard-downloads-registration/dashboard-downloads-registration.component';
 
 
 @Component({
@@ -23,34 +26,46 @@ import { CPDate } from '../../../../../shared/utils';
 export class DashboardDownloadsChartComponent implements OnInit {
   @ViewChild('chartHost') chartHost: ElementRef;
   series;
+  divider;
 
   @Input()
   set data(data) {
-    this.series = data;
+    this.series = data.series;
+    this.divider = this.divideBy(data.divider);
     this.drawChart();
-    console.log('new series', this.series);
   }
 
   constructor() { }
+
+  divideBy(divider) {
+    if (divider === DivideBy.biMonthly) {
+      return 'months';
+    } else if (divider === DivideBy.monthly) {
+      return 'months';
+    } else if (divider === DivideBy.weekly) {
+      return 'weeks';
+    }
+    return 'days';
+  }
 
   buildLabels() {
     let labels = [];
 
     for (let i = 1; i <= this.series[0].length; i++) {
+
       let date = CPDate
-        .toEpoch(moment().subtract(this.series.length - i, 'days'));
+        .toEpoch(moment().subtract(this.series.length - i, this.divider));
       labels.push(moment.unix(date).format('MMM D'));
     }
-    console.log('labels', labels);
     return labels;
   }
 
   buildSeries() {
     return this.series.map(serie => {
       return serie.map((item, index) => {
-        let date = CPDate.toEpoch(moment().subtract(serie.length - index, 'days'));
+        let date = CPDate.toEpoch(moment().subtract(serie.length - index, this.divider));
         return {
-          'meta': moment.unix(date).format('ddd, MMM D'),
+          'meta': moment.unix(date).format('MMM D'),
           'value': item
         }
       })
@@ -67,7 +82,12 @@ export class DashboardDownloadsChartComponent implements OnInit {
     const chipContent = `<span class="tooltip-chip"></span>
     <span class="tooltip-val">Engagement(s) </span>`;
 
-    const highestNoInArray = Math.max.apply(Math, this.series);
+    const highestDownload = Math.max.apply(Math, this.series[0]);
+
+    const highestRegistration = Math.max.apply(Math, this.series[1]);
+
+    const highestNoInArray = highestDownload > highestRegistration
+                             ? highestDownload : highestRegistration;
 
     const high = (highestNoInArray + 5) - ((highestNoInArray + 5) % 5);
 
@@ -75,6 +95,10 @@ export class DashboardDownloadsChartComponent implements OnInit {
       low: 0,
 
       high: high,
+
+      // showPoint: false,
+
+      fullWidth: true,
 
       chartPadding: {
         top: 5,
@@ -107,8 +131,6 @@ export class DashboardDownloadsChartComponent implements OnInit {
 
         label: 'cp-label',
       },
-
-      fullWidth: true,
 
       axisY: {
         labelInterpolationFnc: function showLabelsOnlyForIntegers(value) {
