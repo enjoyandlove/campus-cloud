@@ -102,7 +102,7 @@
     "message": "Password saved, redirecting you to the login page"
   },
   "admin_permissions": {
-    "message": "Permissions"
+    "message": "Select Permissions"
   },
   "admin_search_by_email_or_email": {
     "message": "Search by name or email..."

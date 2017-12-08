@@ -8,3 +8,4 @@ export * from './dashboard-integrations';
 export * from './dashboard-top-services';
 export * from './dashboard-downloads-chart';
 export * from './dashboard-general-information';
+export * from './dashboard-downloads-registration';

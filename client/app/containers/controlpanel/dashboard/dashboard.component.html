@@ -10,43 +10,59 @@
 
   <div class="row tile">
     <div class="col-xs-12">
-      <cp-dashboard-downloads-chart></cp-dashboard-downloads-chart>
+      <cp-dashboard-downloads-registration
+        [dates]="currentDate">
+      </cp-dashboard-downloads-registration>
     </div>
   </div>
 
   <div class="row tile">
     <div class="col-xs-6">
-      <cp-dashboard-general-information></cp-dashboard-general-information>
+      <cp-dashboard-general-information
+        [dates]="currentDate">
+      </cp-dashboard-general-information>
     </div>
   </div>
 
   <div class="row tile" *ngIf="canAssess">
     <div class="col-xs-6">
-      <cp-dashboard-top-events [dates]="currentDate"></cp-dashboard-top-events>
+      <cp-dashboard-top-events
+        [dates]="currentDate">
+      </cp-dashboard-top-events>
     </div>
     <div class="col-xs-6">
-      <cp-dashboard-top-services [dates]="currentDate"></cp-dashboard-top-services>
-    </div>
-  </div>
-
-  <div class="row tile">
-    <div class="col-xs-6">
-      <cp-dashboard-assessment [dates]="currentDate"></cp-dashboard-assessment>
+      <cp-dashboard-top-services
+        [dates]="currentDate">
+      </cp-dashboard-top-services>
     </div>
   </div>
 
   <div class="row tile">
     <div class="col-xs-6">
-      <cp-dashboard-campus-tile [dates]="currentDate"></cp-dashboard-campus-tile>
+      <cp-dashboard-assessment
+        [dates]="currentDate">
+      </cp-dashboard-assessment>
+    </div>
+  </div>
+
+  <div class="row tile">
+    <div class="col-xs-6">
+      <cp-dashboard-campus-tile
+        [dates]="currentDate">
+      </cp-dashboard-campus-tile>
     </div>
     <div class="col-xs-6">
-      <cp-dashboard-top-clubs [dates]="currentDate"></cp-dashboard-top-clubs>
+      <cp-dashboard-top-clubs
+        [dates]="currentDate">
+      </cp-dashboard-top-clubs>
     </div>
   </div>
 
   <div class="row tile">
     <div class="col-xs-5">
-      <cp-dashboard-integrations [dates]="currentDate"></cp-dashboard-integrations>
+      <cp-dashboard-integrations
+        [dates]="currentDate">
+      </cp-dashboard-integrations>
     </div>
   </div>
 </div>
