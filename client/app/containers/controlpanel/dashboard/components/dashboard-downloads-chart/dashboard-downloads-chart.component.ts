@@ -31,41 +31,77 @@ export class DashboardDownloadsChartComponent implements OnInit {
   @Input()
   set data(data) {
     this.series = data.series;
-    this.divider = this.divideBy(data.divider);
+    this.divider = data.divider;
     this.drawChart();
   }
 
   constructor() { }
 
-  divideBy(divider) {
-    if (divider === DivideBy.biMonthly) {
-      return 'months';
-    } else if (divider === DivideBy.monthly) {
-      return 'months';
-    } else if (divider === DivideBy.weekly) {
-      return 'weeks';
+  dailyLabel(index) {
+    let date = CPDate
+      .toEpoch(moment().subtract(this.series[0].length - index, 'days'));
+
+    return moment.unix(date).format('MMM D');
+  }
+
+  weeklyLabel(index) {
+    const weekOne = moment().subtract(this.series[0].length - index, 'weeks');
+
+    let weekStart = CPDate.toEpoch(weekOne);
+
+    let weekEnd = CPDate
+      .toEpoch(weekOne.subtract(1, 'weeks'));
+
+    return `${moment.unix(weekEnd).format('MMM D')} - ${moment.unix(weekStart).format('MMM D')}`;
+  }
+
+  monthlyLabel(index) {
+    let date = CPDate
+      .toEpoch(moment().subtract(this.series[0].length - index, 'months'));
+
+    return moment.unix(date).format('MMM YY');
+  }
+
+  quarterLabel(index) {
+    let date = CPDate
+      .toEpoch(moment().subtract((this.series[0].length - index) * 3, 'months'));
+
+    return moment.unix(date).format('MMM YY');
+  }
+
+  labelByDivider(index) {
+    let label;
+    switch (this.divider) {
+      case DivideBy.daily:
+        label = this.dailyLabel(index);
+        break;
+
+      case DivideBy.weekly:
+        label = this.weeklyLabel(index);
+        break;
+
+      case DivideBy.monthly:
+        label = this.monthlyLabel(index);
+        break;
+
+      case DivideBy.quarter:
+        label = this.quarterLabel(index);
+        break;
     }
-    return 'days';
+    return label;
   }
 
   buildLabels() {
-    let labels = [];
-
-    for (let i = 1; i <= this.series[0].length; i++) {
-
-      let date = CPDate
-        .toEpoch(moment().subtract(this.series.length - i, this.divider));
-      labels.push(moment.unix(date).format('MMM D'));
-    }
-    return labels;
+    return this.series[0].map((_, index) => {
+      return this.labelByDivider(index)
+    });
   }
 
   buildSeries() {
     return this.series.map(serie => {
       return serie.map((item, index) => {
-        let date = CPDate.toEpoch(moment().subtract(serie.length - index, this.divider));
         return {
-          'meta': moment.unix(date).format('MMM D'),
+          'meta': this.labelByDivider(index),
           'value': item
         }
       })
@@ -78,9 +114,6 @@ export class DashboardDownloadsChartComponent implements OnInit {
 
       series: this.buildSeries(),
     };
-
-    const chipContent = `<span class="tooltip-chip"></span>
-    <span class="tooltip-val">Engagement(s) </span>`;
 
     const highestDownload = Math.max.apply(Math, this.series[0]);
 
@@ -107,7 +140,12 @@ export class DashboardDownloadsChartComponent implements OnInit {
       plugins: [
         Chartist.plugins.tooltip(
           {
-            currency: chipContent,
+            transformTooltipTextFnc: (value) => {
+              const badge = `<span class="tooltip-chip"></span>`;
+              const meta = `<span class="tooltip-val">Value ${value}</span>`;
+
+              return `${badge}${meta}`
+            },
 
             appendToBody: true,
 
@@ -142,15 +180,25 @@ export class DashboardDownloadsChartComponent implements OnInit {
         showGrid: false,
 
         labelOffset: {
-          x: -14,
+          x: 0
         },
 
-        labelInterpolationFnc: function skipLabels(value, index, labels) {
-          if (labels.length >= 28) {
+        labelInterpolationFnc: function skipLabels(value, index) {
+          // ignore last label
+          if (this.divider !== DivideBy.daily && (index + 1 === this.series[0].length)) {
+            return null;
+          }
+
+          if (this.divider === DivideBy.daily) {
             return index % 3 === 0 ? value : null;
           }
+
+          if (this.divider === DivideBy.weekly) {
+            return index % 2 === 0 ? value : null;
+          }
+
           return value;
-        },
+        }.bind(this),
       }
     };
 

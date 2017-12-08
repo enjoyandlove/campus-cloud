@@ -339,7 +339,7 @@ background: transparent;
   -ms-flex-pack: center;
   justify-content: center;
   text-align: center;
-  border-radius: 4px;
+  // border-radius: 4px;
 }
 .flatpickr-day.inRange,
 .flatpickr-day.nextMonthDay.inRange,
@@ -395,7 +395,7 @@ background: transparent;
 }
 .flatpickr-day.inRange {
   border-radius: 0;
-  box-shadow: -5px 0 0 #e4f2fd, 5px 0 0 #e4f2fd; //HERE
+  // box-shadow: -5px 0 0 #e4f2fd, 5px 0 0 #e4f2fd; //HERE
 }
 .flatpickr-day.disabled,
 .flatpickr-day.disabled:hover {
