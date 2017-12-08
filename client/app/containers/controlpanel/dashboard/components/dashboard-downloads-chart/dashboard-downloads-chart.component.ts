@@ -45,11 +45,12 @@ export class DashboardDownloadsChartComponent implements OnInit {
   }
 
   weeklyLabel(index) {
-    let weekStart = CPDate
-      .toEpoch(moment().subtract(this.series[0].length - index, 'days'));
+    const weekOne = moment().subtract(this.series[0].length - index, 'weeks');
+
+    let weekStart = CPDate.toEpoch(weekOne);
 
     let weekEnd = CPDate
-      .toEpoch(moment().subtract(this.series[0].length - index, 'weeks'));
+      .toEpoch(weekOne.subtract(1, 'weeks'));
 
     return `${moment.unix(weekEnd).format('MMM D')} - ${moment.unix(weekStart).format('MMM D')}`;
   }
@@ -61,44 +62,46 @@ export class DashboardDownloadsChartComponent implements OnInit {
     return moment.unix(date).format('MMM YY');
   }
 
-  biMonthlyLabel(index) {
+  quarterLabel(index) {
     let date = CPDate
-      .toEpoch(moment().subtract((this.series[0].length - index) * 2, 'months'));
+      .toEpoch(moment().subtract((this.series[0].length - index) * 3, 'months'));
 
     return moment.unix(date).format('MMM YY');
   }
 
-  buildLabels() {
-    let labels = [];
+  labelByDivider(index) {
+    let label;
+    switch (this.divider) {
+      case DivideBy.daily:
+        label = this.dailyLabel(index);
+        break;
 
-    for (let i = 1; i <= this.series[0].length; i++) {
-      switch (this.divider) {
-        case DivideBy.daily:
-          labels.push(this.dailyLabel(i));
-          break;
+      case DivideBy.weekly:
+        label = this.weeklyLabel(index);
+        break;
 
-        case DivideBy.weekly:
-          labels.push(this.weeklyLabel(i));
-          break;
+      case DivideBy.monthly:
+        label = this.monthlyLabel(index);
+        break;
 
-        case DivideBy.monthly:
-          labels.push(this.monthlyLabel(i));
-          break;
-
-        case DivideBy.biMonthly:
-          labels.push(this.biMonthlyLabel(i));
-          break;
-      }
+      case DivideBy.quarter:
+        label = this.quarterLabel(index);
+        break;
     }
-    return labels;
+    return label;
+  }
+
+  buildLabels() {
+    return this.series[0].map((_, index) => {
+      return this.labelByDivider(index)
+    });
   }
 
   buildSeries() {
     return this.series.map(serie => {
       return serie.map((item, index) => {
-        let date = CPDate.toEpoch(moment().subtract(serie.length - index, this.divider));
         return {
-          'meta': moment.unix(date).format('MMM D'),
+          'meta': this.labelByDivider(index),
           'value': item
         }
       })
@@ -112,8 +115,8 @@ export class DashboardDownloadsChartComponent implements OnInit {
       series: this.buildSeries(),
     };
 
-    const chipContent = `<span class="tooltip-chip"></span>
-    <span class="tooltip-val">Engagement(s) </span>`;
+    // const chipContent = `<span class="tooltip-chip"></span>
+    // <span class="tooltip-val">Engagement(s) </span>`;
 
     const highestDownload = Math.max.apply(Math, this.series[0]);
 
@@ -140,7 +143,7 @@ export class DashboardDownloadsChartComponent implements OnInit {
       plugins: [
         Chartist.plugins.tooltip(
           {
-            currency: chipContent,
+            // currency: chipContent,
 
             appendToBody: true,
 

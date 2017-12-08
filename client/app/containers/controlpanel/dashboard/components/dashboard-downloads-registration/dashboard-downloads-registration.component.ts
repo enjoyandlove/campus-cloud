@@ -9,7 +9,7 @@ const week = 7;
 const year = 365;
 const month = 30;
 const threeMonths = 90;
-const twoMonths = 30 * 2;
+const quarter = month * 3;
 const twoYears = year * 2;
 
 const groupEvery = (data: Number[], bound: number): Array<Number[]> => {
@@ -33,7 +33,7 @@ export enum DivideBy {
   'daily' = 0,
   'weekly' = 1,
   'monthly' = 2,
-  'biMonthly' = 3,
+  'quarter' = 3,
 }
 
 @Component({
@@ -45,6 +45,8 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
   _dates;
   loading;
   chartData;
+  downloads = 0;
+  registrations = 0;
   divider = DivideBy.daily
 
   @Input()
@@ -79,24 +81,21 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
       .fetchData(stream$)
       .then(res => {
         if (res.data.series.length >= twoYears) {
-          console.log('twoYears grouped by 2 Months');
-          this.divider = DivideBy.biMonthly;
-          return this.crunch(res.data.series, twoMonths);
+          this.divider = DivideBy.quarter;
+          return this.crunch(res.data.series, quarter);
         }
 
         if (res.data.series.length >= year) {
-          console.log('year grouped by Month');
           this.divider = DivideBy.monthly;
           return this.crunch(res.data.series, month);
         }
 
         if (res.data.series.length >= threeMonths) {
-          console.log('threeMonths grouped by Week');
           this.divider = DivideBy.weekly;
           return this.crunch(res.data.series, week);
         }
 
-        console.log('daily grouped by Day');
+        this.divider = DivideBy.daily;
         return Promise.resolve(res.data.series);
       })
       .then(res => {
@@ -104,11 +103,13 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
           res,
           this.mockSecondSeries(res)
         ];
-
         this.chartData = {
           series,
           divider: this.divider
         }
+
+        this.downloads = addGroup(series)[0];
+        this.registrations = addGroup(series)[1];
       })
       .catch(err => console.log(err))
   }
