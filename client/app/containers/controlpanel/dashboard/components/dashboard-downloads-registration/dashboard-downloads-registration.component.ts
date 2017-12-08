@@ -25,7 +25,7 @@ const groupEvery = (data: Number[], bound: number): Array<Number[]> => {
 
 const addGroup = (data) => {
   return data.map((group: Number[]) => {
-    return group.reduce((prev, next) => +prev + +next)
+    return group.reduce((prev: number, next: number) => prev + next)
   })
 }
 
@@ -61,24 +61,9 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
     super.isLoading().subscribe(loading => this.loading = loading);
   }
 
-  crunchOverTwoYears(data) {
-    this.divider = DivideBy.biMonthly;
+  crunch(data, groupBy) {
     return new Promise(resolve => {
-      resolve(addGroup(groupEvery(data, twoMonths)))
-    })
-  }
-
-  crunchOverOneYear(data) {
-    this.divider = DivideBy.monthly;
-    return new Promise(resolve => {
-      resolve(addGroup(groupEvery(data, month)))
-    })
-  }
-
-  crunchOverThreeMonths(data) {
-    this.divider = DivideBy.weekly;
-    return new Promise(resolve => {
-      resolve(addGroup(groupEvery(data, week)))
+      resolve(addGroup(groupEvery(data, groupBy)))
     })
   }
 
@@ -93,20 +78,22 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
     super
       .fetchData(stream$)
       .then(res => {
-        console.log('length', res.data.series.length);
         if (res.data.series.length >= twoYears) {
           console.log('twoYears');
-          return this.crunchOverTwoYears(res.data.series);
+          this.divider = DivideBy.biMonthly;
+          return this.crunch(res.data.series, twoMonths);
         }
 
         if (res.data.series.length >= year) {
           console.log('year');
-          return this.crunchOverOneYear(res.data.series);
+          this.divider = DivideBy.monthly;
+          return this.crunch(res.data.series, month);
         }
 
         if (res.data.series.length >= threeMonths) {
           console.log('threeMonths');
-          return this.crunchOverThreeMonths(res.data.series);
+          this.divider = DivideBy.weekly;
+          return this.crunch(res.data.series, week);
         }
 
         console.log('daily');

@@ -96,8 +96,6 @@ export class DashboardDownloadsChartComponent implements OnInit {
 
       high: high,
 
-      // showPoint: false,
-
       fullWidth: true,
 
       chartPadding: {
@@ -148,15 +146,7 @@ export class DashboardDownloadsChartComponent implements OnInit {
         },
 
         labelInterpolationFnc: function skipLabels(value, index, labels) {
-          const DATE_TYPES = [28, 40, 80];
-
-          const [MONTH, SIX_WEEKS, THREE_MONTHS] = DATE_TYPES;
-
-          if (labels.length >= THREE_MONTHS + 1) {
-            return index % 9 === 0 ? value : null;
-          } else if (labels.length >= SIX_WEEKS + 1) {
-            return index % 5 === 0 ? value : null;
-          } else if (labels.length >= MONTH + 1) {
+          if (labels.length >= 28) {
             return index % 3 === 0 ? value : null;
           }
           return value;
