@@ -115,9 +115,6 @@ export class DashboardDownloadsChartComponent implements OnInit {
       series: this.buildSeries(),
     };
 
-    // const chipContent = `<span class="tooltip-chip"></span>
-    // <span class="tooltip-val">Engagement(s) </span>`;
-
     const highestDownload = Math.max.apply(Math, this.series[0]);
 
     const highestRegistration = Math.max.apply(Math, this.series[1]);
@@ -143,7 +140,12 @@ export class DashboardDownloadsChartComponent implements OnInit {
       plugins: [
         Chartist.plugins.tooltip(
           {
-            // currency: chipContent,
+            transformTooltipTextFnc: (value) => {
+              const badge = `<span class="tooltip-chip"></span>`;
+              const meta = `<span class="tooltip-val">Value ${value}</span>`;
+
+              return `${badge}${meta}`
+            },
 
             appendToBody: true,
 
@@ -179,7 +181,6 @@ export class DashboardDownloadsChartComponent implements OnInit {
 
         labelOffset: {
           x: 0
-          // x: -14,
         },
 
         labelInterpolationFnc: function skipLabels(value, index) {

@@ -108,8 +108,9 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
           divider: this.divider
         }
 
-        this.downloads = addGroup(series)[0];
-        this.registrations = addGroup(series)[1];
+        const totals = addGroup(series);
+        this.downloads = totals[0];
+        this.registrations = totals[1];
       })
       .catch(err => console.log(err))
   }
