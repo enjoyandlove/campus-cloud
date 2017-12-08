@@ -31,31 +31,64 @@ export class DashboardDownloadsChartComponent implements OnInit {
   @Input()
   set data(data) {
     this.series = data.series;
-    this.divider = this.divideBy(data.divider);
+    this.divider = data.divider;
     this.drawChart();
   }
 
   constructor() { }
 
-  divideBy(divider) {
-    if (divider === DivideBy.biMonthly) {
-      return 'months';
-    } else if (divider === DivideBy.monthly) {
-      return 'months';
-    } else if (divider === DivideBy.weekly) {
-      return 'weeks';
-    }
-    return 'days';
+  dailyLabel(index) {
+    let date = CPDate
+      .toEpoch(moment().subtract(this.series[0].length - index, 'days'));
+
+    return moment.unix(date).format('MMM D');
+  }
+
+  weeklyLabel(index) {
+    let weekStart = CPDate
+      .toEpoch(moment().subtract(this.series[0].length - index, 'days'));
+
+    let weekEnd = CPDate
+      .toEpoch(moment().subtract(this.series[0].length - index, 'weeks'));
+
+    return `${moment.unix(weekEnd).format('MMM D')} - ${moment.unix(weekStart).format('MMM D')}`;
+  }
+
+  monthlyLabel(index) {
+    let date = CPDate
+      .toEpoch(moment().subtract(this.series[0].length - index, 'months'));
+
+    return moment.unix(date).format('MMM YY');
+  }
+
+  biMonthlyLabel(index) {
+    let date = CPDate
+      .toEpoch(moment().subtract((this.series[0].length - index) * 2, 'months'));
+
+    return moment.unix(date).format('MMM YY');
   }
 
   buildLabels() {
     let labels = [];
 
     for (let i = 1; i <= this.series[0].length; i++) {
+      switch (this.divider) {
+        case DivideBy.daily:
+          labels.push(this.dailyLabel(i));
+          break;
 
-      let date = CPDate
-        .toEpoch(moment().subtract(this.series.length - i, this.divider));
-      labels.push(moment.unix(date).format('MMM D'));
+        case DivideBy.weekly:
+          labels.push(this.weeklyLabel(i));
+          break;
+
+        case DivideBy.monthly:
+          labels.push(this.monthlyLabel(i));
+          break;
+
+        case DivideBy.biMonthly:
+          labels.push(this.biMonthlyLabel(i));
+          break;
+      }
     }
     return labels;
   }
@@ -145,12 +178,17 @@ export class DashboardDownloadsChartComponent implements OnInit {
           x: -14,
         },
 
-        labelInterpolationFnc: function skipLabels(value, index, labels) {
-          if (labels.length >= 28) {
+        labelInterpolationFnc: function skipLabels(value, index) {
+          if (this.divider === DivideBy.daily) {
             return index % 3 === 0 ? value : null;
           }
+
+          if (this.divider === DivideBy.weekly) {
+            return index % 2 === 0 ? value : null;
+          }
+
           return value;
-        },
+        }.bind(this),
       }
     };
 

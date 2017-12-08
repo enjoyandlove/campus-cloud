@@ -79,24 +79,24 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
       .fetchData(stream$)
       .then(res => {
         if (res.data.series.length >= twoYears) {
-          console.log('twoYears');
+          console.log('twoYears grouped by 2 Months');
           this.divider = DivideBy.biMonthly;
           return this.crunch(res.data.series, twoMonths);
         }
 
         if (res.data.series.length >= year) {
-          console.log('year');
+          console.log('year grouped by Month');
           this.divider = DivideBy.monthly;
           return this.crunch(res.data.series, month);
         }
 
         if (res.data.series.length >= threeMonths) {
-          console.log('threeMonths');
+          console.log('threeMonths grouped by Week');
           this.divider = DivideBy.weekly;
           return this.crunch(res.data.series, week);
         }
 
-        console.log('daily');
+        console.log('daily grouped by Day');
         return Promise.resolve(res.data.series);
       })
       .then(res => {
