@@ -178,10 +178,16 @@ export class DashboardDownloadsChartComponent implements OnInit {
         showGrid: false,
 
         labelOffset: {
-          x: -14,
+          x: 0
+          // x: -14,
         },
 
         labelInterpolationFnc: function skipLabels(value, index) {
+          // ignore last label
+          if (this.divider !== DivideBy.daily && (index + 1 === this.series[0].length)) {
+            return null;
+          }
+
           if (this.divider === DivideBy.daily) {
             return index % 3 === 0 ? value : null;
           }

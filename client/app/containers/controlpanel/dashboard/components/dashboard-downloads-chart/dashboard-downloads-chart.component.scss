@@ -699,15 +699,29 @@ span.tooltip-val {
   &.ct-horizontal { white-space: nowrap; }
 }
 
-.cp-line {
-  fill: none;
-  stroke-width: 1px;
+.ct-series-a .cp-line {
+  stroke: $color-warning;
+}
+
+.ct-series-b .cp-line {
   stroke: $color-brand;
 }
 
-.cp-point {
-  stroke-width: 3px;
+.ct-series-a .cp-point {
+  stroke: $color-warning;
+}
+
+.ct-series-b .cp-point {
   stroke: $color-brand;
+}
+
+.cp-line {
+  fill: none;
+  stroke-width: 1px;
+}
+
+.cp-point {
+  stroke-width: 7px;
   stroke-linecap: round;
   transition: stroke-width .2s linear;
 
