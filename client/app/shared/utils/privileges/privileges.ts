@@ -31,14 +31,18 @@ export const canAccountLevelReadResource = (session: Map<any, any>, privilegeTyp
 
   if (accountLevelEmpty(session.get('user'))) { return false; }
 
-  session.get('user').account_mapping[session.get('school').id].forEach(store => {
-    Object.keys(session.get('user').account_level_privileges[store]).forEach(privilege => {
+  try {
+    session.get('user').account_mapping[session.get('school').id].forEach(store => {
+      Object.keys(session.get('user').account_level_privileges[store]).forEach(privilege => {
 
-      if (privilegeType === +privilege) {
-        hasAccountAccess = true;
-      }
+        if (privilegeType === +privilege) {
+          hasAccountAccess = true;
+        }
+      });
     });
-  });
+  } catch (error) {
+    return false;
+  }
 
   return hasAccountAccess;
 }
@@ -48,14 +52,18 @@ export const canAccountLevelWriteResource = (session: Map<any, any>, privilegeTy
 
   if (accountLevelEmpty(session.get('user'))) { return false; }
 
-  session.get('user').account_mapping[session.get('school').id].forEach(store => {
-    Object.keys(session.get('user').account_level_privileges[store]).forEach(privilege => {
+  try {
+    session.get('user').account_mapping[session.get('school').id].forEach(store => {
+      Object.keys(session.get('user').account_level_privileges[store]).forEach(privilege => {
 
-      if (privilegeType === +privilege) {
-        hasAccountAccess = true;
-      }
+        if (privilegeType === +privilege) {
+          hasAccountAccess = true;
+        }
+      });
     });
-  });
+  } catch (error) {
+    return false;
+  }
 
   return hasAccountAccess;
 }
