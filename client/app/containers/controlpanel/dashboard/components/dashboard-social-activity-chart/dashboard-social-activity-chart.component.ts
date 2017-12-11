@@ -37,27 +37,15 @@ export class DashboardSocialActivyChartComponent implements OnInit {
       series: this.series,
     };
 
-    // const highestDownload = Math.max.apply(Math, this.series[0]);
-
-    // const highestRegistration = Math.max.apply(Math, this.series[1]);
-
-    // const highestNoInArray = highestDownload > highestRegistration
-    //                          ? highestDownload : highestRegistration;
-
-    // const high = (highestNoInArray + 5) - ((highestNoInArray + 5) % 5);
-
     const options = {
-      // low: 0,
-
-      // high: high,
 
       fullWidth: true,
 
-      // chartPadding: {
-      //   top: 5,
+      chartPadding: {
+        // top: 5,
 
-      //   right: 20,
-      // },
+        right: 0,
+      },
 
       plugins: [
         Chartist.plugins.tooltip(
@@ -84,7 +72,7 @@ export class DashboardSocialActivyChartComponent implements OnInit {
 
       stackBars: true,
 
-      seriesBarDistance: 10,
+      seriesBarDistance: 0,
 
       horizontalBars: true,
 

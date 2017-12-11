@@ -700,19 +700,19 @@ span.tooltip-val {
 }
 
 .ct-series-a .cp-line {
-  stroke: $color-warning;
+  stroke: $color-brand;
 }
 
 .ct-series-b .cp-line {
-  stroke: $color-brand;
-}
-
-.ct-series-a .cp-point {
   stroke: $color-warning;
 }
 
-.ct-series-b .cp-point {
+.ct-series-a .cp-dsh-point {
   stroke: $color-brand;
+}
+
+.ct-series-b .cp-dsh-point {
+  stroke: $color-warning;
 }
 
 .cp-line {
@@ -720,7 +720,7 @@ span.tooltip-val {
   stroke-width: 1px;
 }
 
-.cp-point {
+.cp-dsh-point {
   stroke-width: 7px;
   stroke-linecap: round;
   transition: stroke-width .2s linear;
