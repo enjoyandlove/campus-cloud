@@ -7,23 +7,9 @@ import { DashboardService } from './../../dashboard.service';
 
 import * as moment from 'moment';
 
-// const week = 7;
 const year = 365;
-// const month = 30;
 const threeMonths = 90;
-// const quarter = month * 3;
 const twoYears = year * 2;
-
-const groupEvery = (data: Number[], bound: number): Array<Number[]> => {
-  let arr = [];
-  let _data = [...data];
-
-  while (_data.length > 0) {
-    arr.push(_data.splice(0, bound));
-  }
-
-  return arr;
-}
 
 const addGroup = (data) => {
   return data.map((group: Number[]) => {
@@ -31,58 +17,37 @@ const addGroup = (data) => {
   })
 }
 
-const groupByWeek = (dates: Date[], serie: Number[]) => {
-  let group = [];
-  let firstDay = new Date(dates[0]).getDay();
-
-  dates.map((date, index) => {
-    if (new Date(date).getDay() === firstDay) {
-      group.push(serie[index]);
-      return;
+const aggregate = (data: Number[], serie: Number[]): Promise<Number[]> => {
+  let arr = [];
+  data.reduce((prev, current, index) => {
+    if (prev === current) {
+      arr[arr.length - 1] = +serie[index] + arr[arr.length - 1];
+      return current;
     }
+    arr.push(serie[index]);
 
-    const lastIndex = group.length === 0 ? 0 : group.length - 1;
-    group[lastIndex] = group[lastIndex] + serie[index];
-  });
+    return current;
+  }, 0);
 
-  return new Promise(resolve => { resolve(group); })
+  return new Promise(resolve => { resolve(arr); });
+}
+
+
+const groupByWeek = (dates: Date[], serie: Number[]) => {
+  const datesByWeek = dates.map(d => { return moment(d).week() });
+  return aggregate(datesByWeek, serie);
 }
 
 const groupByMonth = (dates: Date[], series: Number[]) => {
-  let arr = [];
-  const groupBy = require('lodash').groupBy;
-  let currentMonth = new Date(dates[0]).getMonth();
-  const monthNumber = dates.map(date => new Date(date).getMonth());
-  const datesByMonth: Array<Number> = groupBy(monthNumber, currentMonth)['undefined'];
+  const datesByMonth = dates.map(d => { return moment(d).month() });
 
-  datesByMonth.reduce((prev, current, index) => {
-    if (prev === current) {
-      arr[arr.length - 1] = +series[index] + arr[arr.length - 1];
-      return current;
-    }
-    arr.push(series[index]);
-
-    return current;
-  }, 0);
-
-  return new Promise(resolve => { resolve(arr); });
+  return aggregate(datesByMonth, series);
 }
 
 const groupByQuarter = (dates: Date[], series: Number[]) => {
-  let arr = [];
   const datesByQuarter = dates.map(d => { return moment(d).quarter() });
 
-  datesByQuarter.reduce((prev, current, index) => {
-    if (prev === current) {
-      arr[arr.length - 1] = +series[index] + arr[arr.length - 1];
-      return current;
-    }
-    arr.push(series[index]);
-
-    return current;
-  }, 0);
-
-  return new Promise(resolve => { resolve(arr); });
+  return aggregate(datesByQuarter, series);
 }
 
 export enum DivideBy {
@@ -117,12 +82,6 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
   ) {
     super();
     super.isLoading().subscribe(loading => this.loading = loading);
-  }
-
-  crunch(data, groupBy) {
-    return new Promise(resolve => {
-      resolve(addGroup(groupEvery(data, groupBy)))
-    })
   }
 
   fetch() {
