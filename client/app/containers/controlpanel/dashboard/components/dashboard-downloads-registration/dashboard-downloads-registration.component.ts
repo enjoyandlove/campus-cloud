@@ -19,13 +19,14 @@ const addGroup = (data) => {
 
 const aggregate = (data: Number[], serie: Number[]): Promise<Number[]> => {
   let arr = [];
+
   data.reduce((prev, current, index) => {
     if (prev === current) {
-      arr[arr.length - 1] = +serie[index] + arr[arr.length - 1];
+      arr[arr.length - 1] += serie[index];
       return current;
     }
-    arr.push(serie[index]);
 
+    arr.push(serie[index]);
     return current;
   }, 0);
 
@@ -95,7 +96,6 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
     super
       .fetchData(stream$)
       .then(res => {
-        console.log(res.data);
         if (res.data.series.length >= twoYears) {
           this.divider = DivideBy.quarter;
           return groupByQuarter(res.data.labels, res.data.series);
