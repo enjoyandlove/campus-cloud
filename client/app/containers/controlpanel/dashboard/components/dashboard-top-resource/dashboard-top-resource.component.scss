@@ -9,6 +9,10 @@ $margin-top: 30px;
 
   p {
     margin-bottom: 0;
+
+    &.semi-bold {
+      @include font-semi-bold();
+    }
   }
 
   &--no-results {

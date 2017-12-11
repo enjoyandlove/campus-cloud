@@ -16,6 +16,8 @@
   }
 
   &--amount {
+    @include font-semi-bold();
+
     color: $color-text;
   }
 }
