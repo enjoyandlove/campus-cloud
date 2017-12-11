@@ -88,15 +88,16 @@ export class DashboardSocialActivyChartComponent implements OnInit {
 
       horizontalBars: true,
 
-      // classNames: {
-      //   grid: 'cp-grid',
+      classNames: {
+        series: 'dsh-series'
+        // grid: 'cp-grid',
 
-      //   line: 'cp-line',
+        // line: 'cp-line',
 
-      //   point: 'cp-point',
+        // point: 'cp-point',
 
-      //   label: 'cp-label',
-      // },
+        // label: 'cp-label',
+      },
 
       // axisY: {
       //   labelInterpolationFnc: function showLabelsOnlyForIntegers(value) {
