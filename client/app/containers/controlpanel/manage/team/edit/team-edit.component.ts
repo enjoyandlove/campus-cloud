@@ -4,6 +4,11 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
+import {
+  accountsToStoreMap,
+  canAccountLevelReadResource
+} from './../../../../../shared/utils/privileges/privileges';
+
 import { TEAM_ACCESS } from '../utils';
 import { CPSession } from '../../../../../session';
 import { accountCleanUp } from './../create/team-create.component';
@@ -11,7 +16,6 @@ import { BaseComponent } from '../../../../../base/base.component';
 import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 import { CP_PRIVILEGES, CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
-import { accountsToStoreMap } from './../../../../../shared/utils/privileges/privileges';
 import { AdminService, ErrorService, CPI18nService } from '../../../../../shared/services';
 
 const _cpI18n = new CPI18nService();
@@ -76,7 +80,7 @@ const manageAdminDropdown = function (privilege = { r: false, w: false }) {
 };
 
 const clubsDropdown = (schoolLevel = { r: false, w: false },
-  accountLevel = false) => {
+                       accountLevel = false) => {
 
   let items = [
     {
@@ -734,6 +738,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    const session = this.session.g;
     this.user = this.session.g.get('user');
     this.schoolId = this.session.g.get('school').id;
 
@@ -754,15 +759,23 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     this.canReadServices = schoolPrivileges[CP_PRIVILEGES_MAP.services] || false;
     this.formData = TEAM_ACCESS.getMenu(this.user.school_level_privileges[this.schoolId]);
 
-    const clubsPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.clubs];
+    const clubsPrivilegeSchool = schoolPrivileges[CP_PRIVILEGES_MAP.clubs];
+
+    const clubsPrivilegeAccount = canAccountLevelReadResource(session, CP_PRIVILEGES_MAP.clubs);
+
     const eventsPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.events];
-    const servicesPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.services];
+
+    const servicesPrivilegeSchool = schoolPrivileges[CP_PRIVILEGES_MAP.services];
+
+    const servicesPrivilegeAccount = canAccountLevelReadResource(session,
+      CP_PRIVILEGES_MAP.services);
+
     const manageAdminPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin];
     const eventsAssessmentPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.event_attendance];
 
-    this.clubsMenu = clubsDropdown(clubsPrivilege);
-    this.servicesMenu = servicesDropdown(servicesPrivilege);
     this.manageAdmins = manageAdminDropdown(manageAdminPrivilege);
+    this.clubsMenu = clubsDropdown(clubsPrivilegeSchool, clubsPrivilegeAccount);
     this.eventsMenu = eventsDropdown(eventsPrivilege, eventsAssessmentPrivilege);
+    this.servicesMenu = servicesDropdown(servicesPrivilegeSchool, servicesPrivilegeAccount);
   }
 }
