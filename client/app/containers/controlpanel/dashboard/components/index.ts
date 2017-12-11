@@ -7,5 +7,7 @@ export * from './dashboard-top-resource';
 export * from './dashboard-integrations';
 export * from './dashboard-top-services';
 export * from './dashboard-downloads-chart';
+export * from './dashboard-social-activity';
 export * from './dashboard-general-information';
+export * from './dashboard-social-activity-chart';
 export * from './dashboard-downloads-registration';

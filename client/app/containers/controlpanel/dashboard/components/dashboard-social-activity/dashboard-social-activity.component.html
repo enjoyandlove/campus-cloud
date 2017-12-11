@@ -1,0 +1,30 @@
+<ng-container [ngSwitch]="loading">
+    <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+    <div class="tile" *ngSwitchCase="false">
+      <div class="row">
+        <div class="col-xs-12">
+          <p class="tile--title">{{ 'dashboard_social_activity_title' | cpI18n }}</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-6">
+          <div class="row">
+            <div class="col-xs-9 tile--stat">
+              <p>{{ 'dashboard_social_activity_total' | cpI18n }}</p>
+            </div>
+            <div class="col-xs-3 text-right tile--chip">123</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <cp-dashboard-social-activity-chart
+            [data]="chartData">
+          </cp-dashboard-social-activity-chart>
+        </div>
+      </div>
+    </div>
+  </ng-container>

@@ -33,7 +33,6 @@ const aggregate = (data: Number[], serie: Number[]): Promise<Number[]> => {
   return new Promise(resolve => { resolve(arr); });
 }
 
-
 const groupByWeek = (dates: Date[], serie: Number[]) => {
   const datesByWeek = dates.map(d => { return moment(d).week() });
   return aggregate(datesByWeek, serie);
