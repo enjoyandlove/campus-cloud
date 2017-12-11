@@ -105,13 +105,14 @@ const mockSocialActivity = () => {
   let counter = 0;
 
   let res = {
-    series: [[], []],
+    series: [],
     labels: [],
   };
 
-  while (counter < 15) {
-    res.series[0].push((Math.random() * (1000 - 32) + 32).toFixed())
-    res.series[1].push((Math.random() * (1000 - 32) + 32).toFixed())
+  while (counter < 9) {
+    res.series.push([]);
+    res.series[counter].push((Math.random() * (1000 - 32) + 32).toFixed())
+    // res.series[1].push((Math.random() * (1000 - 32) + 32).toFixed())
     res.labels.push(`Label ${counter}`)
     counter++;
   }
