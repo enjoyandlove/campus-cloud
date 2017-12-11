@@ -25,7 +25,7 @@ let pickerOptions = {
   inline: true,
   mode: 'range',
   altInput: true,
-  maxDate: new Date(),
+  maxDate: new Date(Date.now() - 24 * 3600 * 1000),
   enableTime: false,
   altFormat: 'F j, Y'
 }
@@ -108,8 +108,7 @@ export class DashboardDatePickerComponent implements OnInit, AfterViewInit, OnDe
     this.customDates = [
       this.helper.last30Days(),
       this.helper.last90Days(),
-      this.helper.lastYear(),
-      this.helper.allTime()
+      this.helper.lastYear()
     ]
 
     this.setLabel(this.customDates[0]);

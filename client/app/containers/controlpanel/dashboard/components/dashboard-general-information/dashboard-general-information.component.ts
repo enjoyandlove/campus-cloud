@@ -1,13 +1,9 @@
+import { URLSearchParams } from '@angular/http';
 import { Component, OnInit, Input } from '@angular/core';
 
 import { BaseComponent } from '../../../../../base';
 import { DashboardService } from './../../dashboard.service';
 
-interface IInput {
-  start: number;
-  end: number;
-  label: string;
-}
 
 @Component({
   selector: 'cp-dashboard-general-information',
@@ -15,7 +11,13 @@ interface IInput {
   styleUrls: ['./dashboard-general-information.component.scss']
 })
 export class DashboardGeneralInformationComponent extends BaseComponent implements OnInit {
-  @Input() date: IInput;
+  _dates;
+
+  @Input()
+  set dates(dates) {
+    this._dates = dates;
+    this.fetch();
+  }
 
   loading;
 
@@ -28,7 +30,11 @@ export class DashboardGeneralInformationComponent extends BaseComponent implemen
 
 
   fetch() {
-    const stream$ = this.service.getGeneralInformation(this.startRange, this.endRange)
+    const search = new URLSearchParams();
+    search.append('start', this._dates.start);
+    search.append('end', this._dates.end);
+
+    const stream$ = this.service.getGeneralInformation(search);
     super
       .fetchData(stream$)
       .then(res => console.log(res))
