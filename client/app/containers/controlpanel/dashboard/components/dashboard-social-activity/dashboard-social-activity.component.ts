@@ -38,10 +38,7 @@ export class DashboardSocialActivyComponent extends BaseComponent implements OnI
 
     super
       .fetchData(stream$)
-      .then(res => {
-        this.chartData = res.data;
-        console.log('chart', res.data);
-      })
+      .then(res => { this.chartData = res.data })
       .catch(err => console.log(err));
   }
 
