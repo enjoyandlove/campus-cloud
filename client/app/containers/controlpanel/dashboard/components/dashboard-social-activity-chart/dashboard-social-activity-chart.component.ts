@@ -59,24 +59,24 @@ export class DashboardSocialActivyChartComponent implements OnInit {
       //   right: 20,
       // },
 
-      // plugins: [
-      //   Chartist.plugins.tooltip(
-      //     {
-      //       transformTooltipTextFnc: (value) => {
-      //         const badge = `<span class="tooltip-chip"></span>`;
-      //         const meta = `<span class="tooltip-val">Value ${value}</span>`;
+      plugins: [
+        Chartist.plugins.tooltip(
+          {
+            // transformTooltipTextFnc: (value) => {
+            //   const badge = `<span class="tooltip-chip"></span>`;
+            //   const meta = `<span class="tooltip-val">${value}</span>`;
 
-      //         return `${badge}${meta}`
-      //       },
+            //   return `${badge}${meta}`
+            // },
 
-      //       appendToBody: true,
+            appendToBody: true,
 
-      //       anchorToPoint: true,
+            anchorToPoint: true,
 
-      //       pointClass: 'cp-point',
-      //     }
-      //   )
-      // ],
+            // pointClass: 'cp-point',
+          }
+        )
+      ],
 
       lineSmooth: false,
 
@@ -104,7 +104,9 @@ export class DashboardSocialActivyChartComponent implements OnInit {
       //   },
       // },
       axisY: {
-        // offset: 70,
+        offset: -10,
+
+        showLabel: false,
 
         showGrid: false,
       },
@@ -113,6 +115,8 @@ export class DashboardSocialActivyChartComponent implements OnInit {
         // position: 'end',
 
         showGrid: false,
+
+        showLabel: false,
 
         // labelOffset: {
         //   x: 0
@@ -142,6 +146,13 @@ export class DashboardSocialActivyChartComponent implements OnInit {
     chart.on('created', function () {
       this.isChartDataReady = true;
     }.bind(this));
+
+    chart.on('draw', function (d) {
+      d.element.attr({
+        style: 'stroke-width: 45px'
+      });
+    }.bind(this));
+
   }
 
   ngOnInit() { }
