@@ -151,7 +151,7 @@ export class DashboardDownloadsChartComponent implements OnInit {
 
             anchorToPoint: true,
 
-            pointClass: 'cp-point',
+            pointClass: 'cp-dsh-point',
           }
         )
       ],
@@ -163,7 +163,7 @@ export class DashboardDownloadsChartComponent implements OnInit {
 
         line: 'cp-line',
 
-        point: 'cp-point',
+        point: 'cp-dsh-point',
 
         label: 'cp-label',
       },
