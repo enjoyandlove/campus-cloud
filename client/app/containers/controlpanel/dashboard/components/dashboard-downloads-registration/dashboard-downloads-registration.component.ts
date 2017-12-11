@@ -29,6 +29,35 @@ const addGroup = (data) => {
   })
 }
 
+// const groupByWeek = (dates: Date[], serie: Number[]) => {
+//   let group = [];
+//   let firstDay = new Date(dates[0]).getDay();
+
+//   dates.map((date, index) => {
+//     if (new Date(date).getDay() === firstDay) {
+//       group.push(serie[index]);
+//       return;
+//     }
+
+//     const lastIndex = group.length === 0 ? 0 : group.length - 1;
+//     group[lastIndex] = group[lastIndex] + serie[index];
+//   });
+//   return group;
+// }
+
+const groupByMonth = (dates: Date[]) => {
+  return dates;
+  // const groupBy = require('lodash').groupBy;
+  // // let group: Array<Number> = [];
+  // let currentMonth = new Date(dates[0]).getMonth();
+  // const monthNumber = dates.map(date => new Date(date).getMonth());
+  // const datesByMonth: Array<Number> = groupBy(monthNumber, currentMonth)['undefined'];
+
+  // datesByMonth.map(monthDate => {
+
+  // })
+}
+
 export enum DivideBy {
   'daily' = 0,
   'weekly' = 1,
@@ -80,6 +109,7 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
     super
       .fetchData(stream$)
       .then(res => {
+        console.log(res.data);
         if (res.data.series.length >= twoYears) {
           this.divider = DivideBy.quarter;
           return this.crunch(res.data.series, quarter);
@@ -87,6 +117,9 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
 
         if (res.data.series.length >= year) {
           this.divider = DivideBy.monthly;
+          groupByMonth(res.data.labels);
+          // console.log('groupBy Month', group);
+          // console.log('groupBy Month Length', group.length);
           return this.crunch(res.data.series, month);
         }
 

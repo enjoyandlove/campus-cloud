@@ -222,7 +222,7 @@
     "message": "All Students"
   },
   "assess_average_rating": {
-    "message": "Average Rating"
+    "message": "Rating"
   },
   "assess_button_download_engagement_data": {
     "message": "Download Engagement Data"
@@ -288,7 +288,7 @@
     "message": "Events Assessed"
   },
   "assess_event_rating_average": {
-    "message": "Event Average Rating"
+    "message": "Event Rating"
   },
   "assess_event_responses": {
     "message": "Event Responses"
@@ -372,7 +372,7 @@
     "message": "# of  Service Check-ins"
   },
   "assess_service_rating_average": {
-    "message": "Service Average Rating"
+    "message": "Service Rating"
   },
   "assess_service_responses": {
     "message": "Service Responses"
@@ -435,7 +435,7 @@
     "message": "Reset Password"
   },
   "average_rating": {
-    "message": "Average Rating"
+    "message": "Rating"
   },
   "beta_banner_go_back": {
     "message": "Revert to Previous Version"
@@ -504,25 +504,25 @@
     "message": "Download QR Code"
   },
   "checkin_header_title": {
-    "message": "Check-in Instructions"
+    "message": "Check-in"
   },
   "checkin_instructions_one": {
     "message": "We use QR codes to help attendees check in to an event. Be sure to print or share the QR  code with your event attendance organizer."
   },
   "checkin_instructions_three": {
-    "message": "You can view attendance statistics on your control panel. Be sure to come back to view attendee feedback and event ratings."
+    "message": "You can view attendance statistics in Event Info. Be sure to come back to view feedback and ratings."
   },
   "checkin_instructions_two": {
     "message": "Attendees can check in by scanning the QR code with the app. QR Codes can be printed or shown directly on a laptop, phone or tablet screen"
   },
   "checkin_list": {
-    "message": "Check-In List"
+    "message": "Attendee List"
   },
   "checkin_manual_checkin": {
     "message": "Manual Check-in"
   },
   "checkin_scannable_qr_code": {
-    "message": "Automatic Check-in (Scan QR Code)"
+    "message": "Automatic Check-in (Scan QR code)"
   },
   "clicks": {
     "message": "Clicks"
@@ -678,7 +678,7 @@
     "message": "Student"
   },
   "dashboard_assessment_student_feedback": {
-    "message": "Student Feedback"
+    "message": "Feedback"
   },
   "dashboard_assessment_title": {
     "message": "Assessment"
@@ -735,7 +735,7 @@
     "message": "Description"
   },
   "disabled": {
-    "message": "Disabled"
+    "message": "No one"
   },
   "done": {
     "message": "Done"
@@ -768,10 +768,10 @@
     "message": "Enabled"
   },
   "ended": {
-    "message": "Ended"
+    "message": "End Date:"
   },
   "ends": {
-    "message": "Ends"
+    "message": "End date"
   },
   "end_date": {
     "message": "End Date"
@@ -804,7 +804,7 @@
     "message": "Attendance Feedback"
   },
   "events_attendance_manager": {
-    "message": "Attd Manager"
+    "message": "Attendance Manager"
   },
   "events_attendance_manager_full": {
     "message": "Attendance Manager"
@@ -819,7 +819,7 @@
     "message": "Create Event"
   },
   "events_checked_in_method": {
-    "message": "Checked-in Method"
+    "message": "Check-in Method"
   },
   "events_checked_in_time": {
     "message": "Check-in Time"
@@ -828,7 +828,7 @@
     "message": "Check-in"
   },
   "events_check_in_details": {
-    "message": "Check-in Instructions"
+    "message": "Check-in"
   },
   "events_create_heading": {
     "message": "Create Event"
@@ -876,7 +876,7 @@
     "message": "Import Events from Facebook"
   },
   "events_facebook_help": {
-    "message": "Provide the link (e.g., https://www.facebook.com/oohlalamobileapp/events/) to the Facebook event page."
+    "message": "Provide the link to the Facebook event page (e.g., https://www.facebook.com/oohlalamobileapp/events/)."
   },
   "events_facebook_label_host": {
     "message": "Select Host"
@@ -888,7 +888,7 @@
     "message": "Are you sure you want to delete this link?"
   },
   "events_facebook_link_delete_modal_title": {
-    "message": "Are you sure?"
+    "message": "Delete Event Link"
   },
   "events_hosted_by": {
     "message": "Hosted by"
@@ -951,7 +951,7 @@
     "message": "Thanks for your feedback"
   },
   "feeds": {
-    "message": "Feeds"
+    "message": "Walls"
   },
   "feeds_all_posts": {
     "message": "All Posts"
@@ -1020,7 +1020,7 @@
     "message": "posted in"
   },
   "feeds_post_as": {
-    "message": "Post as:"
+    "message": "Select a Host"
   },
   "feeds_post_to": {
     "message": "Post to"
@@ -1029,13 +1029,13 @@
     "message": "Removed Posts"
   },
   "feeds_team_members": {
-    "message": "Team Members"
+    "message": "Members"
   },
   "feeds_wall_name": {
     "message": "Club Name"
   },
   "feeds_wall_settings_modal_title": {
-    "message": "Wall Settings"
+    "message": "Club Wall Settings"
   },
   "first_name": {
     "message": "First Name"
@@ -1332,7 +1332,7 @@
     "message": "Select Category"
   },
   "select_host": {
-    "message": "Select a host"
+    "message": "Select a Host"
   },
   "send": {
     "message": "Send"
@@ -1404,7 +1404,7 @@
     "message": "Check-in Time"
   },
   "services_label_check_in_details": {
-    "message": "Check-in Instructions"
+    "message": "Check-in"
   },
   "services_label_default_question": {
     "message": "Feedback Question"
@@ -1479,10 +1479,10 @@
     "message": "Something went wrong"
   },
   "started": {
-    "message": "Started"
+    "message": "Start Date"
   },
   "starts": {
-    "message": "Starts"
+    "message": "Start Date"
   },
   "start_date": {
     "message": "Start Date"
@@ -1497,7 +1497,7 @@
     "message": "Student Engagements"
   },
   "student_feedback": {
-    "message": "Student Feedback"
+    "message": "Feedback"
   },
   "student_id": {
     "message": "Student ID"
@@ -1533,7 +1533,7 @@
     "message": "Title"
   },
   "to": {
-    "message": "to"
+    "message": "To"
   },
   "total_ratings": {
     "message": "Total Ratings"
