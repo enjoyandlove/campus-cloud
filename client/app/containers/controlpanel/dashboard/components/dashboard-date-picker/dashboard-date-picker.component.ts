@@ -25,7 +25,7 @@ let pickerOptions = {
   inline: true,
   mode: 'range',
   altInput: true,
-  maxDate: new Date(),
+  maxDate: new Date(Date.now() - 24 * 3600 * 1000),
   enableTime: false,
   altFormat: 'F j, Y'
 }
