@@ -222,7 +222,7 @@
     "message": "All Students"
   },
   "assess_average_rating": {
-    "message": "Rating"
+    "message": "Average Rating"
   },
   "assess_button_download_engagement_data": {
     "message": "Download Engagement Data"
@@ -288,7 +288,7 @@
     "message": "Events Assessed"
   },
   "assess_event_rating_average": {
-    "message": "Event Rating"
+    "message": "Event Average Rating"
   },
   "assess_event_responses": {
     "message": "Event Responses"
@@ -372,7 +372,7 @@
     "message": "# of  Service Check-ins"
   },
   "assess_service_rating_average": {
-    "message": "Service Rating"
+    "message": "Service Average Rating"
   },
   "assess_service_responses": {
     "message": "Service Responses"
@@ -435,7 +435,7 @@
     "message": "Reset Password"
   },
   "average_rating": {
-    "message": "Rating"
+    "message": "Average Rating"
   },
   "beta_banner_go_back": {
     "message": "Revert to Previous Version"
@@ -718,6 +718,12 @@
   },
   "dashboard_service_clicks": {
     "message": "Service Clicks"
+  },
+  "dashboard_social_activity_title": {
+    "message": "Social Activity"
+  },
+  "dashboard_social_activity_total": {
+    "message": "Total Social Activity"
   },
   "dashboard_top_events": {
     "message": "Top Events"

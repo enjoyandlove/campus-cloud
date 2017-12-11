@@ -20,6 +20,11 @@ export class DashboardService extends BaseService {
     return super.get(url, { search }).map(res => res.json());
   }
 
+  getSocialActivity(search: URLSearchParams) {
+    console.log(search);
+    return Observable.of(mockSocialActivity()).delay(400);
+  }
+
   getCampusTile(search: URLSearchParams) {
     console.log(search);
     return Observable.of(mockCampuTile()).delay(400);
@@ -90,6 +95,24 @@ const mockTopClubsTile = () => {
         'members': (Math.random() * (1000 - 32) + 32).toFixed(),
       }
     )
+    counter++;
+  }
+  return res;
+}
+
+
+const mockSocialActivity = () => {
+  let counter = 0;
+
+  let res = {
+    series: [[], []],
+    labels: [],
+  };
+
+  while (counter < 15) {
+    res.series[0].push((Math.random() * (1000 - 32) + 32).toFixed())
+    res.series[1].push((Math.random() * (1000 - 32) + 32).toFixed())
+    res.labels.push(`Label ${counter}`)
     counter++;
   }
   return res;

@@ -14,7 +14,9 @@ import {
   DashboardTopResourceComponent,
   DashboardTopServicesComponent,
   DashboardIntegrationsComponent,
+  DashboardSocialActivyComponent,
   DashboardDownloadsChartComponent,
+  DashboardSocialActivyChartComponent,
   DashboardGeneralInformationComponent,
   DashboardDownloadsRegistrationComponent
 } from './components';
@@ -28,7 +30,8 @@ import { DashboardRoutingModule } from './dashboard.routing.module';
   DashboardTopEventsComponent, DashboardTopServicesComponent,
   DashboardTopResourceComponent, DashboardAssessmentComponent,
   DashboardIntegrationsComponent, DashboardCampuTileComponent,
-  DashboardTopClubsComponent, DashboardDownloadsRegistrationComponent ],
+  DashboardTopClubsComponent, DashboardDownloadsRegistrationComponent,
+  DashboardSocialActivyComponent, DashboardSocialActivyChartComponent, ],
 
   imports: [ CommonModule, SharedModule, DashboardRoutingModule ],
 
