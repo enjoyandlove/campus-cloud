@@ -46,8 +46,9 @@ export class DashboardService extends BaseService {
   }
 
   getGeneralInformation(search: URLSearchParams) {
-    console.log(search);
-    return Observable.of([]).delay(2300);
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.DASHBOARD_GENERAL_INFORMATION}/`;
+
+    return super.get(url, { search }).map(res => res.json());
   }
 
   getTopEvents(search: URLSearchParams) {

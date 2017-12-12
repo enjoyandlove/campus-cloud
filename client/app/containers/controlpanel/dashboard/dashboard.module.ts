@@ -23,6 +23,9 @@ import {
 
 import { DashboardComponent }  from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard.routing.module';
+import {
+  CPStatsFormatterPipe
+} from '../assess/engagement/components/engagement-stats/pipes/stats-formatter.pipe';
 
 @NgModule({
   declarations: [ DashboardComponent, DashboardDatePickerComponent,
@@ -31,7 +34,8 @@ import { DashboardRoutingModule } from './dashboard.routing.module';
   DashboardTopResourceComponent, DashboardAssessmentComponent,
   DashboardIntegrationsComponent, DashboardCampuTileComponent,
   DashboardTopClubsComponent, DashboardDownloadsRegistrationComponent,
-  DashboardSocialActivyComponent, DashboardSocialActivyChartComponent, ],
+  DashboardSocialActivyComponent, DashboardSocialActivyChartComponent,
+  CPStatsFormatterPipe ],
 
   imports: [ CommonModule, SharedModule, DashboardRoutingModule ],
 
