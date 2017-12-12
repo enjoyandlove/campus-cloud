@@ -120,7 +120,8 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
         this.chartData = {
           series,
           divider: this.divider
-        }
+        };
+
         const totals = addGroup(series);
 
         this.downloads = totals[0];

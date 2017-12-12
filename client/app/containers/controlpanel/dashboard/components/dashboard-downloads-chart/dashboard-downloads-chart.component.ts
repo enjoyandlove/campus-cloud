@@ -12,6 +12,11 @@ require('chartist-plugin-tooltips');
 
 import * as moment from 'moment';
 import { CPDate } from '../../../../../shared/utils';
+
+import {
+  CPStatsFormatterPipe
+} from './../../../assess/engagement/components/engagement-stats/pipes/stats-formatter.pipe';
+
 import {
   DivideBy
 } from './../dashboard-downloads-registration/dashboard-downloads-registration.component';
@@ -39,13 +44,13 @@ export class DashboardDownloadsChartComponent implements OnInit {
 
   dailyLabel(index) {
     let date = CPDate
-      .toEpoch(moment().subtract(this.series[0].length - index, 'days'));
+      .toEpoch(moment().subtract(this.series[0].length - (index + 1), 'days'));
 
-    return moment.unix(date).format('MMM D');
+    return moment.unix(date).format('MMM Do');
   }
 
   weeklyLabel(index) {
-    const weekOne = moment().subtract(this.series[0].length - index, 'weeks');
+    const weekOne = moment().subtract(this.series[0].length - (index + 1), 'weeks');
 
     let weekStart = CPDate.toEpoch(weekOne);
 
@@ -57,14 +62,15 @@ export class DashboardDownloadsChartComponent implements OnInit {
 
   monthlyLabel(index) {
     let date = CPDate
-      .toEpoch(moment().subtract(this.series[0].length - index, 'months'));
+      .toEpoch(moment().subtract(this.series[0].length - (index + 1), 'months'));
 
     return moment.unix(date).format('MMM YY');
   }
 
   quarterLabel(index) {
     let date = CPDate
-      .toEpoch(moment().subtract((this.series[0].length - index) * 3, 'months'));
+      .toEpoch(moment().subtract((this.series[0].length - (index + 1)) * 3, 'months'));
+
 
     return moment.unix(date).format('MMM YY');
   }
@@ -170,7 +176,9 @@ export class DashboardDownloadsChartComponent implements OnInit {
 
       axisY: {
         labelInterpolationFnc: function showLabelsOnlyForIntegers(value) {
-          return value % 1 === 0 ? value : null;
+          const formatter = new CPStatsFormatterPipe();
+
+          return value % 1 === 0 ? formatter.transform(value) : null;
         },
       },
 

@@ -1,7 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
 import { BaseComponent } from '../../../../../base';
+import { CPSession } from '../../../../../session';
 import { DashboardService } from './../../dashboard.service';
 
 @Component({
@@ -10,17 +11,11 @@ import { DashboardService } from './../../dashboard.service';
   styleUrls: ['./dashboard-integrations.component.scss']
 })
 export class DashboardIntegrationsComponent extends BaseComponent implements OnInit {
-  _dates;
-
-  @Input()
-  set dates(dates) {
-    this._dates = dates;
-    this.fetch();
-  }
-
+  data;
   loading;
 
   constructor(
+    private session: CPSession,
     private service: DashboardService
   ) {
     super();
@@ -30,13 +25,12 @@ export class DashboardIntegrationsComponent extends BaseComponent implements OnI
 
   fetch() {
     const search = new URLSearchParams();
-    search.append('start', this._dates.start);
-    search.append('end', this._dates.end);
+    search.append('school_id', this.session.g.get('school').id);
 
     const stream$ = this.service.getIntegrations(search)
     super
       .fetchData(stream$)
-      .then(res => console.log(res))
+      .then(res => this.data = res.data)
       .catch(err => console.log(err));
   }
 

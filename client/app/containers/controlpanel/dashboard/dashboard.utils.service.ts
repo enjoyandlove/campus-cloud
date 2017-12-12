@@ -7,7 +7,7 @@ import { CPI18nService } from './../../../shared/services/i18n.service';
 
 const cpI18n = new CPI18nService();
 
-const today = CPDate.toEpoch(moment().hours(0).minutes(0).seconds(0).toDate());
+const todayEnd = CPDate.toEpoch(moment().hours(23).minutes(59).seconds(59).toDate());
 const last30Days = CPDate.toEpoch(moment().subtract(30, 'days').hours(0).minutes(0).seconds(0));
 const last90Days = CPDate.toEpoch(moment().subtract(90, 'days').hours(0).minutes(0).seconds(0));
 const lastYear = CPDate.toEpoch(moment().subtract(1, 'year').hours(0).minutes(0).seconds(0));
@@ -18,9 +18,17 @@ export class DashboardUtilsService {
     return true;
   }
 
+  dayStart(date) {
+    return CPDate.toEpoch(moment(date).hours(0).minutes(0).seconds(0))
+  }
+
+  dayEnd(date) {
+    return CPDate.toEpoch(moment(date).hours(23).minutes(59).seconds(59).toDate())
+  }
+
   last30Days() {
     return {
-      end: today,
+      end: todayEnd,
       start: last30Days,
       label: cpI18n.translate('dashboard_last_30_days')
     }
@@ -28,7 +36,7 @@ export class DashboardUtilsService {
 
   last90Days() {
     return {
-      end: today,
+      end: todayEnd,
       start: last90Days,
       label: cpI18n.translate('dashboard_last_90_days')
     }
@@ -36,7 +44,7 @@ export class DashboardUtilsService {
 
   lastYear() {
     return {
-      end: today,
+      end: todayEnd,
       start: lastYear,
       label: cpI18n.translate('dashboard_last_year')
     }
@@ -44,7 +52,7 @@ export class DashboardUtilsService {
 
   allTime() {
     return {
-      end: today,
+      end: todayEnd,
       start: 1,
       label: cpI18n.translate('dashboard_all_time')
     }
