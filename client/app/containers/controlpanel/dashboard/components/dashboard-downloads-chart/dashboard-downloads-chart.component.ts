@@ -44,13 +44,13 @@ export class DashboardDownloadsChartComponent implements OnInit {
 
   dailyLabel(index) {
     let date = CPDate
-      .toEpoch(moment().subtract(this.series[0].length - index, 'days'));
+      .toEpoch(moment().subtract(this.series[0].length - (index + 1), 'days'));
 
-    return moment.unix(date).format('MMM D');
+    return moment.unix(date).format('MMM Do');
   }
 
   weeklyLabel(index) {
-    const weekOne = moment().subtract(this.series[0].length - index, 'weeks');
+    const weekOne = moment().subtract(this.series[0].length - (index + 1), 'weeks');
 
     let weekStart = CPDate.toEpoch(weekOne);
 
@@ -61,16 +61,18 @@ export class DashboardDownloadsChartComponent implements OnInit {
   }
 
   monthlyLabel(index) {
+
     let date = CPDate
-      .toEpoch(moment().subtract(this.series[0].length - index, 'months'));
+      .toEpoch(moment().subtract(this.series[0].length - (index + 1), 'months'));
 
     return moment.unix(date).format('MMM YY');
   }
 
   quarterLabel(index) {
     let date = CPDate
-      .toEpoch(moment().subtract((this.series[0].length - index) * 3, 'months'));
+      .toEpoch(moment().subtract((this.series[0].length - (index + 1)) * 3, 'months'));
 
+    console.log(this.series[0]);
     return moment.unix(date).format('MMM YY');
   }
 

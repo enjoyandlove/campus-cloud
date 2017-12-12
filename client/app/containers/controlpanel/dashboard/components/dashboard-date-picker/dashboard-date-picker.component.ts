@@ -60,8 +60,8 @@ export class DashboardDatePickerComponent implements OnInit, AfterViewInit, OnDe
       const formattedEnd = datePipe.transform(CPDate.toEpoch(selectedDates[1]), this.dateFormat);
 
       const date = {
-        start: CPDate.toEpoch(selectedDates[0]),
-        end: CPDate.toEpoch(selectedDates[1]),
+        start: this.helper.dayStart(selectedDates[0]),
+        end: this.helper.dayEnd(selectedDates[1]),
         label: `${formattedStart} - ${formattedEnd}`
       };
 
