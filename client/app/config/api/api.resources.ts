@@ -74,6 +74,8 @@ export const API_ENDPOINTS = {
 
   DASHBORD_USER_ACQUISITION: 'analytics/user_acquisition',
 
+  DASHBOARD_INTEGRATION_STATUS: 'analytics/integration_status',
+
   DASHBOARD_GENERAL_INFORMATION: 'analytics/general_information',
 
 }

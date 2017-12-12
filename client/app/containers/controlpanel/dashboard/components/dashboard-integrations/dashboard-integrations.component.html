@@ -14,7 +14,12 @@
           <div class="col-xs-9 tile--stat">
             <p>{{ 'dashboard_integrations_sso' | cpI18n }}</p>
           </div>
-          <div class="col-xs-2 text-right tile--badge pull-right active">Yes</div>
+          <div
+            class="col-xs-2 text-right tile--badge pull-right"
+            [class.active]="data.has_sso"
+            [class.disable]="!data.has_sso">
+            {{ data.has_sso ? 'Yes' : 'No' }}
+        </div>
         </div>
       </div>
       <div class="col-xs-12 tile--item">
@@ -22,7 +27,12 @@
           <div class="col-xs-9 tile--stat">
             <p>{{ 'dashboard_integrations_courses' | cpI18n }}</p>
           </div>
-          <div class="col-xs-2 text-right tile--badge pull-right disable">No</div>
+          <div
+            class="col-xs-2 text-right tile--badge pull-right"
+            [class.active]="data.has_courses"
+            [class.disable]="!data.has_courses">
+            {{ data.has_courses ? 'Yes' : 'No' }}
+          </div>
         </div>
       </div>
     </div>
@@ -31,17 +41,14 @@
       <div class="col-xs-12 tile--item">
         <div class="row">
           <div class="col-xs-9 tile--stat">
-            <p>{{ 'dashboard_assessment_student' | cpI18n }}</p>
-          </div>
-          <div class="col-xs-2 text-right tile--badge pull-right active">Yes</div>
-        </div>
-      </div>
-      <div class="col-xs-12 tile--item">
-        <div class="row">
-          <div class="col-xs-9 tile--stat">
             <p>{{ 'dashboard_assessment_lms' | cpI18n }}</p>
           </div>
-          <div class="col-xs-2 text-right tile--badge pull-right disable">No</div>
+          <div
+            class="col-xs-2 text-right tile--badge pull-right"
+            [class.active]="data.has_lms"
+            [class.disable]="!data.has_lms">
+            {{ data.has_lms ? 'Yes' : 'No' }}
+          </div>
         </div>
       </div>
     </div>

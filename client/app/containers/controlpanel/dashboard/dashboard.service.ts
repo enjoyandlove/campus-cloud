@@ -64,8 +64,9 @@ export class DashboardService extends BaseService {
   }
 
   getIntegrations(search: URLSearchParams) {
-    console.log(search);
-    return Observable.of([]).delay(560);
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.DASHBOARD_INTEGRATION_STATUS}/`;
+
+    return super.get(url, { search }).map(res => res.json());
   }
 
   getTopClubs(search: URLSearchParams) {
