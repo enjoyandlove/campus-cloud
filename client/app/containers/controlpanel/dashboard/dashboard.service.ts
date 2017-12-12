@@ -15,9 +15,19 @@ export class DashboardService extends BaseService {
   }
 
   getDownloads(search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_ENGAGEMENT}/`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.DASHBORD_USER_ACQUISITION}/`;
 
-    return super.get(url, { search }).map(res => res.json());
+    return super
+            .get(url, { search })
+            .map(data => {
+              const jsonData = data.json();
+
+              return {
+                series: [jsonData.downloads.series, jsonData.registrations.series],
+                labels: jsonData.downloads.labels
+              };
+            })
+            // .map(res => res.json());
   }
 
   getSocialActivity(search: URLSearchParams) {

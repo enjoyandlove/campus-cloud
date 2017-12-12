@@ -23,9 +23,7 @@ import {
 
 import { DashboardComponent }  from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard.routing.module';
-import {
-  CPStatsFormatterPipe
-} from '../assess/engagement/components/engagement-stats/pipes/stats-formatter.pipe';
+import { EngagementModule } from './../assess/engagement/engagement.module';
 
 @NgModule({
   declarations: [ DashboardComponent, DashboardDatePickerComponent,
@@ -34,10 +32,9 @@ import {
   DashboardTopResourceComponent, DashboardAssessmentComponent,
   DashboardIntegrationsComponent, DashboardCampuTileComponent,
   DashboardTopClubsComponent, DashboardDownloadsRegistrationComponent,
-  DashboardSocialActivyComponent, DashboardSocialActivyChartComponent,
-  CPStatsFormatterPipe ],
+  DashboardSocialActivyComponent, DashboardSocialActivyChartComponent ],
 
-  imports: [ CommonModule, SharedModule, DashboardRoutingModule ],
+  imports: [ CommonModule, SharedModule, DashboardRoutingModule, EngagementModule ],
 
   providers: [ DashboardService, DashboardUtilsService ],
 })
