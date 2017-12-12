@@ -1,8 +1,8 @@
-import { CPSession } from './../../../../../session/index';
 import { Component, OnInit, Input } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
 import { BaseComponent } from '../../../../../base';
+import { CPSession } from './../../../../../session';
 import { DashboardService } from './../../dashboard.service';
 
 @Component({
@@ -13,6 +13,7 @@ import { DashboardService } from './../../dashboard.service';
 export class DashboardSocialActivyComponent extends BaseComponent implements OnInit {
   total;
   _dates;
+  loading;
   chartData;
 
   @Input()
@@ -21,8 +22,6 @@ export class DashboardSocialActivyComponent extends BaseComponent implements OnI
     this.fetch();
   }
 
-  loading;
-
   constructor(
     private session: CPSession,
     private service: DashboardService
@@ -30,7 +29,6 @@ export class DashboardSocialActivyComponent extends BaseComponent implements OnI
     super();
     super.isLoading().subscribe(loading => this.loading = loading);
   }
-
 
   fetch() {
     const search = new URLSearchParams();

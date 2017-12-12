@@ -12,6 +12,11 @@ require('chartist-plugin-tooltips');
 
 import * as moment from 'moment';
 import { CPDate } from '../../../../../shared/utils';
+
+import {
+  CPStatsFormatterPipe
+} from './../../../assess/engagement/components/engagement-stats/pipes/stats-formatter.pipe';
+
 import {
   DivideBy
 } from './../dashboard-downloads-registration/dashboard-downloads-registration.component';
@@ -170,7 +175,9 @@ export class DashboardDownloadsChartComponent implements OnInit {
 
       axisY: {
         labelInterpolationFnc: function showLabelsOnlyForIntegers(value) {
-          return value % 1 === 0 ? value : null;
+          const formatter = new CPStatsFormatterPipe();
+
+          return value % 1 === 0 ? formatter.transform(value) : null;
         },
       },
 
