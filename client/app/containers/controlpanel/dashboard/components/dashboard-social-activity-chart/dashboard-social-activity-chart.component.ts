@@ -43,8 +43,6 @@ export class DashboardSocialActivyChartComponent implements OnInit {
 
   drawChart() {
     const data = {
-      // labels: this.labels,
-
       series: this.buildSeries(),
     };
 
@@ -53,26 +51,15 @@ export class DashboardSocialActivyChartComponent implements OnInit {
       fullWidth: true,
 
       chartPadding: {
-        // top: 5,
-
         right: 0,
       },
 
       plugins: [
         Chartist.plugins.tooltip(
           {
-            // transformTooltipTextFnc: (value) => {
-            //   const badge = `<span class="tooltip-chip"></span>`;
-            //   const meta = `<span class="tooltip-val">${value}</span>`;
-
-            //   return `${badge}${meta}`
-            // },
-
             appendToBody: true,
 
             anchorToPoint: true,
-
-            // pointClass: 'cp-point',
           }
         )
       ],
@@ -89,20 +76,8 @@ export class DashboardSocialActivyChartComponent implements OnInit {
 
       classNames: {
         series: 'dsh-series'
-        // grid: 'cp-grid',
-
-        // line: 'cp-line',
-
-        // point: 'cp-point',
-
-        // label: 'cp-label',
       },
 
-      // axisY: {
-      //   labelInterpolationFnc: function showLabelsOnlyForIntegers(value) {
-      //     return value % 1 === 0 ? value : null;
-      //   },
-      // },
       axisY: {
         offset: -10,
 
@@ -112,32 +87,10 @@ export class DashboardSocialActivyChartComponent implements OnInit {
       },
 
       axisX: {
-        // position: 'end',
-
         showGrid: false,
 
         showLabel: false,
 
-        // labelOffset: {
-        //   x: 0
-        // },
-
-        // labelInterpolationFnc: function skipLabels(value, index) {
-        //   // ignore last label
-        //   if (this.divider !== DivideBy.daily && (index + 1 === this.series[0].length)) {
-        //     return null;
-        //   }
-
-        //   if (this.divider === DivideBy.daily) {
-        //     return index % 3 === 0 ? value : null;
-        //   }
-
-        //   if (this.divider === DivideBy.weekly) {
-        //     return index % 2 === 0 ? value : null;
-        //   }
-
-        //   return value;
-        // }.bind(this),
       }
     };
 

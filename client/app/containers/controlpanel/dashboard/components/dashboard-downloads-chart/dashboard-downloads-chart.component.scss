@@ -3,6 +3,11 @@
 @import '~styles/core/colors';
 @import '~styles/core/typography';
 
+:host {
+  display: block;
+  position: relative;
+}
+
 .ct-label {
   fill: rgba(0, 0, 0, 0.4);
   color: rgba(0, 0, 0, 0.4);
@@ -657,8 +662,14 @@
   height: 310px;
 }
 
+.chartist-tooltip {
+  text-align: center;
+  display: inline-block;
+}
+
 span.chartist-tooltip-value {
   @include font-semi-bold();
+  @include font-16px();
 }
 
 .cp-label.ct-vertical {
