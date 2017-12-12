@@ -68,5 +68,12 @@ export const API_ENDPOINTS = {
 
   EXTERNAL_SERVICE_CHECKIN: 'external_service_checkin',
 
-  EXTERNAL_SERVICE_FEEDBACK: 'external_service_feedback'
+  EXTERNAL_SERVICE_FEEDBACK: 'external_service_feedback',
+
+  DASHBOARD_SOCIAL_ACTIVITY: 'analytics/social_activity',
+
+  DASHBORD_USER_ACQUISITION: 'analytics/user_acquisition',
+
+  DASHBOARD_GENERAL_INFORMATION: 'analytics/general_information',
+
 }

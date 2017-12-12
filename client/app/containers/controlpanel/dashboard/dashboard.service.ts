@@ -15,14 +15,42 @@ export class DashboardService extends BaseService {
   }
 
   getDownloads(search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_ENGAGEMENT}/`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.DASHBORD_USER_ACQUISITION}/`;
 
-    return super.get(url, { search }).map(res => res.json());
+    return super
+      .get(url, { search })
+      .map(data => {
+        const jsonData = data.json();
+
+        return {
+          series: [jsonData.downloads.series, jsonData.registrations.series],
+          labels: jsonData.downloads.labels
+        };
+      })
   }
 
   getSocialActivity(search: URLSearchParams) {
-    console.log(search);
-    return Observable.of(mockSocialActivity()).delay(400);
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.DASHBOARD_SOCIAL_ACTIVITY}/`;
+
+    return super
+      .get(url, { search })
+      .map(data => {
+        let res = {
+          series: [],
+          labels: [],
+        };
+
+        const jsonData = data.json();
+
+        res.series.push([jsonData.messages]);
+        res.series.push([jsonData.wall_comments]);
+        res.series.push([jsonData.connections]);
+        res.series.push([jsonData.campus_posts]);
+        res.series.push([jsonData.wall_post_likes]);
+        res.labels.push('Messages', 'Wall Comments', 'Connections',
+                        'Campus Posts', 'Wall Post Likes')
+        return res;
+      })
   }
 
   getCampusTile(search: URLSearchParams) {
@@ -46,8 +74,9 @@ export class DashboardService extends BaseService {
   }
 
   getGeneralInformation(search: URLSearchParams) {
-    console.log(search);
-    return Observable.of([]).delay(2300);
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.DASHBOARD_GENERAL_INFORMATION}/`;
+
+    return super.get(url, { search }).map(res => res.json());
   }
 
   getTopEvents(search: URLSearchParams) {
@@ -100,20 +129,3 @@ const mockTopClubsTile = () => {
   return res;
 }
 
-
-const mockSocialActivity = () => {
-  let counter = 0;
-
-  let res = {
-    series: [],
-    labels: [],
-  };
-
-  while (counter < 5) {
-    res.series.push([]);
-    res.series[counter].push((Math.random() * (1000 - 32) + 32).toFixed())
-    res.labels.push(`Label ${counter}`)
-    counter++;
-  }
-  return res;
-}

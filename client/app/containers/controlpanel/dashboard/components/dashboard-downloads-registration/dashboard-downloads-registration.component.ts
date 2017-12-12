@@ -95,43 +95,38 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
     super
       .fetchData(stream$)
       .then(res => {
-        if (res.data.series.length >= twoYears) {
+        if (res.data.series[0].length >= twoYears) {
           this.divider = DivideBy.quarter;
-          return groupByQuarter(res.data.labels, res.data.series);
+          return Promise.all([groupByQuarter(res.data.labels, res.data.series[0]),
+                             groupByQuarter(res.data.labels, res.data.series[1])])
         }
 
-        if (res.data.series.length >= year) {
+        if (res.data.series[0].length >= year) {
           this.divider = DivideBy.monthly;
-          return groupByMonth(res.data.labels, res.data.series);
+          return Promise.all([groupByMonth(res.data.labels, res.data.series[0]),
+                              groupByMonth(res.data.labels, res.data.series[1])])
         }
 
-        if (res.data.series.length >= threeMonths) {
+        if (res.data.series[0].length >= threeMonths) {
           this.divider = DivideBy.weekly;
-          return groupByWeek(res.data.labels, res.data.series);
+          return Promise.all([groupByWeek(res.data.labels, res.data.series[0]),
+                              groupByWeek(res.data.labels, res.data.series[1])])
         }
 
         this.divider = DivideBy.daily;
         return Promise.resolve(res.data.series);
       })
-      .then(res => {
-        const series = [
-          res,
-          this.mockSecondSeries(res)
-        ];
+      .then((series: any) => {
         this.chartData = {
           series,
           divider: this.divider
         }
-
         const totals = addGroup(series);
+
         this.downloads = totals[0];
         this.registrations = totals[1];
       })
       .catch(err => console.log(err))
-  }
-
-  mockSecondSeries(series) {
-    return series.map(serie => (serie + 1) * 4)
   }
 
   ngOnInit() { }

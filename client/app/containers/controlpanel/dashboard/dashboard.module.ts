@@ -23,6 +23,7 @@ import {
 
 import { DashboardComponent }  from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard.routing.module';
+import { EngagementModule } from './../assess/engagement/engagement.module';
 
 @NgModule({
   declarations: [ DashboardComponent, DashboardDatePickerComponent,
@@ -31,9 +32,9 @@ import { DashboardRoutingModule } from './dashboard.routing.module';
   DashboardTopResourceComponent, DashboardAssessmentComponent,
   DashboardIntegrationsComponent, DashboardCampuTileComponent,
   DashboardTopClubsComponent, DashboardDownloadsRegistrationComponent,
-  DashboardSocialActivyComponent, DashboardSocialActivyChartComponent, ],
+  DashboardSocialActivyComponent, DashboardSocialActivyChartComponent ],
 
-  imports: [ CommonModule, SharedModule, DashboardRoutingModule ],
+  imports: [ CommonModule, SharedModule, DashboardRoutingModule, EngagementModule ],
 
   providers: [ DashboardService, DashboardUtilsService ],
 })
