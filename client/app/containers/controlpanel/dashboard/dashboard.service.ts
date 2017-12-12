@@ -42,11 +42,12 @@ export class DashboardService extends BaseService {
 
         const jsonData = data.json();
 
-        res.series.push([jsonData.messages]);
-        res.series.push([jsonData.wall_comments]);
-        res.series.push([jsonData.connections]);
-        res.series.push([jsonData.campus_posts]);
         res.series.push([jsonData.wall_post_likes]);
+        res.series.push([jsonData.campus_posts]);
+        res.series.push([jsonData.connections]);
+        res.series.push([jsonData.wall_comments]);
+        res.series.push([jsonData.messages]);
+
         res.labels.push('Messages', 'Wall Comments', 'Connections',
                         'Campus Posts', 'Wall Post Likes')
         return res;
