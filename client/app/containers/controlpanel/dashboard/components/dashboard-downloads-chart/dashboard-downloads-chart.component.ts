@@ -104,10 +104,12 @@ export class DashboardDownloadsChartComponent implements OnInit {
   }
 
   buildSeries() {
-    return this.series.map(serie => {
+    return this.series.map((serie, idx) => {
+      const chartName = idx === 0 ? 'Downloads ' : 'Registrations ';
+
       return serie.map((item, index) => {
         return {
-          'meta': this.labelByDivider(index),
+          'meta': chartName + this.labelByDivider(index),
           'value': item
         }
       })
@@ -146,12 +148,12 @@ export class DashboardDownloadsChartComponent implements OnInit {
       plugins: [
         Chartist.plugins.tooltip(
           {
-            transformTooltipTextFnc: (value) => {
-              const badge = `<span class="tooltip-chip"></span>`;
-              const meta = `<span class="tooltip-val">Value ${value}</span>`;
+            // transformTooltipTextFnc: (value) => {
+            //   const badge = `<span class="tooltip-chip"></span>`;
+            //   const meta = `<span class="tooltip-val">Value ${value}</span>`;
 
-              return `${badge}${meta}`
-            },
+            //   return `${badge}${meta}`
+            // },
 
             appendToBody: true,
 
