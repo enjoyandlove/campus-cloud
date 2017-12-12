@@ -32,7 +32,14 @@
                 <img
                   class="avatar img-rounded"
                   [src]="item.image === '' ? defaultImage : item.image">
-                <p class="title text-truncate">{{ item.name }}</p>
+                <p class="title text-truncate">
+                  <ng-container *ngIf="!isSuperAdmin">{{ item.name }}</ng-container>
+                  <ng-container *ngIf="isSuperAdmin">
+                    <div>
+                      <a [routerLink]="['/manage/' + resource + '/' + item.id]">{{ item.name }}</a>
+                    </div>
+                  </ng-container>
+                </p>
               </div>
               <div class="col-xs-2 no-left-padding">
                 <p class="semi-bold">{{ item.attendees }}</p>

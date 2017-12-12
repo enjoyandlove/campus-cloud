@@ -30,11 +30,22 @@ export class DashboardSocialActivyChartComponent implements OnInit {
 
   constructor() { }
 
+  buildSeries() {
+    return this.series.map((serie, index) => {
+      return serie.map((item) => {
+        return {
+          'meta': this.labels[index],
+          'value': item
+        }
+      })
+    })
+  }
+
   drawChart() {
     const data = {
-      labels: this.labels,
+      // labels: this.labels,
 
-      series: this.series,
+      series: this.buildSeries(),
     };
 
     const options = {

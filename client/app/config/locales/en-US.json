@@ -648,7 +648,7 @@
     "message": "Upload your CSV file or"
   },
   "csv_modal_button_text": {
-    "message": "Click to select a CSV file here"
+    "message": "Select a CSV file"
   },
   "csv_modal_instruction": {
     "message": "Limit of 100 items to import at a time."
@@ -1080,7 +1080,7 @@
     "message": "Instructions"
   },
   "invite_team_members": {
-    "message": "Team Members"
+    "message": "Create New Team Member"
   },
   "last_name": {
     "message": "Last Name"

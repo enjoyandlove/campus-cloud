@@ -3,6 +3,7 @@ import { URLSearchParams } from '@angular/http';
 
 import { BaseComponent } from '../../../../../base';
 import { DashboardService } from './../../dashboard.service';
+import { DashboardUtilsService } from './../../dashboard.utils.service';
 
 @Component({
   selector: 'cp-dashboard-top-clubs',
@@ -13,6 +14,7 @@ export class DashboardTopClubsComponent extends BaseComponent implements OnInit 
   _dates;
   loading;
   items = [];
+  isSuperAdmin;
   defaultImage = require('public/default/user.png');
 
   @Input()
@@ -22,7 +24,8 @@ export class DashboardTopClubsComponent extends BaseComponent implements OnInit 
   }
 
   constructor(
-    private service: DashboardService
+    private service: DashboardService,
+    private helper: DashboardUtilsService
   ) {
     super();
     super.isLoading().subscribe(loading => this.loading = loading);
@@ -42,5 +45,7 @@ export class DashboardTopClubsComponent extends BaseComponent implements OnInit 
 
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.isSuperAdmin = this.helper.isSuperAdmin();
+  }
 }
