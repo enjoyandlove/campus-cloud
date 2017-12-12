@@ -1,3 +1,4 @@
+import { CPSession } from './../../../../../session/index';
 import { Component, OnInit, Input } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
@@ -10,6 +11,7 @@ import { DashboardService } from './../../dashboard.service';
   styleUrls: ['./dashboard-social-activity.component.scss']
 })
 export class DashboardSocialActivyComponent extends BaseComponent implements OnInit {
+  total;
   _dates;
   chartData;
 
@@ -22,6 +24,7 @@ export class DashboardSocialActivyComponent extends BaseComponent implements OnI
   loading;
 
   constructor(
+    private session: CPSession,
     private service: DashboardService
   ) {
     super();
@@ -31,14 +34,20 @@ export class DashboardSocialActivyComponent extends BaseComponent implements OnI
 
   fetch() {
     const search = new URLSearchParams();
-    search.append('start', this._dates.start);
     search.append('end', this._dates.end);
+    search.append('start', this._dates.start);
+    search.append('school_id', this.session.g.get('school').id);
 
     const stream$ = this.service.getSocialActivity(search);
 
     super
       .fetchData(stream$)
-      .then(res => { this.chartData = res.data })
+      .then(res => {
+        const flatten = require('lodash').flatten;
+
+        this.chartData = res.data;
+        this.total = flatten(res.data.series).reduce((prev, curr) => { return prev + curr }, 0)
+      })
       .catch(err => console.log(err));
   }
 

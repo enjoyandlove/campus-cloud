@@ -11,11 +11,11 @@ const year = 365;
 const threeMonths = 90;
 const twoYears = year * 2;
 
-// const addGroup = (data) => {
-//   return data.map((group: Number[]) => {
-//     return group.reduce((prev: number, next: number) => prev + next)
-//   })
-// }
+const addGroup = (data) => {
+  return data.map((group: Number[]) => {
+    return group.reduce((prev: number, next: number) => prev + next)
+  })
+}
 
 const aggregate = (data: Number[], serie: Number[]): Promise<Number[]> => {
   let arr = [];
@@ -121,6 +121,10 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
           series,
           divider: this.divider
         }
+        const totals = addGroup(series);
+
+        this.downloads = totals[0];
+        this.registrations = totals[1];
       })
       .catch(err => console.log(err))
   }
