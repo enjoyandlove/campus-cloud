@@ -1,5 +1,6 @@
 import {
   OnInit,
+  Input,
   Output,
   ViewChild,
   Component,
@@ -50,6 +51,11 @@ export class DashboardDatePickerComponent implements OnInit, AfterViewInit, OnDe
   customDates = [];
   dateFormat = FORMAT.SHORT;
 
+  @Input()
+  set state(state) {
+    this.setLabel(state);
+  }
+
   constructor(
     private helper: DashboardUtilsService
   ) { }
@@ -66,7 +72,9 @@ export class DashboardDatePickerComponent implements OnInit, AfterViewInit, OnDe
       };
 
       this.setLabel(date);
+
       this.triggerChange();
+
       $(this.calendarEl.nativeElement).dropdown('toggle');
     }
   }
@@ -109,8 +117,6 @@ export class DashboardDatePickerComponent implements OnInit, AfterViewInit, OnDe
       this.helper.last30Days(),
       this.helper.last90Days(),
       this.helper.lastYear()
-    ]
-
-    this.setLabel(this.customDates[0]);
+    ];
   }
 }

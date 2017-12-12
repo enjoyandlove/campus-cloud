@@ -61,7 +61,6 @@ export class DashboardDownloadsChartComponent implements OnInit {
   }
 
   monthlyLabel(index) {
-
     let date = CPDate
       .toEpoch(moment().subtract(this.series[0].length - (index + 1), 'months'));
 
@@ -72,7 +71,7 @@ export class DashboardDownloadsChartComponent implements OnInit {
     let date = CPDate
       .toEpoch(moment().subtract((this.series[0].length - (index + 1)) * 3, 'months'));
 
-    console.log(this.series[0]);
+
     return moment.unix(date).format('MMM YY');
   }
 
