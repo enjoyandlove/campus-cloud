@@ -1,7 +1,3 @@
-import { mockUser } from './../../../../../session/mock/user';
-import mockSession from './../../../../../session/mock/session';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs';
 /*
  * Testing a simple Angular 2 component
  * More info: https://angular.io/docs/ts/latest/guide/testing.html#!#simple-component-test
@@ -10,16 +6,21 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Store, StoreModule } from '@ngrx/store';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
 import { Http } from '@angular/http';
+import 'rxjs';
 
 // import { By } from '@angular/platform-browser';
 // import { DebugElement } from '@angular/core';
 
 import { StudentsService } from './../students.service';
 import { CPSession } from './../../../../../session/index';
+import { mockUser } from './../../../../../session/mock/user';
+import mockSession from './../../../../../session/mock/session';
 import { SharedModule } from './../../../../../shared/shared.module';
 import { StudentsProfileComponent } from './students-profile.component';
 import { snackBarReducer, headerReducer } from '../../../../../reducers';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 
 class MockHttp {}
@@ -78,6 +79,7 @@ describe('StudentsProfileComponent', () => {
       ],
       providers: [
         CPSession,
+        CPI18nService,
         { provide: CPSession, useValue: mockSession },
         { provide: Http, useClass: MockHttp },
         { provide: StudentsService, useClass: MockStudentsService },
