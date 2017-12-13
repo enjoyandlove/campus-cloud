@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
 import { BaseComponent } from '../../../../../base';
@@ -12,6 +12,8 @@ import { DashboardService } from './../../dashboard.service';
   styleUrls: ['./dashboard-general-information.component.scss']
 })
 export class DashboardGeneralInformationComponent extends BaseComponent implements OnInit {
+  @Output() ready: EventEmitter<boolean> = new EventEmitter();
+
   data;
   _dates;
 
@@ -28,7 +30,10 @@ export class DashboardGeneralInformationComponent extends BaseComponent implemen
     private service: DashboardService
   ) {
     super();
-    super.isLoading().subscribe(loading => this.loading = loading);
+    super.isLoading().subscribe(loading => {
+      this.loading = loading;
+      this.ready.emit(!this.loading);
+    });
   }
 
 

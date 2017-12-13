@@ -1,9 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
 import { BaseComponent } from '../../../../../base';
 import { DashboardService } from './../../dashboard.service';
 import { DashboardUtilsService } from './../../dashboard.utils.service';
+import { CPSession } from '../../../../../session/index';
 
 @Component({
   selector: 'cp-dashboard-top-clubs',
@@ -11,6 +12,8 @@ import { DashboardUtilsService } from './../../dashboard.utils.service';
   styleUrls: ['./dashboard-top-clubs.component.scss']
 })
 export class DashboardTopClubsComponent extends BaseComponent implements OnInit {
+  @Output() ready: EventEmitter<boolean> = new EventEmitter();
+
   _dates;
   loading;
   items = [];
@@ -24,17 +27,22 @@ export class DashboardTopClubsComponent extends BaseComponent implements OnInit 
   }
 
   constructor(
+    private session: CPSession,
     private service: DashboardService,
     private helper: DashboardUtilsService
   ) {
     super();
-    super.isLoading().subscribe(loading => this.loading = loading);
+    super.isLoading().subscribe(loading => {
+      this.loading = loading;
+      this.ready.emit(!this.loading);
+    });
   }
 
   fetch() {
     const search = new URLSearchParams();
-    search.append('start', this._dates.start);
     search.append('end', this._dates.end);
+    search.append('start', this._dates.start);
+    search.append('school_id', this.session.g.get('school').id);
 
     const stream$ = this.service.getTopClubs(search);
 

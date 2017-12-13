@@ -1,4 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
 
 import { CPSession, IUser } from '../../../session';
@@ -6,6 +7,10 @@ import { CPI18nService } from '../../../shared/services';
 import { CP_PRIVILEGES_MAP } from '../../../shared/constants';
 import { DashboardUtilsService } from './dashboard.utils.service';
 import { canSchoolReadResource } from '../../../shared/utils/privileges';
+
+import { Observable } from 'rxjs/Observable';
+
+const isTileReady = (val) => !!val;
 
 @Component({
   selector: 'cp-dashboard',
@@ -18,6 +23,17 @@ export class DashboardComponent implements OnInit {
   canAssess = false;
   currentDate = null;
   isSuperAdmin = false;
+  areAllTilesReady = false;
+
+  downloadsTile$ = new BehaviorSubject(false);
+  generalInfoTile$ = new BehaviorSubject(false);
+  topEventsTile$ = new BehaviorSubject(false);
+  topServicesTile$ = new BehaviorSubject(false);
+  assessmentTile$ = new BehaviorSubject(false);
+  socialActivityTile$ = new BehaviorSubject(false);
+  campusTileTile$ = new BehaviorSubject(false);
+  topClubsTile$ = new BehaviorSubject(false);
+  integrationsTile$ = new BehaviorSubject(false);
 
   constructor(
     private router: Router,
@@ -92,6 +108,24 @@ export class DashboardComponent implements OnInit {
     };
   }
 
+  subscribeToTilesReadyEvent() {
+    Observable.combineLatest([this.downloadsTile$,
+                              this.generalInfoTile$,
+                              this.topEventsTile$,
+                              this.topServicesTile$,
+                              this.assessmentTile$,
+                              this.socialActivityTile$,
+                              this.campusTileTile$,
+                              this.topClubsTile$,
+                              this.integrationsTile$])
+                              .subscribe(tiles => {
+                                setTimeout(() => {
+                                  this.areAllTilesReady = tiles.every(isTileReady);
+                                }, 1)
+                                return tiles.every(isTileReady);
+                              });
+  }
+
   ngOnInit() {
     this.isSuperAdmin = this.helper.isSuperAdmin();
     this.canAssess = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.assessment);
@@ -106,5 +140,6 @@ export class DashboardComponent implements OnInit {
     }
 
     this.updateHeader();
+    // this.subscribeToTilesReadyEvent();
   }
 }
