@@ -5,9 +5,13 @@ import { Http, URLSearchParams } from '@angular/http';
 
 import { API } from '../../../config/api';
 import { BaseService } from '../../../base/index';
+// import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class DashboardService extends BaseService {
+  eventAssessment;
+  serviceAssessment;
+
   constructor(http: Http, router: Router) {
     super(http, router);
 
@@ -59,9 +63,13 @@ export class DashboardService extends BaseService {
     return Observable.of(mockCampuTile()).delay(400);
   }
 
-  getAssessment(search: URLSearchParams) {
-    console.log(search);
-    return Observable.of([]).delay(560);
+  getAssessment() {
+    // return Observable.of([]);
+    // const stream$ = Observable.combineLatest(this.eventAssessment, this.serviceAssessment);
+
+    return Observable.of({...this.eventAssessment, ...this.serviceAssessment})
+
+      // .combineLatest(this.eventAssessment, this.serviceAssessment);
   }
 
   getIntegrations(search: URLSearchParams) {
@@ -85,13 +93,37 @@ export class DashboardService extends BaseService {
   getTopEvents(search: URLSearchParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_EVENT}/`;
 
-    return super.get(url, { search }).map(res => res.json());
+    return super
+      .get(url, { search })
+      .map(res => {
+        const jsonData = res.json();
+
+        this.eventAssessment = {
+          event_checkins: jsonData.total_attendees,
+          event_feedback_rate: jsonData.avg_feedbacks,
+          event_total_feedback: jsonData.total_feedbacks
+        };
+
+        return jsonData;
+      });
   }
 
   getTopServices(search: URLSearchParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_SERVICE}/`;
 
-    return super.get(url, { search }).map(res => res.json());
+    return super
+      .get(url, { search })
+      .map(res => {
+        const jsonData = res.json();
+
+        this.serviceAssessment = {
+          service_checkins: jsonData.total_attendees,
+          service_feedback_rate: jsonData.avg_feedbacks,
+          service_total_feedback: jsonData.total_feedbacks
+        };
+
+        return jsonData;
+      });
   }
 }
 
