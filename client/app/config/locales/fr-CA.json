@@ -30,10 +30,10 @@
     "message": "Manage other kinds of app content"
   },
   "admin_assess_help": {
-    "message": "View the Engagement Dashboard and Student Transcript"
+    "message": "View the Assess Dashboard and Student Transcript"
   },
   "admin_campus_announcements": {
-    "message": "Campus Announcements"
+    "message": "Regular and Urgent Announcements"
   },
   "admin_can_edit": {
     "message": "Can Edit"
@@ -63,10 +63,13 @@
     "message": "Emergency Announcements"
   },
   "admin_engagement_dashboard": {
-    "message": "Engagement Dashboard"
+    "message": "Assessment Dashboard"
   },
   "admin_events_help": {
     "message": "View events; view event assessment"
+  },
+  "admin_events_title": {
+    "message": "Event Viewer"
   },
   "admin_grant_permissions": {
     "message": "Invite new team members and assign permissions"
@@ -90,7 +93,7 @@
     "message": "Are you sure you want to remove %s?"
   },
   "admin_modal_delete_title": {
-    "message": "Remove Team Member"
+    "message": "Delete Team Member"
   },
   "admin_notify_help": {
     "message": "Send messages to students' phones and/or send emergency announcements"
@@ -114,7 +117,7 @@
     "message": "Select Services"
   },
   "admin_service_owner": {
-    "message": "Service Owner"
+    "message": "Service Executive"
   },
   "admin_service_owner_help": {
     "message": "Create new services; manage information, events and assessment for all services or select services"
@@ -138,19 +141,19 @@
     "message": "Announce to all students"
   },
   "announcements_compose_modal_title": {
-    "message": "Create New Announcement"
+    "message": "Create Announcement"
   },
   "announcements_delete_modal_body": {
-    "message": "Are you sure you want to archive this announcement?"
+    "message": "Are you sure you want to delete this announcement?"
   },
   "announcements_delete_modal_body_warning": {
-    "message": "Archiving your notification means no more students will receive it."
+    "message": "No more students will receive it."
   },
   "announcements_delete_modal_title": {
-    "message": "Archive Announcement"
+    "message": "Delete Announcement"
   },
   "announcements_emergency_help": {
-    "message": "Overrides the push settings of the user and forces users to acknowledge the message"
+    "message": "Overrides the user's push notifications settings and forces them to acknowledge the message"
   },
   "announcements_not_sent": {
     "message": "Message not sent, please wait %s minutes before trying again"
@@ -165,7 +168,7 @@
     "message": "Type"
   },
   "announcements_urgent_help": {
-    "message": "Overrides the push settings of the user"
+    "message": "Overrides the user's push notification settings"
   },
   "announcement_confirm_campus_wide": {
     "message": "Campus Wide Announcement"
@@ -198,7 +201,7 @@
     "message": "App Name"
   },
   "archive": {
-    "message": "Archive"
+    "message": "Delete"
   },
   "are_you_sure?": {
     "message": "Are you Sure?"
@@ -300,7 +303,7 @@
     "message": "Feedback Received"
   },
   "assess_last_engagement": {
-    "message": "Time of Last Engagement"
+    "message": "Last Engaged"
   },
   "assess_last_month": {
     "message": "Last Month"
@@ -354,7 +357,7 @@
     "message": "Students who attended one engagement for the period selected"
   },
   "assess_repeat_engagement": {
-    "message": "Repeat Engagement"
+    "message": "Multiple Engagements"
   },
   "assess_repeat_engagement_tooltip": {
     "message": "Students who attended more than one engagement for the period selected"
@@ -381,7 +384,7 @@
     "message": "Services Response Rate"
   },
   "assess_sort_by": {
-    "message": "Sort By"
+    "message": "Sort by"
   },
   "assess_student_id": {
     "message": "Student ID"
@@ -420,16 +423,16 @@
     "message": "Your password has been changed"
   },
   "auth_pwd_reset_heading": {
-    "message": "Follow these simple steps to reset your account"
+    "message": "Follow these steps to reset your password"
   },
   "auth_pwd_reset_step_one": {
-    "message": "Enter your email address"
+    "message": "Enter your email address and click \"Reset Password.\""
   },
   "auth_pwd_reset_step_three": {
-    "message": "Follow instructions to regain access to your account"
+    "message": "Follow the instructions to reset your password."
   },
   "auth_pwd_reset_step_two": {
-    "message": "Wait for your recovery details to be sent"
+    "message": "You will receive an email with step-by-step instructions."
   },
   "auth_reset_password": {
     "message": "Reset Password"
@@ -444,7 +447,7 @@
     "message": "Thank you for trying out the beta."
   },
   "body": {
-    "message": "Body"
+    "message": "Message"
   },
   "building": {
     "message": "Building"
@@ -609,7 +612,7 @@
     "message": "Edit Member"
   },
   "clubs_member_label_name": {
-    "message": "Name (needs a mobile app account)"
+    "message": "Name (requires a mobile app account)"
   },
   "clubs_no_members_found": {
     "message": "No Members Found"
@@ -630,7 +633,7 @@
     "message": "JPG or PNG. Max size of 5MB"
   },
   "compose": {
-    "message": "Create New Announcement"
+    "message": "Create Announcement"
   },
   "confirm": {
     "message": "Confirm"
@@ -741,7 +744,7 @@
     "message": "Description"
   },
   "disabled": {
-    "message": "No one"
+    "message": "Disabled"
   },
   "done": {
     "message": "Done"
@@ -1248,7 +1251,7 @@
     "message": "QR Code"
   },
   "rating": {
-    "message": "Rating"
+    "message": "Ratings"
   },
   "ratings": {
     "message": "Ratings"
@@ -1344,7 +1347,7 @@
     "message": "Send"
   },
   "sent": {
-    "message": "Sent"
+    "message": "Date Sent"
   },
   "service": {
     "message": "Service"
@@ -1446,7 +1449,7 @@
     "message": "Are you sure you want to delete %s?"
   },
   "services_provider_delete_modal_title": {
-    "message": "Are you sure?"
+    "message": "Delete Service Provider"
   },
   "services_provider_label_add_service_provider": {
     "message": "Create Service Provider"
@@ -1455,7 +1458,7 @@
     "message": "Feedback Question"
   },
   "services_provider_search_tootlip": {
-    "message": "Search Service Providers"
+    "message": "Search..."
   },
   "services_repeat_visits": {
     "message": "Repeat Visitors"
@@ -1500,7 +1503,7 @@
     "message": "Students"
   },
   "student_engagements": {
-    "message": "Student Engagements"
+    "message": "Student Engagement"
   },
   "student_feedback": {
     "message": "Feedback"
@@ -1518,13 +1521,13 @@
     "message": "Templates"
   },
   "templates_button_new": {
-    "message": "Create New Template"
+    "message": "Create Template"
   },
   "templates_crate_label_template_name": {
     "message": "Template Name"
   },
   "templates_crate_modal_title": {
-    "message": "Create New Template"
+    "message": "Create Template"
   },
   "templates_create_label_all_students": {
     "message": "Announce to all students"

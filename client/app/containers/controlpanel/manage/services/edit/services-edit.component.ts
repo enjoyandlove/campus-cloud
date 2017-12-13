@@ -36,6 +36,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   service;
   categories;
   buttonData;
+  hasFeedback;
   withAttendance;
   serviceFeedback;
   school: ISchool;
@@ -101,10 +102,11 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     super
       .fetchData(stream$)
       .then(res => {
-
         let providers = res.data[1];
 
         this.service = res.data[0];
+
+        this.hasFeedback = this.service.enable_feedback === FEEDBACK_ENABLED;
 
         this.categories = res.data[2];
 

@@ -18,7 +18,7 @@ import { CallbackPasswordResetComponent } from './callback-password-reset.compon
 
 class RouterMock {
     navigate() {
-      console.log('navigating');
+      // console.log('navigating');
     }
 }
 

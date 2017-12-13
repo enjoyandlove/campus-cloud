@@ -192,7 +192,7 @@
                         </div>
                       </div>
 
-                      <div class="row form-group">
+                      <div class="row form-group" *ngIf="hasFeedback">
                         <div class="col-xs-12">
                           <label i18n>{{ 'services_label_default_question' | cpI18n }}</label>
                           <input
