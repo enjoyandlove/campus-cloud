@@ -1,5 +1,7 @@
-import { Observable } from 'rxjs/Observable';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Observable } from 'rxjs/Observable';
+
+import { CPI18nService } from '../../services';
 import { CPSearchBoxComponent } from './cp-searchbox.component';
 
 describe('CPSearchBoxComponent', () => {
@@ -9,6 +11,8 @@ describe('CPSearchBoxComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [CPSearchBoxComponent],
+
+      providers: [ CPI18nService ]
     });
 
     fixture = TestBed.createComponent(CPSearchBoxComponent);

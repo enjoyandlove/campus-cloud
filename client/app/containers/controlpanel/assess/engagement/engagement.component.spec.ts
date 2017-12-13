@@ -1,6 +1,3 @@
-import { HEADER_UPDATE } from './../../../../reducers/header.reducer';
-import { STATUS } from './../../../../shared/constants/status';
-import { SNACKBAR_SHOW } from './../../../../reducers/snackbar.reducer';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Store, StoreModule } from '@ngrx/store';
@@ -10,9 +7,13 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { CPSession } from './../../../../session/index';
 import { EngagementService } from './engagement.service';
 import { mockUser } from './../../../../session/mock/user';
+import { CPI18nService } from '../../../../shared/services';
 import { EngagementComponent } from './engagement.component';
 import { mockSchool } from './../../../../session/mock/school';
+import { STATUS } from './../../../../shared/constants/status';
 import { snackBarReducer, headerReducer } from '../../../../reducers';
+import { HEADER_UPDATE } from './../../../../reducers/header.reducer';
+import { SNACKBAR_SHOW } from './../../../../reducers/snackbar.reducer';
 
 const mockFilterState = {
   'engagement': {
@@ -74,6 +75,7 @@ describe('EngagementComponent', () => {
       ],
       declarations: [ EngagementComponent ],
       providers: [
+        CPI18nService,
         { provide: Router,  useClass: MockRouter },
         { provide: CPSession, useClass: MockSession },
         { provide: EngagementService, useClass: MockEngagementService },
