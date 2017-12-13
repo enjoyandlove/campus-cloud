@@ -622,7 +622,7 @@
     top: 0;
     left: 0; }
 
-.chartist-tooltip {
+.chartist-tooltip.cp-dsh-downloads {
   border-radius: 4px;
   position: absolute;
   display: inline-block;
@@ -639,7 +639,7 @@
   -moz-transition: opacity .2s linear;
   -o-transition: opacity .2s linear;
   transition: opacity .2s linear; }
-  .chartist-tooltip:before {
+  .chartist-tooltip.cp-dsh-downloads:before {
     content: "";
     position: absolute;
     top: 100%;
@@ -649,7 +649,7 @@
     margin-left: -7px;
     border: 7px solid transparent;
     border-top-color: #212121; }
-  .chartist-tooltip.tooltip-show {
+  .chartist-tooltip.cp-dsh-downloads.tooltip-show {
     opacity: 1; }
 
 .ct-area, .ct-line {
@@ -662,14 +662,14 @@
   height: 310px;
 }
 
-.chartist-tooltip {
+.chartist-tooltip.cp-dsh-downloads {
   text-align: center;
   display: inline-block;
-}
 
-span.chartist-tooltip-value {
-  @include font-semi-bold();
-  @include font-16px();
+  span.chartist-tooltip-value {
+    @include font-semi-bold();
+    @include font-16px();
+  }
 }
 
 .cp-label.ct-vertical {

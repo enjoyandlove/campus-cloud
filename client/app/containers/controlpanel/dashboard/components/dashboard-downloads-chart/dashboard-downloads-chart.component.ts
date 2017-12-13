@@ -155,9 +155,11 @@ export class DashboardDownloadsChartComponent implements OnInit {
             //   return `${badge}${meta}`
             // },
 
-            appendToBody: true,
+            // appendToBody: true,
 
-            anchorToPoint: true,
+            // anchorToPoint: true,
+
+            class: 'cp-dsh-downloads',
 
             pointClass: 'cp-dsh-point',
           }
