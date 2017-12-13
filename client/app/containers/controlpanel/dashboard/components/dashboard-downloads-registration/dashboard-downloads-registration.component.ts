@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
 import { BaseComponent } from '../../../../../base';
@@ -63,6 +63,8 @@ export enum DivideBy {
   styleUrls: ['./dashboard-downloads-registration.component.scss']
 })
 export class DashboardDownloadsRegistrationComponent extends BaseComponent implements OnInit {
+  @Output() ready: EventEmitter<boolean> = new EventEmitter();
+
   _dates;
   loading;
   chartData;
@@ -81,7 +83,10 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
     private service: DashboardService
   ) {
     super();
-    super.isLoading().subscribe(loading => this.loading = loading);
+    super.isLoading().subscribe(loading => {
+      this.loading = loading;
+      this.ready.emit(!this.loading);
+    });
   }
 
   fetch() {

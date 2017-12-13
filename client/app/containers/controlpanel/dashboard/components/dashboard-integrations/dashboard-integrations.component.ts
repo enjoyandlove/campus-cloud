@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
 import { BaseComponent } from '../../../../../base';
@@ -11,6 +11,8 @@ import { DashboardService } from './../../dashboard.service';
   styleUrls: ['./dashboard-integrations.component.scss']
 })
 export class DashboardIntegrationsComponent extends BaseComponent implements OnInit {
+  @Output() ready: EventEmitter<boolean> = new EventEmitter();
+
   data;
   loading;
 
@@ -19,7 +21,10 @@ export class DashboardIntegrationsComponent extends BaseComponent implements OnI
     private service: DashboardService
   ) {
     super();
-    super.isLoading().subscribe(loading => this.loading = loading);
+    super.isLoading().subscribe(loading => {
+      this.loading = loading;
+      this.ready.emit(!this.loading);
+    });
   }
 
 

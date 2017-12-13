@@ -12,7 +12,8 @@
   <div class="row tile">
     <div class="col-xs-12">
       <cp-dashboard-downloads-registration
-        [dates]="currentDate">
+        [dates]="currentDate"
+        (ready)="downloadsTile$.next($event)">
       </cp-dashboard-downloads-registration>
     </div>
   </div>
@@ -20,7 +21,8 @@
   <div class="row tile">
     <div class="col-xs-6">
       <cp-dashboard-general-information
-        [dates]="currentDate">
+        [dates]="currentDate"
+        (ready)="generalInfoTile$.next($event)">
       </cp-dashboard-general-information>
     </div>
   </div>
@@ -28,12 +30,14 @@
   <div class="row tile" *ngIf="canAssess">
     <div class="col-xs-6">
       <cp-dashboard-top-events
-        [dates]="currentDate">
+        [dates]="currentDate"
+        (ready)="topEventsTile$.next($event)">
       </cp-dashboard-top-events>
     </div>
     <div class="col-xs-6">
       <cp-dashboard-top-services
-        [dates]="currentDate">
+        [dates]="currentDate"
+        (ready)="topServicesTile$.next($event)">
       </cp-dashboard-top-services>
     </div>
   </div>
@@ -41,12 +45,14 @@
   <div class="row tile">
     <div class="col-xs-6" *ngIf="canAssess">
       <cp-dashboard-assessment
-        [dates]="currentDate">
+        [dates]="currentDate"
+        (ready)="assessmentTile$.next($event)">
       </cp-dashboard-assessment>
     </div>
     <div class="col-xs-6" *ngIf="isSuperAdmin">
       <cp-dashboard-social-activity
-        [dates]="currentDate">
+        [dates]="currentDate"
+        (ready)="socialActivityTile$.next($event)">
       </cp-dashboard-social-activity>
     </div>
   </div>
@@ -54,19 +60,23 @@
   <div class="row tile" *ngIf="isSuperAdmin">
     <div class="col-xs-6">
       <cp-dashboard-campus-tile
-        [dates]="currentDate">
+        [dates]="currentDate"
+        (ready)="campusTileTile$.next($event)">
       </cp-dashboard-campus-tile>
     </div>
     <div class="col-xs-6">
       <cp-dashboard-top-clubs
-        [dates]="currentDate">
+        [dates]="currentDate"
+        (ready)="topClubsTile$.next($event)">
       </cp-dashboard-top-clubs>
     </div>
   </div>
 
   <div class="row tile" *ngIf="isSuperAdmin">
     <div class="col-xs-5">
-      <cp-dashboard-integrations></cp-dashboard-integrations>
+      <cp-dashboard-integrations
+        (ready)="integrationsTile$.next($event)">
+      </cp-dashboard-integrations>
     </div>
   </div>
 </div>

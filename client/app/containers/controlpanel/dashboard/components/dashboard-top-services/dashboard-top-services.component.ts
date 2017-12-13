@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
 import { CPSession } from '../../../../../session';
@@ -11,6 +11,8 @@ import { DashboardService } from './../../dashboard.service';
   styleUrls: ['./dashboard-top-services.component.scss']
 })
 export class DashboardTopServicesComponent extends BaseComponent implements OnInit {
+  @Output() ready: EventEmitter<boolean> = new EventEmitter();
+
   _dates;
   loading;
   items = [];
@@ -26,7 +28,10 @@ export class DashboardTopServicesComponent extends BaseComponent implements OnIn
     private service: DashboardService
   ) {
     super();
-    super.isLoading().subscribe(loading => this.loading = loading)
+    super.isLoading().subscribe(loading => {
+      this.loading = loading;
+      this.ready.emit(!this.loading);
+    });
   }
 
   parseResponse(items: Array<any>) {

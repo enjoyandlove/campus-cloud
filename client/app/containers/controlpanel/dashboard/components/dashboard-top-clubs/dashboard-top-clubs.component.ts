@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
 import { BaseComponent } from '../../../../../base';
@@ -11,6 +11,8 @@ import { DashboardUtilsService } from './../../dashboard.utils.service';
   styleUrls: ['./dashboard-top-clubs.component.scss']
 })
 export class DashboardTopClubsComponent extends BaseComponent implements OnInit {
+  @Output() ready: EventEmitter<boolean> = new EventEmitter();
+
   _dates;
   loading;
   items = [];
@@ -28,7 +30,10 @@ export class DashboardTopClubsComponent extends BaseComponent implements OnInit 
     private helper: DashboardUtilsService
   ) {
     super();
-    super.isLoading().subscribe(loading => this.loading = loading);
+    super.isLoading().subscribe(loading => {
+      this.loading = loading;
+      this.ready.emit(!this.loading);
+    });
   }
 
   fetch() {
