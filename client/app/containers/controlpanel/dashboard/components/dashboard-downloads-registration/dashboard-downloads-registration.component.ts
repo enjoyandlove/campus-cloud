@@ -117,15 +117,15 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
         return Promise.resolve(res.data.series);
       })
       .then((series: any) => {
-        this.chartData = {
-          series,
-          divider: this.divider
-        };
-
         const totals = addGroup(series);
 
         this.downloads = totals[0];
         this.registrations = totals[1];
+
+        this.chartData = {
+          series,
+          divider: this.divider
+        };
       })
       .catch(err => console.log(err))
   }

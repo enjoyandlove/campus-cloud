@@ -148,17 +148,6 @@ export class DashboardDownloadsChartComponent implements OnInit {
       plugins: [
         Chartist.plugins.tooltip(
           {
-            // transformTooltipTextFnc: (value) => {
-            //   const badge = `<span class="tooltip-chip"></span>`;
-            //   const meta = `<span class="tooltip-val">Value ${value}</span>`;
-
-            //   return `${badge}${meta}`
-            // },
-
-            // appendToBody: true,
-
-            // anchorToPoint: true,
-
             class: 'cp-dsh-downloads',
 
             pointClass: 'cp-dsh-point',
