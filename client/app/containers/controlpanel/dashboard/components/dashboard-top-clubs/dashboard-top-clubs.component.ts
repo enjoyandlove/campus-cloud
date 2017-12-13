@@ -4,6 +4,7 @@ import { URLSearchParams } from '@angular/http';
 import { BaseComponent } from '../../../../../base';
 import { DashboardService } from './../../dashboard.service';
 import { DashboardUtilsService } from './../../dashboard.utils.service';
+import { CPSession } from '../../../../../session/index';
 
 @Component({
   selector: 'cp-dashboard-top-clubs',
@@ -26,6 +27,7 @@ export class DashboardTopClubsComponent extends BaseComponent implements OnInit 
   }
 
   constructor(
+    private session: CPSession,
     private service: DashboardService,
     private helper: DashboardUtilsService
   ) {
@@ -38,8 +40,9 @@ export class DashboardTopClubsComponent extends BaseComponent implements OnInit 
 
   fetch() {
     const search = new URLSearchParams();
-    search.append('start', this._dates.start);
     search.append('end', this._dates.end);
+    search.append('start', this._dates.start);
+    search.append('school_id', this.session.g.get('school').id);
 
     const stream$ = this.service.getTopClubs(search);
 

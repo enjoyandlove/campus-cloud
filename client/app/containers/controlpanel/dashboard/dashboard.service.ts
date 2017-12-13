@@ -71,8 +71,9 @@ export class DashboardService extends BaseService {
   }
 
   getTopClubs(search: URLSearchParams) {
-    console.log(search);
-    return Observable.of(mockTopClubsTile()).delay(400);
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.DASHBOARD_TOP_CLUBS}/`;
+
+    return super.get(url, { search }).map(res => res.json());
   }
 
   getGeneralInformation(search: URLSearchParams) {
@@ -106,24 +107,6 @@ const mockCampuTile = () => {
         'avatar': '',
         'clicks': (Math.random() * (1000 - 32) + 32).toFixed(),
         'average': (Math.random() * (1000 - 32) + 32).toFixed()
-      }
-    )
-    counter++;
-  }
-  return res;
-}
-
-const mockTopClubsTile = () => {
-  let res = [];
-  let counter = 0;
-
-  while (counter < 5) {
-    res.push(
-      {
-        'id': counter + 1,
-        'title': `Title ${counter}`,
-        'avatar': '',
-        'members': (Math.random() * (1000 - 32) + 32).toFixed(),
       }
     )
     counter++;
