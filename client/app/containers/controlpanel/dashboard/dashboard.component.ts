@@ -127,7 +127,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isSuperAdmin = this.helper.isSuperAdmin();
+    this.isSuperAdmin = this.helper.isSuperAdmin(this.session);
     this.canAssess = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.assessment);
     this.currentDate = this.helper.last30Days();
 

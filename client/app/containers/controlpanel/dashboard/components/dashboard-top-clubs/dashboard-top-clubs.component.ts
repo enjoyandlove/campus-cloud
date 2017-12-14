@@ -54,6 +54,6 @@ export class DashboardTopClubsComponent extends BaseComponent implements OnInit 
   }
 
   ngOnInit() {
-    this.isSuperAdmin = this.helper.isSuperAdmin();
+    this.isSuperAdmin = this.helper.isSuperAdmin(this.session);
   }
 }
