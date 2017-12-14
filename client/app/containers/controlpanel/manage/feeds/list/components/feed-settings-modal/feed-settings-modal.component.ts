@@ -123,7 +123,7 @@ export class FeedSettingsComponent implements OnInit {
 
     this.privileges = [
       {
-        label: this.cpI18n.translate('disabled'),
+        label: this.cpI18n.translate('no_one'),
         action: 100
       },
       {

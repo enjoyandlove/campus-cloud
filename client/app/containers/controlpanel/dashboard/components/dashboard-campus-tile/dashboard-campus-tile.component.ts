@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
+import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
 import { DashboardService } from './../../dashboard.service';
 
@@ -24,6 +25,7 @@ export class DashboardCampuTileComponent extends BaseComponent implements OnInit
   }
 
   constructor(
+    private session: CPSession,
     private service: DashboardService
   ) {
     super();
@@ -35,8 +37,9 @@ export class DashboardCampuTileComponent extends BaseComponent implements OnInit
 
   fetch() {
     const search = new URLSearchParams();
-    search.append('start', this._dates.start);
     search.append('end', this._dates.end);
+    search.append('start', this._dates.start);
+    search.append('school_id', this.session.g.get('school').id)
 
     const stream$ = this.service.getCampusTile(search);
 
