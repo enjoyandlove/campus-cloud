@@ -15,11 +15,11 @@ export class CPSession {
   public g = new Map();
 
   public isSuperAdmin() {
-    const clubsWide = canSchoolWriteResource(this.g, CP_PRIVILEGES_MAP.clubs);
-    const assessWide = canSchoolWriteResource(this.g, CP_PRIVILEGES_MAP.assessment);
+    const clubsSchoolWide = canSchoolWriteResource(this.g, CP_PRIVILEGES_MAP.clubs);
+    const assessSchoolWide = canSchoolWriteResource(this.g, CP_PRIVILEGES_MAP.assessment);
     const serviceSchoolWide = canSchoolWriteResource(this.g, CP_PRIVILEGES_MAP.services);
 
-    return clubsWide && assessWide && serviceSchoolWide;
+    return clubsSchoolWide && assessSchoolWide && serviceSchoolWide;
   }
 
   constructor() { }
