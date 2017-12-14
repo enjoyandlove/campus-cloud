@@ -71,6 +71,11 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
   registrations = 0;
   divider = DivideBy.daily
 
+  range = {
+    start: null,
+    end: null
+  }
+
   @Input()
   set dates(dates) {
     this._dates = dates;
@@ -99,6 +104,15 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
     super
       .fetchData(stream$)
       .then(res => {
+        this.range = Object.assign(
+          {},
+          this.range,
+          {
+            start: res.data.labels[0],
+            end: res.data.labels[res.data.labels.length - 1],
+          }
+        )
+
         if (res.data.series[0].length >= twoYears) {
           this.divider = DivideBy.quarter;
           return Promise.all([groupByQuarter(res.data.labels, res.data.series[0]),
@@ -128,6 +142,7 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
 
         this.chartData = {
           series,
+          range: this.range,
           divider: this.divider
         };
       })

@@ -30,11 +30,13 @@ import {
 })
 export class DashboardDownloadsChartComponent implements OnInit {
   @ViewChild('chartHost') chartHost: ElementRef;
+  range;
   series;
   divider;
 
   @Input()
   set data(data) {
+    this.range = data.range;
     this.series = data.series;
     this.divider = data.divider;
     this.drawChart();
@@ -43,14 +45,13 @@ export class DashboardDownloadsChartComponent implements OnInit {
   constructor() { }
 
   dailyLabel(index) {
-    let date = CPDate
-      .toEpoch(moment().subtract(this.series[0].length - (index + 1), 'days'));
+    let date = CPDate.toEpoch(moment(this.range.start).add(index, 'days'));
 
     return moment.unix(date).format('MMM Do');
   }
 
   weeklyLabel(index) {
-    const weekOne = moment().subtract(this.series[0].length - (index + 1), 'weeks');
+    const weekOne = moment(this.range.start).add(index, 'weeks');
 
     let weekStart = CPDate.toEpoch(weekOne);
 
@@ -61,16 +62,13 @@ export class DashboardDownloadsChartComponent implements OnInit {
   }
 
   monthlyLabel(index) {
-    let date = CPDate
-      .toEpoch(moment().subtract(this.series[0].length - (index + 1), 'months'));
+    let date = CPDate.toEpoch(moment(this.range.start).add(index, 'months'));
 
     return moment.unix(date).format('MMM YY');
   }
 
   quarterLabel(index) {
-    let date = CPDate
-      .toEpoch(moment().subtract((this.series[0].length - (index + 1)) * 3, 'months'));
-
+    let date = CPDate.toEpoch(moment(this.range.start).add(index, 'quarters'));
 
     return moment.unix(date).format('MMM YY');
   }
