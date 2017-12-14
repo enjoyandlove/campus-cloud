@@ -35,6 +35,9 @@ describe('DashboardDatePickerComponent', () => {
 
     comp.picker = $(comp.calendarEl.nativeElement).flatpickr(pickerOptions)
 
+    spyOn(comp.dateChange, 'emit');
+    spyOn(comp.picker, 'clear');
+
     helper = TestBed.get(DashboardUtilsService);
   });
 
@@ -50,11 +53,39 @@ describe('DashboardDatePickerComponent', () => {
     expect(comp.selected).toEqual(expected);
   })
 
-  xit('triggerChange', () => {
+  it('triggerChange', () => {
     const expected = helper.last30Days();
 
     comp.setLabel(expected);
 
-    comp.dateChange.emit()
+    comp.triggerChange();
+
+    expect(comp.dateChange.emit).toHaveBeenCalledWith(expected);
+  })
+
+  it('resetCalendar', () => {
+    comp.resetCalendar();
+
+    expect(comp.picker.clear).toHaveBeenCalled();
+  })
+
+  it('onDateChanged', () => {
+    const date1 = new Date('2017-12-04T05:00:00.000Z');
+    const date2 = new Date('2017-12-06T05:00:00.000Z');
+
+    const expected = {
+      start: 1512363600,
+      end: 1512622799,
+      label: 'Dec 4, 2017 - Dec 6, 2017',
+    }
+
+    spyOn(comp, 'setLabel');
+    spyOn(comp, 'triggerChange');
+
+    comp.onDateChanged([date1, date2]);
+
+    expect(comp.setLabel).toHaveBeenCalledWith(expected);
+
+    expect(comp.triggerChange).toHaveBeenCalled();
   })
 })
