@@ -7,7 +7,7 @@ import { DashboardService } from './../../dashboard.service';
 
 import {
   addGroup,
-  // aggregate,
+  aggregate,
   groupByWeek,
   groupByMonth,
   groupByQuarter,
@@ -31,14 +31,13 @@ const mockDates = [
   '2017-12-11'
 ];
 
-
 describe('DashboardDownloadsRegistrationComponent', () => {
   let comp: DashboardDownloadsRegistrationComponent
   let fixture: ComponentFixture<DashboardDownloadsRegistrationComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ DashboardModule ],
+      imports: [DashboardModule],
       declarations: [],
       providers: [
         CPSession,
@@ -77,7 +76,7 @@ describe('DashboardDownloadsRegistrationComponent', () => {
   })
 
   it('groupByMonth', () => {
-    const expected = [3, 1, 2 ];
+    const expected = [3, 1, 2];
 
     groupByMonth(mockDates, mockSeries).then(res => {
       expect(res).toEqual(expected);
@@ -90,5 +89,16 @@ describe('DashboardDownloadsRegistrationComponent', () => {
     groupByQuarter(mockDates, mockSeries).then(res => {
       expect(res).toEqual(expected);
     });
+  })
+
+  it('aggregate', () => {
+    const dates = [1, 1, 2, 3, 3, 3, 4];
+    const series = [0, 3, 2, 1, 3, 2, 0];
+    const expected = [3, 2, 6, 0];
+
+    aggregate(dates, series)
+      .then(res => {
+        expect(res).toEqual(expected)
+      });
   })
 })
