@@ -40,7 +40,7 @@
                         <ng-container *ngIf="!isSuperAdmin">{{ item.name }}</ng-container>
                         <ng-container *ngIf="isSuperAdmin">
                           <div>
-                            <a [routerLink]="['/manage/clubs/' + item.id]">{{ item.name }}</a>
+                            <a [routerLink]="['/manage/clubs/' + item.id + '/info']">{{ item.name }}</a>
                           </div>
                         </ng-container>
                       </p>

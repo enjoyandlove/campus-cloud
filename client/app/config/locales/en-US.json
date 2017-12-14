@@ -710,6 +710,9 @@
   "dashboard_club_views": {
     "message": "Club Views"
   },
+  "dashboard_downloads_title": {
+    "message": "Downloads & Registrations"
+  },
   "dashboard_event_views": {
     "message": "Event Views"
   },
@@ -831,7 +834,7 @@
     "message": "Attendance Feedback"
   },
   "events_attendance_manager": {
-    "message": "Attendance Manager"
+    "message": "Attd Manager"
   },
   "events_attendance_manager_full": {
     "message": "Attendance Manager"

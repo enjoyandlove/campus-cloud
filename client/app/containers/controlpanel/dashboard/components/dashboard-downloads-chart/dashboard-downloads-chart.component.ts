@@ -184,7 +184,7 @@ export class DashboardDownloadsChartComponent implements OnInit {
 
         labelInterpolationFnc: function skipLabels(value, index) {
           // ignore last label
-          if (this.divider !== DivideBy.daily && (index + 1 === this.series[0].length)) {
+          if (index + 1 === this.series[0].length) {
             return null;
           }
 
