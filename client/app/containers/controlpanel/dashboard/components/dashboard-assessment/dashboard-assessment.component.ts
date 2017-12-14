@@ -11,6 +11,7 @@ import { DashboardService } from './../../dashboard.service';
 export class DashboardAssessmentComponent extends BaseComponent implements OnInit {
   @Output() ready: EventEmitter<boolean> = new EventEmitter();
 
+  data;
   _dates;
 
   @Input()
@@ -25,21 +26,30 @@ export class DashboardAssessmentComponent extends BaseComponent implements OnIni
     private service: DashboardService
   ) {
     super();
-    super.isLoading().subscribe(loading => {
-      this.loading = loading;
-      this.ready.emit(!this.loading);
-    });
   }
 
 
   fetch() {
+    this.loading = true;
     const stream$ = this.service.getAssessment();
-    // this.service.getAssessment().subscribe(res => console.log('A', res));
 
-    super
-      .fetchData(stream$)
-      .then(res => console.log('ASSESS', res))
-      .catch(err => console.log(err));
+    stream$
+      .subscribe(
+      (res: any) => {
+        this.loading = false;
+        this.data = {
+          event_checkins: res[0].event_checkins,
+          event_feedback_rate: res[0].event_feedback_rate,
+          event_total_feedback: res[0].event_total_feedback,
+          service_checkins: res[1].service_checkins,
+          service_feedback_rate: res[1].service_feedback_rate,
+          service_total_feedback: res[1].service_total_feedback,
+        }
+      },
+      _ => {
+        this.loading = false;
+      })
+
   }
 
   ngOnInit() {

@@ -5,12 +5,12 @@ import { Http, URLSearchParams } from '@angular/http';
 
 import { API } from '../../../config/api';
 import { BaseService } from '../../../base/index';
-// import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class DashboardService extends BaseService {
-  eventAssessment;
-  serviceAssessment;
+  eventAssessment = new Subject();
+  serviceAssessment = new Subject();
 
   constructor(http: Http, router: Router) {
     super(http, router);
@@ -65,12 +65,10 @@ export class DashboardService extends BaseService {
   }
 
   getAssessment() {
-    // return Observable.of([]);
-    // const stream$ = Observable.combineLatest(this.eventAssessment, this.serviceAssessment);
+    const eventAssessment$ = this.eventAssessment.asObservable();
+    const serviceAssessment$ = this.serviceAssessment.asObservable();
 
-    return Observable.of({...this.eventAssessment, ...this.serviceAssessment})
-
-      // .combineLatest(this.eventAssessment, this.serviceAssessment);
+    return Observable.combineLatest(eventAssessment$, serviceAssessment$);
   }
 
   getIntegrations(search: URLSearchParams) {
@@ -97,13 +95,16 @@ export class DashboardService extends BaseService {
     return super
       .get(url, { search })
       .map(res => {
+
         const jsonData = res.json();
 
-        this.eventAssessment = {
+        const eventAssessment = {
           event_checkins: jsonData.total_attendees,
           event_feedback_rate: jsonData.avg_feedbacks,
           event_total_feedback: jsonData.total_feedbacks
         };
+
+        this.eventAssessment.next(eventAssessment);
 
         return jsonData;
       });
@@ -117,11 +118,13 @@ export class DashboardService extends BaseService {
       .map(res => {
         const jsonData = res.json();
 
-        this.serviceAssessment = {
+        const serviceAssessment = {
           service_checkins: jsonData.total_attendees,
           service_feedback_rate: jsonData.avg_feedbacks,
           service_total_feedback: jsonData.total_feedbacks
         };
+
+        this.serviceAssessment.next(serviceAssessment)
 
         return jsonData;
       });
