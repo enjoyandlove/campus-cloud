@@ -1,6 +1,13 @@
 @import '~styles/core/colors';
 @import '~styles/core/typography';
 
+p.title {
+  @include font-24px();
+  @include font-bold();
+
+  margin-bottom: 38px;
+}
+
 @mixin badge() {
   top: 5px;
   left: 4px;

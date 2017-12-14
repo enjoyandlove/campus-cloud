@@ -1,6 +1,10 @@
 <ng-container [ngSwitch]="loading">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
-
+  <div class="row">
+    <div class="col-xs-12">
+      <p class="title">{{ 'dashboard_downloads_title' | cpI18n }}</p>
+    </div>
+  </div>
   <ng-container *ngSwitchCase="false">
     <cp-dashboard-downloads-chart
       [data]="chartData">
