@@ -11,13 +11,13 @@ const year = 365;
 const threeMonths = 90;
 const twoYears = year * 2;
 
-const addGroup = (data) => {
+export const addGroup = (data) => {
   return data.map((group: Number[]) => {
     return group.reduce((prev: number, next: number) => prev + next)
   })
 }
 
-const aggregate = (data: Number[], serie: Number[]): Promise<Number[]> => {
+export const aggregate = (data: Number[], serie: Number[]): Promise<Number[]> => {
   let arr = [];
 
   data.reduce((prev, current, index) => {
@@ -33,19 +33,18 @@ const aggregate = (data: Number[], serie: Number[]): Promise<Number[]> => {
   return new Promise(resolve => { resolve(arr); });
 }
 
-const groupByWeek = (dates: Date[], serie: Number[]) => {
-  const datesByWeek = dates.map(d => { return moment(d).week() });
+export const groupByWeek = (dates: any[], serie: Number[]) => {
+  const datesByWeek = dates.map(d => moment(d).week());
   return aggregate(datesByWeek, serie);
 }
 
-const groupByMonth = (dates: Date[], series: Number[]) => {
-  const datesByMonth = dates.map(d => { return moment(d).month() });
-
+export const groupByMonth = (dates: any[], series: Number[]) => {
+  const datesByMonth = dates.map(d => moment(d).month());
   return aggregate(datesByMonth, series);
 }
 
-const groupByQuarter = (dates: Date[], series: Number[]) => {
-  const datesByQuarter = dates.map(d => { return moment(d).quarter() });
+export const groupByQuarter = (dates: any[], series: Number[]) => {
+  const datesByQuarter = dates.map(d => moment(d).quarter());
 
   return aggregate(datesByQuarter, series);
 }
