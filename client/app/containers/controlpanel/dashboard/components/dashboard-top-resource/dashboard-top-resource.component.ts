@@ -4,6 +4,7 @@
  */
 import { Component, OnInit, Input } from '@angular/core';
 
+import { CPSession } from '../../../../../session';
 import { DashboardUtilsService } from './../../dashboard.utils.service';
 
 @Component({
@@ -20,10 +21,11 @@ export class DashboardTopResourceComponent implements OnInit {
   defaultImage = require('public/default/user.png');
 
   constructor(
+    private session: CPSession,
     private helper: DashboardUtilsService
   ) { }
 
   ngOnInit() {
-    this.isSuperAdmin = this.helper.isSuperAdmin();
+    this.isSuperAdmin = this.helper.isSuperAdmin(this.session);
   }
 }
