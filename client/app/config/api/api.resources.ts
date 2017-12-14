@@ -60,9 +60,12 @@ export const API_ENDPOINTS = {
 
   SERVICE_ASSESSMENT: 'service_assessment',
 
+
   DASHBOARD_TOP_CLUBS: 'analytics/club_data',
 
   SOCIAL_POST_CATEGORY: 'social_post_category',
+
+  DASHBOARD_CAMPUS_TILE: 'analytics/campus_guide',
 
   EXTERNAL_EVENT_CHECKIN: 'external_event_checkin',
 

@@ -59,8 +59,9 @@ export class DashboardService extends BaseService {
   }
 
   getCampusTile(search: URLSearchParams) {
-    console.log(search);
-    return Observable.of(mockCampuTile()).delay(400);
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.DASHBOARD_CAMPUS_TILE}/`;
+
+    return super.get(url, { search }).map(res => res.json());
   }
 
   getAssessment() {
@@ -125,24 +126,5 @@ export class DashboardService extends BaseService {
         return jsonData;
       });
   }
-}
-
-const mockCampuTile = () => {
-  let res = [];
-  let counter = 0;
-
-  while (counter < 15) {
-    res.push(
-      {
-        'id': counter + 1,
-        'title': `Title ${counter}`,
-        'avatar': '',
-        'clicks': (Math.random() * (1000 - 32) + 32).toFixed(),
-        'average': (Math.random() * (1000 - 32) + 32).toFixed()
-      }
-    )
-    counter++;
-  }
-  return res;
 }
 

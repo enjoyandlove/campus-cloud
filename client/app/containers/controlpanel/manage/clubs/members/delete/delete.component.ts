@@ -44,7 +44,7 @@ export class ClubsMembersDeleteComponent implements OnInit {
 
   ngOnInit() {
     this.buttonData = {
-      text: this.cpI18n.translate('delete'),
+      text: this.cpI18n.translate('remove'),
       class: 'danger'
     }
   }
