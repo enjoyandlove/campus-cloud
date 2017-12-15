@@ -24,6 +24,11 @@ describe('DashboardDownloadsChartComponent', () => {
       end: '2017-12-18'
     };
 
+    comp.series = [
+      [1, 2, 3],
+      [3, 2, 1]
+    ]
+
     comp.divider = 0;
 
     fixture.detectChanges(); // trigger initial data binding
@@ -72,5 +77,15 @@ describe('DashboardDownloadsChartComponent', () => {
     comp.divider = 3;
     fixture.detectChanges();
     expect(comp.labelByDivider(1)).toEqual(quarterlyExpected);
+  })
+
+  it('buildLabels', () => {
+    const expected = ['Dec 16th', 'Dec 17th', 'Dec 18th'];
+    const result = comp.buildLabels();
+
+    expect(result).toEqual(expected);
+    expect(result.length).toEqual(3);
+    expect(result).toContain(expected[0]);
+    expect(result[0]).toEqual(expected[0]);
   })
 });
