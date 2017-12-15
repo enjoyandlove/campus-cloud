@@ -47,7 +47,7 @@ export class DashboardSocialActivyComponent extends BaseComponent implements OnI
       .fetchData(stream$)
       .then(res => {
         const flatten = require('lodash').flatten;
-
+        console.log(res.data);
         this.chartData = res.data;
         this.total = flatten(res.data.series).reduce((prev, curr) => { return prev + curr }, 0)
       })

@@ -713,6 +713,9 @@
   "dashboard_downloads_title": {
     "message": "Downloads & Registrations"
   },
+  "dashboard_event_feedback": {
+    "message": "Events Feedback"
+  },
   "dashboard_event_views": {
     "message": "Event Views"
   },
@@ -743,11 +746,29 @@
   "dashboard_service_clicks": {
     "message": "Service Clicks"
   },
+  "dashboard_service_feedback": {
+    "message": "Services Feedback"
+  },
+  "dashboard_social_activity_comments": {
+    "message": "Comments"
+  },
+  "dashboard_social_activity_connections": {
+    "message": "Connections"
+  },
+  "dashboard_social_activity_likes": {
+    "message": "Likes"
+  },
+  "dashboard_social_activity_messages": {
+    "message": "Messages"
+  },
   "dashboard_social_activity_title": {
     "message": "Social Activity"
   },
   "dashboard_social_activity_total": {
     "message": "Total Social Activity"
+  },
+  "dashboard_social_activity_wall_posts": {
+    "message": "Wall Posts"
   },
   "dashboard_top_events": {
     "message": "Top Events"
@@ -1078,6 +1099,9 @@
   },
   "hello": {
     "message": "Hello"
+  },
+  "help_desk": {
+    "message": "Help Desk"
   },
   "hide": {
     "message": "Hide"

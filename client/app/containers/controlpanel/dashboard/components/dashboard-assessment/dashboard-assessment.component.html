@@ -24,16 +24,16 @@
 
       <div class="row">
         <div class="col-xs-9 tile--stat">
-          <p>{{ 'dashboard_assessment_feedback_rate' | cpI18n }}</p>
+          <p>{{ 'dashboard_event_feedback' | cpI18n }}</p>
         </div>
-        <div class="col-xs-3 text-left tile--amount">{{ ((data.event_feedback_rate + data.service_feedback_rate) / 2).toFixed(0) }}%</div>
+        <div class="col-xs-3 text-left tile--amount">{{ data.event_total_feedback }} ({{ data.event_feedback_rate }})%</div>
       </div>
 
       <div class="row">
         <div class="col-xs-9 tile--stat">
-          <p>{{ 'dashboard_assessment_student_feedback' | cpI18n }}</p>
+          <p>{{ 'dashboard_service_feedback' | cpI18n }}</p>
         </div>
-        <div class="col-xs-3 text-left tile--amount">{{ data.event_total_feedback + data.service_total_feedback }}</div>
+        <div class="col-xs-3 text-left tile--amount">{{ data.service_total_feedback }} ({{ data.service_feedback_rate }})%</div>
       </div>
     </div>
   </ng-container>

@@ -18,13 +18,14 @@ export class CPSession {
     const clubsSchoolWide = canSchoolWriteResource(this.g, CP_PRIVILEGES_MAP.clubs);
     const assessSchoolWide = canSchoolWriteResource(this.g, CP_PRIVILEGES_MAP.assessment);
     const serviceSchoolWide = canSchoolWriteResource(this.g, CP_PRIVILEGES_MAP.services);
+    const moderationSchoolWide = canSchoolWriteResource(this.g, CP_PRIVILEGES_MAP.moderation);
 
     const eventSchoolWide = canSchoolWriteResource(this.g, CP_PRIVILEGES_MAP.events);
     const manageAndAssessEvent = canSchoolWriteResource(this.g, CP_PRIVILEGES_MAP.event_attendance);
 
     return clubsSchoolWide && assessSchoolWide &&
            serviceSchoolWide && manageAndAssessEvent
-           && eventSchoolWide;
+           && eventSchoolWide && moderationSchoolWide;
   }
 
   constructor() { }
