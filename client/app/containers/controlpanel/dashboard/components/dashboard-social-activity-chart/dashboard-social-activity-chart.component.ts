@@ -20,11 +20,14 @@ export class DashboardSocialActivyChartComponent implements OnInit {
   @ViewChild('socialActivity') socialActivity: ElementRef;
   series;
   labels;
+  percentages;
 
   @Input()
   set data(data) {
     this.series = data.series;
     this.labels = data.labels;
+    this.percentages = data.percentage;
+
     this.drawChart();
   }
 
@@ -34,7 +37,7 @@ export class DashboardSocialActivyChartComponent implements OnInit {
     return this.series.map((serie, index) => {
       return serie.map((item) => {
         return {
-          'meta': this.labels[index],
+          'meta': `${this.labels[index]} (${this.percentages[index]}%)`,
           'value': item
         }
       })

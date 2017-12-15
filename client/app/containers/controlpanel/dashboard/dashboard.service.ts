@@ -52,8 +52,8 @@ export class DashboardService extends BaseService {
         res.series.push([jsonData.wall_comments]);
         res.series.push([jsonData.messages]);
 
-        res.labels.push('Messages', 'Wall Comments', 'Connections',
-                        'Campus Posts', 'Wall Post Likes')
+        res.labels.push('Messages', 'Comments', 'Connections',
+                        'Wall Posts', 'Likes')
         return res;
       })
   }

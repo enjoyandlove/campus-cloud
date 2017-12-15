@@ -7,10 +7,18 @@ import { CPI18nService } from './../../../shared/services/i18n.service';
 
 const cpI18n = new CPI18nService();
 
-const todayEnd = CPDate.toEpoch(moment().hours(23).minutes(59).seconds(59).toDate());
-const last30Days = CPDate.toEpoch(moment().subtract(30, 'days').hours(0).minutes(0).seconds(0));
-const last90Days = CPDate.toEpoch(moment().subtract(90, 'days').hours(0).minutes(0).seconds(0));
-const lastYear = CPDate.toEpoch(moment().subtract(1, 'year').hours(0).minutes(0).seconds(0));
+const todayDate = moment().hours(23).minutes(59).seconds(59);
+const yesterdayDate = moment(todayDate).subtract(1, 'days');
+const yesterdayEnd = CPDate.toEpoch(yesterdayDate.toDate());
+
+const last30Days = CPDate.toEpoch(moment(yesterdayDate)
+  .subtract(30, 'days').hours(0).minutes(0).seconds(0));
+
+const last90Days = CPDate.toEpoch(moment(yesterdayDate)
+  .subtract(90, 'days').hours(0).minutes(0).seconds(0));
+
+const lastYear = CPDate.toEpoch(moment(yesterdayDate)
+  .subtract(1, 'year').hours(0).minutes(0).seconds(0));
 
 @Injectable()
 export class DashboardUtilsService {
@@ -28,7 +36,7 @@ export class DashboardUtilsService {
 
   last30Days() {
     return {
-      end: todayEnd,
+      end: yesterdayEnd,
       start: last30Days,
       label: cpI18n.translate('dashboard_last_30_days')
     }
@@ -36,7 +44,7 @@ export class DashboardUtilsService {
 
   last90Days() {
     return {
-      end: todayEnd,
+      end: yesterdayEnd,
       start: last90Days,
       label: cpI18n.translate('dashboard_last_90_days')
     }
@@ -44,7 +52,7 @@ export class DashboardUtilsService {
 
   lastYear() {
     return {
-      end: todayEnd,
+      end: yesterdayEnd,
       start: lastYear,
       label: cpI18n.translate('dashboard_last_year')
     }
@@ -52,7 +60,7 @@ export class DashboardUtilsService {
 
   allTime() {
     return {
-      end: todayEnd,
+      end: yesterdayEnd,
       start: 1,
       label: cpI18n.translate('dashboard_all_time')
     }

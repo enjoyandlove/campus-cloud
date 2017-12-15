@@ -12,9 +12,47 @@
         <div class="col-xs-6">
           <div class="row">
             <div class="col-xs-8 tile--stat">
-              <p>{{ 'dashboard_social_activity_total' | cpI18n }}</p>
+              <p>{{ 'dashboard_social_activity_messages' | cpI18n }}</p>
             </div>
-            <div class="col-xs-4 text-left tile--amount">{{ total | cpStatsFormatter }}</div>
+            <div class="col-xs-4 text-left tile--amount">{{ chartData.series[4] | cpStatsFormatter }}</div>
+          </div>
+        </div>
+        <div class="col-xs-6">
+          <div class="row">
+            <div class="col-xs-8 tile--stat">
+              <p>{{ 'dashboard_social_activity_comments' | cpI18n }}</p>
+            </div>
+            <div class="col-xs-4 text-left tile--amount">{{ chartData.series[3] | cpStatsFormatter }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-6">
+          <div class="row">
+            <div class="col-xs-8 tile--stat">
+              <p>{{ 'dashboard_social_activity_connections' | cpI18n }}</p>
+            </div>
+            <div class="col-xs-4 text-left tile--amount">{{ chartData.series[2] | cpStatsFormatter }}</div>
+          </div>
+        </div>
+        <div class="col-xs-6">
+          <div class="row">
+            <div class="col-xs-8 tile--stat">
+              <p>{{ 'dashboard_social_activity_wall_posts' | cpI18n }}</p>
+            </div>
+            <div class="col-xs-4 text-left tile--amount">{{ chartData.series[1] | cpStatsFormatter }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-6">
+          <div class="row">
+            <div class="col-xs-8 tile--stat">
+              <p>{{ 'dashboard_social_activity_likes' | cpI18n }}</p>
+            </div>
+            <div class="col-xs-4 text-left tile--amount">{{ chartData.series[0] | cpStatsFormatter }}</div>
           </div>
         </div>
       </div>
