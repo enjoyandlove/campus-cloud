@@ -56,9 +56,9 @@ export class DashboardDownloadsChartComponent implements OnInit {
     let weekStart = CPDate.toEpoch(weekOne);
 
     let weekEnd = CPDate
-      .toEpoch(weekOne.subtract(1, 'weeks'));
+      .toEpoch(weekOne.add(1, 'weeks'));
 
-    return `${moment.unix(weekEnd).format('MMM D')} - ${moment.unix(weekStart).format('MMM D')}`;
+    return `${moment.unix(weekStart).format('MMM D')} - ${moment.unix(weekEnd).format('MMM D')}`;
   }
 
   monthlyLabel(index) {
