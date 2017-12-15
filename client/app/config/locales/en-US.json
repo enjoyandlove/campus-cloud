@@ -714,7 +714,7 @@
     "message": "Downloads & Registrations"
   },
   "dashboard_event_feedback": {
-    "message": "Events Feedback"
+    "message": "Event Feedback"
   },
   "dashboard_event_views": {
     "message": "Event Views"
@@ -747,7 +747,7 @@
     "message": "Service Clicks"
   },
   "dashboard_service_feedback": {
-    "message": "Services Feedback"
+    "message": "Service Feedback"
   },
   "dashboard_social_activity_comments": {
     "message": "Comments"
