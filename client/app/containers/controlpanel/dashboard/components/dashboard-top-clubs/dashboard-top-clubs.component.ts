@@ -1,10 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
+import { Router } from '@angular/router';
 
+import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
 import { DashboardService } from './../../dashboard.service';
 import { DashboardUtilsService } from './../../dashboard.utils.service';
-import { CPSession } from '../../../../../session/index';
 
 @Component({
   selector: 'cp-dashboard-top-clubs',
@@ -27,6 +28,7 @@ export class DashboardTopClubsComponent extends BaseComponent implements OnInit 
   }
 
   constructor(
+    public router: Router,
     private session: CPSession,
     private service: DashboardService,
     private helper: DashboardUtilsService

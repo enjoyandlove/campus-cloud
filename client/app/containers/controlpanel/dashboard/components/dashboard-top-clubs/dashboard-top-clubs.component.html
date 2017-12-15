@@ -36,14 +36,12 @@
                       <img
                         class="avatar img-rounded"
                         [src]="item.logo_url === '' ? defaultImage : item.logo_url">
-                      <p class="title text-truncate">
-                        <ng-container *ngIf="!isSuperAdmin">{{ item.name }}</ng-container>
-                        <ng-container *ngIf="isSuperAdmin">
-                          <div>
-                            <a [routerLink]="['/manage/clubs/' + item.id + '/info']">{{ item.name }}</a>
-                          </div>
-                        </ng-container>
-                      </p>
+                      <ng-container *ngIf="!isSuperAdmin">
+                        <p class="title text-truncate">{{ item.name }}</p>
+                      </ng-container>
+                      <ng-container *ngIf="isSuperAdmin">
+                        <p class="title text-truncate hover" (click)="router.navigate(['/manage/clubs/' + item.id + '/info'])">{{ item.name }}</p>
+                      </ng-container>
                     </div>
                     <div class="col-xs-2 no-left-padding">
                       <p class="semi-bold">{{ item.member_count }}</p>
