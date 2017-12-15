@@ -3,6 +3,7 @@
  * between top-events and top services
  */
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { CPSession } from '../../../../../session';
 import { DashboardUtilsService } from './../../dashboard.utils.service';
@@ -21,6 +22,7 @@ export class DashboardTopResourceComponent implements OnInit {
   defaultImage = require('public/default/user.png');
 
   constructor(
+    public router: Router,
     private session: CPSession,
     private helper: DashboardUtilsService
   ) { }

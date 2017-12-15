@@ -193,7 +193,11 @@ export class DashboardDownloadsChartComponent implements OnInit {
           }
 
           if (this.divider === DivideBy.weekly) {
-            return index % 2 === 0 ? value : null;
+            if (this.series[0].length > 15) {
+              return index % 8 === 0 ? value : null;
+            }
+
+            return index % 4 === 0 ? value : null;
           }
 
           return value;
