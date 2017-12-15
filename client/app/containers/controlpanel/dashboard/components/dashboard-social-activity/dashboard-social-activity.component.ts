@@ -13,7 +13,6 @@ import { DashboardService } from './../../dashboard.service';
 export class DashboardSocialActivyComponent extends BaseComponent implements OnInit {
   @Output() ready: EventEmitter<boolean> = new EventEmitter();
 
-  total;
   _dates;
   loading;
   chartData;
@@ -35,6 +34,13 @@ export class DashboardSocialActivyComponent extends BaseComponent implements OnI
     });
   }
 
+  calculatePercentage(data) {
+    const flatten = require('lodash').flatten;
+    const total = flatten(data.series).reduce((prev, curr) => { return prev + curr }, 0);
+
+    return data.series.map(item => ((item * 100) / total).toFixed(1));
+  }
+
   fetch() {
     const search = new URLSearchParams();
     search.append('end', this._dates.end);
@@ -46,10 +52,10 @@ export class DashboardSocialActivyComponent extends BaseComponent implements OnI
     super
       .fetchData(stream$)
       .then(res => {
-        const flatten = require('lodash').flatten;
-        console.log(res.data);
-        this.chartData = res.data;
-        this.total = flatten(res.data.series).reduce((prev, curr) => { return prev + curr }, 0)
+        this.chartData = {
+          ...res.data,
+          percentage: this.calculatePercentage(res.data)
+        };
       })
       .catch(err => console.log(err));
   }

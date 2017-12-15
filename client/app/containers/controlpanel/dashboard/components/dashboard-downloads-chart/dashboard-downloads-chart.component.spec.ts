@@ -41,7 +41,7 @@ describe('DashboardDownloadsChartComponent', () => {
   })
 
   it('weeklyLabel', () => {
-    const expected = 'Dec 16 - Dec 23';
+    const expected = 'Dec 23 - Dec 30';
 
     expect(comp.weeklyLabel(1)).toEqual(expected);
   })
@@ -60,7 +60,7 @@ describe('DashboardDownloadsChartComponent', () => {
 
   it('labelByDivider', () => {
     const dailyExpected = 'Dec 17th';
-    const weeklyExpected = 'Dec 16 - Dec 23';
+    const weeklyExpected = 'Dec 23 - Dec 30';
     const monthlyExpected = 'Jan 18';
     const quarterlyExpected = 'Mar 18';
 
