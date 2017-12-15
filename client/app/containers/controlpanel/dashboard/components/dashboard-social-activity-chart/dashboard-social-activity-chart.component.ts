@@ -58,9 +58,6 @@ export class DashboardSocialActivyChartComponent implements OnInit {
         Chartist.plugins.tooltip(
           {
             class: 'cp-social-activity',
-            // appendToBody: true,
-
-            // anchorToPoint: true,
           }
         )
       ],

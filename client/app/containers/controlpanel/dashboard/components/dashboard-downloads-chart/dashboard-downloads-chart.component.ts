@@ -92,6 +92,7 @@ export class DashboardDownloadsChartComponent implements OnInit {
         label = this.quarterLabel(index);
         break;
     }
+
     return label;
   }
 
