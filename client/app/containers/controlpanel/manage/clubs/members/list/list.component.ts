@@ -29,6 +29,7 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
   isCreate;
   isDelete;
   query = null;
+  hasSSO = false;
   editMember = '';
   deleteMember = '';
   state: IState = state;
@@ -94,5 +95,8 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
 
   onTearDown(modal) { this[modal] = false; }
 
-  ngOnInit() { this.fetch(); }
+  ngOnInit() {
+    this.fetch();
+    this.hasSSO = false;
+  }
 }
