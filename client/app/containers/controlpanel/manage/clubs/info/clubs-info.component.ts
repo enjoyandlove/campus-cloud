@@ -92,27 +92,10 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
     });
   }
 
-  validateFile(file) {
-    const validType = {
-      message: this.cpI18n.translate('error_invalid_extension'),
-      valid: this.fileService.validateDoc(file),
-    };
-
-    const validSize = {
-      message: this.cpI18n.translate('error_file_is_too_big'),
-      valid: this.fileService.validateFileSize(file),
-    };
-
-    return {
-      valid: validType.valid && validSize.valid,
-      errors: [validType.message, validSize.message]
-    }
-  }
-
   onFileAdded(file) {
     const headers = new Headers();
     const search = new URLSearchParams();
-    const validate = this.validateFile(file);
+    const validate = this.fileService.validImage(file);
 
     search.append('school_id', this.session.g.get('school').id.toString());
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;

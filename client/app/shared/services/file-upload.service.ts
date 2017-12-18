@@ -20,7 +20,7 @@ export class FileUploadService {
     private cpI18n: CPI18nService
   ) { }
 
-  validImage(file: File) {
+  validImage(file: File): { valid: boolean, errors: Array<string> } {
     const validType = {
       message: this.cpI18n.translate('error_invalid_extension'),
       valid: this.validateImage(file),
@@ -37,15 +37,15 @@ export class FileUploadService {
     }
   }
 
-  validateFileSize(media: File) {
+  validateFileSize(media: File): boolean {
     return media.size < this.maxFileSize;
   }
 
-  validateDoc(media: File, validTypes = this.validFileTypes) {
+  validateDoc(media: File, validTypes = this.validFileTypes): boolean {
     return validTypes.includes(media.type);
   }
 
-  validateImage(media: File, validTypes = this.validImageTypes) {
+  validateImage(media: File, validTypes = this.validImageTypes): boolean {
     return validTypes.includes(media.type);
   }
 
