@@ -60,7 +60,12 @@ export const API_ENDPOINTS = {
 
   SERVICE_ASSESSMENT: 'service_assessment',
 
+
+  DASHBOARD_TOP_CLUBS: 'analytics/club_data',
+
   SOCIAL_POST_CATEGORY: 'social_post_category',
+
+  DASHBOARD_CAMPUS_TILE: 'analytics/campus_guide',
 
   EXTERNAL_EVENT_CHECKIN: 'external_event_checkin',
 
@@ -68,5 +73,14 @@ export const API_ENDPOINTS = {
 
   EXTERNAL_SERVICE_CHECKIN: 'external_service_checkin',
 
-  EXTERNAL_SERVICE_FEEDBACK: 'external_service_feedback'
+  EXTERNAL_SERVICE_FEEDBACK: 'external_service_feedback',
+
+  DASHBOARD_SOCIAL_ACTIVITY: 'analytics/social_activity',
+
+  DASHBORD_USER_ACQUISITION: 'analytics/user_acquisition',
+
+  DASHBOARD_INTEGRATION_STATUS: 'analytics/integration_status',
+
+  DASHBOARD_GENERAL_INFORMATION: 'analytics/general_information',
+
 }

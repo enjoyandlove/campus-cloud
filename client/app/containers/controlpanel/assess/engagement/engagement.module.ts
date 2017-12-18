@@ -28,5 +28,7 @@ import { EngagementRoutingModule } from './engagement.routing.module';
   imports: [ ReactiveFormsModule, CommonModule, SharedModule, EngagementRoutingModule ],
 
   providers: [ EngagementService ],
+
+  exports: [ CPStatsFormatterPipe ]
 })
 export class EngagementModule {}

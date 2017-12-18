@@ -51,6 +51,7 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
     scope: null
   };
   stats: Array<any>;
+  defaultImage = require('public/default/user.png');
   sortyBy: Array<{ 'label': string, 'action': number }>;
 
   constructor(
@@ -60,7 +61,6 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
   ) {
     super();
   }
-
 
   onSortBy(sortBy) {
     this.isSorting = true;

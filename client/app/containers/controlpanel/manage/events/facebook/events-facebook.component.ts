@@ -12,7 +12,6 @@ import {
   IHeader,
   HEADER_UPDATE
 } from '../../../../../reducers/header.reducer';
-import { CPI18nService } from '../../../../../shared/services/index';
 
 @Component({
   selector: 'cp-events-facebook',
@@ -31,7 +30,6 @@ export class EventsFacebookComponent extends BaseComponent implements OnInit {
   constructor(
     private session: CPSession,
     private store: Store<IHeader>,
-    private cpI18n: CPI18nService,
     private utils: EventUtilService,
     private storeService: StoreService
   ) {
@@ -61,10 +59,10 @@ export class EventsFacebookComponent extends BaseComponent implements OnInit {
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': this.cpI18n.translate('events_facebook_heading'),
+        'heading': 'events_facebook_heading',
         'crumbs': {
           'url': backToEvents,
-          'label': this.cpI18n.translate('events')
+          'label': 'events'
         },
         'subheading': '',
         'children': []

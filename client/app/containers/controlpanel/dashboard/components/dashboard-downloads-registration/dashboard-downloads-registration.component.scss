@@ -1,0 +1,53 @@
+@import '~styles/core/colors';
+@import '~styles/core/typography';
+
+p.title {
+  @include font-24px();
+  @include font-bold();
+
+  margin-bottom: 38px;
+}
+
+@mixin badge() {
+  top: 5px;
+  left: 4px;
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.legend {
+  padding: 25px 0 55px 0;
+  border-bottom: 1px solid $border-color;
+
+  span {
+    @include font-semi-bold();
+
+    display: inline-block;
+  }
+
+  &--downloads {
+    position: relative;
+    padding-left: 20px;
+    margin-right: 25px;
+
+    &:before {
+      @include badge();
+
+      background: $color-brand;
+    }
+  }
+
+  &--registrations {
+    position: relative;
+    padding-left: 20px;
+
+    &:before {
+      @include badge();
+
+      background: $color-warning;
+    }
+  }
+}

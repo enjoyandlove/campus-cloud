@@ -12,10 +12,10 @@
     "message": "You do not have sufficient privileges to perform this action."
   },
   "admin_all_acceess_help": {
-    "message": "Give access to all of the Services, Clubs and App Content"
+    "message": "Grant the new team member the same Campus Cloud permissions as me."
   },
   "admin_all_access": {
-    "message": "All Access"
+    "message": "Copy my Campus Cloud Permissions"
   },
   "admin_all_clubs": {
     "message": "All Clubs"
@@ -24,16 +24,16 @@
     "message": "All Services"
   },
   "admin_app_content": {
-    "message": "App Content"
+    "message": "Other"
   },
   "admin_app_content_help": {
-    "message": "Select the content that you want your invitee to access"
+    "message": "Manage other kinds of app content"
   },
   "admin_assess_help": {
-    "message": "View engagement and student attendance data"
+    "message": "View the Assess Dashboard and Student Transcript"
   },
   "admin_campus_announcements": {
-    "message": "Campus Announcements"
+    "message": "Regular Announcements"
   },
   "admin_can_edit": {
     "message": "Can Edit"
@@ -45,7 +45,7 @@
     "message": "Club Owner"
   },
   "admin_club_owner_help": {
-    "message": "Manage club details, events and membership"
+    "message": "Create new clubs; manage information, events and membership for all clubs or select clubs"
   },
   "admin_club_service_modal_title": {
     "message": "Select %s"
@@ -59,20 +59,26 @@
   "admin_delete_user_error": {
     "message": "We could not delete the selected user"
   },
+  "admin_edit_profile": {
+    "message": "Edit Profile"
+  },
   "admin_emergency_announcements": {
     "message": "Emergency Announcements"
   },
   "admin_engagement_dashboard": {
-    "message": "Engagement Dashboard"
+    "message": "Assessment Dashboard"
   },
   "admin_events_help": {
-    "message": "Manage and assess events"
+    "message": "View events; view event assessment"
+  },
+  "admin_events_title": {
+    "message": "Event Viewer"
   },
   "admin_grant_permissions": {
-    "message": "Grant Permissions"
+    "message": "Invite new team members and assign permissions"
   },
   "admin_invite": {
-    "message": "Invite"
+    "message": "Create New Team Member"
   },
   "admin_invitee": {
     "message": "Invitee"
@@ -81,19 +87,19 @@
     "message": "Create your Campus Cloud Account"
   },
   "admin_manage_and_assess_events": {
-    "message": "Manage and Assess Events"
+    "message": "View events and event assessment"
   },
   "admin_manage_events": {
-    "message": "Manage Events"
+    "message": "View Events"
   },
   "admin_modal_delete_body": {
     "message": "Are you sure you want to remove %s?"
   },
   "admin_modal_delete_title": {
-    "message": "Remove Team Member"
+    "message": "Delete Team Member"
   },
   "admin_notify_help": {
-    "message": "Select push notifications"
+    "message": "Send messages to students' phones and/or send emergency announcements"
   },
   "admin_no_access": {
     "message": "No Access"
@@ -102,7 +108,7 @@
     "message": "Password saved, redirecting you to the login page"
   },
   "admin_permissions": {
-    "message": "Permissions"
+    "message": "Select Permissions"
   },
   "admin_search_by_email_or_email": {
     "message": "Search by name or email..."
@@ -114,13 +120,13 @@
     "message": "Select Services"
   },
   "admin_service_owner": {
-    "message": "Service Owner"
+    "message": "Service Executive"
   },
   "admin_service_owner_help": {
-    "message": "Manage service details, events and assessment"
+    "message": "Create new services; manage information, events and assessment for all services or select services"
   },
   "all": {
-    "message": "All"
+    "message": "All Categories"
   },
   "all_fields_are_required": {
     "message": "All fields are required"
@@ -138,19 +144,19 @@
     "message": "Announce to all students"
   },
   "announcements_compose_modal_title": {
-    "message": "Compose"
+    "message": "Create Announcement"
   },
   "announcements_delete_modal_body": {
-    "message": "Are you sure you want to archive this announcement?"
+    "message": "Are you sure you want to delete this announcement?"
   },
   "announcements_delete_modal_body_warning": {
-    "message": "Archiving your notification means no more students will receive it."
+    "message": "No more students will receive it."
   },
   "announcements_delete_modal_title": {
-    "message": "Archive Announcement"
+    "message": "Delete Announcement"
   },
   "announcements_emergency_help": {
-    "message": "Overrides the push settings of the user and forces users to acknowledge the message"
+    "message": "Overrides the user's push notifications settings and forces them to acknowledge the message"
   },
   "announcements_not_sent": {
     "message": "Message not sent, please wait %s minutes before trying again"
@@ -162,10 +168,10 @@
     "message": "Delivered as a regular push notification"
   },
   "announcements_type": {
-    "message": "Announcement Type"
+    "message": "Type"
   },
   "announcements_urgent_help": {
-    "message": "Overrides the push settings of the user"
+    "message": "Overrides the user's push notification settings"
   },
   "announcement_confirm_campus_wide": {
     "message": "Campus Wide Announcement"
@@ -198,7 +204,7 @@
     "message": "App Name"
   },
   "archive": {
-    "message": "Archive"
+    "message": "Delete"
   },
   "are_you_sure?": {
     "message": "Are you Sure?"
@@ -228,10 +234,10 @@
     "message": "Download Engagement Data"
   },
   "assess_checkin_date": {
-    "message": "Check-In Date"
+    "message": "Check-in Date"
   },
   "assess_check_in_time": {
-    "message": "Check-In Item"
+    "message": "Check-in Item"
   },
   "assess_demo_feature_four_description": {
     "message": "Assessment enables you to easily identify which students are disengaged and send them targeted communications via the mobile app."
@@ -300,7 +306,7 @@
     "message": "Feedback Received"
   },
   "assess_last_engagement": {
-    "message": "Last Engagement"
+    "message": "Last Engaged"
   },
   "assess_last_month": {
     "message": "Last Month"
@@ -342,7 +348,7 @@
     "message": "# of Check-ins"
   },
   "assess_number_of_event_checkins": {
-    "message": "# of Event Check-Ins"
+    "message": "# of Event Check-ins"
   },
   "assess_number_of_responses": {
     "message": "# of Responses"
@@ -354,7 +360,7 @@
     "message": "Students who attended one engagement for the period selected"
   },
   "assess_repeat_engagement": {
-    "message": "Repeat Engagement"
+    "message": "Multiple Engagements"
   },
   "assess_repeat_engagement_tooltip": {
     "message": "Students who attended more than one engagement for the period selected"
@@ -369,7 +375,7 @@
     "message": "Services Assessed"
   },
   "assess_service_checkins": {
-    "message": "# of Service Check-ins"
+    "message": "# of  Service Check-ins"
   },
   "assess_service_rating_average": {
     "message": "Service Average Rating"
@@ -381,7 +387,7 @@
     "message": "Services Response Rate"
   },
   "assess_sort_by": {
-    "message": "Sort By"
+    "message": "Sort by"
   },
   "assess_student_id": {
     "message": "Student ID"
@@ -420,16 +426,16 @@
     "message": "Your password has been changed"
   },
   "auth_pwd_reset_heading": {
-    "message": "Follow these simple steps to reset your account"
+    "message": "Follow these steps to reset your password"
   },
   "auth_pwd_reset_step_one": {
-    "message": "Enter your email address"
+    "message": "Enter your email address and click \"Reset Password.\""
   },
   "auth_pwd_reset_step_three": {
-    "message": "Follow instructions to regain access to your account"
+    "message": "Follow the instructions to reset your password."
   },
   "auth_pwd_reset_step_two": {
-    "message": "Wait for your recovery details to be sent"
+    "message": "You will receive an email with step-by-step instructions."
   },
   "auth_reset_password": {
     "message": "Reset Password"
@@ -444,13 +450,13 @@
     "message": "Thank you for trying out the beta."
   },
   "body": {
-    "message": "Body"
+    "message": "Message"
   },
   "building": {
     "message": "Building"
   },
   "button_add_photo": {
-    "message": "Add Photo"
+    "message": "Upload Picture"
   },
   "calendar": {
     "message": "Calendar"
@@ -504,25 +510,28 @@
     "message": "Download QR Code"
   },
   "checkin_header_title": {
-    "message": "Check In Instructions"
+    "message": "Check-in"
   },
   "checkin_instructions_one": {
     "message": "We use QR codes to help attendees check in to an event. Be sure to print or share the QR  code with your event attendance organizer."
   },
   "checkin_instructions_three": {
-    "message": "You can view attendance statistics on your control panel. Be sure to come back to view attendee feedback and event ratings."
+    "message": "You can view attendance statistics in Event Info. Be sure to come back to view feedback and ratings."
   },
   "checkin_instructions_two": {
     "message": "Attendees can check in by scanning the QR code with the app. QR Codes can be printed or shown directly on a laptop, phone or tablet screen"
   },
   "checkin_list": {
-    "message": "Check-In List"
+    "message": "Attendee List"
   },
   "checkin_manual_checkin": {
-    "message": "Manual Check In"
+    "message": "Manual Check-in"
   },
   "checkin_scannable_qr_code": {
-    "message": "Scannable QR Code"
+    "message": "Automatic Check-in (Scan QR code)"
+  },
+  "clicks": {
+    "message": "Clicks"
   },
   "clubs": {
     "message": "Clubs"
@@ -590,6 +599,12 @@
   "clubs_label_member_type": {
     "message": "Member Type"
   },
+  "clubs_membership_disabled": {
+    "message": "Users can view the club but cannot join or message other members"
+  },
+  "clubs_membership_enabled": {
+    "message": "Allows users to join the club and message other members"
+  },
   "clubs_member_button_create": {
     "message": "Add Member"
   },
@@ -606,13 +621,22 @@
     "message": "Edit Member"
   },
   "clubs_member_label_name": {
-    "message": "Name (need a mobile app account)"
+    "message": "Name (requires a mobile app account)"
   },
   "clubs_no_members_found": {
     "message": "No Members Found"
   },
   "clubs_no_results": {
     "message": "No clubs found"
+  },
+  "clubs_status_active": {
+    "message": "Club is approved and is listed in the Campus App"
+  },
+  "clubs_status_inactive": {
+    "message": "Club is suspended and is not listed in the Campus App"
+  },
+  "clubs_status_pending": {
+    "message": "Club is awaiting approval and is not listed in the Campus App"
   },
   "comment": {
     "message": "Comment"
@@ -627,7 +651,7 @@
     "message": "JPG or PNG. Max size of 5MB"
   },
   "compose": {
-    "message": "Compose"
+    "message": "Create Announcement"
   },
   "confirm": {
     "message": "Confirm"
@@ -645,13 +669,115 @@
     "message": "Upload your CSV file or"
   },
   "csv_modal_button_text": {
-    "message": "Click to select a CSV file here"
+    "message": "Select a CSV file"
   },
   "csv_modal_instruction": {
     "message": "Limit of 100 items to import at a time."
   },
   "csv_modal_title": {
     "message": "Upload CSV File"
+  },
+  "dashboard_all_time": {
+    "message": "All Time"
+  },
+  "dashboard_announcements": {
+    "message": "Announcements"
+  },
+  "dashboard_assessment_event_checkins": {
+    "message": "Event Check-Ins"
+  },
+  "dashboard_assessment_feedback_rate": {
+    "message": "Feedback Rate"
+  },
+  "dashboard_assessment_lms": {
+    "message": "LMS"
+  },
+  "dashboard_assessment_service_checkins": {
+    "message": "Service Check-Ins"
+  },
+  "dashboard_assessment_student": {
+    "message": "Student"
+  },
+  "dashboard_assessment_student_feedback": {
+    "message": "Feedback"
+  },
+  "dashboard_assessment_title": {
+    "message": "Assessment"
+  },
+  "dashboard_campus_tile_title": {
+    "message": "Campus Guide Activity\n"
+  },
+  "dashboard_club_views": {
+    "message": "Club Views"
+  },
+  "dashboard_downloads_title": {
+    "message": "Downloads & Registrations"
+  },
+  "dashboard_event_feedback": {
+    "message": "Event Feedback"
+  },
+  "dashboard_event_views": {
+    "message": "Event Views"
+  },
+  "dashboard_general_information": {
+    "message": "Campus App Activity"
+  },
+  "dashboard_integrations_courses": {
+    "message": "Courses"
+  },
+  "dashboard_integrations_sso": {
+    "message": "Single Sign-On"
+  },
+  "dashboard_integrations_title": {
+    "message": "Integrations"
+  },
+  "dashboard_last_30_days": {
+    "message": "Last 30 Days"
+  },
+  "dashboard_last_90_days": {
+    "message": "Last 90 Days"
+  },
+  "dashboard_last_year": {
+    "message": "Last Year"
+  },
+  "dashboard_no_data_found": {
+    "message": "No Results Found"
+  },
+  "dashboard_service_clicks": {
+    "message": "Service Clicks"
+  },
+  "dashboard_service_feedback": {
+    "message": "Service Feedback"
+  },
+  "dashboard_social_activity_comments": {
+    "message": "Comments"
+  },
+  "dashboard_social_activity_connections": {
+    "message": "Connections"
+  },
+  "dashboard_social_activity_likes": {
+    "message": "Likes"
+  },
+  "dashboard_social_activity_messages": {
+    "message": "Messages"
+  },
+  "dashboard_social_activity_title": {
+    "message": "Social Activity"
+  },
+  "dashboard_social_activity_total": {
+    "message": "Total Social Activity"
+  },
+  "dashboard_social_activity_wall_posts": {
+    "message": "Posts"
+  },
+  "dashboard_top_events": {
+    "message": "Top Events"
+  },
+  "dashboard_top_five_clubs_title": {
+    "message": "Top Clubs"
+  },
+  "dashboard_top_services": {
+    "message": "Top Services"
   },
   "delete": {
     "message": "Delete"
@@ -667,6 +793,9 @@
   },
   "download": {
     "message": "Download"
+  },
+  "downloads": {
+    "message": "Downloads"
   },
   "download_csv": {
     "message": "Download CSV File"
@@ -690,10 +819,10 @@
     "message": "Enabled"
   },
   "ended": {
-    "message": "Ended"
+    "message": "End Date:"
   },
   "ends": {
-    "message": "Ends"
+    "message": "End date"
   },
   "end_date": {
     "message": "End Date"
@@ -714,7 +843,7 @@
     "message": "Invalid Extension"
   },
   "error_no_hosts_found_help": {
-    "message": "No Services or Clubs found, check your account privileges"
+    "message": "You do not have sufficient privileges to associate this new event with a host (a service or a club). "
   },
   "event": {
     "message": "Event"
@@ -741,22 +870,22 @@
     "message": "Create Event"
   },
   "events_checked_in_method": {
-    "message": "Checked-in Method"
+    "message": "Check-in Method"
   },
   "events_checked_in_time": {
-    "message": "Checked In Time"
+    "message": "Check-in Time"
   },
   "events_check_in": {
-    "message": "Check-In"
+    "message": "Check-in"
   },
   "events_check_in_details": {
-    "message": "Check-In Details"
+    "message": "Check-in"
   },
   "events_create_heading": {
     "message": "Create Event"
   },
   "events_default_question": {
-    "message": "Default Question"
+    "message": "Feedback Question"
   },
   "events_delete_modal_body": {
     "message": "Are you sure you want to delete %s?"
@@ -768,10 +897,10 @@
     "message": "Edit Event"
   },
   "events_error_end_date_after_now": {
-    "message": "Event End Time must be greater than now"
+    "message": "The event's end time must be in the future."
   },
   "events_error_end_date_before_start": {
-    "message": "Event End Time must be after Event Start Time"
+    "message": "The event's end time must be later than its start time."
   },
   "events_event_attendance": {
     "message": "Event Attendance"
@@ -792,13 +921,13 @@
     "message": "Event Name"
   },
   "events_facebook_add_button": {
-    "message": "Add Link"
+    "message": "Create Link"
   },
   "events_facebook_heading": {
     "message": "Import Events from Facebook"
   },
   "events_facebook_help": {
-    "message": "To import events from Facebook, input your Facebook page's event link below eg.https://www.facebook.com/oohlalamobileapp/events/"
+    "message": "Provide the link to the Facebook event page (e.g., https://www.facebook.com/oohlalamobileapp/events/)."
   },
   "events_facebook_label_host": {
     "message": "Select Host"
@@ -810,7 +939,7 @@
     "message": "Are you sure you want to delete this link?"
   },
   "events_facebook_link_delete_modal_title": {
-    "message": "Are you sure?"
+    "message": "Delete Event Link"
   },
   "events_hosted_by": {
     "message": "Hosted by"
@@ -818,8 +947,14 @@
   "events_import_bulk_update": {
     "message": "Bulk Update"
   },
+  "events_import_csv_heading": {
+    "message": "Import Events from File"
+  },
+  "events_import_csv_sub_heading": {
+    "message": "File contains data for %s calendar event(s)"
+  },
   "events_import_from_facebook": {
-    "message": "Import from Facebook"
+    "message": "Import Events from Facebook"
   },
   "events_label_past_events": {
     "message": "Past Events"
@@ -891,10 +1026,10 @@
     "message": "Approve Post"
   },
   "feeds_can_comment": {
-    "message": "Can Comment"
+    "message": "Who can comment?"
   },
   "feeds_can_post": {
-    "message": "Can Post"
+    "message": "Who can post?"
   },
   "feeds_delete_comment": {
     "message": "Delete Comment"
@@ -936,7 +1071,7 @@
     "message": "posted in"
   },
   "feeds_post_as": {
-    "message": "Post as"
+    "message": "Select a Host"
   },
   "feeds_post_to": {
     "message": "Post to"
@@ -945,25 +1080,28 @@
     "message": "Removed Posts"
   },
   "feeds_team_members": {
-    "message": "Team Members"
+    "message": "Members"
   },
   "feeds_wall_name": {
-    "message": "Wall Name"
+    "message": "Club Name"
   },
   "feeds_wall_settings_modal_title": {
-    "message": "Wall Settings"
+    "message": "Club Wall Settings"
   },
   "first_name": {
     "message": "First Name"
   },
   "for": {
-    "message": "For"
+    "message": "for"
   },
   "from": {
     "message": "From"
   },
   "hello": {
     "message": "Hello"
+  },
+  "help_desk": {
+    "message": "Help Desk"
   },
   "hide": {
     "message": "Hide"
@@ -978,7 +1116,7 @@
     "message": "Import from CSV"
   },
   "in": {
-    "message": "In"
+    "message": "in"
   },
   "inactive": {
     "message": "Inactive"
@@ -990,7 +1128,7 @@
     "message": "Instructions"
   },
   "invite_team_members": {
-    "message": "Invite Team Members"
+    "message": "Create New Team Member"
   },
   "last_name": {
     "message": "Last Name"
@@ -999,10 +1137,10 @@
     "message": "Links"
   },
   "links_add_modal_title": {
-    "message": "Add Link"
+    "message": "Create Link"
   },
   "links_button_new": {
-    "message": "Add Link"
+    "message": "Create Link"
   },
   "links_delete_modal_body": {
     "message": "Are you sure you want to delete %s?"
@@ -1011,22 +1149,22 @@
     "message": "Delete Link"
   },
   "links_edit_modal_title": {
-    "message": "Edit Link"
+    "message": "Name"
   },
   "links_label_link_name": {
-    "message": "Link Name"
+    "message": "Name"
   },
   "links_label_link_url": {
-    "message": "Link URL"
+    "message": "URL"
   },
   "links_no_results_found": {
     "message": "No Links found"
   },
   "link_label_description": {
-    "message": "Link Description"
+    "message": "Description"
   },
   "link_label_link_banner": {
-    "message": "Link Banner"
+    "message": "Image"
   },
   "lists": {
     "message": "Lists"
@@ -1035,7 +1173,7 @@
     "message": "Create List"
   },
   "lists_create_modal_title": {
-    "message": "Create New List"
+    "message": "Create List"
   },
   "lists_delete_modal_body": {
     "message": "Are you sure you want to delete %s?"
@@ -1050,13 +1188,16 @@
     "message": "This list is being used in a notification template. To delete this list, first delete all templates addressed to this list, and try again."
   },
   "lists_label_list_description": {
-    "message": "List Description"
+    "message": "Description"
   },
   "lists_label_list_name": {
-    "message": "List Name"
+    "message": "Name"
   },
   "lists_no_results_found": {
     "message": "No lists found"
+  },
+  "lists_number_of_users": {
+    "message": "Number of Users"
   },
   "location": {
     "message": "Location"
@@ -1080,7 +1221,7 @@
     "message": "Manage"
   },
   "manage_team_members": {
-    "message": "Manage Team Members"
+    "message": "Team Manager"
   },
   "maps": {
     "message": "Maps"
@@ -1093,6 +1234,12 @@
   },
   "message": {
     "message": "Message"
+  },
+  "message_file_upload_error": {
+    "message": "Something went wrong, please try again"
+  },
+  "message_file_upload_success": {
+    "message": "File uploaded successfully"
   },
   "move": {
     "message": "Move"
@@ -1114,6 +1261,9 @@
   },
   "no_hosts_available": {
     "message": "No Hosts Available"
+  },
+  "no_one": {
+    "message": "No One"
   },
   "no_results": {
     "message": "No Results"
@@ -1158,10 +1308,13 @@
     "message": "QR Code"
   },
   "rating": {
-    "message": "Rating"
+    "message": "Ratings"
   },
   "ratings": {
     "message": "Ratings"
+  },
+  "registrations": {
+    "message": "Registrations"
   },
   "regular": {
     "message": "Regular"
@@ -1185,7 +1338,7 @@
     "message": "Students can post messages to Club Feeds. Executives and Administrators can moderate these Feeds."
   },
   "release_notes_june_2_item_two": {
-    "message": "Executives of Clubs and Groups can create Events and Services within those groups"
+    "message": "Executives of a club can create events and services hosted by that club."
   },
   "release_notes_june_2_title": {
     "message": "New as of June 2, 2017:"
@@ -1214,6 +1367,9 @@
   "release_notes_title": {
     "message": "Welcome to the brand new Campus Cloud!"
   },
+  "remove": {
+    "message": "Remove"
+  },
   "response": {
     "message": "Response"
   },
@@ -1222,6 +1378,9 @@
   },
   "results": {
     "message": "Results"
+  },
+  "reupload": {
+    "message": "Reupload"
   },
   "room": {
     "message": "Room"
@@ -1245,13 +1404,13 @@
     "message": "Select Category"
   },
   "select_host": {
-    "message": "Select Host"
+    "message": "Select a Host"
   },
   "send": {
     "message": "Send"
   },
   "sent": {
-    "message": "Sent"
+    "message": "Date Sent"
   },
   "service": {
     "message": "Service"
@@ -1263,7 +1422,7 @@
     "message": "Admin"
   },
   "services_button_add_service_provider": {
-    "message": "Add Service Provider"
+    "message": "Create Service Provider"
   },
   "services_button_create": {
     "message": "Create Service"
@@ -1299,7 +1458,7 @@
     "message": "Import Services"
   },
   "services_label_all_checkin_methods": {
-    "message": "All check-in methods"
+    "message": "Check-in method"
   },
   "services_label_attendee_name": {
     "message": "Attendee Name"
@@ -1311,16 +1470,16 @@
     "message": "Checked-in Method"
   },
   "services_label_checked_in_time": {
-    "message": "Checked-in Time"
+    "message": "Check-in Time"
   },
   "services_label_checkin_time": {
-    "message": "Checked-in time"
+    "message": "Check-in Time"
   },
   "services_label_check_in_details": {
-    "message": "Check-In Details"
+    "message": "Check-in"
   },
   "services_label_default_question": {
-    "message": "Default Question"
+    "message": "Feedback Question"
   },
   "services_label_description": {
     "message": "Service Description"
@@ -1344,37 +1503,37 @@
     "message": "No services found"
   },
   "services_providers_no_results": {
-    "message": "No service provider yet, use the button above to create a provider."
+    "message": "There are no service providers for this service.  Use \"Create Service Provider\" to create one. \n\nService Providers are used to track attendance check-ins and gather student feedback."
   },
   "services_provider_button_add_another": {
-    "message": "Add Another Service Provider"
+    "message": "Add another Service Provider"
   },
   "services_provider_delete_modal_body": {
     "message": "Are you sure you want to delete %s?"
   },
   "services_provider_delete_modal_title": {
-    "message": "Are you sure?"
+    "message": "Delete Service Provider"
   },
   "services_provider_label_add_service_provider": {
-    "message": "Add Service Provider"
+    "message": "Create Service Provider"
   },
   "services_provider_label_default_question": {
-    "message": "Default Question"
+    "message": "Feedback Question"
   },
   "services_provider_search_tootlip": {
-    "message": "Search Service Provider"
+    "message": "Search..."
   },
   "services_repeat_visits": {
-    "message": "Repeat Visits"
+    "message": "Repeat Visitors"
   },
   "services_total_responses": {
     "message": "Total Responses"
   },
   "services_total_visits": {
-    "message": "Total Visits"
+    "message": "Total Check-ins to Service"
   },
   "services_unique_visits": {
-    "message": "Unique Visits"
+    "message": "Unique Visitors"
   },
   "services_visits": {
     "message": "Visits"
@@ -1392,10 +1551,10 @@
     "message": "Something went wrong"
   },
   "started": {
-    "message": "Started"
+    "message": "Start Date"
   },
   "starts": {
-    "message": "Starts"
+    "message": "Start Date"
   },
   "start_date": {
     "message": "Start Date"
@@ -1407,10 +1566,10 @@
     "message": "Students"
   },
   "student_engagements": {
-    "message": "Student Engagements"
+    "message": "Student Engagement"
   },
   "student_feedback": {
-    "message": "Student Feedback"
+    "message": "Feedback"
   },
   "student_id": {
     "message": "Student ID"
@@ -1425,13 +1584,13 @@
     "message": "Templates"
   },
   "templates_button_new": {
-    "message": "New Template"
+    "message": "Create Template"
   },
   "templates_crate_label_template_name": {
     "message": "Template Name"
   },
   "templates_crate_modal_title": {
-    "message": "New Template"
+    "message": "Create Template"
   },
   "templates_create_label_all_students": {
     "message": "Announce to all students"

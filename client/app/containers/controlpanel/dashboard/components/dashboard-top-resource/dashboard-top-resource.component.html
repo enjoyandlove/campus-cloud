@@ -1,0 +1,57 @@
+<div class="row table">
+  <div class="col-xs-12">
+    <ng-container *ngIf="!items.length">
+      <p class="table--no-results text-center">{{ 'dashboard_no_data_found' | cpI18n }}</p>
+    </ng-container>
+    <ng-container *ngIf="items.length">
+      <div class="row table--header">
+        <div class="col-xs-1">
+          <p>#</p>
+        </div>
+        <div class="col-xs-5 no-left-padding">
+          <p i18n>{{ 'title' | cpI18n }}</p>
+        </div>
+        <div class="col-xs-2 no-left-padding">
+          <p i18n>{{ 'attendees' | cpI18n }}</p>
+        </div>
+        <div class="col-xs-2 no-right-padding">
+          <p i18n>{{ 'feedback' | cpI18n }}</p>
+        </div>
+        <div class="col-xs-2 text-right no-left-padding">
+          <p i18n>{{ 'rating' | cpI18n }}</p>
+        </div>
+      </div>
+      <div class="row" *ngFor="let item of items; index as index last as last">
+        <div class="col-xs-12">
+          <div class="table--item" [class.isLast]="last">
+            <div class="row">
+              <div class="col-xs-1">
+                <p class="ranking">{{ index + 1 }}</p>
+              </div>
+              <div class="col-xs-5 no-left-padding text-truncate">
+                <img
+                  class="avatar img-rounded"
+                  [src]="item.image === '' ? defaultImage : item.image">
+                <ng-container *ngIf="!isSuperAdmin">
+                  <p class="title text-truncate">{{ item.name }}</p>
+                </ng-container>
+                <ng-container *ngIf="isSuperAdmin">
+                  <p class="title text-truncate hover" (click)="router.navigate(['/manage/' + resource + '/' + item.id])">{{ item.name }}</p>
+                </ng-container>
+              </div>
+              <div class="col-xs-2 no-left-padding">
+                <p class="semi-bold">{{ item.attendees }}</p>
+              </div>
+              <div class="col-xs-2 no-right-padding">
+                <p class="semi-bold">{{ item.feedback }}</p>
+              </div>
+              <div class="col-xs-2 text-right no-left-padding">
+                <p class="semi-bold">{{ ((item.rating / 100) * 5).toFixed(1) }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

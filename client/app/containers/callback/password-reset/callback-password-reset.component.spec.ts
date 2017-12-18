@@ -1,22 +1,24 @@
+import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { AuthService } from './../../auth/auth.service';
-import { ErrorService } from './../../../shared/services/error.service';
+import { StoreModule } from '@ngrx/store';
+
 import {
   TestBed,
   async,
   fakeAsync,
   ComponentFixture
 } from '@angular/core/testing';
-import { Router, ActivatedRoute } from '@angular/router';
-import { StoreModule } from '@ngrx/store';
 
+import { AuthService } from './../../auth/auth.service';
+import { CPI18nService } from '../../../shared/services';
 import { FormsModule, FormBuilder } from '@angular/forms';
 import { ALERT_DEFAULT } from '../../../reducers/alert.reducer';
+import { ErrorService } from './../../../shared/services/error.service';
 import { CallbackPasswordResetComponent } from './callback-password-reset.component';
 
 class RouterMock {
     navigate() {
-      console.log('navigating');
+      // console.log('navigating');
     }
 }
 
@@ -51,6 +53,7 @@ describe('Password Reset', () => {
      declarations: [ CallbackPasswordResetComponent ],
      providers: [
       FormBuilder,
+      CPI18nService,
       ErrorService,
       { provide: ActivatedRoute, useClass: MockActivatedRoute },
       { provide: AuthService, useClass: MockAuthService },
@@ -77,7 +80,7 @@ describe('Password Reset', () => {
 
 
   it('Should read Key from url', fakeAsync(() => {
-    expect(comp.isSubmitted).not.toBeDefined();
+    expect(comp.isSubmitted).toBeFalsy();
     expect(comp.key.toString()).toBe('123');
   }));
 
