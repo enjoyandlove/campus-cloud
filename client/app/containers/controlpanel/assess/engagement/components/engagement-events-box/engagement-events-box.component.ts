@@ -29,7 +29,6 @@ interface IState {
   };
 }
 
-
 @Component({
   selector: 'cp-engagement-events-box',
   templateUrl: './engagement-events-box.component.html',
@@ -51,6 +50,8 @@ export class EngagementEventsBoxComponent extends BaseComponent implements OnIni
     end: null,
     scope: null
   };
+
+  defaultImage = require('public/default/user.png');
   sortyBy: Array<{ 'label': string, 'action': number }>;
 
   constructor(
