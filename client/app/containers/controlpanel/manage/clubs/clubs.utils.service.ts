@@ -13,9 +13,7 @@ import {
 export class ClubsUtilsService {
 
   isSJSU(club: IClub) {
-    console.log('ClubsUtilsService', club);
-    return true;
-    // return 'advisor_firstname' in club;
+    return 'advisor_firstname' in club || false;
   }
 
   getSubNavChildren(club: IClub, session) {
