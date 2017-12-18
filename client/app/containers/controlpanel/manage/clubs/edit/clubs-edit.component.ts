@@ -1,3 +1,4 @@
+import { ClubsUtilsService } from './../clubs.utils.service';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -29,6 +30,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
   defaultStatus;
   membershipTypes;
   form: FormGroup;
+  isSJSU: boolean;
   defaultMembership;
   isFormReady = false;
   mapCenter: BehaviorSubject<any>;
@@ -41,6 +43,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
     private session: CPSession,
     private cpI18n: CPI18nService,
     private route: ActivatedRoute,
+    private helper: ClubsUtilsService,
     private clubsService: ClubsService,
   ) {
     super();
@@ -66,6 +69,9 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
       .fetchData(stream$)
       .then(res => {
         this.club = res.data;
+
+        this.isSJSU = this.helper.isSJSU(this.club);
+
         this.buildForm();
 
         this.defaultStatus = this.getDefaultStatus(this.club.status);
@@ -100,6 +106,9 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
       'website': [this.club.website],
       'phone': [this.club.phone],
       'email': [this.club.email],
+      'advisor_firstname': [this.club.advisor_firstname],
+      'advisor_lastname': [this.club.advisor_lastname],
+      'advisor_email': [this.club.advisor_email],
     });
 
     this.isFormReady = true;
