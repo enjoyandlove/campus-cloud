@@ -1,4 +1,3 @@
-import { Observable } from 'rxjs/Observable';
 import { URLSearchParams, Headers } from '@angular/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
@@ -82,53 +81,66 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
     });
   }
 
-  flashMessageError() {
+  flashMessageError(body = this.cpI18n.translate('message_file_upload_error')) {
     this.store.dispatch({
       type: SNACKBAR_SHOW,
       payload: {
+        body,
         class: 'danger',
         autoClose: true,
-        body: this.cpI18n.translate('message_file_upload_error')
       }
     });
+  }
+
+  validateFile(file) {
+    const validType = {
+      message: this.cpI18n.translate('error_invalid_extension'),
+      valid: this.fileService.validateDoc(file),
+    };
+
+    const validSize = {
+      message: this.cpI18n.translate('error_file_is_too_big'),
+      valid: this.fileService.validateFileSize(file),
+    };
+
+    return {
+      valid: validType.valid && validSize.valid,
+      errors: [validType.message, validSize.message]
+    }
   }
 
   onFileAdded(file) {
     const headers = new Headers();
     const search = new URLSearchParams();
+    const validate = this.validateFile(file);
+
     search.append('school_id', this.session.g.get('school').id.toString());
-
-    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
-
-    headers.append('Authorization', auth);
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
 
-    const validateMime$ = this.fileService.validateDoc(file);
-    const validateSize$ = this.fileService.validateFileSize(file);
+    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
+    headers.append('Authorization', auth);
 
-    const validate$ = Observable.of(validateMime$, validateSize$);
+    if (!validate.valid) {
+      this.flashMessageError(validate.errors[0]);
+      return;
+    }
 
-    validate$.subscribe(
-      res => console.log('res', res),
-      err => console.log('err', err),
-    )
+    this
+      .fileService
+      .uploadFile(file, url, headers)
+      .switchMap(data => {
+        this.club = Object.assign(
+          {},
+          this.club,
+          { logo_url: data.image_url }
+        )
 
-    // this
-    //   .fileService
-    //   .uploadFile(file, url, headers)
-    //   .switchMap(data => {
-    //     this.club = Object.assign(
-    //       {},
-    //       this.club,
-    //       { logo_url: data.image_url }
-    //     )
-
-    //     return this.clubsService.updateClub(this.club, this.clubId, search);
-    //   })
-    //   .subscribe(
-    //     _ => this.flashMessageSuccess(),
-    //     _ => this.flashMessageError()
-    //   )
+        return this.clubsService.updateClub(this.club, this.clubId, search);
+      })
+      .subscribe(
+        _ => this.flashMessageSuccess(),
+        _ => this.flashMessageError()
+      )
   }
 
   ngOnInit() {

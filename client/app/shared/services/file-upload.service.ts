@@ -1,5 +1,4 @@
 import { Http, Headers } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 
 @Injectable()
@@ -18,18 +17,15 @@ export class FileUploadService {
   constructor(private http: Http) { }
 
   validateFileSize(media: File) {
-    const isValid = media.size < this.maxFileSize;
-    return isValid ? Observable.of(media) : Observable.throw('File is too big');
+    return media.size < this.maxFileSize;
   }
 
   validateDoc(media: File, validTypes = this.validFileTypes) {
-    const isValid = validTypes.includes(media.type);
-    return isValid ? Observable.of(media) : Observable.throw('Invalid file type');
+    return validTypes.includes(media.type);
   }
 
   validateImage(media: File, validTypes = this.validImageTypes) {
-    const isValid = validTypes.includes(media.type);
-    return isValid ? Observable.of(media) : Observable.throw('Invalid file type');
+    return validTypes.includes(media.type);
   }
 
   uploadFile(media: File, url: string, headers?: Headers) {
