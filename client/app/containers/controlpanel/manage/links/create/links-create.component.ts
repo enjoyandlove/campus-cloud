@@ -6,8 +6,9 @@ import { ILink } from '../link.interface';
 import { API } from '../../../../../config/api';
 import { LinksService } from '../links.service';
 import { CPSession } from '../../../../../session';
-import { CPImage, appStorage } from '../../../../../shared/utils';
-import { FileUploadService, CPI18nService } from '../../../../../shared/services';
+import { appStorage } from '../../../../../shared/utils';
+import { FileUploadService } from '../../../../../shared/services';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 declare var $: any;
 
@@ -27,8 +28,8 @@ export class LinksCreateComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private session: CPSession,
+    public cpI18n: CPI18nService,
     private service: LinksService,
-    private cpI18n: CPI18nService,
     private fileUploadService: FileUploadService
   ) { }
 
@@ -44,15 +45,10 @@ export class LinksCreateComponent implements OnInit {
 
   onFileUpload(file) {
     this.imageError = null;
-    const fileExtension = file.name.split('.').pop();
+    const validate = this.fileUploadService.validImage(file);
 
-    if (!CPImage.isSizeOk(file.size, CPImage.MAX_IMAGE_SIZE)) {
-      this.imageError = this.cpI18n.translate('error_file_is_too_big');
-      return;
-    }
-
-    if (!CPImage.isValidExtension(fileExtension, CPImage.VALID_EXTENSIONS)) {
-      this.imageError = this.cpI18n.translate('error_invalid_extension');
+    if (!validate.valid) {
+      this.imageError = validate.errors[0];
       return;
     }
 

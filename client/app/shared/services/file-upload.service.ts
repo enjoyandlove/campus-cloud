@@ -1,6 +1,8 @@
 import { Http, Headers } from '@angular/http';
 import { Injectable } from '@angular/core';
 
+import { CPI18nService } from './index';
+
 @Injectable()
 export class FileUploadService {
   maxFileSize = 10e+7;
@@ -13,8 +15,27 @@ export class FileUploadService {
 
   validImageTypes = ['image/jpeg', 'image/jpg', 'image/png'];
 
+  constructor(
+    private http: Http,
+    private cpI18n: CPI18nService
+  ) { }
 
-  constructor(private http: Http) { }
+  validImage(file: File) {
+    const validType = {
+      message: this.cpI18n.translate('error_invalid_extension'),
+      valid: this.validateImage(file),
+    };
+
+    const validSize = {
+      message: this.cpI18n.translate('error_file_is_too_big'),
+      valid: this.validateFileSize(file),
+    };
+
+    return {
+      valid: validType.valid && validSize.valid,
+      errors: [validType.message, validSize.message]
+    }
+  }
 
   validateFileSize(media: File) {
     return media.size < this.maxFileSize;

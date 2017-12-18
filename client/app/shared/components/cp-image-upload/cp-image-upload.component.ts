@@ -29,23 +29,6 @@ export class CPImageUploadComponent implements OnInit {
     private fileUploadService: FileUploadService
   ) { }
 
-  validateFile(file) {
-    const validType = {
-      message: this.cpI18n.translate('error_invalid_extension'),
-      valid: this.fileUploadService.validateImage(file),
-    };
-
-    const validSize = {
-      message: this.cpI18n.translate('error_file_is_too_big'),
-      valid: this.fileUploadService.validateFileSize(file),
-    };
-
-    return {
-      valid: validType.valid && validSize.valid,
-      errors: [validType.message, validSize.message]
-    }
-  }
-
   onFileUpload(file, asPromise?: boolean) {
     this.error = null;
 
@@ -54,7 +37,7 @@ export class CPImageUploadComponent implements OnInit {
       return;
     }
 
-    const validate = this.validateFile(file);
+    const validate = this.fileUploadService.validImage(file);
 
     if (!validate.valid) {
       if (asPromise) {
