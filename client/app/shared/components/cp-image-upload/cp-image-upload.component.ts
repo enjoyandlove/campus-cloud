@@ -3,7 +3,7 @@ import { Headers } from '@angular/http';
 
 import { API } from '../../../config/api';
 import { CPI18nService } from '../../services';
-import { CPImage, appStorage } from '../../../shared/utils';
+import { appStorage } from '../../../shared/utils';
 import { FileUploadService } from '../../../shared/services/file-upload.service';
 
 @Component({
@@ -19,44 +19,32 @@ export class CPImageUploadComponent implements OnInit {
   @Output() uploaded: EventEmitter<string> = new EventEmitter();
 
   image;
+  error;
   fileName;
   isLoading;
   buttonText;
-  errors = [];
 
   constructor(
     public cpI18n: CPI18nService,
     private fileUploadService: FileUploadService
   ) { }
 
-  validateImage(file) {
-    const fileExtension = file.name.split('.').pop();
-
-    if (!CPImage.isSizeOk(file.size, CPImage.MAX_IMAGE_SIZE)) {
-      this.errors.push(this.cpI18n.translate('error_file_is_too_big'));
-    }
-
-    if (!CPImage.isValidExtension(fileExtension, CPImage.VALID_EXTENSIONS)) {
-      this.errors.push(this.cpI18n.translate('error_invalid_extension'));
-      return;
-    }
-
-  }
-
   onFileUpload(file, asPromise?: boolean) {
-    this.errors = [];
+    this.error = null;
 
     if (!file) {
       this.image = null;
       return;
     }
 
-    this.validateImage(file);
+    const validate = this.fileUploadService.validImage(file);
 
-    if (this.errors.length) {
+    if (!validate.valid) {
       if (asPromise) {
-        return Promise.reject(this.errors[0]);
+        return Promise.reject(validate.errors[0]);
       }
+
+      this.error = validate.errors[0];
       return;
     }
 
@@ -83,7 +71,7 @@ export class CPImageUploadComponent implements OnInit {
       },
       _ => {
         this.isLoading = false;
-        this.errors.push(this.cpI18n.translate('something_went_wrong'));
+        this.error = this.cpI18n.translate('something_went_wrong');
       }
       );
   }

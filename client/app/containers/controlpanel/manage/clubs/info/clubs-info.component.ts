@@ -1,13 +1,17 @@
+import { URLSearchParams, Headers } from '@angular/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { URLSearchParams } from '@angular/http';
+import { Store } from '@ngrx/store';
 
 import { ClubStatus } from '../club.status';
 import { ClubsService } from '../clubs.service';
+import { API } from '../../../../../config/api';
 import { CPSession } from '../../../../../session';
-import { CPI18nService } from '../../../../../shared/services';
 import { BaseComponent } from '../../../../../base/base.component';
+import { appStorage } from './../../../../../shared/utils/storage/storage';
+import { CPI18nService, FileUploadService } from '../../../../../shared/services';
+import { SNACKBAR_SHOW, ISnackbar } from './../../../../../reducers/snackbar.reducer';
 
 @Component({
   selector: 'cp-clubs-info',
@@ -27,7 +31,9 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
     private session: CPSession,
     private route: ActivatedRoute,
     private cpI18n: CPI18nService,
-    private clubsService: ClubsService
+    private store: Store<ISnackbar>,
+    private clubsService: ClubsService,
+    private fileService: FileUploadService
   ) {
     super();
     this.clubId = this.route.parent.snapshot.params['clubId'];
@@ -63,6 +69,61 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
           this.club.advisor_email;
       })
       .catch(err => { throw new Error(err) });
+  }
+
+  flashMessageSuccess() {
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        autoClose: true,
+        body: this.cpI18n.translate('message_file_upload_success')
+      }
+    });
+  }
+
+  flashMessageError(body = this.cpI18n.translate('message_file_upload_error')) {
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        body,
+        class: 'danger',
+        autoClose: true,
+      }
+    });
+  }
+
+  onFileAdded(file) {
+    const headers = new Headers();
+    const search = new URLSearchParams();
+    const validate = this.fileService.validImage(file);
+
+    search.append('school_id', this.session.g.get('school').id.toString());
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
+
+    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
+    headers.append('Authorization', auth);
+
+    if (!validate.valid) {
+      this.flashMessageError(validate.errors[0]);
+      return;
+    }
+
+    this
+      .fileService
+      .uploadFile(file, url, headers)
+      .switchMap(data => {
+        this.club = Object.assign(
+          {},
+          this.club,
+          { logo_url: data.image_url }
+        )
+
+        return this.clubsService.updateClub(this.club, this.clubId, search);
+      })
+      .subscribe(
+        _ => this.flashMessageSuccess(),
+        _ => this.flashMessageError()
+      )
   }
 
   ngOnInit() {
