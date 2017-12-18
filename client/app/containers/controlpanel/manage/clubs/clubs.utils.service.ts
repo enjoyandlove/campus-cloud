@@ -11,6 +11,11 @@ import {
 
 @Injectable()
 export class ClubsUtilsService {
+
+  isSJSU(club: IClub) {
+    return 'advisor_firstname' in club || false;
+  }
+
   getSubNavChildren(club: IClub, session) {
     let links = [];
 
