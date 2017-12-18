@@ -172,7 +172,8 @@
                     <input
                       type="text"
                       class="form-control"
-                      formControlName="advisor_firstname">
+                      formControlName="advisor_firstname"
+                      [class.error]="formError && form.controls['advisor_firstname'].hasError('required')">
                   </div>
 
                   <div class="col-xs-6">
@@ -180,7 +181,8 @@
                     <input
                       type="text"
                       class="form-control"
-                      formControlName="advisor_lastname">
+                      formControlName="advisor_lastname"
+                      [class.error]="formError && form.controls['advisor_lastname'].hasError('required')">
                   </div>
                 </div>
 
@@ -190,7 +192,8 @@
                     <input
                       type="text"
                       class="form-control"
-                      formControlName="advisor_email">
+                      formControlName="advisor_email"
+                      [class.error]="formError && form.controls['advisor_email'].hasError('required')">
                   </div>
                 </div>
               </div>

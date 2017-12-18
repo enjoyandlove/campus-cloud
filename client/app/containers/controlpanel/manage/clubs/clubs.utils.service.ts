@@ -13,7 +13,7 @@ import {
 export class ClubsUtilsService {
 
   isSJSU(club: IClub) {
-    console.log(club);
+    console.log('ClubsUtilsService', club);
     return true;
     // return 'advisor_firstname' in club;
   }
