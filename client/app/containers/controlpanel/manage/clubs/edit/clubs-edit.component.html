@@ -125,7 +125,7 @@
         </div>
 
         <div class="col-xs-6">
-          <div class="cp-card">
+          <div class="cp-card contact">
             <div class="row form-group">
               <div class="col-xs-12">
                 <p class="title" i18n>{{ 'contact_details' | cpI18n }}</p>
@@ -155,6 +155,45 @@
                       type="text"
                       class="form-control"
                       formControlName="email">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cp-card" *ngIf="isSJSU">
+            <div class="row form-group">
+              <div class="col-xs-12">
+                <p class="title" i18n>{{ 'clubs_label_advisor' | cpI18n }}</p>
+
+                <div class="row form--group">
+                  <div class="col-xs-6">
+                    <label i18n>{{ 'first_name' | cpI18n }}</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="advisor_firstname"
+                      [class.error]="formError && form.controls['advisor_firstname'].hasError('required')">
+                  </div>
+
+                  <div class="col-xs-6">
+                    <label i18n>{{ 'last_name' | cpI18n  }}</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="advisor_lastname"
+                      [class.error]="formError && form.controls['advisor_lastname'].hasError('required')">
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-xs-12">
+                    <label i18n>{{ 'email' | cpI18n  }}</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="advisor_email"
+                      [class.error]="formError && form.controls['advisor_email'].hasError('required')">
                   </div>
                 </div>
               </div>
