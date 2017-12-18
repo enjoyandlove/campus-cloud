@@ -1235,6 +1235,12 @@
   "message": {
     "message": "Message"
   },
+  "message_file_upload_error": {
+    "message": "Something went wrong, please try again"
+  },
+  "message_file_upload_success": {
+    "message": "File uploaded successfully"
+  },
   "move": {
     "message": "Move"
   },
@@ -1372,6 +1378,9 @@
   },
   "results": {
     "message": "Results"
+  },
+  "reupload": {
+    "message": "Reupload"
   },
   "room": {
     "message": "Room"
