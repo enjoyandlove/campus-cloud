@@ -102,7 +102,9 @@
                                   <p class="ranking">{{ index + 1 }}</p>
                                 </div>
                                 <div class="col-xs-5 no-left-padding text-truncate">
-                                  <img [src]="[service.service_logo_url]" alt="" class="service-avatar img-rounded">
+                                  <img
+                                    class="service-avatar img-rounded"
+                                    [src]="service.service_logo_url === '' ? defaultImage : service.service_logo_url">
                                   <p class="service-title text-truncate">{{ service.service_name }}</p>
                                 </div>
                                 <div class="col-xs-2 no-left-padding">

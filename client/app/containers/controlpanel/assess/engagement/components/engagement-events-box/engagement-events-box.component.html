@@ -101,7 +101,10 @@
                                 <div class="col-xs-1">
                                   <p class="ranking">{{ index + 1 }}</p>
                                 </div>
-                                <div class="col-xs-5 no-left-padding text-truncate"><img [src]="[event.event_poster_thumb_url]" alt="" class="event-avatar img-rounded"><p class="event-title text-truncate">{{ event.event_title }}</p></div>
+                                <div class="col-xs-5 no-left-padding text-truncate">
+                                  <img [src]="event.event_poster_thumb_url === '' ? defaultImage : event.event_poster_thumb_url" alt="" class="event-avatar img-rounded">
+                                  <p class="event-title text-truncate">{{ event.event_title }}</p>
+                                </div>
                                 <div class="col-xs-2 no-left-padding">
                                   <p>{{ event.num_of_attendees }}</p>
                                 </div>
