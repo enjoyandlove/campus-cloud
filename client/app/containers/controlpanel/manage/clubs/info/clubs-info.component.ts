@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Observable';
 import { URLSearchParams, Headers } from '@angular/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
@@ -102,23 +103,32 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
     headers.append('Authorization', auth);
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
 
-    this
-      .fileService
-      .uploadFile(file, url, headers)
-      .switchMap(data => {
+    const validateMime$ = this.fileService.validateDoc(file);
+    const validateSize$ = this.fileService.validateFileSize(file);
 
-        this.club = Object.assign(
-          {},
-          this.club,
-          { logo_url: data.image_url }
-        )
+    const validate$ = Observable.of(validateMime$, validateSize$);
 
-        return this.clubsService.updateClub(this.club, this.clubId, search);
-      })
-      .subscribe(
-        _ => this.flashMessageSuccess(),
-        _ => this.flashMessageError()
-      )
+    validate$.subscribe(
+      res => console.log('res', res),
+      err => console.log('err', err),
+    )
+
+    // this
+    //   .fileService
+    //   .uploadFile(file, url, headers)
+    //   .switchMap(data => {
+    //     this.club = Object.assign(
+    //       {},
+    //       this.club,
+    //       { logo_url: data.image_url }
+    //     )
+
+    //     return this.clubsService.updateClub(this.club, this.clubId, search);
+    //   })
+    //   .subscribe(
+    //     _ => this.flashMessageSuccess(),
+    //     _ => this.flashMessageError()
+    //   )
   }
 
   ngOnInit() {
