@@ -33,7 +33,7 @@
     "message": "View the Assess Dashboard and Student Transcript"
   },
   "admin_campus_announcements": {
-    "message": "Regular and Urgent Announcements"
+    "message": "Regular Announcements"
   },
   "admin_can_edit": {
     "message": "Can Edit"
@@ -705,7 +705,7 @@
     "message": "Assessment"
   },
   "dashboard_campus_tile_title": {
-    "message": "Campus Tile Activity"
+    "message": "Campus Guide Activity\n"
   },
   "dashboard_club_views": {
     "message": "Club Views"
@@ -720,13 +720,13 @@
     "message": "Event Views"
   },
   "dashboard_general_information": {
-    "message": "General Information"
+    "message": "Campus App Activity"
   },
   "dashboard_integrations_courses": {
     "message": "Courses"
   },
   "dashboard_integrations_sso": {
-    "message": "SSO"
+    "message": "Single Sign-On"
   },
   "dashboard_integrations_title": {
     "message": "Integrations"
@@ -768,13 +768,13 @@
     "message": "Total Social Activity"
   },
   "dashboard_social_activity_wall_posts": {
-    "message": "Wall Posts"
+    "message": "Posts"
   },
   "dashboard_top_events": {
     "message": "Top Events"
   },
   "dashboard_top_five_clubs_title": {
-    "message": "Top 5 Active Clubs"
+    "message": "Top Clubs"
   },
   "dashboard_top_services": {
     "message": "Top Services"
@@ -1002,7 +1002,7 @@
     "message": "Thanks for your feedback"
   },
   "feeds": {
-    "message": "Walls"
+    "message": "Feeds"
   },
   "feeds_all_posts": {
     "message": "All Posts"
@@ -1235,6 +1235,12 @@
   "message": {
     "message": "Message"
   },
+  "message_file_upload_error": {
+    "message": "Something went wrong, please try again"
+  },
+  "message_file_upload_success": {
+    "message": "File uploaded successfully"
+  },
   "move": {
     "message": "Move"
   },
@@ -1372,6 +1378,9 @@
   },
   "results": {
     "message": "Results"
+  },
+  "reupload": {
+    "message": "Reupload"
   },
   "room": {
     "message": "Room"
