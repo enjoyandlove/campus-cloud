@@ -25,6 +25,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   @Input() isService: boolean;
 
   event;
+  banner;
   urlPrefix;
   dateFormat;
   isPastEvent;
@@ -32,6 +33,8 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   eventId: number;
   draggable = false;
   mapCenter: BehaviorSubject<any>;
+
+  defaultImage = require('public/default/image.png');
 
   constructor(
     public cpI18n: CPI18nService,
@@ -55,9 +58,13 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
       .then(event => {
         this.event = event.data;
 
+
         this.isPastEvent = this.utils.isPastEvent(this.event);
 
         this.urlPrefix = this.utils.buildUrlPrefix(this.clubId, this.serviceId);
+
+        this.banner = this.event.poster_url === '' ?
+                      this.event.store_logo_url : this.event.poster_url;
 
         this.buildHeader(this.event);
 
