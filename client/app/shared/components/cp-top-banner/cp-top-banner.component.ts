@@ -14,7 +14,7 @@ export class CPTopBanerComponent implements OnInit {
 
   ngOnInit() {
     this.oldCPUrl = isCanada ?
-                    'https://ca.oohlalamobile.com/login' :
-                    'https://oohlalamobile.com/login';
+                    'https://ca.oohlalamobile.com/login?no_redirect=true' :
+                    'https://oohlalamobile.com/login?no_redirect=true';
   }
 }
