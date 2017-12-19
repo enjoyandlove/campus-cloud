@@ -1,4 +1,14 @@
-import { Component, Input, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import {
+    Input,
+    OnInit,
+    Output,
+    Component,
+    OnDestroy,
+    ElementRef,
+    HostListener,
+    EventEmitter,
+} from '@angular/core';
+
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { URLSearchParams } from '@angular/http';
@@ -37,11 +47,20 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
   };
 
   constructor(
+    private el: ElementRef,
     private fb: FormBuilder,
     private session: CPSession,
     private service: ListsService,
     private cpI18n: CPI18nService
   ) { }
+
+  @HostListener('document:click', ['$event'])
+  onClick(event) {
+    // out of modal reset form
+    if (event.target.contains(this.el.nativeElement)) {
+      this.resetModal();
+    }
+  }
 
   doSubmit() {
     this.isError = false;
