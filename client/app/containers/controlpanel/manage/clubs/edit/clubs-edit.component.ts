@@ -1,4 +1,3 @@
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -9,9 +8,12 @@ import { Store } from '@ngrx/store';
 import { ClubsService } from '../clubs.service';
 import { CPSession } from '../../../../../session';
 import { CPMap } from '../../../../../shared/utils';
+import { ClubsUtilsService } from './../clubs.utils.service';
 import { BaseComponent } from '../../../../../base/base.component';
+import { advisorDataRequired } from './custom-validators.directive';
 import { membershipTypes, statusTypes } from '../create/permissions';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 @Component({
   selector: 'cp-clubs-edit',
@@ -29,6 +31,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
   defaultStatus;
   membershipTypes;
   form: FormGroup;
+  isSJSU: boolean;
   defaultMembership;
   isFormReady = false;
   mapCenter: BehaviorSubject<any>;
@@ -41,6 +44,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
     private session: CPSession,
     private cpI18n: CPI18nService,
     private route: ActivatedRoute,
+    private helper: ClubsUtilsService,
     private clubsService: ClubsService,
   ) {
     super();
@@ -66,6 +70,9 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
       .fetchData(stream$)
       .then(res => {
         this.club = res.data;
+
+        this.isSJSU = this.helper.isSJSU(this.club);
+
         this.buildForm();
 
         this.defaultStatus = this.getDefaultStatus(this.club.status);
@@ -100,112 +107,115 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
       'website': [this.club.website],
       'phone': [this.club.phone],
       'email': [this.club.email],
+      'advisor_firstname': [this.club.advisor_firstname, advisorDataRequired(this.isSJSU)],
+      'advisor_lastname': [this.club.advisor_lastname, advisorDataRequired(this.isSJSU)],
+      'advisor_email': [this.club.advisor_email, advisorDataRequired(this.isSJSU)],
     });
 
     this.isFormReady = true;
   }
 
-  onSubmit() {
-    this.formError = false;
+onSubmit() {
+  this.formError = false;
 
-    if (!this.form.valid) {
-      this.formError = true;
+  if (!this.form.valid) {
+    this.formError = true;
+    this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
+    return;
+  }
+
+  const search = new URLSearchParams();
+  search.append('school_id', this.session.g.get('school').id.toString());
+
+  this
+    .clubsService
+    .updateClub(this.form.value, this.clubId, search)
+    .subscribe(
+    res => { this.router.navigate(['/manage/clubs/' + res.id + '/info']); },
+    err => {
       this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
-      return;
+      throw new Error(err)
     }
+    );
+}
 
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+onUploadedImage(image): void {
+  this.form.controls['logo_url'].setValue(image);
+}
 
-    this
-      .clubsService
-      .updateClub(this.form.value, this.clubId, search)
-      .subscribe(
-      res => { this.router.navigate(['/manage/clubs/' + res.id + '/info']); },
-      err => {
-        this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
-        throw new Error(err)
-      }
-      );
+onSelectedMembership(type) {
+  this.form.controls['has_membership'].setValue(type.action);
+}
+
+onSelectedStatus(type) {
+  this.form.controls['status'].setValue(type.action);
+}
+
+onResetMap() {
+  this.form.controls['city'].setValue('');
+  this.form.controls['province'].setValue('');
+  this.form.controls['country'].setValue('');
+  this.form.controls['latitude'].setValue(this.school.latitude);
+  this.form.controls['longitude'].setValue(this.school.longitude);
+  this.form.controls['address'].setValue('');
+  this.form.controls['postal_code'].setValue('');
+
+  this.mapCenter.next({
+    lat: this.school.latitude,
+    lng: this.school.longitude
+  });
+}
+
+onMapSelection(data) {
+  let cpMap = CPMap.getBaseMapObject(data);
+
+  this.form.controls['city'].setValue(cpMap.city);
+  this.form.controls['province'].setValue(cpMap.province);
+  this.form.controls['country'].setValue(cpMap.country);
+  this.form.controls['latitude'].setValue(cpMap.latitude);
+  this.form.controls['longitude'].setValue(cpMap.longitude);
+  this.form.controls['address'].setValue(data.formatted_address);
+  this.form.controls['postal_code'].setValue(cpMap.postal_code);
+  this.newAddress.next(this.form.controls['address'].value);
+}
+
+onPlaceChange(data) {
+  if (!data) { return; }
+
+  let cpMap = CPMap.getBaseMapObject(data);
+
+  this.form.controls['city'].setValue(cpMap.city);
+  this.form.controls['province'].setValue(cpMap.province);
+  this.form.controls['country'].setValue(cpMap.country);
+  this.form.controls['latitude'].setValue(cpMap.latitude);
+  this.form.controls['longitude'].setValue(cpMap.longitude);
+  this.form.controls['address'].setValue(data.name);
+  this.form.controls['postal_code'].setValue(cpMap.postal_code);
+
+  this.mapCenter.next(data.geometry.location.toJSON());
+}
+
+ngOnInit() {
+  this.fetch();
+  this.school = this.session.g.get('school');
+
+  this.buttonData = {
+    text: this.cpI18n.translate('save'),
+    class: 'primary'
   }
 
-  onUploadedImage(image): void {
-    this.form.controls['logo_url'].setValue(image);
-  }
-
-  onSelectedMembership(type) {
-    this.form.controls['has_membership'].setValue(type.action);
-  }
-
-  onSelectedStatus(type) {
-    this.form.controls['status'].setValue(type.action);
-  }
-
-  onResetMap() {
-    this.form.controls['city'].setValue('');
-    this.form.controls['province'].setValue('');
-    this.form.controls['country'].setValue('');
-    this.form.controls['latitude'].setValue(this.school.latitude);
-    this.form.controls['longitude'].setValue(this.school.longitude);
-    this.form.controls['address'].setValue('');
-    this.form.controls['postal_code'].setValue('');
-
-    this.mapCenter.next({
-      lat: this.school.latitude,
-      lng: this.school.longitude
-    });
-  }
-
-  onMapSelection(data) {
-    let cpMap = CPMap.getBaseMapObject(data);
-
-    this.form.controls['city'].setValue(cpMap.city);
-    this.form.controls['province'].setValue(cpMap.province);
-    this.form.controls['country'].setValue(cpMap.country);
-    this.form.controls['latitude'].setValue(cpMap.latitude);
-    this.form.controls['longitude'].setValue(cpMap.longitude);
-    this.form.controls['address'].setValue(data.formatted_address);
-    this.form.controls['postal_code'].setValue(cpMap.postal_code);
-    this.newAddress.next(this.form.controls['address'].value);
-  }
-
-  onPlaceChange(data) {
-    if (!data) { return; }
-
-    let cpMap = CPMap.getBaseMapObject(data);
-
-    this.form.controls['city'].setValue(cpMap.city);
-    this.form.controls['province'].setValue(cpMap.province);
-    this.form.controls['country'].setValue(cpMap.country);
-    this.form.controls['latitude'].setValue(cpMap.latitude);
-    this.form.controls['longitude'].setValue(cpMap.longitude);
-    this.form.controls['address'].setValue(data.name);
-    this.form.controls['postal_code'].setValue(cpMap.postal_code);
-
-    this.mapCenter.next(data.geometry.location.toJSON());
-  }
-
-  ngOnInit() {
-    this.fetch();
-    this.school = this.session.g.get('school');
-
-    this.buttonData = {
-      text: this.cpI18n.translate('save'),
-      class: 'primary'
-    }
-
-    this.store.dispatch({
-      type: HEADER_UPDATE,
-      payload:
+  this.store.dispatch({
+    type: HEADER_UPDATE,
+    payload:
       {
         'heading': 'clubs_edit_heading',
         'subheading': null,
         'em': null,
         'children': []
       }
-    });
+  });
 
-    this.statusTypes = statusTypes;
-    this.membershipTypes = membershipTypes;
-  }
+  this.statusTypes = statusTypes;
+  this.membershipTypes = membershipTypes;
+}
 }

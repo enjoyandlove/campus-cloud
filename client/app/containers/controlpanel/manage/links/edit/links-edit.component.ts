@@ -4,7 +4,7 @@ import { Headers } from '@angular/http';
 
 import { API } from '../../../../../config/api';
 import { LinksService } from '../links.service';
-import { CPImage, appStorage } from '../../../../../shared/utils';
+import { appStorage } from '../../../../../shared/utils';
 import { FileUploadService } from '../../../../../shared/services';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
@@ -27,8 +27,8 @@ export class LinksEditComponent implements OnInit, OnChanges {
 
   constructor(
     private fb: FormBuilder,
+    public cpI18n: CPI18nService,
     private service: LinksService,
-    private cpI18n: CPI18nService,
     private fileUploadService: FileUploadService
   ) { }
 
@@ -44,15 +44,10 @@ export class LinksEditComponent implements OnInit, OnChanges {
 
   onFileUpload(file) {
     this.imageError = null;
-    const fileExtension = file.name.split('.').pop();
+    const validate = this.fileUploadService.validImage(file);
 
-    if (!CPImage.isSizeOk(file.size, CPImage.MAX_IMAGE_SIZE)) {
-      this.imageError = this.cpI18n.translate('error_file_is_too_big');
-      return;
-    }
-
-    if (!CPImage.isValidExtension(fileExtension, CPImage.VALID_EXTENSIONS)) {
-      this.imageError = this.cpI18n.translate('error_invalid_extension');
+    if (!validate.valid) {
+      this.imageError = validate.errors[0];
       return;
     }
 

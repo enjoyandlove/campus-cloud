@@ -4,6 +4,10 @@
 @import '~styles/core/typography';
 @import '~styles/components/button';
 
+.cp-card.contact {
+  margin-bottom: 30px;
+}
+
 .form__image {
   height: 108px;
   padding-top: 15px;

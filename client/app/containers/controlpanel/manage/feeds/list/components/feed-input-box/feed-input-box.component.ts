@@ -12,14 +12,13 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 
 import {
   StoreService,
-  CPI18nService,
   FileUploadService
 } from '../../../../../../../shared/services';
 
 import { API } from '../../../../../../../config/api';
 import { FeedsService } from '../../../feeds.service';
 import { CPSession, ISchool } from '../../../../../../../session';
-import { CPImage, appStorage } from '../../../../../../../shared/utils';
+import { appStorage } from '../../../../../../../shared/utils';
 
 @Component({
   selector: 'cp-feed-input-box',
@@ -47,7 +46,6 @@ export class FeedInputBoxComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private session: CPSession,
-    private cpI18n: CPI18nService,
     private feedsService: FeedsService,
     private storeService: StoreService,
     private fileUploadService: FileUploadService
@@ -131,15 +129,10 @@ export class FeedInputBoxComponent implements OnInit {
 
   onFileUpload(file) {
     this.imageError = null;
-    const fileExtension = file.name.split('.').pop();
+    const validate = this.fileUploadService.validImage(file);
 
-    if (!CPImage.isSizeOk(file.size, CPImage.MAX_IMAGE_SIZE)) {
-      this.imageError = this.cpI18n.translate('error_file_is_too_big');
-      return;
-    }
-
-    if (!CPImage.isValidExtension(fileExtension, CPImage.VALID_EXTENSIONS)) {
-      this.imageError = this.cpI18n.translate('error_invalid_extension');
+    if (!validate.valid) {
+      this.imageError = validate.errors[0];
       return;
     }
 
