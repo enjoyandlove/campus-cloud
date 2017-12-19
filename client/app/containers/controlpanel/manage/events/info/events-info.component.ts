@@ -63,7 +63,8 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
 
         this.urlPrefix = this.utils.buildUrlPrefix(this.clubId, this.serviceId);
 
-        this.banner = this.event.poster_url === '' ? this.defaultImage : this.event.poster_url;
+        this.banner = this.event.poster_url === '' ?
+                      this.event.store_logo_url : this.event.poster_url;
 
         this.buildHeader(this.event);
 
