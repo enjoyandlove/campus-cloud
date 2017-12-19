@@ -1,3 +1,4 @@
+
 import {
   Input,
   OnInit,
@@ -17,8 +18,9 @@ import {
 
 import { API } from '../../../../../../../config/api';
 import { FeedsService } from '../../../feeds.service';
-import { CPSession, ISchool } from '../../../../../../../session';
 import { appStorage } from '../../../../../../../shared/utils';
+import { CPSession, ISchool } from '../../../../../../../session';
+import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 
 @Component({
   selector: 'cp-feed-input-box',
@@ -46,6 +48,7 @@ export class FeedInputBoxComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private session: CPSession,
+    public cpI18n: CPI18nService,
     private feedsService: FeedsService,
     private storeService: StoreService,
     private fileUploadService: FileUploadService
