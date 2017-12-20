@@ -27,14 +27,27 @@ export abstract class BaseService {
     private router: Router
   ) { }
 
+  private waitAndRetryThreeTimes(err): Observable<any> {
+    let retries = 3;
+
+    return err
+      .delay(1200)
+      .flatMap(e => {
+        if (retries > 0) {
+          retries -= 1;
+          return Observable.of(e);
+        }
+        return Observable.throw(e);
+      })
+  }
+
   get(url: string, opts?: RequestOptionsArgs) {
     const headers = buildCommonHeaders();
 
     return this
       .http
       .get(url, { headers, ...opts })
-      .publishReplay(1)
-      .refCount()
+      .retryWhen(err => this.waitAndRetryThreeTimes(err))
       .catch(err => {
         if (err.status === 403) {
           return Observable.of(
@@ -55,7 +68,7 @@ export abstract class BaseService {
     return this
       .http
       .post(url, data, { headers, ...opts })
-      .delay(200)
+      .retryWhen(err => this.waitAndRetryThreeTimes(err))
       .catch(err => this.catchError(err));
   }
 
@@ -67,8 +80,7 @@ export abstract class BaseService {
     return this
       .http
       .put(url, data, { headers, ...opts })
-      .delay(200)
-      .retry(1)
+      .retryWhen(err => this.waitAndRetryThreeTimes(err))
       .catch(err => silent ? Observable.throw(err) : this.catchError(err));
   }
 
@@ -78,6 +90,7 @@ export abstract class BaseService {
     return this
       .http
       .delete(url, { headers, ...opts })
+      .retryWhen(err => this.waitAndRetryThreeTimes(err))
       .catch(err => silent ? Observable.throw(err) : this.catchError(err));
   }
 
@@ -89,11 +102,11 @@ export abstract class BaseService {
         break;
 
       case 404:
-        this.router.navigate(['../']);
+        this.router.navigate(['/dashboard']);
         break;
 
       case 403:
-        this.router.navigate(['../']);
+        this.router.navigate(['/dashboard']);
         break;
 
       case 500:

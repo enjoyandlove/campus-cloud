@@ -23,7 +23,7 @@ export const API_ENDPOINTS = {
 
   SOCIAL_GROUP: 'group',
 
-  USER_LIST: 'user_list',
+  USER_LIST: 'user_listX',
 
   GROUP_THREAD: 'group_thread',
 
