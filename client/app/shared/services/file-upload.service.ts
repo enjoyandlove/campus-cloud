@@ -5,7 +5,7 @@ import { CPI18nService } from './index';
 
 @Injectable()
 export class FileUploadService {
-  maxFileSize = 10e+7;
+  maxFileSize = 8e+7;
 
   validFileTypes = [
     'application/pdf', // .pdf
@@ -24,6 +24,23 @@ export class FileUploadService {
     const validType = {
       message: this.cpI18n.translate('error_invalid_extension'),
       valid: this.validateImage(file),
+    };
+
+    const validSize = {
+      message: this.cpI18n.translate('error_file_is_too_big'),
+      valid: this.validateFileSize(file),
+    };
+
+    return {
+      valid: validType.valid && validSize.valid,
+      errors: [validType.message, validSize.message]
+    }
+  }
+
+  validFile(file: File): { valid: boolean, errors: Array<string> } {
+    const validType = {
+      message: this.cpI18n.translate('error_invalid_extension'),
+      valid: this.validateDoc(file),
     };
 
     const validSize = {

@@ -95,10 +95,10 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
   onFileAdded(file) {
     const headers = new Headers();
     const search = new URLSearchParams();
-    const validate = this.fileService.validImage(file);
+    const validate = this.fileService.validFile(file);
 
     search.append('school_id', this.session.g.get('school').id.toString());
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.FILE_UPLOAD}/`;
 
     const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
     headers.append('Authorization', auth);
@@ -115,7 +115,7 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
         this.club = Object.assign(
           {},
           this.club,
-          { logo_url: data.image_url }
+          { constitution_url: data.file_uri }
         )
 
         return this.clubsService.updateClub(this.club, this.clubId, search);
