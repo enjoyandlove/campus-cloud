@@ -24,6 +24,7 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
   clubStatus;
   clubId: number;
   draggable = false;
+  uploading = false;
   hasMetaData = false;
   mapCenter: BehaviorSubject<any>;
 
@@ -108,6 +109,8 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
       return;
     }
 
+    this.uploading = true;
+
     this
       .fileService
       .uploadFile(file, url, headers)
@@ -121,8 +124,14 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
         return this.clubsService.updateClub(this.club, this.clubId, search);
       })
       .subscribe(
-        _ => this.flashMessageSuccess(),
-        _ => this.flashMessageError()
+        _ => {
+          this.uploading = false;
+          this.flashMessageSuccess();
+        },
+        _ => {
+          this.uploading = false;
+          this.flashMessageError();
+        }
       )
   }
 
