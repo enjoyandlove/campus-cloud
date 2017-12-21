@@ -48,9 +48,10 @@
 
     &__results {
       height: 283px;
-      overflow: scroll;
       list-style: none;
       margin-bottom: 0;
+      overflow-y: scroll;
+      overflow-x: hidden;
 
       &--full-height {
         height: 321px;
