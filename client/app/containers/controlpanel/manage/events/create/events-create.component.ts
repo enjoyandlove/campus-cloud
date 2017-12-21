@@ -164,8 +164,26 @@ export class EventsCreateComponent implements OnInit {
     this.newAddress.next(this.form.controls['address'].value);
   }
 
+  updateWithUserLocation(location) {
+    this.form.controls['city'].setValue(location.city);
+    this.form.controls['province'].setValue(location.province);
+    this.form.controls['country'].setValue(location.country);
+    this.form.controls['location'].setValue(location.name);
+    this.form.controls['latitude'].setValue(location.latitude);
+    this.form.controls['longitude'].setValue(location.longitude);
+    this.form.controls['address'].setValue(location.address);
+    this.form.controls['postal_code'].setValue(location.postal_code);
+
+    this.mapCenter.next({lat: location.latitude, lng: location.longitude});
+  }
+
   onPlaceChange(data) {
     if (!data) { return; }
+
+    if ('fromUsersLocations' in data) {
+      this.updateWithUserLocation(data);
+      return;
+    }
 
     let cpMap = CPMap.getBaseMapObject(data);
 

@@ -13,7 +13,27 @@ export class CPLocationsService {
   constructor() { }
 
   getLocations() {
-    return Observable.of([]);
+    let results: Array<any> = [
+      {
+        'label': 'Your Locations',
+        'heading': true,
+        'value': null,
+        'isGoogle': false
+      }
+    ];
+
+    return mockLocations().map(locations => {
+      return results.concat(locations.map(location => {
+        return {
+          'label_dark': location.name,
+          'label_medium': location.address,
+          'full_label': location.address,
+          'heading': false,
+          'value': location,
+          'isGoogle': false
+        }
+      }))
+    });
   }
 
   geoCode(location) {
@@ -91,4 +111,25 @@ export class CPLocationsService {
 
     return res.asObservable();
   }
+}
+
+
+const mockLocations = () => {
+  const mockData = [
+    {
+      name: 'Anas\'s House',
+      address: '123 Boulevard de Maisonneuve Est, Montreal, QC, Canada',
+      short_name: 'aah',
+      latitude: 45.539820,
+      longitude: -73.612546,
+    },
+    {
+      name: 'Andres\'s House',
+      address: '321 Boulevard de Maisonneuve Est, Montreal, QC, Canada',
+      short_name: 'aht',
+      latitude: -45.539820,
+      longitude: 73.612546,
+    }
+  ]
+  return Observable.of(mockData);
 }
