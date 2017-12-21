@@ -190,6 +190,10 @@ export class DashboardDownloadsChartComponent implements OnInit {
           }
 
           if (this.divider === DivideBy.daily) {
+            if (this.series[0].length > 15) {
+              return index % 8 === 0 ? value : null;
+            }
+
             return index % 3 === 0 ? value : null;
           }
 

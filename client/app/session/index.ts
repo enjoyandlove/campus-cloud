@@ -28,5 +28,9 @@ export class CPSession {
            && eventSchoolWide && moderationSchoolWide;
   }
 
+  public hasSSO() {
+    return this.g.get('school').has_sso_integration
+  }
+
   constructor() { }
 };
