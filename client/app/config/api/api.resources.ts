@@ -15,6 +15,8 @@ export const API_ENDPOINTS = {
 
   SESSION: 'session',
 
+  FILE_UPLOAD: 'file',
+
   P_RESET: 'ns_admin',
 
   SERVICES: 'service',
