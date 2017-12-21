@@ -67,10 +67,7 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
         return service.getAllSuggestions(query, lat, lng)
       })
       .subscribe(
-        res => {
-          console.log(res);
-          this.setSuggestions(res);
-        },
+        res => this.setSuggestions(res),
         err => console.log(err)
       )
   }

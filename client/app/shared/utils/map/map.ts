@@ -1,3 +1,16 @@
+import { FormGroup } from '@angular/forms';
+
+interface ILocation {
+  city: string;
+  province: string;
+  country: string;
+  latitude: number;
+  longitude: number;
+  address: string;
+  postal_code: string;
+  location?: string;
+}
+
 interface ICPMap {
   city: string;
   country: string;
@@ -80,8 +93,35 @@ function getBaseMapObject(data) {
   return obj;
 };
 
+const resetLocationFields = (school) => {
+  return {
+    city: '',
+    province: '',
+    country: '',
+    address: '',
+    postal_code: '',
+    latitude: school.latitude,
+    longitude: school.longitude,
+  };
+}
+
+const setFormLocationData = (form: FormGroup, location: ILocation) => {
+  form.controls['city'].setValue(location.city);
+  form.controls['province'].setValue(location.province);
+  form.controls['country'].setValue(location.country);
+  form.controls['location'].setValue(location.location);
+  form.controls['latitude'].setValue(location.latitude);
+  form.controls['longitude'].setValue(location.longitude);
+  form.controls['address'].setValue(location.address);
+  form.controls['postal_code'].setValue(location.postal_code);
+
+  return form;
+}
+
 export const CPMap = {
   locationAsObject,
   getBaseMapObject,
+  setFormLocationData,
+  resetLocationFields,
   getValueFromAddressComponent
 };

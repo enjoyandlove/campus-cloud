@@ -132,49 +132,34 @@ export class EventsCreateComponent implements OnInit {
 
   toggleEventAttendance(value) {
     value = value ? 1 : 0;
-
     this.form.controls['event_attendance'].setValue(value);
   }
 
   onResetMap() {
-    this.form.controls['city'].setValue('');
-    this.form.controls['province'].setValue('');
-    this.form.controls['country'].setValue('');
-    this.form.controls['latitude'].setValue(this.school.latitude);
-    this.form.controls['longitude'].setValue(this.school.longitude);
-    this.form.controls['address'].setValue('');
-    this.form.controls['postal_code'].setValue('');
-
-    this.mapCenter.next({
-      lat: this.school.latitude,
-      lng: this.school.longitude
-    });
+    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields(this.school));
+    this.centerMap(this.school.latitude, this.school.longitude);
   }
 
   onMapSelection(data) {
     let cpMap = CPMap.getBaseMapObject(data);
 
-    this.form.controls['city'].setValue(cpMap.city);
-    this.form.controls['province'].setValue(cpMap.province);
-    this.form.controls['country'].setValue(cpMap.country);
-    this.form.controls['latitude'].setValue(cpMap.latitude);
-    this.form.controls['longitude'].setValue(cpMap.longitude);
-    this.form.controls['address'].setValue(data.formatted_address);
-    this.form.controls['postal_code'].setValue(cpMap.postal_code);
+    const location = {...cpMap, address: data.formatted_address}
+
+    CPMap.setFormLocationData(this.form, location);
+
     this.newAddress.next(this.form.controls['address'].value);
   }
 
   updateWithUserLocation(location) {
-    this.form.controls['city'].setValue(location.city);
-    this.form.controls['province'].setValue(location.province);
-    this.form.controls['country'].setValue(location.country);
-    this.form.controls['location'].setValue(location.name);
-    this.form.controls['latitude'].setValue(location.latitude);
-    this.form.controls['longitude'].setValue(location.longitude);
-    this.form.controls['address'].setValue(location.address);
-    this.form.controls['postal_code'].setValue(location.postal_code);
+    location = Object.assign(
+      {},
+      location,
+      { location: location.name }
+    )
 
-    this.mapCenter.next({lat: location.latitude, lng: location.longitude});
+    CPMap.setFormLocationData(this.form, location);
+
+    this.centerMap(location.latitude, location.longitude);
   }
 
   onPlaceChange(data) {
@@ -187,15 +172,17 @@ export class EventsCreateComponent implements OnInit {
 
     let cpMap = CPMap.getBaseMapObject(data);
 
-    this.form.controls['city'].setValue(cpMap.city);
-    this.form.controls['province'].setValue(cpMap.province);
-    this.form.controls['country'].setValue(cpMap.country);
-    this.form.controls['latitude'].setValue(cpMap.latitude);
-    this.form.controls['longitude'].setValue(cpMap.longitude);
-    this.form.controls['address'].setValue(data.name);
-    this.form.controls['postal_code'].setValue(cpMap.postal_code);
+    const location = {...cpMap, address: data.name};
 
-    this.mapCenter.next(data.geometry.location.toJSON());
+    const coords: google.maps.LatLngLiteral = data.geometry.location.toJSON();
+
+    CPMap.setFormLocationData(this.form, location);
+
+    this.centerMap(coords.lat, coords.lng);
+  }
+
+  centerMap(lat: number, lng: number) {
+    return this.mapCenter.next({lat, lng});
   }
 
   onSubmit() {
