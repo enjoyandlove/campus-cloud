@@ -99,6 +99,7 @@ const resetLocationFields = (school) => {
     province: '',
     country: '',
     address: '',
+    location: '',
     postal_code: '',
     latitude: school.latitude,
     longitude: school.longitude,

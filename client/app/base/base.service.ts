@@ -30,8 +30,6 @@ export abstract class BaseService {
   private waitAndRetryThreeTimes(err): Observable<any> {
     let retries = 3;
 
-    console.log(err);
-
     return err
       .delay(1200)
       .flatMap(e => {
