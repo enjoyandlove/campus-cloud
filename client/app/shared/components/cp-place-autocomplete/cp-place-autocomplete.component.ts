@@ -67,7 +67,7 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
         return service.getAllSuggestions(query, lat, lng)
       })
       .subscribe(
-        res => this.setSuggestions(res[1]),
+        res => this.setSuggestions(res),
         err => console.log(err)
       )
   }
@@ -83,6 +83,16 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
       this.fetchGoogleDetails(location);
       return;
     }
+
+    const locationData = Object.assign(
+      {},
+      location.value,
+      {
+        fromUsersLocations: true
+       }
+    )
+
+    this.placeChange.emit(locationData);
   }
 
   reset() {
@@ -122,7 +132,10 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
   }
 
   setSuggestions(suggestions): void {
-    this.state = Object.assign({}, this.state, { suggestions });
+    this.state = Object.assign(
+      {},
+      this.state,
+      { suggestions: [ ...suggestions[0], ...suggestions[1] ] });
   }
 
   resetSuggestions(): void {
