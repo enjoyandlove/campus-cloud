@@ -118,7 +118,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
         canAccess = schoolLevel || accountLevel
 
         if (!canAccess) {
-          this.router.navigate(['/welcome']);
+          this.router.navigate(['/dashboard']);
         }
         return canAccess;
       }

@@ -7,11 +7,14 @@ import { Store } from '@ngrx/store';
 import { ClubsService } from '../clubs.service';
 import { isDev } from '../../../../../config/env';
 import { CPSession } from '../../../../../session';
+import { CPI18nPipe } from '../../../../../shared/pipes';
 import { BaseComponent } from '../../../../../base/base.component';
 import { CLUBS_MODAL_RESET } from '../../../../../reducers/clubs.reducer';
 import { CPImageUploadComponent } from '../../../../../shared/components';
 import { FileUploadService, CPI18nService } from '../../../../../shared/services';
 import { HEADER_UPDATE, HEADER_DEFAULT } from '../../../../../reducers/header.reducer';
+
+const i18n = new CPI18nPipe();
 
 @Component({
   selector: 'cp-clubs-excel',
@@ -54,15 +57,16 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
   }
 
   private buildHeader() {
+    const subheading = i18n.transform('clubs_import_items_to_import', this.clubs.length);
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': this.cpI18n.translate('clubs_import_heading'),
+        'heading': 'clubs_import_heading',
         'crumbs': {
           'url': 'clubs',
-          'label': this.cpI18n.translate('clubs')
+          'label': 'clubs'
         },
-        'em': `${this.clubs.length} ${this.cpI18n.translate('clubs_import_items_to_import')}`,
+        'em': `[NOTRANSLATE]${subheading}[NOTRANSLATE]`,
         'children': []
       }
     });
