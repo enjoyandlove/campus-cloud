@@ -11,9 +11,9 @@ import { CPMapsComponent, CPModalComponent, CPTopBarComponent, CPAvatarComponent
   CPAlertComponent, CPDatePickerComponent, CPSwitchComponent,
   CPSmallDatePickerComponent, CPUploadButtonComponent, CPPaginationComponent,
   CPNoContentComponent, CPCheckDropdownComponent, CPImageUploadComponent,
-  SchoolSwitchComponent, CPIntercommComponent, CPTrackersComponent, CPChipComponent,
-  CPTypeAheadComponent, CPUploadModalComponent, CPSnackBarComponent, CPButtonComponent,
-  CPTextEditorComponent, CPTopBanerComponent
+  SchoolSwitchComponent, CPTrackersComponent, CPChipComponent, CPTypeAheadComponent,
+  CPUploadModalComponent, CPSnackBarComponent, CPButtonComponent, CPTextEditorComponent,
+  CPTopBanerComponent
 } from './components';
 
 import {
@@ -40,7 +40,7 @@ import {
   CPStarsComponent, CPFilterPipe, CPAlertComponent,
   CPAlertComponent, CPDatePickerComponent, CPSwitchComponent, CPDatePickerComponent,
   CPSmallDatePickerComponent, CPPaginationComponent, CPNoContentComponent,
-  CPCheckDropdownComponent, CPImageUploadComponent, SchoolSwitchComponent, CPIntercommComponent,
+  CPCheckDropdownComponent, CPImageUploadComponent, SchoolSwitchComponent,
   CPTrackersComponent, CPUploadModalComponent, CPChipComponent, CPTypeAheadComponent,
   CPSnackBarComponent, CPTrackerDirective, CPButtonComponent, CPTextEditorComponent,
   CPI18nPipe, CPTopBanerComponent ],
@@ -57,7 +57,7 @@ import {
   CPStarsComponent, CPFilterPipe, CPAlertComponent,
   CPAlertComponent, CPDatePickerComponent, CPSwitchComponent, CPDatePickerComponent,
   CPSmallDatePickerComponent, CPPaginationComponent, CPNoContentComponent,
-  CPCheckDropdownComponent, CPImageUploadComponent, SchoolSwitchComponent, CPIntercommComponent,
+  CPCheckDropdownComponent, CPImageUploadComponent, SchoolSwitchComponent,
   CPTrackersComponent, CPUploadModalComponent, CPChipComponent, CPTypeAheadComponent,
   CPSnackBarComponent, CPTrackerDirective, CPButtonComponent, CPTextEditorComponent, CPI18nPipe,
   CPTopBanerComponent ]
