@@ -97,7 +97,7 @@ export abstract class BaseService {
         break;
 
       case 500:
-        this.router.navigate(['/welcome']);
+        this.router.navigate(['/dashboard']);
         break;
 
       default:
