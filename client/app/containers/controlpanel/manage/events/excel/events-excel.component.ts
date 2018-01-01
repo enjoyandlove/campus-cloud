@@ -16,6 +16,8 @@ import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { CPI18nPipe } from './../../../../../shared/pipes/i18n/i18n.pipe';
 import { StoreService, AdminService } from '../../../../../shared/services';
+import { CPImageUploadComponent } from '../../../../../shared/components';
+import { FileUploadService, CPI18nService } from '../../../../../shared/services';
 
 const i18n = new CPI18nPipe();
 
@@ -56,7 +58,9 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     private session: CPSession,
     private adminService: AdminService,
     private storeService: StoreService,
-    private eventsService: EventsService
+    private eventsService: EventsService,
+    private cpI18n: CPI18nService,
+    private fileUploadService: FileUploadService
   ) {
     super();
     this.school = this.session.g.get('school');
@@ -276,7 +280,27 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     this.onBulkChange({ poster_thumb_url: poster_url });
   }
 
-  onSubmit() {
+    onRemoveImage(index) {
+        let eventControl = <FormArray>this.form.controls['events'];
+        let control = <FormGroup>eventControl.at(index);
+        control.controls['poster_url'].setValue(null);
+    }
+
+    onImageUpload(image, index) {
+        let imageUpload = new CPImageUploadComponent(this.cpI18n, this.fileUploadService);
+        let promise = imageUpload.onFileUpload(image, true);
+
+        promise
+            .then((res: any) => {
+                let controls = <FormArray>this.form.controls['events'];
+                let control = <FormGroup>controls.controls[index];
+                control.controls['poster_url'].setValue(res.image_url);
+            })
+            .catch(err => {
+                throw new Error(err)
+            });
+    }
+    onSubmit() {
     this.error = null;
     let _events = [];
     this.formError = false;
