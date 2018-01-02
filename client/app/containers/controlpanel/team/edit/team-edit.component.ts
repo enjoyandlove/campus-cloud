@@ -7,16 +7,16 @@ import { Store } from '@ngrx/store';
 import {
   accountsToStoreMap,
   canAccountLevelReadResource
-} from './../../../../../shared/utils/privileges/privileges';
+} from './../../../../shared/utils/privileges/privileges';
 
 import { TEAM_ACCESS } from '../utils';
-import { CPSession } from '../../../../../session';
-import { accountCleanUp } from './../create/team-create.component';
-import { BaseComponent } from '../../../../../base/base.component';
-import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
-import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
-import { CP_PRIVILEGES, CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
-import { AdminService, ErrorService, CPI18nService } from '../../../../../shared/services';
+import { CPSession } from '../../../../session';
+import { accountCleanUp } from '../create/team-create.component';
+import { BaseComponent } from '../../../../base/base.component';
+import { MODAL_TYPE } from '../../../../shared/components/cp-modal';
+import { HEADER_UPDATE, IHeader } from '../../../../reducers/header.reducer';
+import { CP_PRIVILEGES, CP_PRIVILEGES_MAP } from '../../../../shared/constants';
+import { AdminService, ErrorService, CPI18nService } from '../../../../shared/services';
 
 const _cpI18n = new CPI18nService();
 

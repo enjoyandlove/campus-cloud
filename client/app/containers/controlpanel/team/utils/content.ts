@@ -1,4 +1,4 @@
-import { CP_PRIVILEGES } from '../../../../../shared/constants';
+import { CP_PRIVILEGES } from '../../../../shared/constants';
 
 const IDs = [17, 16, 21, 15, 23, 31];
 

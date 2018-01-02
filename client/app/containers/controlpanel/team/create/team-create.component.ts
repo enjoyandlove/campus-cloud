@@ -5,17 +5,17 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { TEAM_ACCESS } from '../utils';
-import { CPSession } from '../../../../../session';
-import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
-import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
-import { CP_PRIVILEGES, CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
-import { ErrorService, AdminService, CPI18nService } from '../../../../../shared/services';
+import { CPSession } from '../../../../session';
+import { MODAL_TYPE } from '../../../../shared/components/cp-modal';
+import { HEADER_UPDATE, IHeader } from '../../../../reducers/header.reducer';
+import { CP_PRIVILEGES, CP_PRIVILEGES_MAP } from '../../../../shared/constants';
+import { ErrorService, AdminService, CPI18nService } from '../../../../shared/services';
 
 import {
   accountsToStoreMap,
   canSchoolReadResource,
   canAccountLevelReadResource
-} from './../../../../../shared/utils/privileges/privileges';
+} from './../../../../shared/utils/privileges/privileges';
 
 const _cpI18n = new CPI18nService();
 

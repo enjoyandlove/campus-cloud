@@ -3,11 +3,11 @@ import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
 
-import { CPSession } from '../../../../../session';
-import { AdminService } from '../../../../../shared/services';
-import { BaseComponent } from '../../../../../base/base.component';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+import { CPSession } from '../../../../session';
+import { AdminService } from '../../../../shared/services';
+import { BaseComponent } from '../../../../base/base.component';
+import { CPI18nService } from './../../../../shared/services/i18n.service';
+import { HEADER_UPDATE, IHeader } from '../../../../reducers/header.reducer';
 
 interface IState {
   admins: Array<any>;

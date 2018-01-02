@@ -5,11 +5,11 @@
   "children": [
     {
       "label": "manage_team_members",
-      "url": "/manage/team"
+      "url": "/team"
     },
     {
       "label": "invite_team_members",
-      "url": "/manage/team/invite"
+      "url": "/team/invite"
     }
   ]
 }

@@ -3,9 +3,9 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { CPSession } from '../../../../../../../../session';
-import { ClubsService } from '../../../../../clubs/clubs.service';
-import { CP_PRIVILEGES_MAP } from '../../../../../../../../shared/constants';
+import { CPSession } from '../../../../../../../session';
+import { ClubsService } from '../../../../../manage/clubs/clubs.service';
+import { CP_PRIVILEGES_MAP } from '../../../../../../../shared/constants';
 import { BaseTeamSelectModalComponent } from '../base/team-select-modal.component';
 
 const ACTIVE_STATUS = 1;

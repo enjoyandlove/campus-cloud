@@ -2,8 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { permissions } from '../permissions';
 
-import { BaseComponent } from '../../../../../../../../base/base.component';
-import { CP_PRIVILEGES_MAP } from './../../../../../../../../shared/constants';
+import { BaseComponent } from '../../../../../../../base/base.component';
+import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
 
 interface ISelected {
   id: number;

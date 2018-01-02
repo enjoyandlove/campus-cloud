@@ -1,4 +1,4 @@
-import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants';
+import { CP_PRIVILEGES_MAP } from './../../../../shared/constants';
 
 function getMenu(privileges = {}) {
 
