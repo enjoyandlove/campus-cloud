@@ -25,7 +25,7 @@ const appRoutes: Routes = [
 
       { path: 'demo', loadChildren: './request-demo/request-demo.module#RequestDemoModule' },
 
-      { path: 'team', loadChildren: './team/team.module#TeamModule'}
+      { path: 'team', loadChildren: './settings/team/team.module#TeamModule'}
     ]
   },
 ];
