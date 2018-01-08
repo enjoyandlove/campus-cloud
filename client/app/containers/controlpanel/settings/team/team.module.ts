@@ -9,7 +9,6 @@ import { TeamEditComponent } from './edit';
 import { TeamDeleteComponent } from './delete';
 import { TeamCreateComponent } from './create';
 import { TeamUnauthorizedComponent } from './unauthorized';
-import { SettingsComponent } from '../settings.component';
 import { ClubsService } from '../../manage/clubs/clubs.service';
 import { AdminService } from '../../../../shared/services';
 import { ServicesService } from '../../manage/services/services.service';
@@ -28,7 +27,7 @@ import { TeamRoutingModule } from './team.routing.module';
   declarations: [ TeamListComponent, TeamCreateComponent, BaseTeamSelectModalComponent,
   TeamSelectedPipe, TeamFilterPipe, SelectTeamServicesModalComponent,
   SelectTeamClubsModalComponent, TeamDeleteComponent, TeamEditComponent,
-  TeamUnauthorizedComponent, SettingsComponent ],
+  TeamUnauthorizedComponent ],
 
   imports: [ CommonModule, SharedModule, RouterModule, ReactiveFormsModule, TeamRoutingModule ],
 

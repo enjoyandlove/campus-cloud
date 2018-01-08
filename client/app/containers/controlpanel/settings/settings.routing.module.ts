@@ -1,27 +1,24 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-/*import { TeamListComponent } from './team/list/index';
-import { TeamEditComponent } from './team/edit/index';
-import { TeamCreateComponent } from './team/create/index';*/
+import { AuthGuard } from '../../../config/guards';
 import { SettingsComponent } from './settings.component';
 
 
 const appRoutes: Routes = [
 
     {
-        path: 'team',
+        path: '',
         component: SettingsComponent,
+        canActivate: [ AuthGuard ],
+        canActivateChild: [ AuthGuard ],
         children: [
             {
-                path: 'team',
+                path: '',
                 loadChildren: './team/team.module#TeamModule'
             },
         ]
     },
-/*    {path: '', component: TeamListComponent},
-    {path: 'invite', component: TeamCreateComponent},
-    {path: ':adminId/edit', component: TeamEditComponent},*/
 ];
 
 @NgModule({

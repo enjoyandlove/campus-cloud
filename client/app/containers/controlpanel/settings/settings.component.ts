@@ -5,7 +5,7 @@ import { HEADER_UPDATE, IHeader } from '../../../reducers/header.reducer';
 
 
 @Component({
-    selector: 'cp-team',
+    selector: 'cp-settings',
     template: `
         <cp-page-header [data]="headerData$ | async"></cp-page-header>
         <div class="cp-wrapper cp-wrapper--outer">

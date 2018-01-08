@@ -414,7 +414,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       .adminService
       .updateAdmin(this.adminId, _data)
       .subscribe(
-      _ => this.router.navigate([this.currentUserCanManage ? '/manage/team' : '/dashboard']),
+      _ => this.router.navigate([this.currentUserCanManage ? '/team' : '/dashboard']),
       err => {
         if (err.status === 403) {
           $('#teamUnauthorziedModal').modal();
