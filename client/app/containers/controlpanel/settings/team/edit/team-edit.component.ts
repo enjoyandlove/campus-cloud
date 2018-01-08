@@ -345,7 +345,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       payload: {
         'heading': `[NOTRANSLATE]${name}[NOTRANSLATE]`,
         'crumbs': {
-          'url': this.isProfileView ? null : 'team',
+          'url': this.isProfileView ? null : '/team',
           'label': this.isProfileView ? null : 'team_settings'
         },
         'subheading': null,
