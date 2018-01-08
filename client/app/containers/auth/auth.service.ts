@@ -8,7 +8,7 @@ export class AuthService {
   constructor(private http: Http) {}
 
   login(email: string, password: string) {
-    let headers = new Headers();
+    const headers = new Headers();
 
     const authorization = `${API.AUTH_HEADER.TOKEN} ${API.KEY}:${email}:${password}`;
 
@@ -21,7 +21,7 @@ export class AuthService {
   }
 
   submitPasswordReset(body) {
-    let headers = new Headers();
+    const headers = new Headers();
 
     const authorization = `${API.AUTH_HEADER.TOKEN} ${API.KEY}`;
 
@@ -34,7 +34,7 @@ export class AuthService {
   }
 
   createInvitePassword(body: any) {
-    let headers = new Headers();
+    const headers = new Headers();
 
     const authorization = `${API.AUTH_HEADER.TOKEN} ${API.KEY}`;
 

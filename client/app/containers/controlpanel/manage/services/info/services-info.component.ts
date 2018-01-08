@@ -53,7 +53,7 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    let search: URLSearchParams = new URLSearchParams();
+    const search: URLSearchParams = new URLSearchParams();
     search.append('school_id', this.school.id.toString());
     search.append('store_id', this.serviceId.toString());
     search.append('privilege_type', CP_PRIVILEGES_MAP.services.toString());
@@ -64,7 +64,7 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
       .adminService
       .getAdminByStoreId(search)
       .map(admins => {
-        let _admins = [];
+        const _admins = [];
         admins.forEach(admin => {
           if (!admin.is_school_level) {
             _admins.push(admin);
@@ -114,7 +114,7 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
     }
 
     if (this.service.service_attendance) {
-      let attendance = {
+      const attendance = {
         'label': 'assessment',
         'url': `/manage/services/${this.serviceId}`
       };

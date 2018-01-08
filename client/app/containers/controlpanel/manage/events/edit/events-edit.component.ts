@@ -95,8 +95,8 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.formMissingFields = false;
 
     if (this.form.controls['event_attendance'].value === 1) {
-      let managerId = this.form.controls['event_manager_id'];
-      let eventFeedback = this.form.controls['event_feedback'];
+      const managerId = this.form.controls['event_manager_id'];
+      const eventFeedback = this.form.controls['event_feedback'];
 
       if (managerId.value === null) {
         this.formMissingFields = true;
@@ -200,7 +200,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   updateDatePicker() {
-    let _self = this;
+    const _self = this;
 
     this.startdatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
@@ -229,7 +229,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   fetchManagersBySelectedStore(storeId) {
-    let search: URLSearchParams = new URLSearchParams();
+    const search: URLSearchParams = new URLSearchParams();
 
     search.append('school_id', this.school.id.toString());
     search.append('store_id', storeId);
@@ -255,8 +255,8 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    let school = this.session.g.get('school');
-    let search: URLSearchParams = new URLSearchParams();
+    const school = this.session.g.get('school');
+    const search: URLSearchParams = new URLSearchParams();
     search.append('school_id', school.id.toString());
 
     const event$ = this.eventService.getEventById(this.eventId);
@@ -318,7 +318,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   onMapSelection(data) {
-    let cpMap = CPMap.getBaseMapObject(data);
+    const cpMap = CPMap.getBaseMapObject(data);
 
     const location = {...cpMap, address: data.formatted_address}
 
@@ -347,7 +347,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    let cpMap = CPMap.getBaseMapObject(data);
+    const cpMap = CPMap.getBaseMapObject(data);
 
     const location = {...cpMap, address: data.name};
 

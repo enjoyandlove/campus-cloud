@@ -64,7 +64,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    let search: URLSearchParams = new URLSearchParams();
+    const search: URLSearchParams = new URLSearchParams();
     search.append('school_id', this.school.id.toString());
 
     const stores$ = this.storeService.getStores(search);
@@ -180,7 +180,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     this.isChecked.map(item => {
 
       if (item.checked) {
-        let ctrl = <FormGroup>control.controls[item.index];
+        const ctrl = <FormGroup>control.controls[item.index];
 
         Object.keys(actions).forEach(key => {
           ctrl.controls[key].setValue(actions[key]);
@@ -218,7 +218,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   }
 
   getManagersByHostId(storeOrClubId): Observable<any> {
-    let search: URLSearchParams = new URLSearchParams();
+    const search: URLSearchParams = new URLSearchParams();
 
     search.append('school_id', this.school.id.toString());
     search.append('store_id', storeOrClubId);
@@ -229,7 +229,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       .getAdminByStoreId(search)
       .startWith([{ 'label': '---' }])
       .map(admins => {
-        let _admins = [
+        const _admins = [
           {
             'label': '---',
             'value': null
@@ -258,7 +258,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   }
 
   onCheckAll(checked) {
-    let _isChecked = [];
+    const _isChecked = [];
 
     this.isChecked.map((item) => {
       _isChecked.push(Object.assign({}, item, { checked: checked }));
@@ -278,16 +278,16 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
 
   onSubmit() {
     this.error = null;
-    let _events = [];
+    const _events = [];
     this.formError = false;
     let requiredFieldsError = false;
-    let events = Object.assign({}, this.form.controls['events'].value);
+    const events = Object.assign({}, this.form.controls['events'].value);
 
     const eventsData = <FormArray>this.form.controls['events'];
     const eventGroups = eventsData.controls;
 
     Object.keys(eventGroups).forEach(index => {
-      let controls = eventGroups[index].controls;
+      const controls = eventGroups[index].controls;
       if (controls.event_attendance.value === 1) {
         if (!controls.event_manager_id.value) {
           requiredFieldsError = true;

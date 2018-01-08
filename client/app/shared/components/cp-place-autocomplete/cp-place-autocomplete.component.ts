@@ -56,7 +56,7 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
       .debounceTime(300)
       .distinctUntilChanged()
       .switchMap((event: any) => {
-        let query = event.target.value;
+        const query = event.target.value;
 
         if (!query) {
           this.placeChange.emit(null);

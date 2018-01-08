@@ -64,10 +64,10 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
 
   doSubmit() {
     this.isError = false;
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    let data = Object.assign({}, this.form.value);
+    const data = Object.assign({}, this.form.value);
 
     if (this.state.isPristine) {
       delete data.user_emails;
@@ -87,7 +87,7 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
       },
       err => {
         this.isError = true;
-        let error = JSON.parse(err._body).error;
+        const error = JSON.parse(err._body).error;
         if (error === 'Database Error') {
           this.errorMessage = 'A list with that name already exists';
           return;
@@ -120,7 +120,7 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
   }
 
   onSearch(query) {
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('search_str', query);
     search.append('school_id', this.session.g.get('school').id.toString());
 
@@ -128,7 +128,7 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
       .service
       .getUsers(search)
       .map(users => {
-        let _users = [];
+        const _users = [];
 
         users.forEach(user => {
           _users.push({
@@ -194,7 +194,7 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
 
     if (this.users) {
       this.state.isPristine = false;
-      let emails = [];
+      const emails = [];
 
       this.users.forEach(user => { emails.push(user.email); });
 

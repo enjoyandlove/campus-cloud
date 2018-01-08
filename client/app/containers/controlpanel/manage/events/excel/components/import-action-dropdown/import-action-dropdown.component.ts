@@ -56,8 +56,8 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
   }
 
   private fetch() {
-    let school = this.session.g.get('school');
-    let search: URLSearchParams = new URLSearchParams();
+    const school = this.session.g.get('school');
+    const search: URLSearchParams = new URLSearchParams();
     search.append('school_id', school.id.toString());
 
     const stores$ = this.storeService.getStores(search);
@@ -79,7 +79,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
   }
 
   getManagersByHostId(storeId) {
-    let search: URLSearchParams = new URLSearchParams();
+    const search: URLSearchParams = new URLSearchParams();
 
     search.append('school_id', this.school.id.toString());
     search.append('store_id', storeId);
@@ -90,7 +90,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
       .getAdminByStoreId(search)
       .startWith([{ 'label': '---' }])
       .map(admins => {
-        let _admins = [
+        const _admins = [
           {
             'label': '---',
             'value': null
@@ -107,7 +107,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
   }
 
   toggleEventAttendance() {
-    let value = this.state.event_attendance === 0 ? 1 : 0;
+    const value = this.state.event_attendance === 0 ? 1 : 0;
 
     this.state = Object.assign(
       {},

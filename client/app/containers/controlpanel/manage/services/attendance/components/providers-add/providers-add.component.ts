@@ -29,7 +29,7 @@ export class ServicesProviderAddComponent implements OnInit {
   ) { }
 
   onSubmit() {
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('service_id', this.serviceId.toString());
 
     this

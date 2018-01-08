@@ -6,7 +6,7 @@ function _utf8_encode(string) {
 
   for (let n = 0; n < string.length; n++) {
 
-    let c = string.charCodeAt(n);
+    const c = string.charCodeAt(n);
 
     if (c < 128) {
       utftext += String.fromCharCode(c);

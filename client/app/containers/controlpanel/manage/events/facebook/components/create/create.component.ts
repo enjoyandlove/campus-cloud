@@ -29,7 +29,7 @@ export class FacebookEventsCreateComponent implements OnInit {
 
   onSubmit(data) {
     this.errors = [];
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     this

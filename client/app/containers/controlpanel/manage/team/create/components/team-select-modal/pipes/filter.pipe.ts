@@ -8,7 +8,7 @@ export class TeamFilterPipe implements PipeTransform {
     const filterResults = [];
 
     data.forEach(item => {
-      let str: String = (item.data[filterBy]).toString().toLowerCase();
+      const str: String = (item.data[filterBy]).toString().toLowerCase();
 
       if (str.startsWith(query.toLowerCase())) {
         filterResults.push(item);

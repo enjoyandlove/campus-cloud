@@ -278,8 +278,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   servicesDefaultPermission() {
     if (this.servicesCount) { return this.servicesCount; }
     let selected;
-    let school_level_privileges = this.schoolPrivileges;
-    let service_privilege = school_level_privileges[CP_PRIVILEGES_MAP.services];
+    const school_level_privileges = this.schoolPrivileges;
+    const service_privilege = school_level_privileges[CP_PRIVILEGES_MAP.services];
 
     if (!service_privilege) {
       selected = this.servicesMenu[0];
@@ -301,8 +301,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     if (this.clubsCount) { return this.clubsCount; }
 
     let selected;
-    let school_level_privileges = this.schoolPrivileges;
-    let club_privilege = school_level_privileges[CP_PRIVILEGES_MAP.clubs];
+    const school_level_privileges = this.schoolPrivileges;
+    const club_privilege = school_level_privileges[CP_PRIVILEGES_MAP.clubs];
 
     if (!club_privilege) {
       selected = this.clubsMenu[0];
@@ -722,7 +722,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    let privilege = this.user.school_level_privileges[this.schoolId][privilegeNo];
+    const privilege = this.user.school_level_privileges[this.schoolId][privilegeNo];
 
     this.schoolPrivileges = Object.assign(
       {},
@@ -747,7 +747,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       text: this.cpI18n.translate('update')
     }
 
-    let schoolPrivileges = this.user.school_level_privileges[this.schoolId] || {};
+    const schoolPrivileges = this.user.school_level_privileges[this.schoolId] || {};
 
     if (CP_PRIVILEGES_MAP.manage_admin in schoolPrivileges) {
       this.currentUserCanManage = schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin].w;

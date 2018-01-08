@@ -31,7 +31,7 @@ const map = {
 };
 
 function locationAsObject(location) {
-  let googleCords = location.toJSON();
+  const googleCords = location.toJSON();
 
   return {
     latitude: googleCords.lat,

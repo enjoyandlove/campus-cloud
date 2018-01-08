@@ -44,9 +44,9 @@ export class ServicesListComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    let search = new URLSearchParams();
-    let attendance_only = this.state.attendance_only ?
-      this.state.attendance_only.toString() : null;
+    const search = new URLSearchParams();
+    const attendance_only = this.state.attendance_only ?
+                            this.state.attendance_only.toString() : null;
 
     search.append('attendance_only', attendance_only);
     search.append('search_text', this.state.search_text);
@@ -94,7 +94,7 @@ export class ServicesListComponent extends BaseComponent implements OnInit {
 
   onDeleted(serviceId: number) {
     this.deleteService = '';
-    let _state = Object.assign({}, this.state);
+    const _state = Object.assign({}, this.state);
 
     _state.services = _state.services.filter(service => service.id !== serviceId);
 

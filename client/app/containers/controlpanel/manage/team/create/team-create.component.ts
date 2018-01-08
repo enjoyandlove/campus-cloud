@@ -234,7 +234,7 @@ export class TeamCreateComponent implements OnInit {
       return;
     }
 
-    let _data = {
+    const _data = {
       ...data,
       school_level_privileges: {
         [this.schoolId]: {
@@ -522,7 +522,7 @@ export class TeamCreateComponent implements OnInit {
       return;
     }
 
-    let privilege = this.user.school_level_privileges[this.schoolId][privilegeNo];
+    const privilege = this.user.school_level_privileges[this.schoolId][privilegeNo];
 
     this.schoolPrivileges = Object.assign(
       {},

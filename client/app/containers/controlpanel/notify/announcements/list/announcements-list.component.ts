@@ -96,8 +96,8 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
   }
 
   private fetch() {
-    let search = new URLSearchParams();
-    let type = this.state.type !== null ? this.state.type.toString() : null;
+    const search = new URLSearchParams();
+    const type = this.state.type !== null ? this.state.type.toString() : null;
 
     search.append('priority', type);
     search.append('search_str', this.state.query);

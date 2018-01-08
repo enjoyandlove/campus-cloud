@@ -29,7 +29,7 @@ export class SelectTeamServicesModalComponent extends BaseTeamSelectModalCompone
   }
 
   ngOnInit() {
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     this
@@ -37,7 +37,7 @@ export class SelectTeamServicesModalComponent extends BaseTeamSelectModalCompone
       .getServices(1, 1000, search)
       .subscribe(services => {
         let res = {};
-        let selected = {};
+        const selected = {};
         if (this.selectedServices) {
           services.map(service => {
 

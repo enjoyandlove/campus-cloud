@@ -66,9 +66,9 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
     groupSearch.append('store_id', clubId);
     groupSearch.append('school_id', schoolId);
 
-    let socialGroupDetails$ = this.membersService.getSocialGroupDetails(groupSearch);
+    const socialGroupDetails$ = this.membersService.getSocialGroupDetails(groupSearch);
 
-    let stream$ = socialGroupDetails$
+    const stream$ = socialGroupDetails$
       .flatMap((groups: any) => {
       memberSearch.append('group_id', groups[0].id.toString());
 

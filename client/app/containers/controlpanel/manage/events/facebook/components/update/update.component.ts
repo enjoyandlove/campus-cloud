@@ -49,7 +49,7 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
   }
 
   buildEventControls() {
-    let arr = [];
+    const arr = [];
 
     this.links.map(link => {
       arr.push(this.buildEventControl(link));
@@ -59,10 +59,10 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
   }
 
   onBulkUpdate(data) {
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    let _links = [];
+    const _links = [];
 
 
     data.links.forEach(link => {
@@ -104,7 +104,7 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
   private fetch() {
     this.loading = true;
     this.isEdited = false;
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     if (this.storeId) {
@@ -116,7 +116,7 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
     }
 
     const links$ = this.eventsService.getFacebookEvents(search).map((links: any) => {
-      let _links = [];
+      const _links = [];
 
       links.map(link => {
         _links.push({

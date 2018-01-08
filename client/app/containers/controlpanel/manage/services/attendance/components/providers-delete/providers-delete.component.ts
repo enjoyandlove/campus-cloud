@@ -20,7 +20,7 @@ export class ServicesProviderDeleteComponent {
   ) { }
 
   onDelete() {
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('service_id', this.serviceId.toString());
 
     this

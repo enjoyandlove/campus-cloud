@@ -53,7 +53,7 @@ export class FeedInputBoxComponent implements OnInit {
     private storeService: StoreService,
     private fileUploadService: FileUploadService
   ) {
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     this.stores$ = this.storeService.getStores(search);
@@ -61,7 +61,7 @@ export class FeedInputBoxComponent implements OnInit {
     this.channels$ = this.feedsService.getChannelsBySchoolId(1, 100, search)
       .startWith([{ label: '---' }])
       .map(channels => {
-        let _channels = [
+        const _channels = [
           {
             label: '---',
             action: null
@@ -69,7 +69,7 @@ export class FeedInputBoxComponent implements OnInit {
         ];
 
         channels.forEach(channel => {
-          let _channel = {
+          const _channel = {
             label: channel.name,
             action: channel.id
           };
@@ -102,7 +102,7 @@ export class FeedInputBoxComponent implements OnInit {
   }
 
   parseData(data) {
-    let _data = {
+    const _data = {
       'post_type': data.post_type || null,
       'store_id': data.store_id,
       'school_id': this.session.g.get('school').id,

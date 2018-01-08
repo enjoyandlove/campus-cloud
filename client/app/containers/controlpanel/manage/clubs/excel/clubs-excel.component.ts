@@ -129,7 +129,7 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
       return;
     }
 
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     this

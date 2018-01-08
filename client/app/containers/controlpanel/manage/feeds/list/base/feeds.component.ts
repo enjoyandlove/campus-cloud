@@ -117,15 +117,15 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
 
-    let flagged = this.state.flagged_by_users_only ?
+    const flagged = this.state.flagged_by_users_only ?
       this.state.flagged_by_users_only.toString() : null;
 
-    let removed = this.state.removed_by_moderators_only ?
+    const removed = this.state.removed_by_moderators_only ?
       this.state.removed_by_moderators_only.toString() : null;
 
-    let type = this.state.post_types ?
+    const type = this.state.post_types ?
       this.state.post_types.toString() : null;
 
     search.append('post_types', type);
@@ -138,7 +138,7 @@ export class FeedsComponent extends BaseComponent implements OnInit {
       search.append('group_id', this.state.wall_type.toString());
     }
 
-    let stream$ = this.doAdvancedSearch(search);
+    const stream$ = this.doAdvancedSearch(search);
 
     super
       .fetchData(stream$)
@@ -151,21 +151,21 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   doAdvancedSearch(search) {
     let stream$;
 
-    let groupThread$ = this.service.getGroupWallFeeds(this.startRange, this.endRange, search);
-    let campusThread$ = this.service.getCampusWallFeeds(this.startRange, this.endRange, search);
+    const groupThread$ = this.service.getGroupWallFeeds(this.startRange, this.endRange, search);
+    const campusThread$ = this.service.getCampusWallFeeds(this.startRange, this.endRange, search);
 
     if (this.state.isCampusThread) {
-      let _search = new URLSearchParams();
+      const _search = new URLSearchParams();
       _search.append('school_id', this.session.g.get('school').id.toString());
 
-      let channels$ = this.service.getChannelsBySchoolId(1, 1000, _search);
+      const channels$ = this.service.getChannelsBySchoolId(1, 1000, _search);
 
       stream$ =
         Observable
           .combineLatest(campusThread$, channels$)
           .map(res => {
-            let result = [];
-            let threads = res[0];
+            const result = [];
+            const threads = res[0];
             this.channels = res[1];
 
 
@@ -218,7 +218,7 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   }
 
   onEdited(feed) {
-    let _state = Object.assign({}, this.state, {
+    const _state = Object.assign({}, this.state, {
       feeds: this.state.feeds.map(_feed => {
         if (_feed.id === feed.id) {
           return _feed = feed;
@@ -231,7 +231,7 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   }
 
   onDeleted(feedId: number) {
-    let _state = Object.assign({}, this.state);
+    const _state = Object.assign({}, this.state);
 
     _state.feeds = _state.feeds.filter(feed => feed.id !== feedId);
 

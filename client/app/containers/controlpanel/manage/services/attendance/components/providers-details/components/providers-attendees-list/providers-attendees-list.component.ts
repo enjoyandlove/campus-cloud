@@ -44,7 +44,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
   }
 
   fetch() {
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('search_text', this.state.search_text);
     search.append('service_id', this.serviceId.toString());
     search.append('service_provider_id', this.providerId.toString());

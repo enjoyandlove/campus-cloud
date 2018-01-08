@@ -26,7 +26,7 @@ export class CheckinInternalModalComponent implements OnInit {
   }
 
   onSubmit() {
-    let data = this.form.value;
+    const data = this.form.value;
 
     if (this.isEvent) {
       delete data['provider_name'];

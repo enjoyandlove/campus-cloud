@@ -34,7 +34,7 @@ export class TemplatesDeleteComponent implements OnInit {
 
   onDelete() {
     this.isError = false;
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     this

@@ -55,8 +55,8 @@ export class CPUploadModalComponent implements OnInit {
   }
 
   validator(file) {
-    let result = [];
-    let validators = [
+    const result = [];
+    const validators = [
       {
         'exp': this.props.validExtensions.indexOf(file.name.split('.').pop()) === -1,
         'error': this.cpI18n.translate('error_invalid_extension'),
@@ -84,9 +84,9 @@ export class CPUploadModalComponent implements OnInit {
 
     if (!file.target.files.length) { return; }
 
-    let _file = file.target.files[0];
+    const _file = file.target.files[0];
 
-    let errors = this.validator(_file)[0];
+    const errors = this.validator(_file)[0];
 
     if (errors) {
       this.isError = true;

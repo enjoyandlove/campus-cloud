@@ -39,7 +39,7 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
   }
 
   onDeletedComment(commentId: number) {
-    let _state = Object.assign({}, this.state);
+    const _state = Object.assign({}, this.state);
 
     _state.comments = _state.comments.filter(comment => comment.id !== commentId);
 
@@ -48,7 +48,7 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('thread_id', this.feedId.toString());
 
     if (this._isCampusWallView) {
@@ -57,14 +57,14 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
       search.append('group_id', this.groupId.toString());
     }
 
-    let campusWallComments$ = this.feedsService.getCampusWallCommentsByThreadId(search);
-    let groupWallComments$ = this.feedsService.getGroupWallCommentsByThreadId(search);
-    let stream$ = this._isCampusWallView ? campusWallComments$ : groupWallComments$;
+    const campusWallComments$ = this.feedsService.getCampusWallCommentsByThreadId(search);
+    const groupWallComments$ = this.feedsService.getGroupWallCommentsByThreadId(search);
+    const stream$ = this._isCampusWallView ? campusWallComments$ : groupWallComments$;
 
     super
       .fetchData(stream$)
       .then(res => {
-        let _comments = [];
+        const _comments = [];
 
         res.data.map(comment => {
           _comments.push({

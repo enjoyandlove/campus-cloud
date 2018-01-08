@@ -103,7 +103,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
       return;
     }
 
-    let body = {
+    const body = {
       current_password: data.current,
       new_password: data.password
     };
@@ -120,8 +120,8 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
 
   passwordsMatch() {
     if (this.form) {
-      let password = this.form.controls['password'].value;
-      let confirmation = this.form.controls['confirmation'].value;
+      const password = this.form.controls['password'].value;
+      const confirmation = this.form.controls['confirmation'].value;
 
       if (password === confirmation) {
         return;

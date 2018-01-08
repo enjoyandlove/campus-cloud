@@ -75,8 +75,8 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    let searchProviders = new URLSearchParams();
-    let searchAdmin = new URLSearchParams();
+    const searchProviders = new URLSearchParams();
+    const searchAdmin = new URLSearchParams();
 
     searchProviders.append('service_id', this.serviceId.toString());
 
@@ -102,7 +102,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     super
       .fetchData(stream$)
       .then(res => {
-        let providers = res.data[1];
+        const providers = res.data[1];
 
         this.service = res.data[0];
 
@@ -138,7 +138,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
         this.buildForm();
 
         if (providers.length) {
-          let control = <FormArray>this.form.controls['providers'];
+          const control = <FormArray>this.form.controls['providers'];
           providers.forEach(provider => control.push(this.buildServiceProviderControl(provider)));
         }
       })
@@ -151,7 +151,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   }
 
   onMapSelection(data) {
-    let cpMap = CPMap.getBaseMapObject(data);
+    const cpMap = CPMap.getBaseMapObject(data);
 
     const location = {...cpMap, address: data.formatted_address}
 
@@ -180,7 +180,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    let cpMap = CPMap.getBaseMapObject(data);
+    const cpMap = CPMap.getBaseMapObject(data);
 
     const location = {...cpMap, address: data.name};
 
@@ -224,7 +224,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   deleteProvider(data: IServiceDeleteModal) {
     const controls = <FormArray>this.form.controls['providers'];
 
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('service_id', this.serviceId.toString());
 
     this
@@ -309,7 +309,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     this.formError = false;
 
     if (this.form.controls['providers'].dirty) {
-      let adminControls = <FormArray>this.form.controls['providers'];
+      const adminControls = <FormArray>this.form.controls['providers'];
       adminControls.controls.forEach((control: FormGroup) => {
         if (control.dirty && control.touched) {
           Object.keys(control.controls).forEach(key => {
@@ -327,7 +327,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    let data = Object.assign({}, this.form.value);
+    const data = Object.assign({}, this.form.value);
 
     this
       .servicesService
@@ -359,10 +359,10 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       )
       .switchMap(service => {
         this.withAttendance = service.service_attendance;
-        let providers = [];
-        let search = new URLSearchParams();
-        let controls = <FormArray>this.form.controls['providers'];
-        let providersControls = controls.controls;
+        const providers = [];
+        const search = new URLSearchParams();
+        const controls = <FormArray>this.form.controls['providers'];
+        const providersControls = controls.controls;
 
         providersControls.forEach((provider: FormGroup) => {
           providers.push({

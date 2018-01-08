@@ -134,7 +134,7 @@ export class EngagementTopBarComponent implements OnInit {
   }
 
   ngOnInit() {
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     const now = CPDate.toEpoch(new Date());
@@ -232,8 +232,8 @@ export class EngagementTopBarComponent implements OnInit {
 
     this.route.data.subscribe((res: any) => {
       // @data [services, lists]
-      let _lists = [...this.commonStudentFilter];
-      let _engagements = [...this.commonEngageMentFilter];
+      const _lists = [...this.commonStudentFilter];
+      const _engagements = [...this.commonEngageMentFilter];
 
       if (res.data[0].length) {
         _engagements.push(

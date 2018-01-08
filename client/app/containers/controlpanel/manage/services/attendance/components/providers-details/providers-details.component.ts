@@ -40,7 +40,7 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
   }
 
   private fetch() {
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('service_id', this.serviceId);
 
     const service$ = this.serviceService.getServiceById(this.serviceId)

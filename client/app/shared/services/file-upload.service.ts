@@ -67,7 +67,7 @@ export class FileUploadService {
   }
 
   uploadFile(media: File, url: string, headers?: Headers) {
-    let formData: FormData = new FormData();
+    const formData: FormData = new FormData();
 
     formData.append('file', media, media.name);
 

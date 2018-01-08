@@ -33,7 +33,7 @@ export class StoreService extends BaseService {
       ]
       )
       .map(res => {
-        let services = [
+        const services = [
           {
             'label': cpI18n.translate('services'),
             'value': null,
@@ -41,7 +41,7 @@ export class StoreService extends BaseService {
           }
         ];
 
-        let _services = res.map(store => {
+        const _services = res.map(store => {
           return {
             'label': store.name,
             'value': store.store_id,
@@ -81,7 +81,7 @@ export class StoreService extends BaseService {
       ]
       )
       .map(res => {
-        let clubs = [
+        const clubs = [
           {
             'label': cpI18n.translate('clubs'),
             'value': null,
@@ -89,7 +89,7 @@ export class StoreService extends BaseService {
           }
         ];
 
-        let _clubs = res.map(store => {
+        const _clubs = res.map(store => {
           return {
             'label': store.name,
             'value': store.id,

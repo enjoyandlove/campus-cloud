@@ -44,7 +44,7 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('event_id', this.event.id);
     search.append('sort_field', this.state.sort_field);
     search.append('sort_direction', this.state.sort_direction);

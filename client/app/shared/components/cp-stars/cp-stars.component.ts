@@ -29,7 +29,7 @@ export class CPStarsComponent implements OnInit {
   constructor() { }
 
   fillStars() {
-    let _stars = [];
+    const _stars = [];
     this.stars.forEach((star, index) => {
       if ((index + 1) <= this.totalRating) {
         star = Object.assign({}, star, { state: STAR_STATE.full, filled: true });

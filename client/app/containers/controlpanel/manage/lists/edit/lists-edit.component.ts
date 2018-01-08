@@ -50,7 +50,7 @@ export class ListsEditComponent implements OnInit {
   }
 
   doSubmit() {
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     let data = Object.assign({}, this.form.value);
@@ -104,7 +104,7 @@ export class ListsEditComponent implements OnInit {
   }
 
   buildChips() {
-    let chips = [];
+    const chips = [];
 
     this.list.users.map(user => {
       chips.push(
@@ -124,7 +124,7 @@ export class ListsEditComponent implements OnInit {
   }
 
   onSearch(query) {
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('search_str', query);
     search.append('school_id', this.session.g.get('school').id.toString());
 
@@ -132,7 +132,7 @@ export class ListsEditComponent implements OnInit {
       .service
       .getUsers(search)
       .map(users => {
-        let _users = [];
+        const _users = [];
 
         users.forEach(user => {
           _users.push({
@@ -162,7 +162,7 @@ export class ListsEditComponent implements OnInit {
       withAvatar: true
     };
 
-    let users = this.buildChips();
+    const users = this.buildChips();
 
     this.typeAheadOpts = {
       suggestions: [],

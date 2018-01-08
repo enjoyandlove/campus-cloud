@@ -48,7 +48,7 @@ export class ClubsMembersEditComponent implements OnInit {
   }
 
   onTypeChange(type): void {
-    let control = this.form.controls['member_type'];
+    const control = this.form.controls['member_type'];
     control.setValue(type);
   }
 
@@ -65,9 +65,9 @@ export class ClubsMembersEditComponent implements OnInit {
       return;
     }
 
-    let group_id = this.groupId;
-    let member_type = this.form.value.member_type;
-    let member_position = this.form.value.member_type === MemberType.executive ?
+    const group_id = this.groupId;
+    const member_type = this.form.value.member_type;
+    const member_position = this.form.value.member_type === MemberType.executive ?
                           this.form.value.member_position : '';
 
     this

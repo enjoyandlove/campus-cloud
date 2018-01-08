@@ -1,7 +1,7 @@
 function cleanNullValues(obj: any): any {
   if (Array.isArray(obj)) { return obj; }
 
-  let _obj = {};
+  const _obj = {};
 
   Object.keys(obj).forEach(key => {
     if (obj[key] !== null) {

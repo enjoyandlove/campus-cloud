@@ -11,6 +11,7 @@
     "curly": true,
     "eofline": true,
     "forin": true,
+    "prefer-const": [true, {"destructuring": "all"}],
     "indent": [
       true,
       "spaces",

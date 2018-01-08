@@ -50,14 +50,14 @@ export class FeedMoveComponent implements OnInit {
   }
 
   ngOnInit() {
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     this.channels$ = this
       .feedsService.getChannelsBySchoolId(1, 1000, search)
       .startWith([{ label: '---' }])
       .map(channels => {
-        let _channels = [
+        const _channels = [
           {
             label: '---',
             action: null
@@ -68,7 +68,7 @@ export class FeedMoveComponent implements OnInit {
           if (this.feed.post_type === channel.id) {
             this.currentChannel = channel.name;
           }
-          let _channel = {
+          const _channel = {
             label: channel.name,
             action: channel.id
           };

@@ -39,7 +39,7 @@ export class DashboardService extends BaseService {
     return super
       .get(url, { search })
       .map(data => {
-        let res = {
+        const res = {
           series: [],
           labels: [],
         };

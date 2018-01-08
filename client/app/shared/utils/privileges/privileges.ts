@@ -7,7 +7,7 @@ const schoolLevelEmpty = (user) => {
 }
 
 export const accountsToStoreMap = (accountsMap: Array<number> = [], accountPrivileges) => {
-  let accounts = {};
+  const accounts = {};
 
   accountsMap.map(storeId => {
     if (storeId in accountPrivileges) {

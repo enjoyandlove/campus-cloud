@@ -21,7 +21,7 @@ export class ServicesEditCreateProviderComponent implements OnInit {
   ) { }
 
   onSubmit(data) {
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('service_id', this.serviceId.toString());
 
 

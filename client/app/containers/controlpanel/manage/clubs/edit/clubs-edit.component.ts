@@ -61,7 +61,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
   }
 
   fetch() {
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     const stream$ = this.clubsService.getClubById(this.clubId, search);
@@ -161,7 +161,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
   }
 
   onMapSelection(data) {
-    let cpMap = CPMap.getBaseMapObject(data);
+    const cpMap = CPMap.getBaseMapObject(data);
 
     const location = {...cpMap, address: data.formatted_address}
 
@@ -190,7 +190,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    let cpMap = CPMap.getBaseMapObject(data);
+    const cpMap = CPMap.getBaseMapObject(data);
 
     const location = {...cpMap, address: data.name};
 

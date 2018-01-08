@@ -78,9 +78,9 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
       this.loading = true;
     }
 
-    let list_id = this.state.list_id ? this.state.list_id.toString() : null;
+    const list_id = this.state.list_id ? this.state.list_id.toString() : null;
 
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('sort_by', this.state.sortBy);
     search.append('end', this.state.end.toString());
     search.append('start', this.state.start.toString());

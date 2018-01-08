@@ -64,7 +64,7 @@ export class EventsCreateComponent implements OnInit {
     private eventService: EventsService
   ) {
     this.school = this.session.g.get('school');
-    let search: URLSearchParams = new URLSearchParams();
+    const search: URLSearchParams = new URLSearchParams();
 
     this.buildHeader();
     search.append('school_id', this.school.id.toString());
@@ -141,7 +141,7 @@ export class EventsCreateComponent implements OnInit {
   }
 
   onMapSelection(data) {
-    let cpMap = CPMap.getBaseMapObject(data);
+    const cpMap = CPMap.getBaseMapObject(data);
 
     const location = {...cpMap, address: data.formatted_address}
 
@@ -170,7 +170,7 @@ export class EventsCreateComponent implements OnInit {
       return;
     }
 
-    let cpMap = CPMap.getBaseMapObject(data);
+    const cpMap = CPMap.getBaseMapObject(data);
 
     const location = {...cpMap, address: data.name};
 
@@ -198,8 +198,8 @@ export class EventsCreateComponent implements OnInit {
     }
 
     if (this.form.controls['event_attendance'].value === EventAttendance.enabled) {
-      let managerId = this.form.controls['event_manager_id'];
-      let eventFeedback = this.form.controls['event_feedback'];
+      const managerId = this.form.controls['event_manager_id'];
+      const eventFeedback = this.form.controls['event_feedback'];
 
       if (!(managerId.value)) {
         this.formError = true;
@@ -318,7 +318,7 @@ export class EventsCreateComponent implements OnInit {
       'custom_basic_feedback_label': [null]
     });
 
-    let _self = this;
+    const _self = this;
 
     this.startdatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,

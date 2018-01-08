@@ -35,7 +35,7 @@ export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent
   }
 
   ngOnInit() {
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     this
@@ -44,7 +44,7 @@ export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent
       .map(clubs => clubs.filter(club => club.status === ACTIVE_STATUS))
       .subscribe(clubs => {
         let res = {};
-        let selected = {};
+        const selected = {};
 
         if (this.selectedClubs) {
           clubs.map(club => {

@@ -64,9 +64,9 @@ export class BaseCheckinComponent implements OnInit {
   }
 
   handlePdf() {
-    let doc = new jsPDF();
+    const doc = new jsPDF();
 
-    let imageFormat =
+    const imageFormat =
       decodeURIComponent(this.data.qr_img_base64)
         .split(',')[0].split('/')[1].split(';')[0].toUpperCase();
 
@@ -85,10 +85,10 @@ export class BaseCheckinComponent implements OnInit {
 
     if (this.isService) {
       {
-        let fontSize = this.getPDFTitleFontSize();
+        const fontSize = this.getPDFTitleFontSize();
         doc.setFontSize(fontSize);
-        let textHeight = (PAGE_HEIGHT - 130);
-        let text = <Array<string>>doc.splitTextToSize(this.data.service_name, fullWidth);
+        const textHeight = (PAGE_HEIGHT - 130);
+        const text = <Array<string>>doc.splitTextToSize(this.data.service_name, fullWidth);
 
         text.forEach((line, index) => {
           doc.text(line, 105, (textHeight + index * (fontSize * CENTIMETER)), 'center');
@@ -98,10 +98,10 @@ export class BaseCheckinComponent implements OnInit {
 
     if (this.isEvent) {
       {
-        let fontSize = this.getPDFTitleFontSize();
+        const fontSize = this.getPDFTitleFontSize();
         doc.setFontSize(fontSize);
-        let textHeight = (PAGE_HEIGHT - 130);
-        let text = <Array<string>>doc.splitTextToSize(this.data.title, fullWidth);
+        const textHeight = (PAGE_HEIGHT - 130);
+        const text = <Array<string>>doc.splitTextToSize(this.data.title, fullWidth);
 
         text.forEach((line, index) => {
           doc.text(line, 105, (textHeight + index * (fontSize * CENTIMETER)), 'center');
@@ -113,8 +113,8 @@ export class BaseCheckinComponent implements OnInit {
       doc.setFontSize(34);
       doc.setFontType('normal');
       {
-        let textHeight = (PAGE_HEIGHT - 80);
-        let text = doc.splitTextToSize(this.data.provider_name, fullWidth);
+        const textHeight = (PAGE_HEIGHT - 80);
+        const text = doc.splitTextToSize(this.data.provider_name, fullWidth);
         text.forEach((line, index) => {
           doc.text(line, 105, (textHeight + index * (34 * CENTIMETER)), 'center');
         });
@@ -126,7 +126,7 @@ export class BaseCheckinComponent implements OnInit {
     doc.setDrawColor(255, 0, 0);
     doc.setFillColor(255, 0, 0);
 
-    let appLogoFormat = decodeURIComponent(this.data.app_logo_img_base64)
+    const appLogoFormat = decodeURIComponent(this.data.app_logo_img_base64)
       .split(',')[0].split('/')[1].split(';')[0].toUpperCase();
 
 
@@ -217,7 +217,7 @@ export class BaseCheckinComponent implements OnInit {
 
 
   getPDFTitleFontSize() {
-    let name = this.isService ? this.data.service_name : this.data.title;
+    const name = this.isService ? this.data.service_name : this.data.title;
 
     if (name.length < 15) {
       return 50;
@@ -230,7 +230,7 @@ export class BaseCheckinComponent implements OnInit {
   }
 
   getFileName() {
-    let name = this.isService ? this.data.service_name : this.data.title;
+    const name = this.isService ? this.data.service_name : this.data.title;
     return name.toLowerCase().split(' ').join('_');
   }
 

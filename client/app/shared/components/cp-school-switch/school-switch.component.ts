@@ -48,7 +48,7 @@ export class SchoolSwitchComponent implements OnInit {
     this.canManageAdmins = false;
 
     if (schoolPrivileges) {
-      let manage_admin = schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin];
+      const manage_admin = schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin];
 
       schoolPrivileges = user.school_level_privileges[this.session.g.get('school').id];
 

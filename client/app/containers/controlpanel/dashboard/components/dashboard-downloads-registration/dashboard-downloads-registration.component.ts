@@ -18,7 +18,7 @@ export const addGroup = (data) => {
 }
 
 export const aggregate = (data: Number[], serie: Number[]): Promise<Number[]> => {
-  let arr = [];
+  const arr = [];
 
   data.reduce((prev, current, index) => {
     if (prev === current) {

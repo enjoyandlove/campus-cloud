@@ -16,10 +16,10 @@ export class EngagementResolver implements Resolve<any> {
 
   resolve(): Observable<any> {
 
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    let serviceSearch = new URLSearchParams();
+    const serviceSearch = new URLSearchParams();
     serviceSearch.append('attendance_only', SERVICE_WITH_ATTENDANCE);
     serviceSearch.append('school_id', this.session.g.get('school').id.toString());
 

@@ -46,7 +46,7 @@ export class StudentsComposeComponent implements OnInit {
     private storeService: StoreService
   ) {
     const school = this.session.g.get('school');
-    let search: URLSearchParams = new URLSearchParams();
+    const search: URLSearchParams = new URLSearchParams();
     search.append('school_id', school.id.toString());
 
     this.stores$ = this.storeService.getStores(search);
@@ -63,7 +63,7 @@ export class StudentsComposeComponent implements OnInit {
   doSubmit() {
     let data = this.form.value;
     this.isError = false;
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     data = Object.assign(

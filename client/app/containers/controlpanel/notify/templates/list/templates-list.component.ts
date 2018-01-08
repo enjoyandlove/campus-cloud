@@ -68,7 +68,7 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
   }
 
   fetch() {
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('search_str', this.state.search_str);
     search.append('school_id', this.session.g.get('school').id.toString());
 

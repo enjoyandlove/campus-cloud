@@ -89,7 +89,7 @@ export class EventsComponent extends BaseComponent {
 
   doFilter(filter) {
     let storeId;
-    let isUpcoming = filter.upcoming;
+    const isUpcoming = filter.upcoming;
 
     if (this.isClub) {
       storeId = this.clubId;
@@ -136,11 +136,11 @@ export class EventsComponent extends BaseComponent {
   }
 
   buildHeaders() {
-    let end = this.endRange;
-    let start = this.startRange;
-    let search = new URLSearchParams();
+    const end = this.endRange;
+    const start = this.startRange;
+    const search = new URLSearchParams();
 
-    let exclude_current = this.state.exclude_current ?
+    const exclude_current = this.state.exclude_current ?
       this.state.exclude_current.toString() : null;
 
     let store_id = this.state.store_id ? (this.state.store_id).toString() : null;

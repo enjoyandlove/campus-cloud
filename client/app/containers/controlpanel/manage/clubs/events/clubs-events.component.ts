@@ -57,7 +57,7 @@ export class ClubsEventsComponent extends BaseComponent implements OnInit {
   }
 
   buildPayload() {
-    let menu = {
+    const menu = {
       heading: `[NOTRANSLATE]${this.club.name}[NOTRANSLATE]`,
       subheading: null,
       'crumbs': {

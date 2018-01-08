@@ -65,7 +65,7 @@ export class FeedFiltersComponent implements OnInit {
   }
 
   private fetch() {
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     this.walls$ = this.feedsService.getSocialGroups(search)
@@ -76,7 +76,7 @@ export class FeedFiltersComponent implements OnInit {
         }
       ])
       .map(groupWalls => {
-        let _walls = [
+        const _walls = [
           {
             label: this.cpI18n.translate('campus_wall'),
             action: 1
@@ -84,7 +84,7 @@ export class FeedFiltersComponent implements OnInit {
         ];
 
         groupWalls.forEach(wall => {
-          let _wall = {
+          const _wall = {
             label: wall.name,
             action: wall.id,
             commentingMemberType: wall.min_commenting_member_type,
@@ -101,7 +101,7 @@ export class FeedFiltersComponent implements OnInit {
     this.channels$ = this.feedsService.getChannelsBySchoolId(1, 1000, search)
       .startWith([{ label: this.cpI18n.translate('all') }])
       .map(channels => {
-        let _channels = [
+        const _channels = [
           {
             label:  this.cpI18n.translate('all'),
             action: null
@@ -109,7 +109,7 @@ export class FeedFiltersComponent implements OnInit {
         ];
 
         channels.forEach(channel => {
-          let _channel = {
+          const _channel = {
             label: channel.name,
             action: channel.id
           };
@@ -230,14 +230,14 @@ export class FeedFiltersComponent implements OnInit {
     ];
 
     if (this.clubId) {
-      let search = new URLSearchParams();
+      const search = new URLSearchParams();
       search.append('school_id', this.session.g.get('school').id.toString());
       search.append('store_id', this.clubId.toString());
 
-      let getGroup = this.feedsService.getSocialGroups(search).toPromise();
+      const getGroup = this.feedsService.getSocialGroups(search).toPromise();
 
       getGroup.then(groups => {
-        let group = groups[0];
+        const group = groups[0];
         this.state = Object.assign(
           {},
           this.state,
