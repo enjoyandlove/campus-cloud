@@ -56,7 +56,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
   }
 
   onLocationUpdated(location) {
-    let _state = Object.assign({}, this.state, {
+    const _state = Object.assign({}, this.state, {
       locations: this.state.locations.map(_location => {
         if (_location.id === location.id) {
           return _location = location.data;
@@ -69,7 +69,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
   }
 
   onLocationDeleted(locationId) {
-    let _state = Object.assign({}, this.state);
+    const _state = Object.assign({}, this.state);
 
     _state.locations = _state.locations.filter(locations => {
       if (locations.id !== locationId) { return locations; }

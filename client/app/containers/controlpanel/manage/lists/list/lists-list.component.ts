@@ -103,7 +103,7 @@ export class ListsListComponent extends BaseComponent implements OnInit {
 
   onDeletedList(listId: number) {
     this.isListsDelete = false;
-    let _state = Object.assign({}, this.state);
+    const _state = Object.assign({}, this.state);
 
     _state.lists = _state.lists.filter(list => {
       if (list.id !== listId) { return list; }

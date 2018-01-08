@@ -26,7 +26,7 @@ export class FeedApproveModalComponent implements OnInit {
   ) { }
 
   onSubmit() {
-    let data = { flag: 2 };
+    const data = { flag: 2 };
 
     const approveCampusWallThread$ = this.feedsService.approveCampusWallThread(this.feed.id, data);
 

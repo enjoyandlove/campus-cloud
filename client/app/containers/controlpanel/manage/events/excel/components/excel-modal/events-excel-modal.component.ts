@@ -44,7 +44,7 @@ export class EventsExcelModalComponent implements OnInit {
       )
       .catch(
       err => {
-        let serverError = err.json().error;
+        const serverError = err.json().error;
         return Promise.reject(serverError ?
                               serverError :
                               this.cpI18n.translate('something_went_wrong'));
@@ -69,7 +69,7 @@ export class EventsExcelModalComponent implements OnInit {
   ngOnInit() {
     this.fileName = 'mass_event_invite_sample.csv';
 
-    let templateUrl = isDev ? `/templates/${this.fileName}` : `/dist/templates/${this.fileName}`;
+    const templateUrl = isDev ? `/templates/${this.fileName}` : `/dist/templates/${this.fileName}`;
 
     this.options = {
       templateUrl,

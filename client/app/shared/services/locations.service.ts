@@ -13,7 +13,7 @@ export class CPLocationsService {
   constructor() { }
 
   getLocations() {
-    let results: Array<any> = [
+    const results: Array<any> = [
       {
         'label': 'Your Locations',
         'heading': true,
@@ -56,7 +56,7 @@ export class CPLocationsService {
       { input, location }
     );
 
-    let results: Array<any> = [
+    const results: Array<any> = [
       {
         'label': 'Google Maps Results',
         'heading': true,

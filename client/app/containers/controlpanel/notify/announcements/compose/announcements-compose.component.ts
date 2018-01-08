@@ -92,7 +92,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       .service
       .getUsers(search)
       .map(users => {
-        let _users = [];
+        const _users = [];
 
         users.forEach(user => {
           _users.push({
@@ -150,7 +150,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       .service
       .getLists(search, 1, 400)
       .map(lists => {
-        let _lists = [];
+        const _lists = [];
 
         lists.forEach(list => {
           _lists.push({
@@ -238,7 +238,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    let prefix = this.subject_prefix.label ? this.subject_prefix.label.toUpperCase() : '';
+    const prefix = this.subject_prefix.label ? this.subject_prefix.label.toUpperCase() : '';
 
     let data = {
       'store_id': this.form.value.store_id,
@@ -388,7 +388,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       suggestions: this.suggestions,
       reset: this.resetChips$
     };
-    let schoolPrivileges = this.session.g.get('user')
+    const schoolPrivileges = this.session.g.get('user')
       .school_level_privileges[this.session.g.get('school').id];
 
     try {

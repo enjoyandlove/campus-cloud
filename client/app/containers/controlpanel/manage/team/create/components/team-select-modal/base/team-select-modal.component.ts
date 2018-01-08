@@ -48,7 +48,7 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
   }
 
   updateItem(id: number, key: string, value: any) {
-    let _state = Object.assign({}, this.state);
+    const _state = Object.assign({}, this.state);
 
     _state.selected.forEach(service => {
       if (service.id === id) {
@@ -66,8 +66,8 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
   }
 
   onSubmit() {
-    let _item = {};
-    let _state = [...this.state.selected];
+    const _item = {};
+    const _state = [...this.state.selected];
 
     _state.map(item => {
       if (item.checked) {
@@ -110,7 +110,7 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
   }
 
   updateState(items) {
-    let _selected = [];
+    const _selected = [];
 
     items.forEach(item => {
       _selected.push({
@@ -152,7 +152,7 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
 
       if (res.selected) {
         Object.keys(res.selected).forEach(storeId => {
-          let type = res.selected[storeId].w ? 2 : 1;
+          const type = res.selected[storeId].w ? 2 : 1;
           this.updateItem(res.selected[storeId].id, 'type', type);
         });
       }

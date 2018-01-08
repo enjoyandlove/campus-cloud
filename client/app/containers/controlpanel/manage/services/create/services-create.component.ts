@@ -58,7 +58,7 @@ export class ServicesCreateComponent implements OnInit {
       .getCategories()
       .startWith([{ label: '---', action: null }])
       .map(categories => {
-        let _categories = [
+        const _categories = [
           {
             label: '---',
             action: null
@@ -82,7 +82,7 @@ export class ServicesCreateComponent implements OnInit {
   }
 
   onMapSelection(data) {
-    let cpMap = CPMap.getBaseMapObject(data);
+    const cpMap = CPMap.getBaseMapObject(data);
 
     const location = {...cpMap, address: data.formatted_address}
 
@@ -111,7 +111,7 @@ export class ServicesCreateComponent implements OnInit {
       return;
     }
 
-    let cpMap = CPMap.getBaseMapObject(data);
+    const cpMap = CPMap.getBaseMapObject(data);
 
     const location = {...cpMap, address: data.name};
 
@@ -150,9 +150,9 @@ export class ServicesCreateComponent implements OnInit {
       return;
     }
 
-    let data = Object.assign(this.form.value);
+    const data = Object.assign(this.form.value);
 
-    let { service_attendance } = data;
+    const { service_attendance } = data;
 
     if (service_attendance === ATTENDANCE_DISABLED || service_attendance == null) {
       data.enable_feedback = null;

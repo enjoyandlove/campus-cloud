@@ -81,7 +81,7 @@ export class ServicesEventsComponent extends EventsComponent {
     }
 
     if (this.service.service_attendance) {
-      let attendance = {
+      const attendance = {
         'label': 'assessment',
         'url': `/manage/services/${this.serviceId}`
       };

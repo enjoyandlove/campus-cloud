@@ -79,7 +79,7 @@ export class ClubsCreateComponent implements OnInit {
   }
 
   onMapSelection(data) {
-    let cpMap = CPMap.getBaseMapObject(data);
+    const cpMap = CPMap.getBaseMapObject(data);
 
     const location = {...cpMap, address: data.formatted_address}
 
@@ -108,7 +108,7 @@ export class ClubsCreateComponent implements OnInit {
       return;
     }
 
-    let cpMap = CPMap.getBaseMapObject(data);
+    const cpMap = CPMap.getBaseMapObject(data);
 
     const location = {...cpMap, address: data.name};
 

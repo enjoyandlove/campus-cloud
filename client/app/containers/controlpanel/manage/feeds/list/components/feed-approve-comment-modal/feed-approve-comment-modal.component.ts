@@ -26,7 +26,7 @@ export class FeedApproveCommentModalComponent implements OnInit {
   ) { }
 
   onSubmit() {
-    let data = { flag: 2 };
+    const data = { flag: 2 };
 
     const approveCampusWallComment$ = this
       .feedsService.approveCampusWallComment(this.feed.id, data);

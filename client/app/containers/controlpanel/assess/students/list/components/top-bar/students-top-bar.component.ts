@@ -67,7 +67,7 @@ export class StudentsTopBarComponent implements OnInit {
         }
       ])
       .map(lists => {
-        let items = [
+        const items = [
           {
             'label': this.cpI18n.translate('assess_all_students'),
             'id': null

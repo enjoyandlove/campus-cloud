@@ -2,7 +2,7 @@ import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants';
 
 function getMenu(privileges = {}) {
 
-  let form = {
+  const form = {
     services: {
       active: false,
       deps: []

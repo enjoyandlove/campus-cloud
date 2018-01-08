@@ -53,7 +53,7 @@ export class LocationsUpdateComponent implements OnInit {
   }
 
   onMapSelection(data) {
-    let cpMap = CPMap.getBaseMapObject(data);
+    const cpMap = CPMap.getBaseMapObject(data);
 
     this.form.controls['city'].setValue(cpMap.city);
     this.form.controls['province'].setValue(cpMap.province);
@@ -68,7 +68,7 @@ export class LocationsUpdateComponent implements OnInit {
   onPlaceChange(data) {
     if (!data) { return; }
 
-    let cpMap = CPMap.getBaseMapObject(data);
+    const cpMap = CPMap.getBaseMapObject(data);
 
     this.form.controls['city'].setValue(cpMap.city);
     this.form.controls['province'].setValue(cpMap.province);

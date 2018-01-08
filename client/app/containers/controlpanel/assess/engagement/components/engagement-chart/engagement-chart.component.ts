@@ -40,10 +40,10 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
   constructor() { }
 
   buildLabels() {
-    let labels = [];
+    const labels = [];
 
     for (let i = 1; i <= this.props.series.length; i++) {
-      let date = CPDate
+      const date = CPDate
         .toEpoch(moment().subtract(this.props.series.length - i, 'days'));
       labels.push(moment.unix(date).format('MMM D'));
     }
@@ -52,10 +52,10 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
   }
 
   buildSeries() {
-    let series = [];
+    const series = [];
 
     for (let i = 1; i <= this.props.series.length; i++) {
-      let date = CPDate
+      const date = CPDate
         .toEpoch(moment().subtract(this.props.series.length - i, 'days'));
 
       series.push(

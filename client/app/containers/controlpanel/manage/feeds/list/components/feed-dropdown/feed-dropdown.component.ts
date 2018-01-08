@@ -53,7 +53,7 @@ export class FeedDropdownComponent implements OnInit {
     ];
 
     if (this._isCampusWallView) {
-      let approveMenu = {
+      const approveMenu = {
         action: 2,
         label: this.cpI18n.translate('feeds_move_post'),
         isPostOnly: true,

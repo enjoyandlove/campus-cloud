@@ -54,7 +54,7 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
   }
 
   buildHeader(name) {
-    let menu = {
+    const menu = {
       heading: `[NOTRANSLATE]${name}[NOTRANSLATE]`,
       'crumbs': {
         'url': `clubs`,

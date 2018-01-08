@@ -82,7 +82,7 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
       .getCategories()
       .startWith([{ label: '---', action: null }])
       .map(categories => {
-        let _categories = [
+        const _categories = [
           {
             label: '---',
             action: null
@@ -159,7 +159,7 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
     this.isChecked.map(item => {
 
       if (item.checked) {
-        let ctrl = <FormGroup>control.controls[item.index];
+        const ctrl = <FormGroup>control.controls[item.index];
 
         Object.keys(actions).forEach(key => {
           ctrl.controls[key].setValue(actions[key]);
@@ -190,7 +190,7 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
   }
 
   onCheckAll(checked) {
-    let _isChecked = [];
+    const _isChecked = [];
 
     this.isChecked.map((item) => {
       _isChecked.push(Object.assign({}, item, { checked: checked }));
@@ -208,8 +208,8 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
   }
 
   onSubmit() {
-    let parsedServices = [];
-    let _data = Object.assign({}, this.form.value.services);
+    const parsedServices = [];
+    const _data = Object.assign({}, this.form.value.services);
 
     Object.keys(_data).forEach(key => {
       parsedServices.push(Object.assign({}, _data[key], { category: _data[key].category.action }));

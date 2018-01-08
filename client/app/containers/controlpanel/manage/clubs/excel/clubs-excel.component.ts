@@ -51,8 +51,8 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
   }
 
   onRemoveImage(index) {
-    let clubsControl = <FormArray>this.form.controls['clubs'];
-    let control = <FormGroup>clubsControl.at(index);
+    const clubsControl = <FormArray>this.form.controls['clubs'];
+    const control = <FormGroup>clubsControl.at(index);
     control.controls['logo_url'].setValue(null);
   }
 
@@ -109,13 +109,13 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
   }
 
   onImageUpload(image, index) {
-    let imageUpload = new CPImageUploadComponent(this.cpI18n, this.fileUploadService);
-    let promise = imageUpload.onFileUpload(image, true);
+    const imageUpload = new CPImageUploadComponent(this.cpI18n, this.fileUploadService);
+    const promise = imageUpload.onFileUpload(image, true);
 
     promise
       .then((res: any) => {
-        let clubsControl = <FormArray>this.form.controls['clubs'];
-        let control = <FormGroup>clubsControl.at(index);
+        const clubsControl = <FormArray>this.form.controls['clubs'];
+        const control = <FormGroup>clubsControl.at(index);
         control.controls['logo_url'].setValue(res.image_url);
       })
       .catch(err => { throw new Error(err) });

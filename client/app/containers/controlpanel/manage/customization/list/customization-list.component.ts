@@ -53,7 +53,7 @@ export class CustomizationListComponent implements OnInit {
     console.log('saving');
     console.log(this.canvas);
 
-    let promise: Promise<any> = this.canvas.result(
+    const promise: Promise<any> = this.canvas.result(
       {
         'type': 'base64',
         'size': 'viewport',
@@ -109,7 +109,7 @@ export class CustomizationListComponent implements OnInit {
 
   ngOnInit() {
     // https://foliotek.github.io/Croppie/
-    let Croppie = require('croppie');
+    const Croppie = require('croppie');
 
     this.canvas = new Croppie(document.getElementById('canvas_wrapper'), {
       'enableZoom': false,
