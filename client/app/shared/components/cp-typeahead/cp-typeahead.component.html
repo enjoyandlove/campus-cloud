@@ -47,7 +47,7 @@
 
       <ul
         *ngIf="props.suggestions && props.suggestions.length"
-        class="typeahead__list">
+        class="typeahead__list typeahead__scroll-bar">
         <li
           class="typeahead__item list-as-anchor"
           (click)="onHandleClick(suggestion)"
