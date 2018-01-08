@@ -135,7 +135,7 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
     this.state = Object.assign(
       {},
       this.state,
-      { suggestions: [ ...suggestions[0], ...suggestions[1] ] });
+      { suggestions: [...suggestions[1]] });
   }
 
   resetSuggestions(): void {
