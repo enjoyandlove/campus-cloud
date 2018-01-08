@@ -1,10 +1,10 @@
 import {
-  Input,
-  OnInit,
-  Output,
+  ChangeDetectionStrategy,
   Component,
   EventEmitter,
-  ChangeDetectionStrategy
+  Input,
+  OnInit,
+  Output
 } from '@angular/core';
 
 @Component({
@@ -18,7 +18,7 @@ export class CPSwitchComponent implements OnInit {
   @Input() isChecked: boolean;
   @Output() toggle: EventEmitter<boolean> = new EventEmitter();
 
-  constructor() { }
+  constructor () { }
 
   onChange() {
     this.isChecked = !this.isChecked;

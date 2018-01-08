@@ -749,11 +749,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
     const schoolPrivileges = this.user.school_level_privileges[this.schoolId] || {};
 
-    if (CP_PRIVILEGES_MAP.manage_admin in schoolPrivileges) {
-      this.currentUserCanManage = schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin].w;
-    } else {
-      this.currentUserCanManage = false;
-    }
+    this.currentUserCanManage = CP_PRIVILEGES_MAP.manage_admin in schoolPrivileges ?
+                                schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin].w : false;
 
     this.canReadEvents = schoolPrivileges[CP_PRIVILEGES_MAP.events] || false;
     this.canReadServices = schoolPrivileges[CP_PRIVILEGES_MAP.services] || false;

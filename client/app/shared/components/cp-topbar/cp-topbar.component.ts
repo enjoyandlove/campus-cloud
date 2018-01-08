@@ -1,13 +1,13 @@
-import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 
 import {
-  canSchoolReadResource,
-  canAccountLevelReadResource
+  canAccountLevelReadResource,
+  canSchoolReadResource
 } from './../../utils/privileges';
 
+import { CPSession, ISchool, IUser } from '../../../session';
 import { CP_PRIVILEGES_MAP } from './../../constants';
-import { CPSession, IUser, ISchool } from '../../../session';
 
 @Component({
   selector: 'cp-topbar',
@@ -62,6 +62,7 @@ export class CPTopBarComponent implements OnInit {
     } else if (canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.links))  {
       return 'links';
     }
+
     return null;
   }
 
@@ -80,14 +81,10 @@ export class CPTopBarComponent implements OnInit {
 
     this.isManageActiveRoute = this.isManage(this.router.url);
 
-    this.router.events.subscribe(event => {
+    this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        if (this.isManage(event.url)) {
-          this.isManageActiveRoute = true;
-        } else {
-          this.isManageActiveRoute = false;
-        }
+        this.isManageActiveRoute = this.isManage(event.url) ? true : false;
       }
-    })
+    });
   }
 }

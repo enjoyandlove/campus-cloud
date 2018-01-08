@@ -10,6 +10,13 @@
     ],
     "curly": true,
     "eofline": true,
+    "import-spacing": true,
+    "new-parens": true,
+    "no-consecutive-blank-lines": [true, 1],
+    "newline-before-return": true,
+    "interface-name": [true, "always-prefix"],
+    "binary-expression-operand-order": true,
+    "no-conditional-assignment": true,
     "forin": true,
     "prefer-const": [true, {"destructuring": "all"}],
     "indent": [
@@ -17,11 +24,30 @@
       "spaces",
       2
     ],
+    "max-file-line-count": [
+      true,
+      800
+    ],
+    "max-classes-per-file": [
+      true,
+      1
+    ],
+    "no-duplicate-imports": true,
     "label-position": true,
     "max-line-length": [
       true,
       100
     ],
+    "align": [
+      true,
+      "arguments",
+      "elements",
+      "members",
+      "parameters",
+      "statements"
+    ],
+    "arrow-parens": true,
+    "arrow-return-shorthand": true,
     "member-access": false,
     "member-ordering": [
       true,
@@ -40,14 +66,21 @@
     ],
     "no-construct": true,
     "no-debugger": true,
+    "no-duplicate-super": true,
+    "no-duplicate-switch-case": true,
     "no-duplicate-variable": true,
     "no-empty": false,
     "no-eval": true,
+    "no-unnecessary-class": true,
+    "no-internal-module": true,
     "no-inferrable-types": true,
     "no-shadowed-variable": true,
+    "restrict-plus-operands": true,
+    "strict-type-predicates": true,
     "no-string-literal": false,
     "no-switch-case-fall-through": true,
     "no-trailing-whitespace": true,
+    "prefer-conditional-expression": true,
     "no-unused-expression": true,
     "no-use-before-declare": true,
     "no-var-keyword": true,
@@ -65,8 +98,20 @@
     ],
     "radix": true,
     "semicolon": [
+      true,
       "always"
     ],
+    "ordered-imports": [
+      true,
+      "grouped-imports"
+    ],
+    "space-within-parens": [
+      true,
+      0
+    ],
+    "space-before-function-paren": [false, "always"],
+    "use-isnan": true,
+    "typeof-compare": true,
     "triple-equals": [
       true,
       "allow-null-check"
