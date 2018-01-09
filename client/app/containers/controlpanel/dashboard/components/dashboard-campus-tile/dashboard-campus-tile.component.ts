@@ -41,10 +41,7 @@ export class DashboardCampuTileComponent extends BaseComponent
 
     const stream$ = this.service.getCampusTile(search);
 
-    super
-      .fetchData(stream$)
-      .then((res) => (this.items = res.data))
-      .catch((err) => console.log(err));
+    super.fetchData(stream$).then((res) => (this.items = res.data));
   }
 
   ngOnInit() {}

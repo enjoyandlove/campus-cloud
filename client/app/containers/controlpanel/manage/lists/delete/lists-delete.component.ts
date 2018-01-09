@@ -72,8 +72,6 @@ export class ListsDeleteComponent implements OnInit {
           this.templateConflict = true;
 
           return;
-        } else {
-          console.log(err);
         }
       },
     );

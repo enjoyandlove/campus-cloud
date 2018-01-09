@@ -74,7 +74,6 @@ export class ListsService extends BaseService {
   }
 
   setModalServices(services: any[]): void {
-    console.log(services);
     this.store.dispatch({
       type: SERVICES_MODAL_SET,
       payload: services,
