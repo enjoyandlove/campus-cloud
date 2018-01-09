@@ -24,11 +24,9 @@
       <div class="col-xs-9 wrapper__right-side">
         <label class="no-margin dark" i18n>{{ description }}</label>
         <span class="text-muted" i18n>{{ 'component_cpimage_help' | cpI18n }}</span>
-        <div class="row" *ngIf="errors.length">
+        <div class="row" *ngIf="error">
           <div class="col-xs-12">
-            <label
-              class="error"
-              *ngFor="let error of errors">
+            <label class="error">
               {{ error }}
             </label>
           </div>

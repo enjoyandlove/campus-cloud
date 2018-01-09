@@ -4,7 +4,7 @@ import { Headers } from '@angular/http';
 import { API } from '../../../.././../../../config/api';
 import { STATUS } from '../../../.././../../../shared/constants';
 import { FileUploadService } from '../../../.././../../../shared/services';
-import { CPImage, appStorage } from '../../../.././../../../shared/utils';
+import { appStorage } from '../../../.././../../../shared/utils';
 
 @Component({
   selector: 'cp-customization-upload-button',
@@ -29,15 +29,10 @@ export class CustomizationUploadButtonComponent implements OnInit {
 
     if (!file) { return; }
 
-    const fileExtension = file.name.split('.').pop();
+    const validate = this.fileUploadService.validImage(file);
 
-    if (!CPImage.isSizeOk(file.size, CPImage.MAX_IMAGE_SIZE)) {
-      this.error.emit(STATUS.FILE_IS_TOO_BIG);
-      return;
-    }
-
-    if (!CPImage.isValidExtension(fileExtension, CPImage.VALID_EXTENSIONS)) {
-      this.error.emit(STATUS.WRONG_EXTENSION);
+    if (!validate.valid) {
+      this.error.emit(validate.errors[0]);
       return;
     }
 

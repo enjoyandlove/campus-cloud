@@ -11,6 +11,7 @@ import { FORMAT } from '../../../../../../../shared/pipes/date';
 export class AttendanceUpcomingComponent implements OnInit {
   @Input() event: any;
 
+  banner;
   mapCenter;
   dateFormat;
   draggable = false;
@@ -19,6 +20,9 @@ export class AttendanceUpcomingComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.banner = this.event.poster_url === '' ?
+                  this.event.store_logo_url : this.event.poster_url;
+
     this.dateFormat = FORMAT.DATETIME;
     this.mapCenter = new BehaviorSubject(
     {

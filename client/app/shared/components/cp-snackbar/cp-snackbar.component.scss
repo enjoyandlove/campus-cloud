@@ -4,12 +4,12 @@
 .bar {
   left: 0;
   z-index: 9;
-  top: 200px;
+  top: 235px;
   width: 100%;
   position: absolute;
 
   &--wrapper {
-    padding: 12px 18px;
+    padding: 9px 10px;
     border-radius: 4px;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,0.24);
 
@@ -36,10 +36,8 @@
     span {
       @include font-normal();
 
-      line-height: 1;
       margin-bottom: 0;
       color: $color-white;
-      vertical-align: -4px;
     }
 
     &.success {
