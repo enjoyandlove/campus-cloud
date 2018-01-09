@@ -162,8 +162,7 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent
           range: this.range,
           divider: this.divider,
         };
-      })
-      .catch((err) => console.log(err));
+      });
   }
 
   ngOnInit() {}

@@ -49,10 +49,7 @@ export class DashboardTopClubsComponent extends BaseComponent
 
     const stream$ = this.service.getTopClubs(search);
 
-    super
-      .fetchData(stream$)
-      .then((res) => (this.items = res.data))
-      .catch((err) => console.log(err));
+    super.fetchData(stream$).then((res) => (this.items = res.data));
   }
 
   ngOnInit() {

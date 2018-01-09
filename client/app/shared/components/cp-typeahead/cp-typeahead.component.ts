@@ -90,7 +90,7 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
           this.query.emit(query);
         },
         (err) => {
-          console.log(err);
+          throw new Error(err);
         },
       );
   }

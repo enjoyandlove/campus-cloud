@@ -53,15 +53,12 @@ export class DashboardSocialActivyComponent extends BaseComponent
 
     const stream$ = this.service.getSocialActivity(search);
 
-    super
-      .fetchData(stream$)
-      .then((res) => {
-        this.chartData = {
-          ...res.data,
-          percentage: this.calculatePercentage(res.data),
-        };
-      })
-      .catch((err) => console.log(err));
+    super.fetchData(stream$).then((res) => {
+      this.chartData = {
+        ...res.data,
+        percentage: this.calculatePercentage(res.data),
+      };
+    });
   }
 
   ngOnInit() {

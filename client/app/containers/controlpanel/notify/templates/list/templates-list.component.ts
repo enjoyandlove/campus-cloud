@@ -77,14 +77,9 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
       search,
     );
 
-    super
-      .fetchData(stream$)
-      .then((res) => {
-        this.state = Object.assign({}, this.state, { templates: res.data });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    super.fetchData(stream$).then((res) => {
+      this.state = Object.assign({}, this.state, { templates: res.data });
+    });
   }
 
   onFilter(search_str) {

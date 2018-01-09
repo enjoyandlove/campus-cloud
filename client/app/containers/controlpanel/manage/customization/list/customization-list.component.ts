@@ -50,32 +50,22 @@ export class CustomizationListComponent implements OnInit {
   }
 
   onSave() {
-    console.log('saving');
-    console.log(this.canvas);
-
-    const promise: Promise<any> = this.canvas.result({
-      type: 'base64',
-      size: 'viewport',
-      format: 'jpeg',
-    });
-
-    promise
-      .then((res) => {
-        console.log(res);
-        console.log(typeof res);
-        // let reader = new FileReader();
-
-        // console.log(reader);
-
-        // reader.readAsDataURL(res);
-
-        // console.log(reader.result);
-
-        // // this.onFileUpload(res);
-      })
-      .catch((err) => {
-        throw new Error(err);
-      });
+    // const promise: Promise<any> = this.canvas.result({
+    //   type: 'base64',
+    //   size: 'viewport',
+    //   format: 'jpeg',
+    // });
+    // promise
+    //   .then((res) => {
+    //     // let reader = new FileReader();
+    //     // console.log(reader);
+    //     // reader.readAsDataURL(res);
+    //     // console.log(reader.result);
+    //     // // this.onFileUpload(res);
+    //   })
+    //   .catch((err) => {
+    //     throw new Error(err);
+    //   });
   }
 
   onFileUpload(file) {
@@ -103,9 +93,8 @@ export class CustomizationListComponent implements OnInit {
 
     headers.append('Authorization', auth);
 
-    this.fileUploadService
-      .uploadFile(file, url, headers)
-      .subscribe((res) => console.log(res));
+    this.fileUploadService.uploadFile(file, url, headers);
+    // .subscribe((res) => console.log(res));
   }
 
   ngOnInit() {
