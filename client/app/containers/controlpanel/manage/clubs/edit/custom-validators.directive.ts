@@ -7,6 +7,6 @@ export function advisorDataRequired(isSJSU): ValidatorFn {
 
     const required = isSJSU ? isBlank : false;
 
-    return required ? { 'required': true } : null
+    return required ? { required: true } : null;
   };
 }

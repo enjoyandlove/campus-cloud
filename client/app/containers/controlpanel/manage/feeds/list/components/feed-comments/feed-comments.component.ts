@@ -1,23 +1,23 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { FeedsService } from '../../../feeds.service';
-import { CPSession } from '../../../../../../../session';
 import { BaseComponent } from '../../../../../../../base/base.component';
+import { CPSession } from '../../../../../../../session';
+import { FeedsService } from '../../../feeds.service';
 
 interface IState {
   comments: Array<any>;
 }
 
 const state: IState = {
-  comments: []
+  comments: [],
 };
 
 @Component({
   selector: 'cp-feed-comments',
   templateUrl: './feed-comments.component.html',
-  styleUrls: ['./feed-comments.component.scss']
+  styleUrls: ['./feed-comments.component.scss'],
 })
 export class FeedCommentsComponent extends BaseComponent implements OnInit {
   @Input() feedId: number;
@@ -30,18 +30,17 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
   _isCampusWallView;
   state: IState = state;
 
-  constructor(
-    private session: CPSession,
-    private feedsService: FeedsService
-  ) {
+  constructor(private session: CPSession, private feedsService: FeedsService) {
     super();
-    super.isLoading().subscribe(res => this.loading = res);
+    super.isLoading().subscribe((res) => (this.loading = res));
   }
 
   onDeletedComment(commentId: number) {
     const _state = Object.assign({}, this.state);
 
-    _state.comments = _state.comments.filter(comment => comment.id !== commentId);
+    _state.comments = _state.comments.filter(
+      (comment) => comment.id !== commentId,
+    );
 
     this.state = Object.assign({}, this.state, { comments: _state.comments });
     this.deleted.emit();
@@ -57,16 +56,22 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
       search.append('group_id', this.groupId.toString());
     }
 
-    const campusWallComments$ = this.feedsService.getCampusWallCommentsByThreadId(search);
-    const groupWallComments$ = this.feedsService.getGroupWallCommentsByThreadId(search);
-    const stream$ = this._isCampusWallView ? campusWallComments$ : groupWallComments$;
+    const campusWallComments$ = this.feedsService.getCampusWallCommentsByThreadId(
+      search,
+    );
+    const groupWallComments$ = this.feedsService.getGroupWallCommentsByThreadId(
+      search,
+    );
+    const stream$ = this._isCampusWallView
+      ? campusWallComments$
+      : groupWallComments$;
 
     super
       .fetchData(stream$)
-      .then(res => {
+      .then((res) => {
         const _comments = [];
 
-        res.data.map(comment => {
+        res.data.map((comment) => {
           _comments.push({
             id: comment.id,
             avatar_thumb: comment.avatar_thumb,
@@ -76,12 +81,14 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
             flag: comment.flag,
             dislikes: comment.dislikes,
             display_name: comment.display_name,
-            added_time: comment.added_time
+            added_time: comment.added_time,
           });
         });
         this.state = Object.assign({}, this.state, { comments: _comments });
       })
-      .catch(err => { throw new Error(err) });
+      .catch((err) => {
+        throw new Error(err);
+      });
   }
 
   ngOnInit() {

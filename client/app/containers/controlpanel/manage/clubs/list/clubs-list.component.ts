@@ -20,13 +20,13 @@ interface IState {
 const state: IState = {
   clubs: [],
   query: null,
-  type: null
+  type: null,
 };
 
 @Component({
   selector: 'cp-clubs-list',
   templateUrl: './clubs-list.component.html',
-  styleUrls: ['./clubs-list.component.scss']
+  styleUrls: ['./clubs-list.component.scss'],
 })
 export class ClubsListComponent extends BaseComponent implements OnInit {
   loading;
@@ -43,10 +43,10 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
     private session: CPSession,
     private cpI18n: CPI18nService,
     private clubsService: ClubsService,
-    private headerService: ManageHeaderService
+    private headerService: ManageHeaderService,
   ) {
     super();
-    super.isLoading().subscribe(res => this.loading = res);
+    super.isLoading().subscribe((res) => (this.loading = res));
 
     this.fetch();
   }
@@ -58,49 +58,55 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
     search.append('search_str', this.state.query);
 
     super
-      .fetchData(this.clubsService.getClubs(search, this.startRange, this.endRange))
-      .then(res => this.state = Object.assign({}, this.state, { clubs: res.data }))
-      .catch(_ => null);
+      .fetchData(
+        this.clubsService.getClubs(search, this.startRange, this.endRange),
+      )
+      .then(
+        (res) =>
+          (this.state = Object.assign({}, this.state, { clubs: res.data })),
+      )
+      .catch((_) => null);
   }
 
   onApproveClub(clubId: number) {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    this
-      .clubsService
+    this.clubsService
       .updateClub({ status: this.ACTIVE_STATUS }, clubId, search)
       .subscribe(
-      updatedClub => {
-        this.state = {
-          ...this.state,
-          clubs: this
-            .state
-            .clubs
-            .map(oldClub => oldClub.id === updatedClub.id ? updatedClub : oldClub)
-        }
-      },
-      err => { throw new Error(err) }
+        (updatedClub) => {
+          this.state = {
+            ...this.state,
+            clubs: this.state.clubs.map(
+              (oldClub) =>
+                oldClub.id === updatedClub.id ? updatedClub : oldClub,
+            ),
+          };
+        },
+        (err) => {
+          throw new Error(err);
+        },
       );
   }
 
   doFilter(filter) {
     this.state = Object.assign({}, this.state, {
       query: filter.query,
-      type: filter.type
+      type: filter.type,
     });
 
-    if (filter.query) { this.resetPagination(); }
+    if (filter.query) {
+      this.resetPagination();
+    }
 
     this.fetch();
   }
 
   onDeletedClub(clubId) {
-    this.state = Object.assign(
-      {},
-      this.state,
-      { clubs: this.state.clubs.filter(club => club.id !== clubId) }
-    );
+    this.state = Object.assign({}, this.state, {
+      clubs: this.state.clubs.filter((club) => club.id !== clubId),
+    });
 
     if (this.state.clubs.length === 0 && this.pageNumber > 1) {
       this.resetPagination();
@@ -120,16 +126,14 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.clubStatus = {
-      [ClubStatus.inactive] : this.cpI18n.translate('inactive'),
-      [ClubStatus.active] : this.cpI18n.translate('active'),
-      [ClubStatus.pending] : this.cpI18n.translate('pending'),
+      [ClubStatus.inactive]: this.cpI18n.translate('inactive'),
+      [ClubStatus.active]: this.cpI18n.translate('active'),
+      [ClubStatus.pending]: this.cpI18n.translate('pending'),
     };
 
-    this
-      .store
-      .dispatch({
-        type: HEADER_UPDATE,
-        payload: this.headerService.filterByPrivileges()
-      });
+    this.store.dispatch({
+      type: HEADER_UPDATE,
+      payload: this.headerService.filterByPrivileges(),
+    });
   }
 }
