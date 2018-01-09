@@ -24,8 +24,6 @@ export class CPTrackerDirective {
 
   @HostListener('click')
   onclick() {
-    console.log(this.eventData);
-
     if (this.eventData.type === CP_TRACK_TO.GA) {
       this.emitGA();
     }
@@ -43,6 +41,6 @@ export class CPTrackerDirective {
   }
 
   emitAmplitude() {
-    console.log('emitting amplitude');
+    // console.log('emitting amplitude');
   }
 }

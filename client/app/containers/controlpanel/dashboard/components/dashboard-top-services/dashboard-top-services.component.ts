@@ -61,8 +61,7 @@ export class DashboardTopServicesComponent extends BaseComponent
     super
       .fetchData(stream$)
       .then((res) => this.parseResponse(res.data.top_services))
-      .then((res: any) => (this.items = res))
-      .catch((err) => console.log(err));
+      .then((res: any) => (this.items = res));
   }
 
   ngOnInit() {

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Observable';
 export class CPPreloadStrategy implements PreloadingStrategy {
   preload(route: Route, load: Function): Observable<any> {
     if (route.data) {
-      console.log('loading ', route);
+      // console.log('loading ', route);
     }
 
     return route.data && route.data.preload ? load() : Observable.of(null);

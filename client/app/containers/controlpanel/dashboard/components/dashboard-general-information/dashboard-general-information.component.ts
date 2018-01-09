@@ -41,10 +41,7 @@ export class DashboardGeneralInformationComponent extends BaseComponent
     search.append('school_id', this.session.g.get('school').id);
 
     const stream$ = this.service.getGeneralInformation(search);
-    super
-      .fetchData(stream$)
-      .then((res) => (this.data = res.data))
-      .catch((err) => console.log(err));
+    super.fetchData(stream$).then((res) => (this.data = res.data));
   }
 
   ngOnInit() {

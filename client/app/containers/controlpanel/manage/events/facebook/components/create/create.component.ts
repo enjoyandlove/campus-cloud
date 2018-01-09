@@ -43,7 +43,6 @@ export class FacebookEventsCreateComponent implements OnInit {
 
           return;
         }
-        console.log(err);
       },
     );
   }

@@ -210,8 +210,7 @@ export class EngagementComponent extends BaseComponent implements OnInit {
           };
         });
         createSpreadSheet(parsedData, columns, fileName);
-      })
-      .catch((err) => console.log(err));
+      });
   }
 
   onComposeTeardown() {
