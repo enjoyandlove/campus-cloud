@@ -280,27 +280,28 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     this.onBulkChange({ poster_thumb_url: poster_url });
   }
 
-    onRemoveImage(index) {
-        let eventControl = <FormArray>this.form.controls['events'];
-        let control = <FormGroup>eventControl.at(index);
-        control.controls['poster_url'].setValue(null);
-    }
+  onRemoveImage(index) {
+    let eventControl = <FormArray>this.form.controls['events'];
+    let control = <FormGroup>eventControl.at(index);
+    control.controls['poster_url'].setValue(null);
+  }
 
-    onImageUpload(image, index) {
-        let imageUpload = new CPImageUploadComponent(this.cpI18n, this.fileUploadService);
-        let promise = imageUpload.onFileUpload(image, true);
+  onImageUpload(image, index) {
+    let imageUpload = new CPImageUploadComponent(this.cpI18n, this.fileUploadService);
+    let promise = imageUpload.onFileUpload(image, true);
 
-        promise
-            .then((res: any) => {
-                let controls = <FormArray>this.form.controls['events'];
-                let control = <FormGroup>controls.controls[index];
-                control.controls['poster_url'].setValue(res.image_url);
-            })
-            .catch(err => {
-                throw new Error(err)
-            });
-    }
-    onSubmit() {
+    promise
+      .then((res: any) => {
+        let controls = <FormArray>this.form.controls['events'];
+        let control = <FormGroup>controls.controls[index];
+        control.controls['poster_url'].setValue(res.image_url);
+      })
+      .catch(err => {
+        throw new Error(err)
+      });
+  }
+
+  onSubmit() {
     this.error = null;
     let _events = [];
     this.formError = false;
@@ -315,11 +316,11 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       if (controls.event_attendance.value === 1) {
         if (!controls.event_manager_id.value) {
           requiredFieldsError = true;
-          controls.event_manager_id.setErrors({ 'required': true });
+          controls.event_manager_id.setErrors({'required': true});
         }
         if (!controls.event_attendance.value) {
           requiredFieldsError = true;
-          controls.event_attendance.setErrors({ 'required': true });
+          controls.event_attendance.setErrors({'required': true});
         }
       }
     });
@@ -327,7 +328,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     if (requiredFieldsError || !this.form.valid) {
       this.formError = true;
       this.error = STATUS.ALL_FIELDS_ARE_REQUIRED;
-      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
+      this.buttonData = Object.assign({}, this.buttonData, {disabled: false});
       return;
     }
 
@@ -369,30 +370,30 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       .eventsService
       .createEvent(_events)
       .subscribe(
-      _ => {
-        if (this.isClub) {
-          this.router.navigate([`/manage/clubs/${this.clubId}/events`]);
-          return;
+        _ => {
+          if (this.isClub) {
+            this.router.navigate([`/manage/clubs/${this.clubId}/events`]);
+            return;
+          }
+
+          if (this.isService) {
+            this.router.navigate([`/manage/services/${this.serviceId}/events`]);
+            return;
+          }
+
+          this.router.navigate(['/manage/events']);
+        },
+        err => {
+          this.formError = true;
+          this.buttonData = Object.assign({}, this.buttonData, {disabled: false});
+
+          if (err.status === 400) {
+            this.error = STATUS.ALL_FIELDS_ARE_REQUIRED;
+            return;
+          }
+
+          this.error = STATUS.SOMETHING_WENT_WRONG;
         }
-
-        if (this.isService) {
-          this.router.navigate([`/manage/services/${this.serviceId}/events`]);
-          return;
-        }
-
-        this.router.navigate(['/manage/events']);
-      },
-      err => {
-        this.formError = true;
-        this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
-
-        if (err.status === 400) {
-          this.error = STATUS.ALL_FIELDS_ARE_REQUIRED;
-          return;
-        }
-
-        this.error = STATUS.SOMETHING_WENT_WRONG;
-      }
       );
   }
 
