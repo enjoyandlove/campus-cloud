@@ -1,9 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'cp-pagination',
   templateUrl: './cp-pagination.component.html',
-  styleUrls: ['./cp-pagination.component.scss']
+  styleUrls: ['./cp-pagination.component.scss'],
 })
 export class CPPaginationComponent implements OnInit {
   @Input() pageNext: boolean;
@@ -12,16 +12,20 @@ export class CPPaginationComponent implements OnInit {
   @Output() next: EventEmitter<null> = new EventEmitter();
   @Output() previous: EventEmitter<null> = new EventEmitter();
 
-  constructor() { }
+  constructor() {}
 
   onNext(): void {
-    if (!this.pageNext) { return; }
+    if (!this.pageNext) {
+      return;
+    }
 
     this.next.emit();
   }
 
   onPrevious(): void {
-    if (!this.pagePrev) { return; }
+    if (!this.pagePrev) {
+      return;
+    }
     this.previous.emit();
   }
 

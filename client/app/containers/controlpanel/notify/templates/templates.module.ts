@@ -17,19 +17,24 @@ import { TemplatesService } from './templates.service';
 import { AnnouncementsModule } from '../announcements/announcements.module';
 
 @NgModule({
-  declarations: [ TemplatesListComponent, TemplatesTopBarComponent, TemplatesDeleteComponent,
-    TemplatesComposeComponent, TemplatesCreateComponent ],
+  declarations: [
+    TemplatesListComponent,
+    TemplatesTopBarComponent,
+    TemplatesDeleteComponent,
+    TemplatesComposeComponent,
+    TemplatesCreateComponent,
+  ],
 
-  exports: [ ],
+  exports: [],
 
   imports: [
-      CommonModule,
-      SharedModule,
-      ReactiveFormsModule,
-      TemplatesRoutingModule,
-      AnnouncementsModule
-    ],
+    CommonModule,
+    SharedModule,
+    ReactiveFormsModule,
+    TemplatesRoutingModule,
+    AnnouncementsModule,
+  ],
 
-  providers: [ TemplatesService ],
+  providers: [TemplatesService],
 })
 export class TemplatesModule {}

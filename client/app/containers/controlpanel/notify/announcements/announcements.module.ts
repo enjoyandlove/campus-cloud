@@ -10,7 +10,7 @@ import { AnnouncementsComposeComponent } from './compose';
 
 import {
   AnnouncementsListActionBoxComponent,
-  AnnouncementsListRecipientsComponent
+  AnnouncementsListRecipientsComponent,
 } from './list/components';
 
 import { AnnouncementsRoutingModule } from './announcements.routing.module';
@@ -18,15 +18,28 @@ import { AnnouncementsRoutingModule } from './announcements.routing.module';
 import { AnnouncementsService } from './announcements.service';
 
 @NgModule({
-  declarations: [ AnnouncementsListComponent, AnnouncementsListActionBoxComponent,
-  AnnouncementsComposeComponent, AnnouncementsConfirmComponent, AnnouncementDeleteComponent,
-  AnnouncementsListRecipientsComponent ],
+  declarations: [
+    AnnouncementsListComponent,
+    AnnouncementsListActionBoxComponent,
+    AnnouncementsComposeComponent,
+    AnnouncementsConfirmComponent,
+    AnnouncementDeleteComponent,
+    AnnouncementsListRecipientsComponent,
+  ],
 
-  exports: [ AnnouncementsComposeComponent,  AnnouncementsConfirmComponent,
-    AnnouncementsListRecipientsComponent],
+  exports: [
+    AnnouncementsComposeComponent,
+    AnnouncementsConfirmComponent,
+    AnnouncementsListRecipientsComponent,
+  ],
 
-  imports: [ CommonModule, SharedModule, AnnouncementsRoutingModule, ReactiveFormsModule ],
+  imports: [
+    CommonModule,
+    SharedModule,
+    AnnouncementsRoutingModule,
+    ReactiveFormsModule,
+  ],
 
-  providers: [ AnnouncementsService ],
+  providers: [AnnouncementsService],
 })
 export class AnnouncementsModule {}

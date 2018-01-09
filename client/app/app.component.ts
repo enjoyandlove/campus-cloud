@@ -6,6 +6,4 @@ import '../style/app.scss';
   selector: 'cp-app',
   templateUrl: './app.component.html',
 })
-export class AppComponent {
-  constructor() { }
-}
+export class AppComponent {}

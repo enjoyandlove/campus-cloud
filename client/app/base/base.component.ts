@@ -17,13 +17,14 @@ export abstract class BaseComponent {
     public pageNumber = 1,
     public startRange = 1,
     public endRange = maxPerPage + 1,
-  ) { }
+  ) {}
 
   fetchData(request: Observable<any>) {
     this._isLoading.next(true);
+
     return request
       .toPromise()
-      .then(response => {
+      .then((response) => {
         this.pageNext = false;
         this.pagePrev = false;
 
@@ -41,11 +42,12 @@ export abstract class BaseComponent {
         return Promise.resolve({
           data: response,
           pageNext: this.pageNext,
-          pagePrev: this.pagePrev
+          pagePrev: this.pagePrev,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         this._isLoading.next(false);
+
         return Promise.reject(err);
       });
   }
@@ -64,7 +66,9 @@ export abstract class BaseComponent {
   }
 
   goToPrevious(): void {
-    if (this.pageNumber === 1) { return; };
+    if (this.pageNumber === 1) {
+      return;
+    }
     this.endRange -= maxPerPage;
     this.startRange -= maxPerPage;
 

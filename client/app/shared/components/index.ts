@@ -27,5 +27,3 @@ export * from './cp-upload-button';
 export * from './cp-check-dropdown';
 export * from './cp-small-datepicker';
 export * from './cp-place-autocomplete';
-
-

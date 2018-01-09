@@ -21,34 +21,46 @@ export class LocationsService extends BaseService {
   // }
 
   getLocations() {
-    const promise = new Promise(resolve => {
-      setTimeout(() => { resolve(mockLocations); }, 700);
+    const promise = new Promise((resolve) => {
+      setTimeout(
+        () => {
+          resolve(mockLocations);
+        },
+
+        700,
+      );
     });
 
-    return Observable.fromPromise(promise).map(res => res);
+    return Observable.fromPromise(promise).map((res) => res);
   }
 
   getLocationById(locationId: number) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LINKS}/${locationId}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.LINKS
+    }/${locationId}`;
 
-    return super.get(url).map(res => res.json());
+    return super.get(url).map((res) => res.json());
   }
 
   updateLocation(body, locationId: number) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LINKS}/${locationId}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.LINKS
+    }/${locationId}`;
 
-    return super.update(url, body).map(res => res.json());
+    return super.update(url, body).map((res) => res.json());
   }
 
   createLocation(body) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LINKS}/`;
 
-    return super.post(url, body).map(res => res.json());
+    return super.post(url, body).map((res) => res.json());
   }
 
   deleteLocation(locationId: number) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LINKS}/${locationId}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.LINKS
+    }/${locationId}`;
 
-    return super.delete(url).map(res => res.json());
+    return super.delete(url).map((res) => res.json());
   }
 }

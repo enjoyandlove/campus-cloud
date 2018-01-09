@@ -2,16 +2,16 @@ import { Injectable } from '@angular/core';
 
 import { IClub } from './club.interface';
 import { ClubStatus } from './club.status';
+
 import { CP_PRIVILEGES_MAP } from './../../../../shared/constants/privileges';
 
 import {
   canSchoolReadResource,
-  canStoreReadAndWriteResource
+  canStoreReadAndWriteResource,
 } from './../../../../shared/utils/privileges/privileges';
 
 @Injectable()
 export class ClubsUtilsService {
-
   isSJSU(club: IClub) {
     return 'advisor_firstname' in club || false;
   }
@@ -23,13 +23,15 @@ export class ClubsUtilsService {
 
     const clubIsPending = club.status !== ClubStatus.pending;
 
-    const schoolAccess = (permission) => canSchoolReadResource(session.g, permission);
+    const schoolAccess = (permission) =>
+      canSchoolReadResource(session.g, permission);
 
     const storeAccess = (permission) => {
       return canStoreReadAndWriteResource(session.g, club.id, permission);
-    }
+    };
 
-    const schoolOrStoreAccess = (permission) => schoolAccess(permission) || storeAccess(permission);
+    const schoolOrStoreAccess = (permission) =>
+      schoolAccess(permission) || storeAccess(permission);
 
     if (clubIsActive && schoolOrStoreAccess(CP_PRIVILEGES_MAP.events)) {
       links = ['Events', ...links];
@@ -47,6 +49,6 @@ export class ClubsUtilsService {
 
     links = ['Info', ...links];
 
-    return links
+    return links;
   }
 }

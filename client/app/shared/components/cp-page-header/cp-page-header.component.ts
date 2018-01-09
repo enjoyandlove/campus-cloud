@@ -1,13 +1,13 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 interface IData {
-  'heading': string;
-  'subheading'?: string;
-  'em'?: string;
-  'children': [
+  heading: string;
+  subheading?: string;
+  em?: string;
+  children: [
     {
-      'label': string
-      'url': string
+      label: string;
+      url: string;
     }
   ];
 }
@@ -15,12 +15,12 @@ interface IData {
 @Component({
   selector: 'cp-page-header',
   templateUrl: './cp-page-header.component.html',
-  styleUrls: ['./cp-page-header.component.scss']
+  styleUrls: ['./cp-page-header.component.scss'],
 })
 export class CPPageHeaderComponent implements OnInit {
   @Input() data: IData;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {}
 }

@@ -8,7 +8,7 @@ declare var $: any;
 @Component({
   selector: 'cp-services-delete',
   templateUrl: './services-delete.component.html',
-  styleUrls: ['./services-delete.component.scss']
+  styleUrls: ['./services-delete.component.scss'],
 })
 export class ServicesDeleteComponent implements OnInit {
   @Input() service: any;
@@ -18,26 +18,21 @@ export class ServicesDeleteComponent implements OnInit {
 
   constructor(
     private cpI18n: CPI18nService,
-    private servicesService: ServicesService
-  ) { }
-
+    private servicesService: ServicesService,
+  ) {}
 
   onDelete() {
-    this
-      .servicesService
-      .deleteService(this.service.id)
-      .subscribe(
-        _ => {
-          this.deleted.emit(this.service.id);
-          $('#deleteServicesModal').modal('hide');
-          this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
-        });
+    this.servicesService.deleteService(this.service.id).subscribe((_) => {
+      this.deleted.emit(this.service.id);
+      $('#deleteServicesModal').modal('hide');
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
+    });
   }
 
   ngOnInit() {
     this.buttonData = {
       class: 'danger',
-      text: this.cpI18n.translate('delete')
-    }
+      text: this.cpI18n.translate('delete'),
+    };
   }
 }

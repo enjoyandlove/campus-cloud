@@ -11,7 +11,7 @@ declare var $: any;
 @Component({
   selector: 'cp-providers-add',
   templateUrl: './providers-add.component.html',
-  styleUrls: ['./providers-add.component.scss']
+  styleUrls: ['./providers-add.component.scss'],
 })
 export class ServicesProviderAddComponent implements OnInit {
   @Input() serviceId: number;
@@ -25,22 +25,20 @@ export class ServicesProviderAddComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private cpI18n: CPI18nService,
-    private providersService: ProvidersService
-  ) { }
+    private providersService: ProvidersService,
+  ) {}
 
   onSubmit() {
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('service_id', this.serviceId.toString());
 
-    this
-      .providersService
+    this.providersService
       .createProvider(this.form.value, search)
-      .subscribe(
-        res => {
-          this.form.reset();
-          $('#createProvider').modal('hide');
-          this.created.emit(res);
-        });
+      .subscribe((res) => {
+        this.form.reset();
+        $('#createProvider').modal('hide');
+        this.created.emit(res);
+      });
   }
 
   doReset() {
@@ -49,23 +47,20 @@ export class ServicesProviderAddComponent implements OnInit {
   }
 
   ngOnInit() {
-    this
-      .serviceWithFeedback
-      .subscribe(feedback => {
-        this.serviceAcceptsFeedback = feedback;
+    this.serviceWithFeedback.subscribe((feedback) => {
+      this.serviceAcceptsFeedback = feedback;
 
-        this.form = this.fb.group({
-          'provider_name': [null, Validators.required],
-          'email': [null, Validators.required],
-          'custom_basic_feedback_label': [null, Validators.required],
-        });
-
-        if (!this.serviceAcceptsFeedback) {
-          this
-            .form
-            .controls['custom_basic_feedback_label']
-            .setValue(this.cpI18n.translate('services_default_feedback_question'));
-        }
+      this.form = this.fb.group({
+        provider_name: [null, Validators.required],
+        email: [null, Validators.required],
+        custom_basic_feedback_label: [null, Validators.required],
       });
+
+      if (!this.serviceAcceptsFeedback) {
+        this.form.controls['custom_basic_feedback_label'].setValue(
+          this.cpI18n.translate('services_default_feedback_question'),
+        );
+      }
+    });
   }
 }

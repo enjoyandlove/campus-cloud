@@ -1,24 +1,24 @@
 import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
   Input,
   OnInit,
   Output,
-  Component,
-  EventEmitter,
-  ChangeDetectionStrategy
 } from '@angular/core';
 
 @Component({
   selector: 'cp-switch',
   templateUrl: './cp-switch.component.html',
   styleUrls: ['./cp-switch.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CPSwitchComponent implements OnInit {
   @Input() id: string;
   @Input() isChecked: boolean;
   @Output() toggle: EventEmitter<boolean> = new EventEmitter();
 
-  constructor() { }
+  constructor() {}
 
   onChange() {
     this.isChecked = !this.isChecked;
