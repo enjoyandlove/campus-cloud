@@ -5,13 +5,13 @@ import { BaseComponent } from '../../../../../base';
 import { CPSession } from './../../../../../session';
 import { DashboardService } from './../../dashboard.service';
 
-
 @Component({
   selector: 'cp-dashboard-general-information',
   templateUrl: './dashboard-general-information.component.html',
-  styleUrls: ['./dashboard-general-information.component.scss']
+  styleUrls: ['./dashboard-general-information.component.scss'],
 })
-export class DashboardGeneralInformationComponent extends BaseComponent implements OnInit {
+export class DashboardGeneralInformationComponent extends BaseComponent
+  implements OnInit {
   @Output() ready: EventEmitter<boolean> = new EventEmitter();
 
   data;
@@ -25,17 +25,13 @@ export class DashboardGeneralInformationComponent extends BaseComponent implemen
 
   loading;
 
-  constructor(
-    private session: CPSession,
-    private service: DashboardService
-  ) {
+  constructor(private session: CPSession, private service: DashboardService) {
     super();
-    super.isLoading().subscribe(loading => {
+    super.isLoading().subscribe((loading) => {
       this.loading = loading;
       this.ready.emit(!this.loading);
     });
   }
-
 
   fetch() {
     const search = new URLSearchParams();
@@ -45,10 +41,7 @@ export class DashboardGeneralInformationComponent extends BaseComponent implemen
     search.append('school_id', this.session.g.get('school').id);
 
     const stream$ = this.service.getGeneralInformation(search);
-    super
-      .fetchData(stream$)
-      .then(res => this.data = res.data)
-      .catch(err => console.log(err));
+    super.fetchData(stream$).then((res) => (this.data = res.data));
   }
 
   ngOnInit() {

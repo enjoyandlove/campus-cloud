@@ -8,9 +8,10 @@ import { DashboardService } from './../../dashboard.service';
 @Component({
   selector: 'cp-dashboard-top-events',
   templateUrl: './dashboard-top-events.component.html',
-  styleUrls: ['./dashboard-top-events.component.scss']
+  styleUrls: ['./dashboard-top-events.component.scss'],
 })
-export class DashboardTopEventsComponent extends BaseComponent implements OnInit {
+export class DashboardTopEventsComponent extends BaseComponent
+  implements OnInit {
   @Output() ready: EventEmitter<boolean> = new EventEmitter();
 
   _dates;
@@ -23,30 +24,29 @@ export class DashboardTopEventsComponent extends BaseComponent implements OnInit
     this.fetch();
   }
 
-  constructor(
-    private session: CPSession,
-    private service: DashboardService
-  ) {
+  constructor(private session: CPSession, private service: DashboardService) {
     super();
-    super.isLoading().subscribe(loading => {
+    super.isLoading().subscribe((loading) => {
       this.loading = loading;
       this.ready.emit(!this.loading);
     });
   }
 
   parseResponse(items: Array<any>) {
-    return new Promise(resolve => {
-      resolve(items.map(item => {
-        return {
-          'id': item.event_id,
-          'name': item.event_title,
-          'image': item.event_poster_thumb_url,
-          'attendees': item.num_of_attendees,
-          'feedback': item.num_of_feedbacks,
-          'rating': item.average_of_feedbacks,
-        }
-      }))
-    })
+    return new Promise((resolve) => {
+      resolve(
+        items.map((item) => {
+          return {
+            id: item.event_id,
+            name: item.event_title,
+            image: item.event_poster_thumb_url,
+            attendees: item.num_of_attendees,
+            feedback: item.num_of_feedbacks,
+            rating: item.average_of_feedbacks,
+          };
+        }),
+      );
+    });
   }
 
   fetch() {
@@ -60,9 +60,8 @@ export class DashboardTopEventsComponent extends BaseComponent implements OnInit
 
     super
       .fetchData(stream$)
-      .then(res => this.parseResponse(res.data.top_events))
-      .then((res: any) => this.items = res)
-      .catch(err => console.log(err))
+      .then((res) => this.parseResponse(res.data.top_events))
+      .then((res: any) => (this.items = res));
   }
 
   ngOnInit() {

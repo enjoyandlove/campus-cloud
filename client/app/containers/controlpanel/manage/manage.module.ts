@@ -3,15 +3,15 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../../shared/shared.module';
 
 import { ManageHeaderService } from './utils/header';
-import { ManageComponent }  from './manage.component';
+import { ManageComponent } from './manage.component';
 
 import { ManageRoutingModule } from './manage.routing.module';
 
 @NgModule({
-  declarations: [ ManageComponent ],
+  declarations: [ManageComponent],
 
-  imports: [ CommonModule, SharedModule, ManageRoutingModule ],
+  imports: [CommonModule, SharedModule, ManageRoutingModule],
 
-  providers: [ ManageHeaderService ],
+  providers: [ManageHeaderService],
 })
 export class ManageModule {}

@@ -1,67 +1,100 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+
 import { SharedModule } from '../../../../shared/shared.module';
 
-import { EventsInfoComponent }  from './info';
-import { EventsListComponent }  from './list';
-import { EventsEditComponent }  from './edit';
-import { EventsExcelComponent }  from './excel';
-import { EventsCreateComponent } from './create';
-import { EventsDeleteComponent }  from './delete';
-import { EventsFacebookComponent }  from './facebook';
-import { EventsAttendanceComponent }  from './attendance';
-
-import { EventsService } from './events.service';
-import { EventUtilService } from './events.utils.service';
-import { EventsRoutingModule } from './events.routing.module';
-
-import {
-  ListPastComponent,
-  ListUpcomingComponent,
-  ListActionBoxComponent
-} from './list/components';
-
-import {
-  FacebookEventsDeleteComponent,
-  FacebookEventsCreateComponent,
-  FacebookEventsUpdateComponent
-} from './facebook/components';
-
+import { EventsAttendanceComponent } from './attendance';
 import {
   AttendancePastComponent,
   AttendanceUpcomingComponent,
   EventsFeedbackModalComponent,
-  EventsPastActionBoxComponent
+  EventsPastActionBoxComponent,
 } from './attendance/components';
-
+import { EventsCreateComponent } from './create';
+import { EventsDeleteComponent } from './delete';
+import { EventsEditComponent } from './edit';
+import { EventsRoutingModule } from './events.routing.module';
+import { EventsService } from './events.service';
+import { EventUtilService } from './events.utils.service';
+import { EventsExcelComponent } from './excel';
 import {
   EventsExcelModalComponent,
+  EventsImportActionDropdownComponent,
   EventsImportTopBarComponent,
-  EventsImportActionDropdownComponent
 } from './excel/components';
-
+import { EventsFacebookComponent } from './facebook';
+import {
+  FacebookEventsCreateComponent,
+  FacebookEventsDeleteComponent,
+  FacebookEventsUpdateComponent,
+} from './facebook/components';
+import { EventsInfoComponent } from './info';
+import { EventsListComponent } from './list';
 import { EventsComponent } from './list/base/events.component';
+import {
+  ListActionBoxComponent,
+  ListPastComponent,
+  ListUpcomingComponent,
+} from './list/components';
 
 @NgModule({
-  declarations: [ EventsListComponent, EventsCreateComponent, EventsAttendanceComponent,
-  EventsDeleteComponent, EventsInfoComponent, EventsEditComponent, EventsExcelModalComponent,
-  EventsFacebookComponent, EventsExcelComponent, EventsImportActionDropdownComponent,
-  EventsImportTopBarComponent, ListActionBoxComponent, ListPastComponent, ListUpcomingComponent,
-  AttendancePastComponent, AttendanceUpcomingComponent,
-  EventsFeedbackModalComponent, EventsPastActionBoxComponent, FacebookEventsCreateComponent,
-  FacebookEventsUpdateComponent, FacebookEventsDeleteComponent, EventsComponent ],
+  declarations: [
+    EventsListComponent,
+    EventsCreateComponent,
+    EventsAttendanceComponent,
+    EventsDeleteComponent,
+    EventsInfoComponent,
+    EventsEditComponent,
+    EventsExcelModalComponent,
+    EventsFacebookComponent,
+    EventsExcelComponent,
+    EventsImportActionDropdownComponent,
+    EventsImportTopBarComponent,
+    ListActionBoxComponent,
+    ListPastComponent,
+    ListUpcomingComponent,
+    AttendancePastComponent,
+    AttendanceUpcomingComponent,
+    EventsFeedbackModalComponent,
+    EventsPastActionBoxComponent,
+    FacebookEventsCreateComponent,
+    FacebookEventsUpdateComponent,
+    FacebookEventsDeleteComponent,
+    EventsComponent,
+  ],
 
-  imports: [ CommonModule, SharedModule, EventsRoutingModule, RouterModule, ReactiveFormsModule ],
+  imports: [
+    CommonModule,
+    SharedModule,
+    EventsRoutingModule,
+    RouterModule,
+    ReactiveFormsModule,
+  ],
 
-  providers: [ EventsService, EventUtilService ],
+  providers: [EventsService, EventUtilService],
 
-  exports: [ EventsListComponent, EventsCreateComponent, EventsAttendanceComponent,
-  EventsDeleteComponent, EventsInfoComponent, EventsEditComponent, EventsExcelModalComponent,
-  EventsFacebookComponent, EventsExcelComponent, EventsImportActionDropdownComponent,
-  EventsImportTopBarComponent, ListActionBoxComponent, ListPastComponent, ListUpcomingComponent,
-  AttendancePastComponent, AttendanceUpcomingComponent,
-  EventsFeedbackModalComponent, EventsPastActionBoxComponent, EventsComponent]
+  exports: [
+    EventsListComponent,
+    EventsCreateComponent,
+    EventsAttendanceComponent,
+    EventsDeleteComponent,
+    EventsInfoComponent,
+    EventsEditComponent,
+    EventsExcelModalComponent,
+    EventsFacebookComponent,
+    EventsExcelComponent,
+    EventsImportActionDropdownComponent,
+    EventsImportTopBarComponent,
+    ListActionBoxComponent,
+    ListPastComponent,
+    ListUpcomingComponent,
+    AttendancePastComponent,
+    AttendanceUpcomingComponent,
+    EventsFeedbackModalComponent,
+    EventsPastActionBoxComponent,
+    EventsComponent,
+  ],
 })
 export class EventsModule {}

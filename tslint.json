@@ -1,26 +1,35 @@
 {
-  "rulesDirectory": [
-    "node_modules/codelyzer"
-  ],
+  "rulesDirectory": ["node_modules/codelyzer"],
   "rules": {
     "class-name": true,
-    "comment-format": [
-      true,
-      "check-space"
-    ],
+    "comment-format": [true, "check-space"],
     "curly": true,
     "eofline": true,
+    "import-spacing": true,
+    "new-parens": true,
+    "no-consecutive-blank-lines": [true, 1],
+    "newline-before-return": true,
+    "interface-name": [true, "always-prefix"],
+    "binary-expression-operand-order": true,
+    "no-conditional-assignment": true,
     "forin": true,
-    "indent": [
-      true,
-      "spaces",
-      2
-    ],
+    "prefer-const": [true, { "destructuring": "all" }],
+    "indent": [true, "spaces", 2],
+    "max-file-line-count": [true, 850],
+    "max-classes-per-file": [true, 1],
+    "no-duplicate-imports": true,
     "label-position": true,
-    "max-line-length": [
+    "max-line-length": [true, 100],
+    "align": [
       true,
-      100
+      "arguments",
+      "elements",
+      "members",
+      "parameters",
+      "statements"
     ],
+    "arrow-parens": true,
+    "arrow-return-shorthand": true,
     "member-access": false,
     "member-ordering": [
       true,
@@ -29,24 +38,24 @@
     ],
     "no-arg": true,
     "no-bitwise": false,
-    "no-console": [
-      true,
-      "debug",
-      "info",
-      "time",
-      "timeEnd",
-      "trace"
-    ],
+    "no-console": [true, "log", "debug", "trace"],
     "no-construct": true,
     "no-debugger": true,
+    "no-duplicate-super": true,
+    "no-duplicate-switch-case": true,
     "no-duplicate-variable": true,
     "no-empty": false,
     "no-eval": true,
+    "no-unnecessary-class": false,
+    "no-internal-module": true,
     "no-inferrable-types": true,
     "no-shadowed-variable": true,
+    "restrict-plus-operands": true,
+    "strict-type-predicates": true,
     "no-string-literal": false,
     "no-switch-case-fall-through": true,
     "no-trailing-whitespace": true,
+    "prefer-conditional-expression": true,
     "no-unused-expression": true,
     "no-use-before-declare": true,
     "no-var-keyword": true,
@@ -58,18 +67,20 @@
       "check-else",
       "check-whitespace"
     ],
-    "quotemark": [
-      true,
-      "single"
-    ],
+    "quotemark": [true, "single"],
     "radix": true,
-    "semicolon": [
-      "always"
+    "semicolon": [true, "always"],
+    "ordered-imports": [
+      false,
+      {
+        "grouped-imports": true
+      }
     ],
-    "triple-equals": [
-      true,
-      "allow-null-check"
-    ],
+    "space-within-parens": [true, 0],
+    "space-before-function-paren": [false, "always"],
+    "use-isnan": true,
+    "typeof-compare": true,
+    "triple-equals": [true, "allow-null-check"],
     "typedef-whitespace": [
       true,
       {
@@ -87,20 +98,12 @@
       "check-decl",
       "check-operator",
       "check-separator",
-      "check-type"
+      "check-type",
+      "check-module"
     ],
-    "directive-selector": [
-      true,
-      "attribute",
-      "cp",
-      "camelCase"
-    ],
-    "component-selector": [
-      true,
-      "element",
-      "cp",
-      "kebab-case"
-    ],
+    "directive-selector": [true, "attribute", "cp", "camelCase"],
+    "component-selector": [true, "element", "cp", "kebab-case"],
+    "no-unused-css": true,
     "use-input-property-decorator": true,
     "use-output-property-decorator": true,
     "use-host-property-decorator": true,
@@ -110,11 +113,7 @@
     "use-pipe-transform-interface": true,
     "component-class-suffix": true,
     "directive-class-suffix": true,
-    "pipe-naming": [
-      true,
-      "camelCase",
-      "cp"
-    ],
+    "pipe-naming": [true, "camelCase", "cp"],
     "no-attribute-parameter-decorator": true,
     "no-forward-ref": true,
     "import-destructuring-spacing": true,

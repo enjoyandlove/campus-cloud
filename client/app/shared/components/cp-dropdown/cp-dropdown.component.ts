@@ -1,13 +1,13 @@
+import { Observable } from 'rxjs/Observable';
+
 import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
   Input,
   OnInit,
   Output,
-  Component,
-  EventEmitter,
-  ChangeDetectionStrategy
 } from '@angular/core';
-
-import { Observable } from 'rxjs/Observable';
 
 interface IItems {
   label: string;
@@ -20,14 +20,15 @@ interface IItems {
   selector: 'cp-dropdown',
   templateUrl: './cp-dropdown.component.html',
   styleUrls: ['./cp-dropdown.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CPDropdownComponent implements OnInit {
   @Input() items: IItems[];
   @Input() selectedItem: any;
   @Input() isRequiredError: boolean;
   @Input() reset: Observable<boolean>;
-  @Output() selected: EventEmitter<{'label': string, 'event': string}> = new EventEmitter();
+  @Output()
+  selected: EventEmitter<{ label: string; event: string }> = new EventEmitter();
 
   query = null;
   tooltipText = null;
@@ -35,10 +36,12 @@ export class CPDropdownComponent implements OnInit {
   isSearching = false;
   MIN_RESULTS_FOR_SEARCH = 40;
 
-  constructor() { }
+  constructor() {}
 
   onClick(item) {
-    if (item.heading) { return; }
+    if (item.heading) {
+      return;
+    }
 
     this.selectedItem = item;
     this.selected.emit(item);
@@ -62,8 +65,10 @@ export class CPDropdownComponent implements OnInit {
       this.reset = Observable.of(false);
     }
 
-    this.reset.subscribe(reset => {
-      if (reset) { this.resetMenu(); }
+    this.reset.subscribe((reset) => {
+      if (reset) {
+        this.resetMenu();
+      }
     });
   }
 }

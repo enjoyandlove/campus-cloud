@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { Http } from '@angular/http';
+import { Router } from '@angular/router';
 
-import { API } from '../../config/api';
 import { BaseService } from '../../base/base.service';
+import { API } from '../../config/api';
 
 @Injectable()
 export class SchoolService extends BaseService {
@@ -16,6 +16,6 @@ export class SchoolService extends BaseService {
   getSchools() {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SCHOOL}/`;
 
-    return super.get(url).map(res => res.json());
+    return super.get(url).map((res) => res.json());
   }
 }

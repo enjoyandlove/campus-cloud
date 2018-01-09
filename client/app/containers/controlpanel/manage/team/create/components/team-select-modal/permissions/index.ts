@@ -11,7 +11,6 @@ export const permissions = [
   {
     type: 2,
     title: cpI18n.translate('admin_can_edit'),
-    description: cpI18n.translate('admin_can_edit_help')
-  }
+    description: cpI18n.translate('admin_can_edit_help'),
+  },
 ];
-

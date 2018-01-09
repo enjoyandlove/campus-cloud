@@ -8,7 +8,7 @@ const EVENTS_ENGAGEMENTS = 2;
 @Component({
   selector: 'cp-profile-top-bar',
   templateUrl: './profile-top-bar.component.html',
-  styleUrls: ['./profile-top-bar.component.scss']
+  styleUrls: ['./profile-top-bar.component.scss'],
 })
 export class StudentsProfileTopBarComponent implements OnInit {
   @Output() filter: EventEmitter<number> = new EventEmitter();
@@ -21,17 +21,17 @@ export class StudentsProfileTopBarComponent implements OnInit {
   ngOnInit() {
     this.dropdown = [
       {
-        'label': this.cpI18n.translate('assess_all_engagements'),
-        'action': ALL_ENGAGEMENTS
+        label: this.cpI18n.translate('assess_all_engagements'),
+        action: ALL_ENGAGEMENTS,
       },
       {
-        'label': this.cpI18n.translate('assess_all_events'),
-        'action': EVENTS_ENGAGEMENTS
+        label: this.cpI18n.translate('assess_all_events'),
+        action: EVENTS_ENGAGEMENTS,
       },
       {
-        'label': this.cpI18n.translate('assess_all_services'),
-        'action': SERVICES_ENGAGEMENTS
-      }
-    ]
+        label: this.cpI18n.translate('assess_all_services'),
+        action: SERVICES_ENGAGEMENTS,
+      },
+    ];
   }
 }

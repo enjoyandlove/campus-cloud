@@ -31,17 +31,17 @@ export class DashboardSocialActivyChartComponent implements OnInit {
     this.drawChart();
   }
 
-  constructor() { }
+  constructor() {}
 
   buildSeries() {
     return this.series.map((serie, index) => {
       return serie.map((item) => {
         return {
-          'meta': `${this.labels[index]} (${this.percentages[index]}%)`,
-          'value': item
-        }
-      })
-    })
+          meta: `${this.labels[index]} (${this.percentages[index]}%)`,
+          value: item,
+        };
+      });
+    });
   }
 
   drawChart() {
@@ -50,7 +50,6 @@ export class DashboardSocialActivyChartComponent implements OnInit {
     };
 
     const options = {
-
       fullWidth: true,
 
       chartPadding: {
@@ -58,11 +57,9 @@ export class DashboardSocialActivyChartComponent implements OnInit {
       },
 
       plugins: [
-        Chartist.plugins.tooltip(
-          {
-            class: 'cp-social-activity',
-          }
-        )
+        Chartist.plugins.tooltip({
+          class: 'cp-social-activity',
+        }),
       ],
 
       lineSmooth: false,
@@ -76,7 +73,7 @@ export class DashboardSocialActivyChartComponent implements OnInit {
       horizontalBars: true,
 
       classNames: {
-        series: 'dsh-series'
+        series: 'dsh-series',
       },
 
       axisY: {
@@ -91,23 +88,31 @@ export class DashboardSocialActivyChartComponent implements OnInit {
         showGrid: false,
 
         showLabel: false,
-
-      }
+      },
     };
 
-    const chart = new Chartist.Bar(this.socialActivity.nativeElement, data, options);
+    const chart = new Chartist.Bar(
+      this.socialActivity.nativeElement,
+      data,
+      options,
+    );
 
-    chart.on('created', function () {
-      this.isChartDataReady = true;
-    }.bind(this));
+    chart.on(
+      'created',
+      function() {
+        this.isChartDataReady = true;
+      }.bind(this),
+    );
 
-    chart.on('draw', function (d) {
-      d.element.attr({
-        style: 'stroke-width: 45px'
-      });
-    }.bind(this));
-
+    chart.on(
+      'draw',
+      function(d) {
+        d.element.attr({
+          style: 'stroke-width: 45px',
+        });
+      }.bind(this),
+    );
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 }

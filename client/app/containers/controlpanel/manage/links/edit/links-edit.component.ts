@@ -1,4 +1,11 @@
-import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  OnChanges,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Headers } from '@angular/http';
 
@@ -15,7 +22,7 @@ declare var $: any;
 @Component({
   selector: 'cp-links-edit',
   templateUrl: './links-edit.component.html',
-  styleUrls: ['./links-edit.component.scss']
+  styleUrls: ['./links-edit.component.scss'],
 })
 export class LinksEditComponent implements OnInit, OnChanges {
   @Input() link: any;
@@ -29,16 +36,16 @@ export class LinksEditComponent implements OnInit, OnChanges {
     private fb: FormBuilder,
     public cpI18n: CPI18nService,
     private service: LinksService,
-    private fileUploadService: FileUploadService
-  ) { }
+    private fileUploadService: FileUploadService,
+  ) {}
 
   buildForm() {
     this.form = this.fb.group({
-      'link_url': [this.link.link_url, Validators.required],
-      'name': [this.link.name, Validators.required],
-      'school_id': [this.link.school_id, Validators.required],
-      'description': [this.link.description, Validators.maxLength(512)],
-      'img_url': [this.link.img_url],
+      link_url: [this.link.link_url, Validators.required],
+      name: [this.link.name, Validators.required],
+      school_id: [this.link.school_id, Validators.required],
+      description: [this.link.description, Validators.maxLength(512)],
+      img_url: [this.link.img_url],
     });
   }
 
@@ -48,24 +55,26 @@ export class LinksEditComponent implements OnInit, OnChanges {
 
     if (!validate.valid) {
       this.imageError = validate.errors[0];
+
       return;
     }
 
     const headers = new Headers();
     const url = this.service.getUploadImageUrl();
-    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
+    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(
+      appStorage.keys.SESSION,
+    )}`;
 
     headers.append('Authorization', auth);
 
-    this
-      .fileUploadService
-      .uploadFile(file, url, headers)
-      .subscribe(
-      res => {
+    this.fileUploadService.uploadFile(file, url, headers).subscribe(
+      (res) => {
         this.form.controls['img_url'].setValue(res.image_url);
       },
-      err => { throw new Error(err) }
-      );
+      (err) => {
+        throw new Error(err);
+      },
+    );
   }
 
   handleDeleteImage() {
@@ -74,17 +83,16 @@ export class LinksEditComponent implements OnInit, OnChanges {
   }
 
   doSubmit() {
-    this
-      .service
-      .updateLink(this.form.value, this.link.id)
-      .subscribe(
-      res => {
+    this.service.updateLink(this.form.value, this.link.id).subscribe(
+      (res) => {
         this.editLink.emit(res);
         $('#linksEdit').modal('hide');
         this.resetModal();
       },
-      err => { throw new Error(err) }
-      );
+      (err) => {
+        throw new Error(err);
+      },
+    );
   }
 
   ngOnChanges() {
@@ -97,6 +105,5 @@ export class LinksEditComponent implements OnInit, OnChanges {
     this.resetEditModal.emit();
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 }

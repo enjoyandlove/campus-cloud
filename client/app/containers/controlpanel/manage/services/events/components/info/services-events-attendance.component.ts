@@ -7,7 +7,8 @@ import { BaseComponent } from '../../../../../../../base/base.component';
   selector: 'cp-services-events-attendance',
   templateUrl: './services-events-attendance.component.html',
 })
-export class ServicesEventsInfoComponent extends BaseComponent implements OnInit {
+export class ServicesEventsInfoComponent extends BaseComponent
+  implements OnInit {
   loading;
   storeId;
   serviceId;
@@ -15,10 +16,10 @@ export class ServicesEventsInfoComponent extends BaseComponent implements OnInit
 
   constructor(
     private route: ActivatedRoute,
-    private servicesService: ServicesService
+    private servicesService: ServicesService,
   ) {
     super();
-    super.isLoading().subscribe(res => this.loading = res);
+    super.isLoading().subscribe((res) => (this.loading = res));
 
     this.isService = true;
     this.serviceId = this.route.snapshot.params['serviceId'];
@@ -29,9 +30,11 @@ export class ServicesEventsInfoComponent extends BaseComponent implements OnInit
   private fetch() {
     super
       .fetchData(this.servicesService.getServiceById(this.serviceId))
-      .then(res => this.storeId = res.data.store_id)
-      .catch(err => { throw new Error(err) });
+      .then((res) => (this.storeId = res.data.store_id))
+      .catch((err) => {
+        throw new Error(err);
+      });
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 }

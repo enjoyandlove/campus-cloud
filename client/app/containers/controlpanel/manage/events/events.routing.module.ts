@@ -5,20 +5,20 @@ import { RouterModule, Routes } from '@angular/router';
  * CRUD
  */
 import { EventsListComponent } from './list';
-import { EventsInfoComponent }  from './info';
-import { EventsEditComponent }  from './edit';
+import { EventsInfoComponent } from './info';
+import { EventsEditComponent } from './edit';
 import { EventsCreateComponent } from './create';
 
 /**
  * Imports
  */
-import { EventsExcelComponent }  from './excel';
-import { EventsFacebookComponent }  from './facebook';
+import { EventsExcelComponent } from './excel';
+import { EventsFacebookComponent } from './facebook';
 
 /**
  * MISC
  */
-import { EventsAttendanceComponent }  from './attendance';
+import { EventsAttendanceComponent } from './attendance';
 
 const appRoutes: Routes = [
   { path: 'import', redirectTo: '', pathMatch: 'full' },
@@ -26,7 +26,7 @@ const appRoutes: Routes = [
   {
     path: '',
     data: { preload: true },
-    component: EventsListComponent
+    component: EventsListComponent,
   },
   { path: 'create', component: EventsCreateComponent },
   { path: ':eventId', component: EventsAttendanceComponent },
@@ -37,11 +37,7 @@ const appRoutes: Routes = [
   { path: 'import/facebook', component: EventsFacebookComponent },
 ];
 @NgModule({
-  imports: [
-    RouterModule.forChild(appRoutes)
-  ],
-  exports: [
-    RouterModule
-  ]
+  imports: [RouterModule.forChild(appRoutes)],
+  exports: [RouterModule],
 })
 export class EventsRoutingModule {}

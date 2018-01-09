@@ -4,11 +4,11 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../../shared/shared.module';
 
-import { CustomizationListComponent }  from './list';
+import { CustomizationListComponent } from './list';
 
 import {
   CustomizationUploadButtonComponent,
-  CustomizationControlButtonsComponent
+  CustomizationControlButtonsComponent,
 } from './list/components';
 
 import { CustomizationRoutingModule } from './customization.routing.module';
@@ -16,12 +16,20 @@ import { CustomizationRoutingModule } from './customization.routing.module';
 // import { LinksService } from './links.service';
 
 @NgModule({
-  declarations: [ CustomizationListComponent, CustomizationUploadButtonComponent,
-  CustomizationControlButtonsComponent ],
+  declarations: [
+    CustomizationListComponent,
+    CustomizationUploadButtonComponent,
+    CustomizationControlButtonsComponent,
+  ],
 
-  imports: [ CommonModule, SharedModule, RouterModule, ReactiveFormsModule,
-  CustomizationRoutingModule ],
+  imports: [
+    CommonModule,
+    SharedModule,
+    RouterModule,
+    ReactiveFormsModule,
+    CustomizationRoutingModule,
+  ],
 
-  providers: [ ],
+  providers: [],
 })
 export class CustomizationModule {}
