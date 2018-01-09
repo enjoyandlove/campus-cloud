@@ -1,15 +1,15 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 export const STAR_SIZE = {
-  'SMALL': 'small',
-  'LARGE': 'large',
-  'DEFAULT': 'default'
+  SMALL: 'small',
+  LARGE: 'large',
+  DEFAULT: 'default',
 };
 
 const STAR_STATE = {
   empty: 'star_border',
   half: 'star_half',
-  full: 'star'
+  full: 'star',
 };
 
 const DISABLED = -1;
@@ -17,7 +17,7 @@ const DISABLED = -1;
 @Component({
   selector: 'cp-stars',
   templateUrl: './cp-stars.component.html',
-  styleUrls: ['./cp-stars.component.scss']
+  styleUrls: ['./cp-stars.component.scss'],
 })
 export class CPStarsComponent implements OnInit {
   @Input() maxRate: number;
@@ -26,33 +26,43 @@ export class CPStarsComponent implements OnInit {
   stars;
   totalRating;
 
-  constructor() { }
+  constructor() {}
 
   fillStars() {
     const _stars = [];
     this.stars.forEach((star, index) => {
-      if ((index + 1) <= this.totalRating) {
-        star = Object.assign({}, star, { state: STAR_STATE.full, filled: true });
+      if (index + 1 <= this.totalRating) {
+        star = Object.assign({}, star, {
+          state: STAR_STATE.full,
+          filled: true,
+        });
         _stars.push(star);
+
         return;
       }
-      if ((index + 1) === +(this.totalRating.toFixed())) {
+      if (index + 1 === +this.totalRating.toFixed()) {
         if (this.totalRating % 1) {
-          star = Object.assign({}, star, { state: STAR_STATE.half, filled: true });
+          star = Object.assign({}, star, {
+            state: STAR_STATE.half,
+            filled: true,
+          });
           _stars.push(star);
+
           return;
         }
       }
       _stars.push(star);
     });
 
-    this.stars = [ ..._stars ];
+    this.stars = [..._stars];
   }
 
   drawStars() {
-     this.stars = Array(this.maxRate).fill('').map((_, index) => {
-      return { index, state: STAR_STATE.full, filled: false };
-    });
+    this.stars = Array(this.maxRate)
+      .fill('')
+      .map((_, index) => {
+        return { index, state: STAR_STATE.full, filled: false };
+      });
   }
 
   ngOnInit() {
@@ -60,15 +70,16 @@ export class CPStarsComponent implements OnInit {
       /**
        *  event does not support the
        *  new basic feedback system
-      **/
+       **/
 
       this.totalRating = 0;
       this.maxRate = 5;
       this.drawStars();
+
       return;
     }
 
-    this.totalRating = +((this.avgRate * this.maxRate) / 100).toFixed(1);
+    this.totalRating = +(this.avgRate * this.maxRate / 100).toFixed(1);
 
     this.drawStars();
     this.fillStars();

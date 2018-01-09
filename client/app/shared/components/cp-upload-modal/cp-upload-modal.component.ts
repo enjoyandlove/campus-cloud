@@ -1,11 +1,11 @@
 import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
   Input,
   OnInit,
   Output,
-  Component,
-  ElementRef,
-  HostListener,
-  EventEmitter
 } from '@angular/core';
 
 import { CPI18nService } from '../../services/index';
@@ -21,12 +21,11 @@ interface IOptions {
 @Component({
   selector: 'cp-upload-modal',
   templateUrl: './cp-upload-modal.component.html',
-  styleUrls: ['./cp-upload-modal.component.scss']
+  styleUrls: ['./cp-upload-modal.component.scss'],
 })
 export class CPUploadModalComponent implements OnInit {
   @Input() props: IOptions;
   @Output() navigate: EventEmitter<null> = new EventEmitter();
-
 
   isError;
   isReady;
@@ -34,10 +33,7 @@ export class CPUploadModalComponent implements OnInit {
   processing;
   errorMessage;
 
-  constructor(
-    private el: ElementRef,
-    private cpI18n: CPI18nService
-  ) { }
+  constructor(private el: ElementRef, private cpI18n: CPI18nService) {}
 
   @HostListener('document:click', ['$event'])
   onClick(event) {
@@ -58,31 +54,36 @@ export class CPUploadModalComponent implements OnInit {
     const result = [];
     const validators = [
       {
-        'exp': this.props.validExtensions.indexOf(file.name.split('.').pop()) === -1,
-        'error': this.cpI18n.translate('error_invalid_extension'),
-        'isError': false
+        exp:
+          this.props.validExtensions.indexOf(file.name.split('.').pop()) === -1,
+        error: this.cpI18n.translate('error_invalid_extension'),
+        isError: false,
       },
       {
-        'exp': file.size > FIVE_MB,
-        'error': this.cpI18n.translate('error_file_is_too_big'),
-        'isError': false
-      }
+        exp: file.size > FIVE_MB,
+        error: this.cpI18n.translate('error_file_is_too_big'),
+        isError: false,
+      },
     ];
 
-    validators.map(validator => {
+    validators.map((validator) => {
       if (validator.exp) {
         validator.isError = true;
         result.push(validator);
       }
+
       return validator;
     });
+
     return result;
   }
 
   onChange(file) {
     this.resetValues();
 
-    if (!file.target.files.length) { return; }
+    if (!file.target.files.length) {
+      return;
+    }
 
     const _file = file.target.files[0];
 
@@ -91,6 +92,7 @@ export class CPUploadModalComponent implements OnInit {
     if (errors) {
       this.isError = true;
       this.errorMessage = errors.error;
+
       return;
     }
 
@@ -100,12 +102,13 @@ export class CPUploadModalComponent implements OnInit {
     // reset input value
     file.target.value = null;
 
-    this.props.parser(_file)
-      .then(_ => {
+    this.props
+      .parser(_file)
+      .then((_) => {
         this.isReady = true;
         this.processing = false;
       })
-      .catch(err => {
+      .catch((err) => {
         this.isError = true;
         this.processing = false;
         this.errorMessage = err;

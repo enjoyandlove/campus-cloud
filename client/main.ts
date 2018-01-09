@@ -1,9 +1,10 @@
-// import { TRANSLATIONS, TRANSLATIONS_FORMAT, LOCALE_ID  } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { enableProdMode } from '@angular/core';
-import { isProd } from './app/config/env/index';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
+
+import { isProd } from './app/config/env/index';
+// import { TRANSLATIONS, TRANSLATIONS_FORMAT, LOCALE_ID  } from '@angular/core';
 
 // import { TRANSLATION_FR, TRANSLATION_EN } from '../locale';
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 interface IItem {
@@ -10,7 +10,7 @@ interface IItem {
 @Component({
   selector: 'cp-check-dropdown',
   templateUrl: './cp-check-dropdown.component.html',
-  styleUrls: ['./cp-check-dropdown.component.scss']
+  styleUrls: ['./cp-check-dropdown.component.scss'],
 })
 export class CPCheckDropdownComponent implements OnInit {
   @Input() items: Array<IItem>;
@@ -19,7 +19,7 @@ export class CPCheckDropdownComponent implements OnInit {
   @Input() buttonClass: string;
   @Output() selected: EventEmitter<IItem> = new EventEmitter();
 
-  constructor() { }
+  constructor() {}
 
   onClick(item) {
     this.selectedItem = item;
@@ -37,8 +37,10 @@ export class CPCheckDropdownComponent implements OnInit {
       this.reset = Observable.of(false);
     }
 
-    this.reset.subscribe(reset => {
-      if (reset) { this.resetMenu(); }
+    this.reset.subscribe((reset) => {
+      if (reset) {
+        this.resetMenu();
+      }
     });
   }
 }

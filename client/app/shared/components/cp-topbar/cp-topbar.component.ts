@@ -1,18 +1,19 @@
 import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
+import { CPSession, ISchool, IUser } from '../../../session';
+
+import { CP_PRIVILEGES_MAP } from './../../constants';
+
 import {
   canAccountLevelReadResource,
-  canSchoolReadResource
+  canSchoolReadResource,
 } from './../../utils/privileges';
-
-import { CPSession, ISchool, IUser } from '../../../session';
-import { CP_PRIVILEGES_MAP } from './../../constants';
 
 @Component({
   selector: 'cp-topbar',
   templateUrl: './cp-topbar.component.html',
-  styleUrls: ['./cp-topbar.component.scss']
+  styleUrls: ['./cp-topbar.component.scss'],
 })
 export class CPTopBarComponent implements OnInit {
   isOpen;
@@ -30,8 +31,8 @@ export class CPTopBarComponent implements OnInit {
   constructor(
     public el: ElementRef,
     public session: CPSession,
-    public router: Router
-  ) { }
+    public router: Router,
+  ) {}
 
   @HostListener('document:click', ['$event'])
   onClick(event) {
@@ -43,23 +44,30 @@ export class CPTopBarComponent implements OnInit {
   }
 
   getManageHomePage() {
-    if (canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.events))  {
+    if (canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.events)) {
       return 'events';
-    } else if (canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.moderation))  {
+    } else if (
+      canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.moderation)
+    ) {
       return 'feeds';
     } else if (
       canAccountLevelReadResource(this.session.g, CP_PRIVILEGES_MAP.clubs) ||
       canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.clubs)
-    )  {
+    ) {
       return 'clubs';
     } else if (
       canAccountLevelReadResource(this.session.g, CP_PRIVILEGES_MAP.services) ||
       canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.services)
-    )  {
+    ) {
       return 'services';
-    } else if (canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.campus_announcements))  {
+    } else if (
+      canSchoolReadResource(
+        this.session.g,
+        CP_PRIVILEGES_MAP.campus_announcements,
+      )
+    ) {
       return 'lists';
-    } else if (canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.links))  {
+    } else if (canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.links)) {
       return 'links';
     }
 
@@ -76,8 +84,14 @@ export class CPTopBarComponent implements OnInit {
 
     this.manageHomePage = this.getManageHomePage();
 
-    this.canNotify = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.campus_announcements);
-    this.canAssess = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.assessment);
+    this.canNotify = canSchoolReadResource(
+      this.session.g,
+      CP_PRIVILEGES_MAP.campus_announcements,
+    );
+    this.canAssess = canSchoolReadResource(
+      this.session.g,
+      CP_PRIVILEGES_MAP.assessment,
+    );
 
     this.isManageActiveRoute = this.isManage(this.router.url);
 

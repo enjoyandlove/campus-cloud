@@ -1,18 +1,20 @@
 import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
   Input,
   OnInit,
   Output,
-  Component,
   ViewChild,
-  ElementRef,
-  EventEmitter,
-  AfterViewInit,
-  ChangeDetectorRef
 } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
-import { CPSession } from './../../../session';
+
 import { CPLocationsService } from '../../services/locations.service';
+
+import { CPSession } from './../../../session';
 
 interface IState {
   input: string;
@@ -24,7 +26,7 @@ const service = new CPLocationsService();
 @Component({
   selector: 'cp-place-autocomplete',
   templateUrl: './cp-place-autocomplete.component.html',
-  styleUrls: ['./cp-place-autocomplete.component.scss']
+  styleUrls: ['./cp-place-autocomplete.component.scss'],
 })
 export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
   @ViewChild('hostEl') hostEl: ElementRef;
@@ -38,13 +40,10 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
 
   state: IState = {
     input: null,
-    suggestions: []
-  }
+    suggestions: [],
+  };
 
-  constructor(
-    private cpSession: CPSession,
-    private ref: ChangeDetectorRef
-  ) { }
+  constructor(private cpSession: CPSession, private ref: ChangeDetectorRef) {}
 
   ngAfterViewInit() {
     const input = this.hostEl.nativeElement;
@@ -60,37 +59,34 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
 
         if (!query) {
           this.placeChange.emit(null);
+
           return Observable.empty();
         }
 
         this.setInput(query);
-        return service.getAllSuggestions(query, lat, lng)
+
+        return service.getAllSuggestions(query, lat, lng);
       })
-      .subscribe(
-        res => this.setSuggestions(res),
-        err => console.log(err)
-      )
+      .subscribe((res) => this.setSuggestions(res), (err) => console.log(err));
   }
 
-
   handleClick(location) {
-    if (!location.value) { return; }
+    if (!location.value) {
+      return;
+    }
 
     this.resetSuggestions();
     this.setInput(location.full_label);
 
     if (location.isGoogle) {
       this.fetchGoogleDetails(location);
+
       return;
     }
 
-    const locationData = Object.assign(
-      {},
-      location.value,
-      {
-        fromUsersLocations: true
-       }
-    )
+    const locationData = Object.assign({}, location.value, {
+      fromUsersLocations: true,
+    });
 
     this.placeChange.emit(locationData);
   }
@@ -106,21 +102,18 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
     service
       .getLocationDetails(location.value, this.hostEl.nativeElement)
       .subscribe(
-      details => {
-        details = Object.assign(
-          {},
-          details,
-          { name: location.full_label }
-        )
-        this.placeChange.emit(details);
-      },
-      () => this.placeChange.emit(null)
-      )
+        (details) => {
+          details = Object.assign({}, details, { name: location.full_label });
+          this.placeChange.emit(details);
+        },
+        () => this.placeChange.emit(null),
+      );
   }
 
   noResultsIfEmpty(results: Array<any>) {
-    return results.length === 1 ?
-      [...results, { 'label_medium': 'No Results', 'value': null }] : results
+    return results.length === 1
+      ? [...results, { label_medium: 'No Results', value: null }]
+      : results;
   }
 
   setInput(input): void {
@@ -132,10 +125,9 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
   }
 
   setSuggestions(suggestions): void {
-    this.state = Object.assign(
-      {},
-      this.state,
-      { suggestions: [...suggestions[1]] });
+    this.state = Object.assign({}, this.state, {
+      suggestions: [...suggestions[1]],
+    });
   }
 
   resetSuggestions(): void {
@@ -147,11 +139,11 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
       this.setInput(this.defaultValue);
     }
 
-    this.newAddress.subscribe(address => {
+    this.newAddress.subscribe((address) => {
       if (address) {
         this.setInput(address);
         this.ref.detectChanges();
       }
-    })
+    });
   }
 }

@@ -17,8 +17,9 @@ export const STATUS = {
 
   PASSWORDS_DO_NOT_MATCH: 'Passwords do not match',
 
-  EMAIL_DOES_NOT_EXIST: 'I\'m sorry, but we weren\'t able to find a user\
-   with that login information',
+  EMAIL_DOES_NOT_EXIST:
+    "I'm sorry, but we weren't able to find a user\
+   with that login information",
 
   NO_ACCOUNT_FOUND: 'Please check your credentials and try again.',
 
@@ -48,4 +49,3 @@ export const STATUS = {
 
   WRONG_EXTENSION_IMAGE: 'Please upload a JPG or PNG image',
 };
-

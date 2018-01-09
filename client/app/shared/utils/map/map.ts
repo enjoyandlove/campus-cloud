@@ -22,12 +22,12 @@ interface ICPMap {
   longitude: number;
 }
 const map = {
-  'city': 'locality',
-  'country': 'country',
-  'street_name': 'route',
-  'postal_code': 'postal_code',
-  'street_number': 'street_number',
-  'province': 'administrative_area_level_1',
+  city: 'locality',
+  country: 'country',
+  street_name: 'route',
+  postal_code: 'postal_code',
+  street_number: 'street_number',
+  province: 'administrative_area_level_1',
 };
 
 function locationAsObject(location) {
@@ -35,28 +35,34 @@ function locationAsObject(location) {
 
   return {
     latitude: googleCords.lat,
-    longitude: googleCords.lng
+    longitude: googleCords.lng,
   };
-};
+}
 
-function getValueFromAddressComponent(addressComp: any[], field: string, long?: boolean) {
-    let result = null;
+function getValueFromAddressComponent(
+  addressComp: any[],
+  field: string,
+  long?: boolean,
+) {
+  let result = null;
 
-    addressComp.map(data => {
-      data.types.forEach(type => {
-        if (type === field) {
-          if (long) {
-            result = data.long_name;
-            return;
-          }
-          result = data.short_name;
+  addressComp.map((data) => {
+    data.types.forEach((type) => {
+      if (type === field) {
+        if (long) {
+          result = data.long_name;
+
+          return;
         }
-        return;
-      });
-    });
+        result = data.short_name;
+      }
 
-    return result;
-  };
+      return;
+    });
+  });
+
+  return result;
+}
 
 function getBaseMapObject(data) {
   let obj: ICPMap = {
@@ -67,7 +73,7 @@ function getBaseMapObject(data) {
     street_number: null,
     province: null,
     latitude: null,
-    longitude: null
+    longitude: null,
   };
 
   if (!data) {
@@ -80,18 +86,21 @@ function getBaseMapObject(data) {
       street_number: '',
       province: '',
       latitude: null,
-      longitude: null
+      longitude: null,
     };
   }
 
-  Object.keys(map).map(item => {
-    obj[item] = getValueFromAddressComponent(data.address_components, map[item]);
+  Object.keys(map).map((item) => {
+    obj[item] = getValueFromAddressComponent(
+      data.address_components,
+      map[item],
+    );
   });
 
-  obj = Object.assign({}, obj, {...locationAsObject(data.geometry.location)});
+  obj = Object.assign({}, obj, { ...locationAsObject(data.geometry.location) });
 
   return obj;
-};
+}
 
 const resetLocationFields = (school) => {
   return {
@@ -104,7 +113,7 @@ const resetLocationFields = (school) => {
     latitude: school.latitude,
     longitude: school.longitude,
   };
-}
+};
 
 const setFormLocationData = (form: FormGroup, location: ILocation) => {
   form.controls['city'].setValue(location.city);
@@ -117,12 +126,12 @@ const setFormLocationData = (form: FormGroup, location: ILocation) => {
   form.controls['postal_code'].setValue(location.postal_code);
 
   return form;
-}
+};
 
 export const CPMap = {
   locationAsObject,
   getBaseMapObject,
   setFormLocationData,
   resetLocationFields,
-  getValueFromAddressComponent
+  getValueFromAddressComponent,
 };

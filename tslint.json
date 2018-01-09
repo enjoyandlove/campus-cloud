@@ -103,7 +103,9 @@
     ],
     "ordered-imports": [
       true,
-      "grouped-imports"
+      {
+        "grouped-imports": true
+      }
     ],
     "space-within-parens": [
       true,
@@ -133,7 +135,8 @@
       "check-decl",
       "check-operator",
       "check-separator",
-      "check-type"
+      "check-type",
+      "check-module"
     ],
     "directive-selector": [
       true,
@@ -147,6 +150,7 @@
       "cp",
       "kebab-case"
     ],
+    "no-unused-css": true,
     "use-input-property-decorator": true,
     "use-output-property-decorator": true,
     "use-host-property-decorator": true,

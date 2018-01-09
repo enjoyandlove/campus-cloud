@@ -1,26 +1,23 @@
-import { Http, Headers } from '@angular/http';
 import { Injectable } from '@angular/core';
+import { Headers, Http } from '@angular/http';
 
 import { CPI18nService } from './index';
 
 @Injectable()
 export class FileUploadService {
-  maxFileSize = 8e+7;
+  maxFileSize = 8e7;
 
   validFileTypes = [
     'application/pdf', // .pdf
     'application/msword', // .doc
-    'application/vnd.openxmlformats-officedocument.wordprocessingml.document' // .docx
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // .docx
   ];
 
   validImageTypes = ['image/jpeg', 'image/jpg', 'image/png'];
 
-  constructor(
-    private http: Http,
-    private cpI18n: CPI18nService
-  ) { }
+  constructor(private http: Http, private cpI18n: CPI18nService) {}
 
-  validImage(file: File): { valid: boolean, errors: Array<string> } {
+  validImage(file: File): { valid: boolean; errors: Array<string> } {
     const validType = {
       message: this.cpI18n.translate('error_invalid_extension'),
       valid: this.validateImage(file),
@@ -33,11 +30,11 @@ export class FileUploadService {
 
     return {
       valid: validType.valid && validSize.valid,
-      errors: [validType.message, validSize.message]
-    }
+      errors: [validType.message, validSize.message],
+    };
   }
 
-  validFile(file: File): { valid: boolean, errors: Array<string> } {
+  validFile(file: File): { valid: boolean; errors: Array<string> } {
     const validType = {
       message: this.cpI18n.translate('error_invalid_extension'),
       valid: this.validateDoc(file),
@@ -50,8 +47,8 @@ export class FileUploadService {
 
     return {
       valid: validType.valid && validSize.valid,
-      errors: [validType.message, validSize.message]
-    }
+      errors: [validType.message, validSize.message],
+    };
   }
 
   validateFileSize(media: File): boolean {
@@ -71,6 +68,6 @@ export class FileUploadService {
 
     formData.append('file', media, media.name);
 
-    return this.http.post(url, formData, { headers }).map(res => res.json());
+    return this.http.post(url, formData, { headers }).map((res) => res.json());
   }
 }
