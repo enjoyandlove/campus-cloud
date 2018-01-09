@@ -9,6 +9,7 @@ export class CPPreloadStrategy implements PreloadingStrategy {
     if (route.data) {
       console.log('loading ', route);
     }
+
     return route.data && route.data.preload ? load() : Observable.of(null);
   }
 }
