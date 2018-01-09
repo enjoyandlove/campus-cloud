@@ -8,9 +8,10 @@ import { DashboardService } from './../../dashboard.service';
 @Component({
   selector: 'cp-dashboard-campus-tile',
   templateUrl: './dashboard-campus-tile.component.html',
-  styleUrls: ['./dashboard-campus-tile.component.scss']
+  styleUrls: ['./dashboard-campus-tile.component.scss'],
 })
-export class DashboardCampuTileComponent extends BaseComponent implements OnInit {
+export class DashboardCampuTileComponent extends BaseComponent
+  implements OnInit {
   @Output() ready: EventEmitter<boolean> = new EventEmitter();
 
   _dates;
@@ -24,12 +25,9 @@ export class DashboardCampuTileComponent extends BaseComponent implements OnInit
     this.fetch();
   }
 
-  constructor(
-    private session: CPSession,
-    private service: DashboardService
-  ) {
+  constructor(private session: CPSession, private service: DashboardService) {
     super();
-    super.isLoading().subscribe(loading => {
+    super.isLoading().subscribe((loading) => {
       this.loading = loading;
       this.ready.emit(!this.loading);
     });
@@ -39,15 +37,14 @@ export class DashboardCampuTileComponent extends BaseComponent implements OnInit
     const search = new URLSearchParams();
     search.append('end', this._dates.end);
     search.append('start', this._dates.start);
-    search.append('school_id', this.session.g.get('school').id)
+    search.append('school_id', this.session.g.get('school').id);
 
     const stream$ = this.service.getCampusTile(search);
 
     super
       .fetchData(stream$)
-      .then(res => this.items = res.data)
-      .catch(err => console.log(err));
-
+      .then((res) => (this.items = res.data))
+      .catch((err) => console.log(err));
   }
 
   ngOnInit() {}

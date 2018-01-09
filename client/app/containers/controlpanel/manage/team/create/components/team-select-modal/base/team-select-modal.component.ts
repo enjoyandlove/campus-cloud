@@ -17,15 +17,16 @@ interface IState {
 }
 
 const state: IState = {
-  selected: []
+  selected: [],
 };
 
 @Component({
   selector: 'cp-team-select-modal',
   templateUrl: './team-select-modal.component.html',
-  styleUrls: ['./team-select-modal.component.scss']
+  styleUrls: ['./team-select-modal.component.scss'],
 })
-export class BaseTeamSelectModalComponent extends BaseComponent implements OnInit {
+export class BaseTeamSelectModalComponent extends BaseComponent
+  implements OnInit {
   @Input() title: string;
   @Input() defaultState: any;
   @Input() data: Observable<any>;
@@ -50,7 +51,7 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
   updateItem(id: number, key: string, value: any) {
     const _state = Object.assign({}, this.state);
 
-    _state.selected.forEach(service => {
+    _state.selected.forEach((service) => {
       if (service.id === id) {
         service[key] = value;
       }
@@ -69,12 +70,12 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
     const _item = {};
     const _state = [...this.state.selected];
 
-    _state.map(item => {
+    _state.map((item) => {
       if (item.checked) {
         _item['store_id' in item.data ? item.data.store_id : item.data.id] = {
           [this.privilegeType]: {
             r: true,
-            w: true
+            w: true,
           },
           [CP_PRIVILEGES_MAP.events]: {
             r: true,
@@ -83,25 +84,21 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
           [CP_PRIVILEGES_MAP.event_attendance]: {
             r: true,
             w: true,
-          }
+          },
         };
 
         // if its a club we grant them access to extra privileges
         if (!('store_id' in item.data)) {
-          _item[item.data.id] = Object.assign(
-            {},
-            _item[item.data.id],
-            {
-              [CP_PRIVILEGES_MAP.moderation]: {
-                r: true,
-                w: true,
-              },
-              [CP_PRIVILEGES_MAP.membership]: {
-                r: true,
-                w: true,
-              }
-            }
-          );
+          _item[item.data.id] = Object.assign({}, _item[item.data.id], {
+            [CP_PRIVILEGES_MAP.moderation]: {
+              r: true,
+              w: true,
+            },
+            [CP_PRIVILEGES_MAP.membership]: {
+              r: true,
+              w: true,
+            },
+          });
         }
       }
     });
@@ -112,38 +109,35 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
   updateState(items) {
     const _selected = [];
 
-    items.forEach(item => {
+    items.forEach((item) => {
       _selected.push({
         id: item.id,
         type: 1,
         checked: item.checked || false,
-        data: item
+        data: item,
       });
     });
     this.state = Object.assign({}, this.state, { selected: _selected });
   }
 
   doReset() {
-    this.state = Object.assign(
-      {},
-      this.state,
-      { selected: this.state.selected.map(item => {
+    this.state = Object.assign({}, this.state, {
+      selected: this.state.selected.map((item) => {
         item.checked = false;
+
         return item;
-      }) }
-    )
+      }),
+    });
   }
 
   ngOnInit() {
-    this
-      .reset
-      .subscribe(reset => {
-        if (reset) {
-          this.doReset();
-        }
-      });
+    this.reset.subscribe((reset) => {
+      if (reset) {
+        this.doReset();
+      }
+    });
 
-    this.data.subscribe(res => {
+    this.data.subscribe((res) => {
       this.loading = 'data' in res;
 
       if (res.data) {
@@ -151,7 +145,7 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
       }
 
       if (res.selected) {
-        Object.keys(res.selected).forEach(storeId => {
+        Object.keys(res.selected).forEach((storeId) => {
           const type = res.selected[storeId].w ? 2 : 1;
           this.updateItem(res.selected[storeId].id, 'type', type);
         });

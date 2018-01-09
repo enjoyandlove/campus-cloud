@@ -1,50 +1,45 @@
 import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants';
 
 function getMenu(privileges = {}) {
-
   const form = {
     services: {
       active: false,
-      deps: []
+      deps: [],
     },
     clubs: {
       active: false,
-      deps: []
+      deps: [],
     },
     events: {
       active: false,
-      deps: []
+      deps: [],
     },
     content: {
       orientation: {
         active: false,
-        deps: []
+        deps: [],
       },
       calendars: {
         active: false,
-        deps: []
+        deps: [],
       },
       maps: {
         active: false,
-        deps: []
+        deps: [],
       },
       feeds: {
         active: false,
-        deps: [
-          CP_PRIVILEGES_MAP.membership,
-        ],
-        disables: [
-          CP_PRIVILEGES_MAP.membership,
-        ]
+        deps: [CP_PRIVILEGES_MAP.membership],
+        disables: [CP_PRIVILEGES_MAP.membership],
       },
       links: {
         active: false,
-        deps: []
+        deps: [],
       },
       appCustomizaton: {
         active: false,
-        deps: []
-      }
+        deps: [],
+      },
     },
     notify: {
       campus: {
@@ -52,23 +47,23 @@ function getMenu(privileges = {}) {
         deps: [],
         disables: [
           CP_PRIVILEGES_MAP.assessment,
-          CP_PRIVILEGES_MAP.emergency_announcement
-        ]
+          CP_PRIVILEGES_MAP.emergency_announcement,
+        ],
       },
       emergency: {
         active: false,
-        deps: [CP_PRIVILEGES_MAP.campus_announcements]
-      }
+        deps: [CP_PRIVILEGES_MAP.campus_announcements],
+      },
     },
     assess: {
       engagement: {
         active: false,
-        deps: [CP_PRIVILEGES_MAP.campus_announcements]
-      }
-    }
+        deps: [CP_PRIVILEGES_MAP.campus_announcements],
+      },
+    },
   };
 
-  Object.keys(privileges).forEach(p => {
+  Object.keys(privileges).forEach((p) => {
     if (+p === CP_PRIVILEGES_MAP.services) {
       form.services.active = true;
     }
@@ -108,7 +103,7 @@ function getMenu(privileges = {}) {
   });
 
   return form;
-};
+}
 
 export const TEAM_ACCESS = {
   getMenu,

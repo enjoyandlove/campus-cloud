@@ -8,16 +8,12 @@ import { DashboardComponent } from './dashboard.component';
 const appRoutes: Routes = [
   {
     path: '',
-    canActivate: [ AuthGuard ],
+    canActivate: [AuthGuard],
     component: DashboardComponent,
-  }
+  },
 ];
 @NgModule({
-  imports: [
-    RouterModule.forChild(appRoutes)
-  ],
-  exports: [
-    RouterModule
-  ]
+  imports: [RouterModule.forChild(appRoutes)],
+  exports: [RouterModule],
 })
 export class DashboardRoutingModule {}

@@ -3,18 +3,18 @@ const IDs = [32, 12];
 
 function buildNotifyOptions(userPrivileges: number[]) {
   const _menu = [];
-  IDs.map(id => {
+  IDs.map((id) => {
     if (userPrivileges.indexOf(id) > -1) {
       _menu.push({
-        [id]: CP_PRIVILEGES[id]
+        [id]: CP_PRIVILEGES[id],
       });
     }
   });
+
   return _menu;
-};
+}
 
 export const NOTIFY = {
   IDs,
-  createList: buildNotifyOptions
+  createList: buildNotifyOptions,
 };
-

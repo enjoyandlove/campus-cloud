@@ -15,7 +15,7 @@ declare var $: any;
 @Component({
   selector: 'cp-links-create',
   templateUrl: './links-create.component.html',
-  styleUrls: ['./links-create.component.scss']
+  styleUrls: ['./links-create.component.scss'],
 })
 export class LinksCreateComponent implements OnInit {
   @Output() createLink: EventEmitter<ILink> = new EventEmitter();
@@ -30,16 +30,16 @@ export class LinksCreateComponent implements OnInit {
     private session: CPSession,
     public cpI18n: CPI18nService,
     private service: LinksService,
-    private fileUploadService: FileUploadService
-  ) { }
+    private fileUploadService: FileUploadService,
+  ) {}
 
   buildForm() {
     this.form = this.fb.group({
-      'name': [null, Validators.required],
-      'link_url': [null, Validators.required],
-      'school_id': [this.storeId, Validators.required],
-      'description': [null, Validators.maxLength(512)],
-      'img_url': [null],
+      name: [null, Validators.required],
+      link_url: [null, Validators.required],
+      school_id: [this.storeId, Validators.required],
+      description: [null, Validators.maxLength(512)],
+      img_url: [null],
     });
   }
 
@@ -49,36 +49,34 @@ export class LinksCreateComponent implements OnInit {
 
     if (!validate.valid) {
       this.imageError = validate.errors[0];
+
       return;
     }
 
     const headers = new Headers();
     const url = this.service.getUploadImageUrl();
-    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
+    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(
+      appStorage.keys.SESSION,
+    )}`;
 
     headers.append('Authorization', auth);
 
-    this
-      .fileUploadService
-      .uploadFile(file, url, headers)
-      .subscribe(
-      res => {
+    this.fileUploadService.uploadFile(file, url, headers).subscribe(
+      (res) => {
         this.form.controls['img_url'].setValue(res.image_url);
       },
-      err => { throw new Error(err) }
-      );
+      (err) => {
+        throw new Error(err);
+      },
+    );
   }
 
   doSubmit() {
-    this
-      .service
-      .createLink(this.form.value)
-      .subscribe(
-        res => {
-          $('#linksCreate').modal('hide');
-          this.createLink.emit(res);
-          this.resetModal();
-        });
+    this.service.createLink(this.form.value).subscribe((res) => {
+      $('#linksCreate').modal('hide');
+      this.createLink.emit(res);
+      this.resetModal();
+    });
   }
 
   resetModal() {

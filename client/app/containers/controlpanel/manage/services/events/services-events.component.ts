@@ -2,14 +2,11 @@ import { ActivatedRoute } from '@angular/router';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import {
-  IHeader,
-  HEADER_UPDATE
-} from '../../../../../reducers/header.reducer';
+import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
 import {
   canSchoolReadResource,
-  canStoreReadAndWriteResource
+  canStoreReadAndWriteResource,
 } from './../../../../../shared/utils/privileges';
 
 import { CPSession } from '../../../../../session';
@@ -22,7 +19,7 @@ import { CPI18nService } from '../../../../../shared/services/index';
 @Component({
   selector: 'cp-services-events',
   templateUrl: './services-events.component.html',
-  styleUrls: ['./services-events.component.scss']
+  styleUrls: ['./services-events.component.scss'],
 })
 export class ServicesEventsComponent extends EventsComponent {
   service;
@@ -31,14 +28,13 @@ export class ServicesEventsComponent extends EventsComponent {
   serviceId: number;
   serviceStoreId;
 
-
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
     private route: ActivatedRoute,
     private store: Store<IHeader>,
     public eventsService: EventsService,
-    private serviceService: ServicesService
+    private serviceService: ServicesService,
   ) {
     super(session, cpI18n, eventsService);
     this.serviceId = this.route.snapshot.params['serviceId'];
@@ -47,43 +43,45 @@ export class ServicesEventsComponent extends EventsComponent {
   }
 
   fetchServiceData() {
-    this
-      .serviceService
-      .getServiceById(this.serviceId)
-      .subscribe(
-        res => {
-          this.service = res;
-          this.serviceStoreId = this.service.store_id;
-          this.buildHeader();
-          this.loading = false;
-        });
+    this.serviceService.getServiceById(this.serviceId).subscribe((res) => {
+      this.service = res;
+      this.serviceStoreId = this.service.store_id;
+      this.buildHeader();
+      this.loading = false;
+    });
   }
 
   private buildHeader() {
     let children = [
       {
-        'label': 'info',
-        'url': `/manage/services/${this.serviceId}/info`
-      }
+        label: 'info',
+        url: `/manage/services/${this.serviceId}/info`,
+      },
     ];
 
-    const eventsSchoolLevel = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.events);
-    const eventsAccountLevel = canStoreReadAndWriteResource(this.session.g,
-      this.serviceStoreId, CP_PRIVILEGES_MAP.events);
+    const eventsSchoolLevel = canSchoolReadResource(
+      this.session.g,
+      CP_PRIVILEGES_MAP.events,
+    );
+    const eventsAccountLevel = canStoreReadAndWriteResource(
+      this.session.g,
+      this.serviceStoreId,
+      CP_PRIVILEGES_MAP.events,
+    );
 
     if (eventsSchoolLevel || eventsAccountLevel) {
       const events = {
-        'label': 'events',
-        'url': `/manage/services/${this.serviceId}/events`
-      }
+        label: 'events',
+        url: `/manage/services/${this.serviceId}/events`,
+      };
 
       children = [...children, events];
     }
 
     if (this.service.service_attendance) {
       const attendance = {
-        'label': 'assessment',
-        'url': `/manage/services/${this.serviceId}`
+        label: 'assessment',
+        url: `/manage/services/${this.serviceId}`,
       };
 
       children = [...children, attendance];
@@ -92,14 +90,14 @@ export class ServicesEventsComponent extends EventsComponent {
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': `[NOTRANSLATE]${this.service.name}[NOTRANSLATE]`,
-        'subheading': '',
-        'crumbs': {
-          'url': 'services',
-          'label': 'services',
+        heading: `[NOTRANSLATE]${this.service.name}[NOTRANSLATE]`,
+        subheading: '',
+        crumbs: {
+          url: 'services',
+          label: 'services',
         },
-        'children': [...children]
-      }
+        children: [...children],
+      },
     });
   }
 }

@@ -1,3 +1,4 @@
+/* tslint:disable: max-line-length */
 import {
   Input,
   OnInit,
@@ -13,14 +14,9 @@ require('chartist-plugin-tooltips');
 import * as moment from 'moment';
 import { CPDate } from '../../../../../shared/utils';
 
-import {
-  CPStatsFormatterPipe
-} from './../../../assess/engagement/components/engagement-stats/pipes/stats-formatter.pipe';
+import { CPStatsFormatterPipe } from '../../../assess/engagement/components/engagement-stats/pipes/stats-formatter.pipe';
 
-import {
-  DivideBy
-} from './../dashboard-downloads-registration/dashboard-downloads-registration.component';
-
+import { DivideBy } from './../dashboard-downloads-registration/dashboard-downloads-registration.component';
 
 @Component({
   selector: 'cp-dashboard-downloads-chart',
@@ -42,7 +38,7 @@ export class DashboardDownloadsChartComponent implements OnInit {
     this.drawChart();
   }
 
-  constructor() { }
+  constructor() {}
 
   dailyLabel(index) {
     const date = CPDate.toEpoch(moment(this.range.start).add(index, 'days'));
@@ -55,10 +51,11 @@ export class DashboardDownloadsChartComponent implements OnInit {
 
     const weekStart = CPDate.toEpoch(weekOne);
 
-    const weekEnd = CPDate
-      .toEpoch(weekOne.add(1, 'weeks'));
+    const weekEnd = CPDate.toEpoch(weekOne.add(1, 'weeks'));
 
-    return `${moment.unix(weekStart).format('MMM D')} - ${moment.unix(weekEnd).format('MMM D')}`;
+    return `${moment.unix(weekStart).format('MMM D')} - ${moment
+      .unix(weekEnd)
+      .format('MMM D')}`;
   }
 
   monthlyLabel(index) {
@@ -68,7 +65,9 @@ export class DashboardDownloadsChartComponent implements OnInit {
   }
 
   quarterLabel(index) {
-    const date = CPDate.toEpoch(moment(this.range.start).add(index, 'quarters'));
+    const date = CPDate.toEpoch(
+      moment(this.range.start).add(index, 'quarters'),
+    );
 
     return moment.unix(date).format('MMM YY');
   }
@@ -98,7 +97,7 @@ export class DashboardDownloadsChartComponent implements OnInit {
 
   buildLabels() {
     return this.series[0].map((_, index) => {
-      return this.labelByDivider(index)
+      return this.labelByDivider(index);
     });
   }
 
@@ -108,11 +107,11 @@ export class DashboardDownloadsChartComponent implements OnInit {
 
       return serie.map((item, index) => {
         return {
-          'meta': chartName + this.labelByDivider(index),
-          'value': item
-        }
-      })
-    })
+          meta: chartName + this.labelByDivider(index),
+          value: item,
+        };
+      });
+    });
   }
 
   drawChart() {
@@ -126,10 +125,12 @@ export class DashboardDownloadsChartComponent implements OnInit {
 
     const highestRegistration = Math.max.apply(Math, this.series[1]);
 
-    const highestNoInArray = highestDownload > highestRegistration
-                             ? highestDownload : highestRegistration;
+    const highestNoInArray =
+      highestDownload > highestRegistration
+        ? highestDownload
+        : highestRegistration;
 
-    const high = (highestNoInArray + 5) - ((highestNoInArray + 5) % 5);
+    const high = highestNoInArray + 5 - (highestNoInArray + 5) % 5;
 
     const options = {
       low: 0,
@@ -145,13 +146,11 @@ export class DashboardDownloadsChartComponent implements OnInit {
       },
 
       plugins: [
-        Chartist.plugins.tooltip(
-          {
-            class: 'cp-dsh-downloads',
+        Chartist.plugins.tooltip({
+          class: 'cp-dsh-downloads',
 
-            pointClass: 'cp-dsh-point',
-          }
-        )
+          pointClass: 'cp-dsh-point',
+        }),
       ],
 
       lineSmooth: false,
@@ -180,7 +179,7 @@ export class DashboardDownloadsChartComponent implements OnInit {
         showGrid: false,
 
         labelOffset: {
-          x: 0
+          x: 0,
         },
 
         labelInterpolationFnc: function skipLabels(value, index) {
@@ -207,15 +206,22 @@ export class DashboardDownloadsChartComponent implements OnInit {
 
           return value;
         }.bind(this),
-      }
+      },
     };
 
-    const chart = new Chartist.Line(this.chartHost.nativeElement, data, options);
+    const chart = new Chartist.Line(
+      this.chartHost.nativeElement,
+      data,
+      options,
+    );
 
-    chart.on('created', function () {
-      this.isChartDataReady = true;
-    }.bind(this));
+    chart.on(
+      'created',
+      function() {
+        this.isChartDataReady = true;
+      }.bind(this),
+    );
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 }
