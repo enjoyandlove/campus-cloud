@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { Headers, Http } from '@angular/http';
 
 import { API } from '../../config/api';
 
@@ -8,20 +8,22 @@ export class AuthService {
   constructor(private http: Http) {}
 
   login(email: string, password: string) {
-    let headers = new Headers();
+    const headers = new Headers();
 
-    const authorization = `${API.AUTH_HEADER.TOKEN} ${API.KEY}:${email}:${password}`;
+    const authorization = `${API.AUTH_HEADER.TOKEN} ${
+      API.KEY
+    }:${email}:${password}`;
 
     headers.set('Authorization', authorization);
     headers.set('Content-Type', 'application/x-www-form-urlencoded');
 
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SESSION}/`;
 
-    return this.http.post(url, {}, { headers }).map(res => res.json());
+    return this.http.post(url, {}, { headers }).map((res) => res.json());
   }
 
   submitPasswordReset(body) {
-    let headers = new Headers();
+    const headers = new Headers();
 
     const authorization = `${API.AUTH_HEADER.TOKEN} ${API.KEY}`;
 
@@ -30,11 +32,11 @@ export class AuthService {
 
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.P_RESET}/`;
 
-    return this.http.put(url, body, { headers }).map(res => res);
+    return this.http.put(url, body, { headers }).map((res) => res);
   }
 
   createInvitePassword(body: any) {
-    let headers = new Headers();
+    const headers = new Headers();
 
     const authorization = `${API.AUTH_HEADER.TOKEN} ${API.KEY}`;
 
@@ -43,6 +45,6 @@ export class AuthService {
 
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.P_RESET}/`;
 
-    return this.http.put(url, body, { headers }).map(res => res);
+    return this.http.put(url, body, { headers }).map((res) => res);
   }
 }

@@ -3,10 +3,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import {
-  IHeader,
-  HEADER_UPDATE
-} from '../../../../../reducers/header.reducer';
+import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { EventsService } from '../events.service';
 import { FORMAT } from '../../../../../shared/pipes/date';
 import { EventUtilService } from './../events.utils.service';
@@ -16,7 +13,7 @@ import { CPI18nService } from '../../../../../shared/services/index';
 @Component({
   selector: 'cp-events-info',
   templateUrl: './events-info.component.html',
-  styleUrls: ['./events-info.component.scss']
+  styleUrls: ['./events-info.component.scss'],
 })
 export class EventsInfoComponent extends BaseComponent implements OnInit {
   @Input() isClub: boolean;
@@ -41,7 +38,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
     private store: Store<IHeader>,
     private route: ActivatedRoute,
     private service: EventsService,
-    public utils: EventUtilService
+    public utils: EventUtilService,
   ) {
     super();
     this.dateFormat = FORMAT.DATETIME;
@@ -51,51 +48,52 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    super.isLoading().subscribe(res => this.loading = res);
+    super.isLoading().subscribe((res) => (this.loading = res));
 
     super
       .fetchData(this.service.getEventById(this.eventId))
-      .then(event => {
+      .then((event) => {
         this.event = event.data;
-
 
         this.isPastEvent = this.utils.isPastEvent(this.event);
 
         this.urlPrefix = this.utils.buildUrlPrefix(this.clubId, this.serviceId);
 
-        this.banner = this.event.poster_url === '' ?
-                      this.event.store_logo_url : this.event.poster_url;
+        this.banner =
+          this.event.poster_url === ''
+            ? this.event.store_logo_url
+            : this.event.poster_url;
 
         this.buildHeader(this.event);
 
-        this.mapCenter = new BehaviorSubject(
-          {
-            lat: event.data.latitude,
-            lng: event.data.longitude
-          }
-        );
+        this.mapCenter = new BehaviorSubject({
+          lat: event.data.latitude,
+          lng: event.data.longitude,
+        });
       })
-      .catch(err => { throw new Error(err) });
+      .catch((err) => {
+        throw new Error(err);
+      });
   }
 
   private buildHeader(event) {
     const children = this.utils.getSubNavChildren(event, this.urlPrefix);
 
     const payload = {
-      'heading': `[NOTRANSLATE]${event.title}[NOTRANSLATE]`,
-      'subheading': '',
-      'crumbs': {
-        'url': this.urlPrefix,
-        'label': 'events'
+      heading: `[NOTRANSLATE]${event.title}[NOTRANSLATE]`,
+      subheading: '',
+      crumbs: {
+        url: this.urlPrefix,
+        label: 'events',
       },
-      'children': [...children]
-    }
+      children: [...children],
+    };
 
     this.store.dispatch({
       type: HEADER_UPDATE,
-      payload
+      payload,
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 }

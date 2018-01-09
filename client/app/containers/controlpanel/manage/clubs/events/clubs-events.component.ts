@@ -1,14 +1,16 @@
-import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { IClub } from './../club.interface';
-import { ClubsService } from '../clubs.service';
-import { CPSession } from '../../../../../session';
-import { ClubsUtilsService } from './../clubs.utils.service';
 import { BaseComponent } from '../../../../../base/base.component';
+import { CPSession } from '../../../../../session';
+import { ClubsService } from '../clubs.service';
+
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+
+import { IClub } from './../club.interface';
+import { ClubsUtilsService } from './../clubs.utils.service';
 
 @Component({
   selector: 'cp-clubs-events',
@@ -26,13 +28,13 @@ export class ClubsEventsComponent extends BaseComponent implements OnInit {
     private session: CPSession,
     private route: ActivatedRoute,
     private utils: ClubsUtilsService,
-    private clubsService: ClubsService
+    private clubsService: ClubsService,
   ) {
     super();
 
     this.clubId = this.route.parent.snapshot.parent.params['clubId'];
 
-    super.isLoading().subscribe(loading => this.loading = loading);
+    super.isLoading().subscribe((loading) => (this.loading = loading));
   }
 
   private fetch() {
@@ -41,41 +43,42 @@ export class ClubsEventsComponent extends BaseComponent implements OnInit {
 
     super
       .fetchData(this.clubsService.getClubById(this.clubId, search))
-      .then(club => {
+      .then((club) => {
         this.club = club.data;
         this.buildHeader();
       });
   }
 
   buildHeader() {
-    const payload = this.buildPayload()
+    const payload = this.buildPayload();
 
     this.store.dispatch({
       type: HEADER_UPDATE,
-      payload
+      payload,
     });
   }
 
   buildPayload() {
-    let menu = {
+    const menu = {
       heading: `[NOTRANSLATE]${this.club.name}[NOTRANSLATE]`,
       subheading: null,
-      'crumbs': {
-        'url': this.router.url === `/manage/clubs/${this.clubId}/events`
-          ? 'clubs'
-          : `clubs/${this.clubId}`,
-        'label': 'clubs'
+      crumbs: {
+        url:
+          this.router.url === `/manage/clubs/${this.clubId}/events`
+            ? 'clubs'
+            : `clubs/${this.clubId}`,
+        label: 'clubs',
       },
       em: null,
-      children: []
+      children: [],
     };
 
     const links = this.utils.getSubNavChildren(this.club, this.session);
 
-    links.forEach(link => {
+    links.forEach((link) => {
       menu.children.push({
         label: `[NOTRANSLATE]${link}[NOTRANSLATE]`,
-        url: `/manage/clubs/${this.clubId}/${link.toLocaleLowerCase()}`
+        url: `/manage/clubs/${this.clubId}/${link.toLocaleLowerCase()}`,
       });
     });
 
@@ -86,4 +89,3 @@ export class ClubsEventsComponent extends BaseComponent implements OnInit {
     this.fetch();
   }
 }
-

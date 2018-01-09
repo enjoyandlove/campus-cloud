@@ -6,8 +6,8 @@ import { Injectable } from '@angular/core';
 const defaultOptions: google.maps.MapOptions = {
   zoom: 16,
   disableDefaultUI: true,
-  disableDoubleClickZoom: true
-}
+  disableDoubleClickZoom: true,
+};
 
 @Injectable()
 export class CPMapsService {
@@ -17,24 +17,31 @@ export class CPMapsService {
     return new google.maps.Map(el, options);
   }
 
-  setMarker(map: google.maps.Map,
-            position: google.maps.LatLngLiteral): google.maps.Marker {
-
+  setMarker(
+    map: google.maps.Map,
+    position: google.maps.LatLngLiteral,
+  ): google.maps.Marker {
     const marker = new google.maps.Marker({ position });
     marker.setMap(map);
 
     return marker;
   }
 
-  setMarkerPosition(marker: google.maps.Marker,
-                    position: google.maps.LatLngLiteral): google.maps.Marker {
+  setMarkerPosition(
+    marker: google.maps.Marker,
+    position: google.maps.LatLngLiteral,
+  ): google.maps.Marker {
     marker.setPosition(position);
+
     return marker;
   }
 
-  setCenter(map: google.maps.Map,
-            position: google.maps.LatLngLiteral): google.maps.Map {
+  setCenter(
+    map: google.maps.Map,
+    position: google.maps.LatLngLiteral,
+  ): google.maps.Map {
     map.setCenter(position);
+
     return map;
   }
 }

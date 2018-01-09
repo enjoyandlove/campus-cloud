@@ -19,49 +19,57 @@ export class DashboardService extends BaseService {
   }
 
   getDownloads(search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.DASHBORD_USER_ACQUISITION}/`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.DASHBORD_USER_ACQUISITION
+    }/`;
 
-    return super
-      .get(url, { search })
-      .map(data => {
-        const jsonData = data.json();
+    return super.get(url, { search }).map((data) => {
+      const jsonData = data.json();
 
-        return {
-          series: [jsonData.downloads.series, jsonData.registrations.series],
-          labels: jsonData.downloads.labels
-        };
-      })
+      return {
+        series: [jsonData.downloads.series, jsonData.registrations.series],
+        labels: jsonData.downloads.labels,
+      };
+    });
   }
 
   getSocialActivity(search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.DASHBOARD_SOCIAL_ACTIVITY}/`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.DASHBOARD_SOCIAL_ACTIVITY
+    }/`;
 
-    return super
-      .get(url, { search })
-      .map(data => {
-        let res = {
-          series: [],
-          labels: [],
-        };
+    return super.get(url, { search }).map((data) => {
+      const res = {
+        series: [],
+        labels: [],
+      };
 
-        const jsonData = data.json();
+      const jsonData = data.json();
 
-        res.series.push([jsonData.wall_post_likes]);
-        res.series.push([jsonData.campus_posts]);
-        res.series.push([jsonData.connections]);
-        res.series.push([jsonData.wall_comments]);
-        res.series.push([jsonData.messages]);
+      res.series.push([jsonData.wall_post_likes]);
+      res.series.push([jsonData.campus_posts]);
+      res.series.push([jsonData.connections]);
+      res.series.push([jsonData.wall_comments]);
+      res.series.push([jsonData.messages]);
 
-        res.labels.push('Messages', 'Comments', 'Connections',
-                        'Wall Posts', 'Likes')
-        return res;
-      })
+      res.labels.push(
+        'Messages',
+        'Comments',
+        'Connections',
+        'Wall Posts',
+        'Likes',
+      );
+
+      return res;
+    });
   }
 
   getCampusTile(search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.DASHBOARD_CAMPUS_TILE}/`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.DASHBOARD_CAMPUS_TILE
+    }/`;
 
-    return super.get(url, { search }).map(res => res.json());
+    return super.get(url, { search }).map((res) => res.json());
   }
 
   getAssessment() {
@@ -72,62 +80,66 @@ export class DashboardService extends BaseService {
   }
 
   getIntegrations(search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.DASHBOARD_INTEGRATION_STATUS}/`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.DASHBOARD_INTEGRATION_STATUS
+    }/`;
 
-    return super.get(url, { search }).map(res => res.json());
+    return super.get(url, { search }).map((res) => res.json());
   }
 
   getTopClubs(search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.DASHBOARD_TOP_CLUBS}/`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.DASHBOARD_TOP_CLUBS
+    }/`;
 
-    return super.get(url, { search }).map(res => res.json());
+    return super.get(url, { search }).map((res) => res.json());
   }
 
   getGeneralInformation(search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.DASHBOARD_GENERAL_INFORMATION}/`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.DASHBOARD_GENERAL_INFORMATION
+    }/`;
 
-    return super.get(url, { search }).map(res => res.json());
+    return super.get(url, { search }).map((res) => res.json());
   }
 
   getTopEvents(search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_EVENT}/`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.ASSESS_EVENT
+    }/`;
 
-    return super
-      .get(url, { search })
-      .map(res => {
+    return super.get(url, { search }).map((res) => {
+      const jsonData = res.json();
 
-        const jsonData = res.json();
+      const eventAssessment = {
+        event_checkins: jsonData.total_attendees,
+        event_feedback_rate: jsonData.avg_feedbacks,
+        event_total_feedback: jsonData.total_feedbacks,
+      };
 
-        const eventAssessment = {
-          event_checkins: jsonData.total_attendees,
-          event_feedback_rate: jsonData.avg_feedbacks,
-          event_total_feedback: jsonData.total_feedbacks
-        };
+      this.eventAssessment.next(eventAssessment);
 
-        this.eventAssessment.next(eventAssessment);
-
-        return jsonData;
-      });
+      return jsonData;
+    });
   }
 
   getTopServices(search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_SERVICE}/`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.ASSESS_SERVICE
+    }/`;
 
-    return super
-      .get(url, { search })
-      .map(res => {
-        const jsonData = res.json();
+    return super.get(url, { search }).map((res) => {
+      const jsonData = res.json();
 
-        const serviceAssessment = {
-          service_checkins: jsonData.total_attendees,
-          service_feedback_rate: jsonData.avg_feedbacks,
-          service_total_feedback: jsonData.total_feedbacks
-        };
+      const serviceAssessment = {
+        service_checkins: jsonData.total_attendees,
+        service_feedback_rate: jsonData.avg_feedbacks,
+        service_total_feedback: jsonData.total_feedbacks,
+      };
 
-        this.serviceAssessment.next(serviceAssessment)
+      this.serviceAssessment.next(serviceAssessment);
 
-        return jsonData;
-      });
+      return jsonData;
+    });
   }
 }
-

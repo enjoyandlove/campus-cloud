@@ -23,10 +23,10 @@ declare var $;
 @Component({
   selector: 'cp-students-compose',
   templateUrl: './students-compose.component.html',
-  styleUrls: ['./students-compose.component.scss']
+  styleUrls: ['./students-compose.component.scss'],
 })
 export class StudentsComposeComponent implements OnInit {
-  @Input() props: { 'name': string, 'userIds': Array<number> };
+  @Input() props: { name: string; userIds: Array<number> };
   @Output() teardown: EventEmitter<null> = new EventEmitter();
   @Output() success: EventEmitter<null> = new EventEmitter();
 
@@ -43,10 +43,10 @@ export class StudentsComposeComponent implements OnInit {
     private session: CPSession,
     private cpI18n: CPI18nService,
     private service: StudentsService,
-    private storeService: StoreService
+    private storeService: StoreService,
   ) {
     const school = this.session.g.get('school');
-    let search: URLSearchParams = new URLSearchParams();
+    const search: URLSearchParams = new URLSearchParams();
     search.append('school_id', school.id.toString());
 
     this.stores$ = this.storeService.getStores(search);
@@ -63,35 +63,33 @@ export class StudentsComposeComponent implements OnInit {
   doSubmit() {
     let data = this.form.value;
     this.isError = false;
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    data = Object.assign(
-      {},
-      data,
-      { message: `${data.message} ${this.sendAsName}` }
-    );
+    data = Object.assign({}, data, {
+      message: `${data.message} ${this.sendAsName}`,
+    });
 
-    this
-      .service
-      .postAnnouncements(search, data)
-      .subscribe(
-      res => {
+    this.service.postAnnouncements(search, data).subscribe(
+      (res) => {
         if (res.status === THROTTLED_STATUS) {
           this.isError = true;
           this.errorMessage = `Message not sent, \n
-          please wait ${(res.timeout / 60).toFixed()} minutes before trying again`;
+          please wait ${(
+            res.timeout / 60
+          ).toFixed()} minutes before trying again`;
+
           return;
         }
         this.resetModal();
         this.success.emit();
         $('#studentsComposeModal').modal('hide');
       },
-      _ => {
+      (_) => {
         this.isError = true;
         this.errorMessage = this.cpI18n.translate('something_went_wrong');
-      }
-      );
+      },
+    );
   }
 
   onSelectedHost(host) {
@@ -106,15 +104,13 @@ export class StudentsComposeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.form = this.fb.group(
-      {
-        'user_ids': [this.props.userIds],
-        'is_school_wide': false,
-        'store_id': [null, Validators.required],
-        'subject': [null, [Validators.required, Validators.maxLength(128)]],
-        'message': [null, [Validators.required, Validators.maxLength(400)]],
-        'priority': [2, Validators.required]
-      }
-    );
+    this.form = this.fb.group({
+      user_ids: [this.props.userIds],
+      is_school_wide: false,
+      store_id: [null, Validators.required],
+      subject: [null, [Validators.required, Validators.maxLength(128)]],
+      message: [null, [Validators.required, Validators.maxLength(400)]],
+      priority: [2, Validators.required],
+    });
   }
 }

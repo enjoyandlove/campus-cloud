@@ -1,13 +1,18 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  OnDestroy,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
 
 import { CPSession } from '../../../../../session';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { STATUS } from '../../../../../shared/constants';
-import { StoreService, CPI18nService } from '../../../../../shared/services';
 import { AnnouncementsService } from '../announcements.service';
-import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
+import { CP_PRIVILEGES_MAP, STATUS } from '../../../../../shared/constants';
+import { StoreService, CPI18nService } from '../../../../../shared/services';
 
 declare var $: any;
 
@@ -24,7 +29,7 @@ const state: IState = {
   isToUsers: true,
   isToLists: false,
   isEmergency: false,
-  isCampusWide: false
+  isCampusWide: false,
 };
 
 const THROTTLED_STATUS = 1;
@@ -32,7 +37,7 @@ const THROTTLED_STATUS = 1;
 @Component({
   selector: 'cp-announcements-compose',
   templateUrl: './announcements-compose.component.html',
-  styleUrls: ['./announcements-compose.component.scss']
+  styleUrls: ['./announcements-compose.component.scss'],
 })
 export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   @Output() created: EventEmitter<any> = new EventEmitter();
@@ -64,7 +69,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
   subject_prefix = {
     label: null,
-    type: null
+    type: null,
   };
 
   types;
@@ -74,48 +79,47 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     public session: CPSession,
     public cpI18n: CPI18nService,
     public storeService: StoreService,
-    public service: AnnouncementsService
+    public service: AnnouncementsService,
   ) {
     const school = this.session.g.get('school');
-    let search: URLSearchParams = new URLSearchParams();
+    const search: URLSearchParams = new URLSearchParams();
     search.append('school_id', school.id.toString());
 
     this.stores$ = this.storeService.getStores(search);
   }
 
   doUserSearch(query) {
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('search_str', query);
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    this
-      .service
+    this.service
       .getUsers(search)
-      .map(users => {
-        let _users = [];
+      .map((users) => {
+        const _users = [];
 
-        users.forEach(user => {
+        users.forEach((user) => {
           _users.push({
-            'label': `${user.firstname} ${user.lastname}`,
-            'id': user.id
+            label: `${user.firstname} ${user.lastname}`,
+            id: user.id,
           });
         });
 
         if (!_users.length) {
-          _users.push({ 'label': this.cpI18n.translate('no_results') });
+          _users.push({ label: this.cpI18n.translate('no_results') });
         }
 
         return _users;
       })
       .subscribe(
-      suggestions => {
-        this.typeAheadOpts = Object.assign(
-          {},
-          this.typeAheadOpts,
-          { suggestions }
-        );
-      },
-      err => { throw new Error(err) }
+        (suggestions) => {
+          this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
+            suggestions,
+          });
+        },
+        (err) => {
+          throw new Error(err);
+        },
       );
   }
 
@@ -129,12 +133,14 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     if (this.form.controls['subject'].value) {
       length += this.form.controls['subject'].value.length;
     }
+
     return length;
   }
 
   onSearch(query) {
     if (this.state.isToUsers) {
       this.doUserSearch(query);
+
       return;
     }
 
@@ -142,43 +148,42 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   }
 
   doListsSearch(query) {
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('search_str', query);
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    this
-      .service
+    this.service
       .getLists(search, 1, 400)
-      .map(lists => {
-        let _lists = [];
+      .map((lists) => {
+        const _lists = [];
 
-        lists.forEach(list => {
+        lists.forEach((list) => {
           _lists.push({
-            'label': `${list.name}`,
-            'id': list.id
+            label: `${list.name}`,
+            id: list.id,
           });
         });
 
         if (!_lists.length) {
-          _lists.push({ 'label': this.cpI18n.translate('no_results') });
+          _lists.push({ label: this.cpI18n.translate('no_results') });
         }
 
         return _lists;
       })
       .subscribe(
-      suggestions => {
-        this.typeAheadOpts = Object.assign(
-          {},
-          this.typeAheadOpts,
-          { suggestions }
-        );
-      },
-      err => { throw new Error(err) }
+        (suggestions) => {
+          this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
+            suggestions,
+          });
+        },
+        (err) => {
+          throw new Error(err);
+        },
       );
   }
 
   getTypeFromArray(id) {
-    return this.types.filter(type => type.id === id)[0];
+    return this.types.filter((type) => type.id === id)[0];
   }
 
   resetModal() {
@@ -190,7 +195,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
     this.subject_prefix = {
       label: null,
-      type: null
+      type: null,
     };
 
     $('#composeModal').modal('hide');
@@ -209,21 +214,18 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   doValidate() {
     if (this.state.isCampusWide) {
       this.shouldConfirm = true;
+
       return;
     }
     this.doSubmit();
   }
 
   onHandleToggle(status) {
-    this.state = Object.assign(
-      {},
-      this.state,
-      {
-        isToLists: false,
-        isToUsers: status ? false : true,
-        isCampusWide: !this.state.isCampusWide
-      }
-    );
+    this.state = Object.assign({}, this.state, {
+      isToLists: false,
+      isToUsers: status ? false : true,
+      isCampusWide: !this.state.isCampusWide,
+    });
 
     this.resetChips();
 
@@ -235,58 +237,52 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   doSubmit() {
     this.isError = false;
 
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    let prefix = this.subject_prefix.label ? this.subject_prefix.label.toUpperCase() : '';
+    const prefix = this.subject_prefix.label
+      ? this.subject_prefix.label.toUpperCase()
+      : '';
 
     let data = {
-      'store_id': this.form.value.store_id,
-      'is_school_wide': this.form.value.is_school_wide,
-      'subject': `${prefix} ${this.form.value.subject}`,
-      'message': `${this.form.value.message} \n ${this.sendAsName}`,
-      'priority': this.form.value.priority
+      store_id: this.form.value.store_id,
+      is_school_wide: this.form.value.is_school_wide,
+      subject: `${prefix} ${this.form.value.subject}`,
+      message: `${this.form.value.message} \n ${this.sendAsName}`,
+      priority: this.form.value.priority,
     };
 
     if (this.state.isToUsers && !this.state.isCampusWide) {
-      data = Object.assign(
-        {},
-        data,
-        { 'user_ids': this.form.value.user_ids }
-      );
+      data = Object.assign({}, data, { user_ids: this.form.value.user_ids });
     }
 
     if (this.state.isToLists && !this.state.isCampusWide) {
-      data = Object.assign(
-        {},
-        data,
-        { 'list_ids': this.form.value.list_ids }
-      );
+      data = Object.assign({}, data, { list_ids: this.form.value.list_ids });
     }
 
-    this
-      .service
-      .postAnnouncements(search, data)
-      .subscribe(
-      res => {
+    this.service.postAnnouncements(search, data).subscribe(
+      (res) => {
         if (res.status === THROTTLED_STATUS) {
           this.shouldConfirm = false;
 
           this.isError = true;
           this.errorMessage = `Message not sent, \n
-          please wait ${(res.timeout / 60).toFixed()} minutes before trying again`;
+          please wait ${(
+            res.timeout / 60
+          ).toFixed()} minutes before trying again`;
+
           return;
         }
         this.form.reset();
         this.created.emit(this.form.value);
         this.resetModal();
       },
-      _ => {
+      (_) => {
         this.isError = true;
         this.shouldConfirm = false;
         this.errorMessage = STATUS.SOMETHING_WENT_WRONG;
-      }
-      );
+      },
+    );
   }
 
   onConfirmed() {
@@ -296,7 +292,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   onTypeChanged(type): void {
     this.subject_prefix = {
       label: null,
-      type: null
+      type: null,
     };
     this.state.isUrgent = false;
     this.state.isEmergency = false;
@@ -305,7 +301,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       this.state.isEmergency = true;
       this.subject_prefix = {
         label: this.cpI18n.translate('emergency'),
-        type: 'danger'
+        type: 'danger',
       };
     }
 
@@ -313,7 +309,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       this.state.isUrgent = true;
       this.subject_prefix = {
         label: this.cpI18n.translate('urgent'),
-        type: 'warning'
+        type: 'warning',
       };
     }
 
@@ -343,22 +339,16 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   onSwitchSearchType(type) {
     switch (type) {
       case this.USERS_TYPE:
-        this.state = Object.assign(
-          {},
-          this.state,
-          {
-            isToUsers: true,
-            isToLists: false,
-          });
+        this.state = Object.assign({}, this.state, {
+          isToUsers: true,
+          isToLists: false,
+        });
         break;
       case this.LISTS_TYPE:
-        this.state = Object.assign(
-          {},
-          this.state,
-          {
-            isToUsers: false,
-            isToLists: true,
-          });
+        this.state = Object.assign({}, this.state, {
+          isToUsers: false,
+          isToLists: true,
+        });
         break;
     }
 
@@ -371,7 +361,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   getObjectFromTypesArray(id) {
     let result;
 
-    this.types.forEach(type => {
+    this.types.forEach((type) => {
       if (type.action === id) {
         result = type;
       }
@@ -386,13 +376,15 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     this.typeAheadOpts = {
       withSwitcher: true,
       suggestions: this.suggestions,
-      reset: this.resetChips$
+      reset: this.resetChips$,
     };
-    let schoolPrivileges = this.session.g.get('user')
-      .school_level_privileges[this.session.g.get('school').id];
+    const schoolPrivileges = this.session.g.get('user').school_level_privileges[
+      this.session.g.get('school').id
+    ];
 
     try {
-      canDoEmergency = schoolPrivileges[CP_PRIVILEGES_MAP.emergency_announcement].w;
+      canDoEmergency =
+        schoolPrivileges[CP_PRIVILEGES_MAP.emergency_announcement].w;
     } catch (error) {
       canDoEmergency = false;
     }
@@ -400,33 +392,37 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     this.types = require('./announcement-types').types;
 
     if (!canDoEmergency) {
-      this.types = this.types.filter(type => type.action !== this.EMERGENCY_TYPE);
+      this.types = this.types.filter(
+        (type) => type.action !== this.EMERGENCY_TYPE,
+      );
     }
 
     this.form = this.fb.group({
-      'store_id': [null, Validators.required],
-      'user_ids': [[]],
-      'list_ids': [[]],
-      'is_school_wide': false,
-      'subject': [null, [Validators.required, Validators.maxLength(128)]],
-      'message': [null, [Validators.required, Validators.maxLength(400)]],
-      'priority': [this.types[0].action, Validators.required]
+      store_id: [null, Validators.required],
+      user_ids: [[]],
+      list_ids: [[]],
+      is_school_wide: false,
+      subject: [null, [Validators.required, Validators.maxLength(128)]],
+      message: [null, [Validators.required, Validators.maxLength(400)]],
+      priority: [this.types[0].action, Validators.required],
     });
 
-    this.form.valueChanges.subscribe(_ => {
+    this.form.valueChanges.subscribe((_) => {
       let isValid = true;
 
       isValid = this.form.valid;
 
       if (this.state.isToLists) {
         if (this.form.controls['list_ids'].value) {
-          isValid = this.form.controls['list_ids'].value.length >= 1 && this.form.valid;
+          isValid =
+            this.form.controls['list_ids'].value.length >= 1 && this.form.valid;
         }
       }
 
       if (this.state.isToUsers) {
         if (this.form.controls['user_ids'].value) {
-          isValid = this.form.controls['user_ids'].value.length >= 1 && this.form.valid;
+          isValid =
+            this.form.controls['user_ids'].value.length >= 1 && this.form.valid;
         }
       }
 

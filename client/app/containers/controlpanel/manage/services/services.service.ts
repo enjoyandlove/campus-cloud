@@ -9,56 +9,63 @@ import { SERVICES_MODAL_SET } from '../../../../reducers/services-modal.reducer'
 
 @Injectable()
 export class ServicesService extends BaseService {
-  constructor(
-    http: Http,
-    router: Router,
-    private store: Store<any>) {
+  constructor(http: Http, router: Router, private store: Store<any>) {
     super(http, router);
 
     Object.setPrototypeOf(this, ServicesService.prototype);
   }
 
   getServices(startRange: number, endRange: number, search?: URLSearchParams) {
-    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}`;
+    const common = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.SERVICES
+    }`;
     const url = `${common}/${startRange};${endRange}`;
 
-    return super.get(url, { search }).map(res => res.json());
+    return super.get(url, { search }).map((res) => res.json());
   }
 
   getCategories() {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES_CATEGORY}/1;1000`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.SERVICES_CATEGORY
+    }/1;1000`;
 
-    return super.get(url).map(res => res.json());
+    return super.get(url).map((res) => res.json());
   }
 
   getServiceById(serviceId: number) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}/${serviceId}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.SERVICES
+    }/${serviceId}`;
 
-    return super.get(url).map(res => res.json());
+    return super.get(url).map((res) => res.json());
   }
 
   deleteService(serviceId: number) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}/${serviceId}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.SERVICES
+    }/${serviceId}`;
 
-    return super.delete(url).map(res => res.json());
+    return super.delete(url).map((res) => res.json());
   }
 
   createService(data: any) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}/`;
 
-    return super.post(url, data).map(res => res.json());
+    return super.post(url, data).map((res) => res.json());
   }
 
   updateService(data: any, serviceId: number) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}/${serviceId}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.SERVICES
+    }/${serviceId}`;
 
-    return super.update(url, data).map(res => res.json());
+    return super.update(url, data).map((res) => res.json());
   }
 
   setModalServices(services: any[]): void {
     this.store.dispatch({
       type: SERVICES_MODAL_SET,
-      payload: services
+      payload: services,
     });
   }
 }

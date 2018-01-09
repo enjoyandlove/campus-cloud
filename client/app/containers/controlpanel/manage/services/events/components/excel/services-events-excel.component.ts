@@ -7,7 +7,8 @@ import { BaseComponent } from '../../../../../../../base/base.component';
   selector: 'cp-services-events-excel',
   templateUrl: './services-events-excel.component.html',
 })
-export class ServicesEventsExcelComponent extends BaseComponent implements OnInit {
+export class ServicesEventsExcelComponent extends BaseComponent
+  implements OnInit {
   loading;
   storeId;
   serviceId;
@@ -15,19 +16,21 @@ export class ServicesEventsExcelComponent extends BaseComponent implements OnIni
 
   constructor(
     private route: ActivatedRoute,
-    private servicesService: ServicesService
+    private servicesService: ServicesService,
   ) {
     super();
-    super.isLoading().subscribe(res => this.loading = res);
+    super.isLoading().subscribe((res) => (this.loading = res));
   }
 
   private fetch() {
     super
       .fetchData(this.servicesService.getServiceById(this.serviceId))
-      .then(res => {
+      .then((res) => {
         this.storeId = res.data.store_id;
       })
-      .catch(err => { throw new Error(err) });
+      .catch((err) => {
+        throw new Error(err);
+      });
   }
 
   ngOnInit() {

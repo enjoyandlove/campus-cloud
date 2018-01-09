@@ -5,7 +5,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  HostListener
+  HostListener,
 } from '@angular/core';
 
 import { URLSearchParams } from '@angular/http';
@@ -21,7 +21,7 @@ const LIST_USED_IN_TEMPLATE = 409;
 @Component({
   selector: 'cp-lists-delete',
   templateUrl: './lists-delete.component.html',
-  styleUrls: ['./lists-delete.component.scss']
+  styleUrls: ['./lists-delete.component.scss'],
 })
 export class ListsDeleteComponent implements OnInit {
   @Input() list: any;
@@ -34,8 +34,8 @@ export class ListsDeleteComponent implements OnInit {
     private el: ElementRef,
     private session: CPSession,
     private service: ListsService,
-    private cpI18n: CPI18nService
-  ) { }
+    private cpI18n: CPI18nService,
+  ) {}
 
   @HostListener('document:click', ['$event'])
   onClick(event) {
@@ -52,35 +52,37 @@ export class ListsDeleteComponent implements OnInit {
   }
 
   onDelete() {
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    this
-      .service
-      .removeList(this.list.id, search)
-      .subscribe(
-        _ => {
-          $('#listsDelete').modal('hide');
-          this.deleteList.emit(this.list.id);
-          this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
-        },
-        err => {
-          this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
+    this.service.removeList(this.list.id, search).subscribe(
+      (_) => {
+        $('#listsDelete').modal('hide');
+        this.deleteList.emit(this.list.id);
+        this.buttonData = Object.assign({}, this.buttonData, {
+          disabled: false,
+        });
+      },
+      (err) => {
+        this.buttonData = Object.assign({}, this.buttonData, {
+          disabled: false,
+        });
 
-          if (err.status === LIST_USED_IN_TEMPLATE) {
-            this.templateConflict = true;
-            return;
-          } else {
-            console.log(err);
-          }
+        if (err.status === LIST_USED_IN_TEMPLATE) {
+          this.templateConflict = true;
+
+          return;
+        } else {
+          console.log(err);
         }
-      );
+      },
+    );
   }
 
   ngOnInit() {
     this.buttonData = {
       class: 'danger',
-      text: this.cpI18n.translate('delete')
-    }
+      text: this.cpI18n.translate('delete'),
+    };
   }
 }
