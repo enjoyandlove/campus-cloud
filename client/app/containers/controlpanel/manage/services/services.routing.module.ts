@@ -17,7 +17,7 @@ import {
   ServicesEventsExcelComponent,
   ServicesEventsCreateComponent,
   ServicesEventsFacebookComponent,
-  ServicesEventsAttendanceComponent
+  ServicesEventsAttendanceComponent,
 } from './events/components';
 
 import { ServicesProviderDetailsComponent } from './attendance/components';
@@ -27,14 +27,13 @@ import { ServicesProviderDetailsComponent } from './attendance/components';
  */
 import { ServicesExcelComponent } from './excel';
 
-
 const appRoutes: Routes = [
   { path: 'import', redirectTo: '', pathMatch: 'full' },
 
   {
     path: '',
     data: { preload: true },
-    component: ServicesListComponent
+    component: ServicesListComponent,
   },
 
   { path: 'create', component: ServicesCreateComponent },
@@ -42,26 +41,43 @@ const appRoutes: Routes = [
   { path: ':serviceId/edit', component: ServicesEditComponent },
   { path: ':serviceId/events', component: ServicesEventsComponent },
 
-  { path: ':serviceId/events/create', component: ServicesEventsCreateComponent },
-  { path: ':serviceId/events/:eventId', component: ServicesEventsAttendanceComponent },
-  { path: ':serviceId/events/:eventId/info', component: ServicesEventsInfoComponent },
+  {
+    path: ':serviceId/events/create',
+    component: ServicesEventsCreateComponent,
+  },
+  {
+    path: ':serviceId/events/:eventId',
+    component: ServicesEventsAttendanceComponent,
+  },
+  {
+    path: ':serviceId/events/:eventId/info',
+    component: ServicesEventsInfoComponent,
+  },
 
-  { path: ':serviceId/events/:eventId/edit', component: ServicesEventsEditComponent },
-  { path: ':serviceId/events/import/excel', component: ServicesEventsExcelComponent },
-  { path: ':serviceId/events/import/facebook', component: ServicesEventsFacebookComponent },
+  {
+    path: ':serviceId/events/:eventId/edit',
+    component: ServicesEventsEditComponent,
+  },
+  {
+    path: ':serviceId/events/import/excel',
+    component: ServicesEventsExcelComponent,
+  },
+  {
+    path: ':serviceId/events/import/facebook',
+    component: ServicesEventsFacebookComponent,
+  },
 
   { path: ':serviceId', component: ServicesAttendanceComponent },
 
-  { path: ':serviceId/provider/:providerId', component: ServicesProviderDetailsComponent },
+  {
+    path: ':serviceId/provider/:providerId',
+    component: ServicesProviderDetailsComponent,
+  },
 
-  { path: 'import/excel', component: ServicesExcelComponent }
+  { path: 'import/excel', component: ServicesExcelComponent },
 ];
 @NgModule({
-  imports: [
-    RouterModule.forChild(appRoutes)
-  ],
-  exports: [
-    RouterModule
-  ]
+  imports: [RouterModule.forChild(appRoutes)],
+  exports: [RouterModule],
 })
-export class ServicesRoutingModule { }
+export class ServicesRoutingModule {}

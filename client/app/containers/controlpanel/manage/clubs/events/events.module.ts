@@ -1,34 +1,47 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+
 import { SharedModule } from '../../../../../shared/shared.module';
+import { EventsModule } from '../../events/events.module';
 
 import { ClubsEventsComponent } from './clubs-events.component';
+import { ClubsEventsRoutingModule } from './events.routing.module';
 
 import {
   ClubsEventEditComponent,
   ClubsEventInfoComponent,
-  ClubsEventsExcelComponent,
+  ClubsEventsAttendanceComponent,
   ClubsEventsCreateComponent,
+  ClubsEventsExcelComponent,
   ClubsEventsFacebookComponent,
-  ClubsEventsAttendanceComponent
 } from './components';
 
 /**
  * External Modules
  */
-import { EventsModule } from '../../events/events.module';
-import { ClubsEventsRoutingModule } from './events.routing.module';
 
 @NgModule({
-  declarations: [ ClubsEventsComponent, ClubsEventsCreateComponent,
-  ClubsEventsAttendanceComponent, ClubsEventInfoComponent, ClubsEventEditComponent,
-  ClubsEventsFacebookComponent, ClubsEventsExcelComponent ],
+  declarations: [
+    ClubsEventsComponent,
+    ClubsEventsCreateComponent,
+    ClubsEventsAttendanceComponent,
+    ClubsEventInfoComponent,
+    ClubsEventEditComponent,
+    ClubsEventsFacebookComponent,
+    ClubsEventsExcelComponent,
+  ],
 
-  imports: [ CommonModule, SharedModule, RouterModule, ReactiveFormsModule,
-  ClubsEventsRoutingModule, EventsModule ],
+  imports: [
+    CommonModule,
+    SharedModule,
+    RouterModule,
+    ReactiveFormsModule,
+    ClubsEventsRoutingModule,
+    EventsModule,
+  ],
 
-  providers: [ ],
+  providers: [],
 })
 export class ClubsEventsModule {}

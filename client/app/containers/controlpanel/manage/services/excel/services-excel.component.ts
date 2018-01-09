@@ -9,14 +9,18 @@ import { ServicesService } from '../services.service';
 import { CPI18nService } from '../../../../../shared/services';
 import { BaseComponent } from '../../../../../base/base.component';
 import { SERVICES_MODAL_RESET } from '../../../../../reducers/services-modal.reducer';
-import { HEADER_UPDATE, HEADER_DEFAULT } from '../../../../../reducers/header.reducer';
+import {
+  HEADER_UPDATE,
+  HEADER_DEFAULT,
+} from '../../../../../reducers/header.reducer';
 
 @Component({
   selector: 'cp-services-excel',
   templateUrl: './services-excel.component.html',
-  styleUrls: ['./services-excel.component.scss']
+  styleUrls: ['./services-excel.component.scss'],
 })
-export class ServicesExcelComponent extends BaseComponent implements OnInit, OnDestroy {
+export class ServicesExcelComponent extends BaseComponent
+  implements OnInit, OnDestroy {
   stores;
   services;
   buttonData;
@@ -33,90 +37,84 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
     private store: Store<any>,
     private session: CPSession,
     private cpI18n: CPI18nService,
-    private servicesService: ServicesService
+    private servicesService: ServicesService,
   ) {
     super();
-    super.isLoading().subscribe(res => this.loading = res);
+    super.isLoading().subscribe((res) => (this.loading = res));
 
-    this
-      .store
-      .select('SERVICES_MODAL')
-      .subscribe(
-      res => {
-        // this.services = res;
-        this.services = !isDev ? res : require('./mock.json');
-        this.buildForm();
-        this.buildHeader();
-      });
+    this.store.select('SERVICES_MODAL').subscribe((res) => {
+      // this.services = res;
+      this.services = !isDev ? res : require('./mock.json');
+      this.buildForm();
+      this.buildHeader();
+    });
   }
 
   buildHeader() {
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': this.cpI18n.translate('services_imports_heading'),
-        'crumbs': {
-          'url': 'services',
-          'label': this.cpI18n.translate('services')
+        heading: this.cpI18n.translate('services_imports_heading'),
+        crumbs: {
+          url: 'services',
+          label: this.cpI18n.translate('services'),
         },
-        'em': `${this.services.length} student service(s) data information in the file`,
-        'children': []
-      }
+        em: `${
+          this.services.length
+        } student service(s) data information in the file`,
+        children: [],
+      },
     });
   }
 
   buildForm() {
     this.form = this.fb.group({
-      'services': this.fb.array([])
+      services: this.fb.array([]),
     });
     this.buildGroup();
 
-    this.form.valueChanges.subscribe(_ => {
-      this.buttonData = Object.assign({}, this.buttonData, { disabled: !this.form.valid });
-    })
+    this.form.valueChanges.subscribe((_) => {
+      this.buttonData = Object.assign({}, this.buttonData, {
+        disabled: !this.form.valid,
+      });
+    });
   }
 
   loadCategories(): Promise<any> {
-    return this
-      .servicesService
+    return this.servicesService
       .getCategories()
       .startWith([{ label: '---', action: null }])
-      .map(categories => {
-        let _categories = [
+      .map((categories) => {
+        const _categories = [
           {
             label: '---',
-            action: null
-          }
-        ]
-        categories.map(category => {
-          _categories.push(
-            {
-              action: category.id,
-              label: category.name
-            }
-          )
-        })
+            action: null,
+          },
+        ];
+        categories.map((category) => {
+          _categories.push({
+            action: category.id,
+            label: category.name,
+          });
+        });
+
         return _categories;
       })
-      .toPromise()
+      .toPromise();
   }
 
   buildGroup() {
     const control = <FormArray>this.form.controls['services'];
 
-    this
-      .services
-      .forEach((service, index) => {
-        control.push(this.buildServiceControl(service));
-        this.isChecked.push({ index, checked: false });
-      });
+    this.services.forEach((service, index) => {
+      control.push(this.buildServiceControl(service));
+      this.isChecked.push({ index, checked: false });
+    });
 
-    this
-      .loadCategories()
-      .then(res => {
-        this.categories = res;
-        this.isFormReady = true;
-      })
+    this.loadCategories().then((res) => {
+      this.categories = res;
+      this.isFormReady = true;
+    });
   }
 
   removeControl(index) {
@@ -126,14 +124,14 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
 
   buildServiceControl(service) {
     return this.fb.group({
-      'school_id': [this.session.g.get('school').id],
-      'name': [service.service_name, Validators.required],
-      'description': [service.description],
-      'email': [service.service_email],
-      'contactphone': [service.phone_number],
-      'website': [service.website],
-      'category': [null, Validators.required],
-      'logo_url': [null, Validators.required],
+      school_id: [this.session.g.get('school').id],
+      name: [service.service_name, Validators.required],
+      description: [service.description],
+      email: [service.service_email],
+      contactphone: [service.phone_number],
+      website: [service.website],
+      category: [null, Validators.required],
+      logo_url: [null, Validators.required],
     });
   }
 
@@ -156,12 +154,11 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
   onBulkChange(actions) {
     const control = <FormArray>this.form.controls['services'];
 
-    this.isChecked.map(item => {
-
+    this.isChecked.map((item) => {
       if (item.checked) {
-        let ctrl = <FormGroup>control.controls[item.index];
+        const ctrl = <FormGroup>control.controls[item.index];
 
-        Object.keys(actions).forEach(key => {
+        Object.keys(actions).forEach((key) => {
           ctrl.controls[key].setValue(actions[key]);
         });
       }
@@ -180,17 +177,18 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
   onSingleCheck(checked, index) {
     let _isChecked;
 
-    _isChecked = this.isChecked.map(item => {
+    _isChecked = this.isChecked.map((item) => {
       if (item.index === index) {
         item = Object.assign({}, item, { checked: checked });
       }
+
       return item;
     });
     this.isChecked = [..._isChecked];
   }
 
   onCheckAll(checked) {
-    let _isChecked = [];
+    const _isChecked = [];
 
     this.isChecked.map((item) => {
       _isChecked.push(Object.assign({}, item, { checked: checked }));
@@ -208,20 +206,21 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
   }
 
   onSubmit() {
-    let parsedServices = [];
-    let _data = Object.assign({}, this.form.value.services);
+    const parsedServices = [];
+    const _data = Object.assign({}, this.form.value.services);
 
-    Object.keys(_data).forEach(key => {
-      parsedServices.push(Object.assign({}, _data[key], { category: _data[key].category.action }));
+    Object.keys(_data).forEach((key) => {
+      parsedServices.push(
+        Object.assign({}, _data[key], { category: _data[key].category.action }),
+      );
     });
 
-    this
-      .servicesService
-      .createService(parsedServices)
-      .subscribe(
-      _ => this.router.navigate(['/manage/services']),
-      err => { throw new Error(err) }
-      );
+    this.servicesService.createService(parsedServices).subscribe(
+      (_) => this.router.navigate(['/manage/services']),
+      (err) => {
+        throw new Error(err);
+      },
+    );
   }
 
   ngOnDestroy() {
@@ -233,7 +232,7 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
     this.buttonData = {
       disabled: true,
       class: 'primary',
-      text: this.cpI18n.translate('services_import_button')
-    }
+      text: this.cpI18n.translate('services_import_button'),
+    };
   }
 }

@@ -1,6 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { MembersService } from '../members.service';
+
 import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 
 declare var $: any;
@@ -8,7 +9,7 @@ declare var $: any;
 @Component({
   selector: 'cp-members-delete',
   templateUrl: './delete.component.html',
-  styleUrls: ['./delete.component.scss']
+  styleUrls: ['./delete.component.scss'],
 })
 export class ClubsMembersDeleteComponent implements OnInit {
   @Input() member: any;
@@ -17,35 +18,38 @@ export class ClubsMembersDeleteComponent implements OnInit {
 
   buttonData;
 
-  constructor(
-    private cpI18n: CPI18nService,
-    private service: MembersService
-  ) { }
+  constructor(private cpI18n: CPI18nService, private service: MembersService) {}
 
   onDelete() {
-    this
-      .service
-      .removeMember({
-        member_type: -1,
-        group_id: this.groupId
-      }, this.member.id)
+    this.service
+      .removeMember(
+        {
+          member_type: -1,
+          group_id: this.groupId,
+        },
+        this.member.id,
+      )
       .subscribe(
-        _ => {
+        (_) => {
           this.deleted.emit(this.member.id);
           $('#membersDelete').modal('hide');
-          this.buttonData = Object.assign({}, this.buttonData, { disabled: true });
+          this.buttonData = Object.assign({}, this.buttonData, {
+            disabled: true,
+          });
         },
-        err => {
-          this.buttonData = Object.assign({}, this.buttonData, { disabled: true });
-          throw new Error(err)
-        }
+        (err) => {
+          this.buttonData = Object.assign({}, this.buttonData, {
+            disabled: true,
+          });
+          throw new Error(err);
+        },
       );
   }
 
   ngOnInit() {
     this.buttonData = {
       text: this.cpI18n.translate('remove'),
-      class: 'danger'
-    }
+      class: 'danger',
+    };
   }
 }

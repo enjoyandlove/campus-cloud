@@ -9,7 +9,7 @@ import { FileUploadService } from '../../../../../../../shared/services';
 @Component({
   selector: 'cp-services-import-top-bar',
   templateUrl: './import-top-bar.component.html',
-  styleUrls: ['./import-top-bar.component.scss']
+  styleUrls: ['./import-top-bar.component.scss'],
 })
 export class ServicesImportTopBarComponent implements OnInit {
   @Input() categories: Observable<any>;
@@ -23,9 +23,7 @@ export class ServicesImportTopBarComponent implements OnInit {
   imageError;
   loading = true;
 
-  constructor(
-    private fileUploadService: FileUploadService
-  ) { }
+  constructor(private fileUploadService: FileUploadService) {}
 
   onFileUpload(file) {
     this.imageError = null;
@@ -33,22 +31,24 @@ export class ServicesImportTopBarComponent implements OnInit {
 
     if (!validate.valid) {
       this.imageError = validate.errors[0];
+
       return;
     }
 
     const headers = new Headers();
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
-    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
+    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(
+      appStorage.keys.SESSION,
+    )}`;
 
     headers.append('Authorization', auth);
 
-    this
-      .fileUploadService
-      .uploadFile(file, url, headers)
-      .subscribe(
-      res => this.imageChange.emit(res.image_url),
-      err => { throw new Error(err) }
-      );
+    this.fileUploadService.uploadFile(file, url, headers).subscribe(
+      (res) => this.imageChange.emit(res.image_url),
+      (err) => {
+        throw new Error(err);
+      },
+    );
   }
 
   ngOnInit() {}

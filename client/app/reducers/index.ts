@@ -16,7 +16,6 @@ export { reducer as servicesModalReducer } from './services-modal.reducer';
 //  */
 // import { combineReducers } from '@ngrx/store';
 
-
 // /**
 //  * Every reducer module's default export is the reducer function itself. In
 //  * addition, each module should export a type or interface that describes
@@ -27,8 +26,6 @@ export { reducer as servicesModalReducer } from './services-modal.reducer';
 
 // export { reducer as mobileReducer } from './mobile.reducer';
 
-
-
 // /**
 //  * As mentioned, we treat each reducer like a table in a database. This means
 //  * our top level state interface is just a map of keys to inner state types.
@@ -36,7 +33,6 @@ export { reducer as servicesModalReducer } from './services-modal.reducer';
 // export interface IState {
 //   mobile: mobile.IMobile;
 // }
-
 
 // /**
 //  * Because metareducers take a reducer function and return a new reducer,
@@ -50,5 +46,3 @@ export { reducer as servicesModalReducer } from './services-modal.reducer';
 // };
 
 // export const reducer = combineReducers(reducers);
-
-

@@ -1,14 +1,15 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+
+import { CPI18nService, ErrorService } from '../../../../../shared/services';
 
 import { LinksService } from '../links.service';
-import { ErrorService, CPI18nService } from '../../../../../shared/services';
 
 declare var $: any;
 
 @Component({
   selector: 'cp-links-delete',
   templateUrl: './links-delete.component.html',
-  styleUrls: ['./links-delete.component.scss']
+  styleUrls: ['./links-delete.component.scss'],
 })
 export class LinksDeleteComponent implements OnInit {
   @Input() link: any;
@@ -21,26 +22,25 @@ export class LinksDeleteComponent implements OnInit {
     private service: LinksService,
     private cpI18n: CPI18nService,
     private errorService: ErrorService,
-  ) { }
+  ) {}
 
   onDelete() {
-    this
-      .service
-      .deleteLink(this.link.id)
-      .subscribe(
-        () => {
-          $('#linksDelete').modal('hide');
+    this.service.deleteLink(this.link.id).subscribe(
+      () => {
+        $('#linksDelete').modal('hide');
 
-          this.deleteLink.emit(this.link.id);
+        this.deleteLink.emit(this.link.id);
 
-          this.resetModal();
-        },
-        err => {
-          this.errorService.handleError(err);
+        this.resetModal();
+      },
+      (err) => {
+        this.errorService.handleError(err);
 
-          this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
-        }
-      );
+        this.buttonData = Object.assign({}, this.buttonData, {
+          disabled: false,
+        });
+      },
+    );
   }
 
   resetModal() {
@@ -52,7 +52,7 @@ export class LinksDeleteComponent implements OnInit {
   ngOnInit() {
     this.buttonData = {
       text: this.cpI18n.translate('delete'),
-      class: 'danger'
-    }
+      class: 'danger',
+    };
   }
 }

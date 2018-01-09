@@ -9,9 +9,7 @@ export class ClubsEventsAttendanceComponent implements OnInit {
   clubId;
   isClub = true;
 
-  constructor(
-    private route: ActivatedRoute
-  ) { }
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.clubId = this.route.snapshot.parent.parent.params['clubId'];

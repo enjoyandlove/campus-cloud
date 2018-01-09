@@ -1,47 +1,79 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+
 import { SharedModule } from '../../../../shared/shared.module';
 
+import { FeedsRoutingModule } from './feeds.routing.module';
+import { FeedsService } from './feeds.service';
+import { FeedsListComponent } from './list';
 import { FeedsComponent } from './list/base/feeds.component';
 
 import {
-  FeedBodyComponent,
-  FeedMoveComponent,
-  FeedItemComponent,
-  FeeHeaderComponent,
-  FeedCommentComponent,
-  FeedFiltersComponent,
-  FeedCommentsComponent,
-  FeedDropdownComponent,
-  FeedInputBoxComponent,
-  FeedSettingsComponent,
-  FeedDeleteModalComponent,
+  FeedApproveCommentModalComponent,
   FeedApproveModalComponent,
+  FeedBodyComponent,
+  FeedCommentComponent,
+  FeedCommentsComponent,
   FeedDeleteCommentModalComponent,
-  FeedApproveCommentModalComponent
+  FeedDeleteModalComponent,
+  FeedDropdownComponent,
+  FeedFiltersComponent,
+  FeedHeaderComponent,
+  FeedInputBoxComponent,
+  FeedItemComponent,
+  FeedMoveComponent,
+  FeedSettingsComponent,
 } from './list/components';
 
-import { FeedsListComponent } from './list';
-import { FeedsService } from './feeds.service';
-import { FeedsRoutingModule } from './feeds.routing.module';
-
 @NgModule({
-  declarations: [ FeedsListComponent, FeedMoveComponent, FeedItemComponent, FeedCommentComponent,
-  FeedInputBoxComponent, FeedSettingsComponent, FeedFiltersComponent, FeedCommentsComponent,
-  FeeHeaderComponent, FeedBodyComponent, FeedDropdownComponent, FeedDeleteModalComponent,
-  FeedApproveModalComponent, FeedDeleteCommentModalComponent, FeedApproveCommentModalComponent,
-  FeedsComponent ],
+  declarations: [
+    FeedsListComponent,
+    FeedMoveComponent,
+    FeedItemComponent,
+    FeedCommentComponent,
+    FeedInputBoxComponent,
+    FeedSettingsComponent,
+    FeedFiltersComponent,
+    FeedCommentsComponent,
+    FeedHeaderComponent,
+    FeedBodyComponent,
+    FeedDropdownComponent,
+    FeedDeleteModalComponent,
+    FeedApproveModalComponent,
+    FeedDeleteCommentModalComponent,
+    FeedApproveCommentModalComponent,
+    FeedsComponent,
+  ],
 
-  imports: [ CommonModule, SharedModule, FeedsRoutingModule, RouterModule, ReactiveFormsModule ],
+  imports: [
+    CommonModule,
+    SharedModule,
+    FeedsRoutingModule,
+    RouterModule,
+    ReactiveFormsModule,
+  ],
 
-  providers: [ FeedsService ],
+  providers: [FeedsService],
 
-  exports: [ FeedsListComponent, FeedMoveComponent, FeedItemComponent, FeedCommentComponent,
-  FeedInputBoxComponent, FeedSettingsComponent, FeedFiltersComponent, FeedCommentsComponent,
-  FeeHeaderComponent, FeedBodyComponent, FeedDropdownComponent, FeedDeleteModalComponent,
-  FeedApproveModalComponent, FeedDeleteCommentModalComponent, FeedApproveCommentModalComponent,
-  FeedsComponent ]
+  exports: [
+    FeedsListComponent,
+    FeedMoveComponent,
+    FeedItemComponent,
+    FeedCommentComponent,
+    FeedInputBoxComponent,
+    FeedSettingsComponent,
+    FeedFiltersComponent,
+    FeedCommentsComponent,
+    FeedHeaderComponent,
+    FeedBodyComponent,
+    FeedDropdownComponent,
+    FeedDeleteModalComponent,
+    FeedApproveModalComponent,
+    FeedDeleteCommentModalComponent,
+    FeedApproveCommentModalComponent,
+    FeedsComponent,
+  ],
 })
 export class FeedsModule {}
