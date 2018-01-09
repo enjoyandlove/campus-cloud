@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { FeedsService } from '../../../feeds.service';
+
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 
 declare var $: any;
@@ -9,7 +10,7 @@ declare var $: any;
 @Component({
   selector: 'cp-feed-approve-modal',
   templateUrl: './feed-approve-modal.component.html',
-  styleUrls: ['./feed-approve-modal.component.scss']
+  styleUrls: ['./feed-approve-modal.component.scss'],
 })
 export class FeedApproveModalComponent implements OnInit {
   @Input() feed: any;
@@ -22,36 +23,39 @@ export class FeedApproveModalComponent implements OnInit {
 
   constructor(
     private cpI18n: CPI18nService,
-    private feedsService: FeedsService
-  ) { }
+    private feedsService: FeedsService,
+  ) {}
 
   onSubmit() {
-    let data = { flag: 2 };
+    const data = { flag: 2 };
 
-    const approveCampusWallThread$ = this.feedsService.approveCampusWallThread(this.feed.id, data);
+    const approveCampusWallThread$ = this.feedsService.approveCampusWallThread(
+      this.feed.id,
+      data,
+    );
 
-    const approveGroupWallThread$ = this.feedsService.approveGroupWallThread(this.feed.id, data);
+    const approveGroupWallThread$ = this.feedsService.approveGroupWallThread(
+      this.feed.id,
+      data,
+    );
 
-    const stream$ = this._isCampusWallView ?
-                    approveCampusWallThread$ :
-                    approveGroupWallThread$;
+    const stream$ = this._isCampusWallView
+      ? approveCampusWallThread$
+      : approveGroupWallThread$;
 
-    stream$
-      .subscribe(
-        _ => {
-          $('#approveFeedModal').modal('hide');
-          this.buttonData = Object.assign({}, this.buttonData, { disabled: true });
-          this.approved.emit(this.feed.id);
-          this.teardown.emit();
-        }
-      );
+    stream$.subscribe((_) => {
+      $('#approveFeedModal').modal('hide');
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: true });
+      this.approved.emit(this.feed.id);
+      this.teardown.emit();
+    });
   }
 
   ngOnInit() {
     this.buttonData = {
       text: this.cpI18n.translate('approve'),
-      class: 'primary'
-    }
+      class: 'primary',
+    };
 
     this.isCampusWallView.subscribe((res: any) => {
       this._isCampusWallView = res.type === 1 ? true : false;

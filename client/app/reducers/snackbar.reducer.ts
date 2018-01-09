@@ -12,16 +12,16 @@ const initialState: ISnackbar = {
   body: null,
   class: 'success',
   autoClose: false,
-  autoCloseDelay: 4000
+  autoCloseDelay: 4000,
 };
 
 export function reducer(state = initialState, action): ISnackbar {
   switch (action.type) {
-    case (SNACKBAR_SHOW):
+    case SNACKBAR_SHOW:
       return Object.assign({}, state, ...action.payload);
-    case (SNACKBAR_HIDE):
+    case SNACKBAR_HIDE:
       return initialState;
     default:
       return state;
   }
-};
+}

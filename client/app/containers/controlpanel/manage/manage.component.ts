@@ -18,7 +18,7 @@ export class ManageComponent implements OnInit {
   constructor(
     private router: Router,
     private store: Store<any>,
-    private headerService: ManageHeaderService
+    private headerService: ManageHeaderService,
   ) {
     this.headerData$ = this.store.select('HEADER');
   }
@@ -32,11 +32,10 @@ export class ManageComponent implements OnInit {
 
     this.store.dispatch({
       type: HEADER_UPDATE,
-      payload: this.headerService.filterByPrivileges()
+      payload: this.headerService.filterByPrivileges(),
     });
   }
 }
-
 
 // {
 //   "privilege": 13,

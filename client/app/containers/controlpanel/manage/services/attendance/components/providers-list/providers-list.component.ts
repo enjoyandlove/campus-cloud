@@ -15,21 +15,23 @@ interface IState {
 
 const state: IState = {
   providers: [],
-  search_text: null
+  search_text: null,
 };
 
 @Component({
   selector: 'cp-providers-list',
   templateUrl: './providers-list.component.html',
-  styleUrls: ['./providers-list.component.scss']
+  styleUrls: ['./providers-list.component.scss'],
 })
-export class ServicesProvidersListComponent extends BaseComponent implements OnInit {
+export class ServicesProvidersListComponent extends BaseComponent
+  implements OnInit {
   @Input() serviceId: number;
   @Input() query: Observable<string>;
   @Input() reload: Observable<boolean>;
   @Input() download: Observable<boolean>;
   @Input() serviceWithFeedback: Observable<boolean>;
-  @Output() providersLength$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  @Output()
+  providersLength$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   loading;
   deleteProvider = '';
@@ -38,10 +40,10 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
 
   constructor(
     private cpI18n: CPI18nService,
-    private providersService: ProvidersService
+    private providersService: ProvidersService,
   ) {
     super();
-    super.isLoading().subscribe(res => this.loading = res);
+    super.isLoading().subscribe((res) => (this.loading = res));
   }
 
   onPaginationNext() {
@@ -56,71 +58,88 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
 
   private fetch() {
     const search = new URLSearchParams();
-    search.append('search_text', this.state.search_text );
+    search.append('search_text', this.state.search_text);
     search.append('service_id', this.serviceId.toString());
 
     super
-      .fetchData(this.providersService.getProviders(this.startRange, this.endRange, search))
-      .then(res => {
+      .fetchData(
+        this.providersService.getProviders(
+          this.startRange,
+          this.endRange,
+          search,
+        ),
+      )
+      .then((res) => {
         this.state = Object.assign({}, this.state, { providers: res.data });
         this.providersLength$.next(res.data.length > 0);
       })
-      .catch(_ => {});
+      .catch((_) => {});
   }
 
   onDeleted(providerId) {
-    this.state = Object.assign(
-      {},
-      this.state,
-      { providers: this.state.providers.filter(provider => provider.id !== providerId) }
-    );
+    this.state = Object.assign({}, this.state, {
+      providers: this.state.providers.filter(
+        (provider) => provider.id !== providerId,
+      ),
+    });
   }
 
   ngOnInit() {
-    this.serviceWithFeedback.subscribe(withRating => this.displayRatingColumn = withRating);
+    this.serviceWithFeedback.subscribe(
+      (withRating) => (this.displayRatingColumn = withRating),
+    );
 
-    this.query.subscribe(search_text => {
+    this.query.subscribe((search_text) => {
       this.state = Object.assign({}, this.state, { search_text });
       this.fetch();
     });
 
-    this.reload.subscribe(reload => {
+    this.reload.subscribe((reload) => {
       if (reload) {
         this.fetch();
       }
     });
 
-    this.download.subscribe(download => {
+    this.download.subscribe((download) => {
       if (download) {
         const search = new URLSearchParams();
         search.append('service_id', this.serviceId.toString());
         search.append('all', '1');
 
-        const stream$ = this.providersService.getProviders(this.startRange, this.endRange, search);
+        const stream$ = this.providersService.getProviders(
+          this.startRange,
+          this.endRange,
+          search,
+        );
 
-        stream$.toPromise().then(providers => {
+        stream$.toPromise().then((providers) => {
           const columns = [
             this.cpI18n.translate('service_provider'),
             this.cpI18n.translate('email'),
             this.cpI18n.translate('average_rating'),
             this.cpI18n.translate('total_ratings'),
-            this.cpI18n.translate('services_total_visits')
+            this.cpI18n.translate('services_total_visits'),
           ];
 
-          providers = providers.map(data => {
+          providers = providers.map((data) => {
             return {
               [this.cpI18n.translate('service_provider')]: data.provider_name,
 
               [this.cpI18n.translate('email')]: data.email,
 
-              [this.cpI18n.translate('average_rating')]:
-                ((data.avg_rating_percent * 5) / 100).toFixed(1),
+              [this.cpI18n.translate('average_rating')]: (
+                data.avg_rating_percent *
+                5 /
+                100
+              ).toFixed(1),
 
               [this.cpI18n.translate('total_ratings')]: data.num_ratings,
 
-              [this.cpI18n.translate('services_total_visits')]: data.total_visits,
-            }
-          })
+              [this.cpI18n.translate(
+                'services_total_visits',
+              )]: data.total_visits,
+            };
+          });
 
           createSpreadSheet(providers, columns, 'providers_data');
         });

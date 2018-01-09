@@ -15,7 +15,7 @@ const isTileReady = (val) => !!val;
 @Component({
   selector: 'cp-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
   headerData;
@@ -40,7 +40,7 @@ export class DashboardComponent implements OnInit {
     private session: CPSession,
     private route: ActivatedRoute,
     private cpI18n: CPI18nService,
-    private helper: DashboardUtilsService
+    private helper: DashboardUtilsService,
   ) {
     this.user = this.session.g.get('user');
   }
@@ -48,42 +48,29 @@ export class DashboardComponent implements OnInit {
   readStateFromUrl(): void {
     const routeParams: any = this.route.snapshot.queryParams;
 
-    this.currentDate = Object.assign(
-      {},
-      this.currentDate,
-      {
-        'start': +routeParams.start,
-        'end': +routeParams.end,
-        'label': routeParams.label
-      }
-    );
+    this.currentDate = Object.assign({}, this.currentDate, {
+      start: +routeParams.start,
+      end: +routeParams.end,
+      label: routeParams.label,
+    });
   }
 
   initState() {
     const defaultDate = this.helper.last30Days();
 
-    this.currentDate = Object.assign(
-      {},
-      this.currentDate,
-      { ...defaultDate }
-    );
+    this.currentDate = Object.assign({}, this.currentDate, { ...defaultDate });
 
     this.updateUrl();
   }
 
   updateUrl(): void {
-    this
-      .router
-      .navigate(
-      ['/dashboard'],
-      {
-        queryParams: {
-          'start': this.currentDate.start,
-          'end': this.currentDate.end,
-          'label': this.currentDate.label
-        }
-      }
-      );
+    this.router.navigate(['/dashboard'], {
+      queryParams: {
+        start: this.currentDate.start,
+        end: this.currentDate.end,
+        label: this.currentDate.label,
+      },
+    });
   }
 
   onDateChange(newDate) {
@@ -92,48 +79,59 @@ export class DashboardComponent implements OnInit {
   }
 
   updateHeader() {
-    const hello = this.cpI18n.translate('hello')
+    const hello = this.cpI18n.translate('hello');
     const username = `[NOTRANSLATE]${this.user.firstname}[NOTRANSLATE]`;
     const heading = `${hello} ${username}!`;
 
     this.headerData = {
       heading,
-      'crumbs': {
-        'url': null,
-        'label': null
+      crumbs: {
+        url: null,
+        label: null,
       },
-      'subheading': null,
-      'em': null,
-      'children': []
+      subheading: null,
+      em: null,
+      children: [],
     };
   }
 
   subscribeToTilesReadyEvent() {
-    Observable.combineLatest([this.downloadsTile$,
-                              this.generalInfoTile$,
-                              this.topEventsTile$,
-                              this.topServicesTile$,
-                              this.assessmentTile$,
-                              this.socialActivityTile$,
-                              this.campusTileTile$,
-                              this.topClubsTile$,
-                              this.integrationsTile$])
-                              .subscribe(tiles => {
-                                setTimeout(() => {
-                                  this.areAllTilesReady = tiles.every(isTileReady);
-                                }, 1)
-                                return tiles.every(isTileReady);
-                              });
+    Observable.combineLatest([
+      this.downloadsTile$,
+      this.generalInfoTile$,
+      this.topEventsTile$,
+      this.topServicesTile$,
+      this.assessmentTile$,
+      this.socialActivityTile$,
+      this.campusTileTile$,
+      this.topClubsTile$,
+      this.integrationsTile$,
+    ]).subscribe((tiles) => {
+      setTimeout(
+        () => {
+          this.areAllTilesReady = tiles.every(isTileReady);
+        },
+
+        1,
+      );
+
+      return tiles.every(isTileReady);
+    });
   }
 
   ngOnInit() {
     this.isSuperAdmin = this.helper.isSuperAdmin(this.session);
-    this.canAssess = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.assessment);
+    this.canAssess = canSchoolReadResource(
+      this.session.g,
+      CP_PRIVILEGES_MAP.assessment,
+    );
     this.currentDate = this.helper.last30Days();
 
-    if (this.route.snapshot.queryParams['start'] &&
+    if (
+      this.route.snapshot.queryParams['start'] &&
       this.route.snapshot.queryParams['end'] &&
-      this.route.snapshot.queryParams['label']) {
+      this.route.snapshot.queryParams['label']
+    ) {
       this.readStateFromUrl();
     } else {
       this.initState();

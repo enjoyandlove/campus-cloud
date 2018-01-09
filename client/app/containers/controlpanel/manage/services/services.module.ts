@@ -1,3 +1,4 @@
+/* tslint:disable:max-line-length */
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -25,51 +26,69 @@ import {
   ServicesEventsExcelComponent,
   ServicesEventsCreateComponent,
   ServicesEventsFacebookComponent,
-  ServicesEventsAttendanceComponent
+  ServicesEventsAttendanceComponent,
 } from './events/components';
 
 import {
   ServicesEditDeleteModalComponent,
-  ServicesEditCreateProviderComponent
+  ServicesEditCreateProviderComponent,
 } from './edit/components';
 
-import {
-  ServicesListActionBoxComponent
-} from './list/components';
+import { ServicesListActionBoxComponent } from './list/components';
 
 import {
   ServicesExcelModalComponent,
-  ServicesImportTopBarComponent
+  ServicesImportTopBarComponent,
 } from './excel/components';
 
 import {
   ServicesProviderAddComponent,
   ServicesProvidersListComponent,
   ServicesProviderDeleteComponent,
-  ServicesProviderDetailsComponent
+  ServicesProviderDetailsComponent,
 } from './attendance/components';
 
-import {
-  ServicesProvidersAttendeesListComponent
-} from './attendance/components/providers-details/components';
+import { ServicesProvidersAttendeesListComponent } from './attendance/components/providers-details/components';
 
 import { EventsModule } from '../events/events.module';
 
-
 @NgModule({
-  declarations: [ ServicesListComponent, ServicesListActionBoxComponent, ServicesDeleteComponent,
-  ServicesExcelModalComponent, ServicesAttendanceComponent, ServicesCreateComponent,
-  ServicesEditComponent, ServicesInfoComponent,
-  ServicesEventsComponent, ServicesProviderAddComponent, ServicesProviderDeleteComponent,
-  ServicesExcelComponent, ServicesImportTopBarComponent, ServicesProvidersListComponent,
-  ServicesProviderDetailsComponent, ServicesProvidersAttendeesListComponent,
-  ServicesEventsCreateComponent, ServicesEventsAttendanceComponent, ServicesEventsInfoComponent,
-  ServicesEventsEditComponent, ServicesEventsFacebookComponent, ServicesEventsExcelComponent,
-  ServicesEditDeleteModalComponent, ServicesEditCreateProviderComponent ],
+  declarations: [
+    ServicesListComponent,
+    ServicesListActionBoxComponent,
+    ServicesDeleteComponent,
+    ServicesExcelModalComponent,
+    ServicesAttendanceComponent,
+    ServicesCreateComponent,
+    ServicesEditComponent,
+    ServicesInfoComponent,
+    ServicesEventsComponent,
+    ServicesProviderAddComponent,
+    ServicesProviderDeleteComponent,
+    ServicesExcelComponent,
+    ServicesImportTopBarComponent,
+    ServicesProvidersListComponent,
+    ServicesProviderDetailsComponent,
+    ServicesProvidersAttendeesListComponent,
+    ServicesEventsCreateComponent,
+    ServicesEventsAttendanceComponent,
+    ServicesEventsInfoComponent,
+    ServicesEventsEditComponent,
+    ServicesEventsFacebookComponent,
+    ServicesEventsExcelComponent,
+    ServicesEditDeleteModalComponent,
+    ServicesEditCreateProviderComponent,
+  ],
 
-  imports: [ CommonModule, SharedModule, ServicesRoutingModule, RouterModule,
-  ReactiveFormsModule, EventsModule ],
+  imports: [
+    CommonModule,
+    SharedModule,
+    ServicesRoutingModule,
+    RouterModule,
+    ReactiveFormsModule,
+    EventsModule,
+  ],
 
-  providers: [ ServicesService, ProvidersService, AdminService ],
+  providers: [ServicesService, ProvidersService, AdminService],
 })
 export class ServicesModule {}

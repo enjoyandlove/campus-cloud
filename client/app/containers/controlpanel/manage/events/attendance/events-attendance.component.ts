@@ -8,11 +8,10 @@ import { EventUtilService } from './../events.utils.service';
 import { BaseComponent } from '../../../../../base/base.component';
 import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
-
 @Component({
   selector: 'cp-events-attendance',
   templateUrl: './events-attendance.component.html',
-  styleUrls: ['./events-attendance.component.scss']
+  styleUrls: ['./events-attendance.component.scss'],
 })
 export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   @Input() isClub: boolean;
@@ -30,51 +29,52 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     private store: Store<IHeader>,
     private route: ActivatedRoute,
     private service: EventsService,
-    private utils: EventUtilService
+    private utils: EventUtilService,
   ) {
     super();
     this.eventId = this.route.snapshot.params['eventId'];
-    super.isLoading().subscribe(res => this.loading = res);
+    super.isLoading().subscribe((res) => (this.loading = res));
   }
-
 
   private fetch() {
     super
       .fetchData(this.service.getEventById(this.eventId))
-      .then(event => {
+      .then((event) => {
         this.event = event.data;
 
         this.buildHeader(event.data);
 
         this.isUpcoming = this.event.end > CPDate.toEpoch(new Date());
       })
-      .catch(err => { throw new Error(err) });
+      .catch((err) => {
+        throw new Error(err);
+      });
   }
 
   private buildHeader(event) {
     const children = this.utils.getSubNavChildren(event, this.urlPrefix);
 
     const payload = {
-      'heading': `[NOTRANSLATE]${event.title}[NOTRANSLATE]`,
+      heading: `[NOTRANSLATE]${event.title}[NOTRANSLATE]`,
 
-      'subheading': '',
+      subheading: '',
 
-      'crumbs': {
-        'url': this.urlPrefix,
-        'label': 'events'
+      crumbs: {
+        url: this.urlPrefix,
+        label: 'events',
       },
 
-      'children': [...children]
-    }
+      children: [...children],
+    };
 
     this.store.dispatch({
       type: HEADER_UPDATE,
-      payload
+      payload,
     });
   }
 
   ngOnInit() {
     this.urlPrefix = this.utils.buildUrlPrefix(this.clubId, this.serviceId);
-    this.fetch()
+    this.fetch();
   }
 }

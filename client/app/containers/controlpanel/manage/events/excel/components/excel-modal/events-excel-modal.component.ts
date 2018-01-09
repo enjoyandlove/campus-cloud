@@ -9,7 +9,7 @@ import { CPI18nService } from './../../../../../../../shared/services/i18n.servi
 @Component({
   selector: 'cp-events-excel-modal',
   templateUrl: './events-excel-modal.component.html',
-  styleUrls: ['./events-excel-modal.component.scss']
+  styleUrls: ['./events-excel-modal.component.scss'],
 })
 export class EventsExcelModalComponent implements OnInit {
   @Input() storeId: number;
@@ -28,38 +28,44 @@ export class EventsExcelModalComponent implements OnInit {
     private cpI18n: CPI18nService,
     private service: EventsService,
     private fileService: FileUploadService,
-  ) { }
+  ) {}
 
   parser(file) {
     const url = !isDev ? '/events/excel' : 'http://localhost:8000/events/excel';
-    return this
-      .fileService
+
+    return this.fileService
       .uploadFile(file, url)
       .toPromise()
-      .then(
-      res => {
+      .then((res) => {
         this.service.setModalEvents(JSON.parse(res));
+
         return Promise.resolve();
-      }
-      )
-      .catch(
-      err => {
-        let serverError = err.json().error;
-        return Promise.reject(serverError ?
-                              serverError :
-                              this.cpI18n.translate('something_went_wrong'));
-      }
-      );
+      })
+      .catch((err) => {
+        const serverError = err.json().error;
+
+        return Promise.reject(
+          serverError
+            ? serverError
+            : this.cpI18n.translate('something_went_wrong'),
+        );
+      });
   }
 
   onNavigate() {
     if (this.isService) {
-      this.router.navigate([`/manage/services/${this.serviceId}/events/import/excel`]);
+      this.router.navigate([
+        `/manage/services/${this.serviceId}/events/import/excel`,
+      ]);
+
       return;
     }
 
     if (this.isClub) {
-      this.router.navigate([`/manage/clubs/${this.clubId}/events/import/excel`]);
+      this.router.navigate([
+        `/manage/clubs/${this.clubId}/events/import/excel`,
+      ]);
+
       return;
     }
 
@@ -69,12 +75,14 @@ export class EventsExcelModalComponent implements OnInit {
   ngOnInit() {
     this.fileName = 'mass_event_invite_sample.csv';
 
-    let templateUrl = isDev ? `/templates/${this.fileName}` : `/dist/templates/${this.fileName}`;
+    const templateUrl = isDev
+      ? `/templates/${this.fileName}`
+      : `/dist/templates/${this.fileName}`;
 
     this.options = {
       templateUrl,
       validExtensions: ['csv'],
-      parser: this.parser.bind(this)
+      parser: this.parser.bind(this),
     };
   }
 }

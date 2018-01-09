@@ -9,7 +9,7 @@ import { appStorage } from '../../../.././../../../shared/utils';
 @Component({
   selector: 'cp-customization-upload-button',
   templateUrl: './upload-button.component.html',
-  styleUrls: ['./upload-button.component.scss']
+  styleUrls: ['./upload-button.component.scss'],
 })
 export class CustomizationUploadButtonComponent implements OnInit {
   @Output() reset: EventEmitter<null> = new EventEmitter();
@@ -18,37 +18,38 @@ export class CustomizationUploadButtonComponent implements OnInit {
 
   _error;
 
-  constructor(
-    private fileUploadService: FileUploadService
-  ) { }
+  constructor(private fileUploadService: FileUploadService) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   onFileUpload(file) {
     this.reset.emit();
 
-    if (!file) { return; }
+    if (!file) {
+      return;
+    }
 
     const validate = this.fileUploadService.validImage(file);
 
     if (!validate.valid) {
       this.error.emit(validate.errors[0]);
+
       return;
     }
 
     const headers = new Headers();
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
-    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
+    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(
+      appStorage.keys.SESSION,
+    )}`;
 
     headers.append('Authorization', auth);
 
-    this
-      .fileUploadService
+    this.fileUploadService
       .uploadFile(file, url, headers)
       .subscribe(
-      res => this.upload.emit(res.image_url),
-      _ => this.error.emit(STATUS.SOMETHING_WENT_WRONG)
+        (res) => this.upload.emit(res.image_url),
+        (_) => this.error.emit(STATUS.SOMETHING_WENT_WRONG),
       );
   }
-
 }

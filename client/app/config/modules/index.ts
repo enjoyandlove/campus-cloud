@@ -1,22 +1,21 @@
-import { StoreModule } from '@ngrx/store';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { FormsModule } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { StoreModule } from '@ngrx/store';
 
 import { TopLevelRoutesModule } from '../../app.routing';
-import { SharedModule } from '../../shared/shared.module';
 import { AuthModule } from '../../containers/auth/auth.module';
 import { ControlPanelModule } from '../../containers/controlpanel/controlpanel.module';
+import { SharedModule } from '../../shared/shared.module';
 
 import {
-  clubsReducer,
   alertReducer,
-  mobileReducer,
-  headerReducer,
-  snackBarReducer,
+  clubsReducer,
   eventsModalReducer,
-  servicesModalReducer
+  headerReducer,
+  mobileReducer,
+  servicesModalReducer,
+  snackBarReducer,
 } from '../../reducers';
 
 const APP_STATE_MODULE = StoreModule.forRoot({
@@ -26,10 +25,17 @@ const APP_STATE_MODULE = StoreModule.forRoot({
   MOBILE: mobileReducer,
   SNACKBAR: snackBarReducer,
   EVENTS_MODAL: eventsModalReducer,
-  SERVICES_MODAL: servicesModalReducer
+  SERVICES_MODAL: servicesModalReducer,
 });
 
-export const APP_MODULES = [ APP_STATE_MODULE, HttpModule, FormsModule, BrowserModule,
-SharedModule, ReactiveFormsModule, ControlPanelModule, TopLevelRoutesModule,
-AuthModule ];
-
+export const APP_MODULES = [
+  APP_STATE_MODULE,
+  HttpModule,
+  FormsModule,
+  BrowserModule,
+  SharedModule,
+  ReactiveFormsModule,
+  ControlPanelModule,
+  TopLevelRoutesModule,
+  AuthModule,
+];

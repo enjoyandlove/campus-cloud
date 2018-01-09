@@ -1,19 +1,17 @@
-
-import {
-  Input,
-  OnInit,
-  Output,
-  Component,
-  EventEmitter,
-} from '@angular/core';
+import { Input, OnInit, Output, Component, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Headers, URLSearchParams } from '@angular/http';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 
 import {
   StoreService,
-  FileUploadService
+  FileUploadService,
 } from '../../../../../../../shared/services';
 
 import { API } from '../../../../../../../config/api';
@@ -25,7 +23,7 @@ import { CPI18nService } from './../../../../../../../shared/services/i18n.servi
 @Component({
   selector: 'cp-feed-input-box',
   templateUrl: './feed-input-box.component.html',
-  styleUrls: ['./feed-input-box.component.scss']
+  styleUrls: ['./feed-input-box.component.scss'],
 })
 export class FeedInputBoxComponent implements OnInit {
   @Input() clubId: number;
@@ -51,27 +49,28 @@ export class FeedInputBoxComponent implements OnInit {
     public cpI18n: CPI18nService,
     private feedsService: FeedsService,
     private storeService: StoreService,
-    private fileUploadService: FileUploadService
+    private fileUploadService: FileUploadService,
   ) {
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     this.stores$ = this.storeService.getStores(search);
 
-    this.channels$ = this.feedsService.getChannelsBySchoolId(1, 100, search)
+    this.channels$ = this.feedsService
+      .getChannelsBySchoolId(1, 100, search)
       .startWith([{ label: '---' }])
-      .map(channels => {
-        let _channels = [
+      .map((channels) => {
+        const _channels = [
           {
             label: '---',
-            action: null
-          }
+            action: null,
+          },
         ];
 
-        channels.forEach(channel => {
-          let _channel = {
+        channels.forEach((channel) => {
+          const _channel = {
             label: channel.name,
-            action: channel.id
+            action: channel.id,
           };
 
           _channels.push(_channel);
@@ -87,27 +86,24 @@ export class FeedInputBoxComponent implements OnInit {
     const campusWall$ = this.feedsService.postToCampusWall(_data);
     const stream$ = this._isCampusWallView ? groupWall$ : campusWall$;
 
-    stream$
-      .subscribe(
-      res => {
-        if (!this.clubId) {
-          this.form.reset();
-        }
-        this.form.controls['message'].setValue(null);
-        this.reset$.next(true);
-        this.resetTextEditor$.next(true);
-        this.created.emit(res);
+    stream$.subscribe((res) => {
+      if (!this.clubId) {
+        this.form.reset();
       }
-      );
+      this.form.controls['message'].setValue(null);
+      this.reset$.next(true);
+      this.resetTextEditor$.next(true);
+      this.created.emit(res);
+    });
   }
 
   parseData(data) {
-    let _data = {
-      'post_type': data.post_type || null,
-      'store_id': data.store_id,
-      'school_id': this.session.g.get('school').id,
-      'message': data.message,
-      'message_image_url': data.message_image_url
+    const _data = {
+      post_type: data.post_type || null,
+      store_id: data.store_id,
+      school_id: this.session.g.get('school').id,
+      message: data.message,
+      message_image_url: data.message_image_url,
     };
 
     if (this._isCampusWallView) {
@@ -117,7 +113,7 @@ export class FeedInputBoxComponent implements OnInit {
     return _data;
   }
 
-  onContentChange(data: { body: string, image: string }) {
+  onContentChange(data: { body: string; image: string }) {
     this.form.controls['message'].setValue(data.body);
     this.form.controls['message_image_url'].setValue(data.image);
   }
@@ -136,25 +132,27 @@ export class FeedInputBoxComponent implements OnInit {
 
     if (!validate.valid) {
       this.imageError = validate.errors[0];
+
       return;
     }
 
     const headers = new Headers();
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
-    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
+    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(
+      appStorage.keys.SESSION,
+    )}`;
 
     headers.append('Authorization', auth);
 
-    this
-      .fileUploadService
-      .uploadFile(file, url, headers)
-      .subscribe(
-      res => {
+    this.fileUploadService.uploadFile(file, url, headers).subscribe(
+      (res) => {
         this.image$.next(res.image_url);
         this.form.controls['message_image_url'].setValue(res.image_url);
       },
-      err => { throw new Error(err) }
-      );
+      (err) => {
+        throw new Error(err);
+      },
+    );
   }
 
   removePhoto(): void {
@@ -163,18 +161,22 @@ export class FeedInputBoxComponent implements OnInit {
 
   ngOnInit() {
     this.school = this.session.g.get('school');
-    this.isCampusWallView.subscribe(res => {
+    this.isCampusWallView.subscribe((res) => {
       // Not Campus Wall
       if (res.type !== 1) {
         this.groupId = res.type;
         this.form.controls['store_id'].setValue(res.group_id);
         this.form.removeControl('post_type');
         this._isCampusWallView = true;
+
         return;
       }
 
       if (this.form) {
-        this.form.registerControl('post_type', new FormControl(null, Validators.required));
+        this.form.registerControl(
+          'post_type',
+          new FormControl(null, Validators.required),
+        );
         this.form.controls['store_id'].setValue(null);
       }
 
@@ -182,12 +184,12 @@ export class FeedInputBoxComponent implements OnInit {
     });
 
     this.form = this.fb.group({
-      'group_id': [null],
-      'school_id': [this.session.g.get('school').id],
-      'store_id': [null, Validators.required],
-      'post_type': [null, Validators.required],
-      'message': [null, [Validators.required, Validators.maxLength(500)]],
-      'message_image_url': [null]
+      group_id: [null],
+      school_id: [this.session.g.get('school').id],
+      store_id: [null, Validators.required],
+      post_type: [null, Validators.required],
+      message: [null, [Validators.required, Validators.maxLength(500)]],
+      message_image_url: [null],
     });
   }
 }

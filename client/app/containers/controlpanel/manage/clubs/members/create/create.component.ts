@@ -1,30 +1,29 @@
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { URLSearchParams } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
-
 import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
   Input,
   OnInit,
   Output,
   ViewChild,
-  Component,
-  ElementRef,
-  EventEmitter,
-  AfterViewInit
 } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { URLSearchParams } from '@angular/http';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
 
-import { MemberType } from '../member.status';
-import { MembersService } from '../members.service';
 import { CPSession } from '../../../../../../session';
 import { CPI18nService } from '../../../../../../shared/services/index';
+import { MemberType } from '../member.status';
+import { MembersService } from '../members.service';
 
 declare var $: any;
 
 @Component({
   selector: 'cp-members-create',
   templateUrl: './create.component.html',
-  styleUrls: ['./create.component.scss']
+  styleUrls: ['./create.component.scss'],
 })
 export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
   @Input() groupId: number;
@@ -43,16 +42,18 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
     private fb: FormBuilder,
     private session: CPSession,
     private cpI18n: CPI18nService,
-    private service: MembersService
-  ) { }
+    private service: MembersService,
+  ) {}
 
   ngAfterViewInit() {
     const keyup$ = Observable.fromEvent(this.input.nativeElement, 'keyup');
     const blur$ = Observable.fromEvent(this.input.nativeElement, 'blur');
 
-    blur$
-      .debounceTime(200)
-      .subscribe(_ => { if (this.members.length) { this.members = []; } });
+    blur$.debounceTime(200).subscribe((_) => {
+      if (this.members.length) {
+        this.members = [];
+      }
+    });
 
     keyup$
       .debounceTime(400)
@@ -61,33 +62,34 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
         const target = <HTMLInputElement>event.target;
         const query = target.value;
 
-        if (!query) { return Observable.of([]); }
+        if (!query) {
+          return Observable.of([]);
+        }
 
-        let search = new URLSearchParams();
+        const search = new URLSearchParams();
         search.append('search_str', query);
         search.append('school_id', this.session.g.get('school').id.toString());
 
-        return this
-          .service
-          .getMembers(search, 1, 1000)
-          .map(members => {
-            if (!(members.length)) {
-              return [{ 'label': this.cpI18n.translate('no_results') }]
-            }
+        return this.service.getMembers(search, 1, 1000).map((members) => {
+          if (!members.length) {
+            return [{ label: this.cpI18n.translate('no_results') }];
+          }
 
-            return members.map(member => {
-              return {
-                'label': `${member.firstname} ${member.lastname}`,
-                'id': member.id
-              }
-            })
+          return members.map((member) => {
+            return {
+              label: `${member.firstname} ${member.lastname}`,
+              id: member.id,
+            };
           });
+        });
       })
-      .subscribe(members => this.members = members);
+      .subscribe((members) => (this.members = members));
   }
 
   onMemberSelected(member) {
-    if (!member.id) { return; }
+    if (!member.id) {
+      return;
+    }
 
     this.members = [];
     this.input.nativeElement.value = member.label;
@@ -95,7 +97,7 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
   }
 
   onTypeChange(type): void {
-    let control = this.form.controls['member_type'];
+    const control = this.form.controls['member_type'];
     control.setValue(type);
   }
 
@@ -110,6 +112,7 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
 
     if (!this.form.valid) {
       this.formErrors = true;
+
       return;
     }
 
@@ -117,25 +120,31 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
       this.form.controls['member_position'].setValue(null);
     }
 
-    let group_id = this.groupId;
-    let member_position = this.form.value.member_position;
-    let member_type = this.form.value.member_type;
+    const group_id = this.groupId;
+    const member_position = this.form.value.member_position;
+    const member_type = this.form.value.member_type;
 
-    this
-      .service
-      .addMember({ member_type, group_id, member_position }, this.form.value.member)
+    this.service
+      .addMember(
+        { member_type, group_id, member_position },
+        this.form.value.member,
+      )
       .subscribe(
-      member => {
-        this.added.emit(member);
-        $('#membersCreate').modal('hide');
-        this.doReset();
-        this.buttonData = Object.assign({}, this.buttonData, { disabled: true });
-        this.reset$.next(true);
-      },
-      err => {
-        this.buttonData = Object.assign({}, this.buttonData, { disabled: true });
-        throw new Error(err)
-      }
+        (member) => {
+          this.added.emit(member);
+          $('#membersCreate').modal('hide');
+          this.doReset();
+          this.buttonData = Object.assign({}, this.buttonData, {
+            disabled: true,
+          });
+          this.reset$.next(true);
+        },
+        (err) => {
+          this.buttonData = Object.assign({}, this.buttonData, {
+            disabled: true,
+          });
+          throw new Error(err);
+        },
       );
   }
 
@@ -143,28 +152,30 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
     this.buttonData = {
       text: this.cpI18n.translate('save'),
       disabled: true,
-      class: 'primary'
-    }
+      class: 'primary',
+    };
 
     this.memberTypes = [
       {
         label: this.cpI18n.translate('member'),
-        action: MemberType.member
+        action: MemberType.member,
       },
       {
         label: this.cpI18n.translate('executive'),
-        action: MemberType.executive
-      }
+        action: MemberType.executive,
+      },
     ];
 
     this.form = this.fb.group({
-      'member': [null, Validators.required],
-      'member_type': [this.memberTypes[0].action, Validators.required],
-      'member_position': [null]
+      member: [null, Validators.required],
+      member_type: [this.memberTypes[0].action, Validators.required],
+      member_position: [null],
     });
 
-    this.form.valueChanges.subscribe(_ => {
-      this.buttonData = Object.assign({}, this.buttonData, { disabled: !this.form.valid });
-    })
+    this.form.valueChanges.subscribe((_) => {
+      this.buttonData = Object.assign({}, this.buttonData, {
+        disabled: !this.form.valid,
+      });
+    });
   }
 }

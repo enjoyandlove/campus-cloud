@@ -9,7 +9,7 @@ declare var $: any;
 @Component({
   selector: 'cp-feed-delete-comment-modal',
   templateUrl: './feed-delete-comment-modal.component.html',
-  styleUrls: ['./feed-delete-comment-modal.component.scss']
+  styleUrls: ['./feed-delete-comment-modal.component.scss'],
 })
 export class FeedDeleteCommentModalComponent implements OnInit {
   @Input() feed: any;
@@ -22,29 +22,32 @@ export class FeedDeleteCommentModalComponent implements OnInit {
 
   constructor(
     private cpI18n: CPI18nService,
-    private feedsService: FeedsService
-  ) { }
+    private feedsService: FeedsService,
+  ) {}
 
   onDelete() {
-    const deleteCampusComment$ = this.feedsService.deleteCampusWallCommentByThreadId(this.feed.id);
-    const deleteGroupComment$ = this.feedsService.deleteGroupWallCommentByThreadId(this.feed.id);
-    const stream$ = this._isCampusWallView ? deleteCampusComment$ : deleteGroupComment$;
+    const deleteCampusComment$ = this.feedsService.deleteCampusWallCommentByThreadId(
+      this.feed.id,
+    );
+    const deleteGroupComment$ = this.feedsService.deleteGroupWallCommentByThreadId(
+      this.feed.id,
+    );
+    const stream$ = this._isCampusWallView
+      ? deleteCampusComment$
+      : deleteGroupComment$;
 
-    stream$
-      .subscribe(
-        _ => {
-          $('#deleteFeedCommentModal').modal('hide');
-          this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
-          this.deleted.emit(this.feed.id);
-          this.teardown.emit();
-        }
-      );
+    stream$.subscribe((_) => {
+      $('#deleteFeedCommentModal').modal('hide');
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
+      this.deleted.emit(this.feed.id);
+      this.teardown.emit();
+    });
   }
 
   ngOnInit() {
     this.buttonData = {
       class: 'danger',
-      text: this.cpI18n.translate('delete')
+      text: this.cpI18n.translate('delete'),
     };
 
     this.isCampusWallView.subscribe((res: any) => {

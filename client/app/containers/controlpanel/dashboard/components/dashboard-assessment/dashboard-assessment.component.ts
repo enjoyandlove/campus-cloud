@@ -6,9 +6,10 @@ import { DashboardService } from './../../dashboard.service';
 @Component({
   selector: 'cp-dashboard-assessment',
   templateUrl: './dashboard-assessment.component.html',
-  styleUrls: ['./dashboard-assessment.component.scss']
+  styleUrls: ['./dashboard-assessment.component.scss'],
 })
-export class DashboardAssessmentComponent extends BaseComponent implements OnInit {
+export class DashboardAssessmentComponent extends BaseComponent
+  implements OnInit {
   @Output() ready: EventEmitter<boolean> = new EventEmitter();
 
   data;
@@ -22,19 +23,15 @@ export class DashboardAssessmentComponent extends BaseComponent implements OnIni
 
   loading;
 
-  constructor(
-    private service: DashboardService
-  ) {
+  constructor(private service: DashboardService) {
     super();
   }
-
 
   fetch() {
     this.loading = true;
     const stream$ = this.service.getAssessment();
 
-    stream$
-      .subscribe(
+    stream$.subscribe(
       (res: any) => {
         this.loading = false;
         this.data = {
@@ -44,12 +41,12 @@ export class DashboardAssessmentComponent extends BaseComponent implements OnIni
           service_checkins: res[1].service_checkins,
           service_feedback_rate: res[1].service_feedback_rate,
           service_total_feedback: res[1].service_total_feedback,
-        }
+        };
       },
-      _ => {
+      (_) => {
         this.loading = false;
-      })
-
+      },
+    );
   }
 
   ngOnInit() {
