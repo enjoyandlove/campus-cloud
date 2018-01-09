@@ -1,3 +1,4 @@
+/* tslint:disable:quotemark */
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -40,9 +41,13 @@ export class BaseCheckinComponent implements OnInit {
     this.isDownload = 'download' in this.route.snapshot.queryParams;
 
     if (this.isInternal) {
-      setTimeout(() => {
-        $('#checkinInternalModal').modal();
-      }, 1);
+      setTimeout(
+        () => {
+          $('#checkinInternalModal').modal();
+        },
+
+        1,
+      );
     }
   }
 

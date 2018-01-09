@@ -97,6 +97,7 @@ export class ServicesExcelComponent extends BaseComponent
             label: category.name,
           });
         });
+
         return _categories;
       })
       .toPromise();

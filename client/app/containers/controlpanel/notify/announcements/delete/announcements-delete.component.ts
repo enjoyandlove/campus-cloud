@@ -11,7 +11,7 @@ declare var $: any;
 @Component({
   selector: 'cp-announcements-delete',
   templateUrl: './announcements-delete.component.html',
-  styleUrls: ['./announcements-delete.component.scss']
+  styleUrls: ['./announcements-delete.component.scss'],
 })
 export class AnnouncementDeleteComponent implements OnInit {
   @Input() item: any;
@@ -25,8 +25,8 @@ export class AnnouncementDeleteComponent implements OnInit {
   constructor(
     private session: CPSession,
     private cpI18n: CPI18nService,
-    private service: AnnouncementsService
-  ) { }
+    private service: AnnouncementsService,
+  ) {}
 
   doReset() {
     this.isError = false;
@@ -38,28 +38,29 @@ export class AnnouncementDeleteComponent implements OnInit {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    this
-      .service
-      .deleteAnnouncement(this.item.id, search)
-      .subscribe(
-        _ => {
-          this.teardown.emit();
-          this.deleted.emit(this.item.id);
-          $('#deleteAnnouncementModal').modal('hide');
-          this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
-        },
-        _ => {
-          this.isError = true;
-          this.errorMessage = STATUS.SOMETHING_WENT_WRONG;
-          this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
-        }
-      );
+    this.service.deleteAnnouncement(this.item.id, search).subscribe(
+      (_) => {
+        this.teardown.emit();
+        this.deleted.emit(this.item.id);
+        $('#deleteAnnouncementModal').modal('hide');
+        this.buttonData = Object.assign({}, this.buttonData, {
+          disabled: false,
+        });
+      },
+      (_) => {
+        this.isError = true;
+        this.errorMessage = STATUS.SOMETHING_WENT_WRONG;
+        this.buttonData = Object.assign({}, this.buttonData, {
+          disabled: false,
+        });
+      },
+    );
   }
 
   ngOnInit() {
     this.buttonData = {
       class: 'danger',
       text: this.cpI18n.translate('archive'),
-    }
+    };
   }
 }

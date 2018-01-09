@@ -57,9 +57,13 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @HostListener('document:click', ['$event'])
   onClick() {
-    setTimeout(() => {
-      this.props.suggestions = [];
-    }, 100);
+    setTimeout(
+      () => {
+        this.props.suggestions = [];
+      },
+
+      100,
+    );
   }
 
   listenForKeyChanges() {

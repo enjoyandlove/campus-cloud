@@ -3,14 +3,11 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import {
-  IHeader,
-  HEADER_UPDATE
-} from '../../../../../reducers/header.reducer';
+import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
 import {
   canSchoolReadResource,
-  canStoreReadAndWriteResource
+  canStoreReadAndWriteResource,
 } from './../../../../../shared/utils/privileges';
 
 import { ServicesService } from '../services.service';
@@ -25,9 +22,10 @@ const FEEDBACK_ENABLED = 1;
 @Component({
   selector: 'cp-services-attendance',
   templateUrl: './services-attendance.component.html',
-  styleUrls: ['./services-attendance.component.scss']
+  styleUrls: ['./services-attendance.component.scss'],
 })
-export class ServicesAttendanceComponent extends BaseComponent implements OnInit {
+export class ServicesAttendanceComponent extends BaseComponent
+  implements OnInit {
   loading;
   service;
   storeId;
@@ -47,11 +45,11 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
     public cpI18n: CPI18nService,
     private store: Store<IHeader>,
     private route: ActivatedRoute,
-    private serviceService: ServicesService
+    private serviceService: ServicesService,
   ) {
     super();
     this.serviceId = this.route.snapshot.params['serviceId'];
-    super.isLoading().subscribe(res => this.loading = res);
+    super.isLoading().subscribe((res) => (this.loading = res));
 
     this.fetch();
   }
@@ -59,12 +57,14 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
   private fetch() {
     super
       .fetchData(this.serviceService.getServiceById(this.serviceId))
-      .then(res => {
+      .then((res) => {
         this.service = res.data;
         this.storeId = this.service.store_id;
 
         if ('enable_feedback' in this.service) {
-          this.enableFeedback$.next(this.service.enable_feedback === FEEDBACK_ENABLED)
+          this.enableFeedback$.next(
+            this.service.enable_feedback === FEEDBACK_ENABLED,
+          );
         } else {
           this.enableFeedback$.next(true);
         }
@@ -75,15 +75,18 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
 
         if (!this.service.service_attendance) {
           this.redirectOnDisabledAttendance();
+
           return;
         }
         this.buildHeader();
       })
-      .catch(err => { throw new Error(err) });
+      .catch((err) => {
+        throw new Error(err);
+      });
   }
 
   setDefaultFeedback() {
-    this.service = Object.assign({}, this.service, { 'enable_feedback': 0 } );
+    this.service = Object.assign({}, this.service, { enable_feedback: 0 });
   }
 
   redirectOnDisabledAttendance() {
@@ -106,28 +109,34 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
   private buildHeader() {
     let children = [
       {
-        'label': 'info',
-        'url': `/manage/services/${this.serviceId}/info`
-      }
+        label: 'info',
+        url: `/manage/services/${this.serviceId}/info`,
+      },
     ];
 
-    const eventsSchoolLevel = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.events);
-    const eventsAccountLevel = canStoreReadAndWriteResource(this.session.g,
-      this.storeId, CP_PRIVILEGES_MAP.events);
+    const eventsSchoolLevel = canSchoolReadResource(
+      this.session.g,
+      CP_PRIVILEGES_MAP.events,
+    );
+    const eventsAccountLevel = canStoreReadAndWriteResource(
+      this.session.g,
+      this.storeId,
+      CP_PRIVILEGES_MAP.events,
+    );
 
     if (eventsSchoolLevel || eventsAccountLevel) {
       const events = {
-        'label': 'events',
-        'url': `/manage/services/${this.serviceId}/events`
-      }
+        label: 'events',
+        url: `/manage/services/${this.serviceId}/events`,
+      };
 
       children = [...children, events];
     }
 
     if (this.service.service_attendance) {
       const attendance = {
-        'label': 'assessment',
-        'url': `/manage/services/${this.serviceId}`
+        label: 'assessment',
+        url: `/manage/services/${this.serviceId}`,
       };
 
       children = [...children, attendance];
@@ -136,14 +145,14 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': `[NOTRANSLATE]${this.service.name}[NOTRANSLATE]`,
-        'subheading': '',
-        'crumbs': {
-          'url': 'services',
-          'label': 'services'
+        heading: `[NOTRANSLATE]${this.service.name}[NOTRANSLATE]`,
+        subheading: '',
+        crumbs: {
+          url: 'services',
+          label: 'services',
         },
-        'children': [...children]
-      }
+        children: [...children],
+      },
     });
   }
 
@@ -151,6 +160,5 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
     this.noProviders = !data;
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 }
-

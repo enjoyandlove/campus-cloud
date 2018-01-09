@@ -37,9 +37,13 @@ export class AdminInviteComponent implements OnInit, OnDestroy {
 
   handleSuccess() {
     this.isSubmitted = true;
-    setTimeout(() => {
-      this.router.navigate(['/login']);
-    }, 1500);
+    setTimeout(
+      () => {
+        this.router.navigate(['/login']);
+      },
+
+      1500,
+    );
   }
 
   ngOnDestroy() {

@@ -8,15 +8,12 @@ import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base/base.component';
 import { StoreService } from '../../../../../shared/services/store.service';
 
-import {
-  IHeader,
-  HEADER_UPDATE
-} from '../../../../../reducers/header.reducer';
+import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
 @Component({
   selector: 'cp-events-facebook',
   templateUrl: './events-facebook.component.html',
-  styleUrls: ['./events-facebook.component.scss']
+  styleUrls: ['./events-facebook.component.scss'],
 })
 export class EventsFacebookComponent extends BaseComponent implements OnInit {
   @Input() storeId: number;
@@ -31,14 +28,16 @@ export class EventsFacebookComponent extends BaseComponent implements OnInit {
     private session: CPSession,
     private store: Store<IHeader>,
     private utils: EventUtilService,
-    private storeService: StoreService
+    private storeService: StoreService,
   ) {
     super();
 
-    super.isLoading().subscribe(res => this.loading = res);
+    super.isLoading().subscribe((res) => (this.loading = res));
   }
 
-  onCreated() { this.reload$.next(true); }
+  onCreated() {
+    this.reload$.next(true);
+  }
 
   private fetch() {
     const school = this.session.g.get('school');
@@ -49,8 +48,10 @@ export class EventsFacebookComponent extends BaseComponent implements OnInit {
 
     super
       .fetchData(stores$)
-      .then(res => this.stores = res.data)
-      .catch(err => { throw new Error(err) });
+      .then((res) => (this.stores = res.data))
+      .catch((err) => {
+        throw new Error(err);
+      });
   }
 
   private buildHeader() {
@@ -59,14 +60,14 @@ export class EventsFacebookComponent extends BaseComponent implements OnInit {
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': 'events_facebook_heading',
-        'crumbs': {
-          'url': backToEvents,
-          'label': 'events'
+        heading: 'events_facebook_heading',
+        crumbs: {
+          url: backToEvents,
+          label: 'events',
         },
-        'subheading': '',
-        'children': []
-      }
+        subheading: '',
+        children: [],
+      },
     });
   }
 
@@ -75,6 +76,6 @@ export class EventsFacebookComponent extends BaseComponent implements OnInit {
 
     const isClubOrService = this.storeId || this.clubId;
 
-    return isClubOrService ? this.loading = false : this.fetch();
+    return isClubOrService ? (this.loading = false) : this.fetch();
   }
 }

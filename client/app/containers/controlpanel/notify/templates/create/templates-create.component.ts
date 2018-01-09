@@ -1,5 +1,17 @@
-import { Component, OnInit, OnDestroy, HostListener, ElementRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+/* tslint:disable:max-line-length */
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  HostListener,
+  ElementRef,
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
 
 import { TemplatesService } from './../templates.service';
@@ -7,21 +19,17 @@ import { CPSession } from './../../../../../session/index';
 import { CPI18nService, StoreService } from './../../../../../shared/services';
 import { AnnouncementsService } from './../../announcements/announcements.service';
 
-import {
-  AnnouncementsComposeComponent
-} from './../../announcements/compose/announcements-compose.component';
-
+import { AnnouncementsComposeComponent } from './../../announcements/compose/announcements-compose.component';
 
 declare var $;
 
 @Component({
   selector: 'cp-templates-create',
   templateUrl: './templates-create.component.html',
-  styleUrls: ['./templates-create.component.scss']
+  styleUrls: ['./templates-create.component.scss'],
 })
 export class TemplatesCreateComponent extends AnnouncementsComposeComponent
   implements OnInit, OnDestroy {
-
   form: FormGroup;
 
   constructor(
@@ -31,7 +39,7 @@ export class TemplatesCreateComponent extends AnnouncementsComposeComponent
     public cpI18n: CPI18nService,
     public storeService: StoreService,
     public service: AnnouncementsService,
-    private childService: TemplatesService
+    private childService: TemplatesService,
   ) {
     super(fb, session, cpI18n, storeService, service);
   }
@@ -77,7 +85,7 @@ export class TemplatesCreateComponent extends AnnouncementsComposeComponent
 
     this.subject_prefix = {
       label: null,
-      type: null
+      type: null,
     };
 
     $('#templateCreateModal').modal('hide');
@@ -102,46 +110,34 @@ export class TemplatesCreateComponent extends AnnouncementsComposeComponent
     search.append('school_id', this.session.g.get('school').id.toString());
 
     let data = {
-      'store_id': this.form.value.store_id,
-      'name': this.form.value.name,
-      'is_school_wide': this.form.value.is_school_wide,
-      'subject': this.form.value.subject,
-      'message': this.form.value.message,
-      'priority': this.form.value.priority
+      store_id: this.form.value.store_id,
+      name: this.form.value.name,
+      is_school_wide: this.form.value.is_school_wide,
+      subject: this.form.value.subject,
+      message: this.form.value.message,
+      priority: this.form.value.priority,
     };
 
     if (this.state.isToUsers && !this.state.isCampusWide) {
-      data = Object.assign(
-        {},
-        data,
-        { 'user_ids': this.form.value.user_ids }
-      );
+      data = Object.assign({}, data, { user_ids: this.form.value.user_ids });
     }
 
     if (this.state.isToLists && !this.state.isCampusWide) {
-      data = Object.assign(
-        {},
-        data,
-        { 'list_ids': this.form.value.list_ids }
-      );
+      data = Object.assign({}, data, { list_ids: this.form.value.list_ids });
     }
 
-    this
-      .childService
-      .createTemplate(search, data)
-      .subscribe(
+    this.childService.createTemplate(search, data).subscribe(
       () => {
         this.form.reset();
         this.created.emit(this.form.value);
         this.resetModal();
       },
-      _ => {
+      (_) => {
         this.isError = true;
         this.errorMessage = this.cpI18n.translate('something_went_wrong');
-      }
-      );
+      },
+    );
   }
-
 
   onConfirmed() {
     super.onConfirmed();

@@ -5,16 +5,12 @@ import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
-import {
-  IHeader,
-  HEADER_UPDATE
-} from '../../../../../reducers/header.reducer';
+import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
 import {
   canSchoolReadResource,
-  canStoreReadAndWriteResource
+  canStoreReadAndWriteResource,
 } from './../../../../../shared/utils/privileges';
-
 
 import { ServicesService } from '../services.service';
 import { CPSession, ISchool } from '../../../../../session';
@@ -25,7 +21,7 @@ import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 @Component({
   selector: 'cp-services-info',
   templateUrl: './services-info.component.html',
-  styleUrls: ['./services-info.component.scss']
+  styleUrls: ['./services-info.component.scss'],
 })
 export class ServicesInfoComponent extends BaseComponent implements OnInit {
   admins;
@@ -42,11 +38,11 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
     private store: Store<IHeader>,
     private route: ActivatedRoute,
     private adminService: AdminService,
-    private serviceService: ServicesService
+    private serviceService: ServicesService,
   ) {
     super();
     this.school = this.session.g.get('school');
-    super.isLoading().subscribe(res => this.loading = res);
+    super.isLoading().subscribe((res) => (this.loading = res));
     this.serviceId = this.route.snapshot.params['serviceId'];
 
     this.fetch();
@@ -60,63 +56,69 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
 
     const service$ = this.serviceService.getServiceById(this.serviceId);
 
-    const admins$ = this
-      .adminService
+    const admins$ = this.adminService
       .getAdminByStoreId(search)
-      .map(admins => {
+      .map((admins) => {
         const _admins = [];
-        admins.forEach(admin => {
+        admins.forEach((admin) => {
           if (!admin.is_school_level) {
             _admins.push(admin);
           }
         });
+
         return _admins;
       });
 
     const stream$ = Observable.combineLatest(service$, admins$);
     super
       .fetchData(stream$)
-      .then(res => {
+      .then((res) => {
         this.admins = res.data[1];
         this.service = res.data[0];
         this.storeId = this.service.store_id;
 
         this.buildHeader();
 
-        this.mapCenter = new BehaviorSubject(
-          {
-            lat: res.data[0].latitude,
-            lng: res.data[0].longitude
-          }
-        );
+        this.mapCenter = new BehaviorSubject({
+          lat: res.data[0].latitude,
+          lng: res.data[0].longitude,
+        });
       })
-      .catch(err => { throw new Error(err) });
+      .catch((err) => {
+        throw new Error(err);
+      });
   }
 
   private buildHeader() {
     let children = [
       {
-        'label': 'info',
-        'url': `/manage/services/${this.serviceId}/info`
-      }
+        label: 'info',
+        url: `/manage/services/${this.serviceId}/info`,
+      },
     ];
-    const eventsSchoolLevel = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.events);
-    const eventsAccountLevel = canStoreReadAndWriteResource(this.session.g,
-      this.storeId, CP_PRIVILEGES_MAP.events);
+    const eventsSchoolLevel = canSchoolReadResource(
+      this.session.g,
+      CP_PRIVILEGES_MAP.events,
+    );
+    const eventsAccountLevel = canStoreReadAndWriteResource(
+      this.session.g,
+      this.storeId,
+      CP_PRIVILEGES_MAP.events,
+    );
 
     if (eventsSchoolLevel || eventsAccountLevel) {
       const events = {
-        'label': 'events',
-        'url': `/manage/services/${this.serviceId}/events`
-      }
+        label: 'events',
+        url: `/manage/services/${this.serviceId}/events`,
+      };
 
       children = [...children, events];
     }
 
     if (this.service.service_attendance) {
       const attendance = {
-        'label': 'assessment',
-        'url': `/manage/services/${this.serviceId}`
+        label: 'assessment',
+        url: `/manage/services/${this.serviceId}`,
       };
 
       children = [...children, attendance];
@@ -125,16 +127,16 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': `[NOTRANSLATE]${this.service.name}[NOTRANSLATE]`,
-        'crumbs': {
-          'url': 'services',
-          'label': 'services',
+        heading: `[NOTRANSLATE]${this.service.name}[NOTRANSLATE]`,
+        crumbs: {
+          url: 'services',
+          label: 'services',
         },
-        'subheading': '',
-        'children': [...children]
-      }
+        subheading: '',
+        children: [...children],
+      },
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 }

@@ -73,9 +73,13 @@ export class CallbackPasswordResetComponent implements OnDestroy, OnInit {
 
   handleSuccess() {
     this.isSubmitted = true;
-    setTimeout(() => {
-      this.router.navigate(['/login']);
-    }, 1500);
+    setTimeout(
+      () => {
+        this.router.navigate(['/login']);
+      },
+
+      1500,
+    );
   }
 
   ngOnDestroy() {

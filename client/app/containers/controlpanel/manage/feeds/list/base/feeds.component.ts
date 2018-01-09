@@ -34,13 +34,13 @@ const state: IState = {
   currentView: null,
   isCampusThread: true,
   flagged_by_users_only: null,
-  removed_by_moderators_only: null
+  removed_by_moderators_only: null,
 };
 
 @Component({
   selector: 'cp-feeds',
   templateUrl: './feeds.component.html',
-  styleUrls: ['./feeds.component.scss']
+  styleUrls: ['./feeds.component.scss'],
 })
 export class FeedsComponent extends BaseComponent implements OnInit {
   @Input() clubId: number;
@@ -53,26 +53,26 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   loading = true;
   disablePost = 100;
   state: IState = state;
-  isFilteredByRemovedPosts$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  isFilteredByFlaggedPosts$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  isFilteredByRemovedPosts$: BehaviorSubject<boolean> = new BehaviorSubject(
+    false,
+  );
+  isFilteredByFlaggedPosts$: BehaviorSubject<boolean> = new BehaviorSubject(
+    false,
+  );
   isCampusWallView$: BehaviorSubject<any> = new BehaviorSubject({
     type: 1,
-    group_id: null
-
+    group_id: null,
   });
 
-  constructor(
-    public session: CPSession,
-    public service: FeedsService
-  ) {
+  constructor(public session: CPSession, public service: FeedsService) {
     super();
-    super.isLoading().subscribe(res => this.loading = res);
+    super.isLoading().subscribe((res) => (this.loading = res));
   }
 
   onDoFilter(data) {
     this.isCampusWallView$.next({
       type: data.wall_type,
-      group_id: data.group_id
+      group_id: data.group_id,
     });
 
     // filter by removed posts
@@ -89,19 +89,15 @@ export class FeedsComponent extends BaseComponent implements OnInit {
       this.isFilteredByFlaggedPosts$.next(false);
     }
 
-    this.state = Object.assign(
-      {},
-      this.state,
-      {
-        group_id: data.group_id,
-        wall_type: data.wall_type,
-        post_types: data.post_types,
-        currentView: data.currentView,
-        isCampusThread: data.wall_type === 1,
-        flagged_by_users_only: data.flagged_by_users_only,
-        removed_by_moderators_only: data.removed_by_moderators_only
-      }
-    );
+    this.state = Object.assign({}, this.state, {
+      group_id: data.group_id,
+      wall_type: data.wall_type,
+      post_types: data.post_types,
+      currentView: data.currentView,
+      isCampusThread: data.wall_type === 1,
+      flagged_by_users_only: data.flagged_by_users_only,
+      removed_by_moderators_only: data.removed_by_moderators_only,
+    });
 
     this.fetch();
   }
@@ -119,14 +115,17 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   private fetch() {
     const search = new URLSearchParams();
 
-    const flagged = this.state.flagged_by_users_only ?
-      this.state.flagged_by_users_only.toString() : null;
+    const flagged = this.state.flagged_by_users_only
+      ? this.state.flagged_by_users_only.toString()
+      : null;
 
-    const removed = this.state.removed_by_moderators_only ?
-      this.state.removed_by_moderators_only.toString() : null;
+    const removed = this.state.removed_by_moderators_only
+      ? this.state.removed_by_moderators_only.toString()
+      : null;
 
-    const type = this.state.post_types ?
-      this.state.post_types.toString() : null;
+    const type = this.state.post_types
+      ? this.state.post_types.toString()
+      : null;
 
     search.append('post_types', type);
     search.append('flagged_by_users_only', flagged);
@@ -142,17 +141,25 @@ export class FeedsComponent extends BaseComponent implements OnInit {
 
     super
       .fetchData(stream$)
-      .then(res => {
+      .then((res) => {
         this.state = Object.assign({}, this.state, { feeds: res.data });
       })
-      .catch(_ => null);
+      .catch((_) => null);
   }
 
   doAdvancedSearch(search) {
     let stream$;
 
-    const groupThread$ = this.service.getGroupWallFeeds(this.startRange, this.endRange, search);
-    const campusThread$ = this.service.getCampusWallFeeds(this.startRange, this.endRange, search);
+    const groupThread$ = this.service.getGroupWallFeeds(
+      this.startRange,
+      this.endRange,
+      search,
+    );
+    const campusThread$ = this.service.getCampusWallFeeds(
+      this.startRange,
+      this.endRange,
+      search,
+    );
 
     if (this.state.isCampusThread) {
       const _search = new URLSearchParams();
@@ -160,23 +167,22 @@ export class FeedsComponent extends BaseComponent implements OnInit {
 
       const channels$ = this.service.getChannelsBySchoolId(1, 1000, _search);
 
-      stream$ =
-        Observable
-          .combineLatest(campusThread$, channels$)
-          .map(res => {
-            const result = [];
-            const threads = res[0];
-            this.channels = res[1];
+      stream$ = Observable.combineLatest(campusThread$, channels$).map(
+        (res) => {
+          const result = [];
+          const threads = res[0];
+          this.channels = res[1];
 
-
-            threads.forEach(thread => {
-              result.push({
-                ...thread,
-                channelName: this.getChannelNameFromArray(this.channels, thread)
-              });
+          threads.forEach((thread) => {
+            result.push({
+              ...thread,
+              channelName: this.getChannelNameFromArray(this.channels, thread),
             });
-            return result;
           });
+
+          return result;
+        },
+      );
     } else {
       return groupThread$;
     }
@@ -186,17 +192,23 @@ export class FeedsComponent extends BaseComponent implements OnInit {
 
   getChannelNameFromArray(channels, thread) {
     let name;
-    channels.filter(channel => {
+    channels.filter((channel) => {
       if (channel.id === thread.post_type) {
         name = channel.name;
       }
     });
+
     return name;
   }
 
   onCreated(feed) {
     // do not append to list if currently filtering by flagged or removed posts
-    if (this.isFilteredByRemovedPosts$.value || this.isFilteredByFlaggedPosts$.value) { return; }
+    if (
+      this.isFilteredByRemovedPosts$.value ||
+      this.isFilteredByFlaggedPosts$.value
+    ) {
+      return;
+    }
 
     let channelName;
 
@@ -206,25 +218,23 @@ export class FeedsComponent extends BaseComponent implements OnInit {
 
     feed = Object.assign({}, feed, {
       ...feed,
-      channelName
+      channelName,
     });
 
-
-    this.state = Object.assign(
-      {},
-      this.state,
-      { feeds: [feed, ...this.state.feeds] }
-    );
+    this.state = Object.assign({}, this.state, {
+      feeds: [feed, ...this.state.feeds],
+    });
   }
 
   onEdited(feed) {
     const _state = Object.assign({}, this.state, {
-      feeds: this.state.feeds.map(_feed => {
+      feeds: this.state.feeds.map((_feed) => {
         if (_feed.id === feed.id) {
-          return _feed = feed;
+          return (_feed = feed);
         }
+
         return _feed;
-      })
+      }),
     });
 
     this.state = Object.assign({}, this.state, _state);
@@ -233,7 +243,7 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   onDeleted(feedId: number) {
     const _state = Object.assign({}, this.state);
 
-    _state.feeds = _state.feeds.filter(feed => feed.id !== feedId);
+    _state.feeds = _state.feeds.filter((feed) => feed.id !== feedId);
 
     this.state = Object.assign({}, this.state, { feeds: _state.feeds });
   }

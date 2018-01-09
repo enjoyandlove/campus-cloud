@@ -11,24 +11,35 @@ import {
   EngagementTopBarComponent,
   EngagementComposeComponent,
   EngagementEventsBoxComponent,
-  EngagementServicesBoxComponent
+  EngagementServicesBoxComponent,
 } from './components';
 
 import { CPStatsFormatterPipe } from './components/engagement-stats/pipes/stats-formatter.pipe';
-
 
 import { EngagementService } from './engagement.service';
 import { EngagementRoutingModule } from './engagement.routing.module';
 
 @NgModule({
-  declarations: [ EngagementComponent, EngagementTopBarComponent,
-    EngagementChartComponent, EngagementStatsComponent, EngagementEventsBoxComponent,
-    EngagementServicesBoxComponent, EngagementComposeComponent, CPStatsFormatterPipe ],
+  declarations: [
+    EngagementComponent,
+    EngagementTopBarComponent,
+    EngagementChartComponent,
+    EngagementStatsComponent,
+    EngagementEventsBoxComponent,
+    EngagementServicesBoxComponent,
+    EngagementComposeComponent,
+    CPStatsFormatterPipe,
+  ],
 
-  imports: [ ReactiveFormsModule, CommonModule, SharedModule, EngagementRoutingModule ],
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    SharedModule,
+    EngagementRoutingModule,
+  ],
 
-  providers: [ EngagementService ],
+  providers: [EngagementService],
 
-  exports: [ CPStatsFormatterPipe ]
+  exports: [CPStatsFormatterPipe],
 })
 export class EngagementModule {}

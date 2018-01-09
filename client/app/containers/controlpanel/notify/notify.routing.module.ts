@@ -5,28 +5,30 @@ import { AuthGuard } from '../../../config/guards';
 
 import { NotifyComponent } from './notify.component';
 
-
 const appRoutes: Routes = [
   // { path: '', redirectTo: 'events', pathMatch: 'full' },
 
   {
     path: '',
     component: NotifyComponent,
-    canActivate: [ AuthGuard ],
-    canActivateChild: [ AuthGuard ],
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
     children: [
-      { path: '', loadChildren: './announcements/announcements.module#AnnouncementsModule' },
+      {
+        path: '',
+        loadChildren:
+          './announcements/announcements.module#AnnouncementsModule',
+      },
 
-      { path: 'templates', loadChildren: './templates/templates.module#TemplatesModule' },
-    ]
-  }
+      {
+        path: 'templates',
+        loadChildren: './templates/templates.module#TemplatesModule',
+      },
+    ],
+  },
 ];
 @NgModule({
-  imports: [
-    RouterModule.forChild(appRoutes)
-  ],
-  exports: [
-    RouterModule
-  ]
+  imports: [RouterModule.forChild(appRoutes)],
+  exports: [RouterModule],
 })
 export class NotifyRoutingModule {}

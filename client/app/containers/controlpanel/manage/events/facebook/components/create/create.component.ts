@@ -9,7 +9,7 @@ import { CPI18nService } from '../../../../../../../shared/services';
 @Component({
   selector: 'cp-facebook-events-create',
   templateUrl: './create.component.html',
-  styleUrls: ['./create.component.scss']
+  styleUrls: ['./create.component.scss'],
 })
 export class FacebookEventsCreateComponent implements OnInit {
   @Input() clubId: number;
@@ -24,30 +24,28 @@ export class FacebookEventsCreateComponent implements OnInit {
     private fb: FormBuilder,
     private session: CPSession,
     private cpI18n: CPI18nService,
-    private eventsService: EventsService
-  ) { }
+    private eventsService: EventsService,
+  ) {}
 
   onSubmit(data) {
     this.errors = [];
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    this
-      .eventsService
-      .createFacebookEvent(data, search)
-      .subscribe(
-        _ => {
-          this.form.reset();
-          this.created.emit();
-        },
-        err => {
-          if (err.status === 400) {
-            this.errors.push(this.cpI18n.translate('duplicate_entry'));
-            return;
-          }
-          console.log(err);
+    this.eventsService.createFacebookEvent(data, search).subscribe(
+      (_) => {
+        this.form.reset();
+        this.created.emit();
+      },
+      (err) => {
+        if (err.status === 400) {
+          this.errors.push(this.cpI18n.translate('duplicate_entry'));
+
+          return;
         }
-      );
+        console.log(err);
+      },
+    );
   }
 
   onSelectedStore(host) {
@@ -66,8 +64,8 @@ export class FacebookEventsCreateComponent implements OnInit {
     }
 
     this.form = this.fb.group({
-      'url': [null, Validators.required],
-      'store_id': [store_id ? store_id : null, Validators.required]
+      url: [null, Validators.required],
+      store_id: [store_id ? store_id : null, Validators.required],
     });
   }
 }

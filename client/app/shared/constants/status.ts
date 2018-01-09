@@ -1,3 +1,5 @@
+/* tslint:disable:quotemark */
+
 /**
  * Any status string used in the
  * cp-alert component comes from this file
