@@ -3,11 +3,10 @@ import { Observable } from 'rxjs/Observable';
 
 import { CPI18nService } from '../../../../../../../shared/services/index';
 
-
 @Component({
   selector: 'cp-feed-dropdown',
   templateUrl: './feed-dropdown.component.html',
-  styleUrls: ['./feed-dropdown.component.scss']
+  styleUrls: ['./feed-dropdown.component.scss'],
 })
 export class FeedDropdownComponent implements OnInit {
   @Input() isComment: boolean;
@@ -19,22 +18,22 @@ export class FeedDropdownComponent implements OnInit {
   _isCampusWallView;
   _requiresApproval;
 
-  constructor(
-    public cpI18n: CPI18nService
-  ) { }
+  constructor(public cpI18n: CPI18nService) {}
 
   removeApproveOption() {
-    this.options = this.options.filter(option => option.action !== 1);
+    this.options = this.options.filter((option) => option.action !== 1);
   }
 
   ngOnInit() {
-    if (!this.requiresApproval) { return this.requiresApproval.startWith(false); }
+    if (!this.requiresApproval) {
+      return this.requiresApproval.startWith(false);
+    }
 
     this.isCampusWallView.subscribe((res: any) => {
       this._isCampusWallView = res.type === 1;
     });
 
-    this.requiresApproval.subscribe(requiresApproval => {
+    this.requiresApproval.subscribe((requiresApproval) => {
       this._requiresApproval = requiresApproval;
 
       if (!requiresApproval && this.options) {
@@ -46,10 +45,10 @@ export class FeedDropdownComponent implements OnInit {
       {
         action: 3,
         isPostOnly: false,
-        label: this.cpI18n.translate(this.isComment ?
-                                    'feeds_delete_comment' :
-                                    'feeds_delete_post')
-      }
+        label: this.cpI18n.translate(
+          this.isComment ? 'feeds_delete_comment' : 'feeds_delete_post',
+        ),
+      },
     ];
 
     if (this._isCampusWallView) {
@@ -66,14 +65,16 @@ export class FeedDropdownComponent implements OnInit {
       const flaggedMenu = {
         action: 1,
         isPostOnly: false,
-        label: this.cpI18n.translate(this.isComment ?
-                                     'feeds_approve_comment' :
-                                     'feeds_approve_post')
+        label: this.cpI18n.translate(
+          this.isComment ? 'feeds_approve_comment' : 'feeds_approve_post',
+        ),
       };
 
       items = [flaggedMenu, ...items];
     }
 
-    this.options = this.isComment ? items.filter(item => !item.isPostOnly) : items;
+    this.options = this.isComment
+      ? items.filter((item) => !item.isPostOnly)
+      : items;
   }
-};
+}

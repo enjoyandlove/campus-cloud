@@ -37,14 +37,15 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
 
   isChartDataReady = false;
 
-  constructor() { }
+  constructor() {}
 
   buildLabels() {
     const labels = [];
 
     for (let i = 1; i <= this.props.series.length; i++) {
-      const date = CPDate
-        .toEpoch(moment().subtract(this.props.series.length - i, 'days'));
+      const date = CPDate.toEpoch(
+        moment().subtract(this.props.series.length - i, 'days'),
+      );
       labels.push(moment.unix(date).format('MMM D'));
     }
 
@@ -55,15 +56,14 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
     const series = [];
 
     for (let i = 1; i <= this.props.series.length; i++) {
-      const date = CPDate
-        .toEpoch(moment().subtract(this.props.series.length - i, 'days'));
-
-      series.push(
-        {
-          'meta': moment.unix(date).format('ddd, MMM D'),
-          'value': this.props.series[i - 1]
-        }
+      const date = CPDate.toEpoch(
+        moment().subtract(this.props.series.length - i, 'days'),
       );
+
+      series.push({
+        meta: moment.unix(date).format('ddd, MMM D'),
+        value: this.props.series[i - 1],
+      });
     }
 
     return series;
@@ -81,7 +81,7 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
 
     const highestNoInArray = Math.max.apply(Math, this.props.series);
 
-    const high = (highestNoInArray + 5) - ((highestNoInArray + 5) % 5);
+    const high = highestNoInArray + 5 - (highestNoInArray + 5) % 5;
 
     const options = {
       low: 0,
@@ -95,17 +95,15 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
       },
 
       plugins: [
-        Chartist.plugins.tooltip(
-          {
-            currency: chipContent,
+        Chartist.plugins.tooltip({
+          currency: chipContent,
 
-            appendToBody: true,
+          appendToBody: true,
 
-            anchorToPoint: true,
+          anchorToPoint: true,
 
-            pointClass: 'cp-point',
-          }
-        )
+          pointClass: 'cp-point',
+        }),
       ],
 
       lineSmooth: false,
@@ -149,22 +147,25 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
           } else if (labels.length >= MONTH + 1) {
             return index % 3 === 0 ? value : null;
           }
+
           return value;
         },
-      }
+      },
     };
 
     const chart = new Chartist.Line(this.chart.nativeElement, data, options);
 
-    chart.on('created', function () {
-      this.isChartDataReady = true;
-    }.bind(this));
+    chart.on(
+      'created',
+      function() {
+        this.isChartDataReady = true;
+      }.bind(this),
+    );
   }
 
   ngAfterViewInit() {
     this.drawChart();
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 }
-

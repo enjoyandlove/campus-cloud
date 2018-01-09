@@ -11,9 +11,10 @@ import { CPI18nService } from '../../../../../../../shared/services/index';
 @Component({
   selector: 'cp-facebook-update',
   templateUrl: './update.component.html',
-  styleUrls: ['./update.component.scss']
+  styleUrls: ['./update.component.scss'],
 })
-export class FacebookEventsUpdateComponent extends BaseComponent implements OnInit {
+export class FacebookEventsUpdateComponent extends BaseComponent
+  implements OnInit {
   @Input() clubId: number;
   @Input() storeId: number;
   @Input() stores: Array<any>;
@@ -30,28 +31,28 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
     private fb: FormBuilder,
     private session: CPSession,
     private cpI18n: CPI18nService,
-    private eventsService: EventsService
+    private eventsService: EventsService,
   ) {
     super();
   }
 
   buildForm() {
     this.form = this.fb.group({
-      'links': this.fb.array(this.buildEventControls())
+      links: this.fb.array(this.buildEventControls()),
     });
 
     this.loading = false;
 
-    this.form.valueChanges.subscribe(_ => {
+    this.form.valueChanges.subscribe((_) => {
       this.isEdited = true;
-      this.buttonData = Object.assign({}, this.buttonData, { disabled: false })
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
     });
   }
 
   buildEventControls() {
     const arr = [];
 
-    this.links.map(link => {
+    this.links.map((link) => {
       arr.push(this.buildEventControl(link));
     });
 
@@ -64,21 +65,17 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
 
     const _links = [];
 
-
-    data.links.forEach(link => {
+    data.links.forEach((link) => {
       _links.push({
         id: link.id,
         url: link.url,
-        store_id: link.store_id
+        store_id: link.store_id,
       });
     });
 
-    this
-      .eventsService
+    this.eventsService
       .bulkUpdateFacebookEvents(_links, search)
-      .subscribe(
-      _ => this.fetch()
-      );
+      .subscribe((_) => this.fetch());
   }
 
   onSelectedStore(store, index) {
@@ -90,10 +87,10 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
 
   buildEventControl(link) {
     return this.fb.group({
-      'id': [link.id],
-      'url': [link.url, Validators.required],
-      'store_id': [link.store_id, Validators.required],
-      'selected': [link.host]
+      id: [link.id],
+      url: [link.url, Validators.required],
+      store_id: [link.store_id, Validators.required],
+      selected: [link.host],
     });
   }
 
@@ -115,30 +112,33 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
       search.append('store_id', this.clubId.toString());
     }
 
-    const links$ = this.eventsService.getFacebookEvents(search).map((links: any) => {
-      const _links = [];
+    const links$ = this.eventsService
+      .getFacebookEvents(search)
+      .map((links: any) => {
+        const _links = [];
 
-      links.map(link => {
-        _links.push({
-          id: link.id,
-          url: link.url,
-          store_id: link.store_id,
-          host: {
-            label: link.store_name,
-            action: link.store_id
-          }
+        links.map((link) => {
+          _links.push({
+            id: link.id,
+            url: link.url,
+            store_id: link.store_id,
+            host: {
+              label: link.store_name,
+              action: link.store_id,
+            },
+          });
         });
+
+        return _links;
       });
-      return _links;
-    });
 
     super
       .fetchData(links$)
-      .then(res => {
+      .then((res) => {
         this.links = res.data;
         this.buildForm();
       })
-      .catch(_ => {});
+      .catch((_) => {});
   }
 
   ngOnInit() {
@@ -147,10 +147,10 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
     this.buttonData = {
       class: 'primary',
       text: this.cpI18n.translate('update'),
-      disabled: true
-    }
+      disabled: true,
+    };
 
-    this.reload.subscribe(res => {
+    this.reload.subscribe((res) => {
       if (res) {
         this.fetch();
       }

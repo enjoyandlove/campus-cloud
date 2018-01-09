@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
-
 import { IClub } from '../club.interface';
 import { ClubsService } from '../clubs.service';
 import { CPSession } from '../../../../../session';
@@ -13,7 +12,7 @@ import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
 @Component({
   selector: 'cp-clubs-details',
-  template: '<router-outlet></router-outlet>'
+  template: '<router-outlet></router-outlet>',
 })
 export class ClubsDetailsComponent extends BaseComponent implements OnInit {
   loading;
@@ -26,13 +25,13 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
     private session: CPSession,
     private route: ActivatedRoute,
     private utils: ClubsUtilsService,
-    private clubsService: ClubsService
+    private clubsService: ClubsService,
   ) {
     super();
 
     this.clubId = this.route.snapshot.params['clubId'];
 
-    super.isLoading().subscribe(loading => this.loading = loading);
+    super.isLoading().subscribe((loading) => (this.loading = loading));
   }
 
   private fetch() {
@@ -41,13 +40,13 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
 
     super
       .fetchData(this.clubsService.getClubById(this.clubId, search))
-      .then(club => {
+      .then((club) => {
         this.club = club.data;
 
-        if (!((this.router.url.split('/').includes('facebook')))) {
+        if (!this.router.url.split('/').includes('facebook')) {
           this.store.dispatch({
             type: HEADER_UPDATE,
-            payload: this.buildHeader(club.data.name)
+            payload: this.buildHeader(club.data.name),
           });
         }
       });
@@ -56,26 +55,28 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
   buildHeader(name) {
     const menu = {
       heading: `[NOTRANSLATE]${name}[NOTRANSLATE]`,
-      'crumbs': {
-        'url': `clubs`,
-        'label': 'clubs'
+      crumbs: {
+        url: `clubs`,
+        label: 'clubs',
       },
       subheading: null,
       em: null,
-      children: []
+      children: [],
     };
 
     const links = this.utils.getSubNavChildren(this.club, this.session);
 
-    links.forEach(link => {
+    links.forEach((link) => {
       menu.children.push({
         label: `[NOTRANSLATE]${link}[NOTRANSLATE]`,
-        url: `/manage/clubs/${this.clubId}/${link.toLocaleLowerCase()}`
+        url: `/manage/clubs/${this.clubId}/${link.toLocaleLowerCase()}`,
       });
     });
 
     return menu;
   }
 
-  ngOnInit() { this.fetch(); }
+  ngOnInit() {
+    this.fetch();
+  }
 }
