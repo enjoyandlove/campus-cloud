@@ -3,8 +3,8 @@ import { ErrorHandler } from '@angular/core';
 import { AuthGuard } from '../guards';
 
 import { CPSession } from '../../session';
-import { CPI18nService } from './../../shared/services/i18n.service';
-import { ErrorService } from '../../shared/services';
+
+import { CPI18nService, ErrorService } from '../../shared/services';
 
 import { isProd } from './../env';
 import { RavenErrorHandler } from './raven.handler';

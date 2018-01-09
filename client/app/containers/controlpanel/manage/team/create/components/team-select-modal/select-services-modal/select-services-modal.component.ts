@@ -1,16 +1,18 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
-import { CPSession } from './../../../../../../../../session/index';
 import { ServicesService } from '../../../../../services/services.service';
-import { CP_PRIVILEGES_MAP } from '../../../../../../../../shared/constants';
 import { BaseTeamSelectModalComponent } from '../base/team-select-modal.component';
+
+import { CP_PRIVILEGES_MAP } from '../../../../../../../../shared/constants';
+
+import { CPSession } from './../../../../../../../../session';
 
 @Component({
   selector: 'cp-select-services-modal',
-  templateUrl: './select-services-modal.component.html'
+  templateUrl: './select-services-modal.component.html',
 })
 export class SelectTeamServicesModalComponent extends BaseTeamSelectModalComponent
   implements OnInit {
@@ -20,10 +22,7 @@ export class SelectTeamServicesModalComponent extends BaseTeamSelectModalCompone
   @Output() teardown: EventEmitter<any> = new EventEmitter();
   data$: BehaviorSubject<any> = new BehaviorSubject({});
 
-  constructor(
-    private session: CPSession,
-    private service: ServicesService,
-  ) {
+  constructor(private session: CPSession, private service: ServicesService) {
     super();
     this.privilegeType = CP_PRIVILEGES_MAP.services;
   }
@@ -32,38 +31,41 @@ export class SelectTeamServicesModalComponent extends BaseTeamSelectModalCompone
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    this
-      .service
-      .getServices(1, 1000, search)
-      .subscribe(services => {
-        let res = {};
-        const selected = {};
-        if (this.selectedServices) {
-          services.map(service => {
-
-            if (Object.keys(this.selectedServices).includes(service.store_id.toString())) {
-              if (CP_PRIVILEGES_MAP.services in this.selectedServices[service.store_id]) {
-                selected[service.store_id] = service;
-              }
+    this.service.getServices(1, 1000, search).subscribe((services) => {
+      let res = {};
+      const selected = {};
+      if (this.selectedServices) {
+        services.map((service) => {
+          if (
+            Object.keys(this.selectedServices).includes(
+              service.store_id.toString(),
+            )
+          ) {
+            if (
+              CP_PRIVILEGES_MAP.services in
+              this.selectedServices[service.store_id]
+            ) {
+              selected[service.store_id] = service;
             }
+          }
 
-            if (selected[service.store_id]) {
-              service.checked = true;
-              selected[service.store_id] = Object.assign(
-                {},
-                selected[service.store_id],
-                { id: service.id }
-              );
-            }
-          });
-        }
-        res = {
-          data: services,
-          selected: selected
-        };
+          if (selected[service.store_id]) {
+            service.checked = true;
+            selected[service.store_id] = Object.assign(
+              {},
+              selected[service.store_id],
+              { id: service.id },
+            );
+          }
+        });
+      }
+      res = {
+        data: services,
+        selected: selected,
+      };
 
-        this.teardown.emit();
-        this.data$.next(res);
-      });
+      this.teardown.emit();
+      this.data$.next(res);
+    });
   }
 }

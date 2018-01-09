@@ -63,4 +63,3 @@ export interface IClub {
 
   constitution_url?: string;
 }
-
