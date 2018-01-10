@@ -7,7 +7,7 @@ import { ProvidersService } from '../../../providers.service';
 @Component({
   selector: 'cp-services-edit-create-provider',
   templateUrl: './services-edit-create-provider.component.html',
-  styleUrls: ['./services-edit-create-provider.component.scss']
+  styleUrls: ['./services-edit-create-provider.component.scss'],
 })
 export class ServicesEditCreateProviderComponent implements OnInit {
   @Input() serviceId: number;
@@ -17,29 +17,24 @@ export class ServicesEditCreateProviderComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private providersService: ProvidersService
-  ) { }
+    private providersService: ProvidersService,
+  ) {}
 
   onSubmit(data) {
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('service_id', this.serviceId.toString());
 
-
-    this
-      .providersService
-      .createProvider(data, search)
-      .subscribe(
-        res => {
-          this.created.emit(res);
-          this.form.reset();
-        });
+    this.providersService.createProvider(data, search).subscribe((res) => {
+      this.created.emit(res);
+      this.form.reset();
+    });
   }
 
   ngOnInit() {
     this.form = this.fb.group({
-      'provider_name': [null, Validators.required],
-      'email': [null, Validators.required],
-      'custom_basic_feedback_label': [null, Validators.required]
+      provider_name: [null, Validators.required],
+      email: [null, Validators.required],
+      custom_basic_feedback_label: [null, Validators.required],
     });
   }
 }

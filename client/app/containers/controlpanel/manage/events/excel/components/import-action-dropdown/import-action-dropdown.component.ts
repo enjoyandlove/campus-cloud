@@ -6,7 +6,11 @@ import { Observable } from 'rxjs/Observable';
 import { CPSession, ISchool } from '../../../../../../../session';
 import { BaseComponent } from '../../../../../../../base/base.component';
 import { CP_PRIVILEGES_MAP } from '../../../../../../../shared/constants';
-import { StoreService, AdminService, CPI18nService } from '../../../../../../../shared/services';
+import {
+  StoreService,
+  AdminService,
+  CPI18nService,
+} from '../../../../../../../shared/services';
 
 interface IState {
   store_id: any;
@@ -19,9 +23,10 @@ interface IState {
 @Component({
   selector: 'cp-import-action-dropdown',
   templateUrl: './import-action-dropdown.component.html',
-  styleUrls: ['./import-action-dropdown.component.scss']
+  styleUrls: ['./import-action-dropdown.component.scss'],
 })
-export class EventsImportActionDropdownComponent extends BaseComponent implements OnInit {
+export class EventsImportActionDropdownComponent extends BaseComponent
+  implements OnInit {
   @Input() storeId: number;
 
   @Input() clubId: number;
@@ -47,111 +52,98 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
     private session: CPSession,
     private cpI18n: CPI18nService,
     private adminService: AdminService,
-    private storeService: StoreService
+    private storeService: StoreService,
   ) {
     super();
     this.fetch();
     this.school = this.session.g.get('school');
-    super.isLoading().subscribe(res => this.loading = res);
+    super.isLoading().subscribe((res) => (this.loading = res));
   }
 
   private fetch() {
-    let school = this.session.g.get('school');
-    let search: URLSearchParams = new URLSearchParams();
+    const school = this.session.g.get('school');
+    const search: URLSearchParams = new URLSearchParams();
     search.append('school_id', school.id.toString());
 
     const stores$ = this.storeService.getStores(search);
 
     super
       .fetchData(stores$)
-      .then(res => this.stores = res.data)
-      .catch(err => { throw new Error(err) });
+      .then((res) => (this.stores = res.data))
+      .catch((err) => {
+        throw new Error(err);
+      });
   }
 
   onHostSelected(store_id) {
     this.selectedHost$.next(store_id.event);
 
-    this.state = Object.assign(
-      {},
-      this.state,
-      { store_id }
-    );
+    this.state = Object.assign({}, this.state, { store_id });
   }
 
   getManagersByHostId(storeId) {
-    let search: URLSearchParams = new URLSearchParams();
+    const search: URLSearchParams = new URLSearchParams();
 
     search.append('school_id', this.school.id.toString());
     search.append('store_id', storeId);
     search.append('privilege_type', CP_PRIVILEGES_MAP.events.toString());
 
-    return this
-      .adminService
+    return this.adminService
       .getAdminByStoreId(search)
-      .startWith([{ 'label': '---' }])
-      .map(admins => {
-        let _admins = [
+      .startWith([{ label: '---' }])
+      .map((admins) => {
+        const _admins = [
           {
-            'label': '---',
-            'value': null
-          }
+            label: '---',
+            value: null,
+          },
         ];
-        admins.forEach(admin => {
+        admins.forEach((admin) => {
           _admins.push({
-            'label': `${admin.firstname} ${admin.lastname}`,
-            'value': admin.id
+            label: `${admin.firstname} ${admin.lastname}`,
+            value: admin.id,
           });
         });
+
         return _admins;
       });
   }
 
   toggleEventAttendance() {
-    let value = this.state.event_attendance === 0 ? 1 : 0;
+    const value = this.state.event_attendance === 0 ? 1 : 0;
 
-    this.state = Object.assign(
-      {},
-      this.state,
-      { event_attendance: value }
-    );
+    this.state = Object.assign({}, this.state, { event_attendance: value });
+
     return;
   }
 
   updateEventManager(manager) {
-    this.state = Object.assign(
-      {},
-      this.state,
-      { event_manager_id: manager });
+    this.state = Object.assign({}, this.state, { event_manager_id: manager });
+
     return;
   }
 
   updateAttendanceManager(manager) {
-    this.state = Object.assign(
-      {},
-      this.state,
-      { attendance_manager_email: manager });
+    this.state = Object.assign({}, this.state, {
+      attendance_manager_email: manager,
+    });
+
     return;
   }
 
   updateAttendanceFeedback(feedback) {
-    this.state = Object.assign(
-      {},
-      this.state,
-      { event_feedback: feedback });
+    this.state = Object.assign({}, this.state, { event_feedback: feedback });
+
     return;
   }
 
   defaultState() {
-    this.state = Object.assign(
-      {},
-      this.state,
-      {
-        event_feedback: this.eventAttendanceFeedback[1],
-        event_attendance: 0,
-        event_manager_id: null,
-        attendance_manager_email: null,
-      }
-    );
+    this.state = Object.assign({}, this.state, {
+      event_feedback: this.eventAttendanceFeedback[1],
+      event_attendance: 0,
+      event_manager_id: null,
+      attendance_manager_email: null,
+    });
   }
 
   updateManagersByStoreOrClubId(storeId) {
@@ -164,16 +156,13 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
      * dropdown, upon change we call the managers endpoint
      * and update the available managers
      */
-    this.managers$ =
-      this
-        .selectedHost$
-        .asObservable()
-        .flatMap(host => {
-          if (host) {
-            return this.getManagersByHostId(host);
-          }
-          return Observable.of([{'label': '---'}]);
-        });
+    this.managers$ = this.selectedHost$.asObservable().flatMap((host) => {
+      if (host) {
+        return this.getManagersByHostId(host);
+      }
+
+      return Observable.of([{ label: '---' }]);
+    });
   }
 
   doSubmit() {
@@ -199,26 +188,24 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
 
     this.eventAttendanceFeedback = [
       {
-        'label': this.cpI18n.translate('enabled'),
-        'event': 1
+        label: this.cpI18n.translate('enabled'),
+        event: 1,
       },
       {
-        'label': this.cpI18n.translate('disabled'),
-        'event': 0
-      }
+        label: this.cpI18n.translate('disabled'),
+        event: 0,
+      },
     ];
 
     this.state = {
       store_id: null,
       event_attendance: 0,
       event_manager_id: {
-        'label': '',
-        'event': null
+        label: '',
+        event: null,
       },
       attendance_manager_email: null,
-      event_feedback: this.eventAttendanceFeedback[1]
+      event_feedback: this.eventAttendanceFeedback[1],
     };
-
-
   }
 }

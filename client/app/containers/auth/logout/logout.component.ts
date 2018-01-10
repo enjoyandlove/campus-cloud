@@ -9,10 +9,7 @@ import { appStorage } from '../../../shared/utils';
   template: '',
 })
 export class LogoutComponent implements OnInit {
-  constructor(
-    private router: Router,
-    private session: CPSession
-  ) { }
+  constructor(private router: Router, private session: CPSession) {}
 
   ngOnInit() {
     this.session.g.clear();

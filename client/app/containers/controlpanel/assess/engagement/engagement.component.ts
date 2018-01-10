@@ -21,7 +21,7 @@ const REPEAT_ENGAGEMENT = 1;
 @Component({
   selector: 'cp-engagement',
   templateUrl: './engagement.component.html',
-  styleUrls: ['./engagement.component.scss']
+  styleUrls: ['./engagement.component.scss'],
 })
 export class EngagementComponent extends BaseComponent implements OnInit {
   chartData;
@@ -37,25 +37,20 @@ export class EngagementComponent extends BaseComponent implements OnInit {
     public store: Store<any>,
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public service: EngagementService
+    public service: EngagementService,
   ) {
     super();
-    super.isLoading().subscribe(loading => this.loading = loading);
+    super.isLoading().subscribe((loading) => (this.loading = loading));
   }
 
   updateUrl() {
-    this
-      .router
-      .navigate(
-      ['/assess/dashboard'],
-      {
-        queryParams: {
-          'engagement': this.filterState.engagement.route_id,
-          'for': this.filterState.for.route_id,
-          'range': this.filterState.range.route_id
-        }
-      }
-      );
+    this.router.navigate(['/assess/dashboard'], {
+      queryParams: {
+        engagement: this.filterState.engagement.route_id,
+        for: this.filterState.for.route_id,
+        range: this.filterState.range.route_id,
+      },
+    });
   }
 
   onDoFilter(filterState) {
@@ -72,8 +67,10 @@ export class EngagementComponent extends BaseComponent implements OnInit {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    search.append(this.filterState.engagement.data.queryParam,
-      this.filterState.engagement.data.value);
+    search.append(
+      this.filterState.engagement.data.queryParam,
+      this.filterState.engagement.data.value,
+    );
 
     search.append('user_list_id', this.filterState.for.listId);
     search.append('start', `${this.filterState.range.payload.range.start}`);
@@ -87,20 +84,28 @@ export class EngagementComponent extends BaseComponent implements OnInit {
 
     super
       .fetchData(this.service.getChartData(search))
-      .then(res => {
+      .then((res) => {
         this.chartData = {
           ...res.data,
           starts: this.filterState.range.payload.range.start,
           ends: this.filterState.range.payload.range.end,
         };
       })
-      .catch(err => { throw new Error(err) });
+      .catch((err) => {
+        throw new Error(err);
+      });
   }
 
   onDoCompose(data): void {
     this.messageData = data;
     this.isComposeModal = true;
-    setTimeout(() => { $('#composeModal').modal(); }, 1);
+    setTimeout(
+      () => {
+        $('#composeModal').modal();
+      },
+
+      1,
+    );
   }
 
   onDownload(cohort) {
@@ -124,11 +129,10 @@ export class EngagementComponent extends BaseComponent implements OnInit {
       }
     }
 
-    this
-      .service
+    this.service
       .getChartData(search)
       .toPromise()
-      .then(data => {
+      .then((data) => {
         const columns = [
           this.cpI18n.translate('assess_student_name'),
           this.cpI18n.translate('assess_number_of_checkins'),
@@ -143,48 +147,70 @@ export class EngagementComponent extends BaseComponent implements OnInit {
           this.cpI18n.translate('assess_service_responses'),
           this.cpI18n.translate('assess_service_responses_rate'),
           this.cpI18n.translate('assess_service_rating_average'),
-          this.cpI18n.translate('assess_student_id')
+          this.cpI18n.translate('assess_student_id'),
         ];
 
-        const parsedData = data.download_data.map(item => {
+        const parsedData = data.download_data.map((item) => {
           return {
-            [this.cpI18n.translate('assess_student_name')]: `${item.firstname} ${item.lastname}`,
+            [this.cpI18n.translate('assess_student_name')]: `${
+              item.firstname
+            } ${item.lastname}`,
 
-            [this.cpI18n.translate('assess_number_of_checkins')]: item.total_checkins,
+            [this.cpI18n.translate(
+              'assess_number_of_checkins',
+            )]: item.total_checkins,
 
-            [this.cpI18n.translate('assess_number_of_responses')]: item.total_responses,
+            [this.cpI18n.translate(
+              'assess_number_of_responses',
+            )]: item.total_responses,
 
-            [this.cpI18n.translate('assess_response_rate')]:
-              `${item.total_response_rate.toFixed(1)}%`,
+            [this.cpI18n.translate(
+              'assess_response_rate',
+            )]: `${item.total_response_rate.toFixed(1)}%`,
 
-              [this.cpI18n.translate('assess_average_rating')]:
-              `${(item.event_ratings + item.service_ratings) / 2}%`,
+            [this.cpI18n.translate(
+              'assess_average_rating',
+            )]: `${(item.event_ratings + item.service_ratings) / 2}%`,
 
-              [this.cpI18n.translate('assess_number_of_event_checkins')]: item.event_checkins,
+            [this.cpI18n.translate(
+              'assess_number_of_event_checkins',
+            )]: item.event_checkins,
 
-            [this.cpI18n.translate('assess_event_responses')]: item.event_responses,
+            [this.cpI18n.translate(
+              'assess_event_responses',
+            )]: item.event_responses,
 
-            [this.cpI18n.translate('assess_event_responses_rate')]:
-              `${item.event_response_rate.toFixed(1)}%`,
+            [this.cpI18n.translate(
+              'assess_event_responses_rate',
+            )]: `${item.event_response_rate.toFixed(1)}%`,
 
-            [this.cpI18n.translate('assess_event_rating_average')]: item.event_ratings,
+            [this.cpI18n.translate(
+              'assess_event_rating_average',
+            )]: item.event_ratings,
 
-            [this.cpI18n.translate('assess_service_checkins')]: item.service_checkins,
+            [this.cpI18n.translate(
+              'assess_service_checkins',
+            )]: item.service_checkins,
 
-            [this.cpI18n.translate('assess_service_responses')]: item.service_responses,
+            [this.cpI18n.translate(
+              'assess_service_responses',
+            )]: item.service_responses,
 
-            [this.cpI18n.translate('assess_service_responses_rate')]:
-              `${item.service_response_rate.toFixed(1)}%`,
+            [this.cpI18n.translate(
+              'assess_service_responses_rate',
+            )]: `${item.service_response_rate.toFixed(1)}%`,
 
-            [this.cpI18n.translate('assess_service_rating_average')]: item.service_ratings,
+            [this.cpI18n.translate(
+              'assess_service_rating_average',
+            )]: item.service_ratings,
 
-            [this.cpI18n.translate('assess_student_id')]: item.student_identifier,
-          }
-        })
-        createSpreadSheet(parsedData, columns, fileName)
-
-      })
-      .catch(err => console.log(err));
+            [this.cpI18n.translate(
+              'assess_student_id',
+            )]: item.student_identifier,
+          };
+        });
+        createSpreadSheet(parsedData, columns, fileName);
+      });
   }
 
   onComposeTeardown() {
@@ -198,14 +224,14 @@ export class EngagementComponent extends BaseComponent implements OnInit {
       payload: {
         body: this.cpI18n.translate('announcement_success_sent'),
         autoClose: true,
-      }
+      },
     });
   }
 
   ngOnInit() {
     this.store.dispatch({
       type: HEADER_UPDATE,
-      payload: require('../assess.header.json')
+      payload: require('../assess.header.json'),
     });
   }
 }

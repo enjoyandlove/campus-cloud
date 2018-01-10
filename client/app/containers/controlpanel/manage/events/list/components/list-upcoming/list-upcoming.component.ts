@@ -44,7 +44,7 @@ export class ListUpcomingComponent implements OnInit {
   onDelete(event) { this.deleteEvent.emit(event); }
 
   doSort(sort_field) {
-    let sort_direction = this.state.sort_direction === 'asc' ? 'desc' : 'asc';
+    const sort_direction = this.state.sort_direction === 'asc' ? 'desc' : 'asc';
 
     this.sort = Object.assign(
       {},

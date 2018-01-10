@@ -1,3 +1,4 @@
+/* tslint:disable:ordered-imports */
 // Angular 2
 import '@angular/platform-browser';
 import '@angular/platform-browser-dynamic';
@@ -13,4 +14,3 @@ import 'rxjs';
 // You can import js, ts, css, sass, ...
 import 'jquery';
 require('../node_modules/bootstrap-sass/assets/javascripts/bootstrap.min');
-

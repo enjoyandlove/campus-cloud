@@ -4,26 +4,21 @@ import { RouterModule, Routes } from '@angular/router';
 import { CallbackComponent } from './callback.component';
 import { CallbackPasswordResetComponent } from './password-reset';
 
-import {
-  CheckinEventsComponent,
-  CheckinServiceComponent
-} from './checkin';
+import { CheckinEventsComponent, CheckinServiceComponent } from './checkin';
 
-import {
-  FeedbackEventComponent,
-  FeedbackServiceComponent
-} from './feedback';
+import { FeedbackEventComponent, FeedbackServiceComponent } from './feedback';
 
-import {
-  AdminInviteComponent
-} from './admin-invite';
+import { AdminInviteComponent } from './admin-invite';
 
 const appRoutes: Routes = [
   {
     path: '',
     component: CallbackComponent,
     children: [
-      { path: 'password-reset/:key', component: CallbackPasswordResetComponent },
+      {
+        path: 'password-reset/:key',
+        component: CallbackPasswordResetComponent,
+      },
 
       { path: 'invite/:key', component: AdminInviteComponent },
 
@@ -31,18 +26,17 @@ const appRoutes: Routes = [
       { path: 'feedback/s/:service', component: FeedbackServiceComponent },
 
       { path: 'checkin/e/:event', component: CheckinEventsComponent },
-      { path: 'checkin/s/:service/:provider', component: CheckinServiceComponent },
+      {
+        path: 'checkin/s/:service/:provider',
+        component: CheckinServiceComponent,
+      },
 
       { path: '**', redirectTo: '/login' },
-    ]
+    ],
   },
 ];
 @NgModule({
-  imports: [
-    RouterModule.forChild(appRoutes)
-  ],
-  exports: [
-    RouterModule
-  ]
+  imports: [RouterModule.forChild(appRoutes)],
+  exports: [RouterModule],
 })
 export class CallbackRoutingModule {}

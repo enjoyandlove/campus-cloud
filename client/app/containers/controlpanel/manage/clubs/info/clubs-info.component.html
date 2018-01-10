@@ -38,82 +38,95 @@
     <div class="row" *ngIf="hasMetaData">
       <div class="col-xs-8 col-xs-offset-2">
         <div class="cp-card meta">
-          <div class="row meta__item" *ngIf="club.constitution_url">
-            <div class="col-xs-3 meta__type" i18n>
-              {{ 'clubs_label_constitution' | cpI18n }}
-            </div>
-            <div class="col-xs-9">
-              <span>
-                <a [attr.href]="club.constitution_url" download class="cpbtn cpbtn--link" i18n>
-                    {{ 'download' | cpI18n }}
-                </a>
-              </span>
-            </div>
-          </div>
+          <ng-container [ngSwitch]="uploading">
+            <cp-spinner *ngSwitchCase="true"></cp-spinner>
+            <ng-container *ngSwitchCase="false">
+              <div class="row meta__item" *ngIf="club.constitution_url">
+                <div class="col-xs-3 meta__type" i18n>
+                  {{ 'clubs_label_constitution' | cpI18n }}
+                </div>
+                <div class="col-xs-9">
+                  <span>
+                    <a [attr.href]="club.constitution_url" download class="cpbtn cpbtn--link" i18n>
+                      {{ 'download' | cpI18n }}
+                    </a>
+                  </span>
+                  <span> / </span>
+                  <span>
+                    <cp-upload-button
+                      buttonText="Reupload"
+                      buttonClass="cpbtn cpbtn--link"
+                      (fileUpload)="onFileAdded($event)">
+                    </cp-upload-button>
+                  </span>
+                </div>
+              </div>
 
-          <div class="row meta__item" *ngIf="club.advisor_firstname">
-            <div class="col-xs-3 meta__type" i18n>
-                {{ 'clubs_label_advisor' | cpI18n }}
-            </div>
-            <div class="col-xs-9">
-              <span>
-                {{ club.advisor_firstname }}
-                {{ club.advisor_lastname }}
-                <ng-container *ngIf="club.advisor_email">
-                   ({{ club.advisor_email  }})
-                </ng-container>
-              </span>
-            </div>
-          </div>
+              <div class="row meta__item" *ngIf="club.advisor_firstname">
+                <div class="col-xs-3 meta__type" i18n>
+                    {{ 'clubs_label_advisor' | cpI18n }}
+                </div>
+                <div class="col-xs-9">
+                  <span>
+                    {{ club.advisor_firstname }}
+                    {{ club.advisor_lastname }}
+                    <ng-container *ngIf="club.advisor_email">
+                        (<a [href]="['mailto:' + club.advisor_email]">{{ club.advisor_email }}</a>)
+                    </ng-container>
+                  </span>
+                </div>
+              </div>
 
-          <div class="row meta__item" *ngIf="club.phone">
-            <div class="col-xs-3 meta__type" i18n>
-                {{ 'phone_number' | cpI18n }}
-            </div>
-            <div class="col-xs-9">
-              <span>{{ club.phone }}</span>
-            </div>
-          </div>
-          <div class="row meta__item" *ngIf="club.email">
-            <div class="col-xs-3 meta__type" i18n>
-                {{ 'email' | cpI18n }}
-            </div>
-            <div class="col-xs-9">
-              <span>{{ club.email }}</span>
-            </div>
-          </div>
-          <div class="row meta__item" *ngIf="club.website">
-            <div class="col-xs-3 meta__type" i18n>
-                {{ 'website' | cpI18n }}
-            </div>
-            <div class="col-xs-9">
-              <span>{{ club.website }}</span>
-            </div>
-          </div>
-          <div class="row meta__item" *ngIf="club.address">
-            <div class="col-xs-3 meta__type" i18n>
-                {{ 'location' | cpI18n }}
-            </div>
-            <div class="col-xs-9">
-              <span>{{ club.address }}</span>
-            </div>
-          </div>
-          <div class="row meta__item" *ngIf="club.location">
-            <div class="col-xs-3 meta__type" i18n>
-                {{ 'building' | cpI18n }}
-            </div>
-            <div class="col-xs-9">
-              <span>{{ club.location }}</span>
-            </div>
-          </div>
-          <div class="row meta__item" *ngIf="club.room_info">
-            <div class="col-xs-3 meta__type" i18n>
-                {{ 'room' | cpI18n }}
-            </div>
-            <div class="col-xs-9">
-              <span>{{ club.room_info }}</span>
-            </div>
-          </div>
+              <div class="row meta__item" *ngIf="club.phone">
+                <div class="col-xs-3 meta__type" i18n>
+                    {{ 'phone_number' | cpI18n }}
+                </div>
+                <div class="col-xs-9">
+                  <span>{{ club.phone }}</span>
+                </div>
+              </div>
+              <div class="row meta__item" *ngIf="club.email">
+                <div class="col-xs-3 meta__type" i18n>
+                    {{ 'email' | cpI18n }}
+                </div>
+                <div class="col-xs-9">
+                  <span>{{ club.email }}</span>
+                </div>
+              </div>
+              <div class="row meta__item" *ngIf="club.website">
+                <div class="col-xs-3 meta__type" i18n>
+                    {{ 'website' | cpI18n }}
+                </div>
+                <div class="col-xs-9">
+                  <span>{{ club.website }}</span>
+                </div>
+              </div>
+              <div class="row meta__item" *ngIf="club.address">
+                <div class="col-xs-3 meta__type" i18n>
+                    {{ 'location' | cpI18n }}
+                </div>
+                <div class="col-xs-9">
+                  <span>{{ club.address }}</span>
+                </div>
+              </div>
+              <div class="row meta__item" *ngIf="club.location">
+                <div class="col-xs-3 meta__type" i18n>
+                    {{ 'building' | cpI18n }}
+                </div>
+                <div class="col-xs-9">
+                  <span>{{ club.location }}</span>
+                </div>
+              </div>
+              <div class="row meta__item" *ngIf="club.room_info">
+                <div class="col-xs-3 meta__type" i18n>
+                    {{ 'room' | cpI18n }}
+                </div>
+                <div class="col-xs-9">
+                  <span>{{ club.room_info }}</span>
+                </div>
+              </div>
+            </ng-container>
+          </ng-container>
         </div>
       </div>
     </div>

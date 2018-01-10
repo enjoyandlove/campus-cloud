@@ -5,23 +5,18 @@ import { EngagementResolver } from './engagement.resolver';
 
 import { EngagementComponent } from './engagement.component';
 
-
 const engagementRoutes: Routes = [
   {
     path: '',
     component: EngagementComponent,
     resolve: {
-      data: EngagementResolver
-    }
-  }
+      data: EngagementResolver,
+    },
+  },
 ];
 @NgModule({
-  imports: [
-    RouterModule.forChild(engagementRoutes)
-  ],
-  exports: [
-    RouterModule
-  ],
-  providers: [ EngagementResolver ]
+  imports: [RouterModule.forChild(engagementRoutes)],
+  exports: [RouterModule],
+  providers: [EngagementResolver],
 })
-export class EngagementRoutingModule { }
+export class EngagementRoutingModule {}

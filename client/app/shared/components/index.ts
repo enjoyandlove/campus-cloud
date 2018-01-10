@@ -12,7 +12,6 @@ export * from './cp-snackbar';
 export * from './cp-trackers';
 export * from './cp-dropdown';
 export * from './cp-checkbox';
-export * from './cp-intercomm';
 export * from './cp-searchbox';
 export * from './cp-typeahead';
 export * from './cp-top-banner';
@@ -28,5 +27,3 @@ export * from './cp-upload-button';
 export * from './cp-check-dropdown';
 export * from './cp-small-datepicker';
 export * from './cp-place-autocomplete';
-
-

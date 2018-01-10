@@ -1,21 +1,23 @@
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
+
 import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
   Input,
   OnInit,
   Output,
   ViewChild,
-  Component,
-  ElementRef,
-  EventEmitter,
-  AfterViewInit,
 } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+
 import { CPI18nService } from './../../services/i18n.service';
 
 @Component({
   selector: 'cp-searchbox',
   templateUrl: './cp-searchbox.component.html',
-  styleUrls: ['./cp-searchbox.component.scss']
+  styleUrls: ['./cp-searchbox.component.scss'],
 })
 export class CPSearchBoxComponent implements AfterViewInit, OnInit {
   @Input() fixed: true;
@@ -27,9 +29,7 @@ export class CPSearchBoxComponent implements AfterViewInit, OnInit {
   stream$: Observable<string>;
   isSearch$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
-  constructor(
-    public cpI18n: CPI18nService
-  ) { }
+  constructor(public cpI18n: CPI18nService) {}
 
   onClear() {
     this.query.emit(null);
@@ -41,20 +41,21 @@ export class CPSearchBoxComponent implements AfterViewInit, OnInit {
     const input = this.q.nativeElement;
     this.stream$ = Observable.fromEvent(input, 'keyup');
 
-    this
-      .stream$
-      .map(res => {
+    this.stream$
+      .map((res) => {
         this.searching.emit(true);
+
         return res;
       })
       .debounceTime(501)
       .map((res: any) => res.target.value)
       .distinctUntilChanged()
-      .subscribe(query => {
+      .subscribe((query) => {
         if (!query) {
           this.query.emit(null);
           this.searching.emit(false);
           this.isSearch$.next(false);
+
           return;
         }
 
@@ -64,5 +65,5 @@ export class CPSearchBoxComponent implements AfterViewInit, OnInit {
       });
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 }

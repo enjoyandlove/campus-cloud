@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 interface IChip {
   id: number;
@@ -14,14 +14,14 @@ interface IProps {
 @Component({
   selector: 'cp-chip',
   templateUrl: './cp-chip.component.html',
-  styleUrls: ['./cp-chip.component.scss']
+  styleUrls: ['./cp-chip.component.scss'],
 })
 export class CPChipComponent implements OnInit {
   @Input() chip: IChip;
   @Input() props: IProps;
   @Output() handleClose: EventEmitter<number> = new EventEmitter();
 
-  constructor() { }
+  constructor() {}
 
   onHandleClose(chip) {
     this.handleClose.emit(chip.id);

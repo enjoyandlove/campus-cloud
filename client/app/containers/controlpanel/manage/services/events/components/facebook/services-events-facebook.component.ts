@@ -8,7 +8,8 @@ import { BaseComponent } from '../../../../../../../base/base.component';
   selector: 'cp-services-events-facebook',
   templateUrl: './services-events-facebook.component.html',
 })
-export class ServicesEventsFacebookComponent extends BaseComponent implements OnInit {
+export class ServicesEventsFacebookComponent extends BaseComponent
+  implements OnInit {
   loading;
   storeId;
   serviceId;
@@ -16,10 +17,10 @@ export class ServicesEventsFacebookComponent extends BaseComponent implements On
 
   constructor(
     private route: ActivatedRoute,
-    private servicesService: ServicesService
+    private servicesService: ServicesService,
   ) {
     super();
-    super.isLoading().subscribe(res => this.loading = res);
+    super.isLoading().subscribe((res) => (this.loading = res));
 
     this.isService = true;
     this.serviceId = this.route.snapshot.params['serviceId'];
@@ -30,10 +31,11 @@ export class ServicesEventsFacebookComponent extends BaseComponent implements On
   private fetch() {
     super
       .fetchData(this.servicesService.getServiceById(this.serviceId))
-      .then(res => this.storeId = res.data.store_id)
-      .catch(err => { throw new Error(err) });
+      .then((res) => (this.storeId = res.data.store_id))
+      .catch((err) => {
+        throw new Error(err);
+      });
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 }
-
