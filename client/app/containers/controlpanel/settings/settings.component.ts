@@ -5,8 +5,8 @@ import { HEADER_UPDATE, IHeader } from '../../../reducers/header.reducer';
 
 
 @Component({
-    selector: 'cp-settings',
-    template: `
+  selector: 'cp-settings',
+  template: `
         <cp-page-header [data]="headerData$ | async"></cp-page-header>
         <div class="cp-wrapper cp-wrapper--outer">
             <router-outlet></router-outlet>
@@ -15,16 +15,16 @@ import { HEADER_UPDATE, IHeader } from '../../../reducers/header.reducer';
 })
 export class SettingsComponent implements OnInit {
 
-    headerData$: Observable<IHeader>;
+  headerData$: Observable<IHeader>;
 
-    constructor(private store: Store<any>) {
-        this.headerData$ = this.store.select('HEADER');
+  constructor(private store: Store<any>) {
+    this.headerData$ = this.store.select('HEADER');
 
-        this.store.dispatch({
-            type: HEADER_UPDATE,
-            payload: require('./settings.header.json')
-        });
-    }
+    this.store.dispatch({
+      type: HEADER_UPDATE,
+      payload: require('./settings.header.json')
+    });
+  }
 
-    ngOnInit() {}
+  ngOnInit() { }
 }

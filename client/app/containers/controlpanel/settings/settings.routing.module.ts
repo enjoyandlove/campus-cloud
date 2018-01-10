@@ -6,19 +6,18 @@ import { SettingsComponent } from './settings.component';
 
 
 const appRoutes: Routes = [
-
-    {
-        path: '',
-        component: SettingsComponent,
-        canActivate: [ AuthGuard ],
-        canActivateChild: [ AuthGuard ],
-        children: [
-            {
-                path: '',
-                loadChildren: './team/team.module#TeamModule'
-            },
-        ]
-    },
+  {
+    path: '',
+    component: SettingsComponent,
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
+    children: [
+      {
+        path: 'team',
+        loadChildren: './team/team.module#TeamModule'
+      },
+    ]
+  },
 ];
 
 @NgModule({
@@ -29,4 +28,4 @@ const appRoutes: Routes = [
     RouterModule
   ]
 })
-export class SettingsRoutingModule {}
+export class SettingsRoutingModule { }

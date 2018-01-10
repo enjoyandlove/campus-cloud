@@ -261,7 +261,7 @@ export class TeamCreateComponent implements OnInit {
       .teamService
       .createAdmin(_data)
       .subscribe(
-      _ => this.router.navigate(['/team']),
+      _ => this.router.navigate(['/settings/team']),
       err => {
         this.isFormError = true;
 

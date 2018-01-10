@@ -19,7 +19,7 @@
       class="switch__item"
       [class.isFirstItem]="schools.length === 1">
       <a
-        [routerLink]="['/team/' + session.g.get('user').id + '/edit']" [queryParams]="{profile: true}" i18n>
+        [routerLink]="['/settings/team/' + session.g.get('user').id + '/edit']" [queryParams]="{profile: true}" i18n>
         {{ 'profile' | cpI18n }}
     </a>
     </li>
@@ -32,7 +32,7 @@
       class="switch__item"
       (click)="close.emit()"
       *ngIf="canManageAdmins">
-      <a [routerLink]="['/team']" i18n>{{ 'team_settings' | cpI18n }}</a>
+      <a [routerLink]="['/settings/team']" i18n>{{ 'team_settings' | cpI18n }}</a>
     </li>
     <li
       class="switch__item"
