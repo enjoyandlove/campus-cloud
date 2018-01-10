@@ -12,10 +12,7 @@ const mockLists = require('./mock.json');
 
 @Injectable()
 export class ListsService extends BaseService {
-  constructor(
-    http: Http,
-    router: Router,
-    private store: Store<any>) {
+  constructor(http: Http, router: Router, private store: Store<any>) {
     super(http, router);
 
     Object.setPrototypeOf(this, ListsService.prototype);
@@ -24,44 +21,52 @@ export class ListsService extends BaseService {
   getUsers(search: URLSearchParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER}/`;
 
-    return super.get(url, { search }).map(res => res.json());
+    return super.get(url, { search }).map((res) => res.json());
   }
 
   getLists(search: URLSearchParams, startRange: number, endRange: number) {
-    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER_LIST}`;
+    const common = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.USER_LIST
+    }`;
     const url = `${common}/${startRange};${endRange}`;
 
-    return super.get(url, { search }).map(res => res.json());
+    return super.get(url, { search }).map((res) => res.json());
   }
 
   removeList(id: number, search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER_LIST}/${id}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.USER_LIST
+    }/${id}`;
 
-    return super.delete(url, { search }).map(res => res);
+    return super.delete(url, { search }).map((res) => res);
   }
 
   createList(body: any, search: URLSearchParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER_LIST}/`;
 
-    return super.post(url, body, { search }).map(res => res.json());
+    return super.post(url, body, { search }).map((res) => res.json());
   }
 
   updateList(listId: number, body: any, search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER_LIST}/${listId}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.USER_LIST
+    }/${listId}`;
 
-    return super.update(url, body, { search }).map(res => res.json());
+    return super.update(url, body, { search }).map((res) => res.json());
   }
 
   getMessageById(messageId) {
-    const promise = new Promise(resolve => {
-      resolve(mockLists.filter(list => {
-        if (list.id === +messageId) {
-          return list;
-        }
-      }));
+    const promise = new Promise((resolve) => {
+      resolve(
+        mockLists.filter((list) => {
+          if (list.id === +messageId) {
+            return list;
+          }
+        }),
+      );
     });
 
-    return Observable.fromPromise(promise).map(res => res[0]);
+    return Observable.fromPromise(promise).map((res) => res[0]);
   }
 
   getUploadImageUrl() {
@@ -69,10 +74,9 @@ export class ListsService extends BaseService {
   }
 
   setModalServices(services: any[]): void {
-    console.log(services);
     this.store.dispatch({
       type: SERVICES_MODAL_SET,
-      payload: services
+      payload: services,
     });
   }
 }

@@ -1,15 +1,15 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Headers } from '@angular/http';
 
 import { API } from '../../../config/api';
-import { CPI18nService } from '../../services';
-import { CPImage, appStorage } from '../../../shared/utils';
 import { FileUploadService } from '../../../shared/services/file-upload.service';
+import { appStorage } from '../../../shared/utils';
+import { CPI18nService } from '../../services';
 
 @Component({
   selector: 'cp-image-upload',
   templateUrl: './cp-image-upload.component.html',
-  styleUrls: ['./cp-image-upload.component.scss']
+  styleUrls: ['./cp-image-upload.component.scss'],
 })
 export class CPImageUploadComponent implements OnInit {
   @Input() small: boolean;
@@ -19,44 +19,34 @@ export class CPImageUploadComponent implements OnInit {
   @Output() uploaded: EventEmitter<string> = new EventEmitter();
 
   image;
+  error;
   fileName;
   isLoading;
   buttonText;
-  errors = [];
 
   constructor(
     public cpI18n: CPI18nService,
-    private fileUploadService: FileUploadService
-  ) { }
-
-  validateImage(file) {
-    const fileExtension = file.name.split('.').pop();
-
-    if (!CPImage.isSizeOk(file.size, CPImage.MAX_IMAGE_SIZE)) {
-      this.errors.push(this.cpI18n.translate('error_file_is_too_big'));
-    }
-
-    if (!CPImage.isValidExtension(fileExtension, CPImage.VALID_EXTENSIONS)) {
-      this.errors.push(this.cpI18n.translate('error_invalid_extension'));
-      return;
-    }
-
-  }
+    private fileUploadService: FileUploadService,
+  ) {}
 
   onFileUpload(file, asPromise?: boolean) {
-    this.errors = [];
+    this.error = null;
 
     if (!file) {
       this.image = null;
+
       return;
     }
 
-    this.validateImage(file);
+    const validate = this.fileUploadService.validImage(file);
 
-    if (this.errors.length) {
+    if (!validate.valid) {
       if (asPromise) {
-        return Promise.reject(this.errors[0]);
+        return Promise.reject(validate.errors[0]);
       }
+
+      this.error = validate.errors[0];
+
       return;
     }
 
@@ -64,7 +54,9 @@ export class CPImageUploadComponent implements OnInit {
 
     const headers = new Headers();
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
-    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
+    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(
+      appStorage.keys.SESSION,
+    )}`;
 
     headers.append('Authorization', auth);
 
@@ -72,20 +64,17 @@ export class CPImageUploadComponent implements OnInit {
       return this.fileUploadService.uploadFile(file, url, headers).toPromise();
     }
 
-    this
-      .fileUploadService
-      .uploadFile(file, url, headers)
-      .subscribe(
-      res => {
+    this.fileUploadService.uploadFile(file, url, headers).subscribe(
+      (res) => {
         this.isLoading = false;
         this.image = res.image_url;
         this.uploaded.emit(res.image_url);
       },
-      _ => {
+      (_) => {
         this.isLoading = false;
-        this.errors.push(this.cpI18n.translate('something_went_wrong'));
-      }
-      );
+        this.error = this.cpI18n.translate('something_went_wrong');
+      },
+    );
   }
 
   removeImage() {

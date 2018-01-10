@@ -13,7 +13,7 @@ interface IState {
 
 const state: IState = {
   lists: [],
-  search_str: null
+  search_str: null,
 };
 
 declare var $: any;
@@ -21,7 +21,7 @@ declare var $: any;
 @Component({
   selector: 'cp-lists-list',
   templateUrl: './lists-list.component.html',
-  styleUrls: ['./lists-list.component.scss']
+  styleUrls: ['./lists-list.component.scss'],
 })
 export class ListsListComponent extends BaseComponent implements OnInit {
   loading;
@@ -35,10 +35,10 @@ export class ListsListComponent extends BaseComponent implements OnInit {
   constructor(
     private session: CPSession,
     public cpI18n: CPI18nService,
-    private listsService: ListsService
+    private listsService: ListsService,
   ) {
     super();
-    super.isLoading().subscribe(res => this.loading = res);
+    super.isLoading().subscribe((res) => (this.loading = res));
 
     this.fetch();
   }
@@ -48,20 +48,25 @@ export class ListsListComponent extends BaseComponent implements OnInit {
     search.append('search_str', this.state.search_str);
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    const stream$ = this.listsService.getLists(search, this.startRange, this.endRange);
+    const stream$ = this.listsService.getLists(
+      search,
+      this.startRange,
+      this.endRange,
+    );
 
     super
       .fetchData(stream$)
-      .then(res => this.state = Object.assign({}, this.state, { lists: res.data }))
-      .catch(err => { throw new Error(err) });
+      .then(
+        (res) =>
+          (this.state = Object.assign({}, this.state, { lists: res.data })),
+      )
+      .catch((err) => {
+        throw new Error(err);
+      });
   }
 
   onSearch(search_str) {
-    this.state = Object.assign(
-      {},
-      this.state,
-      { search_str }
-    );
+    this.state = Object.assign({}, this.state, { search_str });
     this.resetPagination();
 
     this.fetch();
@@ -89,12 +94,24 @@ export class ListsListComponent extends BaseComponent implements OnInit {
   onLaunchCreateModal(users?: Array<any>) {
     this.isListsCreate = true;
     this.listUsers = users ? users : null;
-    setTimeout(() => { $('#listsCreate').modal(); }, 1);
+    setTimeout(
+      () => {
+        $('#listsCreate').modal();
+      },
+
+      1,
+    );
   }
 
   onLaunchImportModal() {
     this.isListsImport = true;
-    setTimeout(() => { $('#listsImport').modal(); }, 1);
+    setTimeout(
+      () => {
+        $('#listsImport').modal();
+      },
+
+      1,
+    );
   }
 
   onEditedList() {
@@ -103,10 +120,13 @@ export class ListsListComponent extends BaseComponent implements OnInit {
 
   onDeletedList(listId: number) {
     this.isListsDelete = false;
-    let _state = Object.assign({}, this.state);
+    const _state = Object.assign({}, this.state);
 
-    _state.lists = _state.lists.filter(list => {
-      if (list.id !== listId) { return list; }
+    _state.lists = _state.lists.filter((list) => {
+      if (list.id !== listId) {
+        return list;
+      }
+
       return;
     });
 
@@ -118,5 +138,5 @@ export class ListsListComponent extends BaseComponent implements OnInit {
     }
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 }

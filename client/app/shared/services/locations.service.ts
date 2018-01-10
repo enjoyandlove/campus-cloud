@@ -1,19 +1,41 @@
-import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
 const defaultOptions: google.maps.places.AutocompletionRequest = {
   offset: 5,
   input: null,
-  radius: 500
-}
+  radius: 500,
+};
 
 @Injectable()
 export class CPLocationsService {
-  constructor() { }
+  constructor() {}
 
   getLocations() {
-    return Observable.of([]);
+    const results: Array<any> = [
+      {
+        label: 'Your Locations',
+        heading: true,
+        value: null,
+        isGoogle: false,
+      },
+    ];
+
+    return mockLocations().map((locations) => {
+      return results.concat(
+        locations.map((location) => {
+          return {
+            label_dark: location.name,
+            label_medium: location.address,
+            full_label: location.address,
+            heading: false,
+            value: location,
+            isGoogle: false,
+          };
+        }),
+      );
+    });
   }
 
   geoCode(location) {
@@ -21,9 +43,11 @@ export class CPLocationsService {
       const service = new google.maps.Geocoder();
 
       service.geocode({ location }, (data, status) => {
-        status === google.maps.GeocoderStatus.OK ? resolve(data[0]) : reject(status);
-      })
-    })
+        status === google.maps.GeocoderStatus.OK
+          ? resolve(data[0])
+          : reject(status);
+      });
+    });
   }
 
   getGoogleSuggestions(input: string, lat: number, lng: number) {
@@ -33,19 +57,19 @@ export class CPLocationsService {
     const options: google.maps.places.AutocompletionRequest = Object.assign(
       {},
       defaultOptions,
-      { input, location }
+      { input, location },
     );
 
-    let results: Array<any> = [
+    const results: Array<any> = [
       {
-        'label': 'Google Maps Results',
-        'heading': true,
-        'value': null,
-        'isGoogle': false
-      }
+        label: 'Google Maps Results',
+        heading: true,
+        value: null,
+        isGoogle: false,
+      },
     ];
 
-    const promise = new Promise(resolve => {
+    const promise = new Promise((resolve) => {
       service.getPlacePredictions(options, (suggestions, status) => {
         if (!(status === google.maps.places.PlacesServiceStatus.OK)) {
           return resolve([]);
@@ -53,22 +77,22 @@ export class CPLocationsService {
 
         suggestions.map((suggestion: any) => {
           const mainText = `${suggestion.structured_formatting.main_text}`;
-          const secondaryText = `${suggestion.structured_formatting.secondary_text}`;
+          const secondaryText = `${
+            suggestion.structured_formatting.secondary_text
+          }`;
 
-          results.push(
-            {
-              'label_dark': `${mainText}`,
-              'label_medium': `${secondaryText}`,
-              'full_label': `${mainText}, ${secondaryText}`,
-              'heading': false,
-              'value': suggestion.place_id,
-              'isGoogle': true
-            }
-          )
-        })
+          results.push({
+            label_dark: `${mainText}`,
+            label_medium: `${secondaryText}`,
+            full_label: `${mainText}, ${secondaryText}`,
+            heading: false,
+            value: suggestion.place_id,
+            isGoogle: true,
+          });
+        });
         resolve(results);
-      })
-    })
+      });
+    });
 
     return Observable.fromPromise(promise);
   }
@@ -85,10 +109,32 @@ export class CPLocationsService {
     const service = new google.maps.places.PlacesService(el);
 
     service.getDetails({ placeId }, (details, status) => {
-      return status === google.maps.places.PlacesServiceStatus.OK ?
-        res.next(details) : res.next({});
-    })
+      return status === google.maps.places.PlacesServiceStatus.OK
+        ? res.next(details)
+        : res.next({});
+    });
 
     return res.asObservable();
   }
 }
+
+const mockLocations = () => {
+  const mockData = [
+    {
+      name: 'Anas House',
+      address: '123 Boulevard de Maisonneuve Est, Montreal, QC, Canada',
+      short_name: 'aah',
+      latitude: 45.53982,
+      longitude: -73.612546,
+    },
+    {
+      name: 'Andres House',
+      address: '321 Boulevard de Maisonneuve Est, Montreal, QC, Canada',
+      short_name: 'aht',
+      latitude: -45.53982,
+      longitude: 73.612546,
+    },
+  ];
+
+  return Observable.of(mockData);
+};

@@ -8,32 +8,29 @@ export const statusTypes = [
   {
     action: ClubStatus.active,
     label: 'Active',
-    description: i18n.transform('clubs_status_active')
+    description: i18n.transform('clubs_status_active'),
   },
   {
     action: ClubStatus.inactive,
     label: 'Inactive',
-    description: i18n.transform('clubs_status_inactive')
+    description: i18n.transform('clubs_status_inactive'),
   },
   {
     action: ClubStatus.pending,
     label: 'Pending',
-    description: i18n.transform('clubs_status_pending')
-  }
+    description: i18n.transform('clubs_status_pending'),
+  },
 ];
 
 export const membershipTypes = [
   {
     action: true,
     label: 'Enabled',
-    description: i18n.transform('clubs_membership_enabled')
+    description: i18n.transform('clubs_membership_enabled'),
   },
   {
     action: false,
     label: 'Disabled',
-    description: i18n.transform('clubs_membership_disabled')
-  }
+    description: i18n.transform('clubs_membership_disabled'),
+  },
 ];
-
-
-

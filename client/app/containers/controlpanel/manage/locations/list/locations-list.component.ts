@@ -10,13 +10,13 @@ interface IState {
 }
 
 const state: IState = {
-  locations: []
+  locations: [],
 };
 
 @Component({
   selector: 'cp-locations-list',
   templateUrl: './locations-list.component.html',
-  styleUrls: ['./locations-list.component.scss']
+  styleUrls: ['./locations-list.component.scss'],
 })
 export class LocationsListComponent extends BaseComponent implements OnInit {
   loading;
@@ -25,58 +25,61 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
   updateLocation = '';
   state: IState = state;
 
-  constructor(
-    private locationsService: LocationsService
-  ) {
+  constructor(private locationsService: LocationsService) {
     super();
-    super.isLoading().subscribe(res => this.loading = res);
+    super.isLoading().subscribe((res) => (this.loading = res));
 
     this.fetch();
   }
 
   private fetch() {
-    super
-      .fetchData(this.locationsService.getLocations())
-      .then(res => {
-        this.state = Object.assign({}, this.state, { locations: res.data });
-      });
+    super.fetchData(this.locationsService.getLocations()).then((res) => {
+      this.state = Object.assign({}, this.state, { locations: res.data });
+    });
   }
 
   onLaunchModal() {
     this.isLocationsCreate = !this.isLocationsCreate;
-    setTimeout(() => { $('#locationsCreate').modal(); }, 1);
-  }
+    setTimeout(
+      () => {
+        $('#locationsCreate').modal();
+      },
 
-  onLocationCreated(location) {
-    this.state = Object.assign(
-      {},
-      this.state,
-      { locations: [location, ...this.state.locations] }
+      1,
     );
   }
 
+  onLocationCreated(location) {
+    this.state = Object.assign({}, this.state, {
+      locations: [location, ...this.state.locations],
+    });
+  }
+
   onLocationUpdated(location) {
-    let _state = Object.assign({}, this.state, {
-      locations: this.state.locations.map(_location => {
+    const _state = Object.assign({}, this.state, {
+      locations: this.state.locations.map((_location) => {
         if (_location.id === location.id) {
-          return _location = location.data;
+          return (_location = location.data);
         }
+
         return _location;
-      })
+      }),
     });
 
     this.state = Object.assign({}, this.state, _state);
   }
 
   onLocationDeleted(locationId) {
-    let _state = Object.assign({}, this.state);
+    const _state = Object.assign({}, this.state);
 
-    _state.locations = _state.locations.filter(locations => {
-      if (locations.id !== locationId) { return locations; }
+    _state.locations = _state.locations.filter((locations) => {
+      if (locations.id !== locationId) {
+        return locations;
+      }
     });
 
     this.state = Object.assign({}, this.state, { locations: _state.locations });
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 }

@@ -18,24 +18,38 @@ import {
   DashboardDownloadsChartComponent,
   DashboardSocialActivyChartComponent,
   DashboardGeneralInformationComponent,
-  DashboardDownloadsRegistrationComponent
+  DashboardDownloadsRegistrationComponent,
 } from './components';
 
-import { DashboardComponent }  from './dashboard.component';
+import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard.routing.module';
 import { EngagementModule } from './../assess/engagement/engagement.module';
 
 @NgModule({
-  declarations: [ DashboardComponent, DashboardDatePickerComponent,
-  DashboardDownloadsChartComponent, DashboardGeneralInformationComponent,
-  DashboardTopEventsComponent, DashboardTopServicesComponent,
-  DashboardTopResourceComponent, DashboardAssessmentComponent,
-  DashboardIntegrationsComponent, DashboardCampuTileComponent,
-  DashboardTopClubsComponent, DashboardDownloadsRegistrationComponent,
-  DashboardSocialActivyComponent, DashboardSocialActivyChartComponent ],
+  declarations: [
+    DashboardComponent,
+    DashboardDatePickerComponent,
+    DashboardDownloadsChartComponent,
+    DashboardGeneralInformationComponent,
+    DashboardTopEventsComponent,
+    DashboardTopServicesComponent,
+    DashboardTopResourceComponent,
+    DashboardAssessmentComponent,
+    DashboardIntegrationsComponent,
+    DashboardCampuTileComponent,
+    DashboardTopClubsComponent,
+    DashboardDownloadsRegistrationComponent,
+    DashboardSocialActivyComponent,
+    DashboardSocialActivyChartComponent,
+  ],
 
-  imports: [ CommonModule, SharedModule, DashboardRoutingModule, EngagementModule ],
+  imports: [
+    CommonModule,
+    SharedModule,
+    DashboardRoutingModule,
+    EngagementModule,
+  ],
 
-  providers: [ DashboardService, DashboardUtilsService ],
+  providers: [DashboardService, DashboardUtilsService],
 })
 export class DashboardModule {}
