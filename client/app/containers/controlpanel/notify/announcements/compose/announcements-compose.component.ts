@@ -386,7 +386,8 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     this.typeAheadOpts = {
       withSwitcher: true,
       suggestions: this.suggestions,
-      reset: this.resetChips$
+      reset: this.resetChips$,
+      cssOverflowUnset: true
     };
     let schoolPrivileges = this.session.g.get('user')
       .school_level_privileges[this.session.g.get('school').id];

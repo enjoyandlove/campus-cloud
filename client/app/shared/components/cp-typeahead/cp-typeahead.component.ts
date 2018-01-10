@@ -23,6 +23,7 @@ interface IState {
 interface IProps {
   isUsers: boolean;
   withSwitcher: boolean;
+  cssOverflowUnset: boolean;
   suggestions: Array<any>;
   reset: Observable<boolean>;
   defaultValues: Array<{ 'label': string; 'id': number }>;
