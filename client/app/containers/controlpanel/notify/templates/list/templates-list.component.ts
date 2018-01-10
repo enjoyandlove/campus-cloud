@@ -20,9 +20,8 @@ declare var $;
 @Component({
   selector: 'cp-templates-list',
   templateUrl: './templates-list.component.html',
-  styleUrls: ['./templates-list.component.scss']
+  styleUrls: ['./templates-list.component.scss'],
 })
-
 export class TemplatesListComponent extends BaseComponent implements OnInit {
   loading;
 
@@ -39,8 +38,8 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
 
   state: IState = {
     search_str: null,
-    templates: []
-  }
+    templates: [],
+  };
 
   constructor(
     private router: Router,
@@ -48,10 +47,10 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
     private session: CPSession,
     private route: ActivatedRoute,
     private cpI18n: CPI18nService,
-    private service: TemplatesService
+    private service: TemplatesService,
   ) {
     super();
-    super.isLoading().subscribe(loading => this.loading = loading);
+    super.isLoading().subscribe((loading) => (this.loading = loading));
 
     this.templateId = this.route.snapshot.queryParams['template'];
     this.schoolId = this.route.snapshot.queryParams['school'];
@@ -68,24 +67,19 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
   }
 
   fetch() {
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('search_str', this.state.search_str);
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    const stream$ = this.service.getTemplates(this.startRange, this.endRange, search);
+    const stream$ = this.service.getTemplates(
+      this.startRange,
+      this.endRange,
+      search,
+    );
 
-    super
-      .fetchData(stream$)
-      .then(res => {
-        this.state = Object.assign(
-          {},
-          this.state,
-          { templates: res.data }
-        )
-      })
-      .catch(err => {
-        console.log(err);
-      })
+    super.fetchData(stream$).then((res) => {
+      this.state = Object.assign({}, this.state, { templates: res.data });
+    });
   }
 
   onFilter(search_str) {
@@ -97,13 +91,9 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
   }
 
   onDeleted(id) {
-    this.state = Object.assign(
-      {},
-      this.state,
-      {
-        templates: this.state.templates.filter(template => template.id !== id)
-      }
-    );
+    this.state = Object.assign({}, this.state, {
+      templates: this.state.templates.filter((template) => template.id !== id),
+    });
 
     if (this.state.templates.length === 0 && this.pageNumber > 1) {
       this.resetPagination();
@@ -115,7 +105,13 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
     this.isTemplateDelete = true;
     this.deleteTemplate = template;
 
-    setTimeout(() => { $('#deleteTemplateModal').modal(); }, 1);
+    setTimeout(
+      () => {
+        $('#deleteTemplateModal').modal();
+      },
+
+      1,
+    );
   }
 
   onComposed() {
@@ -124,7 +120,7 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
       payload: {
         body: this.cpI18n.translate('announcement_success_sent'),
         autoClose: true,
-      }
+      },
     });
 
     $('#templateComposeModal').modal('hide');
@@ -137,21 +133,22 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
 
   onLaunchCreateModal() {
     this.isTemplateCreateModal = true;
-    setTimeout(() => { $('#templateCreateModal').modal(); }, 1);
+    setTimeout(
+      () => {
+        $('#templateCreateModal').modal();
+      },
+
+      1,
+    );
   }
 
   updateURL(template) {
-    this
-      .router
-      .navigate(
-      ['/notify/templates'],
-      {
-        queryParams: {
-          'template': base64.encode(template.id.toString()),
-          'school': base64.encode(this.session.g.get('school').id.toString()),
-        }
-      }
-      );
+    this.router.navigate(['/notify/templates'], {
+      queryParams: {
+        template: base64.encode(template.id.toString()),
+        school: base64.encode(this.session.g.get('school').id.toString()),
+      },
+    });
   }
   doComposeModalTeardown() {
     this.isTemplateComposeModal = false;
@@ -165,24 +162,35 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
     this.isTemplateComposeModal = true;
     this.templateData = templateData;
 
-    setTimeout(() => { $('#templateComposeModal').modal(); }, 1);
+    setTimeout(
+      () => {
+        $('#templateComposeModal').modal();
+      },
+
+      1,
+    );
   }
 
   loadTemplateFromId() {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    this
-      .service
+    this.service
       .getTemplateById(search, +base64.decode(this.templateId))
       .toPromise()
-      .then(template => {
+      .then((template) => {
         this.isTemplateComposeModal = true;
 
         this.templateData = template;
-        setTimeout(() => { $('#templateComposeModal').modal(); }, 1);
+        setTimeout(
+          () => {
+            $('#templateComposeModal').modal();
+          },
+
+          1,
+        );
       })
-      .catch(_ => null);
+      .catch((_) => null);
   }
 
   ngOnInit() {

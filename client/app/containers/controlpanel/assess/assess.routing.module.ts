@@ -5,27 +5,28 @@ import { AuthGuard } from '../../../config/guards';
 
 import { AssessComponent } from './assess.component';
 
-
 const appRoutes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
 
   {
     path: '',
     component: AssessComponent,
-    canActivate: [ AuthGuard ],
+    canActivate: [AuthGuard],
     children: [
-      { path: 'dashboard', loadChildren: './engagement/engagement.module#EngagementModule' },
+      {
+        path: 'dashboard',
+        loadChildren: './engagement/engagement.module#EngagementModule',
+      },
 
-      { path: 'students', loadChildren: './students/students.module#EngagementStudentsModule' },
-    ]
-  }
+      {
+        path: 'students',
+        loadChildren: './students/students.module#EngagementStudentsModule',
+      },
+    ],
+  },
 ];
 @NgModule({
-  imports: [
-    RouterModule.forChild(appRoutes)
-  ],
-  exports: [
-    RouterModule
-  ]
+  imports: [RouterModule.forChild(appRoutes)],
+  exports: [RouterModule],
 })
 export class AssessRoutingModule {}

@@ -20,13 +20,18 @@ import { EventsModule } from '../../events/events.module';
 import { ClubsService } from '../clubs.service';
 
 @NgModule({
-  declarations: [ ClubsWallComponent, ClubsInfoComponent,
-  ClubsDetailsComponent ],
+  declarations: [ClubsWallComponent, ClubsInfoComponent, ClubsDetailsComponent],
 
-  imports: [ CommonModule, SharedModule, RouterModule, ReactiveFormsModule,
-  ClubsDetailsRoutingModule,
-  FeedsModule, EventsModule ],
+  imports: [
+    CommonModule,
+    SharedModule,
+    RouterModule,
+    ReactiveFormsModule,
+    ClubsDetailsRoutingModule,
+    FeedsModule,
+    EventsModule,
+  ],
 
-  providers: [ ClubsService ],
+  providers: [ClubsService],
 })
 export class ClubsDetailsModule {}

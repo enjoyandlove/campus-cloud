@@ -1,4 +1,3 @@
-
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -13,29 +12,32 @@ const appRoutes: Routes = [
     path: '',
     component: ControlPanelComponent,
     children: [
-      { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
+      {
+        path: 'dashboard',
+        loadChildren: './dashboard/dashboard.module#DashboardModule',
+      },
 
-      { path: 'manage', loadChildren: './manage/manage.module#ManageModule'},
+      { path: 'manage', loadChildren: './manage/manage.module#ManageModule' },
 
       { path: 'notify', loadChildren: './notify/notify.module#NotifyModule' },
 
       { path: 'assess', loadChildren: './assess/assess.module#AssessModule' },
 
-      { path: 'account', loadChildren: './account/account.module#AccountModule' },
+      {
+        path: 'account',
+        loadChildren: './account/account.module#AccountModule',
+      },
 
-      { path: 'demo', loadChildren: './request-demo/request-demo.module#RequestDemoModule' },
-    ]
+      {
+        path: 'demo',
+        loadChildren: './request-demo/request-demo.module#RequestDemoModule',
+      },
+    ],
   },
 ];
 @NgModule({
-  imports: [
-    RouterModule.forChild(appRoutes)
-  ],
-  providers: [
-    CPPreloadStrategy
-  ],
-  exports: [
-    RouterModule
-  ]
+  imports: [RouterModule.forChild(appRoutes)],
+  providers: [CPPreloadStrategy],
+  exports: [RouterModule],
 })
 export class ControlPanelRoutingModule {}

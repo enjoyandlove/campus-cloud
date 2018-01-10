@@ -9,7 +9,8 @@ import {
   ErrorService,
   StoreService,
   AdminService,
-  CPI18nService } from '../../../../../shared/services';
+  CPI18nService,
+} from '../../../../../shared/services';
 
 import { EventsService } from '../events.service';
 import { CPSession, ISchool } from '../../../../../session';
@@ -22,13 +23,13 @@ const COMMON_DATE_PICKER_OPTIONS = {
   utc: true,
   altInput: true,
   enableTime: true,
-  altFormat: 'F j, Y h:i K'
+  altFormat: 'F j, Y h:i K',
 };
 
 @Component({
   selector: 'cp-events-create',
   templateUrl: './events-create.component.html',
-  styleUrls: ['./events-create.component.scss']
+  styleUrls: ['./events-create.component.scss'],
 })
 export class EventsCreateComponent implements OnInit {
   @Input() storeId: number;
@@ -50,7 +51,7 @@ export class EventsCreateComponent implements OnInit {
   startdatePickerOpts;
   mapCenter: BehaviorSubject<any>;
   newAddress = new BehaviorSubject(null);
-  managers: Array<any> = [{'label': '---'}];
+  managers: Array<any> = [{ label: '---' }];
 
   constructor(
     private router: Router,
@@ -61,10 +62,10 @@ export class EventsCreateComponent implements OnInit {
     private adminService: AdminService,
     private storeService: StoreService,
     private errorService: ErrorService,
-    private eventService: EventsService
+    private eventService: EventsService,
   ) {
     this.school = this.session.g.get('school');
-    let search: URLSearchParams = new URLSearchParams();
+    const search: URLSearchParams = new URLSearchParams();
 
     this.buildHeader();
     search.append('school_id', this.school.id.toString());
@@ -74,15 +75,15 @@ export class EventsCreateComponent implements OnInit {
 
   buildHeader() {
     const payload = {
-      'heading': 'events_create_heading',
-      'subheading': null,
-      'em': null,
-      'children': []
-    }
+      heading: 'events_create_heading',
+      subheading: null,
+      em: null,
+      children: [],
+    };
 
     this.storeHeader.dispatch({
       type: HEADER_UPDATE,
-      payload
+      payload,
     });
   }
 
@@ -103,26 +104,28 @@ export class EventsCreateComponent implements OnInit {
     search.append('school_id', this.school.id.toString());
     search.append('privilege_type', CP_PRIVILEGES_MAP.events.toString());
 
-    this
-    .adminService
-    .getAdminByStoreId(search)
-    .map(admins => {
-     return [
-        {
-          'label': '---',
-          'value': null
+    this.adminService
+      .getAdminByStoreId(search)
+      .map((admins) => {
+        return [
+          {
+            label: '---',
+            value: null,
+          },
+          ...admins.map((admin) => {
+            return {
+              label: `${admin.firstname} ${admin.lastname}`,
+              value: admin.id,
+            };
+          }),
+        ];
+      })
+      .subscribe(
+        (managers) => (this.managers = managers),
+        (err) => {
+          throw new Error(err);
         },
-        ...admins.map(admin => {
-          return {
-            'label': `${admin.firstname} ${admin.lastname}`,
-            'value': admin.id
-          }
-        })
-      ];
-    }).subscribe(
-      managers => this.managers = managers,
-      err => { throw new Error(err) }
-    );
+      );
   }
 
   onUploadedImage(image) {
@@ -132,52 +135,59 @@ export class EventsCreateComponent implements OnInit {
 
   toggleEventAttendance(value) {
     value = value ? 1 : 0;
-
     this.form.controls['event_attendance'].setValue(value);
   }
 
   onResetMap() {
-    this.form.controls['city'].setValue('');
-    this.form.controls['province'].setValue('');
-    this.form.controls['country'].setValue('');
-    this.form.controls['latitude'].setValue(this.school.latitude);
-    this.form.controls['longitude'].setValue(this.school.longitude);
-    this.form.controls['address'].setValue('');
-    this.form.controls['postal_code'].setValue('');
-
-    this.mapCenter.next({
-      lat: this.school.latitude,
-      lng: this.school.longitude
-    });
+    CPMap.setFormLocationData(
+      this.form,
+      CPMap.resetLocationFields(this.school),
+    );
+    this.centerMap(this.school.latitude, this.school.longitude);
   }
 
   onMapSelection(data) {
-    let cpMap = CPMap.getBaseMapObject(data);
+    const cpMap = CPMap.getBaseMapObject(data);
 
-    this.form.controls['city'].setValue(cpMap.city);
-    this.form.controls['province'].setValue(cpMap.province);
-    this.form.controls['country'].setValue(cpMap.country);
-    this.form.controls['latitude'].setValue(cpMap.latitude);
-    this.form.controls['longitude'].setValue(cpMap.longitude);
-    this.form.controls['address'].setValue(data.formatted_address);
-    this.form.controls['postal_code'].setValue(cpMap.postal_code);
+    const location = { ...cpMap, address: data.formatted_address };
+
+    CPMap.setFormLocationData(this.form, location);
+
     this.newAddress.next(this.form.controls['address'].value);
   }
 
+  updateWithUserLocation(location) {
+    location = Object.assign({}, location, { location: location.name });
+
+    CPMap.setFormLocationData(this.form, location);
+
+    this.centerMap(location.latitude, location.longitude);
+  }
+
   onPlaceChange(data) {
-    if (!data) { return; }
+    if (!data) {
+      return;
+    }
 
-    let cpMap = CPMap.getBaseMapObject(data);
+    if ('fromUsersLocations' in data) {
+      this.updateWithUserLocation(data);
 
-    this.form.controls['city'].setValue(cpMap.city);
-    this.form.controls['province'].setValue(cpMap.province);
-    this.form.controls['country'].setValue(cpMap.country);
-    this.form.controls['latitude'].setValue(cpMap.latitude);
-    this.form.controls['longitude'].setValue(cpMap.longitude);
-    this.form.controls['address'].setValue(data.name);
-    this.form.controls['postal_code'].setValue(cpMap.postal_code);
+      return;
+    }
 
-    this.mapCenter.next(data.geometry.location.toJSON());
+    const cpMap = CPMap.getBaseMapObject(data);
+
+    const location = { ...cpMap, address: data.name };
+
+    const coords: google.maps.LatLngLiteral = data.geometry.location.toJSON();
+
+    CPMap.setFormLocationData(this.form, location);
+
+    this.centerMap(coords.lat, coords.lng);
+  }
+
+  centerMap(lat: number, lng: number) {
+    return this.mapCenter.next({ lat, lng });
   }
 
   onSubmit() {
@@ -189,57 +199,73 @@ export class EventsCreateComponent implements OnInit {
     if (!this.form.valid) {
       this.formError = true;
       this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
+
       return;
     }
 
     if (this.form.controls['event_attendance'].value === EventAttendance.enabled) {
       let managerId = this.form.controls['event_manager_id'];
 
-      if (!(managerId.value)) {
+      if (!managerId.value) {
         this.formError = true;
-        managerId.setErrors({'required': true});
-        this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
+        managerId.setErrors({ required: true });
+        this.buttonData = Object.assign({}, this.buttonData, {
+          disabled: false,
+        });
       }
     }
 
     if (this.form.controls['end'].value <= this.form.controls['start'].value) {
       this.isDateError = true;
       this.formError = true;
-      this.form.controls['end'].setErrors({ 'required': true });
-      this.dateErrorMessage = this.cpI18n.translate('events_error_end_date_before_start');
+      this.form.controls['end'].setErrors({ required: true });
+      this.dateErrorMessage = this.cpI18n.translate(
+        'events_error_end_date_before_start',
+      );
       this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
+
       return;
     }
 
-    if (this.form.controls['end'].value <= Math.round(new Date().getTime() / 1000)) {
+    if (
+      this.form.controls['end'].value <= Math.round(new Date().getTime() / 1000)
+    ) {
       this.isDateError = true;
       this.formError = true;
-      this.form.controls['end'].setErrors({ 'required': true });
-      this.dateErrorMessage = this.cpI18n.translate('events_error_end_date_after_now');
+      this.form.controls['end'].setErrors({ required: true });
+      this.dateErrorMessage = this.cpI18n.translate(
+        'events_error_end_date_after_now',
+      );
       this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
+
       return;
     }
 
-    this
-      .eventService
-      .createEvent(this.form.value)
-      .subscribe(
-      res => {
+    this.eventService.createEvent(this.form.value).subscribe(
+      (res) => {
         if (this.isService) {
-          this.router.navigate([`/manage/services/${this.serviceId}/events/${res.id}`]);
+          this.router.navigate([
+            `/manage/services/${this.serviceId}/events/${res.id}`,
+          ]);
+
           return;
         }
         if (this.isClub) {
-          this.router.navigate([`/manage/clubs/${this.clubId}/events/${res.id}`]);
+          this.router.navigate([
+            `/manage/clubs/${this.clubId}/events/${res.id}`,
+          ]);
+
           return;
         }
         this.router.navigate(['/manage/events/' + res.id]);
       },
-      err => {
+      (err) => {
         this.errorService.handleError(err);
-        this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
-      }
-      );
+        this.buttonData = Object.assign({}, this.buttonData, {
+          disabled: false,
+        });
+      },
+    );
   }
 
   onEventFeedbackChange(option) {
@@ -262,64 +288,63 @@ export class EventsCreateComponent implements OnInit {
 
     this.buttonData = {
       class: 'primary',
-      text: this.cpI18n.translate('events_button_new')
-    }
+      text: this.cpI18n.translate('events_button_new'),
+    };
 
     this.booleanOptions = [
       {
-        'label': this.cpI18n.translate('enabled'),
-        'action': EventFeedback.enabled
+        label: this.cpI18n.translate('enabled'),
+        action: EventFeedback.enabled,
       },
       {
-        'label': this.cpI18n.translate('disabled'),
-        'action': EventFeedback.disabled
-      }
+        label: this.cpI18n.translate('disabled'),
+        action: EventFeedback.disabled,
+      },
     ];
 
-    this.mapCenter = new BehaviorSubject(
-      {
-        lat: this.school.latitude,
-        lng: this.school.longitude
-      });
-
-    this.form = this.fb.group({
-      'title': [null, Validators.required],
-      'store_id': [store_id ? store_id : null, Validators.required],
-      'location': [null],
-      'room_data': [null],
-      'city': [null],
-      'province': [null],
-      'country': [null],
-      'address': [null],
-      'postal_code': [null],
-      'latitude': [this.school.latitude],
-      'longitude': [this.school.longitude],
-      'event_attendance': [EventAttendance.disabled],
-      'start': [null, Validators.required],
-      'poster_url': [null, Validators.required],
-      'poster_thumb_url': [null, Validators.required],
-      'end': [null, Validators.required],
-      'description': [null],
-      'event_feedback': [EventFeedback.enabled],
-      'event_manager_id': [null],
-      'attendance_manager_email': [null],
-      'custom_basic_feedback_label': [null]
+    this.mapCenter = new BehaviorSubject({
+      lat: this.school.latitude,
+      lng: this.school.longitude,
     });
 
-    let _self = this;
+    this.form = this.fb.group({
+      title: [null, Validators.required],
+      store_id: [store_id ? store_id : null, Validators.required],
+      location: [null],
+      room_data: [null],
+      city: [null],
+      province: [null],
+      country: [null],
+      address: [null],
+      postal_code: [null],
+      latitude: [this.school.latitude],
+      longitude: [this.school.longitude],
+      event_attendance: [EventAttendance.disabled],
+      start: [null, Validators.required],
+      poster_url: [null, Validators.required],
+      poster_thumb_url: [null, Validators.required],
+      end: [null, Validators.required],
+      description: [null],
+      event_feedback: [EventFeedback.enabled],
+      event_manager_id: [null],
+      attendance_manager_email: [null],
+      custom_basic_feedback_label: [null],
+    });
+
+    const _self = this;
 
     this.startdatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      onClose: function (date) {
+      onClose: function(date) {
         _self.form.controls['start'].setValue(CPDate.toEpoch(date[0]));
-      }
+      },
     };
 
     this.enddatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      onClose: function (date) {
+      onClose: function(date) {
         _self.form.controls['end'].setValue(CPDate.toEpoch(date[0]));
-      }
+      },
     };
   }
 }

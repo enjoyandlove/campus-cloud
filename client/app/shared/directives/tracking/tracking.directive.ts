@@ -1,11 +1,11 @@
-import { Directive, Input, HostListener } from '@angular/core';
+import { Directive, HostListener, Input } from '@angular/core';
 
 import { CPTrackingService } from './../../services/tracking.service';
 
 export const CP_TRACK_TO = {
-  'GA': 'ga',
-  'AMPLITUDE': 'am'
-}
+  GA: 'ga',
+  AMPLITUDE: 'am',
+};
 
 interface IEventData {
   type: string;
@@ -15,18 +15,15 @@ interface IEventData {
 
 @Directive({
   selector: '[cpTracker]',
-  providers: [ CPTrackingService ]
+  providers: [CPTrackingService],
 })
 export class CPTrackerDirective {
   @Input() eventData: IEventData;
 
-  constructor(
-    public cpTracker: CPTrackingService
-  ) { }
+  constructor(public cpTracker: CPTrackingService) {}
 
-  @HostListener('click') onclick() {
-    console.log(this.eventData);
-
+  @HostListener('click')
+  onclick() {
     if (this.eventData.type === CP_TRACK_TO.GA) {
       this.emitGA();
     }
@@ -37,10 +34,13 @@ export class CPTrackerDirective {
   }
 
   emitGA() {
-    this.cpTracker.gaEmitEvent(this.eventData.eventAction, this.eventData.eventCategory);
+    this.cpTracker.gaEmitEvent(
+      this.eventData.eventAction,
+      this.eventData.eventCategory,
+    );
   }
 
   emitAmplitude() {
-    console.log('emitting amplitude');
+    // console.log('emitting amplitude');
   }
 }

@@ -12,7 +12,7 @@ export class EventUtilService {
 
   isUpcomingEvent(event: IEvent) {
     return event.start > CPDate.toEpoch(new Date());
-  };
+  }
 
   buildUrlPrefix(clubId: number = null, serviceId: number = null) {
     if (clubId) {
@@ -20,24 +20,26 @@ export class EventUtilService {
     } else if (serviceId) {
       return `/manage/services/${serviceId}/events`;
     }
+
     return '/manage/events';
   }
 
   getSubNavChildren(event, urlPrefix) {
     const pastEvent = this.isPastEvent(event);
-    const attendanceEnabled = event.event_attendance === EventAttendance.enabled;
+    const attendanceEnabled =
+      event.event_attendance === EventAttendance.enabled;
 
     const children = [
       {
-        'label': 'info',
-        'url': `${urlPrefix}/${event.id}/info`
+        label: 'info',
+        url: `${urlPrefix}/${event.id}/info`,
       },
       {
-        'label': 'assessment',
-        'url': `${urlPrefix}/${event.id}`
-      }
+        label: 'assessment',
+        url: `${urlPrefix}/${event.id}`,
+      },
     ];
 
-    return pastEvent && attendanceEnabled ? children : []
+    return pastEvent && attendanceEnabled ? children : [];
   }
 }

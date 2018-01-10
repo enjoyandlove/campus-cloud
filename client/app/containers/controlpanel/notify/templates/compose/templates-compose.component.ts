@@ -1,22 +1,27 @@
-import { Component, Input, OnInit, OnDestroy, HostListener, ElementRef } from '@angular/core';
+/* tslint:disable:max-line-length */
+import {
+  Component,
+  Input,
+  OnInit,
+  OnDestroy,
+  HostListener,
+  ElementRef,
+} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { CPSession } from './../../../../../session/index';
 import { StoreService, CPI18nService } from './../../../../../shared/services';
 import { AnnouncementsService } from './../../announcements/announcements.service';
 
-import {
-  AnnouncementsComposeComponent
-} from './../../announcements/compose/announcements-compose.component';
+import { AnnouncementsComposeComponent } from './../../announcements/compose/announcements-compose.component';
 
 @Component({
   selector: 'cp-templates-compose',
   templateUrl: './templates-compose.component.html',
-  styleUrls: ['./templates-compose.component.scss']
+  styleUrls: ['./templates-compose.component.scss'],
 })
 export class TemplatesComposeComponent extends AnnouncementsComposeComponent
   implements OnInit, OnDestroy {
-
   @Input() data: any;
 
   form: FormGroup;
@@ -26,7 +31,7 @@ export class TemplatesComposeComponent extends AnnouncementsComposeComponent
     public session: CPSession,
     public cpI18n: CPI18nService,
     public storeService: StoreService,
-    public service: AnnouncementsService
+    public service: AnnouncementsService,
   ) {
     super(fb, session, cpI18n, storeService, service);
   }
@@ -79,6 +84,7 @@ export class TemplatesComposeComponent extends AnnouncementsComposeComponent
   doValidate() {
     if (this.state.isEmergency || this.state.isCampusWide) {
       this.shouldConfirm = true;
+
       return;
     }
     this.doSubmit();
@@ -113,17 +119,13 @@ export class TemplatesComposeComponent extends AnnouncementsComposeComponent
   }
 
   updateStateFromInputData() {
-    this.state = Object.assign(
-      {},
-      this.state,
-      {
-        isToLists: 'list_details' in this.data,
-        isToUsers: 'user_details' in this.data,
-        isCampusWide: this.data.is_school_wide,
-        isUrgent: this.data.priority === this.URGENT_TYPE,
-        isEmergency: this.data.priority === this.EMERGENCY_TYPE,
-      }
-    )
+    this.state = Object.assign({}, this.state, {
+      isToLists: 'list_details' in this.data,
+      isToUsers: 'user_details' in this.data,
+      isCampusWide: this.data.is_school_wide,
+      isUrgent: this.data.priority === this.URGENT_TYPE,
+      isEmergency: this.data.priority === this.EMERGENCY_TYPE,
+    });
   }
 
   updateLabel() {
@@ -131,19 +133,19 @@ export class TemplatesComposeComponent extends AnnouncementsComposeComponent
       case this.EMERGENCY_TYPE:
         this.subject_prefix = {
           label: this.cpI18n.translate('emergency'),
-          type: 'danger'
+          type: 'danger',
         };
         break;
       case this.URGENT_TYPE:
         this.subject_prefix = {
           label: this.cpI18n.translate('urgent'),
-          type: 'warning'
+          type: 'warning',
         };
         break;
       default:
         this.subject_prefix = {
           label: null,
-          type: null
+          type: null,
         };
         break;
     }
@@ -159,12 +161,12 @@ export class TemplatesComposeComponent extends AnnouncementsComposeComponent
     this.form.controls['is_school_wide'].setValue(this.data.is_school_wide);
 
     if ('list_details' in this.data) {
-      const list_ids = this.data.list_details.map(list => list.id);
+      const list_ids = this.data.list_details.map((list) => list.id);
       this.form.controls['list_ids'].setValue(list_ids);
     }
 
     if ('user_details' in this.data) {
-      const user_ids = this.data.user_details.map(user => user.id);
+      const user_ids = this.data.user_details.map((user) => user.id);
       this.form.controls['user_ids'].setValue(user_ids);
     }
   }
@@ -173,33 +175,25 @@ export class TemplatesComposeComponent extends AnnouncementsComposeComponent
     this.typeAheadOpts.isUsers = 'user_details' in this.data;
 
     if ('list_details' in this.data) {
-      this.typeAheadOpts = Object.assign(
-        {},
-        this.typeAheadOpts,
-        {
-          defaultValues: this.data.list_details.map(list => {
-            return {
-              id: list.id,
-              label: list.name
-            }
-          })
-        }
-      );
+      this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
+        defaultValues: this.data.list_details.map((list) => {
+          return {
+            id: list.id,
+            label: list.name,
+          };
+        }),
+      });
     }
 
     if ('user_details' in this.data) {
-      this.typeAheadOpts = Object.assign(
-        {},
-        this.typeAheadOpts,
-        {
-          defaultValues: this.data.user_details.map(user => {
-            return {
-              id: user.id,
-              label: user.email
-            }
-          })
-        }
-      );
+      this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
+        defaultValues: this.data.user_details.map((user) => {
+          return {
+            id: user.id,
+            label: user.email,
+          };
+        }),
+      });
     }
   }
 
@@ -215,7 +209,7 @@ export class TemplatesComposeComponent extends AnnouncementsComposeComponent
 
     this.selectedHost = {
       label: this.data.store_name,
-      value: this.data.store_id
-    }
+      value: this.data.store_id,
+    };
   }
 }

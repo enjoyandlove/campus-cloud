@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 /**
  * CRUD
  */
-import { LinksListComponent }  from './list';
+import { LinksListComponent } from './list';
 // import { LinksEditComponent }  from './edit';
 // import { LinksDeleteComponent }  from './delete';
 
@@ -14,11 +14,7 @@ const appRoutes: Routes = [
   { path: '', component: LinksListComponent },
 ];
 @NgModule({
-  imports: [
-    RouterModule.forChild(appRoutes)
-  ],
-  exports: [
-    RouterModule
-  ]
+  imports: [RouterModule.forChild(appRoutes)],
+  exports: [RouterModule],
 })
 export class LinksRoutingModule {}

@@ -1,9 +1,9 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'cp-clubs-members-action-box',
   templateUrl: './action-box.component.html',
-  styleUrls: ['./action-box.component.scss']
+  styleUrls: ['./action-box.component.scss'],
 })
 export class ClubsMembersActionBoxComponent {
   @Output() create: EventEmitter<null> = new EventEmitter();

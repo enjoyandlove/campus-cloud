@@ -43,8 +43,8 @@ export class AnnouncementsListActionBoxComponent implements OnInit {
   }
 
   ngOnInit() {
-    let schoolPrivilege = this.session.g.get('user')
-      .school_level_privileges[this.session.g.get('school').id];
+    const schoolPrivilege = this.session.g.get('user')
+                            .school_level_privileges[this.session.g.get('school').id];
 
     this.canCompose = schoolPrivilege[CP_PRIVILEGES_MAP.campus_announcements].w;
 

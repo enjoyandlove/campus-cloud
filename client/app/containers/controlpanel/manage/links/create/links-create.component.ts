@@ -6,15 +6,16 @@ import { ILink } from '../link.interface';
 import { API } from '../../../../../config/api';
 import { LinksService } from '../links.service';
 import { CPSession } from '../../../../../session';
-import { CPImage, appStorage } from '../../../../../shared/utils';
-import { FileUploadService, CPI18nService } from '../../../../../shared/services';
+import { appStorage } from '../../../../../shared/utils';
+import { FileUploadService } from '../../../../../shared/services';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 declare var $: any;
 
 @Component({
   selector: 'cp-links-create',
   templateUrl: './links-create.component.html',
-  styleUrls: ['./links-create.component.scss']
+  styleUrls: ['./links-create.component.scss'],
 })
 export class LinksCreateComponent implements OnInit {
   @Output() createLink: EventEmitter<ILink> = new EventEmitter();
@@ -27,62 +28,55 @@ export class LinksCreateComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private session: CPSession,
+    public cpI18n: CPI18nService,
     private service: LinksService,
-    private cpI18n: CPI18nService,
-    private fileUploadService: FileUploadService
-  ) { }
+    private fileUploadService: FileUploadService,
+  ) {}
 
   buildForm() {
     this.form = this.fb.group({
-      'name': [null, Validators.required],
-      'link_url': [null, Validators.required],
-      'school_id': [this.storeId, Validators.required],
-      'description': [null, Validators.maxLength(512)],
-      'img_url': [null],
+      name: [null, Validators.required],
+      link_url: [null, Validators.required],
+      school_id: [this.storeId, Validators.required],
+      description: [null, Validators.maxLength(512)],
+      img_url: [null],
     });
   }
 
   onFileUpload(file) {
     this.imageError = null;
-    const fileExtension = file.name.split('.').pop();
+    const validate = this.fileUploadService.validImage(file);
 
-    if (!CPImage.isSizeOk(file.size, CPImage.MAX_IMAGE_SIZE)) {
-      this.imageError = this.cpI18n.translate('error_file_is_too_big');
-      return;
-    }
+    if (!validate.valid) {
+      this.imageError = validate.errors[0];
 
-    if (!CPImage.isValidExtension(fileExtension, CPImage.VALID_EXTENSIONS)) {
-      this.imageError = this.cpI18n.translate('error_invalid_extension');
       return;
     }
 
     const headers = new Headers();
     const url = this.service.getUploadImageUrl();
-    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
+    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(
+      appStorage.keys.SESSION,
+    )}`;
 
     headers.append('Authorization', auth);
 
-    this
-      .fileUploadService
-      .uploadFile(file, url, headers)
-      .subscribe(
-      res => {
+    this.fileUploadService.uploadFile(file, url, headers).subscribe(
+      (res) => {
         this.form.controls['img_url'].setValue(res.image_url);
       },
-      err => { throw new Error(err) }
-      );
+      (err) => {
+        throw new Error(err);
+      },
+    );
   }
 
   doSubmit() {
-    this
-      .service
-      .createLink(this.form.value)
-      .subscribe(
-        res => {
-          $('#linksCreate').modal('hide');
-          this.createLink.emit(res);
-          this.resetModal();
-        });
+    this.service.createLink(this.form.value).subscribe((res) => {
+      $('#linksCreate').modal('hide');
+      this.createLink.emit(res);
+      this.resetModal();
+    });
   }
 
   resetModal() {
