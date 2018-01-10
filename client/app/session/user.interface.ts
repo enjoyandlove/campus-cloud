@@ -12,4 +12,4 @@ export interface IUser {
   profile_pic_url: string;
   account_mapping: any;
   school_level_privileges: any;
-};
+}

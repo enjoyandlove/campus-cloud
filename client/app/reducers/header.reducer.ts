@@ -11,9 +11,9 @@ export interface IHeader {
   crumbs?: {
     url: string;
     label: string;
-  }
+  };
 
-  children: {url: string, label: string}[];
+  children: { url: string; label: string }[];
 }
 
 const initialState: IHeader = {
@@ -22,32 +22,29 @@ const initialState: IHeader = {
   em: '',
   crumbs: {
     url: null,
-    label: null
+    label: null,
   },
-  children: []
+  children: [],
 };
 
 export function reducer(state = initialState, action) {
   switch (action.type) {
-    case (HEADER_UPDATE):
+    case HEADER_UPDATE:
       let payload = action.payload;
 
       if (!('crumbs' in payload)) {
-        payload = Object.assign(
-          {},
-          payload,
-          {
-            crumbs: {
-              url: null,
-              label: null
-            }
-          }
-        )
+        payload = Object.assign({}, payload, {
+          crumbs: {
+            url: null,
+            label: null,
+          },
+        });
       }
+
       return Object.assign({}, state, payload);
-    case (HEADER_DEFAULT):
+    case HEADER_DEFAULT:
       return initialState;
     default:
       return state;
   }
-};
+}

@@ -15,6 +15,8 @@ export const API_ENDPOINTS = {
 
   SESSION: 'session',
 
+  FILE_UPLOAD: 'file',
+
   P_RESET: 'ns_admin',
 
   SERVICES: 'service',
@@ -46,7 +48,6 @@ export const API_ENDPOINTS = {
 
   STUDENT_PROFILE: 'student_profile',
 
-
   TEMPLATE: 'announcement_template',
   // Event assessment
 
@@ -59,7 +60,6 @@ export const API_ENDPOINTS = {
   STUDENT_ENGAGEMENT: 'student_engagement',
 
   SERVICE_ASSESSMENT: 'service_assessment',
-
 
   DASHBOARD_TOP_CLUBS: 'analytics/club_data',
 
@@ -82,5 +82,4 @@ export const API_ENDPOINTS = {
   DASHBOARD_INTEGRATION_STATUS: 'analytics/integration_status',
 
   DASHBOARD_GENERAL_INFORMATION: 'analytics/general_information',
-
-}
+};

@@ -16,14 +16,13 @@ interface IState {
 
 const state: IState = {
   links: [],
-  search_str: null
+  search_str: null,
 };
-
 
 @Component({
   selector: 'cp-links-list',
   templateUrl: './links-list.component.html',
-  styleUrls: ['./links-list.component.scss']
+  styleUrls: ['./links-list.component.scss'],
 })
 export class LinksListComponent extends BaseComponent implements OnInit {
   pageNext;
@@ -41,13 +40,13 @@ export class LinksListComponent extends BaseComponent implements OnInit {
   constructor(
     private session: CPSession,
     public cpI18n: CPI18nService,
-    private service: LinksService
+    private service: LinksService,
   ) {
     super();
 
     this.fetch();
 
-    super.isLoading().subscribe(loading => this.loading = loading);
+    super.isLoading().subscribe((loading) => (this.loading = loading));
   }
 
   onPaginationNext() {
@@ -63,11 +62,7 @@ export class LinksListComponent extends BaseComponent implements OnInit {
   }
 
   onSearch(search_str) {
-    this.state = Object.assign(
-      {},
-      this.state,
-      { search_str }
-    );
+    this.state = Object.assign({}, this.state, { search_str });
 
     this.resetPagination();
 
@@ -84,14 +79,22 @@ export class LinksListComponent extends BaseComponent implements OnInit {
 
     super
       .fetchData(this.service.getLinks(start, end, search))
-      .then(res => this.state = { ...this.state, links: res.data })
-      .catch(err => { throw new Error(err) });
+      .then((res) => (this.state = { ...this.state, links: res.data }))
+      .catch((err) => {
+        throw new Error(err);
+      });
   }
 
   onLaunchCreateModal() {
     this.isLinksCreate = true;
 
-    setTimeout(() => { $('#linksCreate').modal(); }, 1);
+    setTimeout(
+      () => {
+        $('#linksCreate').modal();
+      },
+
+      1,
+    );
   }
 
   onCreatedLink(link: ILink) {
@@ -102,25 +105,19 @@ export class LinksListComponent extends BaseComponent implements OnInit {
   onEditedLink(editedLink) {
     this.isLinksEdit = false;
 
-    this.state = Object.assign(
-      {},
-      this.state,
-      {
-        links: this.state.links.map(link => link.id === editedLink.id ? editedLink : link)
-      }
-    )
+    this.state = Object.assign({}, this.state, {
+      links: this.state.links.map(
+        (link) => (link.id === editedLink.id ? editedLink : link),
+      ),
+    });
   }
 
   onDeletedLink(linkId: number) {
     this.isLinksDelete = false;
 
-    this.state = Object.assign(
-      {},
-      this.state,
-      {
-        links: this.state.links.filter(link => link.id !== linkId)
-      }
-    );
+    this.state = Object.assign({}, this.state, {
+      links: this.state.links.filter((link) => link.id !== linkId),
+    });
 
     if (this.state.links.length === 0 && this.pageNumber > 1) {
       this.resetPagination();
@@ -128,5 +125,5 @@ export class LinksListComponent extends BaseComponent implements OnInit {
     }
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 }

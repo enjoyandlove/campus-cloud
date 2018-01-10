@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { ClubsListComponent } from './list';
+import { ClubsCreateComponent } from './create';
 import { ClubsEditComponent } from './edit';
 import { ClubsExcelComponent } from './excel';
-import { ClubsCreateComponent } from './create';
+import { ClubsListComponent } from './list';
 
 const appRoutes: Routes = [
   { path: '', component: ClubsListComponent },
@@ -15,15 +15,13 @@ const appRoutes: Routes = [
 
   { path: 'import/excel', component: ClubsExcelComponent },
 
-  { path: ':clubId', loadChildren: './details/details.module#ClubsDetailsModule' }
-
+  {
+    path: ':clubId',
+    loadChildren: './details/details.module#ClubsDetailsModule',
+  },
 ];
 @NgModule({
-  imports: [
-    RouterModule.forChild(appRoutes)
-  ],
-  exports: [
-    RouterModule
-  ]
+  imports: [RouterModule.forChild(appRoutes)],
+  exports: [RouterModule],
 })
 export class ClubsRoutingModule {}

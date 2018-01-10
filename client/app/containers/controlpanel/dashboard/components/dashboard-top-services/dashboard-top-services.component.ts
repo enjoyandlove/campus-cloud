@@ -8,9 +8,10 @@ import { DashboardService } from './../../dashboard.service';
 @Component({
   selector: 'cp-dashboard-top-services',
   templateUrl: './dashboard-top-services.component.html',
-  styleUrls: ['./dashboard-top-services.component.scss']
+  styleUrls: ['./dashboard-top-services.component.scss'],
 })
-export class DashboardTopServicesComponent extends BaseComponent implements OnInit {
+export class DashboardTopServicesComponent extends BaseComponent
+  implements OnInit {
   @Output() ready: EventEmitter<boolean> = new EventEmitter();
 
   _dates;
@@ -23,30 +24,29 @@ export class DashboardTopServicesComponent extends BaseComponent implements OnIn
     this.fetch();
   }
 
-  constructor(
-    private session: CPSession,
-    private service: DashboardService
-  ) {
+  constructor(private session: CPSession, private service: DashboardService) {
     super();
-    super.isLoading().subscribe(loading => {
+    super.isLoading().subscribe((loading) => {
       this.loading = loading;
       this.ready.emit(!this.loading);
     });
   }
 
   parseResponse(items: Array<any>) {
-    return new Promise(resolve => {
-      resolve(items.map(item => {
-        return {
-          'id': item.campus_service_id,
-          'name': item.service_name,
-          'image': item.service_logo_url,
-          'attendees': item.num_of_attendees,
-          'feedback': item.num_of_feedbacks,
-          'rating': item.average_of_feedbacks,
-        }
-      }))
-    })
+    return new Promise((resolve) => {
+      resolve(
+        items.map((item) => {
+          return {
+            id: item.campus_service_id,
+            name: item.service_name,
+            image: item.service_logo_url,
+            attendees: item.num_of_attendees,
+            feedback: item.num_of_feedbacks,
+            rating: item.average_of_feedbacks,
+          };
+        }),
+      );
+    });
   }
 
   fetch() {
@@ -60,9 +60,8 @@ export class DashboardTopServicesComponent extends BaseComponent implements OnIn
 
     super
       .fetchData(stream$)
-      .then(res => this.parseResponse(res.data.top_services))
-      .then((res: any) => this.items = res)
-      .catch(err => console.log(err))
+      .then((res) => this.parseResponse(res.data.top_services))
+      .then((res: any) => (this.items = res));
   }
 
   ngOnInit() {

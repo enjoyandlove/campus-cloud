@@ -13,4 +13,3 @@ export class ControlPanelService extends BaseService {
     Object.setPrototypeOf(this, ControlPanelService.prototype);
   }
 }
-

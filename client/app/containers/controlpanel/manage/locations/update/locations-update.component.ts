@@ -1,5 +1,5 @@
-import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { CPSession } from '../../../../../session';
@@ -10,7 +10,7 @@ declare var $: any;
 @Component({
   selector: 'cp-locations-update',
   templateUrl: './locations-update.component.html',
-  styleUrls: ['./locations-update.component.scss']
+  styleUrls: ['./locations-update.component.scss'],
 })
 export class LocationsUpdateComponent implements OnInit {
   @Input() location: any;
@@ -23,16 +23,13 @@ export class LocationsUpdateComponent implements OnInit {
   mapCenter: BehaviorSubject<any>;
   newAddress = new BehaviorSubject(null);
 
-  constructor(
-    private fb: FormBuilder,
-    private session: CPSession,
-  ) { }
+  constructor(private fb: FormBuilder, private session: CPSession) {}
 
   doSubmit() {
     $('#locationsUpdate').modal('hide');
     this.locationUpdated.emit({
       id: this.location.id,
-      data: this.form.value
+      data: this.form.value,
     });
     this.resetModal();
   }
@@ -48,12 +45,12 @@ export class LocationsUpdateComponent implements OnInit {
 
     this.mapCenter.next({
       lat: this.school.latitude,
-      lng: this.school.longitude
+      lng: this.school.longitude,
     });
   }
 
   onMapSelection(data) {
-    let cpMap = CPMap.getBaseMapObject(data);
+    const cpMap = CPMap.getBaseMapObject(data);
 
     this.form.controls['city'].setValue(cpMap.city);
     this.form.controls['province'].setValue(cpMap.province);
@@ -66,9 +63,11 @@ export class LocationsUpdateComponent implements OnInit {
   }
 
   onPlaceChange(data) {
-    if (!data) { return; }
+    if (!data) {
+      return;
+    }
 
-    let cpMap = CPMap.getBaseMapObject(data);
+    const cpMap = CPMap.getBaseMapObject(data);
 
     this.form.controls['city'].setValue(cpMap.city);
     this.form.controls['province'].setValue(cpMap.province);
@@ -88,22 +87,21 @@ export class LocationsUpdateComponent implements OnInit {
   ngOnInit() {
     this.school = this.session.g.get('school');
 
-    this.mapCenter = new BehaviorSubject(
-      {
-        lat: this.location.latitude,
-        lng: this.location.longitude
-      });
+    this.mapCenter = new BehaviorSubject({
+      lat: this.location.latitude,
+      lng: this.location.longitude,
+    });
 
     this.form = this.fb.group({
-      'name': [this.location.name, Validators.required],
-      'short_name': [this.location.short_name, Validators.required],
-      'address': [this.location.address, Validators.required],
-      'city': [this.location.city, Validators.required],
-      'province': [this.location.province, Validators.required],
-      'country': [this.location.country, Validators.required],
-      'postal_code': [this.location.postal_code, Validators.required],
-      'latitude': [this.location.latitude, Validators.required],
-      'longitude': [this.location.longitude, Validators.required],
+      name: [this.location.name, Validators.required],
+      short_name: [this.location.short_name, Validators.required],
+      address: [this.location.address, Validators.required],
+      city: [this.location.city, Validators.required],
+      province: [this.location.province, Validators.required],
+      country: [this.location.country, Validators.required],
+      postal_code: [this.location.postal_code, Validators.required],
+      latitude: [this.location.latitude, Validators.required],
+      longitude: [this.location.longitude, Validators.required],
     });
 
     this.isFormReady = true;

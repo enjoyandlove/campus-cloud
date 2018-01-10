@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { ClubsEventsComponent } from './clubs-events.component';
+
 /**
  * CRUD
  */
-import { ClubsEventsComponent } from './clubs-events.component';
 
 import {
   ClubsEventEditComponent,
   ClubsEventInfoComponent,
-  ClubsEventsExcelComponent,
+  ClubsEventsAttendanceComponent,
   ClubsEventsCreateComponent,
+  ClubsEventsExcelComponent,
   ClubsEventsFacebookComponent,
-  ClubsEventsAttendanceComponent
 } from './components';
-
 
 const appRoutes: Routes = [
   { path: 'import', redirectTo: '', pathMatch: 'full' },
@@ -29,11 +29,7 @@ const appRoutes: Routes = [
   { path: 'import/facebook', component: ClubsEventsFacebookComponent },
 ];
 @NgModule({
-  imports: [
-    RouterModule.forChild(appRoutes)
-  ],
-  exports: [
-    RouterModule
-  ]
+  imports: [RouterModule.forChild(appRoutes)],
+  exports: [RouterModule],
 })
 export class ClubsEventsRoutingModule {}

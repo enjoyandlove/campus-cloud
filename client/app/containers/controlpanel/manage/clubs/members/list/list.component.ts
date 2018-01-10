@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+
+import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
 import { MemberType } from '../member.status';
 import { MembersService } from '../members.service';
+
 import { CPSession } from '../../../../../../session';
+
 import { BaseComponent } from '../../../../../../base/base.component';
 
 declare var $: any;
@@ -20,7 +23,7 @@ const state: IState = {
 @Component({
   selector: 'cp-clubs-members',
   templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss']
+  styleUrls: ['./list.component.scss'],
 })
 export class ClubsMembersComponent extends BaseComponent implements OnInit {
   isEdit;
@@ -29,6 +32,7 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
   isCreate;
   isDelete;
   query = null;
+  hasSSO = false;
   editMember = '';
   deleteMember = '';
   state: IState = state;
@@ -38,10 +42,10 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
   constructor(
     private session: CPSession,
     private route: ActivatedRoute,
-    private membersService: MembersService
+    private membersService: MembersService,
   ) {
     super();
-    super.isLoading().subscribe(loading => this.loading = loading);
+    super.isLoading().subscribe((loading) => (this.loading = loading));
   }
 
   onPaginationNext() {
@@ -65,26 +69,37 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
     groupSearch.append('store_id', clubId);
     groupSearch.append('school_id', schoolId);
 
-    let socialGroupDetails$ = this.membersService.getSocialGroupDetails(groupSearch);
+    const socialGroupDetails$ = this.membersService.getSocialGroupDetails(
+      groupSearch,
+    );
 
-    let stream$ = socialGroupDetails$
-      .flatMap((groups: any) => {
+    const stream$ = socialGroupDetails$.flatMap((groups: any) => {
       memberSearch.append('group_id', groups[0].id.toString());
 
       this.groupId = groups[0].id;
 
-      return this.membersService.getMembers(memberSearch, this.startRange, this.endRange);
+      return this.membersService.getMembers(
+        memberSearch,
+        this.startRange,
+        this.endRange,
+      );
     });
 
     super
       .fetchData(stream$)
-      .then(res => this.state.members = res.data)
-      .catch(err => { throw new Error(err) });
+      .then((res) => (this.state.members = res.data))
+      .catch((err) => {
+        throw new Error(err);
+      });
   }
 
-  forceRefresh() { this.fetch(); }
+  forceRefresh() {
+    this.fetch();
+  }
 
-  onFilter(query) { this.query = query; }
+  onFilter(query) {
+    this.query = query;
+  }
 
   onLaunchCreateModal() {
     this.isCreate = true;
@@ -92,7 +107,12 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
     $('#membersCreate').modal();
   }
 
-  onTearDown(modal) { this[modal] = false; }
+  onTearDown(modal) {
+    this[modal] = false;
+  }
 
-  ngOnInit() { this.fetch(); }
+  ngOnInit() {
+    this.fetch();
+    this.hasSSO = this.session.hasSSO();
+  }
 }

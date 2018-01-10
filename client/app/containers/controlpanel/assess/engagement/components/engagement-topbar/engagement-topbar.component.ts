@@ -1,10 +1,5 @@
 import { CPI18nService } from './../../../../../../shared/services/i18n.service';
-import {
-  OnInit,
-  Output,
-  Component,
-  EventEmitter,
-} from '@angular/core';
+import { OnInit, Output, Component, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { URLSearchParams } from '@angular/http';
 
@@ -14,27 +9,27 @@ import { CPDate } from '../../../../../../shared/utils/date';
 
 interface IState {
   engagement: {
-    'label': string,
-    'data': {
-      type: string,
-      value: number
-    }
+    label: string;
+    data: {
+      type: string;
+      value: number;
+    };
   };
 
   for: {
-    'label': string,
-    'listId': number
+    label: string;
+    listId: number;
   };
 
   range: {
-    'label': string,
-    'payload': {
-      'metric': string,
-      'range': {
-        start: number,
-        end: number
-      }
-    }
+    label: string;
+    payload: {
+      metric: string;
+      range: {
+        start: number;
+        end: number;
+      };
+    };
   };
 }
 
@@ -64,8 +59,8 @@ export class EngagementTopBarComponent implements OnInit {
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
-    private route: ActivatedRoute
-  ) { }
+    private route: ActivatedRoute,
+  ) {}
 
   onDateRangeChange(payload) {
     this.updateState('range', payload);
@@ -80,11 +75,7 @@ export class EngagementTopBarComponent implements OnInit {
   }
 
   updateState(key, payload) {
-    this.state = Object.assign(
-      {},
-      this.state,
-      { [key]: payload }
-    );
+    this.state = Object.assign({}, this.state, { [key]: payload });
 
     this.doFilter.emit(this.state);
   }
@@ -92,197 +83,222 @@ export class EngagementTopBarComponent implements OnInit {
   initState() {
     this.state = {
       engagement: {
-        ...this.commonEngageMentFilter[0]
+        ...this.commonEngageMentFilter[0],
       },
 
       for: {
-        ...this.commonStudentFilter[0]
+        ...this.commonStudentFilter[0],
       },
 
       range: {
-        ...this.dateFilter[0]
-      }
+        ...this.dateFilter[0],
+      },
     };
   }
 
   getFromArray(arr: Array<any>, key: string, val: number) {
-    return arr.filter(item => item[key] === val)[0];
+    return arr.filter((item) => item[key] === val)[0];
   }
 
   getStateFromUrl() {
     const routeParams: any = this.route.snapshot.queryParams;
 
-    this.state = Object.assign(
-      {},
-      this.state,
-      {
-        engagement: {
-          ...this.getFromArray(this.engageMentFilter, 'route_id', routeParams.engagement)
-        },
+    this.state = Object.assign({}, this.state, {
+      engagement: {
+        ...this.getFromArray(
+          this.engageMentFilter,
+          'route_id',
+          routeParams.engagement,
+        ),
+      },
 
-        for: {
-          ...this.getFromArray(this.studentFilter, 'route_id', routeParams.for)
-        },
+      for: {
+        ...this.getFromArray(this.studentFilter, 'route_id', routeParams.for),
+      },
 
-        range: {
-          ...this.getFromArray(this.dateFilter, 'route_id', routeParams.range)
-        }
-      }
-    );
+      range: {
+        ...this.getFromArray(this.dateFilter, 'route_id', routeParams.range),
+      },
+    });
 
     this.doFilter.emit(this.state);
   }
 
   ngOnInit() {
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     const now = CPDate.toEpoch(new Date());
-    const lastWeek = CPDate.toEpoch(moment().subtract(6, 'days').hours(0).minutes(0).seconds(0));
-    const lastMonth = CPDate.toEpoch(moment().subtract(1, 'months').hours(0).minutes(0).seconds(0));
-    const sixWeeks = CPDate.toEpoch(moment().subtract(6, 'weeks').hours(0).minutes(0).seconds(0));
+    const lastWeek = CPDate.toEpoch(
+      moment()
+        .subtract(6, 'days')
+        .hours(0)
+        .minutes(0)
+        .seconds(0),
+    );
+    const lastMonth = CPDate.toEpoch(
+      moment()
+        .subtract(1, 'months')
+        .hours(0)
+        .minutes(0)
+        .seconds(0),
+    );
+    const sixWeeks = CPDate.toEpoch(
+      moment()
+        .subtract(6, 'weeks')
+        .hours(0)
+        .minutes(0)
+        .seconds(0),
+    );
     const threeMonths = CPDate.toEpoch(
-      moment().subtract(3, 'months').hours(0).minutes(0).seconds(0)
+      moment()
+        .subtract(3, 'months')
+        .hours(0)
+        .minutes(0)
+        .seconds(0),
     );
 
     this.dateFilter = [
       {
-        'route_id': 'last_week',
-        'label': this.cpI18n.translate('assess_last_seven_days'),
-        'payload': {
-          'metric': 'daily',
-          'range': {
+        route_id: 'last_week',
+        label: this.cpI18n.translate('assess_last_seven_days'),
+        payload: {
+          metric: 'daily',
+          range: {
             end: now,
-            start: lastWeek
-          }
-        }
+            start: lastWeek,
+          },
+        },
       },
       {
-        'route_id': 'last_month',
-        'label': this.cpI18n.translate('assess_last_month'),
-        'payload': {
-          'metric': 'daily',
-          'range': {
+        route_id: 'last_month',
+        label: this.cpI18n.translate('assess_last_month'),
+        payload: {
+          metric: 'daily',
+          range: {
             end: now,
-            start: lastMonth
-          }
-        }
+            start: lastMonth,
+          },
+        },
       },
       {
-        'route_id': 'last_six_weeks',
-        'label': this.cpI18n.translate('assess_last_six_weeks'),
-        'payload': {
-          'metric': 'weekly',
-          'range': {
+        route_id: 'last_six_weeks',
+        label: this.cpI18n.translate('assess_last_six_weeks'),
+        payload: {
+          metric: 'weekly',
+          range: {
             end: now,
-            start: sixWeeks
-          }
-        }
+            start: sixWeeks,
+          },
+        },
       },
       {
-        'route_id': 'last_three_months',
-        'label': this.cpI18n.translate('assess_last_three_months'),
-        'payload': {
-          'metric': 'monthly',
-          'range': {
+        route_id: 'last_three_months',
+        label: this.cpI18n.translate('assess_last_three_months'),
+        payload: {
+          metric: 'monthly',
+          range: {
             end: now,
-            start: threeMonths
-          }
-        }
-      }
+            start: threeMonths,
+          },
+        },
+      },
     ];
 
     this.commonEngageMentFilter = [
       {
-        'route_id': 'all',
-        'label': this.cpI18n.translate('assess_all_engagements'),
-        'data': {
+        route_id: 'all',
+        label: this.cpI18n.translate('assess_all_engagements'),
+        data: {
           type: null,
           value: 0,
-          queryParam: 'scope'
-        }
+          queryParam: 'scope',
+        },
       },
       {
-        'route_id': 'all_services',
-        'label': this.cpI18n.translate('assess_all_services'),
-        'data': {
+        route_id: 'all_services',
+        label: this.cpI18n.translate('assess_all_services'),
+        data: {
           type: 'services',
           value: 1,
-          queryParam: 'scope'
-        }
+          queryParam: 'scope',
+        },
       },
       {
-        'route_id': 'all_events',
-        'label': this.cpI18n.translate('assess_all_events'),
-        'data': {
+        route_id: 'all_events',
+        label: this.cpI18n.translate('assess_all_events'),
+        data: {
           type: 'events',
           value: 2,
-          queryParam: 'scope'
-        }
-      }
+          queryParam: 'scope',
+        },
+      },
     ];
 
     this.commonStudentFilter = [
       {
-        'route_id': 'all_students',
-        'label': this.cpI18n.translate('assess_all_students'),
-        'listId': null
-      }
+        route_id: 'all_students',
+        label: this.cpI18n.translate('assess_all_students'),
+        listId: null,
+      },
     ];
 
     this.route.data.subscribe((res: any) => {
       // @data [services, lists]
-      let _lists = [...this.commonStudentFilter];
-      let _engagements = [...this.commonEngageMentFilter];
+      const _lists = [...this.commonStudentFilter];
+      const _engagements = [...this.commonEngageMentFilter];
 
       if (res.data[0].length) {
-        _engagements.push(
-          {
-            'label': this.cpI18n.translate('services'),
-            'value': null,
-            'heading': true,
-          }
-        )
+        _engagements.push({
+          label: this.cpI18n.translate('services'),
+          value: null,
+          heading: true,
+        });
       }
 
-      res.data[1].forEach(list => {
-        _lists.push(
-          {
-            'route_id': list.name.toLowerCase().split(' ').join('_'),
-            'label': list.name,
-            'listId': list.id
-          }
-        );
+      res.data[1].forEach((list) => {
+        _lists.push({
+          route_id: list.name
+            .toLowerCase()
+            .split(' ')
+            .join('_'),
+          label: list.name,
+          listId: list.id,
+        });
       });
 
-      res.data[0].forEach(service => {
-        _engagements.push(
-          {
-            'route_id': service.name.toLowerCase().split(' ').join('_'),
-            'label': service.name,
-            'data': {
-              type: 'services',
-              value: service.id,
-              queryParam: 'service_id'
-            }
-          }
-        );
+      res.data[0].forEach((service) => {
+        _engagements.push({
+          route_id: service.name
+            .toLowerCase()
+            .split(' ')
+            .join('_'),
+          label: service.name,
+          data: {
+            type: 'services',
+            value: service.id,
+            queryParam: 'service_id',
+          },
+        });
       });
 
       this.studentFilter = _lists;
       this.engageMentFilter = _engagements;
     });
 
-    if (this.route.snapshot.queryParams['engagement'] &&
-        this.route.snapshot.queryParams['for'] &&
-        this.route.snapshot.queryParams['range']  ) {
-          this.hasRouteData = true;
+    if (
+      this.route.snapshot.queryParams['engagement'] &&
+      this.route.snapshot.queryParams['for'] &&
+      this.route.snapshot.queryParams['range']
+    ) {
+      this.hasRouteData = true;
     }
 
     this.initState();
 
     if (!this.hasRouteData) {
       this.doFilter.emit(this.state);
+
       return;
     }
 

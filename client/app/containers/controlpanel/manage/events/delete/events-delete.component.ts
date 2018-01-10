@@ -8,7 +8,7 @@ declare var $: any;
 @Component({
   selector: 'cp-events-delete',
   templateUrl: './events-delete.component.html',
-  styleUrls: ['./events-delete.component.scss']
+  styleUrls: ['./events-delete.component.scss'],
 })
 export class EventsDeleteComponent implements OnInit {
   @Input() event: any;
@@ -19,26 +19,22 @@ export class EventsDeleteComponent implements OnInit {
   constructor(
     private cpI18n: CPI18nService,
     private eventService: EventsService,
-  ) { }
+  ) {}
 
   onDelete() {
-    this
-      .eventService
-      .deleteEventById(this.event.id)
-      .subscribe(
-        () => {
-          this.deletedEvent.emit(this.event.id);
+    this.eventService.deleteEventById(this.event.id).subscribe(() => {
+      this.deletedEvent.emit(this.event.id);
 
-          $('#deleteEventsModal').modal('hide');
+      $('#deleteEventsModal').modal('hide');
 
-          this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
-        });
+      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
+    });
   }
 
   ngOnInit() {
     this.buttonData = {
       text: this.cpI18n.translate('delete'),
-      class: 'danger'
-    }
+      class: 'danger',
+    };
   }
 }

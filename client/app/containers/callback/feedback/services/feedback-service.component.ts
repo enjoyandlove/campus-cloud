@@ -1,15 +1,15 @@
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { URLSearchParams } from '@angular/http';
+import { ActivatedRoute } from '@angular/router';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { FeedbackService } from '../feedback.service';
 import { BaseComponent } from '../../../../base/base.component';
+import { FeedbackService } from '../feedback.service';
 
 @Component({
   selector: 'cp-feedback-service',
   templateUrl: './feedback-service.component.html',
-  styleUrls: ['./feedback-service.component.scss']
+  styleUrls: ['./feedback-service.component.scss'],
 })
 export class FeedbackServiceComponent extends BaseComponent implements OnInit {
   event;
@@ -21,10 +21,10 @@ export class FeedbackServiceComponent extends BaseComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private feedbackService: FeedbackService
+    private feedbackService: FeedbackService,
   ) {
     super();
-    super.isLoading().subscribe(res => this.loading = res);
+    super.isLoading().subscribe((res) => (this.loading = res));
 
     this.checkinId = this.route.snapshot.params['service'];
   }
@@ -32,18 +32,17 @@ export class FeedbackServiceComponent extends BaseComponent implements OnInit {
   fetch() {
     super
       .fetchData(this.feedbackService.getServiceData(this.search))
-      .then(res => this.event = res.data)
-      .catch(_ => {});
+      .then((res) => (this.event = res.data))
+      .catch((_) => {});
   }
 
   onSubmit(data) {
-    this
-      .feedbackService
-      .doServiceFeedback(data, this.search)
-      .subscribe(
-        _ => this.isSubmitted$.next(true),
-        err => { throw new Error(err) }
-      );
+    this.feedbackService.doServiceFeedback(data, this.search).subscribe(
+      (_) => this.isSubmitted$.next(true),
+      (err) => {
+        throw new Error(err);
+      },
+    );
   }
 
   ngOnInit() {

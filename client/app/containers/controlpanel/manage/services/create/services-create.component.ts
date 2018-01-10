@@ -20,7 +20,7 @@ const FEEDBACK_DISABLED = 0;
 @Component({
   selector: 'cp-services-create',
   templateUrl: './services-create.component.html',
-  styleUrls: ['./services-create.component.scss']
+  styleUrls: ['./services-create.component.scss'],
 })
 export class ServicesCreateComponent implements OnInit {
   buttonData;
@@ -35,13 +35,13 @@ export class ServicesCreateComponent implements OnInit {
 
   feedbackOptions = [
     {
-      'label': this.cpI18n.translate('enabled'),
-      'value': FEEDBACK_ENABLED
+      label: this.cpI18n.translate('enabled'),
+      value: FEEDBACK_ENABLED,
     },
     {
-      'label': this.cpI18n.translate('disabled'),
-      'value': FEEDBACK_DISABLED
-    }
+      label: this.cpI18n.translate('disabled'),
+      value: FEEDBACK_DISABLED,
+    },
   ];
 
   constructor(
@@ -50,74 +50,80 @@ export class ServicesCreateComponent implements OnInit {
     private session: CPSession,
     private store: Store<IHeader>,
     private cpI18n: CPI18nService,
-    private servicesService: ServicesService
+    private servicesService: ServicesService,
   ) {
     this.buildHeader();
-    this.categories$ = this
-      .servicesService
+    this.categories$ = this.servicesService
       .getCategories()
       .startWith([{ label: '---', action: null }])
-      .map(categories => {
-        let _categories = [
+      .map((categories) => {
+        const _categories = [
           {
             label: '---',
-            action: null
-          }
-        ]
-        categories.map(category => {
-          _categories.push(
-            {
-              action: category.id,
-              label: category.name
-            }
-          )
-        })
+            action: null,
+          },
+        ];
+        categories.map((category) => {
+          _categories.push({
+            action: category.id,
+            label: category.name,
+          });
+        });
+
         return _categories;
       });
   }
 
   onResetMap() {
-    this.form.controls['city'].setValue('');
-    this.form.controls['province'].setValue('');
-    this.form.controls['country'].setValue('');
-    this.form.controls['latitude'].setValue(this.school.latitude);
-    this.form.controls['longitude'].setValue(this.school.longitude);
-    this.form.controls['address'].setValue('');
-    this.form.controls['postal_code'].setValue('');
-
-    this.mapCenter.next({
-      lat: this.school.latitude,
-      lng: this.school.longitude
-    });
+    CPMap.setFormLocationData(
+      this.form,
+      CPMap.resetLocationFields(this.school),
+    );
+    this.centerMap(this.school.latitude, this.school.longitude);
   }
 
   onMapSelection(data) {
-    let cpMap = CPMap.getBaseMapObject(data);
+    const cpMap = CPMap.getBaseMapObject(data);
 
-    this.form.controls['city'].setValue(cpMap.city);
-    this.form.controls['province'].setValue(cpMap.province);
-    this.form.controls['country'].setValue(cpMap.country);
-    this.form.controls['latitude'].setValue(cpMap.latitude);
-    this.form.controls['longitude'].setValue(cpMap.longitude);
-    this.form.controls['address'].setValue(data.formatted_address);
-    this.form.controls['postal_code'].setValue(cpMap.postal_code);
+    const location = { ...cpMap, address: data.formatted_address };
+
+    CPMap.setFormLocationData(this.form, location);
+
     this.newAddress.next(this.form.controls['address'].value);
   }
 
+  updateWithUserLocation(location) {
+    location = Object.assign({}, location, { location: location.name });
+
+    CPMap.setFormLocationData(this.form, location);
+
+    this.centerMap(location.latitude, location.longitude);
+  }
+
   onPlaceChange(data) {
-    if (!data) { return; }
+    if (!data) {
+      return;
+    }
 
-    let cpMap = CPMap.getBaseMapObject(data);
+    if ('fromUsersLocations' in data) {
+      this.updateWithUserLocation(data);
 
-    this.form.controls['city'].setValue(cpMap.city);
-    this.form.controls['province'].setValue(cpMap.province);
-    this.form.controls['country'].setValue(cpMap.country);
-    this.form.controls['latitude'].setValue(cpMap.latitude);
-    this.form.controls['longitude'].setValue(cpMap.longitude);
-    this.form.controls['address'].setValue(data.name);
-    this.form.controls['postal_code'].setValue(cpMap.postal_code);
+      return;
+    }
 
-    this.mapCenter.next(data.geometry.location.toJSON());
+    const cpMap = CPMap.getBaseMapObject(data);
+
+    const location = { ...cpMap, address: data.name };
+
+    const coords: google.maps.LatLngLiteral = data.geometry.location.toJSON();
+
+    CPMap.setFormLocationData(this.form, location);
+
+    this.centerMap(coords.lat, coords.lng);
+  }
+
+  centerMap(lat: number, lng: number) {
+    return this.mapCenter.next({ lat, lng });
   }
 
   onSelectedFeedback(feedback) {
@@ -128,11 +134,11 @@ export class ServicesCreateComponent implements OnInit {
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': 'services_create_heading',
-        'subheading': null,
-        'em': null,
-        'children': []
-      }
+        heading: 'services_create_heading',
+        subheading: null,
+        em: null,
+        children: [],
+      },
     });
   }
 
@@ -141,21 +147,23 @@ export class ServicesCreateComponent implements OnInit {
 
     if (!this.form.valid) {
       this.formError = true;
+
       return;
     }
 
-    let data = Object.assign(this.form.value);
+    const data = Object.assign(this.form.value);
 
-    let { service_attendance } = data;
+    const { service_attendance } = data;
 
-    if (service_attendance === ATTENDANCE_DISABLED || service_attendance == null) {
+    if (
+      service_attendance === ATTENDANCE_DISABLED ||
+      service_attendance == null
+    ) {
       data.enable_feedback = null;
     }
 
-    this
-      .servicesService
-      .createService(
-      {
+    this.servicesService
+      .createService({
         school_id: this.school.id,
         name: data.name,
         logo_url: data.logo_url,
@@ -179,10 +187,11 @@ export class ServicesCreateComponent implements OnInit {
         rating_scale_maximum: data.rating_scale_maximum,
         default_basic_feedback_label: data.default_basic_feedback_label,
       })
-      .catch(err => Observable.throw(err))
-      .subscribe(service => {
+      .catch((err) => Observable.throw(err))
+      .subscribe((service) => {
         if (service.service_attendance) {
           this.router.navigate(['/manage/services/' + service.id]);
+
           return;
         }
 
@@ -192,18 +201,16 @@ export class ServicesCreateComponent implements OnInit {
 
   onToggleAttendance(event) {
     if (event) {
-      this
-        .form
-        .controls['default_basic_feedback_label']
-        .setValue(this.cpI18n.translate('services_default_feedback_question'));
+      this.form.controls['default_basic_feedback_label'].setValue(
+        this.cpI18n.translate('services_default_feedback_question'),
+      );
     } else {
       this.form.controls['default_basic_feedback_label'].setValue(null);
     }
 
-    this
-      .form
-      .controls['service_attendance']
-      .setValue(event ? ATTENDANCE_ENABLED : ATTENDANCE_DISABLED);
+    this.form.controls['service_attendance'].setValue(
+      event ? ATTENDANCE_ENABLED : ATTENDANCE_DISABLED,
+    );
   }
 
   ngOnInit() {
@@ -212,43 +219,43 @@ export class ServicesCreateComponent implements OnInit {
     this.buttonData = {
       disabled: true,
       class: 'primary',
-      text: this.cpI18n.translate('services_create_button_create')
-    }
+      text: this.cpI18n.translate('services_create_button_create'),
+    };
 
     this.storeId = this.school.main_union_store_id;
-    this.mapCenter = new BehaviorSubject(
-      {
-        lat: this.school.latitude,
-        lng: this.school.longitude
-      }
-    );
-
-    this.form = this.fb.group({
-      'name': [null, Validators.required],
-      'logo_url': [null, Validators.required],
-      'category': [null, Validators.required],
-      'location': [null],
-      'room_data': [null],
-      'address': [null],
-      'description': [null],
-      'email': [null],
-      'website': [null],
-      'contactphone': [null],
-      'secondary_name': [null],
-      'city': [null],
-      'province': [null],
-      'country': [null],
-      'postal_code': [null],
-      'latitude': [this.school.latitude],
-      'longitude': [this.school.longitude],
-      'service_attendance': [null],
-      'rating_scale_maximum': [null],
-      'default_basic_feedback_label': [null],
-      'enable_feedback': [FEEDBACK_ENABLED]
+    this.mapCenter = new BehaviorSubject({
+      lat: this.school.latitude,
+      lng: this.school.longitude,
     });
 
-    this.form.valueChanges.subscribe(_ => {
-      this.buttonData = Object.assign({}, this.buttonData, { disabled: !this.form.valid });
-    })
+    this.form = this.fb.group({
+      name: [null, Validators.required],
+      logo_url: [null, Validators.required],
+      category: [null, Validators.required],
+      location: [null],
+      room_data: [null],
+      address: [null],
+      description: [null],
+      email: [null],
+      website: [null],
+      contactphone: [null],
+      secondary_name: [null],
+      city: [null],
+      province: [null],
+      country: [null],
+      postal_code: [null],
+      latitude: [this.school.latitude],
+      longitude: [this.school.longitude],
+      service_attendance: [null],
+      rating_scale_maximum: [null],
+      default_basic_feedback_label: [null],
+      enable_feedback: [FEEDBACK_ENABLED],
+    });
+
+    this.form.valueChanges.subscribe((_) => {
+      this.buttonData = Object.assign({}, this.buttonData, {
+        disabled: !this.form.valid,
+      });
+    });
   }
 }

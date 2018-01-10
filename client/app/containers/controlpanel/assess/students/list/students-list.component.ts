@@ -12,8 +12,8 @@ import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 interface IState {
-  search_str: string,
-  user_list_id: number
+  search_str: string;
+  user_list_id: number;
 }
 
 declare var $;
@@ -21,7 +21,7 @@ declare var $;
 @Component({
   selector: 'cp-students-list',
   templateUrl: './students-list.component.html',
-  styleUrls: ['./students-list.component.scss']
+  styleUrls: ['./students-list.component.scss'],
 })
 export class StudentsListComponent extends BaseComponent implements OnInit {
   loading;
@@ -30,7 +30,7 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
   state: IState = {
     search_str: null,
     user_list_id: null,
-  }
+  };
   messageData;
   listIdFromUrl;
   dateFormat = FORMAT.DATETIME;
@@ -44,27 +44,34 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
     private session: CPSession,
     public cpI18n: CPI18nService,
     private route: ActivatedRoute,
-    private service: StudentsService
+    private service: StudentsService,
   ) {
     super();
-    super.isLoading().subscribe(loading => this.loading = loading);
+    super.isLoading().subscribe((loading) => (this.loading = loading));
   }
 
   fetch() {
     const search = new URLSearchParams();
-    const user_list_id = this.state.user_list_id ? this.state.user_list_id.toString() : null;
+    const user_list_id = this.state.user_list_id
+      ? this.state.user_list_id.toString()
+      : null;
 
     search.append('school_id', this.session.g.get('school').id.toString());
     search.append('search_str', this.state.search_str);
     search.append('user_list_id', user_list_id);
 
-    const stream$ = this.service.getStudentsByList(search, this.startRange, this.endRange);
+    const stream$ = this.service.getStudentsByList(
+      search,
+      this.startRange,
+      this.endRange,
+    );
 
     super
       .fetchData(stream$)
-      .then(res => this.students = res.data)
-      .catch(err => { throw new Error(err) });
-
+      .then((res) => (this.students = res.data))
+      .catch((err) => {
+        throw new Error(err);
+      });
   }
 
   onPaginationNext(): void {
@@ -78,26 +85,17 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
   }
 
   updateUrl() {
-    this
-      .router
-      .navigate(
-        ['/assess/students'],
-        {
-          queryParams: {
-            list_id: this.state.user_list_id
-          }
-        }
-      )
+    this.router.navigate(['/assess/students'], {
+      queryParams: {
+        list_id: this.state.user_list_id,
+      },
+    });
   }
 
   readStateFromUrl() {
-    this.state = Object.assign(
-      {},
-      this.state,
-      {
-        user_list_id: this.route.snapshot.queryParams['list_id']
-      }
-    )
+    this.state = Object.assign({}, this.state, {
+      user_list_id: this.route.snapshot.queryParams['list_id'],
+    });
 
     this.fetch();
   }
@@ -108,7 +106,7 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
       payload: {
         body: this.cpI18n.translate('announcement_success_sent'),
         autoClose: true,
-      }
+      },
     });
   }
 
@@ -120,22 +118,24 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
   messageStudent(student) {
     this.messageData = {
       name: `${student.firstname} ${student.lastname}`,
-      userIds: [student.id]
+      userIds: [student.id],
     };
 
     this.isStudentComposeModal = true;
-    setTimeout(() => { $('#studentsComposeModal').modal(); }, 1);
+    setTimeout(
+      () => {
+        $('#studentsComposeModal').modal();
+      },
+
+      1,
+    );
   }
 
   onFilter(filterBy) {
-    this.state = Object.assign(
-      {},
-      this.state,
-      {
-        search_str: filterBy.search_str,
-        user_list_id: filterBy.list_id,
-      }
-    )
+    this.state = Object.assign({}, this.state, {
+      search_str: filterBy.search_str,
+      user_list_id: filterBy.list_id,
+    });
     this.updateUrl();
 
     if (filterBy.search_str) {
@@ -150,7 +150,7 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
 
     this.store.dispatch({
       type: HEADER_UPDATE,
-      payload: require('../../assess.header.json')
+      payload: require('../../assess.header.json'),
     });
 
     if ('list_id' in this.route.snapshot.queryParams) {

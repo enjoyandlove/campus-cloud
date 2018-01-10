@@ -19,19 +19,33 @@ import {
   TeamSelectedPipe,
   BaseTeamSelectModalComponent,
   SelectTeamClubsModalComponent,
-  SelectTeamServicesModalComponent
+  SelectTeamServicesModalComponent,
 } from './create/components';
 
 import { TeamRoutingModule } from './team.routing.module';
 
 @NgModule({
-  declarations: [ TeamListComponent, TeamCreateComponent, BaseTeamSelectModalComponent,
-  TeamSelectedPipe, TeamFilterPipe, SelectTeamServicesModalComponent,
-  SelectTeamClubsModalComponent, TeamDeleteComponent, TeamEditComponent,
-  TeamUnauthorizedComponent ],
+  declarations: [
+    TeamListComponent,
+    TeamCreateComponent,
+    BaseTeamSelectModalComponent,
+    TeamSelectedPipe,
+    TeamFilterPipe,
+    SelectTeamServicesModalComponent,
+    SelectTeamClubsModalComponent,
+    TeamDeleteComponent,
+    TeamEditComponent,
+    TeamUnauthorizedComponent,
+  ],
 
-  imports: [ CommonModule, SharedModule, RouterModule, ReactiveFormsModule, TeamRoutingModule ],
+  imports: [
+    CommonModule,
+    SharedModule,
+    RouterModule,
+    ReactiveFormsModule,
+    TeamRoutingModule,
+  ],
 
-  providers: [ ServicesService, ClubsService, AdminService ],
+  providers: [ServicesService, ClubsService, AdminService],
 })
 export class TeamModule {}
