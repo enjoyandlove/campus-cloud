@@ -1,23 +1,23 @@
-import { Observable } from 'rxjs/Observable';
 import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
   Input,
+  OnDestroy,
   OnInit,
   Output,
-  OnDestroy,
-  Component,
   ViewChild,
-  ElementRef,
-  AfterViewInit,
-  EventEmitter,
-  HostListener
 } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
 interface IState {
   isLists: boolean;
   isUsers: boolean;
   ids: Array<number>;
   canSearch: boolean;
-  chips: Array<{ 'label': string; 'id': number }>;
+  chips: Array<{ label: string; id: number }>;
 }
 
 interface IProps {
@@ -25,13 +25,13 @@ interface IProps {
   withSwitcher: boolean;
   suggestions: Array<any>;
   reset: Observable<boolean>;
-  defaultValues: Array<{ 'label': string; 'id': number }>;
+  defaultValues: Array<{ label: string; id: number }>;
 }
 
 @Component({
   selector: 'cp-typeahead',
   templateUrl: './cp-typeahead.component.html',
-  styleUrls: ['./cp-typeahead.component.scss']
+  styleUrls: ['./cp-typeahead.component.scss'],
 })
 export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('input') input: ElementRef;
@@ -50,14 +50,20 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
     chips: [],
     isLists: false,
     isUsers: false,
-    canSearch: true
+    canSearch: true,
   };
 
-  constructor() { }
+  constructor() {}
 
   @HostListener('document:click', ['$event'])
   onClick() {
-    setTimeout(() => { this.props.suggestions = []; }, 100);
+    setTimeout(
+      () => {
+        this.props.suggestions = [];
+      },
+
+      100,
+    );
   }
 
   listenForKeyChanges() {
@@ -72,19 +78,20 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
       .debounceTime(400)
       .distinctUntilChanged()
       .subscribe(
-      res => {
-        const query = (res.split(',')[res.split(',').length - 1]).trim();
+        (res) => {
+          const query = res.split(',')[res.split(',').length - 1].trim();
 
-        if (!query) {
-          this.resetList();
-          return;
-        }
+          if (!query) {
+            this.resetList();
 
-        this.query.emit(query);
-      },
-      err => {
-        console.log(err);
-      }
+            return;
+          }
+
+          this.query.emit(query);
+        },
+        (err) => {
+          throw new Error(err);
+        },
       );
   }
 
@@ -95,7 +102,9 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onHandleClick(suggestion) {
-    if (!suggestion.id) { return; }
+    if (!suggestion.id) {
+      return;
+    }
 
     // hide suggestions
     this.resetList();
@@ -104,7 +113,9 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
     this.el.value = null;
 
     // check for dupes
-    if (this.state.ids.indexOf(suggestion.id) !== -1) { return; }
+    if (this.state.ids.indexOf(suggestion.id) !== -1) {
+      return;
+    }
 
     this.state.ids.push(suggestion.id);
     this.state.chips.push(suggestion);
@@ -116,16 +127,11 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
     this.props.suggestions = [];
   }
 
-
   onHandleRemove(id) {
-    this.state = Object.assign(
-      {},
-      this.state,
-      {
-        ids: this.state.ids.filter(_id => _id !== id),
-        chips: this.state.chips.filter(chip => chip.id !== id)
-      }
-    );
+    this.state = Object.assign({}, this.state, {
+      ids: this.state.ids.filter((_id) => _id !== id),
+      chips: this.state.chips.filter((chip) => chip.id !== id),
+    });
     this.selection.emit(this.state.ids);
   }
 
@@ -136,14 +142,10 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   teardown() {
-    this.state = Object.assign(
-      {},
-      this.state,
-      {
-        ids: [],
-        chips: []
-      }
-    );
+    this.state = Object.assign({}, this.state, {
+      ids: [],
+      chips: [],
+    });
   }
 
   ngOnDestroy() {
@@ -155,32 +157,22 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
 
     switch (selection.id) {
       case 1:
-        this.state = Object.assign(
-          {},
-          this.state,
-          {
-            isUsers: true,
-            isLists: false,
-          });
-        this.chipOptions = Object.assign(
-          {},
-          this.chipOptions,
-          { icon: 'account_box' }
-        );
+        this.state = Object.assign({}, this.state, {
+          isUsers: true,
+          isLists: false,
+        });
+        this.chipOptions = Object.assign({}, this.chipOptions, {
+          icon: 'account_box',
+        });
         break;
       case 2:
-        this.state = Object.assign(
-          {},
-          this.state,
-          {
-            isUsers: false,
-            isLists: true,
-          });
-        this.chipOptions = Object.assign(
-          {},
-          this.chipOptions,
-          { icon: 'list' }
-        );
+        this.state = Object.assign({}, this.state, {
+          isUsers: false,
+          isLists: true,
+        });
+        this.chipOptions = Object.assign({}, this.chipOptions, {
+          icon: 'list',
+        });
         break;
     }
 
@@ -195,11 +187,13 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
     this.chipOptions = {
       withClose: true,
       withAvatar: true,
-      icon: this.props.isUsers ? 'account_box' : 'list'
+      icon: this.props.isUsers ? 'account_box' : 'list',
     };
 
     if (this.props.withSwitcher) {
-      this.state = Object.assign({}, this.state, { isUsers: this.props.isUsers });
+      this.state = Object.assign({}, this.state, {
+        isUsers: this.props.isUsers,
+      });
     }
 
     if (!this.props.reset) {
@@ -208,29 +202,27 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.switcherMenu = [
       {
-        'label': 'Users',
-        'id': 1
+        label: 'Users',
+        id: 1,
       },
       {
-        'label': 'Lists',
-        'id': 2,
-      }
+        label: 'Lists',
+        id: 2,
+      },
     ];
 
     if (this.props.defaultValues) {
       this.teardown();
-      this.props.defaultValues.map(value => {
+      this.props.defaultValues.map((value) => {
         this.state.ids.push(value.id);
         this.state.chips.push(value);
       });
     }
 
-    this.props.reset.subscribe(reset => {
+    this.props.reset.subscribe((reset) => {
       if (reset) {
         this.teardown();
       }
     });
   }
 }
-
-

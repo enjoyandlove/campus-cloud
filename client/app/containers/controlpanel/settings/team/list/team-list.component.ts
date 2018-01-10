@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
-
 import { CPSession } from '../../../../../session';
 import { AdminService } from '../../../../../shared/services';
 import { BaseComponent } from '../../../../../base/base.component';
@@ -16,7 +15,7 @@ interface IState {
 
 const state: IState = {
   admins: [],
-  search_str: null
+  search_str: null,
 };
 
 declare var $: any;
@@ -24,7 +23,7 @@ declare var $: any;
 @Component({
   selector: 'cp-team-list',
   templateUrl: './team-list.component.html',
-  styleUrls: ['./team-list.component.scss']
+  styleUrls: ['./team-list.component.scss'],
 })
 export class TeamListComponent extends BaseComponent implements OnInit {
   admins;
@@ -36,10 +35,10 @@ export class TeamListComponent extends BaseComponent implements OnInit {
     public session: CPSession,
     public store: Store<IHeader>,
     public cpI18n: CPI18nService,
-    public adminService: AdminService
+    public adminService: AdminService,
   ) {
     super();
-    super.isLoading().subscribe(res => this.loading = res);
+    super.isLoading().subscribe((res) => (this.loading = res));
 
     this.fetch();
   }
@@ -53,17 +52,18 @@ export class TeamListComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('search_str', this.state.search_str);
     search.append('school_id', this.session.g.get('school').id.toString());
 
     super
-      .fetchData(this.adminService.getAdmins(this.startRange, this.endRange, search))
-      .then(res => {
+      .fetchData(
+        this.adminService.getAdmins(this.startRange, this.endRange, search),
+      )
+      .then((res) => {
         this.state = Object.assign({}, this.state, { admins: res.data });
       })
-      .catch(_ => {}
-      );
+      .catch((_) => {});
   }
 
   private buildHeader() {
@@ -88,11 +88,9 @@ export class TeamListComponent extends BaseComponent implements OnInit {
   }
 
   onDeleted(adminId) {
-    this.state = Object.assign(
-      {},
-      this.state,
-      { admins: this.state.admins.filter(admin => admin.id !== adminId) }
-    );
+    this.state = Object.assign({}, this.state, {
+      admins: this.state.admins.filter((admin) => admin.id !== adminId),
+    });
 
     if (this.state.admins.length === 0 && this.pageNumber > 1) {
       this.resetPagination();

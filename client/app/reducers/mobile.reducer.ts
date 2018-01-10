@@ -5,7 +5,7 @@ export interface IMobile {
 }
 
 const initialState = {
-  isOpen: false
+  isOpen: false,
 };
 
 export function reducer(state: IMobile = initialState, action) {

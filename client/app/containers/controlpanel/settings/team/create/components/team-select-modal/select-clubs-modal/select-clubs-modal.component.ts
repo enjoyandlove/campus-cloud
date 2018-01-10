@@ -12,7 +12,7 @@ const ACTIVE_STATUS = 1;
 
 @Component({
   selector: 'cp-select-clubs-modal',
-  templateUrl: './select-clubs-modal.component.html'
+  templateUrl: './select-clubs-modal.component.html',
 })
 export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent
   implements OnInit {
@@ -22,10 +22,7 @@ export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent
   @Output() teardown: EventEmitter<null> = new EventEmitter();
   data$: BehaviorSubject<any> = new BehaviorSubject({});
 
-  constructor(
-    private session: CPSession,
-    private service: ClubsService
-  ) {
+  constructor(private session: CPSession, private service: ClubsService) {
     super();
     this.privilegeType = CP_PRIVILEGES_MAP.clubs;
   }
@@ -35,19 +32,18 @@ export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent
   }
 
   ngOnInit() {
-    let search = new URLSearchParams();
+    const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    this
-      .service
+    this.service
       .getClubs(search, 1, 1000)
-      .map(clubs => clubs.filter(club => club.status === ACTIVE_STATUS))
-      .subscribe(clubs => {
+      .map((clubs) => clubs.filter((club) => club.status === ACTIVE_STATUS))
+      .subscribe((clubs) => {
         let res = {};
-        let selected = {};
+        const selected = {};
 
         if (this.selectedClubs) {
-          clubs.map(club => {
+          clubs.map((club) => {
             if (Object.keys(this.selectedClubs).includes(club.id.toString())) {
               if (CP_PRIVILEGES_MAP.clubs in this.selectedClubs[club.id]) {
                 selected[club.id] = club;
@@ -58,17 +54,15 @@ export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent
               club.checked = true;
               // we pass the id to the selected object
               // to populate the modal state....
-              selected[club.id] = Object.assign(
-                {},
-                selected[club.id],
-                { id: club.id }
-              );
+              selected[club.id] = Object.assign({}, selected[club.id], {
+                id: club.id,
+              });
             }
           });
         }
         res = {
           data: clubs,
-          selected: selected
+          selected: selected,
         };
 
         this.data$.next(res);

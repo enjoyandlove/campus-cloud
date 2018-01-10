@@ -1,5 +1,5 @@
-import { Router, NavigationEnd } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 
 import { CPTrackingService } from './../../services/tracking.service';
 
@@ -10,16 +10,16 @@ import { CPTrackingService } from './../../services/tracking.service';
 export class CPTrackersComponent implements OnInit {
   constructor(
     private router: Router,
-    private cpTrackingService: CPTrackingService
-  ) { }
+    private cpTrackingService: CPTrackingService,
+  ) {}
 
   listenForRouteChanges() {
-    this.router.events.subscribe(event => {
+    this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.cpTrackingService.hotJarRecordPage();
         this.cpTrackingService.gaTrackPage(event.urlAfterRedirects);
       }
-    })
+    });
   }
 
   ngOnInit() {

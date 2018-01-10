@@ -20,31 +20,40 @@ export class LinksService extends BaseService {
   getLinks(startRage: number, endRage: number, search?: URLSearchParams) {
     search.append('is_system', '0');
 
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LINKS}/${startRage};${endRage}`;
-    return super.get(url, { search }).map(res => res.json());
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.LINKS
+    }/${startRage};${endRage}`;
+
+    return super.get(url, { search }).map((res) => res.json());
   }
 
   getLinkById(linkId: number) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LINKS}/${linkId}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.LINKS
+    }/${linkId}`;
 
-    return super.get(url).map(res => res.json());
+    return super.get(url).map((res) => res.json());
   }
 
   updateLink(body, linkId: number) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LINKS}/${linkId}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.LINKS
+    }/${linkId}`;
 
-    return super.update(url, body).map(res => res.json());
+    return super.update(url, body).map((res) => res.json());
   }
 
   createLink(body) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LINKS}/`;
 
-    return super.post(url, body).map(res => res.json());
+    return super.post(url, body).map((res) => res.json());
   }
 
   deleteLink(linkId: number) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LINKS}/${linkId}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.LINKS
+    }/${linkId}`;
 
-    return super.delete(url).map(res => res.json());
+    return super.delete(url).map((res) => res.json());
   }
 }
