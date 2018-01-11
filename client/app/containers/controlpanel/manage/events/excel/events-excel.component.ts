@@ -13,10 +13,14 @@ import { CPSession, ISchool } from '../../../../../session';
 import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { CPI18nPipe } from './../../../../../shared/pipes/i18n/i18n.pipe';
-import { StoreService, AdminService } from '../../../../../shared/services';
 import { STATUS, CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 import { CPImageUploadComponent } from '../../../../../shared/components';
-import { FileUploadService, CPI18nService } from '../../../../../shared/services';
+import {
+  FileUploadService,
+  CPI18nService,
+  StoreService,
+  AdminService
+} from '../../../../../shared/services';
 
 const i18n = new CPI18nPipe();
 
@@ -284,24 +288,24 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     this.onBulkChange({ poster_thumb_url: poster_url });
   }
 
-  onRemoveImage(index) {
-    let eventControl = <FormArray>this.form.controls['events'];
-    let control = <FormGroup>eventControl.at(index);
+  onRemoveImage(index: number) {
+    const eventControl = <FormArray>this.form.controls['events'];
+    const control = <FormGroup>eventControl.at(index);
     control.controls['poster_url'].setValue(null);
   }
 
-  onImageUpload(image, index) {
-    let imageUpload = new CPImageUploadComponent(this.cpI18n, this.fileUploadService);
-    let promise = imageUpload.onFileUpload(image, true);
+  onImageUpload(image: string, index: number) {
+    const imageUpload = new CPImageUploadComponent(this.cpI18n, this.fileUploadService);
+    const promise = imageUpload.onFileUpload(image, true);
 
     promise
       .then((res: any) => {
-        let controls = <FormArray>this.form.controls['events'];
-        let control = <FormGroup>controls.controls[index];
+        const controls = <FormArray>this.form.controls['events'];
+        const control = <FormGroup>controls.controls[index];
         control.controls['poster_url'].setValue(res.image_url);
       })
-      .catch(err => {
-        throw new Error(err)
+      .catch((err) => {
+        throw new Error(err);
       });
   }
 
