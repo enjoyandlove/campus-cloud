@@ -40,19 +40,26 @@
                           (toggle)="onSingleCheck($event, i)">
                         </cp-checkbox>
 
-                        <div class="event__avatar">
-                          <div
-                            *ngIf="!event.controls.poster_url.value"
-                            class="placeholder placeholder--small text-center"
-                            [class.isRequired]="formError && event.controls.poster_url.hasError('required')">
-                            <i class="material-icons">image</i>
-                          </div>
+                        <div class="event__thumbnail">
+                          <span
+                             class="deleteButton hover"
+                             (click)="onRemoveImage(i)"
+                             *ngIf="event.controls['poster_url'].value">
+                            &times;
+                          </span>
+                          <cp-upload-button
+                            theme="small"
+                            [isRequired]="formError && event.controls['poster_url'].hasError('required')"
+                            (fileUpload)="onImageUpload($event, i)"
+                            *ngIf="!event.controls['poster_url'].value"
+                            (click)="onSingleCheck($event, i)">
+                          </cp-upload-button>
                           <img
-                            *ngIf="event.controls.poster_url.value"
-                            class="img-responsive img-rounded"
-                            [src]="event.controls.poster_url.value">
+                            class="img-rounded"
+                            *ngIf="event.controls['poster_url'].value"
+                            [src]="event.controls['poster_url'].value">
                         </div>
-                      </div>
+                        </div>
 
                       <div [class]="[storeId || clubId? 'col-xs-9 no-left-padding text-truncate' : 'col-xs-8 no-left-padding text-truncate']">
                         <span class="event__title">
