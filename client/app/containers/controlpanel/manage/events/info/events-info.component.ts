@@ -21,6 +21,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   @Input() serviceId: number;
   @Input() isService: boolean;
 
+  infoData;
   event;
   banner;
   urlPrefix;
@@ -70,6 +71,17 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
           lat: event.data.latitude,
           lng: event.data.longitude,
         });
+
+        this.infoData = {
+          event: this.event,
+          title: this.event.title,
+          description: this.event.description,
+          address: this.event.address,
+          banner: this.banner,
+          draggable: this.draggable,
+          mapCenter: this.mapCenter,
+          type: 'events'
+        };
       })
       .catch((err) => {
         throw new Error(err);

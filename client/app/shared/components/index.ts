@@ -1,3 +1,4 @@
+export * from './cp-info';
 export * from './cp-chip';
 export * from './cp-maps';
 export * from './cp-stars';

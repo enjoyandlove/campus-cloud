@@ -24,6 +24,8 @@ import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
   styleUrls: ['./services-info.component.scss'],
 })
 export class ServicesInfoComponent extends BaseComponent implements OnInit {
+  infoData;
+  banner;
   admins;
   service;
   storeId;
@@ -83,6 +85,20 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
           lat: res.data[0].latitude,
           lng: res.data[0].longitude,
         });
+
+        this.infoData = {
+          banner: this.service.logo_url,
+          title: this.service.name,
+          description: this.service.description,
+          contactphone: this.service.contactphone,
+          email: this.service.email,
+          website: this.service.website,
+          address: this.service.address,
+          mapCenter: this.mapCenter,
+          draggable: this.draggable,
+          admins: this.admins,
+          type: 'services'
+        };
       })
       .catch((err) => {
         throw new Error(err);

@@ -9,6 +9,7 @@ import { FileUploadService, StoreService } from './services';
 import { CPTrackingService } from './services/tracking.service';
 
 import {
+  CPInfoComponent,
   CPAvatarComponent,
   CPMapsComponent,
   CPModalComponent,
@@ -42,6 +43,7 @@ import {
 
 @NgModule({
   declarations: [
+    CPInfoComponent,
     CPTopBarComponent,
     CPMapsComponent,
     CPAvatarComponent,
@@ -84,6 +86,7 @@ import {
   providers: [StoreService, FileUploadService, CPTrackingService],
 
   exports: [
+    CPInfoComponent,
     CPTopBarComponent,
     CPMapsComponent,
     CPAvatarComponent,
