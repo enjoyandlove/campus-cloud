@@ -12,7 +12,8 @@
         (bulkChange)="onBulkChange($event)"
         (checkAll)="onCheckAll($event)"
         (hostChange)="onHostBulkChange($event)"
-        (imageChange)="onImageBulkChange($event)">
+        (imageChange)="onImageBulkChange($event)"
+        [props]="uploadButtonData" >
       </cp-import-top-bar>
     </div>
 
