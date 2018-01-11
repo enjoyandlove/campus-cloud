@@ -204,7 +204,7 @@ export class EventsCreateComponent implements OnInit {
     }
 
     if (this.form.controls['event_attendance'].value === EventAttendance.enabled) {
-      let managerId = this.form.controls['event_manager_id'];
+      const managerId = this.form.controls['event_manager_id'];
 
       if (!managerId.value) {
         this.formError = true;
