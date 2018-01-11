@@ -26,7 +26,7 @@ import {
 
 const _cpI18n = new CPI18nService();
 
-const eventsDropdown = function(
+const eventsDropdown = function (
   eventPrivilege = { r: false, w: false },
   eventAssessmentPrivilege = { r: false, w: false },
 ) {
@@ -64,7 +64,7 @@ const eventsDropdown = function(
   return items;
 };
 
-const manageAdminDropdown = function(privilege: { r: boolean; w: boolean }) {
+const manageAdminDropdown = function (privilege: { r: boolean; w: boolean }) {
   let items = [
     {
       label: _cpI18n.translate('disabled'),
@@ -131,7 +131,7 @@ const clubsDropdown = (
   return items;
 };
 
-const servicesDropdown = function(
+const servicesDropdown = function (
   schoolLevel = { r: false, w: false },
   accountLevel = false,
 ) {
@@ -217,7 +217,7 @@ export class TeamCreateComponent implements OnInit {
     private cpI18n: CPI18nService,
     private teamService: AdminService,
     private errorService: ErrorService,
-  ) {}
+  ) { }
 
   private buildHeader() {
     this.store.dispatch({
@@ -283,8 +283,8 @@ export class TeamCreateComponent implements OnInit {
       .teamService
       .createAdmin(_data)
       .subscribe(
-      _ => this.router.navigate(['/settings/team']),
-      err => {
+      () => this.router.navigate(['/settings/team']),
+      (err) => {
         this.isFormError = true;
 
         if (err.status === 409) {
@@ -633,7 +633,7 @@ export class TeamCreateComponent implements OnInit {
   }
 }
 
-export const accountCleanUp = function(accountPrivileges, privilegeNo: number) {
+export const accountCleanUp = function (accountPrivileges, privilegeNo: number) {
   if (accountPrivileges) {
     Object.keys(accountPrivileges).map((store) => {
       if (privilegeNo in accountPrivileges[store]) {

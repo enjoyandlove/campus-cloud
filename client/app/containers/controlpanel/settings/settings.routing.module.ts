@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '../../../config/guards';
 import { SettingsComponent } from './settings.component';
 
-
 const appRoutes: Routes = [
   {
     path: '',

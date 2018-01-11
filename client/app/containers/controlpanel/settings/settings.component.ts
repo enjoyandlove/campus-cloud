@@ -3,7 +3,6 @@ import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { HEADER_UPDATE, IHeader } from '../../../reducers/header.reducer';
 
-
 @Component({
   selector: 'cp-settings',
   template: `

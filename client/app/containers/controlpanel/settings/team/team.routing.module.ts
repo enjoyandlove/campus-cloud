@@ -5,7 +5,6 @@ import { TeamCreateComponent } from './create';
 import { TeamEditComponent } from './edit';
 import { TeamListComponent } from './list';
 
-
 const appRoutes: Routes = [
   { path: '', component: TeamListComponent },
   { path: 'invite', component: TeamCreateComponent },
