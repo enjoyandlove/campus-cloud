@@ -37,6 +37,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   stores;
   formError;
   buttonData;
+  uploadButtonData;
   mockDropdown;
   isChecked = [];
   school: ISchool;
@@ -269,6 +270,18 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     });
 
     this.isChecked = [..._isChecked];
+
+    if (checked) {
+      this.uploadButtonData = {
+        class: 'cancel',
+        disabled: false
+      };
+    } else {
+      this.uploadButtonData = {
+        class: 'disabled',
+        disabled: true
+      };
+    }
   }
 
   onHostBulkChange(store_id) {
@@ -388,10 +401,16 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.uploadButtonData = {
+      class: 'disabled',
+      disabled: true
+    };
+
     this.buttonData = {
       text: 'Import Events',
       class: 'primary',
-      disabled: true,
+      disabled: true
     };
 
     this.store.select('EVENTS_MODAL').subscribe((res) => {
