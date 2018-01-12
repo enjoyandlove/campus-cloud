@@ -9,10 +9,9 @@ import { TeamEditComponent } from './edit';
 import { TeamDeleteComponent } from './delete';
 import { TeamCreateComponent } from './create';
 import { TeamUnauthorizedComponent } from './unauthorized';
-
-import { ClubsService } from '../clubs/clubs.service';
+import { ClubsService } from '../../manage/clubs/clubs.service';
 import { AdminService } from '../../../../shared/services';
-import { ServicesService } from '../services/services.service';
+import { ServicesService } from '../../manage/services/services.service';
 
 import {
   TeamFilterPipe,

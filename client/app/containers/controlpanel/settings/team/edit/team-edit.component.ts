@@ -11,7 +11,7 @@ import {
 
 import { TEAM_ACCESS } from '../utils';
 import { CPSession } from '../../../../../session';
-import { accountCleanUp } from './../create/team-create.component';
+import { accountCleanUp } from '../create/team-create.component';
 import { BaseComponent } from '../../../../../base/base.component';
 import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
@@ -375,13 +375,14 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   private buildHeader(name) {
+
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        heading: `[NOTRANSLATE]${name}[NOTRANSLATE]`,
-        crumbs: {
-          url: this.isProfileView ? null : 'team',
-          label: this.isProfileView ? null : 'team_settings',
+        'heading': `[NOTRANSLATE]${name}[NOTRANSLATE]`,
+        'crumbs': {
+          'url': this.isProfileView ? null : '/settings/team',
+          'label': this.isProfileView ? null : 'team_settings'
         },
         subheading: null,
         em: null,
@@ -453,12 +454,12 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       _data = { firstname, lastname };
     }
 
-    this.adminService.updateAdmin(this.adminId, _data).subscribe(
-      (_) =>
-        this.router.navigate([
-          this.currentUserCanManage ? '/manage/team' : '/dashboard',
-        ]),
-      (err) => {
+    this
+      .adminService
+      .updateAdmin(this.adminId, _data)
+      .subscribe(
+        () => this.router.navigate([this.currentUserCanManage ? '/settings/team' : '/dashboard']),
+        (err) => {
         if (err.status === 403) {
           $('#teamUnauthorziedModal').modal();
 
