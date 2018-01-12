@@ -203,23 +203,12 @@ export class EventsCreateComponent implements OnInit {
       return;
     }
 
-    if (
-      this.form.controls['event_attendance'].value === EventAttendance.enabled
-    ) {
+    if (this.form.controls['event_attendance'].value === EventAttendance.enabled) {
       const managerId = this.form.controls['event_manager_id'];
-      const eventFeedback = this.form.controls['event_feedback'];
 
       if (!managerId.value) {
         this.formError = true;
         managerId.setErrors({ required: true });
-        this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: false,
-        });
-      }
-
-      if (!eventFeedback.value) {
-        this.formError = true;
-        eventFeedback.setErrors({ required: true });
         this.buttonData = Object.assign({}, this.buttonData, {
           disabled: false,
         });

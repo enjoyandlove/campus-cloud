@@ -123,9 +123,10 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
 
           [this.cpI18n.translate('rsvp')]: rsvp[item.rsvp],
 
-          [this.cpI18n.translate('events_checked_in_time')]: check_in_method[
-            item.check_in_method
-          ],
+          [this.cpI18n.translate('events_checked_in_time')]:
+            item.feedback_rating === -1
+              ? ''
+              : (item.feedback_rating * 5 / 100).toFixed(2),
 
           [this.cpI18n.translate('rating')]: unix(item.check_in_time).format(
             'MMMM Do YYYY - h:mm a',
@@ -133,10 +134,9 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
 
           [this.cpI18n.translate('events_user_feedback')]: item.feedback_text,
 
-          [this.cpI18n.translate('events_checked_in_method')]:
-            item.feedback_rating === -1
-              ? ''
-              : (item.feedback_rating * 5 / 100).toFixed(2),
+          [this.cpI18n.translate('events_checked_in_method')]: check_in_method[
+            item.check_in_method
+          ],
 
           [this.cpI18n.translate('student_id')]: item.student_identifier,
         };
