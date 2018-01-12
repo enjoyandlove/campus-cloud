@@ -41,6 +41,7 @@
 
 <cp-modal modalId="settingsModal">
   <cp-feed-settings-modal
+    [customCSS]="customCSS"
     [clubId]="clubId"
     (updateWallSettings)="onUpdateWallSettings($event)">
   </cp-feed-settings-modal>

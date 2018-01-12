@@ -45,6 +45,7 @@ const state: IState = {
 export class FeedsComponent extends BaseComponent implements OnInit {
   @Input() clubId: number;
   @Input() isClubsView: boolean;
+  @Input() customCSS: string;
 
   feeds;
   groups;
