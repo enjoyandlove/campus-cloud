@@ -157,17 +157,17 @@
               </p>
             </div>
           </div>
-          <!-- <div class="row options-row">
-            <div
-              class="col-xs-4"
-              [class.isDisabled]="!formData.content.orientation.active">
-              <cp-checkbox
-                class="cpcheckbox"
-                (toggle)="checkControl($event, CP_PRIVILEGES_MAP.orientation, formData.content.orientation)"
-                [isDisabled]="!formData.content.orientation.active">
-              </cp-checkbox>
-              <span i18n>{{ 'orientation' | cpI18n }}</span>
-            </div>
+          <div class="row options-row">
+          <div
+            class="col-xs-4"
+            [class.isDisabled]="!formData.content.feeds.active">
+            <cp-checkbox
+              class="cpcheckbox"
+              (toggle)="checkControl($event, CP_PRIVILEGES_MAP.moderation, formData.content.feeds)"
+              [isDisabled]="!formData.content.feeds.active">
+            </cp-checkbox>
+            <span i18n>{{ 'feeds' | cpI18n }}</span>
+          </div>
 
             <div
               class="col-xs-4"
@@ -182,30 +182,6 @@
 
             <div
               class="col-xs-4"
-              [class.isDisabled]="!formData.content.maps.active">
-              <cp-checkbox
-                class="cpcheckbox"
-                (toggle)="checkControl($event, CP_PRIVILEGES_MAP.campus_maps, formData.content.maps)"
-                [isDisabled]="!formData.content.maps.active">
-              </cp-checkbox>
-              <span i18n>{{ 'maps' | cpI18n }}</span>
-            </div>
-          </div> -->
-
-          <div class="row options-row">
-            <div
-              class="col-xs-4"
-              [class.isDisabled]="!formData.content.feeds.active">
-              <cp-checkbox
-                class="cpcheckbox"
-                (toggle)="checkControl($event, CP_PRIVILEGES_MAP.moderation, formData.content.feeds)"
-                [isDisabled]="!formData.content.feeds.active">
-              </cp-checkbox>
-              <span i18n>{{ 'feeds' | cpI18n }}</span>
-            </div>
-
-            <div
-              class="col-xs-4"
               [class.isDisabled]="!formData.content.links.active">
               <cp-checkbox
                 class="cpcheckbox"
@@ -214,6 +190,30 @@
               </cp-checkbox>
               <span i18n>{{ 'links' | cpI18n }}</span>
             </div>
+          </div>
+
+          <div class="row options-row">
+            <!-- <div
+              class="col-xs-4"
+              [class.isDisabled]="!formData.content.maps.active">
+              <cp-checkbox
+                class="cpcheckbox"
+                (toggle)="checkControl($event, CP_PRIVILEGES_MAP.campus_maps, formData.content.maps)"
+                [isDisabled]="!formData.content.maps.active">
+              </cp-checkbox>
+              <span i18n>{{ 'maps' | cpI18n }}</span>
+            </div> -->
+
+            <!-- <div
+              class="col-xs-4"
+              [class.isDisabled]="!formData.content.orientation.active">
+              <cp-checkbox
+                class="cpcheckbox"
+                (toggle)="checkControl($event, CP_PRIVILEGES_MAP.orientation, formData.content.orientation)"
+                [isDisabled]="!formData.content.orientation.active">
+              </cp-checkbox>
+              <span i18n>{{ 'orientation' | cpI18n }}</span>
+            </div> -->
 
             <!-- <div
               class="col-xs-4"
