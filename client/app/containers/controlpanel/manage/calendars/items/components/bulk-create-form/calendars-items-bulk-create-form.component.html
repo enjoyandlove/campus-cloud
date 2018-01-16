@@ -1,0 +1,55 @@
+<form [formGroup]="form" class="form">
+  <div formArrayName="items">
+    <div class="row" *ngFor="let item of form.controls.items.controls; let i=index">
+      <div [formGroupName]="i" class="col-xs-12">
+        <div class="row form-group">
+          <div class="col-xs-12">
+            <div class="cp-card">
+              <div class="row">
+                <div class="col-xs-6">
+                  <label i18n>{{ 'name' | cpI18n }}</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="title">
+                </div>
+                <div class="col-xs-6">
+                  <label i18n>{{ 'location' | cpI18n }}</label>
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <cp-place-autocomplete
+                        placeHolder="Address..."
+                        (placeChange)="onPlaceChange($event, i)"
+                        [defaultValue]="item.controls.location.value">
+                      </cp-place-autocomplete>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="cp-wrapper cp-wrapper--outer">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="pull-right">
+            <a [routerLink]="['/manage/calendars']"
+              class="cpbtn cpbtn--cancel" i18n>
+              {{ 'cancel' | cpI18n }}
+            </a>
+            <cp-button
+              [props]="buttonData"
+              (buttonClick)="onSubmit()">
+            </cp-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+

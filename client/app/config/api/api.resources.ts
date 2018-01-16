@@ -38,6 +38,8 @@ export const API_ENDPOINTS = {
 
   CAMPUS_THREAD: 'campus_thread',
 
+  CALENDARS: 'academic_calendar',
+
   CAMPUS_COMMENT: 'campus_comment',
 
   ASSESS_SERVICE: 'assess_service',
@@ -56,6 +58,8 @@ export const API_ENDPOINTS = {
   SERVICE_PROVIDER: 'service_provider',
 
   ASSESS_ENGAGEMENT: 'assess_engagement',
+
+  CALENDAR_ITEMS: 'academic_calendar_item',
 
   STUDENT_ENGAGEMENT: 'student_engagement',
 

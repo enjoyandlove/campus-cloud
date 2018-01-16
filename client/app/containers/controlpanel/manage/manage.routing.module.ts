@@ -31,6 +31,8 @@ const appRoutes: Routes = [
 
       { path: 'lists', loadChildren: './lists/lists.module#ListsModule' },
 
+      { path: 'calendars', loadChildren: './calendars/calendars.module#CalendarsModule' },
+
       {
         path: 'customization',
         loadChildren:
