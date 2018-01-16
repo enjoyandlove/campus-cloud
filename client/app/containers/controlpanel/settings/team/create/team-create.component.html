@@ -1,0 +1,345 @@
+<div class="cp-wrapper">
+  <div class="row">
+    <form
+      [formGroup]="form"
+      class="col-xs-8 col-xs-offset-2 margin-bottom">
+      <div class="section cp-card form-group">
+        <p class="section__title" i18n>{{ 'admin_invite' | cpI18n }}</p>
+        <div class="row">
+          <div class="col-xs-4">
+            <label i18n>{{ 'first_name' | cpI18n }}</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="firstname">
+          </div>
+
+          <div class="col-xs-4">
+            <label i18n>{{ 'last_name' | cpI18n }}</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="lastname">
+          </div>
+
+          <div class="col-xs-4">
+            <label i18n>{{ 'email' | cpI18n }}</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="email">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <div
+              class="all-access"
+              [class.isEnabled]="isAllAccessEnabled">
+              <div class="row">
+                <div class="col-xs-8">
+                  <p class="section-sub-title" i18n>{{ 'admin_all_access' | cpI18n }}</p>
+                  <p class="section-description" i18n>
+                    {{ 'admin_all_acceess_help' | cpI18n }}
+                  </p>
+                </div>
+                <div class="col-xs-4">
+                  <div class="pull-right">
+                    <cp-switch
+                      (toggle)="toggleAllAccess($event)"
+                      (toggle)="isAllAccessEnabled = !isAllAccessEnabled">
+                    </cp-switch>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Permissions -->
+      <fieldset [disabled]="isAllAccessEnabled">
+      <div
+        class="section cp-card form-group"
+        [class.isDisabled]="isAllAccessEnabled">
+        <!-- Manage Team Members -->
+        <div class="section__item">
+          <p class="section__title" i18n>{{ 'admin_permissions' | cpI18n }}</p>
+          <div class="row">
+            <div class="col-xs-8">
+              <p class="section-sub-title" i18n>{{ 'manage_team_members' | cpI18n }}</p>
+              <p class="section-description" i18n>
+                {{ 'admin_grant_permissions' | cpI18n }}
+              </p>
+            </div>
+            <div class="col-xs-4">
+              <cp-dropdown
+                [items]="manageAdmins"
+                (selected)="onManageAdminSelected($event)">
+              </cp-dropdown>
+            </div>
+          </div>
+        </div>
+        <!-- END Manage Admin -->
+
+        <!-- Service Owner -->
+        <fieldset [disabled]="!canReadServices">
+          <div class="section__item">
+            <div class="row">
+              <div class="col-xs-8">
+                <p class="section-sub-title" i18n>{{ 'admin_service_owner' | cpI18n }}</p>
+                <p class="section-description" i18n>
+                  {{ 'admin_service_owner_help' | cpI18n }}
+                </p>
+              </div>
+              <div class="col-xs-4">
+                <cp-dropdown
+                  [items]="servicesMenu"
+                  [selectedItem]="servicesCount"
+                  (selected)="onServicesSelected($event)">
+                </cp-dropdown>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <!-- END Service Owner -->
+
+        <!-- Club Owner -->
+        <fieldset [disabled]="!canReadClubs">
+          <div class="section__item">
+            <div class="row">
+              <div class="col-xs-8">
+                <p class="section-sub-title" i18n>{{ 'admin_club_owner' | cpI18n }}</p>
+                <p class="section-description" i18n>
+                  {{ 'admin_club_owner_help' | cpI18n }}
+                </p>
+              </div>
+              <div class="col-xs-4">
+                <cp-dropdown
+                  [items]="clubsMenu"
+                  [selectedItem]="clubsCount"
+                  (selected)="onClubsSelected($event)">
+                </cp-dropdown>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <!-- END Club Owner -->
+
+        <!-- Events -->
+        <fieldset [disabled]="!canReadEvents">
+          <div class="section__item">
+            <div class="row">
+              <div class="col-xs-8">
+                <p class="section-sub-title" i18n>{{ 'admin_events_title' | cpI18n }}</p>
+                <p class="section-description" i18n>
+                  {{ 'admin_events_help' | cpI18n }}
+                </p>
+              </div>
+              <div class="col-xs-4">
+                <cp-dropdown
+                  [items]="eventsMenu"
+                  (selected)="onEventsSelected($event)">
+                </cp-dropdown>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <!-- END Events -->
+
+        <!-- App Content -->
+        <div class="section__item section--content">
+          <div class="row">
+            <div class="col-xs-12">
+              <p class="section-sub-title" i18n>{{ 'admin_app_content' | cpI18n }}</p>
+              <p class="section-description" i18n>
+                {{ 'admin_app_content_help' | cpI18n }}
+              </p>
+            </div>
+          </div>
+          <!-- <div class="row options-row">
+            <div
+              class="col-xs-4"
+              [class.isDisabled]="!formData.content.orientation.active">
+              <cp-checkbox
+                class="cpcheckbox"
+                (toggle)="checkControl($event, CP_PRIVILEGES_MAP.orientation, formData.content.orientation)"
+                [isDisabled]="!formData.content.orientation.active">
+              </cp-checkbox>
+              <span i18n>{{ 'orientation' | cpI18n }}</span>
+            </div>
+
+            <div
+              class="col-xs-4"
+              [class.isDisabled]="!formData.content.calendars.active">
+              <cp-checkbox
+                class="cpcheckbox"
+                (toggle)="checkControl($event, CP_PRIVILEGES_MAP.calendar, formData.content.calendars)"
+                [isDisabled]="!formData.content.calendars.active">
+              </cp-checkbox>
+              <span i18n>{{ 'calendar' | cpI18n }}</span>
+            </div>
+
+            <div
+              class="col-xs-4"
+              [class.isDisabled]="!formData.content.maps.active">
+              <cp-checkbox
+                class="cpcheckbox"
+                (toggle)="checkControl($event, CP_PRIVILEGES_MAP.campus_maps, formData.content.maps)"
+                [isDisabled]="!formData.content.maps.active">
+              </cp-checkbox>
+              <span i18n>{{ 'maps' | cpI18n }}</span>
+            </div>
+          </div> -->
+
+          <div class="row options-row">
+            <div
+              class="col-xs-4"
+              [class.isDisabled]="!formData.content.feeds.active">
+              <cp-checkbox
+                class="cpcheckbox"
+                (toggle)="checkControl($event, CP_PRIVILEGES_MAP.moderation, formData.content.feeds)"
+                [isDisabled]="!formData.content.feeds.active">
+              </cp-checkbox>
+              <span i18n>{{ 'feeds' | cpI18n }}</span>
+            </div>
+
+            <div
+              class="col-xs-4"
+              [class.isDisabled]="!formData.content.links.active">
+              <cp-checkbox
+                class="cpcheckbox"
+                (toggle)="checkControl($event, CP_PRIVILEGES_MAP.links, formData.content.links)"
+                [isDisabled]="!formData.content.links.active">
+              </cp-checkbox>
+              <span i18n>{{ 'links' | cpI18n }}</span>
+            </div>
+
+            <!-- <div
+              class="col-xs-4"
+              [class.isDisabled]="!formData.content.appCustomizaton.active">
+              <cp-checkbox
+                class="cpcheckbox"
+                (toggle)="checkControl($event, CP_PRIVILEGES_MAP.app_customization, formData.content.appCustomizaton)"
+                [isDisabled]="!formData.content.appCustomizaton.active">
+              </cp-checkbox>
+              <span i18n>{{ 'app_customization' | cpI18n }}</span>
+            </div> -->
+          </div>
+        </div>
+        <!-- END App Content -->
+
+        <!-- Notify -->
+        <div class="section__item">
+          <div class="row">
+            <div class="col-xs-12">
+              <p class="section-sub-title" i18n>{{ 'notify' | cpI18n }}</p>
+              <p class="section-description" i18n>
+                {{ 'admin_notify_help' | cpI18n }}
+              </p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="row options-row">
+                <div
+                  class="col-xs-5"
+                  [class.isDisabled]="!formData.notify.campus.active">
+                  <cp-checkbox
+                    class="cpcheckbox"
+                    [isDisabled]="!formData.notify.campus.active"
+                    [isChecked]="schoolPrivileges && schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements]"
+                    (toggle)="checkControl($event, CP_PRIVILEGES_MAP.campus_announcements, formData.notify.campus)">
+                  </cp-checkbox>
+                  <span i18n>{{ 'admin_campus_announcements' | cpI18n }}</span>
+                </div>
+                <div
+                  class="col-xs-5"
+                  [class.isDisabled]="!formData.notify.emergency.active">
+                  <cp-checkbox
+                    class="cpcheckbox"
+                    [isDisabled]="!formData.notify.emergency.active"
+                    [isChecked]="schoolPrivileges && schoolPrivileges[CP_PRIVILEGES_MAP.emergency_announcement]"
+                    (toggle)="checkControl($event, CP_PRIVILEGES_MAP.emergency_announcement, formData.notify.emergency)">
+                  </cp-checkbox>
+                  <span i18n>{{ 'admin_emergency_announcements' | cpI18n }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- END Notify -->
+
+        <!-- Assess -->
+        <div class="section__item">
+          <div class="row">
+            <div class="col-xs-12">
+              <p class="section-sub-title" i18n>{{ 'assess' | cpI18n }}</p>
+              <p class="section-description" i18n>
+                {{ 'admin_assess_help' | cpI18n }}
+              </p>
+            </div>
+          </div>
+          <div class="row">
+            <div
+              class="col-xs-5 options-row"
+              [class.isDisabled]="!formData.assess.engagement.active">
+              <cp-checkbox
+                class="cpcheckbox"
+                [isDisabled]="!formData.assess.engagement.active"
+                [isChecked]="schoolPrivileges && schoolPrivileges[CP_PRIVILEGES_MAP.assessment]"
+                (toggle)="checkControl($event, CP_PRIVILEGES_MAP.assessment, formData.assess.engagement)">
+              </cp-checkbox>
+              <span i18n>{{ 'admin_engagement_dashboard' | cpI18n }}</span>
+            </div>
+          </div>
+        </div>
+        <!-- END Assess -->
+      </div>
+      </fieldset>
+      <!-- END Permissions -->
+
+      <div class="footer">
+        <div class="cp-wrapper cp-wrapper--outer">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="pull-right">
+                <label class="error" *ngIf="isFormError">{{ formError }}</label>
+
+                <a [routerLink]="['/settings/team']"
+                  class="cpbtn cpbtn--cancel" i18n>
+                  {{ 'cancel' | cpI18n }}
+                </a>
+
+                <cp-button
+                  [props]="buttonData"
+                  (buttonClick)="onSubmit(form.value)">
+                </cp-button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<cp-modal
+  [type]="MODAL_TYPE"
+  *ngIf="isServiceModal"
+  modalId="selectServicesModal">
+  <cp-select-services-modal
+    [reset]="resetServiceModal$"
+    (selected)="onServicesModalSelected($event)">
+  </cp-select-services-modal>
+</cp-modal>
+
+<cp-modal
+  [type]="MODAL_TYPE"
+  *ngIf="isClubsModal"
+  modalId="selectClubsModal">
+  <cp-select-clubs-modal
+    [reset]="resetClubsModal$"
+    (selected)="onClubsModalSelected($event)">
+  </cp-select-clubs-modal>
+</cp-modal>

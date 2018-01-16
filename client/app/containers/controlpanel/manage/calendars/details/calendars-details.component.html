@@ -1,0 +1,83 @@
+<div class="row">
+    <div class="col-xs-12">
+      <cp-calendars-details-action-box
+        (search)="onSearch($event)"
+        (launchCreateModal)="onLaunchCreateModal()">
+      </cp-calendars-details-action-box>
+    </div>
+  </div>
+
+  <div [ngSwitch]="loading">
+    <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+    <div *ngSwitchCase="false">
+      <cp-no-content
+        class="no-content"
+        *ngIf="!state.items.length"
+        [noContentText]="cpI18n.translate('calendars_items_no_results_found')">
+      </cp-no-content>
+
+      <div *ngIf="state.items.length">
+        <ul class="items cp-form">
+          <li class="cp-form__header col-xs-12">
+            <div class="row">
+              <span class="col-xs-5" i18n>
+                {{ 'name' | cpI18n }}
+              </span>
+              <span class="col-xs-5" i18n>{{ 'start_date' | cpI18n }}</span>
+              <span class="col-xs-2"></span>
+            </div>
+          </li>
+
+          <li class="cp-form__item col-xs-12" *ngFor="let item of state.items">
+            <div class="row">
+              <span class="col-xs-5 text-truncate hover">
+                <a [routerLink]="['items/' + item.id]">
+                  <strong>
+                    {{ item.title }}
+                  </strong>
+                </a>
+                <br>
+                {{ item.description }}
+              </span>
+              <span class="col-xs-5 text-truncate">
+                {{ item.start | cpDatePipe:dateFormat }}
+              </span>
+              <span class="col-xs-2 text-right">
+                <span
+                  data-toggle="modal"
+                  (click)="selectedItem = item"
+                  (click)="launchDeleteModal = true"
+                  data-target="#deleteCalendarItemModal"
+                  class="hover action-button material-icons text-center">
+                  close
+                </span>
+              </span>
+            </div>
+          </li>
+        </ul>
+
+        <cp-pagination
+          [pageNext]="pageNext"
+          [pagePrev]="pagePrev"
+          [pageNumber]="pageNumber"
+          (next)="onPaginationNext()"
+          (previous)="onPaginationPrevious()">
+        </cp-pagination>
+      </div>
+    </div>
+  </div>
+
+  <cp-modal
+    *ngIf="launchDeleteModal"
+    modalId="deleteCalendarItemModal">
+    <cp-calendars-items-delete
+      [item]="selectedItem"
+      (deleted)="onDeleted($event)"
+      (resetCreateModal)="launchDeleteModal = false">
+    </cp-calendars-items-delete>
+  </cp-modal>
+
+  <cp-modal modalId="calendarsItemsImport">
+    <cp-calendars-items-import-modal></cp-calendars-items-import-modal>
+  </cp-modal>
