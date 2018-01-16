@@ -1,0 +1,20 @@
+<form [formGroup]="form">
+  <div class="row form-group">
+    <div class="col-xs-12">
+      <label i18n>{{ 'calendars_label_name' | cpI18n }}</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="name">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <label i18n>{{ 'calendars_label_description' | cpI18n }}</label>
+      <textarea
+        class="form-control"
+        formControlName="description">
+      </textarea>
+    </div>
+  </div>
+</form>

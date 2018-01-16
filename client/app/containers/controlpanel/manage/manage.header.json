@@ -32,6 +32,12 @@
       "privilege": 23,
       "label": "links",
       "url": "/manage/links"
+    },
+    {
+      "privilege": 16,
+      "label": "calendars",
+      "new": true,
+      "url": "/manage/calendars"
     }
   ]
 }

@@ -38,11 +38,23 @@ export class CPLocationsService {
     });
   }
 
-  geoCode(location) {
+  geoCode(location): Promise<any> {
     return new Promise((resolve, reject) => {
       const service = new google.maps.Geocoder();
 
       service.geocode({ location }, (data, status) => {
+        status === google.maps.GeocoderStatus.OK
+          ? resolve(data[0])
+          : reject(status);
+      });
+    });
+  }
+
+  getAddressDetails(address): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const service = new google.maps.Geocoder();
+
+      service.geocode({ address: address }, (data, status) => {
         status === google.maps.GeocoderStatus.OK
           ? resolve(data[0])
           : reject(status);
