@@ -1,14 +1,14 @@
-.custom-scroll-bar ::-webkit-scrollbar-track {
+.cp-scrollbar ::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: #F5F5F5;
 }
 
-.custom-scroll-bar::-webkit-scrollbar {
+.cp-scrollbar::-webkit-scrollbar {
   width: 10px;
   background-color: #F5F5F5;
 }
 
-.custom-scroll-bar::-webkit-scrollbar-thumb {
+.cp-scrollbar::-webkit-scrollbar-thumb {
   background-color: #0ae;
 
   background-image: -webkit-gradient(linear, 0 0, 0 100%,
