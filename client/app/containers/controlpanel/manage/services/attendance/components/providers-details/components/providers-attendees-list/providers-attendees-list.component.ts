@@ -12,10 +12,14 @@ import { unix } from 'moment';
 
 interface IState {
   search_text: string;
+  sort_field: string;
+  sort_direction: string;
 }
 
 const state: IState = {
   search_text: null,
+  sort_field: 'firstname',
+  sort_direction: 'asc',
 };
 
 @Component({
@@ -81,6 +85,8 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent
     search.append('all', '1');
     search.append('service_id', this.serviceId.toString());
     search.append('service_provider_id', this.providerId.toString());
+    search.append('sort_field', this.state.sort_field);
+    search.append('sort_direction', this.state.sort_direction);
 
     const stream$ = this.providersService.getProviderAssessments(
       this.startRange,
@@ -89,6 +95,16 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent
     );
 
     return stream$.toPromise();
+  }
+
+  doSort(sort_field) {
+    this.state = {
+      ...this.state,
+      sort_field,
+      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc',
+    };
+
+    this.fetch();
   }
 
   ngOnInit() {

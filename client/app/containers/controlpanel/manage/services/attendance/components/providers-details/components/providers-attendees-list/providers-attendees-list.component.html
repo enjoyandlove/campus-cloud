@@ -13,16 +13,64 @@
           <div class="cp-table__header">
             <div class="row">
               <div class="col-xs-4">
-                <span i18n>{{ 'services_label_attendee_name' | cpI18n }}</span>
+                <span
+                  class="hover"
+                  (click)="doSort('firstname')">
+                  {{ 'services_label_attendee_name' | cpI18n }}
+                  <span *ngIf="state.sort_field === 'firstname'">
+                    <i
+                      class="material-icons"
+                      *ngIf="state.sort_direction === 'asc'">
+                      arrow_upward
+                    </i>
+                    <i
+                      class="material-icons"
+                      *ngIf="state.sort_direction === 'desc'">
+                      arrow_downward
+                    </i>
+                  </span>
+                </span>
               </div>
               <div class="col-xs-3">
                 <span i18n>{{ 'rating' | cpI18n }}</span>
               </div>
               <div class="col-xs-2">
-                <span i18n>{{ 'services_label_all_checkin_methods' | cpI18n }}</span>
+                <span
+                  class="hover"
+                  (click)="doSort('check_in_method')">
+                  {{ 'services_label_all_checkin_methods' | cpI18n }}
+                  <span *ngIf="state.sort_field === 'check_in_method'">
+                    <i
+                      class="material-icons"
+                      *ngIf="state.sort_direction === 'asc'">
+                      arrow_upward
+                    </i>
+                    <i
+                      class="material-icons"
+                      *ngIf="state.sort_direction === 'desc'">
+                      arrow_downward
+                    </i>
+                  </span>
+                </span>
               </div>
               <div class="col-xs-3">
-                <span i18n>{{ 'services_label_checkin_time' | cpI18n }}</span>
+                <span
+                  class="hover"
+                  (click)="doSort('check_in_time')">
+                  {{ 'services_label_checkin_time' | cpI18n }}
+                  <span *ngIf="state.sort_field === 'check_in_time'">
+                    <i
+                      class="material-icons"
+                      *ngIf="state.sort_direction === 'asc'">
+                      arrow_upward
+                    </i>
+                    <i
+                      class="material-icons"
+                      *ngIf="state.sort_direction === 'desc'">
+                      arrow_downward
+                    </i>
+                  </span>
+                </span>
               </div>
             </div>
           </div>
