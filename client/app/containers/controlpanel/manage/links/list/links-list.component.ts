@@ -7,16 +7,18 @@ import { CPSession } from './../../../../../session/index';
 import { BaseComponent } from '../../../../../base/base.component';
 import { CPI18nService } from '../../../../../shared/services/index';
 
-declare var $: any;
-
 interface IState {
   links: Array<ILink>;
   search_str: string;
+  sort_field: string;
+  sort_direction: string;
 }
 
 const state: IState = {
   links: [],
   search_str: null,
+  sort_field: 'name',
+  sort_direction: 'asc',
 };
 
 @Component({
@@ -65,6 +67,16 @@ export class LinksListComponent extends BaseComponent implements OnInit {
     this.state = Object.assign({}, this.state, { search_str });
 
     this.resetPagination();
+
+    this.fetch();
+  }
+
+  doSort(sort_field) {
+    this.state = {
+      ...this.state,
+      sort_field: sort_field,
+      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc',
+    };
 
     this.fetch();
   }
