@@ -15,12 +15,16 @@ interface IState {
   clubs: IClub[];
   query: string;
   type: string;
+  sort_field: string;
+  sort_direction: string;
 }
 
 const state: IState = {
   clubs: [],
   query: null,
   type: null,
+  sort_field: 'name',
+  sort_direction: 'asc',
 };
 
 @Component({
@@ -51,11 +55,22 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
     this.fetch();
   }
 
+  doSort(sort_field) {
+    this.state = {
+      ...this.state,
+      sort_field: sort_field,
+      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc',
+    };
+    this.fetch();
+  }
+
   private fetch() {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
     search.append('status', this.state.type);
     search.append('search_str', this.state.query);
+    search.append('sort_field', this.state.sort_field);
+    search.append('sort_direction', this.state.sort_direction);
 
     super
       .fetchData(

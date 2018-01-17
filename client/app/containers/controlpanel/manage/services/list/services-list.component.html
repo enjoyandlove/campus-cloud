@@ -53,40 +53,8 @@
               </i>
             </span>
           </span>
-          <span
-            class="col-xs-2 hover"
-            (click)="doSort('num_ratings')">
-            {{ 'ratings' | cpI18n }}
-            <span *ngIf="state.sort_field === 'num_ratings'">
-              <i
-                class="material-icons"
-                *ngIf="state.sort_direction === 'asc'">
-                arrow_upward
-              </i>
-              <i
-                class="material-icons"
-                *ngIf="state.sort_direction === 'desc'">
-                arrow_downward
-              </i>
-            </span>
-          </span>
-          <span
-            class="col-xs-3 hover"
-            (click)="doSort('avg_rating_percent')">
-            {{ 'average_rating' | cpI18n }}
-            <span *ngIf="state.sort_field === 'avg_rating_percent'">
-              <i
-                class="material-icons"
-                *ngIf="state.sort_direction === 'asc'">
-                arrow_upward
-              </i>
-              <i
-                class="material-icons"
-                *ngIf="state.sort_direction === 'desc'">
-                arrow_downward
-              </i>
-            </span>
-          </span>
+          <span class="col-xs-2">{{ 'ratings' | cpI18n }}</span>
+          <span class="col-xs-3">{{ 'average_rating' | cpI18n }}</span>
           <span class="col-xs-1 hover"></span>
         </div>
       </li>
