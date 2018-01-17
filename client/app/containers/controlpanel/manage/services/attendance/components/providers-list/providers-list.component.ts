@@ -11,11 +11,15 @@ import { CPI18nService } from './../../../../../../../shared/services/i18n.servi
 interface IState {
   search_text: string;
   providers: Array<any>;
+  sort_field: string;
+  sort_direction: string;
 }
 
 const state: IState = {
   providers: [],
   search_text: null,
+  sort_direction: 'asc',
+  sort_field: 'provider_name',
 };
 
 @Component({
@@ -56,10 +60,21 @@ export class ServicesProvidersListComponent extends BaseComponent
     this.fetch();
   }
 
+  doSort(sort_field) {
+    this.state = {
+      ...this.state,
+      sort_field,
+      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc',
+    };
+    this.fetch();
+  }
+
   private fetch() {
     const search = new URLSearchParams();
     search.append('search_text', this.state.search_text);
     search.append('service_id', this.serviceId.toString());
+    search.append('sort_field', this.state.sort_field);
+    search.append('sort_direction', this.state.sort_direction);
 
     super
       .fetchData(
