@@ -15,6 +15,7 @@ import { Observable } from 'rxjs/Observable';
 import { CPLocationsService } from '../../services/locations.service';
 
 import { CPSession } from './../../../session';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 interface IState {
   input: string;
@@ -137,6 +138,10 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     if (this.defaultValue) {
       this.setInput(this.defaultValue);
+    }
+
+    if (this.newAddress === undefined) {
+      this.newAddress = new BehaviorSubject(null);
     }
 
     this.newAddress.subscribe((address) => {

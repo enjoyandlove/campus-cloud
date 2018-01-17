@@ -1,0 +1,137 @@
+import { Observable } from 'rxjs/Observable';
+import { URLSearchParams } from '@angular/http';
+import { ICalendar } from './../calendars.interface';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
+
+import { FORMAT } from './../../../../../shared/pipes/date/date.pipe';
+import { CalendarsService } from './../calendars.services';
+import { BaseComponent } from '../../../../../base';
+import { CPSession } from '../../../../../session';
+import { CPI18nService } from '../../../../../shared/services';
+
+import {
+  IHeader,
+  HEADER_UPDATE,
+} from './../../../../../reducers/header.reducer';
+
+@Component({
+  selector: 'cp-calendars-details',
+  templateUrl: './calendars-details.component.html',
+  styleUrls: ['./calendars-details.component.scss'],
+})
+export class CalendarsDetailComponent extends BaseComponent implements OnInit {
+  loading;
+  calendarId: number;
+  calendar: ICalendar;
+  selectedItem = null;
+  launchDeleteModal = false;
+  dateFormat = FORMAT.DATETIME;
+
+  state = {
+    items: [],
+    search_str: null,
+  };
+
+  constructor(
+    public session: CPSession,
+    public cpI18n: CPI18nService,
+    public store: Store<IHeader>,
+    public route: ActivatedRoute,
+    public service: CalendarsService,
+  ) {
+    super();
+    super.isLoading().subscribe((loading) => (this.loading = loading));
+    this.calendarId = this.route.snapshot.params['calendarId'];
+
+    this.fetch();
+  }
+
+  onPaginationNext() {
+    super.goToNext();
+
+    this.fetch();
+  }
+
+  onPaginationPrevious() {
+    super.goToPrevious();
+
+    this.fetch();
+  }
+
+  onSearch(search_str) {
+    this.state = Object.assign({}, this.state, { search_str });
+
+    this.resetPagination();
+
+    this.fetch();
+  }
+
+  buildHeader() {
+    this.store.dispatch({
+      type: HEADER_UPDATE,
+      payload: {
+        heading: `[NOTRANSLATE]${this.calendar.name}[NOTRANSLATE]`,
+        subheading: null,
+        em: null,
+        crumbs: {
+          url: '/manage/calendars',
+          label: 'calendars',
+        },
+        children: [],
+      },
+    });
+  }
+
+  onDeleted(itemId: number) {
+    this.selectedItem = null;
+    this.launchDeleteModal = false;
+
+    this.state = Object.assign({}, this.state, {
+      items: this.state.items.filter((item) => item.id !== itemId),
+    });
+
+    if (this.state.items.length === 0 && this.pageNumber > 1) {
+      this.resetPagination();
+      this.fetch();
+    }
+  }
+
+  ngOnInit() {}
+
+  private fetch() {
+    const itemSearch = new URLSearchParams();
+    const calendarSearch = new URLSearchParams();
+
+    itemSearch.append('search_str', this.state.search_str);
+    itemSearch.append('academic_calendar_id', this.calendarId.toString());
+    itemSearch.append('school_id', this.session.g.get('school').id.toString());
+    calendarSearch.append(
+      'school_id',
+      this.session.g.get('school').id.toString(),
+    );
+
+    const calendar$ = this.service.getCalendarById(
+      this.calendarId,
+      calendarSearch,
+    );
+    const items$ = this.service.getItemsByCalendarId(
+      this.startRange,
+      this.endRange,
+      itemSearch,
+    );
+    const stream$ = Observable.combineLatest(calendar$, items$);
+
+    super
+      .fetchData(stream$)
+      .then((res) => {
+        this.calendar = res.data[0];
+        this.state = { ...this.state, items: res.data[1] };
+        this.buildHeader();
+      })
+      .catch((err) => {
+        throw new Error(err);
+      });
+  }
+}

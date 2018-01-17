@@ -7,6 +7,19 @@
   font-size: 2em;
 }
 
+.cp-table__header {
+  span.hover {
+    position: relative;
+
+    > span i {
+      top: 1px;
+      font-size: 17px;
+      position: absolute;
+      padding-left: 6px;
+    }
+  }
+}
+
 a.startcheckin {
   padding-left: 0;
   padding-right: 0;

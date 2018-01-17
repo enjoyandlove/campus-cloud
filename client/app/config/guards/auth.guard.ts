@@ -95,6 +95,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
       'events',
       'feeds',
       'clubs',
+      'calendars',
       'services',
       'lists',
       'links',
@@ -112,6 +113,8 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
       services: CP_PRIVILEGES_MAP.services,
 
       lists: CP_PRIVILEGES_MAP.campus_announcements,
+
+      calendars: CP_PRIVILEGES_MAP.calendar,
 
       links: CP_PRIVILEGES_MAP.links,
 

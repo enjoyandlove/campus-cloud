@@ -1,0 +1,22 @@
+<ng-container [ngSwitch]="ready">
+  <cp-spinner *ngSwitchCase="false"></cp-spinner>
+
+  <div class="row" *ngSwitchCase="true">
+    <div class="col-xs-12">
+      <cp-calendars-items-bulk-create-form
+        [form]="form"
+        #createForm
+        (submitted)="onSubmit($event)">
+      </cp-calendars-items-bulk-create-form>
+    </div>
+  </div>
+</ng-container>
+
+<cp-modal modalId="calendarImportsConfirmation" *ngIf="launchConfirmationModal">
+    <cp-import-confirmation-modal
+      [calendarId]="calendarId"
+      [original]="originalData"
+      [response]="confirmationData">
+    </cp-import-confirmation-modal>
+</cp-modal>
+

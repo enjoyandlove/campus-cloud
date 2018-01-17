@@ -1,0 +1,67 @@
+<ng-container [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+  <ng-container *ngSwitchCase="false">
+    <div class="row">
+      <div class="col-xs-8 col-xs-offset-2">
+        <div class="cp-card item meta">
+          <div class="row">
+            <div class="col-xs-2 meta__label">
+              <p><strong>{{ 'start' | cpI18n }}</strong></p>
+            </div>
+            <div class="col-xs-10 meta__info">
+              <div class="row">
+                <div class="col-xs-9">
+                  <p>{{ item.start | cpDatePipe:dateFormat }}</p>
+                </div>
+                <div class="col-xs-3">
+                  <a [routerLink]="['edit']" class="cpbtn cpbtn--primary pull-right">
+                    {{ 'calendars_items_edit_btn' | cpI18n }}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-2 meta__label">
+              <p><strong>{{ 'end' | cpI18n }}</strong></p>
+            </div>
+            <div class="col-xs-10 meta__info">
+              <p class="text-truncate">{{ item.end | cpDatePipe:dateFormat }}</p>
+            </div>
+          </div>
+
+          <div class="row address" *ngIf="item.location !== ''">
+            <div class="col-xs-2 meta__label">
+              <p><strong>{{ 'location' | cpI18n }}</strong></p>
+            </div>
+            <div class="col-xs-10 meta__info">
+              <p>{{ item.location }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-8 col-xs-offset-2">
+        <div class="cp-card map">
+          <cp-maps
+            [center]="mapCenter"
+            [draggable]="draggable"
+            class="map__container">
+          </cp-maps>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="item.description !== ''">
+      <div class="col-xs-8 col-xs-offset-2">
+        <div class="cp-card">
+          <p><strong>{{ 'description' | cpI18n }}</strong></p>
+          <p class="item__description">{{ item.description }}</p>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
