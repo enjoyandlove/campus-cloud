@@ -53,6 +53,8 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent
     search.append('search_text', this.state.search_text);
     search.append('service_id', this.serviceId.toString());
     search.append('service_provider_id', this.providerId.toString());
+    search.append('sort_field', this.state.sort_field);
+    search.append('sort_direction', this.state.sort_direction);
 
     const stream$ = this.providersService.getProviderAssessments(
       this.startRange,
@@ -85,8 +87,6 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent
     search.append('all', '1');
     search.append('service_id', this.serviceId.toString());
     search.append('service_provider_id', this.providerId.toString());
-    search.append('sort_field', this.state.sort_field);
-    search.append('sort_direction', this.state.sort_direction);
 
     const stream$ = this.providersService.getProviderAssessments(
       this.startRange,
