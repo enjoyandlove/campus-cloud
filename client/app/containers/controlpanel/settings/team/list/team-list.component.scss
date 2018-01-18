@@ -7,6 +7,19 @@ ul {
   list-style: none;
 }
 
+.cp-form__header {
+  span.hover {
+    position: relative;
+
+    > span i {
+      top: 1px;
+      font-size: 17px;
+      position: absolute;
+      padding-left: 6px;
+    }
+  }
+}
+
 .deletebutton {
   font-size: 2em;
 }

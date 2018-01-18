@@ -11,14 +11,16 @@ import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 interface IState {
   admins: Array<any>;
   search_str: string;
+  sort_field: string;
+  sort_direction: string;
 }
 
 const state: IState = {
   admins: [],
   search_str: null,
+  sort_field: 'firstname',
+  sort_direction: 'asc',
 };
-
-declare var $: any;
 
 @Component({
   selector: 'cp-team-list',
@@ -51,9 +53,21 @@ export class TeamListComponent extends BaseComponent implements OnInit {
     this.fetch();
   }
 
+  doSort(sort_field) {
+    this.state = {
+      ...this.state,
+      sort_field: sort_field,
+      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc',
+    };
+
+    this.fetch();
+  }
+
   private fetch() {
     const search = new URLSearchParams();
     search.append('search_str', this.state.search_str);
+    search.append('sort_field', this.state.sort_field);
+    search.append('sort_direction', this.state.sort_direction);
     search.append('school_id', this.session.g.get('school').id.toString());
 
     super
@@ -69,7 +83,7 @@ export class TeamListComponent extends BaseComponent implements OnInit {
   private buildHeader() {
     this.store.dispatch({
       type: HEADER_UPDATE,
-      payload: require('../../settings.header.json')
+      payload: require('../../settings.header.json'),
     });
   }
 
