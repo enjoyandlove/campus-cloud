@@ -3,7 +3,11 @@
     "message": "Please check your credentials and try again."
   },
   "active": {
-    "message": "Active"
+    "message": "Active",
+    "description": "Active Club"
+  },
+  "address": {
+    "message": "Address"
   },
   "admins_error_no_access_granted": {
     "message": "You have not granted any access"
@@ -12,7 +16,8 @@
     "message": "You do not have sufficient privileges to perform this action."
   },
   "admin_all_acceess_help": {
-    "message": "Grant the new team member the same Campus Cloud permissions as me."
+    "message":
+      "Grant the new team member the same Campus Cloud permissions as me."
   },
   "admin_all_access": {
     "message": "Copy my Campus Cloud Permissions"
@@ -30,7 +35,7 @@
     "message": "Manage other kinds of app content"
   },
   "admin_assess_help": {
-    "message": "View the Assess Dashboard and Student Transcript"
+    "message": "View the Assessment Dashboard and Student Transcript"
   },
   "admin_campus_announcements": {
     "message": "Regular Announcements"
@@ -39,13 +44,15 @@
     "message": "Can Edit"
   },
   "admin_can_edit_help": {
-    "message": "See content created by other team members and create your own content"
+    "message":
+      "See content created by other team members and create your own content"
   },
   "admin_club_owner": {
     "message": "Club Owner"
   },
   "admin_club_owner_help": {
-    "message": "Create new clubs; manage information, events and membership for all clubs or select clubs"
+    "message":
+      "Create new clubs; manage information, events and membership for all clubs or select clubs"
   },
   "admin_club_service_modal_title": {
     "message": "Select %s"
@@ -99,7 +106,8 @@
     "message": "Delete Team Member"
   },
   "admin_notify_help": {
-    "message": "Send messages to students' phones and/or send emergency announcements"
+    "message":
+      "Send messages to students' phones and/or send emergency announcements"
   },
   "admin_no_access": {
     "message": "No Access"
@@ -123,10 +131,14 @@
     "message": "Service Executive"
   },
   "admin_service_owner_help": {
-    "message": "Create new services; manage information, events and assessment for all services or select services"
+    "message":
+      "Create new services; manage information, events and assessment for all services or select services"
   },
   "all": {
     "message": "All Categories"
+  },
+  "all_day": {
+    "message": "All day"
   },
   "all_fields_are_required": {
     "message": "All fields are required"
@@ -156,7 +168,8 @@
     "message": "Delete Announcement"
   },
   "announcements_emergency_help": {
-    "message": "Overrides the user's push notifications settings and forces them to acknowledge the message"
+    "message":
+      "Overrides the user's push notifications settings and forces them to acknowledge the message"
   },
   "announcements_not_sent": {
     "message": "Message not sent, please wait %s minutes before trying again"
@@ -174,16 +187,16 @@
     "message": "Overrides the user's push notification settings"
   },
   "announcement_confirm_campus_wide": {
-    "message": "Campus Wide Announcement"
+    "message": "Campus-Wide Announcement"
   },
   "announcement_confirm_campus_wide_and_emergency": {
-    "message": "Campus Wide and Emergency Announcement"
+    "message": "Campus-Wide and Emergency Announcement"
   },
   "announcement_confirm_campus_wide_and_emergency_body": {
-    "message": "You are about to send a campus wide, emergency announcement."
+    "message": "You are about to send a campus-wide emergency announcement."
   },
   "announcement_confirm_campus_wide_body": {
-    "message": "You are about to send a campus wide announcement."
+    "message": "You are about to send a campus-wide announcement."
   },
   "announcement_confirm_emergency": {
     "message": "Emergency Announcement"
@@ -240,25 +253,29 @@
     "message": "Check-in Item"
   },
   "assess_demo_feature_four_description": {
-    "message": "Assessment enables you to easily identify which students are disengaged and send them targeted communications via the mobile app."
+    "message":
+      "Assessment enables you to easily identify which students are disengaged and send them targeted communications via the mobile app."
   },
   "assess_demo_feature_four_title": {
     "message": "Identify and Communicate"
   },
   "assess_demo_feature_one_description": {
-    "message": "Conveniently track student attendance at campus events and services without any additional hardware or software."
+    "message":
+      "Conveniently track student attendance at campus events and services without any additional hardware or software."
   },
   "assess_demo_feature_one_title": {
     "message": "Communicate with Students"
   },
   "assess_demo_feature_three_description": {
-    "message": "Positive student engagement is the key to success. Get detailed insights on how students engaged and interacted with events or services."
+    "message":
+      "Positive student engagement is the key to success. Get detailed insights on how students engaged and interacted with events or services."
   },
   "assess_demo_feature_three_title": {
     "message": "Actionable Insights"
   },
   "assess_demo_feature_two_description": {
-    "message": "Get real-time feedback and input from your students on programs, including answers to custom questions for any events or services."
+    "message":
+      "Get real-time feedback and input from your students on programs, including answers to custom questions for any events or services."
   },
   "assess_demo_feature_two_title": {
     "message": "Attendance Tracking"
@@ -279,7 +296,8 @@
     "message": "or email us at cm@oohlalamobile.com"
   },
   "assess_demo_hero_description": {
-    "message": "OOHLALA Assessment Tools enable you to measure and assess student activity outside of the classroom"
+    "message":
+      "OOHLALA Assessment enables you to measure and assess student activity outside of the classroom"
   },
   "assess_demo_hero_title": {
     "message": "Measure Student Engagement Anywhere on Campus"
@@ -363,7 +381,8 @@
     "message": "Multiple Engagements"
   },
   "assess_repeat_engagement_tooltip": {
-    "message": "Students who attended more than one engagement for the period selected"
+    "message":
+      "Students who attended more than one engagement for the period selected"
   },
   "assess_response_date": {
     "message": "Response Date"
@@ -443,6 +462,9 @@
   "average_rating": {
     "message": "Average Rating"
   },
+  "back": {
+    "message": "Back"
+  },
   "beta_banner_go_back": {
     "message": "Revert to Previous Version"
   },
@@ -470,6 +492,45 @@
   "calendars_button_new": {
     "message": "Add Calendar"
   },
+  "calendars_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "calendars_delete_modal_title": {
+    "message": "Delete Calendar"
+  },
+  "calendars_edit_modal_title": {
+    "message": "Edit Calendar"
+  },
+  "calendars_form_submit_button_new": {
+    "message": "Create Item"
+  },
+  "calendars_items_buttons_new": {
+    "message": "Create Calendar Item"
+  },
+  "calendars_items_edit_btn": {
+    "message": "Edit Calendar Item"
+  },
+  "calendars_items_import_csv_heading": {
+    "message": "Import Calendar Items from File"
+  },
+  "calendars_items_import_csv_sub_heading": {
+    "message": "File contains data for %s calendar item(s)"
+  },
+  "calendars_items_import_message_error": {
+    "message": "Failed to create %s items"
+  },
+  "calendars_items_import_message_success": {
+    "message": "Successfully created %s items"
+  },
+  "calendars_items_no_results_found": {
+    "message": "No calendar items found"
+  },
+  "calendars_item_create_heading": {
+    "message": "Create Calendar Item"
+  },
+  "calendars_item_details": {
+    "message": "Item details"
+  },
   "calendars_label_description": {
     "message": "Description"
   },
@@ -483,7 +544,7 @@
     "message": "Campus Wall"
   },
   "campus_wide": {
-    "message": "Campus Wide"
+    "message": "Campus-Wide"
   },
   "cancel": {
     "message": "Cancel"
@@ -510,16 +571,21 @@
     "message": "Download QR Code"
   },
   "checkin_header_title": {
-    "message": "Check-in"
+    "message": "Check-in",
+    "description":
+      "Public Check-In Page (Title)\r\nhttps://ccstaging.oohlalamobile.com/#/cb/checkin/e/pNmRN94bVUbUI9qtz89i5A"
   },
   "checkin_instructions_one": {
-    "message": "We use QR codes to help attendees check in to an event. Be sure to print or share the QR  code with your event attendance organizer."
+    "message":
+      "We use QR codes to help attendees check in to an event. Be sure to print or share the QR  code with your event attendance organizer."
   },
   "checkin_instructions_three": {
-    "message": "You can view attendance statistics in Event Info. Be sure to come back to view feedback and ratings."
+    "message":
+      "You can view attendance statistics in Event Info. Be sure to come back to view feedback and ratings."
   },
   "checkin_instructions_two": {
-    "message": "Attendees can check in by scanning the QR code with the app. QR Codes can be printed or shown directly on a laptop, phone or tablet screen"
+    "message":
+      "Attendees can check in by scanning the QR code with the app. QR Codes can be printed or shown directly on a laptop, phone or tablet screen"
   },
   "checkin_list": {
     "message": "Attendee List"
@@ -561,10 +627,10 @@
     "message": "Import Clubs"
   },
   "clubs_import_heading": {
-    "message": "Import Clubs"
+    "message": "Import Clubs from File"
   },
   "clubs_import_items_to_import": {
-    "message": "valid student club(s) in the file"
+    "message": "File contains data for %s club(s)."
   },
   "clubs_label_advisor": {
     "message": "Advisor"
@@ -588,7 +654,8 @@
     "message": "Club Status"
   },
   "clubs_label_constitution": {
-    "message": "Constitution"
+    "message": "Constitution",
+    "description": "Form Label "
   },
   "clubs_label_edit_club": {
     "message": "Edit Club"
@@ -600,7 +667,8 @@
     "message": "Member Type"
   },
   "clubs_membership_disabled": {
-    "message": "Users can view the club but cannot join or message other members"
+    "message":
+      "Users can view the club but cannot join or message other members"
   },
   "clubs_membership_enabled": {
     "message": "Allows users to join the club and message other members"
@@ -662,6 +730,9 @@
   "contact_details": {
     "message": "Contact Details"
   },
+  "created": {
+    "message": "Date Created"
+  },
   "csv_modal_anchor_text": {
     "message": "Download CSV Sample File"
   },
@@ -676,9 +747,6 @@
   },
   "csv_modal_title": {
     "message": "Upload CSV File"
-  },
-  "dashboard_all_time": {
-    "message": "All Time"
   },
   "dashboard_announcements": {
     "message": "Announcements"
@@ -801,7 +869,7 @@
     "message": "Download CSV File"
   },
   "duplicate_entry": {
-    "message": "An entry like that already exists"
+    "message": "There is already a user with that email address."
   },
   "edit": {
     "message": "Edit"
@@ -810,7 +878,7 @@
     "message": "Email"
   },
   "email_does_not_exist": {
-    "message": "I'm sorry, but we weren't able to find a user with that login information"
+    "message": "There is no user with that login information."
   },
   "emergency": {
     "message": "Emergency"
@@ -843,7 +911,8 @@
     "message": "Invalid Extension"
   },
   "error_no_hosts_found_help": {
-    "message": "You do not have sufficient privileges to associate this new event with a host (a service or a club). "
+    "message":
+      "You do not have sufficient privileges to associate this new event with a service or a club."
   },
   "event": {
     "message": "Event"
@@ -927,7 +996,8 @@
     "message": "Import Events from Facebook"
   },
   "events_facebook_help": {
-    "message": "Provide the link to the Facebook event page (e.g., https://www.facebook.com/oohlalamobileapp/events/)."
+    "message":
+      "Provide the link to the Facebook event page (e.g., https://www.facebook.com/oohlalamobileapp/events/)."
   },
   "events_facebook_label_host": {
     "message": "Select Host"
@@ -1002,7 +1072,7 @@
     "message": "Thanks for your feedback"
   },
   "feeds": {
-    "message": "Feeds"
+    "message": "Walls"
   },
   "feeds_all_posts": {
     "message": "All Posts"
@@ -1185,7 +1255,8 @@
     "message": "Edit List"
   },
   "lists_error_template_conflict": {
-    "message": "This list is being used in a notification template. To delete this list, first delete all templates addressed to this list, and try again."
+    "message":
+      "This list is being used in a notification template. To delete this list, first delete all templates addressed to this list, and try again."
   },
   "lists_label_list_description": {
     "message": "Description"
@@ -1201,6 +1272,27 @@
   },
   "location": {
     "message": "Location"
+  },
+  "locations": {
+    "message": "Locations"
+  },
+  "locations_btn_create": {
+    "message": "Add Location"
+  },
+  "locations_create_modal_title": {
+    "message": "Add Location"
+  },
+  "locations_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "locations_delete_modal_title": {
+    "message": "Delete Location"
+  },
+  "locations_edit_modal_title": {
+    "message": "Edit Location"
+  },
+  "locations_label_acronym": {
+    "message": "Acronym"
   },
   "login": {
     "message": "Login"
@@ -1241,6 +1333,9 @@
   "message_file_upload_success": {
     "message": "File uploaded successfully"
   },
+  "more": {
+    "message": "More"
+  },
   "move": {
     "message": "Move"
   },
@@ -1250,11 +1345,17 @@
   "new_password": {
     "message": "New Password"
   },
+  "next": {
+    "message": "Next"
+  },
   "no": {
     "message": "No"
   },
   "notify": {
     "message": "Notify"
+  },
+  "notify_announcement_recipient": {
+    "message": "Recipients"
   },
   "no_admins_found": {
     "message": "No Admins found"
@@ -1270,6 +1371,35 @@
   },
   "ok": {
     "message": "Ok"
+  },
+  "on_boarding_step_1_description": {
+    "message": "Manage your campus app and increase student engagement."
+  },
+  "on_boarding_step_1_description_1": {
+    "message": "Rebuilt from the group up."
+  },
+  "on_boarding_step_1_title": {
+    "message": "Welcome to all the new Campus Cloud!"
+  },
+  "on_boarding_step_2_description": {
+    "message":
+      "All your campus resources including events, services, clubs and more."
+  },
+  "on_boarding_step_2_title": {
+    "message": "Manage your campus content"
+  },
+  "on_boarding_step_3_description": {
+    "message":
+      "Send campus announcements or target messages for specific students."
+  },
+  "on_boarding_step_3_title": {
+    "message": "Notify your campus and send targeted messages"
+  },
+  "on_boarding_step_4_description": {
+    "message": "Understand student engagement with campus events and services."
+  },
+  "on_boarding_step_4_title": {
+    "message": "Assess campus activities"
   },
   "optional": {
     "message": "Optional"
@@ -1287,7 +1417,8 @@
     "message": "Your password must contain at least 6 characters."
   },
   "password_requirements_special_char": {
-    "message": "For added security, use numbers, letters and special characters such as @, #, $, &amp;, etc"
+    "message":
+      "For added security, use numbers, letters and special characters such as @, #, $, &amp;, etc"
   },
   "password_reset_success": {
     "message": "Password saved, redirecting you to the login page"
@@ -1326,7 +1457,8 @@
     "message": "Bug fixes and usability improvements"
   },
   "release_notes_july_10_item_two": {
-    "message": "Administrators can create lists of users, to use in sending Notifications."
+    "message":
+      "Administrators can create lists of users, to use in sending Notifications."
   },
   "release_notes_july_10_title": {
     "message": "New as of July 10, 2017:"
@@ -1335,10 +1467,12 @@
     "message": "Administrators can create Clubs and Groups"
   },
   "release_notes_june_2_item_three": {
-    "message": "Students can post messages to Club Feeds. Executives and Administrators can moderate these Feeds."
+    "message":
+      "Students can post messages to Club Feeds. Executives and Administrators can moderate these Feeds."
   },
   "release_notes_june_2_item_two": {
-    "message": "Executives of a club can create events and services hosted by that club."
+    "message":
+      "Executives of a club can create events and services hosted by that club."
   },
   "release_notes_june_2_title": {
     "message": "New as of June 2, 2017:"
@@ -1347,13 +1481,16 @@
     "message": "The OOHLALA Team."
   },
   "release_notes_p_one": {
-    "message": "As part of the build up to 2018, we’ve rebuilt the Campus Cloud from the ground up. You’ll find the new Campus Cloud to be faster, more intuitive and user-friendly than the previous version. Please note that we are still refining some of the features from the old version and will be releasing them over the next few weeks. The first of these updated features will be a brand new dashboard that is more insightful!"
+    "message":
+      "As part of the build up to 2018, we’ve rebuilt the Campus Cloud from the ground up. You’ll find the new Campus Cloud to be faster, more intuitive and user-friendly than the previous version. Please note that we are still refining some of the features from the old version and will be releasing them over the next few weeks. The first of these updated features will be a brand new dashboard that is more insightful!"
   },
   "release_notes_p_three": {
-    "message": "We hope your experience with the new Campus Cloud proves to be an easy and enjoyable one, and we look forward to hearing your feedback!"
+    "message":
+      "We hope your experience with the new Campus Cloud proves to be an easy and enjoyable one, and we look forward to hearing your feedback!"
   },
   "release_notes_p_two": {
-    "message": "Should you wish to return to the old Campus Cloud, you can always do so by clicking on the banner at the top of the screen. If you wish to provide any feedback on your experience with the new Campus Cloud, please contact us at "
+    "message":
+      "Should you wish to return to the old Campus Cloud, you can always do so by clicking on the banner at the top of the screen. If you wish to provide any feedback on your experience with the new Campus Cloud, please contact us at "
   },
   "release_notes_sept_6_item_one": {
     "message": "Student comments are now included in downloaded Assessment data"
@@ -1380,7 +1517,7 @@
     "message": "Results"
   },
   "reupload": {
-    "message": "Reupload"
+    "message": "Re-upload"
   },
   "room": {
     "message": "Room"
@@ -1467,7 +1604,7 @@
     "message": "Service Banner"
   },
   "services_label_checked_in_method": {
-    "message": "Checked-in Method"
+    "message": "Check-in Method"
   },
   "services_label_checked_in_time": {
     "message": "Check-in Time"
@@ -1503,7 +1640,8 @@
     "message": "No services found"
   },
   "services_providers_no_results": {
-    "message": "There are no service providers for this service.  Use \"Create Service Provider\" to create one. \n\nService Providers are used to track attendance check-ins and gather student feedback."
+    "message":
+      "There are no service providers for this service.  Use \"Create Service Provider\" to create one. \n\nService Providers are used to track attendance check-ins and gather student feedback."
   },
   "services_provider_button_add_another": {
     "message": "Add another Service Provider"
@@ -1524,13 +1662,13 @@
     "message": "Search..."
   },
   "services_repeat_visits": {
-    "message": "Repeat Visitors"
+    "message": "Repeat Visits"
   },
   "services_total_responses": {
     "message": "Total Responses"
   },
   "services_total_visits": {
-    "message": "Total Check-ins to Service"
+    "message": "Total Check-ins"
   },
   "services_unique_visits": {
     "message": "Unique Visitors"
