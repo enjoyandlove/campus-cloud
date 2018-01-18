@@ -1,4 +1,3 @@
-export * from './cp-info';
 export * from './cp-chip';
 export * from './cp-maps';
 export * from './cp-stars';
@@ -26,5 +25,6 @@ export * from './cp-upload-modal';
 export * from './cp-school-switch';
 export * from './cp-upload-button';
 export * from './cp-check-dropdown';
+export * from './cp-resource-banner';
 export * from './cp-small-datepicker';
 export * from './cp-place-autocomplete';

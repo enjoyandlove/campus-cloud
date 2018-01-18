@@ -9,7 +9,6 @@ import { FileUploadService, StoreService } from './services';
 import { CPTrackingService } from './services/tracking.service';
 
 import {
-  CPInfoComponent,
   CPAvatarComponent,
   CPMapsComponent,
   CPModalComponent,
@@ -39,11 +38,11 @@ import {
   CPButtonComponent,
   CPTextEditorComponent,
   CPTopBanerComponent,
+  CPResourceBannerComponent
 } from './components';
 
 @NgModule({
   declarations: [
-    CPInfoComponent,
     CPTopBarComponent,
     CPMapsComponent,
     CPAvatarComponent,
@@ -79,6 +78,7 @@ import {
     CPTextEditorComponent,
     CPI18nPipe,
     CPTopBanerComponent,
+    CPResourceBannerComponent
   ],
 
   imports: [CommonModule, RouterModule, ReactiveFormsModule],
@@ -86,7 +86,6 @@ import {
   providers: [StoreService, FileUploadService, CPTrackingService],
 
   exports: [
-    CPInfoComponent,
     CPTopBarComponent,
     CPMapsComponent,
     CPAvatarComponent,
@@ -122,6 +121,7 @@ import {
     CPTextEditorComponent,
     CPI18nPipe,
     CPTopBanerComponent,
+    CPResourceBannerComponent
   ],
 })
 export class SharedModule {}

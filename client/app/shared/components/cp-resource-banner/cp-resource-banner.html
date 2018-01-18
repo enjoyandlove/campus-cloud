@@ -1,0 +1,8 @@
+<div
+  class="resource-banner__banner img-responsive img-rounded"
+  [ngStyle]="{ 'background' : 'linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url(' + resourceBanner.banner + ')' }">
+  <div class="resource-banner__meta">
+    <p class="resource-banner__title text-truncate">{{ resourceBanner.title }}</p>
+    <p *ngIf="resourceBanner.store_name">{{ resourceBanner.store_name }}</p>
+  </div>
+</div>

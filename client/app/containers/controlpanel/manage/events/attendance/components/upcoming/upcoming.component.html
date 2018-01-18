@@ -3,15 +3,7 @@
     <div class="cp-card event__header">
       <div class="row">
         <div class="col-xs-12">
-          <div
-            class="event__banner img-responsive img-rounded"
-            [ngStyle]="{ 'background' : 'linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url(' + banner + ')' }">
-            <div class="event__meta">
-              <p class="event__title text-truncate">{{ event.title }}</p>
-              <p>{{ event.store_name }}</p>
-            </div>
-          </div>
-
+         <cp-resource-banner [resourceBanner]="resourceBanner"></cp-resource-banner>
           <div class="row event__buttons">
             <div class="col-xs-12">
               <a

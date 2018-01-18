@@ -1,4 +1,63 @@
 <div [ngSwitch]="loading">
-    <cp-spinner *ngSwitchCase="true"></cp-spinner>
-    <cp-info *ngSwitchCase="false" [data]="infoData"></cp-info>
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div *ngSwitchCase="false">
+    <div class="row">
+      <div class="col-xs-8 col-xs-offset-2">
+        <div class="cp-card event">
+          <div class="row">
+            <div class="col-xs-12">
+              <div
+                class="event__banner placeholder img-responsive img-rounded"
+                [ngStyle]="{ 'background-image' : 'url(' + banner + ')' }">
+              </div>
+
+              <div class="row">
+                <div [class]="!utils.isPastEvent(event) ? 'col-xs-10' : 'col-xs-12'">
+                  <p class="event__title">{{ event.title }}</p>
+                </div>
+                <div class="col-xs-2" *ngIf="!utils.isPastEvent(event)">
+                  <a
+                    [routerLink]="['../edit']"
+                    class="cpbtn cpbtn--primary pull-right" i18n>
+                    {{ 'edit' | cpI18n }}
+                  </a>
+                </div>
+              </div>
+              <p>
+                <span i18n>{{ 'events_hosted_by' | cpI18n }} </span> {{ event.store_name }}
+              </p>
+
+              <div class="event__meta text-truncate">
+                <p>
+                  <strong i18n *ngIf="!utils.isPastEvent(event)">{{ 'starts' | cpI18n }}</strong>
+                  <strong i18n *ngIf="utils.isPastEvent(event)">{{ 'started' | cpI18n }}</strong>
+                  {{ event.start | cpDatePipe:dateFormat }}
+                  <br>
+                  <strong i18n *ngIf="!utils.isPastEvent(event)">{{ 'ends' | cpI18n }}</strong>
+                  <strong i18n *ngIf="utils.isPastEvent(event)">{{ 'ended' | cpI18n }}</strong>
+                  {{ event.end | cpDatePipe:dateFormat }}
+                </p>
+
+                <p *ngIf="event.address">{{ event.address }}</p>
+              </div>
+
+              <hr>
+
+              <p>{{ event.description }}</p>
+
+              <div class="row">
+                <div class="col-xs-12 event__map">
+                  <cp-maps
+                    [center]="mapCenter"
+                    [draggable]="draggable">
+                  </cp-maps>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

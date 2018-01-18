@@ -10,6 +10,7 @@ import { FORMAT } from '../../../../../../../shared/pipes/date';
 })
 export class AttendanceUpcomingComponent implements OnInit {
   @Input() event: any;
+  @Input() resourceBanner: any;
 
   banner;
   mapCenter;
@@ -30,5 +31,11 @@ export class AttendanceUpcomingComponent implements OnInit {
       lng: this.event.longitude
     }
     );
+
+    this.resourceBanner = {
+      banner: this.banner,
+      title: this.event.title,
+      store_name: this.event.store_name
+    };
   }
 }
