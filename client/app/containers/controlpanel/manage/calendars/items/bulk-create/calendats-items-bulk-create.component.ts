@@ -17,6 +17,7 @@ import {
   HEADER_UPDATE,
 } from './../../../../../../reducers/header.reducer';
 import { CalendarsService } from '../../calendars.services';
+import { CPObj } from './../../../../../../shared/utils/object/object';
 
 const i18n = new CPI18nPipe();
 
@@ -60,8 +61,12 @@ export class CalendarsItemsBulkCreateComponent extends BaseComponent
     search.append('school_id', this.session.g.get('school').id);
     search.append('academic_calendar_id', this.calendarId.toString());
 
+    const itemsWithNoNullValues = items.items.map((item) =>
+      CPObj.cleanNullValues(item),
+    );
+
     this.service
-      .createItem(items.items, search)
+      .createItem(itemsWithNoNullValues, search)
       .subscribe((confirmationData) => {
         this.launchConfirmationModal = true;
         this.confirmationData = confirmationData;
