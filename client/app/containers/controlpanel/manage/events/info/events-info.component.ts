@@ -20,6 +20,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   @Input() clubId: number;
   @Input() serviceId: number;
   @Input() isService: boolean;
+  @Input() resourceBanner: any;
 
   event;
   banner;
@@ -70,6 +71,12 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
           lat: event.data.latitude,
           lng: event.data.longitude,
         });
+
+        this.resourceBanner = {
+          banner: this.banner,
+          title: this.event.title,
+          store_name: this.event.store_name
+        };
       })
       .catch((err) => {
         throw new Error(err);
