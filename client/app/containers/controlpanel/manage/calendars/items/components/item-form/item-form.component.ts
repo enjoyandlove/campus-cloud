@@ -118,10 +118,15 @@ export class CalendarsItemFormComponent implements OnInit {
     const cpMap = CPMap.getBaseMapObject(data);
 
     const location = { ...cpMap, address: data.name };
-
     const coords: google.maps.LatLngLiteral = data.geometry.location.toJSON();
 
     CPMap.setFormLocationData(this.form, location);
+
+    /**
+     * Calendar Items store the item's address
+     * as location unlike other resources...
+     */
+    this.form.controls['location'].setValue(data.name);
 
     this.centerMap(coords.lat, coords.lng);
   }
@@ -158,9 +163,15 @@ export class CalendarsItemFormComponent implements OnInit {
       },
     };
 
+    const submitEdit = this.cpI18n.translate('save');
+    const submitCreate = this.cpI18n.translate(
+      'calendars_form_submit_button_new',
+    );
+    const isEditForm = this.form.controls['title'].value !== null;
+
     this.buttonData = {
       class: 'primary',
-      text: this.cpI18n.translate('calendars_form_submit_button_new'),
+      text: isEditForm ? submitEdit : submitCreate,
     };
   }
 
