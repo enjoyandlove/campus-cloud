@@ -511,7 +511,7 @@
     "message": "Failed to create %s items"
   },
   "calendars_items_import_message_success": {
-    "message": "Successfully created %s items"
+    "message": "Successfully created %s item(s)"
   },
   "calendars_items_no_results_found": {
     "message": "No calendar items found"
@@ -524,6 +524,9 @@
   },
   "calendars_item_details": {
     "message": "Item details"
+  },
+  "calendars_item_edit_heading": {
+    "message": "Edit Calendar Item"
   },
   "calendars_item_modal_title": {
     "message": "Delete Calendar Item"
