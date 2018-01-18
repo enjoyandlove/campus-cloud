@@ -492,11 +492,14 @@
   "calendars_form_submit_button_new": {
     "message": "Create Item"
   },
-  "calendars_items_buttons_new": {
+  "calendars_items_button_new": {
     "message": "Create Calendar Item"
   },
   "calendars_items_edit_btn": {
     "message": "Edit Calendar Item"
+  },
+  "calendars_items_import_confirmation_modal_title": {
+    "message": "Import from File"
   },
   "calendars_items_import_csv_heading": {
     "message": "Import Calendar Items from File"
@@ -516,8 +519,14 @@
   "calendars_item_create_heading": {
     "message": "Create Calendar Item"
   },
+  "calendars_item_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
   "calendars_item_details": {
     "message": "Item details"
+  },
+  "calendars_item_modal_title": {
+    "message": "Delete Calendar Item"
   },
   "calendars_label_description": {
     "message": "Description"
