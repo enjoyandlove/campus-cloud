@@ -69,6 +69,9 @@
   "admin_emergency_announcements": {
     "message": "Emergency Announcements"
   },
+  "admin_enabled": {
+    "message": "Enabled"
+  },
   "admin_engagement_dashboard": {
     "message": "Assessment Dashboard"
   },
@@ -475,10 +478,10 @@
     "message": "Calendars"
   },
   "calendars_add_modal_title": {
-    "message": "Add Calendar"
+    "message": "Create Calendar"
   },
   "calendars_button_new": {
-    "message": "Add Calendar"
+    "message": "Create Calendar"
   },
   "calendars_delete_modal_body": {
     "message": "Are you sure you want to delete %s?"
@@ -628,6 +631,9 @@
   "clubs_import_items_to_import": {
     "message": "File contains data for %s club(s)."
   },
+  "clubs_inactive": {
+    "message": "Inactive"
+  },
   "clubs_label_advisor": {
     "message": "Advisor"
   },
@@ -702,7 +708,8 @@
     "message": "Club is awaiting approval and is not listed in the Campus App"
   },
   "comment": {
-    "message": "Comment"
+    "message": "Comment",
+    "description": "Walls Comment"
   },
   "comments": {
     "message": "Comments"
@@ -747,7 +754,8 @@
     "message": "Announcements"
   },
   "dashboard_assessment_event_checkins": {
-    "message": "Event Check-Ins"
+    "message": "Event Check-Ins",
+    "description": "Dashboard Assessment tile"
   },
   "dashboard_assessment_feedback_rate": {
     "message": "Feedback Rate"
@@ -873,13 +881,11 @@
     "message": "Email"
   },
   "email_does_not_exist": {
-    "message": "There is no user with that login information."
+    "message": "There is no user with that login information.",
+    "description": "Lost password view..."
   },
   "emergency": {
     "message": "Emergency"
-  },
-  "enabled": {
-    "message": "Enabled"
   },
   "ended": {
     "message": "End Date:"
@@ -891,7 +897,8 @@
     "message": "End Date"
   },
   "engagement": {
-    "message": "Engagement"
+    "message": "Engagement",
+    "description": "Not used yet"
   },
   "error": {
     "message": "Error"
@@ -1034,6 +1041,9 @@
   "events_user_feedback": {
     "message": "User Feedback"
   },
+  "event_enabled": {
+    "message": "Enabled"
+  },
   "executive": {
     "message": "Executive"
   },
@@ -1050,7 +1060,8 @@
     "message": "Please click a star to rate the service"
   },
   "feedback_label_event_feedback": {
-    "message": "Event Feedback"
+    "message": "Event Feedback",
+    "description": "Single Event \r\nhttps://projects.invisionapp.com/d/main#/console/10688612/232187816/preview"
   },
   "feedback_label_rate_event": {
     "message": "Rate Event"
@@ -1059,7 +1070,8 @@
     "message": "Rate Service"
   },
   "feedback_label_service_feedback": {
-    "message": "Service Feedback"
+    "message": "Service Feedback",
+    "description": "Same as above"
   },
   "feedback_thank_you": {
     "message": "Thanks for your feedback"
@@ -1181,9 +1193,6 @@
   "in": {
     "message": "in"
   },
-  "inactive": {
-    "message": "Inactive"
-  },
   "info": {
     "message": "Info"
   },
@@ -1287,7 +1296,8 @@
     "message": "Acronym"
   },
   "login": {
-    "message": "Login"
+    "message": "Login",
+    "description": "is the route name\r\nhttps://ccstaging.oohlalamobile.com/#/lost-password"
   },
   "logout": {
     "message": "Logout"
@@ -1418,9 +1428,6 @@
   "phone_number": {
     "message": "Phone Number"
   },
-  "post": {
-    "message": "Post"
-  },
   "profile": {
     "message": "Profile"
   },
@@ -1455,10 +1462,12 @@
     "message": "Administrators can create Clubs and Groups"
   },
   "release_notes_june_2_item_three": {
-    "message": "Students can post messages to Club Feeds. Executives and Administrators can moderate these Feeds."
+    "message": "Students can post messages to Club Feeds. Executives and Administrators can moderate these Feeds.",
+    "description": "Release notes not in use"
   },
   "release_notes_june_2_item_two": {
-    "message": "Executives of a club can create events and services hosted by that club."
+    "message": "Executives of a club can create events and services hosted by that club.",
+    "description": "Release notes not in use"
   },
   "release_notes_june_2_title": {
     "message": "New as of June 2, 2017:"
@@ -1467,10 +1476,12 @@
     "message": "The OOHLALA Team."
   },
   "release_notes_p_one": {
-    "message": "As part of the build up to 2018, we’ve rebuilt the Campus Cloud from the ground up. You’ll find the new Campus Cloud to be faster, more intuitive and user-friendly than the previous version. Please note that we are still refining some of the features from the old version and will be releasing them over the next few weeks. The first of these updated features will be a brand new dashboard that is more insightful!"
+    "message": "As part of the build up to 2018, we’ve rebuilt the Campus Cloud from the ground up. You’ll find the new Campus Cloud to be faster, more intuitive and user-friendly than the previous version. Please note that we are still refining some of the features from the old version and will be releasing them over the next few weeks. The first of these updated features will be a brand new dashboard that is more insightful!",
+    "description": "Release notes not in use"
   },
   "release_notes_p_three": {
-    "message": "We hope your experience with the new Campus Cloud proves to be an easy and enjoyable one, and we look forward to hearing your feedback!"
+    "message": "We hope your experience with the new Campus Cloud proves to be an easy and enjoyable one, and we look forward to hearing your feedback!",
+    "description": "Release notes not in use"
   },
   "release_notes_p_two": {
     "message": "Should you wish to return to the old Campus Cloud, you can always do so by clicking on the banner at the top of the screen. If you wish to provide any feedback on your experience with the new Campus Cloud, please contact us at "
@@ -1518,7 +1529,8 @@
     "message": "Search"
   },
   "selected": {
-    "message": "Selected"
+    "message": "Selected",
+    "description": "Not in use"
   },
   "select_category": {
     "message": "Select Category"
@@ -1596,7 +1608,8 @@
     "message": "Check-in Time"
   },
   "services_label_check_in_details": {
-    "message": "Check-in"
+    "message": "Check-in",
+    "description": "Noun"
   },
   "services_label_default_question": {
     "message": "Feedback Question"
@@ -1614,10 +1627,8 @@
     "message": "Service Name"
   },
   "services_label_service_assessment": {
-    "message": "Service Assessment"
-  },
-  "services_label_service_attendance": {
-    "message": "Service Attendance"
+    "message": "Service Assessment",
+    "description": "Singular\r\nhttps://ccstaging.oohlalamobile.com/#/manage/services/create"
   },
   "services_no_service_found": {
     "message": "No services found"
@@ -1658,6 +1669,9 @@
   "services_visits": {
     "message": "Visits"
   },
+  "service_enabled": {
+    "message": "Enabled"
+  },
   "service_provider": {
     "message": "Service Provider"
   },
@@ -1686,7 +1700,8 @@
     "message": "Students"
   },
   "student_engagements": {
-    "message": "Student Engagement"
+    "message": "Student Engagement",
+    "description": "Graph title\r\nhttps://ccstaging.oohlalamobile.com/#/assess/dashboard?engagement=all&for=all_students&range=last_week"
   },
   "student_feedback": {
     "message": "Feedback"
@@ -1734,7 +1749,8 @@
     "message": "Type"
   },
   "update": {
-    "message": "Update"
+    "message": "Update",
+    "description": "Verb"
   },
   "upload_picture": {
     "message": "Upload Picture"
@@ -1750,6 +1766,9 @@
   },
   "view_more": {
     "message": "View More"
+  },
+  "walls_button_create_post": {
+    "message": "Post"
   },
   "website": {
     "message": "Website"
