@@ -38,6 +38,7 @@ import {
   CPButtonComponent,
   CPTextEditorComponent,
   CPTopBanerComponent,
+  CPTooltipComponent,
 } from './components';
 
 @NgModule({
@@ -77,6 +78,7 @@ import {
     CPTextEditorComponent,
     CPI18nPipe,
     CPTopBanerComponent,
+    CPTooltipComponent,
   ],
 
   imports: [CommonModule, RouterModule, ReactiveFormsModule],
@@ -119,6 +121,7 @@ import {
     CPTextEditorComponent,
     CPI18nPipe,
     CPTopBanerComponent,
+    CPTooltipComponent,
   ],
 })
 export class SharedModule {}

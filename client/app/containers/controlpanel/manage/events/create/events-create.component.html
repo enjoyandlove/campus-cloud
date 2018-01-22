@@ -31,6 +31,9 @@
             <div class="row form-group" *ngIf="!isClub && !isService">
               <div class="col-xs-12">
                 <label i18n>{{ 'select_host' | cpI18n }}</label>
+                <cp-tooltip
+                [toolTipContent]="toolTipContent">
+                </cp-tooltip>
                 <cp-dropdown
                   [items]="stores$ | async"
                   (selected)="onSelectedHost($event)"

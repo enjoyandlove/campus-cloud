@@ -8,6 +8,7 @@ export * from './cp-topbar';
 export * from './cp-switch';
 export * from './cp-button';
 export * from './cp-spinner';
+export * from './cp-tooltip';
 export * from './cp-snackbar';
 export * from './cp-trackers';
 export * from './cp-dropdown';

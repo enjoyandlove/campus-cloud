@@ -26,6 +26,15 @@ const COMMON_DATE_PICKER_OPTIONS = {
   altFormat: 'F j, Y h:i K',
 };
 
+interface IToolTipContent {
+  content: string;
+  trigger?: string;
+  link?: {
+    text: string;
+    url: string;
+  };
+}
+
 @Component({
   selector: 'cp-events-create',
   templateUrl: './events-create.component.html',
@@ -37,6 +46,7 @@ export class EventsCreateComponent implements OnInit {
   @Input() clubId: boolean;
   @Input() serviceId: number;
   @Input() isService: boolean;
+  @Input() toolTipContent: IToolTipContent;
 
   stores$;
   buttonData;
@@ -284,6 +294,15 @@ export class EventsCreateComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.toolTipContent = Object.assign({}, this.toolTipContent, {
+      content: this.cpI18n.translate('assess_no_engagement_tooltip'),
+      trigger: 'manual',
+      link: {
+        text: this.cpI18n.translate('more'),
+        url: 'http://www.google.com',
+      }
+    });
+
     let store_id;
     // fetch managers by service
     if (this.storeId) {
