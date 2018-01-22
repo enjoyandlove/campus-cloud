@@ -28,7 +28,7 @@
           class="cpbtn cpbtn--primary" i18n
           [disabled]="!props.repeat_engagements.length"
           (click)="onCompose('Repeat Engagement', props.repeat_engagements)">
-          {{ 'message' | cpI18n }}
+          {{ 'message_action' | cpI18n }}
         </button>
       </div>
     </div>
@@ -60,7 +60,7 @@
           class="cpbtn cpbtn--primary" i18n
           [disabled]="!props.one_engagements.length"
           (click)="onCompose('One Engagement', props.one_engagements)">
-          {{ 'message' | cpI18n }}
+          {{ 'message_action' | cpI18n }}
         </button>
       </div>
     </div>
@@ -92,7 +92,7 @@
           class="cpbtn cpbtn--primary" i18n
           [disabled]="!props.zero_engagements.length"
           (click)="onCompose('No Engagement', props.zero_engagements)">
-          {{ 'message' | cpI18n }}
+          {{ 'message_action' | cpI18n }}
         </button>
       </div>
     </div>
