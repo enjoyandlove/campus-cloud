@@ -52,8 +52,9 @@ export class CPDropdownComponent implements OnInit {
     this.query = query;
   }
 
-  resetMenu() {
+  resetDropdown() {
     this.selectedItem = this.items[0];
+    this.selected.emit(this.selectedItem);
   }
 
   ngOnInit() {
@@ -67,7 +68,7 @@ export class CPDropdownComponent implements OnInit {
 
     this.reset.subscribe((reset) => {
       if (reset) {
-        this.resetMenu();
+        this.resetDropdown();
       }
     });
   }
