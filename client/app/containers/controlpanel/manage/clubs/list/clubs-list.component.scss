@@ -4,23 +4,25 @@
 @import '~styles/components/button';
 @import '~bootstrap/variables';
 
+.cp-form__header {
+  span.hover {
+    position: relative;
+
+    > span i {
+      top: 1px;
+      font-size: 17px;
+      position: absolute;
+      padding-left: 6px;
+    }
+  }
+}
+
 .delete-club {
   font-size: 2em;
 }
 
 .no-content {
   @include card-margin();
-}
-
-.cp-form__header {
-  span.hover {
-    position: relative;
-
-    > span i {
-      top: -2px;
-      position: absolute;
-    }
-  }
 }
 
 .clubs {

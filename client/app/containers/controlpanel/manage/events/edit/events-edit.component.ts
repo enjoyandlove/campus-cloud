@@ -399,7 +399,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.dateFormat = FORMAT.DATETIME;
     this.booleanOptions = [
       {
-        label: this.cpI18n.translate('enabled'),
+        label: this.cpI18n.translate('event_enabled'),
         action: EventAttendance.enabled,
       },
       {

@@ -16,8 +16,10 @@
     position: relative;
 
     > span i {
-      top: -2px;
+      top: 1px;
+      font-size: 17px;
       position: absolute;
+      padding-left: 6px;
     }
   }
 }
@@ -27,7 +29,7 @@
   list-style: none;
 
   .member__title {
-    display: inherit
+    display: inherit;
   }
 
   &__thumbnail {

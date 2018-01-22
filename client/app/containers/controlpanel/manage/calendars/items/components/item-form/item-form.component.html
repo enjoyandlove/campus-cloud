@@ -4,7 +4,7 @@
       <div class="cp-card">
         <div class="row item-details">
           <div class="col-xs-12">
-            <p class="title" i18n>{{ 'details' | cpI18n }}</p>
+            <p class="title" i18n>{{ 'calendars_item_details' | cpI18n }}</p>
             <div class="form-group margin-top">
               <label i18n>{{ 'events_event_name' | cpI18n }}</label>
               <input
@@ -63,23 +63,6 @@
                       (placeChange)="onPlaceChange($event)"
                       [defaultValue]="form.controls.location.value">
                     </cp-place-autocomplete>
-                  </div>
-                </div>
-                <div class="row form-group">
-                  <div class="col-xs-6">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Building"
-                      formControlName="location">
-                  </div>
-
-                  <div class="col-xs-6">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Room"
-                      formControlName="room_data">
                   </div>
                 </div>
               </div>

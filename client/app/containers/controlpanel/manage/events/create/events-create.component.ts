@@ -203,7 +203,9 @@ export class EventsCreateComponent implements OnInit {
       return;
     }
 
-    if (this.form.controls['event_attendance'].value === EventAttendance.enabled) {
+    if (
+      this.form.controls['event_attendance'].value === EventAttendance.enabled
+    ) {
       const managerId = this.form.controls['event_manager_id'];
 
       if (!managerId.value) {
@@ -293,7 +295,7 @@ export class EventsCreateComponent implements OnInit {
 
     this.booleanOptions = [
       {
-        label: this.cpI18n.translate('enabled'),
+        label: this.cpI18n.translate('event_enabled'),
         action: EventFeedback.enabled,
       },
       {
