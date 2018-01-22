@@ -141,7 +141,7 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.clubStatus = {
-      [ClubStatus.inactive]: this.cpI18n.translate('inactive'),
+      [ClubStatus.inactive]: this.cpI18n.translate('clubs_inactive'),
       [ClubStatus.active]: this.cpI18n.translate('active'),
       [ClubStatus.pending]: this.cpI18n.translate('pending'),
     };
