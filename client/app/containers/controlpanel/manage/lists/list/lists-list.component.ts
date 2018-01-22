@@ -9,14 +9,16 @@ import { CPI18nService } from '../../../../../shared/services/index';
 interface IState {
   lists: Array<any>;
   search_str: string;
+  sort_field: string;
+  sort_direction: string;
 }
 
 const state: IState = {
   lists: [],
   search_str: null,
+  sort_field: 'name',
+  sort_direction: 'asc',
 };
-
-declare var $: any;
 
 @Component({
   selector: 'cp-lists-list',
@@ -43,9 +45,21 @@ export class ListsListComponent extends BaseComponent implements OnInit {
     this.fetch();
   }
 
+  doSort(sort_field) {
+    this.state = {
+      ...this.state,
+      sort_field: sort_field,
+      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc',
+    };
+
+    this.fetch();
+  }
+
   private fetch() {
     const search = new URLSearchParams();
     search.append('search_str', this.state.search_str);
+    search.append('sort_field', this.state.sort_field);
+    search.append('sort_direction', this.state.sort_direction);
     search.append('school_id', this.session.g.get('school').id.toString());
 
     const stream$ = this.listsService.getLists(

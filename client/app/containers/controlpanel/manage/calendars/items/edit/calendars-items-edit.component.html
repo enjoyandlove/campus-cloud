@@ -1,0 +1,13 @@
+<ng-container [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div class="row margin-bottom" *ngSwitchCase="false">
+    <div class="col-xs-6 col-xs-offset-3">
+      <cp-item-form
+        #editForm
+        [form]="form"
+        (submitted)="onEdit($event)">
+      </cp-item-form>
+    </div>
+  </div>
+</ng-container>

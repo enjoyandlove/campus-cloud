@@ -13,7 +13,7 @@ import { FileUploadService } from '../../../../../../../shared/services';
 })
 export class EventsImportTopBarComponent implements OnInit {
   @Input() storeId: number;
-
+  @Input() props: any;
   @Input() clubId: number;
   @Input() isClub: boolean;
 

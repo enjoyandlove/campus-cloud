@@ -13,12 +13,16 @@ interface IState {
   search_text: string;
   attendance_only: number;
   services: Array<any>;
+  sort_field: string;
+  sort_direction: string;
 }
 
 const state: IState = {
   services: [],
   search_text: null,
   attendance_only: 0,
+  sort_field: 'name',
+  sort_direction: 'asc',
 };
 
 @Component({
@@ -43,6 +47,15 @@ export class ServicesListComponent extends BaseComponent implements OnInit {
     super.isLoading().subscribe((res) => (this.loading = res));
   }
 
+  doSort(sort_field) {
+    this.state = {
+      ...this.state,
+      sort_field: sort_field,
+      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc',
+    };
+    this.fetch();
+  }
+
   private fetch() {
     const search = new URLSearchParams();
     const attendance_only = this.state.attendance_only
@@ -50,6 +63,8 @@ export class ServicesListComponent extends BaseComponent implements OnInit {
       : null;
 
     search.append('attendance_only', attendance_only);
+    search.append('sort_field', this.state.sort_field);
+    search.append('sort_direction', this.state.sort_direction);
     search.append('search_text', this.state.search_text);
     search.append('school_id', this.session.g.get('school').id.toString());
 

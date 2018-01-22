@@ -1,0 +1,21 @@
+<div class="cp-card">
+  <div class="row">
+    <div class="col-xs-3 pull-left">
+      <cp-searchbox (query)="onSearch($event)"></cp-searchbox>
+    </div>
+    <div class="col-xs-5 text-right col-xs-offset-4">
+      <a
+        [routerLink]="['items/create']" i18n
+        class="cpbtn cpbtn--primary cpbtn--square-right no-right-padding">
+        {{ 'calendars_items_button_new' | cpI18n }}
+      </a>
+      <div
+        class="cpbtn cpbtn--square-left cpbtn--no-padding cpbtn--primary no-left-padding hover action-dropdown">
+        <i class="material-icons" data-toggle="dropdown">expand_more</i>
+        <ul class="dropdown-menu dropdown-menu-right text-left action-dropdown-list">
+          <li i18n (click)="launchModal()" class="list-as-anchor">{{ 'import_from_csv' | cpI18n }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

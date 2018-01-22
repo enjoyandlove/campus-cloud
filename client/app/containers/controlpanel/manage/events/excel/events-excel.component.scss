@@ -21,7 +21,14 @@
   margin-top: 6px;
 }
 
-.event__avatar {
+.deleteButton {
+  top: 4px;
+  left: 25px;
+  font-size: 1.5em;
+  position: absolute;
+}
+
+.event {
   height: 35px;
 
   .placeholder.isRequired {
@@ -29,10 +36,20 @@
     background-color: rgba(255, 96, 89, 0.25);
   }
 
-  img {
-    width: auto;
-    height: 100%;
-    max-width: 35px;
+  &__thumbnail {
+    margin-left: 40px;
+    img {
+      height: 35px;
+      width: 35px;
+    }
+  }
+  span.hover {
+    position: relative;
+
+    > span i {
+      top: -2px;
+      position: absolute;
+    }
   }
 }
 

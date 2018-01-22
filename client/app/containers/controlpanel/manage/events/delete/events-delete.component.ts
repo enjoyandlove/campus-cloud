@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { EventsService } from '../events.service';
-import { CPI18nService } from '../../../../../shared/services/index';
+import { CPI18nService } from '../../../../../shared/services';
 
 declare var $: any;
 
