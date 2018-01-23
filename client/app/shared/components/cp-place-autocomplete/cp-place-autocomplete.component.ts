@@ -34,6 +34,7 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
 
   @Input() placeHolder: string;
   @Input() defaultValue: string;
+  @Input() disableLocations: boolean;
   @Input() newAddress: Observable<string>;
 
   @Output() placeChange: EventEmitter<any> = new EventEmitter();
@@ -126,9 +127,12 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
   }
 
   setSuggestions(suggestions): void {
-    this.state = Object.assign({}, this.state, {
-      suggestions: [...suggestions[1]],
-    });
+    const showAll = this.disableLocations === undefined;
+    const newSuggestions = showAll
+      ? [...suggestions[0], ...suggestions[1]]
+      : [...suggestions[1]];
+
+    this.state = Object.assign({}, this.state, { suggestions: newSuggestions });
   }
 
   resetSuggestions(): void {
