@@ -42,6 +42,7 @@ import {
   CPButtonComponent,
   CPTextEditorComponent,
   CPTopBanerComponent,
+  CPTooltipComponent,
   CPResourceBannerComponent
 } from './components';
 import { LocationsService } from '../containers/controlpanel/manage/locations/locations.service';
@@ -84,6 +85,7 @@ import { CPMapsService } from './services/maps.service';
     CPTextEditorComponent,
     CPI18nPipe,
     CPTopBanerComponent,
+    CPTooltipComponent,
     CPResourceBannerComponent
   ],
 
@@ -134,6 +136,7 @@ import { CPMapsService } from './services/maps.service';
     CPTextEditorComponent,
     CPI18nPipe,
     CPTopBanerComponent,
+    CPTooltipComponent,
     CPResourceBannerComponent
   ],
 })

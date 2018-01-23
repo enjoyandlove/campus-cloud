@@ -4,7 +4,7 @@ import {
   OnInit,
   OnDestroy,
   HostListener,
-  ElementRef,
+  ElementRef, Input,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -20,6 +20,7 @@ import { CPI18nService, StoreService } from './../../../../../shared/services';
 import { AnnouncementsService } from './../../announcements/announcements.service';
 
 import { AnnouncementsComposeComponent } from './../../announcements/compose/announcements-compose.component';
+import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 
 declare var $;
 
@@ -30,6 +31,8 @@ declare var $;
 })
 export class TemplatesCreateComponent extends AnnouncementsComposeComponent
   implements OnInit, OnDestroy {
+  @Input() toolTipContent: IToolTipContent;
+
   form: FormGroup;
 
   constructor(
@@ -164,6 +167,15 @@ export class TemplatesCreateComponent extends AnnouncementsComposeComponent
   }
 
   ngOnInit() {
+    this.toolTipContent = Object.assign({}, this.toolTipContent, {
+      content: this.cpI18n.translate('notify_announcement_template_to_tooltip'),
+      link: {
+        text: this.cpI18n.translate('lists_button_create'),
+        url: 'https://oohlalamobile.zendesk.com/hc/en-us/articles/' +
+        '115004330554-Create-a-List-of-Students',
+      }
+    });
+
     super.ngOnInit();
     const control = new FormControl(null, Validators.required);
 

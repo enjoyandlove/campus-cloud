@@ -14,6 +14,7 @@ import { StoreService, CPI18nService } from './../../../../../shared/services';
 import { AnnouncementsService } from './../../announcements/announcements.service';
 
 import { AnnouncementsComposeComponent } from './../../announcements/compose/announcements-compose.component';
+import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 
 @Component({
   selector: 'cp-templates-compose',
@@ -23,6 +24,7 @@ import { AnnouncementsComposeComponent } from './../../announcements/compose/ann
 export class TemplatesComposeComponent extends AnnouncementsComposeComponent
   implements OnInit, OnDestroy {
   @Input() data: any;
+  @Input() toolTipContent: IToolTipContent;
 
   form: FormGroup;
   constructor(
@@ -198,6 +200,14 @@ export class TemplatesComposeComponent extends AnnouncementsComposeComponent
   }
 
   ngOnInit() {
+    this.toolTipContent = Object.assign({}, this.toolTipContent, {
+      content: this.cpI18n.translate('notify_announcement_template_to_tooltip'),
+      link: {
+        text: this.cpI18n.translate('lists_button_create'),
+        url: 'https://oohlalamobile.zendesk.com/hc/en-us/articles/' +
+        '115004330554-Create-a-List-of-Students',
+      }
+    });
     super.ngOnInit();
 
     this.updateLabel();
