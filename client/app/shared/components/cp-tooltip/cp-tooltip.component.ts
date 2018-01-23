@@ -36,14 +36,12 @@ export class CPTooltipComponent implements OnInit {
   hover() {
     $('.pop').popover({
       trigger: 'hover',
-      html: true,
     });
   }
 
   click() {
     $('.pop').popover({
       trigger: 'click',
-      html: true,
     });
   }
 
@@ -51,7 +49,6 @@ export class CPTooltipComponent implements OnInit {
     $('.pop')
       .popover({
         trigger: 'manual',
-        html: true,
         animation: false,
       })
       .on('mouseenter', function() {
