@@ -4,9 +4,8 @@ import { IToolTipContent } from './cp-tooltip.interface';
 @Component({
   selector: 'cp-tooltip',
   templateUrl: 'cp-tooltip.component.html',
-  styleUrls: ['cp-tooltip.component.scss']
+  styleUrls: ['cp-tooltip.component.scss'],
 })
-
 export class CPTooltipComponent implements OnInit {
   @Input() toolTipContent: IToolTipContent;
 
@@ -17,9 +16,12 @@ export class CPTooltipComponent implements OnInit {
   ngOnInit() {
     this.content = this.toolTipContent.content;
     if (this.toolTipContent.link) {
-      this.content += ' <a class="more-text" href="' + this.toolTipContent.link.url
-        + '" target="_blank">'
-        + this.toolTipContent.link.text + '</a>';
+      this.content +=
+        ' <a class="more-text" href="' +
+        this.toolTipContent.link.url +
+        '" target="_blank">' +
+        this.toolTipContent.link.text +
+        '</a>';
     }
 
     if (this.toolTipContent.trigger === 'hover') {
@@ -35,7 +37,6 @@ export class CPTooltipComponent implements OnInit {
     $('.pop').popover({
       trigger: 'hover',
       html: true,
-      content: this.content
     });
   }
 
@@ -43,33 +44,34 @@ export class CPTooltipComponent implements OnInit {
     $('.pop').popover({
       trigger: 'click',
       html: true,
-      content: this.content
     });
   }
 
   manual() {
-    $('.pop').popover(
-      {
+    $('.pop')
+      .popover({
         trigger: 'manual',
         html: true,
         animation: false,
-        content: this.content,
-      }).on('mouseenter', function () {
-      const _this = this;
-      $(this).popover('show');
-      $('.popover').on('mouseleave', function () {
-        $(_this).popover('hide');
+      })
+      .on('mouseenter', function() {
+        const _this = this;
+        $(this).popover('show');
+        $('.popover').on('mouseleave', function() {
+          $(_this).popover('hide');
+        });
+      })
+      .on('mouseleave', function() {
+        const _this = this;
+        setTimeout(
+          () => {
+            if (!$('.popover:hover').length) {
+              $(_this).popover('hide');
+            }
+          },
+
+          100,
+        );
       });
-    }).on('mouseleave', function () {
-      const _this = this;
-      setTimeout(
-        () => {
-          if (!$('.popover:hover').length) {
-            $(_this).popover('hide');
-          }
-        },
-        100,
-      );
-    });
   }
 }
