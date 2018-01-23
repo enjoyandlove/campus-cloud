@@ -47,17 +47,17 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   dateFormat;
   serverError;
   isDateError;
-  eventManager
+  eventManager;
   originalHost;
   booleanOptions;
   loading = true;
   school: ISchool;
   eventId: number;
   form: FormGroup;
-  studentFeedback
+  studentFeedback;
   selectedManager;
   dateErrorMessage;
-  attendanceManager
+  attendanceManager;
   enddatePickerOpts;
   attendance = false;
   isFormReady = false;
