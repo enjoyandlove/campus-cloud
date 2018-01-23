@@ -14,9 +14,6 @@ import { Observable } from 'rxjs/Observable';
 import { CPMapsService } from './../../services/maps.service';
 import { CPLocationsService } from '../../services/locations.service';
 
-const cpMapsService = new CPMapsService();
-const locationService = new CPLocationsService();
-
 @Component({
   selector: 'cp-maps',
   templateUrl: './cp-maps.component.html',
@@ -32,21 +29,27 @@ export class CPMapsComponent implements OnInit, AfterViewInit {
   map: google.maps.Map;
   marker: google.maps.Marker;
 
-  constructor() {}
+  constructor(
+    public locationService: CPLocationsService,
+    public cpMapsService: CPMapsService,
+  ) {}
 
   drawMap() {
     this.center.subscribe((center) => {
       const el = this.hostEl.nativeElement;
-      this.map = cpMapsService.init(el, center, this.draggable);
-      this.marker = cpMapsService.setMarker(this.map, center);
+      this.map = this.cpMapsService.init(el, center, this.draggable);
+      this.marker = this.cpMapsService.setMarker(this.map, center);
 
       if (this.doubleClick) {
         this.map.addListener('dblclick', (event) => {
-          locationService
+          this.locationService
             .geoCode(event.latLng.toJSON())
             .then((response) => this.mapSelection.emit(response));
 
-          cpMapsService.setMarkerPosition(this.marker, event.latLng.toJSON());
+          this.cpMapsService.setMarkerPosition(
+            this.marker,
+            event.latLng.toJSON(),
+          );
         });
       }
     });

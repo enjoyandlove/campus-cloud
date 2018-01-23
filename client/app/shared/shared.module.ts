@@ -5,7 +5,11 @@ import { RouterModule } from '@angular/router';
 
 import { CPTrackerDirective } from './directives';
 import { CPDatePipe, CPFilterPipe, CPI18nPipe } from './pipes';
-import { FileUploadService, StoreService } from './services';
+import {
+  FileUploadService,
+  StoreService,
+  CPLocationsService,
+} from './services';
 import { CPTrackingService } from './services/tracking.service';
 
 import {
@@ -39,6 +43,8 @@ import {
   CPTextEditorComponent,
   CPTopBanerComponent,
 } from './components';
+import { LocationsService } from '../containers/controlpanel/manage/locations/locations.service';
+import { CPMapsService } from './services/maps.service';
 
 @NgModule({
   declarations: [
@@ -81,7 +87,14 @@ import {
 
   imports: [CommonModule, RouterModule, ReactiveFormsModule],
 
-  providers: [StoreService, FileUploadService, CPTrackingService],
+  providers: [
+    StoreService,
+    FileUploadService,
+    CPTrackingService,
+    CPLocationsService,
+    LocationsService,
+    CPMapsService,
+  ],
 
   exports: [
     CPTopBarComponent,
