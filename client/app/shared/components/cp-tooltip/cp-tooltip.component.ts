@@ -17,7 +17,7 @@ export class CPTooltipComponent implements OnInit {
     this.content = this.toolTipContent.content;
     if (this.toolTipContent.link) {
       this.content +=
-        ' <a class="more-text" href="' +
+        ' <a class="cptooltip-link" href="' +
         this.toolTipContent.link.url +
         '" target="_blank">' +
         this.toolTipContent.link.text +

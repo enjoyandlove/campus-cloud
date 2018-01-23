@@ -35,8 +35,8 @@
     font-size: 14px;
     font-weight: normal;
     line-height: 18px;
-    background-color: $color-black;;
-    border-bottom: 1px solid $color-black;;
+    background-color: $color-black;
+    border-bottom: 1px solid $color-black;
     border-radius: 5px 5px 0 0;
   }
 
@@ -57,7 +57,7 @@
     border-width: 11px;
   }
   & > .arrow:after {
-    content: "";
+    content: '';
     border-width: 10px;
   }
   &.top > .arrow {
@@ -70,7 +70,7 @@
   &.top > .arrow:after {
     bottom: 1px;
     margin-left: -10px;
-    content: " ";
+    content: ' ';
     border-top-color: #fff;
     border-bottom-width: 0;
   }
@@ -85,7 +85,7 @@
   &.right > .arrow:after {
     bottom: -10px;
     left: 1px;
-    content: " ";
+    content: ' ';
     border-right-color: $color-black;
     border-left-width: 0;
   }
@@ -100,7 +100,7 @@
   &.bottom > .arrow:after {
     top: 1px;
     margin-left: -10px;
-    content: " ";
+    content: ' ';
     border-top-width: 0;
     border-bottom-color: $color-black;
   }
@@ -115,12 +115,12 @@
   &.left > .arrow:after {
     right: 1px;
     bottom: -10px;
-    content: " ";
+    content: ' ';
     border-right-width: 0;
     border-left-color: $color-black;
   }
 }
 
-a.more-text {
-  color: #1771b5;
+a.cptooltip-link {
+  color: $color-brand;
 }
