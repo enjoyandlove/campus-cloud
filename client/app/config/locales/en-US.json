@@ -9,9 +9,6 @@
   "address": {
     "message": "Address"
   },
-  "address": {
-    "message": "Address"
-  },
   "admins_error_no_access_granted": {
     "message": "You have not granted any access"
   },
@@ -37,7 +34,7 @@
     "message": "Manage other kinds of app content"
   },
   "admin_assess_help": {
-    "message": "View the Assessment Dashboard and Student Transcript"
+    "message": "View the Assessment Dashboard"
   },
   "admin_campus_announcements": {
     "message": "Regular Announcements"
@@ -298,7 +295,7 @@
     "message": "Measure Student Engagement Anywhere on Campus"
   },
   "assess_download_transcript": {
-    "message": "Download Transcript"
+    "message": "Download CSV File"
   },
   "assess_engagements_last_seven_days": {
     "message": "Engagement (Last 7 Days)"
@@ -369,14 +366,11 @@
   "assess_one_engagement": {
     "message": "One Engagement"
   },
-  "assess_one_engagement_tooltip": {
-    "message": "Students who attended one engagement for the period selected"
-  },
   "assess_repeat_engagement": {
     "message": "Multiple Engagements"
   },
   "assess_repeat_engagement_tooltip": {
-    "message": "Students who attended more than one engagement for the period selected"
+    "message": "Students who checked in more than one Event or Service"
   },
   "assess_response_date": {
     "message": "Response Date"
@@ -924,10 +918,13 @@
     "message": "Attendance Feedback"
   },
   "events_attendance_manager": {
-    "message": "Attd Manager"
+    "message": "Att. Manager"
   },
   "events_attendance_manager_full": {
     "message": "Attendance Manager"
+  },
+  "events_attendance_manager_tooltip": {
+    "message": "The attendance manager may be any person with a valid email address, they will receive instructions to setup check-ins for this event."
   },
   "events_attendant": {
     "message": "Attendant"
@@ -986,8 +983,14 @@
   "events_event_details": {
     "message": "Event Details"
   },
+  "events_event_feedback_tooltip": {
+    "message": "If enabled, after an event is finished will prompt event attendees to provide feedback and rating as a response to the feedback question."
+  },
   "events_event_manager": {
     "message": "Event Manager"
+  },
+  "events_event_manager_tooltip": {
+    "message": "The event manager needs to be a current administrator. They will receive emails related to checking in users and assessment reports once it is finished."
   },
   "events_event_name": {
     "message": "Event Name"
@@ -1316,6 +1319,12 @@
   "manage": {
     "message": "Manage"
   },
+  "manage_create_service_category_tooltip": {
+    "message": "The category the service belongs to, helps filter and group content in the campus app."
+  },
+  "manage_create_service_feedback_tooltip": {
+    "message": "If enabled, after a check-in to a service provider prompt attendees to provide feedback and rating as a response to the feedback question."
+  },
   "manage_team_members": {
     "message": "Team Members"
   },
@@ -1364,6 +1373,9 @@
   "notify_announcement_recipient": {
     "message": "Recipients"
   },
+  "notify_announcement_template_to_tooltip": {
+    "message": "The recepients of the accouncements. Can be sent to students who are app users or pre-defined lists. For more info:"
+  },
   "no_admins_found": {
     "message": "No Admins found"
   },
@@ -1383,10 +1395,10 @@
     "message": "Manage your campus app and increase student engagement."
   },
   "on_boarding_step_1_description_1": {
-    "message": "Rebuilt from the group up."
+    "message": "Rebuilt from the ground up."
   },
   "on_boarding_step_1_title": {
-    "message": "Welcome to all the new Campus Cloud!"
+    "message": "Welcome to the all new Campus Cloud!"
   },
   "on_boarding_step_2_description": {
     "message": "All your campus resources including events, services, clubs and more."
@@ -1610,7 +1622,7 @@
     "message": "Service Details"
   },
   "services_label_enable_service_feedback": {
-    "message": "Enable Service Feedback"
+    "message": "Feedback"
   },
   "services_label_name": {
     "message": "Service Name"
