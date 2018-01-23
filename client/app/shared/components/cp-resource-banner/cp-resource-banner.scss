@@ -1,0 +1,34 @@
+@import '~styles/components/card';
+@import '~styles/components/button';
+@import '~styles/core/typography';
+
+.resource-banner {
+  &__banner {
+    height: 225px;
+    position: relative;
+    margin-bottom: 15px;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+  }
+
+  &__meta {
+    left: 20px;
+    bottom: 20px;
+    position: absolute;
+
+    p {
+      @include font-16px();
+
+      margin-bottom: 0;
+      color: $color-white;
+
+      &.resource-banner__title {
+        @include font-semi-bold();
+        @include font-24px();
+
+        margin-bottom: 0;
+      }
+    }
+  }
+}
