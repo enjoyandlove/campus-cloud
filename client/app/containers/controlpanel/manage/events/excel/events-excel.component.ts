@@ -259,6 +259,8 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
 
   onSingleCheck(checked, index) {
     let _isChecked;
+    let _getOnlyChecked;
+    let _getChecked;
 
     _isChecked = this.isChecked.map((item) => {
       if (item.index === index) {
@@ -267,6 +269,20 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
 
       return item;
     });
+
+    _getOnlyChecked = _isChecked.filter((item) => {
+      if (item.checked) {
+        return item;
+      }
+    });
+
+    // this.uploadButtonData.isChecked = _isChecked.length === _getOnlyChecked.length;
+    if (_isChecked.length === _getOnlyChecked.length) {
+      // todo select check all checkbox
+    }
+
+    _getChecked = _getOnlyChecked.length > 0;
+    this.updateUploadPictureStatus(_getChecked);
     this.isChecked = [..._isChecked];
   }
 
@@ -276,9 +292,12 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     this.isChecked.map((item) => {
       _isChecked.push(Object.assign({}, item, { checked: checked }));
     });
-
+    this.updateUploadPictureStatus(checked);
     this.isChecked = [..._isChecked];
 
+  }
+
+  updateUploadPictureStatus(checked) {
     if (checked) {
       this.uploadButtonData = {
         class: 'cancel',
