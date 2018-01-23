@@ -1,7 +1,6 @@
 @import '~styles/components/card';
 @import '~styles/components/button';
 @import '~styles/core/typography';
-@import '~bootstrap/variables';
 
 p.no-margin-bottom {
   margin-bottom: 0;
@@ -32,9 +31,9 @@ strong {
   &__banner {
     position: relative;
     margin-bottom: 15px;
-    background-size: cover !important;
-    background-repeat: no-repeat !important;
-    background-position: center center !important;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
   }
 
   &__meta {

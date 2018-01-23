@@ -17,6 +17,9 @@ import { CPSession, ISchool } from '../../../../../session';
 import { AdminService } from '../../../../../shared/services';
 import { BaseComponent } from '../../../../../base/base.component';
 import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
+import {
+  IResourceBanner
+} from '../../../../../shared/components/cp-resource-banner/cp-resource.interface';
 
 @Component({
   selector: 'cp-services-info',
@@ -24,7 +27,7 @@ import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
   styleUrls: ['./services-info.component.scss'],
 })
 export class ServicesInfoComponent extends BaseComponent implements OnInit {
-  @Input() resourceBanner: any;
+  @Input() resourceBanner: IResourceBanner;
 
   admins;
   service;
@@ -87,8 +90,8 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
         });
 
         this.resourceBanner = {
-          banner: this.service.logo_url,
-          title: this.service.name,
+          image: this.service.logo_url,
+          heading: this.service.name,
         };
       })
       .catch((err) => {

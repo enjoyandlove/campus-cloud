@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { IResourceBanner } from './cp-resource.interface';
 
 @Component({
   selector: 'cp-resource-banner',
@@ -6,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./cp-resource-banner.scss'],
 })
 export class CPResourceBannerComponent implements OnInit {
-  @Input() resourceBanner;
+  @Input() resourceBanner: IResourceBanner;
 
   constructor() {}
 
