@@ -82,12 +82,7 @@ export class TemplatesComposeComponent extends AnnouncementsComposeComponent
   }
 
   doValidate() {
-    if (this.state.isEmergency || this.state.isCampusWide) {
-      this.shouldConfirm = true;
-
-      return;
-    }
-    this.doSubmit();
+    super.doValidate();
   }
 
   doSubmit() {

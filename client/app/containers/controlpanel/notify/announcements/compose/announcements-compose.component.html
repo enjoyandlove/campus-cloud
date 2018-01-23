@@ -154,6 +154,7 @@
   </div>
 
   <cp-announcements-confirm
+    [state]="state"
     *ngSwitchCase="true"
     (confirmed)="onConfirmed()"
     (teardown)="shouldConfirm = false">

@@ -212,7 +212,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   }
 
   doValidate() {
-    if (this.state.isCampusWide) {
+    if (this.state.isEmergency || this.state.isCampusWide) {
       this.shouldConfirm = true;
 
       return;
@@ -294,19 +294,17 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       label: null,
       type: null,
     };
-    this.state.isUrgent = false;
-    this.state.isEmergency = false;
+    this.state.isUrgent = type.action === this.URGENT_TYPE;
+    this.state.isEmergency = type.action === this.EMERGENCY_TYPE;
 
-    if (type.action === this.EMERGENCY_TYPE) {
-      this.state.isEmergency = true;
+    if (this.state.isEmergency) {
       this.subject_prefix = {
         label: this.cpI18n.translate('emergency'),
         type: 'danger',
       };
     }
 
-    if (type.action === this.URGENT_TYPE) {
-      this.state.isUrgent = true;
+    if (this.state.isUrgent) {
       this.subject_prefix = {
         label: this.cpI18n.translate('urgent'),
         type: 'warning',
@@ -377,7 +375,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       withSwitcher: true,
       suggestions: this.suggestions,
       reset: this.resetChips$,
-      customCSS: true
+      customCSS: true,
     };
     const schoolPrivileges = this.session.g.get('user').school_level_privileges[
       this.session.g.get('school').id
