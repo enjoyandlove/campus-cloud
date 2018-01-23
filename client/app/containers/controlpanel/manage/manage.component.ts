@@ -42,8 +42,3 @@ export class ManageComponent implements OnInit {
 //   "label": "Cover Photo",
 //   "url": "/manage/customization"
 // },
-// {
-//   "privilege": 21,
-//   "label": "Locations",
-//   "url": "/manage/locations"
-// }

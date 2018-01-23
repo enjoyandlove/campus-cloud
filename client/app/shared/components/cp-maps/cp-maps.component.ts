@@ -1,5 +1,3 @@
-import { Observable } from 'rxjs/Observable';
-
 import {
   AfterViewInit,
   Component,
@@ -11,9 +9,10 @@ import {
   ViewChild,
 } from '@angular/core';
 
-import { CPLocationsService } from '../../services/locations.service';
+import { Observable } from 'rxjs/Observable';
 
 import { CPMapsService } from './../../services/maps.service';
+import { CPLocationsService } from '../../services/locations.service';
 
 const cpMapsService = new CPMapsService();
 const locationService = new CPLocationsService();
@@ -35,7 +34,7 @@ export class CPMapsComponent implements OnInit, AfterViewInit {
 
   constructor() {}
 
-  ngAfterViewInit() {
+  drawMap() {
     this.center.subscribe((center) => {
       const el = this.hostEl.nativeElement;
       this.map = cpMapsService.init(el, center, this.draggable);
@@ -51,6 +50,21 @@ export class CPMapsComponent implements OnInit, AfterViewInit {
         });
       }
     });
+  }
+
+  ngAfterViewInit() {
+    setTimeout(
+      () => {
+        /**
+         * INTENTIONAL
+         * Ensures the hosting div is
+         * visible when this component is initialized
+         */
+        this.drawMap();
+      },
+
+      10,
+    );
   }
 
   ngOnInit() {}

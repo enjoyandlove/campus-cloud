@@ -9,6 +9,9 @@
   "address": {
     "message": "Address"
   },
+  "address": {
+    "message": "Address"
+  },
   "admins_error_no_access_granted": {
     "message": "You have not granted any access"
   },
