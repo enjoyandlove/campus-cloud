@@ -188,7 +188,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent
 
     this.eventAttendanceFeedback = [
       {
-        label: this.cpI18n.translate('enabled'),
+        label: this.cpI18n.translate('event_enabled'),
         event: 1,
       },
       {

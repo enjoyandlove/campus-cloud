@@ -21,8 +21,6 @@ const appRoutes: Routes = [
         loadChildren: './services/services.module#ServicesModule',
       },
 
-      { path: 'team', loadChildren: './team/team.module#TeamModule' },
-
       { path: 'clubs', loadChildren: './clubs/clubs.module#ClubsModule' },
 
       { path: 'links', loadChildren: './links/links.module#LinksModule' },
@@ -32,6 +30,8 @@ const appRoutes: Routes = [
       { path: 'clubs', loadChildren: './clubs/clubs.module#ClubsModule' },
 
       { path: 'lists', loadChildren: './lists/lists.module#ListsModule' },
+
+      { path: 'calendars', loadChildren: './calendars/calendars.module#CalendarsModule' },
 
       {
         path: 'customization',

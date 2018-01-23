@@ -1,0 +1,111 @@
+<div class="row margin-bottom">
+  <form [formGroup]="form">
+    <div class="col-xs-12">
+      <div class="cp-card">
+        <div class="row item-details">
+          <div class="col-xs-12">
+            <p class="title" i18n>{{ 'calendars_item_details' | cpI18n }}</p>
+            <div class="form-group margin-top">
+              <label i18n>{{ 'events_event_name' | cpI18n }}</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="title"
+                placeholder="Add a short, clear name"
+                [class.error]="formError && form.controls['title'].hasError('required')">
+            </div>
+
+            <div class="row form-group">
+              <div class="col-xs-6">
+                <label i18n>{{ 'start_date' | cpI18n }}</label>
+                <cp-datepicker
+                  [options]="startdatePickerOpts"
+                  [error]="formError && form.controls['start'].hasError('required')">
+                </cp-datepicker>
+              </div>
+              <div class="col-xs-6">
+                <label i18n>{{ 'end_date' | cpI18n }}</label>
+                <cp-datepicker
+                  [options]="enddatePickerOpts"
+                  [error]="formError && form.controls['end'].hasError('required')">
+                </cp-datepicker>
+              </div>
+            </div>
+
+            <div class="row form-group">
+              <div class="col-xs-12">
+                <cp-checkbox
+                  class="checkbox"
+                  (toggle)="onAllDayToggle($event)"
+                  [isChecked]="form.controls['is_all_day'].value">
+                </cp-checkbox>
+                <label i18n class="checkbox__label">{{ 'all_day' | cpI18n }}</label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label i18n>{{ 'events_event_description' | cpI18n }}</label>
+              <textarea
+                formControlName="description"
+                placeholder="Tell people more about the event">
+              </textarea>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12">
+                <label i18n>{{ 'location' | cpI18n }}</label>
+                <div class="row form-group">
+                  <div class="col-xs-12">
+                    <cp-place-autocomplete
+                      placeHolder="Address..."
+                      [newAddress]="newAddress"
+                      (backToDefault)="onResetMap()"
+                      (placeChange)="onPlaceChange($event)"
+                      [defaultValue]="form.controls.location.value">
+                    </cp-place-autocomplete>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="maps">
+                  <cp-maps
+                    [center]="mapCenter"
+                    (mapSelection)="onMapSelection($event)">
+                  </cp-maps>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="cp-wrapper cp-wrapper--outer">
+        <div class="col-xs-12">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="text-right">
+                <label class="error" *ngIf="formError" i18n>
+                    <span>&#x26A0;</span>
+                    {{ isDateError ? dateErrorMessage : cpI18n.translate('error_fill_out_marked_fields') }}
+                </label>
+                <a [routerLink]="['../']"
+                  class="cpbtn cpbtn--cancel" i18n>
+                  {{ 'cancel' | cpI18n }}
+                </a>
+                <cp-button
+                  [props]="buttonData"
+                  (buttonClick)="onSubmit()">
+                </cp-button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -14,6 +14,8 @@ import { CPI18nService } from './../../../../../shared/services/i18n.service';
 interface IState {
   search_str: string;
   user_list_id: number;
+  sort_field: string;
+  sort_direction: string;
 }
 
 declare var $;
@@ -30,6 +32,8 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
   state: IState = {
     search_str: null,
     user_list_id: null,
+    sort_field: 'firstname',
+    sort_direction: 'asc',
   };
   messageData;
   listIdFromUrl;
@@ -50,6 +54,16 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
     super.isLoading().subscribe((loading) => (this.loading = loading));
   }
 
+  doSort(sort_field) {
+    this.state = {
+      ...this.state,
+      sort_field: sort_field,
+      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc',
+    };
+
+    this.fetch();
+  }
+
   fetch() {
     const search = new URLSearchParams();
     const user_list_id = this.state.user_list_id
@@ -58,6 +72,8 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
 
     search.append('school_id', this.session.g.get('school').id.toString());
     search.append('search_str', this.state.search_str);
+    search.append('sort_field', this.state.sort_field);
+    search.append('sort_direction', this.state.sort_direction);
     search.append('user_list_id', user_list_id);
 
     const stream$ = this.service.getStudentsByList(

@@ -11,6 +11,7 @@ export class CPUploadButtonComponent implements OnInit {
   @Input() buttonText: string;
   @Input() buttonClass: string;
   @Output() fileUpload: EventEmitter<File> = new EventEmitter();
+  @Input() props: any;
 
   constructor() {}
 

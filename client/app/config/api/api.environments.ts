@@ -8,7 +8,7 @@ const CP_API_URL = {
   SEA: 'https://seaapi.studentlifemobile.com/cc',
 
   DEV: 'https://usstagingapi.studentlifemobile.com/cc',
-  // DEV: 'http://ec2-54-234-212-53.compute-1.amazonaws.com:5002/cc'
+  //   DEV: 'http://ec2-54-205-194-67.compute-1.amazonaws.com:5002/cc',
 };
 
 export const getUrlByEnv = () => {

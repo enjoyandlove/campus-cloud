@@ -23,8 +23,26 @@
       <ul class="lists cp-form">
         <li class="cp-form__header col-xs-12">
           <div class="row">
-            <span class="col-xs-5" i18n>{{ 'name' | cpI18n }}</span>
-            <span class="col-xs-2" i18n>{{ 'lists_number_of_users' | cpI18n }}</span>
+            <span
+              class="col-xs-5 hover"
+              (click)="doSort('name')">
+              {{ 'name' | cpI18n }}
+              <span *ngIf="state.sort_field === 'name'">
+                <i class="material-icons">
+                  {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+                </i>
+              </span>
+            </span>
+            <span
+              class="col-xs-2 hover"
+              (click)="doSort('lists_number_of_users')">
+              {{ 'lists_number_of_users' | cpI18n }}
+              <span *ngIf="state.sort_field === 'lists_number_of_users'">
+                <i class="material-icons">
+                  {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+                </i>
+              </span>
+            </span>
             <span class="col-xs-1 col-xs-offset-4"></span>
           </div>
         </li>

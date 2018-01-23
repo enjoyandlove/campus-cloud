@@ -72,6 +72,11 @@
       user-select: none;
       border-radius: 4px;
       display: inline-block;
+
+      &.disabled {
+        cursor: not-allowed;
+        pointer-events: none;
+      }
     }
   }
 }

@@ -1,0 +1,45 @@
+<div class="cpmodal">
+    <div class="cpmodal__header">
+      <div class="row">
+        <div class="col-xs-12 text-center">
+          <span i18n><strong>{{ 'calendars_items_import_confirmation_modal_title' | cpI18n }}</strong></span>
+
+          <span
+            data-dismiss="modal"
+            (click)="onOK()"
+            class="pull-right hover cpmodal__header__close">
+            &times;
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cpmodal__body">
+      <div class="row">
+        <div class="col-xs-12">
+          <ng-container [ngSwitch]="parsing">
+            <cp-spinner *ngSwitchCase="true"></cp-spinner>
+            <ng-container *ngSwitchCase="false">
+                <p class="text-center" *ngIf="success.length">
+                  {{ 'calendars_items_import_message_success' | cpI18n: success.length }}
+                </p>
+                <p class="text-center" *ngIf="errors.length">
+                  {{ 'calendars_items_import_message_error' | cpI18n: errors.length }}
+                </p>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+    <div class="cpmodal__footer">
+      <div class="row">
+        <div class="col-xs-6 col-xs-offset-6 text-right">
+          <cp-button
+            [props]="buttonData"
+            (buttonClick)="onOK()">
+          </cp-button>
+        </div>
+      </div>
+    </div>
+  </div>

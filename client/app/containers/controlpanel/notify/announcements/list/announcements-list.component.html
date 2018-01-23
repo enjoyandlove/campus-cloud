@@ -25,7 +25,23 @@
           <div class="row">
             <span class="col-xs-5" i18n>{{ 'to' | cpI18n }}</span>
             <span class="col-xs-3" i18n>{{ 'announcements_type' | cpI18n }}</span>
-            <span class="col-xs-3">{{ 'sent' | cpI18n }}</span>
+            <span
+              class="col-xs-3 hover"
+              (click)="doSort('sent_time')">
+              {{ 'sent' | cpI18n }}
+              <span *ngIf="state.sort_field === 'sent_time'">
+                <i
+                  class="material-icons"
+                  *ngIf="state.sort_direction === 'asc'">
+                  arrow_upward
+                </i>
+                <i
+                  class="material-icons"
+                  *ngIf="state.sort_direction === 'desc'">
+                  arrow_downward
+                </i>
+              </span>
+            </span>
             <span class="col-xs-1"></span>
           </div>
         </li>

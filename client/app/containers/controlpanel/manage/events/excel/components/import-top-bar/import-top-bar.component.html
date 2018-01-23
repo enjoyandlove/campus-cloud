@@ -6,8 +6,9 @@
       </cp-checkbox>
       <cp-upload-button
         buttonText="Upload Picture"
-        buttonClass="cpbtn cpbtn--cancel"
-        (fileUpload)="onFileUpload($event)">
+        [buttonClass]="['cpbtn cpbtn--' + props.class]"
+        (fileUpload)="onFileUpload($event)"
+        [props]="props" >
       </cp-upload-button>
     </div>
 
