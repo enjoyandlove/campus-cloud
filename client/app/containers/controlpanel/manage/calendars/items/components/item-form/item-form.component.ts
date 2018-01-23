@@ -25,7 +25,7 @@ const COMMON_DATE_PICKER_OPTIONS = {
 })
 export class CalendarsItemFormComponent implements OnInit {
   @Input() form: FormGroup;
-
+  @Input() calendarId: number;
   @Output() submitted: EventEmitter<any> = new EventEmitter();
 
   formError;

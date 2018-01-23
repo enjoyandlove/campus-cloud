@@ -22,7 +22,7 @@ export class CalendarsItemCreateComponent implements OnInit {
   @ViewChild('createForm') createForm;
 
   form: FormGroup;
-  calendarID: number;
+  calendarId: number;
 
   constructor(
     public router: Router,
@@ -32,7 +32,7 @@ export class CalendarsItemCreateComponent implements OnInit {
     public store: Store<IHeader>,
     public service: CalendarsService,
   ) {
-    this.calendarID = this.route.snapshot.params['calendarId'];
+    this.calendarId = this.route.snapshot.params['calendarId'];
   }
 
   buildHeader() {
@@ -54,12 +54,12 @@ export class CalendarsItemCreateComponent implements OnInit {
   onSave(newItem: IItem) {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id);
-    search.append('academic_calendar_id', this.calendarID.toString());
+    search.append('academic_calendar_id', this.calendarId.toString());
 
     this.service
       .createItem(newItem, search)
       .subscribe((_) =>
-        this.router.navigate(['/manage/calendars/' + this.calendarID]),
+        this.router.navigate(['/manage/calendars/' + this.calendarId]),
       );
   }
 
