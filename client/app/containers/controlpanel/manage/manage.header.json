@@ -24,6 +24,7 @@
       "url": "/manage/services"
     },
     {
+      "new": true,
       "privilege": 21,
       "label": "locations",
       "url": "/manage/locations"
@@ -41,7 +42,6 @@
     {
       "privilege": 16,
       "label": "calendars",
-      "new": true,
       "url": "/manage/calendars"
     }
   ]
