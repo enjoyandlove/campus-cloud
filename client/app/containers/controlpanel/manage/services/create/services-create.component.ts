@@ -40,7 +40,7 @@ export class ServicesCreateComponent implements OnInit {
 
   feedbackOptions = [
     {
-      label: this.cpI18n.translate('enabled'),
+      label: this.cpI18n.translate('service_enabled'),
       value: FEEDBACK_ENABLED,
     },
     {

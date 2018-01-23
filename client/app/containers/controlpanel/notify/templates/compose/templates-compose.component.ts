@@ -208,7 +208,6 @@ export class TemplatesComposeComponent extends AnnouncementsComposeComponent
         '115004330554-Create-a-List-of-Students',
       }
     });
-
     super.ngOnInit();
 
     this.updateLabel();

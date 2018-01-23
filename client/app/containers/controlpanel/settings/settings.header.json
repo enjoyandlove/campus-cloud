@@ -1,0 +1,15 @@
+{
+  "heading": "team_settings",
+  "subheading": null,
+  "em": null,
+  "children": [
+    {
+      "label": "manage_team_members",
+      "url": "/settings/team"
+    },
+    {
+      "label": "invite_team_members",
+      "url": "/settings/team/invite"
+    }
+  ]
+}

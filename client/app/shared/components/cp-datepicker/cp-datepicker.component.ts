@@ -37,8 +37,17 @@ export class CPDatePickerComponent implements AfterViewInit, OnInit, OnChanges {
     this.el = $(el).flatpickr(this.options);
   }
 
+  toggleTime() {
+    this.el.set('dateFormat', this.options.dateFormat);
+    this.el.set('enableTime', this.options.enableTime);
+  }
+
   ngOnChanges() {
     if (this.el) {
+      if (this.el.config.enableTime !== this.options.enableTime) {
+        this.toggleTime();
+      }
+
       if (this.error) {
         this.el.altInput.classList.add('error');
 

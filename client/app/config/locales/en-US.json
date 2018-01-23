@@ -619,9 +619,6 @@
   "clubs_delete_modal_title": {
     "message": "Delete Club"
   },
-  "clubs_disabled": {
-    "message": "Disabled"
-  },
   "clubs_edit_heading": {
     "message": "Edit Club"
   },
@@ -859,6 +856,9 @@
   "description": {
     "message": "Description"
   },
+  "disabled": {
+    "message": "Disabled"
+  },
   "done": {
     "message": "Done"
   },
@@ -896,6 +896,10 @@
   "end_date": {
     "message": "End Date"
   },
+  "engagement": {
+    "message": "Engagement",
+    "description": "Not used yet"
+  },
   "error": {
     "message": "Error"
   },
@@ -925,9 +929,6 @@
   },
   "events_attendance_manager_full": {
     "message": "Attendance Manager"
-  },
-  "events_attendance_manager_tooltip": {
-    "message": "The attendance manager may be any person with a valid email address, they will receive instructions for setting up checkins for this event."
   },
   "events_attendant": {
     "message": "Attendant"
@@ -962,9 +963,6 @@
   "events_delete_modal_title": {
     "message": "Delete Event"
   },
-  "events_disabled": {
-    "message": "Disabled"
-  },
   "events_edit_event": {
     "message": "Edit Event"
   },
@@ -986,14 +984,8 @@
   "events_event_details": {
     "message": "Event Details"
   },
-  "events_event_feedback_tooltip": {
-    "message": "If enabled, after an event is finished will prompt event attendees to provide feedback and rating as a response to the feedback question."
-  },
   "events_event_manager": {
     "message": "Event Manager"
-  },
-  "events_event_manager_tooltip": {
-    "message": "The event manager needs to be a current administrator. They will receive emails related to checking in users and assessment reports once it is finished."
   },
   "events_event_name": {
     "message": "Event Name"
@@ -1322,12 +1314,6 @@
   "manage": {
     "message": "Manage"
   },
-  "manage_create_service_category_tooltip": {
-    "message": "The category the service belongs to, helps filter and group content in the campus app."
-  },
-  "manage_create_service_feedback_tooltip": {
-    "message": "If enabled, after a check-in to a service provider prompt attendees to provide feedback and rating as a response to the feedback question."
-  },
   "manage_team_members": {
     "message": "Team Members"
   },
@@ -1340,7 +1326,7 @@
   "members": {
     "message": "Members"
   },
-  "message_action": {
+  "message": {
     "message": "Message"
   },
   "message_file_upload_error": {
@@ -1348,9 +1334,6 @@
   },
   "message_file_upload_success": {
     "message": "File uploaded successfully"
-  },
-  "message_noun": {
-    "message": "Message"
   },
   "more": {
     "message": "More"
@@ -1375,9 +1358,6 @@
   },
   "notify_announcement_recipient": {
     "message": "Recipients"
-  },
-  "notify_announcement_template_to_tooltip": {
-    "message": "The recepients of the accouncements. Can be sent to students who are app users or pre-defined lists. For more info:"
   },
   "no_admins_found": {
     "message": "No Admins found"
@@ -1464,8 +1444,7 @@
     "message": "Registrations"
   },
   "regular": {
-    "message": "Regular",
-    "description": "Announcement Type"
+    "message": "Regular"
   },
   "release_notes_july_10_item_one": {
     "message": "Administrators can send Notifications to students' devices"
@@ -1482,11 +1461,27 @@
   "release_notes_june_2_item_one": {
     "message": "Administrators can create Clubs and Groups"
   },
+  "release_notes_june_2_item_three": {
+    "message": "Students can post messages to Club Feeds. Executives and Administrators can moderate these Feeds.",
+    "description": "Release notes not in use"
+  },
+  "release_notes_june_2_item_two": {
+    "message": "Executives of a club can create events and services hosted by that club.",
+    "description": "Release notes not in use"
+  },
   "release_notes_june_2_title": {
     "message": "New as of June 2, 2017:"
   },
   "release_notes_p_four": {
     "message": "The OOHLALA Team."
+  },
+  "release_notes_p_one": {
+    "message": "As part of the build up to 2018, we’ve rebuilt the Campus Cloud from the ground up. You’ll find the new Campus Cloud to be faster, more intuitive and user-friendly than the previous version. Please note that we are still refining some of the features from the old version and will be releasing them over the next few weeks. The first of these updated features will be a brand new dashboard that is more insightful!",
+    "description": "Release notes not in use"
+  },
+  "release_notes_p_three": {
+    "message": "We hope your experience with the new Campus Cloud proves to be an easy and enjoyable one, and we look forward to hearing your feedback!",
+    "description": "Release notes not in use"
   },
   "release_notes_p_two": {
     "message": "Should you wish to return to the old Campus Cloud, you can always do so by clicking on the banner at the top of the screen. If you wish to provide any feedback on your experience with the new Campus Cloud, please contact us at "
@@ -1532,6 +1527,10 @@
   },
   "search": {
     "message": "Search"
+  },
+  "selected": {
+    "message": "Selected",
+    "description": "Not in use"
   },
   "select_category": {
     "message": "Select Category"
@@ -1580,9 +1579,6 @@
   },
   "services_delete_modal_title": {
     "message": "Delete Service"
-  },
-  "services_disabled": {
-    "message": "Disabled"
   },
   "services_edit_heading": {
     "message": "Edit Service"
@@ -1715,9 +1711,6 @@
   },
   "subject": {
     "message": "Subject"
-  },
-  "team_member_disabled": {
-    "message": "Disabled"
   },
   "team_settings": {
     "message": "Team Settings"

@@ -13,9 +13,9 @@ import { CPI18nService } from './../../../../../shared/services/i18n.service';
 interface IState {
   search_str: string;
   templates: Array<any>;
+  sort_field: string;
+  sort_direction: string;
 }
-
-declare var $;
 
 @Component({
   selector: 'cp-templates-list',
@@ -39,6 +39,8 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
   state: IState = {
     search_str: null,
     templates: [],
+    sort_field: 'name',
+    sort_direction: 'asc',
   };
 
   constructor(
@@ -66,9 +68,21 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
     this.fetch();
   }
 
+  doSort(sort_field) {
+    this.state = {
+      ...this.state,
+      sort_field: sort_field,
+      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc',
+    };
+
+    this.fetch();
+  }
+
   fetch() {
     const search = new URLSearchParams();
     search.append('search_str', this.state.search_str);
+    search.append('sort_field', this.state.sort_field);
+    search.append('sort_direction', this.state.sort_direction);
     search.append('school_id', this.session.g.get('school').id.toString());
 
     const stream$ = this.service.getTemplates(

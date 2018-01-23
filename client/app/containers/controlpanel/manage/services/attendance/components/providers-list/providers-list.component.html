@@ -13,16 +13,64 @@
           <div class="cp-table__header">
             <div class="row">
               <div class="col-xs-3">
-                <span i18n>{{ 'service_provider' | cpI18n }}</span>
+                <span
+                  class="hover"
+                  (click)="doSort('provider_name')">
+                  {{ 'service_provider' | cpI18n }}
+                  <span *ngIf="state.sort_field === 'provider_name'">
+                    <i
+                      class="material-icons"
+                      *ngIf="state.sort_direction === 'asc'">
+                      arrow_upward
+                    </i>
+                    <i
+                      class="material-icons"
+                      *ngIf="state.sort_direction === 'desc'">
+                      arrow_downward
+                    </i>
+                  </span>
+                </span>
               </div>
               <div class="col-xs-4" *ngIf="displayRatingColumn">
-                <span i18n>{{ 'average_rating' | cpI18n }}</span>
+                <span>{{ 'average_rating' | cpI18n }}</span>
               </div>
               <div class="col-xs-1" *ngIf="displayRatingColumn">
-                <span i18n>{{ 'rating' | cpI18n }}</span>
+                <span
+                  class="hover"
+                  (click)="doSort('num_ratings')">
+                  {{ 'rating' | cpI18n }}
+                  <span *ngIf="state.sort_field === 'num_ratings'">
+                    <i
+                      class="material-icons"
+                      *ngIf="state.sort_direction === 'asc'">
+                      arrow_upward
+                    </i>
+                    <i
+                      class="material-icons"
+                      *ngIf="state.sort_direction === 'desc'">
+                      arrow_downward
+                    </i>
+                  </span>
+                </span>
               </div>
               <div [class]="[displayRatingColumn ? 'col-xs-1' : 'col-xs-1 col-xs-offset-5']">
-                <span i18n>{{ 'services_visits' | cpI18n }}</span>
+                <span
+                  class="hover"
+                  (click)="doSort('total_visits')">
+                  {{ 'services_visits' | cpI18n }}
+                  <span *ngIf="state.sort_field === 'total_visits'">
+                    <i
+                      class="material-icons"
+                      *ngIf="state.sort_direction === 'asc'">
+                      arrow_upward
+                    </i>
+                    <i
+                      class="material-icons"
+                      *ngIf="state.sort_direction === 'desc'">
+                      arrow_downward
+                    </i>
+                  </span>
+                </span>
               </div>
               <div class="col-xs-2">
                 <span i18n>{{ 'assessment' | cpI18n }}</span>

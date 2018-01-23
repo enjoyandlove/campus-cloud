@@ -389,6 +389,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       withSwitcher: true,
       suggestions: this.suggestions,
       reset: this.resetChips$,
+      customCSS: true
     };
     const schoolPrivileges = this.session.g.get('user').school_level_privileges[
       this.session.g.get('school').id
