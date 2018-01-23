@@ -30,7 +30,11 @@
 
             <div class="row form-group">
               <div class="col-xs-6">
-                <label i18n>{{ 'select_category' | cpI18n }}</label>
+                <label i18n>{{ 'select_category' | cpI18n }}
+                  <cp-tooltip
+                    [toolTipContent]="category">
+                  </cp-tooltip>
+                </label>
                 <cp-dropdown
                   [items]="categories$ | async"
                   (selected)="form.controls['category'].setValue($event.action)"
@@ -147,7 +151,11 @@
         <ng-container *ngIf="attendance">
           <div class="row">
             <div class="col-xs-6">
-              <label i18n>{{ 'services_label_enable_service_feedback' | cpI18n }}</label>
+              <label i18n>{{ 'services_label_enable_service_feedback' | cpI18n }}
+                <cp-tooltip
+                  [toolTipContent]="feedback">
+                </cp-tooltip>
+              </label>
               <cp-dropdown
                 [items]="feedbackOptions"
                 (selected)="onSelectedFeedback($event)">

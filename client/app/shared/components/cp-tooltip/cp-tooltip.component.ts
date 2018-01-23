@@ -1,13 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-
-interface IToolTipContent {
-  content: string;
-  trigger?: string; // hover, click, manual (default = manual)
-  link?: {
-    text: string;
-    url: string;
-  };
-}
+import { IToolTipContent } from './cp-tooltip.interface';
 
 @Component({
   selector: 'cp-tooltip',

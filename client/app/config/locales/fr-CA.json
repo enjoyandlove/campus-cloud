@@ -2,6 +2,10 @@
   "account_not_found": {
     "message": "Veuillez vérifier vos identifiants et essayer de nouveau."
   },
+  "active": {
+    "message": "Actif",
+    "description": "Active Club"
+  },
   "address": {
     "message": "Adresse"
   },
@@ -61,6 +65,9 @@
   },
   "admin_emergency_announcements": {
     "message": "Annonces d'urgence"
+  },
+  "admin_enabled": {
+    "message": "Activé"
   },
   "admin_engagement_dashboard": {
     "message": "Tableau de bord des évaluations"
@@ -126,7 +133,7 @@
     "message": "Toutes les catégories"
   },
   "all_day": {
-    "message": "All day"
+    "message": "Toute la journée"
   },
   "all_fields_are_required": {
     "message": "Tous les champs sont requis"
@@ -435,7 +442,7 @@
     "message": "Note moyenne"
   },
   "back": {
-    "message": "Back"
+    "message": "Retour"
   },
   "beta_banner_go_back": {
     "message": "Retourner à l'ancienne version"
@@ -465,55 +472,55 @@
     "message": "Ajouter calendrier"
   },
   "calendars_delete_modal_body": {
-    "message": "Are you sure you want to delete %s?"
+    "message": "Êtes-vous sûr de vouloir supprimer %s ?"
   },
   "calendars_delete_modal_title": {
-    "message": "Delete Calendar"
+    "message": "Supprimer calendrier"
   },
   "calendars_edit_modal_title": {
-    "message": "Edit Calendar"
+    "message": "Éditer calendrier"
   },
   "calendars_form_submit_button_new": {
-    "message": "Create Item"
+    "message": "Créer entrée"
   },
   "calendars_items_button_new": {
-    "message": "Create Calendar Item"
+    "message": "Créer entrée calendrier"
   },
   "calendars_items_edit_btn": {
-    "message": "Edit Calendar Item"
+    "message": "Éditer entrée calendrier"
   },
   "calendars_items_import_confirmation_modal_title": {
-    "message": "Import from File"
+    "message": "Importer depuis fichier"
   },
   "calendars_items_import_csv_heading": {
-    "message": "Import Calendar Items from File"
+    "message": "Importer entrées calendrier depuis fichier"
   },
   "calendars_items_import_csv_sub_heading": {
-    "message": "File contains data for %s calendar item(s)"
+    "message": "Le fichier contient des données pour %s entrée(s) de calendrier"
   },
   "calendars_items_import_message_error": {
-    "message": "Failed to create %s items"
+    "message": "Échec de création pour %s entrées"
   },
   "calendars_items_import_message_success": {
-    "message": "Successfully created %s item(s)"
+    "message": "%s entrée(s) créée(s) avec succès"
   },
   "calendars_items_no_results_found": {
-    "message": "No calendar items found"
+    "message": "Aucune entrée de calendrier trouvée"
   },
   "calendars_item_create_heading": {
-    "message": "Create Calendar Item"
+    "message": "Créer entrée calendrier"
   },
   "calendars_item_delete_modal_body": {
-    "message": "Are you sure you want to delete %s?"
+    "message": "Êtes-vous sûr de vouloir supprimer %s ?"
   },
   "calendars_item_details": {
-    "message": "Item details"
+    "message": "Détails de l'entrée"
   },
   "calendars_item_edit_heading": {
-    "message": "Edit Calendar Item"
+    "message": "Éditer entrée calendrier"
   },
   "calendars_item_modal_title": {
-    "message": "Delete Calendar Item"
+    "message": "Supprimer entrée calendrier"
   },
   "calendars_label_description": {
     "message": "Description"
@@ -553,6 +560,10 @@
   },
   "checkin_download_qr_code": {
     "message": "Télécharger code QR"
+  },
+  "checkin_header_title": {
+    "message": "Vérification de présence",
+    "description": "Public Check-In Page (Title)\r\nhttps://ccstaging.oohlalamobile.com/#/cb/checkin/e/pNmRN94bVUbUI9qtz89i5A"
   },
   "checkin_instructions_one": {
     "message": "Nous utilisons des codes QR pour aider les invités à enregistrer leur présence à un événement. Assurez-vous d'imprimer ou de partager le code QR avec votre organisateur de présence d'événement."
@@ -596,6 +607,9 @@
   "clubs_delete_modal_title": {
     "message": "Supprimer club"
   },
+  "clubs_disabled": {
+    "message": "Désactivé"
+  },
   "clubs_edit_heading": {
     "message": "Éditer club"
   },
@@ -607,6 +621,9 @@
   },
   "clubs_import_items_to_import": {
     "message": "Le fichier contient des données pour %s clubs"
+  },
+  "clubs_inactive": {
+    "message": "Inactif"
   },
   "clubs_label_advisor": {
     "message": "Conseiller"
@@ -628,6 +645,10 @@
   },
   "clubs_label_club_status": {
     "message": "Statut du club"
+  },
+  "clubs_label_constitution": {
+    "message": "Constitution",
+    "description": "Form Label "
   },
   "clubs_label_edit_club": {
     "message": "Éditer club"
@@ -677,6 +698,10 @@
   "clubs_status_pending": {
     "message": "Le club attend l'approbation et n'est pas listé dans l'application du campus"
   },
+  "comment": {
+    "message": "Commentaire",
+    "description": "Walls Comment"
+  },
   "comments": {
     "message": "Commentaires"
   },
@@ -699,7 +724,7 @@
     "message": "Détails du contact"
   },
   "created": {
-    "message": "Date Created"
+    "message": "Date de création"
   },
   "csv_modal_anchor_text": {
     "message": "Télécharger un fichier échantillon CSV"
@@ -719,8 +744,18 @@
   "dashboard_announcements": {
     "message": "Annonces"
   },
+  "dashboard_assessment_event_checkins": {
+    "message": "Vérifications de présence à l'événement",
+    "description": "Dashboard Assessment tile"
+  },
   "dashboard_assessment_feedback_rate": {
     "message": "Taux de retour"
+  },
+  "dashboard_assessment_lms": {
+    "message": "LMS"
+  },
+  "dashboard_assessment_service_checkins": {
+    "message": "Vérifications de présence au service"
   },
   "dashboard_assessment_student": {
     "message": "Étudiant"
@@ -833,6 +868,10 @@
   "email": {
     "message": "Courriel"
   },
+  "email_does_not_exist": {
+    "message": "Il n'y a aucun utilisateur avec ces informations de connexion.",
+    "description": "Lost password view..."
+  },
   "emergency": {
     "message": "Urgence"
   },
@@ -872,6 +911,9 @@
   "events_attendance_manager_full": {
     "message": "Gestionnaire de présences"
   },
+  "events_attendance_manager_tooltip": {
+    "message": "The attendance manager may be any person with a valid email address, they will receive instructions for setting up checkins for this event."
+  },
   "events_attendant": {
     "message": "Présent"
   },
@@ -905,6 +947,9 @@
   "events_delete_modal_title": {
     "message": "Supprimer événement"
   },
+  "events_disabled": {
+    "message": "Désactivé"
+  },
   "events_edit_event": {
     "message": "Éditer événement"
   },
@@ -926,8 +971,14 @@
   "events_event_details": {
     "message": "Détails de l'événement"
   },
+  "events_event_feedback_tooltip": {
+    "message": "If enabled, after an event is finished will prompt event attendees to provide feedback and rating as a response to the feedback question."
+  },
   "events_event_manager": {
     "message": "Gestionnaire de l'événement"
+  },
+  "events_event_manager_tooltip": {
+    "message": "The event manager needs to be a current administrator. They will receive emails related to checking in users and assessment reports once it is finished."
   },
   "events_event_name": {
     "message": "Nom de l'événement"
@@ -983,6 +1034,9 @@
   "events_user_feedback": {
     "message": "Retour d'utilisateur"
   },
+  "event_enabled": {
+    "message": "Activé"
+  },
   "executive": {
     "message": "Exécutif"
   },
@@ -998,11 +1052,19 @@
   "feedback_form_service_help": {
     "message": "Veuillez cliquer une étoile pour noter le service"
   },
+  "feedback_label_event_feedback": {
+    "message": "Retours sur l'événement",
+    "description": "Single Event \r\nhttps://projects.invisionapp.com/d/main#/console/10688612/232187816/preview"
+  },
   "feedback_label_rate_event": {
     "message": "Noter événement"
   },
   "feedback_label_rate_service": {
     "message": "Noter service"
+  },
+  "feedback_label_service_feedback": {
+    "message": "Retours sur le service",
+    "description": "Same as above"
   },
   "feedback_thank_you": {
     "message": "Merci pour votre retour"
@@ -1226,6 +1288,10 @@
   "locations_label_acronym": {
     "message": "Acronyme"
   },
+  "login": {
+    "message": "Connexion",
+    "description": "is the route name\r\nhttps://ccstaging.oohlalamobile.com/#/lost-password"
+  },
   "logout": {
     "message": "Se déconnecter"
   },
@@ -1241,6 +1307,12 @@
   "manage": {
     "message": "Gérer"
   },
+  "manage_create_service_category_tooltip": {
+    "message": "The category the service belongs to, helps filter and group content in the campus app."
+  },
+  "manage_create_service_feedback_tooltip": {
+    "message": "If enabled, after a check-in to a service provider prompt attendees to provide feedback and rating as a response to the feedback question."
+  },
   "manage_team_members": {
     "message": "Membres d'équipe"
   },
@@ -1253,14 +1325,20 @@
   "members": {
     "message": "Membres"
   },
+  "message_action": {
+    "message": "Contacter"
+  },
   "message_file_upload_error": {
     "message": "Quelque chose s'est mal passé, veuillez réessayer"
   },
   "message_file_upload_success": {
     "message": "Fichier téléversé avec succès"
   },
+  "message_noun": {
+    "message": "Message"
+  },
   "more": {
-    "message": "More"
+    "message": "Plus"
   },
   "move": {
     "message": "Déplacer"
@@ -1272,7 +1350,7 @@
     "message": "Nouveau mot de passe"
   },
   "next": {
-    "message": "Next"
+    "message": "Suivant"
   },
   "no": {
     "message": "Non"
@@ -1281,7 +1359,10 @@
     "message": "Notifier"
   },
   "notify_announcement_recipient": {
-    "message": "Recipients"
+    "message": "Destinataires"
+  },
+  "notify_announcement_template_to_tooltip": {
+    "message": "The recepients of the accouncements. Can be sent to students who are app users or pre-defined lists. For more info:"
   },
   "no_admins_found": {
     "message": "Aucun administrateur trouvé"
@@ -1299,31 +1380,25 @@
     "message": "Ok"
   },
   "on_boarding_step_1_description": {
-    "message": "Manage your campus app and increase student engagement."
-  },
-  "on_boarding_step_1_description_1": {
-    "message": "Rebuilt from the group up."
-  },
-  "on_boarding_step_1_title": {
-    "message": "Welcome to all the new Campus Cloud!"
+    "message": "Gérer votre application du campus et augmentez l'implication des étudiants."
   },
   "on_boarding_step_2_description": {
-    "message": "All your campus resources including events, services, clubs and more."
+    "message": "Toutes vos ressources du campus incluant événements, services, clubs et plus."
   },
   "on_boarding_step_2_title": {
-    "message": "Manage your campus content"
+    "message": "Gérer votre contenu du campus"
   },
   "on_boarding_step_3_description": {
-    "message": "Send campus announcements or target messages for specific students."
+    "message": "Envoyez des annonces au campus ou ciblez vos messages pour des étudiants spécifiques."
   },
   "on_boarding_step_3_title": {
-    "message": "Notify your campus and send targeted messages"
+    "message": "Notifiez votre campus et envoyez des messages ciblés"
   },
   "on_boarding_step_4_description": {
-    "message": "Understand student engagement with campus events and services."
+    "message": "Comprenez l'implication des étudiants dans les événements et les services."
   },
   "on_boarding_step_4_title": {
-    "message": "Assess campus activities"
+    "message": "Évaluez les activités du campus"
   },
   "optional": {
     "message": "Optionnel"
@@ -1366,6 +1441,10 @@
   },
   "registrations": {
     "message": "Inscriptions"
+  },
+  "regular": {
+    "message": "Normal",
+    "description": "Announcement Type"
   },
   "release_notes_july_10_item_one": {
     "message": "Les administrateurs peuvent envoyer des notifications aux appareils des étudiants"
@@ -1414,6 +1493,9 @@
   },
   "results": {
     "message": "Résultat"
+  },
+  "reupload": {
+    "message": "Re-téléverser"
   },
   "room": {
     "message": "Salle"
@@ -1478,6 +1560,9 @@
   "services_delete_modal_title": {
     "message": "Supprimer service"
   },
+  "services_disabled": {
+    "message": "Désactivé"
+  },
   "services_edit_heading": {
     "message": "Éditer service"
   },
@@ -1505,6 +1590,10 @@
   "services_label_checkin_time": {
     "message": "Heure d'enregistrement"
   },
+  "services_label_check_in_details": {
+    "message": "Vérification de présence",
+    "description": "Noun"
+  },
   "services_label_default_question": {
     "message": "Question de retour"
   },
@@ -1519,6 +1608,10 @@
   },
   "services_label_name": {
     "message": "Nom du service"
+  },
+  "services_label_service_assessment": {
+    "message": "Évaluation du service",
+    "description": "Singular\r\nhttps://ccstaging.oohlalamobile.com/#/manage/services/create"
   },
   "services_no_service_found": {
     "message": "Aucun services trouvés"
@@ -1559,6 +1652,9 @@
   "services_visits": {
     "message": "Visites"
   },
+  "service_enabled": {
+    "message": "Activé"
+  },
   "service_provider": {
     "message": "Fournisseur de service"
   },
@@ -1586,6 +1682,10 @@
   "students": {
     "message": "Étudiants"
   },
+  "student_engagements": {
+    "message": "Implication des étudiants",
+    "description": "Graph title\r\nhttps://ccstaging.oohlalamobile.com/#/assess/dashboard?engagement=all&for=all_students&range=last_week"
+  },
   "student_feedback": {
     "message": "Retour"
   },
@@ -1594,6 +1694,9 @@
   },
   "subject": {
     "message": "Sujet"
+  },
+  "team_member_disabled": {
+    "message": "Désactivé(e)"
   },
   "team_settings": {
     "message": "Réglages d'équipe"
@@ -1631,6 +1734,10 @@
   "type": {
     "message": "Type"
   },
+  "update": {
+    "message": "Mettre à jour",
+    "description": "Verb"
+  },
   "upload_picture": {
     "message": "Téléverser photo"
   },
@@ -1645,6 +1752,9 @@
   },
   "view_more": {
     "message": "Voir plus"
+  },
+  "walls_button_create_post": {
+    "message": "Publier"
   },
   "website": {
     "message": "Site web"

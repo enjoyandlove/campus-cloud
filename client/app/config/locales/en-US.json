@@ -69,6 +69,9 @@
   "admin_emergency_announcements": {
     "message": "Emergency Announcements"
   },
+  "admin_enabled": {
+    "message": "Enabled"
+  },
   "admin_engagement_dashboard": {
     "message": "Assessment Dashboard"
   },
@@ -616,6 +619,9 @@
   "clubs_delete_modal_title": {
     "message": "Delete Club"
   },
+  "clubs_disabled": {
+    "message": "Disabled"
+  },
   "clubs_edit_heading": {
     "message": "Edit Club"
   },
@@ -627,6 +633,9 @@
   },
   "clubs_import_items_to_import": {
     "message": "File contains data for %s club(s)."
+  },
+  "clubs_inactive": {
+    "message": "Inactive"
   },
   "clubs_label_advisor": {
     "message": "Advisor"
@@ -702,7 +711,8 @@
     "message": "Club is awaiting approval and is not listed in the Campus App"
   },
   "comment": {
-    "message": "Comment"
+    "message": "Comment",
+    "description": "Walls Comment"
   },
   "comments": {
     "message": "Comments"
@@ -747,7 +757,8 @@
     "message": "Announcements"
   },
   "dashboard_assessment_event_checkins": {
-    "message": "Event Check-Ins"
+    "message": "Event Check-Ins",
+    "description": "Dashboard Assessment tile"
   },
   "dashboard_assessment_feedback_rate": {
     "message": "Feedback Rate"
@@ -848,9 +859,6 @@
   "description": {
     "message": "Description"
   },
-  "disabled": {
-    "message": "Disabled"
-  },
   "done": {
     "message": "Done"
   },
@@ -873,13 +881,11 @@
     "message": "Email"
   },
   "email_does_not_exist": {
-    "message": "There is no user with that login information."
+    "message": "There is no user with that login information.",
+    "description": "Lost password view..."
   },
   "emergency": {
     "message": "Emergency"
-  },
-  "enabled": {
-    "message": "Enabled"
   },
   "ended": {
     "message": "End Date:"
@@ -889,9 +895,6 @@
   },
   "end_date": {
     "message": "End Date"
-  },
-  "engagement": {
-    "message": "Engagement"
   },
   "error": {
     "message": "Error"
@@ -922,6 +925,9 @@
   },
   "events_attendance_manager_full": {
     "message": "Attendance Manager"
+  },
+  "events_attendance_manager_tooltip": {
+    "message": "The attendance manager may be any person with a valid email address, they will receive instructions for setting up checkins for this event."
   },
   "events_attendant": {
     "message": "Attendant"
@@ -956,6 +962,9 @@
   "events_delete_modal_title": {
     "message": "Delete Event"
   },
+  "events_disabled": {
+    "message": "Disabled"
+  },
   "events_edit_event": {
     "message": "Edit Event"
   },
@@ -977,8 +986,14 @@
   "events_event_details": {
     "message": "Event Details"
   },
+  "events_event_feedback_tooltip": {
+    "message": "If enabled, after an event is finished will prompt event attendees to provide feedback and rating as a response to the feedback question."
+  },
   "events_event_manager": {
     "message": "Event Manager"
+  },
+  "events_event_manager_tooltip": {
+    "message": "The event manager needs to be a current administrator. They will receive emails related to checking in users and assessment reports once it is finished."
   },
   "events_event_name": {
     "message": "Event Name"
@@ -1034,6 +1049,9 @@
   "events_user_feedback": {
     "message": "User Feedback"
   },
+  "event_enabled": {
+    "message": "Enabled"
+  },
   "executive": {
     "message": "Executive"
   },
@@ -1050,7 +1068,8 @@
     "message": "Please click a star to rate the service"
   },
   "feedback_label_event_feedback": {
-    "message": "Event Feedback"
+    "message": "Event Feedback",
+    "description": "Single Event \r\nhttps://projects.invisionapp.com/d/main#/console/10688612/232187816/preview"
   },
   "feedback_label_rate_event": {
     "message": "Rate Event"
@@ -1059,7 +1078,8 @@
     "message": "Rate Service"
   },
   "feedback_label_service_feedback": {
-    "message": "Service Feedback"
+    "message": "Service Feedback",
+    "description": "Same as above"
   },
   "feedback_thank_you": {
     "message": "Thanks for your feedback"
@@ -1181,9 +1201,6 @@
   "in": {
     "message": "in"
   },
-  "inactive": {
-    "message": "Inactive"
-  },
   "info": {
     "message": "Info"
   },
@@ -1287,7 +1304,8 @@
     "message": "Acronym"
   },
   "login": {
-    "message": "Login"
+    "message": "Login",
+    "description": "is the route name\r\nhttps://ccstaging.oohlalamobile.com/#/lost-password"
   },
   "logout": {
     "message": "Logout"
@@ -1304,6 +1322,12 @@
   "manage": {
     "message": "Manage"
   },
+  "manage_create_service_category_tooltip": {
+    "message": "The category the service belongs to, helps filter and group content in the campus app."
+  },
+  "manage_create_service_feedback_tooltip": {
+    "message": "If enabled, after a check-in to a service provider prompt attendees to provide feedback and rating as a response to the feedback question."
+  },
   "manage_team_members": {
     "message": "Team Members"
   },
@@ -1316,7 +1340,7 @@
   "members": {
     "message": "Members"
   },
-  "message": {
+  "message_action": {
     "message": "Message"
   },
   "message_file_upload_error": {
@@ -1324,6 +1348,9 @@
   },
   "message_file_upload_success": {
     "message": "File uploaded successfully"
+  },
+  "message_noun": {
+    "message": "Message"
   },
   "more": {
     "message": "More"
@@ -1348,6 +1375,9 @@
   },
   "notify_announcement_recipient": {
     "message": "Recipients"
+  },
+  "notify_announcement_template_to_tooltip": {
+    "message": "The recepients of the accouncements. Can be sent to students who are app users or pre-defined lists. For more info:"
   },
   "no_admins_found": {
     "message": "No Admins found"
@@ -1418,9 +1448,6 @@
   "phone_number": {
     "message": "Phone Number"
   },
-  "post": {
-    "message": "Post"
-  },
   "profile": {
     "message": "Profile"
   },
@@ -1437,7 +1464,8 @@
     "message": "Registrations"
   },
   "regular": {
-    "message": "Regular"
+    "message": "Regular",
+    "description": "Announcement Type"
   },
   "release_notes_july_10_item_one": {
     "message": "Administrators can send Notifications to students' devices"
@@ -1454,23 +1482,11 @@
   "release_notes_june_2_item_one": {
     "message": "Administrators can create Clubs and Groups"
   },
-  "release_notes_june_2_item_three": {
-    "message": "Students can post messages to Club Feeds. Executives and Administrators can moderate these Feeds."
-  },
-  "release_notes_june_2_item_two": {
-    "message": "Executives of a club can create events and services hosted by that club."
-  },
   "release_notes_june_2_title": {
     "message": "New as of June 2, 2017:"
   },
   "release_notes_p_four": {
     "message": "The OOHLALA Team."
-  },
-  "release_notes_p_one": {
-    "message": "As part of the build up to 2018, we’ve rebuilt the Campus Cloud from the ground up. You’ll find the new Campus Cloud to be faster, more intuitive and user-friendly than the previous version. Please note that we are still refining some of the features from the old version and will be releasing them over the next few weeks. The first of these updated features will be a brand new dashboard that is more insightful!"
-  },
-  "release_notes_p_three": {
-    "message": "We hope your experience with the new Campus Cloud proves to be an easy and enjoyable one, and we look forward to hearing your feedback!"
   },
   "release_notes_p_two": {
     "message": "Should you wish to return to the old Campus Cloud, you can always do so by clicking on the banner at the top of the screen. If you wish to provide any feedback on your experience with the new Campus Cloud, please contact us at "
@@ -1516,9 +1532,6 @@
   },
   "search": {
     "message": "Search"
-  },
-  "selected": {
-    "message": "Selected"
   },
   "select_category": {
     "message": "Select Category"
@@ -1568,6 +1581,9 @@
   "services_delete_modal_title": {
     "message": "Delete Service"
   },
+  "services_disabled": {
+    "message": "Disabled"
+  },
   "services_edit_heading": {
     "message": "Edit Service"
   },
@@ -1596,7 +1612,8 @@
     "message": "Check-in Time"
   },
   "services_label_check_in_details": {
-    "message": "Check-in"
+    "message": "Check-in",
+    "description": "Noun"
   },
   "services_label_default_question": {
     "message": "Feedback Question"
@@ -1614,10 +1631,8 @@
     "message": "Service Name"
   },
   "services_label_service_assessment": {
-    "message": "Service Assessment"
-  },
-  "services_label_service_attendance": {
-    "message": "Service Attendance"
+    "message": "Service Assessment",
+    "description": "Singular\r\nhttps://ccstaging.oohlalamobile.com/#/manage/services/create"
   },
   "services_no_service_found": {
     "message": "No services found"
@@ -1658,6 +1673,9 @@
   "services_visits": {
     "message": "Visits"
   },
+  "service_enabled": {
+    "message": "Enabled"
+  },
   "service_provider": {
     "message": "Service Provider"
   },
@@ -1686,7 +1704,8 @@
     "message": "Students"
   },
   "student_engagements": {
-    "message": "Student Engagement"
+    "message": "Student Engagement",
+    "description": "Graph title\r\nhttps://ccstaging.oohlalamobile.com/#/assess/dashboard?engagement=all&for=all_students&range=last_week"
   },
   "student_feedback": {
     "message": "Feedback"
@@ -1696,6 +1715,9 @@
   },
   "subject": {
     "message": "Subject"
+  },
+  "team_member_disabled": {
+    "message": "Disabled"
   },
   "team_settings": {
     "message": "Team Settings"
@@ -1734,7 +1756,8 @@
     "message": "Type"
   },
   "update": {
-    "message": "Update"
+    "message": "Update",
+    "description": "Verb"
   },
   "upload_picture": {
     "message": "Upload Picture"
@@ -1750,6 +1773,9 @@
   },
   "view_more": {
     "message": "View More"
+  },
+  "walls_button_create_post": {
+    "message": "Post"
   },
   "website": {
     "message": "Website"

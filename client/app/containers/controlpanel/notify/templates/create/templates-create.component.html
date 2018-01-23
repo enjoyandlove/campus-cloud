@@ -47,7 +47,11 @@
               </div>
 
               <div class="form-group" *ngIf="!state.isCampusWide">
-                <label i18n>{{ 'to' | cpI18n }}</label>
+                <label i18n>{{ 'to' | cpI18n }}
+                  <cp-tooltip
+                    [toolTipContent]="toolTipContent">
+                  </cp-tooltip>
+                </label>
                 <div class="row">
                   <div class="col-xs-12">
                     <cp-typeahead
