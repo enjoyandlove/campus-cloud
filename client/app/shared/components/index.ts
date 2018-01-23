@@ -26,5 +26,6 @@ export * from './cp-upload-modal';
 export * from './cp-school-switch';
 export * from './cp-upload-button';
 export * from './cp-check-dropdown';
+export * from './cp-resource-banner';
 export * from './cp-small-datepicker';
 export * from './cp-place-autocomplete';

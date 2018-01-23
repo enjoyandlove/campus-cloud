@@ -44,7 +44,7 @@ export class ServicesCreateComponent implements OnInit {
       value: FEEDBACK_ENABLED,
     },
     {
-      label: this.cpI18n.translate('disabled'),
+      label: this.cpI18n.translate('services_disabled'),
       value: FEEDBACK_DISABLED,
     },
   ];

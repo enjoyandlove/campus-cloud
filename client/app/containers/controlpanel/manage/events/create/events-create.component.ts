@@ -315,7 +315,7 @@ export class EventsCreateComponent implements OnInit {
         action: EventFeedback.enabled,
       },
       {
-        label: this.cpI18n.translate('disabled'),
+        label: this.cpI18n.translate('events_disabled'),
         action: EventFeedback.disabled,
       },
     ];

@@ -419,7 +419,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
         action: EventAttendance.enabled,
       },
       {
-        label: this.cpI18n.translate('disabled'),
+        label: this.cpI18n.translate('events_disabled'),
         action: EventAttendance.disabled,
       },
     ];

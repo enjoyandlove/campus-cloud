@@ -9,6 +9,9 @@
   "address": {
     "message": "Address"
   },
+  "address": {
+    "message": "Address"
+  },
   "admins_error_no_access_granted": {
     "message": "You have not granted any access"
   },
@@ -619,6 +622,9 @@
   "clubs_delete_modal_title": {
     "message": "Delete Club"
   },
+  "clubs_disabled": {
+    "message": "Disabled"
+  },
   "clubs_edit_heading": {
     "message": "Edit Club"
   },
@@ -856,9 +862,6 @@
   "description": {
     "message": "Description"
   },
-  "disabled": {
-    "message": "Disabled"
-  },
   "done": {
     "message": "Done"
   },
@@ -895,10 +898,6 @@
   },
   "end_date": {
     "message": "End Date"
-  },
-  "engagement": {
-    "message": "Engagement",
-    "description": "Not used yet"
   },
   "error": {
     "message": "Error"
@@ -962,6 +961,9 @@
   },
   "events_delete_modal_title": {
     "message": "Delete Event"
+  },
+  "events_disabled": {
+    "message": "Disabled"
   },
   "events_edit_event": {
     "message": "Edit Event"
@@ -1326,7 +1328,7 @@
   "members": {
     "message": "Members"
   },
-  "message": {
+  "message_action": {
     "message": "Message"
   },
   "message_file_upload_error": {
@@ -1334,6 +1336,9 @@
   },
   "message_file_upload_success": {
     "message": "File uploaded successfully"
+  },
+  "message_noun": {
+    "message": "Message"
   },
   "more": {
     "message": "More"
@@ -1444,7 +1449,8 @@
     "message": "Registrations"
   },
   "regular": {
-    "message": "Regular"
+    "message": "Regular",
+    "description": "Announcement Type"
   },
   "release_notes_july_10_item_one": {
     "message": "Administrators can send Notifications to students' devices"
@@ -1461,27 +1467,11 @@
   "release_notes_june_2_item_one": {
     "message": "Administrators can create Clubs and Groups"
   },
-  "release_notes_june_2_item_three": {
-    "message": "Students can post messages to Club Feeds. Executives and Administrators can moderate these Feeds.",
-    "description": "Release notes not in use"
-  },
-  "release_notes_june_2_item_two": {
-    "message": "Executives of a club can create events and services hosted by that club.",
-    "description": "Release notes not in use"
-  },
   "release_notes_june_2_title": {
     "message": "New as of June 2, 2017:"
   },
   "release_notes_p_four": {
     "message": "The OOHLALA Team."
-  },
-  "release_notes_p_one": {
-    "message": "As part of the build up to 2018, we’ve rebuilt the Campus Cloud from the ground up. You’ll find the new Campus Cloud to be faster, more intuitive and user-friendly than the previous version. Please note that we are still refining some of the features from the old version and will be releasing them over the next few weeks. The first of these updated features will be a brand new dashboard that is more insightful!",
-    "description": "Release notes not in use"
-  },
-  "release_notes_p_three": {
-    "message": "We hope your experience with the new Campus Cloud proves to be an easy and enjoyable one, and we look forward to hearing your feedback!",
-    "description": "Release notes not in use"
   },
   "release_notes_p_two": {
     "message": "Should you wish to return to the old Campus Cloud, you can always do so by clicking on the banner at the top of the screen. If you wish to provide any feedback on your experience with the new Campus Cloud, please contact us at "
@@ -1527,10 +1517,6 @@
   },
   "search": {
     "message": "Search"
-  },
-  "selected": {
-    "message": "Selected",
-    "description": "Not in use"
   },
   "select_category": {
     "message": "Select Category"
@@ -1579,6 +1565,9 @@
   },
   "services_delete_modal_title": {
     "message": "Delete Service"
+  },
+  "services_disabled": {
+    "message": "Disabled"
   },
   "services_edit_heading": {
     "message": "Edit Service"
@@ -1711,6 +1700,9 @@
   },
   "subject": {
     "message": "Subject"
+  },
+  "team_member_disabled": {
+    "message": "Disabled"
   },
   "team_settings": {
     "message": "Team Settings"

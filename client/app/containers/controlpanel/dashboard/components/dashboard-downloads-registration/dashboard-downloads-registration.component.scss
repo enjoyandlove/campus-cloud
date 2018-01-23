@@ -19,8 +19,7 @@ p.title {
 }
 
 .legend {
-  padding: 25px 0 55px 0;
-  border-bottom: 1px solid $border-color;
+  padding: 12px 0 0 0;
 
   span {
     @include font-semi-bold();

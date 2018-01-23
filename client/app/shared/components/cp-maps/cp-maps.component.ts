@@ -1,5 +1,3 @@
-import { Observable } from 'rxjs/Observable';
-
 import {
   AfterViewInit,
   Component,
@@ -11,12 +9,10 @@ import {
   ViewChild,
 } from '@angular/core';
 
-import { CPLocationsService } from '../../services/locations.service';
+import { Observable } from 'rxjs/Observable';
 
 import { CPMapsService } from './../../services/maps.service';
-
-const cpMapsService = new CPMapsService();
-const locationService = new CPLocationsService();
+import { CPLocationsService } from '../../services/locations.service';
 
 @Component({
   selector: 'cp-maps',
@@ -33,24 +29,45 @@ export class CPMapsComponent implements OnInit, AfterViewInit {
   map: google.maps.Map;
   marker: google.maps.Marker;
 
-  constructor() {}
+  constructor(
+    public locationService: CPLocationsService,
+    public cpMapsService: CPMapsService,
+  ) {}
 
-  ngAfterViewInit() {
+  drawMap() {
     this.center.subscribe((center) => {
       const el = this.hostEl.nativeElement;
-      this.map = cpMapsService.init(el, center, this.draggable);
-      this.marker = cpMapsService.setMarker(this.map, center);
+      this.map = this.cpMapsService.init(el, center, this.draggable);
+      this.marker = this.cpMapsService.setMarker(this.map, center);
 
       if (this.doubleClick) {
         this.map.addListener('dblclick', (event) => {
-          locationService
+          this.locationService
             .geoCode(event.latLng.toJSON())
             .then((response) => this.mapSelection.emit(response));
 
-          cpMapsService.setMarkerPosition(this.marker, event.latLng.toJSON());
+          this.cpMapsService.setMarkerPosition(
+            this.marker,
+            event.latLng.toJSON(),
+          );
         });
       }
     });
+  }
+
+  ngAfterViewInit() {
+    setTimeout(
+      () => {
+        /**
+         * INTENTIONAL
+         * Ensures the hosting div is
+         * visible when this component is initialized
+         */
+        this.drawMap();
+      },
+
+      10,
+    );
   }
 
   ngOnInit() {}

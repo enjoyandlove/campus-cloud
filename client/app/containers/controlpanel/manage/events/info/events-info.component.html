@@ -3,48 +3,63 @@
 
   <div *ngSwitchCase="false">
     <div class="row">
-      <div class="col-xs-8 col-xs-offset-2">
-        <div class="cp-card event">
+      <div class="col-xs-8 col-xs-offset-2 event">
+        <div class="cp-card event__header">
           <div class="row">
             <div class="col-xs-12">
-              <div
-                class="event__banner placeholder img-responsive img-rounded"
-                [ngStyle]="{ 'background-image' : 'url(' + banner + ')' }">
-              </div>
-
-              <div class="row">
-                <div [class]="!utils.isPastEvent(event) ? 'col-xs-10' : 'col-xs-12'">
-                  <p class="event__title">{{ event.title }}</p>
-                </div>
-                <div class="col-xs-2" *ngIf="!utils.isPastEvent(event)">
+              <cp-resource-banner [resourceBanner]="resourceBanner"></cp-resource-banner>
+              <div class="row event__buttons">
+                <div class="col-xs-12" *ngIf="!utils.isPastEvent(event)">
                   <a
                     [routerLink]="['../edit']"
-                    class="cpbtn cpbtn--primary pull-right" i18n>
+                    class="cpbtn cpbtn--primary" i18n>
                     {{ 'edit' | cpI18n }}
                   </a>
                 </div>
               </div>
-              <p>
-                <span i18n>{{ 'events_hosted_by' | cpI18n }} </span> {{ event.store_name }}
-              </p>
+            </div>
+          </div>
+        </div>
 
-              <div class="event__meta text-truncate">
-                <p>
-                  <strong i18n *ngIf="!utils.isPastEvent(event)">{{ 'starts' | cpI18n }}</strong>
-                  <strong i18n *ngIf="utils.isPastEvent(event)">{{ 'started' | cpI18n }}</strong>
-                  {{ event.start | cpDatePipe:dateFormat }}
-                  <br>
-                  <strong i18n *ngIf="!utils.isPastEvent(event)">{{ 'ends' | cpI18n }}</strong>
-                  <strong i18n *ngIf="utils.isPastEvent(event)">{{ 'ended' | cpI18n }}</strong>
-                  {{ event.end | cpDatePipe:dateFormat }}
-                </p>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="cp-card event__details">
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="row">
+                    <div class="col-xs-2">
+                      <p>
+                        <strong i18n *ngIf="!utils.isPastEvent(event)">{{ 'starts' | cpI18n }}</strong>
+                        <strong i18n *ngIf="utils.isPastEvent(event)">{{ 'started' | cpI18n }}</strong>
+                      </p>
+                    </div>
+                    <div class="col-xs-10">
+                      <p>{{ event.start | cpDatePipe:dateFormat }}</p>
+                    </div>
+                  </div>
 
-                  <p *ngIf="event.address">{{ event.address }}</p>
+                  <div class="row">
+                    <div class="col-xs-2">
+                      <p>
+                        <strong i18n *ngIf="!utils.isPastEvent(event)">{{ 'ends' | cpI18n }}</strong>
+                        <strong i18n *ngIf="utils.isPastEvent(event)">{{ 'ended' | cpI18n }}</strong>
+                      </p>
+                    </div>
+                    <div class="col-xs-10">
+                      {{ event.end | cpDatePipe:dateFormat }}
+                    </div>
+                  </div>
+
+                  <div class="row" *ngIf="event.address">
+                    <div class="col-xs-2">
+                      <p><strong i18n>{{ 'location' | cpI18n }}</strong></p>
+                    </div>
+                    <div class="col-xs-10">
+                      <p>{{ event.address }}</p>
+                    </div>
+                  </div>
+                </div>
               </div>
-
-              <hr>
-
-              <p>{{ event.description }}</p>
 
               <div class="row">
                 <div class="col-xs-12 event__map">
@@ -54,6 +69,15 @@
                   </cp-maps>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" *ngIf="event.description">
+          <div class="col-xs-12">
+            <div class="cp-card">
+              <p><strong>{{ 'description' | cpI18n }}</strong></p>
+              <p class="no-margin-bottom">{{ event.description }}</p>
             </div>
           </div>
         </div>

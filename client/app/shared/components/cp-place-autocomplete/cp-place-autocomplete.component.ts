@@ -22,8 +22,6 @@ interface IState {
   suggestions: Array<any>;
 }
 
-const service = new CPLocationsService();
-
 @Component({
   selector: 'cp-place-autocomplete',
   templateUrl: './cp-place-autocomplete.component.html',
@@ -34,6 +32,7 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
 
   @Input() placeHolder: string;
   @Input() defaultValue: string;
+  @Input() disableLocations: boolean;
   @Input() newAddress: Observable<string>;
 
   @Output() placeChange: EventEmitter<any> = new EventEmitter();
@@ -44,7 +43,11 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
     suggestions: [],
   };
 
-  constructor(private cpSession: CPSession, private ref: ChangeDetectorRef) {}
+  constructor(
+    private cpSession: CPSession,
+    private ref: ChangeDetectorRef,
+    public service: CPLocationsService,
+  ) {}
 
   ngAfterViewInit() {
     const input = this.hostEl.nativeElement;
@@ -66,7 +69,7 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
 
         this.setInput(query);
 
-        return service.getAllSuggestions(query, lat, lng);
+        return this.service.getAllSuggestions(query, lat, lng);
       })
       .subscribe((res) => this.setSuggestions(res));
   }
@@ -100,7 +103,7 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
   }
 
   fetchGoogleDetails(location) {
-    service
+    this.service
       .getLocationDetails(location.value, this.hostEl.nativeElement)
       .subscribe(
         (details) => {
@@ -126,9 +129,15 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
   }
 
   setSuggestions(suggestions): void {
-    this.state = Object.assign({}, this.state, {
-      suggestions: [...suggestions[1]],
-    });
+    const showAll = this.disableLocations === undefined;
+    const newSuggestions = showAll
+      ? [
+          ...this.noResultsIfEmpty(suggestions[0]),
+          ...this.noResultsIfEmpty(suggestions[1]),
+        ]
+      : [...this.noResultsIfEmpty(suggestions[1])];
+
+    this.state = Object.assign({}, this.state, { suggestions: newSuggestions });
   }
 
   resetSuggestions(): void {
