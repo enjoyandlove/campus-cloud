@@ -26,23 +26,37 @@
             <div class="cp-card services__details">
               <div class="row">
                 <div class="col-xs-12">
-                  <div class="services__meta">
-                    <p *ngIf="service.contactphone">
-                      <i class="material-icons">phone</i> {{ service.contactphone }}
-                    <p>
-
-                    <p *ngIf="service.email">
-                      <i class="material-icons">email</i>{{ service.email }}
-                    </p>
-
-                    <p *ngIf="service.website">
-                      <i class="material-icons">web</i>{{ service.website }}
-                    </p>
-
-                    <p *ngIf="service.address">
-                      <i class="material-icons">place</i>
-                      {{ service.address }}
-                    </p>
+                  <div class="row" *ngIf="service.contactphone">
+                    <div class="col-xs-2">
+                      <p><strong i18n>{{ 'phone' | cpI18n }}</strong></p>
+                    </div>
+                    <div class="col-xs-10">
+                      <p>{{ service.contactphone }}</p>
+                    </div>
+                  </div>
+                  <div class="row" *ngIf="service.email">
+                    <div class="col-xs-2">
+                      <p><strong i18n>{{ 'email' | cpI18n }}</strong></p>
+                    </div>
+                    <div class="col-xs-10">
+                      <p>{{ service.email }}</p>
+                    </div>
+                  </div>
+                  <div class="row" *ngIf="service.website">
+                    <div class="col-xs-2">
+                      <p><strong i18n>{{ 'website' | cpI18n }}</strong></p>
+                    </div>
+                    <div class="col-xs-10">
+                      <p>{{ service.website }}</p>
+                    </div>
+                  </div>
+                  <div class="row" *ngIf="service.address">
+                    <div class="col-xs-2">
+                      <p><strong i18n>{{ 'location' | cpI18n }}</strong></p>
+                    </div>
+                    <div class="col-xs-10">
+                      <p>{{ service.address }}</p>
+                    </div>
                   </div>
                 </div>
               </div>
