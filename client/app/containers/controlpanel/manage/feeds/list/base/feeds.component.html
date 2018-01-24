@@ -2,6 +2,7 @@
   <div class="row">
     <div class="col-xs-8 col-xs-offset-2">
       <cp-feed-filters
+        [cssOverflowUnset]="cssOverflowUnset"
         [clubId]="clubId"
         (doFilter)="onDoFilter($event)">
       </cp-feed-filters>

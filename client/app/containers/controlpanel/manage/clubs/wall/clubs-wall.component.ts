@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 export class ClubsWallComponent implements OnInit {
   clubId: number;
   isClubsView = true;
+  cssOverflowUnset = true;
 
   constructor(
     private route: ActivatedRoute

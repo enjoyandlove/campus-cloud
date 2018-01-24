@@ -34,7 +34,7 @@
     "message": "Gérer d'autres sortes de contenu de l'application"
   },
   "admin_assess_help": {
-    "message": "Voir le tableau de bord d'évaluation"
+    "message": "View the Assessment Dashboard"
   },
   "admin_campus_announcements": {
     "message": "Annonces normales"
@@ -295,7 +295,7 @@
     "message": "Mesurer l'engagement étudiant n'importe où sur le campus"
   },
   "assess_download_transcript": {
-    "message": "Télécharger fichier CSV"
+    "message": "Download CSV File"
   },
   "assess_engagements_last_seven_days": {
     "message": "Implication (7 derniers jours)"
@@ -366,14 +366,11 @@
   "assess_one_engagement": {
     "message": "Une implication"
   },
-  "assess_one_engagement_tooltip": {
-    "message": "Étudiants présents à un événement ou service pour la période sélectionnée"
-  },
   "assess_repeat_engagement": {
     "message": "Plusieurs implications"
   },
   "assess_repeat_engagement_tooltip": {
-    "message": "Étudiants ayant vérifié leur présence à  plus d'un événement ou service"
+    "message": "Students who checked in more than one Event or Service"
   },
   "assess_response_date": {
     "message": "Date de la réponse"
@@ -621,6 +618,9 @@
   },
   "clubs_disabled": {
     "message": "Désactivé"
+  },
+  "clubs_disabled": {
+    "message": "Disabled"
   },
   "clubs_edit_heading": {
     "message": "Éditer club"
@@ -896,9 +896,6 @@
   "end_date": {
     "message": "Date de fin"
   },
-  "engagement": {
-    "message": "Implication"
-  },
   "error": {
     "message": "Erreur"
   },
@@ -924,13 +921,17 @@
     "message": "Retour des participants"
   },
   "events_attendance_manager": {
-    "message": "Gest. prés."
+    "message": "Att. Manager"
   },
   "events_attendance_manager_full": {
     "message": "Gestionnaire de présences"
   },
   "events_attendance_manager_tooltip": {
     "message": "Le gestionnaire de présence peut être n'importe quelle personne avec une adresse courriel valide, ils recevront des instructions pour mettre en place la vérification de présence pour cet événement."
+  },
+  "events_attendance_manager_tooltip": {
+    "message":
+      "The attendance manager may be any person with a valid email address, they will receive instructions to setup check-ins for this event."
   },
   "events_attendant": {
     "message": "Présent"
@@ -968,6 +969,9 @@
   "events_disabled": {
     "message": "Désactivé"
   },
+  "events_disabled": {
+    "message": "Disabled"
+  },
   "events_edit_event": {
     "message": "Éditer événement"
   },
@@ -992,11 +996,19 @@
   "events_event_feedback_tooltip": {
     "message": "If enabled, after an event is finished will prompt event attendees to provide feedback and rating as a response to the feedback question."
   },
+  "events_event_feedback_tooltip": {
+    "message":
+      "If enabled, after an event is finished will prompt event attendees to provide feedback and rating as a response to the feedback question."
+  },
   "events_event_manager": {
     "message": "Gestionnaire de l'événement"
   },
   "events_event_manager_tooltip": {
     "message": "The event manager needs to be a current administrator. They will receive emails related to checking in users and assessment reports once it is finished."
+  },
+  "events_event_manager_tooltip": {
+    "message":
+      "The event manager needs to be a current administrator. They will receive emails related to checking in users and assessment reports once it is finished."
   },
   "events_event_name": {
     "message": "Nom de l'événement"
@@ -1331,6 +1343,14 @@
   "manage_create_service_feedback_tooltip": {
     "message": "If enabled, after a check-in to a service provider prompt attendees to provide feedback and rating as a response to the feedback question."
   },
+  "manage_create_service_category_tooltip": {
+    "message":
+      "The category the service belongs to, helps filter and group content in the campus app."
+  },
+  "manage_create_service_feedback_tooltip": {
+    "message":
+      "If enabled, after a check-in to a service provider prompt attendees to provide feedback and rating as a response to the feedback question."
+  },
   "manage_team_members": {
     "message": "Membres d'équipe"
   },
@@ -1344,13 +1364,16 @@
     "message": "Membres"
   },
   "message_action": {
-    "message": "Contacter"
+    "message": "Message"
   },
   "message_file_upload_error": {
     "message": "Quelque chose s'est mal passé, veuillez réessayer"
   },
   "message_file_upload_success": {
     "message": "Fichier téléversé avec succès"
+  },
+  "message_noun": {
+    "message": "Message"
   },
   "message_noun": {
     "message": "Message"
@@ -1382,6 +1405,10 @@
   "notify_announcement_template_to_tooltip": {
     "message": "The recepients of the accouncements. Can be sent to students who are app users or pre-defined lists. For more info:"
   },
+  "notify_announcement_template_to_tooltip": {
+    "message":
+      "The recepients of the accouncements. Can be sent to students who are app users or pre-defined lists. For more info:"
+  },
   "no_admins_found": {
     "message": "Aucun administrateur trouvé"
   },
@@ -1401,10 +1428,10 @@
     "message": "Gérer votre application du campus et augmentez l'implication des étudiants."
   },
   "on_boarding_step_1_description_1": {
-    "message": "Complètement re-construit."
+    "message": "Rebuilt from the ground up."
   },
   "on_boarding_step_1_title": {
-    "message": "Bienvenue sur le tout nouveau Campus Cloud !"
+    "message": "Welcome to the all new Campus Cloud!"
   },
   "on_boarding_step_2_description": {
     "message": "Toutes vos ressources du campus incluant événements, services, clubs et plus."
@@ -1470,7 +1497,7 @@
     "message": "Inscriptions"
   },
   "regular": {
-    "message": "Normal",
+    "message": "Regular",
     "description": "Announcement Type"
   },
   "release_notes_july_10_item_one": {
@@ -1486,13 +1513,13 @@
     "message": "Nouveautés du 10 Juillet 2017 :"
   },
   "release_notes_june_2_item_one": {
-    "message": "Les administrateurs peuvent créer des clubs et des groupes"
+    "message": "Administrators can create Clubs and Groups"
   },
   "release_notes_june_2_title": {
     "message": "Nouveau depuis le 2 juin 2017 :"
   },
   "release_notes_p_four": {
-    "message": "L'équipe OOHLALA."
+    "message": "The OOHLALA Team."
   },
   "release_notes_p_two": {
     "message": "Do I need to translate release notes?"
@@ -1537,7 +1564,7 @@
     "message": "Enregistrer les changements"
   },
   "search": {
-    "message": "Rechercher"
+    "message": "Search"
   },
   "select_category": {
     "message": "Sélectionner une catégorie"
@@ -1590,6 +1617,9 @@
   "services_disabled": {
     "message": "Désactivé"
   },
+  "services_disabled": {
+    "message": "Disabled"
+  },
   "services_edit_heading": {
     "message": "Éditer service"
   },
@@ -1631,7 +1661,7 @@
     "message": "Détails du service"
   },
   "services_label_enable_service_feedback": {
-    "message": "Activer le retour sur le service"
+    "message": "Feedback"
   },
   "services_label_name": {
     "message": "Nom du service"
@@ -1724,6 +1754,9 @@
   },
   "team_member_disabled": {
     "message": "Désactivé(e)"
+  },
+  "team_member_disabled": {
+    "message": "Disabled"
   },
   "team_settings": {
     "message": "Réglages d'équipe"

@@ -3,7 +3,7 @@ import {
   OnInit,
   Output,
   EventEmitter,
-  OnDestroy,
+  OnDestroy, Input,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
@@ -13,6 +13,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { AnnouncementsService } from '../announcements.service';
 import { CP_PRIVILEGES_MAP, STATUS } from '../../../../../shared/constants';
 import { StoreService, CPI18nService } from '../../../../../shared/services';
+import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 
 declare var $: any;
 
@@ -40,6 +41,8 @@ const THROTTLED_STATUS = 1;
   styleUrls: ['./announcements-compose.component.scss'],
 })
 export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
+  @Input() toolTipContent: IToolTipContent;
+
   @Output() created: EventEmitter<any> = new EventEmitter();
   @Output() teardown: EventEmitter<null> = new EventEmitter();
 
@@ -212,7 +215,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   }
 
   doValidate() {
-    if (this.state.isCampusWide) {
+    if (this.state.isEmergency || this.state.isCampusWide) {
       this.shouldConfirm = true;
 
       return;
@@ -294,19 +297,17 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       label: null,
       type: null,
     };
-    this.state.isUrgent = false;
-    this.state.isEmergency = false;
+    this.state.isUrgent = type.action === this.URGENT_TYPE;
+    this.state.isEmergency = type.action === this.EMERGENCY_TYPE;
 
-    if (type.action === this.EMERGENCY_TYPE) {
-      this.state.isEmergency = true;
+    if (this.state.isEmergency) {
       this.subject_prefix = {
         label: this.cpI18n.translate('emergency'),
         type: 'danger',
       };
     }
 
-    if (type.action === this.URGENT_TYPE) {
-      this.state.isUrgent = true;
+    if (this.state.isUrgent) {
       this.subject_prefix = {
         label: this.cpI18n.translate('urgent'),
         type: 'warning',
@@ -371,13 +372,22 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.toolTipContent = Object.assign({}, this.toolTipContent, {
+      content: this.cpI18n.translate('notify_announcement_template_to_tooltip'),
+      link: {
+        text: this.cpI18n.translate('lists_button_create'),
+        url: 'https://oohlalamobile.zendesk.com/hc/en-us/articles/' +
+        '115004330554-Create-a-List-of-Students',
+      }
+    });
+
     let canDoEmergency;
 
     this.typeAheadOpts = {
       withSwitcher: true,
       suggestions: this.suggestions,
       reset: this.resetChips$,
-      customCSS: true
+      customCSS: true,
     };
     const schoolPrivileges = this.session.g.get('user').school_level_privileges[
       this.session.g.get('school').id

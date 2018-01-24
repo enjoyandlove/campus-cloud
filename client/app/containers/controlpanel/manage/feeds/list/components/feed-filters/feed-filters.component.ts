@@ -49,6 +49,8 @@ const state: IState = {
 })
 export class FeedFiltersComponent implements OnInit {
   @Input() clubId: number;
+  @Input() cssOverflowUnset: boolean;
+
   @Output() doFilter: EventEmitter<IState> = new EventEmitter();
 
   posts;

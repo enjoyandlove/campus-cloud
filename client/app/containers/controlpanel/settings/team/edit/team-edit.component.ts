@@ -68,7 +68,7 @@ const eventsDropdown = function(
 const manageAdminDropdown = function(privilege = { r: false, w: false }) {
   let items = [
     {
-      label: _cpI18n.translate('disabled'),
+      label: _cpI18n.translate('team_member_disabled'),
       action: null,
     },
   ];
@@ -375,14 +375,13 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   private buildHeader(name) {
-
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        'heading': `[NOTRANSLATE]${name}[NOTRANSLATE]`,
-        'crumbs': {
-          'url': this.isProfileView ? null : '/settings/team',
-          'label': this.isProfileView ? null : 'team_settings'
+        heading: `[NOTRANSLATE]${name}[NOTRANSLATE]`,
+        crumbs: {
+          url: this.isProfileView ? null : '/settings/team',
+          label: this.isProfileView ? null : 'team_settings',
         },
         subheading: null,
         em: null,
@@ -454,12 +453,12 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       _data = { firstname, lastname };
     }
 
-    this
-      .adminService
-      .updateAdmin(this.adminId, _data)
-      .subscribe(
-        () => this.router.navigate([this.currentUserCanManage ? '/settings/team' : '/dashboard']),
-        (err) => {
+    this.adminService.updateAdmin(this.adminId, _data).subscribe(
+      () =>
+        this.router.navigate([
+          this.currentUserCanManage ? '/settings/team' : '/dashboard',
+        ]),
+      (err) => {
         if (err.status === 403) {
           $('#teamUnauthorziedModal').modal();
 

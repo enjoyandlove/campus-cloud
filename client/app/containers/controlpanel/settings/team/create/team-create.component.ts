@@ -67,7 +67,7 @@ const eventsDropdown = function(
 const manageAdminDropdown = function(privilege: { r: boolean; w: boolean }) {
   let items = [
     {
-      label: _cpI18n.translate('disabled'),
+      label: _cpI18n.translate('team_member_disabled'),
       action: null,
     },
   ];
