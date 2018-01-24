@@ -6,6 +6,7 @@ import {
   Output,
   HostListener,
   ElementRef,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -14,6 +15,7 @@ import { URLSearchParams } from '@angular/http';
 import { CPSession } from '../../../../../session';
 import { CPMap } from '../../../../../shared/utils';
 import { LocationsService } from '../locations.service';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 @Component({
   selector: 'cp-locations-update',
@@ -26,6 +28,7 @@ export class LocationsUpdateComponent implements OnInit {
   @Output() locationUpdated: EventEmitter<any> = new EventEmitter();
 
   school;
+  buttonData;
   form: FormGroup;
   isFormReady = false;
   mapCenter: BehaviorSubject<any>;
@@ -35,6 +38,8 @@ export class LocationsUpdateComponent implements OnInit {
     public el: ElementRef,
     private fb: FormBuilder,
     private session: CPSession,
+    public cpI18n: CPI18nService,
+    public cdRef: ChangeDetectorRef,
     public service: LocationsService,
   ) {}
 
@@ -136,6 +141,23 @@ export class LocationsUpdateComponent implements OnInit {
       postal_code: [this.location.postal_code],
       latitude: [this.location.latitude, Validators.required],
       longitude: [this.location.longitude, Validators.required],
+    });
+
+    this.buttonData = {
+      disabled: true,
+      class: 'primary',
+      text: this.cpI18n.translate('update'),
+    };
+
+    this.form.valueChanges.subscribe((_) => {
+      this.buttonData = { ...this.buttonData, disabled: !this.form.valid };
+
+      /**
+       * INTENTIONAL
+       * In order to reenable the button
+       * after selecting a location from the dropdown
+       */
+      this.cdRef.detectChanges();
     });
 
     this.isFormReady = true;

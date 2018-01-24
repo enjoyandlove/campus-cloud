@@ -90,13 +90,10 @@
           {{ 'cancel' | cpI18n }}
         </button>
 
-        <button
-          type="button"
-          (click)="doSubmit()"
-          [disabled]="!form.valid"
-          class="cpbtn cpbtn--primary"i18n>
-          {{ 'update' | cpI18n }}
-        </button>
+        <cp-button
+          [props]="buttonData"
+          (buttonClick)="doSubmit()">
+        </cp-button>
       </div>
     </div>
   </div>

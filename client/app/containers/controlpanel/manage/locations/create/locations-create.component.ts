@@ -77,7 +77,6 @@ export class LocationsCreateComponent implements OnInit {
   }
 
   onPlaceChange(data) {
-    // console.log('data');
     if (!data) {
       return;
     }
