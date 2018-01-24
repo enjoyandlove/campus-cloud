@@ -1,0 +1,18 @@
+@import '~styles/core/typography';
+
+.cpmodal {
+
+  &__body {
+    padding-top: 40px;
+    min-height: 321px;
+    max-height: 321px;
+    img {
+      padding-bottom: 25px;
+    }
+
+    p,
+    span {
+      @include font-16px()
+    }
+  }
+}
