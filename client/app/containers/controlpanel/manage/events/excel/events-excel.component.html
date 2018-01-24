@@ -52,7 +52,7 @@
                             [isRequired]="formError && event.controls['poster_url'].hasError('required')"
                             (fileUpload)="onImageUpload($event, i)"
                             *ngIf="!event.controls['poster_url'].value"
-                            (click)="onSingleCheck($event, i)">
+                            (click)="resetAllCheckboxes($event, i)">
                           </cp-upload-button>
                           <img
                             class="img-rounded"
