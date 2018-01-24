@@ -13,7 +13,6 @@ import { CPSession } from '../../../../../../../session';
 })
 export class FeedSettingsComponent implements OnInit {
   @Input() clubId: number;
-  @Input() cssOverflowUnset: boolean;
 
   @Output() updateWallSettings: EventEmitter<null> = new EventEmitter();
 

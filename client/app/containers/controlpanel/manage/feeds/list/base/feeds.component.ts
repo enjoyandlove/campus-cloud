@@ -45,7 +45,6 @@ const state: IState = {
 export class FeedsComponent extends BaseComponent implements OnInit {
   @Input() clubId: number;
   @Input() isClubsView: boolean;
-  @Input() cssOverflowUnset: string;
 
   feeds;
   groups;
