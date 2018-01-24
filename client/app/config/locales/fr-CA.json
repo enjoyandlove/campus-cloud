@@ -1,833 +1,846 @@
 {
   "account_not_found": {
-    "message": "Veuillez vérifier vos identifiants et essayer de nouveau."
+    "message": "Please check your credentials and try again."
   },
   "active": {
-    "message": "Actif",
+    "message": "Active",
     "description": "Active Club"
   },
   "address": {
-    "message": "Adresse"
+    "message": "Address"
   },
   "admins_error_no_access_granted": {
-    "message": "On ne vous pas pas accordé d'accès"
+    "message": "You have not granted any access"
   },
   "admin_action_unauthorized": {
-    "message": "Vous n'avez pas les privilèges suffisants pour effectuer cette action."
+    "message": "You do not have sufficient privileges to perform this action."
   },
   "admin_all_acceess_help": {
-    "message": "Accorder au nouveau membre d'équipe les mêmes permissions Campus Cloud que moi."
+    "message":
+      "Grant the new team member the same Campus Cloud permissions as me."
   },
   "admin_all_access": {
-    "message": "Copier mes permissions Campus Cloud"
+    "message": "Copy my Campus Cloud Permissions"
   },
   "admin_all_clubs": {
-    "message": "Tous les clubs"
+    "message": "All Clubs"
   },
   "admin_all_services": {
-    "message": "Tous les services"
+    "message": "All Services"
   },
   "admin_app_content": {
-    "message": "Autre"
+    "message": "Other"
   },
   "admin_app_content_help": {
-    "message": "Gérer d'autres sortes de contenu de l'application"
+    "message": "Manage other kinds of app content"
   },
   "admin_assess_help": {
     "message": "View the Assessment Dashboard"
   },
   "admin_campus_announcements": {
-    "message": "Annonces normales"
+    "message": "Regular Announcements"
   },
   "admin_can_edit": {
-    "message": "Peut éditer"
+    "message": "Can Edit"
   },
   "admin_can_edit_help": {
-    "message": "Voir le contenu créé par un autre membre d'équipe et créer votre propre contenu"
+    "message":
+      "See content created by other team members and create your own content"
   },
   "admin_club_owner": {
-    "message": "Propriétaire du club"
+    "message": "Club Owner"
   },
   "admin_club_owner_help": {
-    "message": "Créer de nouveaux clubs; gérer l'information, les événements et les membres pour tous les clubs ou sélectionner des clubs "
+    "message":
+      "Create new clubs; manage information, events and membership for all clubs or select clubs"
   },
   "admin_club_service_modal_title": {
-    "message": "Sélectionner %s"
+    "message": "Select %s"
   },
   "admin_create_account": {
-    "message": "Créer compte"
+    "message": "Create Account"
   },
   "admin_create_button": {
-    "message": "Envoyer invitation"
+    "message": "Send Invite"
   },
   "admin_delete_user_error": {
-    "message": "Nous n'avons pas pu supprimer l'utilisateur sélectionné"
+    "message": "We could not delete the selected user"
   },
   "admin_edit_profile": {
-    "message": "Éditer profil"
+    "message": "Edit Profile"
   },
   "admin_emergency_announcements": {
-    "message": "Annonces d'urgence"
+    "message": "Emergency Announcements"
   },
   "admin_enabled": {
-    "message": "Activé"
+    "message": "Enabled"
   },
   "admin_engagement_dashboard": {
-    "message": "Tableau de bord des évaluations"
+    "message": "Assessment Dashboard"
   },
   "admin_events_help": {
-    "message": "Voir événements; voir l'évaluation des événements"
+    "message": "View events; view event assessment"
   },
   "admin_events_title": {
-    "message": "Vue d'événement"
+    "message": "Event Viewer"
   },
   "admin_grant_permissions": {
-    "message": "Inviter de nouveaux membres d'équipe et assigner des permissions"
+    "message": "Invite new team members and assign permissions"
   },
   "admin_invite": {
-    "message": "Créer un nouveau membre d'équipe"
+    "message": "Create New Team Member"
   },
   "admin_invitee": {
-    "message": "Invité"
+    "message": "Invitee"
   },
   "admin_invite_heading": {
-    "message": "Créer votre compte Campus Cloud"
+    "message": "Create your Campus Cloud Account"
   },
   "admin_manage_and_assess_events": {
-    "message": "Voir les événements et l'évaluation des événements"
+    "message": "View events and event assessment"
   },
   "admin_manage_events": {
-    "message": "Voir les événements"
+    "message": "View Events"
   },
   "admin_modal_delete_body": {
-    "message": "Êtes-vous sûr(e) de vouloir supprimer %s ?"
+    "message": "Are you sure you want to remove %s?"
   },
   "admin_modal_delete_title": {
-    "message": "Supprimer membre d'équipe"
+    "message": "Delete Team Member"
   },
   "admin_notify_help": {
-    "message": "Envoyer des messages aux téléphones des étudiants et/ou envoyez des annonces d'urgence"
+    "message":
+      "Send messages to students' phones and/or send emergency announcements"
   },
   "admin_no_access": {
-    "message": "Aucun accès"
+    "message": "No Access"
   },
   "admin_password_sucess_redirect": {
-    "message": "Mot de passe sauvegardé, nous vous redirigeons vers la page de connexion"
+    "message": "Password saved, redirecting you to the login page"
   },
   "admin_permissions": {
-    "message": "Sélectionner permissions"
+    "message": "Select Permissions"
   },
   "admin_search_by_email_or_email": {
-    "message": "Rechercher par nom ou courriel..."
+    "message": "Search by name or email..."
   },
   "admin_select_clubs": {
-    "message": "Sélectionner clubs"
+    "message": "Select Clubs"
   },
   "admin_select_services": {
-    "message": "Sélectionner services"
+    "message": "Select Services"
   },
   "admin_service_owner": {
-    "message": "Sélectionner exécutif"
+    "message": "Service Executive"
   },
   "admin_service_owner_help": {
-    "message": "Créer de nouveaux services; gérer l'information, événements et évaluation pour tous les services ou sélectionner des services"
+    "message":
+      "Create new services; manage information, events and assessment for all services or select services"
   },
   "all": {
-    "message": "Toutes les catégories"
+    "message": "All Categories"
   },
   "all_day": {
-    "message": "Toute la journée"
+    "message": "All day"
   },
   "all_fields_are_required": {
-    "message": "Tous les champs sont requis"
+    "message": "All fields are required"
   },
   "and": {
-    "message": "et"
+    "message": "and"
   },
   "announce": {
-    "message": "Annoncer"
+    "message": "Announce"
   },
   "announcements": {
-    "message": "Annonces"
+    "message": "Announcements"
   },
   "announcements_compose_modal_help": {
-    "message": "Annoncer à tous les étudiants"
+    "message": "Announce to all students"
   },
   "announcements_compose_modal_title": {
-    "message": "Créer annonce"
+    "message": "Create Announcement"
   },
   "announcements_delete_modal_body": {
-    "message": "Êtes-vous sûr de vouloir supprimer cette annonce ?"
+    "message": "Are you sure you want to delete this announcement?"
   },
   "announcements_delete_modal_body_warning": {
-    "message": "Aucun étudiant ne la recevra."
+    "message": "No more students will receive it."
   },
   "announcements_delete_modal_title": {
-    "message": "Supprimer annonce"
+    "message": "Delete Announcement"
   },
   "announcements_emergency_help": {
-    "message": "Outrepassez les réglages de notifications Push de l'utilisateur et forcez-les à reconnaître le message"
+    "message":
+      "Overrides the user's push notifications settings and forces them to acknowledge the message"
   },
   "announcements_not_sent": {
-    "message": "Message non envoyé, veuillez attendre %s minutes avant d'essayer de nouveau"
+    "message": "Message not sent, please wait %s minutes before trying again"
   },
   "announcements_no_engagement_data": {
-    "message": "Pas de données d'implication"
+    "message": "No engagement data"
   },
   "announcements_regular_help": {
-    "message": "Livré comme notification Push normale"
+    "message": "Delivered as a regular push notification"
   },
   "announcements_type": {
     "message": "Type"
   },
   "announcements_urgent_help": {
-    "message": "Outrepasse les réglages de notifications Push de l'utilisateur"
+    "message": "Overrides the user's push notification settings"
   },
   "announcement_confirm_campus_wide": {
-    "message": "Annonce à tout le campus"
+    "message": "Campus-Wide Announcement"
   },
   "announcement_confirm_campus_wide_and_emergency": {
-    "message": "Annonce d'urgence à tout le campus"
+    "message": "Campus-Wide and Emergency Announcement"
   },
   "announcement_confirm_campus_wide_and_emergency_body": {
-    "message": "Vous êtes sur le point d'envoyer une annonce d'urgence à tout le campus."
+    "message": "You are about to send a campus-wide emergency announcement."
   },
   "announcement_confirm_campus_wide_body": {
-    "message": "Vous êtes sur le point d'envoyer une annonce à tout le campus."
+    "message": "You are about to send a campus-wide announcement."
   },
   "announcement_confirm_emergency": {
-    "message": "Annonce d'urgence"
+    "message": "Emergency Announcement"
   },
   "announcement_success_sent": {
-    "message": "Succès ! Votre message a été envoyé"
+    "message": "Success! Your message has been sent"
   },
   "apply": {
-    "message": "Appliquer"
+    "message": "Apply"
   },
   "approve": {
-    "message": "Approuver"
+    "message": "Approve"
   },
   "app_customization": {
-    "message": "Personnalisation de l'application"
+    "message": "App Customization"
   },
   "app_name": {
-    "message": "Nom de l'application"
+    "message": "App Name"
   },
   "archive": {
-    "message": "Supprimer"
+    "message": "Delete"
   },
   "are_you_sure?": {
-    "message": "Êtes-vous sûr ?"
+    "message": "Are you Sure?"
   },
   "assess": {
-    "message": "Évaluer"
+    "message": "Assess"
   },
   "assessment": {
-    "message": "Évaluation"
+    "message": "Assessment"
   },
   "assess_all_engagements": {
-    "message": "Aucune implications"
+    "message": "All Engagements"
   },
   "assess_all_events": {
-    "message": "Évaluer événements"
+    "message": "All Events"
   },
   "assess_all_services": {
-    "message": "Évaluer services"
+    "message": "All Services"
   },
   "assess_all_students": {
-    "message": "Évaluer étudiants"
+    "message": "All Students"
   },
   "assess_average_rating": {
-    "message": "Note moyenne"
+    "message": "Average Rating"
   },
   "assess_button_download_engagement_data": {
-    "message": "Télécharger les données d'implication"
+    "message": "Download Engagement Data"
   },
   "assess_checkin_date": {
-    "message": "Date de présence"
+    "message": "Check-in Date"
   },
   "assess_check_in_time": {
-    "message": "Élément de présence"
+    "message": "Check-in Item"
   },
   "assess_demo_feature_four_description": {
-    "message": "L'évaluation vous permet d'identifier facilement quels étudiants ne sont pas impliqués et de leur envoyer des communications ciblées via l'application mobile."
+    "message":
+      "Assessment enables you to easily identify which students are disengaged and send them targeted communications via the mobile app."
   },
   "assess_demo_feature_four_title": {
-    "message": "Identifier et communiquer"
+    "message": "Identify and Communicate"
   },
   "assess_demo_feature_one_description": {
-    "message": "Suivez la présence étudiante facilement aux événements du campus et aux services sans matériel ou logiciel supplémentaire."
+    "message":
+      "Conveniently track student attendance at campus events and services without any additional hardware or software."
   },
   "assess_demo_feature_one_title": {
-    "message": "Communiquer avec les étudiants"
+    "message": "Communicate with Students"
   },
   "assess_demo_feature_three_description": {
-    "message": "L'implication positive des étudiants est la clé du succès. Obtenez des analyses détaillées sur comment les étudiants se sont impliqués et ont interagit avec les événements ou les services."
+    "message":
+      "Positive student engagement is the key to success. Get detailed insights on how students engaged and interacted with events or services."
   },
   "assess_demo_feature_three_title": {
-    "message": "Analyses actionnables"
+    "message": "Actionable Insights"
   },
   "assess_demo_feature_two_description": {
-    "message": "Obtenez du retour en temps réel de vos étudiants sur les programmes, incluant des réponses à des questions personnalisées pour n'importe quel événement ou service."
+    "message":
+      "Get real-time feedback and input from your students on programs, including answers to custom questions for any events or services."
   },
   "assess_demo_feature_two_title": {
-    "message": "Suivi de présence"
+    "message": "Attendance Tracking"
   },
   "assess_demo_footer_bottom": {
-    "message": "pour mettre en place OOHLALA Assessment sur votre campus"
+    "message": "to set up OOHLALA Assessment on your campus"
   },
   "assess_demo_footer_cta": {
-    "message": "Commencer aujourd'hui"
+    "message": "Get Started Today"
   },
   "assess_demo_footer_top": {
-    "message": "Parler à votre responsable de la réussite client"
+    "message": "Speak to your Customer Success Manager"
   },
   "assess_demo_hero_cta": {
-    "message": "Planifier une démo aujourd'hui !"
+    "message": "Schedule a Demo Today!"
   },
   "assess_demo_hero_cta_help": {
-    "message": "ou contactez-nous à cm@oohlalamobile.com"
+    "message": "or email us at cm@oohlalamobile.com"
   },
   "assess_demo_hero_description": {
-    "message": "OOHLALA Assessment Tools vous permet de mesurer et évaluer l'activité étudiante en dehors de la salle de classe"
+    "message":
+      "OOHLALA Assessment enables you to measure and assess student activity outside of the classroom"
   },
   "assess_demo_hero_title": {
-    "message": "Mesurer l'engagement étudiant n'importe où sur le campus"
+    "message": "Measure Student Engagement Anywhere on Campus"
   },
   "assess_download_transcript": {
     "message": "Download CSV File"
   },
   "assess_engagements_last_seven_days": {
-    "message": "Implication (7 derniers jours)"
+    "message": "Engagement (Last 7 Days)"
   },
   "assess_events_assessed": {
-    "message": "Événements évalués"
+    "message": "Events Assessed"
   },
   "assess_event_rating_average": {
-    "message": "Note moyenne de l'événement"
+    "message": "Event Average Rating"
   },
   "assess_event_responses": {
-    "message": "Réponses d'événements"
+    "message": "Event Responses"
   },
   "assess_event_responses_rate": {
-    "message": "Taux de réponse d'événement"
+    "message": "Event Response Rate"
   },
   "assess_feedback_received": {
-    "message": "Retour reçu"
+    "message": "Feedback Received"
   },
   "assess_last_engagement": {
-    "message": "Dernièrement impliqué"
+    "message": "Last Engaged"
   },
   "assess_last_month": {
-    "message": "Mois dernier"
+    "message": "Last Month"
   },
   "assess_last_seven_days": {
-    "message": "7 derniers jours"
+    "message": "Last 7 Days"
   },
   "assess_last_six_weeks": {
-    "message": "6 dernières semaines"
+    "message": "Last 6 Weeks"
   },
   "assess_last_three_months": {
-    "message": "3 derniers mois"
+    "message": "Last 3 Months"
   },
   "assess_message_student": {
-    "message": "Contacter étudiant"
+    "message": "Message Student"
   },
   "assess_new_message": {
-    "message": "Nouveau message"
+    "message": "New Message"
   },
   "assess_no_engagement": {
-    "message": "Pas d'implication"
+    "message": "No Engagement"
   },
   "assess_no_engagement_tooltip": {
-    "message": "Étudiants qui n'ont pas eu de présence pour la période sélectionnée"
+    "message": "Students who had no attendance for the period selected"
   },
   "assess_no_event_data": {
-    "message": "Aucune donnée d'événement"
+    "message": "No Event Data"
   },
   "assess_no_event_data_help": {
-    "message": "Pour voir les données des événements utilisez le filtre d'implication"
+    "message": "To see Events data use the Engagement filter"
   },
   "assess_no_service_data": {
-    "message": "Aucune données de service"
+    "message": "No Service Data"
   },
   "assess_no_service_data_help": {
-    "message": "Pour voir les données des services utilisez le filtre d'implication"
+    "message": "To see Service data use the Engagement filter"
   },
   "assess_number_of_checkins": {
-    "message": "# de présences"
+    "message": "# of Check-ins"
   },
   "assess_number_of_event_checkins": {
-    "message": "# de présences aux événements"
+    "message": "# of Event Check-ins"
   },
   "assess_number_of_responses": {
-    "message": "# de réponses"
+    "message": "# of Responses"
   },
   "assess_one_engagement": {
-    "message": "Une implication"
+    "message": "One Engagement"
   },
   "assess_repeat_engagement": {
-    "message": "Plusieurs implications"
+    "message": "Multiple Engagements"
   },
   "assess_repeat_engagement_tooltip": {
     "message": "Students who checked in more than one Event or Service"
   },
   "assess_response_date": {
-    "message": "Date de la réponse"
+    "message": "Response Date"
   },
   "assess_response_rate": {
-    "message": "Taux de réponse"
+    "message": "Response Rate"
   },
   "assess_services_assessed": {
-    "message": "Services évalués"
+    "message": "Services Assessed"
   },
   "assess_service_checkins": {
-    "message": "# de présence aux services"
+    "message": "# of  Service Check-ins"
   },
   "assess_service_rating_average": {
-    "message": "Note moyenne du service"
+    "message": "Service Average Rating"
   },
   "assess_service_responses": {
-    "message": "Réponses de services"
+    "message": "Service Responses"
   },
   "assess_service_responses_rate": {
-    "message": "Taux de réponse de services"
+    "message": "Services Response Rate"
   },
   "assess_sort_by": {
-    "message": "Trier par"
+    "message": "Sort by"
   },
   "assess_student_id": {
-    "message": "ID Étudiant"
+    "message": "Student ID"
   },
   "assess_student_name": {
-    "message": "Nom de l'étudiant"
+    "message": "Student Name"
   },
   "assess_top_events": {
-    "message": "Événements les plus populaires"
+    "message": "Top Events"
   },
   "assess_top_services": {
-    "message": "Services les plus populaires"
+    "message": "Top Services"
   },
   "assess_total_attendees": {
-    "message": "Total des présences"
+    "message": "Total Attendees"
   },
   "assess_total_events": {
-    "message": "Total des événements"
+    "message": "Total Events"
   },
   "assess_total_services": {
-    "message": "Total des services"
+    "message": "Total Services"
   },
   "attendee": {
-    "message": "Présent"
+    "message": "Attendee"
   },
   "attendees": {
-    "message": "Présents"
+    "message": "Attendees"
   },
   "auth_confirm_new_password": {
-    "message": "Confirmez le nouveau mot de passe"
+    "message": "Confirm New Password"
   },
   "auth_old_password": {
-    "message": "Ancien mot de passe"
+    "message": "Old Password"
   },
   "auth_password_reset_success": {
-    "message": "Votre mot de passe a été changé"
+    "message": "Your password has been changed"
   },
   "auth_pwd_reset_heading": {
-    "message": "Suivez ces étapes pour réinitialiser votre mot de passe"
+    "message": "Follow these steps to reset your password"
   },
   "auth_pwd_reset_step_one": {
-    "message": "Entrez votre courriel et cliquez \"Réinitialiser mot de passe.\""
+    "message": "Enter your email address and click \"Reset Password.\""
   },
   "auth_pwd_reset_step_three": {
-    "message": "Suivez les instructions pour réinitialiser votre mot de passe."
+    "message": "Follow the instructions to reset your password."
   },
   "auth_pwd_reset_step_two": {
-    "message": "Vous recevrez un courriel avec des instructions étape par étape."
+    "message": "You will receive an email with step-by-step instructions."
   },
   "auth_reset_password": {
-    "message": "Réinitialiser mot de passe"
+    "message": "Reset Password"
   },
   "average_rating": {
-    "message": "Note moyenne"
+    "message": "Average Rating"
   },
   "back": {
-    "message": "Retour"
+    "message": "Back"
   },
   "beta_banner_go_back": {
-    "message": "Retourner à l'ancienne version"
+    "message": "Revert to Previous Version"
   },
   "beta_banner_thank_you": {
-    "message": "Merci d'essayer la beta."
+    "message": "Thank you for trying out the beta."
   },
   "body": {
     "message": "Message"
   },
   "building": {
-    "message": "Bâtiment"
+    "message": "Building"
   },
   "button_add_photo": {
-    "message": "Téléverser image"
+    "message": "Upload Picture"
   },
   "calendar": {
-    "message": "Calendrier"
+    "message": "Calendar"
   },
   "calendars": {
-    "message": "Calendriers"
+    "message": "Calendars"
   },
   "calendars_add_modal_title": {
-    "message": "Ajouter calendrier"
+    "message": "Create Calendar"
   },
   "calendars_button_new": {
-    "message": "Ajouter calendrier"
+    "message": "Create Calendar"
   },
   "calendars_delete_modal_body": {
-    "message": "Êtes-vous sûr de vouloir supprimer %s ?"
+    "message": "Are you sure you want to delete %s?"
   },
   "calendars_delete_modal_title": {
-    "message": "Supprimer calendrier"
+    "message": "Delete Calendar"
   },
   "calendars_edit_modal_title": {
-    "message": "Éditer calendrier"
+    "message": "Edit Calendar"
   },
   "calendars_form_submit_button_new": {
-    "message": "Créer entrée"
+    "message": "Create Item"
   },
   "calendars_items_button_new": {
-    "message": "Créer entrée calendrier"
+    "message": "Create Calendar Item"
   },
   "calendars_items_edit_btn": {
-    "message": "Éditer entrée calendrier"
+    "message": "Edit Calendar Item"
   },
   "calendars_items_import_confirmation_modal_title": {
-    "message": "Importer depuis fichier"
+    "message": "Import from File"
   },
   "calendars_items_import_csv_heading": {
-    "message": "Importer entrées calendrier depuis fichier"
+    "message": "Import Calendar Items from File"
   },
   "calendars_items_import_csv_sub_heading": {
-    "message": "Le fichier contient des données pour %s entrée(s) de calendrier"
+    "message": "File contains data for %s calendar item(s)"
   },
   "calendars_items_import_message_error": {
-    "message": "Échec de création pour %s entrées"
+    "message": "Failed to create %s items"
   },
   "calendars_items_import_message_success": {
-    "message": "%s entrée(s) créée(s) avec succès"
+    "message": "Successfully created %s item(s)"
   },
   "calendars_items_no_results_found": {
-    "message": "Aucune entrée de calendrier trouvée"
+    "message": "No calendar items found"
   },
   "calendars_item_create_heading": {
-    "message": "Créer entrée calendrier"
+    "message": "Create Calendar Item"
   },
   "calendars_item_delete_modal_body": {
-    "message": "Êtes-vous sûr de vouloir supprimer %s ?"
+    "message": "Are you sure you want to delete %s?"
   },
   "calendars_item_details": {
-    "message": "Détails de l'entrée"
+    "message": "Item details"
   },
   "calendars_item_edit_heading": {
-    "message": "Éditer entrée calendrier"
+    "message": "Edit Calendar Item"
   },
   "calendars_item_modal_title": {
-    "message": "Supprimer entrée calendrier"
+    "message": "Delete Calendar Item"
   },
   "calendars_label_description": {
     "message": "Description"
   },
   "calendars_label_name": {
-    "message": "Nom"
+    "message": "Name"
   },
   "calendars_no_results_found": {
-    "message": "Aucun calendrier trouvé"
+    "message": "No Calendars found"
   },
   "campus_wall": {
-    "message": "Mur du campus"
+    "message": "Campus Wall"
   },
   "campus_wide": {
-    "message": "Tout le campus"
+    "message": "Campus-Wide"
   },
   "cancel": {
-    "message": "Annuler"
+    "message": "Cancel"
   },
   "category": {
-    "message": "Categorie"
+    "message": "Category"
   },
   "change_password": {
-    "message": "Changer mot de passe"
+    "message": "Change Password"
   },
   "change_school": {
-    "message": "Changer d'école"
+    "message": "Change School"
   },
   "checkins": {
-    "message": "Vérifications de présence"
+    "message": "Check-Ins"
   },
   "checkin_attendance_list": {
-    "message": "Liste de présence"
+    "message": "Attendance List"
   },
   "checkin_button_pdf_kit": {
-    "message": "Kit d'outil PDF"
+    "message": "PDF Kit Tool"
   },
   "checkin_download_qr_code": {
-    "message": "Télécharger code QR"
+    "message": "Download QR Code"
   },
   "checkin_header_title": {
-    "message": "Vérification de présence",
-    "description": "Public Check-In Page (Title)\r\nhttps://ccstaging.oohlalamobile.com/#/cb/checkin/e/pNmRN94bVUbUI9qtz89i5A"
+    "message": "Check-in",
+    "description":
+      "Public Check-In Page (Title)\r\nhttps://ccstaging.oohlalamobile.com/#/cb/checkin/e/pNmRN94bVUbUI9qtz89i5A"
   },
   "checkin_instructions_one": {
-    "message": "Nous utilisons des codes QR pour aider les invités à enregistrer leur présence à un événement. Assurez-vous d'imprimer ou de partager le code QR avec votre organisateur de présence d'événement."
+    "message":
+      "We use QR codes to help attendees check in to an event. Be sure to print or share the QR  code with your event attendance organizer."
   },
   "checkin_instructions_three": {
-    "message": "Vous pouvez voir les statistiques de présence dans les informations de l'événement. Assurez-vous de revenir pour visualiser les retours et notes."
+    "message":
+      "You can view attendance statistics in Event Info. Be sure to come back to view feedback and ratings."
   },
   "checkin_instructions_two": {
-    "message": "Les invités peuvent vérifier leur présence en scannant le code QR avec l'application. Les codes QR peuvent être imprimés ou affichés directement sur un ordinateur portable, un téléphone ou une tablette."
+    "message":
+      "Attendees can check in by scanning the QR code with the app. QR Codes can be printed or shown directly on a laptop, phone or tablet screen"
   },
   "checkin_list": {
-    "message": "Liste des présents"
+    "message": "Attendee List"
   },
   "checkin_manual_checkin": {
-    "message": "Vérification de présence manuelle"
+    "message": "Manual Check-in"
   },
   "checkin_scannable_qr_code": {
-    "message": "Vérification de présence automatique (Scanner code QR)"
+    "message": "Automatic Check-in (Scan QR code)"
   },
   "clicks": {
-    "message": "Clics"
+    "message": "Clicks"
   },
   "clubs": {
     "message": "Clubs"
   },
   "clubs_all_clubs": {
-    "message": "Tous les clubs"
+    "message": "All Clubs"
   },
   "clubs_and_groups": {
-    "message": "Clubs & groupes"
+    "message": "Clubs & Groups"
   },
   "clubs_button_create": {
-    "message": "Créer club"
+    "message": "Create Club"
   },
   "clubs_create_heading": {
-    "message": "Créer club"
+    "message": "Create Club"
   },
   "clubs_delete_modal_body": {
-    "message": "Êtes-vous sûr de vouloir supprimer %s ?"
+    "message": "Are you sure you want to delete %s?"
   },
   "clubs_delete_modal_title": {
-    "message": "Supprimer club"
-  },
-  "clubs_disabled": {
-    "message": "Désactivé"
+    "message": "Delete Club"
   },
   "clubs_disabled": {
     "message": "Disabled"
   },
   "clubs_edit_heading": {
-    "message": "Éditer club"
+    "message": "Edit Club"
   },
   "clubs_import_button_submit": {
-    "message": "Importer clubs"
+    "message": "Import Clubs"
   },
   "clubs_import_heading": {
-    "message": "Importer des clubs depuis un fichier"
+    "message": "Import Clubs from File"
   },
   "clubs_import_items_to_import": {
-    "message": "Le fichier contient des données pour %s clubs"
+    "message": "File contains data for %s club(s)."
   },
   "clubs_inactive": {
-    "message": "Inactif"
+    "message": "Inactive"
   },
   "clubs_label_advisor": {
-    "message": "Conseiller"
+    "message": "Advisor"
   },
   "clubs_label_club_banner": {
-    "message": "Bannière du club"
+    "message": "Club Banner"
   },
   "clubs_label_club_description": {
-    "message": "Description du club"
+    "message": "Club Description"
   },
   "clubs_label_club_details": {
-    "message": "Détails du club"
+    "message": "Club Details"
   },
   "clubs_label_club_membership": {
-    "message": "Membres du club"
+    "message": "Club Membership"
   },
   "clubs_label_club_name": {
-    "message": "Nom du club"
+    "message": "Club Name"
   },
   "clubs_label_club_status": {
-    "message": "Statut du club"
+    "message": "Club Status"
   },
   "clubs_label_constitution": {
     "message": "Constitution",
     "description": "Form Label "
   },
   "clubs_label_edit_club": {
-    "message": "Éditer club"
+    "message": "Edit Club"
   },
   "clubs_label_executive_position": {
     "message": "Position"
   },
   "clubs_label_member_type": {
-    "message": "Type de membre"
+    "message": "Member Type"
   },
   "clubs_membership_disabled": {
-    "message": "Les utilisateurs peuvent voir le club mais ne peuvent pas le rejoindre ou voir les autres membres"
+    "message":
+      "Users can view the club but cannot join or message other members"
   },
   "clubs_membership_enabled": {
-    "message": "Permet aux utilisateurs de rejoindre le club et de contacter les autres membres"
+    "message": "Allows users to join the club and message other members"
   },
   "clubs_member_button_create": {
-    "message": "Ajouter membre"
+    "message": "Add Member"
   },
   "clubs_member_create_modal_title": {
-    "message": "Ajouter membre"
+    "message": "Add Member"
   },
   "clubs_member_delete_modal_body": {
-    "message": "Êtes-vous sur de vouloir supprimer %s ?"
+    "message": "Are you sure you want to remove %s?"
   },
   "clubs_member_delete_modal_title": {
-    "message": "Supprimer membre"
+    "message": "Remove Member"
   },
   "clubs_member_edit_modal_title": {
-    "message": "Éditer membre"
+    "message": "Edit Member"
   },
   "clubs_member_label_name": {
-    "message": "Nom (nécessite un compte d'application mobile)"
+    "message": "Name (requires a mobile app account)"
   },
   "clubs_no_members_found": {
-    "message": "Aucun membres trouvés"
+    "message": "No Members Found"
   },
   "clubs_no_results": {
-    "message": "Aucun clubs trouvés"
+    "message": "No clubs found"
   },
   "clubs_status_active": {
-    "message": "Le club est approuvé et est listé dans l'application du campus"
+    "message": "Club is approved and is listed in the Campus App"
   },
   "clubs_status_inactive": {
-    "message": "Le club est suspendu et n'est pas listé dans l'application du campus"
+    "message": "Club is suspended and is not listed in the Campus App"
   },
   "clubs_status_pending": {
-    "message": "Le club attend l'approbation et n'est pas listé dans l'application du campus"
+    "message": "Club is awaiting approval and is not listed in the Campus App"
   },
   "comment": {
-    "message": "Commentaire",
+    "message": "Comment",
     "description": "Walls Comment"
   },
   "comments": {
-    "message": "Commentaires"
+    "message": "Comments"
   },
   "component_cpimage_description": {
-    "message": "Téléverser votre photo"
+    "message": "Upload your picture"
   },
   "component_cpimage_help": {
-    "message": "JPG ou PNG. Taille maximum 5Mo"
+    "message": "JPG or PNG. Max size of 5MB"
   },
   "compose": {
-    "message": "Créer une annonce"
+    "message": "Create Announcement"
   },
   "confirm": {
-    "message": "Confirmer"
+    "message": "Confirm"
   },
   "confirm_password": {
-    "message": "Confirmer mot de passe"
+    "message": "Confirm Password"
   },
   "contact_details": {
-    "message": "Détails du contact"
+    "message": "Contact Details"
   },
   "created": {
-    "message": "Date de création"
+    "message": "Date Created"
   },
   "csv_modal_anchor_text": {
-    "message": "Télécharger un fichier échantillon CSV"
+    "message": "Download CSV Sample File"
   },
   "csv_modal_body": {
-    "message": "Téléverser votre fichier CSV ou"
+    "message": "Upload your CSV file or"
   },
   "csv_modal_button_text": {
-    "message": "Sélectionner un fichier CSV"
+    "message": "Select a CSV file"
   },
   "csv_modal_instruction": {
-    "message": "Limiter à 100 éléments à importer à la fois."
+    "message": "Limit of 100 items to import at a time."
   },
   "csv_modal_title": {
-    "message": "Téléverser fichier CSV"
+    "message": "Upload CSV File"
   },
   "dashboard_announcements": {
-    "message": "Annonces"
+    "message": "Announcements"
   },
   "dashboard_assessment_event_checkins": {
-    "message": "Vérifications de présence à l'événement",
+    "message": "Event Check-Ins",
     "description": "Dashboard Assessment tile"
   },
   "dashboard_assessment_feedback_rate": {
-    "message": "Taux de retour"
+    "message": "Feedback Rate"
   },
   "dashboard_assessment_lms": {
     "message": "LMS"
   },
   "dashboard_assessment_service_checkins": {
-    "message": "Vérifications de présence au service"
+    "message": "Service Check-Ins"
   },
   "dashboard_assessment_student": {
-    "message": "Étudiant"
+    "message": "Student"
   },
   "dashboard_assessment_student_feedback": {
-    "message": "Retour"
+    "message": "Feedback"
   },
   "dashboard_assessment_title": {
-    "message": "Évaluation"
+    "message": "Assessment"
   },
   "dashboard_campus_tile_title": {
-    "message": "Activité du guide du campus"
+    "message": "Campus Guide Activity\n"
   },
   "dashboard_club_views": {
-    "message": "Vues du club"
+    "message": "Club Views"
   },
   "dashboard_downloads_title": {
-    "message": "Téléchargement & inscriptions"
+    "message": "Downloads & Registrations"
   },
   "dashboard_event_feedback": {
-    "message": "Retour sur l'événement"
+    "message": "Event Feedback"
   },
   "dashboard_event_views": {
-    "message": "Vues de l'événement"
+    "message": "Event Views"
   },
   "dashboard_general_information": {
-    "message": "Activité de l'application du campus"
+    "message": "Campus App Activity"
   },
   "dashboard_integrations_courses": {
-    "message": "Cours"
+    "message": "Courses"
   },
   "dashboard_integrations_sso": {
-    "message": "Identification unique"
+    "message": "Single Sign-On"
   },
   "dashboard_integrations_title": {
-    "message": "Intégrations"
+    "message": "Integrations"
   },
   "dashboard_last_30_days": {
-    "message": "30 derniers jours"
+    "message": "Last 30 Days"
   },
   "dashboard_last_90_days": {
-    "message": "90 derniers jours"
+    "message": "Last 90 Days"
   },
   "dashboard_last_year": {
-    "message": "Dernière année"
+    "message": "Last Year"
   },
   "dashboard_no_data_found": {
-    "message": "Aucun résultats trouvés"
+    "message": "No Results Found"
   },
   "dashboard_service_clicks": {
-    "message": "Clics du service"
+    "message": "Service Clicks"
   },
   "dashboard_service_feedback": {
-    "message": "Retours sur le service"
+    "message": "Service Feedback"
   },
   "dashboard_social_activity_comments": {
-    "message": "Commentaires"
+    "message": "Comments"
   },
   "dashboard_social_activity_connections": {
-    "message": "Connexions"
+    "message": "Connections"
   },
   "dashboard_social_activity_likes": {
     "message": "Likes"
@@ -836,385 +849,379 @@
     "message": "Messages"
   },
   "dashboard_social_activity_title": {
-    "message": "Activité sociale"
+    "message": "Social Activity"
   },
   "dashboard_social_activity_total": {
-    "message": "Activité sociale totale"
+    "message": "Total Social Activity"
   },
   "dashboard_social_activity_wall_posts": {
-    "message": "Publications"
+    "message": "Posts"
   },
   "dashboard_top_events": {
-    "message": "Événements les plus popuplaires"
+    "message": "Top Events"
   },
   "dashboard_top_five_clubs_title": {
-    "message": "Clubs les plus populaires"
+    "message": "Top Clubs"
   },
   "dashboard_top_services": {
-    "message": "Services les plus populaires"
+    "message": "Top Services"
   },
   "delete": {
-    "message": "Supprimer"
+    "message": "Delete"
   },
   "description": {
     "message": "Description"
   },
   "done": {
-    "message": "Terminé"
+    "message": "Done"
   },
   "download": {
-    "message": "Télécharger"
+    "message": "Download"
   },
   "downloads": {
-    "message": "Téléchargements"
+    "message": "Downloads"
   },
   "download_csv": {
-    "message": "Télécharger fichier CSV"
+    "message": "Download CSV File"
   },
   "duplicate_entry": {
-    "message": "Il y a déjà un utilisateur avec cette adresse courriel."
+    "message": "There is already a user with that email address."
   },
   "edit": {
-    "message": "Éditer"
+    "message": "Edit"
   },
   "email": {
-    "message": "Courriel"
+    "message": "Email"
   },
   "email_does_not_exist": {
-    "message": "Il n'y a aucun utilisateur avec ces informations de connexion.",
+    "message": "There is no user with that login information.",
     "description": "Lost password view..."
   },
   "emergency": {
-    "message": "Urgence"
+    "message": "Emergency"
   },
   "ended": {
-    "message": "Date de fin:"
+    "message": "End Date:"
   },
   "ends": {
-    "message": "Date de fin"
+    "message": "End date"
   },
   "end_date": {
-    "message": "Date de fin"
+    "message": "End Date"
+  },
+  "engagement": {
+    "message": "Engagement"
   },
   "error": {
-    "message": "Erreur"
+    "message": "Error"
   },
   "error_file_is_too_big": {
-    "message": "Fichier trop volumineux"
+    "message": "File too Big"
   },
   "error_fill_out_marked_fields": {
-    "message": "Veuillez remplir les champs marqués"
+    "message": "Please fill out the marked fields"
   },
   "error_invalid_extension": {
-    "message": "Extension invalide"
+    "message": "Invalid Extension"
   },
   "error_no_hosts_found_help": {
-    "message": "Vous n'avez pas des privilèges suffisants pour associer cet événement avec un service ou un club."
+    "message":
+      "You do not have sufficient privileges to associate this new event with a service or a club."
   },
   "event": {
-    "message": "Événement"
+    "message": "Event"
   },
   "events": {
-    "message": "Événements"
+    "message": "Events"
   },
   "events_attendance_feedback": {
-    "message": "Retour des participants"
+    "message": "Attendance Feedback"
   },
   "events_attendance_manager": {
     "message": "Att. Manager"
   },
   "events_attendance_manager_full": {
-    "message": "Gestionnaire de présences"
-  },
-  "events_attendance_manager_tooltip": {
-    "message": "Le gestionnaire de présence peut être n'importe quelle personne avec une adresse courriel valide, ils recevront des instructions pour mettre en place la vérification de présence pour cet événement."
+    "message": "Attendance Manager"
   },
   "events_attendance_manager_tooltip": {
     "message":
       "The attendance manager may be any person with a valid email address, they will receive instructions to setup check-ins for this event."
   },
   "events_attendant": {
-    "message": "Présent"
+    "message": "Attendant"
   },
   "events_attendee_email": {
-    "message": "Courriel du participant"
+    "message": "Attendee Email"
   },
   "events_button_new": {
-    "message": "Créer événement"
+    "message": "Create Event"
   },
   "events_checked_in_method": {
-    "message": "Méthode de vérification de présence"
+    "message": "Check-in Method"
   },
   "events_checked_in_time": {
-    "message": "Heure de vérification de présence"
+    "message": "Check-in Time"
   },
   "events_check_in": {
-    "message": "Vérification de présence"
+    "message": "Check-in"
   },
   "events_check_in_details": {
-    "message": "Vérification de présence"
+    "message": "Check-in"
   },
   "events_create_heading": {
-    "message": "Créer événement"
+    "message": "Create Event"
   },
   "events_default_question": {
-    "message": "Question de retour"
+    "message": "Feedback Question"
   },
   "events_delete_modal_body": {
-    "message": "Êtes-vous sûr de vouloir supprimer %s ?"
+    "message": "Are you sure you want to delete %s?"
   },
   "events_delete_modal_title": {
-    "message": "Supprimer événement"
-  },
-  "events_disabled": {
-    "message": "Désactivé"
+    "message": "Delete Event"
   },
   "events_disabled": {
     "message": "Disabled"
   },
   "events_edit_event": {
-    "message": "Éditer événement"
+    "message": "Edit Event"
   },
   "events_error_end_date_after_now": {
-    "message": "L'heure de fin de l'événement doit être dans le futur."
+    "message": "The event's end time must be in the future."
   },
   "events_error_end_date_before_start": {
-    "message": "L'heure de fin de l'événement doit être plus tard que son heure de début."
+    "message": "The event's end time must be later than its start time."
   },
   "events_event_attendance": {
-    "message": "Présence aux événement"
+    "message": "Event Attendance"
   },
   "events_event_banner": {
-    "message": "Bannière de l'événement"
+    "message": "Event Banner"
   },
   "events_event_description": {
-    "message": "Description de l'événement"
+    "message": "Event Description"
   },
   "events_event_details": {
-    "message": "Détails de l'événement"
-  },
-  "events_event_feedback_tooltip": {
-    "message": "If enabled, after an event is finished will prompt event attendees to provide feedback and rating as a response to the feedback question."
+    "message": "Event Details"
   },
   "events_event_feedback_tooltip": {
     "message":
       "If enabled, after an event is finished will prompt event attendees to provide feedback and rating as a response to the feedback question."
   },
   "events_event_manager": {
-    "message": "Gestionnaire de l'événement"
-  },
-  "events_event_manager_tooltip": {
-    "message": "The event manager needs to be a current administrator. They will receive emails related to checking in users and assessment reports once it is finished."
+    "message": "Event Manager"
   },
   "events_event_manager_tooltip": {
     "message":
       "The event manager needs to be a current administrator. They will receive emails related to checking in users and assessment reports once it is finished."
   },
   "events_event_name": {
-    "message": "Nom de l'événement"
+    "message": "Event Name"
   },
   "events_facebook_add_button": {
-    "message": "Créer lien"
+    "message": "Create Link"
   },
   "events_facebook_heading": {
-    "message": "Importer des événements depuis Facebook"
+    "message": "Import Events from Facebook"
   },
   "events_facebook_help": {
-    "message": "Fournissez le lien vers la page de l'événement Facebook (e.g., https://www.facebook.com/oohlalamobileapp/events/)."
+    "message":
+      "Provide the link to the Facebook event page (e.g., https://www.facebook.com/oohlalamobileapp/events/)."
   },
   "events_facebook_label_host": {
-    "message": "Sélectionner l'hôte"
+    "message": "Select Host"
   },
   "events_facebook_label_link": {
-    "message": "Lien d'événement Facebook"
+    "message": "Facebook Event Link"
   },
   "events_facebook_link_delete_modal_body": {
-    "message": "Êtes-vous sûr de vouloir supprimer ce lien ?"
+    "message": "Are you sure you want to delete this link?"
   },
   "events_facebook_link_delete_modal_title": {
-    "message": "Supprimer le lien de l'événement"
+    "message": "Delete Event Link"
   },
   "events_hosted_by": {
-    "message": "Organisé par"
+    "message": "Hosted by"
   },
   "events_import_bulk_update": {
-    "message": "Modification groupée"
+    "message": "Bulk Update"
   },
   "events_import_csv_heading": {
-    "message": "Importer des événements depuis un fichier"
+    "message": "Import Events from File"
   },
   "events_import_csv_sub_heading": {
-    "message": "Le fichier contient des données pour %s événement(s) de calendrier"
+    "message": "File contains data for %s calendar event(s)"
   },
   "events_import_from_facebook": {
-    "message": "Importer des événements depuis Facebook"
+    "message": "Import Events from Facebook"
   },
   "events_label_past_events": {
-    "message": "Événements passés"
+    "message": "Past Events"
   },
   "events_label_upcoming_events": {
-    "message": "Événements à venir"
+    "message": "Upcoming Events"
   },
   "events_no_attendees": {
-    "message": "Aucun participants"
+    "message": "No Attendees"
   },
   "events_no_events_found": {
-    "message": "Aucun événements trouvés"
+    "message": "No events found"
   },
   "events_user_feedback": {
-    "message": "Retour d'utilisateur"
+    "message": "User Feedback"
   },
   "event_enabled": {
-    "message": "Activé"
+    "message": "Enabled"
   },
   "executive": {
-    "message": "Exécutif"
+    "message": "Executive"
   },
   "feedback": {
-    "message": "Retour"
+    "message": "Feedback"
   },
   "feedback_form_event_help": {
-    "message": "Veuillez cliquer une étoile pour noter l'événement"
+    "message": "Please click a star to rate the event"
   },
   "feedback_form_placeholder": {
-    "message": "Dites-nous ce que vous pensez"
+    "message": "Tells us what you think"
   },
   "feedback_form_service_help": {
-    "message": "Veuillez cliquer une étoile pour noter le service"
+    "message": "Please click a star to rate the service"
   },
   "feedback_label_event_feedback": {
-    "message": "Retours sur l'événement",
-    "description": "Single Event \r\nhttps://projects.invisionapp.com/d/main#/console/10688612/232187816/preview"
+    "message": "Event Feedback",
+    "description":
+      "Single Event \r\nhttps://projects.invisionapp.com/d/main#/console/10688612/232187816/preview"
   },
   "feedback_label_rate_event": {
-    "message": "Noter événement"
+    "message": "Rate Event"
   },
   "feedback_label_rate_service": {
-    "message": "Noter service"
+    "message": "Rate Service"
   },
   "feedback_label_service_feedback": {
-    "message": "Retours sur le service",
+    "message": "Service Feedback",
     "description": "Same as above"
   },
   "feedback_thank_you": {
-    "message": "Merci pour votre retour"
+    "message": "Thanks for your feedback"
   },
   "feeds": {
-    "message": "Murs"
+    "message": "Walls"
   },
   "feeds_all_posts": {
-    "message": "Toutes les publications"
+    "message": "All Posts"
   },
   "feeds_approve_comment": {
-    "message": "Approuver commentaire"
+    "message": "Approve Comment"
   },
   "feeds_approve_comment_modal_body": {
-    "message": "Êtes-vous sûr de vouloir approuver cette publication ?"
+    "message": "Are you sure you want to approve this post?"
   },
   "feeds_approve_comment_modal_title": {
-    "message": "Approuver commentaire"
+    "message": "Approve Comment"
   },
   "feeds_approve_post": {
-    "message": "Approuver publication"
+    "message": "Approve Post"
   },
   "feeds_approve_post_modal_body": {
-    "message": "Êtes-vous sûr de vouloir approuver cette publication ?"
+    "message": "Are you sure you want to approve this post?"
   },
   "feeds_approve_post_modal_title": {
-    "message": "Approuver publication"
+    "message": "Approve Post"
   },
   "feeds_can_comment": {
-    "message": "Qui peut commenter ?"
+    "message": "Who can comment?"
   },
   "feeds_can_post": {
-    "message": "Qui peut publier ?"
+    "message": "Who can post?"
   },
   "feeds_delete_comment": {
-    "message": "Supprimer commentaire"
+    "message": "Delete Comment"
   },
   "feeds_delete_comment_modal_body": {
-    "message": "Êtes-vous sûr de vouloir supprimer ce commentaire ?"
+    "message": "Are you sure you want to delete this comment?"
   },
   "feeds_delete_comment_modal_title": {
-    "message": "Supprimer commentaire"
+    "message": "Delete Comment"
   },
   "feeds_delete_post": {
-    "message": "Supprimer publication"
+    "message": "Delete Post"
   },
   "feeds_delete_post_modal_body": {
-    "message": "Êtes-vous sûr de vouloir supprimer cette publication ?"
+    "message": "Are you sure you want to delete this post?"
   },
   "feeds_delete_post_modal_title": {
-    "message": "Supprimer publication"
+    "message": "Delete Post"
   },
   "feeds_error_wall_is_disabled": {
-    "message": "Pour autoriser les publications, changez les réglages pour ce mur"
+    "message": "To enable posting, change the settings for this wall"
   },
   "feeds_everyone": {
-    "message": "Tout le monde"
+    "message": "Everyone"
   },
   "feeds_flagged_posts": {
-    "message": "Publications signalées"
+    "message": "Flagged Posts"
   },
   "feeds_input_placeholder": {
-    "message": "Ajouter du texte à cette publication..."
+    "message": "Add some text to this post...."
   },
   "feeds_move_post": {
-    "message": "Déplacer publication"
+    "message": "Move Post"
   },
   "feeds_move_post_from": {
-    "message": "Déplacer la publication depuis"
+    "message": "Move post from"
   },
   "feeds_posted_in": {
-    "message": "publié dans"
+    "message": "posted in"
   },
   "feeds_post_as": {
-    "message": "Sélectionner un hôte"
+    "message": "Select a Host"
   },
   "feeds_post_to": {
-    "message": "Publier vers"
+    "message": "Post to"
   },
   "feeds_removed_posts": {
-    "message": "Publications supprimées"
+    "message": "Removed Posts"
   },
   "feeds_team_members": {
-    "message": "Membres"
+    "message": "Members"
   },
   "feeds_wall_name": {
-    "message": "Nom du club"
+    "message": "Club Name"
   },
   "feeds_wall_settings_modal_title": {
-    "message": "Réglages du mur du club"
+    "message": "Club Wall Settings"
   },
   "first_name": {
-    "message": "Prénom"
+    "message": "First Name"
   },
   "for": {
-    "message": "pour"
+    "message": "for"
   },
   "from": {
-    "message": "Depuis"
+    "message": "From"
   },
   "hello": {
-    "message": "Bonjour"
+    "message": "Hello"
   },
   "help_desk": {
-    "message": "Assistance"
+    "message": "Help Desk"
   },
   "hide": {
-    "message": "Masquer"
+    "message": "Hide"
   },
   "host": {
-    "message": "Hôte"
+    "message": "Host"
   },
   "import": {
-    "message": "Importer"
+    "message": "Import"
   },
   "import_from_csv": {
-    "message": "Importer depuis CSV"
+    "message": "Import from CSV"
   },
   "in": {
-    "message": "dans"
+    "message": "in"
   },
   "info": {
     "message": "Info"
@@ -1223,37 +1230,37 @@
     "message": "Instructions"
   },
   "invite_team_members": {
-    "message": "Créer un nouveau membre d'équipe"
+    "message": "Create New Team Member"
   },
   "last_name": {
-    "message": "Nom de famille"
+    "message": "Last Name"
   },
   "links": {
-    "message": "Liens"
+    "message": "Links"
   },
   "links_add_modal_title": {
-    "message": "Créer lien"
+    "message": "Create Link"
   },
   "links_button_new": {
-    "message": "Créer lien"
+    "message": "Create Link"
   },
   "links_delete_modal_body": {
-    "message": "Êtes-vous sûr de vouloir supprimer %s ?"
+    "message": "Are you sure you want to delete %s?"
   },
   "links_delete_modal_title": {
-    "message": "Supprimer lien"
+    "message": "Delete Link"
   },
   "links_edit_modal_title": {
-    "message": "Nom"
+    "message": "Name"
   },
   "links_label_link_name": {
-    "message": "Nom"
+    "message": "Name"
   },
   "links_label_link_url": {
-    "message": "Lien"
+    "message": "URL"
   },
   "links_no_results_found": {
-    "message": "Aucun liens trouvés"
+    "message": "No Links found"
   },
   "link_label_description": {
     "message": "Description"
@@ -1262,86 +1269,82 @@
     "message": "Image"
   },
   "lists": {
-    "message": "Listes"
+    "message": "Lists"
   },
   "lists_button_create": {
-    "message": "Créer liste"
+    "message": "Create List"
   },
   "lists_create_modal_title": {
-    "message": "Créer liste"
+    "message": "Create List"
   },
   "lists_delete_modal_body": {
-    "message": "Êtes-vous sûr de vouloir supprimer %s ?"
+    "message": "Are you sure you want to delete %s?"
   },
   "lists_delete_modal_title": {
-    "message": "Supprimer liste"
+    "message": "Delete List"
   },
   "lists_edit_modal_title": {
-    "message": "Éditer liste"
+    "message": "Edit List"
   },
   "lists_error_template_conflict": {
-    "message": "Cette liste est utilisée dans un modèle de notification. Pour supprimer cette liste, vous devez d'abord supprimer tous les modèles adressés à cette liste, et essayer de nouveau."
+    "message":
+      "This list is being used in a notification template. To delete this list, first delete all templates addressed to this list, and try again."
   },
   "lists_label_list_description": {
     "message": "Description"
   },
   "lists_label_list_name": {
-    "message": "Nom"
+    "message": "Name"
   },
   "lists_no_results_found": {
-    "message": "Aucune liste trouvée"
+    "message": "No lists found"
   },
   "lists_number_of_users": {
-    "message": "Nombre d'utilisateurs"
+    "message": "Number of Users"
   },
   "location": {
-    "message": "Lieu"
+    "message": "Location"
   },
   "locations": {
-    "message": "Lieux"
+    "message": "Locations"
   },
   "locations_btn_create": {
-    "message": "Ajouter lieu"
+    "message": "Add Location"
   },
   "locations_create_modal_title": {
-    "message": "Ajouter lieu"
+    "message": "Add Location"
   },
   "locations_delete_modal_body": {
-    "message": "Êtes-vous sûr de vouloir supprimer %s ?"
+    "message": "Are you sure you want to delete %s?"
   },
   "locations_delete_modal_title": {
-    "message": "Supprimer lieu"
+    "message": "Delete Location"
   },
   "locations_edit_modal_title": {
-    "message": "Éditer lieu"
+    "message": "Edit Location"
   },
   "locations_label_acronym": {
-    "message": "Acronyme"
+    "message": "Acronym"
   },
   "login": {
-    "message": "Connexion",
-    "description": "is the route name\r\nhttps://ccstaging.oohlalamobile.com/#/lost-password"
+    "message": "Login",
+    "description":
+      "is the route name\r\nhttps://ccstaging.oohlalamobile.com/#/lost-password"
   },
   "logout": {
-    "message": "Se déconnecter"
+    "message": "Logout"
   },
   "lost_password": {
-    "message": "Mot de passe perdu"
+    "message": "Lost Password"
   },
   "lost_password_question": {
-    "message": "Vous avez perdu votre mot de passe ?"
+    "message": "Lost your password?"
   },
   "lost_password_success": {
-    "message": "Merci ! Veuillez vérifier %s pour un lien permettant de réinitialiser votre mot de passe."
+    "message": "Thanks! Please check %s for a link to reset your password."
   },
   "manage": {
-    "message": "Gérer"
-  },
-  "manage_create_service_category_tooltip": {
-    "message": "The category the service belongs to, helps filter and group content in the campus app."
-  },
-  "manage_create_service_feedback_tooltip": {
-    "message": "If enabled, after a check-in to a service provider prompt attendees to provide feedback and rating as a response to the feedback question."
+    "message": "Manage"
   },
   "manage_create_service_category_tooltip": {
     "message":
@@ -1352,80 +1355,74 @@
       "If enabled, after a check-in to a service provider prompt attendees to provide feedback and rating as a response to the feedback question."
   },
   "manage_team_members": {
-    "message": "Membres d'équipe"
+    "message": "Team Members"
   },
   "maps": {
-    "message": "Cartes"
+    "message": "Maps"
   },
   "member": {
-    "message": "Membre"
+    "message": "Member"
   },
   "members": {
-    "message": "Membres"
+    "message": "Members"
   },
   "message_action": {
     "message": "Message"
   },
   "message_file_upload_error": {
-    "message": "Quelque chose s'est mal passé, veuillez réessayer"
+    "message": "Something went wrong, please try again"
   },
   "message_file_upload_success": {
-    "message": "Fichier téléversé avec succès"
-  },
-  "message_noun": {
-    "message": "Message"
+    "message": "File uploaded successfully"
   },
   "message_noun": {
     "message": "Message"
   },
   "more": {
-    "message": "Plus"
+    "message": "More"
   },
   "move": {
-    "message": "Déplacer"
+    "message": "Move"
   },
   "name": {
-    "message": "Nom"
+    "message": "Name"
   },
   "new_password": {
-    "message": "Nouveau mot de passe"
+    "message": "New Password"
   },
   "next": {
-    "message": "Suivant"
+    "message": "Next"
   },
   "no": {
-    "message": "Non"
+    "message": "No"
   },
   "notify": {
-    "message": "Notifier"
+    "message": "Notify"
   },
   "notify_announcement_recipient": {
-    "message": "Destinataires"
-  },
-  "notify_announcement_template_to_tooltip": {
-    "message": "The recepients of the accouncements. Can be sent to students who are app users or pre-defined lists. For more info:"
+    "message": "Recipients"
   },
   "notify_announcement_template_to_tooltip": {
     "message":
       "The recepients of the accouncements. Can be sent to students who are app users or pre-defined lists. For more info:"
   },
   "no_admins_found": {
-    "message": "Aucun administrateur trouvé"
+    "message": "No Admins found"
   },
   "no_hosts_available": {
-    "message": "Aucun hôte disponible"
+    "message": "No Hosts Available"
   },
   "no_one": {
-    "message": "Personne"
+    "message": "No One"
   },
   "no_results": {
-    "message": "Aucun résultats"
+    "message": "No Results"
   },
   "ok": {
     "message": "Ok"
   },
   "on_boarding_step_1_description": {
-    "message": "Gérer votre application du campus et augmentez l'implication des étudiants."
+    "message": "Manage your campus app and increase student engagement."
   },
   "on_boarding_step_1_description_1": {
     "message": "Rebuilt from the ground up."
@@ -1434,149 +1431,154 @@
     "message": "Welcome to the all new Campus Cloud!"
   },
   "on_boarding_step_2_description": {
-    "message": "Toutes vos ressources du campus incluant événements, services, clubs et plus."
+    "message":
+      "All your campus resources including events, services, clubs and more."
   },
   "on_boarding_step_2_title": {
-    "message": "Gérer votre contenu du campus"
+    "message": "Manage your campus content"
   },
   "on_boarding_step_3_description": {
-    "message": "Envoyez des annonces au campus ou ciblez vos messages pour des étudiants spécifiques."
+    "message":
+      "Send campus announcements or target messages for specific students."
   },
   "on_boarding_step_3_title": {
-    "message": "Notifiez votre campus et envoyez des messages ciblés"
+    "message": "Notify your campus and send targeted messages"
   },
   "on_boarding_step_4_description": {
-    "message": "Comprenez l'implication des étudiants dans les événements et les services."
+    "message": "Understand student engagement with campus events and services."
   },
   "on_boarding_step_4_title": {
-    "message": "Évaluez les activités du campus"
+    "message": "Assess campus activities"
   },
   "optional": {
-    "message": "Optionnel"
+    "message": "Optional"
   },
   "orientation": {
     "message": "Orientation"
   },
   "password": {
-    "message": "Mot de passe"
+    "message": "Password"
   },
   "passwords_do_not_match": {
-    "message": "Les mot de passes ne correspondent pas"
+    "message": "Passwords do not match"
   },
   "password_requirements_length": {
-    "message": "Votre mot de passe doit contenir au moins 6 caractères."
+    "message": "Your password must contain at least 6 characters."
   },
   "password_requirements_special_char": {
-    "message": "Pour plus de sécurité, utilisez des nombres et des caractères spéciaux tels que @, #, $, &amp;, etc"
+    "message":
+      "For added security, use numbers, letters and special characters such as @, #, $, &amp;, etc"
   },
   "password_reset_success": {
-    "message": "Mot de passe enregistré, redirection vers la page d'identification"
+    "message": "Password saved, redirecting you to the login page"
   },
   "pending": {
-    "message": "En attente"
+    "message": "Pending"
   },
   "phone": {
     "message": "Phone"
   },
   "phone_number": {
-    "message": "Numéro de téléphone"
+    "message": "Phone Number"
   },
   "profile": {
-    "message": "Profil"
+    "message": "Profile"
   },
   "qr_code": {
-    "message": "Code QR"
+    "message": "QR Code"
   },
   "rating": {
-    "message": "Notes"
+    "message": "Ratings"
   },
   "ratings": {
-    "message": "Notes"
+    "message": "Ratings"
   },
   "registrations": {
-    "message": "Inscriptions"
+    "message": "Registrations"
   },
   "regular": {
     "message": "Regular",
     "description": "Announcement Type"
   },
   "release_notes_july_10_item_one": {
-    "message": "Les administrateurs peuvent envoyer des notifications aux appareils des étudiants"
+    "message": "Administrators can send Notifications to students' devices"
   },
   "release_notes_july_10_item_three": {
-    "message": "Corrections de bogues et amélioration d'utilisabilité"
+    "message": "Bug fixes and usability improvements"
   },
   "release_notes_july_10_item_two": {
-    "message": "Les administrateurs peuvent créer des listes d'utilisateurs à utiliser lors de l'envoi de notifications."
+    "message":
+      "Administrators can create lists of users, to use in sending Notifications."
   },
   "release_notes_july_10_title": {
-    "message": "Nouveautés du 10 Juillet 2017 :"
+    "message": "New as of July 10, 2017:"
   },
   "release_notes_june_2_item_one": {
     "message": "Administrators can create Clubs and Groups"
   },
   "release_notes_june_2_title": {
-    "message": "Nouveau depuis le 2 juin 2017 :"
+    "message": "New as of June 2, 2017:"
   },
   "release_notes_p_four": {
     "message": "The OOHLALA Team."
   },
   "release_notes_p_two": {
-    "message": "Do I need to translate release notes?"
+    "message":
+      "Should you wish to return to the old Campus Cloud, you can always do so by clicking on the banner at the top of the screen. If you wish to provide any feedback on your experience with the new Campus Cloud, please contact us at "
   },
   "release_notes_sept_6_item_one": {
-    "message": "Les commentaires des étudiants sont maintenant inclus dans les données d'évaluation"
+    "message": "Student comments are now included in downloaded Assessment data"
   },
   "release_notes_sept_6_item_two": {
-    "message": "Les notifications peuvent être créées depuis des modèles"
+    "message": "Notifications can be created and sent from Templates"
   },
   "release_notes_sept_6_title": {
-    "message": "Nouveau depuis le 6 septembre 2017 :"
+    "message": "New as of September 6, 2017:"
   },
   "release_notes_title": {
-    "message": "Bienvenue sur le tout nouveau Campus Cloud !"
+    "message": "Welcome to the brand new Campus Cloud!"
   },
   "remove": {
-    "message": "Supprimer"
+    "message": "Remove"
   },
   "response": {
-    "message": "Réponse"
+    "message": "Response"
   },
   "responses": {
-    "message": "Réponses"
+    "message": "Responses"
   },
   "results": {
-    "message": "Résultat"
+    "message": "Results"
   },
   "reupload": {
-    "message": "Re-téléverser"
+    "message": "Re-upload"
   },
   "room": {
-    "message": "Salle"
+    "message": "Room"
   },
   "rsvp": {
     "message": "RSVP"
   },
   "save": {
-    "message": "Enregistrer"
+    "message": "Save"
   },
   "save_changes": {
-    "message": "Enregistrer les changements"
+    "message": "Save Changes"
   },
   "search": {
     "message": "Search"
   },
   "select_category": {
-    "message": "Sélectionner une catégorie"
+    "message": "Select Category"
   },
   "select_host": {
-    "message": "Sélectionner un hôte"
+    "message": "Select a Host"
   },
   "send": {
-    "message": "Envoyer"
+    "message": "Send"
   },
   "sent": {
-    "message": "Date d'envoi"
+    "message": "Date Sent"
   },
   "service": {
     "message": "Service"
@@ -1585,250 +1587,247 @@
     "message": "Services"
   },
   "services_admin": {
-    "message": "Administrateur"
+    "message": "Admin"
   },
   "services_button_add_service_provider": {
-    "message": "Créer un fournisseur de service"
+    "message": "Create Service Provider"
   },
   "services_button_create": {
-    "message": "Créer service"
+    "message": "Create Service"
   },
   "services_button_download_assessment_data": {
-    "message": "Télécharger les données d'évaluation"
+    "message": "Download Assessment Data"
   },
   "services_button_download_attendance_data": {
-    "message": "Télécharger les données de présence"
+    "message": "Download Attendance Data"
   },
   "services_create_button_create": {
-    "message": "Créer service"
+    "message": "Create Service"
   },
   "services_create_heading": {
-    "message": "Créer service"
+    "message": "Create Service"
   },
   "services_default_feedback_question": {
-    "message": "Qu'avez-vous pensé de la qualité du service ?"
+    "message": "How did you like the service?"
   },
   "services_delete_modal_body": {
-    "message": "Êtes-vous sûr de vouloir supprimer %s ?"
+    "message": "Are you sure you want to delete %s?"
   },
   "services_delete_modal_title": {
-    "message": "Supprimer service"
-  },
-  "services_disabled": {
-    "message": "Désactivé"
+    "message": "Delete Service"
   },
   "services_disabled": {
     "message": "Disabled"
   },
   "services_edit_heading": {
-    "message": "Éditer service"
+    "message": "Edit Service"
   },
   "services_imports_heading": {
-    "message": "Importer des services"
+    "message": "Import Services"
   },
   "services_import_button": {
-    "message": "Importer des services"
+    "message": "Import Services"
   },
   "services_label_all_checkin_methods": {
-    "message": "Méthode de vérification de présence"
+    "message": "Check-in method"
   },
   "services_label_attendee_name": {
-    "message": "Liste des participants"
+    "message": "Attendee Name"
   },
   "services_label_banner": {
-    "message": "Bannière du service"
+    "message": "Service Banner"
   },
   "services_label_checked_in_method": {
-    "message": "Méthode de vérification de présence"
+    "message": "Check-in Method"
   },
   "services_label_checked_in_time": {
-    "message": "Heure d'enregistrement"
+    "message": "Check-in Time"
   },
   "services_label_checkin_time": {
-    "message": "Heure d'enregistrement"
+    "message": "Check-in Time"
   },
   "services_label_check_in_details": {
-    "message": "Vérification de présence",
+    "message": "Check-in",
     "description": "Noun"
   },
   "services_label_default_question": {
-    "message": "Question de retour"
+    "message": "Feedback Question"
   },
   "services_label_description": {
-    "message": "Description du service"
+    "message": "Service Description"
   },
   "services_label_details": {
-    "message": "Détails du service"
+    "message": "Service Details"
   },
   "services_label_enable_service_feedback": {
     "message": "Feedback"
   },
   "services_label_name": {
-    "message": "Nom du service"
+    "message": "Service Name"
   },
   "services_label_service_assessment": {
-    "message": "Évaluation du service",
-    "description": "Singular\r\nhttps://ccstaging.oohlalamobile.com/#/manage/services/create"
+    "message": "Service Assessment",
+    "description":
+      "Singular\r\nhttps://ccstaging.oohlalamobile.com/#/manage/services/create"
   },
   "services_no_service_found": {
-    "message": "Aucun services trouvés"
+    "message": "No services found"
   },
   "services_providers_no_results": {
-    "message": "Il n'y a aucun fournisseur de service pour ce service. Utilisez \"Créer un fournisseur de service\" pour en créer un.\n\nLes fournisseurs de service sont utilisés pour suivre les vérifications de présence et rassembler le retour des étudiants."
+    "message":
+      "There are no service providers for this service.  Use \"Create Service Provider\" to create one. \n\nService Providers are used to track attendance check-ins and gather student feedback."
   },
   "services_provider_button_add_another": {
-    "message": "Ajouter un autre fournisseur de service"
+    "message": "Add another Service Provider"
   },
   "services_provider_delete_modal_body": {
-    "message": "Êtes-vous sûr de vouloir supprimer %s ?"
+    "message": "Are you sure you want to delete %s?"
   },
   "services_provider_delete_modal_title": {
-    "message": "Supprimer le fournisseur de service"
+    "message": "Delete Service Provider"
   },
   "services_provider_label_add_service_provider": {
-    "message": "Créer un fournisseur de service"
+    "message": "Create Service Provider"
   },
   "services_provider_label_default_question": {
-    "message": "Question de retour"
+    "message": "Feedback Question"
   },
   "services_provider_search_tootlip": {
-    "message": "Rechercher..."
+    "message": "Search..."
   },
   "services_repeat_visits": {
-    "message": "Visites à répétition"
+    "message": "Repeat Visits"
   },
   "services_total_responses": {
-    "message": "Total de réponses"
+    "message": "Total Responses"
   },
   "services_total_visits": {
-    "message": "Total de vérification de présences"
+    "message": "Total Check-ins"
   },
   "services_unique_visits": {
-    "message": "Visiteurs uniques"
+    "message": "Unique Visitors"
   },
   "services_visits": {
-    "message": "Visites"
+    "message": "Visits"
   },
   "service_enabled": {
-    "message": "Activé"
+    "message": "Enabled"
   },
   "service_provider": {
-    "message": "Fournisseur de service"
+    "message": "Service Provider"
   },
   "service_provider_name": {
-    "message": "Nom du fournisseur de service"
+    "message": "Service Provider Name"
   },
   "show": {
-    "message": "Afficher"
+    "message": "Show"
   },
   "something_went_wrong": {
-    "message": "Quelque chose s'est mal passé"
+    "message": "Something went wrong"
   },
   "started": {
-    "message": "Date de début"
+    "message": "Start Date"
   },
   "starts": {
-    "message": "Date de début"
+    "message": "Start Date"
   },
   "start_date": {
-    "message": "Date de début"
+    "message": "Start Date"
   },
   "status": {
-    "message": "Statut"
+    "message": "Status"
   },
   "students": {
-    "message": "Étudiants"
+    "message": "Students"
   },
   "student_engagements": {
-    "message": "Implication des étudiants",
-    "description": "Graph title\r\nhttps://ccstaging.oohlalamobile.com/#/assess/dashboard?engagement=all&for=all_students&range=last_week"
+    "message": "Student Engagement",
+    "description":
+      "Graph title\r\nhttps://ccstaging.oohlalamobile.com/#/assess/dashboard?engagement=all&for=all_students&range=last_week"
   },
   "student_feedback": {
-    "message": "Retour"
+    "message": "Feedback"
   },
   "student_id": {
-    "message": "ID étudiant"
+    "message": "Student ID"
   },
   "subject": {
-    "message": "Sujet"
-  },
-  "team_member_disabled": {
-    "message": "Désactivé(e)"
+    "message": "Subject"
   },
   "team_member_disabled": {
     "message": "Disabled"
   },
   "team_settings": {
-    "message": "Réglages d'équipe"
+    "message": "Team Settings"
   },
   "templates": {
-    "message": "Modèles"
+    "message": "Templates"
   },
   "templates_button_new": {
-    "message": "Créer modèle"
+    "message": "Create Template"
   },
   "templates_crate_label_template_name": {
-    "message": "Nom du modèle"
+    "message": "Template Name"
   },
   "templates_crate_modal_title": {
-    "message": "Créer  modèle"
+    "message": "Create Template"
   },
   "templates_create_label_all_students": {
-    "message": "Annoncer à tous les étudiants"
+    "message": "Announce to all students"
   },
   "templates_delete_modal_body": {
-    "message": "Êtes-vous sûr de vouloir supprimer ce modèle ?"
+    "message": "Are you sure you want to delete this template?"
   },
   "templates_delete_modal_title": {
-    "message": "Supprimer modèle"
+    "message": "Delete Template"
   },
   "title": {
-    "message": "Titre"
+    "message": "Title"
   },
   "to": {
-    "message": "À"
+    "message": "To"
   },
   "total_ratings": {
-    "message": "Total de notes"
+    "message": "Total Ratings"
   },
   "type": {
     "message": "Type"
   },
   "update": {
-    "message": "Mettre à jour",
+    "message": "Update",
     "description": "Verb"
   },
   "upload_picture": {
-    "message": "Téléverser photo"
+    "message": "Upload Picture"
   },
   "urgent": {
     "message": "Urgent"
   },
   "users": {
-    "message": "Utilisateurs"
+    "message": "Users"
   },
   "validate_password_min_length": {
-    "message": "Assurez-vous que votre mot de passe fait au moins 6 caractères"
+    "message": "Make sure your password is at least 6 characters long"
   },
   "view_more": {
-    "message": "Voir plus"
+    "message": "View More"
   },
   "walls_button_create_post": {
-    "message": "Publier"
+    "message": "Post"
   },
   "website": {
-    "message": "Site web"
+    "message": "Website"
   },
   "welcome": {
-    "message": "Bienvenue"
+    "message": "Welcome"
   },
   "yes": {
-    "message": "oui"
+    "message": "yes"
   },
   "yes_i_am_sure": {
-    "message": "Oui, je suis sûr"
+    "message": "Yes, I'm Sure"
   },
   "you": {
-    "message": "Vous"
+    "message": "You"
   }
 }
