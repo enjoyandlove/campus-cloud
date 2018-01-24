@@ -1,0 +1,41 @@
+@import '~styles/core/colors';
+// @import '~styles/core/typography';
+@import '~styles/components/card';
+// @import '~styles/components/form';
+@import '~styles/components/button';
+@import '~styles/components/dropdown';
+@import '~bootstrap/variables';
+
+.dropdown-menu,
+.action-dropdown-list {
+  @include cpDropdownMenu();
+}
+
+.actions {
+  label {
+    @include font-normal();
+
+    display: inline-block;
+    vertical-align: -8px;
+  }
+}
+
+.action-dropdown {
+  margin-left: -2px;
+  position: relative;
+
+  i {
+    padding: 4px;
+    font-size: 23px;
+  }
+
+  .dropdown-menu {
+    top: 115%;
+    padding: 0;
+    min-width: 148px;
+
+    a:hover {
+      background: none;
+    }
+  }
+}

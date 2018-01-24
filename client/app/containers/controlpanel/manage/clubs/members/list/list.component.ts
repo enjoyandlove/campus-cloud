@@ -14,10 +14,14 @@ declare var $: any;
 
 interface IState {
   members: Array<any>;
+  sort_field: string;
+  sort_direction: string;
 }
 
 const state: IState = {
   members: [],
+  sort_field: 'firstname',
+  sort_direction: 'asc',
 };
 
 @Component({
@@ -48,6 +52,15 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
     super.isLoading().subscribe((loading) => (this.loading = loading));
   }
 
+  doSort(sort_field) {
+    this.state = {
+      ...this.state,
+      sort_field: sort_field,
+      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc',
+    };
+    this.fetch();
+  }
+
   onPaginationNext() {
     super.goToNext();
     this.fetch();
@@ -65,6 +78,8 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
     const clubId = this.route.snapshot.parent.parent.parent.params['clubId'];
 
     memberSearch.append('school_id', schoolId);
+    memberSearch.append('sort_field', this.state.sort_field);
+    memberSearch.append('sort_direction', this.state.sort_direction);
 
     groupSearch.append('store_id', clubId);
     groupSearch.append('school_id', schoolId);

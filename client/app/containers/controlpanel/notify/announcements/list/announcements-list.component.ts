@@ -11,12 +11,16 @@ interface IState {
   messages: Array<any>;
   query: string;
   type: number;
+  sort_field: string;
+  sort_direction: string;
 }
 
 const state: IState = {
   messages: [],
   query: null,
   type: null,
+  sort_field: 'sent_time',
+  sort_direction: 'asc',
 };
 
 declare var $: any;
@@ -44,6 +48,16 @@ export class AnnouncementsListComponent extends BaseComponent
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
+
+    this.fetch();
+  }
+
+  doSort(sort_field) {
+    this.state = {
+      ...this.state,
+      sort_field: sort_field,
+      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc',
+    };
 
     this.fetch();
   }
@@ -106,6 +120,8 @@ export class AnnouncementsListComponent extends BaseComponent
 
     search.append('priority', type);
     search.append('search_str', this.state.query);
+    search.append('sort_field', this.state.sort_field);
+    search.append('sort_direction', this.state.sort_direction);
     search.append('school_id', this.session.g.get('school').id.toString());
 
     super

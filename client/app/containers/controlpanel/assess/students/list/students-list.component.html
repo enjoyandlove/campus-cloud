@@ -21,9 +21,18 @@
       <ul class="students cp-form">
         <li class="cp-form__header col-xs-12">
           <div class="row">
-            <span class="col-xs-3" i18n>{{ 'name' | cpI18n }}</span>
-            <span class="col-xs-3" i18n>{{ 'assess_engagements_last_seven_days' | cpI18n }}</span>
-            <span class="col-xs-3" i18n>{{ 'assess_last_engagement' | cpI18n }}</span>
+            <span
+              class="col-xs-3 hover"
+              (click)="doSort('firstname')">
+              {{ 'name' | cpI18n }}
+              <span *ngIf="state.sort_field === 'firstname'">
+                <i class="material-icons">
+                  {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+                </i>
+              </span>
+            </span>
+            <span class="col-xs-3">{{ 'assess_engagements_last_seven_days' | cpI18n }}</span>
+            <span class="col-xs-3">{{ 'assess_last_engagement' | cpI18n }}</span>
             <span class="col-xs-3"></span>
           </div>
         </li>
