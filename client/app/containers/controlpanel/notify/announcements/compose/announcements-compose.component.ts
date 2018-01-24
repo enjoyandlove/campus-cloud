@@ -3,7 +3,8 @@ import {
   OnInit,
   Output,
   EventEmitter,
-  OnDestroy, Input,
+  OnDestroy,
+  Input,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
@@ -376,9 +377,10 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       content: this.cpI18n.translate('notify_announcement_template_to_tooltip'),
       link: {
         text: this.cpI18n.translate('lists_button_create'),
-        url: 'https://oohlalamobile.zendesk.com/hc/en-us/articles/' +
-        '115004330554-Create-a-List-of-Students',
-      }
+        url:
+          'https://oohlalamobile.zendesk.com/hc/en-us/articles/' +
+          '115004330554-Create-a-List-of-Students',
+      },
     });
 
     let canDoEmergency;
@@ -387,7 +389,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       withSwitcher: true,
       suggestions: this.suggestions,
       reset: this.resetChips$,
-      customCSS: true,
+      unsetOverflow: true,
     };
     const schoolPrivileges = this.session.g.get('user').school_level_privileges[
       this.session.g.get('school').id
