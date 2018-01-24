@@ -42,6 +42,8 @@ import {
   CPButtonComponent,
   CPTextEditorComponent,
   CPTopBanerComponent,
+  CPOnboardingComponent,
+  CPStepperComponent
   CPTooltipComponent,
   CPResourceBannerComponent
 } from './components';
@@ -85,6 +87,8 @@ import { CPMapsService } from './services/maps.service';
     CPTextEditorComponent,
     CPI18nPipe,
     CPTopBanerComponent,
+    CPOnboardingComponent,
+    CPStepperComponent
     CPTooltipComponent,
     CPResourceBannerComponent
   ],
@@ -136,6 +140,8 @@ import { CPMapsService } from './services/maps.service';
     CPTextEditorComponent,
     CPI18nPipe,
     CPTopBanerComponent,
+    CPOnboardingComponent,
+    CPStepperComponent
     CPTooltipComponent,
     CPResourceBannerComponent
   ],

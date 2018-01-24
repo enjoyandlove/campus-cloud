@@ -12,6 +12,7 @@ import { CPTrackingService } from './../../shared/services/tracking.service';
 })
 export class ControlPanelComponent implements OnInit {
   isProd = isProd;
+  is_onboarded = true;
 
   constructor(
     private router: Router,
@@ -20,6 +21,18 @@ export class ControlPanelComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.is_onboarded = this.session.g.get('user').flags.is_onboarding;
+    if (!this.is_onboarded) {
+      setTimeout(
+        () => {
+          $('#openOnboardingModal').modal({
+            keyboard: false,
+            backdrop: 'static'
+          });
+        },
+        1,
+      );
+    }
     /**
      * this gets initilized only once
      * so we track the first page load here
