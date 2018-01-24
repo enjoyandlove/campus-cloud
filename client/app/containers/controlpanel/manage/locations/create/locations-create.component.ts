@@ -3,6 +3,7 @@ import {
   OnInit,
   EventEmitter,
   Output,
+  ChangeDetectorRef,
   HostListener,
   ElementRef,
 } from '@angular/core';
@@ -37,6 +38,7 @@ export class LocationsCreateComponent implements OnInit {
     private fb: FormBuilder,
     private session: CPSession,
     public cpI18n: CPI18nService,
+    public cdRef: ChangeDetectorRef,
     public service: LocationsService,
   ) {}
 
@@ -75,6 +77,7 @@ export class LocationsCreateComponent implements OnInit {
   }
 
   onPlaceChange(data) {
+    // console.log('data');
     if (!data) {
       return;
     }
@@ -145,6 +148,13 @@ export class LocationsCreateComponent implements OnInit {
 
     this.form.valueChanges.subscribe((_) => {
       this.buttonData = { ...this.buttonData, disabled: !this.form.valid };
+
+      /**
+       * INTENTIONAL
+       * In order to reenable the button
+       * after selecting a location from the dropdown
+       */
+      this.cdRef.detectChanges();
     });
   }
 }
