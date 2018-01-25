@@ -9,7 +9,10 @@ import {
   ISnackbar,
   SNACKBAR_SHOW,
 } from '../../../../../reducers/snackbar.reducer';
-import { CPI18nService } from '../../../../../shared/services/index';
+import {
+  CPI18nService,
+  CPCroppieService,
+} from '../../../../../shared/services/index';
 
 @Component({
   selector: 'cp-customization-list',
@@ -19,9 +22,10 @@ import { CPI18nService } from '../../../../../shared/services/index';
 export class CustomizationListComponent extends BaseComponent
   implements OnInit {
   image;
-  canvas;
   isEdit;
   loading;
+  uploading = false;
+  canvas: CPCroppieService;
 
   constructor(
     public session: CPSession,
@@ -88,18 +92,17 @@ export class CustomizationListComponent extends BaseComponent
   }
 
   canvasInit(image) {
-    // https://foliotek.github.io/Croppie/
-    const Croppie = require('croppie');
     const hostEl = document.getElementById('canvas_wrapper');
-
-    this.canvas = new Croppie(hostEl, {
+    const canvasOptions = {
       enableZoom: false,
       enforceBoundary: true,
       enableOrientation: false,
       viewport: { width: 665, height: 270 },
       boundary: { height: 270 },
       url: image,
-    });
+    };
+
+    this.canvas = new CPCroppieService(hostEl, canvasOptions);
   }
 
   imageToBase64(): Promise<any> {
@@ -119,9 +122,11 @@ export class CustomizationListComponent extends BaseComponent
   }
 
   onSave() {
+    this.uploading = true;
     this.imageToBase64()
       .then((base64ImageData) => this.uploadBase64Image(base64ImageData))
       .then((savedBase64Image) => {
+        this.uploading = false;
         const search = new URLSearchParams();
         search.append('school_id', this.session.g.get('school').id);
 
@@ -135,6 +140,7 @@ export class CustomizationListComponent extends BaseComponent
       })
       .catch((_) => {
         this.onError();
+        this.uploading = false;
       });
   }
 
