@@ -750,6 +750,21 @@
   "csv_modal_title": {
     "message": "Upload CSV File"
   },
+  "customization_description": {
+    "message": "Pick one that shows off your school's personality"
+  },
+  "customization_image_upload_error": {
+    "message": "Something went wrong while uploading your image"
+  },
+  "customization_image_upload_success": {
+    "message": "Banner updated successfully "
+  },
+  "customization_instructions": {
+    "message": "Drag to Reposition Photo"
+  },
+  "customization_title": {
+    "message": "Personalize your Cover Picture"
+  },
   "dashboard_announcements": {
     "message": "Announcements"
   },

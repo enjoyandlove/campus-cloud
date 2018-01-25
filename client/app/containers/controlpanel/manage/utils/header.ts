@@ -75,6 +75,13 @@ export class ManageHeaderService {
         return canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.calendar)
           ? child
           : null;
+      } else if (child.privilege === CP_PRIVILEGES_MAP.app_customization) {
+        return canSchoolReadResource(
+          this.session.g,
+          CP_PRIVILEGES_MAP.app_customization,
+        )
+          ? child
+          : null;
       }
     });
 
