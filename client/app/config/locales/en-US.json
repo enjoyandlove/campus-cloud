@@ -760,7 +760,7 @@
     "message": "Upload CSV File"
   },
   "customization_description": {
-    "message": "Pick one that shows off your school's personality"
+    "message": "(Appears at the top of the Campus Guide in the mobile app.)"
   },
   "customization_image_upload_error": {
     "message": "Something went wrong while uploading your image"

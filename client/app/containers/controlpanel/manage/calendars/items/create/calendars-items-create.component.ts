@@ -43,8 +43,8 @@ export class CalendarsItemCreateComponent implements OnInit {
         subheading: null,
         em: null,
         crumbs: {
-          url: '/manage/calendars',
-          label: 'calendars',
+          url: null,
+          label: null,
         },
         children: [],
       },
