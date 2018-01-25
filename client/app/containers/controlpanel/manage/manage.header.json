@@ -43,6 +43,12 @@
       "privilege": 16,
       "label": "calendars",
       "url": "/manage/calendars"
+    },
+    {
+      "new": true,
+      "privilege": 13,
+      "label": "app_customization",
+      "url": "/manage/customization"
     }
   ]
 }

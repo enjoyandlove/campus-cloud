@@ -1,41 +1,40 @@
 import { Component, OnInit } from '@angular/core';
-import { Headers } from '@angular/http';
+import { URLSearchParams } from '@angular/http';
+import { Store } from '@ngrx/store';
 
-import { API } from '../../../.././../config/api';
-import { appStorage } from '../../../../../shared/utils';
-import { CPSession, ISchool } from '../../../../../session';
-// import { STATUS } from '../../../.././../shared/constants';
-import { FileUploadService } from '../../../../../shared/services';
+import { CPSession } from '../../../../../session';
+import { BaseComponent } from '../../../../../base';
+import { CustomizationService } from './../customization.service';
+import {
+  ISnackbar,
+  SNACKBAR_SHOW,
+} from '../../../../../reducers/snackbar.reducer';
+import { CPI18nService } from '../../../../../shared/services/index';
 
 @Component({
   selector: 'cp-customization-list',
   templateUrl: './customization-list.component.html',
   styleUrls: ['./customization-list.component.scss'],
 })
-export class CustomizationListComponent implements OnInit {
-  error;
+export class CustomizationListComponent extends BaseComponent
+  implements OnInit {
   image;
   canvas;
   isEdit;
-  isError;
-  school: ISchool;
+  loading;
 
   constructor(
-    private session: CPSession,
-    private fileUploadService: FileUploadService,
+    public session: CPSession,
+    public cpI18n: CPI18nService,
+    public store: Store<ISnackbar>,
+    public service: CustomizationService,
   ) {
-    this.school = this.session.g.get('school');
-  }
-
-  onError(error) {
-    this.isError = true;
-    this.error = error;
+    super();
+    super.isLoading().subscribe((loading) => (this.loading = loading));
   }
 
   onReset() {
     this.isEdit = false;
-    this.isError = false;
-    this.error = null;
   }
 
   onCancel() {
@@ -49,64 +48,97 @@ export class CustomizationListComponent implements OnInit {
     this.canvas.bind({ url: image });
   }
 
-  onSave() {
-    // const promise: Promise<any> = this.canvas.result({
-    //   type: 'base64',
-    //   size: 'viewport',
-    //   format: 'jpeg',
-    // });
-    // promise
-    //   .then((res) => {
-    //     // let reader = new FileReader();
-    //     // console.log(reader);
-    //     // reader.readAsDataURL(res);
-    //     // console.log(reader.result);
-    //     // // this.onFileUpload(res);
-    //   })
-    //   .catch((err) => {
-    //     throw new Error(err);
-    //   });
+  onSuccess(
+    message = this.cpI18n.translate('customization_image_upload_success'),
+  ) {
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        body: message,
+        autoClose: true,
+      },
+    });
   }
 
-  onFileUpload(file) {
-    // this.reset.emit();
-
-    // if (!file) { return; }
-
-    // const fileExtension = CPArray.last(file.name.split('.'));
-
-    // if (!CPImage.isSizeOk(file.size, CPImage.MAX_IMAGE_SIZE)) {
-    //   this.error.emit(STATUS.FILE_IS_TOO_BIG);
-    //   return;
-    // }
-
-    // if (!CPImage.isValidExtension(fileExtension, CPImage.VALID_EXTENSIONS)) {
-    //   this.error.emit(STATUS.WRONG_EXTENSION);
-    //   return;
-    // }
-
-    const headers = new Headers();
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
-    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(
-      appStorage.keys.SESSION,
-    )}`;
-
-    headers.append('Authorization', auth);
-
-    this.fileUploadService.uploadFile(file, url, headers);
-    // .subscribe((res) => console.log(res));
+  onError(message = this.cpI18n.translate('customization_image_upload_error')) {
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        autoClose: true,
+        class: 'danger',
+        body: message,
+      },
+    });
   }
 
-  ngOnInit() {
+  loadImage() {
+    const search = new URLSearchParams();
+    search.append('school_id', this.session.g.get('school').id);
+
+    const stream$ = this.service.getCoverImage(search);
+    super.fetchData(stream$).then((res) => {
+      setTimeout(
+        () => {
+          this.canvasInit(res.data.cover_photo_url);
+        },
+
+        5,
+      );
+    });
+  }
+
+  canvasInit(image) {
     // https://foliotek.github.io/Croppie/
     const Croppie = require('croppie');
+    const hostEl = document.getElementById('canvas_wrapper');
 
-    this.canvas = new Croppie(document.getElementById('canvas_wrapper'), {
+    this.canvas = new Croppie(hostEl, {
       enableZoom: false,
+      enforceBoundary: true,
       enableOrientation: false,
       viewport: { width: 665, height: 270 },
       boundary: { height: 270 },
-      url: this.school.logo_url,
+      url: image,
     });
+  }
+
+  imageToBase64(): Promise<any> {
+    return this.canvas.result({
+      type: 'base64',
+      size: 'viewport',
+      format: 'jpeg',
+    });
+  }
+
+  uploadBase64Image(base64ImageData: string) {
+    const body = {
+      base64_image: base64ImageData,
+    };
+
+    return this.service.uploadBase64Image(body).toPromise();
+  }
+
+  onSave() {
+    this.imageToBase64()
+      .then((base64ImageData) => this.uploadBase64Image(base64ImageData))
+      .then((savedBase64Image) => {
+        const search = new URLSearchParams();
+        search.append('school_id', this.session.g.get('school').id);
+
+        return this.service
+          .updateSchoolImage(savedBase64Image.image_url, search)
+          .toPromise();
+      })
+      .then(() => {
+        this.onReset();
+        this.onSuccess();
+      })
+      .catch((_) => {
+        this.onError();
+      });
+  }
+
+  ngOnInit() {
+    this.loadImage();
   }
 }
