@@ -525,6 +525,9 @@
   "calendars_item_delete_modal_body": {
     "message": "Are you sure you want to delete %s?"
   },
+  "calendars_item_description_label": {
+    "message": "Item Description"
+  },
   "calendars_item_details": {
     "message": "Item details"
   },
@@ -533,6 +536,9 @@
   },
   "calendars_item_modal_title": {
     "message": "Delete Calendar Item"
+  },
+  "calendars_item_name_label": {
+    "message": "Item name"
   },
   "calendars_label_description": {
     "message": "Description"
@@ -766,7 +772,7 @@
     "message": "Drag to Reposition Photo"
   },
   "customization_title": {
-    "message": "Personalize your Cover Picture"
+    "message": "Choose an App Banner"
   },
   "dashboard_announcements": {
     "message": "Announcements"
@@ -906,7 +912,7 @@
     "message": "End Date:"
   },
   "ends": {
-    "message": "End date"
+    "message": "End Date"
   },
   "end_date": {
     "message": "End Date"
@@ -1304,10 +1310,10 @@
     "message": "Locations"
   },
   "locations_btn_create": {
-    "message": "Add Location"
+    "message": "Create Location"
   },
   "locations_create_modal_title": {
-    "message": "Add Location"
+    "message": "Create Location"
   },
   "locations_delete_modal_body": {
     "message": "Are you sure you want to delete %s?"

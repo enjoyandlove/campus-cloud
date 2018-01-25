@@ -23,7 +23,7 @@ export class CustomizationListComponent extends BaseComponent
   implements OnInit {
   isEdit;
   loading;
-  currentImage;
+  originalImage;
   uploading = false;
   canvas: CPCroppieService;
 
@@ -47,7 +47,6 @@ export class CustomizationListComponent extends BaseComponent
 
   onUpload(image) {
     this.isEdit = true;
-    this.currentImage = null;
 
     setTimeout(
       () => {
@@ -87,7 +86,7 @@ export class CustomizationListComponent extends BaseComponent
 
     const stream$ = this.service.getCoverImage(search);
     super.fetchData(stream$).then((res) => {
-      this.currentImage = res.data.cover_photo_url;
+      this.originalImage = res.data.cover_photo_url;
     });
   }
 
@@ -135,7 +134,7 @@ export class CustomizationListComponent extends BaseComponent
           .toPromise();
       })
       .then((res) => {
-        this.currentImage = res.cover_photo_url;
+        this.originalImage = res.cover_photo_url;
         this.onReset();
         this.onSuccess();
       })

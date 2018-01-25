@@ -18,13 +18,13 @@
             <div class="col-xs-12">
               <div
                 id="canvas_wrapper"
-                *ngIf="currentImage"
+                *ngIf="!isEdit"
                 class="canvas__wrapper canvas__wrapper--image"
-                [ngStyle]="{'background-image': 'url(' + currentImage + ')'}">
+                [ngStyle]="{'background-image': 'url(' + originalImage + ')'}">
               </div>
               <div
                 id="canvas_wrapper"
-                *ngIf="!currentImage"
+                *ngIf="isEdit"
                 class="canvas__wrapper">
                 <div class="canvas__bounds"></div>
               </div>
