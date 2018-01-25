@@ -6,10 +6,8 @@
       {{ 'cancel' | cpI18n }}
   </button>
 
-  <button
-    type="button"
-    (click)="save.emit()"
-    class="cpbtn cpbtn--primary" i18n>
-    {{ 'save' | cpI18n }}
-  </button>
+  <cp-button
+    [props]="buttonData"
+    (buttonClick)="save.emit()">
+  </cp-button>
 </div>

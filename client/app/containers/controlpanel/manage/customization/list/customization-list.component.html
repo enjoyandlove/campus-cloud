@@ -34,6 +34,7 @@
                 *ngIf="isEdit"
                 (save)="onSave()"
                 (cancel)="onCancel()"
+                [loading]="uploading"
                 class="control-buttons">
               </cp-customizaton-control-buttons>
 

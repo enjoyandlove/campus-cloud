@@ -17,6 +17,7 @@ export class CustomizationUploadButtonComponent implements OnInit {
   @Output() upload: EventEmitter<string> = new EventEmitter();
 
   _error;
+  uploading = false;
 
   constructor(private fileUploadService: FileUploadService) {}
 
@@ -37,6 +38,7 @@ export class CustomizationUploadButtonComponent implements OnInit {
       return;
     }
 
+    this.uploading = true;
     const headers = new Headers();
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
     const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(
@@ -45,11 +47,15 @@ export class CustomizationUploadButtonComponent implements OnInit {
 
     headers.append('Authorization', auth);
 
-    this.fileUploadService
-      .uploadFile(file, url, headers)
-      .subscribe(
-        (res) => this.upload.emit(res.image_url),
-        (_) => this.error.emit(STATUS.SOMETHING_WENT_WRONG),
-      );
+    this.fileUploadService.uploadFile(file, url, headers).subscribe(
+      (res) => {
+        this.uploading = false;
+        this.upload.emit(res.image_url);
+      },
+      (_) => {
+        this.uploading = false;
+        this.error.emit(STATUS.SOMETHING_WENT_WRONG);
+      },
+    );
   }
 }
