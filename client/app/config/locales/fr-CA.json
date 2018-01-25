@@ -198,6 +198,9 @@
   "announcement_confirm_emergency": {
     "message": "Emergency Announcement"
   },
+  "announcement_confirm_emergency_body": {
+    "message": "You are about to send an emergency notification."
+  },
   "announcement_success_sent": {
     "message": "Success! Your message has been sent"
   },
