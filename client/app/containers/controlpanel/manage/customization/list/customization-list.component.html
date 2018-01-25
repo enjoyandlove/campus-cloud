@@ -18,6 +18,13 @@
             <div class="col-xs-12">
               <div
                 id="canvas_wrapper"
+                *ngIf="currentImage"
+                class="canvas__wrapper canvas__wrapper--image"
+                [ngStyle]="{'background-image': 'url(' + currentImage + ')'}">
+              </div>
+              <div
+                id="canvas_wrapper"
+                *ngIf="!currentImage"
                 class="canvas__wrapper">
                 <div class="canvas__bounds"></div>
               </div>

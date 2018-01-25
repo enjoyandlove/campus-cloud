@@ -21,9 +21,9 @@ import {
 })
 export class CustomizationListComponent extends BaseComponent
   implements OnInit {
-  image;
   isEdit;
   loading;
+  currentImage;
   uploading = false;
   canvas: CPCroppieService;
 
@@ -47,9 +47,15 @@ export class CustomizationListComponent extends BaseComponent
 
   onUpload(image) {
     this.isEdit = true;
-    this.image = image;
+    this.currentImage = null;
 
-    this.canvas.bind({ url: image });
+    setTimeout(
+      () => {
+        this.canvasInit(image);
+      },
+
+      5,
+    );
   }
 
   onSuccess(
@@ -81,25 +87,19 @@ export class CustomizationListComponent extends BaseComponent
 
     const stream$ = this.service.getCoverImage(search);
     super.fetchData(stream$).then((res) => {
-      setTimeout(
-        () => {
-          this.canvasInit(res.data.cover_photo_url);
-        },
-
-        5,
-      );
+      this.currentImage = res.data.cover_photo_url;
     });
   }
 
   canvasInit(image) {
     const hostEl = document.getElementById('canvas_wrapper');
     const canvasOptions = {
-      enableZoom: false,
-      enforceBoundary: true,
-      enableOrientation: false,
-      viewport: { width: 665, height: 270 },
-      boundary: { height: 270 },
-      url: image,
+      showZoomer: false,
+      enableResize: false,
+      enableOrientation: true,
+      viewport: { width: 320, height: 180 },
+      boundary: { width: 665, height: 270 },
+      url: `${image}?disableCache=true`,
     };
 
     this.canvas = new CPCroppieService(hostEl, canvasOptions);
@@ -108,7 +108,7 @@ export class CustomizationListComponent extends BaseComponent
   imageToBase64(): Promise<any> {
     return this.canvas.result({
       type: 'base64',
-      size: 'viewport',
+      size: 'original',
       format: 'jpeg',
     });
   }
@@ -134,7 +134,8 @@ export class CustomizationListComponent extends BaseComponent
           .updateSchoolImage(savedBase64Image.image_url, search)
           .toPromise();
       })
-      .then(() => {
+      .then((res) => {
+        this.currentImage = res.cover_photo_url;
         this.onReset();
         this.onSuccess();
       })

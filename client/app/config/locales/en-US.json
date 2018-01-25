@@ -924,7 +924,7 @@
     "message": "Invalid Extension"
   },
   "error_no_hosts_found_help": {
-    "message": "You do not have sufficient privileges to associate this new event with a service or a club."
+    "message": "You do not have sufficient permissions to filter the list of events by host."
   },
   "event": {
     "message": "Event"
@@ -1347,7 +1347,7 @@
     "message": "Team Members"
   },
   "maps": {
-    "message": "Maps"
+    "message": "Locations"
   },
   "member": {
     "message": "Member"
