@@ -31,12 +31,11 @@ const i18n = new CPI18nPipe();
 })
 export class EventsExcelComponent extends BaseComponent implements OnInit {
   @Input() storeId: number;
-
   @Input() clubId: number;
   @Input() isClub: boolean;
-
   @Input() serviceId: number;
   @Input() isService: boolean;
+  @Input() isChecked: boolean;
 
   error;
   events;
@@ -45,7 +44,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   buttonData;
   uploadButtonData;
   mockDropdown;
-  isChecked = [];
+  isSingleChecked = [];
   school: ISchool;
   loading = false;
   form: FormGroup;
@@ -132,7 +131,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
 
     this.events.forEach((event, index) => {
       control.push(this.buildEventControl(event));
-      this.isChecked.push({ index, checked: false });
+      this.isSingleChecked.push({ index, checked: false });
     });
 
     this.isFormReady = true;
@@ -190,7 +189,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   onBulkChange(actions) {
     const control = <FormArray>this.form.controls['events'];
 
-    this.isChecked.map((item) => {
+    this.isSingleChecked.map((item) => {
       if (item.checked) {
         const ctrl = <FormGroup>control.controls[item.index];
 
@@ -258,11 +257,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   }
 
   onSingleCheck(checked, index) {
-    let _isChecked;
-    let _getOnlyChecked;
-    let _getChecked;
-
-    _isChecked = this.isChecked.map((item) => {
+    const _isChecked = this.isSingleChecked.map((item) => {
       if (item.index === index) {
         item = Object.assign({}, item, { checked: checked });
       }
@@ -270,30 +265,26 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       return item;
     });
 
-    _getOnlyChecked = _isChecked.filter((item) => {
+    const _getOnlyChecked = _isChecked.filter((item) => {
       if (item.checked) {
         return item;
       }
     });
 
-    // this.uploadButtonData.isChecked = _isChecked.length === _getOnlyChecked.length;
-    if (_isChecked.length === _getOnlyChecked.length) {
-      // todo select check all checkbox
-    }
-
-    _getChecked = _getOnlyChecked.length > 0;
+    const _getChecked = _getOnlyChecked.length > 0;
+    this.isChecked = _isChecked.length === _getOnlyChecked.length;
     this.updateUploadPictureButtonStatus(_getChecked);
-    this.isChecked = [..._isChecked];
+    this.isSingleChecked = [..._isChecked];
   }
 
   onCheckAll(checked) {
     const _isChecked = [];
 
-    this.isChecked.map((item) => {
+    this.isSingleChecked.map((item) => {
       _isChecked.push(Object.assign({}, item, { checked: checked }));
     });
     this.updateUploadPictureButtonStatus(checked);
-    this.isChecked = [..._isChecked];
+    this.isSingleChecked = [..._isChecked];
 
   }
 
@@ -448,7 +439,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.isChecked = false;
     this.uploadButtonData = {
       class: 'disabled',
       disabled: true

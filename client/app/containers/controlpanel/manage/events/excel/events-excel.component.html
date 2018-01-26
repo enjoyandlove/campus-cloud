@@ -9,6 +9,7 @@
         [isClub]="isClub"
         [serviceId]="serviceId"
         [isService]="isService"
+        [isChecked]="isChecked"
         (bulkChange)="onBulkChange($event)"
         (checkAll)="onCheckAll($event)"
         (hostChange)="onHostBulkChange($event)"
@@ -36,7 +37,7 @@
                       <div [class]="[storeId || clubId? 'col-xs-3 no-left-padding' : 'col-xs-4 no-left-padding']">
                         <cp-checkbox
                           class="checkbox pull-left"
-                          [isChecked]="isChecked[i].checked"
+                          [isChecked]="isSingleChecked[i].checked"
                           (toggle)="onSingleCheck($event, i)">
                         </cp-checkbox>
 
