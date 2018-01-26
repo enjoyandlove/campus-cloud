@@ -81,7 +81,7 @@ const manageAdminDropdown = function(privilege = { r: false, w: false }) {
     items = [
       ...items,
       {
-        label: _cpI18n.translate('enabled'),
+        label: _cpI18n.translate('admin_enabled'),
         action: 1,
       },
     ];
