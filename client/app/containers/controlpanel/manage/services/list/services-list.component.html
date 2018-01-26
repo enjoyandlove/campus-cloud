@@ -24,34 +24,13 @@
             (click)="doSort('name')">
             {{ 'name' | cpI18n }}
             <span *ngIf="state.sort_field === 'name'">
-              <i
-                class="material-icons"
-                *ngIf="state.sort_direction === 'asc'">
-                arrow_upward
-              </i>
-              <i
-                class="material-icons"
-                *ngIf="state.sort_direction === 'desc'">
-                arrow_downward
+              <i class="material-icons">
+                {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
               </i>
             </span>
           </span>
-          <span
-            class="col-xs-2 hover"
-            (click)="doSort('total_visits')">
+          <span class="col-xs-2">
             {{ 'services_visits' | cpI18n }}
-            <span *ngIf="state.sort_field === 'total_visits'">
-              <i
-                class="material-icons"
-                *ngIf="state.sort_direction === 'asc'">
-                arrow_upward
-              </i>
-              <i
-                class="material-icons"
-                *ngIf="state.sort_direction === 'desc'">
-                arrow_downward
-              </i>
-            </span>
           </span>
           <span class="col-xs-2">{{ 'ratings' | cpI18n }}</span>
           <span class="col-xs-3">{{ 'average_rating' | cpI18n }}</span>
