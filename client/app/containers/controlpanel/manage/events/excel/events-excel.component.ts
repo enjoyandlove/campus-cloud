@@ -271,9 +271,10 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       }
     });
 
+    const _isParentChecked = _isChecked.length === _getOnlyChecked.length;
     const _getChecked = _getOnlyChecked.length > 0;
-    this.isChecked = _isChecked.length === _getOnlyChecked.length;
     this.updateUploadPictureButtonStatus(_getChecked);
+    this.updateParentCheckedStatus(_isParentChecked);
     this.isSingleChecked = [..._isChecked];
   }
 
@@ -293,12 +294,17 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     this.onSingleCheck(checked, index);
   }
 
+  updateParentCheckedStatus(checked) {
+    this.isChecked = checked;
+  }
+
   updateUploadPictureButtonStatus(checked) {
     const className = checked ? 'cancel' : 'disabled';
 
     this.uploadButtonData = {
       class: className
     };
+    this.isChecked = checked;
   }
 
   onHostBulkChange(store_id) {
