@@ -257,7 +257,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   }
 
   onSingleCheck(checked, index) {
-    const _isChecked = this.isSingleChecked.map((item) => {
+    const isChecked = this.isSingleChecked.map((item) => {
       if (item.index === index) {
         item = Object.assign({}, item, { checked: checked });
       }
@@ -265,27 +265,27 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       return item;
     });
 
-    const _getOnlyChecked = _isChecked.filter((item) => {
+    const getOnlyChecked = isChecked.filter((item) => {
       if (item.checked) {
         return item;
       }
     });
 
-    const _isParentChecked = _isChecked.length === _getOnlyChecked.length;
-    const _getChecked = _getOnlyChecked.length > 0;
-    this.updateUploadPictureButtonStatus(_getChecked);
-    this.updateParentCheckedStatus(_isParentChecked);
-    this.isSingleChecked = [..._isChecked];
+    const isParentChecked = isChecked.length === getOnlyChecked.length;
+    const getChecked = getOnlyChecked.length > 0;
+    this.updateUploadPictureButtonStatus(getChecked);
+    this.updateParentCheckedStatus(isParentChecked);
+    this.isSingleChecked = [...isChecked];
   }
 
   onCheckAll(checked) {
-    const _isChecked = [];
+    const isChecked = [];
 
     this.isSingleChecked.map((item) => {
-      _isChecked.push(Object.assign({}, item, { checked: checked }));
+      isChecked.push(Object.assign({}, item, { checked: checked }));
     });
     this.updateUploadPictureButtonStatus(checked);
-    this.isSingleChecked = [..._isChecked];
+    this.isSingleChecked = [...isChecked];
 
   }
 
