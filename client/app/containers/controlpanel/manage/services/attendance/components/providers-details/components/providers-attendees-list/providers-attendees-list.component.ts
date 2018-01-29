@@ -18,8 +18,8 @@ interface IState {
 
 const state: IState = {
   search_text: null,
-  sort_field: 'firstname',
-  sort_direction: 'asc',
+  sort_field: 'check_in_time',
+  sort_direction: 'desc',
 };
 
 @Component({
@@ -39,6 +39,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent
   checkinMethods;
   state: IState = state;
   dateFormat = FORMAT.DATETIME;
+  defaultImage = require('public/default/user.png');
 
   constructor(
     private cpI18n: CPI18nService,

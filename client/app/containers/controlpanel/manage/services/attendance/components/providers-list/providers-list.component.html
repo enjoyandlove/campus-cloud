@@ -18,15 +18,8 @@
                   (click)="doSort('provider_name')">
                   {{ 'service_provider' | cpI18n }}
                   <span *ngIf="state.sort_field === 'provider_name'">
-                    <i
-                      class="material-icons"
-                      *ngIf="state.sort_direction === 'asc'">
-                      arrow_upward
-                    </i>
-                    <i
-                      class="material-icons"
-                      *ngIf="state.sort_direction === 'desc'">
-                      arrow_downward
+                    <i class="material-icons">
+                      {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
                     </i>
                   </span>
                 </span>
@@ -40,36 +33,15 @@
                   (click)="doSort('num_ratings')">
                   {{ 'rating' | cpI18n }}
                   <span *ngIf="state.sort_field === 'num_ratings'">
-                    <i
-                      class="material-icons"
-                      *ngIf="state.sort_direction === 'asc'">
-                      arrow_upward
-                    </i>
-                    <i
-                      class="material-icons"
-                      *ngIf="state.sort_direction === 'desc'">
-                      arrow_downward
+                    <i class="material-icons">
+                      {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
                     </i>
                   </span>
                 </span>
               </div>
               <div [class]="[displayRatingColumn ? 'col-xs-1' : 'col-xs-1 col-xs-offset-5']">
-                <span
-                  class="hover"
-                  (click)="doSort('total_visits')">
+                <span>
                   {{ 'services_visits' | cpI18n }}
-                  <span *ngIf="state.sort_field === 'total_visits'">
-                    <i
-                      class="material-icons"
-                      *ngIf="state.sort_direction === 'asc'">
-                      arrow_upward
-                    </i>
-                    <i
-                      class="material-icons"
-                      *ngIf="state.sort_direction === 'desc'">
-                      arrow_downward
-                    </i>
-                  </span>
                 </span>
               </div>
               <div class="col-xs-2">
