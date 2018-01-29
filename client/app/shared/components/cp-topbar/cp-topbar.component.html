@@ -4,7 +4,10 @@
       <div class="col-xs-12">
         <div class="avatar pull-left">
           <a [routerLink]="['/dashboard']">
-            <img class="img-rounded" [src]="logo" alt="Campus Cloud">
+            <img
+              [src]="logo"
+              class="img-rounded"
+              alt="Control Panel">
           </a>
         </div>
         <ul class="nav__links pull-left">
@@ -34,12 +37,12 @@
           <div class="row">
             <div class="col-xs-10 no-left-padding no-right-padding">
               <div
-                *ngIf="school.logo_url !== ''"
+                *ngIf="school.app_logo_url !== ''"
                 class="nav__school__thumb pull-left img-rounded"
-                [ngStyle]="{'background-image': 'url(' + school.logo_url + ')'}">
+                [ngStyle]="{'background-image': 'url(' + school.app_logo_url + ')'}">
               </div>
               <div
-                *ngIf="school.logo_url === ''"
+                *ngIf="school.app_logo_url === ''"
                 class="nav__school__thumb pull-left img-rounded"
                 [ngStyle]="{'background-image': 'url( ' + defaultImage + ')'}">
               </div>

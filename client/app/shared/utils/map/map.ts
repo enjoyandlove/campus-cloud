@@ -119,7 +119,9 @@ const setFormLocationData = (form: FormGroup, location: ILocation) => {
   form.controls['city'].setValue(location.city);
   form.controls['province'].setValue(location.province);
   form.controls['country'].setValue(location.country);
-  form.controls['location'].setValue(location.location);
+  if (form.controls['location']) {
+    form.controls['location'].setValue(location.location);
+  }
   form.controls['latitude'].setValue(location.latitude);
   form.controls['longitude'].setValue(location.longitude);
   form.controls['address'].setValue(location.address);

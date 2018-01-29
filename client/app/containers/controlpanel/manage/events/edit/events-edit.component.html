@@ -137,7 +137,11 @@
           <div class="row margin-top">
             <div class="col-xs-6">
               <div class="form-group">
-                <label i18n>{{ 'events_event_manager' | cpI18n }}</label>
+                <label i18n>{{ 'events_event_manager' | cpI18n }}
+                  <cp-tooltip
+                    [toolTipContent]="eventManager">
+                  </cp-tooltip>
+                </label>
                 <cp-dropdown
                   [items]="managers"
                   [selectedItem]="selectedManager"
@@ -148,7 +152,11 @@
             </div>
             <div class="col-xs-6">
               <div class="form-group">
-                <label i18n>{{ 'events_attendance_manager_full' | cpI18n }} ({{ 'optional' | cpI18n }})</label>
+                <label i18n>{{ 'events_attendance_manager_full' | cpI18n }}
+                  <cp-tooltip
+                    [toolTipContent]="attendanceManager">
+                  </cp-tooltip>
+                </label>
                 <input
                   type="text"
                   class="form-control"
@@ -160,7 +168,11 @@
 
           <div class="row form-group">
             <div class="col-xs-6">
-              <label i18n>{{ 'student_feedback' | cpI18n }}</label>
+              <label i18n>{{ 'student_feedback' | cpI18n }}
+                <cp-tooltip
+                  [toolTipContent]="studentFeedback">
+                </cp-tooltip>
+              </label>
               <cp-dropdown
                 [items]="booleanOptions"
                 [selectedItem]="originalAttnFeedback"

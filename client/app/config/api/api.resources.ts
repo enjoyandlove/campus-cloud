@@ -27,6 +27,10 @@ export const API_ENDPOINTS = {
 
   USER_LIST: 'user_list',
 
+  LOCATIONS: 'location',
+
+  COVER_PHOTO: 'cover_photo',
+
   GROUP_THREAD: 'group_thread',
 
   ANNOUNCEMENT: 'announcement',

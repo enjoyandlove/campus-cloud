@@ -33,15 +33,8 @@
                 </i>
               </span>
             </span>
-            <span
-              class="col-xs-2 hover"
-              (click)="doSort('lists_number_of_users')">
+            <span class="col-xs-2">
               {{ 'lists_number_of_users' | cpI18n }}
-              <span *ngIf="state.sort_field === 'lists_number_of_users'">
-                <i class="material-icons">
-                  {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
-                </i>
-              </span>
             </span>
             <span class="col-xs-1 col-xs-offset-4"></span>
           </div>

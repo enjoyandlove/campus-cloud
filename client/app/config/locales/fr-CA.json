@@ -35,7 +35,7 @@
     "message": "Manage other kinds of app content"
   },
   "admin_assess_help": {
-    "message": "View the Assessment Dashboard and Student Transcript"
+    "message": "View the Assessment Dashboard"
   },
   "admin_campus_announcements": {
     "message": "Regular Announcements"
@@ -204,6 +204,9 @@
   "announcement_confirm_emergency": {
     "message": "Emergency Announcement"
   },
+  "announcement_confirm_emergency_body": {
+    "message": "You are about to send an emergency notification."
+  },
   "announcement_success_sent": {
     "message": "Success! Your message has been sent"
   },
@@ -306,7 +309,7 @@
     "message": "Measure Student Engagement Anywhere on Campus"
   },
   "assess_download_transcript": {
-    "message": "Download Transcript"
+    "message": "Download CSV File"
   },
   "assess_engagements_last_seven_days": {
     "message": "Engagement (Last 7 Days)"
@@ -377,15 +380,11 @@
   "assess_one_engagement": {
     "message": "One Engagement"
   },
-  "assess_one_engagement_tooltip": {
-    "message": "Students who attended one engagement for the period selected"
-  },
   "assess_repeat_engagement": {
     "message": "Multiple Engagements"
   },
   "assess_repeat_engagement_tooltip": {
-    "message":
-      "Students who attended more than one engagement for the period selected"
+    "message": "Students who checked in more than one Event or Service"
   },
   "assess_response_date": {
     "message": "Response Date"
@@ -537,6 +536,9 @@
   "calendars_item_delete_modal_body": {
     "message": "Are you sure you want to delete %s?"
   },
+  "calendars_item_description_label": {
+    "message": "Item Description"
+  },
   "calendars_item_details": {
     "message": "Item details"
   },
@@ -545,6 +547,9 @@
   },
   "calendars_item_modal_title": {
     "message": "Delete Calendar Item"
+  },
+  "calendars_item_name_label": {
+    "message": "Item name"
   },
   "calendars_label_description": {
     "message": "Description"
@@ -634,6 +639,9 @@
   },
   "clubs_delete_modal_title": {
     "message": "Delete Club"
+  },
+  "clubs_disabled": {
+    "message": "Disabled"
   },
   "clubs_edit_heading": {
     "message": "Edit Club"
@@ -767,6 +775,27 @@
   "csv_modal_title": {
     "message": "Upload CSV File"
   },
+  "customise": {
+    "message": "Customise"
+  },
+  "customise_banner": {
+    "message": "Banner"
+  },
+  "customization_description": {
+    "message": "(Appears at the top of the Campus Guide in the mobile app.)"
+  },
+  "customization_image_upload_error": {
+    "message": "Something went wrong while uploading your image"
+  },
+  "customization_image_upload_success": {
+    "message": "Banner updated successfully "
+  },
+  "customization_instructions": {
+    "message": "Drag to Reposition Photo"
+  },
+  "customization_title": {
+    "message": "Choose an App Banner"
+  },
   "dashboard_announcements": {
     "message": "Announcements"
   },
@@ -873,9 +902,6 @@
   "description": {
     "message": "Description"
   },
-  "disabled": {
-    "message": "Disabled"
-  },
   "done": {
     "message": "Done"
   },
@@ -908,14 +934,13 @@
     "message": "End Date:"
   },
   "ends": {
-    "message": "End date"
+    "message": "End Date"
   },
   "end_date": {
     "message": "End Date"
   },
   "engagement": {
-    "message": "Engagement",
-    "description": "Not used yet"
+    "message": "Engagement"
   },
   "error": {
     "message": "Error"
@@ -931,7 +956,7 @@
   },
   "error_no_hosts_found_help": {
     "message":
-      "You do not have sufficient privileges to associate this new event with a service or a club."
+      "You do not have sufficient permissions to filter the list of events by host."
   },
   "event": {
     "message": "Event"
@@ -943,10 +968,14 @@
     "message": "Attendance Feedback"
   },
   "events_attendance_manager": {
-    "message": "Attd Manager"
+    "message": "Att. Manager"
   },
   "events_attendance_manager_full": {
     "message": "Attendance Manager"
+  },
+  "events_attendance_manager_tooltip": {
+    "message":
+      "The attendance manager may be any person with a valid email address, they will receive instructions to setup check-ins for this event."
   },
   "events_attendant": {
     "message": "Attendant"
@@ -981,6 +1010,9 @@
   "events_delete_modal_title": {
     "message": "Delete Event"
   },
+  "events_disabled": {
+    "message": "Disabled"
+  },
   "events_edit_event": {
     "message": "Edit Event"
   },
@@ -1002,8 +1034,16 @@
   "events_event_details": {
     "message": "Event Details"
   },
+  "events_event_feedback_tooltip": {
+    "message":
+      "If enabled, after an event is finished will prompt event attendees to provide feedback and rating as a response to the feedback question."
+  },
   "events_event_manager": {
     "message": "Event Manager"
+  },
+  "events_event_manager_tooltip": {
+    "message":
+      "The event manager needs to be a current administrator. They will receive emails related to checking in users and assessment reports once it is finished."
   },
   "events_event_name": {
     "message": "Event Name"
@@ -1065,6 +1105,9 @@
   },
   "executive": {
     "message": "Executive"
+  },
+  "feature_name_banner": {
+    "message": "Banner"
   },
   "feedback": {
     "message": "Feedback"
@@ -1299,10 +1342,10 @@
     "message": "Locations"
   },
   "locations_btn_create": {
-    "message": "Add Location"
+    "message": "Create Location"
   },
   "locations_create_modal_title": {
-    "message": "Add Location"
+    "message": "Create Location"
   },
   "locations_delete_modal_body": {
     "message": "Are you sure you want to delete %s?"
@@ -1336,11 +1379,19 @@
   "manage": {
     "message": "Manage"
   },
+  "manage_create_service_category_tooltip": {
+    "message":
+      "The category the service belongs to, helps filter and group content in the campus app."
+  },
+  "manage_create_service_feedback_tooltip": {
+    "message":
+      "If enabled, after a check-in to a service provider prompt attendees to provide feedback and rating as a response to the feedback question."
+  },
   "manage_team_members": {
     "message": "Team Members"
   },
   "maps": {
-    "message": "Maps"
+    "message": "Locations"
   },
   "member": {
     "message": "Member"
@@ -1348,7 +1399,7 @@
   "members": {
     "message": "Members"
   },
-  "message": {
+  "message_action": {
     "message": "Message"
   },
   "message_file_upload_error": {
@@ -1356,6 +1407,9 @@
   },
   "message_file_upload_success": {
     "message": "File uploaded successfully"
+  },
+  "message_noun": {
+    "message": "Message"
   },
   "more": {
     "message": "More"
@@ -1381,6 +1435,10 @@
   "notify_announcement_recipient": {
     "message": "Recipients"
   },
+  "notify_announcement_template_to_tooltip": {
+    "message":
+      "The recepients of the accouncements. Can be sent to students who are app users or pre-defined lists. For more info:"
+  },
   "no_admins_found": {
     "message": "No Admins found"
   },
@@ -1400,10 +1458,10 @@
     "message": "Manage your campus app and increase student engagement."
   },
   "on_boarding_step_1_description_1": {
-    "message": "Rebuilt from the group up."
+    "message": "Rebuilt from the ground up."
   },
   "on_boarding_step_1_title": {
-    "message": "Welcome to all the new Campus Cloud!"
+    "message": "Welcome to the all new Campus Cloud!"
   },
   "on_boarding_step_2_description": {
     "message":
@@ -1450,6 +1508,9 @@
   "pending": {
     "message": "Pending"
   },
+  "phone": {
+    "message": "Phone"
+  },
   "phone_number": {
     "message": "Phone Number"
   },
@@ -1469,7 +1530,8 @@
     "message": "Registrations"
   },
   "regular": {
-    "message": "Regular"
+    "message": "Regular",
+    "description": "Announcement Type"
   },
   "release_notes_july_10_item_one": {
     "message": "Administrators can send Notifications to students' devices"
@@ -1487,31 +1549,11 @@
   "release_notes_june_2_item_one": {
     "message": "Administrators can create Clubs and Groups"
   },
-  "release_notes_june_2_item_three": {
-    "message":
-      "Students can post messages to Club Feeds. Executives and Administrators can moderate these Feeds.",
-    "description": "Release notes not in use"
-  },
-  "release_notes_june_2_item_two": {
-    "message":
-      "Executives of a club can create events and services hosted by that club.",
-    "description": "Release notes not in use"
-  },
   "release_notes_june_2_title": {
     "message": "New as of June 2, 2017:"
   },
   "release_notes_p_four": {
     "message": "The OOHLALA Team."
-  },
-  "release_notes_p_one": {
-    "message":
-      "As part of the build up to 2018, we’ve rebuilt the Campus Cloud from the ground up. You’ll find the new Campus Cloud to be faster, more intuitive and user-friendly than the previous version. Please note that we are still refining some of the features from the old version and will be releasing them over the next few weeks. The first of these updated features will be a brand new dashboard that is more insightful!",
-    "description": "Release notes not in use"
-  },
-  "release_notes_p_three": {
-    "message":
-      "We hope your experience with the new Campus Cloud proves to be an easy and enjoyable one, and we look forward to hearing your feedback!",
-    "description": "Release notes not in use"
   },
   "release_notes_p_two": {
     "message":
@@ -1558,10 +1600,6 @@
   },
   "search": {
     "message": "Search"
-  },
-  "selected": {
-    "message": "Selected",
-    "description": "Not in use"
   },
   "select_category": {
     "message": "Select Category"
@@ -1611,6 +1649,9 @@
   "services_delete_modal_title": {
     "message": "Delete Service"
   },
+  "services_disabled": {
+    "message": "Disabled"
+  },
   "services_edit_heading": {
     "message": "Edit Service"
   },
@@ -1652,7 +1693,7 @@
     "message": "Service Details"
   },
   "services_label_enable_service_feedback": {
-    "message": "Enable Service Feedback"
+    "message": "Feedback"
   },
   "services_label_name": {
     "message": "Service Name"
@@ -1746,6 +1787,9 @@
   "subject": {
     "message": "Subject"
   },
+  "team_member_disabled": {
+    "message": "Disabled"
+  },
   "team_settings": {
     "message": "Team Settings"
   },
@@ -1803,6 +1847,9 @@
   },
   "walls_button_create_post": {
     "message": "Post"
+  },
+  "walls_comment_reply": {
+    "message": "Reply"
   },
   "website": {
     "message": "Website"

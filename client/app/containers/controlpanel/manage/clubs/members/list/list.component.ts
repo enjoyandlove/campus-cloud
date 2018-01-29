@@ -20,8 +20,8 @@ interface IState {
 
 const state: IState = {
   members: [],
-  sort_field: 'firstname',
-  sort_direction: 'asc',
+  sort_field: 'member_type',
+  sort_direction: 'desc',
 };
 
 @Component({

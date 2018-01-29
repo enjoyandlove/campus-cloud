@@ -75,6 +75,7 @@
     "@types/amplitude-js": "^2.12.5",
     "@types/bootstrap": "^3.3.36",
     "@types/core-js": "^0.9.0",
+    "@types/croppie": "^2.5.2",
     "@types/file-saver": "^0.0.1",
     "@types/google.analytics": "0.0.35",
     "@types/googlemaps": "^3.30.0",

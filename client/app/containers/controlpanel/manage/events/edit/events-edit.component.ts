@@ -21,6 +21,7 @@ import {
 } from '../../../../../shared/services';
 
 import { EventAttendance } from '../event.status';
+import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 
 const COMMON_DATE_PICKER_OPTIONS = {
   altInput: true,
@@ -38,6 +39,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   @Input() isClub: boolean;
   @Input() clubId: boolean;
   @Input() isService: boolean;
+  @Input() toolTipContent: IToolTipContent;
 
   event;
   stores;
@@ -45,14 +47,17 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   dateFormat;
   serverError;
   isDateError;
+  eventManager;
   originalHost;
   booleanOptions;
   loading = true;
   school: ISchool;
   eventId: number;
   form: FormGroup;
+  studentFeedback;
   selectedManager;
   dateErrorMessage;
+  attendanceManager;
   enddatePickerOpts;
   attendance = false;
   isFormReady = false;
@@ -391,6 +396,17 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.eventManager = Object.assign({}, this.eventManager, {
+      content: this.cpI18n.translate('events_event_manager_tooltip'),
+    });
+    this.attendanceManager = Object.assign({}, this.attendanceManager, {
+      content: this.cpI18n.translate('events_attendance_manager_tooltip'),
+    });
+
+    this.studentFeedback = Object.assign({}, this.studentFeedback, {
+      content: this.cpI18n.translate('events_event_feedback_tooltip'),
+    });
+
     this.buttonData = {
       text: this.cpI18n.translate('save'),
       class: 'primary',
@@ -403,7 +419,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
         action: EventAttendance.enabled,
       },
       {
-        label: this.cpI18n.translate('disabled'),
+        label: this.cpI18n.translate('events_disabled'),
         action: EventAttendance.disabled,
       },
     ];

@@ -1,0 +1,126 @@
+@import 'colors';
+
+.popover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  display: none;
+  max-width: 276px;
+  padding: 1px;
+  text-align: left;
+  white-space: normal;
+  background-color: $color-black;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  border: 1px solid $color-black;
+  border-radius: 6px;
+  color: #ffffff;
+
+  &.top {
+    margin-top: -10px;
+  }
+  &.right {
+    margin-left: 10px;
+  }
+  &.bottom {
+    margin-top: 10px;
+  }
+  &.left {
+    margin-left: -10px;
+  }
+  &.popover-title {
+    padding: 8px 14px;
+    margin: 0;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 18px;
+    background-color: $color-black;
+    border-bottom: 1px solid $color-black;
+    border-radius: 5px 5px 0 0;
+  }
+
+  &.popover-content {
+    padding: 14px 14px;
+  }
+
+  & > .arrow,
+  & > .arrow:after {
+    position: absolute;
+    display: block;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+  }
+  & > .arrow {
+    border-width: 11px;
+  }
+  & > .arrow:after {
+    content: '';
+    border-width: 10px;
+  }
+  &.top > .arrow {
+    bottom: -11px;
+    left: 50%;
+    margin-left: -11px;
+    border-top-color: $color-black;
+    border-bottom-width: 0;
+  }
+  &.top > .arrow:after {
+    bottom: 1px;
+    margin-left: -10px;
+    content: ' ';
+    border-top-color: #fff;
+    border-bottom-width: 0;
+  }
+  &.right > .arrow {
+    top: 50%;
+    left: -11px;
+    margin-top: -11px;
+    border-right-color: $color-black;
+    border-right-color: rgb(0, 0, 0);
+    border-left-width: 0;
+  }
+  &.right > .arrow:after {
+    bottom: -10px;
+    left: 1px;
+    content: ' ';
+    border-right-color: $color-black;
+    border-left-width: 0;
+  }
+  &.bottom > .arrow {
+    top: -11px;
+    left: 50%;
+    margin-left: -11px;
+    border-top-width: 0;
+    border-bottom-color: $color-black;
+    border-bottom-color: rgb(0, 0, 0);
+  }
+  &.bottom > .arrow:after {
+    top: 1px;
+    margin-left: -10px;
+    content: ' ';
+    border-top-width: 0;
+    border-bottom-color: $color-black;
+  }
+  &.left > .arrow {
+    top: 50%;
+    right: -11px;
+    margin-top: -11px;
+    border-right-width: 0;
+    border-left-color: $color-black;
+    border-left-color: rgb(0, 0, 0);
+  }
+  &.left > .arrow:after {
+    right: 1px;
+    bottom: -10px;
+    content: ' ';
+    border-right-width: 0;
+    border-left-color: $color-black;
+  }
+}
+
+a.cptooltip-link {
+  color: $color-brand;
+}

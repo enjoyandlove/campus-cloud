@@ -52,8 +52,8 @@ export class CalendarsItemsEditComponent extends BaseComponent
         subheading: null,
         em: null,
         crumbs: {
-          url: `/manage/calendars/${this.calendarId}/items/${this.itemId}`,
-          label: `[NOTRANSLATE]${this.item.title}[NOTRANSLATE]`,
+          url: null,
+          label: null,
         },
         children: [],
       },

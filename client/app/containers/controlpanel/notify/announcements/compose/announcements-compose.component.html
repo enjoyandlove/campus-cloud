@@ -38,7 +38,11 @@
             </div>
 
             <div class="form-group" *ngIf="!state.isCampusWide">
-              <label i18n>{{ 'to' | cpI18n }}</label>
+              <label i18n>{{ 'to' | cpI18n }}
+                <cp-tooltip
+                  [toolTipContent]="toolTipContent">
+                </cp-tooltip>
+              </label>
               <div class="row">
                 <div class="col-xs-12">
                   <cp-typeahead
@@ -109,7 +113,7 @@
 
             <div class="form-group">
               <label i18n>
-                {{ 'message' | cpI18n }}
+                {{ 'message_noun' | cpI18n }}
                 <span class="pull-right">
                   {{ form.controls.message.value ? form.controls.message.value.length : 0 }}/400
                 </span>
@@ -154,6 +158,7 @@
   </div>
 
   <cp-announcements-confirm
+    [state]="state"
     *ngSwitchCase="true"
     (confirmed)="onConfirmed()"
     (teardown)="shouldConfirm = false">

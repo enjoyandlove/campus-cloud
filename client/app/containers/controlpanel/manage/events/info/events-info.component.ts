@@ -9,6 +9,9 @@ import { FORMAT } from '../../../../../shared/pipes/date';
 import { EventUtilService } from './../events.utils.service';
 import { BaseComponent } from '../../../../../base/base.component';
 import { CPI18nService } from '../../../../../shared/services/index';
+import {
+  IResourceBanner
+} from '../../../../../shared/components/cp-resource-banner/cp-resource.interface';
 
 @Component({
   selector: 'cp-events-info',
@@ -20,6 +23,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   @Input() clubId: number;
   @Input() serviceId: number;
   @Input() isService: boolean;
+  @Input() resourceBanner: IResourceBanner;
 
   event;
   banner;
@@ -70,6 +74,12 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
           lat: event.data.latitude,
           lng: event.data.longitude,
         });
+
+        this.resourceBanner = {
+          image: this.banner,
+          heading: this.event.title,
+          subheading: this.event.store_name
+        };
       })
       .catch((err) => {
         throw new Error(err);
