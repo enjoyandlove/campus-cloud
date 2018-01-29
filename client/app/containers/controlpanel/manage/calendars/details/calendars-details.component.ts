@@ -1,4 +1,3 @@
-import { Observable } from 'rxjs/Observable';
 import { URLSearchParams } from '@angular/http';
 import { ICalendar } from './../calendars.interface';
 import { Component, OnInit } from '@angular/core';
@@ -135,13 +134,17 @@ export class CalendarsDetailComponent extends BaseComponent implements OnInit {
       this.endRange,
       itemSearch,
     );
-    const stream$ = Observable.combineLatest(calendar$, items$);
+
+    const stream$ = calendar$.switchMap((calendarData) => {
+      this.calendar = calendarData;
+
+      return items$;
+    });
 
     super
       .fetchData(stream$)
       .then((res) => {
-        this.calendar = res.data[0];
-        this.state = { ...this.state, items: res.data[1] };
+        this.state = { ...this.state, items: res.data };
         this.buildHeader();
       })
       .catch((err) => {
