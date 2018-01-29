@@ -1,12 +1,9 @@
-import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Http } from '@angular/http';
+import { Http, URLSearchParams } from '@angular/http';
 
 import { API } from '../../../../config/api';
 import { BaseService } from '../../../../base/base.service';
-
-const mockLocations = require('./mock.json');
 
 @Injectable()
 export class LocationsService extends BaseService {
@@ -16,51 +13,41 @@ export class LocationsService extends BaseService {
     Object.setPrototypeOf(this, LocationsService.prototype);
   }
 
-  // getUploadImageUrl() {
-  //   return `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
-  // }
+  getLocations(startRange: number, endRange: number, search: URLSearchParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.LOCATIONS
+    }/${startRange};${endRange}`;
 
-  getLocations() {
-    const promise = new Promise((resolve) => {
-      setTimeout(
-        () => {
-          resolve(mockLocations);
-        },
-
-        700,
-      );
-    });
-
-    return Observable.fromPromise(promise).map((res) => res);
+    return super.get(url, { search }).map((res) => res.json());
   }
 
-  getLocationById(locationId: number) {
+  getLocationById(locationId: number, search: URLSearchParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.LINKS
+      API.ENDPOINTS.LOCATIONS
     }/${locationId}`;
 
-    return super.get(url).map((res) => res.json());
+    return super.get(url, { search }).map((res) => res.json());
   }
 
-  updateLocation(body, locationId: number) {
+  updateLocation(body, locationId: number, search: URLSearchParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.LINKS
+      API.ENDPOINTS.LOCATIONS
     }/${locationId}`;
 
-    return super.update(url, body).map((res) => res.json());
+    return super.update(url, body, { search }).map((res) => res.json());
   }
 
-  createLocation(body) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LINKS}/`;
+  createLocation(body, search: URLSearchParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LOCATIONS}/`;
 
-    return super.post(url, body).map((res) => res.json());
+    return super.post(url, body, { search }).map((res) => res.json());
   }
 
-  deleteLocation(locationId: number) {
+  deleteLocationById(locationId: number, search: URLSearchParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.LINKS
+      API.ENDPOINTS.LOCATIONS
     }/${locationId}`;
 
-    return super.delete(url).map((res) => res.json());
+    return super.delete(url, { search }).map((res) => res.json());
   }
 }

@@ -36,14 +36,3 @@ export class ManageComponent implements OnInit {
     });
   }
 }
-
-// {
-//   "privilege": 13,
-//   "label": "Cover Photo",
-//   "url": "/manage/customization"
-// },
-// {
-//   "privilege": 21,
-//   "label": "Locations",
-//   "url": "/manage/locations"
-// }

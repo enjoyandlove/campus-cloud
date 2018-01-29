@@ -106,6 +106,10 @@
   version "0.9.42"
   resolved "https://registry.yarnpkg.com/@types/core-js/-/core-js-0.9.42.tgz#dd6da92cd7d5ab5ca0b4477524537c3e633b6bce"
 
+"@types/croppie@^2.5.2":
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/@types/croppie/-/croppie-2.5.2.tgz#b30a91125310e623034ae7622d3096f133f42d87"
+
 "@types/file-saver@^0.0.1":
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/@types/file-saver/-/file-saver-0.0.1.tgz#3a3a37884b840e2c4c55770c9fa75a3e11784ef8"

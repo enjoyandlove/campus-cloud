@@ -4,7 +4,7 @@
       <div class="col-xs-12">
         <p>
           {{ 'beta_banner_thank_you' | cpI18n }}
-          <a [attr.href]="oldCPUrl">
+          <a cpTracker [eventData]="eventData" [attr.href]="oldCPUrl">
             {{ 'beta_banner_go_back' | cpI18n }}
           </a>
         </p>

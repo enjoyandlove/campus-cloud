@@ -2,16 +2,17 @@
 @import '~styles/components/dropdown';
 
 .upload-menu {
+  button {
+    line-height: 1;
+  }
   i {
     font-size: 20px;
   }
 
   .pencil {
-
   }
 
   .down {
-
   }
 
   .dropdown-menu {

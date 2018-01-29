@@ -3,13 +3,11 @@
     type="button"
     (click)="cancel.emit()"
     class="cpbtn cpbtn--cancel" i18n>
-      Cancel
+      {{ 'cancel' | cpI18n }}
   </button>
 
-  <button
-    type="button"
-    (click)="save.emit()"
-    class="cpbtn cpbtn--primary" i18n>
-      Save
-  </button>
+  <cp-button
+    [props]="buttonData"
+    (buttonClick)="save.emit()">
+  </cp-button>
 </div>

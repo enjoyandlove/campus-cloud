@@ -42,12 +42,11 @@
           <div class="row">
             <div class="col-xs-12">
               <div class="pull-right">
-                <button
-                  i18n
-                  type="button"
+                <a
+                  [routerLink]="['../../']"
                   class="cpbtn cpbtn--cancel submit">
                   {{ 'cancel' | cpI18n }}
-                </button>
+                </a>
 
                 <cp-button
                   [props]="buttonData"

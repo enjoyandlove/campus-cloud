@@ -2,9 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-import { SharedModule } from '../../../../shared/shared.module';
 
 import { CustomizationListComponent } from './list';
+import { CustomizationService } from './customization.service';
+import { SharedModule } from '../../../../shared/shared.module';
 
 import {
   CustomizationUploadButtonComponent,
@@ -12,8 +13,6 @@ import {
 } from './list/components';
 
 import { CustomizationRoutingModule } from './customization.routing.module';
-
-// import { LinksService } from './links.service';
 
 @NgModule({
   declarations: [
@@ -30,6 +29,6 @@ import { CustomizationRoutingModule } from './customization.routing.module';
     CustomizationRoutingModule,
   ],
 
-  providers: [],
+  providers: [CustomizationService],
 })
 export class CustomizationModule {}

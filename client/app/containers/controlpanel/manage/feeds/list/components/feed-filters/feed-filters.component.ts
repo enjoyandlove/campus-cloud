@@ -49,6 +49,7 @@ const state: IState = {
 })
 export class FeedFiltersComponent implements OnInit {
   @Input() clubId: number;
+
   @Output() doFilter: EventEmitter<IState> = new EventEmitter();
 
   posts;
