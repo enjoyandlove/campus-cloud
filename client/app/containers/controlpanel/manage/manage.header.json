@@ -47,7 +47,7 @@
     {
       "new": true,
       "privilege": 13,
-      "label": "app_customization",
+      "label": "feature_name_banner",
       "url": "/manage/customization"
     }
   ]
