@@ -759,6 +759,12 @@
   "csv_modal_title": {
     "message": "Upload CSV File"
   },
+  "customise": {
+    "message": "Customise"
+  },
+  "customise_banner": {
+    "message": "Banner"
+  },
   "customization_description": {
     "message": "(Appears at the top of the Campus Guide in the mobile app.)"
   },
@@ -1803,6 +1809,9 @@
   },
   "walls_button_create_post": {
     "message": "Post"
+  },
+  "walls_comment_reply": {
+    "message": "Reply"
   },
   "website": {
     "message": "Website"

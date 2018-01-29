@@ -22,6 +22,7 @@ export class CPTopBarComponent implements OnInit {
   canNotify = false;
   canManage = false;
   canAssess = false;
+  canCustomise = false;
   manageHomePage: string;
 
   isManageActiveRoute;
@@ -77,10 +78,6 @@ export class CPTopBarComponent implements OnInit {
       return 'locations';
     } else if (canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.links)) {
       return 'links';
-    } else if (
-      canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.app_customization)
-    ) {
-      return 'customization';
     }
 
     return null;
@@ -103,6 +100,10 @@ export class CPTopBarComponent implements OnInit {
     this.canAssess = canSchoolReadResource(
       this.session.g,
       CP_PRIVILEGES_MAP.assessment,
+    );
+    this.canCustomise = canSchoolReadResource(
+      this.session.g,
+      CP_PRIVILEGES_MAP.app_customization,
     );
 
     this.isManageActiveRoute = this.isManage(this.router.url);
