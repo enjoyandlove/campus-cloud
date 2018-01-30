@@ -6,7 +6,7 @@
     {
       "new": true,
       "label": "customise_banner",
-      "url": "/customise"
+      "url": "/customise/banner"
     }
   ]
 }

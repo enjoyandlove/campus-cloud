@@ -5,6 +5,7 @@ import { AuthGuard } from '../../../config/guards';
 import { CustomiseComponent } from './customise.component';
 
 const appRoutes: Routes = [
+  { path: '', redirectTo: 'banner', pathMatch: 'full' },
   {
     path: '',
     component: CustomiseComponent,
@@ -12,7 +13,7 @@ const appRoutes: Routes = [
     canActivateChild: [AuthGuard],
     children: [
       {
-        path: '',
+        path: 'banner',
         loadChildren: './banner/banner.module#BannerModule'
       },
     ]
