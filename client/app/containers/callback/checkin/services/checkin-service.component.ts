@@ -49,7 +49,7 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
 
   updateAttendeesList(data) {
     this.state.services = Object.assign({}, this.state.services, {
-      external_attendees: [data, ...this.state.services['external_attendees']],
+      attendees: [data, ...this.state.services['attendees']],
     });
   }
 
