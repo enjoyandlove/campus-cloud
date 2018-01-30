@@ -47,7 +47,7 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
 
   updateAttendeesList(data) {
     this.state.events = Object.assign({}, this.state.events, {
-      external_attendees: [data, ...this.state.events['external_attendees']],
+      attendees: [data, ...this.state.events['attendees']],
     });
   }
   // cb/checkin/e/GJ-Fn5w06XY-7h-_oetnJw
