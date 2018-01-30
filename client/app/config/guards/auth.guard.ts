@@ -102,6 +102,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
       'locations',
       'announcements',
       'templates',
+      'banner',
     ];
 
     const routeToPrivilege = {
@@ -124,6 +125,8 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
       locations: CP_PRIVILEGES_MAP.campus_maps,
 
       templates: CP_PRIVILEGES_MAP.campus_announcements,
+
+      banner: CP_PRIVILEGES_MAP.app_customization,
     };
 
     if (childRoute.url.length) {

@@ -3,6 +3,7 @@
     <div class="col-xs-8 col-xs-offset-2">
       <cp-feed-filters
         [clubId]="clubId"
+        [selectedItem]="selectedItem"
         (doFilter)="onDoFilter($event)">
       </cp-feed-filters>
 
@@ -22,7 +23,8 @@
           (deleted)="onDeleted($event)"
           *ngFor="let feed of state.feeds"
           [isCampusWallView]="isCampusWallView$"
-          [isFilteredByRemovedPosts]="isFilteredByRemovedPosts$">
+          [isFilteredByRemovedPosts]="isFilteredByRemovedPosts$"
+          (filterByCategory)="onFilterByCategory($event)">
         </cp-feed-item>
 
         <cp-no-content
