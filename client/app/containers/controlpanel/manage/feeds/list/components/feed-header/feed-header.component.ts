@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import { FORMAT } from '../../../../../../../shared/pipes/date';
 import { CPDate } from '../../../../../../../shared/utils';
@@ -11,7 +11,22 @@ import { CPDate } from '../../../../../../../shared/utils';
 export class FeedHeaderComponent {
   @Input() feed: any;
   @Input() isComment: boolean;
-
+  @Output() filterByCategory: EventEmitter<any> = new EventEmitter();
+  state: any;
   CPDate = CPDate;
   FORMAT = FORMAT.DATETIME;
+
+  loadCategory(item) {
+    this.state = Object.assign(
+      {},
+      this.state,
+      {
+        post_types: item.post_type,
+        wall_type: 1,
+        label: item.channelName,
+        action: item.post_type
+      }
+    );
+    this.filterByCategory.emit(this.state);
+  }
 }

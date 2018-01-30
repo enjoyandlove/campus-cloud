@@ -13,7 +13,7 @@
     <span class="text-muted" i18n>
       {{ 'feeds_posted_in' | cpI18n }}
     </span>
-    <span class="cpbtn cpbtn--link-dark cpbtn--no-hover">
+    <span class="cpbtn cpbtn--link" (click)="loadCategory(feed)">
       {{ feed.channelName }}
     </span>
   </span>

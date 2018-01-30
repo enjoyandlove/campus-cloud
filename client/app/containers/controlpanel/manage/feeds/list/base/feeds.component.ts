@@ -44,6 +44,7 @@ const state: IState = {
 })
 export class FeedsComponent extends BaseComponent implements OnInit {
   @Input() clubId: number;
+  @Input() selectedItem: any;
   @Input() isClubsView: boolean;
 
   feeds;
@@ -67,6 +68,11 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   constructor(public session: CPSession, public service: FeedsService) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
+  }
+
+  onFilterByCategory(category) {
+    this.onDoFilter(category);
+    this.setItemInCategory(category);
   }
 
   onDoFilter(data) {
@@ -100,6 +106,10 @@ export class FeedsComponent extends BaseComponent implements OnInit {
     });
 
     this.fetch();
+  }
+
+  setItemInCategory(category) {
+    this.selectedItem = category;
   }
 
   onPaginationNext() {
