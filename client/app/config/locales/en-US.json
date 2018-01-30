@@ -1085,6 +1085,9 @@
   "executive": {
     "message": "Executive"
   },
+  "feature_name_banner": {
+    "message": "Banner"
+  },
   "feedback": {
     "message": "Feedback"
   },

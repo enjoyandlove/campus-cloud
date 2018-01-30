@@ -1,4 +1,3 @@
-import { Observable } from 'rxjs/Observable';
 import { URLSearchParams } from '@angular/http';
 import { ICalendar } from './../calendars.interface';
 import { Component, OnInit } from '@angular/core';
@@ -32,6 +31,8 @@ export class CalendarsDetailComponent extends BaseComponent implements OnInit {
   state = {
     items: [],
     search_str: null,
+    sort_field: 'title',
+    sort_direction: 'asc',
   };
 
   constructor(
@@ -50,6 +51,16 @@ export class CalendarsDetailComponent extends BaseComponent implements OnInit {
 
   onPaginationNext() {
     super.goToNext();
+
+    this.fetch();
+  }
+
+  doSort(sort_field) {
+    this.state = {
+      ...this.state,
+      sort_field: sort_field,
+      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc',
+    };
 
     this.fetch();
   }
@@ -105,6 +116,8 @@ export class CalendarsDetailComponent extends BaseComponent implements OnInit {
     const calendarSearch = new URLSearchParams();
 
     itemSearch.append('search_str', this.state.search_str);
+    itemSearch.append('sort_field', this.state.sort_field);
+    itemSearch.append('sort_direction', this.state.sort_direction);
     itemSearch.append('academic_calendar_id', this.calendarId.toString());
     itemSearch.append('school_id', this.session.g.get('school').id.toString());
     calendarSearch.append(
@@ -121,13 +134,17 @@ export class CalendarsDetailComponent extends BaseComponent implements OnInit {
       this.endRange,
       itemSearch,
     );
-    const stream$ = Observable.combineLatest(calendar$, items$);
+
+    const stream$ = calendar$.switchMap((calendarData) => {
+      this.calendar = calendarData;
+
+      return items$;
+    });
 
     super
       .fetchData(stream$)
       .then((res) => {
-        this.calendar = res.data[0];
-        this.state = { ...this.state, items: res.data[1] };
+        this.state = { ...this.state, items: res.data };
         this.buildHeader();
       })
       .catch((err) => {

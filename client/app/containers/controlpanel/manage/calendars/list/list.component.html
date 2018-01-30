@@ -21,10 +21,26 @@
       <ul class="calendars cp-form">
         <li class="cp-form__header col-xs-12">
           <div class="row">
-            <span class="col-xs-5" i18n>
+            <span
+              class="col-xs-5 hover"
+              (click)="doSort('name')">
               {{ 'name' | cpI18n }}
+              <span *ngIf="state.sort_field === 'name'">
+                <i class="material-icons">
+                  {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+                </i>
+              </span>
             </span>
-            <span class="col-xs-5" i18n>{{ 'created' | cpI18n }}</span>
+            <span
+              class="col-xs-5 hover"
+              (click)="doSort('created_time')">
+              {{ 'created' | cpI18n }}
+              <span *ngIf="state.sort_field === 'created_time'">
+                <i class="material-icons">
+                  {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+                </i>
+              </span>
+            </span>
             <span class="col-xs-2"></span>
           </div>
         </li>
