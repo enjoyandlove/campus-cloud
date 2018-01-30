@@ -369,11 +369,14 @@
   "assess_one_engagement": {
     "message": "One Engagement"
   },
+  "assess_one_engagement_tooltip": {
+    "message": "Students who checked in to a single Event or Service."
+  },
   "assess_repeat_engagement": {
     "message": "Multiple Engagements"
   },
   "assess_repeat_engagement_tooltip": {
-    "message": "Students who checked in more than one Event or Service"
+    "message": "Students who checked in to more than one Event or Service."
   },
   "assess_response_date": {
     "message": "Response Date"
@@ -419,6 +422,9 @@
   },
   "assess_total_services": {
     "message": "Total Services"
+  },
+  "athletics": {
+    "message": "Athletics"
   },
   "attendee": {
     "message": "Attendee"
@@ -957,7 +963,7 @@
     "message": "Attendance Manager"
   },
   "events_attendance_manager_tooltip": {
-    "message": "The attendance manager may be any person with a valid email address, they will receive instructions to setup check-ins for this event."
+    "message": "Any valid email address.  The Attendance Manager receives email instructions about setting up check-ins for the event."
   },
   "events_attendant": {
     "message": "Attendant"
@@ -1017,13 +1023,13 @@
     "message": "Event Details"
   },
   "events_event_feedback_tooltip": {
-    "message": "If enabled, after an event is finished will prompt event attendees to provide feedback and rating as a response to the feedback question."
+    "message": "Events with Feedback enabled use a push notification to gather student feedback, including a star rating and response to the feedback question."
   },
   "events_event_manager": {
     "message": "Event Manager"
   },
   "events_event_manager_tooltip": {
-    "message": "The event manager needs to be a current administrator. They will receive emails related to checking in users and assessment reports once it is finished."
+    "message": "Select a Host (a Club or Service) before you select an Event Manager.  The Event Manager receives emails related to checking in users, and assessment reports once the event is finished."
   },
   "events_event_name": {
     "message": "Event Name"
@@ -1356,10 +1362,10 @@
     "message": "Manage"
   },
   "manage_create_service_category_tooltip": {
-    "message": "The category the service belongs to, helps filter and group content in the campus app."
+    "message": "Select a category for your service.  Categories help filter and group content in the campus app."
   },
   "manage_create_service_feedback_tooltip": {
-    "message": "If enabled, after a check-in to a service provider prompt attendees to provide feedback and rating as a response to the feedback question."
+    "message": "Services with Feedback enabled use a push notification to gather student feedback, including a star rating and response to the feedback question."
   },
   "manage_team_members": {
     "message": "Team Members"
@@ -1410,7 +1416,7 @@
     "message": "Recipients"
   },
   "notify_announcement_template_to_tooltip": {
-    "message": "The recepients of the accouncements. Can be sent to students who are app users or pre-defined lists. For more info:"
+    "message": "Notifications can be sent to app users, which you can group together into Lists.  For more info:"
   },
   "no_admins_found": {
     "message": "No Admins found"
