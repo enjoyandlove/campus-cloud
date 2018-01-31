@@ -16,8 +16,10 @@ export class FeedItemComponent implements OnInit {
   @Input() feed: any;
   @Input() isCampusWallView: Observable<any>;
   @Input() isFilteredByRemovedPosts: Observable<any>;
+
   @Output() moved: EventEmitter<number> = new EventEmitter();
   @Output() deleted: EventEmitter<number> = new EventEmitter();
+  @Output() filterByCategory: EventEmitter<any> = new EventEmitter();
 
   isMoveModal;
   isDeleteModal;
