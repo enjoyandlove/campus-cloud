@@ -2,7 +2,9 @@
 @import '~styles/core/colors';
 
 .cpmodal {
-
+    a {
+      color: $color-brand;
+    }
   &__body {
     padding-top: 40px;
     min-height: 321px;
@@ -16,17 +18,15 @@
       margin-top: 20px;
       padding: 0 25px 0 25px;
     }
-
-    p a {
-      color: $color-brand;
-    }
   }
 
   &__footer {
     padding-bottom: 16px;
 
-    hr {
-      margin-bottom: 12px;
+    button {
+      border-radius: 18px;
+      padding: 12px 25px 12px 25px;
+      margin-bottom: 10px;
     }
   }
 }

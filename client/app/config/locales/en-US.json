@@ -1575,6 +1575,12 @@
   "results": {
     "message": "Results"
   },
+  "return_to_campus_cloud": {
+    "message": "Return to Campus Cloud"
+  },
+  "return_to_old_control_panel": {
+    "message": "Switch back to old control panel"
+  },
   "reupload": {
     "message": "Re-upload"
   },
