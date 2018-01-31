@@ -1,7 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
-
-import { isCanada } from './../../../config/env/index';
-import { CP_TRACK_TO } from '../../directives/index';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'cp-top-banner',
@@ -9,8 +6,6 @@ import { CP_TRACK_TO } from '../../directives/index';
   styleUrls: ['./cp-top-banner.component.scss'],
 })
 export class CPTopBanerComponent implements OnInit {
-  eventData;
-  @Input() oldCPUrl: string;
 
   constructor() {}
 
@@ -18,15 +13,5 @@ export class CPTopBanerComponent implements OnInit {
     $('#openGAModal').modal();
   }
 
-  ngOnInit() {
-    this.eventData = {
-      type: CP_TRACK_TO.GA,
-      eventAction: 'Click Event',
-      eventCategory: 'Go Back To CP',
-    };
-
-    this.oldCPUrl = isCanada
-      ? 'https://ca.oohlalamobile.com/login?no_redirect=true'
-      : 'https://oohlalamobile.com/login?no_redirect=true';
-  }
+  ngOnInit() {}
 }
