@@ -2,7 +2,6 @@
 @import '~styles/core/typography';
 
 .tile {
-  padding: 24px 0;
 
   &--title {
     @include font-24px();
@@ -28,6 +27,7 @@
     text-align: center;
     position: relative;
     color: $color-text;
+    margin-right: 10px;
 
     &:before {
       top: 9px;

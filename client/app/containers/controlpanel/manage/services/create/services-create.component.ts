@@ -1,6 +1,6 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -10,6 +10,7 @@ import { ServicesService } from '../services.service';
 import { CPSession, ISchool } from '../../../../../session';
 import { CPI18nService } from '../../../../../shared/services';
 import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 
 const ATTENDANCE_ENABLED = 1;
 const ATTENDANCE_DISABLED = 0;
@@ -23,6 +24,10 @@ const FEEDBACK_DISABLED = 0;
   styleUrls: ['./services-create.component.scss'],
 })
 export class ServicesCreateComponent implements OnInit {
+  @Input() toolTipContent: IToolTipContent;
+
+  feedback;
+  category;
   buttonData;
   storeId: number;
   school: ISchool;
@@ -39,7 +44,7 @@ export class ServicesCreateComponent implements OnInit {
       value: FEEDBACK_ENABLED,
     },
     {
-      label: this.cpI18n.translate('disabled'),
+      label: this.cpI18n.translate('services_disabled'),
       value: FEEDBACK_DISABLED,
     },
   ];
@@ -214,6 +219,14 @@ export class ServicesCreateComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.feedback = Object.assign({}, this.feedback, {
+      content: this.cpI18n.translate('manage_create_service_feedback_tooltip'),
+    });
+
+    this.category = Object.assign({}, this.category, {
+      content: this.cpI18n.translate('manage_create_service_category_tooltip'),
+    });
+
     this.school = this.session.g.get('school');
 
     this.buttonData = {

@@ -18,6 +18,7 @@ import { CPMap, CPDate } from '../../../../../shared/utils';
 import { EventAttendance, EventFeedback } from '../event.status';
 import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 
 const COMMON_DATE_PICKER_OPTIONS = {
   utc: true,
@@ -37,14 +38,18 @@ export class EventsCreateComponent implements OnInit {
   @Input() clubId: boolean;
   @Input() serviceId: number;
   @Input() isService: boolean;
+  @Input() toolTipContent: IToolTipContent;
 
   stores$;
   buttonData;
   isDateError;
+  eventManager;
   booleanOptions;
+  studentFeedback;
   school: ISchool;
   form: FormGroup;
   dateErrorMessage;
+  attendanceManager;
   formError = false;
   attendance = false;
   enddatePickerOpts;
@@ -275,6 +280,17 @@ export class EventsCreateComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.eventManager = Object.assign({}, this.eventManager, {
+      content: this.cpI18n.translate('events_event_manager_tooltip'),
+    });
+    this.attendanceManager = Object.assign({}, this.attendanceManager, {
+      content: this.cpI18n.translate('events_attendance_manager_tooltip'),
+    });
+
+    this.studentFeedback = Object.assign({}, this.studentFeedback, {
+      content: this.cpI18n.translate('events_event_feedback_tooltip'),
+    });
+
     let store_id;
     // fetch managers by service
     if (this.storeId) {
@@ -299,7 +315,7 @@ export class EventsCreateComponent implements OnInit {
         action: EventFeedback.enabled,
       },
       {
-        label: this.cpI18n.translate('disabled'),
+        label: this.cpI18n.translate('events_disabled'),
         action: EventFeedback.disabled,
       },
     ];

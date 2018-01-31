@@ -60,12 +60,26 @@ export class ManageHeaderService {
         )
           ? child
           : null;
+      } else if (child.privilege === CP_PRIVILEGES_MAP.campus_maps) {
+        return canSchoolReadResource(
+          this.session.g,
+          CP_PRIVILEGES_MAP.campus_maps,
+        )
+          ? child
+          : null;
       } else if (child.privilege === CP_PRIVILEGES_MAP.links) {
         return canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.links)
           ? child
           : null;
       } else if (child.privilege === CP_PRIVILEGES_MAP.calendar) {
         return canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.calendar)
+          ? child
+          : null;
+      } else if (child.privilege === CP_PRIVILEGES_MAP.app_customization) {
+        return canSchoolReadResource(
+          this.session.g,
+          CP_PRIVILEGES_MAP.app_customization,
+        )
           ? child
           : null;
       }

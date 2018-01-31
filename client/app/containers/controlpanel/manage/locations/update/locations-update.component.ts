@@ -1,11 +1,21 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  HostListener,
+  ElementRef,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { URLSearchParams } from '@angular/http';
 
 import { CPSession } from '../../../../../session';
 import { CPMap } from '../../../../../shared/utils';
-
-declare var $: any;
+import { LocationsService } from '../locations.service';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 @Component({
   selector: 'cp-locations-update',
@@ -18,48 +28,69 @@ export class LocationsUpdateComponent implements OnInit {
   @Output() locationUpdated: EventEmitter<any> = new EventEmitter();
 
   school;
+  buttonData;
   form: FormGroup;
   isFormReady = false;
   mapCenter: BehaviorSubject<any>;
   newAddress = new BehaviorSubject(null);
 
-  constructor(private fb: FormBuilder, private session: CPSession) {}
+  constructor(
+    public el: ElementRef,
+    private fb: FormBuilder,
+    private session: CPSession,
+    public cpI18n: CPI18nService,
+    public cdRef: ChangeDetectorRef,
+    public service: LocationsService,
+  ) {}
 
-  doSubmit() {
-    $('#locationsUpdate').modal('hide');
-    this.locationUpdated.emit({
-      id: this.location.id,
-      data: this.form.value,
-    });
-    this.resetModal();
+  @HostListener('document:click', ['$event'])
+  onClick(event) {
+    // out of modal reset form
+    if (event.target.contains(this.el.nativeElement)) {
+      this.resetModal();
+    }
   }
 
   onResetMap() {
-    this.form.controls['city'].setValue('');
-    this.form.controls['province'].setValue('');
-    this.form.controls['country'].setValue('');
-    this.form.controls['latitude'].setValue(this.school.latitude);
-    this.form.controls['longitude'].setValue(this.school.longitude);
-    this.form.controls['address'].setValue('');
-    this.form.controls['postal_code'].setValue('');
+    CPMap.setFormLocationData(
+      this.form,
+      CPMap.resetLocationFields(this.school),
+    );
+    this.centerMap(this.school.latitude, this.school.longitude);
+  }
 
-    this.mapCenter.next({
-      lat: this.school.latitude,
-      lng: this.school.longitude,
-    });
+  doSubmit() {
+    const search = new URLSearchParams();
+    search.append('school_id', this.session.g.get('school').id);
+
+    this.service
+      .updateLocation(this.form.value, this.location.id, search)
+      .subscribe((_) => {
+        $('#locationsUpdate').modal('hide');
+        this.locationUpdated.emit({
+          id: this.location.id,
+          data: this.form.value,
+        });
+        this.resetModal();
+      });
   }
 
   onMapSelection(data) {
     const cpMap = CPMap.getBaseMapObject(data);
 
-    this.form.controls['city'].setValue(cpMap.city);
-    this.form.controls['province'].setValue(cpMap.province);
-    this.form.controls['country'].setValue(cpMap.country);
-    this.form.controls['latitude'].setValue(cpMap.latitude);
-    this.form.controls['longitude'].setValue(cpMap.longitude);
-    this.form.controls['address'].setValue(data.formatted_address);
-    this.form.controls['postal_code'].setValue(cpMap.postal_code);
+    const location = { ...cpMap, address: data.formatted_address };
+
+    CPMap.setFormLocationData(this.form, location);
+
     this.newAddress.next(this.form.controls['address'].value);
+  }
+
+  updateWithUserLocation(location) {
+    location = Object.assign({}, location, { location: location.name });
+
+    CPMap.setFormLocationData(this.form, location);
+
+    this.centerMap(location.latitude, location.longitude);
   }
 
   onPlaceChange(data) {
@@ -67,17 +98,25 @@ export class LocationsUpdateComponent implements OnInit {
       return;
     }
 
+    if ('fromUsersLocations' in data) {
+      this.updateWithUserLocation(data);
+
+      return;
+    }
+
     const cpMap = CPMap.getBaseMapObject(data);
 
-    this.form.controls['city'].setValue(cpMap.city);
-    this.form.controls['province'].setValue(cpMap.province);
-    this.form.controls['country'].setValue(cpMap.country);
-    this.form.controls['latitude'].setValue(cpMap.latitude);
-    this.form.controls['longitude'].setValue(cpMap.longitude);
-    this.form.controls['address'].setValue(data.name);
-    this.form.controls['postal_code'].setValue(cpMap.postal_code);
+    const location = { ...cpMap, address: data.name };
 
-    this.mapCenter.next(data.geometry.location.toJSON());
+    const coords: google.maps.LatLngLiteral = data.geometry.location.toJSON();
+
+    CPMap.setFormLocationData(this.form, location);
+
+    this.centerMap(coords.lat, coords.lng);
+  }
+
+  centerMap(lat: number, lng: number) {
+    return this.mapCenter.next({ lat, lng });
   }
 
   resetModal() {
@@ -94,14 +133,31 @@ export class LocationsUpdateComponent implements OnInit {
 
     this.form = this.fb.group({
       name: [this.location.name, Validators.required],
-      short_name: [this.location.short_name, Validators.required],
+      short_name: [this.location.short_name, Validators.maxLength(32)],
       address: [this.location.address, Validators.required],
-      city: [this.location.city, Validators.required],
-      province: [this.location.province, Validators.required],
-      country: [this.location.country, Validators.required],
-      postal_code: [this.location.postal_code, Validators.required],
+      city: [this.location.city],
+      province: [this.location.province],
+      country: [this.location.country],
+      postal_code: [this.location.postal_code],
       latitude: [this.location.latitude, Validators.required],
       longitude: [this.location.longitude, Validators.required],
+    });
+
+    this.buttonData = {
+      disabled: true,
+      class: 'primary',
+      text: this.cpI18n.translate('update'),
+    };
+
+    this.form.valueChanges.subscribe((_) => {
+      this.buttonData = { ...this.buttonData, disabled: !this.form.valid };
+
+      /**
+       * INTENTIONAL
+       * In order to reenable the button
+       * after selecting a location from the dropdown
+       */
+      this.cdRef.detectChanges();
     });
 
     this.isFormReady = true;

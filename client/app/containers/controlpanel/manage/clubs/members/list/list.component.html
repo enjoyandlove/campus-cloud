@@ -17,26 +17,29 @@
         <li class="cp-form__header col-xs-12">
           <div class="row">
             <span
-              (click)="doSort('firstname')"
+              (click)="doSort('username')"
               class="col-xs-3 hover">
                 {{ 'name' | cpI18n }}
-                <span *ngIf="state.sort_field === 'firstname'">
-                  <i
-                    class="material-icons"
-                    *ngIf="state.sort_direction === 'asc'">
-                    arrow_upward
-                  </i>
-                  <i
-                    class="material-icons"
-                    *ngIf="state.sort_direction === 'desc'">
-                    arrow_downward
+                <span *ngIf="state.sort_field === 'username'">
+                  <i class="material-icons">
+                    {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
                   </i>
                 </span>
               </span>
-            <span class="col-xs-2">{{ 'clubs_label_member_type' | cpI18n }}</span>
+            <span
+              class="col-xs-2 hover"
+              (click)="doSort('member_type')">
+              {{ 'clubs_label_member_type' | cpI18n }}
+              <span *ngIf="state.sort_field === 'member_type'">
+                <i class="material-icons">
+                  {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+                </i>
+              </span>
+            </span>
+            <span class="col-xs-4" i18n>{{ 'email' | cpI18n }}</span>
             <span class="col-xs-2" *ngIf="hasSSO">{{ 'student_id' | cpI18n }}</span>
             <span
-              [class]="hasSSO ? 'col-xs-2 col-xs-2-offset-1' : 'col-xs-2 col-xs-2-offset-3'">
+              [class]="hasSSO ? 'col-xs-1' : 'col-xs-1 col-xs-offset-2'">
             </span>
           </div>
         </li>
@@ -79,6 +82,10 @@
               {{ member.member_type === excutiveType ? 'Executive' : 'Member' }}
             </span>
 
+            <span class="col-xs-4 text-truncate">
+              {{ member.email }}
+            </span>
+
             <span class="col-xs-2 text-truncate" *ngIf="hasSSO">
               {{ member.student_identifier }}
             </span>
@@ -86,7 +93,7 @@
             <span
               (click)="deleteMember = member"
               data-toggle="modal" data-target="#membersDelete"
-              [class]="hasSSO ? 'col-xs-1 col-xs-offset-1 pull-right text-center delete-member hover' : 'col-xs-1 col-xs-offset-3 pull-right text-center delete-member hover'">
+              [class]="hasSSO ? 'col-xs-1 pull-right text-center delete-member hover' : 'col-xs-1 col-xs-offset-2 pull-right text-center delete-member hover'">
               &times;
             </span>
           </div>

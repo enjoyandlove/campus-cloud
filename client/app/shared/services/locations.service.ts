@@ -1,6 +1,10 @@
+import { URLSearchParams } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+
+import { CPSession } from '../../session';
+import { LocationsService } from '../../containers/controlpanel/manage/locations/locations.service';
 
 const defaultOptions: google.maps.places.AutocompletionRequest = {
   offset: 5,
@@ -10,9 +14,16 @@ const defaultOptions: google.maps.places.AutocompletionRequest = {
 
 @Injectable()
 export class CPLocationsService {
-  constructor() {}
+  constructor(
+    public locationsService: LocationsService,
+    public session: CPSession,
+  ) {}
 
-  getLocations() {
+  getLocations(input: string) {
+    const search = new URLSearchParams();
+    search.append('school_id', this.session.g.get('school').id);
+    search.append('search_str', input);
+
     const results: Array<any> = [
       {
         label: 'Your Locations',
@@ -22,20 +33,22 @@ export class CPLocationsService {
       },
     ];
 
-    return mockLocations().map((locations) => {
-      return results.concat(
-        locations.map((location) => {
-          return {
-            label_dark: location.name,
-            label_medium: location.address,
-            full_label: location.address,
-            heading: false,
-            value: location,
-            isGoogle: false,
-          };
-        }),
-      );
-    });
+    return this.locationsService
+      .getLocations(1, 1000, search)
+      .map((locations) => {
+        return results.concat(
+          locations.map((location) => {
+            return {
+              label_dark: location.name,
+              label_medium: location.address,
+              full_label: location.address,
+              heading: false,
+              value: location,
+              isGoogle: false,
+            };
+          }),
+        );
+      });
   }
 
   geoCode(location): Promise<any> {
@@ -111,7 +124,7 @@ export class CPLocationsService {
 
   getAllSuggestions(input: string, lat: number, lng: number) {
     const google$ = this.getGoogleSuggestions(input, lat, lng);
-    const locations$ = this.getLocations();
+    const locations$ = this.getLocations(input);
 
     return Observable.combineLatest(locations$, google$);
   }
@@ -129,24 +142,3 @@ export class CPLocationsService {
     return res.asObservable();
   }
 }
-
-const mockLocations = () => {
-  const mockData = [
-    {
-      name: 'Anas House',
-      address: '123 Boulevard de Maisonneuve Est, Montreal, QC, Canada',
-      short_name: 'aah',
-      latitude: 45.53982,
-      longitude: -73.612546,
-    },
-    {
-      name: 'Andres House',
-      address: '321 Boulevard de Maisonneuve Est, Montreal, QC, Canada',
-      short_name: 'aht',
-      latitude: -45.53982,
-      longitude: 73.612546,
-    },
-  ];
-
-  return Observable.of(mockData);
-};

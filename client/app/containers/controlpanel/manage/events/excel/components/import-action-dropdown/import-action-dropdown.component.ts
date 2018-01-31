@@ -192,7 +192,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent
         event: 1,
       },
       {
-        label: this.cpI18n.translate('disabled'),
+        label: this.cpI18n.translate('events_disabled'),
         event: 0,
       },
     ];

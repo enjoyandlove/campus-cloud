@@ -2,6 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { FORMAT } from '../../../../../../../shared/pipes/date';
+import {
+  IResourceBanner
+} from '../../../../../../../shared/components/cp-resource-banner/cp-resource.interface';
 
 @Component({
   selector: 'cp-attendance-upcoming',
@@ -10,6 +13,7 @@ import { FORMAT } from '../../../../../../../shared/pipes/date';
 })
 export class AttendanceUpcomingComponent implements OnInit {
   @Input() event: any;
+  @Input() resourceBanner: IResourceBanner;
 
   banner;
   mapCenter;
@@ -30,5 +34,11 @@ export class AttendanceUpcomingComponent implements OnInit {
       lng: this.event.longitude
     }
     );
+
+    this.resourceBanner = {
+      image: this.banner,
+      heading: this.event.title,
+      subheading: this.event.store_name
+    };
   }
 }

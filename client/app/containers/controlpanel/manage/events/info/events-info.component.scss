@@ -2,32 +2,67 @@
 @import '~styles/components/button';
 @import '~styles/core/typography';
 
+p.no-margin-bottom {
+  margin-bottom: 0;
+}
+
+.cp-card {
+  @include card-margin();
+
+  margin-bottom: 0;
+}
+
+strong {
+  @include font-semi-bold();
+
+  color: $color-black;
+}
+
 .event {
+  &__map,
   &__banner {
-    width: 100%;
-    height: auto;
-    margin-bottom: 10px;
+    height: 225px;
+  }
+
+  &__map {
+    margin-top: 15px;
+  }
+
+  &__banner {
+    position: relative;
+    margin-bottom: 15px;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
   }
 
-  &__map,
-  &__banner {
-    height: 200px;
-  }
-
   &__meta {
-    margin-top: 25px;
+    left: 20px;
+    bottom: 20px;
+    position: absolute;
+
     p {
-      margin-bottom: 10px;
+      @include font-16px();
+
+      margin-bottom: 0;
+      color: $color-white;
+
+      &.event__title {
+        @include font-semi-bold();
+        @include font-24px();
+
+        margin-bottom: 0;
+      }
     }
   }
 
-  &__title {
-    @include font-semi-bold();
+  &__buttons {
+    a {
+      margin-right: 10px;
 
-    font-size: 1.6em;
-    margin-bottom: 3px;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
   }
 }

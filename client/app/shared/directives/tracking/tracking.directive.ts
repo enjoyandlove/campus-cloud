@@ -1,5 +1,6 @@
 import { Directive, HostListener, Input } from '@angular/core';
 
+import { isProd } from './../../../config/env';
 import { CPTrackingService } from './../../services/tracking.service';
 
 export const CP_TRACK_TO = {
@@ -34,10 +35,12 @@ export class CPTrackerDirective {
   }
 
   emitGA() {
-    this.cpTracker.gaEmitEvent(
-      this.eventData.eventAction,
-      this.eventData.eventCategory,
-    );
+    if (isProd) {
+      this.cpTracker.gaEmitEvent(
+        this.eventData.eventAction,
+        this.eventData.eventCategory,
+      );
+    }
   }
 
   emitAmplitude() {

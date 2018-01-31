@@ -19,51 +19,16 @@
               class="col-xs-5 hover">
               {{ 'name' | cpI18n }}
               <span *ngIf="state.sort_field === 'name'">
-                <i
-                  class="material-icons"
-                  *ngIf="state.sort_direction === 'asc'">
-                  arrow_upward
-                </i>
-                <i
-                  class="material-icons"
-                  *ngIf="state.sort_direction === 'desc'">
-                  arrow_downward
+                <i class="material-icons">
+                  {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
                 </i>
               </span>
             </span>
-            <span
-              (click)="doSort('status')"
-              class="col-xs-2 hover" >
+            <span class="col-xs-2" >
               {{ 'status' | cpI18n }}
-              <span *ngIf="state.sort_field === 'status'">
-                <i
-                  class="material-icons"
-                  *ngIf="state.sort_direction === 'asc'">
-                  arrow_upward
-                </i>
-                <i
-                  class="material-icons"
-                  *ngIf="state.sort_direction === 'desc'">
-                  arrow_downward
-                </i>
-              </span>
             </span>
-            <span
-              class="col-xs-2 hover"
-              (click)="doSort('member_count')">
+            <span class="col-xs-2">
               {{ 'members' | cpI18n }}
-              <span *ngIf="state.sort_field === 'member_count'">
-                <i
-                  class="material-icons"
-                  *ngIf="state.sort_direction === 'asc'">
-                  arrow_upward
-                </i>
-                <i
-                  class="material-icons"
-                  *ngIf="state.sort_direction === 'desc'">
-                  arrow_downward
-                </i>
-              </span>
             </span>
             <span class="col-xs-2" i18n>{{ 'events' | cpI18n }}</span>
             <span class="col-xs-1"></span>
@@ -93,7 +58,7 @@
               </ng-container>
             </span>
             <span class="col-xs-2 text-truncate">
-              {{ club.member_count === disabledWall ? cpI18n.translate('disabled') : club.member_count }}
+              {{ club.member_count === disabledWall ? cpI18n.translate('clubs_disabled') : club.member_count }}
             </span>
             <span class="col-xs-2 text-truncate">
               {{ club.total_item_count }}

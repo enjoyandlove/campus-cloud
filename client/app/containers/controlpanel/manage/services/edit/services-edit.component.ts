@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,6 +15,8 @@ import { ProvidersService } from '../providers.service';
 import { ServicesService } from '../services.service';
 
 import { IServiceDeleteModal } from './components/service-edit-delete-modal';
+import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
+import { CPI18nService } from '../../../../../shared/services';
 
 declare var $: any;
 
@@ -32,8 +34,12 @@ const SERVICE_FEEDBACK = {
   styleUrls: ['./services-edit.component.scss'],
 })
 export class ServicesEditComponent extends BaseComponent implements OnInit {
+  @Input() toolTipContent: IToolTipContent;
+
   loading;
   service;
+  feedback;
+  category;
   categories;
   buttonData;
   hasFeedback;
@@ -61,6 +67,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     private fb: FormBuilder,
     private session: CPSession,
     private store: Store<IHeader>,
+    private cpI18n: CPI18nService,
     private route: ActivatedRoute,
     private servicesService: ServicesService,
     private providersService: ProvidersService,
@@ -408,6 +415,14 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.feedback = Object.assign({}, this.feedback, {
+      content: this.cpI18n.translate('manage_create_service_feedback_tooltip'),
+    });
+
+    this.category = Object.assign({}, this.category, {
+      content: this.cpI18n.translate('manage_create_service_category_tooltip'),
+    });
+
     this.buttonData = {
       class: 'primary',
       text: 'Save',
