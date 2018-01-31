@@ -265,11 +265,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       return item;
     });
 
-    const getOnlyChecked = isChecked.filter((item) => {
-      if (item.checked) {
-        return item;
-      }
-    });
+    const getOnlyChecked = isChecked.filter((item) => item.checked);
 
     const isParentChecked = isChecked.length === getOnlyChecked.length;
     const getChecked = getOnlyChecked.length > 0;
