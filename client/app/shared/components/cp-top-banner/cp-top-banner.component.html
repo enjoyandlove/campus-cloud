@@ -4,7 +4,7 @@
       <div class="col-xs-12">
         <p>
           {{ 'beta_banner_thank_you' | cpI18n }}
-          <a cpTracker [eventData]="eventData" [attr.href]="oldCPUrl">
+          <a (click)="openGAModal()">
             {{ 'beta_banner_go_back' | cpI18n }}
           </a>
         </p>
@@ -12,3 +12,9 @@
     </div>
   </div>
 </div>
+
+<cp-modal modalId="openGAModal">
+  <cp-top-ga-modal
+  [oldCPUrl]="oldCPUrl">
+  </cp-top-ga-modal>
+</cp-modal>
