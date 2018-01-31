@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { isCanada } from './../../../config/env/index';
 import { CP_TRACK_TO } from '../../directives/index';
@@ -10,9 +10,13 @@ import { CP_TRACK_TO } from '../../directives/index';
 })
 export class CPTopBanerComponent implements OnInit {
   eventData;
-  oldCPUrl: string;
+  @Input() oldCPUrl: string;
 
   constructor() {}
+
+  openGAModal() {
+    $('#openGAModal').modal();
+  }
 
   ngOnInit() {
     this.eventData = {

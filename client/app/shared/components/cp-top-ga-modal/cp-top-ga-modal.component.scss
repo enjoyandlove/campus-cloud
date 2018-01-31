@@ -1,0 +1,30 @@
+@import '~styles/components/button';
+@import '~styles/core/colors';
+
+.cpmodal {
+
+  &__body {
+    padding-top: 40px;
+
+    img {
+      padding-bottom: 25px;
+    }
+
+    ul li {
+      text-align: left;
+      margin-bottom: 15px;
+    }
+
+    ul li a {
+      color: $color-brand;
+    }
+  }
+
+  &__footer {
+    padding-bottom: 16px;
+
+    hr {
+      margin-bottom: 12px;
+    }
+  }
+}
