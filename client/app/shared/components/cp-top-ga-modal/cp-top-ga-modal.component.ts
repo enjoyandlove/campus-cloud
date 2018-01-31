@@ -10,7 +10,9 @@ import { isCanada } from './../../../config/env/index';
 export class CPTopGaModalComponent implements OnInit {
   @Input() oldCPUrl: string;
 
-  eventData;
+  goToOldCPEventData;
+  returnCCEventData;
+
   brandingImage;
 
   constructor() {}
@@ -18,10 +20,16 @@ export class CPTopGaModalComponent implements OnInit {
   ngOnInit() {
     this.brandingImage = require('public/png/branding-image/brand-image.png');
 
-    this.eventData = {
+    this.goToOldCPEventData = {
       type: CP_TRACK_TO.GA,
       eventAction: 'Old CP Clicked',
       eventCategory: 'Go Back To CP',
+    };
+
+    this.returnCCEventData = {
+      type: CP_TRACK_TO.GA,
+      eventAction: 'Return CC Clicked',
+      eventCategory: 'Return Back to CC',
     };
 
     this.oldCPUrl = isCanada
