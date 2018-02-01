@@ -33,7 +33,6 @@ export class StoreService extends BaseService {
           label: cpI18n.translate('services'),
           value: null,
           heading: true,
-          default: false,
         },
       ])
       .map((res) => {
@@ -42,7 +41,6 @@ export class StoreService extends BaseService {
             label: cpI18n.translate('services'),
             value: null,
             heading: true,
-            default: false,
           },
         ];
 
@@ -51,7 +49,6 @@ export class StoreService extends BaseService {
             label: store.name,
             value: store.store_id,
             heading: false,
-            default: store.store_id === this.session.defaultHost,
           };
         });
 
@@ -84,7 +81,6 @@ export class StoreService extends BaseService {
           label: cpI18n.translate('clubs'),
           value: null,
           heading: true,
-          default: false,
         },
       ])
       .map((res) => {
@@ -93,7 +89,6 @@ export class StoreService extends BaseService {
             label: cpI18n.translate('clubs'),
             value: null,
             heading: true,
-            default: false,
           },
         ];
 
@@ -102,7 +97,6 @@ export class StoreService extends BaseService {
             label: store.name,
             value: store.id,
             heading: false,
-            default: store.id === this.session.defaultHost,
           };
         });
 
