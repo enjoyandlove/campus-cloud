@@ -372,11 +372,14 @@
   "assess_one_engagement_tooltip": {
     "message": "Étudiants présents à un événement ou service pour la période sélectionnée"
   },
+  "assess_one_engagement_tooltip": {
+    "message": "Students who checked in to a single Event or Service."
+  },
   "assess_repeat_engagement": {
     "message": "Plusieurs implications"
   },
   "assess_repeat_engagement_tooltip": {
-    "message": "Étudiants ayant vérifié leur présence à plus d'un événement ou service"
+    "message": "Students who checked in to more than one Event or Service."
   },
   "assess_response_date": {
     "message": "Date de la réponse"
@@ -426,6 +429,9 @@
   "athletics": {
     "message": "Athletics"
   },
+  "athletics": {
+    "message": "Athletics"
+  },
   "attendee": {
     "message": "Présent"
   },
@@ -466,7 +472,7 @@
     "message": "Retourner à l'ancienne version"
   },
   "beta_banner_thank_you": {
-    "message": "Merci d'essayer la beta."
+    "message": "Two weeks remaining until Campus Cloud goes live!"
   },
   "body": {
     "message": "Message"
@@ -963,7 +969,8 @@
     "message": "Gestionnaire de présences"
   },
   "events_attendance_manager_tooltip": {
-    "message": "N'importe quelle adresse courriel valide. Le gestionnaire de présence reçoit des instructions par courriel pour mettre en place les vérifications de présence pour l'événement."
+    "message":
+      "Any valid email address.  The Attendance Manager receives email instructions about setting up check-ins for the event."
   },
   "events_attendant": {
     "message": "Présent"
@@ -1023,13 +1030,15 @@
     "message": "Détails de l'événement"
   },
   "events_event_feedback_tooltip": {
-    "message": "Les événements avec retour activé utilisent une notification push pour récupérer le retour des étudiants, incluant une note par étoile et une réponse à la question de retour."
+    "message":
+      "Events with Feedback enabled use a push notification to gather student feedback, including a star rating and response to the feedback question."
   },
   "events_event_manager": {
     "message": "Gestionnaire de l'événement"
   },
   "events_event_manager_tooltip": {
-    "message": "Sélectionnez un hôte (un club ou service) avant de sélectionner un gestionnaire d'événement. Le gestionnaire d'événement reçoit des courriels liés à la vérification de présence des utilisateurs et aux rapports d'évaluation une fois que l'événement est terminé."
+    "message":
+      "Select a Host (a Club or Service) before you select an Event Manager.  The Event Manager receives emails related to checking in users, and assessment reports once the event is finished."
   },
   "events_event_name": {
     "message": "Nom de l'événement"
@@ -1219,6 +1228,45 @@
   "from": {
     "message": "Depuis"
   },
+  "ga_onboarding_date": {
+    "message": "February 12, 2018"
+  },
+  "ga_onboarding_text_1": {
+    "message": "Campus Cloud is changing. We're making it a faster, powerful and smoother experience for you."
+  },
+  "ga_onboarding_text_2": {
+    "message": "The new Campus Cloud will become the default experience on"
+  },
+  "ga_onboarding_text_3": {
+    "message": "and the older version will no longer be accessible."
+  },
+  "ga_onboarding_text_4": {
+    "message": "You can learn all about the new Campus Cloud with guides, how-tos and troubleshooting in our new"
+  },
+  "ga_onboarding_text_5": {
+    "message": "If you have any questions, comments or feedback, we'd love to hear from you:"
+  },
+  "ga_onboarding_date": {
+    "message": "February 12, 2018"
+  },
+  "ga_onboarding_text_1": {
+    "message":
+      "Campus Cloud is changing. We're making it a faster, powerful and smoother experience for you."
+  },
+  "ga_onboarding_text_2": {
+    "message": "The new Campus Cloud will become the default experience on"
+  },
+  "ga_onboarding_text_3": {
+    "message": "and the older version will no longer be accessible."
+  },
+  "ga_onboarding_text_4": {
+    "message":
+      "You can learn all about the new Campus Cloud with guides, how-tos and troubleshooting in our new"
+  },
+  "ga_onboarding_text_5": {
+    "message":
+      "If you have any questions, comments or feedback, we'd love to hear from you:"
+  },
   "hello": {
     "message": "Bonjour"
   },
@@ -1362,10 +1410,12 @@
     "message": "Gérer"
   },
   "manage_create_service_category_tooltip": {
-    "message": "Sélectionnez une catégorie pour votre service. Les catégories aident à filtrer et grouper le contenu dans l'application du campus."
+    "message":
+      "Select a category for your service.  Categories help filter and group content in the campus app."
   },
   "manage_create_service_feedback_tooltip": {
-    "message": "Les services avec retour activé utilisent une notification push pour récupérer le retour des étudiants, incluant une note par étoile et une réponse à la question de retour."
+    "message":
+      "Services with Feedback enabled use a push notification to gather student feedback, including a star rating and response to the feedback question."
   },
   "manage_team_members": {
     "message": "Membres d'équipe"
@@ -1416,7 +1466,8 @@
     "message": "Destinataires"
   },
   "notify_announcement_template_to_tooltip": {
-    "message": "Les notifications peuvent être envoyées aux utilisateurs de l'application que vous pouvez regrouper en listes. Pour plus d'info:"
+    "message":
+      "Notifications can be sent to app users, which you can group together into Lists.  For more info:"
   },
   "no_admins_found": {
     "message": "Aucun administrateur trouvé"
@@ -1556,6 +1607,15 @@
   },
   "results": {
     "message": "Résultat"
+  },
+  "return_to_old_control_panel": {
+    "message": "Switch back to old version"
+  },
+  "return_to_campus_cloud": {
+    "message": "Return to Campus Cloud"
+  },
+  "return_to_old_control_panel": {
+    "message": "Switch back to old version"
   },
   "reupload": {
     "message": "Re-téléverser"
