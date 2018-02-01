@@ -248,9 +248,6 @@ export class EventsCreateComponent implements OnInit {
       return;
     }
 
-    // console.log('VALUE', this.form.value);
-    // return;
-
     this.eventService.createEvent(this.form.value).subscribe(
       (res) => {
         if (this.isService) {
