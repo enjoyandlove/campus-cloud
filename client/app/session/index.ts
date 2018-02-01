@@ -12,9 +12,13 @@ import { canSchoolWriteResource } from './../shared/utils/privileges/privileges'
 
 @Injectable()
 export class CPSession {
+  /**
+   * GLOBAL, we store the School(s), User and any other
+   * object that is referenced throughout the application
+   */
   public g = new Map();
 
-  public isSuperAdmin() {
+  get isSuperAdmin() {
     const clubsSchoolWide = canSchoolWriteResource(
       this.g,
       CP_PRIVILEGES_MAP.clubs,
@@ -51,8 +55,12 @@ export class CPSession {
     );
   }
 
-  public hasSSO() {
+  get hasSSO() {
     return this.g.get('school').has_sso_integration;
+  }
+
+  get defaultHost() {
+    return this.g.get('school').main_union_store_id;
   }
 
   constructor() {}

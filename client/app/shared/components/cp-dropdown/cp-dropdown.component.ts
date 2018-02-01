@@ -38,6 +38,10 @@ export class CPDropdownComponent implements OnInit {
 
   constructor() {}
 
+  ngOnChanges() {
+    console.log('selectedItem', this.selectedItem);
+  }
+
   onClick(item) {
     if (item.heading) {
       return;

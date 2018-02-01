@@ -33,6 +33,7 @@
                 <label i18n>{{ 'select_host' | cpI18n }}</label>
                 <cp-dropdown
                   [items]="stores$ | async"
+                  [selectedItem]="defaultHost"
                   (selected)="onSelectedHost($event)"
                   [isRequiredError]="formError && form.controls['store_id'].hasError('required')">
                 </cp-dropdown>
