@@ -1,3 +1,4 @@
+import { CPSession } from './../../session/index';
 import { Injectable } from '@angular/core';
 import { Http, URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
@@ -8,12 +9,14 @@ import { API } from '../../config/api';
 import { BaseService } from '../../base/base.service';
 
 import { CPI18nService } from './i18n.service';
+import { canSchoolReadResource } from '../utils/privileges/index';
+import { CP_PRIVILEGES_MAP } from '../constants/index';
 
 const cpI18n = new CPI18nService();
 
 @Injectable()
 export class StoreService extends BaseService {
-  constructor(http: Http, router: Router) {
+  constructor(http: Http, router: Router, public session: CPSession) {
     super(http, router);
 
     Object.setPrototypeOf(this, StoreService.prototype);
@@ -111,10 +114,22 @@ export class StoreService extends BaseService {
     search: URLSearchParams,
     placeHolder = cpI18n.translate('select_host'),
   ) {
-    const clubs$ = this.getClubs(search);
-    const services$ = this.getServices(search);
+    const canReadClubs = canSchoolReadResource(
+      this.session.g,
+      CP_PRIVILEGES_MAP.clubs,
+    );
+    const canReadServices = canSchoolReadResource(
+      this.session.g,
+      CP_PRIVILEGES_MAP.services,
+    );
+    const clubs$ = canReadClubs ? this.getClubs(search) : Observable.of([]);
+    const services$ = canReadServices
+      ? this.getServices(search)
+      : Observable.of([]);
 
-    return Observable.combineLatest(services$, clubs$).map((res) => {
+    const stream$ = Observable.combineLatest(services$, clubs$);
+
+    return stream$.map((res) => {
       if (!res[0].length && !res[1].length) {
         return [
           {
