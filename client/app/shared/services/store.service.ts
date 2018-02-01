@@ -1,16 +1,14 @@
-import { CPSession } from './../../session/index';
-import { Injectable } from '@angular/core';
 import { Http, URLSearchParams } from '@angular/http';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { API } from '../../config/api';
-
-import { BaseService } from '../../base/base.service';
-
+import { CPSession } from './../../session';
 import { CPI18nService } from './i18n.service';
-import { canSchoolReadResource } from '../utils/privileges/index';
-import { CP_PRIVILEGES_MAP } from '../constants/index';
+import { CP_PRIVILEGES_MAP } from '../constants';
+import { BaseService } from '../../base/base.service';
+import { canSchoolReadResource } from '../utils/privileges';
 
 const cpI18n = new CPI18nService();
 
