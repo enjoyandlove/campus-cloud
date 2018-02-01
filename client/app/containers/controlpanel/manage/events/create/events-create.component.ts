@@ -53,7 +53,6 @@ export class EventsCreateComponent implements OnInit {
   formError = false;
   attendance = false;
   enddatePickerOpts;
-  defaultHost = null;
   startdatePickerOpts;
   mapCenter: BehaviorSubject<any>;
   newAddress = new BehaviorSubject(null);
@@ -76,14 +75,7 @@ export class EventsCreateComponent implements OnInit {
     this.buildHeader();
     search.append('school_id', this.school.id.toString());
 
-    this.stores$ = this.storeService.getStores(search).map((stores) => {
-      stores.map((store) => {
-        this.defaultHost = store.default ? store : null;
-        console.log(this.defaultHost);
-      });
-
-      return stores;
-    });
+    this.stores$ = this.storeService.getStores(search);
   }
 
   buildHeader() {
@@ -302,7 +294,10 @@ export class EventsCreateComponent implements OnInit {
       content: this.cpI18n.translate('events_event_feedback_tooltip'),
     });
 
-    let store_id = this.defaultHost;
+    let store_id = this.session.defaultHost
+      ? this.session.defaultHost.value
+      : null;
+
     // fetch managers by service
     if (this.storeId) {
       store_id = this.storeId;

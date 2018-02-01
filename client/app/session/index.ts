@@ -17,6 +17,7 @@ export class CPSession {
    * object that is referenced throughout the application
    */
   public g = new Map();
+  private _defaultHost = null;
 
   get isSuperAdmin() {
     const clubsSchoolWide = canSchoolWriteResource(
@@ -59,9 +60,12 @@ export class CPSession {
     return this.g.get('school').has_sso_integration;
   }
 
-  get defaultHost() {
-    return this.g.get('school').main_union_store_id;
+  set defaultHost(storeId) {
+    this._defaultHost = storeId;
   }
 
+  get defaultHost() {
+    return this._defaultHost;
+  }
   constructor() {}
 }
