@@ -16,9 +16,10 @@
   <div class="col-xs-12">
     <cp-feed-input-box
       [clubId]="clubId"
+      [threadId]="feedId"
       [replyView]="isReplyView"
       [isCampusWallView]="isCampusWallView"
-      (replied)="onReplied($event)">
+      (created)="onReplied($event)">
     </cp-feed-input-box>
   </div>
 </div>

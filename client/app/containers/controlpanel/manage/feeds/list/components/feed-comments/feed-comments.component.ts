@@ -37,7 +37,9 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
     super.isLoading().subscribe((res) => (this.loading = res));
   }
 
-  onReplied() {}
+  onReplied() {
+    this.fetch();
+  }
 
   onDeletedComment(commentId: number) {
     const _state = Object.assign({}, this.state);

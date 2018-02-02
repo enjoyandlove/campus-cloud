@@ -27,6 +27,7 @@ import { CPI18nService } from './../../../../../../../shared/services/i18n.servi
 })
 export class FeedInputBoxComponent implements OnInit {
   @Input() clubId: number;
+  @Input() threadId: number;
   @Input() replyView: boolean;
   @Input() disablePost: boolean;
   @Input() isCampusWallView: Observable<any>;
@@ -81,18 +82,77 @@ export class FeedInputBoxComponent implements OnInit {
       });
   }
 
-  onSubmit(data) {
-    const _data = this.parseData(data);
-    const groupWall$ = this.feedsService.postToGroupWall(_data);
-    const campusWall$ = this.feedsService.postToCampusWall(_data);
+  replyToThread({
+    message,
+    message_image_url_list,
+    school_id,
+    store_id,
+  }): Promise<any> {
+    let body = {
+      school_id,
+      store_id,
+      comment: message,
+      thread_id: this.threadId,
+    };
+
+    if (message_image_url_list) {
+      body = Object.assign({}, body, {
+        comment_image_url_list: [...message_image_url_list],
+      });
+    }
+
+    const groupWall$ = this.feedsService.replyToGroupThread(body);
+    const campusWall$ = this.feedsService.replyToCampusThread(body);
     const stream$ = this._isCampusWallView ? groupWall$ : campusWall$;
 
-    stream$.subscribe((res) => {
+    return stream$.toPromise();
+  }
+
+  postToWall(formData): Promise<any> {
+    const groupWall$ = this.feedsService.postToGroupWall(formData);
+    const campusWall$ = this.feedsService.postToCampusWall(formData);
+    const stream$ = this._isCampusWallView ? groupWall$ : campusWall$;
+
+    return stream$.toPromise();
+  }
+
+  onSubmit(data) {
+    const submit = this.replyView
+      ? this.replyToThread(this.parseData(data))
+      : this.postToWall(this.parseData(data));
+    // const uploadImages: Promise<Array<string>> = this.postImages.length
+    //   ? Promise.resolve([...this.postImages])
+    //   : Promise.resolve([]);
+
+    // uploadImages
+    //   .then((images) => {
+    //     data = { ...data, message_image_url_list: [...images] };
+
+    //     return this.replyView
+    //       ? this.replyToThread(this.parseData(data))
+    //       : this.postToWall(this.parseData(data));
+    //   })
+    submit.then((res) => {
       this.resetFormValues();
-      this.reset$.next(true);
-      this.resetTextEditor$.next(true);
       this.created.emit(res);
     });
+    // .catch((err) => this.handleError(err));
+  }
+
+  parseData(data) {
+    const _data = {
+      post_type: data.post_type || null,
+      store_id: data.store_id,
+      school_id: this.session.g.get('school').id,
+      message: data.message,
+      message_image_url_list: data.message_image_url_list,
+    };
+
+    if (this._isCampusWallView) {
+      _data['group_id'] = this.groupId;
+    }
+
+    return _data;
   }
 
   resetFormValues() {
@@ -102,22 +162,6 @@ export class FeedInputBoxComponent implements OnInit {
     }
     this.form.controls['message'].setValue(null);
     this.form.controls['message_image_url'].setValue(null);
-  }
-
-  parseData(data) {
-    const _data = {
-      post_type: data.post_type || null,
-      store_id: data.store_id,
-      school_id: this.session.g.get('school').id,
-      message: data.message,
-      message_image_url: data.message_image_url,
-    };
-
-    if (this._isCampusWallView) {
-      _data['group_id'] = this.groupId;
-    }
-
-    return _data;
   }
 
   onContentChange(data: { body: string; image: string }) {
@@ -168,6 +212,16 @@ export class FeedInputBoxComponent implements OnInit {
 
   ngOnInit() {
     this.school = this.session.g.get('school');
+
+    this.form = this.fb.group({
+      group_id: [null],
+      school_id: [this.session.g.get('school').id],
+      store_id: [this.session.defaultHost.value, Validators.required],
+      post_type: [null, Validators.required],
+      message: [null, [Validators.required, Validators.maxLength(500)]],
+      message_image_url: [null],
+    });
+
     this.isCampusWallView.subscribe((res) => {
       // Not Campus Wall
       if (res.type !== 1) {
@@ -188,15 +242,6 @@ export class FeedInputBoxComponent implements OnInit {
       }
 
       this._isCampusWallView = false;
-    });
-
-    this.form = this.fb.group({
-      group_id: [null],
-      school_id: [this.session.g.get('school').id],
-      store_id: [this.session.defaultHost.value, Validators.required],
-      post_type: [null, Validators.required],
-      message: [null, [Validators.required, Validators.maxLength(500)]],
-      message_image_url: [null],
     });
   }
 }
