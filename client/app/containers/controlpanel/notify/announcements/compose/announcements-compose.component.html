@@ -78,7 +78,7 @@
                       <cp-dropdown
                         [items]="stores$ | async"
                         [reset]="resetCustomFields$"
-                        [selectedItem]="selectedHost"
+                        [selectedItem]="session.defaultHost"
                         (selected)="onSelectedStore($event)">
                       </cp-dropdown>
                     </div>

@@ -8,7 +8,10 @@ import { CPSession } from './../../session';
 import { CPI18nService } from './i18n.service';
 import { CP_PRIVILEGES_MAP } from '../constants';
 import { BaseService } from '../../base/base.service';
-import { canSchoolReadResource } from '../utils/privileges';
+import {
+  canSchoolReadResource,
+  canAccountLevelReadResource,
+} from '../utils/privileges';
 
 const cpI18n = new CPI18nService();
 
@@ -112,14 +115,30 @@ export class StoreService extends BaseService {
     search: URLSearchParams,
     placeHolder = cpI18n.translate('select_host'),
   ) {
-    const canReadClubs = canSchoolReadResource(
+    /**
+     * Check for user privileges before masking the call
+     * to Stores/Clubs to avoid errors in Sentry
+     */
+    const clubsSchoolAccess = canSchoolReadResource(
       this.session.g,
       CP_PRIVILEGES_MAP.clubs,
     );
-    const canReadServices = canSchoolReadResource(
+    const clubsAccountAccess = canAccountLevelReadResource(
+      this.session.g,
+      CP_PRIVILEGES_MAP.clubs,
+    );
+    const canReadClubs = clubsSchoolAccess || clubsAccountAccess;
+
+    const servicesSchoolAccess = canSchoolReadResource(
       this.session.g,
       CP_PRIVILEGES_MAP.services,
     );
+    const servicesAccountAccess = canAccountLevelReadResource(
+      this.session.g,
+      CP_PRIVILEGES_MAP.services,
+    );
+    const canReadServices = servicesSchoolAccess || servicesAccountAccess;
+
     const clubs$ = canReadClubs ? this.getClubs(search) : Observable.of([]);
     const services$ = canReadServices
       ? this.getServices(search)
