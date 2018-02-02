@@ -48,10 +48,10 @@
                   </div>
                   <div class="col-xs-7 no-left-padding">
                     <cp-dropdown
-                      [reset]="reset$"
                       class="dropdown"
                       [items]="stores$ | async"
-                      (selected)="onSelectedHost($event)">
+                      (selected)="onSelectedHost($event)"
+                      [selectedItem]="session.defaultHost">
                     </cp-dropdown>
                   </div>
                 </div>

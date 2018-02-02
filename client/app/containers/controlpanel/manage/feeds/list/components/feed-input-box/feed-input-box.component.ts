@@ -87,14 +87,20 @@ export class FeedInputBoxComponent implements OnInit {
     const stream$ = this._isCampusWallView ? groupWall$ : campusWall$;
 
     stream$.subscribe((res) => {
-      if (!this.clubId) {
-        this.form.reset();
-      }
-      this.form.controls['message'].setValue(null);
+      this.resetFormValues();
       this.reset$.next(true);
       this.resetTextEditor$.next(true);
       this.created.emit(res);
     });
+  }
+
+  resetFormValues() {
+    if (!this.clubId && !this._isCampusWallView) {
+      this.form.controls['group_id'].setValue(null);
+      this.form.controls['post_type'].setValue(null);
+    }
+    this.form.controls['message'].setValue(null);
+    this.form.controls['message_image_url'].setValue(null);
   }
 
   parseData(data) {
@@ -177,7 +183,7 @@ export class FeedInputBoxComponent implements OnInit {
           'post_type',
           new FormControl(null, Validators.required),
         );
-        this.form.controls['store_id'].setValue(null);
+        this.form.controls['store_id'].setValue(this.session.defaultHost.value);
       }
 
       this._isCampusWallView = false;
@@ -186,7 +192,7 @@ export class FeedInputBoxComponent implements OnInit {
     this.form = this.fb.group({
       group_id: [null],
       school_id: [this.session.g.get('school').id],
-      store_id: [null, Validators.required],
+      store_id: [this.session.defaultHost.value, Validators.required],
       post_type: [null, Validators.required],
       message: [null, [Validators.required, Validators.maxLength(500)]],
       message_image_url: [null],

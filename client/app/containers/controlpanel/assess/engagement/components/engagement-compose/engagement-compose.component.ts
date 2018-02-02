@@ -107,7 +107,7 @@ export class EngagementComposeComponent implements OnInit {
     this.form = this.fb.group({
       user_ids: [this.props.userIds],
       is_school_wide: false,
-      store_id: [null, Validators.required],
+      store_id: [this.session.defaultHost.value, Validators.required],
       subject: [null, [Validators.required, Validators.maxLength(128)]],
       message: [null, [Validators.required, Validators.maxLength(400)]],
       priority: [2, Validators.required],
