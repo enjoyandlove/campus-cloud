@@ -160,6 +160,8 @@ export class FeedInputBoxComponent implements OnInit {
       this.form.controls['group_id'].setValue(null);
       this.form.controls['post_type'].setValue(null);
     }
+    this.reset$.next(true);
+    this.resetTextEditor$.next(true);
     this.form.controls['message'].setValue(null);
     this.form.controls['message_image_url'].setValue(null);
   }
@@ -217,7 +219,7 @@ export class FeedInputBoxComponent implements OnInit {
       group_id: [null],
       school_id: [this.session.g.get('school').id],
       store_id: [this.session.defaultHost.value, Validators.required],
-      post_type: [null, Validators.required],
+      post_type: [1, Validators.required],
       message: [null, [Validators.required, Validators.maxLength(500)]],
       message_image_url: [null],
     });

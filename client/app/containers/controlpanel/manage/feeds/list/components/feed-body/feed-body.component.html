@@ -42,7 +42,7 @@
             <button
               class="cpbtn cpbtn--link-dark"
               (click)="isCommentsOpen = !isCommentsOpen"
-              (click)="viewComments.emit(!isCommentsOpen)">
+              (click)="viewComments.emit(isCommentsOpen)">
               <i class="material-icons" *ngIf="!isCommentsOpen">chevron_right</i>
               <i class="material-icons" *ngIf="isCommentsOpen">expand_more</i>
               {{ isCommentsOpen ? cpI18n.translate('hide') : cpI18n.translate('show') }}
