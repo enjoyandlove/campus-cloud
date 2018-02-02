@@ -7,7 +7,7 @@
     </cp-no-content>
 
     <div
-      class="cp-card"
+      [class]="[replyView ? '' : 'cp-card']"
       *ngIf="!disablePost">
       <form
         [formGroup]="form"

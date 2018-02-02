@@ -24,6 +24,13 @@
               <i class="material-icons">thumb_up</i>
               {{ feed.likes }}
             </span>
+            <span
+              class="cpbtn cpbtn--link"
+              (click)="isCommentsOpen = !isCommentsOpen"
+              (click)="toggleReplies.emit(isCommentsOpen)">
+              <i class="material-icons">mode_comment</i>
+              {{ 'reply' | cpI18n }}
+            </span>
             <span class="flag" *ngIf="feed.dislikes > 0 && feed.flag !== 2">
               <i class="material-icons">flag</i>
               {{ feed.dislikes }}
@@ -35,7 +42,7 @@
             <button
               class="cpbtn cpbtn--link-dark"
               (click)="isCommentsOpen = !isCommentsOpen"
-              (click)="viewComments.emit(isCommentsOpen)">
+              (click)="viewComments.emit(!isCommentsOpen)">
               <i class="material-icons" *ngIf="!isCommentsOpen">chevron_right</i>
               <i class="material-icons" *ngIf="isCommentsOpen">expand_more</i>
               {{ isCommentsOpen ? cpI18n.translate('hide') : cpI18n.translate('show') }}

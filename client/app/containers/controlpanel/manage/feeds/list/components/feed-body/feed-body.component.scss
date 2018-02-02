@@ -32,7 +32,10 @@
     span {
       font-size: 12px;
       margin-right: 25px;
-      color: $color-secondary-text;
+
+      &:not(.cpbtn--link) {
+        color: $color-secondary-text;
+      }
 
       i {
         font-size: 15px;

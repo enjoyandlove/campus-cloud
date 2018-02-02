@@ -11,3 +11,14 @@
     </cp-feed-comment>
   </div>
 </div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <cp-feed-input-box
+      [clubId]="clubId"
+      [replyView]="isReplyView"
+      [isCampusWallView]="isCampusWallView"
+      (replied)="onReplied($event)">
+    </cp-feed-input-box>
+  </div>
+</div>

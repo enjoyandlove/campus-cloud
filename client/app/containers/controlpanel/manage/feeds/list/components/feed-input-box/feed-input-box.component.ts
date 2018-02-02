@@ -27,6 +27,7 @@ import { CPI18nService } from './../../../../../../../shared/services/i18n.servi
 })
 export class FeedInputBoxComponent implements OnInit {
   @Input() clubId: number;
+  @Input() replyView: boolean;
   @Input() disablePost: boolean;
   @Input() isCampusWallView: Observable<any>;
   @Output() created: EventEmitter<null> = new EventEmitter();
