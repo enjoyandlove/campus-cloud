@@ -21,6 +21,9 @@
   "admin_all_access": {
     "message": "Copy my Campus Cloud Permissions"
   },
+  "admin_all_athletics": {
+    "message": "All Athletics"
+  },
   "admin_all_clubs": {
     "message": "All Clubs"
   },
@@ -35,6 +38,12 @@
   },
   "admin_assess_help": {
     "message": "View the Assessment Dashboard"
+  },
+  "admin_athletics_owner": {
+    "message": "Athletics Owner"
+  },
+  "admin_athletics_owner_help": {
+    "message": "Create new club with athletics; manage information, events and membership for all clubs or select clubs"
   },
   "admin_campus_announcements": {
     "message": "Regular Announcements"
@@ -119,6 +128,9 @@
   },
   "admin_search_by_email_or_email": {
     "message": "Search by name or email..."
+  },
+  "admin_select_athletics": {
+    "message": "Select Athletics"
   },
   "admin_select_clubs": {
     "message": "Select Clubs"

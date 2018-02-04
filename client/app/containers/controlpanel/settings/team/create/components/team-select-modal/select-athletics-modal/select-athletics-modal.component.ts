@@ -9,15 +9,15 @@ import { CP_PRIVILEGES_MAP } from '../../../../../../../../shared/constants';
 import { BaseTeamSelectModalComponent } from '../base/team-select-modal.component';
 
 const ACTIVE_STATUS = 1;
-const CLUBS = 0;
+const ATHLETICS = 16;
 
 @Component({
-  selector: 'cp-select-clubs-modal',
-  templateUrl: './select-clubs-modal.component.html',
+  selector: 'cp-select-athletics-modal',
+  templateUrl: './select-athletics-modal.component.html',
 })
-export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent
+export class SelectTeamAthleticsModalComponent extends BaseTeamSelectModalComponent
   implements OnInit {
-  @Input() selectedClubs: any;
+  @Input() selectedAthletics: any;
   @Input() reset: Observable<boolean>;
   @Output() selected: EventEmitter<any> = new EventEmitter();
   @Output() teardown: EventEmitter<null> = new EventEmitter();
@@ -25,7 +25,7 @@ export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent
 
   constructor(private session: CPSession, private service: ClubsService) {
     super();
-    this.privilegeType = CP_PRIVILEGES_MAP.clubs;
+    this.privilegeType = CP_PRIVILEGES_MAP.athletics;
   }
 
   doReset() {
@@ -35,35 +35,35 @@ export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent
   ngOnInit() {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
-    search.append('category_id', CLUBS.toString());
+    search.append('category_id', ATHLETICS.toString());
 
     this.service
       .getClubs(search, 1, 1000)
-      .map((clubs) => clubs.filter((club) => club.status === ACTIVE_STATUS))
-      .subscribe((clubs) => {
+      .map((athletics) => athletics.filter((athletic) => athletic.status === ACTIVE_STATUS))
+      .subscribe((athletics) => {
         let res = {};
         const selected = {};
 
-        if (this.selectedClubs) {
-          clubs.map((club) => {
-            if (Object.keys(this.selectedClubs).includes(club.id.toString())) {
-              if (CP_PRIVILEGES_MAP.clubs in this.selectedClubs[club.id]) {
-                selected[club.id] = club;
+        if (this.selectedAthletics) {
+          athletics.map((athletic) => {
+            if (Object.keys(this.selectedAthletics).includes(athletic.id.toString())) {
+              if (CP_PRIVILEGES_MAP.athletics in this.selectedAthletics[athletic.id]) {
+                selected[athletic.id] = athletic;
               }
             }
 
-            if (selected[club.id]) {
-              club.checked = true;
+            if (selected[athletic.id]) {
+              athletic.checked = true;
               // we pass the id to the selected object
               // to populate the modal state....
-              selected[club.id] = Object.assign({}, selected[club.id], {
-                id: club.id,
+              selected[athletic.id] = Object.assign({}, selected[athletic.id], {
+                id: athletic.id,
               });
             }
           });
         }
         res = {
-          data: clubs,
+          data: athletics,
           selected: selected,
         };
 

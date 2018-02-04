@@ -126,6 +126,28 @@
         </fieldset>
         <!-- END Club Owner -->
 
+        <!-- Athletics Owner -->
+        <fieldset [disabled]="!canReadAthletics">
+        <div class="section__item">
+          <div class="row">
+            <div class="col-xs-8">
+              <p class="section-sub-title" i18n>{{ 'admin_athletics_owner' | cpI18n }}</p>
+              <p class="section-description" i18n>
+                {{ 'admin_athletics_owner_help' | cpI18n }}
+              </p>
+            </div>
+            <div class="col-xs-4">
+              <cp-dropdown
+                [items]="athleticsMenu"
+                [selectedItem]="athleticsCount"
+                (selected)="onAthleticsSelected($event)">
+              </cp-dropdown>
+            </div>
+          </div>
+        </div>
+        </fieldset>
+        <!-- END Athletics Owner -->
+
         <!-- Events -->
         <fieldset [disabled]="!canReadEvents">
           <div class="section__item">
@@ -342,4 +364,15 @@
     [reset]="resetClubsModal$"
     (selected)="onClubsModalSelected($event)">
   </cp-select-clubs-modal>
+</cp-modal>
+
+<cp-modal
+  [type]="MODAL_TYPE"
+  *ngIf="isAthleticsModal"
+  modalId="selectAthleticsModal">
+  <cp-select-athletics-modal
+    [reset]="resetAthleticsModal$"
+    (selected)="onAthleticsModalSelected($event)"
+    [selectedAthletics]="accountPrivileges">
+  </cp-select-athletics-modal>
 </cp-modal>
