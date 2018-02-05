@@ -12,6 +12,7 @@ declare var $: any;
 export class FeedCommentComponent implements OnInit {
   @Input() comment: any;
   @Input() last: boolean;
+  @Input() replyView: number;
   @Input() isCampusWallView: Observable<number>;
   @Output() deleted: EventEmitter<number> = new EventEmitter();
 

@@ -25,6 +25,7 @@
               {{ feed.likes }}
             </span>
             <span
+              *ngIf="!replyView"
               class="cpbtn cpbtn--link"
               (click)="isCommentsOpen = !isCommentsOpen"
               (click)="toggleReplies.emit(isCommentsOpen)">

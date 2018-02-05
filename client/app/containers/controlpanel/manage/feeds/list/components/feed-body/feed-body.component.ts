@@ -9,6 +9,7 @@ import { CPI18nService } from '../../../../../../../shared/services/index';
 })
 export class FeedBodyComponent implements OnInit {
   @Input() feed: any;
+  @Input() replyView: number;
   @Input() isRemovedPosts: boolean;
 
   @Output() viewComments: EventEmitter<boolean> = new EventEmitter();
