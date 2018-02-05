@@ -14,7 +14,8 @@ import 'node_modules/quill/dist/quill.snow.css';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
-import { CPI18nService } from '../../services/index';
+import { CPI18nService } from '../../services';
+import { QuillService } from './../../services/quill.service';
 
 interface IState {
   body: string;
@@ -25,8 +26,6 @@ const state: IState = {
   body: null,
   image: null,
 };
-
-const Quill = require('quill');
 
 @Component({
   selector: 'cp-text-editor',
@@ -50,42 +49,29 @@ export class CPTextEditorComponent implements OnInit, AfterViewInit {
   }
 
   launch() {
-    const toolbarOptions = null;
+    const el = this.editor.nativeElement;
 
-    this.quillInstance = new Quill(this.editor.nativeElement, {
+    const options = {
       modules: {
-        toolbar: toolbarOptions,
+        toolbar: null,
       },
       placeholder: this.cpI18n.translate('feeds_input_placeholder'),
       theme: 'snow',
-    });
+    };
 
-    this.quillInstance.on('text-change', () => {
-      this.state = Object.assign({}, this.state, {
-        body: this.quillInstance.getText().trim(),
-      });
-      this.contentChange.emit(this.state);
-    });
+    this.quillInstance = new QuillService(el, options);
+    this.quillInstance.on('text-change', this.textChangeHandler.bind(this));
   }
 
-  removeText() {
-    this.state = Object.assign({}, this.state, { body: null });
-    this.quillInstance.setText('');
+  textChangeHandler() {
+    this.state = Object.assign({}, this.state, {
+      body: this.quillInstance.getText(),
+    });
+    this.contentChange.emit(this.state);
   }
 
   reset() {
-    this.removeText();
-  }
-
-  clearImages(data: Array<any>) {
-    const res = [];
-    data.map((item) => {
-      if (typeof item.insert !== 'object') {
-        res.push(item);
-      }
-    });
-
-    return res;
+    this.quillInstance.reset();
   }
 
   setImage(image) {
@@ -105,15 +91,8 @@ export class CPTextEditorComponent implements OnInit, AfterViewInit {
 
     this.image$.subscribe((image: string) => {
       if (image) {
-        const content = this.quillInstance.getContents();
+        this.quillInstance.insertImage(image);
         this.setImage(image);
-
-        // delete old image if any
-        this.quillInstance.setContents(this.clearImages(content.ops));
-
-        // set new content with no image
-        const range = this.quillInstance.getSelection(true);
-        this.quillInstance.insertEmbed(range.index, 'image', image);
       }
 
       this.setImage(null);
