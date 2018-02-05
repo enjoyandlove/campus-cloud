@@ -163,12 +163,14 @@ export class FeedInputBoxComponent implements OnInit {
     this.reset$.next(true);
     this.resetTextEditor$.next(true);
     this.form.controls['message'].setValue(null);
-    this.form.controls['message_image_url'].setValue(null);
+    this.form.controls['message_image_url_list'].setValue(null);
   }
 
-  onContentChange(data: { body: string; image: string }) {
-    this.form.controls['message'].setValue(data.body);
-    this.form.controls['message_image_url'].setValue(data.image);
+  onContentChange({ body, image }) {
+    this.form.controls['message'].setValue(body);
+    this.form.controls['message_image_url_list'].setValue(
+      image ? [image] : null,
+    );
   }
 
   onSelectedHost(host): void {
@@ -200,7 +202,7 @@ export class FeedInputBoxComponent implements OnInit {
     this.fileUploadService.uploadFile(file, url, headers).subscribe(
       (res) => {
         this.image$.next(res.image_url);
-        this.form.controls['message_image_url'].setValue(res.image_url);
+        this.form.controls['message_image_url_list'].setValue([res.image_url]);
       },
       (err) => {
         throw new Error(err);
@@ -209,7 +211,7 @@ export class FeedInputBoxComponent implements OnInit {
   }
 
   removePhoto(): void {
-    this.form.controls['message_image_url'].setValue(null);
+    this.form.controls['message_image_url_list'].setValue(null);
   }
 
   ngOnInit() {
@@ -221,7 +223,7 @@ export class FeedInputBoxComponent implements OnInit {
       store_id: [this.session.defaultHost.value, Validators.required],
       post_type: [1, Validators.required],
       message: [null, [Validators.required, Validators.maxLength(500)]],
-      message_image_url: [null],
+      message_image_url_list: [null],
     });
 
     this.isCampusWallView.subscribe((res) => {

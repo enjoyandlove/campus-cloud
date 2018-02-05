@@ -26,6 +26,8 @@ const state: IState = {
   image: null,
 };
 
+const Quill = require('quill');
+
 @Component({
   selector: 'cp-text-editor',
   templateUrl: './cp-text-editor.component.html',
@@ -40,36 +42,14 @@ export class CPTextEditorComponent implements OnInit, AfterViewInit {
 
   quillInstance;
   state: IState = state;
-  imageContainer: Element;
-  imageElement: HTMLImageElement = new Image();
-  deleteButtonElement;
 
   constructor(private cpI18n: CPI18nService) {}
 
-  createDeleteButton() {
-    const button = document.createElement('button');
-    button.className =
-      'material-icons cpbtn cpbtn--cancel cpbtn--no-border remove-image';
-    button.onclick = (e) => this.removeImage(e);
-    button.textContent = 'close';
-    button.style.display = 'none';
-    this.deleteButtonElement = button;
-    this.imageContainer.appendChild(button);
-  }
-
   ngAfterViewInit() {
     this.launch();
-
-    this.imageContainer = this.quillInstance.addContainer('cp-editor-image');
-    this.imageElement.style.display = 'none';
-
-    this.createDeleteButton();
-
-    this.imageContainer.appendChild(this.imageElement);
   }
 
   launch() {
-    const Quill = require('quill');
     const toolbarOptions = null;
 
     this.quillInstance = new Quill(this.editor.nativeElement, {
@@ -88,26 +68,28 @@ export class CPTextEditorComponent implements OnInit, AfterViewInit {
     });
   }
 
-  removeImage(e?: MouseEvent) {
-    if (e) {
-      e.preventDefault();
-    }
-
-    this.state = Object.assign({}, this.state, { image: null });
-    this.imageElement.src = null;
-    this.contentChange.emit(this.state);
-    this.imageElement.style.display = 'none';
-    this.deleteButtonElement.style.display = 'none';
-  }
-
   removeText() {
     this.state = Object.assign({}, this.state, { body: null });
     this.quillInstance.setText('');
   }
 
   reset() {
-    this.removeImage();
     this.removeText();
+  }
+
+  clearImages(data: Array<any>) {
+    const res = [];
+    data.map((item) => {
+      if (typeof item.insert !== 'object') {
+        res.push(item);
+      }
+    });
+
+    return res;
+  }
+
+  setImage(image) {
+    this.state = Object.assign({}, this.state, { image });
   }
 
   ngOnInit() {
@@ -123,12 +105,18 @@ export class CPTextEditorComponent implements OnInit, AfterViewInit {
 
     this.image$.subscribe((image: string) => {
       if (image) {
-        this.state = Object.assign({}, this.state, { image });
+        const content = this.quillInstance.getContents();
+        this.setImage(image);
 
-        this.imageElement.src = image;
-        this.imageElement.style.display = 'block';
-        this.deleteButtonElement.style.display = 'block';
+        // delete old image if any
+        this.quillInstance.setContents(this.clearImages(content.ops));
+
+        // set new content with no image
+        const range = this.quillInstance.getSelection(true);
+        this.quillInstance.insertEmbed(range.index, 'image', image);
       }
+
+      this.setImage(null);
     });
   }
 }

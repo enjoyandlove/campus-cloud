@@ -1,6 +1,12 @@
 @import '~styles/core/colors';
 @import '~styles/components/button';
 
+.ql-snow .ql-editor img {
+  display: block;
+  margin-top: 15px;
+  max-width: 180px;
+}
+
 .ql-container.ql-snow {
   min-height: 80px;
   border-radius: 4px;
