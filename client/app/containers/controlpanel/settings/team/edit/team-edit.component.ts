@@ -29,6 +29,7 @@ import {
   clubMenu,
   eventMenu,
   TeamUtilsService,
+  manageAdminMenu,
 } from '../team.utils.service';
 
 declare var $: any;
@@ -337,7 +338,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   onManageAdminSelected(data) {
-    if (!data.action) {
+    if (data.action === manageAdminMenu.disabled) {
       if (CP_PRIVILEGES_MAP.manage_admin in this.schoolPrivileges) {
         delete this.schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin];
       }
@@ -351,12 +352,14 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
-      [CP_PRIVILEGES_MAP.manage_admin]: {
-        r: true,
-        w: true,
-      },
-    });
+    if (data.action === manageAdminMenu.enabled) {
+      this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
+        [CP_PRIVILEGES_MAP.manage_admin]: {
+          r: true,
+          w: true,
+        },
+      });
+    }
   }
 
   toggleAllAccess(checked) {
