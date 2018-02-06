@@ -5,9 +5,22 @@
     <cp-feed-comment
       [last]="last"
       [comment]="comment"
+      [replyView]="isReplyView"
       (deleted)="onDeletedComment($event)"
       [isCampusWallView]="isCampusWallView"
       *ngFor="let comment of state.comments; let last = last">
     </cp-feed-comment>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <cp-feed-input-box
+      [clubId]="clubId"
+      [threadId]="feedId"
+      [replyView]="isReplyView"
+      [isCampusWallView]="isCampusWallView"
+      (created)="onReplied($event)">
+    </cp-feed-input-box>
   </div>
 </div>

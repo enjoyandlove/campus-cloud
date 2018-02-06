@@ -21,6 +21,7 @@ const state: IState = {
 })
 export class FeedCommentsComponent extends BaseComponent implements OnInit {
   @Input() feedId: number;
+  @Input() clubId: number;
   @Input() isCampusWallView: Observable<number>;
   @Output() deleted: EventEmitter<null> = new EventEmitter();
 
@@ -28,11 +29,16 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
   comments;
   groupId: number;
   _isCampusWallView;
+  isReplyView = true;
   state: IState = state;
 
   constructor(private session: CPSession, private feedsService: FeedsService) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
+  }
+
+  onReplied() {
+    this.fetch();
   }
 
   onDeletedComment(commentId: number) {

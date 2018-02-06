@@ -20,6 +20,7 @@
         <cp-feed-item
           [feed]="feed"
           (moved)="fetch()"
+          [clubId]="clubId"
           (deleted)="onDeleted($event)"
           *ngFor="let feed of state.feeds"
           [isCampusWallView]="isCampusWallView$"
