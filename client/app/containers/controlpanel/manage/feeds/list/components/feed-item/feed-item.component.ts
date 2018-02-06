@@ -74,6 +74,12 @@ export class FeedItemComponent implements OnInit {
     });
   }
 
+  onReplied() {
+    this.feed = Object.assign({}, this.feed, {
+      comment_count: this.feed.comment_count + 1,
+    });
+  }
+
   onApprovedPost() {
     this.feed = Object.assign({}, this.feed, { flag: 2 });
     this.requiresApproval$.next(false);

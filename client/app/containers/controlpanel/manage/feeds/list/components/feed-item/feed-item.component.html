@@ -37,6 +37,7 @@
         <cp-feed-comments
           [feedId]="feed.id"
           [clubId]="clubId"
+          (replied)="onReplied()"
           (deleted)="onDeletedComment()"
           [isCampusWallView]="isCampusWallView">
         </cp-feed-comments>
