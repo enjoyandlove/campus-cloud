@@ -120,23 +120,11 @@ export class FeedInputBoxComponent implements OnInit {
     const submit = this.replyView
       ? this.replyToThread(this.parseData(data))
       : this.postToWall(this.parseData(data));
-    // const uploadImages: Promise<Array<string>> = this.postImages.length
-    //   ? Promise.resolve([...this.postImages])
-    //   : Promise.resolve([]);
 
-    // uploadImages
-    //   .then((images) => {
-    //     data = { ...data, message_image_url_list: [...images] };
-
-    //     return this.replyView
-    //       ? this.replyToThread(this.parseData(data))
-    //       : this.postToWall(this.parseData(data));
-    //   })
     submit.then((res) => {
       this.resetFormValues();
       this.created.emit(res);
     });
-    // .catch((err) => this.handleError(err));
   }
 
   parseData(data) {
@@ -208,10 +196,6 @@ export class FeedInputBoxComponent implements OnInit {
         throw new Error(err);
       },
     );
-  }
-
-  removePhoto(): void {
-    this.form.controls['message_image_url_list'].setValue(null);
   }
 
   ngOnInit() {
