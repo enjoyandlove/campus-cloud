@@ -18,7 +18,7 @@
               {{ form.controls.message.value ? form.controls.message.value.length : 0 }}/500
             </p>
           </div>
-          <div class="col-xs-6 text-right">
+          <div class="col-xs-6 text-right" *ngIf="!replyView">
             <label class="error" *ngIf="imageError">{{ imageError }}</label>
             <cp-upload-button
               [buttonText]="cpI18n.translate('button_add_photo')"
