@@ -1,3 +1,4 @@
+import { TeamUtilsService } from './../team.utils.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -11,7 +12,6 @@ import {
 
 import { TEAM_ACCESS } from '../utils';
 import { CPSession } from '../../../../../session';
-import { accountCleanUp } from '../create/team-create.component';
 import { BaseComponent } from '../../../../../base/base.component';
 import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
@@ -25,154 +25,7 @@ import {
   CPI18nService,
 } from '../../../../../shared/services';
 
-const _cpI18n = new CPI18nService();
-
-const eventsDropdown = function(
-  eventPrivilege = { r: false, w: false },
-  eventAssessmentPrivilege = { r: false, w: false },
-): Array<any> {
-  let items = [
-    {
-      label: _cpI18n.translate('admin_no_access'),
-      action: null,
-    },
-  ];
-
-  if (!eventPrivilege.r) {
-    return items;
-  }
-
-  if (eventPrivilege.w) {
-    items = [
-      ...items,
-      {
-        label: _cpI18n.translate('admin_manage_events'),
-        action: 2,
-      },
-    ];
-  }
-
-  if (eventAssessmentPrivilege.w) {
-    items = [
-      ...items,
-      {
-        label: _cpI18n.translate('admin_manage_and_assess_events'),
-        action: 3,
-      },
-    ];
-  }
-
-  return items;
-};
-
-const manageAdminDropdown = function(privilege = { r: false, w: false }) {
-  let items = [
-    {
-      label: _cpI18n.translate('team_member_disabled'),
-      action: null,
-    },
-  ];
-
-  if (!privilege) {
-    return items;
-  }
-
-  if (privilege.w) {
-    items = [
-      ...items,
-      {
-        label: _cpI18n.translate('admin_enabled'),
-        action: 1,
-      },
-    ];
-  }
-
-  return items;
-};
-
-const clubsDropdown = (
-  schoolLevel = { r: false, w: false },
-  accountLevel = false,
-) => {
-  let items = [
-    {
-      label: _cpI18n.translate('admin_no_access'),
-      action: null,
-    },
-  ];
-
-  if (!schoolLevel.w && !accountLevel) {
-    return items;
-  }
-
-  if (accountLevel && !schoolLevel.w) {
-    items = [
-      ...items,
-      {
-        label: _cpI18n.translate('admin_select_clubs'),
-        action: 2,
-      },
-    ];
-  }
-
-  if (schoolLevel.w) {
-    items = [
-      ...items,
-      {
-        label: _cpI18n.translate('admin_select_clubs'),
-        action: 2,
-      },
-      {
-        label: _cpI18n.translate('admin_all_clubs'),
-        action: 3,
-      },
-    ];
-  }
-
-  return items;
-};
-
-const servicesDropdown = function(
-  schoolLevel = { r: false, w: false },
-  accountLevel = false,
-) {
-  let items = [
-    {
-      label: _cpI18n.translate('admin_no_access'),
-      action: null,
-    },
-  ];
-
-  if (!schoolLevel.w && !accountLevel) {
-    return items;
-  }
-
-  if (accountLevel && !schoolLevel.w) {
-    items = [
-      ...items,
-      {
-        label: _cpI18n.translate('admin_select_services'),
-        action: 2,
-      },
-    ];
-  }
-
-  if (schoolLevel.w) {
-    items = [
-      ...items,
-      {
-        label: _cpI18n.translate('admin_select_services'),
-        action: 2,
-      },
-      {
-        label: _cpI18n.translate('admin_all_services'),
-        action: 3,
-      },
-    ];
-  }
-
-  return items;
-};
+import { serviceMenu, clubMenu } from '../team.utils.service';
 
 declare var $: any;
 
@@ -223,6 +76,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     private route: ActivatedRoute,
     private store: Store<IHeader>,
     private cpI18n: CPI18nService,
+    public utils: TeamUtilsService,
     private adminService: AdminService,
     private errorService: ErrorService,
   ) {
@@ -235,7 +89,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   updateServicesDropdownLabel() {
-    const numberOfServices = this.getNumberOf(
+    const numberOfServices = this.utils.getNumberOf(
       CP_PRIVILEGES_MAP.services,
       this.accountPrivileges,
     );
@@ -246,7 +100,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   updateClubsDropdownLabel() {
-    const numberOfClubs = this.getNumberOf(
+    const numberOfClubs = this.utils.getNumberOf(
       CP_PRIVILEGES_MAP.clubs,
       this.accountPrivileges,
     );
@@ -281,7 +135,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
         this.accountPrivileges = Object.assign(
           {},
-          this.editingUser.account_level_privileges,
+          this.utils.setStoreType(this.editingUser.account_level_privileges),
         );
 
         if (!this.schoolPrivileges[CP_PRIVILEGES_MAP.services]) {
@@ -424,7 +278,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
         },
       },
       account_level_privileges: {
-        ...this.accountPrivileges,
+        ...this.utils.cleanExtraFields(this.accountPrivileges),
       },
     };
 
@@ -452,6 +306,11 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
       _data = { firstname, lastname };
     }
+
+    console.log(_data);
+    this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
+
+    return;
 
     this.adminService.updateAdmin(this.adminId, _data).subscribe(
       () =>
@@ -538,18 +397,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     );
   }
 
-  doServicesCleanUp() {
-    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.events);
-    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.services);
-    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.event_attendance);
-
-    if (CP_PRIVILEGES_MAP.services in this.schoolPrivileges) {
-      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.services];
-    }
-  }
-
   onServicesSelected(service) {
-    if (service.action === 2) {
+    if (service.action === serviceMenu.selectServices) {
       this.isServiceModal = true;
       setTimeout(
         () => {
@@ -565,13 +414,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     this.doServicesCleanUp();
     this.resetServiceModal$.next(true);
 
-    Object.keys(this.accountPrivileges).forEach((storeId) => {
-      if (!Object.keys(this.accountPrivileges[storeId]).length) {
-        delete this.accountPrivileges[storeId];
-      }
-    });
-
-    if (service.action === null) {
+    if (service.action === serviceMenu.noAccess) {
       if (this.schoolPrivileges) {
         if (CP_PRIVILEGES_MAP.services in this.schoolPrivileges) {
           delete this.schoolPrivileges[CP_PRIVILEGES_MAP.services];
@@ -589,13 +432,52 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     });
   }
 
-  doClubsCleanUp() {
-    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.clubs);
-    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.events);
-    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.membership);
-    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.moderation);
-    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.event_attendance);
+  doServicesCleanUp() {
+    for (const storeId in this.accountPrivileges) {
+      if (this.accountPrivileges[storeId].is_service) {
+        delete this.accountPrivileges[storeId][CP_PRIVILEGES_MAP.events];
+        delete this.accountPrivileges[storeId][
+          CP_PRIVILEGES_MAP.event_attendance
+        ];
+        delete this.accountPrivileges[storeId][CP_PRIVILEGES_MAP.services];
+        delete this.accountPrivileges[storeId][
+          CP_PRIVILEGES_MAP.event_attendance
+        ];
 
+        this.utils.clearFields(this.accountPrivileges[storeId]);
+
+        if (!Object.keys(this.accountPrivileges[storeId]).length) {
+          delete this.accountPrivileges[storeId];
+        }
+      }
+    }
+
+    if (CP_PRIVILEGES_MAP.services in this.schoolPrivileges) {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.services];
+    }
+  }
+
+  doClubsCleanUp() {
+    for (const storeId in this.accountPrivileges) {
+      if (this.accountPrivileges[storeId].is_club) {
+        delete this.accountPrivileges[storeId][CP_PRIVILEGES_MAP.clubs];
+        delete this.accountPrivileges[storeId][CP_PRIVILEGES_MAP.events];
+        delete this.accountPrivileges[storeId][CP_PRIVILEGES_MAP.membership];
+        delete this.accountPrivileges[storeId][CP_PRIVILEGES_MAP.moderation];
+        delete this.accountPrivileges[storeId][
+          CP_PRIVILEGES_MAP.event_attendance
+        ];
+        delete this.accountPrivileges[storeId][
+          CP_PRIVILEGES_MAP.event_attendance
+        ];
+
+        this.utils.clearFields(this.accountPrivileges[storeId]);
+
+        if (!Object.keys(this.accountPrivileges[storeId]).length) {
+          delete this.accountPrivileges[storeId];
+        }
+      }
+    }
     if (CP_PRIVILEGES_MAP.clubs in this.schoolPrivileges) {
       delete this.schoolPrivileges[CP_PRIVILEGES_MAP.clubs];
     }
@@ -605,18 +487,6 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     if (CP_PRIVILEGES_MAP.moderation in this.schoolPrivileges) {
       delete this.schoolPrivileges[CP_PRIVILEGES_MAP.moderation];
     }
-  }
-
-  getNumberOf(privilegeType: number, accountPrivileges = {}) {
-    let counter = 0;
-
-    Object.keys(accountPrivileges).forEach((storeId) => {
-      if (accountPrivileges[storeId][privilegeType]) {
-        counter += 1;
-      }
-    });
-
-    return counter;
   }
 
   onClubsModalSelected(clubs) {
@@ -632,7 +502,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   onClubsSelected(club) {
-    if (club.action === 2) {
+    if (club.action === clubMenu.selectClubs) {
       this.isClubsModal = true;
       setTimeout(
         () => {
@@ -645,44 +515,40 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    this.doClubsCleanUp();
-    this.resetClubsModal$.next(true);
-
-    Object.keys(this.accountPrivileges).forEach((storeId) => {
-      if (!Object.keys(this.accountPrivileges[storeId]).length) {
-        delete this.accountPrivileges[storeId];
-      }
-    });
-
-    if (club.action === null) {
+    if (club.action === clubMenu.noAccess) {
+      this.doClubsCleanUp();
       this.resetClubsModal$.next(true);
-      delete this.accountPrivileges[CP_PRIVILEGES_MAP.clubs];
 
       return;
     }
 
-    this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
-      [CP_PRIVILEGES_MAP.clubs]: {
-        r: true,
-        w: this.session.g.get('user').school_level_privileges[this.schoolId][
-          CP_PRIVILEGES_MAP.clubs
-        ].w,
-      },
+    if (club.acion === clubMenu.allClubs) {
+      this.doClubsCleanUp();
+      this.resetClubsModal$.next(true);
 
-      [CP_PRIVILEGES_MAP.moderation]: {
-        r: true,
-        w: this.session.g.get('user').school_level_privileges[this.schoolId][
-          CP_PRIVILEGES_MAP.clubs
-        ].w,
-      },
+      this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
+        [CP_PRIVILEGES_MAP.clubs]: {
+          r: true,
+          w: this.session.g.get('user').school_level_privileges[this.schoolId][
+            CP_PRIVILEGES_MAP.clubs
+          ].w,
+        },
 
-      [CP_PRIVILEGES_MAP.membership]: {
-        r: true,
-        w: this.session.g.get('user').school_level_privileges[this.schoolId][
-          CP_PRIVILEGES_MAP.clubs
-        ].w,
-      },
-    });
+        [CP_PRIVILEGES_MAP.moderation]: {
+          r: true,
+          w: this.session.g.get('user').school_level_privileges[this.schoolId][
+            CP_PRIVILEGES_MAP.clubs
+          ].w,
+        },
+
+        [CP_PRIVILEGES_MAP.membership]: {
+          r: true,
+          w: this.session.g.get('user').school_level_privileges[this.schoolId][
+            CP_PRIVILEGES_MAP.clubs
+          ].w,
+        },
+      });
+    }
   }
 
   onEventsSelected(event) {
@@ -830,13 +696,16 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     const eventsAssessmentPrivilege =
       schoolPrivileges[CP_PRIVILEGES_MAP.event_attendance];
 
-    this.manageAdmins = manageAdminDropdown(manageAdminPrivilege);
-    this.clubsMenu = clubsDropdown(clubsPrivilegeSchool, clubsPrivilegeAccount);
-    this.eventsMenu = eventsDropdown(
+    this.manageAdmins = this.utils.manageAdminDropdown(manageAdminPrivilege);
+    this.clubsMenu = this.utils.clubsDropdown(
+      clubsPrivilegeSchool,
+      clubsPrivilegeAccount,
+    );
+    this.eventsMenu = this.utils.eventsDropdown(
       eventsPrivilege,
       eventsAssessmentPrivilege,
     );
-    this.servicesMenu = servicesDropdown(
+    this.servicesMenu = this.utils.servicesDropdown(
       servicesPrivilegeSchool,
       servicesPrivilegeAccount,
     );
