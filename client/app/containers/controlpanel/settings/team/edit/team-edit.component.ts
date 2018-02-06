@@ -437,18 +437,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   doServicesCleanUp() {
     for (const storeId in this.accountPrivileges) {
       if (this.utils.isService(this.accountPrivileges[storeId])) {
-        delete this.accountPrivileges[storeId][CP_PRIVILEGES_MAP.events];
-        delete this.accountPrivileges[storeId][
-          CP_PRIVILEGES_MAP.event_attendance
-        ];
-        delete this.accountPrivileges[storeId][CP_PRIVILEGES_MAP.services];
-        delete this.accountPrivileges[storeId][
-          CP_PRIVILEGES_MAP.event_attendance
-        ];
-
-        if (!Object.keys(this.accountPrivileges[storeId]).length) {
-          delete this.accountPrivileges[storeId];
-        }
+        delete this.accountPrivileges[storeId];
       }
     }
 
@@ -460,17 +449,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   doClubsCleanUp() {
     for (const storeId in this.accountPrivileges) {
       if (this.utils.isClub(this.accountPrivileges[storeId])) {
-        delete this.accountPrivileges[storeId][CP_PRIVILEGES_MAP.clubs];
-        delete this.accountPrivileges[storeId][CP_PRIVILEGES_MAP.events];
-        delete this.accountPrivileges[storeId][CP_PRIVILEGES_MAP.membership];
-        delete this.accountPrivileges[storeId][CP_PRIVILEGES_MAP.moderation];
-        delete this.accountPrivileges[storeId][
-          CP_PRIVILEGES_MAP.event_attendance
-        ];
-
-        if (!Object.keys(this.accountPrivileges[storeId]).length) {
-          delete this.accountPrivileges[storeId];
-        }
+        delete this.accountPrivileges[storeId];
       }
     }
 
