@@ -1,4 +1,3 @@
-import { TeamUtilsService, eventMenu } from './../team.utils.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -25,7 +24,12 @@ import {
   CPI18nService,
 } from '../../../../../shared/services';
 
-import { serviceMenu, clubMenu } from '../team.utils.service';
+import {
+  serviceMenu,
+  clubMenu,
+  eventMenu,
+  TeamUtilsService,
+} from '../team.utils.service';
 
 declare var $: any;
 
