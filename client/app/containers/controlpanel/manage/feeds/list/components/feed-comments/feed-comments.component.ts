@@ -24,6 +24,7 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
   @Input() clubId: number;
   @Input() isCampusWallView: Observable<number>;
   @Output() deleted: EventEmitter<null> = new EventEmitter();
+  @Output() replied: EventEmitter<null> = new EventEmitter();
 
   loading;
   comments;
@@ -38,6 +39,7 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
   }
 
   onReplied() {
+    this.replied.emit();
     this.fetch();
   }
 

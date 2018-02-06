@@ -144,7 +144,7 @@ export class FeedInputBoxComponent implements OnInit {
   }
 
   resetFormValues() {
-    if (!this.clubId && !this._isCampusWallView) {
+    if (!this.clubId && !this._isCampusWallView && !this.replyView) {
       this.form.controls['group_id'].setValue(null);
       this.form.controls['post_type'].setValue(null);
     }
