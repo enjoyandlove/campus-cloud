@@ -28,6 +28,7 @@ import {
   serviceMenu,
   clubMenu,
   eventMenu,
+  manageAdminMenu,
   TeamUtilsService,
 } from '../team.utils.service';
 
@@ -155,7 +156,7 @@ export class TeamCreateComponent implements OnInit {
   }
 
   onManageAdminSelected(data) {
-    if (!data.action) {
+    if (data.action === manageAdminMenu.disabled) {
       if (CP_PRIVILEGES_MAP.manage_admin in this.schoolPrivileges) {
         delete this.schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin];
       }
@@ -163,12 +164,14 @@ export class TeamCreateComponent implements OnInit {
       return;
     }
 
-    this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
-      [CP_PRIVILEGES_MAP.manage_admin]: {
-        r: true,
-        w: true,
-      },
-    });
+    if (data.action === manageAdminMenu.enabled) {
+      this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
+        [CP_PRIVILEGES_MAP.manage_admin]: {
+          r: true,
+          w: true,
+        },
+      });
+    }
   }
 
   toggleAllAccess(checked) {
