@@ -30,7 +30,7 @@
               (click)="isCommentsOpen = !isCommentsOpen"
               (click)="toggleReplies.emit(isCommentsOpen)">
               <i class="material-icons">mode_comment</i>
-              {{ 'reply' | cpI18n }}
+              {{ 'reply_verb' | cpI18n }}
             </span>
             <span class="flag" *ngIf="feed.dislikes > 0 && feed.flag !== 2">
               <i class="material-icons">flag</i>
