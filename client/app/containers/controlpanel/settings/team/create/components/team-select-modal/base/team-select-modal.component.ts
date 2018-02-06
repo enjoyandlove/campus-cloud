@@ -85,8 +85,6 @@ export class BaseTeamSelectModalComponent extends BaseComponent
             r: true,
             w: true,
           },
-          is_service: 'store_id' in item.data,
-          is_club: !('store_id' in item.data),
         };
 
         // if its a club we grant them access to extra privileges

@@ -36,8 +36,6 @@ export class SelectTeamServicesModalComponent extends BaseTeamSelectModalCompone
       const selected = {};
       if (this.selectedServices) {
         services.map((service) => {
-          service.is_service = true;
-          service.is_club = false;
           if (
             Object.keys(this.selectedServices).includes(
               service.store_id.toString(),

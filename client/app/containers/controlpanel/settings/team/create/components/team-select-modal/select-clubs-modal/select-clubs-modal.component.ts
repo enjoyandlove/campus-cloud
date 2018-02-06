@@ -44,8 +44,6 @@ export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent
 
         if (this.selectedClubs) {
           clubs.map((club) => {
-            club.is_service = false;
-            club.is_club = true;
             if (Object.keys(this.selectedClubs).includes(club.id.toString())) {
               if (CP_PRIVILEGES_MAP.clubs in this.selectedClubs[club.id]) {
                 selected[club.id] = club;

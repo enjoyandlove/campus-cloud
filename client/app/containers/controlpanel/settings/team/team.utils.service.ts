@@ -15,40 +15,29 @@ export enum serviceMenu {
   allServices = 3,
 }
 
+export enum eventMenu {
+  noAccess = null,
+  manageEvents = 2,
+  manageEventsAndAssess = 3,
+}
+
+export enum manageAdminMenu {
+  disabled = null,
+  enabled = 1,
+}
+
 @Injectable()
 export class TeamUtilsService {
   constructor(public cpI18n: CPI18nService) {}
-  clearFields = (obj) => {
-    delete obj.is_club;
-    delete obj.is_service;
-  };
 
-  cleanExtraFields = (privileges) => {
-    const res = {};
-
-    Object.keys(privileges).forEach((storeId) => {
-      this.clearFields(privileges[storeId]);
-
-      res[storeId] = {
-        ...privileges[storeId],
-      };
-
-      if (!Object.keys(res[storeId]).length) {
-        delete res[storeId];
-      }
-    });
-
-    return res;
-  };
-
-  eventsDropdown = function(
+  eventsDropdown(
     eventPrivilege = { r: false, w: false },
     eventAssessmentPrivilege = { r: false, w: false },
   ): Array<any> {
     let items = [
       {
         label: this.cpI18n.translate('admin_no_access'),
-        action: null,
+        action: eventMenu.noAccess,
       },
     ];
 
@@ -61,7 +50,7 @@ export class TeamUtilsService {
         ...items,
         {
           label: this.cpI18n.translate('admin_manage_events'),
-          action: 2,
+          action: eventMenu.manageEvents,
         },
       ];
     }
@@ -71,13 +60,13 @@ export class TeamUtilsService {
         ...items,
         {
           label: this.cpI18n.translate('admin_manage_and_assess_events'),
-          action: 3,
+          action: eventMenu.manageEventsAndAssess,
         },
       ];
     }
 
     return items;
-  };
+  }
 
   getNumberOf(privilegeType: number, accountPrivileges = {}) {
     let counter = 0;
@@ -91,11 +80,11 @@ export class TeamUtilsService {
     return counter;
   }
 
-  manageAdminDropdown = function(privilege = { r: false, w: false }) {
+  manageAdminDropdown(privilege = { r: false, w: false }) {
     let items = [
       {
         label: this.cpI18n.translate('team_member_disabled'),
-        action: null,
+        action: manageAdminMenu.disabled,
       },
     ];
 
@@ -108,18 +97,15 @@ export class TeamUtilsService {
         ...items,
         {
           label: this.cpI18n.translate('admin_enabled'),
-          action: 1,
+          action: manageAdminMenu.enabled,
         },
       ];
     }
 
     return items;
-  };
+  }
 
-  clubsDropdown = (
-    schoolLevel = { r: false, w: false },
-    accountLevel = false,
-  ) => {
+  clubsDropdown(schoolLevel = { r: false, w: false }, accountLevel = false) {
     let items = [
       {
         label: this.cpI18n.translate('admin_no_access'),
@@ -156,12 +142,9 @@ export class TeamUtilsService {
     }
 
     return items;
-  };
+  }
 
-  servicesDropdown = function(
-    schoolLevel = { r: false, w: false },
-    accountLevel = false,
-  ) {
+  servicesDropdown(schoolLevel = { r: false, w: false }, accountLevel = false) {
     let items = [
       {
         label: this.cpI18n.translate('admin_no_access'),
@@ -198,27 +181,23 @@ export class TeamUtilsService {
     }
 
     return items;
-  };
+  }
 
-  isService = (obj) => {
+  isService(obj) {
     return (
-      CP_PRIVILEGES_MAP.services in obj &&
-      CP_PRIVILEGES_MAP.events in obj &&
-      CP_PRIVILEGES_MAP.event_attendance in obj
+      !!(CP_PRIVILEGES_MAP.services in obj) &&
+      !!(CP_PRIVILEGES_MAP.events in obj) &&
+      !!(CP_PRIVILEGES_MAP.event_attendance in obj)
     );
-  };
+  }
 
-  setStoreType = (privileges) => {
-    const res = {};
-
-    Object.keys(privileges).forEach((storeId) => {
-      res[storeId] = {
-        ...privileges[storeId],
-        is_club: !this.isService(privileges[storeId]),
-        is_service: this.isService(privileges[storeId]),
-      };
-    });
-
-    return res;
-  };
+  isClub(obj) {
+    return (
+      !!(CP_PRIVILEGES_MAP.clubs in obj) &&
+      !!(CP_PRIVILEGES_MAP.events in obj) &&
+      !!(CP_PRIVILEGES_MAP.membership in obj) &&
+      !!(CP_PRIVILEGES_MAP.moderation in obj) &&
+      !!(CP_PRIVILEGES_MAP.event_attendance in obj)
+    );
+  }
 }

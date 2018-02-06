@@ -1,4 +1,4 @@
-import { TeamUtilsService } from './../team.utils.service';
+import { TeamUtilsService, eventMenu } from './../team.utils.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -135,7 +135,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
         this.accountPrivileges = Object.assign(
           {},
-          this.utils.setStoreType(this.editingUser.account_level_privileges),
+          this.editingUser.account_level_privileges,
         );
 
         if (!this.schoolPrivileges[CP_PRIVILEGES_MAP.services]) {
@@ -278,7 +278,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
         },
       },
       account_level_privileges: {
-        ...this.utils.cleanExtraFields(this.accountPrivileges),
+        ...this.accountPrivileges,
       },
     };
 
@@ -306,11 +306,6 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
       _data = { firstname, lastname };
     }
-
-    console.log(_data);
-    this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
-
-    return;
 
     this.adminService.updateAdmin(this.adminId, _data).subscribe(
       () =>
@@ -434,7 +429,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
   doServicesCleanUp() {
     for (const storeId in this.accountPrivileges) {
-      if (this.accountPrivileges[storeId].is_service) {
+      if (this.utils.isService(this.accountPrivileges[storeId])) {
         delete this.accountPrivileges[storeId][CP_PRIVILEGES_MAP.events];
         delete this.accountPrivileges[storeId][
           CP_PRIVILEGES_MAP.event_attendance
@@ -443,8 +438,6 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
         delete this.accountPrivileges[storeId][
           CP_PRIVILEGES_MAP.event_attendance
         ];
-
-        this.utils.clearFields(this.accountPrivileges[storeId]);
 
         if (!Object.keys(this.accountPrivileges[storeId]).length) {
           delete this.accountPrivileges[storeId];
@@ -459,7 +452,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
   doClubsCleanUp() {
     for (const storeId in this.accountPrivileges) {
-      if (this.accountPrivileges[storeId].is_club) {
+      if (this.utils.isClub(this.accountPrivileges[storeId])) {
         delete this.accountPrivileges[storeId][CP_PRIVILEGES_MAP.clubs];
         delete this.accountPrivileges[storeId][CP_PRIVILEGES_MAP.events];
         delete this.accountPrivileges[storeId][CP_PRIVILEGES_MAP.membership];
@@ -467,23 +460,21 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
         delete this.accountPrivileges[storeId][
           CP_PRIVILEGES_MAP.event_attendance
         ];
-        delete this.accountPrivileges[storeId][
-          CP_PRIVILEGES_MAP.event_attendance
-        ];
-
-        this.utils.clearFields(this.accountPrivileges[storeId]);
 
         if (!Object.keys(this.accountPrivileges[storeId]).length) {
           delete this.accountPrivileges[storeId];
         }
       }
     }
+
     if (CP_PRIVILEGES_MAP.clubs in this.schoolPrivileges) {
       delete this.schoolPrivileges[CP_PRIVILEGES_MAP.clubs];
     }
+
     if (CP_PRIVILEGES_MAP.membership in this.schoolPrivileges) {
       delete this.schoolPrivileges[CP_PRIVILEGES_MAP.membership];
     }
+
     if (CP_PRIVILEGES_MAP.moderation in this.schoolPrivileges) {
       delete this.schoolPrivileges[CP_PRIVILEGES_MAP.moderation];
     }
@@ -522,7 +513,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    if (club.acion === clubMenu.allClubs) {
+    if (club.action === clubMenu.allClubs) {
       this.doClubsCleanUp();
       this.resetClubsModal$.next(true);
 
@@ -552,7 +543,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   onEventsSelected(event) {
-    if (event.action === null) {
+    if (event.action === eventMenu.noAccess) {
       if (CP_PRIVILEGES_MAP.events in this.schoolPrivileges) {
         delete this.schoolPrivileges[CP_PRIVILEGES_MAP.events];
       }
@@ -563,7 +554,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    if (event.action === 2) {
+    if (event.action === eventMenu.manageEvents) {
       if (CP_PRIVILEGES_MAP.event_attendance in this.schoolPrivileges) {
         delete this.schoolPrivileges[CP_PRIVILEGES_MAP.event_attendance];
       }
@@ -576,7 +567,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       });
     }
 
-    if (event.action === 3) {
+    if (event.action === eventMenu.manageEventsAndAssess) {
       this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
         [CP_PRIVILEGES_MAP.events]: {
           r: true,
