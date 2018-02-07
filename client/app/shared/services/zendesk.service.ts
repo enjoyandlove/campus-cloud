@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 
+import { isProd } from './../../config/env';
+
 declare var window;
 
 @Injectable()
 export class ZendeskService {
   setSuggestion(search: string) {
-    console.log('setSuggestion', search);
-
-    window.zE.setHelpCenterSuggestions({ search });
+    if (isProd) {
+      window.zE.setHelpCenterSuggestions({ search });
+    }
   }
 
   getZendeskQueryFromUrl(url: string) {
