@@ -43,7 +43,7 @@ export class DashboardDownloadsChartComponent implements OnInit {
   dailyLabel(index) {
     const date = CPDate.toEpoch(moment(this.range.start).add(index, 'days'));
 
-    return moment.unix(date).format('MMM Do');
+    return moment.unix(date).format('MMM D');
   }
 
   weeklyLabel(index) {

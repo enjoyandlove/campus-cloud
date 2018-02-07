@@ -7,7 +7,7 @@ import { CPI18nService } from '../../services/index';
 export const FORMAT = {
   SHORT: 'MMM D, YYYY',
   LONG: 'dddd, MMMM D, YYYY',
-  DATETIME: 'MMMM Do YYYY, h:mm a',
+  DATETIME: 'MMMM D YYYY, h:mm a',
   TIME: 'h:mm A',
 };
 

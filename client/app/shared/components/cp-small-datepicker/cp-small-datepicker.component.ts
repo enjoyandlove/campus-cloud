@@ -22,6 +22,8 @@ import * as moment from 'moment';
  */
 
 require('flatpickr');
+import * as French from 'flatpickr/dist/l10n/fr.js';
+import { CPI18nService } from '../../services';
 
 declare var $: any;
 
@@ -38,9 +40,12 @@ export class CPSmallDatePickerComponent
   @Output() reset: EventEmitter<null> = new EventEmitter();
   @Output() rangeChange: EventEmitter<string[]> = new EventEmitter();
 
+  locale;
   flatPickerInstance = null;
 
-  constructor(private el: ElementRef) {}
+  constructor(private el: ElementRef) {
+    this.locale = CPI18nService.getLocale();
+  }
 
   @HostListener('document:click', ['$event'])
   onClick(event) {
@@ -80,6 +85,10 @@ export class CPSmallDatePickerComponent
         }
       },
     });
+
+    if (this.locale === 'fr-CA') {
+      this.options = { ...this.options, locale: French.fr };
+    }
 
     this.flatPickerInstance = $(el).flatpickr(this.options);
   }
