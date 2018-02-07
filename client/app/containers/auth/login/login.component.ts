@@ -7,7 +7,11 @@ import { ALERT_DEFAULT } from '../../../reducers/alert.reducer';
 import { appStorage } from '../../../shared/utils';
 import { AuthService } from '../auth.service';
 
-import { CPI18nService, ErrorService } from '../../../shared/services';
+import {
+  CPI18nService,
+  ErrorService,
+  ZendeskService,
+} from '../../../shared/services';
 
 @Component({
   selector: 'cp-login',
@@ -27,6 +31,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private service: AuthService,
     private cpI18n: CPI18nService,
     private route: ActivatedRoute,
+    public zendeskService: ZendeskService,
   ) {
     this.goTo = this.route.snapshot.queryParams['goTo'];
   }
@@ -80,5 +85,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       username: [null, [Validators.required]],
       password: [null, [Validators.required]],
     });
+
+    this.zendeskService.setSuggestion('login');
   }
 }

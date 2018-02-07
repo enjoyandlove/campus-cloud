@@ -7,13 +7,25 @@ import { ClubsExcelComponent } from './excel';
 import { ClubsListComponent } from './list';
 
 const appRoutes: Routes = [
-  { path: '', component: ClubsListComponent },
+  { path: '', component: ClubsListComponent, data: { zendesk: 'clubs' } },
 
-  { path: 'create', component: ClubsCreateComponent },
+  {
+    path: 'create',
+    component: ClubsCreateComponent,
+    data: { zendesk: 'create club' },
+  },
 
-  { path: ':clubId/edit', component: ClubsEditComponent },
+  {
+    path: ':clubId/edit',
+    component: ClubsEditComponent,
+    data: { zendesk: 'edit club' },
+  },
 
-  { path: 'import/excel', component: ClubsExcelComponent },
+  {
+    path: 'import/excel',
+    component: ClubsExcelComponent,
+    data: { zendesk: 'import clubs from csv' },
+  },
 
   {
     path: ':clubId',

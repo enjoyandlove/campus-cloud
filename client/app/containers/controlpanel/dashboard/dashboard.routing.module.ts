@@ -10,6 +10,7 @@ const appRoutes: Routes = [
     path: '',
     canActivate: [AuthGuard],
     component: DashboardComponent,
+    data: { zendesk: 'dashboard' },
   },
 ];
 @NgModule({

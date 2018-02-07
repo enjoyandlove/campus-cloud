@@ -8,6 +8,7 @@ import { EngagementComponent } from './engagement.component';
 const engagementRoutes: Routes = [
   {
     path: '',
+    data: { zendesk: 'Assessment Dashboard' },
     component: EngagementComponent,
     resolve: {
       data: EngagementResolver,
