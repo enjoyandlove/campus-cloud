@@ -23,12 +23,16 @@ export class ControlPanelComponent implements OnInit {
   ngOnInit() {
     this.is_onboarded = this.session.g.get('user').flags.is_onboarding;
     if (!this.is_onboarded) {
-      setTimeout(() => {
-        $('#openOnboardingModal').modal({
-          keyboard: false,
-          backdrop: 'static',
-        });
-      }, 1);
+      setTimeout(
+        () => {
+          $('#openOnboardingModal').modal({
+            keyboard: false,
+            backdrop: 'static',
+          });
+        },
+
+        1,
+      );
     }
     /**
      * this gets initilized only once

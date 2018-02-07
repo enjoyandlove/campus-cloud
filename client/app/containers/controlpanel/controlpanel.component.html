@@ -13,7 +13,7 @@
     <cp-onboarding></cp-onboarding>
   </cp-modal>
 
-  <ng-container>
+  <ng-container *ngIf="isProd">
     <cp-trackers></cp-trackers>
   </ng-container>
 </div>
