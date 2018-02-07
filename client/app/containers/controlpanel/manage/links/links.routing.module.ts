@@ -5,13 +5,16 @@ import { RouterModule, Routes } from '@angular/router';
  * CRUD
  */
 import { LinksListComponent } from './list';
-// import { LinksEditComponent }  from './edit';
-// import { LinksDeleteComponent }  from './delete';
 
 const appRoutes: Routes = [
-  { path: 'import', redirectTo: '', pathMatch: 'full' },
+  {
+    path: 'import',
+    redirectTo: '',
+    pathMatch: 'full',
+    data: { zendesk: 'import links' },
+  },
 
-  { path: '', component: LinksListComponent },
+  { path: '', component: LinksListComponent, data: { zendesk: 'Links' } },
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],

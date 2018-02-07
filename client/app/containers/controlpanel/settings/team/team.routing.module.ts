@@ -6,13 +6,21 @@ import { TeamEditComponent } from './edit';
 import { TeamListComponent } from './list';
 
 const appRoutes: Routes = [
-  { path: '', component: TeamListComponent },
-  { path: 'invite', component: TeamCreateComponent },
-  { path: ':adminId/edit', component: TeamEditComponent },
+  { path: '', component: TeamListComponent, data: { zendesk: 'admins' } },
+  {
+    path: 'invite',
+    component: TeamCreateComponent,
+    data: { zendesk: 'create admin' },
+  },
+  {
+    path: ':adminId/edit',
+    component: TeamEditComponent,
+    data: { zendesk: 'edit admin' },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
   exports: [RouterModule],
 })
-export class TeamRoutingModule { }
+export class TeamRoutingModule {}

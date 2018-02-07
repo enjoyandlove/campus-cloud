@@ -17,6 +17,7 @@ import {
   AdminService,
   SchoolService,
   StoreService,
+  ZendeskService,
 } from '../../shared/services';
 
 /**
@@ -36,6 +37,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     public storeService: StoreService,
     public adminService: AdminService,
     public schoolService: SchoolService,
+    public zendeskService: ZendeskService,
   ) {}
 
   preLoadUser(): Promise<any> {
@@ -112,7 +114,17 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     });
   }
 
+  private setZendesk(routeObj) {
+    if ('zendesk' in routeObj) {
+      this.zendeskService.setSuggestion(routeObj['zendesk']);
+    } else {
+      this.zendeskService.setSuggestion('');
+    }
+  }
+
   canActivateChild(childRoute: ActivatedRouteSnapshot) {
+    this.setZendesk(childRoute.data);
+
     const protectedRoutes = [
       'events',
       'feeds',
@@ -125,6 +137,8 @@ export class AuthGuard implements CanActivate, CanActivateChild {
       'announcements',
       'templates',
       'banner',
+      'dashboard',
+      'students',
     ];
 
     const routeToPrivilege = {
@@ -149,6 +163,10 @@ export class AuthGuard implements CanActivate, CanActivateChild {
       templates: CP_PRIVILEGES_MAP.campus_announcements,
 
       banner: CP_PRIVILEGES_MAP.app_customization,
+
+      dashboard: CP_PRIVILEGES_MAP.assessment,
+
+      students: CP_PRIVILEGES_MAP.assessment,
     };
 
     if (childRoute.url.length) {
@@ -203,6 +221,8 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   }
 
   canActivate(activatedRoute, state) {
+    this.setZendesk(activatedRoute.data);
+
     const sessionKey = appStorage.get(appStorage.keys.SESSION);
 
     if (sessionKey) {

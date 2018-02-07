@@ -16,9 +16,17 @@ const routes: Routes = [
       './containers/controlpanel/controlpanel.module#ControlPanelModule',
   },
 
-  { path: 'login', component: LoginComponent },
+  {
+    path: 'login',
+    data: { zendesk: 'login' },
+    component: LoginComponent,
+  },
 
-  { path: 'lost-password', component: LostPasswordComponent },
+  {
+    path: 'lost-password',
+    data: { zendesk: 'lost password login' },
+    component: LostPasswordComponent,
+  },
 
   {
     path: 'cb',
