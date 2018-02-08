@@ -7,9 +7,7 @@ import { CPSession } from '../../../../../../../../session';
 import { ClubsService } from '../../../../../../manage/clubs/clubs.service';
 import { CP_PRIVILEGES_MAP } from '../../../../../../../../shared/constants';
 import { BaseTeamSelectModalComponent } from '../base/team-select-modal.component';
-
-const ACTIVE_STATUS = 1;
-const CLUBS = 0;
+import { clubAthleticStatus, isClubAthletic } from '../../../../team.utils.service';
 
 @Component({
   selector: 'cp-select-clubs-modal',
@@ -35,11 +33,11 @@ export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent
   ngOnInit() {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
-    search.append('category_id', CLUBS.toString());
+    search.append('category_id', isClubAthletic.club.toString());
 
     this.service
       .getClubs(search, 1, 1000)
-      .map((clubs) => clubs.filter((club) => club.status === ACTIVE_STATUS))
+      .map((clubs) => clubs.filter((club) => club.status === clubAthleticStatus.active))
       .subscribe((clubs) => {
         let res = {};
         const selected = {};

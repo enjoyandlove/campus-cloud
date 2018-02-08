@@ -3,6 +3,15 @@ import { Injectable } from '@angular/core';
 import { CPI18nService } from '../../../../shared/services';
 import { CP_PRIVILEGES_MAP } from './../../../../shared/constants/privileges';
 
+export enum clubAthleticStatus {
+  active = 1
+}
+
+export enum isClubAthletic {
+  club = 0,
+  athletic = 16,
+}
+
 export enum clubMenu {
   noAccess = null,
   selectClubs = 2,
