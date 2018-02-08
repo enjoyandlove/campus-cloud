@@ -24,7 +24,6 @@
       "url": "/manage/services"
     },
     {
-      "new": true,
       "privilege": 21,
       "label": "locations",
       "url": "/manage/locations"
