@@ -12,6 +12,7 @@ const appRoutes: Routes = [
     path: '',
     component: AssessComponent,
     canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
     children: [
       {
         path: 'dashboard',

@@ -291,7 +291,10 @@ export class EventsCreateComponent implements OnInit {
       content: this.cpI18n.translate('events_event_feedback_tooltip'),
     });
 
-    let store_id;
+    let store_id = this.session.defaultHost
+      ? this.session.defaultHost.value
+      : null;
+
     // fetch managers by service
     if (this.storeId) {
       store_id = this.storeId;

@@ -14,10 +14,13 @@ declare var $: any;
 })
 export class FeedItemComponent implements OnInit {
   @Input() feed: any;
+  @Input() clubId: number;
   @Input() isCampusWallView: Observable<any>;
   @Input() isFilteredByRemovedPosts: Observable<any>;
+
   @Output() moved: EventEmitter<number> = new EventEmitter();
   @Output() deleted: EventEmitter<number> = new EventEmitter();
+  @Output() filterByCategory: EventEmitter<any> = new EventEmitter();
 
   isMoveModal;
   isDeleteModal;
@@ -68,6 +71,12 @@ export class FeedItemComponent implements OnInit {
   onDeletedComment() {
     this.feed = Object.assign({}, this.feed, {
       comment_count: this.feed.comment_count - 1,
+    });
+  }
+
+  onReplied() {
+    this.feed = Object.assign({}, this.feed, {
+      comment_count: this.feed.comment_count + 1,
     });
   }
 

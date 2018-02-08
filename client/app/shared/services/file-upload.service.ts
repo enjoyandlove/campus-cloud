@@ -5,7 +5,7 @@ import { CPI18nService } from './index';
 
 @Injectable()
 export class FileUploadService {
-  maxFileSize = 8e7;
+  maxFileSize = 5e6; // 5MB
 
   validFileTypes = [
     'application/pdf', // .pdf
@@ -28,9 +28,18 @@ export class FileUploadService {
       valid: this.validateFileSize(file),
     };
 
+    const errors = [];
+
+    if (!validType.valid) {
+      errors.push(validType.message);
+    }
+    if (!validSize.valid) {
+      errors.push(validSize.message);
+    }
+
     return {
       valid: validType.valid && validSize.valid,
-      errors: [validType.message, validSize.message],
+      errors,
     };
   }
 

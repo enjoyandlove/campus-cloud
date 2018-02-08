@@ -5,9 +5,17 @@ import { StudentsListComponent } from './list';
 import { StudentsProfileComponent } from './profile';
 
 const studentsRoutes: Routes = [
-  { path: '', component: StudentsListComponent },
+  {
+    path: '',
+    data: { zendesk: 'Students List' },
+    component: StudentsListComponent,
+  },
 
-  { path: ':studentId', component: StudentsProfileComponent },
+  {
+    path: ':studentId',
+    data: { zendesk: 'Student Profile' },
+    component: StudentsProfileComponent,
+  },
 ];
 @NgModule({
   imports: [RouterModule.forChild(studentsRoutes)],

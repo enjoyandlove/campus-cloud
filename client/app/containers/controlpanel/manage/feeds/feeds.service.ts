@@ -84,6 +84,22 @@ export class FeedsService extends BaseService {
     return super.post(url, data).map((res) => res.json());
   }
 
+  replyToCampusThread(data) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.CAMPUS_COMMENT
+    }/`;
+
+    return super.post(url, data).map((res) => res.json());
+  }
+
+  replyToGroupThread(data) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.GROUP_COMMENT
+    }/`;
+
+    return super.post(url, data).map((res) => res.json());
+  }
+
   deleteCampusWallMessageByThreadId(threadId: number) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${
       API.ENDPOINTS.CAMPUS_THREAD

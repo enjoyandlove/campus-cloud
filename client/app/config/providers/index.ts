@@ -4,7 +4,11 @@ import { AuthGuard } from '../guards';
 
 import { CPSession } from '../../session';
 
-import { CPI18nService, ErrorService } from '../../shared/services';
+import {
+  CPI18nService,
+  ErrorService,
+  ZendeskService,
+} from '../../shared/services';
 
 import { isProd } from './../env';
 import { RavenErrorHandler } from './raven.handler';
@@ -14,6 +18,7 @@ export const COMMON_PROVIDERS = [
   AuthGuard,
   ErrorService,
   CPI18nService,
+  ZendeskService,
 ];
 
 const PROD_PROVIDERS = [{ provide: ErrorHandler, useClass: RavenErrorHandler }];

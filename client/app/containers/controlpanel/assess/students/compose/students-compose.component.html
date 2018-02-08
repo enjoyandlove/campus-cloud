@@ -33,7 +33,8 @@
             <cp-dropdown
               [reset]="resetStores$"
               [items]="stores$ | async"
-              (selected)="onSelectedHost($event)">
+              (selected)="onSelectedHost($event)"
+              [selectedItem]="session.defaultHost">
             </cp-dropdown>
           </div>
         </div>

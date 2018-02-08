@@ -2,7 +2,10 @@
   <div class="row">
     <div class="col-xs-12">
       <div class="feed__header">
-        <cp-feed-header [feed]="feed"></cp-feed-header>
+        <cp-feed-header
+          [feed]="feed"
+          (filterByCategory)="filterByCategory.emit($event)">
+        </cp-feed-header>
         <div class="feed__more pull-right">
           <cp-feed-dropdown
             *ngIf="!isRemovedPosts"
@@ -20,18 +23,21 @@
       <cp-feed-body
         [feed]="feed"
         [isRemovedPosts]="isRemovedPosts"
-        (viewComments)="isCommentsOpen = $event">
+        (viewComments)="isCommentsOpen = $event"
+        (toggleReplies)="isCommentsOpen = $event">
       </cp-feed-body>
     </div>
   </div>
 
   <div
     class="feed__comments"
-    *ngIf="isCommentsOpen && feed.comment_count > 0">
+    *ngIf="isCommentsOpen">
     <div class="row">
       <div class="col-xs-12">
         <cp-feed-comments
           [feedId]="feed.id"
+          [clubId]="clubId"
+          (replied)="onReplied()"
           (deleted)="onDeletedComment()"
           [isCampusWallView]="isCampusWallView">
         </cp-feed-comments>

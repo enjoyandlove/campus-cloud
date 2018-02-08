@@ -14,6 +14,7 @@
           <fieldset [disabled]="state.wall_type !== 1">
             <cp-dropdown
               [items]="channels$ | async"
+              [selectedItem]="selectedItem"
               (selected)="onFilterSelected($event, 'post_types')">
             </cp-dropdown>
           </fieldset>

@@ -11,7 +11,6 @@ import {
 
 import { TEAM_ACCESS } from '../utils';
 import { CPSession } from '../../../../../session';
-import { accountCleanUp } from '../create/team-create.component';
 import { BaseComponent } from '../../../../../base/base.component';
 import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
@@ -25,196 +24,13 @@ import {
   CPI18nService,
 } from '../../../../../shared/services';
 
-const _cpI18n = new CPI18nService();
-
-const eventsDropdown = function(
-  eventPrivilege = { r: false, w: false },
-  eventAssessmentPrivilege = { r: false, w: false },
-): Array<any> {
-  let items = [
-    {
-      label: _cpI18n.translate('admin_no_access'),
-      action: null,
-    },
-  ];
-
-  if (!eventPrivilege.r) {
-    return items;
-  }
-
-  if (eventPrivilege.w) {
-    items = [
-      ...items,
-      {
-        label: _cpI18n.translate('admin_manage_events'),
-        action: 2,
-      },
-    ];
-  }
-
-  if (eventAssessmentPrivilege.w) {
-    items = [
-      ...items,
-      {
-        label: _cpI18n.translate('admin_manage_and_assess_events'),
-        action: 3,
-      },
-    ];
-  }
-
-  return items;
-};
-
-const manageAdminDropdown = function(privilege = { r: false, w: false }) {
-  let items = [
-    {
-      label: _cpI18n.translate('team_member_disabled'),
-      action: null,
-    },
-  ];
-
-  if (!privilege) {
-    return items;
-  }
-
-  if (privilege.w) {
-    items = [
-      ...items,
-      {
-        label: _cpI18n.translate('admin_enabled'),
-        action: 1,
-      },
-    ];
-  }
-
-  return items;
-};
-
-const clubsDropdown = (
-  schoolLevel = { r: false, w: false },
-  accountLevel = false,
-) => {
-  let items = [
-    {
-      label: _cpI18n.translate('admin_no_access'),
-      action: null,
-    },
-  ];
-
-  if (!schoolLevel.w && !accountLevel) {
-    return items;
-  }
-
-  if (accountLevel && !schoolLevel.w) {
-    items = [
-      ...items,
-      {
-        label: _cpI18n.translate('admin_select_clubs'),
-        action: 2,
-      },
-    ];
-  }
-
-  if (schoolLevel.w) {
-    items = [
-      ...items,
-      {
-        label: _cpI18n.translate('admin_select_clubs'),
-        action: 2,
-      },
-      {
-        label: _cpI18n.translate('admin_all_clubs'),
-        action: 3,
-      },
-    ];
-  }
-
-  return items;
-};
-
-const athleticsDropdown = (
-  schoolLevel = { r: false, w: false },
-  accountLevel = false,
-) => {
-  let items = [
-    {
-      label: _cpI18n.translate('admin_no_access'),
-      action: null,
-    },
-  ];
-
-  if (!schoolLevel.w && !accountLevel) {
-    return items;
-  }
-
-  if (accountLevel && !schoolLevel.w) {
-    items = [
-      ...items,
-      {
-        label: _cpI18n.translate('admin_select_athletics'),
-        action: 2,
-      },
-    ];
-  }
-
-  if (schoolLevel.w) {
-    items = [
-      ...items,
-      {
-        label: _cpI18n.translate('admin_select_athletics'),
-        action: 2,
-      },
-      {
-        label: _cpI18n.translate('admin_all_athletics'),
-        action: 3,
-      },
-    ];
-  }
-
-  return items;
-};
-
-const servicesDropdown = function(
-  schoolLevel = { r: false, w: false },
-  accountLevel = false,
-) {
-  let items = [
-    {
-      label: _cpI18n.translate('admin_no_access'),
-      action: null,
-    },
-  ];
-
-  if (!schoolLevel.w && !accountLevel) {
-    return items;
-  }
-
-  if (accountLevel && !schoolLevel.w) {
-    items = [
-      ...items,
-      {
-        label: _cpI18n.translate('admin_select_services'),
-        action: 2,
-      },
-    ];
-  }
-
-  if (schoolLevel.w) {
-    items = [
-      ...items,
-      {
-        label: _cpI18n.translate('admin_select_services'),
-        action: 2,
-      },
-      {
-        label: _cpI18n.translate('admin_all_services'),
-        action: 3,
-      },
-    ];
-  }
-
-  return items;
-};
+import {
+  serviceMenu,
+  clubMenu,
+  eventMenu,
+  TeamUtilsService,
+  manageAdminMenu, athleticMenu,
+} from '../team.utils.service';
 
 declare var $: any;
 
@@ -269,6 +85,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     private route: ActivatedRoute,
     private store: Store<IHeader>,
     private cpI18n: CPI18nService,
+    public utils: TeamUtilsService,
     private adminService: AdminService,
     private errorService: ErrorService,
   ) {
@@ -281,7 +98,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   updateServicesDropdownLabel() {
-    const numberOfServices = this.getNumberOf(
+    const numberOfServices = this.utils.getNumberOf(
       CP_PRIVILEGES_MAP.services,
       this.accountPrivileges,
     );
@@ -292,7 +109,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   updateClubsDropdownLabel() {
-    const numberOfClubs = this.getNumberOf(
+    const numberOfClubs = this.utils.getNumberOf(
       CP_PRIVILEGES_MAP.clubs,
       this.accountPrivileges,
     );
@@ -303,7 +120,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   updateAthleticsDropdownLabel() {
-    const numberOfAthletics = this.getNumberOf(
+    const numberOfAthletics = this.utils.getNumberOf(
       CP_PRIVILEGES_MAP.athletics,
       this.accountPrivileges,
     );
@@ -565,7 +382,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   onManageAdminSelected(data) {
-    if (!data.action) {
+    if (data.action === manageAdminMenu.disabled) {
       if (CP_PRIVILEGES_MAP.manage_admin in this.schoolPrivileges) {
         delete this.schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin];
       }
@@ -579,12 +396,14 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
-      [CP_PRIVILEGES_MAP.manage_admin]: {
-        r: true,
-        w: true,
-      },
-    });
+    if (data.action === manageAdminMenu.enabled) {
+      this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
+        [CP_PRIVILEGES_MAP.manage_admin]: {
+          r: true,
+          w: true,
+        },
+      });
+    }
   }
 
   toggleAllAccess(checked) {
@@ -624,18 +443,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     );
   }
 
-  doServicesCleanUp() {
-    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.events);
-    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.services);
-    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.event_attendance);
-
-    if (CP_PRIVILEGES_MAP.services in this.schoolPrivileges) {
-      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.services];
-    }
-  }
-
   onServicesSelected(service) {
-    if (service.action === 2) {
+    if (service.action === serviceMenu.selectServices) {
       this.isServiceModal = true;
       setTimeout(
         () => {
@@ -651,13 +460,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     this.doServicesCleanUp();
     this.resetServiceModal$.next(true);
 
-    Object.keys(this.accountPrivileges).forEach((storeId) => {
-      if (!Object.keys(this.accountPrivileges[storeId]).length) {
-        delete this.accountPrivileges[storeId];
-      }
-    });
-
-    if (service.action === null) {
+    if (service.action === serviceMenu.noAccess) {
       if (this.schoolPrivileges) {
         if (CP_PRIVILEGES_MAP.services in this.schoolPrivileges) {
           delete this.schoolPrivileges[CP_PRIVILEGES_MAP.services];
@@ -675,41 +478,60 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     });
   }
 
-  doCleanUp(type) {
-    const clubAthleticsType = type === 'clubs'
-      ? CP_PRIVILEGES_MAP.clubs
-      : CP_PRIVILEGES_MAP.athletics;
-    accountCleanUp(this.accountPrivileges, clubAthleticsType);
-    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.events);
-    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.membership);
-    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.moderation);
-    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.event_attendance);
-
-    if (clubAthleticsType in this.schoolPrivileges) {
-      delete this.schoolPrivileges[clubAthleticsType];
+  doServicesCleanUp() {
+    for (const storeId in this.accountPrivileges) {
+      if (this.utils.isService(this.accountPrivileges[storeId])) {
+        delete this.accountPrivileges[storeId];
+      }
     }
+
+    if (CP_PRIVILEGES_MAP.services in this.schoolPrivileges) {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.services];
+    }
+  }
+
+  doClubsCleanUp() {
+    for (const storeId in this.accountPrivileges) {
+      if (this.utils.isClub(this.accountPrivileges[storeId])) {
+        delete this.accountPrivileges[storeId];
+      }
+    }
+
+    if (CP_PRIVILEGES_MAP.clubs in this.schoolPrivileges) {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.clubs];
+    }
+
     if (CP_PRIVILEGES_MAP.membership in this.schoolPrivileges) {
       delete this.schoolPrivileges[CP_PRIVILEGES_MAP.membership];
     }
+
     if (CP_PRIVILEGES_MAP.moderation in this.schoolPrivileges) {
       delete this.schoolPrivileges[CP_PRIVILEGES_MAP.moderation];
     }
   }
 
-  getNumberOf(privilegeType: number, accountPrivileges = {}) {
-    let counter = 0;
-
-    Object.keys(accountPrivileges).forEach((storeId) => {
-      if (accountPrivileges[storeId][privilegeType]) {
-        counter += 1;
+  doAthleticsCleanUp() {
+    for (const storeId in this.accountPrivileges) {
+      if (this.utils.isAthletic(this.accountPrivileges[storeId])) {
+        delete this.accountPrivileges[storeId];
       }
-    });
+    }
 
-    return counter;
+    if (CP_PRIVILEGES_MAP.athletics in this.schoolPrivileges) {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.athletics];
+    }
+
+    if (CP_PRIVILEGES_MAP.membership in this.schoolPrivileges) {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.membership];
+    }
+
+    if (CP_PRIVILEGES_MAP.moderation in this.schoolPrivileges) {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.moderation];
+    }
   }
 
   onClubsModalSelected(clubs) {
-    this.doCleanUp('clubs');
+    this.doClubsCleanUp();
     const clubsLength = Object.keys(clubs).length;
     this.clubsCount = clubsLength ? { label: `${clubsLength} Club(s)` } : null;
 
@@ -721,7 +543,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   onAthleticsModalSelected(athletics) {
-    this.doCleanUp('athletics');
+    this.doAthleticsCleanUp();
     const athleticsLength = Object.keys(athletics).length;
     this.athleticsCount = athleticsLength ? { label: `${athleticsLength} Athletic(s)` } : null;
 
@@ -733,7 +555,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   onClubsSelected(club) {
-    if (club.action === 2) {
+    if (club.action === clubMenu.selectClubs) {
       this.isClubsModal = true;
       setTimeout(
         () => {
@@ -746,48 +568,44 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    this.doCleanUp('clubs');
-    this.resetClubsModal$.next(true);
-
-    Object.keys(this.accountPrivileges).forEach((storeId) => {
-      if (!Object.keys(this.accountPrivileges[storeId]).length) {
-        delete this.accountPrivileges[storeId];
-      }
-    });
-
-    if (club.action === null) {
+    if (club.action === clubMenu.noAccess) {
+      this.doClubsCleanUp();
       this.resetClubsModal$.next(true);
-      delete this.accountPrivileges[CP_PRIVILEGES_MAP.clubs];
 
       return;
     }
 
-    this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
-      [CP_PRIVILEGES_MAP.clubs]: {
-        r: true,
-        w: this.session.g.get('user').school_level_privileges[this.schoolId][
-          CP_PRIVILEGES_MAP.clubs
-        ].w,
-      },
+    if (club.action === clubMenu.allClubs) {
+      this.doClubsCleanUp();
+      this.resetClubsModal$.next(true);
 
-      [CP_PRIVILEGES_MAP.moderation]: {
-        r: true,
-        w: this.session.g.get('user').school_level_privileges[this.schoolId][
-          CP_PRIVILEGES_MAP.clubs
-        ].w,
-      },
+      this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
+        [CP_PRIVILEGES_MAP.clubs]: {
+          r: true,
+          w: this.session.g.get('user').school_level_privileges[this.schoolId][
+            CP_PRIVILEGES_MAP.clubs
+          ].w,
+        },
 
-      [CP_PRIVILEGES_MAP.membership]: {
-        r: true,
-        w: this.session.g.get('user').school_level_privileges[this.schoolId][
-          CP_PRIVILEGES_MAP.clubs
-        ].w,
-      },
-    });
+        [CP_PRIVILEGES_MAP.moderation]: {
+          r: true,
+          w: this.session.g.get('user').school_level_privileges[this.schoolId][
+            CP_PRIVILEGES_MAP.clubs
+          ].w,
+        },
+
+        [CP_PRIVILEGES_MAP.membership]: {
+          r: true,
+          w: this.session.g.get('user').school_level_privileges[this.schoolId][
+            CP_PRIVILEGES_MAP.clubs
+          ].w,
+        },
+      });
+    }
   }
 
   onAthleticsSelected(athletic) {
-    if (athletic.action === 2) {
+    if (athletic.action === athleticMenu.selectAthletic) {
       this.isAthleticsModal = true;
       setTimeout(
         () => {
@@ -800,48 +618,44 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    this.doCleanUp('athletics');
-    this.resetAthleticsModal$.next(true);
-
-    Object.keys(this.accountPrivileges).forEach((storeId) => {
-      if (!Object.keys(this.accountPrivileges[storeId]).length) {
-        delete this.accountPrivileges[storeId];
-      }
-    });
-
-    if (athletic.action === null) {
+    if (athletic.action === athleticMenu.noAccess) {
+      this.doAthleticsCleanUp();
       this.resetAthleticsModal$.next(true);
-      delete this.accountPrivileges[CP_PRIVILEGES_MAP.athletics];
 
       return;
     }
 
-    this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
-      [CP_PRIVILEGES_MAP.athletics]: {
-        r: true,
-        w: this.session.g.get('user').school_level_privileges[this.schoolId][
-          CP_PRIVILEGES_MAP.athletics
-        ].w,
-      },
+    if (athletic.action === athleticMenu.allAthletics) {
+      this.doAthleticsCleanUp();
+      this.resetAthleticsModal$.next(true);
 
-      [CP_PRIVILEGES_MAP.moderation]: {
-        r: true,
-        w: this.session.g.get('user').school_level_privileges[this.schoolId][
-          CP_PRIVILEGES_MAP.athletics
-        ].w,
-      },
+      this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
+        [CP_PRIVILEGES_MAP.athletics]: {
+          r: true,
+          w: this.session.g.get('user').school_level_privileges[this.schoolId][
+            CP_PRIVILEGES_MAP.athletics
+          ].w,
+        },
 
-      [CP_PRIVILEGES_MAP.membership]: {
-        r: true,
-        w: this.session.g.get('user').school_level_privileges[this.schoolId][
-          CP_PRIVILEGES_MAP.athletics
-        ].w,
-      },
-    });
+        [CP_PRIVILEGES_MAP.moderation]: {
+          r: true,
+          w: this.session.g.get('user').school_level_privileges[this.schoolId][
+            CP_PRIVILEGES_MAP.athletics
+          ].w,
+        },
+
+        [CP_PRIVILEGES_MAP.membership]: {
+          r: true,
+          w: this.session.g.get('user').school_level_privileges[this.schoolId][
+            CP_PRIVILEGES_MAP.athletics
+          ].w,
+        },
+      });
+    }
   }
 
   onEventsSelected(event) {
-    if (event.action === null) {
+    if (event.action === eventMenu.noAccess) {
       if (CP_PRIVILEGES_MAP.events in this.schoolPrivileges) {
         delete this.schoolPrivileges[CP_PRIVILEGES_MAP.events];
       }
@@ -852,7 +666,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    if (event.action === 2) {
+    if (event.action === eventMenu.manageEvents) {
       if (CP_PRIVILEGES_MAP.event_attendance in this.schoolPrivileges) {
         delete this.schoolPrivileges[CP_PRIVILEGES_MAP.event_attendance];
       }
@@ -865,7 +679,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       });
     }
 
-    if (event.action === 3) {
+    if (event.action === eventMenu.manageEventsAndAssess) {
       this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
         [CP_PRIVILEGES_MAP.events]: {
           r: true,
@@ -992,14 +806,20 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     const eventsAssessmentPrivilege =
       schoolPrivileges[CP_PRIVILEGES_MAP.event_attendance];
 
-    this.manageAdmins = manageAdminDropdown(manageAdminPrivilege);
-    this.clubsMenu = clubsDropdown(clubsPrivilegeSchool, clubsPrivilegeAccount);
-    this.athleticsMenu = athleticsDropdown(athleticsPrivilegeSchool, athleticsPrivilegeAccount);
-    this.eventsMenu = eventsDropdown(
+    this.manageAdmins = this.utils.manageAdminDropdown(manageAdminPrivilege);
+    this.clubsMenu = this.utils.clubsDropdown(
+      clubsPrivilegeSchool,
+      clubsPrivilegeAccount,
+    );
+    this.athleticsMenu = this.utils.athleticsDropdown(
+      athleticsPrivilegeSchool,
+      athleticsPrivilegeAccount,
+    );
+    this.eventsMenu = this.utils.eventsDropdown(
       eventsPrivilege,
       eventsAssessmentPrivilege,
     );
-    this.servicesMenu = servicesDropdown(
+    this.servicesMenu = this.utils.servicesDropdown(
       servicesPrivilegeSchool,
       servicesPrivilegeAccount,
     );

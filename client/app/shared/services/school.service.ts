@@ -13,8 +13,10 @@ export class SchoolService extends BaseService {
     Object.setPrototypeOf(this, SchoolService.prototype);
   }
 
-  getSchools() {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SCHOOL}/`;
+  getSchools(startRange = 1, endRange = 100) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.SCHOOL
+    }/${startRange};${endRange}`;
 
     return super.get(url).map((res) => res.json());
   }

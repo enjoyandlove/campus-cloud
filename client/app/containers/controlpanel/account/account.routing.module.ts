@@ -9,6 +9,7 @@ const appRoutes: Routes = [
 
   {
     path: 'change-password',
+    data: { zendesk: 'Change Password' },
     component: ChangePasswordComponent,
     canActivate: [AuthGuard],
   },

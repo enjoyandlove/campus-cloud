@@ -2,21 +2,23 @@ import {
   ActivatedRouteSnapshot,
   CanActivate,
   CanActivateChild,
-  CanLoad,
   Router,
 } from '@angular/router';
 
-import { Injectable } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
+import { Injectable } from '@angular/core';
 import * as Raven from 'raven-js';
 
 import { CPSession } from '../../session';
 import { appStorage } from '../../shared/utils';
 import { base64 } from './../../shared/utils/encrypt/encrypt';
 import { CP_PRIVILEGES_MAP } from './../../shared/constants';
-
-import { AdminService } from './../../shared/services/admin.service';
-import { SchoolService } from './../../shared/services/school.service';
+import {
+  AdminService,
+  SchoolService,
+  StoreService,
+  ZendeskService,
+} from '../../shared/services';
 
 /**
  * Guard to check if user is authenticated
@@ -28,18 +30,15 @@ import {
 } from './../../shared/utils/privileges';
 
 @Injectable()
-export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
+export class AuthGuard implements CanActivate, CanActivateChild {
   constructor(
-    private router: Router,
-    private session: CPSession,
-    private adminService: AdminService,
-    private schoolService: SchoolService,
+    public router: Router,
+    public session: CPSession,
+    public storeService: StoreService,
+    public adminService: AdminService,
+    public schoolService: SchoolService,
+    public zendeskService: ZendeskService,
   ) {}
-
-  canLoad() {
-    // TODO
-    return true;
-  }
 
   preLoadUser(): Promise<any> {
     const search = new URLSearchParams();
@@ -90,7 +89,42 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
       .toPromise();
   }
 
+  fetcthStores(): Promise<any> {
+    const search = new URLSearchParams();
+    search.append('school_id', this.session.g.get('school').id.toString());
+
+    return this.storeService.getStores(search).toPromise();
+  }
+
+  setDefaultHost(stores): Promise<null> {
+    let defaultHost = null;
+
+    return new Promise((resolve) => {
+      const schoolDefaultHost = this.session.g.get('school')
+        .main_union_store_id;
+
+      stores.map((store) => {
+        if (store.value === schoolDefaultHost) {
+          defaultHost = store;
+        }
+      });
+
+      this.session.defaultHost = defaultHost;
+      resolve();
+    });
+  }
+
+  private setZendesk(routeObj) {
+    if ('zendesk' in routeObj) {
+      this.zendeskService.setSuggestion(routeObj['zendesk']);
+    } else {
+      this.zendeskService.setSuggestion('');
+    }
+  }
+
   canActivateChild(childRoute: ActivatedRouteSnapshot) {
+    this.setZendesk(childRoute.data);
+
     const protectedRoutes = [
       'events',
       'feeds',
@@ -102,6 +136,9 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
       'locations',
       'announcements',
       'templates',
+      'banner',
+      'dashboard',
+      'students',
     ];
 
     const routeToPrivilege = {
@@ -124,6 +161,12 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
       locations: CP_PRIVILEGES_MAP.campus_maps,
 
       templates: CP_PRIVILEGES_MAP.campus_announcements,
+
+      banner: CP_PRIVILEGES_MAP.app_customization,
+
+      dashboard: CP_PRIVILEGES_MAP.assessment,
+
+      students: CP_PRIVILEGES_MAP.assessment,
     };
 
     if (childRoute.url.length) {
@@ -178,12 +221,16 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
   }
 
   canActivate(activatedRoute, state) {
+    this.setZendesk(activatedRoute.data);
+
     const sessionKey = appStorage.get(appStorage.keys.SESSION);
 
     if (sessionKey) {
       if (!this.session.g.size) {
         return this.preLoadSchool(activatedRoute)
           .then((_) => this.preLoadUser())
+          .then((_) => this.fetcthStores())
+          .then((stores) => this.setDefaultHost(stores))
           .then((_) => true)
           .catch((_) => false);
       }

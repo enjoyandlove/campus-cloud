@@ -1,3 +1,4 @@
+import { TeamUtilsService } from './team.utils.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -47,6 +48,6 @@ import { TeamRoutingModule } from './team.routing.module';
     TeamRoutingModule,
   ],
 
-  providers: [ServicesService, ClubsService, AdminService],
+  providers: [ServicesService, ClubsService, AdminService, TeamUtilsService],
 })
 export class TeamModule {}

@@ -9,6 +9,7 @@ const appRoutes: Routes = [
   {
     path: 'assess',
     canActivate: [AuthGuard],
+    data: { zendesk: 'assess demo' },
     component: RequestDemoAssessmentComponent,
   },
 ];

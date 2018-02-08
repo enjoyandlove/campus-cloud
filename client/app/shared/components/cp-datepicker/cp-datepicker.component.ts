@@ -8,11 +8,13 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
+import { CPI18nService } from '../../services/index';
 /**
  * https://chmln.github.io/flatpickr/
  */
 
 declare var $: any;
+import * as French from 'flatpickr/dist/l10n/fr.js';
 
 @Component({
   selector: 'cp-datepicker',
@@ -22,17 +24,26 @@ declare var $: any;
 })
 export class CPDatePickerComponent implements AfterViewInit, OnInit, OnChanges {
   @ViewChild('input') input: ElementRef;
+
   @Input() error: boolean;
   @Input() options: any;
-  flatPicker;
+
   el;
+  locale;
+  flatPicker;
 
   constructor() {
     this.flatPicker = require('flatpickr');
+    this.locale = CPI18nService.getLocale();
   }
 
   ngAfterViewInit() {
     const el = this.input.nativeElement;
+    this.options = { ...this.options };
+
+    if (this.locale === 'fr-CA') {
+      this.flatPicker.localize(French.fr);
+    }
 
     this.el = $(el).flatpickr(this.options);
   }
