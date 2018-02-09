@@ -199,12 +199,16 @@ export class FeedInputBoxComponent implements OnInit {
   }
 
   ngOnInit() {
+    const defaultHost = this.session.defaultHost
+      ? this.session.defaultHost.value
+      : null;
+
     this.school = this.session.g.get('school');
 
     this.form = this.fb.group({
       group_id: [null],
       school_id: [this.session.g.get('school').id],
-      store_id: [this.session.defaultHost.value, Validators.required],
+      store_id: [defaultHost, Validators.required],
       post_type: [1, Validators.required],
       message: [null, [Validators.required, Validators.maxLength(500)]],
       message_image_url_list: [null],
@@ -226,7 +230,7 @@ export class FeedInputBoxComponent implements OnInit {
           'post_type',
           new FormControl(null, Validators.required),
         );
-        this.form.controls['store_id'].setValue(this.session.defaultHost.value);
+        this.form.controls['store_id'].setValue(defaultHost);
       }
 
       this._isCampusWallView = false;
