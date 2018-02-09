@@ -21,6 +21,9 @@
   "admin_all_access": {
     "message": "Copy my Campus Cloud Permissions"
   },
+  "admin_all_athletics": {
+    "message": "All Athletics"
+  },
   "admin_all_clubs": {
     "message": "All Clubs"
   },
@@ -35,6 +38,12 @@
   },
   "admin_assess_help": {
     "message": "View the Assessment Dashboard"
+  },
+  "admin_athletics_owner": {
+    "message": "Athletics Owner"
+  },
+  "admin_athletics_owner_help": {
+    "message": "Create new club with athletics; manage information, events and membership for all clubs or select clubs"
   },
   "admin_campus_announcements": {
     "message": "Regular Announcements"
@@ -119,6 +128,9 @@
   },
   "admin_search_by_email_or_email": {
     "message": "Search by name or email..."
+  },
+  "admin_select_athletics": {
+    "message": "Select Athletics"
   },
   "admin_select_clubs": {
     "message": "Select Clubs"
@@ -426,6 +438,45 @@
   "athletics": {
     "message": "Athletics"
   },
+  "athletics_all_athletics": {
+    "message": "All Athletics"
+  },
+  "athletics_button_create": {
+    "message": "Create Athletic"
+  },
+  "athletics_delete_modal_title": {
+    "message": "Delete Athletic"
+  },
+  "athletics_import_button_submit": {
+    "message": "Import Athletics"
+  },
+  "athletics_import_heading": {
+    "message": "Import Athletics from File"
+  },
+  "athletics_import_items_to_import": {
+    "message": "File contains data for %s athletic(s)."
+  },
+  "athletics_label_athletic_banner": {
+    "message": "Athletic Banner"
+  },
+  "athletics_label_athletic_description": {
+    "message": "Athletic Description"
+  },
+  "athletics_label_athletic_details": {
+    "message": "Athletic Details"
+  },
+  "athletics_label_athletic_membership": {
+    "message": "Athletic Membership"
+  },
+  "athletics_label_athletic_name": {
+    "message": "Athletic Name"
+  },
+  "athletics_label_athletic_status": {
+    "message": "Athletic Status"
+  },
+  "athletics_label_edit_athletic": {
+    "message": "Edit Athletic"
+  },
   "attendee": {
     "message": "Attendee"
   },
@@ -475,7 +526,7 @@
     "message": "Building"
   },
   "button_add_photo": {
-    "message": "Upload Picture"
+    "message": "Upload Image"
   },
   "calendar": {
     "message": "Calendar"
@@ -730,7 +781,7 @@
     "message": "Comments"
   },
   "component_cpimage_description": {
-    "message": "Upload your picture"
+    "message": "Upload your image"
   },
   "component_cpimage_help": {
     "message": "JPG or PNG. Max size of 5MB"
@@ -781,7 +832,7 @@
     "message": "Banner updated successfully "
   },
   "customization_instructions": {
-    "message": "Drag to Reposition Photo"
+    "message": "Drag to Reposition Image"
   },
   "customization_title": {
     "message": "Choose an App Banner"
@@ -961,9 +1012,6 @@
   },
   "events_attendance_manager_full": {
     "message": "Attendance Manager"
-  },
-  "events_attendance_manager_tooltip": {
-    "message": "Any valid email address.  The Attendance Manager receives email instructions about setting up check-ins for the event."
   },
   "events_attendant": {
     "message": "Attendant"
@@ -1433,9 +1481,6 @@
   "notify_announcement_recipient": {
     "message": "Recipients"
   },
-  "notify_announcement_template_to_tooltip": {
-    "message": "Notifications can be sent to app users, which you can group together into Lists.  For more info:"
-  },
   "no_admins_found": {
     "message": "No Admins found"
   },
@@ -1520,6 +1565,10 @@
   "ratings": {
     "message": "Ratings"
   },
+  "recipient": {
+    "message": "To",
+    "description": "English To, French Destinataire "
+  },
   "registrations": {
     "message": "Registrations"
   },
@@ -1565,6 +1614,9 @@
   },
   "remove": {
     "message": "Remove"
+  },
+  "reply_verb": {
+    "message": "Comment"
   },
   "response": {
     "message": "Response"
@@ -1658,6 +1710,9 @@
   },
   "services_import_button": {
     "message": "Import Services"
+  },
+  "services_import_items_to_import": {
+    "message": "File contains data for %s service(s)."
   },
   "services_label_all_checkin_methods": {
     "message": "Check-in method"
@@ -1825,8 +1880,12 @@
     "message": "Update",
     "description": "Verb"
   },
+  "uploading": {
+    "message": "Uploading",
+    "description": "CSV Upload process"
+  },
   "upload_picture": {
-    "message": "Upload Picture"
+    "message": "Upload Image"
   },
   "urgent": {
     "message": "Urgent"
@@ -1860,5 +1919,8 @@
   },
   "you": {
     "message": "You"
+  },
+  "zero_quantity": {
+    "message": "No"
   }
 }
