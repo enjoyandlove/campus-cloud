@@ -16,6 +16,7 @@ import { CPLocationsService } from '../../services/locations.service';
 
 import { CPSession } from './../../../session';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { CPI18nService } from '../../services';
 
 interface IState {
   input: string;
@@ -45,6 +46,7 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
 
   constructor(
     private cpSession: CPSession,
+    public cpI18n: CPI18nService,
     private ref: ChangeDetectorRef,
     public service: CPLocationsService,
   ) {}

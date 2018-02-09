@@ -11,6 +11,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { CPI18nService } from '../../services';
 
 interface IState {
   isLists: boolean;
@@ -54,7 +55,7 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
     canSearch: true,
   };
 
-  constructor() {}
+  constructor(public cpI18n: CPI18nService) {}
 
   @HostListener('document:click', ['$event'])
   onClick() {
@@ -203,11 +204,11 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.switcherMenu = [
       {
-        label: 'Users',
+        label: this.cpI18n.translate('users'),
         id: 1,
       },
       {
-        label: 'Lists',
+        label: this.cpI18n.translate('lists'),
         id: 2,
       },
     ];

@@ -4,34 +4,27 @@ import * as moment from 'moment';
 
 import { CPI18nService } from '../../services/index';
 
-export const FORMAT = {
-  SHORT: 'MMM D, YYYY',
-  LONG: 'dddd, MMMM D, YYYY',
-  DATETIME: 'MMMM D YYYY, h:mm a',
+const FORMAT_EN = {
+  SHORT: 'MMM Do, YYYY',
+  LONG: 'dddd, MMMM Do, YYYY',
+  DATETIME: 'MMMM Do YYYY, h:mm a',
   TIME: 'h:mm A',
 };
 
-moment.updateLocale('fr-CA', {
-  months: [
-    'Janvier',
-    'Février',
-    'Mars',
-    'Avril',
-    'Mai',
-    'Juin',
-    'Juillet',
-    'Août',
-    'Septembre',
-    'Octobre',
-    'Novembre',
-    'Décembre',
-  ],
-});
+const FORMAT_FR = {
+  SHORT: 'D MMMM YYYY',
+  LONG: 'dddd D MMMM YYYY',
+  DATETIME: 'D MMMM YYYY HH:mm',
+  TIME: 'HH:mm',
+};
+
+const locale = CPI18nService.getLocale();
+
+export const FORMAT = locale === 'fr-CA' ? FORMAT_FR : FORMAT_EN;
 
 @Pipe({ name: 'cpDatePipe' })
 export class CPDatePipe implements PipeTransform {
   transform(date: number, format: string) {
-    console.log(CPI18nService.getLocale());
     moment.locale(CPI18nService.getLocale());
 
     return moment.unix(date).format(format);

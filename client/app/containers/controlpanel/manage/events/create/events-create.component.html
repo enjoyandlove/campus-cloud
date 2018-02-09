@@ -8,7 +8,6 @@
             <div class="row margin-top">
               <cp-image-upload
                 (uploaded)="onUploadedImage($event)"
-                description="Upload a picture for your event"
                 [required]="formError && form.controls['poster_url'].hasError('required')">
               </cp-image-upload>
             </div>
@@ -24,7 +23,6 @@
                 type="text"
                 class="form-control"
                 formControlName="title"
-                placeholder="Add a short, clear name"
                 [class.error]="formError && form.controls['title'].hasError('required')">
             </div>
 
@@ -59,10 +57,7 @@
 
             <div class="form-group">
               <label i18n>{{ 'events_event_description' | cpI18n }}</label>
-              <textarea
-                formControlName="description"
-                placeholder="Tell people more about the event">
-              </textarea>
+              <textarea formControlName="description"></textarea>
             </div>
 
             <div class="row">
@@ -71,7 +66,6 @@
                 <div class="row form-group">
                   <div class="col-xs-12">
                     <cp-place-autocomplete
-                      placeHolder="Address..."
                       [newAddress]="newAddress"
                       (backToDefault)="onResetMap()"
                       (placeChange)="onPlaceChange($event)"
@@ -81,18 +75,18 @@
                 </div>
                 <div class="row form-group">
                   <div class="col-xs-6">
+                    <label i18n>{{ 'building' | cpI18n }}</label>
                     <input
                       type="text"
                       class="form-control"
-                      placeholder="Building"
                       formControlName="location">
                   </div>
 
                   <div class="col-xs-6">
+                    <label i18n>{{ 'room' | cpI18n }}</label>
                     <input
                       type="text"
                       class="form-control"
-                      placeholder="Room"
                       formControlName="room_data">
                   </div>
                 </div>
@@ -155,7 +149,6 @@
                 <input
                   type="text"
                   class="form-control"
-                  placeholder="example@mail.com"
                   formControlName="attendance_manager_email">
               </div>
             </div>
@@ -182,7 +175,6 @@
               <input
                 type="text"
                 class="form-control"
-                placeholder="How did you like the Event?"
                 formControlName="custom_basic_feedback_label">
             </div>
           </div>

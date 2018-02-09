@@ -8,7 +8,7 @@
           (click)="shouldFocusInput()"
           class="typeahead__input-wrapper__padding">
           <div class="row">
-            <div [class]="[ props.withSwitcher ? 'col-xs-10 no-right-padding' : 'col-xs-12' ]">
+            <div [class]="[ props.withSwitcher ? 'col-xs-9 no-right-padding' : 'col-xs-12' ]">
               <cp-chip
               [chip]="chip"
               [props]="chipOptions"
@@ -20,17 +20,17 @@
               #input
               type="text"
               *ngIf="state.canSearch"
-              placeholder="Search..."
+              [placeholder]="cpI18n.translate('search')"
               class="typeahead__input-wrapper__input">
             </div>
             <div
               *ngIf="props.withSwitcher"
-              class="col-xs-2 switcherMenu no-left-padding">
+              class="col-xs-3 switcherMenu no-left-padding">
               <button
                 type="button"
                 data-toggle="dropdown"
                 class="switcherMenu__button cpbtn--no-border cpbtn cpbtn--cancel">
-                {{ state.isUsers ? 'Users' : 'Lists' }}
+                {{ state.isUsers ? cpI18n.translate('users') : cpI18n.translate('lists') }}
                 <i class="material-icons">keyboard_arrow_down</i>
               </button>
               <ul class="switcherMenu__list dropdown-menu dropdown-menu-right">
