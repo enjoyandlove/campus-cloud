@@ -1711,6 +1711,9 @@
   "services_import_button": {
     "message": "Import Services"
   },
+  "services_import_items_to_import": {
+    "message": "File contains data for %s service(s)."
+  },
   "services_label_all_checkin_methods": {
     "message": "Check-in method"
   },
@@ -1876,6 +1879,10 @@
   "update": {
     "message": "Update",
     "description": "Verb"
+  },
+  "uploading": {
+    "message": "Uploading",
+    "description": "CSV Upload process"
   },
   "upload_picture": {
     "message": "Upload Image"

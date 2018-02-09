@@ -115,7 +115,7 @@
     "message": "Supprimer membre d'équipe"
   },
   "admin_notify_help": {
-    "message": "Envoyer des messages aux téléphones des étudiants et/ou envoyez des annonces d'urgence"
+    "message": "Envoyer des messages aux téléphones des étudiants et envoyez des annonces d'urgence"
   },
   "admin_no_access": {
     "message": "Aucun accès"
@@ -421,10 +421,10 @@
     "message": "Nom de l'étudiant"
   },
   "assess_top_events": {
-    "message": "Événements les plus populaires"
+    "message": "Palmarès des événements"
   },
   "assess_top_services": {
-    "message": "Services les plus populaires"
+    "message": "Palmarès des services"
   },
   "assess_total_attendees": {
     "message": "Total des présences"
@@ -802,7 +802,7 @@
     "message": "Date de création"
   },
   "csv_modal_anchor_text": {
-    "message": "Télécharger un fichier échantillon CSV"
+    "message": "télécharger un fichier échantillon CSV"
   },
   "csv_modal_body": {
     "message": "Téléverser votre fichier CSV ou"
@@ -872,7 +872,7 @@
     "message": "Téléchargement & inscriptions"
   },
   "dashboard_event_feedback": {
-    "message": "Retour sur l'événement"
+    "message": "Retours sur l'événement"
   },
   "dashboard_event_views": {
     "message": "Vues de l'événement"
@@ -899,7 +899,7 @@
     "message": "Dernière année"
   },
   "dashboard_no_data_found": {
-    "message": "Aucun résultats trouvés"
+    "message": "Aucun résultat trouvé"
   },
   "dashboard_service_clicks": {
     "message": "Clics du service"
@@ -932,10 +932,10 @@
     "message": "Événements les plus popuplaires"
   },
   "dashboard_top_five_clubs_title": {
-    "message": "Clubs les plus populaires"
+    "message": "Palmarès des clubs"
   },
   "dashboard_top_services": {
-    "message": "Services les plus populaires"
+    "message": "Palmarès des services"
   },
   "delete": {
     "message": "Supprimer"
@@ -1497,7 +1497,7 @@
     "message": "Personne"
   },
   "no_results": {
-    "message": "Aucun résultats"
+    "message": "Aucun résultat"
   },
   "ok": {
     "message": "Ok"
@@ -1717,6 +1717,9 @@
   "services_import_button": {
     "message": "Importer des services"
   },
+  "services_import_items_to_import": {
+    "message": "Le fichier contient des données pour %s service(s)"
+  },
   "services_label_all_checkin_methods": {
     "message": "Méthode de vérification de présence"
   },
@@ -1882,6 +1885,10 @@
   "update": {
     "message": "Mettre à jour",
     "description": "Verb"
+  },
+  "uploading": {
+    "message": "Téléchargement",
+    "description": "CSV Upload process"
   },
   "upload_picture": {
     "message": "Téléverser photo"

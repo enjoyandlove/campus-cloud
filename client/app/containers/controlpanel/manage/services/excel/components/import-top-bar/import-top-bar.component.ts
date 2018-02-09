@@ -4,7 +4,10 @@ import { Headers } from '@angular/http';
 
 import { API } from '../../../../../../../config/api';
 import { appStorage } from '../../../../../../../shared/utils';
-import { FileUploadService } from '../../../../../../../shared/services';
+import {
+  FileUploadService,
+  CPI18nService,
+} from '../../../../../../../shared/services';
 
 @Component({
   selector: 'cp-services-import-top-bar',
@@ -23,7 +26,10 @@ export class ServicesImportTopBarComponent implements OnInit {
   imageError;
   loading = true;
 
-  constructor(private fileUploadService: FileUploadService) {}
+  constructor(
+    private fileUploadService: FileUploadService,
+    public cpI18n: CPI18nService,
+  ) {}
 
   onFileUpload(file) {
     this.imageError = null;

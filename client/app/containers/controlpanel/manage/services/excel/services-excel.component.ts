@@ -8,11 +8,15 @@ import { CPSession } from '../../../../../session';
 import { ServicesService } from '../services.service';
 import { CPI18nService } from '../../../../../shared/services';
 import { BaseComponent } from '../../../../../base/base.component';
+import { CPI18nPipe } from './../../../../../shared/pipes/i18n/i18n.pipe';
 import { SERVICES_MODAL_RESET } from '../../../../../reducers/services-modal.reducer';
+
 import {
   HEADER_UPDATE,
   HEADER_DEFAULT,
 } from '../../../../../reducers/header.reducer';
+
+const i18n = new CPI18nPipe();
 
 @Component({
   selector: 'cp-services-excel',
@@ -51,17 +55,20 @@ export class ServicesExcelComponent extends BaseComponent
   }
 
   buildHeader() {
+    const subheading = i18n.transform(
+      'services_import_items_to_import',
+      this.services.length,
+    );
+
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        heading: this.cpI18n.translate('services_imports_heading'),
+        heading: 'services_imports_heading',
         crumbs: {
           url: 'services',
-          label: this.cpI18n.translate('services'),
+          label: 'services',
         },
-        em: `${
-          this.services.length
-        } student service(s) data information in the file`,
+        em: `[NOTRANSLATE]${subheading}[NOTRANSLATE]`,
         children: [],
       },
     });

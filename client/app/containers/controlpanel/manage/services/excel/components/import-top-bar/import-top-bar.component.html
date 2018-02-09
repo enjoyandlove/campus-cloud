@@ -6,8 +6,8 @@
     </cp-checkbox>
     <cp-upload-button
       buttonClass="cpbtn cpbtn--cancel"
-      buttonText="Upload Photo"
-      (fileUpload)="onFileUpload($event)">
+      (fileUpload)="onFileUpload($event)"
+      [buttonText]="cpI18n.translate('upload_picture')">
     </cp-upload-button>
   </div>
 
