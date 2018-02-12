@@ -195,6 +195,9 @@
   "announcements_urgent_help": {
     "message": "Outrepasse les réglages de notifications Push de l'utilisateur"
   },
+  "announcement_and_more_text": {
+    "message": "and %s more..."
+  },
   "announcement_confirm_campus_wide": {
     "message": "Annonce à tout le campus"
   },
@@ -929,7 +932,7 @@
     "message": "Publications"
   },
   "dashboard_top_events": {
-    "message": "Événements les plus popuplaires"
+    "message": "Palmarès des événements"
   },
   "dashboard_top_five_clubs_title": {
     "message": "Palmarès des clubs"
@@ -1241,7 +1244,7 @@
     "message": "Déplacer la publication depuis"
   },
   "feeds_posted_in": {
-    "message": "publié dans"
+    "message": "a publié dans"
   },
   "feeds_post_as": {
     "message": "Sélectionner un hôte"
@@ -1875,6 +1878,9 @@
   },
   "to": {
     "message": "À"
+  },
+  "tooltip_more_text": {
+    "message": "(%s) More"
   },
   "total_ratings": {
     "message": "Total de notes"

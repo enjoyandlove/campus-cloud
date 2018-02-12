@@ -68,7 +68,7 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
 
     links.forEach((link) => {
       menu.children.push({
-        label: `[NOTRANSLATE]${link}[NOTRANSLATE]`,
+        label: link.toLocaleLowerCase(),
         url: `/manage/clubs/${this.clubId}/${link.toLocaleLowerCase()}`,
       });
     });

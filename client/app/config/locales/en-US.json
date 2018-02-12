@@ -195,6 +195,9 @@
   "announcements_urgent_help": {
     "message": "Overrides the user's push notification settings"
   },
+  "announcement_and_more_text": {
+    "message": "and %s more..."
+  },
   "announcement_confirm_campus_wide": {
     "message": "Campus-Wide Announcement"
   },
@@ -1869,6 +1872,9 @@
   },
   "to": {
     "message": "To"
+  },
+  "tooltip_more_text": {
+    "message": "(%s) More"
   },
   "total_ratings": {
     "message": "Total Ratings"
