@@ -72,7 +72,7 @@
                 <div class="row events--table" *ngSwitchCase="false">
                   <ng-container *ngIf="!eventsRanking.length">
                     <div class="col-xs-12 text-center events--not_found">
-                        <p class="events--not_found--title" i18n>No {{ sortingBy.label }}</p>
+                        <p class="events--not_found--title" i18n>{{ 'zero_quantity' | cpI18n }} {{ sortingBy.label }}</p>
                     </div>
                   </ng-container>
                   <ng-container *ngIf="eventsRanking.length">
