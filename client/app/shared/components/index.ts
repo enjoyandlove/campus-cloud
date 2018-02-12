@@ -16,6 +16,7 @@ export * from './cp-dropdown';
 export * from './cp-checkbox';
 export * from './cp-searchbox';
 export * from './cp-typeahead';
+export * from './cp-top-banner';
 export * from './cp-onboarding';
 export * from './cp-no-content';
 export * from './cp-datepicker';
