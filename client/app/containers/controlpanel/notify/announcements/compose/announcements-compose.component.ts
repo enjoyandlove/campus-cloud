@@ -371,6 +371,10 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    const defaultHost = this.session.defaultHost
+    ? this.session.defaultHost.value
+    : null;
+
     this.sendAsName = this.session.defaultHost
       ? this.session.defaultHost.label
       : undefined;
@@ -413,7 +417,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     }
 
     this.form = this.fb.group({
-      store_id: [this.session.defaultHost.value, Validators.required],
+      store_id: [defaultHost, Validators.required],
       user_ids: [[]],
       list_ids: [[]],
       is_school_wide: false,
