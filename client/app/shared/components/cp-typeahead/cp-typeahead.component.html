@@ -25,13 +25,12 @@
             </div>
             <div
               *ngIf="props.withSwitcher"
-              class="col-xs-3 switcherMenu no-left-padding">
+              class="col-xs-3 switcherMenu no-left-padding text-right">
               <button
                 type="button"
                 data-toggle="dropdown"
                 class="switcherMenu__button cpbtn--no-border cpbtn cpbtn--cancel">
                 {{ state.isUsers ? cpI18n.translate('users') : cpI18n.translate('lists') }}
-                <i class="material-icons">keyboard_arrow_down</i>
               </button>
               <ul class="switcherMenu__list dropdown-menu dropdown-menu-right">
                 <li
@@ -41,6 +40,9 @@
                   {{ item.label }}
                 </li>
               </ul>
+            </div>
+            <div *ngIf="props.withSwitcher" class="switch-arrow">
+              <i class="material-icons">keyboard_arrow_down</i>
             </div>
           </div>
         </div>
