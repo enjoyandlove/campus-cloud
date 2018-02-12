@@ -8,7 +8,9 @@ declare var window;
 export class ZendeskService {
   setSuggestion(search: string) {
     if (isProd) {
-      window.zE.setHelpCenterSuggestions({ search });
+      if (window.zE !== undefined) {
+        window.zE.setHelpCenterSuggestions({ search });
+      }
     }
   }
 
