@@ -13,20 +13,22 @@ const appRoutes: Routes = [
     children: [
       { path: 'info', component: ClubsInfoComponent },
 
-      { path: 'wall', component: ClubsWallComponent },
+      { path: 'feeds', component: ClubsWallComponent },
 
-      { path: 'events', loadChildren: '../events/events.module#ClubsEventsModule' },
+      {
+        path: 'events',
+        loadChildren: '../events/events.module#ClubsEventsModule',
+      },
 
-      { path: 'members', loadChildren: '../members/members.module#ClubsMembersModule' }
-    ]
-  }
+      {
+        path: 'members',
+        loadChildren: '../members/members.module#ClubsMembersModule',
+      },
+    ],
+  },
 ];
 @NgModule({
-  imports: [
-    RouterModule.forChild(appRoutes)
-  ],
-  exports: [
-    RouterModule
-  ]
+  imports: [RouterModule.forChild(appRoutes)],
+  exports: [RouterModule],
 })
-export class ClubsDetailsRoutingModule { }
+export class ClubsDetailsRoutingModule {}

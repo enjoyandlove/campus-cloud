@@ -12,20 +12,37 @@ const appRoutes: Routes = [
     path: '',
     component: ControlPanelComponent,
     children: [
-      { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
+      {
+        path: 'dashboard',
+        loadChildren: './dashboard/dashboard.module#DashboardModule',
+      },
 
-      { path: 'manage', loadChildren: './manage/manage.module#ManageModule'},
+      { path: 'manage', loadChildren: './manage/manage.module#ManageModule' },
 
       { path: 'notify', loadChildren: './notify/notify.module#NotifyModule' },
 
       { path: 'assess', loadChildren: './assess/assess.module#AssessModule' },
 
-      { path: 'account', loadChildren: './account/account.module#AccountModule' },
+      {
+        path: 'customise',
+        loadChildren: './customise/customise.module#CustomiseModule',
+      },
 
-      { path: 'demo', loadChildren: './request-demo/request-demo.module#RequestDemoModule' },
+      {
+        path: 'account',
+        loadChildren: './account/account.module#AccountModule',
+      },
 
-      { path: 'settings', loadChildren: './settings/settings.module#SettingsModule'}
-    ]
+      {
+        path: 'demo',
+        loadChildren: './request-demo/request-demo.module#RequestDemoModule',
+      },
+
+      {
+        path: 'settings',
+        loadChildren: './settings/settings.module#SettingsModule',
+      },
+    ],
   },
 ];
 @NgModule({

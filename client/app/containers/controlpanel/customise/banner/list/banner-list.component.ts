@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
-import { CustomizationService } from './../customization.service';
+import { BannerService } from '../banner.service';
 import {
   ISnackbar,
   SNACKBAR_SHOW,
@@ -15,11 +15,11 @@ import {
 } from '../../../../../shared/services/index';
 
 @Component({
-  selector: 'cp-customization-list',
-  templateUrl: './customization-list.component.html',
-  styleUrls: ['./customization-list.component.scss'],
+  selector: 'cp-banner-list',
+  templateUrl: './banner-list.component.html',
+  styleUrls: ['./banner-list.component.scss'],
 })
-export class CustomizationListComponent extends BaseComponent
+export class BannerListComponent extends BaseComponent
   implements OnInit {
   isEdit;
   loading;
@@ -31,7 +31,7 @@ export class CustomizationListComponent extends BaseComponent
     public session: CPSession,
     public cpI18n: CPI18nService,
     public store: Store<ISnackbar>,
-    public service: CustomizationService,
+    public service: BannerService,
   ) {
     super();
     super.isLoading().subscribe((loading) => (this.loading = loading));

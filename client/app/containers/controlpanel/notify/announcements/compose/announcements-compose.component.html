@@ -38,7 +38,7 @@
             </div>
 
             <div class="form-group" *ngIf="!state.isCampusWide">
-              <label i18n>{{ 'to' | cpI18n }}
+              <label i18n>{{ 'recipient' | cpI18n }}
                 <cp-tooltip
                   [toolTipContent]="toolTipContent">
                 </cp-tooltip>
@@ -78,7 +78,7 @@
                       <cp-dropdown
                         [items]="stores$ | async"
                         [reset]="resetCustomFields$"
-                        [selectedItem]="selectedHost"
+                        [selectedItem]="session.defaultHost"
                         (selected)="onSelectedStore($event)">
                       </cp-dropdown>
                     </div>

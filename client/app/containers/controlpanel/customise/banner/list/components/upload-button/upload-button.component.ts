@@ -7,11 +7,11 @@ import { FileUploadService } from '../../../.././../../../shared/services';
 import { appStorage } from '../../../.././../../../shared/utils';
 
 @Component({
-  selector: 'cp-customization-upload-button',
+  selector: 'cp-banner-upload-button',
   templateUrl: './upload-button.component.html',
   styleUrls: ['./upload-button.component.scss'],
 })
-export class CustomizationUploadButtonComponent implements OnInit {
+export class BannerUploadButtonComponent implements OnInit {
   @Output() reset: EventEmitter<null> = new EventEmitter();
   @Output() error: EventEmitter<string> = new EventEmitter();
   @Output() upload: EventEmitter<string> = new EventEmitter();

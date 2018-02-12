@@ -1,9 +1,8 @@
+@import '~styles/core/colors';
 @import '~styles/components/button';
 
 .comment {
+  margin-bottom: 25px;
   padding-bottom: 25px;
-
-  &.isLast {
-    padding-bottom: 0;
-  }
+  border-bottom: 1px solid darken($color: $color-text-alt, $amount: 8);
 }

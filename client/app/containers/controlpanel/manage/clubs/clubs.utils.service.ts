@@ -39,7 +39,7 @@ export class ClubsUtilsService {
 
     if (club.has_membership) {
       if (clubIsPending && schoolOrStoreAccess(CP_PRIVILEGES_MAP.moderation)) {
-        links = ['Wall', ...links];
+        links = ['Feeds', ...links];
       }
 
       if (schoolOrStoreAccess(CP_PRIVILEGES_MAP.membership)) {

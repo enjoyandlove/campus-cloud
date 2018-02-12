@@ -3,11 +3,11 @@ import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { CPI18nService } from '../../../../../../../shared/services';
 
 @Component({
-  selector: 'cp-customizaton-control-buttons',
+  selector: 'cp-banner-control-buttons',
   templateUrl: './control-buttons.component.html',
   styleUrls: ['./control-buttons.component.scss'],
 })
-export class CustomizationControlButtonsComponent implements OnInit {
+export class BannerControlButtonsComponent implements OnInit {
   @Output() save: EventEmitter<null> = new EventEmitter();
   @Output() cancel: EventEmitter<null> = new EventEmitter();
 

@@ -8,7 +8,6 @@
             <div class="row">
               <cp-image-upload
                 (uploaded)="onUploadedImage($event)"
-                description="Upload a picture for your club"
                 [required]="formError && form.controls['logo_url'].hasError('required')">
               </cp-image-upload>
             </div>
@@ -29,7 +28,6 @@
                 type="text"
                 class="form-control"
                 formControlName="name"
-                placeholder="Add a short, clear name"
                 [class.error]="formError && form.controls['name'].hasError('required')">
             </div>
           </div>
@@ -40,8 +38,7 @@
             <label i18n>{{ 'clubs_label_club_description' | cpI18n }}</label>
             <textarea
               class="form-control"
-              formControlName="description"
-              placeholder="Tell people more about the club">
+              formControlName="description">
             </textarea>
           </div>
         </div>
@@ -79,7 +76,6 @@
             <div class="row form-group">
               <div class="col-xs-12">
                 <cp-place-autocomplete
-                  placeHolder="Address..."
                   [newAddress]="newAddress"
                   (backToDefault)="onResetMap()"
                   (placeChange)="onPlaceChange($event)"
@@ -89,18 +85,18 @@
             </div>
             <div class="row form-group">
               <div class="col-xs-6">
+                <label i18n>{{ 'building' | cpI18n }}</label>
                 <input
                   type="text"
                   class="form-control"
-                  formControlName="location"
-                  placeholder="Building">
+                  formControlName="location">
               </div>
               <div class="col-xs-6">
+                <label i18n>{{ 'room' | cpI18n }}</label>
                 <input
                   type="text"
                   class="form-control"
-                  formControlName="room_info"
-                  placeholder="Room">
+                  formControlName="room_info">
               </div>
             </div>
           </div>

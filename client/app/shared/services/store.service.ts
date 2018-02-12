@@ -1,19 +1,23 @@
-import { Injectable } from '@angular/core';
 import { Http, URLSearchParams } from '@angular/http';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { API } from '../../config/api';
-
-import { BaseService } from '../../base/base.service';
-
+import { CPSession } from './../../session';
 import { CPI18nService } from './i18n.service';
+import { CP_PRIVILEGES_MAP } from '../constants';
+import { BaseService } from '../../base/base.service';
+import {
+  canSchoolReadResource,
+  canAccountLevelReadResource,
+} from '../utils/privileges';
 
 const cpI18n = new CPI18nService();
 
 @Injectable()
 export class StoreService extends BaseService {
-  constructor(http: Http, router: Router) {
+  constructor(http: Http, router: Router, public session: CPSession) {
     super(http, router);
 
     Object.setPrototypeOf(this, StoreService.prototype);
@@ -111,10 +115,38 @@ export class StoreService extends BaseService {
     search: URLSearchParams,
     placeHolder = cpI18n.translate('select_host'),
   ) {
-    const clubs$ = this.getClubs(search);
-    const services$ = this.getServices(search);
+    /**
+     * Check for user privileges before masking the call
+     * to Stores/Clubs to avoid errors in Sentry
+     */
+    const clubsSchoolAccess = canSchoolReadResource(
+      this.session.g,
+      CP_PRIVILEGES_MAP.clubs,
+    );
+    const clubsAccountAccess = canAccountLevelReadResource(
+      this.session.g,
+      CP_PRIVILEGES_MAP.clubs,
+    );
+    const canReadClubs = clubsSchoolAccess || clubsAccountAccess;
 
-    return Observable.combineLatest(services$, clubs$).map((res) => {
+    const servicesSchoolAccess = canSchoolReadResource(
+      this.session.g,
+      CP_PRIVILEGES_MAP.services,
+    );
+    const servicesAccountAccess = canAccountLevelReadResource(
+      this.session.g,
+      CP_PRIVILEGES_MAP.services,
+    );
+    const canReadServices = servicesSchoolAccess || servicesAccountAccess;
+
+    const clubs$ = canReadClubs ? this.getClubs(search) : Observable.of([]);
+    const services$ = canReadServices
+      ? this.getServices(search)
+      : Observable.of([]);
+
+    const stream$ = Observable.combineLatest(services$, clubs$);
+
+    return stream$.map((res) => {
       if (!res[0].length && !res[1].length) {
         return [
           {

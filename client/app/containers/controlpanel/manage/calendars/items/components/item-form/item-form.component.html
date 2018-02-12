@@ -11,7 +11,6 @@
                 type="text"
                 class="form-control"
                 formControlName="title"
-                placeholder="Add a short, clear name"
                 [class.error]="formError && form.controls['title'].hasError('required')">
             </div>
 
@@ -46,8 +45,7 @@
             <div class="form-group">
               <label i18n>{{ 'calendars_item_description_label' | cpI18n }}</label>
               <textarea
-                formControlName="description"
-                placeholder="Tell people more about the event">
+                formControlName="description">
               </textarea>
             </div>
 
@@ -57,7 +55,6 @@
                 <div class="row form-group">
                   <div class="col-xs-12">
                     <cp-place-autocomplete
-                      placeHolder="Address..."
                       [newAddress]="newAddress"
                       (backToDefault)="onResetMap()"
                       (placeChange)="onPlaceChange($event)"

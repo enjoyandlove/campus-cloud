@@ -14,9 +14,9 @@ require('chartist-plugin-tooltips');
 import * as moment from 'moment';
 import { CPDate } from '../../../../../shared/utils';
 
-import { CPStatsFormatterPipe } from '../../../assess/engagement/components/engagement-stats/pipes/stats-formatter.pipe';
-
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { DivideBy } from './../dashboard-downloads-registration/dashboard-downloads-registration.component';
+import { CPStatsFormatterPipe } from '../../../assess/engagement/components/engagement-stats/pipes/stats-formatter.pipe';
 
 @Component({
   selector: 'cp-dashboard-downloads-chart',
@@ -43,7 +43,10 @@ export class DashboardDownloadsChartComponent implements OnInit {
   dailyLabel(index) {
     const date = CPDate.toEpoch(moment(this.range.start).add(index, 'days'));
 
-    return moment.unix(date).format('MMM Do');
+    return moment
+      .unix(date)
+      .locale(CPI18nService.getLocale())
+      .format('MMM D');
   }
 
   weeklyLabel(index) {
@@ -53,23 +56,35 @@ export class DashboardDownloadsChartComponent implements OnInit {
 
     const weekEnd = CPDate.toEpoch(weekOne.add(1, 'weeks'));
 
-    return `${moment.unix(weekStart).format('MMM D')} - ${moment
+    return `${moment
+      .unix(weekStart)
+      .locale(CPI18nService.getLocale())
+      .format('MMM D')} - ${moment
       .unix(weekEnd)
+      .locale(CPI18nService.getLocale())
       .format('MMM D')}`;
   }
 
   monthlyLabel(index) {
     const date = CPDate.toEpoch(moment(this.range.start).add(index, 'months'));
 
-    return moment.unix(date).format('MMM YY');
+    return moment
+      .unix(date)
+      .locale(CPI18nService.getLocale())
+      .format('MMM YY');
   }
 
   quarterLabel(index) {
     const date = CPDate.toEpoch(
-      moment(this.range.start).add(index, 'quarters'),
+      moment(this.range.start)
+        .locale(CPI18nService.getLocale())
+        .add(index, 'quarters'),
     );
 
-    return moment.unix(date).format('MMM YY');
+    return moment
+      .unix(date)
+      .locale(CPI18nService.getLocale())
+      .format('MMM YY');
   }
 
   labelByDivider(index) {

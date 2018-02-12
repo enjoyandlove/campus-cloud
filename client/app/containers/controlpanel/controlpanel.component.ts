@@ -17,8 +17,8 @@ export class ControlPanelComponent implements OnInit {
   constructor(
     private router: Router,
     private session: CPSession,
-    private cpTrackingService: CPTrackingService
-  ) { }
+    private cpTrackingService: CPTrackingService,
+  ) {}
 
   ngOnInit() {
     this.is_onboarded = this.session.g.get('user').flags.is_onboarding;
@@ -27,9 +27,10 @@ export class ControlPanelComponent implements OnInit {
         () => {
           $('#openOnboardingModal').modal({
             keyboard: false,
-            backdrop: 'static'
+            backdrop: 'static',
           });
         },
+
         1,
       );
     }
@@ -40,5 +41,4 @@ export class ControlPanelComponent implements OnInit {
     CPTrackingService.loadAmplitude(this.session.g.get('user').email);
     this.cpTrackingService.gaTrackPage(this.router.url);
   }
-
 }

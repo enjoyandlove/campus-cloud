@@ -21,10 +21,12 @@
 
     &.list-as-anchor {
       padding: 10px;
+      color: $color-text;
     }
 
     a {
       padding: 10px;
+      color: $color-text;
     }
 
     &:hover:not(.no-hover) {

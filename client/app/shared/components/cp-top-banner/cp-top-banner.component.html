@@ -3,18 +3,17 @@
     <div class="row">
       <div class="col-xs-12">
         <p>
-          {{ 'beta_banner_thank_you' | cpI18n }}
-          <a (click)="openGAModal()">
-            {{ 'beta_banner_go_back' | cpI18n }}
+          {{ 'cp_top_banner_copy' | cpI18n }}.
+
+          <a
+            cpTracker
+            target="_blank"
+            [eventData]="eventData"
+            [href]="viewMoreUrl">
+            {{ 'cp_top_banner_copy_link_text' | cpI18n }}
           </a>
         </p>
       </div>
     </div>
   </div>
 </div>
-
-<cp-modal modalId="openGAModal">
-  <cp-top-ga-modal
-  [oldCPUrl]="oldCPUrl">
-  </cp-top-ga-modal>
-</cp-modal>

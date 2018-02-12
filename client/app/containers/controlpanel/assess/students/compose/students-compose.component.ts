@@ -104,10 +104,14 @@ export class StudentsComposeComponent implements OnInit {
   }
 
   ngOnInit() {
+    const defaultHost = this.session.defaultHost
+      ? this.session.defaultHost.value
+      : null;
+
     this.form = this.fb.group({
       user_ids: [this.props.userIds],
       is_school_wide: false,
-      store_id: [null, Validators.required],
+      store_id: [defaultHost, Validators.required],
       subject: [null, [Validators.required, Validators.maxLength(128)]],
       message: [null, [Validators.required, Validators.maxLength(400)]],
       priority: [2, Validators.required],

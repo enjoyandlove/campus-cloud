@@ -39,7 +39,7 @@
                     </div>
                     <div class="col-xs-8 services--stats--data no-right-padding no-left-padding">
                       <p class="stat">{{ stat.value }}</p>
-                      <p class="text-muted" i18n>{{ stat.label }}</p>
+                      <p class="text-muted text-truncate" i18n>{{ stat.label }}</p>
                     </div>
                   </div>
                 </div>
@@ -72,7 +72,7 @@
                 <div class="row services--table" *ngSwitchCase="false">
                   <ng-container *ngIf="!servicesRanking.length">
                     <div class="col-xs-12 text-center services--not_found">
-                      <p class="services--not_found--title" i18n>No {{ sortingBy.label }}</p>
+                      <p class="services--not_found--title" i18n>{{ zero_quantity | cpI18n }} {{ sortingBy.label }}</p>
                     </div>
                   </ng-container>
                   <ng-container *ngIf="servicesRanking.length">
