@@ -307,6 +307,11 @@ export class EventsCreateComponent implements OnInit {
       this.fetchManagersBySelectedStore(this.clubId);
     }
 
+    // load managers for default host
+    if (this.session.defaultHost) {
+      this.fetchManagersBySelectedStore(store_id);
+    }
+
     this.buttonData = {
       class: 'primary',
       text: this.cpI18n.translate('events_button_new'),
