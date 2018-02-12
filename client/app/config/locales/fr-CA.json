@@ -519,9 +519,6 @@
   "beta_banner_go_back": {
     "message": "Retourner à l'ancienne version"
   },
-  "beta_banner_thank_you": {
-    "message": "Merci d'essayer la beta."
-  },
   "body": {
     "message": "Message"
   },
@@ -800,6 +797,12 @@
   },
   "contact_details": {
     "message": "Détails du contact"
+  },
+  "cp_top_banner_copy": {
+    "message": "Campus Cloud is live"
+  },
+  "cp_top_banner_copy_link_text": {
+    "message": "Read Here for more information"
   },
   "created": {
     "message": "Date de création"

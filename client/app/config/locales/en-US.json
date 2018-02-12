@@ -519,9 +519,6 @@
   "beta_banner_go_back": {
     "message": "Revert to Previous Version"
   },
-  "beta_banner_thank_you": {
-    "message": "Two weeks remaining until Campus Cloud goes live!"
-  },
   "body": {
     "message": "Message"
   },
@@ -800,6 +797,12 @@
   },
   "contact_details": {
     "message": "Contact Details"
+  },
+  "cp_top_banner_copy": {
+    "message": "Campus Cloud is live"
+  },
+  "cp_top_banner_copy_link_text": {
+    "message": "Read Here for more information"
   },
   "created": {
     "message": "Date Created"
