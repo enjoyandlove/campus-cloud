@@ -132,6 +132,7 @@ export class FeedInputBoxComponent implements OnInit {
       payload: {
         body: status === 403 ? forbidden : somethingWentWrong,
         class: 'danger',
+        sticky: true,
         autoClose: true,
       },
     });
