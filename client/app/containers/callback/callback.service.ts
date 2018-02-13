@@ -6,6 +6,7 @@ import { API } from '../../config/api';
 
 import { BaseService } from '../../base/base.service';
 import { CPObj } from '../../shared/utils';
+import {Observable} from "rxjs/Observable";
 
 const buildTokenHeaders = () => {
   const auth = `${API.AUTH_HEADER.TOKEN} ${API.KEY}`;
@@ -22,14 +23,14 @@ export class CallbackService extends BaseService {
     super(_http, _router);
   }
 
-  get(url: string, opts?: RequestOptionsArgs) {
+  get(url: string, opts?: RequestOptionsArgs, silent = false) {
     const headers = buildTokenHeaders();
 
     return this._http
       .get(url, { headers, ...opts })
       .delay(200)
       .retry(1)
-      .catch((err) => super.catchError(err));
+      .catch((err) => silent ? Observable.throw(err) : super.catchError(err));
   }
 
   post(url: string, data: any, opts?: RequestOptionsArgs) {

@@ -1,10 +1,18 @@
 <div [ngSwitch]="loading">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
-  <cp-base-checkin
-    *ngSwitchCase="false"
-    [data]="state.services"
-    [isService]="isService"
-    (send)="onSubmit($event)">
-  </cp-base-checkin>
+  <div *ngIf="isExist">
+    <cp-base-checkin
+      *ngSwitchCase="false"
+      [data]="state.services"
+      [isService]="isService"
+      (send)="onSubmit($event)">
+    </cp-base-checkin>
+  </div>
+
+  <div
+    *ngIf="!isExist"
+    class="col-xs-8 col-xs-offset-2 text-center">
+    <p> {{ 'checkin_404_message' | cpI18n }}</p>
+  </div>
 </div>
