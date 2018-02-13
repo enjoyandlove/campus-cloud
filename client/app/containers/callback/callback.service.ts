@@ -6,7 +6,7 @@ import { API } from '../../config/api';
 
 import { BaseService } from '../../base/base.service';
 import { CPObj } from '../../shared/utils';
-import {Observable} from "rxjs/Observable";
+import { Observable } from 'rxjs/Observable';
 
 const buildTokenHeaders = () => {
   const auth = `${API.AUTH_HEADER.TOKEN} ${API.KEY}`;
