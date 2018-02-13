@@ -65,7 +65,7 @@ export abstract class BaseService {
       });
   }
 
-  post(url: string, data: any, opts?: RequestOptionsArgs) {
+  post(url: string, data: any, opts?: RequestOptionsArgs, silent = false) {
     const headers = buildCommonHeaders();
 
     data = CPObj.cleanNullValues(data);
@@ -73,7 +73,7 @@ export abstract class BaseService {
     return this.http
       .post(url, data, { headers, ...opts })
       .retryWhen((err) => this.waitAndRetryThreeTimes(err))
-      .catch((err) => this.catchError(err));
+      .catch((err) => (silent ? Observable.throw(err) : this.catchError(err)));
   }
 
   update(url: string, data: any, opts?: RequestOptionsArgs, silent = false) {
