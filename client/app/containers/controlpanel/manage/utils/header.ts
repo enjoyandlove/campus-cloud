@@ -42,6 +42,17 @@ export class ManageHeaderService {
         );
 
         return schoolLevel || accountLevel ? child : null;
+      } else if (child.privilege === CP_PRIVILEGES_MAP.athletics) {
+        const schoolLevel = canSchoolReadResource(
+          this.session.g,
+          CP_PRIVILEGES_MAP.athletics,
+        );
+        const accountLevel = canAccountLevelReadResource(
+          this.session.g,
+          CP_PRIVILEGES_MAP.athletics,
+        );
+
+        return schoolLevel || accountLevel ? child : null;
       } else if (child.privilege === CP_PRIVILEGES_MAP.services) {
         const schoolLevel = canSchoolReadResource(
           this.session.g,

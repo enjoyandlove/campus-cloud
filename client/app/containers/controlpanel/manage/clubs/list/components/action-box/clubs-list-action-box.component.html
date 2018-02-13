@@ -16,7 +16,7 @@
       <a
         [routerLink]="['create']" i18n
         class="cpbtn cpbtn--primary cpbtn--square-right no-right-padding">
-        {{ 'clubs_button_create' | cpI18n }}
+        {{ labels.create_button | cpI18n }}
       </a>
       <div
         class="cpbtn cpbtn--square-left cpbtn--no-padding cpbtn--primary no-left-padding hover action-dropdown">
@@ -31,5 +31,7 @@
 
 <cp-modal
   modalId="excelClubssModal">
-  <cp-clubs-excel-modal></cp-clubs-excel-modal>
+  <cp-clubs-excel-modal
+    [isAthletic]="isAthletic">
+  </cp-clubs-excel-modal>
 </cp-modal>

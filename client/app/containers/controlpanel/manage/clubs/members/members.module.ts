@@ -34,6 +34,14 @@ import { MembersService } from './members.service';
     ClubsMembersRoutingModule,
   ],
 
+  exports: [
+    ClubsMembersComponent,
+    ClubsMembersActionBoxComponent,
+    ClubsMembersCreateComponent,
+    ClubsMembersEditComponent,
+    ClubsMembersDeleteComponent,
+  ],
+
   providers: [MembersService],
 })
 export class ClubsMembersModule {}

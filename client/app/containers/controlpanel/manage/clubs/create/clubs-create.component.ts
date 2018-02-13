@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
@@ -16,6 +16,7 @@ import { ClubStatus } from '../club.status';
 import { ClubsService } from '../clubs.service';
 
 import { membershipTypes, statusTypes } from './permissions';
+import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
 
 @Component({
   selector: 'cp-clubs-create',
@@ -23,6 +24,9 @@ import { membershipTypes, statusTypes } from './permissions';
   styleUrls: ['./clubs-create.component.scss'],
 })
 export class ClubsCreateComponent implements OnInit {
+  @Input() isAthletic = isClubAthletic.club;
+
+  labels;
   school;
   formError;
   buttonData;
@@ -53,10 +57,11 @@ export class ClubsCreateComponent implements OnInit {
 
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
+    search.append('category_id', this.isAthletic.toString());
 
     this.clubsService.createClub(this.form.value, search).subscribe(
       (res) => {
-        this.router.navigate(['/manage/clubs/' + res.id + '/info']);
+        this.router.navigate(['/manage/' + this.labels.club_athletic + '/' + res.id + '/info']);
       },
       (err) => {
         this.buttonData = Object.assign({}, this.buttonData, {
@@ -132,6 +137,8 @@ export class ClubsCreateComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.labels = clubAthleticLabels(this.isAthletic);
+
     this.school = this.session.g.get('school');
 
     this.mapCenter = new BehaviorSubject({
@@ -142,7 +149,7 @@ export class ClubsCreateComponent implements OnInit {
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        heading: 'clubs_button_create',
+        heading: this.labels.create_button,
         subheading: null,
         em: null,
         children: [],
@@ -151,7 +158,7 @@ export class ClubsCreateComponent implements OnInit {
 
     this.buttonData = {
       class: 'primary',
-      text: this.cpI18n.translate('clubs_button_create'),
+      text: this.cpI18n.translate(this.labels.create_button),
     };
 
     this.form = this.fb.group({
@@ -172,6 +179,7 @@ export class ClubsCreateComponent implements OnInit {
       website: [null],
       phone: [null],
       email: [null],
+      category_id: this.isAthletic,
     });
   }
 }

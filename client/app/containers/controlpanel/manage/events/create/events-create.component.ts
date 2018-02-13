@@ -37,6 +37,7 @@ export class EventsCreateComponent implements OnInit {
   @Input() isClub: boolean;
   @Input() clubId: boolean;
   @Input() serviceId: number;
+  @Input() isAthletic: number;
   @Input() isService: boolean;
   @Input() toolTipContent: IToolTipContent;
 
@@ -253,6 +254,13 @@ export class EventsCreateComponent implements OnInit {
         if (this.isService) {
           this.router.navigate([
             `/manage/services/${this.serviceId}/events/${res.id}`,
+          ]);
+
+          return;
+        }
+        if (this.isAthletic) {
+          this.router.navigate([
+            `/manage/athletics/${this.clubId}/events/${res.id}`,
           ]);
 
           return;

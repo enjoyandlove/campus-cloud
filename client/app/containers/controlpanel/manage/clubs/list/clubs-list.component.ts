@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
@@ -10,7 +10,7 @@ import { ClubStatus, ClubSocialGroup } from '../club.status';
 import { CPI18nService } from '../../../../../shared/services';
 import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-
+import { isClubAthletic } from '../clubs.athletics.labels';
 interface IState {
   clubs: IClub[];
   query: string;
@@ -33,6 +33,8 @@ const state: IState = {
   styleUrls: ['./clubs-list.component.scss'],
 })
 export class ClubsListComponent extends BaseComponent implements OnInit {
+  @Input() isAthletic = isClubAthletic.club;
+
   loading;
   clubStatus;
   deleteClub = '';
@@ -51,8 +53,6 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
-
-    this.fetch();
   }
 
   doSort(sort_field) {
@@ -71,6 +71,7 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
     search.append('search_str', this.state.query);
     search.append('sort_field', this.state.sort_field);
     search.append('sort_direction', this.state.sort_direction);
+    search.append('category_id', this.isAthletic.toString());
 
     super
       .fetchData(
@@ -140,6 +141,8 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.fetch();
+
     this.clubStatus = {
       [ClubStatus.inactive]: this.cpI18n.translate('clubs_inactive'),
       [ClubStatus.active]: this.cpI18n.translate('active'),

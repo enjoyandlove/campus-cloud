@@ -4,7 +4,7 @@
       <div class="cp-card">
         <div class="row">
           <div class="col-xs-12">
-            <p class="title" i18n>{{ 'clubs_label_club_banner' | cpI18n }}</p>
+            <p class="title" i18n>{{ labels.create_edit_banner | cpI18n }}</p>
             <div class="row">
               <cp-image-upload
                 (uploaded)="onUploadedImage($event)"
@@ -17,13 +17,13 @@
         <div class="form-group club-details">
           <div class="row">
             <div class="col-xs-12">
-              <p class="title" i18n>{{ 'clubs_label_club_details' | cpI18n }}</p>
+              <p class="title" i18n>{{ labels.create_edit_details | cpI18n }}</p>
             </div>
           </div>
 
           <div class="row">
             <div class="col-xs-12">
-              <label i18n>{{ 'clubs_label_club_name' | cpI18n }}</label>
+              <label i18n>{{ labels.create_edit_name | cpI18n }}</label>
               <input
                 type="text"
                 class="form-control"
@@ -35,7 +35,7 @@
 
         <div class="row form-group">
           <div class="col-xs-12">
-            <label i18n>{{ 'clubs_label_club_description' | cpI18n }}</label>
+            <label i18n>{{ labels.create_edit_description | cpI18n }}</label>
             <textarea
               class="form-control"
               formControlName="description">
@@ -45,7 +45,7 @@
 
         <div class="row form-group">
           <div class="col-xs-6">
-            <label i18n>{{ 'clubs_label_club_status' | cpI18n }}</label>
+            <label i18n>{{ labels.create_edit_status | cpI18n }}</label>
             <div class="row">
               <div class="col-xs-12">
                 <cp-check-dropdown
@@ -57,7 +57,7 @@
             </div>
           </div>
           <div class="col-xs-6">
-            <label i18n>{{ 'clubs_label_club_membership' | cpI18n }}</label>
+            <label i18n>{{ labels.create_edit_membership | cpI18n }}</label>
             <div class="row">
               <div class="col-xs-12">
                 <cp-check-dropdown
