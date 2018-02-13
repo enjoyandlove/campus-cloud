@@ -1,7 +1,8 @@
 import { Input, OnInit, Output, Component, EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Headers, URLSearchParams } from '@angular/http';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
+import { Store } from '@ngrx/store';
 import {
   FormGroup,
   FormBuilder,
@@ -19,6 +20,10 @@ import { FeedsService } from '../../../feeds.service';
 import { appStorage } from '../../../../../../../shared/utils';
 import { CPSession, ISchool } from '../../../../../../../session';
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
+import {
+  ISnackbar,
+  SNACKBAR_SHOW,
+} from './../../../../../../../reducers/snackbar.reducer';
 
 @Component({
   selector: 'cp-feed-input-box',
@@ -29,7 +34,7 @@ export class FeedInputBoxComponent implements OnInit {
   @Input() clubId: number;
   @Input() threadId: number;
   @Input() replyView: boolean;
-  @Input() disablePost: boolean;
+  @Input() disablePost: boolean; // TODO REMOVE
   @Input() isCampusWallView: Observable<any>;
   @Output() created: EventEmitter<null> = new EventEmitter();
 
@@ -37,6 +42,7 @@ export class FeedInputBoxComponent implements OnInit {
   stores$;
   channels$;
   imageError;
+  buttonData;
   form: FormGroup;
   school: ISchool;
   _isCampusWallView;
@@ -49,6 +55,7 @@ export class FeedInputBoxComponent implements OnInit {
     private fb: FormBuilder,
     private session: CPSession,
     public cpI18n: CPI18nService,
+    public store: Store<ISnackbar>,
     private feedsService: FeedsService,
     private storeService: StoreService,
     private fileUploadService: FileUploadService,
@@ -116,15 +123,37 @@ export class FeedInputBoxComponent implements OnInit {
     return stream$.toPromise();
   }
 
+  handleError({ status = 400 }) {
+    const forbidden = this.cpI18n.translate('feeds_error_wall_is_disabled');
+    const somethingWentWrong = this.cpI18n.translate('something_went_wrong');
+
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        body: status === 403 ? forbidden : somethingWentWrong,
+        class: 'danger',
+        autoClose: true,
+      },
+    });
+  }
+
   onSubmit(data) {
     const submit = this.replyView
       ? this.replyToThread(this.parseData(data))
       : this.postToWall(this.parseData(data));
 
-    submit.then((res) => {
-      this.resetFormValues();
-      this.created.emit(res);
-    });
+    submit
+      .then((res) => {
+        this.buttonData = { ...this.buttonData, disabled: false };
+
+        this.resetFormValues();
+        this.created.emit(res);
+      })
+      .catch((err) => {
+        this.buttonData = { ...this.buttonData, disabled: false };
+
+        this.handleError(err);
+      });
   }
 
   parseData(data) {
@@ -184,18 +213,18 @@ export class FeedInputBoxComponent implements OnInit {
 
     headers.append('Authorization', auth);
 
-    this.fileUploadService.uploadFile(file, url, headers).subscribe(
-      (res) => {
-        this.image$.next(res.image_url);
-        this.form.controls['message_image_url_list'].setValue([res.image_url]);
-      },
-      (err) => {
-        throw new Error(err);
-      },
-    );
+    this.fileUploadService.uploadFile(file, url, headers).subscribe((res) => {
+      this.image$.next(res.image_url);
+      this.form.controls['message_image_url_list'].setValue([res.image_url]);
+    });
   }
 
   ngOnInit() {
+    this.buttonData = {
+      class: 'primary',
+      text: this.cpI18n.translate('walls_button_create_post'),
+    };
+
     const defaultHost = this.session.defaultHost
       ? this.session.defaultHost.value
       : null;
