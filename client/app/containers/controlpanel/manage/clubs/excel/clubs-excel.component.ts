@@ -51,7 +51,7 @@ export class ClubsExcelComponent extends BaseComponent
   ) {
     super();
     this.store.select('CLUBS').subscribe((res) => {
-      this.clubs = isDev ? res : require('./mock.json');
+      this.clubs = !isDev ? res : require('./mock.json');
     });
   }
 
@@ -108,7 +108,7 @@ export class ClubsExcelComponent extends BaseComponent
       description: [club.description],
       phone: [club.phone_number],
       website: [club.website],
-      category_id: [this.isAthletic]
+      category_id: [this.isAthletic],
     });
   }
 
