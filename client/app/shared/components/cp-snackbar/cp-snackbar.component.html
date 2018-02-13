@@ -1,4 +1,4 @@
- <div class="bar" *ngIf="snack.body">
+ <div class="bar" [class.sticky]="snack.sticky" *ngIf="snack.body">
   <div class="cp-wrapper cp-wrapper--outer">
     <div class="row">
       <div class="col-xs-8 col-xs-offset-2">
@@ -12,7 +12,7 @@
             <span
               *ngIf="snack.class === 'danger'"
               class="material-icons bar--wrapper--icon">
-              close
+              error_outline
             </span>
             <span [innerHTML]="snack.body"></span>
             <span
