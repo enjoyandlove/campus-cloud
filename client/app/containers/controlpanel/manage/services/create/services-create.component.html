@@ -7,7 +7,6 @@
             <p class="title" i18n>{{ 'services_label_banner' | cpI18n }}</p>
             <div class="margin-top row">
               <cp-image-upload
-                description="Upload a picture for your service"
                 [required]="formError && form.controls['logo_url'].hasError('required')"
                 (uploaded)="form.controls.logo_url.setValue($event)">
               </cp-image-upload>
@@ -24,7 +23,6 @@
                 type="text"
                 class="form-control"
                 formControlName="name"
-                placeholder="Add a short, clear name"
                 [class.error]="formError && form.controls['name'].hasError('required')">
             </div>
 
@@ -75,10 +73,7 @@
 
             <div class="form-group form-group">
               <label i18n>{{ 'services_label_description' | cpI18n }}</label>
-              <textarea
-                formControlName="description"
-                placeholder="Tell people more about the service">
-              </textarea>
+              <textarea formControlName="description"></textarea>
             </div>
 
             <div class="row">
@@ -87,7 +82,6 @@
                 <div class="row form-group">
                   <div class="col-xs-12">
                     <cp-place-autocomplete
-                      placeHolder="Address..."
                       [newAddress]="newAddress"
                       (backToDefault)="onResetMap()"
                       (placeChange)="onPlaceChange($event)"
@@ -97,19 +91,19 @@
                 </div>
                 <div class="row form-group">
                   <div class="col-xs-6">
+                    <label i18n>{{ 'building' | cpI18n }}</label>
                     <input
                       type="text"
                       class="form-control"
-                      placeholder="Building"
                       formControlName="location">
                   </div>
 
                   <div class="col-xs-6">
                     <div class="form-group">
+                      <label i18n>{{ 'room' | cpI18n }}</label>
                       <input
                         type="text"
                         class="form-control"
-                        placeholder="Room"
                         formControlName="room_data">
                     </div>
                   </div>

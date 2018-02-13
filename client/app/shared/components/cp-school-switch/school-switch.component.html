@@ -24,8 +24,10 @@
     </a>
     </li>
 
-    <li class="switch__item">
-      <a href="https://oohlalamobile.zendesk.com/hc/en-us" target="_blank" i18n>{{ 'help_desk' | cpI18n }}</a>
+    <li
+      class="switch__item"
+      (click)="close.emit()">
+      <a [href]="helpDeskUrl" target="_blank" i18n>{{ 'help_desk' | cpI18n }}</a>
     </li>
 
     <li

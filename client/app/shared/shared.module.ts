@@ -46,6 +46,7 @@ import {
   CPTooltipComponent,
   CPResourceBannerComponent,
   CPTopGaModalComponent,
+  CPTopBanerComponent,
 } from './components';
 import { LocationsService } from '../containers/controlpanel/manage/locations/locations.service';
 import { CPMapsService } from './services/maps.service';
@@ -91,6 +92,7 @@ import { CPMapsService } from './services/maps.service';
     CPTooltipComponent,
     CPResourceBannerComponent,
     CPTopGaModalComponent,
+    CPTopBanerComponent,
   ],
 
   imports: [CommonModule, RouterModule, ReactiveFormsModule],
@@ -144,6 +146,7 @@ import { CPMapsService } from './services/maps.service';
     CPTooltipComponent,
     CPResourceBannerComponent,
     CPTopGaModalComponent,
+    CPTopBanerComponent,
   ],
 })
 export class SharedModule {}

@@ -21,6 +21,9 @@
   "admin_all_access": {
     "message": "Copier mes permissions Campus Cloud"
   },
+  "admin_all_athletics": {
+    "message": "All Athletics"
+  },
   "admin_all_clubs": {
     "message": "Tous les clubs"
   },
@@ -35,6 +38,12 @@
   },
   "admin_assess_help": {
     "message": "Voir le tableau de bord d'évaluation"
+  },
+  "admin_athletics_owner": {
+    "message": "Athletics Owner"
+  },
+  "admin_athletics_owner_help": {
+    "message": "Create new club with athletics; manage information, events and membership for all clubs or select clubs"
   },
   "admin_campus_announcements": {
     "message": "Annonces normales"
@@ -106,7 +115,7 @@
     "message": "Supprimer membre d'équipe"
   },
   "admin_notify_help": {
-    "message": "Envoyer des messages aux téléphones des étudiants et/ou envoyez des annonces d'urgence"
+    "message": "Envoyer des messages aux téléphones des étudiants et envoyez des annonces d'urgence"
   },
   "admin_no_access": {
     "message": "Aucun accès"
@@ -120,6 +129,9 @@
   "admin_search_by_email_or_email": {
     "message": "Rechercher par nom ou courriel..."
   },
+  "admin_select_athletics": {
+    "message": "Select Athletics"
+  },
   "admin_select_clubs": {
     "message": "Sélectionner clubs"
   },
@@ -127,7 +139,7 @@
     "message": "Sélectionner services"
   },
   "admin_service_owner": {
-    "message": "Sélectionner exécutif"
+    "message": "Exécutif de service"
   },
   "admin_service_owner_help": {
     "message": "Créer de nouveaux services; gérer l'information, événements et évaluation pour tous les services ou sélectionner des services"
@@ -183,6 +195,9 @@
   "announcements_urgent_help": {
     "message": "Outrepasse les réglages de notifications Push de l'utilisateur"
   },
+  "announcement_and_more_text": {
+    "message": "and %s more..."
+  },
   "announcement_confirm_campus_wide": {
     "message": "Annonce à tout le campus"
   },
@@ -199,7 +214,7 @@
     "message": "Annonce d'urgence"
   },
   "announcement_confirm_emergency_body": {
-    "message": "You are about to send an emergency notification."
+    "message": "Vous êtes sur le point d'envoyer une notification d'urgence."
   },
   "announcement_success_sent": {
     "message": "Succès ! Votre message a été envoyé"
@@ -372,20 +387,11 @@
   "assess_one_engagement_tooltip": {
     "message": "Étudiants présents à un événement ou service pour la période sélectionnée"
   },
-  "assess_one_engagement_tooltip": {
-    "message": "Students who checked in to a single Event or Service."
-  },
-  "assess_one_engagement_tooltip": {
-    "message": "Students who checked in to a single Event or Service."
-  },
-  "assess_one_engagement_tooltip": {
-    "message": "Students who checked in to a single Event or Service."
-  },
   "assess_repeat_engagement": {
     "message": "Plusieurs implications"
   },
   "assess_repeat_engagement_tooltip": {
-    "message": "Students who checked in to more than one Event or Service."
+    "message": "Étudiants ayant vérifié leur présence à plus d'un événement ou service"
   },
   "assess_response_date": {
     "message": "Date de la réponse"
@@ -418,10 +424,10 @@
     "message": "Nom de l'étudiant"
   },
   "assess_top_events": {
-    "message": "Événements les plus populaires"
+    "message": "Palmarès des événements"
   },
   "assess_top_services": {
-    "message": "Services les plus populaires"
+    "message": "Palmarès des services"
   },
   "assess_total_attendees": {
     "message": "Total des présences"
@@ -435,14 +441,44 @@
   "athletics": {
     "message": "Athletics"
   },
-  "athletics": {
-    "message": "Athletics"
+  "athletics_all_athletics": {
+    "message": "All Athletics"
   },
-  "athletics": {
-    "message": "Athletics"
+  "athletics_button_create": {
+    "message": "Create Athletic"
   },
-  "athletics": {
-    "message": "Athletics"
+  "athletics_delete_modal_title": {
+    "message": "Delete Athletic"
+  },
+  "athletics_import_button_submit": {
+    "message": "Import Athletics"
+  },
+  "athletics_import_heading": {
+    "message": "Import Athletics from File"
+  },
+  "athletics_import_items_to_import": {
+    "message": "File contains data for %s athletic(s)."
+  },
+  "athletics_label_athletic_banner": {
+    "message": "Athletic Banner"
+  },
+  "athletics_label_athletic_description": {
+    "message": "Athletic Description"
+  },
+  "athletics_label_athletic_details": {
+    "message": "Athletic Details"
+  },
+  "athletics_label_athletic_membership": {
+    "message": "Athletic Membership"
+  },
+  "athletics_label_athletic_name": {
+    "message": "Athletic Name"
+  },
+  "athletics_label_athletic_status": {
+    "message": "Athletic Status"
+  },
+  "athletics_label_edit_athletic": {
+    "message": "Edit Athletic"
   },
   "attendee": {
     "message": "Présent"
@@ -482,9 +518,6 @@
   },
   "beta_banner_go_back": {
     "message": "Retourner à l'ancienne version"
-  },
-  "beta_banner_thank_you": {
-    "message": "Two weeks remaining until Campus Cloud goes live!"
   },
   "body": {
     "message": "Message"
@@ -550,7 +583,7 @@
     "message": "Êtes-vous sûr de vouloir supprimer %s ?"
   },
   "calendars_item_description_label": {
-    "message": "Item Description"
+    "message": "Description de l'entrée"
   },
   "calendars_item_details": {
     "message": "Détails de l'entrée"
@@ -562,7 +595,7 @@
     "message": "Supprimer entrée calendrier"
   },
   "calendars_item_name_label": {
-    "message": "Item name"
+    "message": "Nom de l'entrée"
   },
   "calendars_label_description": {
     "message": "Description"
@@ -765,11 +798,17 @@
   "contact_details": {
     "message": "Détails du contact"
   },
+  "cp_top_banner_copy": {
+    "message": "Campus Cloud a été mis à jour"
+  },
+  "cp_top_banner_copy_link_text": {
+    "message": "Pour en savoir plus, consultez Assistance."
+  },
   "created": {
     "message": "Date de création"
   },
   "csv_modal_anchor_text": {
-    "message": "Télécharger un fichier échantillon CSV"
+    "message": "télécharger un fichier échantillon CSV"
   },
   "csv_modal_body": {
     "message": "Téléverser votre fichier CSV ou"
@@ -784,22 +823,22 @@
     "message": "Téléverser fichier CSV"
   },
   "customise": {
-    "message": "Customise"
+    "message": "Personaliser"
   },
   "customise_banner": {
-    "message": "Banner"
+    "message": "Bannière"
   },
   "customization_description": {
-    "message": "(Appears at the top of the Campus Guide in the mobile app.)"
+    "message": "(Apparaît en haut du guide du campus dans l'application mobile.)"
   },
   "customization_image_upload_error": {
-    "message": "Something went wrong while uploading your image"
+    "message": "Quelque chose a échoué durant le téléversement de votre image"
   },
   "customization_image_upload_success": {
-    "message": "Banner updated successfully "
+    "message": "Bannière mise à jour avec succès"
   },
   "customization_instructions": {
-    "message": "Drag to Reposition Photo"
+    "message": "Glissez pour re-positionner la photo"
   },
   "customization_title": {
     "message": "Choisissez une bannière d'application"
@@ -839,7 +878,7 @@
     "message": "Téléchargement & inscriptions"
   },
   "dashboard_event_feedback": {
-    "message": "Retour sur l'événement"
+    "message": "Retours sur l'événement"
   },
   "dashboard_event_views": {
     "message": "Vues de l'événement"
@@ -866,7 +905,7 @@
     "message": "Dernière année"
   },
   "dashboard_no_data_found": {
-    "message": "Aucun résultats trouvés"
+    "message": "Aucun résultat trouvé"
   },
   "dashboard_service_clicks": {
     "message": "Clics du service"
@@ -896,13 +935,13 @@
     "message": "Publications"
   },
   "dashboard_top_events": {
-    "message": "Événements les plus popuplaires"
+    "message": "Palmarès des événements"
   },
   "dashboard_top_five_clubs_title": {
-    "message": "Clubs les plus populaires"
+    "message": "Palmarès des clubs"
   },
   "dashboard_top_services": {
-    "message": "Services les plus populaires"
+    "message": "Palmarès des services"
   },
   "delete": {
     "message": "Supprimer"
@@ -981,8 +1020,7 @@
     "message": "Gestionnaire de présences"
   },
   "events_attendance_manager_tooltip": {
-    "message":
-      "Any valid email address.  The Attendance Manager receives email instructions about setting up check-ins for the event."
+    "message": "N'importe quelle adresse courriel valide. Le gestionnaire de présence reçoit des instructions par courriel pour mettre en place les vérifications de présence pour l'événement."
   },
   "events_attendant": {
     "message": "Présent"
@@ -1042,15 +1080,13 @@
     "message": "Détails de l'événement"
   },
   "events_event_feedback_tooltip": {
-    "message":
-      "Events with Feedback enabled use a push notification to gather student feedback, including a star rating and response to the feedback question."
+    "message": "Les événements avec retour activé utilisent une notification push pour récupérer le retour des étudiants, incluant une note par étoile et une réponse à la question de retour."
   },
   "events_event_manager": {
     "message": "Gestionnaire de l'événement"
   },
   "events_event_manager_tooltip": {
-    "message":
-      "Select a Host (a Club or Service) before you select an Event Manager.  The Event Manager receives emails related to checking in users, and assessment reports once the event is finished."
+    "message": "Sélectionnez un hôte (un club ou service) avant de sélectionner un gestionnaire d'événement. Le gestionnaire d'événement reçoit des courriels liés à la vérification de présence des utilisateurs et aux rapports d'évaluation une fois que l'événement est terminé."
   },
   "events_event_name": {
     "message": "Nom de l'événement"
@@ -1211,7 +1247,7 @@
     "message": "Déplacer la publication depuis"
   },
   "feeds_posted_in": {
-    "message": "publié dans"
+    "message": "a publié dans"
   },
   "feeds_post_as": {
     "message": "Sélectionner un hôte"
@@ -1241,7 +1277,7 @@
     "message": "Depuis"
   },
   "ga_onboarding_date": {
-    "message": "February 12, 2018"
+    "message": "12 fevrier, 2018"
   },
   "ga_onboarding_text_1": {
     "message": "Campus Cloud is changing. We're making it a faster, powerful and smoother experience for you."
@@ -1257,69 +1293,6 @@
   },
   "ga_onboarding_text_5": {
     "message": "If you have any questions, comments or feedback, we'd love to hear from you:"
-  },
-  "ga_onboarding_date": {
-    "message": "February 12, 2018"
-  },
-  "ga_onboarding_text_1": {
-    "message":
-      "Campus Cloud is changing. We're making it a faster, powerful and smoother experience for you."
-  },
-  "ga_onboarding_text_2": {
-    "message": "The new Campus Cloud will become the default experience on"
-  },
-  "ga_onboarding_text_3": {
-    "message": "and the older version will no longer be accessible."
-  },
-  "ga_onboarding_text_4": {
-    "message":
-      "You can learn all about the new Campus Cloud with guides, how-tos and troubleshooting in our new"
-  },
-  "ga_onboarding_text_5": {
-    "message":
-      "If you have any questions, comments or feedback, we'd love to hear from you:"
-  },
-  "ga_onboarding_date": {
-    "message": "February 12, 2018"
-  },
-  "ga_onboarding_text_1": {
-    "message":
-      "Campus Cloud is changing. We're making it a faster, powerful and smoother experience for you."
-  },
-  "ga_onboarding_text_2": {
-    "message": "The new Campus Cloud will become the default experience on"
-  },
-  "ga_onboarding_text_3": {
-    "message": "and the older version will no longer be accessible."
-  },
-  "ga_onboarding_text_4": {
-    "message":
-      "You can learn all about the new Campus Cloud with guides, how-tos and troubleshooting in our new"
-  },
-  "ga_onboarding_text_5": {
-    "message":
-      "If you have any questions, comments or feedback, we'd love to hear from you:"
-  },
-  "ga_onboarding_date": {
-    "message": "February 12, 2018"
-  },
-  "ga_onboarding_text_1": {
-    "message":
-      "Campus Cloud is changing. We're making it a faster, powerful and smoother experience for you."
-  },
-  "ga_onboarding_text_2": {
-    "message": "The new Campus Cloud will become the default experience on"
-  },
-  "ga_onboarding_text_3": {
-    "message": "and the older version will no longer be accessible."
-  },
-  "ga_onboarding_text_4": {
-    "message":
-      "You can learn all about the new Campus Cloud with guides, how-tos and troubleshooting in our new"
-  },
-  "ga_onboarding_text_5": {
-    "message":
-      "If you have any questions, comments or feedback, we'd love to hear from you:"
   },
   "hello": {
     "message": "Bonjour"
@@ -1464,12 +1437,10 @@
     "message": "Gérer"
   },
   "manage_create_service_category_tooltip": {
-    "message":
-      "Select a category for your service.  Categories help filter and group content in the campus app."
+    "message": "Sélectionnez une catégorie pour votre service. Les catégories aident à filtrer et grouper le contenu dans l'application du campus."
   },
   "manage_create_service_feedback_tooltip": {
-    "message":
-      "Services with Feedback enabled use a push notification to gather student feedback, including a star rating and response to the feedback question."
+    "message": "Les services avec retour activé utilisent une notification push pour récupérer le retour des étudiants, incluant une note par étoile et une réponse à la question de retour."
   },
   "manage_team_members": {
     "message": "Membres d'équipe"
@@ -1520,8 +1491,7 @@
     "message": "Destinataires"
   },
   "notify_announcement_template_to_tooltip": {
-    "message":
-      "Notifications can be sent to app users, which you can group together into Lists.  For more info:"
+    "message": "Les notifications peuvent être envoyées aux utilisateurs de l'application que vous pouvez regrouper en listes. Pour plus d'info:"
   },
   "no_admins_found": {
     "message": "Aucun administrateur trouvé"
@@ -1533,7 +1503,7 @@
     "message": "Personne"
   },
   "no_results": {
-    "message": "Aucun résultats"
+    "message": "Aucun résultat"
   },
   "ok": {
     "message": "Ok"
@@ -1590,7 +1560,7 @@
     "message": "En attente"
   },
   "phone": {
-    "message": "Phone"
+    "message": "Téléphone"
   },
   "phone_number": {
     "message": "Numéro de téléphone"
@@ -1606,6 +1576,10 @@
   },
   "ratings": {
     "message": "Notes"
+  },
+  "recipient": {
+    "message": "Destinataire",
+    "description": "English To, French Destinataire "
   },
   "registrations": {
     "message": "Inscriptions"
@@ -1653,6 +1627,9 @@
   "remove": {
     "message": "Supprimer"
   },
+  "reply_verb": {
+    "message": "Commenter"
+  },
   "response": {
     "message": "Réponse"
   },
@@ -1661,21 +1638,6 @@
   },
   "results": {
     "message": "Résultat"
-  },
-  "return_to_old_control_panel": {
-    "message": "Switch back to old version"
-  },
-  "return_to_campus_cloud": {
-    "message": "Return to Campus Cloud"
-  },
-  "return_to_old_control_panel": {
-    "message": "Switch back to old version"
-  },
-  "return_to_campus_cloud": {
-    "message": "Return to Campus Cloud"
-  },
-  "return_to_old_control_panel": {
-    "message": "Switch back to old version"
   },
   "return_to_campus_cloud": {
     "message": "Return to Campus Cloud"
@@ -1760,6 +1722,9 @@
   },
   "services_import_button": {
     "message": "Importer des services"
+  },
+  "services_import_items_to_import": {
+    "message": "Le fichier contient des données pour %s service(s)"
   },
   "services_label_all_checkin_methods": {
     "message": "Méthode de vérification de présence"
@@ -1885,7 +1850,7 @@
     "message": "Sujet"
   },
   "team_member_disabled": {
-    "message": "Désactivé(e)"
+    "message": "Désactivé"
   },
   "team_settings": {
     "message": "Réglages d'équipe"
@@ -1917,6 +1882,9 @@
   "to": {
     "message": "À"
   },
+  "tooltip_more_text": {
+    "message": "(%s) More"
+  },
   "total_ratings": {
     "message": "Total de notes"
   },
@@ -1926,6 +1894,10 @@
   "update": {
     "message": "Mettre à jour",
     "description": "Verb"
+  },
+  "uploading": {
+    "message": "Téléchargement",
+    "description": "CSV Upload process"
   },
   "upload_picture": {
     "message": "Téléverser photo"
@@ -1962,5 +1934,8 @@
   },
   "you": {
     "message": "Vous"
+  },
+  "zero_quantity": {
+    "message": "Aucune"
   }
 }

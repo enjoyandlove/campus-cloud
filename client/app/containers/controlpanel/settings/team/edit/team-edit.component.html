@@ -13,7 +13,6 @@
               <label i18n>{{ 'first_name' | cpI18n }}</label>
               <input
                 type="text"
-                placeholder="John"
                 class="form-control"
                 formControlName="firstname"
                 [attr.disabled]="!isCurrentUser ? '' : null">
@@ -24,7 +23,6 @@
               <input
                 type="text"
                 class="form-control"
-                placeholder="Smith"
                 formControlName="lastname"
                 [attr.disabled]="!isCurrentUser ? '' : null">
             </div>
@@ -35,8 +33,7 @@
                 type="email"
                 class="form-control"
                 [attr.disabled]="true"
-                formControlName="email"
-                placeholder="john@smith.com">
+                formControlName="email">
             </div>
           </div>
 
