@@ -154,11 +154,8 @@ export class FeedInputBoxComponent implements OnInit {
     this.form.controls['message_image_url_list'].setValue(null);
   }
 
-  onContentChange({ body, image }) {
+  onContentChange({ body }) {
     this.form.controls['message'].setValue(body);
-    this.form.controls['message_image_url_list'].setValue(
-      image ? [image] : null,
-    );
   }
 
   onSelectedHost(host): void {
