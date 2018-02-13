@@ -14,6 +14,7 @@ import { FeedbackService } from '../feedback.service';
 export class FeedbackServiceComponent extends BaseComponent implements OnInit {
   event;
   loading;
+  isExist = true;
   isService = true;
   checkinId: number;
   search: URLSearchParams = new URLSearchParams();
@@ -31,9 +32,12 @@ export class FeedbackServiceComponent extends BaseComponent implements OnInit {
 
   fetch() {
     super
-      .fetchData(this.feedbackService.getServiceData(this.search))
+      .fetchData(this.feedbackService.getServiceData(this.search, true))
       .then((res) => (this.event = res.data))
-      .catch((_) => {});
+      .catch((err) => {
+        this.isExist = false;
+        throw new Error(err);
+      });
   }
 
   onSubmit(data) {
