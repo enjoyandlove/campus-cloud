@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -11,12 +11,16 @@ import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
 import { IClub } from './../club.interface';
 import { ClubsUtilsService } from './../clubs.utils.service';
+import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
 
 @Component({
   selector: 'cp-clubs-events',
   templateUrl: './clubs-events.component.html',
 })
 export class ClubsEventsComponent extends BaseComponent implements OnInit {
+  @Input() isAthletic = isClubAthletic.club;
+
+  labels;
   loading;
   club: IClub;
   isClub = true;
@@ -40,6 +44,7 @@ export class ClubsEventsComponent extends BaseComponent implements OnInit {
   private fetch() {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
+    search.append('category_id', this.isAthletic.toString());
 
     super
       .fetchData(this.clubsService.getClubById(this.clubId, search))
@@ -64,10 +69,10 @@ export class ClubsEventsComponent extends BaseComponent implements OnInit {
       subheading: null,
       crumbs: {
         url:
-          this.router.url === `/manage/clubs/${this.clubId}/events`
-            ? 'clubs'
-            : `clubs/${this.clubId}`,
-        label: 'clubs',
+          this.router.url === `/manage/` + this.labels.club_athletic + `/${this.clubId}/events`
+            ? this.labels.club_athletic
+            : this.labels.club_athletic + `/${this.clubId}`,
+        label: this.labels.club_athletic,
       },
       em: null,
       children: [],
@@ -78,7 +83,7 @@ export class ClubsEventsComponent extends BaseComponent implements OnInit {
     links.forEach((link) => {
       menu.children.push({
         label: link.toLocaleLowerCase(),
-        url: `/manage/clubs/${this.clubId}/${link.toLocaleLowerCase()}`,
+        url: `/manage/` + this.labels.club_athletic + `/${this.clubId}/${link.toLocaleLowerCase()}`,
       });
     });
 
@@ -86,6 +91,7 @@ export class ClubsEventsComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.labels = clubAthleticLabels(this.isAthletic);
     this.fetch();
   }
 }

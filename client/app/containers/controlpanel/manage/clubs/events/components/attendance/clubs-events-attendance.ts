@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -6,6 +6,8 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './clubs-events-attendance.html',
 })
 export class ClubsEventsAttendanceComponent implements OnInit {
+  @Input() isAthletic;
+
   clubId;
   isClub = true;
 

@@ -14,8 +14,10 @@ export class EventUtilService {
     return event.start > CPDate.toEpoch(new Date());
   }
 
-  buildUrlPrefix(clubId: number = null, serviceId: number = null) {
-    if (clubId) {
+  buildUrlPrefix(clubId: number = null, serviceId: number = null, athleticId: number = null) {
+    if (athleticId) {
+      return `/manage/athletics/${clubId}/events`;
+    } else if (clubId) {
       return `/manage/clubs/${clubId}/events`;
     } else if (serviceId) {
       return `/manage/services/${serviceId}/events`;

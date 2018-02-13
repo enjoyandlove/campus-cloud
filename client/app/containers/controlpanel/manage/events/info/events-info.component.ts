@@ -23,6 +23,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   @Input() clubId: number;
   @Input() serviceId: number;
   @Input() isService: boolean;
+  @Input() isAthletic: number;
   @Input() resourceBanner: IResourceBanner;
 
   event;
@@ -61,7 +62,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
 
         this.isPastEvent = this.utils.isPastEvent(this.event);
 
-        this.urlPrefix = this.utils.buildUrlPrefix(this.clubId, this.serviceId);
+        this.urlPrefix = this.utils.buildUrlPrefix(this.clubId, this.serviceId, this.isAthletic);
 
         this.banner =
           this.event.poster_url === ''

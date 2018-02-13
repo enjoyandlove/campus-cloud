@@ -57,6 +57,11 @@ export class CPTopBarComponent implements OnInit {
     ) {
       return 'clubs';
     } else if (
+      canAccountLevelReadResource(this.session.g, CP_PRIVILEGES_MAP.athletics) ||
+      canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.athletics)
+    ) {
+      return 'athletics';
+    } else if (
       canAccountLevelReadResource(this.session.g, CP_PRIVILEGES_MAP.services) ||
       canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.services)
     ) {

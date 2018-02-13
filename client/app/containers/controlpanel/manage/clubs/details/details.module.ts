@@ -32,6 +32,12 @@ import { ClubsService } from '../clubs.service';
     EventsModule,
   ],
 
+  exports: [
+    ClubsWallComponent,
+    ClubsInfoComponent,
+    ClubsDetailsComponent,
+  ],
+
   providers: [ClubsService],
 })
 export class ClubsDetailsModule {}

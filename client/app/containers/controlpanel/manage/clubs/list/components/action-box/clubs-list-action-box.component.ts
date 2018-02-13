@@ -1,11 +1,11 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 
 import { ClubStatus } from '../../../club.status';
 import { CPSession } from './../../../../../../../session/index';
 import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 import { canSchoolWriteResource } from '../../../../../../../shared/utils/privileges/index';
-
+import { isClubAthletic, clubAthleticLabels } from '../../../clubs.athletics.labels';
 interface IState {
   query: string;
   type: string;
@@ -22,11 +22,14 @@ const state: IState = {
   styleUrls: ['./clubs-list-action-box.component.scss'],
 })
 export class ClubsListActionBoxComponent implements OnInit {
+  @Input() isAthletic = isClubAthletic.club;
   @Output() filter: EventEmitter<IState> = new EventEmitter();
 
+  labels;
   clubFilter;
   canCreate;
   state: IState = state;
+  isClubAthleticPrivilege;
 
   constructor(private session: CPSession, private cpI18n: CPI18nService) {}
 
@@ -36,14 +39,19 @@ export class ClubsListActionBoxComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isClubAthleticPrivilege = this.isAthletic === isClubAthletic.club
+      ? CP_PRIVILEGES_MAP.clubs
+      : CP_PRIVILEGES_MAP.athletics;
     this.canCreate = canSchoolWriteResource(
       this.session.g,
-      CP_PRIVILEGES_MAP.clubs,
+      this.isClubAthleticPrivilege,
     );
+
+    this.labels = clubAthleticLabels(this.isAthletic);
 
     this.clubFilter = [
       {
-        label: this.cpI18n.translate('clubs_all_clubs'),
+        label: this.cpI18n.translate(this.labels.all),
         action: null,
       },
       {
