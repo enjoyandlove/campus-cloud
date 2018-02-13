@@ -130,6 +130,26 @@
           </div>
           <!-- END Club Owner -->
 
+          <!-- Athletics Owner -->
+          <div class="section__item">
+            <div class="row">
+              <div class="col-xs-8">
+                <p class="section-sub-title" i18n>{{ 'admin_athletics_owner' | cpI18n }}</p>
+                <p class="section-description" i18n>
+                  {{ 'admin_athletics_owner_help' | cpI18n }}
+                </p>
+              </div>
+              <div class="col-xs-4">
+                <cp-dropdown
+                  [items]="athleticsMenu"
+                  (selected)="onAthleticsSelected($event)"
+                  [selectedItem]="athleticsDefaultPermission()">
+                </cp-dropdown>
+              </div>
+            </div>
+          </div>
+          <!-- END Athletics Owner -->
+
           <!-- Events -->
           <div class="section__item">
             <div class="row">
@@ -352,6 +372,17 @@
       (selected)="onClubsModalSelected($event)"
       [selectedClubs]="accountPrivileges">
     </cp-select-clubs-modal>
+  </cp-modal>
+
+  <cp-modal
+    [type]="MODAL_TYPE"
+    *ngIf="isAthleticsModal"
+    modalId="selectAthleticsModal">
+    <cp-select-athletics-modal
+      [reset]="resetAthleticsModal$"
+      (selected)="onAthleticsModalSelected($event)"
+      [selectedAthletics]="accountPrivileges">
+    </cp-select-athletics-modal>
   </cp-modal>
 
   <cp-modal modalId="teamUnauthorziedModal">

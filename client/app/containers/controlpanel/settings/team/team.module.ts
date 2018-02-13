@@ -20,6 +20,7 @@ import {
   BaseTeamSelectModalComponent,
   SelectTeamClubsModalComponent,
   SelectTeamServicesModalComponent,
+  SelectTeamAthleticsModalComponent,
 } from './create/components';
 
 import { TeamRoutingModule } from './team.routing.module';
@@ -36,6 +37,7 @@ import { TeamRoutingModule } from './team.routing.module';
     TeamDeleteComponent,
     TeamEditComponent,
     TeamUnauthorizedComponent,
+    SelectTeamAthleticsModalComponent,
   ],
 
   imports: [
