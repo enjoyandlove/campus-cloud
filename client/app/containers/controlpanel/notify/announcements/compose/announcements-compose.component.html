@@ -49,6 +49,7 @@
                     [props]="typeAheadOpts"
                     (query)="onSearch($event)"
                     (selection)="onTypeAheadChange($event)"
+                    (selectedChips)="onChipSelection($event)"
                     (typeChange)="onSwitchSearchType($event)">
                   </cp-typeahead>
                 </div>
