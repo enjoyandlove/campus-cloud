@@ -73,7 +73,7 @@ export class FeedsService extends BaseService {
       API.ENDPOINTS.CAMPUS_THREAD
     }/`;
 
-    return super.post(url, data).map((res) => res.json());
+    return super.post(url, data, null, true).map((res) => res.json());
   }
 
   postToGroupWall(data) {
@@ -81,7 +81,7 @@ export class FeedsService extends BaseService {
       API.ENDPOINTS.GROUP_THREAD
     }/`;
 
-    return super.post(url, data).map((res) => res.json());
+    return super.post(url, data, null, true).map((res) => res.json());
   }
 
   replyToCampusThread(data) {
@@ -89,7 +89,7 @@ export class FeedsService extends BaseService {
       API.ENDPOINTS.CAMPUS_COMMENT
     }/`;
 
-    return super.post(url, data).map((res) => res.json());
+    return super.post(url, data, null, true).map((res) => res.json());
   }
 
   replyToGroupThread(data) {
@@ -97,7 +97,7 @@ export class FeedsService extends BaseService {
       API.ENDPOINTS.GROUP_COMMENT
     }/`;
 
-    return super.post(url, data).map((res) => res.json());
+    return super.post(url, data, null, true).map((res) => res.json());
   }
 
   deleteCampusWallMessageByThreadId(threadId: number) {

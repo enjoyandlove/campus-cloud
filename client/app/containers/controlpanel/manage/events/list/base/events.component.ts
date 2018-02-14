@@ -37,6 +37,7 @@ const state = {
 })
 export class EventsComponent extends BaseComponent {
   @Input() storeId: number;
+  @Input() isAthletic: number;
 
   @Input() serviceId: number;
   @Input() isService: boolean;

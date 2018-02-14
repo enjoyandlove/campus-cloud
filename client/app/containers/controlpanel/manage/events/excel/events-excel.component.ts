@@ -31,6 +31,8 @@ const i18n = new CPI18nPipe();
 })
 export class EventsExcelComponent extends BaseComponent implements OnInit {
   @Input() storeId: number;
+  @Input() isAthletic: number;
+
   @Input() clubId: number;
   @Input() isClub: boolean;
   @Input() serviceId: number;
@@ -401,6 +403,12 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
 
     this.eventsService.createEvent(_events).subscribe(
       (_) => {
+        if (this.isAthletic) {
+          this.router.navigate([`/manage/athletics/${this.clubId}/events`]);
+
+          return;
+        }
+
         if (this.isClub) {
           this.router.navigate([`/manage/clubs/${this.clubId}/events`]);
 

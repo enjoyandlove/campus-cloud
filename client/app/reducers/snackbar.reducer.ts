@@ -4,12 +4,14 @@ export const SNACKBAR_HIDE = 'SNACKBAR_HIDE';
 export interface ISnackbar {
   body: string;
   class: string;
+  sticky?: boolean;
   autoClose?: boolean;
   autoCloseDelay?: number;
 }
 
 const initialState: ISnackbar = {
   body: null,
+  sticky: false,
   class: 'success',
   autoClose: false,
   autoCloseDelay: 4000,

@@ -17,7 +17,7 @@
           <ul class="col-xs-12 cp-form" formArrayName="clubs">
             <div class="clubs">
               <li class="cp-form__header row">
-                <span class="col-xs-4" i18n>{{ 'clubs_label_club_name' | cpI18n }}</span>
+                <span class="col-xs-4" i18n>{{ labels.create_edit_name | cpI18n }}</span>
                 <span class="col-xs-3" i18n>{{ 'email' | cpI18n }}</span>
                 <span class="col-xs-2" i18n>{{ 'phone_number' | cpI18n }}</span>
                 <span class="col-xs-2" i18n>{{ 'website' | cpI18n }}</span>
@@ -74,7 +74,7 @@
         <div class="row">
           <div class="col-xs-12">
             <div class="pull-right">
-              <a [routerLink]="['/manage/clubs']"
+              <a [routerLink]="['/manage/' + labels.club_athletic]"
                 class="cpbtn cpbtn--cancel" i18n>
                 {{ 'cancel' | cpI18n }}
               </a>

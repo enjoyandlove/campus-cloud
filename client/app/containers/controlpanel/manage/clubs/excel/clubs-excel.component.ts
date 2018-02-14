@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
@@ -11,7 +11,7 @@ import { CPSession } from '../../../../../session';
 import { CPImageUploadComponent } from '../../../../../shared/components';
 import { CPI18nPipe } from '../../../../../shared/pipes';
 import { ClubsService } from '../clubs.service';
-
+import { isClubAthletic, clubAthleticLabels } from '../clubs.athletics.labels';
 import {
   CPI18nService,
   FileUploadService,
@@ -31,7 +31,10 @@ const i18n = new CPI18nPipe();
 })
 export class ClubsExcelComponent extends BaseComponent
   implements OnInit, OnDestroy {
+  @Input() isAthletic = isClubAthletic.club;
+
   clubs;
+  labels;
   formError;
   buttonData;
   form: FormGroup;
@@ -49,8 +52,6 @@ export class ClubsExcelComponent extends BaseComponent
     super();
     this.store.select('CLUBS').subscribe((res) => {
       this.clubs = !isDev ? res : require('./mock.json');
-      this.buildHeader();
-      this.buildForm();
     });
   }
 
@@ -62,16 +63,16 @@ export class ClubsExcelComponent extends BaseComponent
 
   private buildHeader() {
     const subheading = i18n.transform(
-      'clubs_import_items_to_import',
+      this.labels.import_items,
       this.clubs.length,
     );
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        heading: 'clubs_import_heading',
+        heading: this.labels.import_heading,
         crumbs: {
-          url: 'clubs',
-          label: 'clubs',
+          url: this.labels.club_athletic,
+          label: this.labels.club_athletic,
         },
         em: `[NOTRANSLATE]${subheading}[NOTRANSLATE]`,
         children: [],
@@ -107,6 +108,7 @@ export class ClubsExcelComponent extends BaseComponent
       description: [club.description],
       phone: [club.phone_number],
       website: [club.website],
+      category_id: [this.isAthletic],
     });
   }
 
@@ -146,7 +148,7 @@ export class ClubsExcelComponent extends BaseComponent
     search.append('school_id', this.session.g.get('school').id.toString());
 
     this.clubService.createClub(this.form.value.clubs, search).subscribe(
-      (_) => this.router.navigate(['/manage/clubs']),
+      (_) => this.router.navigate(['/manage/' + this.labels.club_athletic]),
       (err) => {
         throw new Error(err);
       },
@@ -154,8 +156,11 @@ export class ClubsExcelComponent extends BaseComponent
   }
 
   ngOnInit() {
+    this.labels = clubAthleticLabels(this.isAthletic);
+    this.buildHeader();
+    this.buildForm();
     this.buttonData = {
-      text: this.cpI18n.translate('clubs_import_button_submit'),
+      text: this.cpI18n.translate(this.labels.import_button),
       class: 'primary',
       disabled: true,
     };

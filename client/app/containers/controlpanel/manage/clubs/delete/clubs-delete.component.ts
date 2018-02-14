@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ClubsService } from '../clubs.service';
 
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { isClubAthletic, clubAthleticLabels } from '../clubs.athletics.labels';
 
 declare var $: any;
 
@@ -13,8 +14,10 @@ declare var $: any;
 })
 export class ClubsDeleteComponent implements OnInit {
   @Input() club: any;
+  @Input() isAthletic = isClubAthletic.club;
   @Output() deletedClub: EventEmitter<number> = new EventEmitter();
 
+  labels;
   buttonData;
 
   constructor(private service: ClubsService, private cpI18n: CPI18nService) {}
@@ -39,6 +42,7 @@ export class ClubsDeleteComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.labels = clubAthleticLabels(this.isAthletic);
     this.buttonData = {
       text: this.cpI18n.translate('delete'),
       class: 'danger',

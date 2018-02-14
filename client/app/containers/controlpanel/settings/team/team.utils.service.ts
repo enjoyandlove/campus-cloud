@@ -3,10 +3,25 @@ import { Injectable } from '@angular/core';
 import { CPI18nService } from '../../../../shared/services';
 import { CP_PRIVILEGES_MAP } from './../../../../shared/constants/privileges';
 
+export enum clubAthleticStatus {
+  active = 1
+}
+
+export enum isClubAthletic {
+  club = 0,
+  athletic = 16,
+}
+
 export enum clubMenu {
   noAccess = null,
   selectClubs = 2,
   allClubs = 3,
+}
+
+export enum athleticMenu {
+  noAccess = null,
+  selectAthletic = 2,
+  allAthletics = 3,
 }
 
 export enum serviceMenu {
@@ -144,6 +159,45 @@ export class TeamUtilsService {
     return items;
   }
 
+  athleticsDropdown(schoolLevel = { r: false, w: false }, accountLevel = false) {
+    let items = [
+      {
+        label: this.cpI18n.translate('admin_no_access'),
+        action: athleticMenu.noAccess,
+      },
+    ];
+
+    if (!schoolLevel.w && !accountLevel) {
+      return items;
+    }
+
+    if (accountLevel && !schoolLevel.w) {
+      items = [
+        ...items,
+        {
+          label: this.cpI18n.translate('admin_select_clubs'),
+          action: athleticMenu.selectAthletic,
+        },
+      ];
+    }
+
+    if (schoolLevel.w) {
+      items = [
+        ...items,
+        {
+          label: this.cpI18n.translate('admin_select_clubs'),
+          action: athleticMenu.selectAthletic,
+        },
+        {
+          label: this.cpI18n.translate('admin_all_clubs'),
+          action: athleticMenu.allAthletics,
+        },
+      ];
+    }
+
+    return items;
+  }
+
   servicesDropdown(schoolLevel = { r: false, w: false }, accountLevel = false) {
     let items = [
       {
@@ -194,6 +248,16 @@ export class TeamUtilsService {
   isClub(obj) {
     return (
       !!(CP_PRIVILEGES_MAP.clubs in obj) &&
+      !!(CP_PRIVILEGES_MAP.events in obj) &&
+      !!(CP_PRIVILEGES_MAP.membership in obj) &&
+      !!(CP_PRIVILEGES_MAP.moderation in obj) &&
+      !!(CP_PRIVILEGES_MAP.event_attendance in obj)
+    );
+  }
+
+  isAthletic(obj) {
+    return (
+      !!(CP_PRIVILEGES_MAP.athletics in obj) &&
       !!(CP_PRIVILEGES_MAP.events in obj) &&
       !!(CP_PRIVILEGES_MAP.membership in obj) &&
       !!(CP_PRIVILEGES_MAP.moderation in obj) &&

@@ -42,6 +42,16 @@ import {
     EventsModule,
   ],
 
+  exports: [
+    ClubsEventsComponent,
+    ClubsEventsCreateComponent,
+    ClubsEventsAttendanceComponent,
+    ClubsEventInfoComponent,
+    ClubsEventEditComponent,
+    ClubsEventsFacebookComponent,
+    ClubsEventsExcelComponent,
+  ],
+
   providers: [],
 })
 export class ClubsEventsModule {}

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,6 +15,7 @@ import { membershipTypes, statusTypes } from '../create/permissions';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { ClubsUtilsService } from './../clubs.utils.service';
 import { advisorDataRequired } from './custom-validators.directive';
+import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
 
 @Component({
   selector: 'cp-clubs-edit',
@@ -22,8 +23,11 @@ import { advisorDataRequired } from './custom-validators.directive';
   styleUrls: ['./clubs-edit.component.scss'],
 })
 export class ClubsEditComponent extends BaseComponent implements OnInit {
+  @Input() isAthletic = isClubAthletic.club;
+
   club;
   school;
+  labels;
   clubId;
   loading;
   formError;
@@ -66,6 +70,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
   fetch() {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
+    search.append('category_id', this.isAthletic.toString());
 
     const stream$ = this.clubsService.getClubById(this.clubId, search);
 
@@ -143,12 +148,13 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
     const search = new URLSearchParams();
 
     search.append('school_id', this.session.g.get('school').id.toString());
+    search.append('category_id', this.isAthletic.toString());
 
     this.clubsService
       .updateClub(this.form.value, this.clubId, search)
       .subscribe(
         (res) => {
-          this.router.navigate(['/manage/clubs/' + res.id + '/info']);
+          this.router.navigate(['/manage/' + this.labels.club_athletic + '/' + res.id + '/info']);
         },
         (err) => {
           this.buttonData = Object.assign({}, this.buttonData, {
@@ -224,6 +230,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.labels = clubAthleticLabels(this.isAthletic);
     this.fetch();
     this.school = this.session.g.get('school');
 
@@ -235,7 +242,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        heading: 'clubs_edit_heading',
+        heading: this.labels.edit_button,
         subheading: null,
         em: null,
         children: [],

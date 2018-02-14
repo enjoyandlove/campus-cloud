@@ -18,6 +18,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   @Input() clubId: number;
   @Input() serviceId: number;
   @Input() isService: boolean;
+  @Input() isAthletic: number;
 
   event;
   urlPrefix;
@@ -74,7 +75,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.urlPrefix = this.utils.buildUrlPrefix(this.clubId, this.serviceId);
+    this.urlPrefix = this.utils.buildUrlPrefix(this.clubId, this.serviceId, this.isAthletic);
     this.fetch();
   }
 }

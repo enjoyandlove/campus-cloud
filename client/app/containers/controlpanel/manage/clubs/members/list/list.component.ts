@@ -1,6 +1,6 @@
 import { ActivatedRoute } from '@angular/router';
 
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
 import { MemberType } from '../member.status';
@@ -9,6 +9,7 @@ import { MembersService } from '../members.service';
 import { CPSession } from '../../../../../../session';
 
 import { BaseComponent } from '../../../../../../base/base.component';
+import { isClubAthletic } from '../../clubs.athletics.labels';
 
 declare var $: any;
 
@@ -30,6 +31,8 @@ const state: IState = {
   styleUrls: ['./list.component.scss'],
 })
 export class ClubsMembersComponent extends BaseComponent implements OnInit {
+  @Input() isAthletic = isClubAthletic.club;
+
   isEdit;
   groupId;
   loading;
@@ -80,9 +83,11 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
     memberSearch.append('school_id', schoolId);
     memberSearch.append('sort_field', this.state.sort_field);
     memberSearch.append('sort_direction', this.state.sort_direction);
+    memberSearch.append('category_id', this.isAthletic.toString());
 
     groupSearch.append('store_id', clubId);
     groupSearch.append('school_id', schoolId);
+    groupSearch.append('category_id', this.isAthletic.toString());
 
     const socialGroupDetails$ = this.membersService.getSocialGroupDetails(
       groupSearch,
