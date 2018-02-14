@@ -29,21 +29,21 @@
                 <div class="canvas__bounds"></div>
               </div>
 
-              <cp-customization-upload-button
+              <cp-banner-upload-button
                 *ngIf="!isEdit"
                 class="upload-button"
                 (reset)="onReset()"
                 (error)="onError($event)"
                 (upload)="onUpload($event)">
-              </cp-customization-upload-button>
+              </cp-banner-upload-button>
 
-              <cp-customizaton-control-buttons
+              <cp-banner-control-buttons
                 *ngIf="isEdit"
                 (save)="onSave()"
                 (cancel)="onCancel()"
                 [loading]="uploading"
                 class="control-buttons">
-              </cp-customizaton-control-buttons>
+              </cp-banner-control-buttons>
 
               <p class="tooltip" *ngIf="isEdit" i18n>{{ 'customization_instructions' | cpI18n }}</p>
             </div>

@@ -29,28 +29,28 @@
           <div class="row">
             <div class="col-xs-12">
               <div class="row">
-                <div class="col-xs-2">
+                <div class="col-xs-3">
                   <p><strong i18n>{{ 'starts' | cpI18n }}</strong></p>
                 </div>
-                <div class="col-xs-10">
+                <div class="col-xs-9">
                   <p>{{ event.start | cpDatePipe:dateFormat }}</p>
                 </div>
               </div>
 
               <div class="row">
-                <div class="col-xs-2">
+                <div class="col-xs-3">
                   <p><strong i18n>{{ 'ends' | cpI18n }}</strong></p>
                 </div>
-                <div class="col-xs-10">
+                <div class="col-xs-9">
                   {{ event.end | cpDatePipe:dateFormat }}
                 </div>
               </div>
 
               <div class="row" *ngIf="event.address">
-                <div class="col-xs-2">
+                <div class="col-xs-3">
                   <p><strong i18n>{{ 'location' | cpI18n }}</strong></p>
                 </div>
-                <div class="col-xs-10">
+                <div class="col-xs-9">
                   <p>{{ event.address }}</p>
                 </div>
               </div>

@@ -19,14 +19,42 @@ import {
 const appRoutes: Routes = [
   { path: 'import', redirectTo: '', pathMatch: 'full' },
 
-  { path: '', component: ClubsEventsComponent },
-  { path: 'create', component: ClubsEventsCreateComponent },
-  { path: ':eventId', component: ClubsEventsAttendanceComponent },
-  { path: ':eventId/edit', component: ClubsEventEditComponent },
-  { path: ':eventId/info', component: ClubsEventInfoComponent },
+  {
+    path: '',
+    component: ClubsEventsComponent,
+    data: { zendesk: 'club events' },
+  },
+  {
+    path: 'create',
+    component: ClubsEventsCreateComponent,
+    data: { zendesk: 'create club event' },
+  },
+  {
+    path: ':eventId',
+    component: ClubsEventsAttendanceComponent,
+    data: { zendesk: 'club event attendance' },
+  },
+  {
+    path: ':eventId/edit',
+    component: ClubsEventEditComponent,
+    data: { zendesk: 'edit club event' },
+  },
+  {
+    path: ':eventId/info',
+    component: ClubsEventInfoComponent,
+    data: { zendesk: 'club event details' },
+  },
 
-  { path: 'import/excel', component: ClubsEventsExcelComponent },
-  { path: 'import/facebook', component: ClubsEventsFacebookComponent },
+  {
+    path: 'import/excel',
+    component: ClubsEventsExcelComponent,
+    data: { zendesk: 'import club events via csv' },
+  },
+  {
+    path: 'import/facebook',
+    component: ClubsEventsFacebookComponent,
+    data: { zendesk: 'import club events via facebook' },
+  },
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],

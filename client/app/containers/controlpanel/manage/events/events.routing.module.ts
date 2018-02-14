@@ -25,16 +25,40 @@ const appRoutes: Routes = [
 
   {
     path: '',
-    data: { preload: true },
+    data: { zendesk: 'Events' },
     component: EventsListComponent,
   },
-  { path: 'create', component: EventsCreateComponent },
-  { path: ':eventId', component: EventsAttendanceComponent },
-  { path: ':eventId/edit', component: EventsEditComponent },
-  { path: ':eventId/info', component: EventsInfoComponent },
+  {
+    path: 'create',
+    data: { zendesk: 'Events Create' },
+    component: EventsCreateComponent,
+  },
+  {
+    path: ':eventId',
+    data: { zendesk: 'Events Attendance' },
+    component: EventsAttendanceComponent,
+  },
+  {
+    path: ':eventId/edit',
+    data: { zendesk: 'Events Edit' },
+    component: EventsEditComponent,
+  },
+  {
+    path: ':eventId/info',
+    data: { zendesk: 'Events Info' },
+    component: EventsInfoComponent,
+  },
 
-  { path: 'import/excel', component: EventsExcelComponent },
-  { path: 'import/facebook', component: EventsFacebookComponent },
+  {
+    path: 'import/excel',
+    data: { zendesk: 'Events Import from CSV' },
+    component: EventsExcelComponent,
+  },
+  {
+    path: 'import/facebook',
+    data: { zendesk: 'Events Import from Facebook' },
+    component: EventsFacebookComponent,
+  },
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],

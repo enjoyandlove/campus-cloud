@@ -291,7 +291,10 @@ export class EventsCreateComponent implements OnInit {
       content: this.cpI18n.translate('events_event_feedback_tooltip'),
     });
 
-    let store_id;
+    let store_id = this.session.defaultHost
+      ? this.session.defaultHost.value
+      : null;
+
     // fetch managers by service
     if (this.storeId) {
       store_id = this.storeId;
@@ -302,6 +305,11 @@ export class EventsCreateComponent implements OnInit {
     if (this.clubId) {
       store_id = this.clubId;
       this.fetchManagersBySelectedStore(this.clubId);
+    }
+
+    // load managers for default host
+    if (this.session.defaultHost) {
+      this.fetchManagersBySelectedStore(store_id);
     }
 
     this.buttonData = {

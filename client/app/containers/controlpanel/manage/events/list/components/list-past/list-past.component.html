@@ -5,15 +5,8 @@
       class="col-xs-4 hover" i18n>
       {{ 'name' | cpI18n }}
       <span *ngIf="state.sort_field === 'title'">
-        <i
-          class="material-icons"
-          *ngIf="state.sort_direction === 'asc'">
-          arrow_upward
-        </i>
-        <i
-          class="material-icons"
-          *ngIf="state.sort_direction === 'desc'">
-          arrow_downward
+        <i class="material-icons">
+          {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
         </i>
       </span>
     </span>
@@ -22,15 +15,8 @@
       class="col-xs-2 hover" i18n>
       {{ 'end_date' | cpI18n }}
       <span *ngIf="state.sort_field === 'end'">
-        <i
-          class="material-icons"
-          *ngIf="state.sort_direction === 'asc'">
-          arrow_upward
-        </i>
-        <i
-          class="material-icons"
-          *ngIf="state.sort_direction === 'desc'">
-          arrow_downward
+        <i class="material-icons">
+          {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
         </i>
       </span>
     </span>

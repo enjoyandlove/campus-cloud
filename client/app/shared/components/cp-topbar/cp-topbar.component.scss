@@ -84,7 +84,6 @@ nav {
     }
 
     &.active {
-
       a {
         border-bottom: 3px solid $color-brand;
       }
@@ -104,7 +103,7 @@ nav {
 
   &--menu {
     top: 115%;
-    z-index: 2;
+    z-index: 4;
     right: 20px;
     position: absolute;
   }
@@ -123,23 +122,23 @@ nav {
     margin-top: 7px;
   }
 
-    &__name,
-    &__user,
-    &__arrow i {
-      display: block;
-      color: $color-grey;
-      transition: color 300ms ease-in-out;
+  &__name,
+  &__user,
+  &__arrow i {
+    display: block;
+    color: $color-grey;
+    transition: color 300ms ease-in-out;
+  }
+
+  &__user {
+    @include font-semi-bold();
+
+    i {
+      padding-top: 8px;
     }
+  }
 
-    &__user {
-      @include font-semi-bold();
-
-      i {
-        padding-top: 8px;
-      }
-    }
-
-    &__thumb {
+  &__thumb {
     width: 40px;
     height: 40px;
     margin-right: 8px;

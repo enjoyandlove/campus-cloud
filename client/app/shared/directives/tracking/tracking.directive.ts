@@ -8,10 +8,11 @@ export const CP_TRACK_TO = {
   AMPLITUDE: 'am',
 };
 
-interface IEventData {
+export interface IEventData {
   type: string;
   eventAction: string;
   eventCategory: string;
+  eventLabel?: string;
 }
 
 @Directive({
@@ -39,6 +40,7 @@ export class CPTrackerDirective {
       this.cpTracker.gaEmitEvent(
         this.eventData.eventAction,
         this.eventData.eventCategory,
+        this.eventData.eventLabel,
       );
     }
   }

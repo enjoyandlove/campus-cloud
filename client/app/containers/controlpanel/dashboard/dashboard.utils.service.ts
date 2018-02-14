@@ -41,7 +41,7 @@ const lastYear = CPDate.toEpoch(
 @Injectable()
 export class DashboardUtilsService {
   isSuperAdmin(session) {
-    return session.isSuperAdmin();
+    return session.isSuperAdmin;
   }
 
   dayStart(date) {

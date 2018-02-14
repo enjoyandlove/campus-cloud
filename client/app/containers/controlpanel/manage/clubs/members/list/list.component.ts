@@ -128,6 +128,6 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.fetch();
-    this.hasSSO = this.session.hasSSO();
+    this.hasSSO = this.session.hasSSO;
   }
 }

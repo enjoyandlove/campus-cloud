@@ -6,11 +6,11 @@ import { API } from '../../../../config/api';
 import { BaseService } from '../../../../base/base.service';
 
 @Injectable()
-export class CustomizationService extends BaseService {
+export class BannerService extends BaseService {
   constructor(http: Http, router: Router) {
     super(http, router);
 
-    Object.setPrototypeOf(this, CustomizationService.prototype);
+    Object.setPrototypeOf(this, BannerService.prototype);
   }
 
   getCoverImage(search: URLSearchParams) {

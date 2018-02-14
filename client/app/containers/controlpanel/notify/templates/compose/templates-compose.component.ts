@@ -26,7 +26,9 @@ export class TemplatesComposeComponent extends AnnouncementsComposeComponent
   @Input() data: any;
   @Input() toolTipContent: IToolTipContent;
 
+  selectedHost;
   form: FormGroup;
+
   constructor(
     private el: ElementRef,
     public fb: FormBuilder,
@@ -203,9 +205,10 @@ export class TemplatesComposeComponent extends AnnouncementsComposeComponent
       content: this.cpI18n.translate('notify_announcement_template_to_tooltip'),
       link: {
         text: this.cpI18n.translate('lists_button_create'),
-        url: 'https://oohlalamobile.zendesk.com/hc/en-us/articles/' +
-        '115004330554-Create-a-List-of-Students',
-      }
+        url:
+          'https://oohlalamobile.zendesk.com/hc/en-us/articles/' +
+          '115004330554-Create-a-List-of-Students',
+      },
     });
     super.ngOnInit();
 

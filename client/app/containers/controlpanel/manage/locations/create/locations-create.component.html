@@ -25,7 +25,6 @@
                   type="text"
                   class="form-control"
                   formControlName="name"
-                  placeholder="Add a short, clear name"
                   [class.error]="formError && form.controls['name'].hasError('required')">
               </div>
               <div class="col-xs-6">
@@ -46,7 +45,6 @@
                 <div class="col-xs-12">
                   <cp-place-autocomplete
                     disableLocations
-                    placeHolder="Address..."
                     [newAddress]="newAddress"
                     (backToDefault)="onResetMap()"
                     (placeChange)="onPlaceChange($event)"

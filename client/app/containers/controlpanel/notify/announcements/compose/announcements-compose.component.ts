@@ -52,7 +52,6 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   isError;
   sendAsName;
   errorMessage;
-  selectedHost;
   selectedType;
   typeAheadOpts;
   chips = [];
@@ -211,7 +210,6 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   }
 
   onSelectedStore(store) {
-    this.selectedHost = store;
     this.sendAsName = store.label;
     this.form.controls['store_id'].setValue(store.value);
   }
@@ -394,6 +392,14 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    const defaultHost = this.session.defaultHost
+    ? this.session.defaultHost.value
+    : null;
+
+    this.sendAsName = this.session.defaultHost
+      ? this.session.defaultHost.label
+      : undefined;
+
     this.toolTipContent = Object.assign({}, this.toolTipContent, {
       content: this.cpI18n.translate('notify_announcement_template_to_tooltip'),
       link: {
@@ -432,7 +438,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     }
 
     this.form = this.fb.group({
-      store_id: [null, Validators.required],
+      store_id: [defaultHost, Validators.required],
       user_ids: [[]],
       list_ids: [[]],
       is_school_wide: false,

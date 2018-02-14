@@ -3,6 +3,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CPSession, ISchool, IUser } from '../../../session';
 import { CP_PRIVILEGES_MAP } from '../../../shared/constants';
 import { appStorage } from '../../../shared/utils/storage';
+import { CPI18nService } from '../../services';
 
 @Component({
   selector: 'cp-school-switch',
@@ -12,6 +13,7 @@ import { appStorage } from '../../../shared/utils/storage';
 export class SchoolSwitchComponent implements OnInit {
   @Output() close: EventEmitter<null> = new EventEmitter();
 
+  helpDeskUrl;
   isSchoolPanel;
   canManageAdmins;
   selectedSchool: ISchool;
@@ -38,6 +40,11 @@ export class SchoolSwitchComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.helpDeskUrl =
+      CPI18nService.getLocale() === 'fr-CA'
+        ? 'https://oohlalamobile.zendesk.com/hc/fr'
+        : 'https://oohlalamobile.zendesk.com/hc/en-us';
+
     this.schools = this.session.g.get('schools');
     this.selectedSchool = this.session.g.get('school');
 

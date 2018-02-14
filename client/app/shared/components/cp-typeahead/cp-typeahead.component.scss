@@ -3,20 +3,21 @@
 @import '~styles/components/button';
 @import '~styles/components/dropdown';
 
+.switch-arrow {
+  i {
+    top: 11px;
+    right: 10px;
+    line-height: 1;
+    font-size: 18px;
+    position: absolute;
+    transition: transform 200ms ease-in-out;
+  }
+}
+
 .switcherMenu {
+  right: 20px;
   margin-top: 6px;
   position: relative;
-
-  &__button {
-    i {
-      top: 5px;
-      right: 22px;
-      line-height: 1;
-      font-size: 18px;
-      position: absolute;
-      transition: transform 200ms ease-in-out;
-    }
-  }
 
   &__list {
     @include cpDropdownMenu();

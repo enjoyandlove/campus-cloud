@@ -5,10 +5,10 @@
       <div class="col-xs-8 col-xs-offset-2">
         <div class="cp-card item meta">
           <div class="row">
-            <div class="col-xs-2 meta__label">
+            <div class="col-xs-3 meta__label">
               <p><strong>{{ 'start_date' | cpI18n }}</strong></p>
             </div>
-            <div class="col-xs-10 meta__info">
+            <div class="col-xs-9 meta__info">
               <div class="row">
                 <div class="col-xs-9">
                   <p>{{ item.start | cpDatePipe:dateFormat }}</p>
@@ -23,19 +23,19 @@
           </div>
 
           <div class="row">
-            <div class="col-xs-2 meta__label">
+            <div class="col-xs-3 meta__label">
               <p><strong>{{ 'end_date' | cpI18n }}</strong></p>
             </div>
-            <div class="col-xs-10 meta__info">
+            <div class="col-xs-9 meta__info">
               <p class="text-truncate">{{ item.end | cpDatePipe:dateFormat }}</p>
             </div>
           </div>
 
           <div class="row address" *ngIf="item.location !== ''">
-            <div class="col-xs-2 meta__label">
+            <div class="col-xs-3 meta__label">
               <p><strong>{{ 'location' | cpI18n }}</strong></p>
             </div>
-            <div class="col-xs-10 meta__info">
+            <div class="col-xs-9 meta__info">
               <p>{{ item.location }}</p>
             </div>
           </div>

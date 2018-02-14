@@ -14,7 +14,8 @@ import 'node_modules/quill/dist/quill.snow.css';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
-import { CPI18nService } from '../../services/index';
+import { CPI18nService } from '../../services';
+import { QuillService } from './../../services/quill.service';
 
 interface IState {
   body: string;
@@ -40,74 +41,41 @@ export class CPTextEditorComponent implements OnInit, AfterViewInit {
 
   quillInstance;
   state: IState = state;
-  imageContainer: Element;
-  imageElement: HTMLImageElement = new Image();
-  deleteButtonElement;
 
   constructor(private cpI18n: CPI18nService) {}
 
-  createDeleteButton() {
-    const button = document.createElement('button');
-    button.className =
-      'material-icons cpbtn cpbtn--cancel cpbtn--no-border remove-image';
-    button.onclick = (e) => this.removeImage(e);
-    button.textContent = 'close';
-    button.style.display = 'none';
-    this.deleteButtonElement = button;
-    this.imageContainer.appendChild(button);
-  }
-
   ngAfterViewInit() {
     this.launch();
-
-    this.imageContainer = this.quillInstance.addContainer('cp-editor-image');
-    this.imageElement.style.display = 'none';
-
-    this.createDeleteButton();
-
-    this.imageContainer.appendChild(this.imageElement);
   }
 
   launch() {
-    const Quill = require('quill');
-    const toolbarOptions = null;
+    const el = this.editor.nativeElement;
 
-    this.quillInstance = new Quill(this.editor.nativeElement, {
+    const options = {
       modules: {
-        toolbar: toolbarOptions,
+        toolbar: null,
       },
       placeholder: this.cpI18n.translate('feeds_input_placeholder'),
       theme: 'snow',
-    });
+    };
 
-    this.quillInstance.on('text-change', () => {
-      this.state = Object.assign({}, this.state, {
-        body: this.quillInstance.getText().trim(),
-      });
-      this.contentChange.emit(this.state);
-    });
+    this.quillInstance = new QuillService(el, options);
+    this.quillInstance.on('text-change', this.textChangeHandler.bind(this));
   }
 
-  removeImage(e?: MouseEvent) {
-    if (e) {
-      e.preventDefault();
-    }
-
-    this.state = Object.assign({}, this.state, { image: null });
-    this.imageElement.src = null;
+  textChangeHandler() {
+    this.state = Object.assign({}, this.state, {
+      body: this.quillInstance.getText(),
+    });
     this.contentChange.emit(this.state);
-    this.imageElement.style.display = 'none';
-    this.deleteButtonElement.style.display = 'none';
-  }
-
-  removeText() {
-    this.state = Object.assign({}, this.state, { body: null });
-    this.quillInstance.setText('');
   }
 
   reset() {
-    this.removeImage();
-    this.removeText();
+    this.quillInstance.reset();
+  }
+
+  setImage(image) {
+    this.state = Object.assign({}, this.state, { image });
   }
 
   ngOnInit() {
@@ -123,12 +91,11 @@ export class CPTextEditorComponent implements OnInit, AfterViewInit {
 
     this.image$.subscribe((image: string) => {
       if (image) {
-        this.state = Object.assign({}, this.state, { image });
-
-        this.imageElement.src = image;
-        this.imageElement.style.display = 'block';
-        this.deleteButtonElement.style.display = 'block';
+        this.quillInstance.insertImage(image);
+        this.setImage(image);
       }
+
+      this.setImage(null);
     });
   }
 }

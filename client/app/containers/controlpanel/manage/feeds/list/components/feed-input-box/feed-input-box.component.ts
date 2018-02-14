@@ -27,6 +27,8 @@ import { CPI18nService } from './../../../../../../../shared/services/i18n.servi
 })
 export class FeedInputBoxComponent implements OnInit {
   @Input() clubId: number;
+  @Input() threadId: number;
+  @Input() replyView: boolean;
   @Input() disablePost: boolean;
   @Input() isCampusWallView: Observable<any>;
   @Output() created: EventEmitter<null> = new EventEmitter();
@@ -80,19 +82,47 @@ export class FeedInputBoxComponent implements OnInit {
       });
   }
 
-  onSubmit(data) {
-    const _data = this.parseData(data);
-    const groupWall$ = this.feedsService.postToGroupWall(_data);
-    const campusWall$ = this.feedsService.postToCampusWall(_data);
+  replyToThread({
+    message,
+    message_image_url_list,
+    school_id,
+    store_id,
+  }): Promise<any> {
+    let body = {
+      school_id,
+      store_id,
+      comment: message,
+      thread_id: this.threadId,
+    };
+
+    if (message_image_url_list) {
+      body = Object.assign({}, body, {
+        comment_image_url_list: [...message_image_url_list],
+      });
+    }
+
+    const groupWall$ = this.feedsService.replyToGroupThread(body);
+    const campusWall$ = this.feedsService.replyToCampusThread(body);
     const stream$ = this._isCampusWallView ? groupWall$ : campusWall$;
 
-    stream$.subscribe((res) => {
-      if (!this.clubId) {
-        this.form.reset();
-      }
-      this.form.controls['message'].setValue(null);
-      this.reset$.next(true);
-      this.resetTextEditor$.next(true);
+    return stream$.toPromise();
+  }
+
+  postToWall(formData): Promise<any> {
+    const groupWall$ = this.feedsService.postToGroupWall(formData);
+    const campusWall$ = this.feedsService.postToCampusWall(formData);
+    const stream$ = this._isCampusWallView ? groupWall$ : campusWall$;
+
+    return stream$.toPromise();
+  }
+
+  onSubmit(data) {
+    const submit = this.replyView
+      ? this.replyToThread(this.parseData(data))
+      : this.postToWall(this.parseData(data));
+
+    submit.then((res) => {
+      this.resetFormValues();
       this.created.emit(res);
     });
   }
@@ -103,7 +133,7 @@ export class FeedInputBoxComponent implements OnInit {
       store_id: data.store_id,
       school_id: this.session.g.get('school').id,
       message: data.message,
-      message_image_url: data.message_image_url,
+      message_image_url_list: data.message_image_url_list,
     };
 
     if (this._isCampusWallView) {
@@ -113,9 +143,22 @@ export class FeedInputBoxComponent implements OnInit {
     return _data;
   }
 
-  onContentChange(data: { body: string; image: string }) {
-    this.form.controls['message'].setValue(data.body);
-    this.form.controls['message_image_url'].setValue(data.image);
+  resetFormValues() {
+    if (!this.clubId && !this._isCampusWallView && !this.replyView) {
+      this.form.controls['group_id'].setValue(null);
+      this.form.controls['post_type'].setValue(null);
+    }
+    this.reset$.next(true);
+    this.resetTextEditor$.next(true);
+    this.form.controls['message'].setValue(null);
+    this.form.controls['message_image_url_list'].setValue(null);
+  }
+
+  onContentChange({ body, image }) {
+    this.form.controls['message'].setValue(body);
+    this.form.controls['message_image_url_list'].setValue(
+      image ? [image] : null,
+    );
   }
 
   onSelectedHost(host): void {
@@ -147,7 +190,7 @@ export class FeedInputBoxComponent implements OnInit {
     this.fileUploadService.uploadFile(file, url, headers).subscribe(
       (res) => {
         this.image$.next(res.image_url);
-        this.form.controls['message_image_url'].setValue(res.image_url);
+        this.form.controls['message_image_url_list'].setValue([res.image_url]);
       },
       (err) => {
         throw new Error(err);
@@ -155,12 +198,22 @@ export class FeedInputBoxComponent implements OnInit {
     );
   }
 
-  removePhoto(): void {
-    this.form.controls['message_image_url'].setValue(null);
-  }
-
   ngOnInit() {
+    const defaultHost = this.session.defaultHost
+      ? this.session.defaultHost.value
+      : null;
+
     this.school = this.session.g.get('school');
+
+    this.form = this.fb.group({
+      group_id: [null],
+      school_id: [this.session.g.get('school').id],
+      store_id: [defaultHost, Validators.required],
+      post_type: [1, Validators.required],
+      message: [null, [Validators.required, Validators.maxLength(500)]],
+      message_image_url_list: [null],
+    });
+
     this.isCampusWallView.subscribe((res) => {
       // Not Campus Wall
       if (res.type !== 1) {
@@ -177,19 +230,10 @@ export class FeedInputBoxComponent implements OnInit {
           'post_type',
           new FormControl(null, Validators.required),
         );
-        this.form.controls['store_id'].setValue(null);
+        this.form.controls['store_id'].setValue(defaultHost);
       }
 
       this._isCampusWallView = false;
-    });
-
-    this.form = this.fb.group({
-      group_id: [null],
-      school_id: [this.session.g.get('school').id],
-      store_id: [null, Validators.required],
-      post_type: [null, Validators.required],
-      message: [null, [Validators.required, Validators.maxLength(500)]],
-      message_image_url: [null],
     });
   }
 }

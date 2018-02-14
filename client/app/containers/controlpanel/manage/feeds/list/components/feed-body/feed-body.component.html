@@ -24,6 +24,14 @@
               <i class="material-icons">thumb_up</i>
               {{ feed.likes }}
             </span>
+            <span
+              *ngIf="!replyView"
+              class="cpbtn cpbtn--link"
+              (click)="isCommentsOpen = !isCommentsOpen"
+              (click)="toggleReplies.emit(isCommentsOpen)">
+              <i class="material-icons">mode_comment</i>
+              {{ 'reply_verb' | cpI18n }}
+            </span>
             <span class="flag" *ngIf="feed.dislikes > 0 && feed.flag !== 2">
               <i class="material-icons">flag</i>
               {{ feed.dislikes }}

@@ -24,154 +24,13 @@ import {
   canAccountLevelReadResource,
 } from './../../../../../shared/utils/privileges/privileges';
 
-const _cpI18n = new CPI18nService();
-
-const eventsDropdown = function(
-  eventPrivilege = { r: false, w: false },
-  eventAssessmentPrivilege = { r: false, w: false },
-) {
-  let items = [
-    {
-      label: _cpI18n.translate('admin_no_access'),
-      action: null,
-    },
-  ];
-
-  if (!eventPrivilege.r) {
-    return items;
-  }
-
-  if (eventPrivilege.w) {
-    items = [
-      ...items,
-      {
-        label: _cpI18n.translate('admin_manage_events'),
-        action: 2,
-      },
-    ];
-  }
-
-  if (eventAssessmentPrivilege.w) {
-    items = [
-      ...items,
-      {
-        label: _cpI18n.translate('admin_manage_and_assess_events'),
-        action: 3,
-      },
-    ];
-  }
-
-  return items;
-};
-
-const manageAdminDropdown = function(privilege: { r: boolean; w: boolean }) {
-  let items = [
-    {
-      label: _cpI18n.translate('team_member_disabled'),
-      action: null,
-    },
-  ];
-
-  if (!privilege) {
-    return items;
-  }
-
-  if (privilege.w) {
-    items = [
-      ...items,
-      {
-        label: _cpI18n.translate('admin_enabled'),
-        action: 1,
-      },
-    ];
-  }
-
-  return items;
-};
-
-const clubsDropdown = (
-  schoolLevel = { r: false, w: false },
-  accountLevel = false,
-) => {
-  let items = [
-    {
-      label: _cpI18n.translate('admin_no_access'),
-      action: null,
-    },
-  ];
-
-  if (!schoolLevel.w && !accountLevel) {
-    return items;
-  }
-
-  if (accountLevel && !schoolLevel.w) {
-    items = [
-      ...items,
-      {
-        label: _cpI18n.translate('admin_select_clubs'),
-        action: 2,
-      },
-    ];
-  }
-
-  if (schoolLevel.w) {
-    items = [
-      ...items,
-      {
-        label: _cpI18n.translate('admin_select_clubs'),
-        action: 2,
-      },
-      {
-        label: _cpI18n.translate('admin_all_clubs'),
-        action: 3,
-      },
-    ];
-  }
-
-  return items;
-};
-
-const servicesDropdown = function(
-  schoolLevel = { r: false, w: false },
-  accountLevel = false,
-) {
-  let items = [
-    {
-      label: _cpI18n.translate('admin_no_access'),
-      action: null,
-    },
-  ];
-
-  if (!schoolLevel.w && !accountLevel) {
-    return items;
-  }
-
-  if (accountLevel && !schoolLevel.w) {
-    items = [
-      ...items,
-      {
-        label: _cpI18n.translate('admin_select_services'),
-        action: 2,
-      },
-    ];
-  }
-
-  if (schoolLevel.w) {
-    items = [
-      ...items,
-      {
-        label: _cpI18n.translate('admin_select_services'),
-        action: 2,
-      },
-      {
-        label: _cpI18n.translate('admin_all_services'),
-        action: 3,
-      },
-    ];
-  }
-
-  return items;
-};
+import {
+  serviceMenu,
+  clubMenu,
+  eventMenu,
+  manageAdminMenu,
+  TeamUtilsService,
+} from '../team.utils.service';
 
 declare var $: any;
 
@@ -215,6 +74,7 @@ export class TeamCreateComponent implements OnInit {
     private session: CPSession,
     private store: Store<IHeader>,
     private cpI18n: CPI18nService,
+    public utils: TeamUtilsService,
     private teamService: AdminService,
     private errorService: ErrorService,
   ) {}
@@ -296,7 +156,7 @@ export class TeamCreateComponent implements OnInit {
   }
 
   onManageAdminSelected(data) {
-    if (!data.action) {
+    if (data.action === manageAdminMenu.disabled) {
       if (CP_PRIVILEGES_MAP.manage_admin in this.schoolPrivileges) {
         delete this.schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin];
       }
@@ -304,12 +164,14 @@ export class TeamCreateComponent implements OnInit {
       return;
     }
 
-    this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
-      [CP_PRIVILEGES_MAP.manage_admin]: {
-        r: true,
-        w: true,
-      },
-    });
+    if (data.action === manageAdminMenu.enabled) {
+      this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
+        [CP_PRIVILEGES_MAP.manage_admin]: {
+          r: true,
+          w: true,
+        },
+      });
+    }
   }
 
   toggleAllAccess(checked) {
@@ -348,9 +210,7 @@ export class TeamCreateComponent implements OnInit {
   }
 
   onServicesSelected(service) {
-    this.doServicesCleanUp();
-
-    if (service.action === 2) {
+    if (service.action === serviceMenu.selectServices) {
       this.isServiceModal = true;
 
       setTimeout(
@@ -364,7 +224,8 @@ export class TeamCreateComponent implements OnInit {
       return;
     }
 
-    if (service.action === null) {
+    if (service.action === serviceMenu.noAccess) {
+      this.doServicesCleanUp();
       this.resetServiceModal$.next(true);
 
       if (this.schoolPrivileges) {
@@ -376,14 +237,17 @@ export class TeamCreateComponent implements OnInit {
       return;
     }
 
-    this.resetServiceModal$.next(true);
+    if (service.action === serviceMenu.allServices) {
+      this.doServicesCleanUp();
+      this.resetServiceModal$.next(true);
 
-    this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
-      [CP_PRIVILEGES_MAP.services]: {
-        r: service.action === 2 ? true : true,
-        w: service.action === 2 ? false : true,
-      },
-    });
+      this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
+        [CP_PRIVILEGES_MAP.services]: {
+          r: service.action === 2 ? true : true,
+          w: service.action === 2 ? false : true,
+        },
+      });
+    }
   }
 
   onClubsModalSelected(clubs) {
@@ -398,27 +262,31 @@ export class TeamCreateComponent implements OnInit {
   }
 
   doClubsCleanUp() {
-    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.clubs);
-    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.events);
-    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.membership);
-    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.moderation);
-    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.event_attendance);
+    for (const storeId in this.accountPrivileges) {
+      if (this.utils.isClub(this.accountPrivileges[storeId])) {
+        delete this.accountPrivileges[storeId];
+      }
+    }
 
     if (CP_PRIVILEGES_MAP.clubs in this.schoolPrivileges) {
       delete this.schoolPrivileges[CP_PRIVILEGES_MAP.clubs];
     }
+
     if (CP_PRIVILEGES_MAP.membership in this.schoolPrivileges) {
       delete this.schoolPrivileges[CP_PRIVILEGES_MAP.membership];
     }
+
     if (CP_PRIVILEGES_MAP.moderation in this.schoolPrivileges) {
       delete this.schoolPrivileges[CP_PRIVILEGES_MAP.moderation];
     }
   }
 
   doServicesCleanUp() {
-    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.events);
-    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.services);
-    accountCleanUp(this.accountPrivileges, CP_PRIVILEGES_MAP.event_attendance);
+    for (const storeId in this.accountPrivileges) {
+      if (this.utils.isService(this.accountPrivileges[storeId])) {
+        delete this.accountPrivileges[storeId];
+      }
+    }
 
     if (CP_PRIVILEGES_MAP.services in this.schoolPrivileges) {
       delete this.schoolPrivileges[CP_PRIVILEGES_MAP.services];
@@ -426,9 +294,7 @@ export class TeamCreateComponent implements OnInit {
   }
 
   onClubsSelected(club) {
-    this.doClubsCleanUp();
-
-    if (club.action === 2) {
+    if (club.action === clubMenu.selectClubs) {
       this.isClubsModal = true;
       setTimeout(
         () => {
@@ -441,38 +307,42 @@ export class TeamCreateComponent implements OnInit {
       return;
     }
 
-    if (club.action === null) {
+    if (club.action === clubMenu.noAccess) {
+      this.doClubsCleanUp();
       this.resetClubsModal$.next(true);
 
       return;
     }
 
-    this.resetClubsModal$.next(true);
+    if (club.action === clubMenu.allClubs) {
+      this.doClubsCleanUp();
+      this.resetClubsModal$.next(true);
 
-    const clubPrivilege = this.session.g.get('user').school_level_privileges[
-      this.schoolId
-    ][CP_PRIVILEGES_MAP.clubs];
+      const clubPrivilege = this.session.g.get('user').school_level_privileges[
+        this.schoolId
+      ][CP_PRIVILEGES_MAP.clubs];
 
-    this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
-      [CP_PRIVILEGES_MAP.clubs]: {
-        r: true,
-        w: clubPrivilege.w,
-      },
+      this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
+        [CP_PRIVILEGES_MAP.clubs]: {
+          r: true,
+          w: clubPrivilege.w,
+        },
 
-      [CP_PRIVILEGES_MAP.moderation]: {
-        r: true,
-        w: clubPrivilege.w,
-      },
+        [CP_PRIVILEGES_MAP.moderation]: {
+          r: true,
+          w: clubPrivilege.w,
+        },
 
-      [CP_PRIVILEGES_MAP.membership]: {
-        r: true,
-        w: clubPrivilege.w,
-      },
-    });
+        [CP_PRIVILEGES_MAP.membership]: {
+          r: true,
+          w: clubPrivilege.w,
+        },
+      });
+    }
   }
 
   onEventsSelected(event) {
-    if (event.action === null) {
+    if (event.action === eventMenu.noAccess) {
       if (CP_PRIVILEGES_MAP.events in this.schoolPrivileges) {
         delete this.schoolPrivileges[CP_PRIVILEGES_MAP.events];
       }
@@ -483,7 +353,7 @@ export class TeamCreateComponent implements OnInit {
       return;
     }
 
-    if (event.action === 2) {
+    if (event.action === eventMenu.manageEvents) {
       if (CP_PRIVILEGES_MAP.event_attendance in this.schoolPrivileges) {
         delete this.schoolPrivileges[CP_PRIVILEGES_MAP.event_attendance];
       }
@@ -496,7 +366,7 @@ export class TeamCreateComponent implements OnInit {
       });
     }
 
-    if (event.action === 3) {
+    if (event.action === eventMenu.manageEventsAndAssess) {
       this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
         [CP_PRIVILEGES_MAP.events]: {
           r: true,
@@ -617,16 +487,19 @@ export class TeamCreateComponent implements OnInit {
     const manageAdminPrivilege =
       schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin];
 
-    this.clubsMenu = clubsDropdown(clubsPrivilegeSchool, clubsPrivilegeAccount);
-    this.eventsMenu = eventsDropdown(
+    this.clubsMenu = this.utils.clubsDropdown(
+      clubsPrivilegeSchool,
+      clubsPrivilegeAccount,
+    );
+    this.eventsMenu = this.utils.eventsDropdown(
       eventsPrivilege,
       eventsAssessmentPrivilege,
     );
-    this.servicesMenu = servicesDropdown(
+    this.servicesMenu = this.utils.servicesDropdown(
       servicesPrivilegeSchool,
       servicesPrivilegeAccount,
     );
-    this.manageAdmins = manageAdminDropdown(manageAdminPrivilege);
+    this.manageAdmins = this.utils.manageAdminDropdown(manageAdminPrivilege);
   }
 }
 

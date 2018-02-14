@@ -19,6 +19,7 @@ export class EventsImportTopBarComponent implements OnInit {
 
   @Input() serviceId: number;
   @Input() isService: boolean;
+  @Input() isChecked: boolean;
 
   @Output() bulkChange: EventEmitter<any> = new EventEmitter();
   // @Output() deleteEvent: EventEmitter<any> = new EventEmitter();

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, ActivatedRoute } from '@angular/router';
 
 import { CPTrackingService } from './../../services/tracking.service';
 
@@ -9,8 +9,9 @@ import { CPTrackingService } from './../../services/tracking.service';
 })
 export class CPTrackersComponent implements OnInit {
   constructor(
-    private router: Router,
-    private cpTrackingService: CPTrackingService,
+    public router: Router,
+    public route: ActivatedRoute,
+    public cpTrackingService: CPTrackingService,
   ) {}
 
   listenForRouteChanges() {
