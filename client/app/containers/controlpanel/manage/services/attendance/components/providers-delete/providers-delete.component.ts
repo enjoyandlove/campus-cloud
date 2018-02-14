@@ -26,9 +26,6 @@ export class ServicesProviderDeleteComponent {
         $('#deleteProvider').modal('hide');
         this.deleted.emit(this.provider.id);
       },
-      (err) => {
-        throw new Error(err);
-      },
     );
   }
 }

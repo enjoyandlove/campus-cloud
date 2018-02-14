@@ -38,18 +38,13 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    super
-      .fetchData(this.service.getEventById(this.eventId))
-      .then((event) => {
-        this.event = event.data;
+    super.fetchData(this.service.getEventById(this.eventId)).then((event) => {
+      this.event = event.data;
 
-        this.buildHeader(event.data);
+      this.buildHeader(event.data);
 
-        this.isUpcoming = this.event.end > CPDate.toEpoch(new Date());
-      })
-      .catch((err) => {
-        throw new Error(err);
-      });
+      this.isUpcoming = this.event.end > CPDate.toEpoch(new Date());
+    });
   }
 
   private buildHeader(event) {
@@ -75,7 +70,11 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.urlPrefix = this.utils.buildUrlPrefix(this.clubId, this.serviceId, this.isAthletic);
+    this.urlPrefix = this.utils.buildUrlPrefix(
+      this.clubId,
+      this.serviceId,
+      this.isAthletic,
+    );
     this.fetch();
   }
 }

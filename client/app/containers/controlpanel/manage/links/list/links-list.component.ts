@@ -93,10 +93,7 @@ export class LinksListComponent extends BaseComponent implements OnInit {
 
     super
       .fetchData(this.service.getLinks(start, end, search))
-      .then((res) => (this.state = { ...this.state, links: res.data }))
-      .catch((err) => {
-        throw new Error(err);
-      });
+      .then((res) => (this.state = { ...this.state, links: res.data }));
   }
 
   onLaunchCreateModal() {

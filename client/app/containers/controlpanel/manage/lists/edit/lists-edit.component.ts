@@ -134,16 +134,11 @@ export class ListsEditComponent implements OnInit {
 
         return _users;
       })
-      .subscribe(
-        (suggestions) => {
-          this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
-            suggestions,
-          });
-        },
-        (err) => {
-          throw new Error(err);
-        },
-      );
+      .subscribe((suggestions) => {
+        this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
+          suggestions,
+        });
+      });
   }
 
   ngOnInit() {

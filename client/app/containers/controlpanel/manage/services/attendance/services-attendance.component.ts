@@ -79,9 +79,6 @@ export class ServicesAttendanceComponent extends BaseComponent
           return;
         }
         this.buildHeader();
-      })
-      .catch((err) => {
-        throw new Error(err);
       });
   }
 

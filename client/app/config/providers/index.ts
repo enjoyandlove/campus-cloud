@@ -1,7 +1,7 @@
 import { ErrorHandler } from '@angular/core';
 
+import { isProd } from './../env';
 import { AuthGuard } from '../guards';
-
 import { CPSession } from '../../session';
 
 import {
@@ -10,10 +10,9 @@ import {
   ZendeskService,
 } from '../../shared/services';
 
-import { isProd } from './../env';
 import { RavenErrorHandler } from './raven.handler';
 
-export const COMMON_PROVIDERS = [
+const COMMON_APP_PROVIDERS = [
   CPSession,
   AuthGuard,
   ErrorService,
@@ -21,8 +20,10 @@ export const COMMON_PROVIDERS = [
   ZendeskService,
 ];
 
-const PROD_PROVIDERS = [{ provide: ErrorHandler, useClass: RavenErrorHandler }];
+const PROD_APP_PROVIDERS = [
+  { provide: ErrorHandler, useClass: RavenErrorHandler },
+];
 
 export const APP_PROVIDERS = isProd
-  ? [...COMMON_PROVIDERS, ...PROD_PROVIDERS]
-  : [...COMMON_PROVIDERS];
+  ? [...COMMON_APP_PROVIDERS, ...PROD_APP_PROVIDERS]
+  : [...COMMON_APP_PROVIDERS];
