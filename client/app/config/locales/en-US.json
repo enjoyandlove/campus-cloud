@@ -40,10 +40,10 @@
     "message": "View the Assessment Dashboard"
   },
   "admin_athletics_owner": {
-    "message": "Athletics Owner"
+    "message": "Athletics Club Owner"
   },
   "admin_athletics_owner_help": {
-    "message": "Create new club with athletics; manage information, events and membership for all clubs or select clubs"
+    "message": "Create new athletics clubs; manage information, events and membership for all clubs or select clubs"
   },
   "admin_campus_announcements": {
     "message": "Regular Announcements"
@@ -101,6 +101,9 @@
   },
   "admin_invite_heading": {
     "message": "Create your Campus Cloud Account"
+  },
+  "admin_invite_invalid_invite_key_error": {
+    "message": "Invalid invite key"
   },
   "admin_manage_and_assess_events": {
     "message": "View events and event assessment"
@@ -463,22 +466,22 @@
     "message": "Athletic Banner"
   },
   "athletics_label_athletic_description": {
-    "message": "Athletic Description"
+    "message": "Description"
   },
   "athletics_label_athletic_details": {
-    "message": "Athletic Details"
+    "message": "Details"
   },
   "athletics_label_athletic_membership": {
-    "message": "Athletic Membership"
+    "message": "Membership"
   },
   "athletics_label_athletic_name": {
-    "message": "Athletic Name"
+    "message": "Name"
   },
   "athletics_label_athletic_status": {
-    "message": "Athletic Status"
+    "message": "Status"
   },
   "athletics_label_edit_athletic": {
-    "message": "Edit Athletic"
+    "message": "Edit Athletic Club"
   },
   "attendee": {
     "message": "Attendee"
@@ -1019,6 +1022,9 @@
   "events_attendance_manager_full": {
     "message": "Attendance Manager"
   },
+  "events_attendance_manager_tooltip": {
+    "message": "Any valid email address.  The Attendance Manager receives email instructions about setting up check-ins for the event."
+  },
   "events_attendant": {
     "message": "Attendant"
   },
@@ -1487,6 +1493,9 @@
   "notify_announcement_recipient": {
     "message": "Recipients"
   },
+  "notify_announcement_template_to_tooltip": {
+    "message": "Notifications can be sent to app users, which you can group together into Lists.  For more info:"
+  },
   "no_admins_found": {
     "message": "No Admins found"
   },
@@ -1802,6 +1811,10 @@
   },
   "service_enabled": {
     "message": "Enabled"
+  },
+  "service_or_service_provider_error_not_found": {
+    "message": "The service provider does not exist.",
+    "description": "Create a service with assessment,\r\nAdd a service provider to that service\r\nOpen the ckeckin view on a new tab\r\nDelete the Service provider\r\nRefresh the checkin view and check your console"
   },
   "service_provider": {
     "message": "Service Provider"
