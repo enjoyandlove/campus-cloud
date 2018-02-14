@@ -28,6 +28,7 @@ import {
   serviceMenu,
   clubMenu,
   eventMenu,
+  athleticMenu,
   manageAdminMenu,
   TeamUtilsService,
 } from '../team.utils.service';
@@ -53,13 +54,17 @@ export class TeamCreateComponent implements OnInit {
   servicesMenu;
   isClubsModal;
   canReadEvents;
+  athleticsMenu;
   isServiceModal;
   canReadServices;
   form: FormGroup;
+  isAthleticsModal;
+  canReadAthletics;
   accountPrivileges;
   isAllAccessEnabled;
   clubsCount = null;
   servicesCount = null;
+  athleticsCount = null;
   schoolPrivileges = {};
   MODAL_TYPE = MODAL_TYPE.WIDE;
   CP_PRIVILEGES = CP_PRIVILEGES;
@@ -67,6 +72,7 @@ export class TeamCreateComponent implements OnInit {
 
   resetClubsModal$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   resetServiceModal$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  resetAthleticsModal$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
     private router: Router,
@@ -261,6 +267,18 @@ export class TeamCreateComponent implements OnInit {
     );
   }
 
+  onAthleticsModalSelected(athletics) {
+    this.doAthleticsCleanUp();
+    const athleticsLength = Object.keys(athletics).length;
+    this.athleticsCount = athleticsLength ? { label: `${athleticsLength} Athletic(s)` } : null;
+
+    this.accountPrivileges = Object.assign(
+      {},
+      this.accountPrivileges,
+      ...athletics,
+    );
+  }
+
   doClubsCleanUp() {
     for (const storeId in this.accountPrivileges) {
       if (this.utils.isClub(this.accountPrivileges[storeId])) {
@@ -270,6 +288,26 @@ export class TeamCreateComponent implements OnInit {
 
     if (CP_PRIVILEGES_MAP.clubs in this.schoolPrivileges) {
       delete this.schoolPrivileges[CP_PRIVILEGES_MAP.clubs];
+    }
+
+    if (CP_PRIVILEGES_MAP.membership in this.schoolPrivileges) {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.membership];
+    }
+
+    if (CP_PRIVILEGES_MAP.moderation in this.schoolPrivileges) {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.moderation];
+    }
+  }
+
+  doAthleticsCleanUp() {
+    for (const storeId in this.accountPrivileges) {
+      if (this.utils.isAthletic(this.accountPrivileges[storeId])) {
+        delete this.accountPrivileges[storeId];
+      }
+    }
+
+    if (CP_PRIVILEGES_MAP.athletics in this.schoolPrivileges) {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.athletics];
     }
 
     if (CP_PRIVILEGES_MAP.membership in this.schoolPrivileges) {
@@ -336,6 +374,54 @@ export class TeamCreateComponent implements OnInit {
         [CP_PRIVILEGES_MAP.membership]: {
           r: true,
           w: clubPrivilege.w,
+        },
+      });
+    }
+  }
+
+  onAthleticsSelected(athletic) {
+    if (athletic.action === athleticMenu.selectAthletic) {
+      this.isAthleticsModal = true;
+      setTimeout(
+        () => {
+          $('#selectAthleticsModal').modal();
+        },
+
+        1,
+      );
+
+      return;
+    }
+
+    if (athletic.action === athleticMenu.noAccess) {
+      this.doAthleticsCleanUp();
+      this.resetAthleticsModal$.next(true);
+
+      return;
+    }
+
+    if (athletic.action === athleticMenu.allAthletics) {
+      this.doAthleticsCleanUp();
+      this.resetAthleticsModal$.next(true);
+
+      const athleticPrivilege = this.session.g.get('user').school_level_privileges[
+        this.schoolId
+      ][CP_PRIVILEGES_MAP.athletics];
+
+      this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
+        [CP_PRIVILEGES_MAP.athletics]: {
+          r: true,
+          w: athleticPrivilege.w,
+        },
+
+        [CP_PRIVILEGES_MAP.moderation]: {
+          r: true,
+          w: athleticPrivilege.w,
+        },
+
+        [CP_PRIVILEGES_MAP.membership]: {
+          r: true,
+          w: athleticPrivilege.w,
         },
       });
     }
@@ -448,6 +534,10 @@ export class TeamCreateComponent implements OnInit {
       canSchoolReadResource(session, CP_PRIVILEGES_MAP.clubs) ||
       canAccountLevelReadResource(session, CP_PRIVILEGES_MAP.clubs);
 
+    this.canReadAthletics =
+      canSchoolReadResource(session, CP_PRIVILEGES_MAP.athletics) ||
+      canAccountLevelReadResource(session, CP_PRIVILEGES_MAP.athletics);
+
     this.canReadEvents = canSchoolReadResource(
       session,
       CP_PRIVILEGES_MAP.events,
@@ -471,6 +561,13 @@ export class TeamCreateComponent implements OnInit {
       CP_PRIVILEGES_MAP.clubs,
     );
 
+    const athleticsPrivilegeSchool = schoolPrivileges[CP_PRIVILEGES_MAP.athletics];
+
+    const athleticsPrivilegeAccount = canAccountLevelReadResource(
+      session,
+      CP_PRIVILEGES_MAP.athletics,
+    );
+
     const eventsPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.events];
 
     const eventsAssessmentPrivilege =
@@ -490,6 +587,10 @@ export class TeamCreateComponent implements OnInit {
     this.clubsMenu = this.utils.clubsDropdown(
       clubsPrivilegeSchool,
       clubsPrivilegeAccount,
+    );
+    this.athleticsMenu = this.utils.athleticsDropdown(
+      athleticsPrivilegeSchool,
+      athleticsPrivilegeAccount,
     );
     this.eventsMenu = this.utils.eventsDropdown(
       eventsPrivilege,

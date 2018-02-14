@@ -18,6 +18,7 @@ import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 export class EventsFacebookComponent extends BaseComponent implements OnInit {
   @Input() storeId: number;
   @Input() serviceId: number;
+  @Input() isAthletic: number;
   @Input() clubId: number;
 
   stores;
@@ -55,7 +56,7 @@ export class EventsFacebookComponent extends BaseComponent implements OnInit {
   }
 
   private buildHeader() {
-    const backToEvents = this.utils.buildUrlPrefix(this.clubId, this.serviceId);
+    const backToEvents = this.utils.buildUrlPrefix(this.clubId, this.serviceId, this.isAthletic);
 
     this.store.dispatch({
       type: HEADER_UPDATE,

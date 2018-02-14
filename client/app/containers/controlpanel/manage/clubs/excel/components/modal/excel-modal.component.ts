@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ClubsService } from '../../../clubs.service';
-
+import { isClubAthletic, clubAthleticLabels } from '../../../clubs.athletics.labels';
 import { isDev } from '../../../../../../../config/env';
 import {
   CPI18nService,
@@ -15,6 +15,9 @@ import {
   styleUrls: ['./excel-modal.component.scss'],
 })
 export class ClubsExcelModalComponent implements OnInit {
+  @Input() isAthletic = isClubAthletic.club;
+
+  labels;
   options;
   fileName;
   downloadLink;
@@ -49,7 +52,8 @@ export class ClubsExcelModalComponent implements OnInit {
   }
 
   onNavigate() {
-    this.router.navigate(['/manage/clubs/import/excel']);
+    this.labels = clubAthleticLabels(this.isAthletic);
+    this.router.navigate(['/manage/' + this.labels.club_athletic + '/import/excel']);
   }
 
   ngOnInit() {

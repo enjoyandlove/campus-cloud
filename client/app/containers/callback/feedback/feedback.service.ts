@@ -12,12 +12,12 @@ export class FeedbackService extends CallbackService {
     super(_http, _router);
   }
 
-  getServiceData(search: URLSearchParams) {
+  getServiceData(search: URLSearchParams, silent) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${
       API.ENDPOINTS.EXTERNAL_SERVICE_FEEDBACK
     }/`;
 
-    return super.get(url, { search }).map((res) => res.json());
+    return super.get(url, { search }, silent).map((res) => res.json());
   }
 
   getEventData(search: URLSearchParams) {

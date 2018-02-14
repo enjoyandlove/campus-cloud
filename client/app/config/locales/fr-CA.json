@@ -22,7 +22,7 @@
     "message": "Copier mes permissions Campus Cloud"
   },
   "admin_all_athletics": {
-    "message": "All Athletics"
+    "message": "Tous les clubs d'athlétisme"
   },
   "admin_all_clubs": {
     "message": "Tous les clubs"
@@ -40,10 +40,10 @@
     "message": "Voir le tableau de bord d'évaluation"
   },
   "admin_athletics_owner": {
-    "message": "Athletics Owner"
+    "message": "Propriétaire du club d'athlétisme"
   },
   "admin_athletics_owner_help": {
-    "message": "Create new club with athletics; manage information, events and membership for all clubs or select clubs"
+    "message": "Créer de nouveaux clubs d'athlétisme; gérer les coordonnées, les événements et les membres pour tous les clubs ou une sélection de clubs"
   },
   "admin_campus_announcements": {
     "message": "Annonces normales"
@@ -58,7 +58,7 @@
     "message": "Propriétaire du club"
   },
   "admin_club_owner_help": {
-    "message": "Créer de nouveaux clubs; gérer l'information, les événements et les membres pour tous les clubs ou sélectionner des clubs "
+    "message": "Créer de nouveaux clubs; gérer les coordonnées, les événements et les membres"
   },
   "admin_club_service_modal_title": {
     "message": "Sélectionner %s"
@@ -102,6 +102,9 @@
   "admin_invite_heading": {
     "message": "Créer votre compte Campus Cloud"
   },
+  "admin_invite_invalid_invite_key_error": {
+    "message": "Clé d'invitation non valide"
+  },
   "admin_manage_and_assess_events": {
     "message": "Voir les événements et l'évaluation des événements"
   },
@@ -130,7 +133,7 @@
     "message": "Rechercher par nom ou courriel..."
   },
   "admin_select_athletics": {
-    "message": "Select Athletics"
+    "message": "Sélectionner club d'athlétisme"
   },
   "admin_select_clubs": {
     "message": "Sélectionner clubs"
@@ -439,46 +442,46 @@
     "message": "Total des services"
   },
   "athletics": {
-    "message": "Athletics"
+    "message": "Clubs d'athlétisme"
   },
   "athletics_all_athletics": {
-    "message": "All Athletics"
+    "message": "Tous les clubs d'athlétisme"
   },
   "athletics_button_create": {
-    "message": "Create Athletic"
+    "message": "Créer club d'athlétisme"
   },
   "athletics_delete_modal_title": {
-    "message": "Delete Athletic"
+    "message": "Supprimer club d'athlétisme"
   },
   "athletics_import_button_submit": {
-    "message": "Import Athletics"
+    "message": "Importer clubs d'athlétisme"
   },
   "athletics_import_heading": {
-    "message": "Import Athletics from File"
+    "message": "Importer des clubs d'athlétisme depuis un fichier"
   },
   "athletics_import_items_to_import": {
-    "message": "File contains data for %s athletic(s)."
+    "message": "Le fichier contient des données pour %s club(s) d'athlétisme."
   },
   "athletics_label_athletic_banner": {
-    "message": "Athletic Banner"
+    "message": "Bannière du club d'athlétisme"
   },
   "athletics_label_athletic_description": {
-    "message": "Athletic Description"
+    "message": "Description"
   },
   "athletics_label_athletic_details": {
-    "message": "Athletic Details"
+    "message": "Détails"
   },
   "athletics_label_athletic_membership": {
-    "message": "Athletic Membership"
+    "message": "Membres"
   },
   "athletics_label_athletic_name": {
-    "message": "Athletic Name"
+    "message": "Nom"
   },
   "athletics_label_athletic_status": {
-    "message": "Athletic Status"
+    "message": "Statut"
   },
   "athletics_label_edit_athletic": {
-    "message": "Edit Athletic"
+    "message": "Editer club d'athlétisme"
   },
   "attendee": {
     "message": "Présent"
@@ -802,7 +805,7 @@
     "message": "Campus Cloud a été mis à jour"
   },
   "cp_top_banner_copy_link_text": {
-    "message": "Pour en savoir plus, consultez Assistance."
+    "message": "Pour en savoir plus, consultez la rubrique d'assistance."
   },
   "created": {
     "message": "Date de création"
@@ -1808,6 +1811,10 @@
   },
   "service_enabled": {
     "message": "Activé"
+  },
+  "service_or_service_provider_error_not_found": {
+    "message": "Ce fournisseur de service n'existe pas.",
+    "description": "Create a service with assessment,\r\nAdd a service provider to that service\r\nOpen the ckeckin view on a new tab\r\nDelete the Service provider\r\nRefresh the checkin view and check your console"
   },
   "service_provider": {
     "message": "Fournisseur de service"

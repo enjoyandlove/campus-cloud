@@ -12,6 +12,7 @@ import {
   canSchoolReadResource,
   canAccountLevelReadResource,
 } from '../utils/privileges';
+import { isClubAthletic } from '../../containers/controlpanel/manage/clubs/clubs.athletics.labels';
 
 const cpI18n = new CPI18nService();
 
@@ -60,6 +61,48 @@ export class StoreService extends BaseService {
         }
 
         return services.length === 1 ? [] : services;
+      });
+  }
+
+  private getAthletics(search: URLSearchParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.CLUBS
+    }/1;1000`;
+
+    search.append('category_id', isClubAthletic.athletic.toString());
+
+    return super
+      .get(url, { search })
+      .map((res) => res.json())
+      .startWith([
+        {
+          label: cpI18n.translate('athletics'),
+          value: null,
+          heading: true,
+        },
+      ])
+      .map((res) => {
+        const athletics = [
+          {
+            label: cpI18n.translate('athletics'),
+            value: null,
+            heading: true,
+          },
+        ];
+
+        const _athletics = res.map((store) => {
+          return {
+            label: store.name,
+            value: store.id,
+            heading: false,
+          };
+        });
+
+        if (_athletics.length) {
+          athletics.push(..._athletics);
+        }
+
+        return athletics.length === 1 ? [] : athletics;
       });
   }
 
@@ -129,6 +172,17 @@ export class StoreService extends BaseService {
     );
     const canReadClubs = clubsSchoolAccess || clubsAccountAccess;
 
+    const athleticsSchoolAccess = canSchoolReadResource(
+      this.session.g,
+      CP_PRIVILEGES_MAP.athletics,
+    );
+    const athleticsAccountAccess = canAccountLevelReadResource(
+      this.session.g,
+      CP_PRIVILEGES_MAP.athletics,
+    );
+
+    const canReadAthletics = athleticsSchoolAccess || athleticsAccountAccess;
+
     const servicesSchoolAccess = canSchoolReadResource(
       this.session.g,
       CP_PRIVILEGES_MAP.services,
@@ -140,14 +194,19 @@ export class StoreService extends BaseService {
     const canReadServices = servicesSchoolAccess || servicesAccountAccess;
 
     const clubs$ = canReadClubs ? this.getClubs(search) : Observable.of([]);
+
+    const athletics$ = canReadAthletics
+      ? this.getAthletics(search)
+      : Observable.of([]);
+
     const services$ = canReadServices
       ? this.getServices(search)
       : Observable.of([]);
 
-    const stream$ = Observable.combineLatest(services$, clubs$);
+    const stream$ = Observable.combineLatest(services$, clubs$, athletics$);
 
     return stream$.map((res) => {
-      if (!res[0].length && !res[1].length) {
+      if (!res[0].length && !res[1].length && !res[2].length) {
         return [
           {
             value: null,
@@ -167,6 +226,7 @@ export class StoreService extends BaseService {
         },
         ...res[0],
         ...res[1],
+        ...res[2],
       ];
     });
   }

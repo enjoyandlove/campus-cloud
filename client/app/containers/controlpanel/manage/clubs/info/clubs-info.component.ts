@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Headers, URLSearchParams } from '@angular/http';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -21,6 +21,7 @@ import {
 } from './../../../../../reducers/snackbar.reducer';
 
 import { appStorage } from './../../../../../shared/utils/storage/storage';
+import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
 
 @Component({
   selector: 'cp-clubs-info',
@@ -28,7 +29,10 @@ import { appStorage } from './../../../../../shared/utils/storage/storage';
   styleUrls: ['./clubs-info.component.scss'],
 })
 export class ClubsInfoComponent extends BaseComponent implements OnInit {
+  @Input() isAthletic = isClubAthletic.club;
+
   club;
+  labels;
   loading;
   clubStatus;
   clubId: number;
@@ -49,13 +53,12 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
     this.clubId = this.route.parent.snapshot.params['clubId'];
 
     super.isLoading().subscribe((res) => (this.loading = res));
-
-    this.fetch();
   }
 
   private fetch() {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
+    search.append('category_id', this.isAthletic.toString());
 
     super
       .fetchData(this.clubsService.getClubById(this.clubId, search))
@@ -148,6 +151,8 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.labels = clubAthleticLabels(this.isAthletic);
+    this.fetch();
     this.clubStatus = {
       [ClubStatus.inactive]: this.cpI18n.translate('clubs_inactive'),
       [ClubStatus.active]: this.cpI18n.translate('active'),

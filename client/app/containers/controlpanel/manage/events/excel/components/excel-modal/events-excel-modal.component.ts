@@ -13,6 +13,7 @@ import { CPI18nService } from './../../../../../../../shared/services/i18n.servi
 })
 export class EventsExcelModalComponent implements OnInit {
   @Input() storeId: number;
+  @Input() isAthletic: number;
 
   @Input() clubId: number;
   @Input() isClub: boolean;
@@ -53,6 +54,14 @@ export class EventsExcelModalComponent implements OnInit {
   }
 
   onNavigate() {
+    if (this.isAthletic) {
+      this.router.navigate([
+        `/manage/athletics/${this.clubId}/events/import/excel`,
+      ]);
+
+      return;
+    }
+
     if (this.isService) {
       this.router.navigate([
         `/manage/services/${this.serviceId}/events/import/excel`,

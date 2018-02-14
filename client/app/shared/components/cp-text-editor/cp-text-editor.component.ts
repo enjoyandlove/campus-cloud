@@ -6,6 +6,7 @@ import {
   Input,
   OnInit,
   Output,
+  OnDestroy,
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
@@ -19,12 +20,10 @@ import { QuillService } from './../../services/quill.service';
 
 interface IState {
   body: string;
-  image: string;
 }
 
 const state: IState = {
   body: null,
-  image: null,
 };
 
 @Component({
@@ -33,13 +32,14 @@ const state: IState = {
   styleUrls: ['./cp-text-editor.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class CPTextEditorComponent implements OnInit, AfterViewInit {
+export class CPTextEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() image$: Subject<string>;
   @Input() reset$: Subject<boolean>;
   @Output() contentChange: EventEmitter<IState> = new EventEmitter();
   @ViewChild('editor') editor: ElementRef;
 
   quillInstance;
+  subscriptions = [];
   state: IState = state;
 
   constructor(private cpI18n: CPI18nService) {}
@@ -74,11 +74,10 @@ export class CPTextEditorComponent implements OnInit, AfterViewInit {
     this.quillInstance.reset();
   }
 
-  setImage(image) {
-    this.state = Object.assign({}, this.state, { image });
-  }
-
   ngOnInit() {
+    this.subscriptions.push(this.image$);
+    this.subscriptions.push(this.reset$);
+
     if (!this.image$) {
       return Observable.of(null);
     }
@@ -92,10 +91,13 @@ export class CPTextEditorComponent implements OnInit, AfterViewInit {
     this.image$.subscribe((image: string) => {
       if (image) {
         this.quillInstance.insertImage(image);
-        this.setImage(image);
       }
-
-      this.setImage(null);
     });
+  }
+
+  ngOnDestroy() {
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
   }
 }

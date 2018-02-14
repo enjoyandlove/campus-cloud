@@ -47,6 +47,16 @@ import { ClubsListActionBoxComponent } from './list/components';
     EventsModule,
   ],
 
+  exports: [
+    ClubsListComponent,
+    ClubsCreateComponent,
+    ClubsDeleteComponent,
+    ClubsListActionBoxComponent,
+    ClubsExcelModalComponent,
+    ClubsExcelComponent,
+    ClubsEditComponent,
+  ],
+
   providers: [ClubsService, ClubsUtilsService],
 })
 export class ClubsModule {}

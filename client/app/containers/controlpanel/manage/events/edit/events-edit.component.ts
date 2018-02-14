@@ -39,6 +39,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   @Input() isClub: boolean;
   @Input() clubId: boolean;
   @Input() isService: boolean;
+  @Input() isAthletic: number;
   @Input() toolTipContent: IToolTipContent;
 
   event;
@@ -160,6 +161,13 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
     this.eventService.updateEvent(data, this.eventId).subscribe(
       (_) => {
+        if (this.isAthletic) {
+          this.router.navigate([
+            `/manage/athletics/${this.clubId}/events/${this.eventId}`,
+          ]);
+
+          return;
+        }
         if (this.isService) {
           this.router.navigate([
             `/manage/services/${this.storeId}/events/${this.eventId}`,
