@@ -82,12 +82,7 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
       this.endRange,
     );
 
-    super
-      .fetchData(stream$)
-      .then((res) => (this.students = res.data))
-      .catch((err) => {
-        throw new Error(err);
-      });
+    super.fetchData(stream$).then((res) => (this.students = res.data));
   }
 
   onPaginationNext(): void {

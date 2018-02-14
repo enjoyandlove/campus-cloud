@@ -66,14 +66,9 @@ export class EventsComponent extends BaseComponent {
   }
 
   private fetch(stream$) {
-    super
-      .fetchData(stream$)
-      .then((res) => {
-        this.state = Object.assign({}, this.state, { events: res.data });
-      })
-      .catch((err) => {
-        throw new Error(err);
-      });
+    super.fetchData(stream$).then((res) => {
+      this.state = Object.assign({}, this.state, { events: res.data });
+    });
   }
 
   onSortList(sort) {

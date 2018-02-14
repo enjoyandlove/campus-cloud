@@ -74,14 +74,9 @@ export class ServicesListComponent extends BaseComponent implements OnInit {
       search,
     );
 
-    super
-      .fetchData(stream$)
-      .then((res) => {
-        this.state = Object.assign({}, this.state, { services: res.data });
-      })
-      .catch((err) => {
-        throw new Error(err);
-      });
+    super.fetchData(stream$).then((res) => {
+      this.state = Object.assign({}, this.state, { services: res.data });
+    });
   }
 
   private buildHeader() {

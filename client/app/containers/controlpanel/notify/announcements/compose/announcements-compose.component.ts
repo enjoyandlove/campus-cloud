@@ -114,16 +114,11 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
         return _users;
       })
-      .subscribe(
-        (suggestions) => {
-          this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
-            suggestions,
-          });
-        },
-        (err) => {
-          throw new Error(err);
-        },
-      );
+      .subscribe((suggestions) => {
+        this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
+          suggestions,
+        });
+      });
   }
 
   getSubjectLength(): number {
@@ -173,16 +168,11 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
         return _lists;
       })
-      .subscribe(
-        (suggestions) => {
-          this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
-            suggestions,
-          });
-        },
-        (err) => {
-          throw new Error(err);
-        },
-      );
+      .subscribe((suggestions) => {
+        this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
+          suggestions,
+        });
+      });
   }
 
   getTypeFromArray(id) {
@@ -372,8 +362,8 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     const defaultHost = this.session.defaultHost
-    ? this.session.defaultHost.value
-    : null;
+      ? this.session.defaultHost.value
+      : null;
 
     this.sendAsName = this.session.defaultHost
       ? this.session.defaultHost.label

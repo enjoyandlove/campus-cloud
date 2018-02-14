@@ -74,29 +74,24 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
       ? campusWallComments$
       : groupWallComments$;
 
-    super
-      .fetchData(stream$)
-      .then((res) => {
-        const _comments = [];
+    super.fetchData(stream$).then((res) => {
+      const _comments = [];
 
-        res.data.map((comment) => {
-          _comments.push({
-            id: comment.id,
-            avatar_thumb: comment.avatar_thumb,
-            image_thumb_url: comment.image_thumb_url,
-            message: comment.comment,
-            likes: comment.likes,
-            flag: comment.flag,
-            dislikes: comment.dislikes,
-            display_name: comment.display_name,
-            added_time: comment.added_time,
-          });
+      res.data.map((comment) => {
+        _comments.push({
+          id: comment.id,
+          avatar_thumb: comment.avatar_thumb,
+          image_thumb_url: comment.image_thumb_url,
+          message: comment.comment,
+          likes: comment.likes,
+          flag: comment.flag,
+          dislikes: comment.dislikes,
+          display_name: comment.display_name,
+          added_time: comment.added_time,
         });
-        this.state = Object.assign({}, this.state, { comments: _comments });
-      })
-      .catch((err) => {
-        throw new Error(err);
       });
+      this.state = Object.assign({}, this.state, { comments: _comments });
+    });
   }
 
   ngOnInit() {

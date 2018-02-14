@@ -59,10 +59,6 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
       .fetchData(this.checkinService.getServiceData(this.search, true))
       .then((res) => {
         this.state = Object.assign({}, this.state, { services: res.data });
-      })
-      .catch((err) => {
-        this.isExist = false;
-        throw new Error(err);
       });
   }
 

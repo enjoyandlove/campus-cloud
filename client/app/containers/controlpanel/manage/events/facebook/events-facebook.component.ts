@@ -47,16 +47,15 @@ export class EventsFacebookComponent extends BaseComponent implements OnInit {
 
     const stores$ = this.storeService.getStores(search);
 
-    super
-      .fetchData(stores$)
-      .then((res) => (this.stores = res.data))
-      .catch((err) => {
-        throw new Error(err);
-      });
+    super.fetchData(stores$).then((res) => (this.stores = res.data));
   }
 
   private buildHeader() {
-    const backToEvents = this.utils.buildUrlPrefix(this.clubId, this.serviceId, this.isAthletic);
+    const backToEvents = this.utils.buildUrlPrefix(
+      this.clubId,
+      this.serviceId,
+      this.isAthletic,
+    );
 
     this.store.dispatch({
       type: HEADER_UPDATE,

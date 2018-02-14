@@ -1,3 +1,4 @@
+/*tslint:disable:max-line-length */
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -17,9 +18,7 @@ import { CPSession, ISchool } from '../../../../../session';
 import { AdminService } from '../../../../../shared/services';
 import { BaseComponent } from '../../../../../base/base.component';
 import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
-import {
-  IResourceBanner
-} from '../../../../../shared/components/cp-resource-banner/cp-resource.interface';
+import { IResourceBanner } from '../../../../../shared/components/cp-resource-banner/cp-resource.interface';
 
 @Component({
   selector: 'cp-services-info',
@@ -75,28 +74,23 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
       });
 
     const stream$ = Observable.combineLatest(service$, admins$);
-    super
-      .fetchData(stream$)
-      .then((res) => {
-        this.admins = res.data[1];
-        this.service = res.data[0];
-        this.storeId = this.service.store_id;
+    super.fetchData(stream$).then((res) => {
+      this.admins = res.data[1];
+      this.service = res.data[0];
+      this.storeId = this.service.store_id;
 
-        this.buildHeader();
+      this.buildHeader();
 
-        this.mapCenter = new BehaviorSubject({
-          lat: res.data[0].latitude,
-          lng: res.data[0].longitude,
-        });
-
-        this.resourceBanner = {
-          image: this.service.logo_url,
-          heading: this.service.name,
-        };
-      })
-      .catch((err) => {
-        throw new Error(err);
+      this.mapCenter = new BehaviorSubject({
+        lat: res.data[0].latitude,
+        lng: res.data[0].longitude,
       });
+
+      this.resourceBanner = {
+        image: this.service.logo_url,
+        heading: this.service.name,
+      };
+    });
   }
 
   private buildHeader() {

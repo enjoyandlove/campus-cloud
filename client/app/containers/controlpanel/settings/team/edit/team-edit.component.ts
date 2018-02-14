@@ -29,7 +29,8 @@ import {
   clubMenu,
   eventMenu,
   TeamUtilsService,
-  manageAdminMenu, athleticMenu,
+  manageAdminMenu,
+  athleticMenu,
 } from '../team.utils.service';
 
 declare var $: any;
@@ -134,52 +135,47 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     const isEqual = require('lodash').isEqual;
     const admin$ = this.adminService.getAdminById(this.adminId);
 
-    super
-      .fetchData(admin$)
-      .then((user) => {
-        this.editingUser = user.data;
+    super.fetchData(admin$).then((user) => {
+      this.editingUser = user.data;
 
-        this.isCurrentUser =
-          this.editingUser.id === this.session.g.get('user').id;
+      this.isCurrentUser =
+        this.editingUser.id === this.session.g.get('user').id;
 
-        this.buildHeader(
-          `${this.editingUser.firstname} ${this.editingUser.lastname}`,
-        );
+      this.buildHeader(
+        `${this.editingUser.firstname} ${this.editingUser.lastname}`,
+      );
 
-        this.buildForm(this.editingUser);
+      this.buildForm(this.editingUser);
 
-        this.schoolPrivileges = Object.assign(
-          {},
-          this.editingUser.school_level_privileges[this.schoolId],
-        );
+      this.schoolPrivileges = Object.assign(
+        {},
+        this.editingUser.school_level_privileges[this.schoolId],
+      );
 
-        this.accountPrivileges = Object.assign(
-          {},
-          this.editingUser.account_level_privileges,
-        );
+      this.accountPrivileges = Object.assign(
+        {},
+        this.editingUser.account_level_privileges,
+      );
 
-        if (!this.schoolPrivileges[CP_PRIVILEGES_MAP.services]) {
-          this.updateServicesDropdownLabel();
-        }
+      if (!this.schoolPrivileges[CP_PRIVILEGES_MAP.services]) {
+        this.updateServicesDropdownLabel();
+      }
 
-        if (!this.schoolPrivileges[CP_PRIVILEGES_MAP.clubs]) {
-          this.updateClubsDropdownLabel();
-        }
+      if (!this.schoolPrivileges[CP_PRIVILEGES_MAP.clubs]) {
+        this.updateClubsDropdownLabel();
+      }
 
-        if (!this.schoolPrivileges[CP_PRIVILEGES_MAP.athletics]) {
-          this.updateAthleticsDropdownLabel();
-        }
+      if (!this.schoolPrivileges[CP_PRIVILEGES_MAP.athletics]) {
+        this.updateAthleticsDropdownLabel();
+      }
 
-        this.isAllAccessEnabled =
-          isEqual(
-            this.schoolPrivileges,
-            this.user.school_level_privileges[this.schoolId],
-          ) &&
-          isEqual(this.accountPrivileges, this.user.account_level_privileges);
-      })
-      .catch((err) => {
-        throw new Error(err);
-      });
+      this.isAllAccessEnabled =
+        isEqual(
+          this.schoolPrivileges,
+          this.user.school_level_privileges[this.schoolId],
+        ) &&
+        isEqual(this.accountPrivileges, this.user.account_level_privileges);
+    });
   }
 
   servicesDefaultPermission() {
@@ -239,7 +235,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
     let selected;
     const school_level_privileges = this.schoolPrivileges;
-    const athletics_privilege = school_level_privileges[CP_PRIVILEGES_MAP.athletics];
+    const athletics_privilege =
+      school_level_privileges[CP_PRIVILEGES_MAP.athletics];
 
     if (!athletics_privilege) {
       selected = this.athleticsMenu[0];
@@ -545,7 +542,9 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   onAthleticsModalSelected(athletics) {
     this.doAthleticsCleanUp();
     const athleticsLength = Object.keys(athletics).length;
-    this.athleticsCount = athleticsLength ? { label: `${athleticsLength} Athletic(s)` } : null;
+    this.athleticsCount = athleticsLength
+      ? { label: `${athleticsLength} Athletic(s)` }
+      : null;
 
     this.accountPrivileges = Object.assign(
       {},
@@ -784,7 +783,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       CP_PRIVILEGES_MAP.clubs,
     );
 
-    const athleticsPrivilegeSchool = schoolPrivileges[CP_PRIVILEGES_MAP.athletics];
+    const athleticsPrivilegeSchool =
+      schoolPrivileges[CP_PRIVILEGES_MAP.athletics];
 
     const athleticsPrivilegeAccount = canAccountLevelReadResource(
       session,

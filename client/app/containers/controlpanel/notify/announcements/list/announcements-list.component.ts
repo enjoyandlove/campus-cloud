@@ -147,10 +147,7 @@ export class AnnouncementsListComponent extends BaseComponent
       .then(
         (res) =>
           (this.state = Object.assign({}, this.state, { messages: res.data })),
-      )
-      .catch((err) => {
-        throw new Error(err);
-      });
+      );
   }
 
   onCreated() {
