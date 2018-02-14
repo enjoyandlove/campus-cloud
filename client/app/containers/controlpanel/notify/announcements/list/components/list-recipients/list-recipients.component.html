@@ -15,18 +15,12 @@
       *ngIf="recipients_more.length">
       <button
         type="button"
-        data-toggle="dropdown"
-        class="cpbtn cpbtn--link cpbtn--no-border">
-        {{ 'view_more' | cpI18n }} ({{ recipients_more.length }})
+        class="cpbtn cpbtn--link cpbtn--no-border"
+        (click)="viewMoreModal.emit(recipients_more)">
+        <cp-tooltip
+           [toolTipContent]="toolTipContent">
+        </cp-tooltip>
       </button>
-
-      <ul class="dropdown-menu recipients__list">
-        <li
-        class="recipients__item"
-          *ngFor="let name of recipients_more">
-          {{ name }}
-        </li>
-      </ul>
     </div>
   </div>
 </div>

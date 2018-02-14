@@ -33,10 +33,13 @@ declare var $: any;
 export class AnnouncementsListComponent extends BaseComponent
   implements OnInit {
   loading;
+  buttonText;
+  headerText;
   messageType;
   isDeleteModal;
   isComposeModal;
   suggestions = [];
+  viewMoreRecipients = [];
   state: IState = state;
   deleteAnnouncement = null;
   dateFormat = FORMAT.DATETIME;
@@ -90,6 +93,19 @@ export class AnnouncementsListComponent extends BaseComponent
     }
 
     this.fetch();
+  }
+
+  onViewMoreModal(recipients) {
+    this.buttonText = 'done';
+    this.headerText = `(${recipients.length})
+      ${this.cpI18n.translate('notify_announcement_recipient')}`;
+    this.viewMoreRecipients = recipients;
+    setTimeout(
+      () => {
+        $('#viewMoreModal').modal();
+      },
+      1,
+    );
   }
 
   onLaunchCreateModal() {

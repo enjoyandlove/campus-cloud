@@ -1,0 +1,11 @@
+@import '~styles/components/modal';
+@import '~styles/components/button';
+
+.cpmodal {
+  display: block;
+  overflow: visible;
+
+  &__body {
+    overflow: auto;
+  }
+}
