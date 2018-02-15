@@ -29,7 +29,8 @@ import {
   clubMenu,
   eventMenu,
   TeamUtilsService,
-  manageAdminMenu, athleticMenu,
+  manageAdminMenu,
+  athleticMenu,
 } from '../team.utils.service';
 
 declare var $: any;
@@ -239,7 +240,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
     let selected;
     const school_level_privileges = this.schoolPrivileges;
-    const athletics_privilege = school_level_privileges[CP_PRIVILEGES_MAP.athletics];
+    const athletics_privilege =
+      school_level_privileges[CP_PRIVILEGES_MAP.athletics];
 
     if (!athletics_privilege) {
       selected = this.athleticsMenu[0];
@@ -545,7 +547,9 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   onAthleticsModalSelected(athletics) {
     this.doAthleticsCleanUp();
     const athleticsLength = Object.keys(athletics).length;
-    this.athleticsCount = athleticsLength ? { label: `${athleticsLength} Athletic(s)` } : null;
+    this.athleticsCount = athleticsLength
+      ? { label: `${athleticsLength} Athletic(s)` }
+      : null;
 
     this.accountPrivileges = Object.assign(
       {},
@@ -784,7 +788,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       CP_PRIVILEGES_MAP.clubs,
     );
 
-    const athleticsPrivilegeSchool = schoolPrivileges[CP_PRIVILEGES_MAP.athletics];
+    const athleticsPrivilegeSchool =
+      schoolPrivileges[CP_PRIVILEGES_MAP.athletics];
 
     const athleticsPrivilegeAccount = canAccountLevelReadResource(
       session,

@@ -270,7 +270,9 @@ export class TeamCreateComponent implements OnInit {
   onAthleticsModalSelected(athletics) {
     this.doAthleticsCleanUp();
     const athleticsLength = Object.keys(athletics).length;
-    this.athleticsCount = athleticsLength ? { label: `${athleticsLength} Athletic(s)` } : null;
+    this.athleticsCount = athleticsLength
+      ? { label: `${athleticsLength} Athletic(s)` }
+      : null;
 
     this.accountPrivileges = Object.assign(
       {},
@@ -404,9 +406,8 @@ export class TeamCreateComponent implements OnInit {
       this.doAthleticsCleanUp();
       this.resetAthleticsModal$.next(true);
 
-      const athleticPrivilege = this.session.g.get('user').school_level_privileges[
-        this.schoolId
-      ][CP_PRIVILEGES_MAP.athletics];
+      const athleticPrivilege = this.session.g.get('user')
+        .school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.athletics];
 
       this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
         [CP_PRIVILEGES_MAP.athletics]: {
@@ -561,7 +562,8 @@ export class TeamCreateComponent implements OnInit {
       CP_PRIVILEGES_MAP.clubs,
     );
 
-    const athleticsPrivilegeSchool = schoolPrivileges[CP_PRIVILEGES_MAP.athletics];
+    const athleticsPrivilegeSchool =
+      schoolPrivileges[CP_PRIVILEGES_MAP.athletics];
 
     const athleticsPrivilegeAccount = canAccountLevelReadResource(
       session,

@@ -7,7 +7,10 @@ import { CPSession } from '../../../../../../../../session';
 import { ClubsService } from '../../../../../../manage/clubs/clubs.service';
 import { CP_PRIVILEGES_MAP } from '../../../../../../../../shared/constants';
 import { BaseTeamSelectModalComponent } from '../base/team-select-modal.component';
-import { clubAthleticStatus, isClubAthletic } from '../../../../team.utils.service';
+import {
+  clubAthleticStatus,
+  isClubAthletic,
+} from '../../../../team.utils.service';
 
 @Component({
   selector: 'cp-select-athletics-modal',
@@ -17,8 +20,11 @@ export class SelectTeamAthleticsModalComponent extends BaseTeamSelectModalCompon
   implements OnInit {
   @Input() selectedAthletics: any;
   @Input() reset: Observable<boolean>;
+
+  @Output() cancel: EventEmitter<any> = new EventEmitter();
   @Output() selected: EventEmitter<any> = new EventEmitter();
   @Output() teardown: EventEmitter<null> = new EventEmitter();
+
   data$: BehaviorSubject<any> = new BehaviorSubject({});
 
   constructor(private session: CPSession, private service: ClubsService) {
@@ -37,16 +43,26 @@ export class SelectTeamAthleticsModalComponent extends BaseTeamSelectModalCompon
 
     this.service
       .getClubs(search, 1, 1000)
-      .map((athletics) => athletics.filter((athletic) =>
-        athletic.status === clubAthleticStatus.active))
+      .map((athletics) =>
+        athletics.filter(
+          (athletic) => athletic.status === clubAthleticStatus.active,
+        ),
+      )
       .subscribe((athletics) => {
         let res = {};
         const selected = {};
 
         if (this.selectedAthletics) {
           athletics.map((athletic) => {
-            if (Object.keys(this.selectedAthletics).includes(athletic.id.toString())) {
-              if (CP_PRIVILEGES_MAP.athletics in this.selectedAthletics[athletic.id]) {
+            if (
+              Object.keys(this.selectedAthletics).includes(
+                athletic.id.toString(),
+              )
+            ) {
+              if (
+                CP_PRIVILEGES_MAP.athletics in
+                this.selectedAthletics[athletic.id]
+              ) {
                 selected[athletic.id] = athletic;
               }
             }

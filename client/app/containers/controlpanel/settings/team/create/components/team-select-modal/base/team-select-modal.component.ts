@@ -32,7 +32,9 @@ export class BaseTeamSelectModalComponent extends BaseComponent
   @Input() data: Observable<any>;
   @Input() privilegeType: number;
   @Input() reset: Observable<boolean>;
+
   @Output() submit: EventEmitter<any> = new EventEmitter();
+  @Output() cancel: EventEmitter<null> = new EventEmitter();
 
   loading;
   privileges;
@@ -63,7 +65,7 @@ export class BaseTeamSelectModalComponent extends BaseComponent
   }
 
   emitAndClose() {
-    this.onSubmit();
+    this.cancel.emit();
   }
 
   onSubmit() {
