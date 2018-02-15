@@ -7,7 +7,10 @@ import { CPSession } from '../../../../../../../../session';
 import { ClubsService } from '../../../../../../manage/clubs/clubs.service';
 import { CP_PRIVILEGES_MAP } from '../../../../../../../../shared/constants';
 import { BaseTeamSelectModalComponent } from '../base/team-select-modal.component';
-import { clubAthleticStatus, isClubAthletic } from '../../../../team.utils.service';
+import {
+  clubAthleticStatus,
+  isClubAthletic,
+} from '../../../../team.utils.service';
 
 @Component({
   selector: 'cp-select-clubs-modal',
@@ -17,8 +20,11 @@ export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent
   implements OnInit {
   @Input() selectedClubs: any;
   @Input() reset: Observable<boolean>;
+
+  @Output() cancel: EventEmitter<any> = new EventEmitter();
   @Output() selected: EventEmitter<any> = new EventEmitter();
   @Output() teardown: EventEmitter<null> = new EventEmitter();
+
   data$: BehaviorSubject<any> = new BehaviorSubject({});
 
   constructor(private session: CPSession, private service: ClubsService) {
@@ -37,7 +43,9 @@ export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent
 
     this.service
       .getClubs(search, 1, 1000)
-      .map((clubs) => clubs.filter((club) => club.status === clubAthleticStatus.active))
+      .map((clubs) =>
+        clubs.filter((club) => club.status === clubAthleticStatus.active),
+      )
       .subscribe((clubs) => {
         let res = {};
         const selected = {};
