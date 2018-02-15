@@ -225,8 +225,11 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   }
 
   doChipsSelected() {
-    this.typeAheadOpts.isUsers = this.state.isToUsers;
-    if (this.chips.length > 0) {
+    this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
+      isUsers: this.state.isToUsers,
+    });
+
+    if (this.chips.length) {
       this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
         defaultValues: this.chips.map((data) => {
           return {
