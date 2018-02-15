@@ -21,6 +21,7 @@ export class AnnouncementsListRecipientsComponent implements OnInit {
   maxAllowed = maxAllowed.inList;
   maxToolTipAllowed = maxAllowed.inTooltip;
   recipients: Array<string> = [];
+  totalRecipients: Array<string> = [];
   recipients_more: Array<string> = [];
   tooltipRecipients: Array<string> = [];
   tooltipRecipientsMore: Array<string> = [];
@@ -38,6 +39,7 @@ export class AnnouncementsListRecipientsComponent implements OnInit {
 
     if (this.lists.length) {
       this.lists.map((item, index) => {
+        this.totalRecipients.push(item.name);
         if (index + 1 <= this.maxAllowed) {
           this.recipients.push(item.name);
 
@@ -49,6 +51,7 @@ export class AnnouncementsListRecipientsComponent implements OnInit {
 
     if (this.users.length) {
       this.users.map((item, index) => {
+        this.totalRecipients.push(`${item.firstname} ${item.lastname}`);
         if (index + 1 <= this.maxAllowed) {
           this.recipients.push(`${item.firstname} ${item.lastname}`);
 
