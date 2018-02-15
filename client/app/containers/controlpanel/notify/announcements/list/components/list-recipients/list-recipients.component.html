@@ -11,16 +11,12 @@
       </span>
     </div>
     <div
-      class="recipients__more col-xs-6 no-left-padding"
+      class="recipients__more col-xs-6"
       *ngIf="recipients_more.length">
-      <button
-        type="button"
-        class="cpbtn cpbtn--link cpbtn--no-border"
-        (click)="viewMoreModal.emit(recipients_more)">
         <cp-tooltip
+          (click)="viewMoreModal.emit(totalRecipients)"
            [toolTipContent]="toolTipContent">
         </cp-tooltip>
-      </button>
     </div>
   </div>
 </div>
