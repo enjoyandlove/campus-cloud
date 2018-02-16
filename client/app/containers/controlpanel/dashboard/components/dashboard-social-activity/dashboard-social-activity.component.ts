@@ -34,6 +34,7 @@ export class DashboardSocialActivyComponent extends BaseComponent
 
   calculatePercentage(data) {
     const flatten = require('lodash').flatten;
+
     const total = flatten(data.series).reduce(
       (prev, curr) => {
         return prev + curr;
@@ -42,7 +43,7 @@ export class DashboardSocialActivyComponent extends BaseComponent
       0,
     );
 
-    return data.series.map((item) => (item * 100 / total).toFixed(1));
+    return data.series.map((item) => (item * 100 / total).toFixed(1)).reverse();
   }
 
   fetch() {
@@ -61,7 +62,5 @@ export class DashboardSocialActivyComponent extends BaseComponent
     });
   }
 
-  ngOnInit() {
-    this.fetch();
-  }
+  ngOnInit() {}
 }
