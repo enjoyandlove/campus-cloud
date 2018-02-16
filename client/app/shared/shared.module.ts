@@ -1,3 +1,4 @@
+import { CPFIlterByLength } from './pipes/array/filter-by-length.pipe';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -53,6 +54,7 @@ import { CPMapsService } from './services/maps.service';
 
 @NgModule({
   declarations: [
+    CPFIlterByLength,
     CPTopBarComponent,
     CPMapsComponent,
     CPAvatarComponent,
@@ -109,6 +111,7 @@ import { CPMapsService } from './services/maps.service';
   ],
 
   exports: [
+    CPFIlterByLength,
     CPTopBarComponent,
     CPMapsComponent,
     CPAvatarComponent,

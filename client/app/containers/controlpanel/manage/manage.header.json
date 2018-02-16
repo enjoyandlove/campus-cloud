@@ -19,15 +19,14 @@
       "url": "/manage/clubs"
     },
     {
-      "new": true,
-      "privilege": 28,
-      "label": "athletics",
-      "url": "/manage/athletics"
-    },
-    {
       "privilege": 24,
       "label": "services",
       "url": "/manage/services"
+    },
+    {
+      "privilege": 16,
+      "label": "calendars",
+      "url": "/manage/calendars"
     },
     {
       "privilege": 21,
@@ -45,9 +44,9 @@
       "url": "/manage/links"
     },
     {
-      "privilege": 16,
-      "label": "calendars",
-      "url": "/manage/calendars"
+      "privilege": 28,
+      "label": "athletics",
+      "url": "/manage/athletics"
     }
   ]
 }
