@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FeedsListComponent } from './list';
 
 const appRoutes: Routes = [
-  { path: '', component: FeedsListComponent, data: { zendesk: 'Wall' } },
+  { path: '', component: FeedsListComponent, data: { zendesk: 'walls' } },
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],

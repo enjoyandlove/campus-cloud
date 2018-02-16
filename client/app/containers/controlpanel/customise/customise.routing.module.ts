@@ -14,7 +14,7 @@ const appRoutes: Routes = [
     children: [
       {
         path: 'banner',
-        data: { zendesk: 'Customise app banner' },
+        data: { zendesk: 'customize' },
         loadChildren: './banner/banner.module#BannerModule',
       },
     ],

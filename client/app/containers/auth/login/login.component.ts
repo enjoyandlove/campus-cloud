@@ -86,6 +86,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       password: [null, [Validators.required]],
     });
 
-    this.zendeskService.setSuggestion('login');
+    this.zendeskService.setHelpCenterSuggestions({ search: 'login' });
   }
 }
