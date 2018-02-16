@@ -1,5 +1,20 @@
 @import '~styles/core/colors';
 @import '~styles/core/typography';
+@import '~styles/components/button';
+@import '~styles/components/dropdown';
+
+.promote-badge {
+  top: -5px;
+  right: -22px;
+  padding: 3px;
+  line-height: 1;
+  font-size: 7px;
+  color: #ff0000;
+  border-radius: 2px;
+  position: absolute;
+  text-transform: uppercase;
+  transition: color 300ms ease-in-out;
+}
 
 .header {
   height: 170px;
@@ -52,6 +67,34 @@
     color: $color-white;
   }
 
+  &__more {
+    &.open {
+      > a,
+      > i {
+        color: $color-white !important;
+      }
+    }
+
+    &:hover {
+      a,
+      i {
+        color: $color-white;
+      }
+    }
+    i {
+      top: 8px;
+      line-height: 0;
+      font-size: 29px;
+      position: relative;
+      color: $color-grey;
+      transition: color 300ms ease-in-out;
+
+      &:hover {
+        color: $color-white;
+      }
+    }
+  }
+
   &__nav {
     padding: 0;
     line-height: 1.2;
@@ -64,19 +107,6 @@
       margin-right: 40px;
       position: relative;
       display: inline-block;
-
-      .promote-badge {
-        top: -5px;
-        right: -22px;
-        padding: 3px;
-        line-height: 1;
-        font-size: 7px;
-        color: #ff0000;
-        border-radius: 2px;
-        position: absolute;
-        text-transform: uppercase;
-        transition: color 300ms ease-in-out;
-      }
 
       a {
         @include font-16px();
@@ -105,6 +135,29 @@
         color: $color-grey;
         padding-bottom: 8px;
         display: inline-block;
+      }
+    }
+
+    .header__more-children {
+      @include cpDropdownMenu();
+
+      top: 115%;
+      min-width: 110px;
+      max-height: none;
+
+      li {
+        display: block;
+        margin-right: 0;
+
+        a {
+          width: 100%;
+          display: block;
+          color: $color-grey;
+
+          &:hover {
+            background: none;
+          }
+        }
       }
     }
   }
