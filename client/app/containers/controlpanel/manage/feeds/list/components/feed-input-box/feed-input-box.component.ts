@@ -33,6 +33,7 @@ import {
 export class FeedInputBoxComponent implements OnInit {
   @Input() clubId: number;
   @Input() threadId: number;
+  @Input() postType: number;
   @Input() replyView: boolean;
   @Input() disablePost: boolean; // TODO REMOVE
   @Input() isCampusWallView: Observable<any>;
@@ -184,8 +185,12 @@ export class FeedInputBoxComponent implements OnInit {
     this.form.controls['message_image_url_list'].setValue(null);
   }
 
-  onContentChange({ body }) {
+  onContentChange({ body, withImage }) {
     this.form.controls['message'].setValue(body);
+
+    if (!withImage) {
+      this.form.controls['message_image_url_list'].setValue([]);
+    }
   }
 
   onSelectedHost(host): void {
@@ -236,9 +241,13 @@ export class FeedInputBoxComponent implements OnInit {
       group_id: [null],
       school_id: [this.session.g.get('school').id],
       store_id: [defaultHost, Validators.required],
-      post_type: [1, Validators.required],
+      post_type: [this.replyView ? this.postType : null, Validators.required],
       message: [null, [Validators.required, Validators.maxLength(500)]],
       message_image_url_list: [null],
+    });
+
+    this.form.valueChanges.subscribe(() => {
+      this.buttonData = { ...this.buttonData, disabled: !this.form.valid };
     });
 
     this.isCampusWallView.subscribe((res) => {
