@@ -38,6 +38,7 @@
           [feedId]="feed.id"
           [clubId]="clubId"
           (replied)="onReplied()"
+          [postType]="feed.post_type"
           (deleted)="onDeletedComment()"
           [isCampusWallView]="isCampusWallView">
         </cp-feed-comments>

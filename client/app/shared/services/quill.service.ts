@@ -35,6 +35,10 @@ export class QuillService {
     return this.editor.getText().trim();
   }
 
+  getContents() {
+    return this.editor.getContents();
+  }
+
   getSelection(focus = false) {
     return this.editor.getSelection(focus);
   }
