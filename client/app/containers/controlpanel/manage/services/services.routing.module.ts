@@ -32,59 +32,59 @@ const appRoutes: Routes = [
 
   {
     path: '',
-    data: { zendesk: 'Services' },
+    data: { zendesk: 'services' },
     component: ServicesListComponent,
   },
 
   {
     path: 'create',
     component: ServicesCreateComponent,
-    data: { zendesk: 'create a service' },
+    data: { zendesk: 'services' },
   },
   {
     path: ':serviceId/info',
     component: ServicesInfoComponent,
-    data: { zendesk: 'service info' },
+    data: { zendesk: 'services' },
   },
   {
     path: ':serviceId/edit',
     component: ServicesEditComponent,
-    data: { zendesk: 'edit service' },
+    data: { zendesk: 'services' },
   },
   {
     path: ':serviceId/events',
     component: ServicesEventsComponent,
-    data: { zendesk: 'service events' },
+    data: { zendesk: 'services' },
   },
 
   {
     path: ':serviceId/events/create',
-    data: { zendesk: 'create service event' },
+    data: { zendesk: 'services' },
     component: ServicesEventsCreateComponent,
   },
   {
     path: ':serviceId/events/:eventId',
-    data: { zendesk: 'service event attendance' },
+    data: { zendesk: 'services' },
     component: ServicesEventsAttendanceComponent,
   },
   {
-    data: { zendesk: 'service event info' },
+    data: { zendesk: 'services' },
     path: ':serviceId/events/:eventId/info',
     component: ServicesEventsInfoComponent,
   },
 
   {
-    data: { zendesk: 'edit service event' },
+    data: { zendesk: 'services' },
     path: ':serviceId/events/:eventId/edit',
     component: ServicesEventsEditComponent,
   },
   {
-    data: { zendesk: 'import service event via csv' },
+    data: { zendesk: 'services' },
     path: ':serviceId/events/import/excel',
     component: ServicesEventsExcelComponent,
   },
   {
-    data: { zendesk: 'import service event from facebook' },
+    data: { zendesk: 'services' },
     path: ':serviceId/events/import/facebook',
     component: ServicesEventsFacebookComponent,
   },
@@ -92,19 +92,19 @@ const appRoutes: Routes = [
   {
     path: ':serviceId',
     component: ServicesAttendanceComponent,
-    data: { zendesk: 'service attendance' },
+    data: { zendesk: 'services' },
   },
 
   {
     path: ':serviceId/provider/:providerId',
-    data: { zendesk: 'service provider' },
+    data: { zendesk: 'services' },
     component: ServicesProviderDetailsComponent,
   },
 
   {
     path: 'import/excel',
     component: ServicesExcelComponent,
-    data: { zendesk: 'import service via csv' },
+    data: { zendesk: 'services' },
   },
 ];
 @NgModule({

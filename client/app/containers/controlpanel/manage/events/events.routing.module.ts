@@ -25,38 +25,38 @@ const appRoutes: Routes = [
 
   {
     path: '',
-    data: { zendesk: 'Events' },
+    data: { zendesk: 'events' },
     component: EventsListComponent,
   },
   {
     path: 'create',
-    data: { zendesk: 'Events Create' },
+    data: { zendesk: 'events' },
     component: EventsCreateComponent,
   },
   {
     path: ':eventId',
-    data: { zendesk: 'Events Attendance' },
+    data: { zendesk: 'events' },
     component: EventsAttendanceComponent,
   },
   {
     path: ':eventId/edit',
-    data: { zendesk: 'Events Edit' },
+    data: { zendesk: 'events' },
     component: EventsEditComponent,
   },
   {
     path: ':eventId/info',
-    data: { zendesk: 'Events Info' },
+    data: { zendesk: 'events' },
     component: EventsInfoComponent,
   },
 
   {
     path: 'import/excel',
-    data: { zendesk: 'Events Import from CSV' },
+    data: { zendesk: 'events' },
     component: EventsExcelComponent,
   },
   {
     path: 'import/facebook',
-    data: { zendesk: 'Events Import from Facebook' },
+    data: { zendesk: 'events' },
     component: EventsFacebookComponent,
   },
 ];
