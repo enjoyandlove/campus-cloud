@@ -20,7 +20,7 @@ const state: IState = {
   query: null,
   type: null,
   sort_field: 'sent_time',
-  sort_direction: 'asc',
+  sort_direction: 'desc',
 };
 
 declare var $: any;
@@ -100,12 +100,9 @@ export class AnnouncementsListComponent extends BaseComponent
     this.headerText = `(${recipients.length})
       ${this.cpI18n.translate('notify_announcement_recipient')}`;
     this.viewMoreRecipients = recipients;
-    setTimeout(
-      () => {
-        $('#viewMoreModal').modal();
-      },
-      1,
-    );
+    setTimeout(() => {
+      $('#viewMoreModal').modal();
+    }, 1);
   }
 
   onLaunchCreateModal() {
