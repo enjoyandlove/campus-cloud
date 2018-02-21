@@ -241,10 +241,6 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     }
   }
 
-  onChipSelection(chips) {
-    this.chips = chips;
-  }
-
   onHandleToggle(status) {
     this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
       isUsers: true,
@@ -347,7 +343,13 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     this.resetModal();
   }
 
-  onTypeAheadChange(ids) {
+  onTypeAheadChange(chips) {
+    this.chips = chips;
+    const ids = [];
+    chips.forEach((chip) => {
+      ids.push(chip.id);
+    });
+
     if (this.state.isToUsers) {
       this.form.controls['user_ids'].setValue(ids);
       this.form.controls['list_ids'].setValue([]);

@@ -106,8 +106,14 @@ export class ListsEditComponent implements OnInit {
     return chips;
   }
 
-  onSelection(ids) {
+  onSelection(chips) {
     this.hasUsersListChanged = true;
+
+    const ids = [];
+    chips.forEach((chip) => {
+      ids.push(chip.id);
+    });
+
     this.form.controls['user_ids'].setValue(ids);
   }
 

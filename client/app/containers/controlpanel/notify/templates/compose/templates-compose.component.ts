@@ -105,10 +105,6 @@ export class TemplatesComposeComponent extends AnnouncementsComposeComponent
     super.onSwitchSearchType(type);
   }
 
-  onChipSelection(chips) {
-    super.onChipSelection(chips);
-  }
-
   resetChips() {
     super.resetChips();
   }
