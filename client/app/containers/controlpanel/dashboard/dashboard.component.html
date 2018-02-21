@@ -59,7 +59,7 @@
         </cp-dashboard-assessment>
       </div>
     </div>
-    <div class="col-xs-6" *ngIf="isSuperAdmin">
+    <div class="col-xs-6">
       <div class="cp-card">
         <cp-dashboard-social-activity
           [dates]="currentDate"
@@ -69,7 +69,7 @@
     </div>
   </div>
 
-  <div class="row tile" *ngIf="isSuperAdmin">
+  <div class="row tile">
     <div class="col-xs-6">
       <div class="cp-card">
         <cp-dashboard-campus-tile
@@ -78,7 +78,7 @@
         </cp-dashboard-campus-tile>
       </div>
     </div>
-    <div class="col-xs-6">
+    <div class="col-xs-6" *ngIf="canViewClub">
       <div class="cp-card">
         <cp-dashboard-top-clubs
           [dates]="currentDate"
@@ -88,7 +88,7 @@
     </div>
   </div>
 
-  <div class="row tile" *ngIf="isSuperAdmin">
+  <div class="row tile">
     <div class="col-xs-6">
       <div class="cp-card">
       <cp-dashboard-integrations
