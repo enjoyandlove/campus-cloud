@@ -23,7 +23,6 @@ export class DashboardComponent implements OnInit {
   canAssess = false;
   currentDate = null;
   canViewClub = false;
-  isSuperAdmin = false;
   areAllTilesReady = false;
 
   downloadsTile$ = new BehaviorSubject(false);
