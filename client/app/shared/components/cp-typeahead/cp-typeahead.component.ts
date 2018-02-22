@@ -42,7 +42,9 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Output() query: EventEmitter<string> = new EventEmitter();
   @Output() typeChange: EventEmitter<number> = new EventEmitter();
-  @Output() selection: EventEmitter<{ ids: Array<number>, chips: Array<any> }> = new EventEmitter();
+  @Output() selection: EventEmitter<{
+    ids: Array<number>,
+    chips: Array<{ label: string, id: number }> }> = new EventEmitter();
 
   el;
   chipOptions;
