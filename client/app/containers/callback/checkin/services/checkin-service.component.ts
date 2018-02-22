@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { BaseComponent } from '../../../../base/base.component';
 import { CheckinService } from '../checkin.service';
+import { BaseComponent } from '../../../../base/base.component';
+import { CPI18nService, ErrorService } from '../../../../shared/services';
 
 interface IState {
   services: Array<any>;
@@ -28,9 +29,11 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
   search: URLSearchParams = new URLSearchParams();
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private checkinService: CheckinService,
+    public router: Router,
+    public route: ActivatedRoute,
+    public cpI18n: CPI18nService,
+    public errorService: ErrorService,
+    public checkinService: CheckinService,
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -42,8 +45,10 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
   onSubmit(data) {
     this.checkinService.doServiceCheckin(data, this.search).subscribe(
       (_) => this.updateAttendeesList(data),
-      (err) => {
-        throw new Error(err);
+      (_) => {
+        this.errorService.handleError(
+          this.cpI18n.translate('something_went_wrong'),
+        );
       },
     );
   }
@@ -59,7 +64,8 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
       .fetchData(this.checkinService.getServiceData(this.search, true))
       .then((res) => {
         this.state = Object.assign({}, this.state, { services: res.data });
-      });
+      })
+      .catch((_) => this.router.navigate(['/login']));
   }
 
   ngOnInit() {

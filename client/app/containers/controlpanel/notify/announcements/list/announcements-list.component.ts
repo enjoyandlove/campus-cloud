@@ -100,9 +100,13 @@ export class AnnouncementsListComponent extends BaseComponent
     this.headerText = `(${recipients.length})
       ${this.cpI18n.translate('notify_announcement_recipient')}`;
     this.viewMoreRecipients = recipients;
-    setTimeout(() => {
-      $('#viewMoreModal').modal();
-    }, 1);
+    setTimeout(
+      () => {
+        $('#viewMoreModal').modal();
+      },
+
+      1,
+    );
   }
 
   onLaunchCreateModal() {
