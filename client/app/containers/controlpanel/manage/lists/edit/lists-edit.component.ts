@@ -106,9 +106,10 @@ export class ListsEditComponent implements OnInit {
     return chips;
   }
 
-  onSelection(ids) {
+  onSelection(type) {
     this.hasUsersListChanged = true;
-    this.form.controls['user_ids'].setValue(ids);
+
+    this.form.controls['user_ids'].setValue(type.ids);
   }
 
   onSearch(query) {

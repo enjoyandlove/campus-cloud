@@ -41,8 +41,10 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() props: IProps;
 
   @Output() query: EventEmitter<string> = new EventEmitter();
-  @Output() selection: EventEmitter<Array<any>> = new EventEmitter();
   @Output() typeChange: EventEmitter<number> = new EventEmitter();
+  @Output() selection: EventEmitter<{
+    ids: Array<number>,
+    chips: Array<{ label: string, id: number }> }> = new EventEmitter();
 
   el;
   chipOptions;
@@ -121,8 +123,7 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.state.ids.push(suggestion.id);
     this.state.chips.push(suggestion);
-
-    this.selection.emit(this.state.ids);
+    this.selection.emit({ids: this.state.ids, chips: this.state.chips});
   }
 
   resetList() {
@@ -134,7 +135,7 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
       ids: this.state.ids.filter((_id) => _id !== id),
       chips: this.state.chips.filter((chip) => chip.id !== id),
     });
-    this.selection.emit(this.state.ids);
+    this.selection.emit({ids: this.state.ids, chips: this.state.chips});
   }
 
   shouldFocusInput() {

@@ -54,6 +54,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   errorMessage;
   selectedType;
   typeAheadOpts;
+  chips = [];
   form: FormGroup;
   isFormValid = false;
   resetChips$: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -206,20 +207,41 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   doValidate() {
     if (this.state.isEmergency || this.state.isCampusWide) {
       this.shouldConfirm = true;
+      this.doChipsSelected();
 
       return;
     }
     this.doSubmit();
   }
 
+  doChipsSelected() {
+    this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
+      isUsers: this.state.isToUsers,
+    });
+
+    if (this.chips.length) {
+      this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
+        defaultValues: this.chips.map((data) => {
+          return {
+            id: data.id,
+            label: data.label,
+          };
+        }),
+      });
+    }
+  }
+
   onHandleToggle(status) {
+    this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
+      isUsers: true,
+      defaultValues: []
+    });
+
     this.state = Object.assign({}, this.state, {
       isToLists: false,
       isToUsers: status ? false : true,
       isCampusWide: !this.state.isCampusWide,
     });
-
-    this.resetChips();
 
     this.form.controls['user_ids'].setValue([]);
     this.form.controls['list_ids'].setValue([]);
@@ -311,13 +333,14 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     this.resetModal();
   }
 
-  onTypeAheadChange(ids) {
+  onTypeAheadChange(type) {
+    this.chips = type.chips;
     if (this.state.isToUsers) {
-      this.form.controls['user_ids'].setValue(ids);
+      this.form.controls['user_ids'].setValue(type.ids);
       this.form.controls['list_ids'].setValue([]);
     }
     if (this.state.isToLists) {
-      this.form.controls['list_ids'].setValue(ids);
+      this.form.controls['list_ids'].setValue(type.ids);
       this.form.controls['user_ids'].setValue([]);
     }
   }
@@ -341,8 +364,6 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
         });
         break;
     }
-
-    this.resetChips();
 
     this.form.controls['user_ids'].setValue([]);
     this.form.controls['list_ids'].setValue([]);
