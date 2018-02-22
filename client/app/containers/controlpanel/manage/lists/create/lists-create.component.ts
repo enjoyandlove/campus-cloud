@@ -150,19 +150,14 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
       );
   }
 
-  onTypeAheadChange(chips) {
-    if (!chips.length) {
+  onTypeAheadChange(type) {
+    if (!type.ids.length) {
       this.form.controls['user_ids'].setValue(null);
 
       return;
     }
 
-    const ids = [];
-    chips.forEach((chip) => {
-      ids.push(chip.id);
-    });
-
-    this.form.controls['user_ids'].setValue(ids);
+    this.form.controls['user_ids'].setValue(type.ids);
   }
 
   ngOnInit() {

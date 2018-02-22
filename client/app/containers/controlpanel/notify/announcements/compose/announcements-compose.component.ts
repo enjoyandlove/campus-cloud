@@ -343,19 +343,14 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     this.resetModal();
   }
 
-  onTypeAheadChange(chips) {
-    this.chips = chips;
-    const ids = [];
-    chips.forEach((chip) => {
-      ids.push(chip.id);
-    });
-
+  onTypeAheadChange(type) {
+    this.chips = type.chips;
     if (this.state.isToUsers) {
-      this.form.controls['user_ids'].setValue(ids);
+      this.form.controls['user_ids'].setValue(type.ids);
       this.form.controls['list_ids'].setValue([]);
     }
     if (this.state.isToLists) {
-      this.form.controls['list_ids'].setValue(ids);
+      this.form.controls['list_ids'].setValue(type.ids);
       this.form.controls['user_ids'].setValue([]);
     }
   }
