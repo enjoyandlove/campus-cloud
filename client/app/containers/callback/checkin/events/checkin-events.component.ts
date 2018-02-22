@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { BaseComponent } from '../../../../base/base.component';
 import { CheckinService } from '../checkin.service';
+import { BaseComponent } from '../../../../base/base.component';
+import { ErrorService, CPI18nService } from './../../../../shared/services';
 
 interface IState {
   events: Array<any>;
@@ -26,9 +27,11 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
   search: URLSearchParams = new URLSearchParams();
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private checkinService: CheckinService,
+    public router: Router,
+    public route: ActivatedRoute,
+    public cpI18n: CPI18nService,
+    public errorService: ErrorService,
+    public checkinService: CheckinService,
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -37,12 +40,15 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
   }
 
   onSubmit(data) {
-    this.checkinService.doEventCheckin(data, this.search).subscribe(
-      (_) => this.updateAttendeesList(data),
-      (err) => {
-        throw new Error(err);
-      },
-    );
+    this.checkinService
+      .doEventCheckin(data, this.search)
+      .subscribe(
+        (_) => this.updateAttendeesList(data),
+        (_) =>
+          this.errorService.handleError(
+            this.cpI18n.translate('something_went_wrong'),
+          ),
+      );
   }
 
   updateAttendeesList(data) {
@@ -53,11 +59,13 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
   // cb/checkin/e/GJ-Fn5w06XY-7h-_oetnJw
   fetch() {
     super
-      .fetchData(this.checkinService.getEventData(this.search))
+      .fetchData(this.checkinService.getEventData(this.search, true))
       .then((res) => {
         this.state = Object.assign({}, this.state, { events: res.data });
       })
-      .catch((_) => {});
+      .catch((_) => {
+        this.router.navigate(['/login']);
+      });
   }
 
   ngOnInit() {

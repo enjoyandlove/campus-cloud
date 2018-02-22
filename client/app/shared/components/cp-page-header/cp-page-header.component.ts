@@ -22,7 +22,7 @@ export class CPPageHeaderComponent implements OnChanges {
   @Input() data: IData;
 
   extraMenu = null;
-  maxChildren = 5;
+  maxChildren = 8;
   extraChildren = [];
 
   constructor(public router: Router) {}
@@ -41,6 +41,13 @@ export class CPPageHeaderComponent implements OnChanges {
         this.extraChildren.filter(
           (child) => child.url === this.router.url,
         )[0] || null;
+
+      if (
+        this.data.children.length === this.maxChildren + 1 &&
+        this.extraMenu
+      ) {
+        this.extraChildren = [];
+      }
     } else {
       this.extraMenu = null;
       this.extraChildren = [];
