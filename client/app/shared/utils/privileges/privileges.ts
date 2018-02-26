@@ -1,4 +1,8 @@
 const accountLevelEmpty = (user) => {
+  if (!user) {
+    return false;
+  }
+
   let empty = true;
 
   if (
@@ -12,6 +16,10 @@ const accountLevelEmpty = (user) => {
 };
 
 const schoolLevelEmpty = (user) => {
+  if (!user) {
+    return false;
+  }
+
   let empty = true;
 
   if (
