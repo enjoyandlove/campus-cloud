@@ -1,14 +1,32 @@
 const accountLevelEmpty = (user) => {
-  return Object.keys(user.account_level_privileges).length === 0;
+  let empty = true;
+
+  if (
+    user.account_level_privileges &&
+    Object.keys(user.account_level_privileges).length
+  ) {
+    empty = false;
+  }
+
+  return empty;
 };
 
 const schoolLevelEmpty = (user) => {
-  return Object.keys(user.school_level_privileges).length === 0;
+  let empty = true;
+
+  if (
+    user.school_level_privileges &&
+    Object.keys(user.school_level_privileges).length
+  ) {
+    empty = false;
+  }
+
+  return empty;
 };
 
 export const accountsToStoreMap = (
   accountsMap: Array<number> = [],
-  accountPrivileges,
+  accountPrivileges
 ) => {
   const accounts = {};
 
@@ -24,7 +42,7 @@ export const accountsToStoreMap = (
 export const canStoreReadAndWriteResource = (
   session: Map<any, any>,
   storeId: number,
-  privilegeType: number,
+  privilegeType: number
 ) => {
   if (storeId in session.get('user').account_level_privileges) {
     return (
@@ -37,7 +55,7 @@ export const canStoreReadAndWriteResource = (
 
 export const canAccountLevelReadResource = (
   session: Map<any, any>,
-  privilegeType: number,
+  privilegeType: number
 ) => {
   let hasAccountAccess = false;
 
@@ -50,7 +68,7 @@ export const canAccountLevelReadResource = (
       .get('user')
       .account_mapping[session.get('school').id].forEach((store) => {
         Object.keys(
-          session.get('user').account_level_privileges[store],
+          session.get('user').account_level_privileges[store]
         ).forEach((privilege) => {
           if (privilegeType === +privilege) {
             hasAccountAccess = true;
@@ -66,7 +84,7 @@ export const canAccountLevelReadResource = (
 
 export const canAccountLevelWriteResource = (
   session: Map<any, any>,
-  privilegeType: number,
+  privilegeType: number
 ) => {
   let hasAccountAccess = false;
 
@@ -79,7 +97,7 @@ export const canAccountLevelWriteResource = (
       .get('user')
       .account_mapping[session.get('school').id].forEach((store) => {
         Object.keys(
-          session.get('user').account_level_privileges[store],
+          session.get('user').account_level_privileges[store]
         ).forEach((privilege) => {
           if (privilegeType === +privilege) {
             hasAccountAccess = true;
@@ -95,7 +113,7 @@ export const canAccountLevelWriteResource = (
 
 export const canSchoolReadResource = (
   session: Map<any, any>,
-  privilegeType: number,
+  privilegeType: number
 ) => {
   if (schoolLevelEmpty(session.get('user'))) {
     return false;
@@ -120,7 +138,7 @@ export const canSchoolReadResource = (
 
 export const canSchoolWriteResource = (
   session: Map<any, any>,
-  privilegeType: number,
+  privilegeType: number
 ) => {
   if (!Object.keys(session.get('user').school_level_privileges).length) {
     return false;

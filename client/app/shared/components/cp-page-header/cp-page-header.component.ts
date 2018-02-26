@@ -16,13 +16,13 @@ interface IData {
 @Component({
   selector: 'cp-page-header',
   templateUrl: './cp-page-header.component.html',
-  styleUrls: ['./cp-page-header.component.scss'],
+  styleUrls: ['./cp-page-header.component.scss']
 })
 export class CPPageHeaderComponent implements OnChanges {
   @Input() data: IData;
 
   extraMenu = null;
-  maxChildren = 8;
+  maxChildren = 6;
   extraChildren = [];
 
   constructor(public router: Router) {}
@@ -34,12 +34,12 @@ export class CPPageHeaderComponent implements OnChanges {
   ngOnChanges() {
     if (this.data.children.length > this.maxChildren) {
       this.extraChildren = this.data.children.filter(
-        (_, index) => index + 1 > this.maxChildren,
+        (_, index) => index + 1 > this.maxChildren
       );
 
       this.extraMenu =
         this.extraChildren.filter(
-          (child) => child.url === this.router.url,
+          (child) => child.url === this.router.url
         )[0] || null;
 
       if (
