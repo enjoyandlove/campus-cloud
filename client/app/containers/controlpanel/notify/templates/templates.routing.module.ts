@@ -7,7 +7,7 @@ const templatesRoutes: Routes = [
   {
     path: '',
     component: TemplatesListComponent,
-    data: { zendesk: 'templates' },
+    data: { zendesk: 'notify' },
   },
 ];
 @NgModule({

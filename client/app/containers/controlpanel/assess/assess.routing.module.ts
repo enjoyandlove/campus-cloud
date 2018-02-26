@@ -16,11 +16,13 @@ const appRoutes: Routes = [
     children: [
       {
         path: 'dashboard',
+        data: { zendesk: 'assessment' },
         loadChildren: './engagement/engagement.module#EngagementModule',
       },
 
       {
         path: 'students',
+        data: { zendesk: 'notify' },
         loadChildren: './students/students.module#EngagementStudentsModule',
       },
     ],

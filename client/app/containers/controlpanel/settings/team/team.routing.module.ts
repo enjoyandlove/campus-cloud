@@ -6,16 +6,16 @@ import { TeamEditComponent } from './edit';
 import { TeamListComponent } from './list';
 
 const appRoutes: Routes = [
-  { path: '', component: TeamListComponent, data: { zendesk: 'admins' } },
+  { path: '', component: TeamListComponent, data: { zendesk: 'team' } },
   {
     path: 'invite',
     component: TeamCreateComponent,
-    data: { zendesk: 'create admin' },
+    data: { zendesk: 'team' },
   },
   {
     path: ':adminId/edit',
     component: TeamEditComponent,
-    data: { zendesk: 'edit admin' },
+    data: { zendesk: 'tema' },
   },
 ];
 

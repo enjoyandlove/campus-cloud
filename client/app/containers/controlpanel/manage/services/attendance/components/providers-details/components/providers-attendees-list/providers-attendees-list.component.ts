@@ -63,14 +63,9 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent
       search,
     );
 
-    super
-      .fetchData(stream$)
-      .then((res) => {
-        this.assessments = res.data;
-      })
-      .catch((err) => {
-        throw new Error(err);
-      });
+    super.fetchData(stream$).then((res) => {
+      this.assessments = res.data;
+    });
   }
 
   onPaginationNext() {

@@ -30,12 +30,16 @@ const buildCommonHeaders = () => {
   });
 };
 
+const emptyResponse = Observable.of(
+  new Response(new ResponseOptions({ body: JSON.stringify([]) })),
+);
+
 @Injectable()
 export abstract class BaseService {
   constructor(private http: Http, private router: Router) {}
 
-  private waitAndRetryThreeTimes(err): Observable<any> {
-    let retries = 3;
+  private waitAndRetry(err): Observable<any> {
+    let retries = 1;
 
     return err.delay(1200).flatMap((e) => {
       if (retries > 0) {
@@ -48,17 +52,19 @@ export abstract class BaseService {
     });
   }
 
-  get(url: string, opts?: RequestOptionsArgs) {
+  get(url: string, opts?: RequestOptionsArgs, silent = false) {
     const headers = buildCommonHeaders();
 
     return this.http
       .get(url, { headers, ...opts })
-      .retryWhen((err) => this.waitAndRetryThreeTimes(err))
+      .retryWhen((err) => this.waitAndRetry(err))
       .catch((err) => {
+        if (silent) {
+          return Observable.throw(err);
+        }
+
         if (err.status === 403) {
-          return Observable.of(
-            new Response(new ResponseOptions({ body: JSON.stringify([]) })),
-          );
+          return emptyResponse;
         }
 
         return this.catchError(err);
@@ -72,7 +78,7 @@ export abstract class BaseService {
 
     return this.http
       .post(url, data, { headers, ...opts })
-      .retryWhen((err) => this.waitAndRetryThreeTimes(err))
+      .retryWhen((err) => this.waitAndRetry(err))
       .catch((err) => (silent ? Observable.throw(err) : this.catchError(err)));
   }
 
@@ -83,7 +89,7 @@ export abstract class BaseService {
 
     return this.http
       .put(url, data, { headers, ...opts })
-      .retryWhen((err) => this.waitAndRetryThreeTimes(err))
+      .retryWhen((err) => this.waitAndRetry(err))
       .catch((err) => (silent ? Observable.throw(err) : this.catchError(err)));
   }
 
@@ -92,7 +98,7 @@ export abstract class BaseService {
 
     return this.http
       .delete(url, { headers, ...opts })
-      .retryWhen((err) => this.waitAndRetryThreeTimes(err))
+      .retryWhen((err) => this.waitAndRetry(err))
       .catch((err) => (silent ? Observable.throw(err) : this.catchError(err)));
   }
 
@@ -101,19 +107,23 @@ export abstract class BaseService {
       case 401:
         appStorage.clear();
         this.router.navigate(['/login']);
-        break;
+
+        return emptyResponse;
 
       case 404:
         this.router.navigate(['/dashboard']);
-        break;
+
+        return emptyResponse;
 
       case 403:
         this.router.navigate(['/dashboard']);
-        break;
+
+        return emptyResponse;
 
       case 500:
         this.router.navigate(['/dashboard']);
-        break;
+
+        return emptyResponse;
 
       default:
         return Observable.throw(err);

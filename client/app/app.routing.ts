@@ -24,7 +24,7 @@ const routes: Routes = [
 
   {
     path: 'lost-password',
-    data: { zendesk: 'lost password login' },
+    data: { zendesk: 'password' },
     component: LostPasswordComponent,
   },
 

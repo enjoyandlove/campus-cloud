@@ -45,11 +45,7 @@ export abstract class BaseComponent {
           pagePrev: this.pagePrev,
         });
       })
-      .catch((err) => {
-        this._isLoading.next(false);
-
-        return Promise.reject(err);
-      });
+      .catch((err) => Promise.reject(err));
   }
 
   goToNext(): void {

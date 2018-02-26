@@ -3,7 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { ClubsMembersComponent } from './list';
 
-const appRoutes: Routes = [{ path: '', component: ClubsMembersComponent }];
+const appRoutes: Routes = [
+  { path: '', component: ClubsMembersComponent, data: { zendesk: 'clubs' } },
+];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
   exports: [RouterModule],

@@ -109,56 +109,51 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       });
 
     const stream$ = Observable.combineLatest(service$, providers$, categories$);
-    super
-      .fetchData(stream$)
-      .then((res) => {
-        const providers = res.data[1];
+    super.fetchData(stream$).then((res) => {
+      const providers = res.data[1];
 
-        this.service = res.data[0];
+      this.service = res.data[0];
 
-        this.hasFeedback = this.service.enable_feedback === FEEDBACK_ENABLED;
+      this.hasFeedback = this.service.enable_feedback === FEEDBACK_ENABLED;
 
-        this.categories = res.data[2];
+      this.categories = res.data[2];
 
-        this.categories.map((category) => {
-          if (category.action === +this.service.category) {
-            this.selectedCategory = category;
-          }
-        });
+      this.categories.map((category) => {
+        if (category.action === +this.service.category) {
+          this.selectedCategory = category;
+        }
+      });
 
-        const label =
-          SERVICE_FEEDBACK[
-            'enable_feedback' in this.service
-              ? this.service.enable_feedback
-              : FEEDBACK_ENABLED
-          ];
-
-        this.serviceFeedback = [
-          {
-            label,
-            value: null,
-          },
+      const label =
+        SERVICE_FEEDBACK[
+          'enable_feedback' in this.service
+            ? this.service.enable_feedback
+            : FEEDBACK_ENABLED
         ];
 
-        this.mapCenter = new BehaviorSubject({
-          lat: res.data[0].latitude,
-          lng: res.data[0].longitude,
-        });
+      this.serviceFeedback = [
+        {
+          label,
+          value: null,
+        },
+      ];
 
-        this.storeId = res.data[0].store_id;
-
-        this.buildForm();
-
-        if (providers.length) {
-          const control = <FormArray>this.form.controls['providers'];
-          providers.forEach((provider) =>
-            control.push(this.buildServiceProviderControl(provider)),
-          );
-        }
-      })
-      .catch((err) => {
-        throw new Error(err);
+      this.mapCenter = new BehaviorSubject({
+        lat: res.data[0].latitude,
+        lng: res.data[0].longitude,
       });
+
+      this.storeId = res.data[0].store_id;
+
+      this.buildForm();
+
+      if (providers.length) {
+        const control = <FormArray>this.form.controls['providers'];
+        providers.forEach((provider) =>
+          control.push(this.buildServiceProviderControl(provider)),
+        );
+      }
+    });
   }
 
   onResetMap() {

@@ -11,6 +11,7 @@ import {
   CPLocationsService,
 } from './services';
 import { CPTrackingService } from './services/tracking.service';
+import { CPFIlterByLength } from './pipes/array/filter-by-length.pipe';
 
 import {
   CPAvatarComponent,
@@ -41,18 +42,20 @@ import {
   CPSnackBarComponent,
   CPButtonComponent,
   CPTextEditorComponent,
-  CPOnboardingComponent,
-  CPStepperComponent,
   CPTooltipComponent,
   CPResourceBannerComponent,
   CPTopGaModalComponent,
   CPTopBanerComponent,
+  CPOnboardingComponent,
+  CPStepperComponent,
+  CPListModalComponent,
 } from './components';
 import { LocationsService } from '../containers/controlpanel/manage/locations/locations.service';
 import { CPMapsService } from './services/maps.service';
 
 @NgModule({
   declarations: [
+    CPFIlterByLength,
     CPTopBarComponent,
     CPMapsComponent,
     CPAvatarComponent,
@@ -93,6 +96,9 @@ import { CPMapsService } from './services/maps.service';
     CPResourceBannerComponent,
     CPTopGaModalComponent,
     CPTopBanerComponent,
+    CPOnboardingComponent,
+    CPStepperComponent,
+    CPListModalComponent,
   ],
 
   imports: [CommonModule, RouterModule, ReactiveFormsModule],
@@ -107,6 +113,7 @@ import { CPMapsService } from './services/maps.service';
   ],
 
   exports: [
+    CPFIlterByLength,
     CPTopBarComponent,
     CPMapsComponent,
     CPAvatarComponent,
@@ -147,6 +154,9 @@ import { CPMapsService } from './services/maps.service';
     CPResourceBannerComponent,
     CPTopGaModalComponent,
     CPTopBanerComponent,
+    CPOnboardingComponent,
+    CPStepperComponent,
+    CPListModalComponent,
   ],
 })
 export class SharedModule {}

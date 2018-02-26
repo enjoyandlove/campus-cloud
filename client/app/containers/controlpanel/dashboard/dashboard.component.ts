@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
   user: IUser;
   canAssess = false;
   currentDate = null;
-  isSuperAdmin = false;
+  canViewClub = false;
   areAllTilesReady = false;
 
   downloadsTile$ = new BehaviorSubject(false);
@@ -120,11 +120,16 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isSuperAdmin = this.helper.isSuperAdmin(this.session);
     this.canAssess = canSchoolReadResource(
       this.session.g,
       CP_PRIVILEGES_MAP.assessment,
     );
+
+    this.canViewClub = canSchoolReadResource(
+      this.session.g,
+      CP_PRIVILEGES_MAP.clubs,
+    );
+
     this.currentDate = this.helper.last30Days();
 
     if (

@@ -17,35 +17,35 @@ const appRoutes: Routes = [
     children: [
       {
         path: 'password-reset/:key',
-        data: { zendesk: 'password reset' },
+        data: { zendesk: 'password' },
         component: CallbackPasswordResetComponent,
       },
 
       {
         path: 'invite/:key',
         component: AdminInviteComponent,
-        data: { zendesk: 'create account' },
+        data: { zendesk: 'password' },
       },
 
       {
         path: 'feedback/e/:event',
         component: FeedbackEventComponent,
-        data: { zendesk: 'event feedback' },
+        data: { zendesk: 'assessment' },
       },
       {
         path: 'feedback/s/:service',
         component: FeedbackServiceComponent,
-        data: { zendesk: 'service feedback' },
+        data: { zendesk: 'assessment' },
       },
 
       {
         path: 'checkin/e/:event',
         component: CheckinEventsComponent,
-        data: { zendesk: 'event checkin' },
+        data: { zendesk: 'assessment' },
       },
       {
         path: 'checkin/s/:service/:provider',
-        data: { zendesk: 'service checkin' },
+        data: { zendesk: 'assessment' },
         component: CheckinServiceComponent,
       },
 

@@ -30,10 +30,7 @@ export class ServicesEventsInfoComponent extends BaseComponent
   private fetch() {
     super
       .fetchData(this.servicesService.getServiceById(this.serviceId))
-      .then((res) => (this.storeId = res.data.store_id))
-      .catch((err) => {
-        throw new Error(err);
-      });
+      .then((res) => (this.storeId = res.data.store_id));
   }
 
   ngOnInit() {}

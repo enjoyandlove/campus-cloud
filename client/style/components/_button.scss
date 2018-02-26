@@ -2,7 +2,7 @@
 @import '../core/typography';
 
 .cpbtn,
-a.cpbtn, {
+a.cpbtn {
   @include font-normal();
 
   font-size: 1em;
@@ -35,7 +35,7 @@ a.cpbtn, {
 
   &:hover,
   &:focus,
-  &:active, {
+  &:active {
     outline: none;
   }
 
@@ -96,7 +96,7 @@ a.cpbtn, {
       border: 1px solid $color-med-grey;
     }
 
-     &--error {
+    &--error {
       color: $color-danger;
       border: 1px solid $color-danger;
     }
@@ -148,6 +148,10 @@ a.cpbtn, {
       background: $color-white;
       border: 1px solid $color-med-grey;
     }
+  }
+
+  &--ghost {
+    background: transparent;
   }
 
   &--danger {

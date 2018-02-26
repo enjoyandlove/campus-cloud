@@ -73,10 +73,7 @@ export class ListsListComponent extends BaseComponent implements OnInit {
       .then(
         (res) =>
           (this.state = Object.assign({}, this.state, { lists: res.data })),
-      )
-      .catch((err) => {
-        throw new Error(err);
-      });
+      );
   }
 
   onSearch(search_str) {

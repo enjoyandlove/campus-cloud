@@ -63,8 +63,21 @@ export class CPTextEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     this.quillInstance.on('text-change', this.textChangeHandler.bind(this));
   }
 
+  containsImage(): boolean {
+    let hasImage = false;
+
+    this.quillInstance.getContents().ops.map((entry) => {
+      if (typeof entry.insert === 'object') {
+        hasImage = true;
+      }
+    });
+
+    return hasImage;
+  }
+
   textChangeHandler() {
     this.state = Object.assign({}, this.state, {
+      withImage: this.containsImage(),
       body: this.quillInstance.getText(),
     });
     this.contentChange.emit(this.state);

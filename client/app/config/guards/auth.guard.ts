@@ -116,9 +116,11 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
   private setZendesk(routeObj) {
     if ('zendesk' in routeObj) {
-      this.zendeskService.setSuggestion(routeObj['zendesk']);
+      this.zendeskService.setHelpCenterSuggestions({
+        labels: [routeObj['zendesk']],
+      });
     } else {
-      this.zendeskService.setSuggestion('');
+      this.zendeskService.setHelpCenterSuggestions({ labels: [''] });
     }
   }
 
