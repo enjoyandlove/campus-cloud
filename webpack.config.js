@@ -8,7 +8,8 @@ var autoprefixer = require('autoprefixer');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
-var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin;
 
 /**
  * Env
@@ -18,13 +19,13 @@ var ENV = process.env.npm_lifecycle_event;
 var isTestWatch = ENV === 'test-watch';
 var isTest = ENV === 'test' || isTestWatch;
 
-var isProd = ENV === 'staging'
-          || ENV === 'production-usa'
-          || ENV === 'production-sea'
-          || ENV === 'production-canada';
+var isProd =
+  ENV === 'staging' ||
+  ENV === 'production-usa' ||
+  ENV === 'production-sea' ||
+  ENV === 'production-canada';
 
-
-module.exports = function makeWebpackConfig() {
+module.exports = (function makeWebpackConfig() {
   /**
    * Config
    * Reference: http://webpack.github.io/docs/configuration.html
@@ -39,11 +40,9 @@ module.exports = function makeWebpackConfig() {
    */
   if (isProd) {
     config.devtool = 'source-map';
-  }
-  else if (isTest) {
+  } else if (isTest) {
     config.devtool = 'inline-source-map';
-  }
-  else {
+  } else {
     config.devtool = 'eval-source-map';
   }
 
@@ -52,23 +51,27 @@ module.exports = function makeWebpackConfig() {
    * Reference: http://webpack.github.io/docs/configuration.html#entry
    */
   if (!isTest) {
-    config.entry = isTest ? {} : {
-      'polyfills': './client/polyfills.ts',
-      'vendor': './client/vendor.ts',
-      'app': './client/main.ts' // our angular app
-    };
+    config.entry = isTest
+      ? {}
+      : {
+          polyfills: './client/polyfills.ts',
+          vendor: './client/vendor.ts',
+          app: './client/main.ts' // our angular app
+        };
   }
 
   /**
    * Output
    * Reference: http://webpack.github.io/docs/configuration.html#output
    */
-  config.output = isTest ? {} : {
-    path: root('_dist'),
-    publicPath: isProd ? '/dist/' : 'http://localhost:3030/',
-    filename: isProd ? 'js/[name].[hash].js' : 'js/[name].js',
-    chunkFilename: isProd ? 'js/[id].[hash].chunk.js' : '[id].chunk.js'
-  };
+  config.output = isTest
+    ? {}
+    : {
+        path: root('_dist'),
+        publicPath: isProd ? '/dist/' : 'http://localhost:3030/',
+        filename: isProd ? 'js/[name].[chunkhash].js' : 'js/[name].js',
+        chunkFilename: isProd ? 'js/[id].[chunkhash].chunk.js' : '[id].chunk.js'
+      };
 
   /**
    * Resolve
@@ -78,11 +81,18 @@ module.exports = function makeWebpackConfig() {
     // only discover files that have those extensions
     extensions: ['.ts', '.js', '.json', '.css', '.scss', '.html'],
     alias: {
-      'root': path.join(__dirname, "client"),
-      'public': path.resolve(__dirname, "client/public/"),
-      'styles': path.join(__dirname, "client", "style"),
-      'node_modules': path.join(__dirname, "node_modules"),
-      'bootstrap': path.join(__dirname, "node_modules", "bootstrap-sass", "assets", "stylesheets", "bootstrap")
+      root: path.join(__dirname, 'client'),
+      public: path.resolve(__dirname, 'client/public/'),
+      styles: path.join(__dirname, 'client', 'style'),
+      node_modules: path.join(__dirname, 'node_modules'),
+      bootstrap: path.join(
+        __dirname,
+        'node_modules',
+        'bootstrap-sass',
+        'assets',
+        'stylesheets',
+        'bootstrap'
+      )
     }
   };
 
@@ -103,8 +113,16 @@ module.exports = function makeWebpackConfig() {
       // Support for .ts files.
       {
         test: /\.ts$/,
-        loaders: ['awesome-typescript-loader?' + atlOptions, 'angular2-template-loader', 'angular2-router-loader', '@angularclass/hmr-loader'],
-        exclude: [isTest ? /\.(e2e)\.ts$/ : /\.(spec|e2e)\.ts$/, /node_modules\/(?!(ng2-.+))/]
+        loaders: [
+          'awesome-typescript-loader?' + atlOptions,
+          'angular2-template-loader',
+          'angular2-router-loader',
+          '@angularclass/hmr-loader'
+        ],
+        exclude: [
+          isTest ? /\.(e2e)\.ts$/ : /\.(spec|e2e)\.ts$/,
+          /node_modules\/(?!(ng2-.+))/
+        ]
       },
 
       // copy those assets to output
@@ -126,10 +144,19 @@ module.exports = function makeWebpackConfig() {
       {
         test: /\.css$/,
         exclude: root('client', 'app'),
-        loader: isTest ? 'null-loader' : ExtractTextPlugin.extract({ fallback: 'style-loader', loader: ['css-loader', 'postcss-loader'] })
+        loader: isTest
+          ? 'null-loader'
+          : ExtractTextPlugin.extract({
+              fallback: 'style-loader',
+              loader: ['css-loader', 'postcss-loader']
+            })
       },
       // all css required in client/app files will be merged in js files
-      { test: /\.css$/, include: root('client', 'app'), loader: 'raw-loader!postcss-loader' },
+      {
+        test: /\.css$/,
+        include: root('client', 'app'),
+        loader: 'raw-loader!postcss-loader'
+      },
 
       // support for .scss files
       // use 'null' loader in test mode (https://github.com/webpack/null-loader)
@@ -137,14 +164,27 @@ module.exports = function makeWebpackConfig() {
       {
         test: /\.(scss|sass)$/,
         exclude: root('client', 'app'),
-        loader: isTest ? 'null-loader' : ExtractTextPlugin.extract({ fallback: 'style-loader', loader: ['css-loader', 'postcss-loader', 'sass-loader'] })
+        loader: isTest
+          ? 'null-loader'
+          : ExtractTextPlugin.extract({
+              fallback: 'style-loader',
+              loader: ['css-loader', 'postcss-loader', 'sass-loader']
+            })
       },
       // all css required in client/app files will be merged in js files
-      { test: /\.(scss|sass)$/, exclude: root('client', 'style'), loader: 'raw-loader!postcss-loader!sass-loader' },
+      {
+        test: /\.(scss|sass)$/,
+        exclude: root('client', 'style'),
+        loader: 'raw-loader!postcss-loader!sass-loader'
+      },
 
       // support for .html as raw text
       // todo: change the loader to something that adds a hash to images
-      { test: /\.html$/, loader: 'raw-loader', exclude: root('client', 'public') }
+      {
+        test: /\.html$/,
+        loader: 'raw-loader',
+        exclude: root('client', 'public')
+      }
     ]
   };
 
@@ -187,7 +227,7 @@ module.exports = function makeWebpackConfig() {
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
-      jquery: 'jquery',
+      jquery: 'jquery'
     }),
 
     // Workaround needed for angular 2 angular/angular#11580
@@ -244,13 +284,16 @@ module.exports = function makeWebpackConfig() {
       new HtmlWebpackPlugin({
         template: './client/public/index.html',
         chunksSortMode: 'dependency',
-        hash: true,
+        hash: true
       }),
 
       // Extract css files
       // Reference: https://github.com/webpack/extract-text-webpack-plugin
       // Disabled when in test mode or not in build mode
-      new ExtractTextPlugin({ filename: 'css/[name].[hash].css', disable: !isProd })
+      new ExtractTextPlugin({
+        filename: 'css/[name].[hash].css',
+        disable: !isProd
+      })
     );
   }
 
@@ -271,14 +314,16 @@ module.exports = function makeWebpackConfig() {
         sourceMap: true,
         drop_console: true,
         comments: false,
-        mangle: { keep_fnames: true },
+        mangle: { keep_fnames: true }
       }),
 
       // Copy assets from the public folder
       // Reference: https://github.com/kevlened/copy-webpack-plugin
-      new CopyWebpackPlugin([{
-        from: root('client/public')
-      }])
+      new CopyWebpackPlugin([
+        {
+          from: root('client/public')
+        }
+      ])
     );
   }
 
@@ -295,7 +340,7 @@ module.exports = function makeWebpackConfig() {
   };
 
   return config;
-}();
+})();
 
 // Helper functions
 function root(args) {
