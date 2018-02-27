@@ -119,8 +119,6 @@ export class AuthGuard implements CanActivate, CanActivateChild {
       this.zendeskService.setHelpCenterSuggestions({
         labels: [routeObj['zendesk']]
       });
-    } else {
-      this.zendeskService.setHelpCenterSuggestions({ labels: [''] });
     }
   }
 
@@ -237,7 +235,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
           .then((_) => this.fetcthStores())
           .then((stores) => this.setDefaultHost(stores))
           .then((_) => true)
-          .catch((_) => this.redirectAndSaveGoTo(state.url));
+          .catch((_) => this.router.navigate(['/logout']));
       }
 
       return true;
