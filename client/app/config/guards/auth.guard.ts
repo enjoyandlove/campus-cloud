@@ -2,7 +2,7 @@ import {
   ActivatedRouteSnapshot,
   CanActivate,
   CanActivateChild,
-  Router,
+  Router
 } from '@angular/router';
 
 import { URLSearchParams } from '@angular/http';
@@ -17,7 +17,7 @@ import {
   AdminService,
   SchoolService,
   StoreService,
-  ZendeskService,
+  ZendeskService
 } from '../../shared/services';
 
 /**
@@ -26,7 +26,7 @@ import {
 
 import {
   canAccountLevelReadResource,
-  canSchoolReadResource,
+  canSchoolReadResource
 } from './../../shared/utils/privileges';
 
 @Injectable()
@@ -37,7 +37,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     public storeService: StoreService,
     public adminService: AdminService,
     public schoolService: SchoolService,
-    public zendeskService: ZendeskService,
+    public zendeskService: ZendeskService
   ) {}
 
   preLoadUser(): Promise<any> {
@@ -62,7 +62,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
         let schoolIdInUrl;
         let schoolObjFromUrl;
         const storedSchool = JSON.parse(
-          appStorage.get(appStorage.keys.DEFAULT_SCHOOL),
+          appStorage.get(appStorage.keys.DEFAULT_SCHOOL)
         );
 
         try {
@@ -83,7 +83,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
         this.session.g.set(
           'school',
-          storedSchool || schoolObjFromUrl || schools[0],
+          storedSchool || schoolObjFromUrl || schools[0]
         );
       })
       .toPromise();
@@ -117,10 +117,8 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   private setZendesk(routeObj) {
     if ('zendesk' in routeObj) {
       this.zendeskService.setHelpCenterSuggestions({
-        labels: [routeObj['zendesk']],
+        labels: [routeObj['zendesk']]
       });
-    } else {
-      this.zendeskService.setHelpCenterSuggestions({ labels: [''] });
     }
   }
 
@@ -141,7 +139,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
       'templates',
       'banner',
       'dashboard',
-      'students',
+      'students'
     ];
 
     const routeToPrivilege = {
@@ -171,7 +169,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
       dashboard: CP_PRIVILEGES_MAP.assessment,
 
-      students: CP_PRIVILEGES_MAP.assessment,
+      students: CP_PRIVILEGES_MAP.assessment
     };
 
     if (childRoute.url.length) {
@@ -182,11 +180,11 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
         const schoolLevel = canSchoolReadResource(
           this.session.g,
-          routeToPrivilege[path],
+          routeToPrivilege[path]
         );
         const accountLevel = canAccountLevelReadResource(
           this.session.g,
-          routeToPrivilege[path],
+          routeToPrivilege[path]
         );
 
         canAccess = schoolLevel || accountLevel;
@@ -214,12 +212,25 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     Raven.setUserContext({ id, username, email });
   }
 
+  // redirectAndSaveGoTo(url) {
+  //   this.router
+  //     .navigate(['/login'], {
+  //       queryParams: {
+  //         goTo: encodeURIComponent(url)
+  //       },
+  //       queryParamsHandling: 'merge'
+  //     })
+  //     .then(() => location.reload());
+  // }
+
   redirectAndSaveGoTo(url): boolean {
+    appStorage.clear();
+
     this.router.navigate(['/login'], {
       queryParams: {
-        goTo: encodeURIComponent(url),
+        goTo: encodeURIComponent(url)
       },
-      queryParamsHandling: 'merge',
+      queryParamsHandling: 'merge'
     });
 
     return false;
@@ -237,7 +248,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
           .then((_) => this.fetcthStores())
           .then((stores) => this.setDefaultHost(stores))
           .then((_) => true)
-          .catch((_) => false);
+          .catch((_) => this.redirectAndSaveGoTo(state.url));
       }
 
       return true;
