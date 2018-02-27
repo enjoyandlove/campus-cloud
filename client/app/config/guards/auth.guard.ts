@@ -119,8 +119,6 @@ export class AuthGuard implements CanActivate, CanActivateChild {
       this.zendeskService.setHelpCenterSuggestions({
         labels: [routeObj['zendesk']]
       });
-    } else {
-      this.zendeskService.setHelpCenterSuggestions({ labels: [''] });
     }
   }
 
@@ -214,7 +212,20 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     Raven.setUserContext({ id, username, email });
   }
 
+  // redirectAndSaveGoTo(url) {
+  //   this.router
+  //     .navigate(['/login'], {
+  //       queryParams: {
+  //         goTo: encodeURIComponent(url)
+  //       },
+  //       queryParamsHandling: 'merge'
+  //     })
+  //     .then(() => location.reload());
+  // }
+
   redirectAndSaveGoTo(url): boolean {
+    appStorage.clear();
+
     this.router.navigate(['/login'], {
       queryParams: {
         goTo: encodeURIComponent(url)

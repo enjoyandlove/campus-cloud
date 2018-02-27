@@ -99,7 +99,7 @@ export class ZendeskService {
         zEmbed((): void => {
           this.tryToApply(methodName, methodArgs, resolve, reject);
         });
-      },
+      }
     );
 
     return promise;
@@ -111,7 +111,7 @@ export class ZendeskService {
         this.visibilityQueue.push({
           resolve: resolve,
           reject: reject,
-          methodName: methodName,
+          methodName: methodName
         });
 
         // If the zEmbed object hasn't loaded yet, there's nothing more to do -
@@ -130,9 +130,9 @@ export class ZendeskService {
             this.flushVisibilityQueue();
           },
 
-          this.visibilityDelay,
+          this.visibilityDelay
         );
-      },
+      }
     );
 
     return promise;
@@ -142,7 +142,7 @@ export class ZendeskService {
     methodName: string,
     methodArgs: any[],
     resolve: Function,
-    reject: Function,
+    reject: Function
   ): void {
     try {
       zEmbed[methodName](...methodArgs);
