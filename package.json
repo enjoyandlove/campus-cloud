@@ -11,10 +11,14 @@
     "clean-install": "yarn run clean && yarn run install",
     "clean-start": "yarn run clean-install && yarn start",
     "watch": "webpack --watch --progress --profile",
-    "production-usa": "webpack --progress --profile --bail && rimraf dist && mv _dist dist",
-    "production-canada": "webpack --progress --profile --bail && rimraf dist && mv _dist dist",
-    "production-sea": "webpack --progress --profile --bail && rimraf dist && mv _dist dist",
-    "staging": "webpack --progress --profile --bail && rimraf dist && mv _dist dist",
+    "production-usa":
+      "webpack --progress --profile --bail && rimraf dist && mv _dist dist",
+    "production-canada":
+      "webpack --progress --profile --bail && rimraf dist && mv _dist dist",
+    "production-sea":
+      "webpack --progress --profile --bail && rimraf dist && mv _dist dist",
+    "staging":
+      "webpack --progress --profile --bail && rimraf dist && mv _dist dist",
     "build:prod-usa": "yarn run production-usa",
     "build:prod-can": "yarn run production-canada",
     "build:prod-sea": "yarn run production-sea",
@@ -27,8 +31,9 @@
     "e2e-live": "protractor --elementExplorer",
     "pretest": "yarn run lint",
     "test": "karma start",
-    "precommit": "pretty-quick --staged",
-    "posttest": "remap-istanbul -i coverage/json/coverage-final.json -o coverage/html -t html",
+    "precommitX": "pretty-quick --staged",
+    "posttest":
+      "remap-istanbul -i coverage/json/coverage-final.json -o coverage/html -t html",
     "test-watch": "karma start --no-single-run --auto-watch",
     "ci": "yarn run e2e && yarn run test",
     "docs": "typedoc --options typedoc.json client/app/app.component.ts",
