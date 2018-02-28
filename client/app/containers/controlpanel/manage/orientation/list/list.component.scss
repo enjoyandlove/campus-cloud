@@ -1,0 +1,52 @@
+@import '~styles/core/colors';
+@import '~bootstrap/variables';
+@import '~styles/components/form';
+@import '~styles/components/card';
+@import '~styles/components/button';
+@import '~styles/components/dropdown';
+
+.no-content {
+  @include card-margin();
+}
+
+.cp-form {
+
+  &__header {
+
+    span.hover {
+      position: relative;
+
+      > span i {
+        top: 1px;
+        font-size: 17px;
+        position: absolute;
+        padding-left: 6px;
+      }
+    }
+  }
+}
+
+.orientation {
+  padding: 0;
+  list-style: none;
+
+  &__dropdown {
+    right: 50px;
+    position: absolute;
+    z-index: 1000;
+
+    ul {
+      @include cpDropdownMenu();
+
+      width: 245px;
+      border-radius: 4px;
+      overflow-y: auto;
+      box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.3);
+
+      li {
+        padding: 6px 0 12px 12px;
+      }
+    }
+
+  }
+}

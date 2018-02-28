@@ -1,0 +1,46 @@
+<div class="cpmodal">
+  <div class="cpmodal__header">
+    <div class="row">
+      <div class="col-xs-12 text-center">
+        <span i18n><strong>{{ 'orientation_duplicate_program' | cpI18n }}</strong></span>
+
+        <span
+          data-dismiss="modal"
+          (click)="resetModal()"
+          class="pull-right hover cpmodal__header__close">
+            &times;
+          </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cpmodal__body">
+    <cp-calendar-form
+      #duplicateForm
+      [form]="form"
+      [isOrientation]="isOrientation">
+    </cp-calendar-form>
+  </div>
+
+  <div class="cpmodal__footer">
+    <div class="row">
+      <div class="col-xs-6 col-xs-offset-6 text-right">
+        <button
+          type="button"
+          data-dismiss="modal"
+          (click)="resetModal()"
+          class="cpbtn cpbtn--cancel" i18n>
+          {{ 'cancel' | cpI18n }}
+        </button>
+
+        <button
+          type="button"
+          (click)="onSubmit()"
+          class="cpbtn cpbtn--primary"i18n
+          [disabled]="!form.valid">
+          {{ 'save' | cpI18n }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

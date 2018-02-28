@@ -1,0 +1,141 @@
+<div class="row">
+  <div class="col-xs-12">
+    <cp-orientation-list-action-box
+      (search)="onSearch($event)"
+      (launchCreateModal)="onLaunchCreateModal()">
+    </cp-orientation-list-action-box>
+  </div>
+</div>
+
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div *ngSwitchCase="false">
+    <cp-no-content
+      class="no-content"
+      *ngIf="!state.orientationPrograms.length"
+      [noContentText]="cpI18n.translate('orientation_no_results_found')">
+    </cp-no-content>
+
+    <div *ngIf="state.orientationPrograms.length">
+      <ul class="orientation cp-form">
+        <li class="cp-form__header col-xs-12">
+          <div class="row">
+            <span
+              class="col-xs-5 hover"
+              (click)="doSort('name')">
+              {{ 'name' | cpI18n }}
+              <span *ngIf="state.sort_field === 'name'">
+                <i class="material-icons">
+                  {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+                </i>
+              </span>
+            </span>
+            <span
+              class="col-xs-3 hover"
+              (click)="doSort('created_time')">
+              {{ 'duration' | cpI18n }}
+              <span *ngIf="state.sort_field === 'created_time'">
+                <i class="material-icons">
+                  {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+                </i>
+              </span>
+            </span>
+            <span class="col-xs-2 hover">
+              {{ 'members' | cpI18n }}
+            </span>
+            <span class="col-xs-2 hover">
+              {{ 'events' | cpI18n }}
+            </span>
+            <span class="col-xs-1 hover"></span>
+          </div>
+        </li>
+
+        <li class="cp-form__item col-xs-12" *ngFor="let program of state.orientationPrograms;">
+          <div class="row">
+            <span class="col-xs-5 text-truncate hover">
+              <a [routerLink]="[program.id+'/info']">
+                <strong>
+                  {{ program.name }}
+                </strong>
+              </a>
+              <br>
+              {{ program.description }}
+            </span>
+            <span class="col-xs-3 text-truncate">
+              {{ program.start | cpDatePipe:dateFormat }} - {{ program.end | cpDatePipe:dateFormat }}
+            </span>
+            <span class="col-xs-2">
+              {{ program.members }}
+            </span>
+            <span class="col-xs-1">
+              {{ program.events }}
+            </span>
+            <span class="col-xs-1">
+             <strong
+               class="hover"
+               (click)="isOpen = !isOpen;
+               selectedProgram = program">
+               ...
+             </strong>
+              <div
+                *ngIf="isOpen && selectedProgram.id === program.id"
+                class="orientation__dropdown">
+                <ul>
+                  <li
+                    (click)="isOpen = false;
+                    launchDuplicateModal = true;"
+                    class="orientation__dropdown__item"
+                    data-toggle="modal"
+                    data-target="#programDuplicate">
+                      <i class="material-icons">add</i>
+                      <span>{{ 'orientation_duplicate_program' | cpI18n }}</span>
+                  </li>
+                  <li
+                    (click)="isOpen = false;
+                    launchDeleteModal = true;"
+                    class="orientation__dropdown__item"
+                    data-toggle="modal"
+                    data-target="#programDelete">
+                      <i class="material-icons">close</i>
+                      <span>{{ 'orientation_delete_program' | cpI18n }}</span>
+                  </li>
+                </ul>
+              </div>
+            </span>
+          </div>
+        </li>
+      </ul>
+
+      <cp-pagination
+        [pageNext]="pageNext"
+        [pagePrev]="pagePrev"
+        [pageNumber]="pageNumber"
+        (next)="onPaginationNext()"
+        (previous)="onPaginationPrevious()">
+      </cp-pagination>
+    </div>
+  </div>
+</div>
+
+<cp-modal modalId="programCreate" *ngIf="launchCreateModal">
+  <cp-orientation-program-create
+    [isOrientation]="isOrientation"
+    (created)="onCreated($event)">
+  </cp-orientation-program-create>
+</cp-modal>
+
+<cp-modal modalId="programDuplicate" *ngIf="launchDuplicateModal">
+  <cp-orientation-duplicate-program
+    [isOrientation]="isOrientation"
+    [orientationProgram]="selectedProgram"
+    (created)="onCreated($event)">
+  </cp-orientation-duplicate-program>
+</cp-modal>
+
+<cp-modal modalId="programDelete" *ngIf="launchDeleteModal">
+  <cp-orientation-program-delete
+    [orientationProgram]="selectedProgram"
+    (deleted)="onDeleted($event)">
+  </cp-orientation-program-delete>
+</cp-modal>

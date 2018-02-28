@@ -48,6 +48,11 @@
       "privilege": 16,
       "label": "calendars",
       "url": "/manage/calendars"
+    },
+    {
+      "privilege": 17,
+      "label": "orientation",
+      "url": "/manage/orientation"
     }
   ]
 }

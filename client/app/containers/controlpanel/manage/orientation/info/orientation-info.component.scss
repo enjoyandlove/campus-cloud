@@ -1,0 +1,20 @@
+@import '~styles/core/colors';
+@import '~styles/components/card';
+@import '~styles/core/typography';
+@import '~styles/components/button';
+
+.orientation {
+  @include card-margin();
+  margin-top: 0;
+
+  &__title {
+    margin-bottom: 0;
+    @include font-bold();
+    @include font-24px;
+  }
+
+  &__description {
+    margin-top: 25px;
+    color: $color-secondary-text;
+  }
+}

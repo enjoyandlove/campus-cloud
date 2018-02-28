@@ -16,10 +16,7 @@ const appRoutes: Routes = [
     children: [
       { path: 'events', loadChildren: './events/events.module#EventsModule' },
 
-      {
-        path: 'services',
-        loadChildren: './services/services.module#ServicesModule',
-      },
+      { path: 'services', loadChildren: './services/services.module#ServicesModule' },
 
       { path: 'clubs', loadChildren: './clubs/clubs.module#ClubsModule' },
 
@@ -35,10 +32,9 @@ const appRoutes: Routes = [
 
       { path: 'calendars', loadChildren: './calendars/calendars.module#CalendarsModule' },
 
-      {
-        path: 'locations',
-        loadChildren: './locations/locations.module#LocationsModule',
-      },
+      { path: 'locations', loadChildren: './locations/locations.module#LocationsModule' },
+
+      { path: 'orientation', loadChildren: './orientation/orientation.module#OrientationModule' },
     ],
   },
 ];

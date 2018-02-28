@@ -1,7 +1,7 @@
 <form [formGroup]="form">
   <div class="row form-group">
     <div class="col-xs-12">
-      <label i18n>{{ 'calendars_label_name' | cpI18n }}</label>
+      <label>{{ 'name' | cpI18n }}</label>
       <input
         type="text"
         class="form-control"
@@ -10,7 +10,7 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <label i18n>{{ 'calendars_label_description' | cpI18n }}</label>
+      <label>{{ 'description' | cpI18n }}</label>
       <textarea
         class="form-control"
         formControlName="description">
@@ -18,7 +18,7 @@
     </div>
   </div>
   <br>
-  <div class="row" *ngIf="isOrientation">
+  <div class="row">
     <div class="col-xs-10">
       <label>{{ 'orientation_enable_membership' | cpI18n }}</label>
       <p>{{ 'orientation_enable_membership_description' | cpI18n }}</p>

@@ -1544,6 +1544,30 @@
   "orientation": {
     "message": "Orientation"
   },
+  "orientation_create_program": {
+    "message": "Create Program"
+  },
+  "orientation_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "orientation_delete_program": {
+    "message": "Delete Program"
+  },
+  "orientation_duplicate_program": {
+    "message": "Duplicate Program"
+  },
+  "orientation_edit_program": {
+    "message": "Edit Program"
+  },
+  "orientation_enable_membership": {
+    "message": "Enable membership"
+  },
+  "orientation_enable_membership_description": {
+    "message": "Membership will create a wall of this group"
+  },
+  "orientation_no_results_found": {
+    "message": "No Programs found"
+  },
   "password": {
     "message": "Mot de passe"
   },
@@ -1910,7 +1934,7 @@
     "message": "Téléverser photo"
   },
   "urgent": {
-    "message": "Urgent"
+    "message": "Important"
   },
   "users": {
     "message": "Utilisateurs"

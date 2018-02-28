@@ -1,0 +1,65 @@
+[
+  {
+    "id": 59,
+    "name": "let's create a new list changed",
+    "description": "removed 3",
+    "events": 1,
+    "members": 10,
+    "start": "1557637200",
+    "end": "1557637200"
+  },
+  {
+    "id": 81,
+    "name": "ddd",
+    "description": "ddddd",
+    "events": 1,
+    "members": 10,
+    "start": "1557637200",
+    "end": "1557637200"
+  },
+  {
+    "id": 82,
+    "name": "dfsaf",
+    "description": "fdsafs",
+    "events": 1,
+    "members": 10,
+    "start": "1557637200",
+    "end": "1557637200"
+  },
+  {
+    "id": 83,
+    "name": "new list with backend search",
+    "description": "fdsafas",
+    "events": 12,
+    "members": 10,
+    "start": "1557637200",
+    "end": "1557637200"
+  },
+  {
+    "id": 84,
+    "name": "new list with no duplicates",
+    "description": "fdsafsd",
+    "events": 12,
+    "members": 10,
+    "start": "1557637200",
+    "end": "1557637200"
+  },
+  {
+    "id": 85,
+    "name": "web squad",
+    "description": "fdsaf",
+    "events": 1,
+    "members": 10,
+    "start": "1557637200",
+    "end": "1557637200"
+  },
+  {
+    "id": 86,
+    "name": "dfsa",
+    "description": "fdsa",
+    "events": 12,
+    "members": 10,
+    "start": "1557637200",
+    "end": "1557637200"
+  }
+]

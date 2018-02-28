@@ -2,13 +2,12 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'cp-calendar-form',
-  templateUrl: './calendar-form.component.html',
-  styleUrls: ['./calendar-form.component.scss'],
+  selector: 'cp-orientation-program-form',
+  templateUrl: './orientation-program-form.component.html',
+  styleUrls: ['./orientation-program-form.component.scss'],
 })
-export class CalendarsFormComponent implements OnInit {
+export class OrientationProgramFormComponent implements OnInit {
   @Input() form: FormGroup;
-  @Input() isOrientation = false;
 
   @Output()
   submitted: EventEmitter<{
