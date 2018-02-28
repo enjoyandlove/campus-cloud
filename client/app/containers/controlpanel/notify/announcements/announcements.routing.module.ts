@@ -7,7 +7,7 @@ const appRoutes: Routes = [
   {
     path: '',
     component: AnnouncementsListComponent,
-    data: { zendesk: 'announcements' },
+    data: { zendesk: 'notify' },
   },
 ];
 @NgModule({

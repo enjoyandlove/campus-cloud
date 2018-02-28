@@ -110,35 +110,30 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
       this.endRange,
     );
 
-    super
-      .fetchData(stream$)
-      .then((res) => {
-        this.engagementData = res.data.reduce(
-          (result, current) => {
-            if (isSameDay(current.time_epoch, current.time_epoch)) {
-              if (setTimeDataToZero(current.time_epoch) in result) {
-                result[setTimeDataToZero(current.time_epoch)] = [
-                  ...result[setTimeDataToZero(current.time_epoch)],
-                  current,
-                ];
-              } else {
-                result[setTimeDataToZero(current.time_epoch)] = [current];
-              }
+    super.fetchData(stream$).then((res) => {
+      this.engagementData = res.data.reduce(
+        (result, current) => {
+          if (isSameDay(current.time_epoch, current.time_epoch)) {
+            if (setTimeDataToZero(current.time_epoch) in result) {
+              result[setTimeDataToZero(current.time_epoch)] = [
+                ...result[setTimeDataToZero(current.time_epoch)],
+                current,
+              ];
             } else {
               result[setTimeDataToZero(current.time_epoch)] = [current];
             }
+          } else {
+            result[setTimeDataToZero(current.time_epoch)] = [current];
+          }
 
-            return result;
-          },
+          return result;
+        },
 
-          {},
-        );
+        {},
+      );
 
-        this.engagementsByDay = Object.keys(this.engagementData).reverse();
-      })
-      .catch((err) => {
-        throw new Error(err);
-      });
+      this.engagementsByDay = Object.keys(this.engagementData).reverse();
+    });
   }
 
   onFilter(scope) {

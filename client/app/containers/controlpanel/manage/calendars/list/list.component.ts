@@ -83,10 +83,7 @@ export class CalendarsListComponent extends BaseComponent implements OnInit {
 
     super
       .fetchData(this.service.getCalendars(start, end, search))
-      .then((res) => (this.state = { ...this.state, calendars: res.data }))
-      .catch((err) => {
-        throw new Error(err);
-      });
+      .then((res) => (this.state = { ...this.state, calendars: res.data }));
   }
 
   doSort(sort_field) {

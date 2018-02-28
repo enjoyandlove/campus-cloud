@@ -82,18 +82,13 @@ export class EngagementComponent extends BaseComponent implements OnInit {
   fetchChartData() {
     const search = this.buildSearchHeaders();
 
-    super
-      .fetchData(this.service.getChartData(search))
-      .then((res) => {
-        this.chartData = {
-          ...res.data,
-          starts: this.filterState.range.payload.range.start,
-          ends: this.filterState.range.payload.range.end,
-        };
-      })
-      .catch((err) => {
-        throw new Error(err);
-      });
+    super.fetchData(this.service.getChartData(search)).then((res) => {
+      this.chartData = {
+        ...res.data,
+        starts: this.filterState.range.payload.range.start,
+        ends: this.filterState.range.payload.range.end,
+      };
+    });
   }
 
   onDoCompose(data): void {

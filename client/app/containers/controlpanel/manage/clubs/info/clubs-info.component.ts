@@ -79,9 +79,6 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
           this.club.advisor_firstname ||
           this.club.advisor_lastname ||
           this.club.advisor_email;
-      })
-      .catch((err) => {
-        throw new Error(err);
       });
   }
 

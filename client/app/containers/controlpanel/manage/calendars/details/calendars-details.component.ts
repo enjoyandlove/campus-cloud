@@ -141,14 +141,9 @@ export class CalendarsDetailComponent extends BaseComponent implements OnInit {
       return items$;
     });
 
-    super
-      .fetchData(stream$)
-      .then((res) => {
-        this.state = { ...this.state, items: res.data };
-        this.buildHeader();
-      })
-      .catch((err) => {
-        throw new Error(err);
-      });
+    super.fetchData(stream$).then((res) => {
+      this.state = { ...this.state, items: res.data };
+      this.buildHeader();
+    });
   }
 }

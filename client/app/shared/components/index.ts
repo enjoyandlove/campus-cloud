@@ -15,6 +15,7 @@ export * from './cp-trackers';
 export * from './cp-dropdown';
 export * from './cp-checkbox';
 export * from './cp-searchbox';
+export * from './cp-list-modal';
 export * from './cp-typeahead';
 export * from './cp-top-banner';
 export * from './cp-onboarding';

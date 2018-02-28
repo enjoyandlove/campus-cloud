@@ -59,21 +59,16 @@ export class ServicesProviderDetailsComponent extends BaseComponent
       return providers$;
     });
 
-    super
-      .fetchData(stream$)
-      .then((res) => {
-        this.provider = res.data;
-        this.eventRating = (
-          this.provider.avg_rating_percent *
-          this.MAX_RATE /
-          100
-        ).toFixed(1);
+    super.fetchData(stream$).then((res) => {
+      this.provider = res.data;
+      this.eventRating = (
+        this.provider.avg_rating_percent *
+        this.MAX_RATE /
+        100
+      ).toFixed(1);
 
-        this.buildHeader();
-      })
-      .catch((err) => {
-        throw new Error(err);
-      });
+      this.buildHeader();
+    });
   }
 
   buildHeader() {

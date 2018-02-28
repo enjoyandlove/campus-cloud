@@ -4,6 +4,7 @@
   data-placement="bottom"
   class="text-muted with-tooltip pop"
   data-html="true"
-  data-original-title="" [attr.data-content]="content" i18n>
-  <i class="material-icons">info_outline</i>
+  [attr.data-content]="content">
+  <i class="material-icons" *ngIf="!toolTipContent.text">info_outline</i>
+  <span *ngIf="toolTipContent.text" class="cpbtn cpbtn--link">{{ toolTipContent.text }}</span>
 </span>

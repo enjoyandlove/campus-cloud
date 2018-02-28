@@ -14,27 +14,70 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
     children: [
-      { path: 'events', loadChildren: './events/events.module#EventsModule' },
+      {
+        path: 'events',
+        data: { zendesk: 'events' },
+        loadChildren: './events/events.module#EventsModule',
+      },
 
-      { path: 'services', loadChildren: './services/services.module#ServicesModule' },
+      {
+        path: 'services',
+        data: { zendesk: 'services' },
+        loadChildren: './services/services.module#ServicesModule',
+      },
 
-      { path: 'clubs', loadChildren: './clubs/clubs.module#ClubsModule' },
+      {
+        path: 'clubs',
+        data: { zendesk: 'clubs' },
+        loadChildren: './clubs/clubs.module#ClubsModule',
+      },
 
-      { path: 'athletics', loadChildren: './athletics/athletics.module#AthleticsModule' },
+      {
+        path: 'athletics',
+        data: { zendesk: 'athletics' },
+        loadChildren: './athletics/athletics.module#AthleticsModule',
+      },
 
-      { path: 'links', loadChildren: './links/links.module#LinksModule' },
+      {
+        path: 'links',
+        data: { zendesk: 'links' },
+        loadChildren: './links/links.module#LinksModule',
+      },
 
-      { path: 'feeds', loadChildren: './feeds/feeds.module#FeedsModule' },
+      {
+        path: 'feeds',
+        data: { zendesk: 'walls' },
+        loadChildren: './feeds/feeds.module#FeedsModule',
+      },
 
-      { path: 'clubs', loadChildren: './clubs/clubs.module#ClubsModule' },
+      {
+        path: 'clubs',
+        data: { zendesk: 'clubs' },
+        loadChildren: './clubs/clubs.module#ClubsModule',
+      },
 
-      { path: 'lists', loadChildren: './lists/lists.module#ListsModule' },
+      {
+        path: 'lists',
+        data: { zendesk: 'lists' },
+        loadChildren: './lists/lists.module#ListsModule',
+      },
 
-      { path: 'calendars', loadChildren: './calendars/calendars.module#CalendarsModule' },
+      {
+        path: 'calendars',
+        data: { zendesk: 'calendars' },
+        loadChildren: './calendars/calendars.module#CalendarsModule',
+      },
 
-      { path: 'locations', loadChildren: './locations/locations.module#LocationsModule' },
-
-      { path: 'orientation', loadChildren: './orientation/orientation.module#OrientationModule' },
+      {
+        path: 'locations',
+        data: { zendesk: 'locations' },
+        loadChildren: './locations/locations.module#LocationsModule',
+      },
+      {
+        path: 'orientation',
+        data: { zendesk: 'orientation' },
+        loadChildren: './orientation/orientation.module#OrientationModule',
+      },
     ],
   },
 ];

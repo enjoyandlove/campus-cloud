@@ -17,32 +17,32 @@ const appRoutes: Routes = [
   {
     path: '',
     component: CalendarsListComponent,
-    data: { zendesk: 'Calendars' },
+    data: { zendesk: 'calendars' },
   },
   {
     path: ':calendarId',
     component: CalendarsDetailComponent,
-    data: { zendesk: 'Calendar Items' },
+    data: { zendesk: 'calendars' },
   },
   // TODO Split to its own module
   {
     path: ':calendarId/items/create',
     component: CalendarsItemCreateComponent,
-    data: { zendesk: 'create calendar item' },
+    data: { zendesk: 'calendars' },
   },
   {
     path: ':calendarId/items/import',
-    data: { zendesk: 'import calendar items' },
+    data: { zendesk: 'calendars' },
     component: CalendarsItemsBulkCreateComponent,
   },
   {
     path: ':calendarId/items/:itemId',
-    data: { zendesk: 'calendar item details' },
+    data: { zendesk: 'calendars' },
     component: CalendarsItemsDetailsComponent,
   },
   {
     path: ':calendarId/items/:itemId/edit',
-    data: { zendesk: 'edit calendar item' },
+    data: { zendesk: 'calendars' },
     component: CalendarsItemsEditComponent,
   },
 ];

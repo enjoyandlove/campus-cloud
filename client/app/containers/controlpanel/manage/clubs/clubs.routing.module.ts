@@ -12,23 +12,24 @@ const appRoutes: Routes = [
   {
     path: 'create',
     component: ClubsCreateComponent,
-    data: { zendesk: 'create club' },
+    data: { zendesk: 'clubs' },
   },
 
   {
     path: ':clubId/edit',
     component: ClubsEditComponent,
-    data: { zendesk: 'edit club' },
+    data: { zendesk: 'clubs' },
   },
 
   {
     path: 'import/excel',
     component: ClubsExcelComponent,
-    data: { zendesk: 'import clubs from csv' },
+    data: { zendesk: 'clubs' },
   },
 
   {
     path: ':clubId',
+    data: { zendesk: 'clubs' },
     loadChildren: './details/details.module#ClubsDetailsModule',
   },
 ];

@@ -7,7 +7,7 @@ const appRoutes: Routes = [
   {
     path: '',
     component: LocationsListComponent,
-    data: { zendesk: 'Locations' },
+    data: { zendesk: 'locations' },
   },
 ];
 @NgModule({

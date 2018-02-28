@@ -20,7 +20,7 @@ const state: IState = {
   query: null,
   type: null,
   sort_field: 'sent_time',
-  sort_direction: 'asc',
+  sort_direction: 'desc',
 };
 
 declare var $: any;
@@ -33,10 +33,13 @@ declare var $: any;
 export class AnnouncementsListComponent extends BaseComponent
   implements OnInit {
   loading;
+  buttonText;
+  headerText;
   messageType;
   isDeleteModal;
   isComposeModal;
   suggestions = [];
+  viewMoreRecipients = [];
   state: IState = state;
   deleteAnnouncement = null;
   dateFormat = FORMAT.DATETIME;
@@ -92,6 +95,20 @@ export class AnnouncementsListComponent extends BaseComponent
     this.fetch();
   }
 
+  onViewMoreModal(recipients) {
+    this.buttonText = 'done';
+    this.headerText = `(${recipients.length})
+      ${this.cpI18n.translate('notify_announcement_recipient')}`;
+    this.viewMoreRecipients = recipients;
+    setTimeout(
+      () => {
+        $('#viewMoreModal').modal();
+      },
+
+      1,
+    );
+  }
+
   onLaunchCreateModal() {
     this.isComposeModal = true;
     setTimeout(
@@ -131,10 +148,7 @@ export class AnnouncementsListComponent extends BaseComponent
       .then(
         (res) =>
           (this.state = Object.assign({}, this.state, { messages: res.data })),
-      )
-      .catch((err) => {
-        throw new Error(err);
-      });
+      );
   }
 
   onCreated() {

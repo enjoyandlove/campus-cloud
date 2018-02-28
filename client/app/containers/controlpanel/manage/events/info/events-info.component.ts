@@ -1,3 +1,5 @@
+/*tslint:disable:max-line-length */
+
 import { Component, OnInit, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ActivatedRoute } from '@angular/router';
@@ -9,9 +11,7 @@ import { FORMAT } from '../../../../../shared/pipes/date';
 import { EventUtilService } from './../events.utils.service';
 import { BaseComponent } from '../../../../../base/base.component';
 import { CPI18nService } from '../../../../../shared/services/index';
-import {
-  IResourceBanner
-} from '../../../../../shared/components/cp-resource-banner/cp-resource.interface';
+import { IResourceBanner } from '../../../../../shared/components/cp-resource-banner/cp-resource.interface';
 
 @Component({
   selector: 'cp-events-info',
@@ -55,36 +55,35 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   private fetch() {
     super.isLoading().subscribe((res) => (this.loading = res));
 
-    super
-      .fetchData(this.service.getEventById(this.eventId))
-      .then((event) => {
-        this.event = event.data;
+    super.fetchData(this.service.getEventById(this.eventId)).then((event) => {
+      this.event = event.data;
 
-        this.isPastEvent = this.utils.isPastEvent(this.event);
+      this.isPastEvent = this.utils.isPastEvent(this.event);
 
-        this.urlPrefix = this.utils.buildUrlPrefix(this.clubId, this.serviceId, this.isAthletic);
+      this.urlPrefix = this.utils.buildUrlPrefix(
+        this.clubId,
+        this.serviceId,
+        this.isAthletic,
+      );
 
-        this.banner =
-          this.event.poster_url === ''
-            ? this.event.store_logo_url
-            : this.event.poster_url;
+      this.banner =
+        this.event.poster_url === ''
+          ? this.event.store_logo_url
+          : this.event.poster_url;
 
-        this.buildHeader(this.event);
+      this.buildHeader(this.event);
 
-        this.mapCenter = new BehaviorSubject({
-          lat: event.data.latitude,
-          lng: event.data.longitude,
-        });
-
-        this.resourceBanner = {
-          image: this.banner,
-          heading: this.event.title,
-          subheading: this.event.store_name
-        };
-      })
-      .catch((err) => {
-        throw new Error(err);
+      this.mapCenter = new BehaviorSubject({
+        lat: event.data.latitude,
+        lng: event.data.longitude,
       });
+
+      this.resourceBanner = {
+        image: this.banner,
+        heading: this.event.title,
+        subheading: this.event.store_name,
+      };
+    });
   }
 
   private buildHeader(event) {

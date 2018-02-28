@@ -19,12 +19,12 @@ export class CheckinService extends CallbackService {
     return super.get(url, { search }, silent).map((res) => res.json());
   }
 
-  getEventData(search: URLSearchParams) {
+  getEventData(search: URLSearchParams, silent) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${
       API.ENDPOINTS.EXTERNAL_EVENT_CHECKIN
     }/`;
 
-    return super.get(url, { search }).map((res) => res.json());
+    return super.get(url, { search }, silent).map((res) => res.json());
   }
 
   doEventCheckin(data: any, search: URLSearchParams) {
