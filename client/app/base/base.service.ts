@@ -3,7 +3,7 @@ import {
   Http,
   RequestOptionsArgs,
   Response,
-  ResponseOptions,
+  ResponseOptions
 } from '@angular/http';
 
 import { Injectable } from '@angular/core';
@@ -21,17 +21,17 @@ import { API } from './../config/api/index';
 
 const buildCommonHeaders = () => {
   const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(
-    appStorage.keys.SESSION,
+    appStorage.keys.SESSION
   )}`;
 
   return new Headers({
     'Content-Type': 'application/json',
-    Authorization: auth,
+    Authorization: auth
   });
 };
 
 const emptyResponse = Observable.of(
-  new Response(new ResponseOptions({ body: JSON.stringify([]) })),
+  new Response(new ResponseOptions({ body: JSON.stringify([]) }))
 );
 
 @Injectable()
@@ -105,8 +105,7 @@ export abstract class BaseService {
   catchError(err) {
     switch (err.status) {
       case 401:
-        appStorage.clear();
-        this.router.navigate(['/login']);
+        this.router.navigate(['/logout']);
 
         return emptyResponse;
 
