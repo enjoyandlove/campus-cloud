@@ -1,14 +1,24 @@
-import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  CanActivateChild,
+  Router
+} from "@angular/router";
 
-import { URLSearchParams } from '@angular/http';
-import { Injectable } from '@angular/core';
-import * as Raven from 'raven-js';
+import { URLSearchParams } from "@angular/http";
+import { Injectable } from "@angular/core";
+import * as Raven from "raven-js";
 
-import { CPSession } from '../../session';
-import { appStorage } from '../../shared/utils';
-import { base64 } from './../../shared/utils/encrypt/encrypt';
-import { CP_PRIVILEGES_MAP } from './../../shared/constants';
-import { AdminService, SchoolService, StoreService, ZendeskService } from '../../shared/services';
+import { CPSession } from "../../session";
+import { appStorage } from "../../shared/utils";
+import { base64 } from "./../../shared/utils/encrypt/encrypt";
+import { CP_PRIVILEGES_MAP } from "./../../shared/constants";
+import {
+  AdminService,
+  SchoolService,
+  StoreService,
+  ZendeskService
+} from "../../shared/services";
 
 /**
  * Guard to check if user is authenticated
@@ -17,7 +27,7 @@ import { AdminService, SchoolService, StoreService, ZendeskService } from '../..
 import {
   canAccountLevelReadResource,
   canSchoolReadResource
-} from './../../shared/utils/privileges';
+} from "./../../shared/utils/privileges";
 
 @Injectable()
 export class AuthGuard implements CanActivate, CanActivateChild {
@@ -32,12 +42,12 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
   preLoadUser(): Promise<any> {
     const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    search.append("school_id", this.session.g.get("school").id.toString());
 
     return this.adminService
       .getAdmins(1, 1, search)
       .map(users => {
-        this.session.g.set('user', users[0]);
+        this.session.g.set("user", users[0]);
         this.setUserContext();
 
         return users;
@@ -51,7 +61,9 @@ export class AuthGuard implements CanActivate, CanActivateChild {
       .map(schools => {
         let schoolIdInUrl;
         let schoolObjFromUrl;
-        const storedSchool = JSON.parse(appStorage.get(appStorage.keys.DEFAULT_SCHOOL));
+        const storedSchool = JSON.parse(
+          appStorage.get(appStorage.keys.DEFAULT_SCHOOL)
+        );
 
         try {
           schoolIdInUrl = base64.decode(route.queryParams.school);
@@ -67,16 +79,19 @@ export class AuthGuard implements CanActivate, CanActivateChild {
           });
         }
 
-        this.session.g.set('schools', schools);
+        this.session.g.set("schools", schools);
 
-        this.session.g.set('school', storedSchool || schoolObjFromUrl || schools[0]);
+        this.session.g.set(
+          "school",
+          storedSchool || schoolObjFromUrl || schools[0]
+        );
       })
       .toPromise();
   }
 
   fetcthStores(): Promise<any> {
     const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    search.append("school_id", this.session.g.get("school").id.toString());
 
     return this.storeService.getStores(search).toPromise();
   }
@@ -85,7 +100,8 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     let defaultHost = null;
 
     return new Promise(resolve => {
-      const schoolDefaultHost = this.session.g.get('school').main_union_store_id;
+      const schoolDefaultHost = this.session.g.get("school")
+        .main_union_store_id;
 
       stores.map(store => {
         if (store.value === schoolDefaultHost) {
@@ -99,9 +115,9 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   }
 
   private setZendesk(routeObj) {
-    if ('zendesk' in routeObj) {
+    if ("zendesk" in routeObj) {
       this.zendeskService.setHelpCenterSuggestions({
-        labels: [routeObj['zendesk']]
+        labels: [routeObj["zendesk"]]
       });
     }
   }
@@ -110,20 +126,20 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     this.setZendesk(childRoute.data);
 
     const protectedRoutes = [
-      'events',
-      'feeds',
-      'clubs',
-      'athletics',
-      'calendars',
-      'services',
-      'lists',
-      'links',
-      'locations',
-      'announcements',
-      'templates',
-      'banner',
-      'dashboard',
-      'students'
+      "events",
+      "feeds",
+      "clubs",
+      "athletics",
+      "calendars",
+      "services",
+      "lists",
+      "links",
+      "locations",
+      "announcements",
+      "templates",
+      "banner",
+      "dashboard",
+      "students"
     ];
 
     const routeToPrivilege = {
@@ -162,13 +178,19 @@ export class AuthGuard implements CanActivate, CanActivateChild {
       if (protectedRoutes.includes(path)) {
         let canAccess;
 
-        const schoolLevel = canSchoolReadResource(this.session.g, routeToPrivilege[path]);
-        const accountLevel = canAccountLevelReadResource(this.session.g, routeToPrivilege[path]);
+        const schoolLevel = canSchoolReadResource(
+          this.session.g,
+          routeToPrivilege[path]
+        );
+        const accountLevel = canAccountLevelReadResource(
+          this.session.g,
+          routeToPrivilege[path]
+        );
 
         canAccess = schoolLevel || accountLevel;
 
         if (!canAccess) {
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(["/dashboard"]);
         }
 
         return canAccess;
@@ -179,23 +201,23 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   }
 
   setUserContext() {
-    const email = this.session.g.get('user').email;
-    const id = this.session.g.get('user').id.toString();
-    const username = `${this.session.g.get('user').firstname} ${
-      this.session.g.get('user').lastname
+    const email = this.session.g.get("user").email;
+    const id = this.session.g.get("user").id.toString();
+    const username = `${this.session.g.get("user").firstname} ${
+      this.session.g.get("user").lastname
     }`;
 
-    ga('set', 'userId', email);
+    ga("set", "userId", email);
 
     Raven.setUserContext({ id, username, email });
   }
 
   redirectAndSaveGoTo(url): boolean {
-    this.router.navigate(['/login'], {
+    this.router.navigate(["/login"], {
       queryParams: {
         goTo: encodeURIComponent(url)
       },
-      queryParamsHandling: 'merge'
+      queryParamsHandling: "merge"
     });
 
     return false;
