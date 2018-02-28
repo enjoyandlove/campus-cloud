@@ -1,9 +1,4 @@
-import {
-  ActivatedRouteSnapshot,
-  CanActivate,
-  CanActivateChild,
-  Router
-} from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router } from '@angular/router';
 
 import { URLSearchParams } from '@angular/http';
 import { Injectable } from '@angular/core';
@@ -13,12 +8,7 @@ import { CPSession } from '../../session';
 import { appStorage } from '../../shared/utils';
 import { base64 } from './../../shared/utils/encrypt/encrypt';
 import { CP_PRIVILEGES_MAP } from './../../shared/constants';
-import {
-  AdminService,
-  SchoolService,
-  StoreService,
-  ZendeskService
-} from '../../shared/services';
+import { AdminService, SchoolService, StoreService, ZendeskService } from '../../shared/services';
 
 /**
  * Guard to check if user is authenticated
@@ -46,7 +36,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
     return this.adminService
       .getAdmins(1, 1, search)
-      .map((users) => {
+      .map(users => {
         this.session.g.set('user', users[0]);
         this.setUserContext();
 
@@ -58,12 +48,10 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   preLoadSchool(route: ActivatedRouteSnapshot): Promise<any> {
     return this.schoolService
       .getSchools()
-      .map((schools) => {
+      .map(schools => {
         let schoolIdInUrl;
         let schoolObjFromUrl;
-        const storedSchool = JSON.parse(
-          appStorage.get(appStorage.keys.DEFAULT_SCHOOL)
-        );
+        const storedSchool = JSON.parse(appStorage.get(appStorage.keys.DEFAULT_SCHOOL));
 
         try {
           schoolIdInUrl = base64.decode(route.queryParams.school);
@@ -81,10 +69,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
         this.session.g.set('schools', schools);
 
-        this.session.g.set(
-          'school',
-          storedSchool || schoolObjFromUrl || schools[0]
-        );
+        this.session.g.set('school', storedSchool || schoolObjFromUrl || schools[0]);
       })
       .toPromise();
   }
@@ -99,11 +84,10 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   setDefaultHost(stores): Promise<null> {
     let defaultHost = null;
 
-    return new Promise((resolve) => {
-      const schoolDefaultHost = this.session.g.get('school')
-        .main_union_store_id;
+    return new Promise(resolve => {
+      const schoolDefaultHost = this.session.g.get('school').main_union_store_id;
 
-      stores.map((store) => {
+      stores.map(store => {
         if (store.value === schoolDefaultHost) {
           defaultHost = store;
         }
@@ -178,14 +162,8 @@ export class AuthGuard implements CanActivate, CanActivateChild {
       if (protectedRoutes.includes(path)) {
         let canAccess;
 
-        const schoolLevel = canSchoolReadResource(
-          this.session.g,
-          routeToPrivilege[path]
-        );
-        const accountLevel = canAccountLevelReadResource(
-          this.session.g,
-          routeToPrivilege[path]
-        );
+        const schoolLevel = canSchoolReadResource(this.session.g, routeToPrivilege[path]);
+        const accountLevel = canAccountLevelReadResource(this.session.g, routeToPrivilege[path]);
 
         canAccess = schoolLevel || accountLevel;
 
@@ -212,20 +190,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     Raven.setUserContext({ id, username, email });
   }
 
-  // redirectAndSaveGoTo(url) {
-  //   this.router
-  //     .navigate(['/login'], {
-  //       queryParams: {
-  //         goTo: encodeURIComponent(url)
-  //       },
-  //       queryParamsHandling: 'merge'
-  //     })
-  //     .then(() => location.reload());
-  // }
-
   redirectAndSaveGoTo(url): boolean {
-    appStorage.clear();
-
     this.router.navigate(['/login'], {
       queryParams: {
         goTo: encodeURIComponent(url)
@@ -244,11 +209,11 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     if (sessionKey) {
       if (!this.session.g.size) {
         return this.preLoadSchool(activatedRoute)
-          .then((_) => this.preLoadUser())
-          .then((_) => this.fetcthStores())
-          .then((stores) => this.setDefaultHost(stores))
-          .then((_) => true)
-          .catch((_) => false);
+          .then(_ => this.preLoadUser())
+          .then(_ => this.fetcthStores())
+          .then(stores => this.setDefaultHost(stores))
+          .then(_ => true)
+          .catch(_ => false);
       }
 
       return true;
