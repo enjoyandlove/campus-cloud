@@ -1,35 +1,9 @@
 const accountLevelEmpty = (user) => {
-  if (!user) {
-    return false;
-  }
-
-  let empty = true;
-
-  if (
-    user.account_level_privileges &&
-    Object.keys(user.account_level_privileges).length
-  ) {
-    empty = false;
-  }
-
-  return empty;
+  return Object.keys(user.account_level_privileges).length === 0;
 };
 
 const schoolLevelEmpty = (user) => {
-  if (!user) {
-    return false;
-  }
-
-  let empty = true;
-
-  if (
-    user.school_level_privileges &&
-    Object.keys(user.school_level_privileges).length
-  ) {
-    empty = false;
-  }
-
-  return empty;
+  return Object.keys(user.school_level_privileges).length === 0;
 };
 
 export const accountsToStoreMap = (
