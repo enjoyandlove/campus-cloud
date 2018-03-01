@@ -1,9 +1,4 @@
-import {
-  ActivatedRouteSnapshot,
-  CanActivate,
-  CanActivateChild,
-  Router
-} from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router } from '@angular/router';
 
 import { URLSearchParams } from '@angular/http';
 import { Injectable } from '@angular/core';
@@ -13,12 +8,7 @@ import { CPSession } from '../../session';
 import { appStorage } from '../../shared/utils';
 import { base64 } from './../../shared/utils/encrypt/encrypt';
 import { CP_PRIVILEGES_MAP } from './../../shared/constants';
-import {
-  AdminService,
-  SchoolService,
-  StoreService,
-  ZendeskService
-} from '../../shared/services';
+import { AdminService, SchoolService, StoreService, ZendeskService } from '../../shared/services';
 
 /**
  * Guard to check if user is authenticated
@@ -61,9 +51,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
       .map((schools) => {
         let schoolIdInUrl;
         let schoolObjFromUrl;
-        const storedSchool = JSON.parse(
-          appStorage.get(appStorage.keys.DEFAULT_SCHOOL)
-        );
+        const storedSchool = JSON.parse(appStorage.get(appStorage.keys.DEFAULT_SCHOOL));
 
         try {
           schoolIdInUrl = base64.decode(route.queryParams.school);
@@ -81,10 +69,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
         this.session.g.set('schools', schools);
 
-        this.session.g.set(
-          'school',
-          storedSchool || schoolObjFromUrl || schools[0]
-        );
+        this.session.g.set('school', storedSchool || schoolObjFromUrl || schools[0]);
       })
       .toPromise();
   }
@@ -100,8 +85,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     let defaultHost = null;
 
     return new Promise((resolve) => {
-      const schoolDefaultHost = this.session.g.get('school')
-        .main_union_store_id;
+      const schoolDefaultHost = this.session.g.get('school').main_union_store_id;
 
       stores.map((store) => {
         if (store.value === schoolDefaultHost) {
@@ -178,14 +162,8 @@ export class AuthGuard implements CanActivate, CanActivateChild {
       if (protectedRoutes.includes(path)) {
         let canAccess;
 
-        const schoolLevel = canSchoolReadResource(
-          this.session.g,
-          routeToPrivilege[path]
-        );
-        const accountLevel = canAccountLevelReadResource(
-          this.session.g,
-          routeToPrivilege[path]
-        );
+        const schoolLevel = canSchoolReadResource(this.session.g, routeToPrivilege[path]);
+        const accountLevel = canAccountLevelReadResource(this.session.g, routeToPrivilege[path]);
 
         canAccess = schoolLevel || accountLevel;
 
