@@ -13,6 +13,7 @@ import { CPI18nService } from './../../../../../shared/services/i18n.service';
 export class OrientationProgramDeleteComponent implements OnInit {
   @Input() orientationProgram;
   @Output() deleted: EventEmitter<number> = new EventEmitter();
+  @Output() resetDeleteModal: EventEmitter<null> = new EventEmitter();
 
   buttonData;
 
@@ -30,7 +31,7 @@ export class OrientationProgramDeleteComponent implements OnInit {
       .deleteOrientationProgram(this.orientationProgram.id, search)
       .subscribe(() => {
         this.deleted.emit(this.orientationProgram.id);
-
+        this.resetDeleteModal.emit();
         $('#programDelete').modal('hide');
 
         this.buttonData = Object.assign({}, this.buttonData, {

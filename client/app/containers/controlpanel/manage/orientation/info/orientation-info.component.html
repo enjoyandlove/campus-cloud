@@ -35,6 +35,7 @@
   <cp-orientation-program-edit
     [isOrientation]="isOrientation"
     [orientationProgram]="selectedProgram"
-    (edited)="onEditedLink($event)">
+    (edited)="onEditedLink($event)"
+    (resetEditModal)="launchEditModal = false">
   </cp-orientation-program-edit>
 </cp-modal>

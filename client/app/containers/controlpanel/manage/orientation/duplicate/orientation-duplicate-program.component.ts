@@ -31,6 +31,7 @@ export class OrientationDuplicateProgramComponent implements OnInit {
     description: string;
     is_membership: number;
   }> = new EventEmitter();
+  @Output() resetDuplicateModal: EventEmitter<null> = new EventEmitter();
 
   form: FormGroup;
 
@@ -50,6 +51,7 @@ export class OrientationDuplicateProgramComponent implements OnInit {
   }
 
   resetModal() {
+    this.resetDuplicateModal.emit();
     this.duplicateForm.form.reset();
     $('#programDuplicate').modal('hide');
   }
@@ -69,9 +71,10 @@ export class OrientationDuplicateProgramComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
+      id: [this.orientationProgram.id],
       name: [null, [Validators.required, Validators.maxLength(225)]],
       description: [null, Validators.maxLength(512)],
-      is_membership: [1],
+      is_membership: [this.orientationProgram.is_membership],
     });
   }
 }

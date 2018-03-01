@@ -30,6 +30,7 @@ export class OrientationProgramCreateComponent implements OnInit {
     description: string;
     is_membership: number;
   }> = new EventEmitter();
+  @Output() resetCreateModal: EventEmitter<null> = new EventEmitter();
 
   form: FormGroup;
 
@@ -49,6 +50,7 @@ export class OrientationProgramCreateComponent implements OnInit {
   }
 
   resetModal() {
+    this.resetCreateModal.emit();
     this.createForm.form.reset();
     $('#programCreate').modal('hide');
   }

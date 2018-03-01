@@ -121,7 +121,8 @@
 <cp-modal modalId="programCreate" *ngIf="launchCreateModal">
   <cp-orientation-program-create
     [isOrientation]="isOrientation"
-    (created)="onCreated($event)">
+    (created)="onCreated($event)"
+    (resetCreateModal)="launchCreateModal = false">
   </cp-orientation-program-create>
 </cp-modal>
 
@@ -129,13 +130,15 @@
   <cp-orientation-duplicate-program
     [isOrientation]="isOrientation"
     (created)="onCreated($event)"
-    [orientationProgram]="selectedProgram">
+    [orientationProgram]="selectedProgram"
+    (resetDuplicateModal)="launchDuplicateModal = false">
   </cp-orientation-duplicate-program>
 </cp-modal>
 
 <cp-modal modalId="programDelete" *ngIf="launchDeleteModal">
   <cp-orientation-program-delete
+    (deleted)="onDeleted($event)"
     [orientationProgram]="selectedProgram"
-    (deleted)="onDeleted($event)">
+    (resetDeleteModal)="launchDeleteModal = false">
   </cp-orientation-program-delete>
 </cp-modal>

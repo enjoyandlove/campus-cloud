@@ -30,6 +30,7 @@ export class OrientationProgramEditComponent implements OnInit {
     name: string;
     description: string;
   }> = new EventEmitter();
+  @Output() resetEditModal: EventEmitter<null> = new EventEmitter();
 
   form: FormGroup;
 
@@ -49,6 +50,8 @@ export class OrientationProgramEditComponent implements OnInit {
   }
 
   resetModal() {
+    this.resetEditModal.emit();
+    this.editForm.form.reset();
     $('#programEdit').modal('hide');
   }
 
