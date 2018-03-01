@@ -1,6 +1,6 @@
-<ng-container>
-  <!--<cp-spinner *ngSwitchCase="true"></cp-spinner>-->
-  <ng-container>
+<ng-container [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="false"></cp-spinner>
+  <ng-container *ngSwitchCase="true">
     <div class="row">
       <div class="col-xs-8 col-xs-offset-2">
         <div class="cp-card orientation">
@@ -8,7 +8,7 @@
             <div class="col-xs-12">
               <div class="row">
                 <div class="col-xs-10">
-                  <p class="orientation__title text-truncate">Hello and welcome </p>
+                  <p class="orientation__title text-truncate">{{ selectedProgram.name }}</p>
                 </div>
                 <div class="col-xs-2 text-right">
                   <span
@@ -20,7 +20,7 @@
               </div>
               <div class="row">
                 <div class="col-xs-12 orientation__description">
-                  <p>Text messaging, or texting, is the act of composing and sending electronic messages, typically consisting of alphabetic and numeric characters, between two or more users of mobile phones, tablets, desktops/laptops, or other devices. Text messages may be sent over a cellular network, or may also be sent via an Internet ...</p>
+                  <p>{{ selectedProgram.description }}</p>
                 </div>
               </div>
             </div>

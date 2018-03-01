@@ -128,8 +128,8 @@
 <cp-modal modalId="programDuplicate" *ngIf="launchDuplicateModal">
   <cp-orientation-duplicate-program
     [isOrientation]="isOrientation"
-    [orientationProgram]="selectedProgram"
-    (created)="onCreated($event)">
+    (created)="onCreated($event)"
+    [orientationProgram]="selectedProgram">
   </cp-orientation-duplicate-program>
 </cp-modal>
 

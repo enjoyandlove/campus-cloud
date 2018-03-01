@@ -8,7 +8,6 @@ import { Store } from '@ngrx/store';
 import { URLSearchParams } from '@angular/http';
 import { OrientationService } from '../orientation.services';
 import { FORMAT } from '../../../../../shared/pipes/date/date.pipe';
-import { ICalendar } from '../../calendars/calendars.interface';
 
 @Component({
   selector: 'cp-list-orientation',
@@ -102,7 +101,7 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
 
     super
       .fetchData(this.service.getOrientationPrograms(this.startRange, this.endRange, search))
-      .then(() => (this.state = { ...this.state, orientationPrograms: require('../mock.json') }))
+      .then((res) => (this.state = { ...this.state, orientationPrograms: res.data }))
       .catch((err) => {
         throw new Error(err);
       });
@@ -119,9 +118,9 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
   }
 
   // todo might be removed as we redirect to event
-  onCreated(newCalendar: ICalendar): void {
+  onCreated(newProgram: any): void {
     this.launchCreateModal = false;
-    this.state.orientationPrograms = [newCalendar, ...this.state.orientationPrograms];
+    this.state.orientationPrograms = [newProgram, ...this.state.orientationPrograms];
   }
 
   onDeleted(programId: number) {

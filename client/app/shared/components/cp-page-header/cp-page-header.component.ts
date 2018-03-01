@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
+import { isProd } from '../../../config/env';
 
 interface IData {
   heading: string;
@@ -23,6 +24,7 @@ export class CPPageHeaderComponent implements OnChanges {
 
   extraMenu = null;
   maxChildren = 6;
+  readyFeatures = [];
   extraChildren = [];
 
   constructor(public router: Router) {}
@@ -32,8 +34,12 @@ export class CPPageHeaderComponent implements OnChanges {
   }
 
   ngOnChanges() {
-    if (this.data.children.length > this.maxChildren) {
-      this.extraChildren = this.data.children.filter(
+    this.readyFeatures = this.data.children.filter((child) => {
+       return isProd ? !child.hasOwnProperty('hiddenInProd') ? child : null : child;
+    });
+
+    if (this.readyFeatures.length > this.maxChildren) {
+      this.extraChildren = this.readyFeatures.filter(
         (_, index) => index + 1 > this.maxChildren
       );
 
@@ -43,7 +49,7 @@ export class CPPageHeaderComponent implements OnChanges {
         )[0] || null;
 
       if (
-        this.data.children.length === this.maxChildren + 1 &&
+        this.readyFeatures.length === this.maxChildren + 1 &&
         this.extraMenu
       ) {
         this.extraChildren = [];

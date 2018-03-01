@@ -25,8 +25,10 @@ export class OrientationProgramCreateComponent implements OnInit {
 
   @Output()
   created: EventEmitter<{
+    id: number;
     name: string;
     description: string;
+    is_membership: number;
   }> = new EventEmitter();
 
   form: FormGroup;
@@ -57,10 +59,10 @@ export class OrientationProgramCreateComponent implements OnInit {
 
     this.service
       .createOrientationProgram(this.form.value, search)
-      .subscribe(() => {
+      .subscribe((createdOrientationProgram) => {
         // todo: redirect to event page when program created
-        // this.created.emit(createdOrientationProgram);
-        // this.resetModal();
+        this.created.emit(createdOrientationProgram);
+        this.resetModal();
       });
   }
 

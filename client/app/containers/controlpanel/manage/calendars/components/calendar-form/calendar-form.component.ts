@@ -25,5 +25,9 @@ export class CalendarsFormComponent implements OnInit {
     this.form.controls['is_membership'].setValue(value);
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.isOrientation) {
+      this.isChecked = this.form.value.is_membership === 1;
+    }
+  }
 }

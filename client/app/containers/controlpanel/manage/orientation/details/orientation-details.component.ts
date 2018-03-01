@@ -1,10 +1,10 @@
-import { ActivatedRoute } from '@angular/router'; // Router
+import { ActivatedRoute } from '@angular/router';
 import { Component, Input, OnInit } from '@angular/core';
-// import { URLSearchParams } from '@angular/http';
+import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
-// import { OrientationService } from '../orientation.services';
-// import { CPSession } from '../../../../../session';
+import { OrientationService } from '../orientation.services';
+import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
@@ -20,13 +20,10 @@ export class OrientationDetailsComponent extends BaseComponent implements OnInit
   loading;
   orientationId: number;
 
-  constructor(
-  //  private router: Router,
-    private store: Store<any>,
-  //  private session: CPSession,
-    private route: ActivatedRoute,
-  //  private service: OrientationService,
-  ) {
+  constructor(private store: Store<any>,
+              private session: CPSession,
+              private route: ActivatedRoute,
+              private service: OrientationService) {
     super();
 
     this.orientationId = this.route.parent.snapshot.params['orientationId'];
@@ -34,23 +31,19 @@ export class OrientationDetailsComponent extends BaseComponent implements OnInit
     super.isLoading().subscribe((loading) => (this.loading = loading));
   }
 
- /* private fetch() {
+  private fetch() {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     super
-      .fetchData(this.service.getClubById(this.clubId, search))
-      .then((club) => {
-        this.club = club.data;
-
-        if (!this.router.url.split('/').includes('facebook')) {
-          this.store.dispatch({
-            type: HEADER_UPDATE,
-            payload: this.buildHeader(club.data.name),
-          });
-        }
+      .fetchData(this.service.getOrientationProgramById(this.orientationId, search))
+      .then((program) => {
+        this.store.dispatch({
+          type: HEADER_UPDATE,
+          payload: this.buildHeader(program.data[0].name),
+        });
       });
-  }*/
+  }
 
   buildHeader(name) {
     const menu = {
@@ -64,7 +57,8 @@ export class OrientationDetailsComponent extends BaseComponent implements OnInit
       children: [],
     };
 
-    const links = ['Events', 'To-Dos', 'Feeds', 'Member', 'Info'];
+    // todo create utility service to filter menu with privileges (if any)
+    const links = ['Events', 'To-Dos', 'Feeds', 'Members', 'Info'];
 
     links.forEach((link) => {
       menu.children.push({
@@ -77,10 +71,6 @@ export class OrientationDetailsComponent extends BaseComponent implements OnInit
   }
 
   ngOnInit() {
-      this.store.dispatch({
-        type: HEADER_UPDATE,
-        payload: this.buildHeader('hello'),
-      });
-    // this.fetch();
+      this.fetch();
   }
 }

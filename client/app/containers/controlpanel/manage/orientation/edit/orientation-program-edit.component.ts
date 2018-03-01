@@ -30,7 +30,6 @@ export class OrientationProgramEditComponent implements OnInit {
     name: string;
     description: string;
   }> = new EventEmitter();
-  @Output() resetEditModal: EventEmitter<null> = new EventEmitter();
 
   form: FormGroup;
 
@@ -50,8 +49,6 @@ export class OrientationProgramEditComponent implements OnInit {
   }
 
   resetModal() {
-    this.resetEditModal.emit();
-    this.editForm.form.reset();
     $('#programEdit').modal('hide');
   }
 
@@ -71,13 +68,17 @@ export class OrientationProgramEditComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      id: [this.orientationProgram.id, Validators.required],
       name: [
         this.orientationProgram.name,
         [Validators.required, Validators.maxLength(225)],
       ],
-      description: [this.orientationProgram.description, Validators.maxLength(512)],
-      is_membership: [this.orientationProgram.is_membership],
+      description: [
+        this.orientationProgram.description,
+        Validators.maxLength(512)
+      ],
+      is_membership: [
+        this.orientationProgram.is_membership
+      ],
     });
   }
 }
