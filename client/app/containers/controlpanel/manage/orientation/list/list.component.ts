@@ -42,7 +42,6 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
               public headerService: ManageHeaderService) {
     super();
     super.isLoading().subscribe((loading) => (this.loading = loading));
-    this.fetch();
   }
 
   @HostListener('document:click', ['$event'])
@@ -92,7 +91,7 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
     });
   }
 
-  private fetch() {
+  public fetch() {
     const search = new URLSearchParams();
     search.append('search_str', this.state.search_str);
     search.append('sort_field', this.state.sort_field);
@@ -141,5 +140,6 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.buildHeader();
+    this.fetch();
   }
 }

@@ -30,10 +30,9 @@ export class OrientationInfoComponent extends BaseComponent implements OnInit {
     this.orientationId = this.route.parent.snapshot.params['orientationId'];
 
     super.isLoading().subscribe(() => (this.loading = true));
-    this.fetch();
   }
 
-  private fetch() {
+  public fetch() {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
@@ -60,6 +59,8 @@ export class OrientationInfoComponent extends BaseComponent implements OnInit {
     this.selectedProgram = editedProgram;
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.fetch();
+  }
 
 }
