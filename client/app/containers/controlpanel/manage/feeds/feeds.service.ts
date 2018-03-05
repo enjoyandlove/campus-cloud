@@ -16,7 +16,7 @@ export class FeedsService extends BaseService {
   getCampusWallFeeds(
     startRange: number,
     endRange: number,
-    search?: URLSearchParams,
+    search?: URLSearchParams
   ) {
     const common = `${API.BASE_URL}/${API.VERSION.V1}/${
       API.ENDPOINTS.CAMPUS_THREAD
@@ -29,7 +29,7 @@ export class FeedsService extends BaseService {
   getGroupWallFeeds(
     startRange: number,
     endRange: number,
-    search?: URLSearchParams,
+    search?: URLSearchParams
   ) {
     const common = `${API.BASE_URL}/${API.VERSION.V1}/${
       API.ENDPOINTS.GROUP_THREAD
@@ -42,7 +42,7 @@ export class FeedsService extends BaseService {
   getChannelsBySchoolId(
     startRange: number,
     endRange: number,
-    search?: URLSearchParams,
+    search?: URLSearchParams
   ) {
     const common = `${API.BASE_URL}/${API.VERSION.V1}/${
       API.ENDPOINTS.SOCIAL_POST_CATEGORY
@@ -164,18 +164,18 @@ export class FeedsService extends BaseService {
     return super.update(url, data).map((res) => res.json());
   }
 
-  getCampusWallCommentsByThreadId(search?: URLSearchParams) {
+  getCampusWallCommentsByThreadId(search: URLSearchParams, endRage) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${
       API.ENDPOINTS.CAMPUS_COMMENT
-    }/`;
+    }/1;${endRage}`;
 
     return super.get(url, { search }).map((res) => res.json());
   }
 
-  getGroupWallCommentsByThreadId(search?: URLSearchParams) {
+  getGroupWallCommentsByThreadId(search: URLSearchParams, endRage) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${
       API.ENDPOINTS.GROUP_COMMENT
-    }/`;
+    }/1;${endRage}`;
 
     return super.get(url, { search }).map((res) => res.json());
   }

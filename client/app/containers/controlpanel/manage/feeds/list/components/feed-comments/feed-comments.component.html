@@ -17,8 +17,8 @@
   <div class="col-xs-12">
     <cp-feed-input-box
       [clubId]="clubId"
-      [threadId]="feedId"
-      [postType]="postType"
+      [threadId]="feed.id"
+      [postType]="feed.post_type"
       [replyView]="isReplyView"
       [isCampusWallView]="isCampusWallView"
       (created)="onReplied($event)">
