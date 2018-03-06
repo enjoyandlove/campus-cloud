@@ -5,13 +5,13 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { OrientationService } from './orientation.services';
+import { OrientationUtilsService } from './orientation.utils.service';
 import { OrientationRoutingModule } from './orientation.routing.module';
 
 import { OrientationListComponent } from './list';
 import { OrientationProgramCreateComponent } from './create';
 import { OrientationProgramDeleteComponent } from './delete';
 import { OrientationDuplicateProgramComponent } from './duplicate';
-import { OrientationProgramFormComponent } from './components/program-form';
 import { OrientationListActionBoxComponent } from './list/components/action-box';
 
 import { CalendarsModule } from '../calendars/calendars.module';
@@ -19,7 +19,6 @@ import { CalendarsModule } from '../calendars/calendars.module';
 @NgModule({
   declarations: [
     OrientationListComponent,
-    OrientationProgramFormComponent,
     OrientationListActionBoxComponent,
     OrientationProgramCreateComponent,
     OrientationProgramDeleteComponent,
@@ -35,7 +34,10 @@ import { CalendarsModule } from '../calendars/calendars.module';
     CalendarsModule
   ],
 
-  providers: [OrientationService]
+  providers: [
+    OrientationService,
+    OrientationUtilsService
+  ]
 })
 
 export class OrientationModule {}

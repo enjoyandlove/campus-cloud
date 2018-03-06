@@ -76,7 +76,7 @@
                class="hover"
                (click)="isOpen = !isOpen;
                selectedProgram = program">
-               ...
+               <i class="material-icons">more_horiz</i>
              </strong>
               <div
                 *ngIf="isOpen && selectedProgram.id === program.id"
@@ -85,20 +85,20 @@
                   <li
                     (click)="isOpen = false;
                     launchDuplicateModal = true;"
-                    class="orientation__dropdown__item"
+                    class="orientation__dropdown__item col-xs-12"
                     data-toggle="modal"
                     data-target="#programDuplicate">
-                      <i class="material-icons">add</i>
-                      <span>{{ 'orientation_duplicate_program' | cpI18n }}</span>
+                      <i class="material-icons col-xs-2">control_point_duplicate</i>
+                      <span class="col-xs-10">{{ 'orientation_duplicate_program' | cpI18n }}</span>
                   </li>
                   <li
                     (click)="isOpen = false;
                     launchDeleteModal = true;"
-                    class="orientation__dropdown__item"
+                    class="orientation__dropdown__item col-xs-12"
                     data-toggle="modal"
                     data-target="#programDelete">
-                      <i class="material-icons">close</i>
-                      <span>{{ 'orientation_delete_program' | cpI18n }}</span>
+                      <i class="material-icons col-xs-2">close</i>
+                      <span class="col-xs-10">{{ 'orientation_delete_program' | cpI18n }}</span>
                   </li>
                 </ul>
               </div>

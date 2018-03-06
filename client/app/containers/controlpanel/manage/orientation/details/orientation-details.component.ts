@@ -3,8 +3,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
-import { OrientationService } from '../orientation.services';
+import { OrientationUtilsService } from '../orientation.utils.service';
 import { CPSession } from '../../../../../session';
+import { OrientationService } from '../orientation.services';
 import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
@@ -20,10 +21,12 @@ export class OrientationDetailsComponent extends BaseComponent implements OnInit
   loading;
   orientationId: number;
 
-  constructor(private store: Store<any>,
-              private session: CPSession,
-              private route: ActivatedRoute,
-              private service: OrientationService) {
+  constructor(
+    private store: Store<any>,
+    private session: CPSession,
+    private route: ActivatedRoute,
+    private service: OrientationService,
+    private utils: OrientationUtilsService) {
     super();
 
     this.orientationId = this.route.parent.snapshot.params['orientationId'];
@@ -40,14 +43,14 @@ export class OrientationDetailsComponent extends BaseComponent implements OnInit
       .then((program) => {
         this.store.dispatch({
           type: HEADER_UPDATE,
-          payload: this.buildHeader(program.data[0].name),
+          payload: this.buildHeader(program.data[0]),
         });
       });
   }
 
-  buildHeader(name) {
+  buildHeader(program) {
     const menu = {
-      heading: `[NOTRANSLATE]${name}[NOTRANSLATE]`,
+      heading: `[NOTRANSLATE]${program.name}[NOTRANSLATE]`,
       crumbs: {
         url: 'orientation',
         label: 'orientation',
@@ -57,13 +60,12 @@ export class OrientationDetailsComponent extends BaseComponent implements OnInit
       children: [],
     };
 
-    // todo create utility service to filter menu with privileges (if any)
-    const links = ['Events', 'To-Dos', 'Feeds', 'Members', 'Info'];
+    const subNav = this.utils.getSubNavChildren(program.is_membership);
 
-    links.forEach((link) => {
+    subNav.forEach((nav) => {
       menu.children.push({
-        label: link.toLocaleLowerCase(),
-        url: `/manage/orientation/${this.orientationId}/${link.toLocaleLowerCase()}`,
+        label: nav.label.toLocaleLowerCase(),
+        url: `/manage/orientation/${this.orientationId}/${nav.link}`,
       });
     });
 

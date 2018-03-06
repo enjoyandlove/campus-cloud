@@ -5,12 +5,14 @@
 
 .orientation {
   @include card-margin();
+
   margin-top: 0;
 
   &__title {
-    margin-bottom: 0;
     @include font-bold();
     @include font-24px;
+
+    margin-bottom: 0;
   }
 
   &__description {

@@ -1,4 +1,3 @@
-import { CPSession } from './../../../../../session/index';
 import {
   Component,
   OnInit,
@@ -11,6 +10,8 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
 
+import { CPSession } from './../../../../../session';
+import { ProgramMembership } from '../orientation.status';
 import { OrientationService } from '../orientation.services';
 
 @Component({
@@ -72,7 +73,7 @@ export class OrientationProgramCreateComponent implements OnInit {
     this.form = this.fb.group({
       name: [null, [Validators.required, Validators.maxLength(225)]],
       description: [null, Validators.maxLength(512)],
-      is_membership: [1],
+      is_membership: [ProgramMembership.enabled],
     });
   }
 }

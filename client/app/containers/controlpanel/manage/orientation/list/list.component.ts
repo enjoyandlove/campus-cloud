@@ -1,13 +1,14 @@
 import { Component, ElementRef, HostListener, Input, OnInit } from '@angular/core';
-import { BaseComponent } from '../../../../../base';
-import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
-import { CPSession } from '../../../../../session';
-import { ManageHeaderService } from '../../utils';
-import { CPI18nService } from '../../../../../shared/services';
-import { Store } from '@ngrx/store';
 import { URLSearchParams } from '@angular/http';
+import { Store } from '@ngrx/store';
+
+import { ManageHeaderService } from '../../utils';
+import { CPSession } from '../../../../../session';
+import { BaseComponent } from '../../../../../base';
 import { OrientationService } from '../orientation.services';
+import { CPI18nService } from '../../../../../shared/services';
 import { FORMAT } from '../../../../../shared/pipes/date/date.pipe';
+import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 
 @Component({
   selector: 'cp-list-orientation',
@@ -34,12 +35,13 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
     sort_direction: 'asc',
   };
 
-  constructor(public el: ElementRef,
-              public session: CPSession,
-              public cpI18n: CPI18nService,
-              public store: Store<IHeader>,
-              private service: OrientationService,
-              public headerService: ManageHeaderService) {
+  constructor(
+    public el: ElementRef,
+    public session: CPSession,
+    public cpI18n: CPI18nService,
+    public store: Store<IHeader>,
+    private service: OrientationService,
+    public headerService: ManageHeaderService) {
     super();
     super.isLoading().subscribe((loading) => (this.loading = loading));
     this.fetch();
