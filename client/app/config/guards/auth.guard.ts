@@ -213,11 +213,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
           .then((_) => this.fetcthStores())
           .then((stores) => this.setDefaultHost(stores))
           .then((_) => true)
-          .catch((_) => {
-            appStorage.clear();
-
-            return this.redirectAndSaveGoTo(state.url);
-          });
+          .catch((_) => false);
       }
 
       return true;
