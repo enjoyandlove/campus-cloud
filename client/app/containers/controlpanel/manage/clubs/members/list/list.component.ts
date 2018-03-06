@@ -105,12 +105,7 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
       );
     });
 
-    super
-      .fetchData(stream$)
-      .then((res) => (this.state.members = res.data))
-      .catch((err) => {
-        throw new Error(err);
-      });
+    super.fetchData(stream$).then((res) => (this.state.members = res.data));
   }
 
   forceRefresh() {

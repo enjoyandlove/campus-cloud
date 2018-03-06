@@ -11,22 +11,12 @@
       </span>
     </div>
     <div
-      class="recipients__more col-xs-6 no-left-padding"
+      class="recipients__more col-xs-6"
       *ngIf="recipients_more.length">
-      <button
-        type="button"
-        data-toggle="dropdown"
-        class="cpbtn cpbtn--link cpbtn--no-border">
-        {{ 'view_more' | cpI18n }} ({{ recipients_more.length }})
-      </button>
-
-      <ul class="dropdown-menu recipients__list">
-        <li
-        class="recipients__item"
-          *ngFor="let name of recipients_more">
-          {{ name }}
-        </li>
-      </ul>
+        <cp-tooltip
+          (click)="viewMoreModal.emit(totalRecipients)"
+           [toolTipContent]="toolTipContent">
+        </cp-tooltip>
     </div>
   </div>
 </div>

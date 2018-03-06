@@ -1,4 +1,4 @@
-import { ApplicationRef, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 
 import { APP_COMPONENTS, BOOTSTRAP_COMP } from './config/components';
 import { APP_MODULES } from './config/modules';
@@ -11,5 +11,5 @@ import { APP_PROVIDERS } from './config/providers';
   bootstrap: [BOOTSTRAP_COMP],
 })
 export class AppModule {
-  constructor(public appRef: ApplicationRef) {}
+  constructor() {}
 }

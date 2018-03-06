@@ -55,7 +55,8 @@
                 <cp-list-recipients
                   [lists]="message.list_details"
                   [users]="message.user_details"
-                  *ngIf="!message.is_school_wide">
+                  *ngIf="!message.is_school_wide"
+                  (viewMoreModal)="onViewMoreModal($event)">
                 </cp-list-recipients>
               </strong>
 
@@ -109,4 +110,13 @@
     (deleted)="onDeleted($event)"
     (teardown)="isDeleteModal = false">
   </cp-announcements-delete>
+</cp-modal>
+
+<cp-modal
+  modalId="viewMoreModal">
+  <cp-list-modal
+    [buttonText]="buttonText"
+    [headerText]="headerText"
+    [list]="viewMoreRecipients">
+  </cp-list-modal>
 </cp-modal>

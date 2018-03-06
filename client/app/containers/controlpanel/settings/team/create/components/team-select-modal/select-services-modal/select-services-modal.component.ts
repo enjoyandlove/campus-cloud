@@ -18,8 +18,11 @@ export class SelectTeamServicesModalComponent extends BaseTeamSelectModalCompone
   implements OnInit {
   @Input() selectedServices: any;
   @Input() reset: Observable<boolean>;
+
+  @Output() cancel: EventEmitter<any> = new EventEmitter();
   @Output() selected: EventEmitter<any> = new EventEmitter();
   @Output() teardown: EventEmitter<any> = new EventEmitter();
+
   data$: BehaviorSubject<any> = new BehaviorSubject({});
 
   constructor(private session: CPSession, private service: ServicesService) {

@@ -27,9 +27,6 @@ export class ServicesEventsExcelComponent extends BaseComponent
       .fetchData(this.servicesService.getServiceById(this.serviceId))
       .then((res) => {
         this.storeId = res.data.store_id;
-      })
-      .catch((err) => {
-        throw new Error(err);
       });
   }
 

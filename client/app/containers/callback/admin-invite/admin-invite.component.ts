@@ -3,8 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { ALERT_DEFAULT } from '../../../reducers/alert.reducer';
 import { AuthService } from '../../auth/auth.service';
+import { ALERT_DEFAULT } from '../../../reducers/alert.reducer';
+import { CPI18nService, ErrorService } from '../../../shared/services';
 
 @Component({
   selector: 'cp-admin-invite',
@@ -20,6 +21,8 @@ export class AdminInviteComponent implements OnInit, OnDestroy {
     private router: Router,
     private fb: FormBuilder,
     private store: Store<any>,
+    private error: ErrorService,
+    public cpI18n: CPI18nService,
     private route: ActivatedRoute,
     private authService: AuthService,
   ) {
@@ -29,8 +32,12 @@ export class AdminInviteComponent implements OnInit, OnDestroy {
   onSubmit(data) {
     this.authService.createInvitePassword(data).subscribe(
       (_) => this.handleSuccess(),
-      (err) => {
-        throw new Error(err);
+      (_) => {
+        this.error.handleError({
+          reason: this.cpI18n.translate(
+            'admin_invite_invalid_invite_key_error',
+          ),
+        });
       },
     );
   }

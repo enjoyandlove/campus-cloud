@@ -11,10 +11,10 @@ const appRoutes: Routes = [
     path: 'import',
     redirectTo: '',
     pathMatch: 'full',
-    data: { zendesk: 'import links' },
+    data: { zendesk: 'links' },
   },
 
-  { path: '', component: LinksListComponent, data: { zendesk: 'Links' } },
+  { path: '', component: LinksListComponent, data: { zendesk: 'links' } },
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
