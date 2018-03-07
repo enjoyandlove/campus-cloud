@@ -13,6 +13,7 @@ import { URLSearchParams } from '@angular/http';
 import { CPSession } from './../../../../../session';
 import { ProgramMembership } from '../orientation.status';
 import { OrientationService } from '../orientation.services';
+import { CPI18nService } from '../../../../../shared/services/i18n.service';
 
 @Component({
   selector: 'cp-orientation-program-create',
@@ -29,16 +30,18 @@ export class OrientationProgramCreateComponent implements OnInit {
     id: number;
     name: string;
     description: string;
-    is_membership: number;
+    has_membership: number;
   }> = new EventEmitter();
   @Output() resetCreateModal: EventEmitter<null> = new EventEmitter();
 
+  buttonData;
   form: FormGroup;
 
   constructor(
     public el: ElementRef,
     public fb: FormBuilder,
     public session: CPSession,
+    public cpI18n: CPI18nService,
     public service: OrientationService,
   ) {}
 
@@ -73,7 +76,17 @@ export class OrientationProgramCreateComponent implements OnInit {
     this.form = this.fb.group({
       name: [null, [Validators.required, Validators.maxLength(225)]],
       description: [null, Validators.maxLength(512)],
-      is_membership: [ProgramMembership.enabled],
+      has_membership: [ProgramMembership.enabled],
+    });
+
+    this.buttonData = Object.assign({}, this.buttonData, {
+      class: 'primary',
+      disabled: !this.form.valid,
+      text: this.cpI18n.translate('save')
+    });
+
+    this.form.valueChanges.subscribe(() => {
+      this.buttonData = { ...this.buttonData, disabled: !this.form.valid };
     });
   }
 }

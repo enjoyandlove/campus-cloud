@@ -28,7 +28,7 @@ export class OrientationInfoComponent extends BaseComponent implements OnInit {
     super();
     this.orientationId = this.route.parent.snapshot.params['orientationId'];
 
-    super.isLoading().subscribe(() => (this.loading = true));
+    super.isLoading().subscribe((loading) => (this.loading = loading));
     this.fetch();
   }
 

@@ -34,13 +34,10 @@
           {{ 'cancel' | cpI18n }}
         </button>
 
-        <button
-          type="button"
-          (click)="onSubmit()"
-          class="cpbtn cpbtn--primary"i18n
-          [disabled]="!form.valid">
-          {{ 'save' | cpI18n }}
-        </button>
+        <cp-button
+          (buttonClick)="onSubmit()"
+          [props]="buttonData">
+        </cp-button>
       </div>
     </div>
   </div>

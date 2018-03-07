@@ -22,13 +22,13 @@ export class CalendarsFormComponent implements OnInit {
   constructor() {}
 
   toggleMembership(value) {
-    value = value ? 1 : 0;
-    this.form.controls['is_membership'].setValue(value);
+    value = value ? 1 : -1;
+    this.form.controls['has_membership'].setValue(value);
   }
 
   ngOnInit() {
     if (this.isOrientation) {
-      this.isChecked = this.form.value.is_membership === 1;
+      this.isChecked = this.form.value.has_membership === 1;
     }
   }
 }

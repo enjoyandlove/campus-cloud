@@ -31,6 +31,8 @@ export const API_ENDPOINTS = {
 
   COVER_PHOTO: 'cover_photo',
 
+  ORIENTATION: 'orientation',
+
   GROUP_THREAD: 'group_thread',
 
   ANNOUNCEMENT: 'announcement',
