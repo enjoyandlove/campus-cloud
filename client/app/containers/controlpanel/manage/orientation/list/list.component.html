@@ -72,12 +72,12 @@
               {{ program.events }}
             </span>
             <span class="col-xs-1">
-             <strong
-               class="hover"
+             <button
+               class="cpbtn cpbtn--link-dark"
                (click)="isOpen = !isOpen;
                selectedProgram = program">
                <i class="material-icons">more_horiz</i>
-             </strong>
+             </button>
               <div
                 *ngIf="isOpen && selectedProgram.id === program.id"
                 class="orientation__dropdown">

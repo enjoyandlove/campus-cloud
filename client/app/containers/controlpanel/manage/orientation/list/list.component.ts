@@ -17,6 +17,7 @@ import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 })
 
 export class OrientationListComponent extends BaseComponent implements OnInit {
+  @Input() isOrientation = true;
 
   isOpen;
   loading;
@@ -25,8 +26,6 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
   launchCreateModal = false;
   launchDuplicateModal = false;
   dateFormat = FORMAT.SHORT;
-
-  @Input() isOrientation = true;
 
   state = {
     orientationPrograms: [],

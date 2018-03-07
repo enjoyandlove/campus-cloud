@@ -9,6 +9,7 @@ import { FormGroup } from '@angular/forms';
 export class CalendarsFormComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() isOrientation = false;
+  @Input() orientationProgram;
 
   @Output()
   submitted: EventEmitter<{
@@ -17,13 +18,11 @@ export class CalendarsFormComponent implements OnInit {
   }> = new EventEmitter();
 
   isChecked = true;
-  membership: number;
 
   constructor() {}
 
   toggleMembership(value) {
     value = value ? 1 : 0;
-    this.membership = Date.now();
     this.form.controls['is_membership'].setValue(value);
   }
 
