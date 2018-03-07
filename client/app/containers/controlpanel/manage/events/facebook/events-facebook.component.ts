@@ -20,6 +20,8 @@ export class EventsFacebookComponent extends BaseComponent implements OnInit {
   @Input() serviceId: number;
   @Input() isAthletic: number;
   @Input() clubId: number;
+  @Input() orientationId: number;
+  @Input() isOrientation: boolean;
 
   stores;
   loading;
@@ -55,6 +57,7 @@ export class EventsFacebookComponent extends BaseComponent implements OnInit {
       this.clubId,
       this.serviceId,
       this.isAthletic,
+      this.orientationId,
     );
 
     this.store.dispatch({
@@ -74,8 +77,8 @@ export class EventsFacebookComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     this.buildHeader();
 
-    const isClubOrService = this.storeId || this.clubId;
+    const isClubServiceOrOrientation = this.storeId || this.clubId || this.orientationId;
 
-    return isClubOrService ? (this.loading = false) : this.fetch();
+    return isClubServiceOrOrientation ? (this.loading = false) : this.fetch();
   }
 }

@@ -39,6 +39,8 @@ export class EventsCreateComponent implements OnInit {
   @Input() serviceId: number;
   @Input() isAthletic: number;
   @Input() isService: boolean;
+  @Input() orientationId: number;
+  @Input() isOrientation: boolean;
   @Input() toolTipContent: IToolTipContent;
 
   stores$;
@@ -251,6 +253,13 @@ export class EventsCreateComponent implements OnInit {
 
     this.eventService.createEvent(this.form.value).subscribe(
       (res) => {
+        if (this.isOrientation) {
+          this.router.navigate([
+            `/manage/orientation/${this.orientationId}/events`,
+          ]);
+
+          return;
+        }
         if (this.isService) {
           this.router.navigate([
             `/manage/services/${this.serviceId}/events/${res.id}`,
@@ -285,6 +294,10 @@ export class EventsCreateComponent implements OnInit {
 
   onEventFeedbackChange(option) {
     this.form.controls['event_feedback'].setValue(option.action);
+  }
+
+  onAllDayToggle(checked: boolean) {
+    this.form.controls['is_all_day'].setValue(checked);
   }
 
   ngOnInit() {
@@ -363,6 +376,7 @@ export class EventsCreateComponent implements OnInit {
       event_manager_id: [null],
       attendance_manager_email: [null],
       custom_basic_feedback_label: [null],
+      is_all_day: [null],
     });
 
     const _self = this;

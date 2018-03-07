@@ -14,6 +14,7 @@ import { CPI18nService } from '../../../../../../../shared/services';
 export class FacebookEventsCreateComponent implements OnInit {
   @Input() clubId: number;
   @Input() storeId: number;
+  @Input() orientationId: number;
   @Input() stores: Array<any>;
   @Output() created: EventEmitter<null> = new EventEmitter();
 
@@ -56,10 +57,10 @@ export class FacebookEventsCreateComponent implements OnInit {
 
     if (this.storeId) {
       store_id = this.storeId;
-    }
-
-    if (this.clubId) {
+    } else if (this.clubId) {
       store_id = this.clubId;
+    } else if (this.orientationId) {
+      store_id = this.orientationId;
     }
 
     this.form = this.fb.group({

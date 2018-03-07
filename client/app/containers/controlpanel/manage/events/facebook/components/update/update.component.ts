@@ -17,6 +17,7 @@ export class FacebookEventsUpdateComponent extends BaseComponent
   implements OnInit {
   @Input() clubId: number;
   @Input() storeId: number;
+  @Input() orientationId: number;
   @Input() stores: Array<any>;
   @Input() reload: Observable<boolean>;
 

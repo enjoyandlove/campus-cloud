@@ -1,21 +1,27 @@
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
-import { Store } from '@ngrx/store';
 
+import { BaseComponent } from '../../../../../base';
 import { CPSession } from '../../../../../session';
-import { OrientationService } from '../orientation.services';
-import { BaseComponent } from '../../../../../base/base.component';
+import { Store } from '@ngrx/store';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { URLSearchParams } from '@angular/http';
+import { OrientationService } from '../orientation.services';
 import { OrientationUtilsService } from '../orientation.utils.service';
 
 @Component({
-  selector: 'cp-orientation-details',
-  template: '<router-outlet></router-outlet>',
+  selector: 'cp-orientation-events',
+  template: `<cp-events
+              [isOrientation]="isOrientation"
+              [orientationId]="orientationId">
+             </cp-events>`,
 })
-export class OrientationDetailsComponent extends BaseComponent implements OnInit {
-  loading;
+
+export class OrientationEventsComponent extends BaseComponent {
+  isOrientation = true;
   orientationId: number;
+
+  loading;
 
   constructor(
     private store: Store<any>,
@@ -25,9 +31,11 @@ export class OrientationDetailsComponent extends BaseComponent implements OnInit
     private utils: OrientationUtilsService) {
     super();
 
-    this.orientationId = this.route.parent.snapshot.params['orientationId'];
+    this.orientationId = this.route.parent.snapshot.parent.params['orientationId'];
 
     super.isLoading().subscribe((loading) => (this.loading = loading));
+
+    this.fetch();
   }
 
   private fetch() {
@@ -66,9 +74,5 @@ export class OrientationDetailsComponent extends BaseComponent implements OnInit
     });
 
     return menu;
-  }
-
-  ngOnInit() {
-      this.fetch();
   }
 }

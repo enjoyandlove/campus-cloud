@@ -14,12 +14,12 @@ import { CPI18nService } from './../../../../../../../shared/services/i18n.servi
 export class EventsExcelModalComponent implements OnInit {
   @Input() storeId: number;
   @Input() isAthletic: number;
-
   @Input() clubId: number;
   @Input() isClub: boolean;
-
   @Input() serviceId: number;
   @Input() isService: boolean;
+  @Input() orientationId: number;
+  @Input() isOrientation: boolean;
 
   options;
   fileName;
@@ -54,6 +54,14 @@ export class EventsExcelModalComponent implements OnInit {
   }
 
   onNavigate() {
+    if (this.isOrientation) {
+      this.router.navigate([
+        `/manage/orientation/${this.orientationId}/events/import/excel`,
+      ]);
+
+      return;
+    }
+
     if (this.isAthletic) {
       this.router.navigate([
         `/manage/athletics/${this.clubId}/events/import/excel`,

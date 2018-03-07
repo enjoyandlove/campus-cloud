@@ -24,6 +24,8 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   @Input() serviceId: number;
   @Input() isService: boolean;
   @Input() isAthletic: number;
+  @Input() orientationId: number;
+  @Input() isOrientation: boolean;
   @Input() resourceBanner: IResourceBanner;
 
   event;
@@ -64,6 +66,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
         this.clubId,
         this.serviceId,
         this.isAthletic,
+        this.orientationId,
       );
 
       this.banner =

@@ -45,6 +45,9 @@ export class EventsComponent extends BaseComponent {
   @Input() clubId: number;
   @Input() isClub: boolean;
 
+  @Input() orientationId: number;
+  @Input() isOrientation: boolean;
+
   school;
   events;
   loading;

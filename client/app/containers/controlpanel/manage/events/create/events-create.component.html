@@ -26,7 +26,7 @@
                 [class.error]="formError && form.controls['title'].hasError('required')">
             </div>
 
-            <div class="row form-group" *ngIf="!isClub && !isService">
+            <div class="row form-group" *ngIf="!isClub && !isService && !isOrientation">
               <div class="col-xs-12">
                 <label i18n>{{ 'select_host' | cpI18n }}</label>
                 <cp-dropdown
@@ -52,6 +52,16 @@
                   [options]="enddatePickerOpts"
                   [error]="formError && form.controls['end'].hasError('required')">
                 </cp-datepicker>
+              </div>
+            </div>
+
+            <div class="row form-group" *ngIf="isOrientation">
+              <div class="col-xs-12">
+                <cp-checkbox
+                  class="checkbox"
+                  (toggle)="onAllDayToggle($event)">
+                </cp-checkbox>
+                <label i18n>{{ 'all_day' | cpI18n }}</label>
               </div>
             </div>
 
@@ -133,10 +143,17 @@
                   </cp-tooltip>
                 </label>
                 <cp-dropdown
+                  *ngIf="!isOrientation"
                   [items]="managers"
                   (selected)="onSelectedManager($event)"
                   [isRequiredError]="formError && form.controls['event_manager_id'].hasError('required')">
                 </cp-dropdown>
+                <input
+                  *ngIf="isOrientation"
+                  type="text"
+                  class="form-control"
+                  formControlName="event_manager_id"
+                  [class.error]="formError && form.controls['event_manager_id'].hasError('required')">
               </div>
             </div>
             <div class="col-xs-6">

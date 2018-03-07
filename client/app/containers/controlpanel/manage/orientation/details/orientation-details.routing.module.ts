@@ -13,7 +13,7 @@ const appRoutes: Routes = [
 
     //  { path: 'feeds', component: ClubsWallComponent },
 
-      /* {
+      {
          path: 'events',
          loadChildren: '../events/orientation-events.module#OrientationEventsModule',
        },

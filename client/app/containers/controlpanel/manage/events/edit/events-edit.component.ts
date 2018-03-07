@@ -40,6 +40,8 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   @Input() clubId: boolean;
   @Input() isService: boolean;
   @Input() isAthletic: number;
+  @Input() orientationId: number;
+  @Input() isOrientation: boolean;
   @Input() toolTipContent: IToolTipContent;
 
   event;
@@ -161,6 +163,13 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
     this.eventService.updateEvent(data, this.eventId).subscribe(
       (_) => {
+        if (this.isOrientation) {
+          this.router.navigate([
+            `/manage/orientation/${this.orientationId}/events/${this.eventId}`,
+          ]);
+
+          return;
+        }
         if (this.isAthletic) {
           this.router.navigate([
             `/manage/athletics/${this.clubId}/events/${this.eventId}`,
@@ -216,6 +225,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       event_manager_id: [res.event_manager_id],
       attendance_manager_email: [res.attendance_manager_email],
       custom_basic_feedback_label: [res.custom_basic_feedback_label],
+      is_all_day: [res.is_all_day],
     });
 
     this.updateDatePicker();
@@ -253,6 +263,10 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
   onSelectedManager(manager): void {
     this.form.controls['event_manager_id'].setValue(manager.value);
+  }
+
+  onAllDayToggle(checked: boolean) {
+    this.form.controls['is_all_day'].setValue(checked);
   }
 
   onSelectedHost(host): void {

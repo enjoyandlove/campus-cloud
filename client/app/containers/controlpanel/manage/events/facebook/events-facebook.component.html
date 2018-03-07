@@ -13,14 +13,16 @@
       [stores]="stores"
       [clubId]="clubId"
       [storeId]="storeId"
-      (created)="onCreated()">
+      (created)="onCreated()"
+      [orientationId]="orientationId">
     </cp-facebook-events-create>
 
     <cp-facebook-update
       [stores]="stores"
       [clubId]="clubId"
       [storeId]="storeId"
-      [reload]="reload$">
+      [reload]="reload$"
+      [orientationId]="orientationId">
     </cp-facebook-update>
   </div>
 </div>

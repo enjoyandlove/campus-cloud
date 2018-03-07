@@ -15,6 +15,7 @@ import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { CPI18nPipe } from './../../../../../shared/pipes/i18n/i18n.pipe';
 import { STATUS, CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 import { CPImageUploadComponent } from '../../../../../shared/components';
+import { EventUtilService } from '../events.utils.service';
 import {
   FileUploadService,
   CPI18nService,
@@ -38,10 +39,13 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   @Input() serviceId: number;
   @Input() isService: boolean;
   @Input() isChecked: boolean;
+  @Input() orientationId: number;
+  @Input() isOrientation: boolean;
 
   error;
   events;
   stores;
+  urlPrefix;
   formError;
   buttonData;
   uploadButtonData;
@@ -60,6 +64,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     private fb: FormBuilder,
     private store: Store<any>,
     private session: CPSession,
+    private utils: EventUtilService,
     private adminService: AdminService,
     private storeService: StoreService,
     private eventsService: EventsService,
@@ -99,7 +104,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       payload: {
         heading: 'events_import_csv_heading',
         crumbs: {
-          url: 'events',
+          url: this.urlPrefix,
           label: 'events',
         },
         em: `[NOTRANSLATE]${subheading}[NOTRANSLATE]`,
@@ -403,25 +408,9 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
 
     this.eventsService.createEvent(_events).subscribe(
       (_) => {
-        if (this.isAthletic) {
-          this.router.navigate([`/manage/athletics/${this.clubId}/events`]);
+        this.router.navigate([this.urlPrefix]);
 
-          return;
-        }
-
-        if (this.isClub) {
-          this.router.navigate([`/manage/clubs/${this.clubId}/events`]);
-
-          return;
-        }
-
-        if (this.isService) {
-          this.router.navigate([`/manage/services/${this.serviceId}/events`]);
-
-          return;
-        }
-
-        this.router.navigate(['/manage/events']);
+        return;
       },
       (err) => {
         this.formError = true;
@@ -449,6 +438,13 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.urlPrefix = this.utils.buildUrlPrefix(
+      this.clubId,
+      this.serviceId,
+      this.isAthletic,
+      this.orientationId,
+    );
+
     this.isChecked = false;
     this.uploadButtonData = {
       class: 'disabled',

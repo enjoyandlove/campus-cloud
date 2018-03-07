@@ -73,7 +73,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-xs-2" *ngIf="!storeId && !clubId">
+                  <div class="col-xs-2" *ngIf="!storeId && !clubId && !isOrientation">
                     <label i18n>{{ 'host' | cpI18n }}</label>
                     <cp-dropdown
                       [items]="stores"
@@ -132,7 +132,7 @@
         <div class="row">
           <div class="col-xs-12">
             <div class="pull-right">
-              <a [routerLink]="['/manage/events']"
+              <a [routerLink]="[urlPrefix]"
                 class="cpbtn cpbtn--cancel" i18n>
                 {{ 'cancel' | cpI18n }}
               </a>
