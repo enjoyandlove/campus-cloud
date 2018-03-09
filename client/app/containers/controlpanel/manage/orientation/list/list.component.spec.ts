@@ -20,6 +20,8 @@ class MockOrientationService {
 }
 
 describe('OrientationListComponent', () => {
+  let arr;
+  let fakeRequest;
   let compSpy;
   let storeSpy;
   let resPrograms;
@@ -71,8 +73,7 @@ describe('OrientationListComponent', () => {
     expect(compSpy).toHaveBeenCalled();
 
     expect(resPrograms.value.length).toEqual(mockPrograms.length);
-    expect(resPrograms)
-      .toEqual(Observable.of(mockPrograms));
+    expect(resPrograms).toEqual(Observable.of(mockPrograms));
   });
 
   it('should search string', () => {
@@ -81,12 +82,12 @@ describe('OrientationListComponent', () => {
   });
 
   it('should show pagination', () => {
-    const arr = [];
+    arr = [];
     for (let i = 1; i <= 200; i++) {
       arr.push(i);
     }
 
-    const fakeRequest = Observable.of(arr);
+    fakeRequest = Observable.of(arr);
 
     component.fetchData(fakeRequest)
       .then((res) => {
