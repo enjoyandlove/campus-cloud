@@ -1,13 +1,11 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
-
 import { DashboardDownloadsChartComponent } from './dashboard-downloads-chart.component';
-
 
 describe('DashboardDownloadsChartComponent', () => {
   let comp: DashboardDownloadsChartComponent;
   let fixture: ComponentFixture<DashboardDownloadsChartComponent>;
   // async beforeEach
-  beforeEach( async(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ DashboardDownloadsChartComponent ],
     })
@@ -27,7 +25,7 @@ describe('DashboardDownloadsChartComponent', () => {
     comp.series = [
       [1, 2, 3],
       [3, 2, 1]
-    ]
+    ];
 
     comp.divider = 0;
 
@@ -38,25 +36,25 @@ describe('DashboardDownloadsChartComponent', () => {
     const expected = 'Dec 17th';
 
     expect(comp.dailyLabel(1)).toEqual(expected);
-  })
+  });
 
   it('weeklyLabel', () => {
     const expected = 'Dec 23 - Dec 30';
 
     expect(comp.weeklyLabel(1)).toEqual(expected);
-  })
+  });
 
   it('monthlyLabel', () => {
     const expected = 'Jan 18';
 
     expect(comp.monthlyLabel(1)).toEqual(expected);
-  })
+  });
 
   it('quarterLabel', () => {
     const expected = 'Mar 18';
 
     expect(comp.quarterLabel(1)).toEqual(expected);
-  })
+  });
 
   it('labelByDivider', () => {
     const dailyExpected = 'Dec 17th';
@@ -77,7 +75,7 @@ describe('DashboardDownloadsChartComponent', () => {
     comp.divider = 3;
     fixture.detectChanges();
     expect(comp.labelByDivider(1)).toEqual(quarterlyExpected);
-  })
+  });
 
   it('buildLabels', () => {
     const expected = ['Dec 16th', 'Dec 17th', 'Dec 18th'];
@@ -87,5 +85,5 @@ describe('DashboardDownloadsChartComponent', () => {
     expect(result.length).toEqual(3);
     expect(result).toContain(expected[0]);
     expect(result[0]).toEqual(expected[0]);
-  })
+  });
 });

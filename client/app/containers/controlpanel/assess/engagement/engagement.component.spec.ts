@@ -1,3 +1,4 @@
+/*tslint:disable:max-classes-per-file*/
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Store, StoreModule } from '@ngrx/store';
@@ -41,7 +42,7 @@ const mockFilterState = {
       }
     }
   }
-}
+};
 
 class MockEngagementService {
   getChartData() {
@@ -51,11 +52,11 @@ class MockEngagementService {
 
 class MockSession {
   g = new Map();
-};
+}
 
 class MockRouter {
   navigate(url: string) { return url; }
-};
+}
 
 describe('EngagementComponent', () => {
   let storeSpy;
@@ -86,7 +87,7 @@ describe('EngagementComponent', () => {
       set: {
         template: '<div>No need of child components</div>'
       }
-    })
+    });
 
     store = TestBed.get(Store);
     storeSpy = spyOn(store, 'dispatch').and.callThrough();
@@ -109,7 +110,7 @@ describe('EngagementComponent', () => {
 
     expect(component.isComposeModal).toBeTruthy();
     expect(component.messageData).toEqual(expected);
-  })
+  });
 
   it('onFlashMessage', () => {
     component.onFlashMessage();
@@ -122,7 +123,7 @@ describe('EngagementComponent', () => {
       }
     };
     expect(storeSpy).toHaveBeenCalledWith(expected);
-  })
+  });
 
   it('ngOnInit', () => {
     component.ngOnInit();
@@ -132,18 +133,18 @@ describe('EngagementComponent', () => {
       payload: require('../assess.header.json')
     };
     expect(storeSpy).toHaveBeenCalledWith(expected);
-  })
+  });
 
   it('onComposeTeardown', () => {
     component.onComposeTeardown();
 
     expect(component.isComposeModal).toBeFalsy();
     expect(component.messageData).toBeNull();
-  })
+  });
 
   xit('buildSearchHeaders', () => {
     component.onDoFilter(mockFilterState);
     fixture.detectChanges();
-    console.log(component.buildSearchHeaders().paramsMap.toJSON());
-  })
-})
+    // console.log(component.buildSearchHeaders().paramsMap.toJSON());
+  });
+});

@@ -15,7 +15,7 @@ describe('BaseComponent', () => {
     expect(comp.pageNumber).toEqual(1);
     expect(comp.startRange).toEqual(1);
     expect(comp.endRange).toEqual(101);
-  })
+  });
 
   it('should goToPrevious', () => {
     comp.goToPrevious();
@@ -32,14 +32,14 @@ describe('BaseComponent', () => {
     expect(comp.pageNumber).toEqual(1);
     expect(comp.startRange).toEqual(1);
     expect(comp.endRange).toEqual(101);
-  })
+  });
 
   it('goToNext', () => {
     comp.goToNext();
     expect(comp.pageNumber).toEqual(2);
     expect(comp.startRange).toEqual(101);
     expect(comp.endRange).toEqual(201);
-  })
+  });
 
   it('resetPagination', () => {
     comp.goToNext();
@@ -48,20 +48,20 @@ describe('BaseComponent', () => {
     expect(comp.pageNumber).toEqual(1);
     expect(comp.startRange).toEqual(1);
     expect(comp.endRange).toEqual(101);
-  })
+  });
 
   it('fetchData', () => {
-    let arr = [];
+    const arr = [];
     for (let i = 1; i <= 200; i++) { arr.push(i); }
 
-    let fakeRequest = Observable.of(arr);
+    const fakeRequest = Observable.of(arr);
 
     comp
       .fetchData(fakeRequest)
-      .then(res => {
+      .then((res) => {
         expect(comp.pageNext).toBeTruthy();
         expect(comp.pagePrev).toBeFalsy();
         expect(res.data.length).toBe(199);
-      })
-  })
-})
+      });
+  });
+});

@@ -8,9 +8,9 @@ const mockEpochDate = 1482433200;
 describe('CPDate', () => {
   it('Should convert a valid Date object to epoch time', () => {
     expect(CPDate.toEpoch(mockDateObj)).toBe(mockEpochDate);
-  })
+  });
 
   it('Should convert an epoch timestamp into a valid Date Object', () => {
     expect(CPDate.fromEpoch(mockEpochDate)).toEqual(mockDateObj.toDate());
-  })
-})
+  });
+});

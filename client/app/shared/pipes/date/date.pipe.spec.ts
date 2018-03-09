@@ -1,7 +1,7 @@
 import { CPDatePipe, FORMAT } from './date.pipe';
 
 describe('Date Pipe', () => {
-  let pipe = new CPDatePipe();
+  const pipe = new CPDatePipe();
 
   it('Short format should look like "MMM D, YYYY"', () => {
     expect(pipe.transform(1504881271, FORMAT.SHORT)).toContain('Sep 8, 2017');

@@ -3,7 +3,7 @@ import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 import { DashboardDatePickerComponent } from '../index';
 import { DashboardUtilsService } from '../../dashboard.utils.service';
 
-let pickerOptions = {
+const pickerOptions = {
   utc: true,
   inline: true,
   mode: 'range',
@@ -11,7 +11,7 @@ let pickerOptions = {
   maxDate: new Date(Date.now() - 24 * 3600 * 1000),
   enableTime: false,
   altFormat: 'F j, Y'
-}
+};
 
 declare var $: any;
 import 'flatpickr';
@@ -25,7 +25,7 @@ describe('DashboardDatePickerComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ DashboardDatePickerComponent ],
       providers: [ DashboardUtilsService ]
-    })
+    });
     // .compileComponents(); // compile template and css
   }));
 
@@ -33,7 +33,7 @@ describe('DashboardDatePickerComponent', () => {
     fixture = TestBed.createComponent(DashboardDatePickerComponent);
     comp = fixture.componentInstance;
 
-    comp.picker = $(comp.calendarEl.nativeElement).flatpickr(pickerOptions)
+    comp.picker = $(comp.calendarEl.nativeElement).flatpickr(pickerOptions);
 
     spyOn(comp.dateChange, 'emit');
     spyOn(comp.picker, 'clear');
@@ -51,7 +51,7 @@ describe('DashboardDatePickerComponent', () => {
     fixture.detectChanges();
 
     expect(comp.selected).toEqual(expected);
-  })
+  });
 
   it('triggerChange', () => {
     const expected = helper.last30Days();
@@ -61,13 +61,13 @@ describe('DashboardDatePickerComponent', () => {
     comp.triggerChange();
 
     expect(comp.dateChange.emit).toHaveBeenCalledWith(expected);
-  })
+  });
 
   it('resetCalendar', () => {
     comp.resetCalendar();
 
     expect(comp.picker.clear).toHaveBeenCalled();
-  })
+  });
 
   it('onDateChanged', () => {
     const date1 = new Date('2017-12-04T05:00:00.000Z');
@@ -77,7 +77,7 @@ describe('DashboardDatePickerComponent', () => {
       start: 1512363600,
       end: 1512622799,
       label: 'Dec 4, 2017 - Dec 6, 2017',
-    }
+    };
 
     spyOn(comp, 'setLabel');
     spyOn(comp, 'triggerChange');
@@ -87,5 +87,5 @@ describe('DashboardDatePickerComponent', () => {
     expect(comp.setLabel).toHaveBeenCalledWith(expected);
 
     expect(comp.triggerChange).toHaveBeenCalled();
-  })
-})
+  });
+});
