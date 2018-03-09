@@ -29,6 +29,10 @@ export class OrientationProgramCreateComponent implements OnInit {
   created: EventEmitter<{
     id: number;
     name: string;
+    active_from: number;
+    active_until: number;
+    members_count: number;
+    events_count: number;
     description: string;
     has_membership: number;
   }> = new EventEmitter();
