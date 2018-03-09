@@ -25,7 +25,7 @@ describe('OrientationProgramEditComponent', () => {
   let service: OrientationService;
   let fixture: ComponentFixture<OrientationProgramEditComponent>;
 
-  const mockProgram = {
+  const editProgram = {
     'id': 84,
     'name': 'This is new edited name',
     'description': 'this is new edited description',
@@ -60,8 +60,8 @@ describe('OrientationProgramEditComponent', () => {
     expect(spy).not.toHaveBeenCalled();
     component.onSubmit();
     expect(spy).toHaveBeenCalled();
-    expect(service.editOrientationProgram(84, mockProgram, null))
-      .toEqual(Observable.of(mockProgram));
+    expect(service.editOrientationProgram(84, editProgram, null))
+      .toEqual(Observable.of(editProgram));
   });
 
 });

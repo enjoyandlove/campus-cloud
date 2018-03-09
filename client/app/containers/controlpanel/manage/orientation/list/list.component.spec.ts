@@ -22,6 +22,8 @@ class MockOrientationService {
 describe('OrientationListComponent', () => {
   let compSpy;
   let storeSpy;
+  let resPrograms;
+  let mockPrograms;
   let store: Store<any>;
   let service: OrientationService;
   let component: OrientationListComponent;
@@ -61,10 +63,56 @@ describe('OrientationListComponent', () => {
   }));
 
   it('should fetch list of orientation programs', () => {
+    mockPrograms = require('../mock.json');
+    resPrograms = service.getOrientationPrograms(0, 0, null);
+
     expect(compSpy).not.toHaveBeenCalled();
     component.fetch();
     expect(compSpy).toHaveBeenCalled();
-    expect(service.getOrientationPrograms(0, 0, null))
-      .toEqual(Observable.of(require('../mock.json')));
+
+    expect(resPrograms.value.length).toEqual(mockPrograms.length);
+    expect(resPrograms)
+      .toEqual(Observable.of(mockPrograms));
   });
+
+  it('should search string', () => {
+    component.onSearch('hello world');
+    expect(component.state.search_str).toEqual('hello world');
+  });
+
+  it('should show pagination', () => {
+    const arr = [];
+    for (let i = 1; i <= 200; i++) {
+      arr.push(i);
+    }
+
+    const fakeRequest = Observable.of(arr);
+
+    component.fetchData(fakeRequest)
+      .then((res) => {
+        expect(component.pageNext).toBeTruthy();
+        expect(component.pagePrev).toBeFalsy();
+        expect(res.data.length).toBe(199);
+      });
+  });
+
+  it('onPaginationNext', () => {
+    component.onPaginationNext();
+    expect(component.pageNumber).toEqual(2);
+    expect(component.startRange).toEqual(101);
+    expect(component.endRange).toEqual(201);
+  });
+
+  it('onPaginationPrevious', () => {
+    component.pageNumber = 2;
+    component.startRange = 101;
+    component.endRange = 201;
+
+    component.onPaginationPrevious();
+
+    expect(component.pageNumber).toEqual(1);
+    expect(component.startRange).toEqual(1);
+    expect(component.endRange).toEqual(101);
+  });
+
 });
