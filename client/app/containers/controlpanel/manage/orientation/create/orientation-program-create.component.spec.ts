@@ -52,7 +52,18 @@ describe('OrientationProgramCreateComponent', () => {
     });
   }));
 
-  it('Should insert orientation program', () => {
+  it('form validation - should fail', () => {
+    component.ngOnInit();
+    expect(component.form.valid).toBeFalsy();
+  });
+
+  it('form validation - should pass', () => {
+    component.ngOnInit();
+    component.form.controls['name'].setValue('hello world');
+    expect(component.form.valid).toBeTruthy();
+  });
+
+  it('should insert orientation program', () => {
     spy = spyOn(component, 'onSubmit');
     expect(spy).not.toHaveBeenCalled();
     component.onSubmit();
