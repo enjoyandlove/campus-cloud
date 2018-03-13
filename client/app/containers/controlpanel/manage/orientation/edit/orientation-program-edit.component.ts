@@ -66,11 +66,9 @@ export class OrientationProgramEditComponent implements OnInit {
     this.service
       .editOrientationProgram(this.orientationProgram.id, this.form.value, search)
       .subscribe((editedProgram) => {
-        this.edited.emit(editedProgram);
+        this.edited.emit(editedProgram[0]);
         this.resetModal();
       });
-    this.edited.emit(this.editForm.form.value);
-    this.resetModal();
   }
 
   ngOnInit() {

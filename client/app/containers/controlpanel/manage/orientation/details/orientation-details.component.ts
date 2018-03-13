@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
-import { OrientationUtilsService } from '../orientation.utils.service';
+// import { OrientationUtilsService } from '../orientation.utils.service';
 import { CPSession } from '../../../../../session';
 import { OrientationService } from '../orientation.services';
 import { BaseComponent } from '../../../../../base/base.component';
@@ -26,7 +26,8 @@ export class OrientationDetailsComponent extends BaseComponent implements OnInit
     private session: CPSession,
     private route: ActivatedRoute,
     private service: OrientationService,
-    private utils: OrientationUtilsService) {
+   // private utils: OrientationUtilsService
+  ) {
     super();
 
     this.orientationId = this.route.parent.snapshot.params['orientationId'];
@@ -60,7 +61,8 @@ export class OrientationDetailsComponent extends BaseComponent implements OnInit
       children: [],
     };
 
-    const subNav = this.utils.getSubNavChildren(program.is_membership);
+    // const subNav = this.utils.getSubNavChildren(program.has_membership);
+    const subNav = [{label: 'Info', link: 'info'}];
 
     subNav.forEach((nav) => {
       menu.children.push({

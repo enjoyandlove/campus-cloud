@@ -102,10 +102,7 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
 
     super
       .fetchData(this.service.getOrientationPrograms(this.startRange, this.endRange, search))
-      .then((res) => (this.state = { ...this.state, orientationPrograms: res.data }))
-      .catch((err) => {
-        throw new Error(err);
-      });
+      .then((res) => (this.state = { ...this.state, orientationPrograms: res.data }));
   }
 
   doSort(sort_field) {

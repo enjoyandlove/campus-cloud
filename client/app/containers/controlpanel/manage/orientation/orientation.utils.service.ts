@@ -3,12 +3,12 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class OrientationUtilsService {
 
-  getSubNavChildren(isMembership: number) {
+  getSubNavChildren(hasMembership: number) {
     let links = [];
 
     links = [{ label: 'Info', link: 'info'}, ...links];
 
-    if (isMembership === 1) {
+    if (hasMembership === 1) {
       links = [{ label: 'Members', link: 'members' }, ...links];
       links = [{ label: 'Feeds', link: 'feeds' }, ...links];
     }
