@@ -15,6 +15,7 @@ export class CPStepperComponent implements OnInit {
 
   @Output() currentSlide: EventEmitter<any> = new EventEmitter();
 
+  disabled = false;
   start: number;
   totalSteps;
 
@@ -37,6 +38,7 @@ export class CPStepperComponent implements OnInit {
   }
 
   updateAdmin() {
+    this.disabled = true;
     const body = {
       flags: {
         is_onboarding: true
