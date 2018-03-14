@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-
+import { ProgramMembership } from '../../../orientation/orientation.status';
 @Component({
   selector: 'cp-calendar-form',
   templateUrl: './calendar-form.component.html',
@@ -9,6 +9,7 @@ import { FormGroup } from '@angular/forms';
 export class CalendarsFormComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() isOrientation = false;
+  @Input() orientationProgram;
 
   @Output()
   submitted: EventEmitter<{
@@ -17,19 +18,17 @@ export class CalendarsFormComponent implements OnInit {
   }> = new EventEmitter();
 
   isChecked = true;
-  membership: number;
 
   constructor() {}
 
   toggleMembership(value) {
-    value = value ? 1 : 0;
-    this.membership = Date.now();
-    this.form.controls['is_membership'].setValue(value);
+    value = value ? ProgramMembership.enabled : ProgramMembership.disabled;
+    this.form.controls['has_membership'].setValue(value);
   }
 
   ngOnInit() {
     if (this.isOrientation) {
-      this.isChecked = this.form.value.is_membership === 1;
+      this.isChecked = this.form.value.has_membership === ProgramMembership.enabled;
     }
   }
 }

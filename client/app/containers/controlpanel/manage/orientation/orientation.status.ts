@@ -1,4 +1,4 @@
 export enum ProgramMembership {
   'enabled' = 1,
-  'disabled' = 0
+  'disabled' = -1
 }

@@ -17,6 +17,7 @@ import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 })
 
 export class OrientationListComponent extends BaseComponent implements OnInit {
+  @Input() isOrientation = true;
 
   isOpen;
   loading;
@@ -25,8 +26,6 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
   launchCreateModal = false;
   launchDuplicateModal = false;
   dateFormat = FORMAT.SHORT;
-
-  @Input() isOrientation = true;
 
   state = {
     orientationPrograms: [],
@@ -103,10 +102,7 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
 
     super
       .fetchData(this.service.getOrientationPrograms(this.startRange, this.endRange, search))
-      .then((res) => (this.state = { ...this.state, orientationPrograms: res.data }))
-      .catch((err) => {
-        throw new Error(err);
-      });
+      .then((res) => (this.state = { ...this.state, orientationPrograms: res.data }));
   }
 
   doSort(sort_field) {

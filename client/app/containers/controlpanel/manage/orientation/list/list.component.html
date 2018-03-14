@@ -32,19 +32,13 @@
               </span>
             </span>
             <span
-              class="col-xs-3 hover"
-              (click)="doSort('created_time')">
+              class="col-xs-3">
               {{ 'duration' | cpI18n }}
-              <span *ngIf="state.sort_field === 'created_time'">
-                <i class="material-icons">
-                  {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
-                </i>
-              </span>
             </span>
-            <span class="col-xs-2 hover">
+            <span class="col-xs-2">
               {{ 'members' | cpI18n }}
             </span>
-            <span class="col-xs-2 hover">
+            <span class="col-xs-2">
               {{ 'events' | cpI18n }}
             </span>
             <span class="col-xs-1 hover"></span>
@@ -63,21 +57,21 @@
               {{ program.description }}
             </span>
             <span class="col-xs-3 text-truncate">
-              {{ program.start | cpDatePipe:dateFormat }} - {{ program.end | cpDatePipe:dateFormat }}
+              {{ program.active_from | cpDatePipe:dateFormat }} - {{ program.active_until | cpDatePipe:dateFormat }}
             </span>
             <span class="col-xs-2">
-              {{ program.members }}
+              {{ program.members_count }}
             </span>
             <span class="col-xs-1">
-              {{ program.events }}
+              {{ program.events_count }}
             </span>
             <span class="col-xs-1">
-             <strong
-               class="hover"
+             <button
+               class="cpbtn cpbtn--link-dark"
                (click)="isOpen = !isOpen;
                selectedProgram = program">
                <i class="material-icons">more_horiz</i>
-             </strong>
+             </button>
               <div
                 *ngIf="isOpen && selectedProgram.id === program.id"
                 class="orientation__dropdown">

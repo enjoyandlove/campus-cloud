@@ -26,7 +26,7 @@ export class OrientationInfoComponent extends BaseComponent implements OnInit {
     super();
     this.orientationId = this.route.parent.snapshot.params['orientationId'];
 
-    super.isLoading().subscribe(() => (this.loading = true));
+    super.isLoading().subscribe((loading) => (this.loading = loading));
     this.fetch();
   }
 
@@ -36,10 +36,7 @@ export class OrientationInfoComponent extends BaseComponent implements OnInit {
 
     super
       .fetchData(this.service.getOrientationProgramById(this.orientationId, search))
-      .then((res) => (this.selectedProgram = res.data[0]))
-      .catch((err) => {
-        throw new Error(err);
-      });
+      .then((res) => (this.selectedProgram = res.data[0]));
   }
 
   onLaunchEditModal() {

@@ -19,7 +19,6 @@
       "url": "/manage/clubs"
     },
     {
-      "new": true,
       "privilege": 28,
       "label": "athletics",
       "url": "/manage/athletics"

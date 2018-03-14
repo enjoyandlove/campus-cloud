@@ -13,6 +13,7 @@ import { URLSearchParams } from '@angular/http';
 
 import { CPSession } from './../../../../../session';
 import { OrientationService } from '../orientation.services';
+import { CPI18nService } from '../../../../../shared/services/i18n.service';
 
 @Component({
   selector: 'cp-orientation-program-edit',
@@ -27,17 +28,20 @@ export class OrientationProgramEditComponent implements OnInit {
 
   @Output()
   edited: EventEmitter<{
+    id: number;
     name: string;
     description: string;
   }> = new EventEmitter();
   @Output() resetEditModal: EventEmitter<null> = new EventEmitter();
 
+  buttonData;
   form: FormGroup;
 
   constructor(
     public el: ElementRef,
     public fb: FormBuilder,
     public session: CPSession,
+    public cpI18n: CPI18nService,
     public service: OrientationService,
   ) {}
 
@@ -62,11 +66,9 @@ export class OrientationProgramEditComponent implements OnInit {
     this.service
       .editOrientationProgram(this.orientationProgram.id, this.form.value, search)
       .subscribe((editedProgram) => {
-        this.edited.emit(editedProgram);
+        this.edited.emit(editedProgram[0]);
         this.resetModal();
       });
-    this.edited.emit(this.editForm.form.value);
-    this.resetModal();
   }
 
   ngOnInit() {
@@ -79,9 +81,19 @@ export class OrientationProgramEditComponent implements OnInit {
         this.orientationProgram.description,
         Validators.maxLength(512)
       ],
-      is_membership: [
-        this.orientationProgram.is_membership
+      has_membership: [
+        this.orientationProgram.has_membership
       ],
+    });
+
+    this.buttonData = Object.assign({}, this.buttonData, {
+      class: 'primary',
+      disabled: !this.form.valid,
+      text: this.cpI18n.translate('save')
+    });
+
+    this.form.valueChanges.subscribe(() => {
+      this.buttonData = { ...this.buttonData, disabled: !this.form.valid };
     });
   }
 }
