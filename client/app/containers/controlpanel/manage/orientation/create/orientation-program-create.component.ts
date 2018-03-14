@@ -58,7 +58,7 @@ export class OrientationProgramCreateComponent implements OnInit {
     search.append('school_id', this.session.g.get('school').id);
 
     this.service
-      .createOrientationProgram(this.form.value, search)
+      .createProgram(this.form.value, search)
       .subscribe((createdOrientationProgram) => {
         this.resetModal();
         this.router.navigate([

@@ -64,7 +64,7 @@ export class OrientationDuplicateProgramComponent implements OnInit {
     search.append('school_id', this.session.g.get('school').id);
 
     this.service
-      .duplicateOrientationProgram(this.orientationProgram.id, this.form.value, search)
+      .duplicateProgram(this.orientationProgram.id, this.form.value, search)
       .subscribe((duplicateProgram) => {
         // todo: redirect to event page when program created
         this.created.emit(duplicateProgram);

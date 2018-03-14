@@ -28,7 +28,7 @@ export class OrientationProgramDeleteComponent implements OnInit {
     search.append('school_id', this.session.g.get('school').id.toString());
 
     this.service
-      .deleteOrientationProgram(this.orientationProgram.id, search)
+      .deleteProgram(this.orientationProgram.id, search)
       .subscribe(() => {
         this.deleted.emit(this.orientationProgram.id);
         this.resetDeleteModal.emit();

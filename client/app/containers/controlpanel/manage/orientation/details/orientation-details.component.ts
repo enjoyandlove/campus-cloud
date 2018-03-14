@@ -35,7 +35,7 @@ export class OrientationDetailsComponent extends BaseComponent implements OnInit
     search.append('school_id', this.session.g.get('school').id.toString());
 
     super
-      .fetchData(this.service.getOrientationProgramById(this.orientationId, search))
+      .fetchData(this.service.getProgramById(this.orientationId, search))
       .then((program) => {
         this.store.dispatch({
           type: HEADER_UPDATE,
