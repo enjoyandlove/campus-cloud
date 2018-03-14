@@ -66,7 +66,7 @@ export class OrientationProgramEditComponent implements OnInit {
     this.service
       .editProgram(this.orientationProgram.id, this.form.value, search)
       .subscribe((editedProgram) => {
-        this.edited.emit(editedProgram[0]);
+        this.edited.emit(editedProgram);
         this.resetModal();
       });
   }

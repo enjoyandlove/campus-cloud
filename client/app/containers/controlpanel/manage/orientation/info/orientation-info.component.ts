@@ -36,7 +36,7 @@ export class OrientationInfoComponent extends BaseComponent implements OnInit {
 
     super
       .fetchData(this.service.getProgramById(this.orientationId, search))
-      .then((res) => (this.selectedProgram = res.data[0]));
+      .then((res) => (this.selectedProgram = res.data));
   }
 
   onLaunchEditModal() {

@@ -39,7 +39,7 @@ export class OrientationDetailsComponent extends BaseComponent implements OnInit
       .then((program) => {
         this.store.dispatch({
           type: HEADER_UPDATE,
-          payload: this.buildHeader(program.data[0]),
+          payload: this.buildHeader(program.data),
         });
       });
   }
