@@ -64,7 +64,7 @@ export class OrientationProgramEditComponent implements OnInit {
     search.append('school_id', this.session.g.get('school').id);
 
     this.service
-      .editOrientationProgram(this.orientationProgram.id, this.form.value, search)
+      .editProgram(this.orientationProgram.id, this.form.value, search)
       .subscribe((editedProgram) => {
         this.edited.emit(editedProgram[0]);
         this.resetModal();

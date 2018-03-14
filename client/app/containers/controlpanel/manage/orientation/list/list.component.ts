@@ -99,7 +99,7 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
     search.append('school_id', this.session.g.get('school').id.toString());
 
     super
-      .fetchData(this.service.getOrientationPrograms(this.startRange, this.endRange, search))
+      .fetchData(this.service.getPrograms(this.startRange, this.endRange, search))
       .then((res) => (this.state = { ...this.state, orientationPrograms: res.data }));
   }
 
