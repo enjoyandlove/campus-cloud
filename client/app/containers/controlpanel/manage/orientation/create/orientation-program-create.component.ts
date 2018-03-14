@@ -7,8 +7,9 @@ import {
   ElementRef,
   ViewChild,
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { URLSearchParams } from '@angular/http';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { CPSession } from './../../../../../session';
 import { ProgramMembership } from '../orientation.status';
@@ -23,17 +24,6 @@ import { CPI18nService } from '../../../../../shared/services/i18n.service';
 export class OrientationProgramCreateComponent implements OnInit {
   @ViewChild('createForm') createForm;
 
-  @Output()
-  created: EventEmitter<{
-    id: number;
-    name: string;
-    active_from: number;
-    active_until: number;
-    members_count: number;
-    events_count: number;
-    description: string;
-    has_membership: number;
-  }> = new EventEmitter();
   @Output() resetCreateModal: EventEmitter<null> = new EventEmitter();
 
   buttonData;
@@ -44,6 +34,7 @@ export class OrientationProgramCreateComponent implements OnInit {
     public el: ElementRef,
     public fb: FormBuilder,
     public session: CPSession,
+    public router: Router,
     public cpI18n: CPI18nService,
     public service: OrientationService,
   ) {}
@@ -69,9 +60,10 @@ export class OrientationProgramCreateComponent implements OnInit {
     this.service
       .createOrientationProgram(this.form.value, search)
       .subscribe((createdOrientationProgram) => {
-        // todo: redirect to event page when program created
-        this.created.emit(createdOrientationProgram);
         this.resetModal();
+        this.router.navigate([
+          `/manage/orientation/${createdOrientationProgram.id}/events`,
+        ]);
       });
   }
 
