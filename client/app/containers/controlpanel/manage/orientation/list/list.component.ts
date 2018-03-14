@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
@@ -17,8 +17,6 @@ import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 })
 
 export class OrientationListComponent extends BaseComponent implements OnInit {
-  @Input() isOrientation = true;
-
   isOpen;
   loading;
   selectedProgram = null;

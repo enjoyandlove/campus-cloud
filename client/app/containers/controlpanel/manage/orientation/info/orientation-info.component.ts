@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { OrientationService } from '../orientation.services';
@@ -17,8 +17,6 @@ export class OrientationInfoComponent extends BaseComponent implements OnInit {
   selectedProgram = [];
   orientationId: number;
   launchEditModal = false;
-
-  @Input() isOrientation = true;
 
   constructor(
     public session: CPSession,

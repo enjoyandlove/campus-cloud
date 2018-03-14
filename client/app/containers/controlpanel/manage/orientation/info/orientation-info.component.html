@@ -33,7 +33,6 @@
 
 <cp-modal modalId="programEdit" *ngIf="launchEditModal">
   <cp-orientation-program-edit
-    [isOrientation]="isOrientation"
     [orientationProgram]="selectedProgram"
     (edited)="onEditedLink($event)"
     (resetEditModal)="launchEditModal = false">

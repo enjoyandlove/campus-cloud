@@ -5,7 +5,7 @@ import {
   Output,
   HostListener,
   ElementRef,
-  ViewChild, Input,
+  ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
@@ -23,8 +23,6 @@ import { CPI18nService } from '../../../../../shared/services/i18n.service';
 export class OrientationProgramCreateComponent implements OnInit {
   @ViewChild('createForm') createForm;
 
-  @Input() isOrientation = false;
-
   @Output()
   created: EventEmitter<{
     id: number;
@@ -40,6 +38,7 @@ export class OrientationProgramCreateComponent implements OnInit {
 
   buttonData;
   form: FormGroup;
+  isOrientation = true;
 
   constructor(
     public el: ElementRef,
