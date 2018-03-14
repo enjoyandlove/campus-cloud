@@ -17,6 +17,7 @@ export class OrientationService extends BaseService {
     Object.setPrototypeOf(this, OrientationService.prototype);
   }
 
+  // programs
   getPrograms(startRage: number, endRage: number, search: URLSearchParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${
       API.ENDPOINTS.ORIENTATION
@@ -59,5 +60,12 @@ export class OrientationService extends BaseService {
     this.dummy = [programId, body, search];
 
     return Observable.of(body).delay(300);
+  }
+
+  // events
+  getEvents(startRage: number, endRage: number, search?: URLSearchParams) {
+    this.dummy = [startRage, endRage, search];
+
+    return Observable.of(this.mockJson).delay(300);
   }
 }

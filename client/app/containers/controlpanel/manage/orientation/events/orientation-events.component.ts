@@ -43,11 +43,11 @@ export class OrientationEventsComponent extends BaseComponent {
     search.append('school_id', this.session.g.get('school').id.toString());
 
     super
-      .fetchData(this.service.getOrientationProgramById(this.orientationId, search))
+      .fetchData(this.service.getProgramById(this.orientationId, search))
       .then((program) => {
         this.store.dispatch({
           type: HEADER_UPDATE,
-          payload: this.buildHeader(program.data[0]),
+          payload: this.buildHeader(program.data),
         });
       });
   }
@@ -64,7 +64,7 @@ export class OrientationEventsComponent extends BaseComponent {
       children: [],
     };
 
-    const subNav = this.utils.getSubNavChildren(program.is_membership);
+    const subNav = this.utils.getSubNavChildren(program.has_membership);
 
     subNav.forEach((nav) => {
       menu.children.push({
