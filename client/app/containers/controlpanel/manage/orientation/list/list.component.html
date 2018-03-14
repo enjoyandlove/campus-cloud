@@ -114,7 +114,6 @@
 
 <cp-modal modalId="programCreate" *ngIf="launchCreateModal">
   <cp-orientation-program-create
-    [isOrientation]="isOrientation"
     (created)="onCreated($event)"
     (resetCreateModal)="launchCreateModal = false">
   </cp-orientation-program-create>
@@ -122,7 +121,6 @@
 
 <cp-modal modalId="programDuplicate" *ngIf="launchDuplicateModal">
   <cp-orientation-duplicate-program
-    [isOrientation]="isOrientation"
     (created)="onCreated($event)"
     [orientationProgram]="selectedProgram"
     (resetDuplicateModal)="launchDuplicateModal = false">

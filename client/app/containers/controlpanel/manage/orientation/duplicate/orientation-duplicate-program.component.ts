@@ -23,7 +23,6 @@ export class OrientationDuplicateProgramComponent implements OnInit {
   @ViewChild('duplicateForm') duplicateForm;
 
   @Input() orientationProgram;
-  @Input() isOrientation = false;
 
   @Output()
   created: EventEmitter<{
@@ -36,6 +35,7 @@ export class OrientationDuplicateProgramComponent implements OnInit {
 
   buttonData;
   form: FormGroup;
+  isOrientation = true;
 
   constructor(
     public el: ElementRef,

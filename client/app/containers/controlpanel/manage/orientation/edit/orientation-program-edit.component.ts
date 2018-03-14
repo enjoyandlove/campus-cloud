@@ -24,7 +24,6 @@ export class OrientationProgramEditComponent implements OnInit {
   @ViewChild('editForm') editForm;
 
   @Input() orientationProgram;
-  @Input() isOrientation = false;
 
   @Output()
   edited: EventEmitter<{
@@ -36,6 +35,7 @@ export class OrientationProgramEditComponent implements OnInit {
 
   buttonData;
   form: FormGroup;
+  isOrientation = true;
 
   constructor(
     public el: ElementRef,
