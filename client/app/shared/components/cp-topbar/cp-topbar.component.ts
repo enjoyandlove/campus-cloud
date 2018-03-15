@@ -87,6 +87,10 @@ export class CPTopBarComponent implements OnInit {
       canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.app_customization)
     ) {
       return 'customization';
+    } else if (
+      canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.orientation)
+    ) {
+      return 'orientation';
     }
 
     return null;

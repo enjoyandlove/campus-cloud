@@ -12,6 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
 
 import { OrientationService } from '../orientation.services';
+import { CPI18nService } from '../../../../../shared/services/i18n.service';
 
 @Component({
   selector: 'cp-orientation-duplicate-program',
@@ -22,7 +23,6 @@ export class OrientationDuplicateProgramComponent implements OnInit {
   @ViewChild('duplicateForm') duplicateForm;
 
   @Input() orientationProgram;
-  @Input() isOrientation = false;
 
   @Output()
   created: EventEmitter<{
@@ -33,12 +33,15 @@ export class OrientationDuplicateProgramComponent implements OnInit {
   }> = new EventEmitter();
   @Output() resetDuplicateModal: EventEmitter<null> = new EventEmitter();
 
+  buttonData;
   form: FormGroup;
+  isOrientation = true;
 
   constructor(
     public el: ElementRef,
     public fb: FormBuilder,
     public session: CPSession,
+    public cpI18n: CPI18nService,
     public service: OrientationService,
   ) {}
 
@@ -61,7 +64,7 @@ export class OrientationDuplicateProgramComponent implements OnInit {
     search.append('school_id', this.session.g.get('school').id);
 
     this.service
-      .duplicateOrientationProgram(this.orientationProgram.id, this.form.value, search)
+      .duplicateProgram(this.orientationProgram.id, this.form.value, search)
       .subscribe((duplicateProgram) => {
         // todo: redirect to event page when program created
         this.created.emit(duplicateProgram);
@@ -75,6 +78,16 @@ export class OrientationDuplicateProgramComponent implements OnInit {
       name: [null, [Validators.required, Validators.maxLength(225)]],
       description: [null, Validators.maxLength(512)],
       is_membership: [this.orientationProgram.is_membership],
+    });
+
+    this.buttonData = Object.assign({}, this.buttonData, {
+      class: 'primary',
+      disabled: !this.form.valid,
+      text: this.cpI18n.translate('save')
+    });
+
+    this.form.valueChanges.subscribe(() => {
+      this.buttonData = { ...this.buttonData, disabled: !this.form.valid };
     });
   }
 }

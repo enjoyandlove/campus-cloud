@@ -33,10 +33,12 @@ export class CPPageHeaderComponent implements OnChanges {
     return this.router.url === this.extraMenu.url;
   }
 
+  getProductionReadyFeatures() {
+    return this.data.children.filter((child) => !child.hasOwnProperty('hiddenInProd'));
+  }
+
   ngOnChanges() {
-    this.readyFeatures = this.data.children.filter((child) => {
-       return isProd ? !child.hasOwnProperty('hiddenInProd') ? child : null : child;
-    });
+    this.readyFeatures = isProd ? this.getProductionReadyFeatures() : this.data.children;
 
     if (this.readyFeatures.length > this.maxChildren) {
       this.extraChildren = this.readyFeatures.filter(

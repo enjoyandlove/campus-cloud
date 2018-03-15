@@ -44,7 +44,11 @@
       box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.3);
 
       li {
-        padding: 6px 0 12px 12px;
+        padding: 10px 0 10px 0;
+
+        span {
+          padding: 2px 0 0 8px;
+        }
       }
     }
 

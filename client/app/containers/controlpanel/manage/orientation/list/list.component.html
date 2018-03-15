@@ -32,19 +32,13 @@
               </span>
             </span>
             <span
-              class="col-xs-3 hover"
-              (click)="doSort('created_time')">
+              class="col-xs-3">
               {{ 'duration' | cpI18n }}
-              <span *ngIf="state.sort_field === 'created_time'">
-                <i class="material-icons">
-                  {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
-                </i>
-              </span>
             </span>
-            <span class="col-xs-2 hover">
+            <span class="col-xs-2">
               {{ 'members' | cpI18n }}
             </span>
-            <span class="col-xs-2 hover">
+            <span class="col-xs-2">
               {{ 'events' | cpI18n }}
             </span>
             <span class="col-xs-1 hover"></span>
@@ -63,21 +57,21 @@
               {{ program.description }}
             </span>
             <span class="col-xs-3 text-truncate">
-              {{ program.start | cpDatePipe:dateFormat }} - {{ program.end | cpDatePipe:dateFormat }}
+              {{ program.active_from | cpDatePipe:dateFormat }} - {{ program.active_until | cpDatePipe:dateFormat }}
             </span>
             <span class="col-xs-2">
-              {{ program.members }}
+              {{ program.members_count }}
             </span>
             <span class="col-xs-1">
-              {{ program.events }}
+              {{ program.events_count }}
             </span>
             <span class="col-xs-1">
-             <strong
-               class="hover"
+             <button
+               class="cpbtn cpbtn--link-dark"
                (click)="isOpen = !isOpen;
                selectedProgram = program">
-               ...
-             </strong>
+               <i class="material-icons">more_horiz</i>
+             </button>
               <div
                 *ngIf="isOpen && selectedProgram.id === program.id"
                 class="orientation__dropdown">
@@ -85,20 +79,20 @@
                   <li
                     (click)="isOpen = false;
                     launchDuplicateModal = true;"
-                    class="orientation__dropdown__item"
+                    class="orientation__dropdown__item col-xs-12"
                     data-toggle="modal"
                     data-target="#programDuplicate">
-                      <i class="material-icons">add</i>
-                      <span>{{ 'orientation_duplicate_program' | cpI18n }}</span>
+                      <i class="material-icons col-xs-2">control_point_duplicate</i>
+                      <span class="col-xs-10">{{ 'orientation_duplicate_program' | cpI18n }}</span>
                   </li>
                   <li
                     (click)="isOpen = false;
                     launchDeleteModal = true;"
-                    class="orientation__dropdown__item"
+                    class="orientation__dropdown__item col-xs-12"
                     data-toggle="modal"
                     data-target="#programDelete">
-                      <i class="material-icons">close</i>
-                      <span>{{ 'orientation_delete_program' | cpI18n }}</span>
+                      <i class="material-icons col-xs-2">close</i>
+                      <span class="col-xs-10">{{ 'orientation_delete_program' | cpI18n }}</span>
                   </li>
                 </ul>
               </div>
@@ -120,7 +114,6 @@
 
 <cp-modal modalId="programCreate" *ngIf="launchCreateModal">
   <cp-orientation-program-create
-    [isOrientation]="isOrientation"
     (created)="onCreated($event)"
     (resetCreateModal)="launchCreateModal = false">
   </cp-orientation-program-create>
@@ -128,7 +121,6 @@
 
 <cp-modal modalId="programDuplicate" *ngIf="launchDuplicateModal">
   <cp-orientation-duplicate-program
-    [isOrientation]="isOrientation"
     (created)="onCreated($event)"
     [orientationProgram]="selectedProgram"
     (resetDuplicateModal)="launchDuplicateModal = false">

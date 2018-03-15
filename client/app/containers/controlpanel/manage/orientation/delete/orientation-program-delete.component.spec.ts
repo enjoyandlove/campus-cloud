@@ -19,7 +19,7 @@ class MockOrientationService {
     'is_membership': 0
   }];
 
-  deleteOrientationProgram(programId: number, search: any) {
+  deleteProgram(programId: number, search: any) {
     this.dummy = [search];
     const afterDeletedPrograms = this.mockProgram.filter((item) => item.id !== programId);
 
@@ -57,7 +57,7 @@ describe('OrientationProgramDeleteComponent', () => {
     expect(spy).not.toHaveBeenCalled();
     component.onDelete();
     expect(spy).toHaveBeenCalled();
-    expect(service.deleteOrientationProgram(84, null)).toEqual(Observable.of([]));
+    expect(service.deleteProgram(84, null)).toEqual(Observable.of([]));
   });
 
 });

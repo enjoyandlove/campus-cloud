@@ -10,7 +10,7 @@ class MockOrientationService {
   dummy;
   mockPrograms = require('../mock.json');
 
-  getOrientationProgramById(programId: number, search: any) {
+  getProgramById(programId: number, search: any) {
     this.dummy = [search];
     const program = this.mockPrograms.filter((item) => item.id === programId);
 
@@ -67,7 +67,7 @@ describe('OrientationInfoComponent', () => {
     expect(spy).not.toHaveBeenCalled();
     component.fetch();
     expect(spy).toHaveBeenCalled();
-    expect(service.getOrientationProgramById(84, null)).toEqual(mockProgram);
+    expect(service.getProgramById(84, null)).toEqual(mockProgram);
   });
 
 });

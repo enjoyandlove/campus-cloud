@@ -5,12 +5,13 @@ import { FormBuilder } from '@angular/forms';
 
 import { OrientationService } from '../orientation.services';
 import { OrientationProgramEditComponent } from './orientation-program-edit.component';
+import { CPI18nService } from '../../../../../shared/services/i18n.service';
 
 class MockOrientationService {
   dummy;
   program;
   mockPrograms = require('../mock.json');
-  editOrientationProgram(programId: number, body: any, search: any) {
+  editProgram(programId: number, body: any, search: any) {
     this.dummy = [search];
     this.program = this.mockPrograms.filter((item) => item.id === programId);
     this.program = body;
@@ -42,6 +43,7 @@ describe('OrientationProgramEditComponent', () => {
       providers: [
         CPSession,
         FormBuilder,
+        CPI18nService,
         { provide: OrientationService, useClass: MockOrientationService },
       ]
     }) .overrideComponent(OrientationProgramEditComponent, {
@@ -60,7 +62,7 @@ describe('OrientationProgramEditComponent', () => {
     expect(spy).not.toHaveBeenCalled();
     component.onSubmit();
     expect(spy).toHaveBeenCalled();
-    expect(service.editOrientationProgram(84, editProgram, null))
+    expect(service.editProgram(84, editProgram, null))
       .toEqual(Observable.of(editProgram));
   });
 

@@ -12,7 +12,7 @@ class MockOrientationService {
   dummy;
   mockPrograms = require('../mock.json');
 
-  getOrientationPrograms(startRage: number, endRage: number, search: any) {
+  getPrograms(startRage: number, endRage: number, search: any) {
     this.dummy = [startRage, endRage, search];
 
     return Observable.of(this.mockPrograms);
@@ -66,7 +66,7 @@ describe('OrientationListComponent', () => {
 
   it('should fetch list of orientation programs', () => {
     mockPrograms = require('../mock.json');
-    resPrograms = service.getOrientationPrograms(0, 0, null);
+    resPrograms = service.getPrograms(0, 0, null);
 
     expect(compSpy).not.toHaveBeenCalled();
     component.fetch();

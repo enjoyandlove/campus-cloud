@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { OrientationService } from '../orientation.services';
@@ -13,13 +13,10 @@ import { CPSession } from './../../../../../session';
 })
 
 export class OrientationInfoComponent extends BaseComponent implements OnInit {
-
   loading;
   selectedProgram = [];
   orientationId: number;
   launchEditModal = false;
-
-  @Input() isOrientation = true;
 
   constructor(
     public session: CPSession,
@@ -29,7 +26,7 @@ export class OrientationInfoComponent extends BaseComponent implements OnInit {
     super();
     this.orientationId = this.route.parent.snapshot.params['orientationId'];
 
-    super.isLoading().subscribe(() => (this.loading = true));
+    super.isLoading().subscribe((loading) => (this.loading = loading));
   }
 
   public fetch() {
@@ -37,11 +34,8 @@ export class OrientationInfoComponent extends BaseComponent implements OnInit {
     search.append('school_id', this.session.g.get('school').id.toString());
 
     super
-      .fetchData(this.service.getOrientationProgramById(this.orientationId, search))
-      .then((res) => (this.selectedProgram = res.data[0]))
-      .catch((err) => {
-        throw new Error(err);
-      });
+      .fetchData(this.service.getProgramById(this.orientationId, search))
+      .then((res) => (this.selectedProgram = res.data));
   }
 
   onLaunchEditModal() {

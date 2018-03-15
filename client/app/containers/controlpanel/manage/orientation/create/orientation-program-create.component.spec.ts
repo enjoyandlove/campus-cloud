@@ -5,11 +5,12 @@ import { FormBuilder } from '@angular/forms';
 
 import { OrientationService } from '../orientation.services';
 import { OrientationProgramCreateComponent } from './orientation-program-create.component';
+import { CPI18nService } from '../../../../../shared/services/i18n.service';
 
 class MockOrientationService {
   dummy;
 
-  createOrientationProgram(body: any, search: any) {
+  createProgram(body: any, search: any) {
     this.dummy = [search];
 
     return Observable.of(body);
@@ -39,6 +40,7 @@ describe('OrientationProgramCreateComponent', () => {
       providers: [
         CPSession,
         FormBuilder,
+        CPI18nService,
         { provide: OrientationService, useClass: MockOrientationService },
       ]
     }) .overrideComponent(OrientationProgramCreateComponent, {
@@ -68,7 +70,7 @@ describe('OrientationProgramCreateComponent', () => {
     expect(spy).not.toHaveBeenCalled();
     component.onSubmit();
     expect(spy).toHaveBeenCalled();
-    expect(service.createOrientationProgram(mockProgram, null)).toEqual(Observable.of(mockProgram));
+    expect(service.createProgram(mockProgram, null)).toEqual(Observable.of(mockProgram));
   });
 
 });
