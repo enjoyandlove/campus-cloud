@@ -1,4 +1,3 @@
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, Input } from '@angular/core';
@@ -7,18 +6,15 @@ import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
-import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { EventsService } from '../events.service';
 import { FORMAT } from '../../../../../shared/pipes/date';
 import { CPSession, ISchool } from '../../../../../session';
 import { CPMap, CPDate } from '../../../../../shared/utils';
 import { BaseComponent } from '../../../../../base/base.component';
 import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
-import {
-  ErrorService,
-  StoreService,
-  AdminService,
-} from '../../../../../shared/services';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { ErrorService, StoreService, AdminService } from '../../../../../shared/services';
 
 import { EventAttendance } from '../event.status';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
@@ -26,13 +22,13 @@ import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-
 const COMMON_DATE_PICKER_OPTIONS = {
   altInput: true,
   enableTime: true,
-  altFormat: 'F j, Y h:i K',
+  altFormat: 'F j, Y h:i K'
 };
 
 @Component({
   selector: 'cp-events-edit',
   templateUrl: './events-edit.component.html',
-  styleUrls: ['./events-edit.component.scss'],
+  styleUrls: ['./events-edit.component.scss']
 })
 export class EventsEditComponent extends BaseComponent implements OnInit {
   @Input() storeId: number;
@@ -79,7 +75,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     private adminService: AdminService,
     private storeService: StoreService,
     private errorService: ErrorService,
-    private eventService: EventsService,
+    private eventService: EventsService
   ) {
     super();
     this.school = this.session.g.get('school');
@@ -107,7 +103,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       if (managerId.value === null) {
         this.formMissingFields = true;
         this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: false,
+          disabled: false
         });
         managerId.setErrors({ required: true });
       }
@@ -115,7 +111,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       if (eventFeedback.value === null) {
         this.formMissingFields = true;
         this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: false,
+          disabled: false
         });
         eventFeedback.setErrors({ required: true });
       }
@@ -136,24 +132,18 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       this.formMissingFields = true;
       this.form.controls['end'].setErrors({ required: true });
       this.form.controls['start'].setErrors({ required: true });
-      this.dateErrorMessage = this.cpI18n.translate(
-        'events_error_end_date_before_start',
-      );
+      this.dateErrorMessage = this.cpI18n.translate('events_error_end_date_before_start');
       this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
 
       return;
     }
 
-    if (
-      this.form.controls['end'].value <= Math.round(new Date().getTime() / 1000)
-    ) {
+    if (this.form.controls['end'].value <= Math.round(new Date().getTime() / 1000)) {
       this.isDateError = true;
       this.formMissingFields = true;
       this.form.controls['end'].setErrors({ required: true });
       this.form.controls['start'].setErrors({ required: true });
-      this.dateErrorMessage = this.cpI18n.translate(
-        'events_error_end_date_after_now',
-      );
+      this.dateErrorMessage = this.cpI18n.translate('events_error_end_date_after_now');
       this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
 
       return;
@@ -162,23 +152,17 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.eventService.updateEvent(data, this.eventId).subscribe(
       (_) => {
         if (this.isAthletic) {
-          this.router.navigate([
-            `/manage/athletics/${this.clubId}/events/${this.eventId}`,
-          ]);
+          this.router.navigate([`/manage/athletics/${this.clubId}/events/${this.eventId}`]);
 
           return;
         }
         if (this.isService) {
-          this.router.navigate([
-            `/manage/services/${this.storeId}/events/${this.eventId}`,
-          ]);
+          this.router.navigate([`/manage/services/${this.storeId}/events/${this.eventId}`]);
 
           return;
         }
         if (this.isClub) {
-          this.router.navigate([
-            `/manage/clubs/${this.clubId}/events/${this.eventId}`,
-          ]);
+          this.router.navigate([`/manage/clubs/${this.clubId}/events/${this.eventId}`]);
 
           return;
         }
@@ -187,9 +171,9 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       (_) => {
         this.serverError = true;
         this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: false,
+          disabled: false
         });
-      },
+      }
     );
   }
 
@@ -215,7 +199,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       event_feedback: [res.event_feedback],
       event_manager_id: [res.event_manager_id],
       attendance_manager_email: [res.attendance_manager_email],
-      custom_basic_feedback_label: [res.custom_basic_feedback_label],
+      custom_basic_feedback_label: [res.custom_basic_feedback_label]
     });
 
     this.updateDatePicker();
@@ -224,7 +208,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.originalAttnFeedback = this.getFromArray(
       this.booleanOptions,
       'action',
-      res.event_feedback,
+      res.event_feedback
     );
 
     this.originalHost = this.getFromArray(this.stores, 'value', res.store_id);
@@ -240,14 +224,14 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       defaultDate: CPDate.fromEpoch(this.form.controls['start'].value),
       onClose: function(date) {
         _self.form.controls['start'].setValue(CPDate.toEpoch(date[0]));
-      },
+      }
     };
     this.enddatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
       defaultDate: CPDate.fromEpoch(this.form.controls['end'].value),
       onClose: function(date) {
         _self.form.controls['end'].setValue(CPDate.toEpoch(date[0]));
-      },
+      }
     };
   }
 
@@ -274,17 +258,22 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
         return [
           {
             label: '---',
-            value: null,
+            value: null
           },
           ...admins.map((admin) => {
             return {
               label: `${admin.firstname} ${admin.lastname}`,
-              value: admin.id,
+              value: admin.id
             };
-          }),
+          })
         ];
       })
-      .subscribe((res) => (this.managers = res));
+      .subscribe((res) => {
+        this.managers = res;
+        this.selectedManager = this.managers.filter(
+          (manager) => manager.value === this.form.controls['event_manager_id'].value
+        )[0];
+      });
   }
 
   private fetch() {
@@ -303,13 +292,10 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
         this.stores = res.data[1];
         this.event = res.data[0];
         this.buildForm(res.data[0]);
-        this.selectedManager = this.event.attendance_manager_email
-          ? { label: this.event.attendance_manager_email }
-          : null;
 
         this.mapCenter = new BehaviorSubject({
           lat: res.data[0].latitude,
-          lng: res.data[0].longitude,
+          lng: res.data[0].longitude
         });
       })
       .catch((err) => this.errorService.handleError(err));
@@ -321,8 +307,8 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       payload: {
         heading: 'events_edit_event',
         subheading: '',
-        children: [],
-      },
+        children: []
+      }
     });
   }
 
@@ -332,11 +318,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
   enableStudentFeedbackOnAttendanceToggle(value) {
     this.form.controls['event_feedback'].setValue(value);
-    this.originalAttnFeedback = this.getFromArray(
-      this.booleanOptions,
-      'action',
-      value,
-    );
+    this.originalAttnFeedback = this.getFromArray(this.booleanOptions, 'action', value);
   }
 
   toggleEventAttendance(value) {
@@ -348,10 +330,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   onResetMap() {
-    CPMap.setFormLocationData(
-      this.form,
-      CPMap.resetLocationFields(this.school),
-    );
+    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields(this.school));
     this.centerMap(this.school.latitude, this.school.longitude);
   }
 
@@ -405,31 +384,31 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.eventManager = Object.assign({}, this.eventManager, {
-      content: this.cpI18n.translate('events_event_manager_tooltip'),
+      content: this.cpI18n.translate('events_event_manager_tooltip')
     });
     this.attendanceManager = Object.assign({}, this.attendanceManager, {
-      content: this.cpI18n.translate('events_attendance_manager_tooltip'),
+      content: this.cpI18n.translate('events_attendance_manager_tooltip')
     });
 
     this.studentFeedback = Object.assign({}, this.studentFeedback, {
-      content: this.cpI18n.translate('events_event_feedback_tooltip'),
+      content: this.cpI18n.translate('events_event_feedback_tooltip')
     });
 
     this.buttonData = {
       text: this.cpI18n.translate('save'),
-      class: 'primary',
+      class: 'primary'
     };
 
     this.dateFormat = FORMAT.DATETIME;
     this.booleanOptions = [
       {
         label: this.cpI18n.translate('event_enabled'),
-        action: EventAttendance.enabled,
+        action: EventAttendance.enabled
       },
       {
         label: this.cpI18n.translate('events_disabled'),
-        action: EventAttendance.disabled,
-      },
+        action: EventAttendance.disabled
+      }
     ];
   }
 }
