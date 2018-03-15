@@ -73,6 +73,11 @@ const appRoutes: Routes = [
         data: { zendesk: 'locations' },
         loadChildren: './locations/locations.module#LocationsModule',
       },
+      {
+        path: 'orientation',
+        data: { zendesk: 'orientation' },
+        loadChildren: './orientation/orientation.module#OrientationModule',
+      },
     ],
   },
 ];

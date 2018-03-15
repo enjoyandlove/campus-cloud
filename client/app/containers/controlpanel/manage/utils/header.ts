@@ -93,6 +93,13 @@ export class ManageHeaderService {
         )
           ? child
           : null;
+      } else if (child.privilege === CP_PRIVILEGES_MAP.orientation) {
+        return canSchoolReadResource(
+          this.session.g,
+          CP_PRIVILEGES_MAP.orientation,
+        )
+          ? child
+          : null;
       }
     });
 

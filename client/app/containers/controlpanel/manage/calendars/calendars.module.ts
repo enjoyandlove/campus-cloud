@@ -62,6 +62,10 @@ import { CalendarsItemsBulkCreateComponent } from './items/bulk-create/calendats
     CalendarRoutingModule,
   ],
 
+  exports: [
+    CalendarsFormComponent,
+  ],
+
   providers: [CalendarsService, CalendarsItemsService, CPLocationsService],
 })
 export class CalendarsModule {}

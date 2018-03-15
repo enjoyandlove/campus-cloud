@@ -23,12 +23,12 @@
       </div>
     </div>
 
-    <div class="row" *ngIf="data.children.length">
+    <div class="row" *ngIf="readyFeatures.length">
       <div class="col-xs-12">
         <ul class="header__nav">
           <li
             routerLinkActive="active"
-            *ngFor="let page of data.children | cpFilterByLength : maxChildren"
+            *ngFor="let page of readyFeatures | cpFilterByLength : maxChildren"
             [routerLinkActiveOptions]="{exact: page.hasParams ? false : true}">
             <span class="promote-badge" *ngIf="page.new">new</span>
             <a
