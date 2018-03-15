@@ -19,6 +19,8 @@ import { EventAttendance, EventFeedback } from '../event.status';
 import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
+import { OrientationService } from '../../orientation/orientation.services';
+import { EventUtilService } from '../events.utils.service';
 
 const COMMON_DATE_PICKER_OPTIONS = {
   utc: true,
@@ -35,7 +37,7 @@ const COMMON_DATE_PICKER_OPTIONS = {
 export class EventsCreateComponent implements OnInit {
   @Input() storeId: number;
   @Input() isClub: boolean;
-  @Input() clubId: boolean;
+  @Input() clubId: number;
   @Input() serviceId: number;
   @Input() isAthletic: number;
   @Input() isService: boolean;
@@ -44,6 +46,8 @@ export class EventsCreateComponent implements OnInit {
   @Input() toolTipContent: IToolTipContent;
 
   stores$;
+  service;
+  urlPrefix;
   buttonData;
   isDateError;
   eventManager;
@@ -67,10 +71,12 @@ export class EventsCreateComponent implements OnInit {
     private session: CPSession,
     public cpI18n: CPI18nService,
     private storeHeader: Store<any>,
+    private utils: EventUtilService,
     private adminService: AdminService,
     private storeService: StoreService,
     private errorService: ErrorService,
     private eventService: EventsService,
+    private orientationService: OrientationService,
   ) {
     this.school = this.session.g.get('school');
     const search: URLSearchParams = new URLSearchParams();
@@ -251,37 +257,10 @@ export class EventsCreateComponent implements OnInit {
       return;
     }
 
-    this.eventService.createEvent(this.form.value).subscribe(
+    this.service.createEvent(this.form.value).subscribe(
       (res) => {
-        if (this.isOrientation) {
-          this.router.navigate([
-            `/manage/orientation/${this.orientationId}/events`,
-          ]);
-
-          return;
-        }
-        if (this.isService) {
-          this.router.navigate([
-            `/manage/services/${this.serviceId}/events/${res.id}`,
-          ]);
-
-          return;
-        }
-        if (this.isAthletic) {
-          this.router.navigate([
-            `/manage/athletics/${this.clubId}/events/${res.id}`,
-          ]);
-
-          return;
-        }
-        if (this.isClub) {
-          this.router.navigate([
-            `/manage/clubs/${this.clubId}/events/${res.id}`,
-          ]);
-
-          return;
-        }
-        this.router.navigate(['/manage/events/' + res.id]);
+        this.urlPrefix = this.getUrlPrefix(res.id);
+        this.router.navigate([this.urlPrefix]);
       },
       (err) => {
         this.errorService.handleError(err);
@@ -289,6 +268,16 @@ export class EventsCreateComponent implements OnInit {
           disabled: false,
         });
       },
+    );
+  }
+
+  getUrlPrefix(eventId) {
+   return this.utils.builidUrlPrefixEvents(
+      this.clubId,
+      this.serviceId,
+      this.isAthletic,
+      this.orientationId,
+      eventId
     );
   }
 
@@ -301,6 +290,8 @@ export class EventsCreateComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.service = this.isOrientation ? this.orientationService : this.eventService;
+
     this.eventManager = Object.assign({}, this.eventManager, {
       content: this.cpI18n.translate('events_event_manager_tooltip'),
     });

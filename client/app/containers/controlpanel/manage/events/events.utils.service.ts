@@ -32,6 +32,25 @@ export class EventUtilService {
     return '/manage/events';
   }
 
+  builidUrlPrefixEvents(
+    clubId: number = null,
+    serviceId: number = null,
+    athleticId: number = null,
+    orientationId: number = null,
+    eventId: number = null) {
+    if (athleticId) {
+      return `/manage/athletics/${clubId}/events/${eventId}`;
+    } else if (clubId) {
+      return `/manage/clubs/${clubId}/events/${eventId}`;
+    } else if (serviceId) {
+      return `/manage/services/${serviceId}/events/${eventId}`;
+    } else if (orientationId) {
+      return `/manage/orientation/${orientationId}/events`;
+    }
+
+    return `/manage/events/${eventId}`;
+  }
+
   getSubNavChildren(event, urlPrefix) {
     const pastEvent = this.isPastEvent(event);
     const attendanceEnabled =

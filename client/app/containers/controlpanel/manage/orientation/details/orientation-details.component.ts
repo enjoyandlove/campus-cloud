@@ -39,33 +39,9 @@ export class OrientationDetailsComponent extends BaseComponent implements OnInit
       .then((program) => {
         this.store.dispatch({
           type: HEADER_UPDATE,
-          payload: this.buildHeader(program.data),
+          payload: this.utils.buildHeader(program.data),
         });
       });
-  }
-
-  buildHeader(program) {
-    const menu = {
-      heading: `[NOTRANSLATE]${program.name}[NOTRANSLATE]`,
-      crumbs: {
-        url: 'orientation',
-        label: 'orientation',
-      },
-      subheading: null,
-      em: null,
-      children: [],
-    };
-
-    const subNav = this.utils.getSubNavChildren(program.is_membership);
-
-    subNav.forEach((nav) => {
-      menu.children.push({
-        label: nav.label.toLocaleLowerCase(),
-        url: `/manage/orientation/${this.orientationId}/${nav.link}`,
-      });
-    });
-
-    return menu;
   }
 
   ngOnInit() {

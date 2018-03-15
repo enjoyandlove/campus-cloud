@@ -5,6 +5,7 @@ import { EventsService } from '../../events.service';
 import { CPSession } from '../../../../../../session';
 import { BaseComponent } from '../../../../../../base/base.component';
 import { CPI18nService } from './../../../../../../shared/services/i18n.service';
+import { OrientationService } from '../../../orientation/orientation.services';
 
 interface IState {
   start: number;
@@ -55,6 +56,7 @@ export class EventsComponent extends BaseComponent {
   pagePrev;
   pageNumber;
   isUpcoming;
+  eventsService;
   deleteEvent = '';
   state: IState = state;
 
@@ -62,6 +64,7 @@ export class EventsComponent extends BaseComponent {
     public session: CPSession,
     public cpI18n: CPI18nService,
     public service: EventsService,
+    public orientationService: OrientationService
   ) {
     super();
     this.school = this.session.g.get('school');
@@ -149,7 +152,10 @@ export class EventsComponent extends BaseComponent {
     search.append('sort_field', this.state.sort_field);
     search.append('sort_direction', this.state.sort_direction);
 
-    this.fetch(this.service.getEvents(start, end, search));
+    this.eventsService = this.isOrientation ? this.orientationService : this.service;
+
+    this.fetch(this.eventsService.getEvents(start, end, search));
+
   }
 
   onDeleteEvent(event) {

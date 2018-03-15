@@ -9,7 +9,7 @@ import { BaseService } from '../../../../base';
 @Injectable()
 export class OrientationService extends BaseService {
   dummy;
-  mockJson = require('./mock.json');
+  mockJson = require('./mockEvents.json');
 
   constructor(http: Http, router: Router) {
     super(http, router);
@@ -67,5 +67,23 @@ export class OrientationService extends BaseService {
     this.dummy = [startRage, endRage, search];
 
     return Observable.of(this.mockJson).delay(300);
+  }
+
+  createEvent(body: any) {
+    this.dummy = [body];
+
+    return Observable.of(body).delay(300);
+  }
+
+  updateEvent(body: any, eventId: number) {
+    this.dummy = [body, eventId];
+
+    return Observable.of(body).delay(300);
+  }
+
+  getEventById(id: number) {
+    const event = this.mockJson.filter((item) => item.id.toString() === id);
+
+    return Observable.of(event[0]).delay(300);
   }
 }

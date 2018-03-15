@@ -7,6 +7,7 @@ import { CPDate } from '../../../../../shared/utils/date';
 import { EventUtilService } from './../events.utils.service';
 import { BaseComponent } from '../../../../../base/base.component';
 import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { OrientationService } from '../../orientation/orientation.services';
 
 @Component({
   selector: 'cp-events-attendance',
@@ -23,6 +24,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   @Input() isOrientation: boolean;
 
   event;
+  service;
   urlPrefix;
   isUpcoming;
   loading = true;
@@ -31,8 +33,9 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   constructor(
     private store: Store<IHeader>,
     private route: ActivatedRoute,
-    private service: EventsService,
     private utils: EventUtilService,
+    private eventService: EventsService,
+    private orientationService: OrientationService,
   ) {
     super();
     this.eventId = this.route.snapshot.params['eventId'];
@@ -72,6 +75,8 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.service = this.isOrientation ? this.orientationService : this.eventService;
+
     this.urlPrefix = this.utils.buildUrlPrefix(
       this.clubId,
       this.serviceId,

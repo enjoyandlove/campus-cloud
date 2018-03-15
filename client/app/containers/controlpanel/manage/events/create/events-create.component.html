@@ -143,17 +143,10 @@
                   </cp-tooltip>
                 </label>
                 <cp-dropdown
-                  *ngIf="!isOrientation"
                   [items]="managers"
                   (selected)="onSelectedManager($event)"
                   [isRequiredError]="formError && form.controls['event_manager_id'].hasError('required')">
                 </cp-dropdown>
-                <input
-                  *ngIf="isOrientation"
-                  type="text"
-                  class="form-control"
-                  formControlName="event_manager_id"
-                  [class.error]="formError && form.controls['event_manager_id'].hasError('required')">
               </div>
             </div>
             <div class="col-xs-6">

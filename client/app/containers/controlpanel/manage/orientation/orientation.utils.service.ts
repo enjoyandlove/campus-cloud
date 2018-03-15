@@ -18,4 +18,28 @@ export class OrientationUtilsService {
 
     return links;
   }
+
+  buildHeader(program) {
+    const menu = {
+      heading: `[NOTRANSLATE]${program.name}[NOTRANSLATE]`,
+      crumbs: {
+        url: 'orientation',
+        label: 'orientation',
+      },
+      subheading: null,
+      em: null,
+      children: [],
+    };
+
+    const subNav = this.getSubNavChildren(program.has_membership);
+
+    subNav.forEach((nav) => {
+      menu.children.push({
+        label: nav.label.toLocaleLowerCase(),
+        url: `/manage/orientation/${program.id}/${nav.link}`,
+      });
+    });
+
+    return menu;
+  }
 }

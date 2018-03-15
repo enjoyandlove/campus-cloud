@@ -38,6 +38,7 @@ import {
   ListPastComponent,
   ListUpcomingComponent,
 } from './list/components';
+import { OrientationService } from '../orientation/orientation.services';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,7 @@ import {
     ReactiveFormsModule,
   ],
 
-  providers: [EventsService, EventUtilService],
+  providers: [EventsService, EventUtilService, OrientationService],
 
   exports: [
     EventsListComponent,

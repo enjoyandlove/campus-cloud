@@ -53,14 +53,16 @@ export class FacebookEventsCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    let store_id;
+    let store_id = this.session.defaultHost
+      ? this.session.defaultHost.value
+      : null;
 
     if (this.storeId) {
       store_id = this.storeId;
-    } else if (this.clubId) {
+    }
+
+    if (this.clubId) {
       store_id = this.clubId;
-    } else if (this.orientationId) {
-      store_id = this.orientationId;
     }
 
     this.form = this.fb.group({

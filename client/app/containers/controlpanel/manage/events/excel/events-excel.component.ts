@@ -15,6 +15,7 @@ import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { CPI18nPipe } from './../../../../../shared/pipes/i18n/i18n.pipe';
 import { STATUS, CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 import { CPImageUploadComponent } from '../../../../../shared/components';
+import { OrientationService } from '../../orientation/orientation.services';
 import { EventUtilService } from '../events.utils.service';
 import {
   FileUploadService,
@@ -45,9 +46,11 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   error;
   events;
   stores;
+  service;
   urlPrefix;
   formError;
   buttonData;
+  defaultStore;
   uploadButtonData;
   mockDropdown;
   isSingleChecked = [];
@@ -64,12 +67,13 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     private fb: FormBuilder,
     private store: Store<any>,
     private session: CPSession,
+    private cpI18n: CPI18nService,
     private utils: EventUtilService,
     private adminService: AdminService,
     private storeService: StoreService,
     private eventsService: EventsService,
-    private cpI18n: CPI18nService,
-    private fileUploadService: FileUploadService
+    private fileUploadService: FileUploadService,
+    private orientationService: OrientationService,
   ) {
     super();
     this.school = this.session.g.get('school');
@@ -125,6 +129,9 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     if (this.isClub) {
       this.updateManagersByStoreOrClubId(this.clubId);
     }
+    if (this.isOrientation) {
+      this.updateManagersByStoreOrClubId(this.defaultStore);
+    }
 
     this.form.valueChanges.subscribe((_) => {
       this.buttonData = Object.assign({}, this.buttonData, {
@@ -158,6 +165,10 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
 
     if (this.clubId) {
       store_id = this.clubId;
+    }
+
+    if (this.isOrientation) {
+      store_id = this.defaultStore;
     }
 
     return this.fb.group({
@@ -406,7 +417,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       _events.push(_event);
     });
 
-    this.eventsService.createEvent(_events).subscribe(
+    this.service.createEvent(_events).subscribe(
       (_) => {
         this.router.navigate([this.urlPrefix]);
 
@@ -438,6 +449,12 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.service = this.isOrientation ? this.orientationService : this.eventsService;
+
+    this.defaultStore = this.session.defaultHost
+      ? this.session.defaultHost.value
+      : null;
+
     this.urlPrefix = this.utils.buildUrlPrefix(
       this.clubId,
       this.serviceId,
@@ -461,7 +478,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       this.events = !isDev ? res : require('./mock.json');
       // this.events = res;
 
-      if (!this.storeId && !this.clubId) {
+      if (!this.storeId && !this.clubId && !this.isOrientation) {
         this.fetch();
 
         return;
