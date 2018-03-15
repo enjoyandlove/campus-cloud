@@ -9,7 +9,7 @@ import {
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
+
 import { appStorage, CPObj } from '../shared/utils';
 
 import { API } from './../config/api/index';
