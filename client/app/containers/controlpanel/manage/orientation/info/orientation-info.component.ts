@@ -40,9 +40,13 @@ export class OrientationInfoComponent extends BaseComponent implements OnInit {
 
   onLaunchEditModal() {
     this.launchEditModal = true;
-    setTimeout(() => {
-      $('#programEdit').modal();
-    }, 1);
+    setTimeout(
+      () => {
+        $('#programEdit').modal();
+      },
+
+      1
+    );
   }
 
   onEditedLink(editedProgram: any) {

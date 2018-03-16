@@ -24,9 +24,8 @@ export class OrientationDetailsComponent extends BaseComponent implements OnInit
     private store: Store<any>,
     private session: CPSession,
     private route: ActivatedRoute,
-    private service: OrientationService
-  ) // private utils: OrientationUtilsService
-  {
+    private service: OrientationService // private utils: OrientationUtilsService
+  ) {
     super();
 
     this.orientationId = this.route.parent.snapshot.params['orientationId'];

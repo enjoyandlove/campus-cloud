@@ -35,6 +35,8 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
 
   constructor(private session: CPSession, private feedsService: FeedsService) {
     super();
+    this.endRange = 10000;
+    this.maxPerPage = 10000;
     super.isLoading().subscribe((res) => (this.loading = res));
   }
 
@@ -70,6 +72,7 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
       search,
       this.feed.comment_count + 1
     );
+
     const stream$ = this._isCampusWallView ? campusWallComments$ : groupWallComments$;
 
     super.fetchData(stream$).then((res) => {
