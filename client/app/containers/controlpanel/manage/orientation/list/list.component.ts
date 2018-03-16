@@ -56,9 +56,13 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
   onLaunchCreateModal() {
     this.launchCreateModal = true;
 
-    setTimeout(() => {
-      $('#programCreate').modal();
-    }, 1);
+    setTimeout(
+      () => {
+        $('#programCreate').modal();
+      },
+
+      1
+    );
   }
 
   onPaginationNext() {
