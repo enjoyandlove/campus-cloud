@@ -96,6 +96,9 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.endRange = this.feed.comment_count + 1;
+    this.maxPerPage = this.feed.comment_count + 1;
+
     this.isCampusWallView.subscribe((res: any) => {
       this.groupId = res.type;
       this._isCampusWallView = res.type === 1;
