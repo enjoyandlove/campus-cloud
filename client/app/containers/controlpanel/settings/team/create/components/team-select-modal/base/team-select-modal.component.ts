@@ -1,8 +1,12 @@
+/*tslint:disable:max-line-length */
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { permissions } from '../permissions';
+import { get as _get } from 'lodash';
 
+import { canStoreReadAndWriteResource } from './../../../../../../../../shared/utils/privileges/privileges';
+import { CPSession } from './../../../../../../../../session';
 import { BaseComponent } from '../../../../../../../../base/base.component';
+import { permissions, permissionType, permissionIcon } from '../permissions';
 import { CP_PRIVILEGES_MAP } from './../../../../../../../../shared/constants';
 
 interface ISelected {
@@ -17,16 +21,16 @@ interface IState {
 }
 
 const state: IState = {
-  selected: [],
+  selected: []
 };
 
 @Component({
   selector: 'cp-team-select-modal',
   templateUrl: './team-select-modal.component.html',
-  styleUrls: ['./team-select-modal.component.scss'],
+  styleUrls: ['./team-select-modal.component.scss']
 })
-export class BaseTeamSelectModalComponent extends BaseComponent
-  implements OnInit {
+export class BaseTeamSelectModalComponent extends BaseComponent implements OnInit {
+  @Input() privileges: any;
   @Input() title: string;
   @Input() defaultState: any;
   @Input() data: Observable<any>;
@@ -37,25 +41,38 @@ export class BaseTeamSelectModalComponent extends BaseComponent
   @Output() cancel: EventEmitter<null> = new EventEmitter();
 
   loading;
-  privileges;
   query = null;
   state: IState = state;
+  permissionType = permissionType;
 
-  constructor() {
+  constructor(public session: CPSession) {
     super();
     this.privileges = permissions;
   }
 
   onCheckedItem(checked, service) {
+    const canWrite = canStoreReadAndWriteResource(this.session.g, service.id, this.privilegeType);
+
     this.updateItem(service.id, 'checked', checked);
+
+    this.updateItem(
+      service.id,
+      'type',
+      canWrite ? permissionType.write : permissionType.read,
+      canWrite ? permissionIcon.write : permissionIcon.read
+    );
   }
 
-  updateItem(id: number, key: string, value: any) {
+  updateItem(id: number, key: string, value: any, icon = null) {
     const _state = Object.assign({}, this.state);
 
-    _state.selected.forEach((service) => {
-      if (service.id === id) {
-        service[key] = value;
+    _state.selected.forEach((store) => {
+      if (store.id === id) {
+        store[key] = value;
+
+        if (icon) {
+          store['icon'] = icon;
+        }
       }
     });
   }
@@ -77,16 +94,16 @@ export class BaseTeamSelectModalComponent extends BaseComponent
         _item['store_id' in item.data ? item.data.store_id : item.data.id] = {
           [this.privilegeType]: {
             r: true,
-            w: true,
+            w: item.type === permissionType.write
           },
           [CP_PRIVILEGES_MAP.events]: {
             r: true,
-            w: true,
+            w: true
           },
           [CP_PRIVILEGES_MAP.event_attendance]: {
             r: true,
-            w: true,
-          },
+            w: true
+          }
         };
 
         // if its a club we grant them access to extra privileges
@@ -94,12 +111,12 @@ export class BaseTeamSelectModalComponent extends BaseComponent
           _item[item.data.id] = Object.assign({}, _item[item.data.id], {
             [CP_PRIVILEGES_MAP.moderation]: {
               r: true,
-              w: true,
+              w: true
             },
             [CP_PRIVILEGES_MAP.membership]: {
               r: true,
-              w: true,
-            },
+              w: item.type === permissionType.write
+            }
           });
         }
       }
@@ -109,27 +126,29 @@ export class BaseTeamSelectModalComponent extends BaseComponent
   }
 
   updateState(items) {
-    const _selected = [];
-
-    items.forEach((item) => {
-      _selected.push({
-        id: item.id,
-        type: 1,
-        checked: item.checked || false,
-        data: item,
-      });
-    });
-    this.state = Object.assign({}, this.state, { selected: _selected });
+    this.state = {
+      ...this.state,
+      selected: items.map((item) => {
+        return {
+          id: item.id,
+          type: permissionType.read, // default permission type
+          checked: item.checked || false,
+          data: item
+        };
+      })
+    };
   }
 
   doReset() {
-    this.state = Object.assign({}, this.state, {
+    this.state = {
+      ...this.state,
       selected: this.state.selected.map((item) => {
-        item.checked = false;
-
-        return item;
-      }),
-    });
+        return {
+          ...item,
+          checked: false
+        };
+      })
+    };
   }
 
   ngOnInit() {
@@ -140,17 +159,21 @@ export class BaseTeamSelectModalComponent extends BaseComponent
     });
 
     this.data.subscribe((res) => {
-      this.loading = 'data' in res;
+      this.loading = !('data' in res);
 
       if (res.data) {
         this.updateState(res.data);
       }
 
       if (res.selected) {
-        Object.keys(res.selected).forEach((storeId) => {
-          const type = res.selected[storeId].w ? 2 : 1;
-          this.updateItem(res.selected[storeId].id, 'type', type);
-        });
+        for (const store in res.selected) {
+          const canAccountWrite = _get(res.selected[store], 'write', true);
+
+          const value = canAccountWrite ? permissionType.write : permissionType.read;
+          const icon = value === permissionType.write ? permissionIcon.write : permissionIcon.read;
+
+          this.updateItem(res.selected[store].id, 'type', value, icon);
+        }
       }
     });
   }

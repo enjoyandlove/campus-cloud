@@ -8,7 +8,7 @@ import { CPI18nService } from './../../../../../shared/services/i18n.service';
 @Component({
   selector: 'cp-orientation-program-delete',
   templateUrl: './orientation-program-delete.component.html',
-  styleUrls: ['./orientation-program-delete.component.scss'],
+  styleUrls: ['./orientation-program-delete.component.scss']
 })
 export class OrientationProgramDeleteComponent implements OnInit {
   @Input() orientationProgram;
@@ -20,30 +20,28 @@ export class OrientationProgramDeleteComponent implements OnInit {
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public service: OrientationService,
+    public service: OrientationService
   ) {}
 
   onDelete() {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    this.service
-      .deleteProgram(this.orientationProgram.id, search)
-      .subscribe(() => {
-        this.deleted.emit(this.orientationProgram.id);
-        this.resetDeleteModal.emit();
-        $('#programDelete').modal('hide');
+    this.service.deleteProgram(this.orientationProgram.id, search).subscribe(() => {
+      this.deleted.emit(this.orientationProgram.id);
+      this.resetDeleteModal.emit();
+      $('#programDelete').modal('hide');
 
-        this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: false,
-        });
+      this.buttonData = Object.assign({}, this.buttonData, {
+        disabled: false
       });
+    });
   }
 
   ngOnInit() {
     this.buttonData = {
       text: this.cpI18n.translate('delete'),
-      class: 'danger',
+      class: 'danger'
     };
   }
 }

@@ -6,7 +6,8 @@ import {
   Output,
   HostListener,
   ElementRef,
-  ViewChild, Input,
+  ViewChild,
+  Input
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
@@ -17,7 +18,7 @@ import { CPI18nService } from '../../../../../shared/services/i18n.service';
 @Component({
   selector: 'cp-orientation-duplicate-program',
   templateUrl: './orientation-duplicate-program.component.html',
-  styleUrls: ['./orientation-duplicate-program.component.scss'],
+  styleUrls: ['./orientation-duplicate-program.component.scss']
 })
 export class OrientationDuplicateProgramComponent implements OnInit {
   @ViewChild('duplicateForm') duplicateForm;
@@ -42,7 +43,7 @@ export class OrientationDuplicateProgramComponent implements OnInit {
     public fb: FormBuilder,
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public service: OrientationService,
+    public service: OrientationService
   ) {}
 
   @HostListener('document:click', ['$event'])
@@ -77,7 +78,7 @@ export class OrientationDuplicateProgramComponent implements OnInit {
       id: [this.orientationProgram.id],
       name: [null, [Validators.required, Validators.maxLength(225)]],
       description: [null, Validators.maxLength(512)],
-      is_membership: [this.orientationProgram.is_membership],
+      is_membership: [this.orientationProgram.is_membership]
     });
 
     this.buttonData = Object.assign({}, this.buttonData, {

@@ -22,12 +22,9 @@ import { CalendarsItemsImportConfirmationComponent } from './items/components/im
 import {
   CalendarsItemsDeleteComponent,
   CalendarsItemsDetailsComponent,
-  CalendarsItemsEditComponent,
+  CalendarsItemsEditComponent
 } from './items';
-import {
-  CalendarsItemFormComponent,
-  CalendarsItemsImportModalComponent,
-} from './items/components';
+import { CalendarsItemFormComponent, CalendarsItemsImportModalComponent } from './items/components';
 import { CPLocationsService } from '../../../../shared/services/locations.service';
 
 import { CalendarsItemsBulkCreateFormComponent } from './items/components/bulk-create-form/calendars-items-bulk-create-form.component';
@@ -51,21 +48,13 @@ import { CalendarsItemsBulkCreateComponent } from './items/bulk-create/calendats
     CalendarsCreateComponent,
     CalendarsItemsBulkCreateComponent,
     CalendarsItemsBulkCreateFormComponent,
-    CalendarsItemsImportConfirmationComponent,
+    CalendarsItemsImportConfirmationComponent
   ],
 
-  imports: [
-    CommonModule,
-    SharedModule,
-    RouterModule,
-    ReactiveFormsModule,
-    CalendarRoutingModule,
-  ],
+  imports: [CommonModule, SharedModule, RouterModule, ReactiveFormsModule, CalendarRoutingModule],
 
-  exports: [
-    CalendarsFormComponent,
-  ],
+  exports: [CalendarsFormComponent],
 
-  providers: [CalendarsService, CalendarsItemsService, CPLocationsService],
+  providers: [CalendarsService, CalendarsItemsService, CPLocationsService]
 })
 export class CalendarsModule {}
