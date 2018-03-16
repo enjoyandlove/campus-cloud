@@ -16,7 +16,6 @@
     "prefer-const": [true, { "destructuring": "all" }],
     "indent": [true, "spaces", 2],
     "max-file-line-count": [true, 850],
-    "max-classes-per-file": [true, 1],
     "no-duplicate-imports": true,
     "label-position": true,
     "max-line-length": [true, 100],

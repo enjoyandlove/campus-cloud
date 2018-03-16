@@ -39,13 +39,13 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
   mapCenter: BehaviorSubject<any>;
 
   constructor(
-    private session: CPSession,
-    private route: ActivatedRoute,
-    private cpI18n: CPI18nService,
-    private store: Store<ISnackbar>,
-    private clubsService: ClubsService,
+    public session: CPSession,
+    public route: ActivatedRoute,
+    public cpI18n: CPI18nService,
+    public store: Store<ISnackbar>,
+    public clubsService: ClubsService,
     public helper: ClubsUtilsService,
-    private fileService: FileUploadService
+    public fileService: FileUploadService
   ) {
     super();
     this.clubId = this.route.parent.snapshot.params['clubId'];
@@ -53,7 +53,7 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
     super.isLoading().subscribe((res) => (this.loading = res));
   }
 
-  private fetch() {
+  fetch() {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
     search.append('category_id', this.isAthletic.toString());
@@ -65,16 +65,16 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
         lng: res.data.longitude
       });
       this.hasMetaData =
-        this.club.contactphone ||
-        this.club.email ||
-        this.club.room_info ||
-        this.club.location ||
-        this.club.website ||
-        this.club.address ||
-        this.club.constitution_url ||
-        this.club.advisor_firstname ||
-        this.club.advisor_lastname ||
-        this.club.advisor_email;
+        !!this.club.contactphone ||
+        !!this.club.email ||
+        !!this.club.room_info ||
+        !!this.club.location ||
+        !!this.club.website ||
+        !!this.club.address ||
+        !!this.club.constitution_url ||
+        !!this.club.advisor_firstname ||
+        !!this.club.advisor_lastname ||
+        !!this.club.advisor_email;
     });
   }
 
