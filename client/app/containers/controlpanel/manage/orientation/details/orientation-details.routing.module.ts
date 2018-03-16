@@ -9,9 +9,9 @@ const appRoutes: Routes = [
     path: '',
     component: OrientationDetailsComponent,
     children: [
-      { path: 'info', component: OrientationInfoComponent },
+      { path: 'info', component: OrientationInfoComponent }
 
-    //  { path: 'feeds', component: ClubsWallComponent },
+      //  { path: 'feeds', component: ClubsWallComponent },
 
       /* {
          path: 'events',
@@ -22,11 +22,11 @@ const appRoutes: Routes = [
          path: 'members',
          loadChildren: '../members/members.module#ClubsMembersModule',
        },*/
-    ],
-  },
+    ]
+  }
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class OrientationDetailsRoutingModule {}

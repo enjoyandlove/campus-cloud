@@ -94,46 +94,42 @@ export class ZendeskService {
   }
 
   private promisify(methodName: string, methodArgs: any[]): Promise<void> {
-    const promise = new Promise<void>(
-      (resolve: Function, reject: Function): void => {
-        zEmbed((): void => {
-          this.tryToApply(methodName, methodArgs, resolve, reject);
-        });
-      }
-    );
+    const promise = new Promise<void>((resolve: Function, reject: Function): void => {
+      zEmbed((): void => {
+        this.tryToApply(methodName, methodArgs, resolve, reject);
+      });
+    });
 
     return promise;
   }
 
   private promisifyVisibility(methodName: string): Promise<void> {
-    const promise = new Promise<void>(
-      (resolve: Function, reject: Function): void => {
-        this.visibilityQueue.push({
-          resolve: resolve,
-          reject: reject,
-          methodName: methodName
-        });
+    const promise = new Promise<void>((resolve: Function, reject: Function): void => {
+      this.visibilityQueue.push({
+        resolve: resolve,
+        reject: reject,
+        methodName: methodName
+      });
 
-        // If the zEmbed object hasn't loaded yet, there's nothing more to do -
-        // the pre-load state will act as automatic debouncing.
-        if (!this.isLoaded) {
-          return;
-        }
-
-        // If we've made it this far, it means the zEmbed object has fully
-        // loaded. As such, we need to explicitly debounce the show / hide method
-        // calls by delaying the flushing of our internal queue.
-        clearTimeout(this.visibilityTimer);
-
-        this.visibilityTimer = setTimeout(
-          (): void => {
-            this.flushVisibilityQueue();
-          },
-
-          this.visibilityDelay
-        );
+      // If the zEmbed object hasn't loaded yet, there's nothing more to do -
+      // the pre-load state will act as automatic debouncing.
+      if (!this.isLoaded) {
+        return;
       }
-    );
+
+      // If we've made it this far, it means the zEmbed object has fully
+      // loaded. As such, we need to explicitly debounce the show / hide method
+      // calls by delaying the flushing of our internal queue.
+      clearTimeout(this.visibilityTimer);
+
+      this.visibilityTimer = setTimeout(
+        (): void => {
+          this.flushVisibilityQueue();
+        },
+
+        this.visibilityDelay
+      );
+    });
 
     return promise;
   }

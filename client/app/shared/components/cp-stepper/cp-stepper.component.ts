@@ -8,7 +8,6 @@ import { AdminService } from '../../services';
   templateUrl: './cp-stepper.component.html',
   styleUrls: ['./cp-stepper.component.scss']
 })
-
 export class CPStepperComponent implements OnInit {
   @Input() range: number;
   @Input() currentStep: number;
@@ -19,9 +18,7 @@ export class CPStepperComponent implements OnInit {
   start: number;
   totalSteps;
 
-  constructor(private session: CPSession,
-              private adminService: AdminService) {
-  }
+  constructor(private session: CPSession, private adminService: AdminService) {}
 
   backStep(step: number) {
     this.currentStep = --step;
@@ -45,12 +42,10 @@ export class CPStepperComponent implements OnInit {
       }
     };
 
-    this.adminService.updateAdmin(this.session.g.get('user').id, body).subscribe(
-      (response) => {
-        this.session.g.set('user', response);
-        $('#openOnboardingModal').modal('hide');
-      }
-    );
+    this.adminService.updateAdmin(this.session.g.get('user').id, body).subscribe((response) => {
+      this.session.g.set('user', response);
+      $('#openOnboardingModal').modal('hide');
+    });
   }
 
   ngOnInit() {

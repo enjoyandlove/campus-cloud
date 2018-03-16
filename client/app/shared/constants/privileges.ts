@@ -53,7 +53,7 @@ export const CP_PRIVILEGES_MAP = {
 
   event_attendance: 33, // 'Event Attendance',
 
-  assessment: 34,
+  assessment: 34
 };
 
 export const CP_PRIVILEGES = {
@@ -111,5 +111,5 @@ export const CP_PRIVILEGES = {
 
   33: 'Event Attendance',
 
-  34: 'Assessment',
+  34: 'Assessment'
 };

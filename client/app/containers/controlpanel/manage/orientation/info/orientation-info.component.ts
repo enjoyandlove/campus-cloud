@@ -11,7 +11,6 @@ import { CPSession } from './../../../../../session';
   templateUrl: './orientation-info.component.html',
   styleUrls: ['./orientation-info.component.scss']
 })
-
 export class OrientationInfoComponent extends BaseComponent implements OnInit {
   loading;
   selectedProgram = [];
@@ -41,12 +40,9 @@ export class OrientationInfoComponent extends BaseComponent implements OnInit {
 
   onLaunchEditModal() {
     this.launchEditModal = true;
-    setTimeout(
-      () => {
-        $('#programEdit').modal();
-      },
-      1,
-    );
+    setTimeout(() => {
+      $('#programEdit').modal();
+    }, 1);
   }
 
   onEditedLink(editedProgram: any) {
@@ -55,5 +51,4 @@ export class OrientationInfoComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {}
-
 }

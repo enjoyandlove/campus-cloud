@@ -41,19 +41,12 @@ export class CPPageHeaderComponent implements OnChanges {
     this.readyFeatures = isProd ? this.getProductionReadyFeatures() : this.data.children;
 
     if (this.readyFeatures.length > this.maxChildren) {
-      this.extraChildren = this.readyFeatures.filter(
-        (_, index) => index + 1 > this.maxChildren
-      );
+      this.extraChildren = this.readyFeatures.filter((_, index) => index + 1 > this.maxChildren);
 
       this.extraMenu =
-        this.extraChildren.filter(
-          (child) => child.url === this.router.url
-        )[0] || null;
+        this.extraChildren.filter((child) => child.url === this.router.url)[0] || null;
 
-      if (
-        this.readyFeatures.length === this.maxChildren + 1 &&
-        this.extraMenu
-      ) {
+      if (this.readyFeatures.length === this.maxChildren + 1 && this.extraMenu) {
         this.extraChildren = [];
       }
     } else {

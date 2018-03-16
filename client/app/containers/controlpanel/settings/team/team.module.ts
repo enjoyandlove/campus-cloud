@@ -1,17 +1,17 @@
-import { TeamUtilsService } from './team.utils.service';
-import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
-import { SharedModule } from '../../../../shared/shared.module';
+import { NgModule } from '@angular/core';
 
 import { TeamListComponent } from './list';
 import { TeamEditComponent } from './edit';
 import { TeamDeleteComponent } from './delete';
 import { TeamCreateComponent } from './create';
+import { TeamUtilsService } from './team.utils.service';
 import { TeamUnauthorizedComponent } from './unauthorized';
-import { ClubsService } from '../../manage/clubs/clubs.service';
 import { AdminService } from '../../../../shared/services';
+import { ClubsService } from '../../manage/clubs/clubs.service';
+import { SharedModule } from '../../../../shared/shared.module';
 import { ServicesService } from '../../manage/services/services.service';
 
 import {
@@ -19,8 +19,9 @@ import {
   TeamSelectedPipe,
   BaseTeamSelectModalComponent,
   SelectTeamClubsModalComponent,
+  TeamSelectModalPermissionPipe,
   SelectTeamServicesModalComponent,
-  SelectTeamAthleticsModalComponent,
+  SelectTeamAthleticsModalComponent
 } from './create/components';
 
 import { TeamRoutingModule } from './team.routing.module';
@@ -32,22 +33,17 @@ import { TeamRoutingModule } from './team.routing.module';
     BaseTeamSelectModalComponent,
     TeamSelectedPipe,
     TeamFilterPipe,
+    TeamSelectModalPermissionPipe,
     SelectTeamServicesModalComponent,
     SelectTeamClubsModalComponent,
     TeamDeleteComponent,
     TeamEditComponent,
     TeamUnauthorizedComponent,
-    SelectTeamAthleticsModalComponent,
+    SelectTeamAthleticsModalComponent
   ],
 
-  imports: [
-    CommonModule,
-    SharedModule,
-    RouterModule,
-    ReactiveFormsModule,
-    TeamRoutingModule,
-  ],
+  imports: [CommonModule, SharedModule, RouterModule, ReactiveFormsModule, TeamRoutingModule],
 
-  providers: [ServicesService, ClubsService, AdminService, TeamUtilsService],
+  providers: [ServicesService, ClubsService, AdminService, TeamUtilsService]
 })
 export class TeamModule {}

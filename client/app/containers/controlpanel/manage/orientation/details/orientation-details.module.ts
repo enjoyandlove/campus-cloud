@@ -33,9 +33,9 @@ import { OrientationService } from '../orientation.services';
     OrientationDetailsRoutingModule,
     FeedsModule,
     EventsModule,
-    CalendarsModule,
+    CalendarsModule
   ],
 
-  providers: [OrientationService],
+  providers: [OrientationService]
 })
 export class OrientationDetailsModule {}

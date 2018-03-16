@@ -91,5 +91,5 @@ export const API_ENDPOINTS = {
 
   DASHBOARD_INTEGRATION_STATUS: 'analytics/integration_status',
 
-  DASHBOARD_GENERAL_INFORMATION: 'analytics/general_information',
+  DASHBOARD_GENERAL_INFORMATION: 'analytics/general_information'
 };

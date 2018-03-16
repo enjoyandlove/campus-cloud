@@ -11,10 +11,9 @@ import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
 @Component({
   selector: 'cp-orientation-details',
-  template: '<router-outlet></router-outlet>',
+  template: '<router-outlet></router-outlet>'
 })
 export class OrientationDetailsComponent extends BaseComponent implements OnInit {
-
   @Input() isOrientation = false;
 
   labels;
@@ -25,9 +24,9 @@ export class OrientationDetailsComponent extends BaseComponent implements OnInit
     private store: Store<any>,
     private session: CPSession,
     private route: ActivatedRoute,
-    private service: OrientationService,
-   // private utils: OrientationUtilsService
-  ) {
+    private service: OrientationService
+  ) // private utils: OrientationUtilsService
+  {
     super();
 
     this.orientationId = this.route.parent.snapshot.params['orientationId'];
@@ -39,14 +38,12 @@ export class OrientationDetailsComponent extends BaseComponent implements OnInit
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    super
-      .fetchData(this.service.getProgramById(this.orientationId, search))
-      .then((program) => {
-        this.store.dispatch({
-          type: HEADER_UPDATE,
-          payload: this.buildHeader(program.data),
-        });
+    super.fetchData(this.service.getProgramById(this.orientationId, search)).then((program) => {
+      this.store.dispatch({
+        type: HEADER_UPDATE,
+        payload: this.buildHeader(program.data)
       });
+    });
   }
 
   buildHeader(program) {
@@ -54,20 +51,20 @@ export class OrientationDetailsComponent extends BaseComponent implements OnInit
       heading: `[NOTRANSLATE]${program.name}[NOTRANSLATE]`,
       crumbs: {
         url: 'orientation',
-        label: 'orientation',
+        label: 'orientation'
       },
       subheading: null,
       em: null,
-      children: [],
+      children: []
     };
 
     // const subNav = this.utils.getSubNavChildren(program.has_membership);
-    const subNav = [{label: 'Info', link: 'info'}];
+    const subNav = [{ label: 'Info', link: 'info' }];
 
     subNav.forEach((nav) => {
       menu.children.push({
         label: nav.label.toLocaleLowerCase(),
-        url: `/manage/orientation/${this.orientationId}/${nav.link}`,
+        url: `/manage/orientation/${this.orientationId}/${nav.link}`
       });
     });
 
@@ -75,6 +72,6 @@ export class OrientationDetailsComponent extends BaseComponent implements OnInit
   }
 
   ngOnInit() {
-      this.fetch();
+    this.fetch();
   }
 }

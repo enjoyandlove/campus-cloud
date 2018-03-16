@@ -5,15 +5,12 @@ import { CPSession, ISchool, IUser } from '../../../session';
 
 import { CP_PRIVILEGES_MAP } from './../../constants';
 
-import {
-  canAccountLevelReadResource,
-  canSchoolReadResource,
-} from './../../utils/privileges';
+import { canAccountLevelReadResource, canSchoolReadResource } from './../../utils/privileges';
 
 @Component({
   selector: 'cp-topbar',
   templateUrl: './cp-topbar.component.html',
-  styleUrls: ['./cp-topbar.component.scss'],
+  styleUrls: ['./cp-topbar.component.scss']
 })
 export class CPTopBarComponent implements OnInit {
   isOpen;
@@ -29,11 +26,7 @@ export class CPTopBarComponent implements OnInit {
   logo = require('public/svg/logo.svg');
   defaultImage = require('public/default/user.png');
 
-  constructor(
-    public el: ElementRef,
-    public session: CPSession,
-    public router: Router,
-  ) {}
+  constructor(public el: ElementRef, public session: CPSession, public router: Router) {}
 
   @HostListener('document:click', ['$event'])
   onClick(event) {
@@ -47,9 +40,7 @@ export class CPTopBarComponent implements OnInit {
   getManageHomePage() {
     if (canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.events)) {
       return 'events';
-    } else if (
-      canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.moderation)
-    ) {
+    } else if (canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.moderation)) {
       return 'feeds';
     } else if (
       canAccountLevelReadResource(this.session.g, CP_PRIVILEGES_MAP.clubs) ||
@@ -66,30 +57,17 @@ export class CPTopBarComponent implements OnInit {
       canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.services)
     ) {
       return 'services';
-    } else if (
-      canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.calendar)
-    ) {
+    } else if (canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.calendar)) {
       return 'calendars';
-    } else if (
-      canSchoolReadResource(
-        this.session.g,
-        CP_PRIVILEGES_MAP.campus_announcements,
-      )
-    ) {
+    } else if (canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.campus_announcements)) {
       return 'lists';
-    } else if (
-      canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.campus_maps)
-    ) {
+    } else if (canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.campus_maps)) {
       return 'locations';
     } else if (canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.links)) {
       return 'links';
-    } else if (
-      canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.app_customization)
-    ) {
+    } else if (canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.app_customization)) {
       return 'customization';
-    } else if (
-      canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.orientation)
-    ) {
+    } else if (canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.orientation)) {
       return 'orientation';
     }
 
@@ -106,18 +84,9 @@ export class CPTopBarComponent implements OnInit {
 
     this.manageHomePage = this.getManageHomePage();
 
-    this.canNotify = canSchoolReadResource(
-      this.session.g,
-      CP_PRIVILEGES_MAP.campus_announcements,
-    );
-    this.canAssess = canSchoolReadResource(
-      this.session.g,
-      CP_PRIVILEGES_MAP.assessment,
-    );
-    this.canCustomise = canSchoolReadResource(
-      this.session.g,
-      CP_PRIVILEGES_MAP.app_customization,
-    );
+    this.canNotify = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.campus_announcements);
+    this.canAssess = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.assessment);
+    this.canCustomise = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.app_customization);
 
     this.isManageActiveRoute = this.isManage(this.router.url);
 

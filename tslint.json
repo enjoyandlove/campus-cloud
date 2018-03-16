@@ -12,7 +12,7 @@
     "interface-name": [true, "always-prefix"],
     "binary-expression-operand-order": true,
     "no-conditional-assignment": true,
-    "forin": true,
+    "forin": false,
     "prefer-const": [true, { "destructuring": "all" }],
     "indent": [true, "spaces", 2],
     "max-file-line-count": [true, 850],
@@ -20,22 +20,11 @@
     "no-duplicate-imports": true,
     "label-position": true,
     "max-line-length": [true, 100],
-    "align": [
-      true,
-      "arguments",
-      "elements",
-      "members",
-      "parameters",
-      "statements"
-    ],
+    "align": [true, "arguments", "elements", "members", "parameters", "statements"],
     "arrow-parens": true,
     "arrow-return-shorthand": true,
     "member-access": false,
-    "member-ordering": [
-      true,
-      "static-before-instance",
-      "variables-before-functions"
-    ],
+    "member-ordering": [true, "static-before-instance", "variables-before-functions"],
     "no-arg": true,
     "no-bitwise": false,
     "no-console": [true, "log", "debug", "trace"],
@@ -60,13 +49,7 @@
     "no-use-before-declare": true,
     "no-var-keyword": true,
     "object-literal-sort-keys": false,
-    "one-line": [
-      true,
-      "check-open-brace",
-      "check-catch",
-      "check-else",
-      "check-whitespace"
-    ],
+    "one-line": [true, "check-open-brace", "check-catch", "check-else", "check-whitespace"],
     "quotemark": [true, "single"],
     "radix": true,
     "semicolon": [true, "always"],

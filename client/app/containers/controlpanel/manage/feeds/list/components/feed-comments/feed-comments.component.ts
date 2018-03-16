@@ -46,9 +46,7 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
   onDeletedComment(commentId: number) {
     const _state = Object.assign({}, this.state);
 
-    _state.comments = _state.comments.filter(
-      (comment) => comment.id !== commentId
-    );
+    _state.comments = _state.comments.filter((comment) => comment.id !== commentId);
 
     this.state = Object.assign({}, this.state, { comments: _state.comments });
     this.deleted.emit();
@@ -72,9 +70,7 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
       search,
       this.feed.comment_count + 1
     );
-    const stream$ = this._isCampusWallView
-      ? campusWallComments$
-      : groupWallComments$;
+    const stream$ = this._isCampusWallView ? campusWallComments$ : groupWallComments$;
 
     super.fetchData(stream$).then((res) => {
       const _comments = [];
