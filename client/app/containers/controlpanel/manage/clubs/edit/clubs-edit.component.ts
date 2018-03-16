@@ -43,14 +43,14 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
   limitedAdmin = true;
 
   constructor(
-    private router: Router,
-    private fb: FormBuilder,
-    private store: Store<any>,
-    private session: CPSession,
-    private cpI18n: CPI18nService,
-    private route: ActivatedRoute,
-    private helper: ClubsUtilsService,
-    private clubsService: ClubsService
+    public router: Router,
+    public fb: FormBuilder,
+    public store: Store<any>,
+    public session: CPSession,
+    public cpI18n: CPI18nService,
+    public route: ActivatedRoute,
+    public helper: ClubsUtilsService,
+    public clubsService: ClubsService
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));

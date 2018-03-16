@@ -13,11 +13,7 @@ export abstract class BaseComponent {
   private _isLoading = new Subject<boolean>();
   private _isLoading$ = this._isLoading.asObservable();
 
-  constructor(
-    public pageNumber = 1,
-    public startRange = 1,
-    public endRange = maxPerPage + 1,
-  ) {}
+  constructor(public pageNumber = 1, public startRange = 1, public endRange = maxPerPage + 1) {}
 
   fetchData(request: Observable<any>) {
     this._isLoading.next(true);
@@ -42,7 +38,7 @@ export abstract class BaseComponent {
         return Promise.resolve({
           data: response,
           pageNext: this.pageNext,
-          pagePrev: this.pagePrev,
+          pagePrev: this.pagePrev
         });
       })
       .catch((err) => Promise.reject(err));
