@@ -1,3 +1,4 @@
+/*tslint:disable:max-classes-per-file */
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -36,6 +37,8 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
 
   constructor(private session: CPSession, private feedsService: FeedsService) {
     super();
+    this.endRange = 10000;
+    this.maxPerPage = 10000;
     super.isLoading().subscribe((res) => (this.loading = res));
   }
 
@@ -47,9 +50,13 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
   onDeletedComment(commentId: number) {
     const _state = Object.assign({}, this.state);
 
+<<<<<<< Updated upstream
     _state.comments = _state.comments.filter(
       (comment) => comment.id !== commentId,
     );
+=======
+    _state.comments = _state.comments.filter((comment) => comment.id !== commentId);
+>>>>>>> Stashed changes
 
     this.state = Object.assign({}, this.state, { comments: _state.comments });
     this.deleted.emit();
@@ -67,13 +74,19 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
 
     const campusWallComments$ = this.feedsService.getCampusWallCommentsByThreadId(
       search,
+<<<<<<< Updated upstream
     );
     const groupWallComments$ = this.feedsService.getGroupWallCommentsByThreadId(
       search,
+=======
+      this.feed.comment_count + 2
     );
-    const stream$ = this._isCampusWallView
-      ? campusWallComments$
-      : groupWallComments$;
+    const groupWallComments$ = this.feedsService.getGroupWallCommentsByThreadId(
+      search,
+      this.feed.comment_count + 2
+>>>>>>> Stashed changes
+    );
+    const stream$ = this._isCampusWallView ? campusWallComments$ : groupWallComments$;
 
     super.fetchData(stream$).then((res) => {
       const _comments = [];
