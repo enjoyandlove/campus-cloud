@@ -31,6 +31,8 @@ export const API_ENDPOINTS = {
 
   COVER_PHOTO: 'cover_photo',
 
+  ORIENTATION: 'orientation',
+
   GROUP_THREAD: 'group_thread',
 
   ANNOUNCEMENT: 'announcement',
@@ -89,5 +91,5 @@ export const API_ENDPOINTS = {
 
   DASHBOARD_INTEGRATION_STATUS: 'analytics/integration_status',
 
-  DASHBOARD_GENERAL_INFORMATION: 'analytics/general_information',
+  DASHBOARD_GENERAL_INFORMATION: 'analytics/general_information'
 };

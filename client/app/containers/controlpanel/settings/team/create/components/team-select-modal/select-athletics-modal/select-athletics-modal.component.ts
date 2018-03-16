@@ -7,14 +7,11 @@ import { CPSession } from '../../../../../../../../session';
 import { ClubsService } from '../../../../../../manage/clubs/clubs.service';
 import { CP_PRIVILEGES_MAP } from '../../../../../../../../shared/constants';
 import { BaseTeamSelectModalComponent } from '../base/team-select-modal.component';
-import {
-  clubAthleticStatus,
-  isClubAthletic,
-} from '../../../../team.utils.service';
+import { clubAthleticStatus, isClubAthletic } from '../../../../team.utils.service';
 
 @Component({
   selector: 'cp-select-athletics-modal',
-  templateUrl: './select-athletics-modal.component.html',
+  templateUrl: './select-athletics-modal.component.html'
 })
 export class SelectTeamAthleticsModalComponent extends BaseTeamSelectModalComponent
   implements OnInit {
@@ -27,8 +24,8 @@ export class SelectTeamAthleticsModalComponent extends BaseTeamSelectModalCompon
 
   data$: BehaviorSubject<any> = new BehaviorSubject({});
 
-  constructor(private session: CPSession, private service: ClubsService) {
-    super();
+  constructor(public session: CPSession, private service: ClubsService) {
+    super(session);
     this.privilegeType = CP_PRIVILEGES_MAP.athletics;
   }
 
@@ -44,9 +41,7 @@ export class SelectTeamAthleticsModalComponent extends BaseTeamSelectModalCompon
     this.service
       .getClubs(search, 1, 1000)
       .map((athletics) =>
-        athletics.filter(
-          (athletic) => athletic.status === clubAthleticStatus.active,
-        ),
+        athletics.filter((athletic) => athletic.status === clubAthleticStatus.active)
       )
       .subscribe((athletics) => {
         let res = {};
@@ -54,15 +49,8 @@ export class SelectTeamAthleticsModalComponent extends BaseTeamSelectModalCompon
 
         if (this.selectedAthletics) {
           athletics.map((athletic) => {
-            if (
-              Object.keys(this.selectedAthletics).includes(
-                athletic.id.toString(),
-              )
-            ) {
-              if (
-                CP_PRIVILEGES_MAP.athletics in
-                this.selectedAthletics[athletic.id]
-              ) {
+            if (Object.keys(this.selectedAthletics).includes(athletic.id.toString())) {
+              if (CP_PRIVILEGES_MAP.athletics in this.selectedAthletics[athletic.id]) {
                 selected[athletic.id] = athletic;
               }
             }
@@ -72,14 +60,14 @@ export class SelectTeamAthleticsModalComponent extends BaseTeamSelectModalCompon
               // we pass the id to the selected object
               // to populate the modal state....
               selected[athletic.id] = Object.assign({}, selected[athletic.id], {
-                id: athletic.id,
+                id: athletic.id
               });
             }
           });
         }
         res = {
           data: athletics,
-          selected: selected,
+          selected: selected
         };
 
         this.data$.next(res);

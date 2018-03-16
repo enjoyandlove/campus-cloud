@@ -1,0 +1,40 @@
+<ng-container [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+  <ng-container *ngSwitchCase="false">
+    <div class="row">
+      <div class="col-xs-8 col-xs-offset-2">
+        <div class="cp-card orientation">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="row">
+                <div class="col-xs-10">
+                  <p class="orientation__title text-truncate">{{ selectedProgram.name }}</p>
+                </div>
+                <div class="col-xs-2 text-right">
+                  <span
+                    (click)="onLaunchEditModal()"
+                    class="cpbtn hover cpbtn--primary">
+                    {{ 'edit' | cpI18n }}
+                  </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 orientation__description">
+                  <p>{{ selectedProgram.description }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
+
+<cp-modal modalId="programEdit" *ngIf="launchEditModal">
+  <cp-orientation-program-edit
+    [orientationProgram]="selectedProgram"
+    (edited)="onEditedLink($event)"
+    (resetEditModal)="launchEditModal = false">
+  </cp-orientation-program-edit>
+</cp-modal>

@@ -32,6 +32,7 @@
     "ci": "yarn run e2e && yarn run test",
     "docs": "typedoc --options typedoc.json client/app/app.component.ts",
     "start": "yarn run server",
+    "precommit": "pretty-quick --staged",
     "start:hmr": "yarn run server -- --hot",
     "postinstall": "npm rebuild node-sass --force && yarn run webdriver-update"
   },
@@ -115,6 +116,8 @@
     "node-sass": "4.5.3",
     "null-loader": "0.1.1",
     "postcss-loader": "2.0.6",
+    "prettier": "1.11.1",
+    "pretty-quick": "1.4.1",
     "protractor": "5.1.2",
     "raw-loader": "0.5.1",
     "remap-istanbul": "0.9.5",
