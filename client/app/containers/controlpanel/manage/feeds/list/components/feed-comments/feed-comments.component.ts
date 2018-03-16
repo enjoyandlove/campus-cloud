@@ -35,8 +35,6 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
 
   constructor(private session: CPSession, private feedsService: FeedsService) {
     super();
-    this.endRange = 10000;
-    this.maxPerPage = 10000;
     super.isLoading().subscribe((res) => (this.loading = res));
   }
 
@@ -96,6 +94,9 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.endRange = this.feed.comment_count + 1;
+    this.maxPerPage = this.feed.comment_count + 1;
+
     this.isCampusWallView.subscribe((res: any) => {
       this.groupId = res.type;
       this._isCampusWallView = res.type === 1;
