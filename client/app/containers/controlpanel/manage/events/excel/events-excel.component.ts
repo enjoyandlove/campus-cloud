@@ -1,3 +1,4 @@
+/*tslint:disable:max-line-length*/
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -44,6 +45,9 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   stores;
   formError;
   buttonData;
+  selectedHost = [];
+  eventManager = [];
+  attendanceFeedback = [];
   uploadButtonData;
   mockDropdown;
   isSingleChecked = [];
@@ -194,14 +198,39 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     this.isSingleChecked.map((item) => {
       if (item.checked) {
         const ctrl = <FormGroup>control.controls[item.index];
-
         Object.keys(actions).forEach((key) => {
-          ctrl.controls[key].setValue(actions[key]);
+          if (key === 'store_id' && actions[key] !== null) {
+            this.selectedHost[item.index] = actions[key];
+            ctrl.controls[key].setValue(actions[key].value);
+            this.updateManagersByStoreOrClubId(actions[key].value);
+
+          } else if (key === 'event_manager_id') {
+            this.eventManager[item.index] = actions[key];
+            if (actions[key] !== null) {
+              ctrl.controls[key].setValue(actions[key].value);
+            } else {
+              ctrl.controls[key].setValue(actions[key]);
+            }
+
+          } else if (key === 'event_feedback') {
+            this.attendanceFeedback[item.index] = actions[key];
+            ctrl.controls[key].setValue(actions[key].event);
+
+          } else if (actions[key] !== null) {
+            ctrl.controls[key].setValue(actions[key]);
+          }
         });
       }
 
       return item;
     });
+  }
+
+  onBulkDelete() {
+    this.events = this.events.filter((_, index) => !this.isSingleChecked[index].checked);
+    this.uploadButtonData.class = this.events.length < 1 ? 'disabled' : 'cancel';
+    this.isSingleChecked = [];
+    this.buildForm();
   }
 
   onSingleHostSelected(host, index) {
@@ -277,6 +306,9 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   }
 
   onCheckAll(checked) {
+    if (this.events.length < 1) {
+      return;
+    }
     const isChecked = [];
 
     this.isSingleChecked.map((item) => {

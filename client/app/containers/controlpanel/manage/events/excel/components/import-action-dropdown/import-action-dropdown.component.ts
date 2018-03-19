@@ -27,6 +27,7 @@ interface IState {
 })
 export class EventsImportActionDropdownComponent extends BaseComponent
   implements OnInit {
+  @Input() props: any;
   @Input() storeId: number;
 
   @Input() clubId: number;
@@ -76,7 +77,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent
   }
 
   onHostSelected(store_id) {
-    this.selectedHost$.next(store_id.event);
+    this.selectedHost$.next(store_id.value);
 
     this.state = Object.assign({}, this.state, { store_id });
   }
@@ -200,10 +201,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent
     this.state = {
       store_id: null,
       event_attendance: 0,
-      event_manager_id: {
-        label: '',
-        event: null,
-      },
+      event_manager_id: null,
       attendance_manager_email: null,
       event_feedback: this.eventAttendanceFeedback[1],
     };
