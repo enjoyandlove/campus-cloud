@@ -8,6 +8,7 @@ import { createSpreadSheet } from './../../../../../../../shared/utils/csv/parse
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 
 import { unix } from 'moment';
+import { OrientationService } from '../../../../orientation/orientation.services';
 
 interface IState {
   sort_field: string;
@@ -28,6 +29,9 @@ const state = {
 })
 export class AttendancePastComponent extends BaseComponent implements OnInit {
   @Input() event: any;
+  @Input() isOrientation: boolean;
+
+  service;
   loading;
   attendees;
   attendeeFeedback;
@@ -38,6 +42,7 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
   constructor(
     private cpI18n: CPI18nService,
     private eventService: EventsService,
+    private orientationService: OrientationService,
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -50,7 +55,7 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
     search.append('sort_direction', this.state.sort_direction);
     search.append('search_text', this.state.search_text);
 
-    const stream$ = this.eventService.getEventAttendanceByEventId(
+    const stream$ = this.service.getEventAttendanceByEventId(
       this.startRange,
       this.endRange,
       search,
@@ -85,7 +90,7 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
     search.append('event_id', this.event.id);
     search.append('all', '1');
 
-    const stream$ = this.eventService.getEventAttendanceByEventId(
+    const stream$ = this.service.getEventAttendanceByEventId(
       this.startRange,
       this.endRange,
       search,
@@ -171,6 +176,7 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.service = this.isOrientation ? this.orientationService : this.eventService;
     this.fetch();
   }
 }

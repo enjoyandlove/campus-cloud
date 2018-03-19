@@ -54,6 +54,7 @@ declare var $: any;
 })
 export class ListActionBoxComponent implements OnInit {
   @Input() isSimple: boolean;
+  @Input() isOrientation: boolean;
   @Output() listAction: EventEmitter<IState> = new EventEmitter();
 
   hosts;
@@ -191,6 +192,10 @@ export class ListActionBoxComponent implements OnInit {
     );
 
     this.canCreateEvent = canSchoolWrite || canAccountWrite;
+
+    if (this.isOrientation) {
+      this.canCreateEvent = true;
+    }
 
     this.eventFilter = DATE_FILTER;
 

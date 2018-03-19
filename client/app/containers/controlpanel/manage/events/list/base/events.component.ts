@@ -56,6 +56,7 @@ export class EventsComponent extends BaseComponent {
   pagePrev;
   pageNumber;
   isUpcoming;
+  orientation;
   eventsService;
   deleteEvent = '';
   state: IState = state;
@@ -160,6 +161,7 @@ export class EventsComponent extends BaseComponent {
 
   onDeleteEvent(event) {
     this.deleteEvent = event;
+    this.orientation = this.isOrientation;
   }
 
   onDeletedEvent(eventId) {

@@ -86,4 +86,20 @@ export class OrientationService extends BaseService {
 
     return Observable.of(event[0]).delay(300);
   }
+
+  deleteEventById(eventId: number) {
+    const events = this.mockJson.filter((item) => item.id.toString() !== eventId);
+
+    return Observable.of(events).delay(300);
+  }
+
+  getEventAttendanceByEventId(
+    startRage: number,
+    endRage: number,
+    search?: URLSearchParams,
+  ) {
+    this.dummy = [startRage, endRage, search];
+
+    return Observable.of([]).delay(300);
+  }
 }
