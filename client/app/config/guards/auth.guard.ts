@@ -178,6 +178,10 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     if (childRoute.url.length) {
       const path = childRoute.url[0].path;
 
+      if (this.whiteListedRoutes(routeToPrivilege, path)) {
+        return true;
+      }
+
       if (protectedRoutes.includes(path)) {
         let canAccess;
 
@@ -201,6 +205,23 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     }
 
     return true;
+  }
+
+  whiteListedRoutes(routeToPrivilege, path) {
+    const routes = {
+      orientation: ['events', 'feeds', 'members'],
+    };
+
+    const schoolLevel = canSchoolReadResource(
+      this.session.g,
+      routeToPrivilege['orientation'] // todo make this dynamic
+    );
+
+    if (schoolLevel) {
+      if (routes.orientation.includes(path)) {
+        return true;
+      }
+    }
   }
 
   setUserContext() {
