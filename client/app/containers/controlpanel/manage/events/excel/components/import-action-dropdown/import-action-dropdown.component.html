@@ -1,15 +1,19 @@
 <div [ngSwitch]="loading">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
-  <div class="menu cpbtn cpbtn--cancel" *ngSwitchCase="false">
-    <div class="menu__header" (click)="isOpen = !isOpen">
-      <span i18n>{{ 'events_import_bulk_update' | cpI18n }}</span>
+  <div class="menu" *ngSwitchCase="false">
+    <button
+      type="button"
+      (click)="isOpen = !isOpen"
+      [class]="'menu__header cpbtn cpbtn--' + props?.class">
+      {{ 'events_import_bulk_update' | cpI18n }}
       <span class="icon"><i class="material-icons">keyboard_arrow_down</i></span>
-    </div>
+    </button>
+
     <div class="menu__content" [class.open]="isOpen">
       <div class="row">
         <div class="col-xs-12">
-          <div class="row" *ngIf="!storeId">
+          <div class="row" *ngIf="!storeId && !isClub && !isService">
             <div class="col-xs-12">
               <div class="menu__item">
                 <cp-dropdown
