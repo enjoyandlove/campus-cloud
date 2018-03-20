@@ -28,6 +28,14 @@ const mockClub = {
 };
 
 let mockUser = {
+  school_level_privileges: {
+    157: {
+      [CP_PRIVILEGES_MAP.clubs]: {
+        r: true,
+        w: true
+      }
+    }
+  },
   account_level_privileges: {
     1: {
       [CP_PRIVILEGES_MAP.clubs]: {
@@ -87,6 +95,14 @@ describe('ClubsEditComponent', () => {
     expect(comp.limitedAdmin).toBeFalsy();
 
     mockUser = {
+      school_level_privileges: {
+        157: {
+          [CP_PRIVILEGES_MAP.clubs]: {
+            r: true,
+            w: false
+          }
+        }
+      },
       account_level_privileges: {
         1: {
           [CP_PRIVILEGES_MAP.clubs]: {

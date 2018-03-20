@@ -8,6 +8,7 @@ import { CP_PRIVILEGES_MAP } from './../../../../shared/constants/privileges';
 import {
   canStoreReadResource,
   canSchoolReadResource,
+  canSchoolWriteResource,
   canStoreReadAndWriteResource
 } from './../../../../shared/utils/privileges/privileges';
 
@@ -17,8 +18,11 @@ export class ClubsUtilsService {
     return _get(club, 'advisor_firstname', false);
   }
 
-  limitedAdmin(session, storeId) {
-    return !canStoreReadAndWriteResource(session, storeId, CP_PRIVILEGES_MAP.clubs);
+  limitedAdmin(sessionG, storeId) {
+    return (
+      !canStoreReadAndWriteResource(sessionG, storeId, CP_PRIVILEGES_MAP.clubs) &&
+      !canSchoolWriteResource(sessionG, CP_PRIVILEGES_MAP.clubs)
+    );
   }
 
   getSubNavChildren(club: IClub, session) {

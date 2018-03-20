@@ -4,6 +4,14 @@ import { CPSession } from '../../../../session';
 
 const mockUser = (w = true) => {
   return {
+    school_level_privileges: {
+      157: {
+        [CP_PRIVILEGES_MAP.clubs]: {
+          r: true,
+          w
+        }
+      }
+    },
     account_level_privileges: {
       1: {
         [CP_PRIVILEGES_MAP.clubs]: {
@@ -35,9 +43,11 @@ describe('ClubsUtilsService', () => {
 
   it('limitedAdmin', () => {
     mockSession.g.set('user', mockUser(false));
+    mockSession.g.set('school', { id: 157 });
     expect(service.limitedAdmin(mockSession.g, 1)).toBeTruthy();
 
     mockSession.g.set('user', mockUser());
+    mockSession.g.set('school', { id: 157 });
     expect(service.limitedAdmin(mockSession.g, 1)).toBeFalsy();
   });
 });
