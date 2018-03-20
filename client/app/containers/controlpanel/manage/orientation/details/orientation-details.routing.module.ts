@@ -18,10 +18,10 @@ const appRoutes: Routes = [
          loadChildren: '../events/orientation-events.module#OrientationEventsModule',
        },
 
-     /*{
-         path: 'members',
-         loadChildren: '../members/members.module#ClubsMembersModule',
-       },*/
+      {
+        path: 'members',
+        loadChildren: '../members/orientation-members.module#OrientationMembersModule',
+      },
     ],
   },
 ];

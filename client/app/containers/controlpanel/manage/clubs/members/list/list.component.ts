@@ -31,6 +31,7 @@ const state: IState = {
   styleUrls: ['./list.component.scss'],
 })
 export class ClubsMembersComponent extends BaseComponent implements OnInit {
+  @Input() isOrientation: boolean;
   @Input() isAthletic = isClubAthletic.club;
 
   isEdit;
