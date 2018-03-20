@@ -6,11 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { CPSession, ISchool } from '../../../../../../../session';
 import { BaseComponent } from '../../../../../../../base/base.component';
 import { CP_PRIVILEGES_MAP } from '../../../../../../../shared/constants';
-import {
-  StoreService,
-  AdminService,
-  CPI18nService,
-} from '../../../../../../../shared/services';
+import { StoreService, AdminService, CPI18nService } from '../../../../../../../shared/services';
 
 interface IState {
   store_id: any;
@@ -23,10 +19,9 @@ interface IState {
 @Component({
   selector: 'cp-import-action-dropdown',
   templateUrl: './import-action-dropdown.component.html',
-  styleUrls: ['./import-action-dropdown.component.scss'],
+  styleUrls: ['./import-action-dropdown.component.scss']
 })
-export class EventsImportActionDropdownComponent extends BaseComponent
-  implements OnInit {
+export class EventsImportActionDropdownComponent extends BaseComponent implements OnInit {
   @Input() props: any;
   @Input() storeId: number;
 
@@ -53,7 +48,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent
     private session: CPSession,
     private cpI18n: CPI18nService,
     private adminService: AdminService,
-    private storeService: StoreService,
+    private storeService: StoreService
   ) {
     super();
     this.fetch();
@@ -96,13 +91,13 @@ export class EventsImportActionDropdownComponent extends BaseComponent
         const _admins = [
           {
             label: '---',
-            value: null,
-          },
+            value: null
+          }
         ];
         admins.forEach((admin) => {
           _admins.push({
             label: `${admin.firstname} ${admin.lastname}`,
-            value: admin.id,
+            value: admin.id
           });
         });
 
@@ -126,7 +121,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent
 
   updateAttendanceManager(manager) {
     this.state = Object.assign({}, this.state, {
-      attendance_manager_email: manager,
+      attendance_manager_email: manager
     });
 
     return;
@@ -143,7 +138,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent
       event_feedback: this.eventAttendanceFeedback[1],
       event_attendance: 0,
       event_manager_id: null,
-      attendance_manager_email: null,
+      attendance_manager_email: null
     });
   }
 
@@ -190,12 +185,12 @@ export class EventsImportActionDropdownComponent extends BaseComponent
     this.eventAttendanceFeedback = [
       {
         label: this.cpI18n.translate('event_enabled'),
-        event: 1,
+        event: 1
       },
       {
         label: this.cpI18n.translate('events_disabled'),
-        event: 0,
-      },
+        event: 0
+      }
     ];
 
     this.state = {
@@ -203,7 +198,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent
       event_attendance: 0,
       event_manager_id: null,
       attendance_manager_email: null,
-      event_feedback: this.eventAttendanceFeedback[1],
+      event_feedback: this.eventAttendanceFeedback[1]
     };
   }
 }

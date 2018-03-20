@@ -35,7 +35,6 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
   uploading = false;
   hasMetaData = false;
   limitedAdmin = true;
-  mockNotes;
   mapCenter: BehaviorSubject<any>;
 
   constructor(
@@ -140,10 +139,6 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.mockNotes = [
-      { question_1: ['answer1_for_q1', 'answer2_for_q1', 'answer3_for_q1'] },
-      { question_2: ['answer1_for_q2', 'answer2_for_q2'] }
-    ];
     this.limitedAdmin =
       this.isAthletic === isClubAthletic.club
         ? this.helper.limitedAdmin(this.session.g, this.clubId)

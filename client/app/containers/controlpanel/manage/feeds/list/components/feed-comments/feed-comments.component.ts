@@ -72,7 +72,6 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
       search,
       this.feed.comment_count + 1
     );
-
     const stream$ = this._isCampusWallView ? campusWallComments$ : groupWallComments$;
 
     super.fetchData(stream$).then((res) => {
