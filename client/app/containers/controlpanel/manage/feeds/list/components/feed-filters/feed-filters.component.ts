@@ -49,6 +49,7 @@ const state: IState = {
 })
 export class FeedFiltersComponent implements OnInit {
   @Input() clubId: number;
+  @Input() orientationId: number;
   @Input() selectedItem: any;
 
   @Output() doFilter: EventEmitter<IState> = new EventEmitter();

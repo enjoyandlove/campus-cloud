@@ -10,7 +10,7 @@ export class OrientationUtilsService {
 
     if (hasMembership === 1) {
       // links = [{ label: 'Members', link: 'members' }, ...links];
-      // links = [{ label: 'Feeds', link: 'feeds' }, ...links];
+      links = [{ label: 'Feeds', link: 'feeds' }, ...links];
     }
 
     // links = [{ label: 'To-Dos', link: 'todos' }, ...links];

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { OrientationInfoComponent } from '../info';
+import { OrientationWallComponent } from '../wall';
 import { OrientationDetailsComponent } from './orientation-details.component';
 
 const appRoutes: Routes = [
@@ -11,7 +12,7 @@ const appRoutes: Routes = [
     children: [
       { path: 'info', component: OrientationInfoComponent },
 
-    //  { path: 'feeds', component: ClubsWallComponent },
+      { path: 'feeds', component: OrientationWallComponent },
 
       {
          path: 'events',
