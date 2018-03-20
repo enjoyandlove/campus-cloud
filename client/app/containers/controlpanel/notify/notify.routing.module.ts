@@ -6,7 +6,7 @@ import { AuthGuard } from '../../../config/guards';
 import { NotifyComponent } from './notify.component';
 
 const appRoutes: Routes = [
-  // { path: '', redirectTo: 'events', pathMatch: 'full' },
+  { path: '', redirectTo: 'announcements', pathMatch: 'full' },
 
   {
     path: '',
@@ -15,7 +15,7 @@ const appRoutes: Routes = [
     canActivateChild: [AuthGuard],
     children: [
       {
-        path: '',
+        path: 'announcements',
         loadChildren:
           './announcements/announcements.module#AnnouncementsModule',
       },

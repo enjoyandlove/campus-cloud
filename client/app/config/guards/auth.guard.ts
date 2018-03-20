@@ -1,8 +1,10 @@
 import {
   ActivatedRouteSnapshot,
+  RouterStateSnapshot,
   CanActivate,
   CanActivateChild,
-  Router
+  Router,
+  PRIMARY_OUTLET
 } from '@angular/router';
 
 import { URLSearchParams } from '@angular/http';
@@ -122,7 +124,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     }
   }
 
-  canActivateChild(childRoute: ActivatedRouteSnapshot) {
+  canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     this.setZendesk(childRoute.data);
 
     const protectedRoutes = [
@@ -178,7 +180,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     if (childRoute.url.length) {
       const path = childRoute.url[0].path;
 
-      if (this.whiteListedRoutes(routeToPrivilege, path)) {
+      if (this.whiteListedRoutes(routeToPrivilege, path, state.url)) {
         return true;
       }
 
@@ -207,21 +209,34 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     return true;
   }
 
-  whiteListedRoutes(routeToPrivilege, path) {
+  whiteListedRoutes(routeToPrivilege, path, url) {
+    const parentPath = this.getUrlSegments(url);
     const routes = {
       orientation: ['events', 'feeds', 'members'],
     };
 
     const schoolLevel = canSchoolReadResource(
       this.session.g,
-      routeToPrivilege['orientation'] // todo make this dynamic
+      routeToPrivilege[parentPath]
     );
 
     if (schoolLevel) {
-      if (routes.orientation.includes(path)) {
-        return true;
+      if (routes.hasOwnProperty(parentPath)) {
+       if (routes[parentPath].includes(path)) {
+         return true;
+       }
       }
     }
+
+    return false;
+  }
+
+  getUrlSegments(url) {
+    const tree = this.router.parseUrl(url);
+    const children = tree.root.children[PRIMARY_OUTLET];
+    const segments = children.segments;
+
+    return segments[1].path;
   }
 
   setUserContext() {
