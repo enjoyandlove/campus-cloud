@@ -55,6 +55,14 @@
   "admin_can_edit_help": {
     "message": "See content created by other team members and create your own content"
   },
+  "admin_can_read": {
+    "message": "Limited Edit",
+    "description": "Create Team Member > Select Clubs > Select a club > drop down menu"
+  },
+  "admin_can_read_help": {
+    "message": "See content and create content, but not edit all club information.",
+    "description": "Create Team Member > Select Clubs > Select a club > drop down menu"
+  },
   "admin_club_owner": {
     "message": "Club Owner"
   },
@@ -692,6 +700,11 @@
   "clubs_create_heading": {
     "message": "Create Club"
   },
+  "clubs_delete_error_unauthorized": {
+    "message": "You do not have permission to delete this club.",
+    "description":
+      "In Manage Clubs, try to delete a club for which you have only the Limited Edit permission"
+  },
   "clubs_delete_modal_body": {
     "message": "Are you sure you want to delete %s?"
   },
@@ -788,6 +801,10 @@
   },
   "clubs_status_pending": {
     "message": "Club is awaiting approval and is not listed in the Campus App"
+  },
+  "club_info_notes": {
+    "message": "Club Notes",
+    "description": "As a club super editor, view a club info page with club notes. "
   },
   "comment": {
     "message": "Comment",
@@ -1603,7 +1620,7 @@
   },
   "password_requirements_special_char": {
     "message":
-      "For added security, use numbers, letters and special characters such as @, #, $, &amp;, etc"
+      "For added security, use numbers, letters and special characters such as @, #, $, &, etc"
   },
   "password_reset_success": {
     "message": "Password saved, redirecting you to the login page"

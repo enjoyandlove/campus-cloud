@@ -110,7 +110,7 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
     headers.append('Authorization', auth);
 
     if (!validate.valid) {
-      this.flashMessageError(validate.errors[0]);
+      this.flashMessageError(validate.errors.join(', '));
 
       return;
     }
