@@ -15,8 +15,7 @@ import {
 import { EventsService } from '../events.service';
 import { CPSession, ISchool } from '../../../../../session';
 import { CPMap, CPDate } from '../../../../../shared/utils';
-import { EventAttendance, EventFeedback } from '../event.status';
-import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants';
+import { EventAttendance, EventFeedback, IsAllDay } from '../event.status';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 import { OrientationService } from '../../orientation/orientation.services';
@@ -116,7 +115,7 @@ export class EventsCreateComponent implements OnInit {
 
     search.append('store_id', storeId);
     search.append('school_id', this.school.id.toString());
-    search.append('privilege_type', CP_PRIVILEGES_MAP.events.toString());
+    search.append('privilege_type', this.utils.getPrivilegeType(this.isOrientation));
 
     this.adminService
       .getAdminByStoreId(search)
@@ -285,8 +284,9 @@ export class EventsCreateComponent implements OnInit {
     this.form.controls['event_feedback'].setValue(option.action);
   }
 
-  onAllDayToggle(checked: boolean) {
-    this.form.controls['is_all_day'].setValue(checked);
+  onAllDayToggle(value) {
+    value = value ? IsAllDay.enabled : IsAllDay.disabled;
+    this.form.controls['is_all_day'].setValue(value);
   }
 
   ngOnInit() {
@@ -347,7 +347,8 @@ export class EventsCreateComponent implements OnInit {
 
     this.form = this.fb.group({
       title: [null, Validators.required],
-      store_id: [store_id ? store_id : null, Validators.required],
+      store_id: [store_id ? store_id : null, !this.isOrientation ? Validators.required : null],
+      calendar_id: [this.orientationId, this.isOrientation ? Validators.required : null],
       location: [null],
       room_data: [null],
       city: [null],
@@ -367,7 +368,7 @@ export class EventsCreateComponent implements OnInit {
       event_manager_id: [null],
       attendance_manager_email: [null],
       custom_basic_feedback_label: [null],
-      is_all_day: [null],
+      is_all_day: [0],
     });
 
     const _self = this;

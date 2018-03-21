@@ -14,7 +14,6 @@ import { CPI18nService } from '../../../../../../../shared/services';
 export class FacebookEventsCreateComponent implements OnInit {
   @Input() clubId: number;
   @Input() storeId: number;
-  @Input() orientationId: number;
   @Input() stores: Array<any>;
   @Output() created: EventEmitter<null> = new EventEmitter();
 

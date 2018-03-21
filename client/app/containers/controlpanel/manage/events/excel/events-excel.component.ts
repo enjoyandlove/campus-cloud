@@ -13,7 +13,7 @@ import { CPSession, ISchool } from '../../../../../session';
 import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { CPI18nPipe } from './../../../../../shared/pipes/i18n/i18n.pipe';
-import { STATUS, CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
+import { STATUS } from '../../../../../shared/constants';
 import { CPImageUploadComponent } from '../../../../../shared/components';
 import { OrientationService } from '../../orientation/orientation.services';
 import { EventUtilService } from '../events.utils.service';
@@ -50,7 +50,6 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   urlPrefix;
   formError;
   buttonData;
-  defaultStore;
   uploadButtonData;
   mockDropdown;
   isSingleChecked = [];
@@ -130,7 +129,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       this.updateManagersByStoreOrClubId(this.clubId);
     }
     if (this.isOrientation) {
-      this.updateManagersByStoreOrClubId(this.defaultStore);
+      this.updateManagersByStoreOrClubId(null);
     }
 
     this.form.valueChanges.subscribe((_) => {
@@ -167,13 +166,11 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       store_id = this.clubId;
     }
 
-    if (this.isOrientation) {
-      store_id = this.defaultStore;
-    }
-
     return this.fb.group({
-      store_id: [store_id ? store_id : null, Validators.required],
+      store_id: [store_id ? store_id : null, !this.isOrientation ? Validators.required : null],
+      calendar_id: [this.orientationId, this.isOrientation ? Validators.required : null],
       room: [event.room],
+      is_all_day: [0],
       title: [event.title, Validators.required],
       poster_url: [null, Validators.required],
       poster_thumb_url: [null, Validators.required],
@@ -251,7 +248,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
 
     search.append('school_id', this.school.id.toString());
     search.append('store_id', storeOrClubId);
-    search.append('privilege_type', CP_PRIVILEGES_MAP.events.toString());
+    search.append('privilege_type', this.utils.getPrivilegeType(this.isOrientation));
 
     return this.adminService
       .getAdminByStoreId(search)
@@ -395,6 +392,8 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       }
       let _event = {
         title: events[key].title,
+        calendar_id: this.orientationId,
+        is_all_day: 0,
         store_id: store_id ? store_id : events[key].store_id,
         description: events[key].description,
         end: events[key].end,
@@ -450,10 +449,6 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.service = this.isOrientation ? this.orientationService : this.eventsService;
-
-    this.defaultStore = this.session.defaultHost
-      ? this.session.defaultHost.value
-      : null;
 
     this.urlPrefix = this.utils.buildUrlPrefix(
       this.clubId,

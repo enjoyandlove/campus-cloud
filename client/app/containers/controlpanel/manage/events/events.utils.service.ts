@@ -3,6 +3,7 @@ import IEvent from './event.interface';
 import { Injectable } from '@angular/core';
 import { EventAttendance } from './event.status';
 import { CPDate } from './../../../../shared/utils/date/date';
+import { CP_PRIVILEGES_MAP } from '../../../../shared/constants';
 
 @Injectable()
 export class EventUtilService {
@@ -45,7 +46,7 @@ export class EventUtilService {
     } else if (serviceId) {
       return `/manage/services/${serviceId}/events/${eventId}`;
     } else if (orientationId) {
-      return `/manage/orientation/${orientationId}/events`;
+      return `/manage/orientation/${orientationId}/events/${eventId}`;
     }
 
     return `/manage/events/${eventId}`;
@@ -68,5 +69,9 @@ export class EventUtilService {
     ];
 
     return pastEvent && attendanceEnabled ? children : [];
+  }
+
+  getPrivilegeType(type: boolean) {
+    return type ? CP_PRIVILEGES_MAP.orientation.toString() : CP_PRIVILEGES_MAP.events.toString();
   }
 }

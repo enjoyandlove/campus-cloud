@@ -13,7 +13,6 @@ import { FORMAT } from '../../../../../shared/pipes/date';
 import { CPSession, ISchool } from '../../../../../session';
 import { CPMap, CPDate } from '../../../../../shared/utils';
 import { BaseComponent } from '../../../../../base/base.component';
-import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 import {
   ErrorService,
   StoreService,
@@ -183,7 +182,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   private buildForm(res) {
     this.form = this.fb.group({
       title: [res.title, Validators.required],
-      store_id: [res.store_id, Validators.required],
+      store_id: [res.store_id, !this.isOrientation ? Validators.required : null],
       location: [res.location],
       room_data: [res.room_data],
       city: [res.city],
@@ -255,10 +254,10 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
   fetchManagersBySelectedStore(storeId) {
     const search: URLSearchParams = new URLSearchParams();
-
+    storeId = null;
     search.append('school_id', this.school.id.toString());
     search.append('store_id', storeId);
-    search.append('privilege_type', CP_PRIVILEGES_MAP.events.toString());
+    search.append('privilege_type', this.utils.getPrivilegeType(this.isOrientation));
 
     this.adminService
       .getAdminByStoreId(search)

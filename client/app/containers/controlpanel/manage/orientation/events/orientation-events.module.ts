@@ -13,7 +13,6 @@ import {
   OrientationEventsEditComponent,
   OrientationEventsExcelComponent,
   OrientationEventsCreateComponent,
-  OrientationEventsFacebookComponent,
   OrientationEventsAttendanceComponent,
 } from './components';
 
@@ -24,7 +23,6 @@ import {
     OrientationEventsInfoComponent,
     OrientationEventsExcelComponent,
     OrientationEventsCreateComponent,
-    OrientationEventsFacebookComponent,
     OrientationEventsAttendanceComponent
   ],
 
