@@ -13,6 +13,17 @@
         formControlName="name">
     </div>
   </div>
+  <div class="row" *ngIf="isTodo">
+    <div class="col-xs-6">
+      <label>
+        {{ 'due_date' | cpI18n }}
+      </label>
+      <cp-datepicker
+        [error]="formError && form.controls['due_date'].hasError('required')">
+      </cp-datepicker>
+    </div>
+  </div>
+  <br>
   <div class="row">
     <div class="col-xs-12">
       <label>

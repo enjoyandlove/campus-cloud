@@ -8,6 +8,7 @@ import { ProgramMembership } from '../../../orientation/orientation.status';
 })
 export class CalendarsFormComponent implements OnInit {
   @Input() form: FormGroup;
+  @Input() isTodo = false;
   @Input() isOrientation = false;
   @Input() orientationProgram;
 

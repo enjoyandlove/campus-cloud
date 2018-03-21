@@ -7,6 +7,7 @@ import { OrientationInfoComponent } from '../info';
 import { OrientationProgramEditComponent } from '../edit';
 import { OrientationDetailsComponent } from './orientation-details.component';
 
+// import { TodosModule } from '../todos/todos.module';
 import { SharedModule } from '../../../../../shared/shared.module';
 import { OrientationDetailsRoutingModule } from './orientation-details.routing.module';
 
@@ -17,6 +18,7 @@ import { FeedsModule } from '../../feeds/feeds.module';
 import { EventsModule } from '../../events/events.module';
 import { CalendarsModule } from '../../calendars/calendars.module';
 import { OrientationService } from '../orientation.services';
+import { TodosService } from '../todos/todos.service';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,7 @@ import { OrientationService } from '../orientation.services';
     CommonModule,
     SharedModule,
     RouterModule,
+    // TodosModule,
     ReactiveFormsModule,
     OrientationDetailsRoutingModule,
     FeedsModule,
@@ -36,6 +39,6 @@ import { OrientationService } from '../orientation.services';
     CalendarsModule,
   ],
 
-  providers: [OrientationService],
+  providers: [OrientationService, TodosService],
 })
 export class OrientationDetailsModule {}

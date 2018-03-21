@@ -1,0 +1,115 @@
+<div class="row">
+  <div class="col-xs-12">
+    <cp-todos-list-action-box
+      (search)="onSearch($event)"
+      (launchCreateModal)="onLaunchCreateModal()">
+    </cp-todos-list-action-box>
+  </div>
+</div>
+
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div *ngSwitchCase="false">
+    <cp-no-content
+      class="no-content"
+      *ngIf="!state.todos.length"
+      [noContentText]="cpI18n.translate('todos_no_results_found')">
+    </cp-no-content>
+
+    <div *ngIf="state.todos.length">
+      <ul class="todos cp-form">
+        <li class="cp-form__header col-xs-12">
+          <div class="row">
+            <span
+              class="col-xs-5 hover"
+              (click)="doSort('name')">
+              {{ 'name' | cpI18n }}
+              <span *ngIf="state.sort_field === 'name'">
+                <i class="material-icons">
+                  {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+                </i>
+              </span>
+            </span>
+            <span
+              class="col-xs-5 hover"
+              (click)="doSort('due_date')">
+              {{ 'due_date' | cpI18n }}
+              <span *ngIf="state.sort_field === 'due_date'">
+                <i class="material-icons">
+                  {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+                </i>
+              </span>
+            </span>
+            <span class="col-xs-2"></span>
+          </div>
+        </li>
+
+        <li class="cp-form__item col-xs-12" *ngFor="let todo of state.todos">
+          <div class="row">
+            <span class="col-xs-5 text-truncate hover">
+              <a [routerLink]="todo.id">
+                <strong>
+                  {{ todo.name }}
+                </strong>
+              </a>
+              <br>
+              {{ todo.description }}
+            </span>
+            <span class="col-xs-5 text-truncate">
+              {{ todo.due_date | cpDatePipe:dateFormat }}
+            </span>
+            <span class="col-xs-2 text-right">
+              <!--<span
+                data-toggle="modal"
+                data-target="#todoEdit"
+                (click)="launchEditModal = true"
+                (click)="selectedTodo = todo"
+                class="hover action-button material-icons text-center">
+                mode_edit
+              </span>-->
+              <span
+                data-toggle="modal"
+                data-target="#todoDelete"
+                class="hover action-button material-icons text-center">
+                close
+              </span>
+            </span>
+          </div>
+        </li>
+      </ul>
+
+      <cp-pagination
+        [pageNext]="pageNext"
+        [pagePrev]="pagePrev"
+        [pageNumber]="pageNumber"
+        (next)="onPaginationNext()"
+        (previous)="onPaginationPrevious()">
+      </cp-pagination>
+    </div>
+  </div>
+</div>
+
+
+<cp-modal modalId="todoCreate" *ngIf="launchCreateModal">
+  <cp-orientation-todo-create
+    (created)="onCreated($event)"
+    (resetCreateModal)="launchCreateModal = false">
+  </cp-orientation-todo-create>
+</cp-modal>
+<!--
+<cp-modal modalId="todoDelete" *ngIf="launchDeleteModal">
+  <cp-todos-delete
+    [todos]="selectedTodo"
+    (deleted)="onDeleted($event)"
+    (resetDeleteModal)="launchDeleteModal = false">
+  </cp-todos-delete>
+</cp-modal>
+
+<cp-modal modalId="todoEdit" *ngIf="launchEditModal">
+  <cp-todos-edit
+    [todos]="selectedTodo"
+    (edited)="onEditedLink($event)"
+    (reset)="launchEditModal = false">
+  </cp-todos-edit>
+</cp-modal>-->
