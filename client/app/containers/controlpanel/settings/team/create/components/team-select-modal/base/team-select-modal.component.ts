@@ -3,7 +3,10 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { get as _get } from 'lodash';
 
-import { canStoreReadAndWriteResource } from './../../../../../../../../shared/utils/privileges/privileges';
+import {
+  canSchoolWriteResource,
+  canStoreReadAndWriteResource
+} from './../../../../../../../../shared/utils/privileges/privileges';
 import { CPSession } from './../../../../../../../../session';
 import { BaseComponent } from '../../../../../../../../base/base.component';
 import { permissions, permissionType, permissionIcon } from '../permissions';
@@ -51,11 +54,18 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
   }
 
   onCheckedItem(checked, store) {
-    const canWrite = canStoreReadAndWriteResource(this.session.g, store.id, this.privilegeType);
-
     this.updateItem(store.id, 'checked', checked);
 
     if (this.privilegeType === CP_PRIVILEGES_MAP.clubs) {
+      const schoolAccess = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.clubs);
+      const storeLevelAccess = canStoreReadAndWriteResource(
+        this.session.g,
+        store.id,
+        this.privilegeType
+      );
+
+      const canWrite = schoolAccess || storeLevelAccess;
+
       this.updateItem(
         store.id,
         'type',

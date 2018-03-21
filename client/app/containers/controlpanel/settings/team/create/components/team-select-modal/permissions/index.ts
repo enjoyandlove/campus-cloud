@@ -15,8 +15,8 @@ export enum permissionType {
 }
 
 export enum permissionIcon {
-  read = 'visibility_off',
-  write = 'visibility'
+  read = 'lock',
+  write = 'mode_edit'
 }
 
 export const permissions: Array<IPermission> = [

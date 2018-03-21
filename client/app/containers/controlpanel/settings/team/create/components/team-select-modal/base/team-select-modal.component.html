@@ -93,7 +93,7 @@
                             *ngFor="let privilege of privileges | cpFilterByStorePrivileges: privilegeType:item.id"
                             (click)="updateItem(item.id, 'type', privilege.type, privilege.icon)">
                             <div class="row">
-                              <div class="col-xs-2 text-center no-right-padding">
+                              <div class="col-xs-2 text-center no-left-padding no-right-padding">
                                 <i 
                                   class="material-icons" 
                                   *ngIf="item.type === privilege.type">
