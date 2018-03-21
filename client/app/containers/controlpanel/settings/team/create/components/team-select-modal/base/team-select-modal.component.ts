@@ -50,17 +50,21 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
     this.privileges = permissions;
   }
 
-  onCheckedItem(checked, service) {
-    const canWrite = canStoreReadAndWriteResource(this.session.g, service.id, this.privilegeType);
+  onCheckedItem(checked, store) {
+    const canWrite = canStoreReadAndWriteResource(this.session.g, store.id, this.privilegeType);
 
-    this.updateItem(service.id, 'checked', checked);
+    this.updateItem(store.id, 'checked', checked);
 
-    this.updateItem(
-      service.id,
-      'type',
-      canWrite ? permissionType.write : permissionType.read,
-      canWrite ? permissionIcon.write : permissionIcon.read
-    );
+    if (this.privilegeType === CP_PRIVILEGES_MAP.clubs) {
+      this.updateItem(
+        store.id,
+        'type',
+        canWrite ? permissionType.write : permissionType.read,
+        canWrite ? permissionIcon.write : permissionIcon.read
+      );
+    } else {
+      this.updateItem(store.id, 'type', permissionType.write, permissionIcon.write);
+    }
   }
 
   updateItem(id: number, key: string, value: any, icon = null) {

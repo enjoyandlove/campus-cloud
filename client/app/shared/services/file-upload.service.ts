@@ -5,12 +5,13 @@ import { CPI18nService } from './index';
 
 @Injectable()
 export class FileUploadService {
-  maxFileSize = 5e6; // 5MB
+  maxImageSize = 8e6; // 5MB
+  maxFileSize = 8e6; // 8MB
 
   validFileTypes = [
     'application/pdf', // .pdf
     'application/msword', // .doc
-    'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // .docx
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document' // .docx
   ];
 
   validImageTypes = ['image/jpeg', 'image/jpg', 'image/png'];
@@ -20,12 +21,12 @@ export class FileUploadService {
   validImage(file: File): { valid: boolean; errors: Array<string> } {
     const validType = {
       message: this.cpI18n.translate('error_invalid_extension'),
-      valid: this.validateImage(file),
+      valid: this.validateImage(file)
     };
 
     const validSize = {
       message: this.cpI18n.translate('error_file_is_too_big'),
-      valid: this.validateFileSize(file),
+      valid: this.validateFileSize(file, this.maxImageSize)
     };
 
     const errors = [];
@@ -39,29 +40,39 @@ export class FileUploadService {
 
     return {
       valid: validType.valid && validSize.valid,
-      errors,
+      errors
     };
   }
 
   validFile(file: File): { valid: boolean; errors: Array<string> } {
     const validType = {
       message: this.cpI18n.translate('error_invalid_extension'),
-      valid: this.validateDoc(file),
+      valid: this.validateDoc(file)
     };
 
     const validSize = {
       message: this.cpI18n.translate('error_file_is_too_big'),
-      valid: this.validateFileSize(file),
+      valid: this.validateFileSize(file, this.maxFileSize)
     };
+
+    const _errors = [];
+
+    if (!validType.valid) {
+      _errors.push(validType.message);
+    }
+
+    if (!validSize.valid) {
+      _errors.push(validSize.message);
+    }
 
     return {
       valid: validType.valid && validSize.valid,
-      errors: [validType.message, validSize.message],
+      errors: _errors
     };
   }
 
-  validateFileSize(media: File): boolean {
-    return media.size < this.maxFileSize;
+  validateFileSize(media: File, maxFileSize): boolean {
+    return media.size < maxFileSize;
   }
 
   validateDoc(media: File, validTypes = this.validFileTypes): boolean {
