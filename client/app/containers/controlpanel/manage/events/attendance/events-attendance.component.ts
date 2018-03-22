@@ -7,7 +7,7 @@ import { CPDate } from '../../../../../shared/utils/date';
 import { EventUtilService } from './../events.utils.service';
 import { BaseComponent } from '../../../../../base/base.component';
 import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-import { OrientationService } from '../../orientation/orientation.services';
+import { OrientationEventsService } from '../../orientation/events/orientation.events.service';
 
 @Component({
   selector: 'cp-events-attendance',
@@ -35,7 +35,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     private route: ActivatedRoute,
     private utils: EventUtilService,
     private eventService: EventsService,
-    private orientationService: OrientationService,
+    private orientationEventService: OrientationEventsService,
   ) {
     super();
     this.eventId = this.route.snapshot.params['eventId'];
@@ -75,7 +75,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.service = this.isOrientation ? this.orientationService : this.eventService;
+    this.service = this.isOrientation ? this.orientationEventService : this.eventService;
 
     this.urlPrefix = this.utils.buildUrlPrefix(
       this.clubId,

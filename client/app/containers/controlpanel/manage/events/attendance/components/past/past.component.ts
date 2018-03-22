@@ -8,7 +8,9 @@ import { createSpreadSheet } from './../../../../../../../shared/utils/csv/parse
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 
 import { unix } from 'moment';
-import { OrientationService } from '../../../../orientation/orientation.services';
+import {
+  OrientationEventsService
+} from '../../../../orientation/events/orientation.events.service';
 
 interface IState {
   sort_field: string;
@@ -42,7 +44,7 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
   constructor(
     private cpI18n: CPI18nService,
     private eventService: EventsService,
-    private orientationService: OrientationService,
+    private orientationEventService: OrientationEventsService,
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -176,7 +178,7 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.service = this.isOrientation ? this.orientationService : this.eventService;
+    this.service = this.isOrientation ? this.orientationEventService : this.eventService;
     this.fetch();
   }
 }

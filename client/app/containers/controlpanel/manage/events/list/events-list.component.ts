@@ -8,7 +8,7 @@ import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 
 import { EventsComponent } from './base/events.component';
 import { CPI18nService } from '../../../../../shared/services/index';
-import { OrientationService } from '../../orientation/orientation.services';
+import { OrientationEventsService } from '../../orientation/events/orientation.events.service';
 
 @Component({
   selector: 'cp-events-list',
@@ -30,9 +30,9 @@ export class EventsListComponent extends EventsComponent implements OnInit {
     public service: EventsService,
     public cpI18n: CPI18nService,
     private headerService: ManageHeaderService,
-    public orientationService: OrientationService,
+    public orientationEventService: OrientationEventsService,
   ) {
-    super(session, cpI18n, service, orientationService);
+    super(session, cpI18n, service, orientationEventService);
   }
 
   private buildHeader() {

@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from '../../../../../shared/shared.module';
 import { EventsModule } from '../../events/events.module';
 
+import { OrientationEventsService } from './orientation.events.service';
 import { OrientationEventsComponent } from './orientation-events.component';
 import { OrientationEventsRoutingModule } from './orientation-events.routing.module';
 import {
@@ -33,6 +34,8 @@ import {
     ReactiveFormsModule,
     OrientationEventsRoutingModule,
     EventsModule,
-  ]
+  ],
+
+  providers: [OrientationEventsService]
 })
 export class OrientationEventsModule {}

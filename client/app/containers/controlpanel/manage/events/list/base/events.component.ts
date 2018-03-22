@@ -5,7 +5,7 @@ import { EventsService } from '../../events.service';
 import { CPSession } from '../../../../../../session';
 import { BaseComponent } from '../../../../../../base/base.component';
 import { CPI18nService } from './../../../../../../shared/services/i18n.service';
-import { OrientationService } from '../../../orientation/orientation.services';
+import { OrientationEventsService } from '../../../orientation/events/orientation.events.service';
 
 interface IState {
   start: number;
@@ -52,20 +52,20 @@ export class EventsComponent extends BaseComponent {
   school;
   events;
   loading;
+  service;
   pageNext;
   pagePrev;
   pageNumber;
   isUpcoming;
   orientation;
-  eventsService;
   deleteEvent = '';
   state: IState = state;
 
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public service: EventsService,
-    public orientationService: OrientationService
+    public eventService: EventsService,
+    public orientationEventService: OrientationEventsService,
   ) {
     super();
     this.school = this.session.g.get('school');
@@ -153,9 +153,9 @@ export class EventsComponent extends BaseComponent {
     search.append('sort_field', this.state.sort_field);
     search.append('sort_direction', this.state.sort_direction);
 
-    this.eventsService = this.isOrientation ? this.orientationService : this.service;
+    this.service = this.isOrientation ? this.orientationEventService : this.eventService;
 
-    this.fetch(this.eventsService.getEvents(start, end, search));
+    this.fetch(this.service.getEvents(start, end, search));
 
   }
 

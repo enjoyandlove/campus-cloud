@@ -18,8 +18,8 @@ import { CPMap, CPDate } from '../../../../../shared/utils';
 import { EventAttendance, EventFeedback, IsAllDay } from '../event.status';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
-import { OrientationService } from '../../orientation/orientation.services';
 import { EventUtilService } from '../events.utils.service';
+import { OrientationEventsService } from '../../orientation/events/orientation.events.service';
 
 const COMMON_DATE_PICKER_OPTIONS = {
   utc: true,
@@ -75,7 +75,7 @@ export class EventsCreateComponent implements OnInit {
     private storeService: StoreService,
     private errorService: ErrorService,
     private eventService: EventsService,
-    private orientationService: OrientationService,
+    private orientationEventService: OrientationEventsService,
   ) {
     this.school = this.session.g.get('school');
     const search: URLSearchParams = new URLSearchParams();
@@ -227,6 +227,8 @@ export class EventsCreateComponent implements OnInit {
         this.buttonData = Object.assign({}, this.buttonData, {
           disabled: false,
         });
+
+        return;
       }
     }
 
@@ -290,7 +292,7 @@ export class EventsCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.service = this.isOrientation ? this.orientationService : this.eventService;
+    this.service = this.isOrientation ? this.orientationEventService : this.eventService;
 
     this.eventManager = Object.assign({}, this.eventManager, {
       content: this.cpI18n.translate('events_event_manager_tooltip'),
@@ -319,8 +321,9 @@ export class EventsCreateComponent implements OnInit {
       this.fetchManagersBySelectedStore(this.clubId);
     }
 
-    // load managers for default host
-    if (this.session.defaultHost) {
+    if (this.isOrientation) {
+      this.fetchManagersBySelectedStore(null);
+    } else if (this.session.defaultHost) {
       this.fetchManagersBySelectedStore(store_id);
     }
 

@@ -39,6 +39,7 @@
     "verified_checkins": 0,
     "store_id": 2445,
     "dislikes": 0,
+    "is_all_day": 1,
     "store_name": "OOHLALA Mobile",
     "qr_img_url": "https://s3.amazonaws.com/webservice-misc-image/x2i533m1ozkd1aniuf31zco4nes199cbxdkqhnqgl9kx3c8z08twe1cewdi0tg5t.png",
     "num_ratings": 0,

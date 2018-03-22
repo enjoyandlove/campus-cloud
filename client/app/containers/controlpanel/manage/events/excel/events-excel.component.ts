@@ -15,8 +15,8 @@ import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { CPI18nPipe } from './../../../../../shared/pipes/i18n/i18n.pipe';
 import { STATUS } from '../../../../../shared/constants';
 import { CPImageUploadComponent } from '../../../../../shared/components';
-import { OrientationService } from '../../orientation/orientation.services';
 import { EventUtilService } from '../events.utils.service';
+import { OrientationEventsService } from '../../orientation/events/orientation.events.service';
 import {
   FileUploadService,
   CPI18nService,
@@ -72,7 +72,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     private storeService: StoreService,
     private eventsService: EventsService,
     private fileUploadService: FileUploadService,
-    private orientationService: OrientationService,
+    private orientationEventService: OrientationEventsService,
   ) {
     super();
     this.school = this.session.g.get('school');
@@ -448,7 +448,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.service = this.isOrientation ? this.orientationService : this.eventsService;
+    this.service = this.isOrientation ? this.orientationEventService : this.eventsService;
 
     this.urlPrefix = this.utils.buildUrlPrefix(
       this.clubId,

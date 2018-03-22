@@ -21,8 +21,8 @@ import {
 
 import { EventAttendance } from '../event.status';
 import { EventUtilService } from '../events.utils.service';
-import { OrientationService } from '../../orientation/orientation.services';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
+import { OrientationEventsService } from '../../orientation/events/orientation.events.service';
 
 const COMMON_DATE_PICKER_OPTIONS = {
   altInput: true,
@@ -86,16 +86,13 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     private storeService: StoreService,
     private errorService: ErrorService,
     private eventService: EventsService,
-    private orientationService: OrientationService,
+    private orientationEventService: OrientationEventsService,
   ) {
     super();
     this.school = this.session.g.get('school');
     this.eventId = this.route.snapshot.params['eventId'];
 
     super.isLoading().subscribe((res) => (this.loading = res));
-
-    this.fetch();
-    this.buildHeader();
   }
 
   onUploadedImage(image) {
@@ -183,6 +180,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.form = this.fb.group({
       title: [res.title, Validators.required],
       store_id: [res.store_id, !this.isOrientation ? Validators.required : null],
+      calendar_id: [this.orientationId, this.isOrientation ? Validators.required : null],
       location: [res.location],
       room_data: [res.room_data],
       city: [res.city],
@@ -279,13 +277,15 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
+    let stores$ = Observable.of([]);
     const school = this.session.g.get('school');
     const search: URLSearchParams = new URLSearchParams();
     search.append('school_id', school.id.toString());
 
-    const event$ = this.eventService.getEventById(this.eventId);
-    const stores$ = this.storeService.getStores(search);
-
+    if (!this.isClub && !this.isService && !this.isOrientation) {
+      stores$ = this.storeService.getStores(search);
+    }
+    const event$ = this.service.getEventById(this.eventId);
     const stream$ = Observable.combineLatest(event$, stores$);
 
     super
@@ -395,7 +395,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.service = this.isOrientation ? this.orientationService : this.eventService;
+    this.service = this.isOrientation ? this.orientationEventService : this.eventService;
 
     this.eventManager = Object.assign({}, this.eventManager, {
       content: this.cpI18n.translate('events_event_manager_tooltip'),
@@ -432,5 +432,8 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
         action: EventAttendance.disabled,
       },
     ];
+
+    this.fetch();
+    this.buildHeader();
   }
 }

@@ -12,7 +12,7 @@ import { EventUtilService } from './../events.utils.service';
 import { BaseComponent } from '../../../../../base/base.component';
 import { CPI18nService } from '../../../../../shared/services/index';
 import { IResourceBanner } from '../../../../../shared/components/cp-resource-banner/cp-resource.interface';
-import { OrientationService } from '../../orientation/orientation.services';
+import { OrientationEventsService } from '../../orientation/events/orientation.events.service';
 
 @Component({
   selector: 'cp-events-info',
@@ -48,7 +48,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
     private route: ActivatedRoute,
     public utils: EventUtilService,
     private eventService: EventsService,
-    private orientationService: OrientationService,
+    private orientationEventService: OrientationEventsService,
   ) {
     super();
     this.dateFormat = FORMAT.DATETIME;
@@ -110,7 +110,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.service = this.isOrientation ? this.orientationService : this.eventService;
+    this.service = this.isOrientation ? this.orientationEventService : this.eventService;
     this.fetch();
   }
 }
