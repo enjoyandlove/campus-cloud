@@ -20,7 +20,10 @@ import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 import { EventUtilService } from '../events.utils.service';
 import { OrientationEventsService } from '../../orientation/events/orientation.events.service';
+import * as moment from 'moment';
 
+const FORMAT_WITH_TIME = 'F j, Y h:i K';
+const FORMAT_WITHOUT_TIME = 'F j, Y';
 const COMMON_DATE_PICKER_OPTIONS = {
   utc: true,
   altInput: true,
@@ -258,6 +261,10 @@ export class EventsCreateComponent implements OnInit {
       return;
     }
 
+    if (this.form.controls['is_all_day'].value) {
+      this.updateTime();
+    }
+
     this.service.createEvent(this.form.value).subscribe(
       (res) => {
         this.urlPrefix = this.getUrlPrefix(res.id);
@@ -286,7 +293,41 @@ export class EventsCreateComponent implements OnInit {
     this.form.controls['event_feedback'].setValue(option.action);
   }
 
+  toggleDatePickerTime(checked) {
+    const dateFormat = checked ? FORMAT_WITHOUT_TIME : FORMAT_WITH_TIME;
+
+    this.startdatePickerOpts = {
+      ...this.startdatePickerOpts,
+      enableTime: !checked,
+      dateFormat: dateFormat,
+    };
+
+    this.enddatePickerOpts = {
+      ...this.enddatePickerOpts,
+      enableTime: !checked,
+      dateFormat: dateFormat,
+    };
+  }
+
+  updateTime() {
+    const startDateAtMidnight = CPDate.fromEpoch(
+      this.form.controls['start'].value,
+    ).setHours(0, 0, 0, 0);
+
+    const endDateAtMidnight = CPDate.fromEpoch(
+      this.form.controls['end'].value,
+    ).setHours(23, 59, 59, 0);
+
+    this.form.controls['start'].setValue(
+      CPDate.toEpoch(moment(startDateAtMidnight).toDate()),
+    );
+    this.form.controls['end'].setValue(
+      CPDate.toEpoch(moment(endDateAtMidnight).toDate()),
+    );
+  }
+
   onAllDayToggle(value) {
+    this.toggleDatePickerTime(value);
     value = value ? IsAllDay.enabled : IsAllDay.disabled;
     this.form.controls['is_all_day'].setValue(value);
   }
