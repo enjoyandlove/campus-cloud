@@ -48,11 +48,9 @@
         <li class="cp-form__item col-xs-12" *ngFor="let todo of state.todos">
           <div class="row">
             <span class="col-xs-5 text-truncate hover">
-              <a [routerLink]="todo.id">
                 <strong>
                   {{ todo.name }}
                 </strong>
-              </a>
               <br>
               {{ todo.description }}
             </span>
@@ -60,17 +58,17 @@
               {{ todo.due_date | cpDatePipe:dateFormat }}
             </span>
             <span class="col-xs-2 text-right">
-              <!--<span
+              <span
                 data-toggle="modal"
                 data-target="#todoEdit"
-                (click)="launchEditModal = true"
-                (click)="selectedTodo = todo"
+                (click)="launchEditModal = true; selectedTodo = todo"
                 class="hover action-button material-icons text-center">
                 mode_edit
-              </span>-->
+              </span>
               <span
                 data-toggle="modal"
                 data-target="#todoDelete"
+                (click)="launchDeleteModal = true; selectedTodo = todo"
                 class="hover action-button material-icons text-center">
                 close
               </span>
@@ -97,19 +95,18 @@
     (resetCreateModal)="launchCreateModal = false">
   </cp-orientation-todo-create>
 </cp-modal>
-<!--
+
 <cp-modal modalId="todoDelete" *ngIf="launchDeleteModal">
-  <cp-todos-delete
-    [todos]="selectedTodo"
+  <cp-orientation-todos-delete
+    [todo]="selectedTodo"
     (deleted)="onDeleted($event)"
     (resetDeleteModal)="launchDeleteModal = false">
-  </cp-todos-delete>
+  </cp-orientation-todos-delete>
 </cp-modal>
-
 <cp-modal modalId="todoEdit" *ngIf="launchEditModal">
-  <cp-todos-edit
-    [todos]="selectedTodo"
+  <cp-orientation-todos-edit
+    [todo]="selectedTodo"
     (edited)="onEditedLink($event)"
-    (reset)="launchEditModal = false">
-  </cp-todos-edit>
-</cp-modal>-->
+    (resetEditModal)="launchEditModal = false">
+  </cp-orientation-todos-edit>
+</cp-modal>

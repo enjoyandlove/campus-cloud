@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 
 import { TodosService } from './todos.service';
 import { OrientationTodosListComponent } from './list';
+import { OrientationTodosEditComponent } from './edit';
+import { OrientationTodosDeleteComponent } from './delete';
 import { OrientationTodosCreateComponent } from './create';
 import { TodosListActionBoxComponent } from './list/components/action-box';
 
@@ -14,7 +16,9 @@ import { CalendarsModule } from '../../calendars/calendars.module';
 @NgModule({
   declarations: [
     TodosListActionBoxComponent,
+    OrientationTodosEditComponent,
     OrientationTodosListComponent,
+    OrientationTodosDeleteComponent,
     OrientationTodosCreateComponent,
   ],
 

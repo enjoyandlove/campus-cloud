@@ -14,6 +14,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CPSession } from './../../../../../../session';
 import { TodosService } from '../todos.service';
 import { CPI18nService } from '../../../../../../shared/services/i18n.service';
+import { ITodo } from '../todos.interface';
 
 @Component({
   selector: 'cp-orientation-todo-create',
@@ -23,13 +24,8 @@ import { CPI18nService } from '../../../../../../shared/services/i18n.service';
 export class OrientationTodosCreateComponent implements OnInit {
   @ViewChild('createForm') createForm;
 
+  @Output() created: EventEmitter<ITodo> = new EventEmitter();
   @Output() resetCreateModal: EventEmitter<null> = new EventEmitter();
-  @Output()
-  created: EventEmitter<{
-    name: string;
-    description: string;
-    due_date: number;
-  }> = new EventEmitter();
 
   buttonData;
   form: FormGroup;

@@ -29,4 +29,16 @@ export class TodosService extends BaseService {
     return Observable.of(this.mockJson).delay(300);
   }
 
+  deleteTodo(id, search?: URLSearchParams) {
+    this.dummy = [id, search];
+
+    return Observable.of(this.mockJson).delay(300);
+  }
+
+  editTodo(id, body, search?: URLSearchParams) {
+    this.dummy = [body, id, search];
+
+    return Observable.of(body).delay(300);
+  }
+
 }
