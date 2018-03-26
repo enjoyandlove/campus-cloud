@@ -21,7 +21,7 @@ describe('DashboardDatePickerComponent', () => {
   let comp: DashboardDatePickerComponent;
   let fixture: ComponentFixture<DashboardDatePickerComponent>;
 
-  beforeEach( async(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ DashboardDatePickerComponent ],
       providers: [ DashboardUtilsService ]

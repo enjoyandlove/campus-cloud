@@ -1,3 +1,4 @@
+/*tslint:disable:max-line-length*/
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { CPSession } from './../../../../../session';
 import { Observable } from 'rxjs/Observable';
@@ -63,6 +64,23 @@ describe('OrientationProgramCreateComponent', () => {
     component.ngOnInit();
     component.form.controls['name'].setValue('hello world');
     expect(component.form.valid).toBeTruthy();
+  });
+
+  it('form validation - max length 225 - should fail', () => {
+    component.ngOnInit();
+    component.form.controls['name'].setValue('This is the text which we are testing the length of 225 thats why we are entering this text greater than 225 to verify the unit test.  The total length of this string is 226 just to make sure its greater than 225 thanks you ..');
+    expect(component.form.valid).toBeFalsy();
+  });
+
+  it('cp button should have disabled state TRUE', () => {
+    component.ngOnInit();
+    expect(component.buttonData.disabled).toBeTruthy();
+  });
+
+  it('cp button should have disabled state FALSE', () => {
+    component.ngOnInit();
+    component.form.controls['name'].setValue('hello world');
+    expect(component.buttonData.disabled).toBeFalsy();
   });
 
   it('should insert orientation program', () => {
