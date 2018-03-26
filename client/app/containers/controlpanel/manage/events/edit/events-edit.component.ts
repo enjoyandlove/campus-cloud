@@ -249,13 +249,13 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.startdatePickerOpts = {
       ...this.startdatePickerOpts,
       enableTime: !checked,
-      dateFormat: dateFormat,
+      dateFormat
     };
 
     this.enddatePickerOpts = {
       ...this.enddatePickerOpts,
       enableTime: !checked,
-      dateFormat: dateFormat,
+      dateFormat
     };
   }
 
@@ -455,7 +455,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       class: 'primary',
     };
 
-    this.urlPrefix = this.utils.builidUrlPrefixEvents(
+    this.urlPrefix = this.utils.buildUrlPrefixEvents(
       this.clubId,
       this.storeId,
       this.isAthletic,

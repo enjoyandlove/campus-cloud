@@ -33,7 +33,7 @@ export class EventUtilService {
     return '/manage/events';
   }
 
-  builidUrlPrefixEvents(
+  buildUrlPrefixEvents(
     clubId: number = null,
     serviceId: number = null,
     athleticId: number = null,

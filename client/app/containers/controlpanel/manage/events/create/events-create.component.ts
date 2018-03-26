@@ -280,7 +280,7 @@ export class EventsCreateComponent implements OnInit {
   }
 
   getUrlPrefix(eventId) {
-   return this.utils.builidUrlPrefixEvents(
+   return this.utils.buildUrlPrefixEvents(
       this.clubId,
       this.serviceId,
       this.isAthletic,
@@ -299,13 +299,13 @@ export class EventsCreateComponent implements OnInit {
     this.startdatePickerOpts = {
       ...this.startdatePickerOpts,
       enableTime: !checked,
-      dateFormat: dateFormat,
+      dateFormat
     };
 
     this.enddatePickerOpts = {
       ...this.enddatePickerOpts,
       enableTime: !checked,
-      dateFormat: dateFormat,
+      dateFormat
     };
   }
 
@@ -412,7 +412,7 @@ export class EventsCreateComponent implements OnInit {
       event_manager_id: [null],
       attendance_manager_email: [null],
       custom_basic_feedback_label: [null],
-      is_all_day: [0],
+      is_all_day: [IsAllDay.disabled],
     });
 
     const _self = this;

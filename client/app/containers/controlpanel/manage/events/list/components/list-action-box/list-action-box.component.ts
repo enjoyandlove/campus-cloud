@@ -191,11 +191,7 @@ export class ListActionBoxComponent implements OnInit {
       CP_PRIVILEGES_MAP.events,
     );
 
-    this.canCreateEvent = canSchoolWrite || canAccountWrite;
-
-    if (this.isOrientation) {
-      this.canCreateEvent = true;
-    }
+    this.canCreateEvent = canSchoolWrite || canAccountWrite || this.isOrientation;
 
     this.eventFilter = DATE_FILTER;
 

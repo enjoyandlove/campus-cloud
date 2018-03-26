@@ -16,6 +16,7 @@ import { CPI18nPipe } from './../../../../../shared/pipes/i18n/i18n.pipe';
 import { STATUS } from '../../../../../shared/constants';
 import { CPImageUploadComponent } from '../../../../../shared/components';
 import { EventUtilService } from '../events.utils.service';
+import { EventAttendance, EventFeedback, IsAllDay } from '../event.status';
 import { OrientationEventsService } from '../../orientation/events/orientation.events.service';
 import {
   FileUploadService,
@@ -170,7 +171,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       store_id: [store_id ? store_id : null, !this.isOrientation ? Validators.required : null],
       calendar_id: [this.orientationId, this.isOrientation ? Validators.required : null],
       room: [event.room],
-      is_all_day: [0],
+      is_all_day: [IsAllDay.enabled],
       title: [event.title, Validators.required],
       poster_url: [null, Validators.required],
       poster_thumb_url: [null, Validators.required],
@@ -182,8 +183,8 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       // these controls are only required when event attendance is true
       attendance_manager_email: [null],
       event_manager_id: [null],
-      event_attendance: [1],
-      event_feedback: [1],
+      event_attendance: [EventAttendance.enabled],
+      event_feedback: [EventFeedback.enabled],
     });
   }
 
