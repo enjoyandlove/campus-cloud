@@ -5,14 +5,14 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  HostListener,
+  HostListener
 } from '@angular/core';
 
 import { URLSearchParams } from '@angular/http';
 
 import {
   canSchoolWriteResource,
-  canAccountLevelWriteResource,
+  canAccountLevelWriteResource
 } from './../../../../../../../shared/utils/privileges/privileges';
 
 import { Observable } from 'rxjs/Observable';
@@ -32,25 +32,12 @@ interface IState {
   attendance_only: number;
 }
 
-const threeYearsFromNow = new Date(
-  new Date().setFullYear(new Date().getFullYear() + 3),
-);
-
-const state = {
-  upcoming: true,
-  search_str: null,
-  store_id: null, // all stores
-  attendance_only: EventAttendance.disabled,
-  start: CPDate.toEpoch(new Date()),
-  end: CPDate.toEpoch(threeYearsFromNow),
-};
-
-declare var $: any;
+const threeYearsFromNow = new Date(new Date().setFullYear(new Date().getFullYear() + 3));
 
 @Component({
   selector: 'cp-list-action-box',
   templateUrl: './list-action-box.component.html',
-  styleUrls: ['./list-action-box.component.scss'],
+  styleUrls: ['./list-action-box.component.scss']
 })
 export class ListActionBoxComponent implements OnInit {
   @Input() isSimple: boolean;
@@ -62,13 +49,20 @@ export class ListActionBoxComponent implements OnInit {
   dateFilterOpts;
   canCreateEvent;
   isFilteredByDate;
-  state: IState = state;
+  state: IState = {
+    upcoming: true,
+    search_str: null,
+    store_id: null, // all stores
+    attendance_only: EventAttendance.disabled,
+    start: CPDate.toEpoch(new Date(), this.session.tz),
+    end: CPDate.toEpoch(threeYearsFromNow, this.session.tz)
+  };
   stores$: Observable<any>;
 
   constructor(
     private el: ElementRef,
     private session: CPSession,
-    private storeService: StoreService,
+    private storeService: StoreService
   ) {}
 
   getStores() {
@@ -81,10 +75,7 @@ export class ListActionBoxComponent implements OnInit {
 
   @HostListener('document:click', ['$event'])
   onClick(event) {
-    if (
-      !this.el.nativeElement.contains(event.target) ||
-      event.target.nodeName !== 'svg'
-    ) {
+    if (!this.el.nativeElement.contains(event.target) || event.target.nodeName !== 'svg') {
       if (this.isCalendar) {
         this.isCalendar = false;
       }
@@ -109,13 +100,13 @@ export class ListActionBoxComponent implements OnInit {
 
     if (this.state.upcoming) {
       this.state = Object.assign({}, this.state, {
-        start: CPDate.toEpoch(new Date()),
-        end: CPDate.toEpoch(threeYearsFromNow),
+        start: CPDate.toEpoch(new Date(), this.session.tz),
+        end: CPDate.toEpoch(threeYearsFromNow, this.session.tz)
       });
 
       this.dateFilterOpts = Object.assign({}, this.dateFilterOpts, {
         minDate: new Date(),
-        maxDate: null,
+        maxDate: null
       });
 
       return;
@@ -123,12 +114,12 @@ export class ListActionBoxComponent implements OnInit {
 
     this.state = Object.assign({}, this.state, {
       start: 0,
-      end: CPDate.toEpoch(new Date()),
+      end: CPDate.toEpoch(new Date(), this.session.tz)
     });
 
     this.dateFilterOpts = Object.assign({}, this.dateFilterOpts, {
       minDate: null,
-      maxDate: new Date(),
+      maxDate: new Date()
     });
   }
 
@@ -158,17 +149,15 @@ export class ListActionBoxComponent implements OnInit {
     this.isFilteredByDate = true;
 
     this.state = Object.assign({}, this.state, {
-      start: CPDate.toEpoch(dates[0]),
-      end: CPDate.toEpoch(dates[1]),
+      start: CPDate.toEpoch(dates[0], this.session.tz),
+      end: CPDate.toEpoch(dates[1], this.session.tz)
     });
 
     this.listAction.emit(this.state);
   }
 
   onAttendanceToggle(checked) {
-    const attendance_only = checked
-      ? EventAttendance.enabled
-      : EventAttendance.disabled;
+    const attendance_only = checked ? EventAttendance.enabled : EventAttendance.disabled;
 
     this.state = Object.assign({}, this.state, { attendance_only });
 
@@ -181,14 +170,8 @@ export class ListActionBoxComponent implements OnInit {
 
   ngOnInit() {
     this.getStores();
-    const canSchoolWrite = canSchoolWriteResource(
-      this.session.g,
-      CP_PRIVILEGES_MAP.events,
-    );
-    const canAccountWrite = canAccountLevelWriteResource(
-      this.session.g,
-      CP_PRIVILEGES_MAP.events,
-    );
+    const canSchoolWrite = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.events);
+    const canAccountWrite = canAccountLevelWriteResource(this.session.g, CP_PRIVILEGES_MAP.events);
 
     this.canCreateEvent = canSchoolWrite || canAccountWrite;
 
@@ -199,7 +182,7 @@ export class ListActionBoxComponent implements OnInit {
       inline: true,
       mode: 'range',
       minDate: new Date(),
-      maxDate: null,
+      maxDate: null
     };
 
     this.listAction.emit(this.state);

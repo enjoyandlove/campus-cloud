@@ -5,13 +5,14 @@ import {
   ViewChild,
   ElementRef,
   AfterViewInit,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
 
 const Chartist = require('chartist');
 require('chartist-plugin-tooltips');
 
 import * as moment from 'moment';
+import { CPSession } from './../../../../../../session';
 import { CPDate } from '../../../../../../shared/utils/date';
 
 interface IProps {
@@ -27,7 +28,7 @@ interface IProps {
   selector: 'cp-engagement-chart',
   templateUrl: './engagement-chart.component.html',
   styleUrls: ['./engagement-chart.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class EngagementChartComponent implements OnInit, AfterViewInit {
   @Input() props: IProps;
@@ -37,7 +38,7 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
 
   isChartDataReady = false;
 
-  constructor() {}
+  constructor(public session: CPSession) {}
 
   buildLabels() {
     const labels = [];
@@ -45,6 +46,7 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
     for (let i = 1; i <= this.props.series.length; i++) {
       const date = CPDate.toEpoch(
         moment().subtract(this.props.series.length - i, 'days'),
+        this.session.tz
       );
       labels.push(moment.unix(date).format('MMM D'));
     }
@@ -58,11 +60,12 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
     for (let i = 1; i <= this.props.series.length; i++) {
       const date = CPDate.toEpoch(
         moment().subtract(this.props.series.length - i, 'days'),
+        this.session.tz
       );
 
       series.push({
         meta: moment.unix(date).format('ddd, MMM D'),
-        value: this.props.series[i - 1],
+        value: this.props.series[i - 1]
       });
     }
 
@@ -73,7 +76,7 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
     const data = {
       labels: this.buildLabels(),
 
-      series: [this.buildSeries()],
+      series: [this.buildSeries()]
     };
 
     const chipContent = `<span class="tooltip-chip"></span>
@@ -91,7 +94,7 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
       chartPadding: {
         top: 5,
 
-        right: 20,
+        right: 20
       },
 
       plugins: [
@@ -102,8 +105,8 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
 
           anchorToPoint: true,
 
-          pointClass: 'cp-point',
-        }),
+          pointClass: 'cp-point'
+        })
       ],
 
       lineSmooth: false,
@@ -115,7 +118,7 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
 
         point: 'cp-point',
 
-        label: 'cp-label',
+        label: 'cp-label'
       },
 
       fullWidth: true,
@@ -123,7 +126,7 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
       axisY: {
         labelInterpolationFnc: function showLabelsOnlyForIntegers(value) {
           return value % 1 === 0 ? value : null;
-        },
+        }
       },
 
       axisX: {
@@ -132,7 +135,7 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
         showGrid: false,
 
         labelOffset: {
-          x: -14,
+          x: -14
         },
 
         labelInterpolationFnc: function skipLabels(value, index, labels) {
@@ -149,8 +152,8 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
           }
 
           return value;
-        },
-      },
+        }
+      }
     };
 
     const chart = new Chartist.Line(this.chart.nativeElement, data, options);
@@ -159,7 +162,7 @@ export class EngagementChartComponent implements OnInit, AfterViewInit {
       'created',
       function() {
         this.isChartDataReady = true;
-      }.bind(this),
+      }.bind(this)
     );
   }
 

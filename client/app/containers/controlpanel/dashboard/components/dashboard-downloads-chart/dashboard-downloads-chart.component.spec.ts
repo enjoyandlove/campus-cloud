@@ -1,6 +1,15 @@
+import { CPSession } from './../../../../../session/index';
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 
 import { DashboardDownloadsChartComponent } from './dashboard-downloads-chart.component';
+
+class MockCPSession {
+  g = new Map();
+
+  get tz() {
+    return 'America/Toronto';
+  }
+}
 
 describe('DashboardDownloadsChartComponent', () => {
   let comp: DashboardDownloadsChartComponent;
@@ -9,7 +18,8 @@ describe('DashboardDownloadsChartComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        declarations: [DashboardDownloadsChartComponent]
+        declarations: [DashboardDownloadsChartComponent],
+        providers: [{ provide: CPSession, useValue: MockCPSession }]
       }).compileComponents(); // compile template and css
     })
   );
