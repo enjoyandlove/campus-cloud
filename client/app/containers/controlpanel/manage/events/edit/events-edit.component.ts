@@ -22,7 +22,6 @@ import {
 import { EventAttendance, IsAllDay } from '../event.status';
 import { EventUtilService } from '../events.utils.service';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
-import { OrientationEventsService } from '../../orientation/events/orientation.events.service';
 import * as moment from 'moment';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
@@ -50,7 +49,6 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
   event;
   stores;
-  service;
   urlPrefix;
   buttonData;
   dateFormat;
@@ -68,6 +66,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   dateErrorMessage;
   attendanceManager;
   enddatePickerOpts;
+  attendanceEnabled;
   attendance = false;
   isFormReady = false;
   startdatePickerOpts;
@@ -88,8 +87,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     private adminService: AdminService,
     private storeService: StoreService,
     private errorService: ErrorService,
-    private eventService: EventsService,
-    private orientationEventService: OrientationEventsService,
+    private service: EventsService,
   ) {
     super();
     this.school = this.session.g.get('school');
@@ -373,7 +371,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   toggleEventAttendance(value) {
-    value = value ? 1 : 0;
+    value = value ? EventAttendance.enabled : EventAttendance.disabled;
 
     this.enableStudentFeedbackOnAttendanceToggle(value);
 
@@ -437,8 +435,6 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.service = this.isOrientation ? this.orientationEventService : this.eventService;
-
     this.eventManager = Object.assign({}, this.eventManager, {
       content: this.cpI18n.translate('events_event_manager_tooltip'),
     });
@@ -475,6 +471,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       },
     ];
 
+    this.attendanceEnabled = EventAttendance.enabled;
     this.fetch();
     this.buildHeader();
   }

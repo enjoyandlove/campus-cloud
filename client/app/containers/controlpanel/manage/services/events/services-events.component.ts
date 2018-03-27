@@ -38,7 +38,7 @@ export class ServicesEventsComponent extends EventsComponent {
     private serviceService: ServicesService,
     public orientationEventService: OrientationEventsService,
   ) {
-    super(session, cpI18n, eventsService, orientationEventService);
+    super(session, cpI18n, eventsService);
     this.serviceId = this.route.snapshot.params['serviceId'];
 
     this.fetchServiceData();

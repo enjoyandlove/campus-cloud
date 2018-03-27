@@ -52,6 +52,25 @@ export class EventUtilService {
     return `/manage/events/${eventId}`;
   }
 
+  buildUrlPrefixExcel(
+    orientationId: number = null,
+    athleticId: number = null,
+    serviceId: number = null,
+    clubId: number = null,
+  ) {
+    if (orientationId) {
+      return `/manage/orientation/${orientationId}/events/import/excel`;
+    } else if (athleticId) {
+      return `/manage/athletics/${clubId}/events/import/excel`;
+    } else if (serviceId) {
+      return `/manage/services/${serviceId}/events/import/excel`;
+    } else if (clubId) {
+      return `/manage/clubs/${clubId}/events/import/excel`;
+    }
+
+    return `/manage/events/import/excel`;
+  }
+
   getSubNavChildren(event, urlPrefix) {
     const pastEvent = this.isPastEvent(event);
     const attendanceEnabled =

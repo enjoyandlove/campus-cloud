@@ -11,6 +11,7 @@ import {
   AdminService,
   CPI18nService,
 } from '../../../../../../../shared/services';
+import { EventAttendance } from '../../../event.status';
 
 interface IState {
   store_id: any;
@@ -110,7 +111,9 @@ export class EventsImportActionDropdownComponent extends BaseComponent
   }
 
   toggleEventAttendance() {
-    const value = this.state.event_attendance === 0 ? 1 : 0;
+    const value = this.state.event_attendance === EventAttendance.disabled
+      ? EventAttendance.enabled
+      : EventAttendance.disabled;
 
     this.state = Object.assign({}, this.state, { event_attendance: value });
 
@@ -140,7 +143,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent
   defaultState() {
     this.state = Object.assign({}, this.state, {
       event_feedback: this.eventAttendanceFeedback[1],
-      event_attendance: 0,
+      event_attendance: EventAttendance.disabled,
       event_manager_id: null,
       attendance_manager_email: null,
     });
@@ -166,7 +169,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent
   }
 
   doSubmit() {
-    if (this.state.event_attendance === 0) {
+    if (this.state.event_attendance === EventAttendance.disabled) {
       this.defaultState();
     }
     this.bulkAction.emit(this.state);
@@ -199,7 +202,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent
 
     this.state = {
       store_id: null,
-      event_attendance: 0,
+      event_attendance: EventAttendance.disabled,
       event_manager_id: {
         label: '',
         event: null,

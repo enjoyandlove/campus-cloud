@@ -17,7 +17,6 @@ import { STATUS } from '../../../../../shared/constants';
 import { CPImageUploadComponent } from '../../../../../shared/components';
 import { EventUtilService } from '../events.utils.service';
 import { EventAttendance, EventFeedback, IsAllDay } from '../event.status';
-import { OrientationEventsService } from '../../orientation/events/orientation.events.service';
 import {
   FileUploadService,
   CPI18nService,
@@ -47,18 +46,15 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   error;
   events;
   stores;
-  service;
   urlPrefix;
   formError;
   buttonData;
   uploadButtonData;
-  mockDropdown;
   isSingleChecked = [];
   school: ISchool;
   loading = false;
   form: FormGroup;
   isFormReady = false;
-  buttonDropdownOptions;
   eventAttendanceFeedback;
   resetManagerDropdown$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
@@ -68,12 +64,11 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     private store: Store<any>,
     private session: CPSession,
     private cpI18n: CPI18nService,
+    private service: EventsService,
     private utils: EventUtilService,
     private adminService: AdminService,
     private storeService: StoreService,
-    private eventsService: EventsService,
     private fileUploadService: FileUploadService,
-    private orientationEventService: OrientationEventsService,
   ) {
     super();
     this.school = this.session.g.get('school');
@@ -361,7 +356,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
 
     Object.keys(eventGroups).forEach((index) => {
       const controls = eventGroups[index].controls;
-      if (controls.event_attendance.value === 1) {
+      if (controls.event_attendance.value === EventAttendance.enabled) {
         if (!controls.event_manager_id.value) {
           requiredFieldsError = true;
           controls.event_manager_id.setErrors({ required: true });
@@ -394,7 +389,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       let _event = {
         title: events[key].title,
         calendar_id: this.orientationId,
-        is_all_day: 0,
+        is_all_day: IsAllDay.disabled,
         store_id: store_id ? store_id : events[key].store_id,
         description: events[key].description,
         end: events[key].end,
@@ -406,7 +401,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
         event_attendance: events[key].event_attendance,
       };
 
-      if (events[key].event_attendance === 1) {
+      if (events[key].event_attendance === EventAttendance.enabled) {
         _event = Object.assign({}, _event, {
           event_feedback: events[key].event_feedback,
           event_manager_id: events[key].event_manager_id,
@@ -445,12 +440,12 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     const control = <FormGroup>controls.controls[index];
 
     control.controls['event_manager_id'].setValue(null);
-    control.controls['event_attendance'].setValue(checked ? 1 : 0);
+    control.controls['event_attendance'].setValue(checked
+      ? EventAttendance.enabled
+      : EventAttendance.disabled);
   }
 
   ngOnInit() {
-    this.service = this.isOrientation ? this.orientationEventService : this.eventsService;
-
     this.urlPrefix = this.utils.buildUrlPrefix(
       this.clubId,
       this.serviceId,

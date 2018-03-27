@@ -19,7 +19,6 @@ import { EventAttendance, EventFeedback, IsAllDay } from '../event.status';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 import { EventUtilService } from '../events.utils.service';
-import { OrientationEventsService } from '../../orientation/events/orientation.events.service';
 import * as moment from 'moment';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
@@ -48,7 +47,6 @@ export class EventsCreateComponent implements OnInit {
   @Input() toolTipContent: IToolTipContent;
 
   stores$;
-  service;
   urlPrefix;
   buttonData;
   isDateError;
@@ -73,12 +71,11 @@ export class EventsCreateComponent implements OnInit {
     private session: CPSession,
     public cpI18n: CPI18nService,
     private storeHeader: Store<any>,
+    private service: EventsService,
     private utils: EventUtilService,
     private adminService: AdminService,
     private storeService: StoreService,
     private errorService: ErrorService,
-    private eventService: EventsService,
-    private orientationEventService: OrientationEventsService,
   ) {
     this.school = this.session.g.get('school');
     const search: URLSearchParams = new URLSearchParams();
@@ -150,7 +147,7 @@ export class EventsCreateComponent implements OnInit {
   }
 
   toggleEventAttendance(value) {
-    value = value ? 1 : 0;
+    value = value ? EventAttendance.enabled : EventAttendance.disabled;
     this.form.controls['event_attendance'].setValue(value);
   }
 
@@ -333,8 +330,6 @@ export class EventsCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.service = this.isOrientation ? this.orientationEventService : this.eventService;
-
     this.eventManager = Object.assign({}, this.eventManager, {
       content: this.cpI18n.translate('events_event_manager_tooltip'),
     });

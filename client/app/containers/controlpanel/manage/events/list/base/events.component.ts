@@ -5,7 +5,6 @@ import { EventsService } from '../../events.service';
 import { CPSession } from '../../../../../../session';
 import { BaseComponent } from '../../../../../../base/base.component';
 import { CPI18nService } from './../../../../../../shared/services/i18n.service';
-import { OrientationEventsService } from '../../../orientation/events/orientation.events.service';
 
 interface IState {
   start: number;
@@ -52,7 +51,6 @@ export class EventsComponent extends BaseComponent {
   school;
   events;
   loading;
-  service;
   pageNext;
   pagePrev;
   pageNumber;
@@ -64,8 +62,7 @@ export class EventsComponent extends BaseComponent {
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public eventService: EventsService,
-    public orientationEventService: OrientationEventsService,
+    public service: EventsService,
   ) {
     super();
     this.school = this.session.g.get('school');
@@ -137,6 +134,7 @@ export class EventsComponent extends BaseComponent {
       : null;
 
     let store_id = this.state.store_id ? this.state.store_id.toString() : null;
+    const calendar_id = this.orientationId ? this.orientationId.toString() : null;
 
     if (this.storeId) {
       store_id = this.storeId.toString();
@@ -145,6 +143,7 @@ export class EventsComponent extends BaseComponent {
     search.append('start', this.state.start.toString());
     search.append('end', this.state.end.toString());
     search.append('store_id', store_id);
+    search.append('calendar_id', calendar_id);
     search.append('school_id', this.session.g.get('school').id.toString());
     search.append('search_str', this.state.search_str);
     search.append('exclude_current', exclude_current);
@@ -152,8 +151,6 @@ export class EventsComponent extends BaseComponent {
 
     search.append('sort_field', this.state.sort_field);
     search.append('sort_direction', this.state.sort_direction);
-
-    this.service = this.isOrientation ? this.orientationEventService : this.eventService;
 
     this.fetch(this.service.getEvents(start, end, search));
 

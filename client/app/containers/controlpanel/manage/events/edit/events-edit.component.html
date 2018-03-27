@@ -132,13 +132,13 @@
             <span class="pull-right">
               <cp-switch
                 (toggle)="toggleEventAttendance($event)"
-                [isChecked]="form.controls.event_attendance.value === EventAttendance.enabled">
+                [isChecked]="form.controls.event_attendance.value === attendanceEnabled">
               </cp-switch>
             </span>
           </div>
         </div>
 
-        <div *ngIf="form.controls.event_attendance.value === EventAttendance.enabled">
+        <div *ngIf="form.controls.event_attendance.value === attendanceEnabled">
           <div class="row margin-top">
             <div class="col-xs-6">
               <div class="form-group">

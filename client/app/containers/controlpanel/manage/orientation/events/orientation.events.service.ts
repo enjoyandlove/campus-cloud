@@ -4,17 +4,19 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { API } from '../../../../../config/api';
-import { BaseService } from '../../../../../base';
 import { CPSession } from '../../../../../session';
+import { EventsService } from '../../events/events.service';
+import { EVENTS_MODAL_SET } from '../../../../../reducers/events-modal.reducer';
+import { Store } from '@ngrx/store';
 
 @Injectable()
-export class OrientationEventsService extends BaseService {
+export class OrientationEventsService extends EventsService {
   dummy;
   search = new URLSearchParams();
   mockJson = require('./mockEvents.json');
 
-  constructor(http: Http, router: Router, session: CPSession) {
-    super(http, router);
+  constructor(http: Http, router: Router, private stores: Store<any>, session: CPSession) {
+    super(http, router, stores);
 
     Object.setPrototypeOf(this, OrientationEventsService.prototype);
 
@@ -22,9 +24,11 @@ export class OrientationEventsService extends BaseService {
   }
 
   getEvents(startRage: number, endRage: number, search?: URLSearchParams) {
-    this.dummy = [startRage, endRage, search];
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.ORIENTATION_EVENTS
+      }/${startRage};${endRage}`;
 
-    return Observable.of(this.mockJson).delay(300);
+    return super.get(url, { search }).map((res) => res.json());
   }
 
   createEvent(body: any) {
@@ -35,21 +39,24 @@ export class OrientationEventsService extends BaseService {
   }
 
   updateEvent(body: any, eventId: number) {
-    this.dummy = [body, eventId];
+    const search = this.search;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ORIENTATION_EVENTS}/${eventId}`;
 
-    return Observable.of(body).delay(300);
+    return super.update(url, body, {search}).map((res) => res.json());
   }
 
   getEventById(id: number) {
-    const event = this.mockJson.filter((item) => item.id.toString() === id);
+    const search = this.search;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ORIENTATION_EVENTS}/${id}`;
 
-    return Observable.of(event[0]).delay(300);
+    return super.get(url, {search}).map((res) => res.json());
   }
 
   deleteEventById(eventId: number) {
-    const events = this.mockJson.filter((item) => item.id.toString() !== eventId);
+    const search = this.search;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ORIENTATION_EVENTS}/${eventId}`;
 
-    return Observable.of(events).delay(300);
+    return super.delete(url, {search}).map((res) => res.json());
   }
 
   getEventAttendanceByEventId(
@@ -60,5 +67,12 @@ export class OrientationEventsService extends BaseService {
     this.dummy = [startRage, endRage, search];
 
     return Observable.of([]).delay(300);
+  }
+
+  setModalEvents(events: any[]): void {
+    this.stores.dispatch({
+      type: EVENTS_MODAL_SET,
+      payload: events,
+    });
   }
 }

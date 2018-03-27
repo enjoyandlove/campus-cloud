@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { URLSearchParams } from '@angular/http';
+import { Store } from '@ngrx/store';
 
 import { BaseComponent } from '../../../../../base';
 import { CPSession } from '../../../../../session';
-import { Store } from '@ngrx/store';
-import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-import { URLSearchParams } from '@angular/http';
 import { OrientationService } from '../orientation.services';
+import { EventsService } from '../../events/events.service';
+import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { OrientationUtilsService } from '../orientation.utils.service';
+import { OrientationEventsService } from './orientation.events.service';
 
 @Component({
   selector: 'cp-orientation-events',
@@ -15,6 +17,7 @@ import { OrientationUtilsService } from '../orientation.utils.service';
               [isOrientation]="isOrientation"
               [orientationId]="orientationId">
              </cp-events>`,
+  providers: [{ provide: EventsService, useClass: OrientationEventsService }]
 })
 
 export class OrientationEventsComponent extends BaseComponent {
