@@ -1,7 +1,11 @@
+import { CPSession } from './../../../session/index';
 import { CPDatePipe, FORMAT } from './date.pipe';
 
+const mockSession = new CPSession();
+mockSession.g.set('school', { tz_zoneinfo_str: 'America/Toronto' });
+
 describe('Date Pipe', () => {
-  const pipe = new CPDatePipe();
+  const pipe = new CPDatePipe(mockSession);
 
   it('Short format should look like "MMM D, YYYY"', () => {
     expect(pipe.transform(1504881271, FORMAT.SHORT)).toContain('Sep 8th, 2017');
