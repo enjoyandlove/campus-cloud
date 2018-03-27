@@ -49,7 +49,9 @@
           *ngFor="let member of state.members | cpFilterPipe: { query: query, filterBy: ['firstname', 'lastname'] }">
 
           <div class="row" *ngIf="member.noResults">
-            <p class="text-center"><strong>{{ 'clubs_no_members_found' | cpI18n }}...</strong></p>
+            <p class="text-center">
+              <strong>{{ 'clubs_no_members_found' | cpI18n }}</strong>
+            </p>
           </div>
 
           <div class="row" *ngIf="!member.noResults">
@@ -63,13 +65,17 @@
                 [src]="defaultImage"
                 *ngIf="member.avatar_url === ''">
               <strong>
-                  <button
-                    (click)="isEdit = true"
-                    (click)="editMember = member"
-                    class="cpbtn cpbtn--link-dark member__title"
-                    data-toggle="modal" data-target="#membersEdit">
-                    {{ member.firstname }} {{ member.lastname }}
-                  </button>
+                <ng-container *ngIf="limitedAdmin">
+                  {{ member.firstname }} {{ member.lastname }}
+                </ng-container>
+                <button
+                  *ngIf="!limitedAdmin"
+                  (click)="isEdit = true"
+                  (click)="editMember = member"
+                  class="cpbtn cpbtn--link-dark member__title"
+                  data-toggle="modal" data-target="#membersEdit">
+                  {{ member.firstname }} {{ member.lastname }}
+                </button>
               </strong>
               <br>
               <span
@@ -91,6 +97,7 @@
             </span>
 
             <span
+              *ngIf="!limitedAdmin"
               (click)="deleteMember = member"
               data-toggle="modal" data-target="#membersDelete"
               [class]="hasSSO ? 'col-xs-1 pull-right text-center delete-member hover' : 'col-xs-1 col-xs-offset-2 pull-right text-center delete-member hover'">

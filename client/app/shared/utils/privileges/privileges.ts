@@ -1,41 +1,18 @@
+import { get as _get, isEmpty } from 'lodash';
+
 const accountLevelEmpty = (user) => {
-  if (!user) {
-    return false;
-  }
+  const accountLevel = _get(user, 'account_level_privileges', []);
 
-  let empty = true;
-
-  if (
-    user.account_level_privileges &&
-    Object.keys(user.account_level_privileges).length
-  ) {
-    empty = false;
-  }
-
-  return empty;
+  return isEmpty(accountLevel);
 };
 
 const schoolLevelEmpty = (user) => {
-  if (!user) {
-    return false;
-  }
+  const schoolLevel = _get(user, 'school_level_privileges', []);
 
-  let empty = true;
-
-  if (
-    user.school_level_privileges &&
-    Object.keys(user.school_level_privileges).length
-  ) {
-    empty = false;
-  }
-
-  return empty;
+  return isEmpty(schoolLevel);
 };
 
-export const accountsToStoreMap = (
-  accountsMap: Array<number> = [],
-  accountPrivileges
-) => {
+export const accountsToStoreMap = (accountsMap: Array<number> = [], accountPrivileges) => {
   const accounts = {};
 
   accountsMap.map((storeId) => {
@@ -51,20 +28,26 @@ export const canStoreReadAndWriteResource = (
   session: Map<any, any>,
   storeId: number,
   privilegeType: number
-) => {
-  if (storeId in session.get('user').account_level_privileges) {
-    return (
-      privilegeType in session.get('user').account_level_privileges[storeId]
-    );
-  }
+): boolean => {
+  const accountPrivileges = session.get('user').account_level_privileges;
 
-  return false;
+  const write = _get(accountPrivileges, [storeId, privilegeType, 'w'], false);
+  const read = _get(accountPrivileges, [storeId, privilegeType, 'r'], false);
+
+  return write && read;
 };
 
-export const canAccountLevelReadResource = (
+export const canStoreReadResource = (
   session: Map<any, any>,
+  storeId: number,
   privilegeType: number
 ) => {
+  const accountPrivileges = session.get('user').account_level_privileges;
+
+  return _get(accountPrivileges, [storeId, privilegeType, 'r'], false);
+};
+
+export const canAccountLevelReadResource = (session: Map<any, any>, privilegeType: number) => {
   let hasAccountAccess = false;
 
   if (accountLevelEmpty(session.get('user'))) {
@@ -72,17 +55,13 @@ export const canAccountLevelReadResource = (
   }
 
   try {
-    session
-      .get('user')
-      .account_mapping[session.get('school').id].forEach((store) => {
-        Object.keys(
-          session.get('user').account_level_privileges[store]
-        ).forEach((privilege) => {
-          if (privilegeType === +privilege) {
-            hasAccountAccess = true;
-          }
-        });
+    session.get('user').account_mapping[session.get('school').id].forEach((store) => {
+      Object.keys(session.get('user').account_level_privileges[store]).forEach((privilege) => {
+        if (privilegeType === +privilege) {
+          hasAccountAccess = true;
+        }
       });
+    });
   } catch (error) {
     return false;
   }
@@ -90,10 +69,7 @@ export const canAccountLevelReadResource = (
   return hasAccountAccess;
 };
 
-export const canAccountLevelWriteResource = (
-  session: Map<any, any>,
-  privilegeType: number
-) => {
+export const canAccountLevelWriteResource = (session: Map<any, any>, privilegeType: number) => {
   let hasAccountAccess = false;
 
   if (accountLevelEmpty(session.get('user'))) {
@@ -101,17 +77,13 @@ export const canAccountLevelWriteResource = (
   }
 
   try {
-    session
-      .get('user')
-      .account_mapping[session.get('school').id].forEach((store) => {
-        Object.keys(
-          session.get('user').account_level_privileges[store]
-        ).forEach((privilege) => {
-          if (privilegeType === +privilege) {
-            hasAccountAccess = true;
-          }
-        });
+    session.get('user').account_mapping[session.get('school').id].forEach((store) => {
+      Object.keys(session.get('user').account_level_privileges[store]).forEach((privilege) => {
+        if (privilegeType === +privilege) {
+          hasAccountAccess = true;
+        }
       });
+    });
   } catch (error) {
     return false;
   }
@@ -119,23 +91,16 @@ export const canAccountLevelWriteResource = (
   return hasAccountAccess;
 };
 
-export const canSchoolReadResource = (
-  session: Map<any, any>,
-  privilegeType: number
-) => {
+export const canSchoolReadResource = (session: Map<any, any>, privilegeType: number) => {
   if (schoolLevelEmpty(session.get('user'))) {
     return false;
   }
 
-  if (
-    !(session.get('school').id in session.get('user').school_level_privileges)
-  ) {
+  if (!(session.get('school').id in session.get('user').school_level_privileges)) {
     return false;
   }
 
-  const schoolPrivileges = session.get('user').school_level_privileges[
-    session.get('school').id
-  ];
+  const schoolPrivileges = session.get('user').school_level_privileges[session.get('school').id];
 
   if (privilegeType in schoolPrivileges) {
     return schoolPrivileges[privilegeType].r;
@@ -144,23 +109,16 @@ export const canSchoolReadResource = (
   return false;
 };
 
-export const canSchoolWriteResource = (
-  session: Map<any, any>,
-  privilegeType: number
-) => {
+export const canSchoolWriteResource = (session: Map<any, any>, privilegeType: number) => {
   if (!Object.keys(session.get('user').school_level_privileges).length) {
     return false;
   }
 
-  if (
-    !(session.get('school').id in session.get('user').school_level_privileges)
-  ) {
+  if (!(session.get('school').id in session.get('user').school_level_privileges)) {
     return false;
   }
 
-  const schoolPrivileges = session.get('user').school_level_privileges[
-    session.get('school').id
-  ];
+  const schoolPrivileges = session.get('user').school_level_privileges[session.get('school').id];
 
   if (privilegeType in schoolPrivileges) {
     return schoolPrivileges[privilegeType].w;

@@ -1,0 +1,14 @@
+<div class="cp-card">
+  <div class="row">
+    <div class="col-xs-3 pull-left">
+      <cp-searchbox (query)="onSearch($event)"></cp-searchbox>
+    </div>
+    <div class="col-xs-5 pull-right">
+      <button
+        (click)="onLaunchCreateModal()"
+        class="cpbtn cpbtn--primary pull-right" i18n>
+        {{ 'orientation_create_program' | cpI18n }}
+      </button>
+    </div>
+  </div>
+</div>

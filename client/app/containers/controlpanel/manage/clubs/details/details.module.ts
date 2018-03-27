@@ -5,8 +5,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { ClubsInfoComponent } from '../info';
 import { ClubsWallComponent } from '../wall';
-
 import { ClubsDetailsComponent } from './details.component';
+import { ClubNoteToTextPipe } from './../info/note-to-text.pipe';
 
 import { SharedModule } from '../../../../../shared/shared.module';
 import { ClubsDetailsRoutingModule } from './details.routing.module';
@@ -20,7 +20,7 @@ import { EventsModule } from '../../events/events.module';
 import { ClubsService } from '../clubs.service';
 
 @NgModule({
-  declarations: [ClubsWallComponent, ClubsInfoComponent, ClubsDetailsComponent],
+  declarations: [ClubsWallComponent, ClubsInfoComponent, ClubsDetailsComponent, ClubNoteToTextPipe],
 
   imports: [
     CommonModule,
@@ -29,15 +29,11 @@ import { ClubsService } from '../clubs.service';
     ReactiveFormsModule,
     ClubsDetailsRoutingModule,
     FeedsModule,
-    EventsModule,
+    EventsModule
   ],
 
-  exports: [
-    ClubsWallComponent,
-    ClubsInfoComponent,
-    ClubsDetailsComponent,
-  ],
+  exports: [ClubsWallComponent, ClubsInfoComponent, ClubsDetailsComponent],
 
-  providers: [ClubsService],
+  providers: [ClubsService]
 })
 export class ClubsDetailsModule {}

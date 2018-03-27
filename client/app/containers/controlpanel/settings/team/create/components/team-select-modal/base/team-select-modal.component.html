@@ -16,9 +16,9 @@
 
   <div class="cpmodal__body">
     <ng-container [ngSwitch]="loading">
-      <cp-spinner *ngSwitchCase="false"></cp-spinner>
+      <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
-      <ng-container *ngSwitchCase="true">
+      <ng-container *ngSwitchCase="false">
         <div class="col-xs-4 items-list">
           <div class="row items-list__search-box">
             <div class="col-xs-12">
@@ -82,7 +82,7 @@
                       <span class="col-xs-2 no-right-padding text-right hover privileges-menu">
                         <button class="cpbtn cpbtn--cancel hover" data-toggle="dropdown">
                           <span>
-                            <i class="material-icons">mode_edit</i>
+                            <i class="material-icons">{{ item.icon }}</i>
                             <i class="material-icons">keyboard_arrow_down</i>
                           </span>
                         </button>
@@ -90,11 +90,15 @@
                         <ul class="dropdown-menu dropdown-menu-right privileges-menu__list">
                           <li
                             class="privileges-menu__item"
-                            *ngFor="let privilege of privileges"
-                            (click)="updateItem(item.id, 'type', privilege.type)">
+                            *ngFor="let privilege of privileges | cpFilterByStorePrivileges: privilegeType:item.id"
+                            (click)="updateItem(item.id, 'type', privilege.type, privilege.icon)">
                             <div class="row">
-                              <div class="col-xs-2 text-center no-right-padding">
-                                <i class="material-icons">check</i>
+                              <div class="col-xs-2 text-center no-left-padding no-right-padding">
+                                <i 
+                                  class="material-icons" 
+                                  *ngIf="item.type === privilege.type">
+                                  check
+                                </i>
                               </div>
                               <div class="col-xs-10 no-left-padding">
                                 <p class="privileges-menu__item--title" i18n>

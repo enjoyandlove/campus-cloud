@@ -9,7 +9,7 @@ import { FileUploadService } from '../../../../../../../shared/services';
 @Component({
   selector: 'cp-import-top-bar',
   templateUrl: './import-top-bar.component.html',
-  styleUrls: ['./import-top-bar.component.scss'],
+  styleUrls: ['./import-top-bar.component.scss']
 })
 export class EventsImportTopBarComponent implements OnInit {
   @Input() storeId: number;
@@ -22,17 +22,14 @@ export class EventsImportTopBarComponent implements OnInit {
   @Input() isChecked: boolean;
 
   @Output() bulkChange: EventEmitter<any> = new EventEmitter();
-  // @Output() deleteEvent: EventEmitter<any> = new EventEmitter();
   @Output() checkAll: EventEmitter<boolean> = new EventEmitter();
   @Output() hostChange: EventEmitter<number> = new EventEmitter();
   @Output() imageChange: EventEmitter<string> = new EventEmitter();
 
   imageError;
+  buttonClass;
 
-  constructor(
-    private eventService: EventsService,
-    private fileUploadService: FileUploadService,
-  ) {}
+  constructor(private eventService: EventsService, private fileUploadService: FileUploadService) {}
 
   onFileUpload(file) {
     this.imageError = null;
@@ -46,9 +43,7 @@ export class EventsImportTopBarComponent implements OnInit {
 
     const headers = new Headers();
     const url = this.eventService.getUploadImageUrl();
-    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(
-      appStorage.keys.SESSION,
-    )}`;
+    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
 
     headers.append('Authorization', auth);
 
@@ -56,9 +51,11 @@ export class EventsImportTopBarComponent implements OnInit {
       (res) => this.imageChange.emit(res.image_url),
       (err) => {
         throw new Error(err);
-      },
+      }
     );
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.buttonClass = this.props.class === 'disabled' ? this.props.class : 'danger';
+  }
 }

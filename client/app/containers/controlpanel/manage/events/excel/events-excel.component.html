@@ -76,6 +76,7 @@
                   <div class="col-xs-2" *ngIf="!storeId && !clubId">
                     <label i18n>{{ 'host' | cpI18n }}</label>
                     <cp-dropdown
+                      [selectedItem]="selectedHost[i]"
                       [items]="stores"
                       (selected)="onSingleHostSelected($event, i)"
                       [isRequiredError]="formError && event.controls.store_id.hasError('required')">
@@ -96,6 +97,7 @@
                       <div class="col-xs-4 no-left-padding">
                         <label i18n>{{ 'student_feedback' | cpI18n }}</label>
                         <cp-dropdown
+                          [selectedItem]="attendanceFeedback[i]"
                           [items]="eventAttendanceFeedback"
                           (selected)="updateAttendanceFeedback($event, i)"
                           [isRequiredError]="formError && event.controls.event_feedback.hasError('required')">
@@ -104,6 +106,7 @@
                       <div class="col-xs-4">
                         <label i18n>{{ 'events_event_manager' | cpI18n }}</label>
                         <cp-dropdown
+                          [selectedItem]="eventManager[i]"
                           [reset]="resetManagerDropdown$"
                           [items]="event.controls['managers'].value"
                           (selected)="updateEventManager($event, i)"
