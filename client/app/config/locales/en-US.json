@@ -60,7 +60,7 @@
     "description": "Create Team Member > Select Clubs > Select a club > drop down menu"
   },
   "admin_can_read_help": {
-    "message": "See content and create content, but not edit all club information.",
+    "message": "See content and create content, but not edit all club information",
     "description": "Create Team Member > Select Clubs > Select a club > drop down menu"
   },
   "admin_club_owner": {
@@ -284,7 +284,7 @@
   },
   "assess_demo_feature_four_description": {
     "message":
-      "Assessment enables you to easily identify which students are disengaged and send them targeted communications via the mobile app."
+      "Assessment enables you to easily identify which students are disengaged and send them targeted communications via the campus app."
   },
   "assess_demo_feature_four_title": {
     "message": "Identify and Communicate"
@@ -785,7 +785,7 @@
     "message": "Edit Member"
   },
   "clubs_member_label_name": {
-    "message": "Name (requires a mobile app account)"
+    "message": "Name (requires a campus app account)"
   },
   "clubs_no_members_found": {
     "message": "No Members Found"
@@ -862,7 +862,7 @@
     "message": "Banner"
   },
   "customization_description": {
-    "message": "(Appears at the top of the Campus Guide in the mobile app.)"
+    "message": "(High resolution images work best.  JPEG or PNG format, 5 MB or smaller.)"
   },
   "customization_image_upload_error": {
     "message": "Something went wrong while uploading your image"
@@ -996,6 +996,10 @@
   },
   "duplicate_entry": {
     "message": "There is already a user with that email address."
+  },
+  "duration": {
+    "message": "Dates",
+    "description": "Manage > Orientation > View Programs"
   },
   "edit": {
     "message": "Edit"
@@ -1267,7 +1271,7 @@
     "message": "Delete Post"
   },
   "feeds_error_wall_is_disabled": {
-    "message": "To enable posting, change the settings for this wall"
+    "message": "To enable posting, change the settings for this wall."
   },
   "feeds_everyone": {
     "message": "Everyone"
@@ -1601,10 +1605,10 @@
     "message": "Edit Program"
   },
   "orientation_enable_membership": {
-    "message": "Enable membership"
+    "message": "Program membership"
   },
   "orientation_enable_membership_description": {
-    "message": "Membership will create a wall of this group"
+    "message": "Creates an orientation wall where members can post messages."
   },
   "orientation_no_results_found": {
     "message": "No Programs found"

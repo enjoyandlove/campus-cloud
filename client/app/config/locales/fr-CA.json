@@ -55,6 +55,15 @@
   "admin_can_edit_help": {
     "message": "Voir le contenu créé par un autre membre d'équipe et créer votre propre contenu"
   },
+  "admin_can_read": {
+    "message": "Modification limitée",
+    "description": "Create Team Member > Select Clubs > Select a club > drop down menu"
+  },
+  "admin_can_read_help": {
+    "message":
+      "Voir le contenu et créer le contenu, mais pas éditer les informations de tous les clubs",
+    "description": "Create Team Member > Select Clubs > Select a club > drop down menu"
+  },
   "admin_club_owner": {
     "message": "Propriétaire du club"
   },
@@ -691,6 +700,11 @@
   "clubs_create_heading": {
     "message": "Créer club"
   },
+  "clubs_delete_error_unauthorized": {
+    "message": "Vous n'avez pas la permission de supprimer ce club.",
+    "description":
+      "In Manage Clubs, try to delete a club for which you have only the Limited Edit permission"
+  },
   "clubs_delete_modal_body": {
     "message": "Êtes-vous sûr de vouloir supprimer %s ?"
   },
@@ -789,6 +803,10 @@
   "clubs_status_pending": {
     "message": "Le club attend l'approbation et n'est pas listé dans l'application du campus"
   },
+  "club_info_notes": {
+    "message": "Notes du club",
+    "description": "As a club super editor, view a club info page with club notes. "
+  },
   "comment": {
     "message": "Commentaire",
     "description": "Walls Comment"
@@ -797,7 +815,7 @@
     "message": "Commentaires"
   },
   "component_cpimage_description": {
-    "message": "Téléverser votre photo"
+    "message": "Téléverser votre image"
   },
   "component_cpimage_help": {
     "message": "JPG ou PNG. Taille maximum 5Mo"
@@ -979,6 +997,10 @@
   },
   "duplicate_entry": {
     "message": "Il y a déjà un utilisateur avec cette adresse courriel."
+  },
+  "duration": {
+    "message": "Dates",
+    "description": "Manage > Orientation > View Programs"
   },
   "edit": {
     "message": "Éditer"
@@ -1251,7 +1273,7 @@
     "message": "Supprimer publication"
   },
   "feeds_error_wall_is_disabled": {
-    "message": "Pour autoriser les publications, changez les réglages pour ce mur"
+    "message": "Pour autoriser les publications, changez les réglages pour ce mur."
   },
   "feeds_everyone": {
     "message": "Tout le monde"
@@ -1572,28 +1594,28 @@
     "message": "Orientation"
   },
   "orientation_create_program": {
-    "message": "Create Program"
+    "message": "Créer programme"
   },
   "orientation_delete_modal_body": {
-    "message": "Are you sure you want to delete %s?"
+    "message": "Êtes-vous sûr de vouloir supprimer %s ?"
   },
   "orientation_delete_program": {
-    "message": "Delete Program"
+    "message": "Supprimer programme"
   },
   "orientation_duplicate_program": {
-    "message": "Duplicate Program"
+    "message": "Dupliquer programme"
   },
   "orientation_edit_program": {
-    "message": "Edit Program"
+    "message": "Éditer programme"
   },
   "orientation_enable_membership": {
-    "message": "Enable membership"
+    "message": "Membres du programme"
   },
   "orientation_enable_membership_description": {
-    "message": "Membership will create a wall of this group"
+    "message": "Créé un mur d'orientation où les membres peuvent publier des messages."
   },
   "orientation_no_results_found": {
-    "message": "No Programs found"
+    "message": "Aucun programme trouvé"
   },
   "password": {
     "message": "Mot de passe"
@@ -1963,7 +1985,7 @@
     "description": "CSV Upload process"
   },
   "upload_picture": {
-    "message": "Téléverser photo"
+    "message": "Téléverser image"
   },
   "urgent": {
     "message": "Important"
