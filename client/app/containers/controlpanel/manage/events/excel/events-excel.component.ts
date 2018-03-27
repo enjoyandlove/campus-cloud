@@ -220,13 +220,6 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     });
   }
 
-  onBulkDelete() {
-    this.events = this.events.filter((_, index) => !this.isSingleChecked[index].checked);
-    this.uploadButtonData.class = this.events.length < 1 ? 'disabled' : 'cancel';
-    this.isSingleChecked = [];
-    this.buildForm();
-  }
-
   onSingleHostSelected(host, index) {
     const controls = <FormArray>this.form.controls['events'];
     const control = <FormGroup>controls.controls[index];

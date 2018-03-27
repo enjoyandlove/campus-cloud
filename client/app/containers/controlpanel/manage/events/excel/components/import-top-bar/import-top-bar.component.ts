@@ -22,7 +22,6 @@ export class EventsImportTopBarComponent implements OnInit {
   @Input() isChecked: boolean;
 
   @Output() bulkChange: EventEmitter<any> = new EventEmitter();
-  @Output() deleteEvent: EventEmitter<any> = new EventEmitter();
   @Output() checkAll: EventEmitter<boolean> = new EventEmitter();
   @Output() hostChange: EventEmitter<number> = new EventEmitter();
   @Output() imageChange: EventEmitter<string> = new EventEmitter();
