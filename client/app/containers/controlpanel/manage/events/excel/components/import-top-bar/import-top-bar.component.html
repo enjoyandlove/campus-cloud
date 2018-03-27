@@ -12,13 +12,7 @@
         [props]="props" >
       </cp-upload-button>
     </div>
-
-    <!--<div class="col-xs-2">
-      <cp-dropdown
-        [items]="stores"
-        (selected)="hostChange.emit($event)">
-      </cp-dropdown>
-    </div>-->
+    
     <div class="col-xs-2 no-left-padding">
       <cp-import-action-dropdown
         [props]="props"
@@ -29,13 +23,5 @@
         [isService]="isService"
         (bulkAction)="bulkChange.emit($event)">
       </cp-import-action-dropdown>
-    </div>
-    <div class="col-xs-2">
-      <button
-        type="button"
-        (click)="deleteEvent.emit()"
-        [class]="props.class === 'disabled' ? 'cpbtn cpbtn--' + props.class : 'cpbtn cpbtn--danger'">
-        {{ 'delete' | cpI18n }}
-      </button>
     </div>
   </div>
