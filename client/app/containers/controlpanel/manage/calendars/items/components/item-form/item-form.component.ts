@@ -15,13 +15,13 @@ const COMMON_DATE_PICKER_OPTIONS = {
   // utc: true,
   altInput: true,
   enableTime: true,
-  altFormat: FORMAT_WITH_TIME,
+  altFormat: FORMAT_WITH_TIME
 };
 
 @Component({
   selector: 'cp-item-form',
   templateUrl: './item-form.component.html',
-  styleUrls: ['./item-form.component.scss'],
+  styleUrls: ['./item-form.component.scss']
 })
 export class CalendarsItemFormComponent implements OnInit {
   @Input() form: FormGroup;
@@ -38,7 +38,7 @@ export class CalendarsItemFormComponent implements OnInit {
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public utils: CalendarsItemsService,
+    public utils: CalendarsItemsService
   ) {}
 
   toggleDatePickerTime(checked) {
@@ -47,30 +47,32 @@ export class CalendarsItemFormComponent implements OnInit {
     this.startdatePickerOpts = {
       ...this.startdatePickerOpts,
       enableTime: !checked,
-      dateFormat: dateFormat,
+      dateFormat: dateFormat
     };
 
     this.enddatePickerOpts = {
       ...this.enddatePickerOpts,
       enableTime: !checked,
-      dateFormat: dateFormat,
+      dateFormat: dateFormat
     };
   }
 
   updateTime() {
     const startDateAtMidnight = CPDate.fromEpoch(
       this.form.controls['start'].value,
+      this.session.tz
     ).setHours(0, 0, 0, 0);
 
     const endDateAtMidnight = CPDate.fromEpoch(
       this.form.controls['end'].value,
+      this.session.tz
     ).setHours(23, 59, 59, 0);
 
     this.form.controls['start'].setValue(
-      CPDate.toEpoch(moment(startDateAtMidnight).toDate()),
+      CPDate.toEpoch(moment(startDateAtMidnight).toDate(), this.session.tz)
     );
     this.form.controls['end'].setValue(
-      CPDate.toEpoch(moment(endDateAtMidnight).toDate()),
+      CPDate.toEpoch(moment(endDateAtMidnight).toDate(), this.session.tz)
     );
   }
 
@@ -144,34 +146,32 @@ export class CalendarsItemFormComponent implements OnInit {
 
     this.mapCenter = new BehaviorSubject({
       lat: this.session.g.get('school').latitude,
-      lng: this.session.g.get('school').longitude,
+      lng: this.session.g.get('school').longitude
     });
 
     this.startdatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: CPDate.fromEpoch(this.form.controls['start'].value),
+      defaultDate: CPDate.fromEpoch(this.form.controls['start'].value, _self.session.tz),
       onClose: function(date) {
-        _self.form.controls['start'].setValue(CPDate.toEpoch(date[0]));
-      },
+        _self.form.controls['start'].setValue(CPDate.toEpoch(date[0], _self.session.tz));
+      }
     };
 
     this.enddatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: CPDate.fromEpoch(this.form.controls['end'].value),
+      defaultDate: CPDate.fromEpoch(this.form.controls['end'].value, _self.session.tz),
       onClose: function(date) {
-        _self.form.controls['end'].setValue(CPDate.toEpoch(date[0]));
-      },
+        _self.form.controls['end'].setValue(CPDate.toEpoch(date[0], _self.session.tz));
+      }
     };
 
     const submitEdit = this.cpI18n.translate('save');
-    const submitCreate = this.cpI18n.translate(
-      'calendars_form_submit_button_new',
-    );
+    const submitCreate = this.cpI18n.translate('calendars_form_submit_button_new');
     const isEditForm = this.form.controls['title'].value !== null;
 
     this.buttonData = {
       class: 'primary',
-      text: isEditForm ? submitEdit : submitCreate,
+      text: isEditForm ? submitEdit : submitCreate
     };
   }
 

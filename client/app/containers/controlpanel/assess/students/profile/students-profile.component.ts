@@ -18,9 +18,9 @@ import * as moment from 'moment';
 
 declare var $;
 
-const isSameDay = (dateOne, dateTwo): boolean => {
-  dateOne = moment(CPDate.fromEpoch(dateOne)).toObject();
-  dateTwo = moment(CPDate.fromEpoch(dateTwo)).toObject();
+const isSameDay = (dateOne, dateTwo, tz): boolean => {
+  dateOne = moment(CPDate.fromEpoch(dateOne, tz)).toObject();
+  dateTwo = moment(CPDate.fromEpoch(dateTwo, tz)).toObject();
 
   return (
     dateOne.date === dateTwo.date &&
@@ -29,13 +29,14 @@ const isSameDay = (dateOne, dateTwo): boolean => {
   );
 };
 
-const setTimeDataToZero = (unixTimeStamp) => {
+const setTimeDataToZero = (unixTimeStamp, tz) => {
   return CPDate.toEpoch(
-    moment(CPDate.fromEpoch(unixTimeStamp))
+    moment(CPDate.fromEpoch(unixTimeStamp, tz))
       .hours(0)
       .minutes(0)
       .seconds(0)
       .toDate(),
+    this.session.tz
   );
 };
 
@@ -45,7 +46,7 @@ const DOWNLOAD_ALL_RECORDS = 1;
 @Component({
   selector: 'cp-students-profile',
   templateUrl: './students-profile.component.html',
-  styleUrls: ['./students-profile.component.scss'],
+  styleUrls: ['./students-profile.component.scss']
 })
 export class StudentsProfileComponent extends BaseComponent implements OnInit {
   student;
@@ -62,7 +63,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
   isEvent = 'event';
 
   state = {
-    scope: ALL_ENGAGEMENTS,
+    scope: ALL_ENGAGEMENTS
   };
 
   constructor(
@@ -70,12 +71,10 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
     public session: CPSession,
     public route: ActivatedRoute,
     public cpI18n: CPI18nService,
-    public service: StudentsService,
+    public service: StudentsService
   ) {
     super();
-    super
-      .isLoading()
-      .subscribe((loading) => (this.loadingEngagementData = loading));
+    super.isLoading().subscribe((loading) => (this.loadingEngagementData = loading));
 
     this.studentId = this.route.snapshot.params['studentId'];
   }
@@ -89,7 +88,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
 
       this.buildHeader({
         firstname: this.student.firstname,
-        lastname: this.student.lastname,
+        lastname: this.student.lastname
       });
 
       this.loadingStudentData = false;
@@ -107,29 +106,31 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
       search,
       this.studentId,
       this.startRange,
-      this.endRange,
+      this.endRange
     );
 
     super.fetchData(stream$).then((res) => {
+      const tz = this.session.tz;
+
       this.engagementData = res.data.reduce(
         (result, current) => {
-          if (isSameDay(current.time_epoch, current.time_epoch)) {
-            if (setTimeDataToZero(current.time_epoch) in result) {
-              result[setTimeDataToZero(current.time_epoch)] = [
-                ...result[setTimeDataToZero(current.time_epoch)],
-                current,
+          if (isSameDay(current.time_epoch, current.time_epoch, tz)) {
+            if (setTimeDataToZero(current.time_epoch, tz) in result) {
+              result[setTimeDataToZero(current.time_epoch, tz)] = [
+                ...result[setTimeDataToZero(current.time_epoch, tz)],
+                current
               ];
             } else {
-              result[setTimeDataToZero(current.time_epoch)] = [current];
+              result[setTimeDataToZero(current.time_epoch, tz)] = [current];
             }
           } else {
-            result[setTimeDataToZero(current.time_epoch)] = [current];
+            result[setTimeDataToZero(current.time_epoch, tz)] = [current];
           }
 
           return result;
         },
 
-        {},
+        {}
       );
 
       this.engagementsByDay = Object.keys(this.engagementData).reverse();
@@ -156,17 +157,15 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        heading: `[NOTRANSLATE]${student.firstname} ${
-          student.lastname
-        }[NOTRANSLATE]`,
+        heading: `[NOTRANSLATE]${student.firstname} ${student.lastname}[NOTRANSLATE]`,
         subheading: null,
         crumbs: {
           url: 'students',
-          label: 'students',
+          label: 'students'
         },
         em: null,
-        children: [],
-      },
+        children: []
+      }
     });
   }
 
@@ -180,7 +179,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
       search,
       this.studentId,
       this.startRange,
-      this.endRange,
+      this.endRange
     );
 
     const columns = [
@@ -189,12 +188,12 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
       this.cpI18n.translate('assess_checkin_date'),
       this.cpI18n.translate('assess_response_date'),
       this.cpI18n.translate('rating'),
-      this.cpI18n.translate('response'),
+      this.cpI18n.translate('response')
     ];
 
     const type = {
       event: this.cpI18n.translate('event'),
-      service: this.cpI18n.translate('service'),
+      service: this.cpI18n.translate('service')
     };
 
     stream$.toPromise().then((data) => {
@@ -211,23 +210,17 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
           [this.cpI18n.translate('assess_response_date')]:
             item.feedback_time_epoch === 0
               ? 'No Feedback Provided'
-              : moment
-                  .unix(item.feedback_time_epoch)
-                  .format('MMMM Do YYYY - h:mm a'),
+              : moment.unix(item.feedback_time_epoch).format('MMMM Do YYYY - h:mm a'),
 
           [this.cpI18n.translate('rating')]:
             item.user_rating_percent === -1
               ? 'No Rating Provided'
               : (item.user_rating_percent / 100 * 5).toFixed(1),
-          [this.cpI18n.translate('response')]: item.user_feedback_text,
+          [this.cpI18n.translate('response')]: item.user_feedback_text
         };
       });
 
-      createSpreadSheet(
-        data,
-        columns,
-        `${this.student.firstname} ${this.student.lastname}`,
-      );
+      createSpreadSheet(data, columns, `${this.student.firstname} ${this.student.lastname}`);
     });
   }
 
@@ -239,7 +232,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
   launchMessageModal() {
     this.messageData = {
       name: `${this.student.firstname} ${this.student.lastname}`,
-      userIds: [this.student.id],
+      userIds: [this.student.id]
     };
 
     this.isStudentComposeModal = true;
@@ -248,7 +241,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
         $('#studentsComposeModal').modal();
       },
 
-      1,
+      1
     );
   }
 
@@ -257,8 +250,8 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
       type: SNACKBAR_SHOW,
       payload: {
         body: this.cpI18n.translate('announcement_success_sent'),
-        autoClose: true,
-      },
+        autoClose: true
+      }
     });
   }
 

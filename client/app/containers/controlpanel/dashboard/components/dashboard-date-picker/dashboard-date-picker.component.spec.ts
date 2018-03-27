@@ -1,7 +1,17 @@
+import { CPDatePipe } from './../../../../../shared/pipes/date/date.pipe';
 import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 
+import { CPSession } from './../../../../../session';
 import { DashboardDatePickerComponent } from '../index';
 import { DashboardUtilsService } from '../../dashboard.utils.service';
+
+class MockCPSession extends CPSession {
+  get tz() {
+    return 'America/Toronto';
+  }
+}
+
+const mockSession = new MockCPSession();
 
 const pickerOptions = {
   utc: true,
@@ -25,7 +35,7 @@ describe('DashboardDatePickerComponent', () => {
     async(() => {
       TestBed.configureTestingModule({
         declarations: [DashboardDatePickerComponent],
-        providers: [DashboardUtilsService]
+        providers: [DashboardUtilsService, { provide: CPSession, useValue: MockCPSession }]
       });
       // .compileComponents(); // compile template and css
     })
@@ -36,6 +46,7 @@ describe('DashboardDatePickerComponent', () => {
     comp = fixture.componentInstance;
 
     comp.picker = $(comp.calendarEl.nativeElement).flatpickr(pickerOptions);
+    comp.datePipe = new CPDatePipe(mockSession);
 
     spyOn(comp.dateChange, 'emit');
     spyOn(comp.picker, 'clear');
