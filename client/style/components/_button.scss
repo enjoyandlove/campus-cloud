@@ -24,6 +24,7 @@ a.cpbtn {
 
   &:disabled,
   &--disabled {
+    pointer-events: none;
     color: $color-white;
     background: $color-med-grey;
 

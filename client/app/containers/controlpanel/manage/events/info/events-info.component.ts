@@ -12,7 +12,6 @@ import { EventUtilService } from './../events.utils.service';
 import { BaseComponent } from '../../../../../base/base.component';
 import { CPI18nService } from '../../../../../shared/services/index';
 import { IResourceBanner } from '../../../../../shared/components/cp-resource-banner/cp-resource.interface';
-import { OrientationService } from '../../orientation/orientation.services';
 
 @Component({
   selector: 'cp-events-info',
@@ -31,7 +30,6 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
 
   event;
   banner;
-  service;
   urlPrefix;
   dateFormat;
   isPastEvent;
@@ -47,8 +45,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
     private store: Store<IHeader>,
     private route: ActivatedRoute,
     public utils: EventUtilService,
-    private eventService: EventsService,
-    private orientationService: OrientationService,
+    private service: EventsService,
   ) {
     super();
     this.dateFormat = FORMAT.DATETIME;
@@ -110,7 +107,6 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.service = this.isOrientation ? this.orientationService : this.eventService;
     this.fetch();
   }
 }

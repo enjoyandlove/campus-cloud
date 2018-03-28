@@ -12,7 +12,7 @@ import { CPSession } from './../../../../../../../../session';
 
 @Component({
   selector: 'cp-select-services-modal',
-  templateUrl: './select-services-modal.component.html',
+  templateUrl: './select-services-modal.component.html'
 })
 export class SelectTeamServicesModalComponent extends BaseTeamSelectModalComponent
   implements OnInit {
@@ -25,8 +25,8 @@ export class SelectTeamServicesModalComponent extends BaseTeamSelectModalCompone
 
   data$: BehaviorSubject<any> = new BehaviorSubject({});
 
-  constructor(private session: CPSession, private service: ServicesService) {
-    super();
+  constructor(public session: CPSession, private service: ServicesService) {
+    super(session);
     this.privilegeType = CP_PRIVILEGES_MAP.services;
   }
 
@@ -39,32 +39,23 @@ export class SelectTeamServicesModalComponent extends BaseTeamSelectModalCompone
       const selected = {};
       if (this.selectedServices) {
         services.map((service) => {
-          if (
-            Object.keys(this.selectedServices).includes(
-              service.store_id.toString(),
-            )
-          ) {
-            if (
-              CP_PRIVILEGES_MAP.services in
-              this.selectedServices[service.store_id]
-            ) {
+          if (Object.keys(this.selectedServices).includes(service.store_id.toString())) {
+            if (CP_PRIVILEGES_MAP.services in this.selectedServices[service.store_id]) {
               selected[service.store_id] = service;
             }
           }
 
           if (selected[service.store_id]) {
             service.checked = true;
-            selected[service.store_id] = Object.assign(
-              {},
-              selected[service.store_id],
-              { id: service.id },
-            );
+            selected[service.store_id] = Object.assign({}, selected[service.store_id], {
+              id: service.id
+            });
           }
         });
       }
       res = {
         data: services,
-        selected: selected,
+        selected: selected
       };
 
       this.teardown.emit();

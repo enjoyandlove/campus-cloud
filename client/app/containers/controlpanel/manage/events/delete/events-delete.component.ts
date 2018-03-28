@@ -2,7 +2,6 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { EventsService } from '../events.service';
 import { CPI18nService } from '../../../../../shared/services';
-import { OrientationService } from '../../orientation/orientation.services';
 
 declare var $: any;
 
@@ -16,17 +15,14 @@ export class EventsDeleteComponent implements OnInit {
   @Input() isOrientation: boolean;
   @Output() deletedEvent: EventEmitter<number> = new EventEmitter();
 
-  service;
   buttonData;
 
   constructor(
     private cpI18n: CPI18nService,
-    private eventService: EventsService,
-    private orientationService: OrientationService,
+    private service: EventsService,
   ) {}
 
   onDelete() {
-    this.service = this.isOrientation ? this.orientationService : this.eventService;
     this.service.deleteEventById(this.event.id).subscribe(() => {
       this.deletedEvent.emit(this.event.id);
 

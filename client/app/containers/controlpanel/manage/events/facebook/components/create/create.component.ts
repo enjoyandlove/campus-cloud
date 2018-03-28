@@ -52,9 +52,7 @@ export class FacebookEventsCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    let store_id = this.session.defaultHost
-      ? this.session.defaultHost.value
-      : null;
+    let store_id;
 
     if (this.storeId) {
       store_id = this.storeId;

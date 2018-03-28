@@ -29,6 +29,8 @@ import { EventAttendance } from '../../../event.status';
 export class ListUpcomingComponent implements OnInit {
   @Input() state: any;
   @Input() events: any;
+  @Input() isOrientation: boolean;
+
   @Output() deleteEvent: EventEmitter<any> = new EventEmitter();
   @Output() sortList: EventEmitter<ISort> = new EventEmitter();
 
@@ -58,6 +60,6 @@ export class ListUpcomingComponent implements OnInit {
   ngOnInit() {
     const scholAccess = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.events);
     const accountAccess = canAccountLevelReadResource(this.session.g, CP_PRIVILEGES_MAP.events);
-    this.canDelete = scholAccess || accountAccess;
+    this.canDelete = scholAccess || accountAccess || this.isOrientation;
   }
 }

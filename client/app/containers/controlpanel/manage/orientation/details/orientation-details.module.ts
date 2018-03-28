@@ -7,7 +7,6 @@ import { OrientationInfoComponent } from '../info';
 import { OrientationProgramEditComponent } from '../edit';
 import { OrientationDetailsComponent } from './orientation-details.component';
 
-// import { TodosModule } from '../todos/todos.module';
 import { SharedModule } from '../../../../../shared/shared.module';
 import { OrientationDetailsRoutingModule } from './orientation-details.routing.module';
 
@@ -31,12 +30,11 @@ import { TodosService } from '../todos/todos.service';
     CommonModule,
     SharedModule,
     RouterModule,
-    // TodosModule,
     ReactiveFormsModule,
     OrientationDetailsRoutingModule,
     FeedsModule,
     EventsModule,
-    CalendarsModule,
+    CalendarsModule
   ],
 
   providers: [OrientationService, TodosService],

@@ -1,3 +1,4 @@
+/*tslint:disable:max-line-length*/
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -15,8 +16,8 @@ import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { CPI18nPipe } from './../../../../../shared/pipes/i18n/i18n.pipe';
 import { STATUS } from '../../../../../shared/constants';
 import { CPImageUploadComponent } from '../../../../../shared/components';
-import { OrientationService } from '../../orientation/orientation.services';
 import { EventUtilService } from '../events.utils.service';
+import { EventAttendance, EventFeedback, IsAllDay } from '../event.status';
 import {
   FileUploadService,
   CPI18nService,
@@ -29,7 +30,7 @@ const i18n = new CPI18nPipe();
 @Component({
   selector: 'cp-events-excel',
   templateUrl: './events-excel.component.html',
-  styleUrls: ['./events-excel.component.scss'],
+  styleUrls: ['./events-excel.component.scss']
 })
 export class EventsExcelComponent extends BaseComponent implements OnInit {
   @Input() storeId: number;
@@ -46,18 +47,18 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   error;
   events;
   stores;
-  service;
   urlPrefix;
   formError;
   buttonData;
+  selectedHost = [];
+  eventManager = [];
+  attendanceFeedback = [];
   uploadButtonData;
-  mockDropdown;
   isSingleChecked = [];
   school: ISchool;
   loading = false;
   form: FormGroup;
   isFormReady = false;
-  buttonDropdownOptions;
   eventAttendanceFeedback;
   resetManagerDropdown$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
@@ -67,12 +68,11 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     private store: Store<any>,
     private session: CPSession,
     private cpI18n: CPI18nService,
+    private service: EventsService,
     private utils: EventUtilService,
     private adminService: AdminService,
     private storeService: StoreService,
-    private eventsService: EventsService,
     private fileUploadService: FileUploadService,
-    private orientationService: OrientationService,
   ) {
     super();
     this.school = this.session.g.get('school');
@@ -98,10 +98,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   }
 
   private buildHeader() {
-    const subheading = i18n.transform(
-      'events_import_csv_sub_heading',
-      this.events.length,
-    );
+    const subheading = i18n.transform('events_import_csv_sub_heading', this.events.length);
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
@@ -111,14 +108,14 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
           label: 'events',
         },
         em: `[NOTRANSLATE]${subheading}[NOTRANSLATE]`,
-        children: [],
-      },
+        children: []
+      }
     });
   }
 
   private buildForm() {
     this.form = this.fb.group({
-      events: this.fb.array([]),
+      events: this.fb.array([])
     });
     this.buildGroup();
 
@@ -134,7 +131,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
 
     this.form.valueChanges.subscribe((_) => {
       this.buttonData = Object.assign({}, this.buttonData, {
-        disabled: !this.form.valid,
+        disabled: !this.form.valid
       });
     });
   }
@@ -170,7 +167,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       store_id: [store_id ? store_id : null, !this.isOrientation ? Validators.required : null],
       calendar_id: [this.orientationId, this.isOrientation ? Validators.required : null],
       room: [event.room],
-      is_all_day: [0],
+      is_all_day: [IsAllDay.enabled],
       title: [event.title, Validators.required],
       poster_url: [null, Validators.required],
       poster_thumb_url: [null, Validators.required],
@@ -182,8 +179,8 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       // these controls are only required when event attendance is true
       attendance_manager_email: [null],
       event_manager_id: [null],
-      event_attendance: [1],
-      event_feedback: [1],
+      event_attendance: [EventAttendance.enabled],
+      event_feedback: [EventFeedback.enabled],
     });
   }
 
@@ -207,9 +204,24 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     this.isSingleChecked.map((item) => {
       if (item.checked) {
         const ctrl = <FormGroup>control.controls[item.index];
-
         Object.keys(actions).forEach((key) => {
-          ctrl.controls[key].setValue(actions[key]);
+          if (key === 'store_id' && actions[key] !== null) {
+            this.selectedHost[item.index] = actions[key];
+            ctrl.controls[key].setValue(actions[key].value);
+            this.updateManagersByStoreOrClubId(actions[key].value);
+          } else if (key === 'event_manager_id') {
+            this.eventManager[item.index] = actions[key];
+            if (actions[key] !== null) {
+              ctrl.controls[key].setValue(actions[key].value);
+            } else {
+              ctrl.controls[key].setValue(actions[key]);
+            }
+          } else if (key === 'event_feedback') {
+            this.attendanceFeedback[item.index] = actions[key];
+            ctrl.controls[key].setValue(actions[key].event);
+          } else if (actions[key] !== null) {
+            ctrl.controls[key].setValue(actions[key]);
+          }
         });
       }
 
@@ -257,13 +269,13 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
         const _admins = [
           {
             label: '---',
-            value: null,
-          },
+            value: null
+          }
         ];
         admins.forEach((admin) => {
           _admins.push({
             label: `${admin.firstname} ${admin.lastname}`,
-            value: admin.id,
+            value: admin.id
           });
         });
 
@@ -290,6 +302,9 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   }
 
   onCheckAll(checked) {
+    if (this.events.length < 1) {
+      return;
+    }
     const isChecked = [];
 
     this.isSingleChecked.map((item) => {
@@ -297,7 +312,6 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     });
     this.updateUploadPictureButtonStatus(checked);
     this.isSingleChecked = [...isChecked];
-
   }
 
   resetAllCheckboxes(checked, index) {
@@ -360,7 +374,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
 
     Object.keys(eventGroups).forEach((index) => {
       const controls = eventGroups[index].controls;
-      if (controls.event_attendance.value === 1) {
+      if (controls.event_attendance.value === EventAttendance.enabled) {
         if (!controls.event_manager_id.value) {
           requiredFieldsError = true;
           controls.event_manager_id.setErrors({ required: true });
@@ -393,7 +407,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       let _event = {
         title: events[key].title,
         calendar_id: this.orientationId,
-        is_all_day: 0,
+        is_all_day: IsAllDay.disabled,
         store_id: store_id ? store_id : events[key].store_id,
         description: events[key].description,
         end: events[key].end,
@@ -402,14 +416,14 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
         location: events[key].location,
         poster_url: events[key].poster_url,
         poster_thumb_url: events[key].poster_thumb_url,
-        event_attendance: events[key].event_attendance,
+        event_attendance: events[key].event_attendance
       };
 
-      if (events[key].event_attendance === 1) {
+      if (events[key].event_attendance === EventAttendance.enabled) {
         _event = Object.assign({}, _event, {
           event_feedback: events[key].event_feedback,
           event_manager_id: events[key].event_manager_id,
-          attendance_manager_email: events[key].attendance_manager_email,
+          attendance_manager_email: events[key].attendance_manager_email
         });
       }
 
@@ -425,7 +439,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       (err) => {
         this.formError = true;
         this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: false,
+          disabled: false
         });
 
         if (err.status === 400) {
@@ -435,7 +449,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
         }
 
         this.error = STATUS.SOMETHING_WENT_WRONG;
-      },
+      }
     );
   }
 
@@ -444,12 +458,12 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     const control = <FormGroup>controls.controls[index];
 
     control.controls['event_manager_id'].setValue(null);
-    control.controls['event_attendance'].setValue(checked ? 1 : 0);
+    control.controls['event_attendance'].setValue(checked
+      ? EventAttendance.enabled
+      : EventAttendance.disabled);
   }
 
   ngOnInit() {
-    this.service = this.isOrientation ? this.orientationService : this.eventsService;
-
     this.urlPrefix = this.utils.buildUrlPrefix(
       this.clubId,
       this.serviceId,
@@ -486,12 +500,12 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     this.eventAttendanceFeedback = [
       {
         label: 'Enabled',
-        event: 1,
+        event: 1
       },
       {
         label: 'Disabled',
-        event: 0,
-      },
+        event: 0
+      }
     ];
   }
 }

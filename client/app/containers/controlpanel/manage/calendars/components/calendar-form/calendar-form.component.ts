@@ -15,7 +15,7 @@ const COMMON_DATE_PICKER_OPTIONS = {
 @Component({
   selector: 'cp-calendar-form',
   templateUrl: './calendar-form.component.html',
-  styleUrls: ['./calendar-form.component.scss'],
+  styleUrls: ['./calendar-form.component.scss']
 })
 export class CalendarsFormComponent implements OnInit {
   @Input() todo: ITodo;

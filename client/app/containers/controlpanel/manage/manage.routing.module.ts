@@ -17,72 +17,72 @@ const appRoutes: Routes = [
       {
         path: 'events',
         data: { zendesk: 'events' },
-        loadChildren: './events/events.module#EventsModule',
+        loadChildren: './events/events.module#EventsModule'
       },
 
       {
         path: 'services',
         data: { zendesk: 'services' },
-        loadChildren: './services/services.module#ServicesModule',
+        loadChildren: './services/services.module#ServicesModule'
       },
 
       {
         path: 'clubs',
         data: { zendesk: 'clubs' },
-        loadChildren: './clubs/clubs.module#ClubsModule',
+        loadChildren: './clubs/clubs.module#ClubsModule'
       },
 
       {
         path: 'athletics',
         data: { zendesk: 'athletics' },
-        loadChildren: './athletics/athletics.module#AthleticsModule',
+        loadChildren: './athletics/athletics.module#AthleticsModule'
       },
 
       {
         path: 'links',
         data: { zendesk: 'links' },
-        loadChildren: './links/links.module#LinksModule',
+        loadChildren: './links/links.module#LinksModule'
       },
 
       {
         path: 'feeds',
         data: { zendesk: 'walls' },
-        loadChildren: './feeds/feeds.module#FeedsModule',
+        loadChildren: './feeds/feeds.module#FeedsModule'
       },
 
       {
         path: 'clubs',
         data: { zendesk: 'clubs' },
-        loadChildren: './clubs/clubs.module#ClubsModule',
+        loadChildren: './clubs/clubs.module#ClubsModule'
       },
 
       {
         path: 'lists',
         data: { zendesk: 'lists' },
-        loadChildren: './lists/lists.module#ListsModule',
+        loadChildren: './lists/lists.module#ListsModule'
       },
 
       {
         path: 'calendars',
         data: { zendesk: 'calendars' },
-        loadChildren: './calendars/calendars.module#CalendarsModule',
+        loadChildren: './calendars/calendars.module#CalendarsModule'
       },
 
       {
         path: 'locations',
         data: { zendesk: 'locations' },
-        loadChildren: './locations/locations.module#LocationsModule',
+        loadChildren: './locations/locations.module#LocationsModule'
       },
       {
         path: 'orientation',
         data: { zendesk: 'orientation' },
-        loadChildren: './orientation/orientation.module#OrientationModule',
-      },
-    ],
-  },
+        loadChildren: './orientation/orientation.module#OrientationModule'
+      }
+    ]
+  }
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class ManageRoutingModule {}
