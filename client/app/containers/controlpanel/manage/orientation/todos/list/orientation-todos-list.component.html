@@ -47,7 +47,11 @@
 
         <li class="cp-form__item col-xs-12" *ngFor="let todo of state.todos">
           <div class="row">
-            <span class="col-xs-5 text-truncate hover">
+            <span
+              data-toggle="modal"
+              data-target="#todoEdit"
+              class="col-xs-5 text-truncate hover"
+              (click)="launchEditModal = true; selectedTodo = todo">
                 <strong>
                   {{ todo.name }}
                 </strong>
@@ -58,13 +62,6 @@
               {{ todo.due_date | cpDatePipe:dateFormat }}
             </span>
             <span class="col-xs-2 text-right">
-              <span
-                data-toggle="modal"
-                data-target="#todoEdit"
-                (click)="launchEditModal = true; selectedTodo = todo"
-                class="hover action-button material-icons text-center">
-                mode_edit
-              </span>
               <span
                 data-toggle="modal"
                 data-target="#todoDelete"

@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ProgramMembership } from '../../../orientation/orientation.status';
-import { ITodo } from '../../../orientation/todos/todos.interface';
+
 import { CPDate } from '../../../../../../shared/utils';
+import { ITodo } from '../../../orientation/todos/todos.interface';
+import { ProgramMembership } from '../../../orientation/orientation.status';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
 
@@ -45,11 +46,11 @@ export class CalendarsFormComponent implements OnInit {
       this.isChecked = this.form.value.has_membership === ProgramMembership.enabled;
     }
 
-    if (this.todo) {
+    if (this.isTodo) {
       const _self = this;
       this.dueDate = {
         ...COMMON_DATE_PICKER_OPTIONS,
-        defaultDate: CPDate.fromEpoch(this.todo.due_date),
+        defaultDate: CPDate.fromEpoch(this.form.controls['due_date'].value),
         onClose: function(date) {
           _self.form.controls['due_date'].setValue(CPDate.toEpoch(date[0]));
         },

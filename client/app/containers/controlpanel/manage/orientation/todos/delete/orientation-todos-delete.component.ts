@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TodosService } from './../todos.service';
 import { URLSearchParams } from '@angular/http';
 
+import { ITodo } from '../todos.interface';
 import { CPSession } from './../../../../../../session';
 import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 
@@ -11,7 +12,7 @@ import { CPI18nService } from './../../../../../../shared/services/i18n.service'
   styleUrls: ['./orientation-todos-delete.component.scss'],
 })
 export class OrientationTodosDeleteComponent implements OnInit {
-  @Input() todo;
+  @Input() todo: ITodo;
   @Output() deleted: EventEmitter<number> = new EventEmitter();
   @Output() resetDeleteModal: EventEmitter<null> = new EventEmitter();
 
