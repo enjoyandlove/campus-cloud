@@ -33,8 +33,6 @@ export class OrientationTodosListComponent extends BaseComponent implements OnIn
   ) {
     super();
     super.isLoading().subscribe((loading) => (this.loading = loading));
-
-    this.fetch();
   }
 
   onPaginationNext() {
@@ -57,7 +55,7 @@ export class OrientationTodosListComponent extends BaseComponent implements OnIn
     this.fetch();
   }
 
-  private fetch() {
+  public fetch() {
     const search = new URLSearchParams();
     search.append('search_str', this.state.search_str);
     search.append('sort_field', this.state.sort_field);
@@ -124,5 +122,7 @@ export class OrientationTodosListComponent extends BaseComponent implements OnIn
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.fetch();
+  }
 }
