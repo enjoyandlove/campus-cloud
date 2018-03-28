@@ -6,12 +6,13 @@ describe('OrientationListComponent', () => {
   let component: OrientationListComponent;
   let fixture: ComponentFixture<OrientationListComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ OrientationListComponent ]
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        declarations: [OrientationListComponent]
+      }).compileComponents();
     })
-      .compileComponents();
-  }));
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(OrientationListComponent);

@@ -112,7 +112,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       if (managerId.value === null) {
         this.formMissingFields = true;
         this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: false,
+          disabled: false
         });
         managerId.setErrors({ required: true });
       }
@@ -120,7 +120,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       if (eventFeedback.value === null) {
         this.formMissingFields = true;
         this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: false,
+          disabled: false
         });
         eventFeedback.setErrors({ required: true });
       }
@@ -141,24 +141,18 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       this.formMissingFields = true;
       this.form.controls['end'].setErrors({ required: true });
       this.form.controls['start'].setErrors({ required: true });
-      this.dateErrorMessage = this.cpI18n.translate(
-        'events_error_end_date_before_start',
-      );
+      this.dateErrorMessage = this.cpI18n.translate('events_error_end_date_before_start');
       this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
 
       return;
     }
 
-    if (
-      this.form.controls['end'].value <= Math.round(new Date().getTime() / 1000)
-    ) {
+    if (this.form.controls['end'].value <= Math.round(new Date().getTime() / 1000)) {
       this.isDateError = true;
       this.formMissingFields = true;
       this.form.controls['end'].setErrors({ required: true });
       this.form.controls['start'].setErrors({ required: true });
-      this.dateErrorMessage = this.cpI18n.translate(
-        'events_error_end_date_after_now',
-      );
+      this.dateErrorMessage = this.cpI18n.translate('events_error_end_date_after_now');
       this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
 
       return;
@@ -175,9 +169,9 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       (_) => {
         this.serverError = true;
         this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: false,
+          disabled: false
         });
-      },
+      }
     );
   }
 
@@ -214,7 +208,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.originalAttnFeedback = this.getFromArray(
       this.booleanOptions,
       'action',
-      res.event_feedback,
+      res.event_feedback
     );
 
     this.originalHost = this.getFromArray(this.stores, 'value', res.store_id);
@@ -230,14 +224,14 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       defaultDate: CPDate.fromEpoch(this.form.controls['start'].value),
       onClose: function(date) {
         _self.form.controls['start'].setValue(CPDate.toEpoch(date[0]));
-      },
+      }
     };
     this.enddatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
       defaultDate: CPDate.fromEpoch(this.form.controls['end'].value),
       onClose: function(date) {
         _self.form.controls['end'].setValue(CPDate.toEpoch(date[0]));
-      },
+      }
     };
   }
 
@@ -303,17 +297,22 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
         return [
           {
             label: '---',
-            value: null,
+            value: null
           },
           ...admins.map((admin) => {
             return {
               label: `${admin.firstname} ${admin.lastname}`,
-              value: admin.id,
+              value: admin.id
             };
-          }),
+          })
         ];
       })
-      .subscribe((res) => (this.managers = res));
+      .subscribe((res) => {
+        this.managers = res;
+        this.selectedManager = this.managers.filter(
+          (manager) => manager.value === this.form.controls['event_manager_id'].value
+        )[0];
+      });
   }
 
   private fetch() {
@@ -334,13 +333,10 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
         this.stores = res.data[1];
         this.event = res.data[0];
         this.buildForm(res.data[0]);
-        this.selectedManager = this.event.attendance_manager_email
-          ? { label: this.event.attendance_manager_email }
-          : null;
 
         this.mapCenter = new BehaviorSubject({
           lat: res.data[0].latitude,
-          lng: res.data[0].longitude,
+          lng: res.data[0].longitude
         });
       })
       .catch((err) => this.errorService.handleError(err));
@@ -352,8 +348,8 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       payload: {
         heading: 'events_edit_event',
         subheading: '',
-        children: [],
-      },
+        children: []
+      }
     });
   }
 
@@ -363,11 +359,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
   enableStudentFeedbackOnAttendanceToggle(value) {
     this.form.controls['event_feedback'].setValue(value);
-    this.originalAttnFeedback = this.getFromArray(
-      this.booleanOptions,
-      'action',
-      value,
-    );
+    this.originalAttnFeedback = this.getFromArray(this.booleanOptions, 'action', value);
   }
 
   toggleEventAttendance(value) {
@@ -379,10 +371,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   onResetMap() {
-    CPMap.setFormLocationData(
-      this.form,
-      CPMap.resetLocationFields(this.school),
-    );
+    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields(this.school));
     this.centerMap(this.school.latitude, this.school.longitude);
   }
 
@@ -436,19 +425,19 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.eventManager = Object.assign({}, this.eventManager, {
-      content: this.cpI18n.translate('events_event_manager_tooltip'),
+      content: this.cpI18n.translate('events_event_manager_tooltip')
     });
     this.attendanceManager = Object.assign({}, this.attendanceManager, {
-      content: this.cpI18n.translate('events_attendance_manager_tooltip'),
+      content: this.cpI18n.translate('events_attendance_manager_tooltip')
     });
 
     this.studentFeedback = Object.assign({}, this.studentFeedback, {
-      content: this.cpI18n.translate('events_event_feedback_tooltip'),
+      content: this.cpI18n.translate('events_event_feedback_tooltip')
     });
 
     this.buttonData = {
       text: this.cpI18n.translate('save'),
-      class: 'primary',
+      class: 'primary'
     };
 
     this.urlPrefix = this.utils.buildUrlPrefixEvents(
@@ -463,12 +452,12 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.booleanOptions = [
       {
         label: this.cpI18n.translate('event_enabled'),
-        action: EventAttendance.enabled,
+        action: EventAttendance.enabled
       },
       {
         label: this.cpI18n.translate('events_disabled'),
-        action: EventAttendance.disabled,
-      },
+        action: EventAttendance.disabled
+      }
     ];
 
     this.attendanceEnabled = EventAttendance.enabled;

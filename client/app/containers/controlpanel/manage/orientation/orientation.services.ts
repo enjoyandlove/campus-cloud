@@ -19,15 +19,13 @@ export class OrientationService extends BaseService {
   getPrograms(startRage: number, endRage: number, search: URLSearchParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${
       API.ENDPOINTS.ORIENTATION
-      }/${startRage};${endRage}`;
+    }/${startRage};${endRage}`;
 
     return super.get(url, { search }).map((res) => res.json());
   }
 
   getProgramById(programId: number, search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.ORIENTATION
-      }/${programId}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ORIENTATION}/${programId}`;
 
     return super.get(url, { search }).map((res) => res.json());
   }
@@ -39,17 +37,13 @@ export class OrientationService extends BaseService {
   }
 
   editProgram(programId: number, body: any, search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.ORIENTATION
-      }/${programId}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ORIENTATION}/${programId}`;
 
     return super.update(url, body, { search }).map((res) => res.json());
   }
 
   deleteProgram(programId: number, search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.ORIENTATION
-      }/${programId}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ORIENTATION}/${programId}`;
 
     return super.delete(url, { search }).map((res) => res.json());
   }
