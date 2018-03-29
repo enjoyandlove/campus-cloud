@@ -7,7 +7,7 @@ import {
   ElementRef,
   ViewChild,
 } from '@angular/core';
-import { Router } from '@angular/router';
+
 import { URLSearchParams } from '@angular/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -35,7 +35,6 @@ export class OrientationTodosCreateComponent implements OnInit {
     public el: ElementRef,
     public fb: FormBuilder,
     public session: CPSession,
-    public router: Router,
     public cpI18n: CPI18nService,
     public service: TodosService,
   ) {}
