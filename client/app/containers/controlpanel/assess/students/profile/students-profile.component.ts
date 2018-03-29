@@ -19,8 +19,8 @@ import * as moment from 'moment';
 declare var $;
 
 const isSameDay = (dateOne, dateTwo, tz): boolean => {
-  dateOne = moment(CPDate.fromEpoch(dateOne, tz)).toObject();
-  dateTwo = moment(CPDate.fromEpoch(dateTwo, tz)).toObject();
+  dateOne = CPDate.fromEpoch(dateOne, tz).toObject();
+  dateTwo = CPDate.fromEpoch(dateTwo, tz).toObject();
 
   return (
     dateOne.date === dateTwo.date &&
@@ -30,14 +30,7 @@ const isSameDay = (dateOne, dateTwo, tz): boolean => {
 };
 
 const setTimeDataToZero = (unixTimeStamp, tz) => {
-  return CPDate.toEpoch(
-    moment(CPDate.fromEpoch(unixTimeStamp, tz))
-      .hours(0)
-      .minutes(0)
-      .seconds(0)
-      .toDate(),
-    this.session.tz
-  );
+  return CPDate.toEpoch(CPDate.fromEpoch(unixTimeStamp, tz).startOf('day'), tz);
 };
 
 const ALL_ENGAGEMENTS = 0;

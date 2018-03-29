@@ -32,7 +32,7 @@ interface IState {
   attendance_only: number;
 }
 
-const threeYearsFromNow = new Date(new Date().setFullYear(new Date().getFullYear() + 3));
+const threeYearsFromNow = CPDate.now().add(3, 'years');
 
 @Component({
   selector: 'cp-list-action-box',
@@ -54,7 +54,7 @@ export class ListActionBoxComponent implements OnInit {
     search_str: null,
     store_id: null, // all stores
     attendance_only: EventAttendance.disabled,
-    start: CPDate.toEpoch(new Date(), this.session.tz),
+    start: CPDate.toEpoch(CPDate.now(), this.session.tz),
     end: CPDate.toEpoch(threeYearsFromNow, this.session.tz)
   };
   stores$: Observable<any>;
@@ -96,16 +96,17 @@ export class ListActionBoxComponent implements OnInit {
   }
 
   private resetDateRange() {
+    const now = CPDate.now().format();
     this.isFilteredByDate = false;
 
     if (this.state.upcoming) {
       this.state = Object.assign({}, this.state, {
-        start: CPDate.toEpoch(new Date(), this.session.tz),
+        start: CPDate.toEpoch(now, this.session.tz),
         end: CPDate.toEpoch(threeYearsFromNow, this.session.tz)
       });
 
       this.dateFilterOpts = Object.assign({}, this.dateFilterOpts, {
-        minDate: new Date(),
+        minDate: now,
         maxDate: null
       });
 
@@ -114,12 +115,12 @@ export class ListActionBoxComponent implements OnInit {
 
     this.state = Object.assign({}, this.state, {
       start: 0,
-      end: CPDate.toEpoch(new Date(), this.session.tz)
+      end: CPDate.toEpoch(now, this.session.tz)
     });
 
     this.dateFilterOpts = Object.assign({}, this.dateFilterOpts, {
       minDate: null,
-      maxDate: new Date()
+      maxDate: now
     });
   }
 
@@ -181,7 +182,7 @@ export class ListActionBoxComponent implements OnInit {
       utc: true,
       inline: true,
       mode: 'range',
-      minDate: new Date(),
+      minDate: CPDate.now().format(),
       maxDate: null
     };
 

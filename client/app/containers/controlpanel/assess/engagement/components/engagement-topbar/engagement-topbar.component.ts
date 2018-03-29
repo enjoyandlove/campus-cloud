@@ -124,7 +124,7 @@ export class EngagementTopBarComponent implements OnInit {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    const now = CPDate.toEpoch(new Date(), this.session.tz);
+    const now = CPDate.toEpoch(CPDate.now(), this.session.tz);
     const lastWeek = CPDate.toEpoch(
       moment()
         .subtract(6, 'days')
