@@ -25,10 +25,10 @@ import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 class MockHttp {}
 
-class MockStudentsService {
+const mockStudentsService = {
   getStudentById() {
     return Observable.of(mockUser);
-  }
+  },
 
   getEngagements() {
     return Observable.of([
@@ -56,7 +56,7 @@ class MockStudentsService {
       }
     ]);
   }
-}
+};
 
 describe('StudentsProfileComponent', () => {
   let store: Store<any>;
@@ -77,9 +77,9 @@ describe('StudentsProfileComponent', () => {
       ],
       providers: [
         CPI18nService,
-        { provide: CPSession, useValue: MockCPSession },
+        { provide: CPSession, useClass: MockCPSession },
         { provide: Http, useClass: MockHttp },
-        { provide: StudentsService, useClass: MockStudentsService },
+        { provide: StudentsService, useValue: mockStudentsService },
         {
           provide: ActivatedRoute,
           useValue: {
@@ -105,14 +105,14 @@ describe('StudentsProfileComponent', () => {
     // fixture.detectChanges();
   });
 
-  xit('should teardown compose', () => {
+  it('should teardown compose', () => {
     comp.onComposeTeardown();
 
     expect(comp.messageData).toBeFalsy();
     expect(comp.isStudentComposeModal).toBeFalsy();
   });
 
-  xit('should flash success message', () => {
+  it('should flash success message', () => {
     const expected = {
       class: 'success',
       autoClose: true,
@@ -128,7 +128,7 @@ describe('StudentsProfileComponent', () => {
     store.select('SNACKBAR').subscribe((payload) => expect(payload).toEqual(expected));
   });
 
-  xit('should launchMessageModal', () => {
+  it('should launchMessageModal', () => {
     comp.fetchStudentData();
     fixture.detectChanges();
 
@@ -143,30 +143,33 @@ describe('StudentsProfileComponent', () => {
     expect(comp.isStudentComposeModal).toBeTruthy();
   });
 
-  xit('loadingStudentData should be set', () => {
+  it('loadingStudentData should be set', () => {
     expect(comp.loadingStudentData).toBeTruthy();
   });
 
-  xit('should update student to match mocked service', () => {
+  it('should update student to match mocked service', () => {
     comp.fetchStudentData();
     fixture.detectChanges();
     expect(comp.student).toEqual(mockUser);
     expect(comp.loadingStudentData).toBeFalsy();
   });
 
-  xit('should populate header', () => {
+  it('should populate header', () => {
     const expected = {
-      heading: 'Mock User',
+      heading: '[NOTRANSLATE]Mock User[NOTRANSLATE]',
       subheading: null,
       em: null,
+      crumbs: { url: 'students', label: 'students' },
       children: []
     };
     comp.fetchStudentData();
 
-    store.select('HEADER').subscribe((payload) => expect(payload).toEqual(expected));
+    store.select('HEADER').subscribe((payload) => {
+      expect(payload).toEqual(expected);
+    });
   });
 
-  xit('Spy on real service test', (done) => {
+  it('Spy on real service test', (done) => {
     const spy = spyOn(service, 'getStudentById').and.returnValue(Observable.of('Sopa'));
 
     fixture.detectChanges();

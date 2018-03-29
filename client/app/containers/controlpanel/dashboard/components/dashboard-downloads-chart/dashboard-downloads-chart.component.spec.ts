@@ -19,7 +19,7 @@ describe('DashboardDownloadsChartComponent', () => {
     async(() => {
       TestBed.configureTestingModule({
         declarations: [DashboardDownloadsChartComponent],
-        providers: [{ provide: CPSession, useValue: MockCPSession }]
+        providers: [{ provide: CPSession, useClass: MockCPSession }]
       }).compileComponents(); // compile template and css
     })
   );
