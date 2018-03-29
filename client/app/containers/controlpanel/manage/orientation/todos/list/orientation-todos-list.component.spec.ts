@@ -61,4 +61,10 @@ describe('OrientationTodosListComponent', () => {
     expect(component.state.search_str).toEqual('hello world');
   });
 
+  it('should launch create modal', () => {
+    expect(component.launchCreateModal).toBeFalsy();
+    component.onLaunchCreateModal();
+    expect(component.launchCreateModal).toBeTruthy();
+  });
+
 });

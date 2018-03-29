@@ -15,7 +15,6 @@ import { ITodo } from '../todos.interface';
 import { TodosService } from '../todos.service';
 import { CPSession } from './../../../../../../session';
 import { CPI18nService } from '../../../../../../shared/services/i18n.service';
-import { OrientationUtilsService } from '../../orientation.utils.service';
 
 @Component({
   selector: 'cp-orientation-todos-edit',
@@ -40,7 +39,6 @@ export class OrientationTodosEditComponent implements OnInit {
     public session: CPSession,
     public cpI18n: CPI18nService,
     public service: TodosService,
-    public utils: OrientationUtilsService,
   ) {}
 
   @HostListener('document:click', ['$event'])
