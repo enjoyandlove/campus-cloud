@@ -8,20 +8,15 @@ import { CPI18nService } from './../../../shared/services/i18n.service';
 
 const cpI18n = new CPI18nService();
 
-const todayDate = moment()
-  .hours(23)
-  .minutes(59)
-  .seconds(59);
-const yesterdayDate = moment(todayDate).subtract(1, 'days');
-const yesterdayEnd = (tz) => CPDate.toEpoch(yesterdayDate.toDate(), tz);
+const todayDate = moment().endOf('day');
+const yesterdayDate = todayDate.clone().subtract(1, 'days');
+const yesterdayEnd = (tz) => CPDate.toEpoch(yesterdayDate, tz);
 
 const last30Days = (tz) =>
   CPDate.toEpoch(
     moment(yesterdayDate)
       .subtract(30, 'days')
-      .hours(0)
-      .minutes(0)
-      .seconds(0),
+      .startOf('day'),
     tz
   );
 
@@ -29,9 +24,7 @@ const last90Days = (tz) =>
   CPDate.toEpoch(
     moment(yesterdayDate)
       .subtract(90, 'days')
-      .hours(0)
-      .minutes(0)
-      .seconds(0),
+      .startOf('day'),
     tz
   );
 
@@ -39,9 +32,7 @@ const lastYear = (tz) =>
   CPDate.toEpoch(
     moment(yesterdayDate)
       .subtract(1, 'year')
-      .hours(0)
-      .minutes(0)
-      .seconds(0),
+      .startOf('day'),
     tz
   );
 
@@ -53,24 +44,11 @@ export class DashboardUtilsService {
   }
 
   dayStart(date) {
-    return CPDate.toEpoch(
-      moment(date)
-        .hours(0)
-        .minutes(0)
-        .seconds(0),
-      this.session.tz
-    );
+    return CPDate.toEpoch(moment(date).startOf('day'), this.session.tz);
   }
 
   dayEnd(date) {
-    return CPDate.toEpoch(
-      moment(date)
-        .hours(23)
-        .minutes(59)
-        .seconds(59)
-        .toDate(),
-      this.session.tz
-    );
+    return CPDate.toEpoch(moment(date).endOf('day'), this.session.tz);
   }
 
   last30Days() {
@@ -91,7 +69,7 @@ export class DashboardUtilsService {
 
   lastYear() {
     return {
-      end: yesterdayEnd,
+      end: yesterdayEnd(this.session.tz),
       start: lastYear(this.session.tz),
       label: cpI18n.translate('dashboard_last_year')
     };
@@ -99,7 +77,7 @@ export class DashboardUtilsService {
 
   allTime() {
     return {
-      end: yesterdayEnd,
+      end: yesterdayEnd(this.session.tz),
       start: 1,
       label: cpI18n.translate('dashboard_all_time')
     };

@@ -9,11 +9,11 @@ import { CPDate } from './../../../../shared/utils/date/date';
 export class EventUtilService {
   constructor(public session: CPSession) {}
   isPastEvent(event: IEvent): boolean {
-    return event.end < CPDate.toEpoch(new Date(), this.session.tz);
+    return event.end < CPDate.toEpoch(CPDate.now(), this.session.tz);
   }
 
   isUpcomingEvent(event: IEvent) {
-    return event.start > CPDate.toEpoch(new Date(), this.session.tz);
+    return event.start > CPDate.toEpoch(CPDate.now(), this.session.tz);
   }
 
   buildUrlPrefix(clubId: number = null, serviceId: number = null, athleticId: number = null) {

@@ -6,8 +6,6 @@ import { CPI18nService } from '../../../../../../../shared/services';
 import { CPDate, CPMap } from '../../../../../../../shared/utils';
 import { CalendarsItemsService } from '../../item.utils.service';
 
-import * as moment from 'moment';
-
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
 const FORMAT_WITHOUT_TIME = 'F j, Y';
 
@@ -61,19 +59,15 @@ export class CalendarsItemFormComponent implements OnInit {
     const startDateAtMidnight = CPDate.fromEpoch(
       this.form.controls['start'].value,
       this.session.tz
-    ).setHours(0, 0, 0, 0);
+    ).startOf('day');
 
     const endDateAtMidnight = CPDate.fromEpoch(
       this.form.controls['end'].value,
       this.session.tz
-    ).setHours(23, 59, 59, 0);
+    ).endOf('day');
 
-    this.form.controls['start'].setValue(
-      CPDate.toEpoch(moment(startDateAtMidnight).toDate(), this.session.tz)
-    );
-    this.form.controls['end'].setValue(
-      CPDate.toEpoch(moment(endDateAtMidnight).toDate(), this.session.tz)
-    );
+    this.form.controls['start'].setValue(CPDate.toEpoch(startDateAtMidnight, this.session.tz));
+    this.form.controls['end'].setValue(CPDate.toEpoch(endDateAtMidnight, this.session.tz));
   }
 
   onAllDayToggle(checked: boolean) {
@@ -151,17 +145,17 @@ export class CalendarsItemFormComponent implements OnInit {
 
     this.startdatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: CPDate.fromEpoch(this.form.controls['start'].value, _self.session.tz),
-      onClose: function(date) {
-        _self.form.controls['start'].setValue(CPDate.toEpoch(date[0], _self.session.tz));
+      defaultDate: CPDate.fromEpoch(this.form.controls['start'].value, _self.session.tz).format(),
+      onClose: function(_, dateStr) {
+        _self.form.controls['start'].setValue(CPDate.toEpoch(dateStr, _self.session.tz));
       }
     };
 
     this.enddatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: CPDate.fromEpoch(this.form.controls['end'].value, _self.session.tz),
-      onClose: function(date) {
-        _self.form.controls['end'].setValue(CPDate.toEpoch(date[0], _self.session.tz));
+      defaultDate: CPDate.fromEpoch(this.form.controls['end'].value, _self.session.tz).format(),
+      onClose: function(_, dateStr) {
+        _self.form.controls['end'].setValue(CPDate.toEpoch(dateStr, _self.session.tz));
       }
     };
 

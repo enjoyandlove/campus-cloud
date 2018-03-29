@@ -11,6 +11,8 @@ describe('CPDate', () => {
   });
 
   it('Should convert an epoch timestamp into a valid Date Object', () => {
-    expect(CPDate.fromEpoch(mockEpochDate, 'America/Toronto')).toEqual(mockDateObj.toDate());
+    expect(CPDate.fromEpoch(mockEpochDate, 'America/Toronto').format()).toEqual(
+      mockDateObj.format()
+    );
   });
 });
