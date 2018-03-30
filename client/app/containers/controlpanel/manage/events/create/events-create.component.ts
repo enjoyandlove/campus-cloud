@@ -19,7 +19,6 @@ import { EventAttendance, EventFeedback, IsAllDay } from '../event.status';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 import { EventUtilService } from '../events.utils.service';
-import * as moment from 'moment';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
 const FORMAT_WITHOUT_TIME = 'F j, Y';
@@ -75,7 +74,7 @@ export class EventsCreateComponent implements OnInit {
     private utils: EventUtilService,
     private adminService: AdminService,
     private storeService: StoreService,
-    private errorService: ErrorService,
+    private errorService: ErrorService
   ) {
     this.school = this.session.g.get('school');
     const search: URLSearchParams = new URLSearchParams();
@@ -266,7 +265,7 @@ export class EventsCreateComponent implements OnInit {
   }
 
   getUrlPrefix(eventId) {
-   return this.utils.buildUrlPrefixEvents(
+    return this.utils.buildUrlPrefixEvents(
       this.clubId,
       this.serviceId,
       this.isAthletic,
@@ -298,18 +297,16 @@ export class EventsCreateComponent implements OnInit {
   updateTime() {
     const startDateAtMidnight = CPDate.fromEpoch(
       this.form.controls['start'].value,
-    ).setHours(0, 0, 0, 0);
+      this.session.tz
+    ).startOf('day');
 
     const endDateAtMidnight = CPDate.fromEpoch(
       this.form.controls['end'].value,
-    ).setHours(23, 59, 59, 0);
+      this.session.tz
+    ).endOf('day');
 
-    this.form.controls['start'].setValue(
-      CPDate.toEpoch(moment(startDateAtMidnight).toDate()),
-    );
-    this.form.controls['end'].setValue(
-      CPDate.toEpoch(moment(endDateAtMidnight).toDate()),
-    );
+    this.form.controls['start'].setValue(CPDate.toEpoch(startDateAtMidnight, this.session.tz));
+    this.form.controls['end'].setValue(CPDate.toEpoch(endDateAtMidnight, this.session.tz));
   }
 
   onAllDayToggle(value) {
@@ -394,7 +391,7 @@ export class EventsCreateComponent implements OnInit {
       event_manager_id: [null],
       attendance_manager_email: [null],
       custom_basic_feedback_label: [null],
-      is_all_day: [IsAllDay.disabled],
+      is_all_day: [IsAllDay.disabled]
     });
 
     const _self = this;
