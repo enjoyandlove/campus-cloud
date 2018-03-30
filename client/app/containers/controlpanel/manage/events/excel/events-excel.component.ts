@@ -174,8 +174,8 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       location: [event.location],
       managers: [[{ label: '---', event: null }]],
       description: [event.description],
-      end: [CPDate.toEpoch(event.end_date), Validators.required],
-      start: [CPDate.toEpoch(event.start_date), Validators.required],
+      end: [CPDate.toEpoch(event.end_date, this.session.tz), Validators.required],
+      start: [CPDate.toEpoch(event.start_date, this.session.tz), Validators.required],
       // these controls are only required when event attendance is true
       attendance_manager_email: [null],
       event_manager_id: [null],

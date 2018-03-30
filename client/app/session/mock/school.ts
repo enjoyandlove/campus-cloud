@@ -10,6 +10,7 @@ export const mockSchool = {
   longitude: 0,
   id: 2806,
   app_url_ios: '',
+  tz_zoneinfo_str: 'America/Toronto',
   has_guide_customization: true,
   premium_level: 0,
   wall_unlocked: false,
@@ -18,5 +19,5 @@ export const mockSchool = {
   is_config_validated: true,
   logo_url: '',
   is_verified: true,
-  email: '',
+  email: ''
 };

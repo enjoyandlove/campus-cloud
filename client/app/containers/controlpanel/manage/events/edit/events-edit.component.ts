@@ -147,7 +147,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    if (this.form.controls['end'].value <= Math.round(new Date().getTime() / 1000)) {
+    if (this.form.controls['end'].value <= CPDate.now().unix()) {
       this.isDateError = true;
       this.formMissingFields = true;
       this.form.controls['end'].setErrors({ required: true });
@@ -221,16 +221,16 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
     this.startdatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: CPDate.fromEpoch(this.form.controls['start'].value),
-      onClose: function(date) {
-        _self.form.controls['start'].setValue(CPDate.toEpoch(date[0]));
+      defaultDate: CPDate.fromEpoch(this.form.controls['start'].value, _self.session.tz).format(),
+      onClose: function(_, dateStr) {
+        _self.form.controls['start'].setValue(CPDate.toEpoch(dateStr, _self.session.tz));
       }
     };
     this.enddatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: CPDate.fromEpoch(this.form.controls['end'].value),
-      onClose: function(date) {
-        _self.form.controls['end'].setValue(CPDate.toEpoch(date[0]));
+      defaultDate: CPDate.fromEpoch(this.form.controls['end'].value, _self.session.tz).format(),
+      onClose: function(_, dateStr) {
+        _self.form.controls['end'].setValue(CPDate.toEpoch(dateStr, _self.session.tz));
       }
     };
   }
