@@ -41,6 +41,7 @@ const threeYearsFromNow = CPDate.now().add(3, 'years');
 })
 export class ListActionBoxComponent implements OnInit {
   @Input() isSimple: boolean;
+  @Input() isOrientation: boolean;
   @Output() listAction: EventEmitter<IState> = new EventEmitter();
 
   hosts;
@@ -174,7 +175,7 @@ export class ListActionBoxComponent implements OnInit {
     const canSchoolWrite = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.events);
     const canAccountWrite = canAccountLevelWriteResource(this.session.g, CP_PRIVILEGES_MAP.events);
 
-    this.canCreateEvent = canSchoolWrite || canAccountWrite;
+    this.canCreateEvent = canSchoolWrite || canAccountWrite || this.isOrientation;
 
     this.eventFilter = DATE_FILTER;
 

@@ -31,7 +31,7 @@
                 [class.error]="formMissingFields && form.controls['title'].hasError('required')">
             </div>
 
-            <div class="row form-group" *ngIf="!isClub && !isService">
+            <div class="row form-group" *ngIf="!isClub && !isService && !isOrientation">
               <div class="col-xs-12">
                 <label i18n>{{ 'select_host' | cpI18n }}</label>
                 <cp-dropdown
@@ -57,6 +57,17 @@
                   [options]="enddatePickerOpts"
                   [error]="formMissingFields && form.controls['end'].hasError('required')">
                 </cp-datepicker>
+              </div>
+            </div>
+
+            <div class="row form-group" *ngIf="isOrientation">
+              <div class="col-xs-12">
+                <cp-checkbox
+                  class="checkbox"
+                  (toggle)="onAllDayToggle($event)"
+                  [isChecked]="form.controls['is_all_day'].value">
+                </cp-checkbox>
+                <label i18n>{{ 'all_day' | cpI18n }}</label>
               </div>
             </div>
 
@@ -121,13 +132,13 @@
             <span class="pull-right">
               <cp-switch
                 (toggle)="toggleEventAttendance($event)"
-                [isChecked]="form.controls.event_attendance.value === 1 ? true : false">
+                [isChecked]="form.controls.event_attendance.value === attendanceEnabled">
               </cp-switch>
             </span>
           </div>
         </div>
 
-        <div *ngIf="form.controls.event_attendance.value === 1">
+        <div *ngIf="form.controls.event_attendance.value === attendanceEnabled">
           <div class="row margin-top">
             <div class="col-xs-6">
               <div class="form-group">

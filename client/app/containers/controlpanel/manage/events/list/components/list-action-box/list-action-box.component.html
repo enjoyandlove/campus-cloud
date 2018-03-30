@@ -71,7 +71,7 @@
         class="cpbtn cpbtn--square-left cpbtn--no-padding cpbtn--primary no-left-padding hover action-dropdown">
         <i class="material-icons" data-toggle="dropdown">expand_more</i>
         <ul class="dropdown-menu dropdown-menu-right text-left action-dropdown-list">
-          <li i18n>
+          <li i18n *ngIf="!isOrientation">
             <a [routerLink]="['import/facebook']">
               {{ 'events_import_from_facebook' | cpI18n }}
             </a>

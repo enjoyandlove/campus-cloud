@@ -15,11 +15,14 @@ import {
 import { EventsService } from '../events.service';
 import { CPSession, ISchool } from '../../../../../session';
 import { CPMap, CPDate } from '../../../../../shared/utils';
-import { EventAttendance, EventFeedback } from '../event.status';
-import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants';
+import { EventAttendance, EventFeedback, IsAllDay } from '../event.status';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
+import { EventUtilService } from '../events.utils.service';
+import * as moment from 'moment';
 
+const FORMAT_WITH_TIME = 'F j, Y h:i K';
+const FORMAT_WITHOUT_TIME = 'F j, Y';
 const COMMON_DATE_PICKER_OPTIONS = {
   utc: true,
   altInput: true,
@@ -35,13 +38,16 @@ const COMMON_DATE_PICKER_OPTIONS = {
 export class EventsCreateComponent implements OnInit {
   @Input() storeId: number;
   @Input() isClub: boolean;
-  @Input() clubId: boolean;
+  @Input() clubId: number;
   @Input() serviceId: number;
   @Input() isAthletic: number;
   @Input() isService: boolean;
+  @Input() orientationId: number;
+  @Input() isOrientation: boolean;
   @Input() toolTipContent: IToolTipContent;
 
   stores$;
+  urlPrefix;
   buttonData;
   isDateError;
   eventManager;
@@ -65,10 +71,11 @@ export class EventsCreateComponent implements OnInit {
     private session: CPSession,
     public cpI18n: CPI18nService,
     private storeHeader: Store<any>,
+    private service: EventsService,
+    private utils: EventUtilService,
     private adminService: AdminService,
     private storeService: StoreService,
     private errorService: ErrorService,
-    private eventService: EventsService
   ) {
     this.school = this.session.g.get('school');
     const search: URLSearchParams = new URLSearchParams();
@@ -108,7 +115,7 @@ export class EventsCreateComponent implements OnInit {
 
     search.append('store_id', storeId);
     search.append('school_id', this.school.id.toString());
-    search.append('privilege_type', CP_PRIVILEGES_MAP.events.toString());
+    search.append('privilege_type', this.utils.getPrivilegeType(this.isOrientation));
 
     this.adminService
       .getAdminByStoreId(search)
@@ -140,7 +147,7 @@ export class EventsCreateComponent implements OnInit {
   }
 
   toggleEventAttendance(value) {
-    value = value ? 1 : 0;
+    value = value ? EventAttendance.enabled : EventAttendance.disabled;
     this.form.controls['event_attendance'].setValue(value);
   }
 
@@ -215,6 +222,8 @@ export class EventsCreateComponent implements OnInit {
         this.buttonData = Object.assign({}, this.buttonData, {
           disabled: false
         });
+
+        return;
       }
     }
 
@@ -238,24 +247,14 @@ export class EventsCreateComponent implements OnInit {
       return;
     }
 
-    this.eventService.createEvent(this.form.value).subscribe(
+    if (this.form.controls['is_all_day'].value) {
+      this.updateTime();
+    }
+
+    this.service.createEvent(this.form.value).subscribe(
       (res) => {
-        if (this.isService) {
-          this.router.navigate([`/manage/services/${this.serviceId}/events/${res.id}`]);
-
-          return;
-        }
-        if (this.isAthletic) {
-          this.router.navigate([`/manage/athletics/${this.clubId}/events/${res.id}`]);
-
-          return;
-        }
-        if (this.isClub) {
-          this.router.navigate([`/manage/clubs/${this.clubId}/events/${res.id}`]);
-
-          return;
-        }
-        this.router.navigate(['/manage/events/' + res.id]);
+        this.urlPrefix = this.getUrlPrefix(res.id);
+        this.router.navigate([this.urlPrefix]);
       },
       (err) => {
         this.errorService.handleError(err);
@@ -266,8 +265,57 @@ export class EventsCreateComponent implements OnInit {
     );
   }
 
+  getUrlPrefix(eventId) {
+   return this.utils.buildUrlPrefixEvents(
+      this.clubId,
+      this.serviceId,
+      this.isAthletic,
+      this.orientationId,
+      eventId
+    );
+  }
+
   onEventFeedbackChange(option) {
     this.form.controls['event_feedback'].setValue(option.action);
+  }
+
+  toggleDatePickerTime(checked) {
+    const dateFormat = checked ? FORMAT_WITHOUT_TIME : FORMAT_WITH_TIME;
+
+    this.startdatePickerOpts = {
+      ...this.startdatePickerOpts,
+      enableTime: !checked,
+      dateFormat
+    };
+
+    this.enddatePickerOpts = {
+      ...this.enddatePickerOpts,
+      enableTime: !checked,
+      dateFormat
+    };
+  }
+
+  updateTime() {
+    const startDateAtMidnight = CPDate.fromEpoch(
+      this.form.controls['start'].value,
+    ).setHours(0, 0, 0, 0);
+
+    const endDateAtMidnight = CPDate.fromEpoch(
+      this.form.controls['end'].value,
+    ).setHours(23, 59, 59, 0);
+
+    this.form.controls['start'].setValue(
+      CPDate.toEpoch(moment(startDateAtMidnight).toDate()),
+    );
+    this.form.controls['end'].setValue(
+      CPDate.toEpoch(moment(endDateAtMidnight).toDate()),
+    );
+  }
+
+  onAllDayToggle(value) {
+    this.toggleDatePickerTime(value);
+    value = value ? IsAllDay.enabled : IsAllDay.disabled;
+    this.form.controls['is_all_day'].setValue(value);
   }
 
   ngOnInit() {
@@ -296,8 +344,9 @@ export class EventsCreateComponent implements OnInit {
       this.fetchManagersBySelectedStore(this.clubId);
     }
 
-    // load managers for default host
-    if (this.session.defaultHost) {
+    if (this.isOrientation) {
+      this.fetchManagersBySelectedStore(null);
+    } else if (this.session.defaultHost) {
       this.fetchManagersBySelectedStore(store_id);
     }
 
@@ -324,7 +373,8 @@ export class EventsCreateComponent implements OnInit {
 
     this.form = this.fb.group({
       title: [null, Validators.required],
-      store_id: [store_id ? store_id : null, Validators.required],
+      store_id: [store_id ? store_id : null, !this.isOrientation ? Validators.required : null],
+      calendar_id: [this.orientationId, this.isOrientation ? Validators.required : null],
       location: [null],
       room_data: [null],
       city: [null],
@@ -343,7 +393,8 @@ export class EventsCreateComponent implements OnInit {
       event_feedback: [EventFeedback.enabled],
       event_manager_id: [null],
       attendance_manager_email: [null],
-      custom_basic_feedback_label: [null]
+      custom_basic_feedback_label: [null],
+      is_all_day: [IsAllDay.disabled],
     });
 
     const _self = this;
