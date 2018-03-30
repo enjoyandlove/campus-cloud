@@ -12,17 +12,18 @@ declare var $: any;
 })
 export class EventsDeleteComponent implements OnInit {
   @Input() event: any;
+  @Input() isOrientation: boolean;
   @Output() deletedEvent: EventEmitter<number> = new EventEmitter();
 
   buttonData;
 
   constructor(
     private cpI18n: CPI18nService,
-    private eventService: EventsService,
+    private service: EventsService,
   ) {}
 
   onDelete() {
-    this.eventService.deleteEventById(this.event.id).subscribe(() => {
+    this.service.deleteEventById(this.event.id).subscribe(() => {
       this.deletedEvent.emit(this.event.id);
 
       $('#deleteEventsModal').modal('hide');

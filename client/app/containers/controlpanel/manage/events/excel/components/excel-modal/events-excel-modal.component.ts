@@ -5,6 +5,7 @@ import { isDev } from '../../../../../../../config/env';
 import { EventsService } from '../../../events.service';
 import { FileUploadService } from '../../../../../../../shared/services';
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
+import { EventUtilService } from '../../../events.utils.service';
 
 @Component({
   selector: 'cp-events-excel-modal',
@@ -14,20 +15,22 @@ import { CPI18nService } from './../../../../../../../shared/services/i18n.servi
 export class EventsExcelModalComponent implements OnInit {
   @Input() storeId: number;
   @Input() isAthletic: number;
-
   @Input() clubId: number;
   @Input() isClub: boolean;
-
   @Input() serviceId: number;
   @Input() isService: boolean;
+  @Input() orientationId: number;
+  @Input() isOrientation: boolean;
 
   options;
   fileName;
+  urlPrefix;
 
   constructor(
     private router: Router,
     private cpI18n: CPI18nService,
     private service: EventsService,
+    private utils: EventUtilService,
     private fileService: FileUploadService,
   ) {}
 
@@ -54,31 +57,14 @@ export class EventsExcelModalComponent implements OnInit {
   }
 
   onNavigate() {
-    if (this.isAthletic) {
-      this.router.navigate([
-        `/manage/athletics/${this.clubId}/events/import/excel`,
-      ]);
+    this.urlPrefix = this.utils.buildUrlPrefixExcel(
+      this.orientationId,
+      this.isAthletic,
+      this.serviceId,
+      this.clubId
+    );
 
-      return;
-    }
-
-    if (this.isService) {
-      this.router.navigate([
-        `/manage/services/${this.serviceId}/events/import/excel`,
-      ]);
-
-      return;
-    }
-
-    if (this.isClub) {
-      this.router.navigate([
-        `/manage/clubs/${this.clubId}/events/import/excel`,
-      ]);
-
-      return;
-    }
-
-    this.router.navigate(['/manage/events/import/excel']);
+    this.router.navigate([this.urlPrefix]);
   }
 
   ngOnInit() {

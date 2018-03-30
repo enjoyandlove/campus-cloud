@@ -9,7 +9,6 @@ import { BaseService } from '../../../../base';
 @Injectable()
 export class OrientationService extends BaseService {
   dummy;
-  mockJson = require('./mock.json');
 
   constructor(http: Http, router: Router) {
     super(http, router);

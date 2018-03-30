@@ -114,12 +114,6 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
     this.fetch();
   }
 
-  // todo might be removed as we redirect to event
-  onCreated(newProgram: any): void {
-    this.launchCreateModal = false;
-    this.state.orientationPrograms = [newProgram, ...this.state.orientationPrograms];
-  }
-
   onDeleted(programId: number) {
     this.selectedProgram = null;
     this.launchDeleteModal = false;

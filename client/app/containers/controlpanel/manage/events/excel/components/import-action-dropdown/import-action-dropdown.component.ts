@@ -3,9 +3,10 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
+import { EventAttendance } from '../../../event.status';
+import { EventUtilService } from '../../../events.utils.service';
 import { CPSession, ISchool } from '../../../../../../../session';
 import { BaseComponent } from '../../../../../../../base/base.component';
-import { CP_PRIVILEGES_MAP } from '../../../../../../../shared/constants';
 import { StoreService, AdminService, CPI18nService } from '../../../../../../../shared/services';
 
 interface IState {
@@ -24,12 +25,11 @@ interface IState {
 export class EventsImportActionDropdownComponent extends BaseComponent implements OnInit {
   @Input() props: any;
   @Input() storeId: number;
-
   @Input() clubId: number;
   @Input() isClub: boolean;
-
   @Input() serviceId: number;
   @Input() isService: boolean;
+  @Input() isOrientation: boolean;
 
   @Output() bulkAction: EventEmitter<IState> = new EventEmitter();
 
@@ -47,6 +47,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
   constructor(
     private session: CPSession,
     private cpI18n: CPI18nService,
+    private utils: EventUtilService,
     private adminService: AdminService,
     private storeService: StoreService
   ) {
@@ -82,7 +83,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
 
     search.append('school_id', this.school.id.toString());
     search.append('store_id', storeId);
-    search.append('privilege_type', CP_PRIVILEGES_MAP.events.toString());
+    search.append('privilege_type', this.utils.getPrivilegeType(this.isOrientation));
 
     return this.adminService
       .getAdminByStoreId(search)
@@ -106,7 +107,9 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
   }
 
   toggleEventAttendance() {
-    const value = this.state.event_attendance === 0 ? 1 : 0;
+    const value = this.state.event_attendance === EventAttendance.disabled
+      ? EventAttendance.enabled
+      : EventAttendance.disabled;
 
     this.state = Object.assign({}, this.state, { event_attendance: value });
 
@@ -136,7 +139,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
   defaultState() {
     this.state = Object.assign({}, this.state, {
       event_feedback: this.eventAttendanceFeedback[1],
-      event_attendance: 0,
+      event_attendance: EventAttendance.disabled,
       event_manager_id: null,
       attendance_manager_email: null
     });
@@ -162,7 +165,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
   }
 
   doSubmit() {
-    if (this.state.event_attendance === 0) {
+    if (this.state.event_attendance === EventAttendance.disabled) {
       this.defaultState();
     }
     this.bulkAction.emit(this.state);
@@ -178,7 +181,11 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
       this.updateManagersByStoreOrClubId(this.clubId);
     }
 
-    if (!this.isClub && !this.isService) {
+    if (this.isOrientation) {
+      this.updateManagersByStoreOrClubId(null);
+    }
+
+    if (!this.isClub && !this.isService && !this.isOrientation) {
       this.listenForHostChanges();
     }
 
@@ -195,7 +202,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
 
     this.state = {
       store_id: null,
-      event_attendance: 0,
+      event_attendance: EventAttendance.disabled,
       event_manager_id: null,
       attendance_manager_email: null,
       event_feedback: this.eventAttendanceFeedback[1]

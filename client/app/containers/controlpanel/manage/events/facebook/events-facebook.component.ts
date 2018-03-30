@@ -74,8 +74,8 @@ export class EventsFacebookComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     this.buildHeader();
 
-    const isClubOrService = this.storeId || this.clubId;
+    const isClubService = this.storeId || this.clubId;
 
-    return isClubOrService ? (this.loading = false) : this.fetch();
+    return isClubService ? (this.loading = false) : this.fetch();
   }
 }

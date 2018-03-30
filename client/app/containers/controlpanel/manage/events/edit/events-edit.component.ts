@@ -1,3 +1,4 @@
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, Input } from '@angular/core';
@@ -6,40 +7,49 @@ import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
+import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { EventsService } from '../events.service';
 import { FORMAT } from '../../../../../shared/pipes/date';
 import { CPSession, ISchool } from '../../../../../session';
 import { CPMap, CPDate } from '../../../../../shared/utils';
 import { BaseComponent } from '../../../../../base/base.component';
-import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-import { ErrorService, StoreService, AdminService } from '../../../../../shared/services';
+import {
+  ErrorService,
+  StoreService,
+  AdminService,
+} from '../../../../../shared/services';
 
-import { EventAttendance } from '../event.status';
+import { EventAttendance, IsAllDay } from '../event.status';
+import { EventUtilService } from '../events.utils.service';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
+import * as moment from 'moment';
 
+const FORMAT_WITH_TIME = 'F j, Y h:i K';
+const FORMAT_WITHOUT_TIME = 'F j, Y';
 const COMMON_DATE_PICKER_OPTIONS = {
   altInput: true,
   enableTime: true,
-  altFormat: 'F j, Y h:i K'
+  altFormat: 'F j, Y h:i K',
 };
 
 @Component({
   selector: 'cp-events-edit',
   templateUrl: './events-edit.component.html',
-  styleUrls: ['./events-edit.component.scss']
+  styleUrls: ['./events-edit.component.scss'],
 })
 export class EventsEditComponent extends BaseComponent implements OnInit {
   @Input() storeId: number;
   @Input() isClub: boolean;
-  @Input() clubId: boolean;
+  @Input() clubId: number;
   @Input() isService: boolean;
   @Input() isAthletic: number;
+  @Input() orientationId: number;
+  @Input() isOrientation: boolean;
   @Input() toolTipContent: IToolTipContent;
 
   event;
   stores;
+  urlPrefix;
   buttonData;
   dateFormat;
   serverError;
@@ -56,6 +66,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   dateErrorMessage;
   attendanceManager;
   enddatePickerOpts;
+  attendanceEnabled;
   attendance = false;
   isFormReady = false;
   startdatePickerOpts;
@@ -72,19 +83,17 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     public cpI18n: CPI18nService,
     private store: Store<IHeader>,
     private route: ActivatedRoute,
+    private utils: EventUtilService,
     private adminService: AdminService,
     private storeService: StoreService,
     private errorService: ErrorService,
-    private eventService: EventsService
+    private service: EventsService,
   ) {
     super();
     this.school = this.session.g.get('school');
     this.eventId = this.route.snapshot.params['eventId'];
 
     super.isLoading().subscribe((res) => (this.loading = res));
-
-    this.fetch();
-    this.buildHeader();
   }
 
   onUploadedImage(image) {
@@ -149,24 +158,13 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    this.eventService.updateEvent(data, this.eventId).subscribe(
+    if (this.form.controls['is_all_day'].value) {
+      this.updateTime();
+    }
+
+    this.service.updateEvent(data, this.eventId).subscribe(
       (_) => {
-        if (this.isAthletic) {
-          this.router.navigate([`/manage/athletics/${this.clubId}/events/${this.eventId}`]);
-
-          return;
-        }
-        if (this.isService) {
-          this.router.navigate([`/manage/services/${this.storeId}/events/${this.eventId}`]);
-
-          return;
-        }
-        if (this.isClub) {
-          this.router.navigate([`/manage/clubs/${this.clubId}/events/${this.eventId}`]);
-
-          return;
-        }
-        this.router.navigate(['/manage/events/' + this.eventId]);
+        this.router.navigate([this.urlPrefix]);
       },
       (_) => {
         this.serverError = true;
@@ -180,7 +178,8 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   private buildForm(res) {
     this.form = this.fb.group({
       title: [res.title, Validators.required],
-      store_id: [res.store_id, Validators.required],
+      store_id: [res.store_id, !this.isOrientation ? Validators.required : null],
+      calendar_id: [this.orientationId, this.isOrientation ? Validators.required : null],
       location: [res.location],
       room_data: [res.room_data],
       city: [res.city],
@@ -199,7 +198,8 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       event_feedback: [res.event_feedback],
       event_manager_id: [res.event_manager_id],
       attendance_manager_email: [res.attendance_manager_email],
-      custom_basic_feedback_label: [res.custom_basic_feedback_label]
+      custom_basic_feedback_label: [res.custom_basic_feedback_label],
+      is_all_day: [res.is_all_day],
     });
 
     this.updateDatePicker();
@@ -235,8 +235,47 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     };
   }
 
+  toggleDatePickerTime(checked) {
+    const dateFormat = checked ? FORMAT_WITHOUT_TIME : FORMAT_WITH_TIME;
+
+    this.startdatePickerOpts = {
+      ...this.startdatePickerOpts,
+      enableTime: !checked,
+      dateFormat
+    };
+
+    this.enddatePickerOpts = {
+      ...this.enddatePickerOpts,
+      enableTime: !checked,
+      dateFormat
+    };
+  }
+
+  updateTime() {
+    const startDateAtMidnight = CPDate.fromEpoch(
+      this.form.controls['start'].value,
+    ).setHours(0, 0, 0, 0);
+
+    const endDateAtMidnight = CPDate.fromEpoch(
+      this.form.controls['end'].value,
+    ).setHours(23, 59, 59, 0);
+
+    this.form.controls['start'].setValue(
+      CPDate.toEpoch(moment(startDateAtMidnight).toDate()),
+    );
+    this.form.controls['end'].setValue(
+      CPDate.toEpoch(moment(endDateAtMidnight).toDate()),
+    );
+  }
+
   onSelectedManager(manager): void {
     this.form.controls['event_manager_id'].setValue(manager.value);
+  }
+
+  onAllDayToggle(value) {
+    this.toggleDatePickerTime(value);
+    value = value ? IsAllDay.enabled : IsAllDay.disabled;
+    this.form.controls['is_all_day'].setValue(value);
   }
 
   onSelectedHost(host): void {
@@ -247,10 +286,10 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
   fetchManagersBySelectedStore(storeId) {
     const search: URLSearchParams = new URLSearchParams();
-
+    storeId = null;
     search.append('school_id', this.school.id.toString());
     search.append('store_id', storeId);
-    search.append('privilege_type', CP_PRIVILEGES_MAP.events.toString());
+    search.append('privilege_type', this.utils.getPrivilegeType(this.isOrientation));
 
     this.adminService
       .getAdminByStoreId(search)
@@ -277,13 +316,15 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
+    let stores$ = Observable.of([]);
     const school = this.session.g.get('school');
     const search: URLSearchParams = new URLSearchParams();
     search.append('school_id', school.id.toString());
 
-    const event$ = this.eventService.getEventById(this.eventId);
-    const stores$ = this.storeService.getStores(search);
-
+    if (!this.isClub && !this.isService && !this.isOrientation) {
+      stores$ = this.storeService.getStores(search);
+    }
+    const event$ = this.service.getEventById(this.eventId);
     const stream$ = Observable.combineLatest(event$, stores$);
 
     super
@@ -322,7 +363,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   toggleEventAttendance(value) {
-    value = value ? 1 : 0;
+    value = value ? EventAttendance.enabled : EventAttendance.disabled;
 
     this.enableStudentFeedbackOnAttendanceToggle(value);
 
@@ -399,6 +440,14 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       class: 'primary'
     };
 
+    this.urlPrefix = this.utils.buildUrlPrefixEvents(
+      this.clubId,
+      this.storeId,
+      this.isAthletic,
+      this.orientationId,
+      this.eventId
+    );
+
     this.dateFormat = FORMAT.DATETIME;
     this.booleanOptions = [
       {
@@ -410,5 +459,9 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
         action: EventAttendance.disabled
       }
     ];
+
+    this.attendanceEnabled = EventAttendance.enabled;
+    this.fetch();
+    this.buildHeader();
   }
 }

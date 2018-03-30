@@ -14,8 +14,10 @@ import { CPSession, ISchool } from '../../../../../session';
 import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { CPI18nPipe } from './../../../../../shared/pipes/i18n/i18n.pipe';
-import { STATUS, CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
+import { STATUS } from '../../../../../shared/constants';
 import { CPImageUploadComponent } from '../../../../../shared/components';
+import { EventUtilService } from '../events.utils.service';
+import { EventAttendance, EventFeedback, IsAllDay } from '../event.status';
 import {
   FileUploadService,
   CPI18nService,
@@ -39,23 +41,24 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   @Input() serviceId: number;
   @Input() isService: boolean;
   @Input() isChecked: boolean;
+  @Input() orientationId: number;
+  @Input() isOrientation: boolean;
 
   error;
   events;
   stores;
+  urlPrefix;
   formError;
   buttonData;
   selectedHost = [];
   eventManager = [];
   attendanceFeedback = [];
   uploadButtonData;
-  mockDropdown;
   isSingleChecked = [];
   school: ISchool;
   loading = false;
   form: FormGroup;
   isFormReady = false;
-  buttonDropdownOptions;
   eventAttendanceFeedback;
   resetManagerDropdown$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
@@ -64,11 +67,12 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     private fb: FormBuilder,
     private store: Store<any>,
     private session: CPSession,
+    private cpI18n: CPI18nService,
+    private service: EventsService,
+    private utils: EventUtilService,
     private adminService: AdminService,
     private storeService: StoreService,
-    private eventsService: EventsService,
-    private cpI18n: CPI18nService,
-    private fileUploadService: FileUploadService
+    private fileUploadService: FileUploadService,
   ) {
     super();
     this.school = this.session.g.get('school');
@@ -100,8 +104,8 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       payload: {
         heading: 'events_import_csv_heading',
         crumbs: {
-          url: 'events',
-          label: 'events'
+          url: this.urlPrefix,
+          label: 'events',
         },
         em: `[NOTRANSLATE]${subheading}[NOTRANSLATE]`,
         children: []
@@ -120,6 +124,9 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     }
     if (this.isClub) {
       this.updateManagersByStoreOrClubId(this.clubId);
+    }
+    if (this.isOrientation) {
+      this.updateManagersByStoreOrClubId(null);
     }
 
     this.form.valueChanges.subscribe((_) => {
@@ -157,8 +164,10 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     }
 
     return this.fb.group({
-      store_id: [store_id ? store_id : null, Validators.required],
+      store_id: [store_id ? store_id : null, !this.isOrientation ? Validators.required : null],
+      calendar_id: [this.orientationId, this.isOrientation ? Validators.required : null],
       room: [event.room],
+      is_all_day: [IsAllDay.enabled],
       title: [event.title, Validators.required],
       poster_url: [null, Validators.required],
       poster_thumb_url: [null, Validators.required],
@@ -170,8 +179,8 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       // these controls are only required when event attendance is true
       attendance_manager_email: [null],
       event_manager_id: [null],
-      event_attendance: [1],
-      event_feedback: [1]
+      event_attendance: [EventAttendance.enabled],
+      event_feedback: [EventFeedback.enabled],
     });
   }
 
@@ -251,7 +260,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
 
     search.append('school_id', this.school.id.toString());
     search.append('store_id', storeOrClubId);
-    search.append('privilege_type', CP_PRIVILEGES_MAP.events.toString());
+    search.append('privilege_type', this.utils.getPrivilegeType(this.isOrientation));
 
     return this.adminService
       .getAdminByStoreId(search)
@@ -365,7 +374,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
 
     Object.keys(eventGroups).forEach((index) => {
       const controls = eventGroups[index].controls;
-      if (controls.event_attendance.value === 1) {
+      if (controls.event_attendance.value === EventAttendance.enabled) {
         if (!controls.event_manager_id.value) {
           requiredFieldsError = true;
           controls.event_manager_id.setErrors({ required: true });
@@ -397,6 +406,8 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       }
       let _event = {
         title: events[key].title,
+        calendar_id: this.orientationId,
+        is_all_day: IsAllDay.disabled,
         store_id: store_id ? store_id : events[key].store_id,
         description: events[key].description,
         end: events[key].end,
@@ -408,7 +419,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
         event_attendance: events[key].event_attendance
       };
 
-      if (events[key].event_attendance === 1) {
+      if (events[key].event_attendance === EventAttendance.enabled) {
         _event = Object.assign({}, _event, {
           event_feedback: events[key].event_feedback,
           event_manager_id: events[key].event_manager_id,
@@ -419,27 +430,11 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       _events.push(_event);
     });
 
-    this.eventsService.createEvent(_events).subscribe(
+    this.service.createEvent(_events).subscribe(
       (_) => {
-        if (this.isAthletic) {
-          this.router.navigate([`/manage/athletics/${this.clubId}/events`]);
+        this.router.navigate([this.urlPrefix]);
 
-          return;
-        }
-
-        if (this.isClub) {
-          this.router.navigate([`/manage/clubs/${this.clubId}/events`]);
-
-          return;
-        }
-
-        if (this.isService) {
-          this.router.navigate([`/manage/services/${this.serviceId}/events`]);
-
-          return;
-        }
-
-        this.router.navigate(['/manage/events']);
+        return;
       },
       (err) => {
         this.formError = true;
@@ -463,10 +458,19 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     const control = <FormGroup>controls.controls[index];
 
     control.controls['event_manager_id'].setValue(null);
-    control.controls['event_attendance'].setValue(checked ? 1 : 0);
+    control.controls['event_attendance'].setValue(checked
+      ? EventAttendance.enabled
+      : EventAttendance.disabled);
   }
 
   ngOnInit() {
+    this.urlPrefix = this.utils.buildUrlPrefix(
+      this.clubId,
+      this.serviceId,
+      this.isAthletic,
+      this.orientationId,
+    );
+
     this.isChecked = false;
     this.uploadButtonData = {
       class: 'disabled',
@@ -483,7 +487,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       this.events = !isDev ? res : require('./mock.json');
       // this.events = res;
 
-      if (!this.storeId && !this.clubId) {
+      if (!this.storeId && !this.clubId && !this.isOrientation) {
         this.fetch();
 
         return;
