@@ -36,8 +36,8 @@ export class TodosFormComponent implements OnInit {
     this.dueDate = {
       ...COMMON_DATE_PICKER_OPTIONS,
       defaultDate: CPDate.fromEpoch(this.form.controls['due_date'].value),
-      onClose: function(date) {
-        _self.form.controls['due_date'].setValue(CPDate.toEpoch(date[0]));
+      onClose: function(_, dateStr) {
+        _self.form.controls['due_date'].setValue(CPDate.toEpoch(dateStr));
       },
     };
   }
