@@ -41,7 +41,7 @@ class MockStudentsService {
         time_epoch: 1467907902,
         rating_scale_maximum: 5,
         type: 'event',
-        feedback_time_epoch: 1469024496,
+        feedback_time_epoch: 1469024496
       },
       {
         related_id: 1483825,
@@ -52,8 +52,8 @@ class MockStudentsService {
         time_epoch: 1471644492,
         rating_scale_maximum: 5,
         type: 'event',
-        feedback_time_epoch: 1471877917,
-      },
+        feedback_time_epoch: 1471877917
+      }
     ]);
   }
 }
@@ -72,8 +72,8 @@ describe('StudentsProfileComponent', () => {
         SharedModule,
         StoreModule.forRoot({
           HEADER: headerReducer,
-          SNACKBAR: snackBarReducer,
-        }),
+          SNACKBAR: snackBarReducer
+        })
       ],
       providers: [
         CPSession,
@@ -85,12 +85,12 @@ describe('StudentsProfileComponent', () => {
           provide: ActivatedRoute,
           useValue: {
             snapshot: {
-              params: Observable.of({ studentId: 1 }),
-            },
-          },
-        },
+              params: Observable.of({ studentId: 1 })
+            }
+          }
+        }
       ],
-      schemas: [NO_ERRORS_SCHEMA],
+      schemas: [NO_ERRORS_SCHEMA]
     });
 
     store = TestBed.get(Store);
@@ -115,17 +115,16 @@ describe('StudentsProfileComponent', () => {
     const expected = {
       class: 'success',
       autoClose: true,
+      sticky: false,
       autoCloseDelay: 4000,
-      body: 'Success! Your message has been sent',
+      body: 'Success! Your message has been sent'
     };
 
     comp.fetchStudentData();
 
     comp.onFlashMessage();
 
-    store
-      .select('SNACKBAR')
-      .subscribe((payload) => expect(payload).toEqual(expected));
+    store.select('SNACKBAR').subscribe((payload) => expect(payload).toEqual(expected));
   });
 
   it('should launchMessageModal', () => {
@@ -134,7 +133,7 @@ describe('StudentsProfileComponent', () => {
 
     const mockMessageData = {
       name: `${mockUser.firstname} ${mockUser.lastname}`,
-      userIds: [mockUser.id],
+      userIds: [mockUser.id]
     };
 
     comp.launchMessageModal();
@@ -159,19 +158,15 @@ describe('StudentsProfileComponent', () => {
       heading: 'Mock User',
       subheading: null,
       em: null,
-      children: [],
+      children: []
     };
     comp.fetchStudentData();
 
-    store
-      .select('HEADER')
-      .subscribe((payload) => expect(payload).toEqual(expected));
+    store.select('HEADER').subscribe((payload) => expect(payload).toEqual(expected));
   });
 
   xit('Spy on real service test', (done) => {
-    const spy = spyOn(service, 'getStudentById').and.returnValue(
-      Observable.of('Sopa'),
-    );
+    const spy = spyOn(service, 'getStudentById').and.returnValue(Observable.of('Sopa'));
 
     fixture.detectChanges();
     spy.calls.mostRecent().returnValue.subscribe(() => {

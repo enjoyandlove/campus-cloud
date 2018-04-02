@@ -1,3 +1,4 @@
+/*tslint:disable:max-line-length*/
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -27,7 +28,7 @@ const i18n = new CPI18nPipe();
 @Component({
   selector: 'cp-events-excel',
   templateUrl: './events-excel.component.html',
-  styleUrls: ['./events-excel.component.scss'],
+  styleUrls: ['./events-excel.component.scss']
 })
 export class EventsExcelComponent extends BaseComponent implements OnInit {
   @Input() storeId: number;
@@ -44,6 +45,9 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   stores;
   formError;
   buttonData;
+  selectedHost = [];
+  eventManager = [];
+  attendanceFeedback = [];
   uploadButtonData;
   mockDropdown;
   isSingleChecked = [];
@@ -90,27 +94,24 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   }
 
   private buildHeader() {
-    const subheading = i18n.transform(
-      'events_import_csv_sub_heading',
-      this.events.length,
-    );
+    const subheading = i18n.transform('events_import_csv_sub_heading', this.events.length);
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
         heading: 'events_import_csv_heading',
         crumbs: {
           url: 'events',
-          label: 'events',
+          label: 'events'
         },
         em: `[NOTRANSLATE]${subheading}[NOTRANSLATE]`,
-        children: [],
-      },
+        children: []
+      }
     });
   }
 
   private buildForm() {
     this.form = this.fb.group({
-      events: this.fb.array([]),
+      events: this.fb.array([])
     });
     this.buildGroup();
 
@@ -123,7 +124,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
 
     this.form.valueChanges.subscribe((_) => {
       this.buttonData = Object.assign({}, this.buttonData, {
-        disabled: !this.form.valid,
+        disabled: !this.form.valid
       });
     });
   }
@@ -170,7 +171,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       attendance_manager_email: [null],
       event_manager_id: [null],
       event_attendance: [1],
-      event_feedback: [1],
+      event_feedback: [1]
     });
   }
 
@@ -194,9 +195,24 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     this.isSingleChecked.map((item) => {
       if (item.checked) {
         const ctrl = <FormGroup>control.controls[item.index];
-
         Object.keys(actions).forEach((key) => {
-          ctrl.controls[key].setValue(actions[key]);
+          if (key === 'store_id' && actions[key] !== null) {
+            this.selectedHost[item.index] = actions[key];
+            ctrl.controls[key].setValue(actions[key].value);
+            this.updateManagersByStoreOrClubId(actions[key].value);
+          } else if (key === 'event_manager_id') {
+            this.eventManager[item.index] = actions[key];
+            if (actions[key] !== null) {
+              ctrl.controls[key].setValue(actions[key].value);
+            } else {
+              ctrl.controls[key].setValue(actions[key]);
+            }
+          } else if (key === 'event_feedback') {
+            this.attendanceFeedback[item.index] = actions[key];
+            ctrl.controls[key].setValue(actions[key].event);
+          } else if (actions[key] !== null) {
+            ctrl.controls[key].setValue(actions[key]);
+          }
         });
       }
 
@@ -244,13 +260,13 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
         const _admins = [
           {
             label: '---',
-            value: null,
-          },
+            value: null
+          }
         ];
         admins.forEach((admin) => {
           _admins.push({
             label: `${admin.firstname} ${admin.lastname}`,
-            value: admin.id,
+            value: admin.id
           });
         });
 
@@ -277,6 +293,9 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   }
 
   onCheckAll(checked) {
+    if (this.events.length < 1) {
+      return;
+    }
     const isChecked = [];
 
     this.isSingleChecked.map((item) => {
@@ -284,7 +303,6 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     });
     this.updateUploadPictureButtonStatus(checked);
     this.isSingleChecked = [...isChecked];
-
   }
 
   resetAllCheckboxes(checked, index) {
@@ -387,14 +405,14 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
         location: events[key].location,
         poster_url: events[key].poster_url,
         poster_thumb_url: events[key].poster_thumb_url,
-        event_attendance: events[key].event_attendance,
+        event_attendance: events[key].event_attendance
       };
 
       if (events[key].event_attendance === 1) {
         _event = Object.assign({}, _event, {
           event_feedback: events[key].event_feedback,
           event_manager_id: events[key].event_manager_id,
-          attendance_manager_email: events[key].attendance_manager_email,
+          attendance_manager_email: events[key].attendance_manager_email
         });
       }
 
@@ -426,7 +444,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       (err) => {
         this.formError = true;
         this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: false,
+          disabled: false
         });
 
         if (err.status === 400) {
@@ -436,7 +454,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
         }
 
         this.error = STATUS.SOMETHING_WENT_WRONG;
-      },
+      }
     );
   }
 
@@ -478,12 +496,12 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     this.eventAttendanceFeedback = [
       {
         label: 'Enabled',
-        event: 1,
+        event: 1
       },
       {
         label: 'Disabled',
-        event: 0,
-      },
+        event: 0
+      }
     ];
   }
 }

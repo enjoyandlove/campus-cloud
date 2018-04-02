@@ -8,20 +8,13 @@ import { TEAM_ACCESS } from '../utils';
 import { CPSession } from '../../../../../session';
 import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
-import {
-  CP_PRIVILEGES,
-  CP_PRIVILEGES_MAP,
-} from '../../../../../shared/constants';
-import {
-  ErrorService,
-  AdminService,
-  CPI18nService,
-} from '../../../../../shared/services';
+import { CP_PRIVILEGES, CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
+import { ErrorService, AdminService, CPI18nService } from '../../../../../shared/services';
 
 import {
   accountsToStoreMap,
   canSchoolReadResource,
-  canAccountLevelReadResource,
+  canAccountLevelReadResource
 } from './../../../../../shared/utils/privileges/privileges';
 
 import {
@@ -30,7 +23,7 @@ import {
   eventMenu,
   athleticMenu,
   manageAdminMenu,
-  TeamUtilsService,
+  TeamUtilsService
 } from '../team.utils.service';
 
 declare var $: any;
@@ -38,7 +31,7 @@ declare var $: any;
 @Component({
   selector: 'cp-team-create',
   templateUrl: './team-create.component.html',
-  styleUrls: ['./team-create.component.scss'],
+  styleUrls: ['./team-create.component.scss']
 })
 export class TeamCreateComponent implements OnInit {
   user;
@@ -82,13 +75,13 @@ export class TeamCreateComponent implements OnInit {
     private cpI18n: CPI18nService,
     public utils: TeamUtilsService,
     private teamService: AdminService,
-    private errorService: ErrorService,
+    private errorService: ErrorService
   ) {}
 
   private buildHeader() {
     this.store.dispatch({
       type: HEADER_UPDATE,
-      payload: require('../../settings.header.json'),
+      payload: require('../../settings.header.json')
     });
   }
 
@@ -96,12 +89,12 @@ export class TeamCreateComponent implements OnInit {
     this.form = this.fb.group({
       firstname: [null, Validators.required],
       lastname: [null, Validators.required],
-      email: [null, Validators.required],
+      email: [null, Validators.required]
     });
 
     this.form.valueChanges.subscribe((_) => {
       this.buttonData = Object.assign({}, this.buttonData, {
-        disabled: !this.form.valid,
+        disabled: !this.form.valid
       });
     });
   }
@@ -113,7 +106,7 @@ export class TeamCreateComponent implements OnInit {
     if (!this.form.valid) {
       this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       this.errorService.handleError({
-        reason: this.cpI18n.translate('all_fields_are_required'),
+        reason: this.cpI18n.translate('all_fields_are_required')
       });
 
       return;
@@ -123,19 +116,17 @@ export class TeamCreateComponent implements OnInit {
       ...data,
       school_level_privileges: {
         [this.schoolId]: {
-          ...this.schoolPrivileges,
-        },
+          ...this.schoolPrivileges
+        }
       },
       account_level_privileges: {
-        ...this.accountPrivileges,
-      },
+        ...this.accountPrivileges
+      }
     };
 
     const isEmpty = require('lodash').isEmpty;
     const emptyAccountPrivileges = isEmpty(_data.account_level_privileges);
-    const emptySchoolPrivileges = isEmpty(
-      _data.school_level_privileges[this.schoolId],
-    );
+    const emptySchoolPrivileges = isEmpty(_data.school_level_privileges[this.schoolId]);
 
     if (emptyAccountPrivileges && emptySchoolPrivileges) {
       this.formError = this.cpI18n.translate('admins_error_no_access_granted');
@@ -157,7 +148,7 @@ export class TeamCreateComponent implements OnInit {
         }
 
         this.formError = this.cpI18n.translate('something_went_wrong');
-      },
+      }
     );
   }
 
@@ -174,8 +165,8 @@ export class TeamCreateComponent implements OnInit {
       this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
         [CP_PRIVILEGES_MAP.manage_admin]: {
           r: true,
-          w: true,
-        },
+          w: true
+        }
       });
     }
   }
@@ -186,14 +177,11 @@ export class TeamCreateComponent implements OnInit {
         {},
         accountsToStoreMap(
           this.session.g.get('user').account_mapping[this.schoolId],
-          this.user.account_level_privileges,
-        ),
+          this.user.account_level_privileges
+        )
       );
 
-      this.schoolPrivileges = Object.assign(
-        {},
-        this.user.school_level_privileges[this.schoolId],
-      );
+      this.schoolPrivileges = Object.assign({}, this.user.school_level_privileges[this.schoolId]);
 
       return;
     }
@@ -204,15 +192,9 @@ export class TeamCreateComponent implements OnInit {
 
   onServicesModalSelected(services) {
     const servicesLength = Object.keys(services).length;
-    this.servicesCount = servicesLength
-      ? { label: `${servicesLength} Service(s)` }
-      : null;
+    this.servicesCount = servicesLength ? { label: `${servicesLength} Service(s)` } : null;
 
-    this.accountPrivileges = Object.assign(
-      {},
-      this.accountPrivileges,
-      ...services,
-    );
+    this.accountPrivileges = Object.assign({}, this.accountPrivileges, ...services);
   }
 
   onServicesSelected(service) {
@@ -224,7 +206,7 @@ export class TeamCreateComponent implements OnInit {
           $('#selectServicesModal').modal();
         },
 
-        1,
+        1
       );
 
       return;
@@ -250,8 +232,8 @@ export class TeamCreateComponent implements OnInit {
       this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
         [CP_PRIVILEGES_MAP.services]: {
           r: service.action === 2 ? true : true,
-          w: service.action === 2 ? false : true,
-        },
+          w: service.action === 2 ? false : true
+        }
       });
     }
   }
@@ -260,25 +242,15 @@ export class TeamCreateComponent implements OnInit {
     const clubsLength = Object.keys(clubs).length;
     this.clubsCount = clubsLength ? { label: `${clubsLength} Club(s)` } : null;
 
-    this.accountPrivileges = Object.assign(
-      {},
-      this.accountPrivileges,
-      ...clubs,
-    );
+    this.accountPrivileges = Object.assign({}, this.accountPrivileges, ...clubs);
   }
 
   onAthleticsModalSelected(athletics) {
     this.doAthleticsCleanUp();
     const athleticsLength = Object.keys(athletics).length;
-    this.athleticsCount = athleticsLength
-      ? { label: `${athleticsLength} Athletic(s)` }
-      : null;
+    this.athleticsCount = athleticsLength ? { label: `${athleticsLength} Athletic(s)` } : null;
 
-    this.accountPrivileges = Object.assign(
-      {},
-      this.accountPrivileges,
-      ...athletics,
-    );
+    this.accountPrivileges = Object.assign({}, this.accountPrivileges, ...athletics);
   }
 
   doClubsCleanUp() {
@@ -341,7 +313,7 @@ export class TeamCreateComponent implements OnInit {
           $('#selectClubsModal').modal();
         },
 
-        1,
+        1
       );
 
       return;
@@ -358,25 +330,25 @@ export class TeamCreateComponent implements OnInit {
       this.doClubsCleanUp();
       this.resetClubsModal$.next(true);
 
-      const clubPrivilege = this.session.g.get('user').school_level_privileges[
-        this.schoolId
-      ][CP_PRIVILEGES_MAP.clubs];
+      const clubPrivilege = this.session.g.get('user').school_level_privileges[this.schoolId][
+        CP_PRIVILEGES_MAP.clubs
+      ];
 
       this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
         [CP_PRIVILEGES_MAP.clubs]: {
           r: true,
-          w: clubPrivilege.w,
+          w: clubPrivilege.w
         },
 
         [CP_PRIVILEGES_MAP.moderation]: {
           r: true,
-          w: clubPrivilege.w,
+          w: clubPrivilege.w
         },
 
         [CP_PRIVILEGES_MAP.membership]: {
           r: true,
-          w: clubPrivilege.w,
-        },
+          w: clubPrivilege.w
+        }
       });
     }
   }
@@ -389,7 +361,7 @@ export class TeamCreateComponent implements OnInit {
           $('#selectAthleticsModal').modal();
         },
 
-        1,
+        1
       );
 
       return;
@@ -406,24 +378,25 @@ export class TeamCreateComponent implements OnInit {
       this.doAthleticsCleanUp();
       this.resetAthleticsModal$.next(true);
 
-      const athleticPrivilege = this.session.g.get('user')
-        .school_level_privileges[this.schoolId][CP_PRIVILEGES_MAP.athletics];
+      const athleticPrivilege = this.session.g.get('user').school_level_privileges[this.schoolId][
+        CP_PRIVILEGES_MAP.athletics
+      ];
 
       this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
         [CP_PRIVILEGES_MAP.athletics]: {
           r: true,
-          w: athleticPrivilege.w,
+          w: athleticPrivilege.w
         },
 
         [CP_PRIVILEGES_MAP.moderation]: {
           r: true,
-          w: athleticPrivilege.w,
+          w: athleticPrivilege.w
         },
 
         [CP_PRIVILEGES_MAP.membership]: {
           r: true,
-          w: athleticPrivilege.w,
-        },
+          w: athleticPrivilege.w
+        }
       });
     }
   }
@@ -448,8 +421,8 @@ export class TeamCreateComponent implements OnInit {
       this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
         [CP_PRIVILEGES_MAP.events]: {
           r: true,
-          w: true,
-        },
+          w: true
+        }
       });
     }
 
@@ -457,13 +430,13 @@ export class TeamCreateComponent implements OnInit {
       this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
         [CP_PRIVILEGES_MAP.events]: {
           r: true,
-          w: true,
+          w: true
         },
 
         [CP_PRIVILEGES_MAP.event_attendance]: {
           r: true,
-          w: true,
-        },
+          w: true
+        }
       });
     }
   }
@@ -504,15 +477,13 @@ export class TeamCreateComponent implements OnInit {
       return;
     }
 
-    const privilege = this.user.school_level_privileges[this.schoolId][
-      privilegeNo
-    ];
+    const privilege = this.user.school_level_privileges[this.schoolId][privilegeNo];
 
     this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
       [privilegeNo]: {
         r: privilege.r,
-        w: privilege.w,
-      },
+        w: privilege.w
+      }
     });
 
     this.handleDependencies(privilegeNo, privilegeExtraData.deps);
@@ -528,7 +499,7 @@ export class TeamCreateComponent implements OnInit {
     this.buttonData = {
       disabled: true,
       class: 'primary',
-      text: this.cpI18n.translate('admin_create_button'),
+      text: this.cpI18n.translate('admin_create_button')
     };
 
     this.canReadClubs =
@@ -539,68 +510,50 @@ export class TeamCreateComponent implements OnInit {
       canSchoolReadResource(session, CP_PRIVILEGES_MAP.athletics) ||
       canAccountLevelReadResource(session, CP_PRIVILEGES_MAP.athletics);
 
-    this.canReadEvents = canSchoolReadResource(
-      session,
-      CP_PRIVILEGES_MAP.events,
-    );
+    this.canReadEvents = canSchoolReadResource(session, CP_PRIVILEGES_MAP.events);
 
     this.canReadServices =
       canSchoolReadResource(session, CP_PRIVILEGES_MAP.services) ||
       canAccountLevelReadResource(session, CP_PRIVILEGES_MAP.services);
 
-    this.formData = TEAM_ACCESS.getMenu(
-      this.user.school_level_privileges[this.schoolId],
-    );
+    this.formData = TEAM_ACCESS.getMenu(this.user.school_level_privileges[this.schoolId]);
 
     this.buildHeader();
     this.buildForm();
 
     const clubsPrivilegeSchool = schoolPrivileges[CP_PRIVILEGES_MAP.clubs];
 
-    const clubsPrivilegeAccount = canAccountLevelReadResource(
-      session,
-      CP_PRIVILEGES_MAP.clubs,
-    );
+    const clubsPrivilegeAccount = canAccountLevelReadResource(session, CP_PRIVILEGES_MAP.clubs);
 
-    const athleticsPrivilegeSchool =
-      schoolPrivileges[CP_PRIVILEGES_MAP.athletics];
+    const athleticsPrivilegeSchool = schoolPrivileges[CP_PRIVILEGES_MAP.athletics];
 
     const athleticsPrivilegeAccount = canAccountLevelReadResource(
       session,
-      CP_PRIVILEGES_MAP.athletics,
+      CP_PRIVILEGES_MAP.athletics
     );
 
     const eventsPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.events];
 
-    const eventsAssessmentPrivilege =
-      schoolPrivileges[CP_PRIVILEGES_MAP.event_attendance];
+    const eventsAssessmentPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.event_attendance];
 
-    const servicesPrivilegeSchool =
-      schoolPrivileges[CP_PRIVILEGES_MAP.services];
+    const servicesPrivilegeSchool = schoolPrivileges[CP_PRIVILEGES_MAP.services];
 
     const servicesPrivilegeAccount = canAccountLevelReadResource(
       session,
-      CP_PRIVILEGES_MAP.services,
+      CP_PRIVILEGES_MAP.services
     );
 
-    const manageAdminPrivilege =
-      schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin];
+    const manageAdminPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin];
 
-    this.clubsMenu = this.utils.clubsDropdown(
-      clubsPrivilegeSchool,
-      clubsPrivilegeAccount,
-    );
+    this.clubsMenu = this.utils.clubsDropdown(clubsPrivilegeSchool, clubsPrivilegeAccount);
     this.athleticsMenu = this.utils.athleticsDropdown(
       athleticsPrivilegeSchool,
-      athleticsPrivilegeAccount,
+      athleticsPrivilegeAccount
     );
-    this.eventsMenu = this.utils.eventsDropdown(
-      eventsPrivilege,
-      eventsAssessmentPrivilege,
-    );
+    this.eventsMenu = this.utils.eventsDropdown(eventsPrivilege, eventsAssessmentPrivilege);
     this.servicesMenu = this.utils.servicesDropdown(
       servicesPrivilegeSchool,
-      servicesPrivilegeAccount,
+      servicesPrivilegeAccount
     );
     this.manageAdmins = this.utils.manageAdminDropdown(manageAdminPrivilege);
   }

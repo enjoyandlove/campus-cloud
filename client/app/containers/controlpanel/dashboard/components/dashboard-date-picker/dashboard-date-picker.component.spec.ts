@@ -21,13 +21,15 @@ describe('DashboardDatePickerComponent', () => {
   let comp: DashboardDatePickerComponent;
   let fixture: ComponentFixture<DashboardDatePickerComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ DashboardDatePickerComponent ],
-      providers: [ DashboardUtilsService ]
-    });
-    // .compileComponents(); // compile template and css
-  }));
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        declarations: [DashboardDatePickerComponent],
+        providers: [DashboardUtilsService]
+      });
+      // .compileComponents(); // compile template and css
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DashboardDatePickerComponent);
@@ -76,7 +78,7 @@ describe('DashboardDatePickerComponent', () => {
     const expected = {
       start: 1512363600,
       end: 1512622799,
-      label: 'Dec 4, 2017 - Dec 6, 2017',
+      label: 'Dec 4th, 2017 - Dec 6th, 2017'
     };
 
     spyOn(comp, 'setLabel');

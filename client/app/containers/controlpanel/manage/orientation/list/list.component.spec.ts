@@ -115,5 +115,4 @@ describe('OrientationListComponent', () => {
     expect(component.startRange).toEqual(1);
     expect(component.endRange).toEqual(101);
   });
-
 });

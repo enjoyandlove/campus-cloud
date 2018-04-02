@@ -1,20 +1,18 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { ClubsService } from '../clubs.service';
-
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { isClubAthletic, clubAthleticLabels } from '../clubs.athletics.labels';
-
-declare var $: any;
 
 @Component({
   selector: 'cp-clubs-delete',
   templateUrl: './clubs-delete.component.html',
-  styleUrls: ['./clubs-delete.component.scss'],
+  styleUrls: ['./clubs-delete.component.scss']
 })
 export class ClubsDeleteComponent implements OnInit {
   @Input() club: any;
   @Input() isAthletic = isClubAthletic.club;
+  @Output() error: EventEmitter<string> = new EventEmitter();
   @Output() deletedClub: EventEmitter<number> = new EventEmitter();
 
   labels;
@@ -29,15 +27,18 @@ export class ClubsDeleteComponent implements OnInit {
 
         $('#deleteClubsModal').modal('hide');
 
-        this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: false,
-        });
+        this.buttonData = { ...this.buttonData, disabled: false };
       },
 
-      () =>
-        (this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: false,
-        })),
+      (err) => {
+        $('#deleteClubsModal').modal('hide');
+
+        this.buttonData = { ...this.buttonData, disabled: false };
+
+        this.error.emit(
+          err.status === 403 ? 'clubs_delete_error_unauthorized' : 'something_went_wrong'
+        );
+      }
     );
   }
 
@@ -45,7 +46,7 @@ export class ClubsDeleteComponent implements OnInit {
     this.labels = clubAthleticLabels(this.isAthletic);
     this.buttonData = {
       text: this.cpI18n.translate('delete'),
-      class: 'danger',
+      class: 'danger'
     };
   }
 }

@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs/Observable';
 import { BaseComponent } from './base.component';
 
-class BaseComponentMock extends BaseComponent { }
+class BaseComponentMock extends BaseComponent {}
 
 describe('BaseComponent', () => {
   let comp: BaseComponent;
@@ -52,16 +52,16 @@ describe('BaseComponent', () => {
 
   it('fetchData', () => {
     const arr = [];
-    for (let i = 1; i <= 200; i++) { arr.push(i); }
+    for (let i = 1; i <= 200; i++) {
+      arr.push(i);
+    }
 
     const fakeRequest = Observable.of(arr);
 
-    comp
-      .fetchData(fakeRequest)
-      .then((res) => {
-        expect(comp.pageNext).toBeTruthy();
-        expect(comp.pagePrev).toBeFalsy();
-        expect(res.data.length).toBe(199);
-      });
+    comp.fetchData(fakeRequest).then((res) => {
+      expect(comp.pageNext).toBeTruthy();
+      expect(comp.pagePrev).toBeFalsy();
+      expect(res.data.length).toBe(199);
+    });
   });
 });
