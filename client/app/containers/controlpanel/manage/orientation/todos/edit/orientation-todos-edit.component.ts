@@ -30,7 +30,6 @@ export class OrientationTodosEditComponent implements OnInit {
   @Output() resetEditModal: EventEmitter<null> = new EventEmitter();
 
   buttonData;
-  isTodo = true;
   form: FormGroup;
 
   constructor(
