@@ -111,9 +111,7 @@ export class OrientationTodosListComponent extends BaseComponent implements OnIn
     this.launchDeleteModal = false;
 
     this.state = Object.assign({}, this.state, {
-      todos: this.state.todos.filter(
-        (todo) => todo.id !== todoId,
-      ),
+      todos: this.state.todos.filter((todo) => todo.id !== todoId)
     });
 
     if (this.state.todos.length === 0 && this.pageNumber > 1) {
