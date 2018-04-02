@@ -29,7 +29,6 @@ export class OrientationTodosCreateComponent implements OnInit {
 
   buttonData;
   form: FormGroup;
-  isTodo = true;
 
   constructor(
     public el: ElementRef,

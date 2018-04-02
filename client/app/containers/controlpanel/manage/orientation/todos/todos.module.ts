@@ -1,20 +1,22 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { TodosService } from './todos.service';
+import { TodosFormComponent } from './components';
 import { OrientationTodosListComponent } from './list';
 import { OrientationTodosEditComponent } from './edit';
 import { OrientationTodosDeleteComponent } from './delete';
 import { OrientationTodosCreateComponent } from './create';
 import { TodosListActionBoxComponent } from './list/components/action-box';
 
-import { RouterModule } from '@angular/router';
 import { SharedModule } from '../../../../../shared/shared.module';
 import { TodosRoutingModule } from './todos.routing.module';
-import { CalendarsModule } from '../../calendars/calendars.module';
 
 @NgModule({
   declarations: [
+    TodosFormComponent,
     TodosListActionBoxComponent,
     OrientationTodosEditComponent,
     OrientationTodosListComponent,
@@ -27,7 +29,7 @@ import { CalendarsModule } from '../../calendars/calendars.module';
     SharedModule,
     RouterModule,
     TodosRoutingModule,
-    CalendarsModule
+    ReactiveFormsModule,
   ],
 
   providers: [
