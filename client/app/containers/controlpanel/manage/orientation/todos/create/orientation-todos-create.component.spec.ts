@@ -21,6 +21,7 @@ class MockTodosService {
 
 describe('OrientationTodosCreateComponent', () => {
   let spy;
+  let spyService;
   let service: TodosService;
   let component: OrientationTodosCreateComponent;
   let fixture: ComponentFixture<OrientationTodosCreateComponent>;
@@ -50,44 +51,41 @@ describe('OrientationTodosCreateComponent', () => {
       });
   }));
 
-  it('isTodo should be TRUE', () => {
-    expect(component.isTodo).toBeTruthy();
-  });
-
   it('form validation - should fail', () => {
-    component.ngOnInit();
     expect(component.form.valid).toBeFalsy();
   });
 
   it('form validation - should pass', () => {
-    // component.ngOnInit();
     component.form.controls['name'].setValue('Hello World!');
+    component.form.controls['due_date'].setValue(1515625016);
     expect(component.form.valid).toBeTruthy();
   });
 
   it('form validation - max length 225 - should fail', () => {
-    component.ngOnInit();
-    component.form.controls['name'].setValue('This is the text which we are testing the length of 225 thats why we are entering this text greater than 225 to verify the unit test.  The total length of this string is 226 just to make sure its greater than 225 thanks you');
+    component.form.controls['name'].setValue('Hello World!');
+    component.form.controls['due_date'].setValue(1515625016);
+    component.form.controls['name'].setValue('This is the text which we are testing the length of 225 thats why we are entering this text greater than 225 to verify the unit test.  The total length of this string is 226 just to make sure its greater than 225 thanks you ..');
     expect(component.form.valid).toBeFalsy();
   });
 
   it('cp button should have disabled state TRUE', () => {
-    component.ngOnInit();
     expect(component.buttonData.disabled).toBeTruthy();
   });
 
   it('cp button should have disabled state FALSE', () => {
-    component.ngOnInit();
-    component.form.controls['name'].setValue('hello world');
+    component.form.controls['name'].setValue('Hello World!');
+    component.form.controls['due_date'].setValue(1515625016);
     expect(component.buttonData.disabled).toBeFalsy();
   });
 
   it('should insert todo', () => {
     spy = spyOn(component, 'onSubmit');
-    expect(spy).not.toHaveBeenCalled();
     component.onSubmit();
-    expect(spy).toHaveBeenCalled();
-    expect(service.createTodo(mockTodo, null)).toEqual(Observable.of(mockTodo));
+    expect(spy).toHaveBeenCalledWith();
+
+    spyService = spyOn(service, 'createTodo');
+    service.createTodo(mockTodo, null);
+    expect(spyService).toHaveBeenCalledWith(mockTodo, null);
   });
 
   });

@@ -22,11 +22,11 @@ class MockTodosService {
 
     return Observable.of(afterDeletedTodo);
   }
-
 }
 
 describe('OrientationTodosDeleteComponent', () => {
   let spy;
+  let spyservice;
   let service: TodosService;
   let component: OrientationTodosDeleteComponent;
   let fixture: ComponentFixture<OrientationTodosDeleteComponent>;
@@ -49,17 +49,19 @@ describe('OrientationTodosDeleteComponent', () => {
       });
   }));
 
-  it('buttonData should have "Delete" label', () => {
+  it('buttonData should have "Delete" label & "Danger class"', () => {
     component.ngOnInit();
-    expect(component.buttonData.text).toEqual('delete');
+    expect(component.buttonData.text).toEqual('Delete');
     expect(component.buttonData.class).toEqual('danger');
   });
 
   it('should delete todo', () => {
-    expect(spy).not.toHaveBeenCalled();
     component.onDelete();
-    expect(spy).toHaveBeenCalled();
-    expect(service.deleteTodo(240786, null)).toEqual(Observable.of([]));
+    expect(spy).toHaveBeenCalledWith();
+
+    spyservice = spyOn(service, 'deleteTodo');
+    service.deleteTodo(240786, null);
+    expect(spyservice).toHaveBeenCalledWith(240786, null);
   });
 
 });
