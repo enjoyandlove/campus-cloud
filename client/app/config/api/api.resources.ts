@@ -91,6 +91,8 @@ export const API_ENDPOINTS = {
 
   DASHBORD_USER_ACQUISITION: 'analytics/user_acquisition',
 
+  EXTERNAL_USER_EVENT_CHECKIN: 'external_user_event_checkin',
+
   DASHBOARD_INTEGRATION_STATUS: 'analytics/integration_status',
 
   DASHBOARD_GENERAL_INFORMATION: 'analytics/general_information'

@@ -2,30 +2,29 @@ import { Injectable } from '@angular/core';
 import { Http, URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
 
-// import { API } from '../../../config/api';
-import { Observable } from 'rxjs/Observable';
+import { API } from '../../../config/api';
 import { CheckinService } from './checkin.service';
 
 @Injectable()
 export class OrientationCheckinService extends CheckinService {
-  dummy;
-  mock = require('./orientation-events/mockCheckin.json');
 
   constructor(public _http: Http, public _router: Router) {
     super(_http, _router);
   }
 
   getEventData(search: URLSearchParams, silent) {
-    this.dummy = search;
-    this.dummy = silent;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.EXTERNAL_USER_EVENT_CHECKIN
+      }/`;
 
-    return Observable.of(this.mock);
+    return super.get(url, { search }, silent).map((res) => res.json());
   }
 
   doEventCheckin(data: any, search: URLSearchParams) {
-    this.dummy = search;
-    this.dummy = data;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.EXTERNAL_USER_EVENT_CHECKIN
+      }/`;
 
-    return Observable.of([]);
+    return super.update(url, data, { search }).map((res) => res.json());
   }
 }
