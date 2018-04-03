@@ -29,6 +29,7 @@ class MockOrientationService {
 
 describe('OrientationProgramDeleteComponent', () => {
   let spy;
+  let spyservice;
   let component: OrientationProgramDeleteComponent;
   let service: OrientationService;
   let fixture: ComponentFixture<OrientationProgramDeleteComponent>;
@@ -53,11 +54,19 @@ describe('OrientationProgramDeleteComponent', () => {
     });
   }));
 
+  it('buttonData should have "Delete" label & "Danger class"', () => {
+    component.ngOnInit();
+    expect(component.buttonData.text).toEqual('Delete');
+    expect(component.buttonData.class).toEqual('danger');
+  });
+
   it('should delete orientation program', () => {
-    expect(spy).not.toHaveBeenCalled();
     component.onDelete();
-    expect(spy).toHaveBeenCalled();
-    expect(service.deleteProgram(84, null)).toEqual(Observable.of([]));
+    expect(spy).toHaveBeenCalledWith();
+
+    spyservice = spyOn(service, 'deleteProgram');
+    service.deleteProgram(84, null);
+    expect(spyservice).toHaveBeenCalledWith(84, null);
   });
 
 });
