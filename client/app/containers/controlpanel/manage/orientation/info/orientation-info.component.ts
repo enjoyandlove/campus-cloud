@@ -13,7 +13,7 @@ import { CPSession } from './../../../../../session';
 })
 export class OrientationInfoComponent extends BaseComponent implements OnInit {
   loading;
-  selectedProgram = [];
+  selectedProgram;
   orientationId: number;
   launchEditModal = false;
 

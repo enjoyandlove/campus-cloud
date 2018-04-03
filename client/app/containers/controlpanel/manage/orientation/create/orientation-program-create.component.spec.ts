@@ -26,13 +26,13 @@ describe('OrientationProgramCreateComponent', () => {
 
   const mockProgram = {
     'id': 84,
-    'name': 'new list with no duplicates',
-    'description': 'fdsafsd',
+    'name': 'Hello World!',
+    'description': 'This is description',
     'events': 12,
     'members': 10,
     'start': '1557637200',
     'end': '1557637200',
-    'is_membership': 0
+    'has_membership': 0
   };
 
   beforeEach(async(() => {

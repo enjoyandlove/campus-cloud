@@ -7,7 +7,7 @@
     "members": 10,
     "start": "1557637200",
     "end": "1557637200",
-    "is_membership": 0
+    "has_membership": 0
   },
   {
     "id": 81,
@@ -17,7 +17,7 @@
     "members": 10,
     "start": "1557637200",
     "end": "1557637200",
-    "is_membership": 1
+    "has_membership": 1
   },
   {
     "id": 82,
@@ -27,7 +27,7 @@
     "members": 10,
     "start": "1557637200",
     "end": "1557637200",
-    "is_membership": 1
+    "has_membership": 1
   },
   {
     "id": 83,
@@ -37,17 +37,17 @@
     "members": 10,
     "start": "1557637200",
     "end": "1557637200",
-    "is_membership": 0
+    "has_membership": 0
   },
   {
     "id": 84,
-    "name": "new list with no duplicates",
-    "description": "fdsafsd",
+    "name": "Hello World!",
+    "description": "This is description",
     "events": 12,
     "members": 10,
     "start": "1557637200",
     "end": "1557637200",
-    "is_membership": 0
+    "has_membership": 0
   },
   {
     "id": 85,
@@ -57,7 +57,7 @@
     "members": 10,
     "start": "1557637200",
     "end": "1557637200",
-    "is_membership": 1
+    "has_membership": 1
   },
   {
     "id": 86,
@@ -67,6 +67,6 @@
     "members": 10,
     "start": "1557637200",
     "end": "1557637200",
-    "is_membership": 0
+    "has_membership": 0
   }
 ]

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { OrientationInfoComponent } from './orientation-info.component';
 import { OrientationService } from '../orientation.services';
+import { OrientationDetailsModule } from '../details/orientation-details.module';
 
 class MockOrientationService {
   dummy;
@@ -20,24 +21,25 @@ class MockOrientationService {
 
 describe('OrientationInfoComponent', () => {
   let spy;
+  let title: HTMLElement;
   let component: OrientationInfoComponent;
   let service: OrientationService;
   let fixture: ComponentFixture<OrientationInfoComponent>;
 
   const mockProgram = Observable.of([{
     'id': 84,
-    'name': 'new list with no duplicates',
-    'description': 'fdsafsd',
+    'name': 'Hello World!',
+    'description': 'This is description',
     'events': 12,
     'members': 10,
     'start': '1557637200',
     'end': '1557637200',
-    'is_membership': 0
+    'has_membership': 0
   }]);
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OrientationInfoComponent ],
+      imports: [OrientationDetailsModule],
       providers: [
         CPSession,
         { provide: OrientationService, useClass: MockOrientationService },
@@ -50,20 +52,25 @@ describe('OrientationInfoComponent', () => {
             },
           }
         }
-      ]
-    }) .overrideComponent(OrientationInfoComponent, {
-      set: {
-        template: '<div>No Template</div>'
-      }
+      ],
     }).compileComponents().then(() => {
       fixture = TestBed.createComponent(OrientationInfoComponent);
       component = fixture.componentInstance;
       service = TestBed.get(OrientationService);
+      spy = spyOn(component, 'fetch');
+      component.loading = false;
     });
   }));
 
-  it('Should fetch orientation program by Id', () => {
-    spy = spyOn(component, 'fetch');
+  it('should display orientation program Title', () => {
+    service.getProgramById(84, null).subscribe((res) => component.selectedProgram = res[0]);
+
+    fixture.detectChanges();
+    title = fixture.nativeElement.querySelector('.orientation__title');
+    expect(title.textContent).toEqual('Hello World!');
+  });
+
+  it('should fetch orientation program by Id', () => {
     expect(spy).not.toHaveBeenCalled();
     component.fetch();
     expect(spy).toHaveBeenCalled();

@@ -34,7 +34,7 @@ describe('OrientationProgramEditComponent', () => {
     'members': 30,
     'start': '1557637200',
     'end': '1557637200',
-    'is_membership': 1
+    'has_membership': 1
   };
 
   beforeEach(async(() => {
@@ -57,7 +57,7 @@ describe('OrientationProgramEditComponent', () => {
     });
   }));
 
-  it('Should insert orientation program', () => {
+  it('should insert orientation program', () => {
     spy = spyOn(component, 'onSubmit');
     expect(spy).not.toHaveBeenCalled();
     component.onSubmit();
