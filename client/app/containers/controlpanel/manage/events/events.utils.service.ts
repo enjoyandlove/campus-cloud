@@ -93,4 +93,12 @@ export class EventUtilService {
   getPrivilegeType(type: boolean) {
     return type ? CP_PRIVILEGES_MAP.orientation.toString() : CP_PRIVILEGES_MAP.events.toString();
   }
+
+  getEventCheckInLink(isOrientation = false) {
+    if (isOrientation) {
+      return '/cb/checkin/o/';
+    }
+
+    return '/cb/checkin/e/';
+  }
 }
