@@ -325,7 +325,6 @@ export class EventsCreateComponent implements OnInit {
 
   onAllDayToggle(value) {
     this.toggleDatePickerTime(value);
-    value = value ? IsAllDay.enabled : IsAllDay.disabled;
     this.form.controls['is_all_day'].setValue(value);
   }
 

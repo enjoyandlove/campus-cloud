@@ -2,28 +2,29 @@ import { Injectable } from '@angular/core';
 import { Http, URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
 
-// import { API } from '../../../config/api';
-import { Observable } from 'rxjs/Observable';
+import { API } from '../../../config/api';
 import { FeedbackService } from './feedback.service';
 
 @Injectable()
 export class OrientationFeedbackService extends FeedbackService {
-  dummy;
 
   constructor(public _http: Http, public _router: Router) {
     super(_http, _router);
   }
 
   getEventData(search: URLSearchParams) {
-    this.dummy = search;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.EXTERNAL_USER_EVENT_FEEDBACK
+      }/`;
 
-    return Observable.of([]);
+    return super.get(url, { search }).map((res) => res.json());
   }
 
   doEventFeedback(data: any, search: URLSearchParams) {
-    this.dummy = search;
-    this.dummy = data;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.EXTERNAL_USER_EVENT_FEEDBACK
+      }/`;
 
-    return Observable.of([]);
+    return super.update(url, data, { search }).map((res) => res.json());
   }
 }

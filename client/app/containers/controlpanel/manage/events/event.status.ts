@@ -19,14 +19,14 @@ export enum EventSortDirection {
   'desc' = 'desc',
 }
 
-export enum IsAllDay {
-  'enabled' = 1,
-  'disabled' = 0,
-}
-
 export enum EventVerificationMethod {
   'web' = 1,
   'hostQR' = 2,
   'userQR' = 3,
   'QR' = 4,
 }
+
+export const IsAllDay = {
+  'enabled': true,
+  'disabled': false,
+};

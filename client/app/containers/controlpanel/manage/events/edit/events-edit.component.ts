@@ -19,7 +19,7 @@ import {
   AdminService,
 } from '../../../../../shared/services';
 
-import { EventAttendance, IsAllDay } from '../event.status';
+import { EventAttendance } from '../event.status';
 import { EventUtilService } from '../events.utils.service';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 import * as moment from 'moment';
@@ -274,7 +274,6 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
   onAllDayToggle(value) {
     this.toggleDatePickerTime(value);
-    value = value ? IsAllDay.enabled : IsAllDay.disabled;
     this.form.controls['is_all_day'].setValue(value);
   }
 
