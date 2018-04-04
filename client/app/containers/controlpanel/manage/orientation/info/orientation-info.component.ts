@@ -20,7 +20,7 @@ export class OrientationInfoComponent extends BaseComponent implements OnInit {
   constructor(
     public session: CPSession,
     private route: ActivatedRoute,
-    private service: OrientationService
+    public service: OrientationService
   ) {
     super();
     this.orientationId = this.route.parent.snapshot.params['orientationId'];

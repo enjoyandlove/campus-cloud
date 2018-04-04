@@ -36,7 +36,7 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
     public session: CPSession,
     public cpI18n: CPI18nService,
     public store: Store<IHeader>,
-    private service: OrientationService,
+    public service: OrientationService,
     public headerService: ManageHeaderService
   ) {
     super();

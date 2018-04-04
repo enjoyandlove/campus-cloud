@@ -1,42 +1,42 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CPSession } from '../../../../../session';
-import { Store, StoreModule } from '@ngrx/store';
-import { ManageHeaderService } from '../../utils';
-import { CPI18nService } from '../../../../../shared/services';
-import { OrientationService } from '../orientation.services';
-import { OrientationListComponent } from './list.component';
-import { headerReducer, snackBarReducer } from '../../../../../reducers';
 import { Observable } from 'rxjs/Observable';
+import { Store, StoreModule } from '@ngrx/store';
+import { URLSearchParams } from '@angular/http';
+
+import { ManageHeaderService } from '../../utils';
+import { CPSession } from '../../../../../session';
+import { OrientationModule } from '../orientation.module';
+import { OrientationListComponent } from './list.component';
+import { OrientationService } from '../orientation.services';
+import { CPI18nService } from '../../../../../shared/services';
+import { mockSchool } from '../../../../../session/mock/school';
+import { headerReducer, snackBarReducer } from '../../../../../reducers';
 
 class MockOrientationService {
   dummy;
-  mockPrograms = require('../mock.json');
 
   getPrograms(startRage: number, endRage: number, search: any) {
     this.dummy = [startRage, endRage, search];
 
-    return Observable.of(this.mockPrograms);
+    return Observable.of(Observable.of({}));
   }
 }
 
 describe('OrientationListComponent', () => {
-  let arr;
-  let fakeRequest;
-  let compSpy;
+  let spy;
+  let search;
   let storeSpy;
-  let resPrograms;
-  let mockPrograms;
   let store: Store<any>;
   let service: OrientationService;
   let component: OrientationListComponent;
   let fixture: ComponentFixture<OrientationListComponent>;
 
+  const mockPrograms = require('../mock.json');
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        OrientationListComponent,
-      ],
       imports: [
+        OrientationModule,
         StoreModule.forRoot({
           HEADER: headerReducer,
           SNACKBAR: snackBarReducer
@@ -48,71 +48,34 @@ describe('OrientationListComponent', () => {
         ManageHeaderService,
         { provide: OrientationService, useClass: MockOrientationService }
       ]
-    }).overrideComponent(OrientationListComponent, {
-      set: {
-        template: '<div>No Template</div>'
-      }
-    })
-      .compileComponents()
+    }).compileComponents()
       .then(() => {
         store = TestBed.get(Store);
         storeSpy = spyOn(store, 'dispatch').and.callThrough();
         fixture = TestBed.createComponent(OrientationListComponent);
-        component = fixture.componentInstance;
         service = TestBed.get(OrientationService);
-        compSpy = spyOn(component, 'fetch');
+
+        component = fixture.componentInstance;
+        component.session.g.set('school', mockSchool);
+
+        search = new URLSearchParams();
+        search.append('search_str', component.state.search_str);
+        search.append('sort_field', component.state.sort_field);
+        search.append('sort_direction', component.state.sort_direction);
+        search.append('school_id', component.session.g.get('school').id.toString());
       });
   }));
-
-  it('should fetch list of orientation programs', () => {
-    mockPrograms = require('../mock.json');
-    resPrograms = service.getPrograms(0, 0, null);
-
-    expect(compSpy).not.toHaveBeenCalled();
-    component.fetch();
-    expect(compSpy).toHaveBeenCalled();
-
-    expect(resPrograms.value.length).toEqual(mockPrograms.length);
-    expect(resPrograms).toEqual(Observable.of(mockPrograms));
-  });
 
   it('should search string', () => {
     component.onSearch('hello world');
     expect(component.state.search_str).toEqual('hello world');
   });
 
-  it('should show pagination', () => {
-    arr = [];
-    for (let i = 1; i <= 200; i++) {
-      arr.push(i);
-    }
+  it('should fetch list of orientation programs', () => {
+    spy = spyOn(component.service, 'getPrograms').and.returnValue(Observable.of(mockPrograms));
+    component.ngOnInit();
 
-    fakeRequest = Observable.of(arr);
-
-    component.fetchData(fakeRequest)
-      .then((res) => {
-        expect(component.pageNext).toBeTruthy();
-        expect(component.pagePrev).toBeFalsy();
-        expect(res.data.length).toBe(199);
-      });
-  });
-
-  it('onPaginationNext', () => {
-    component.onPaginationNext();
-    expect(component.pageNumber).toEqual(2);
-    expect(component.startRange).toEqual(101);
-    expect(component.endRange).toEqual(201);
-  });
-
-  it('onPaginationPrevious', () => {
-    component.pageNumber = 2;
-    component.startRange = 101;
-    component.endRange = 201;
-
-    component.onPaginationPrevious();
-
-    expect(component.pageNumber).toEqual(1);
-    expect(component.startRange).toEqual(1);
-    expect(component.endRange).toEqual(101);
+    expect(spy.calls.count()).toBe(1);
+    expect(spy).toHaveBeenCalledWith(component.startRange, component.endRange, search);
   });
 });

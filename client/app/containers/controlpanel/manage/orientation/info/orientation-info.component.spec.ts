@@ -1,26 +1,27 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { CPSession } from './../../../../../session';
 import { Observable } from 'rxjs/Observable';
+import { URLSearchParams } from '@angular/http';
 
-import { OrientationInfoComponent } from './orientation-info.component';
+import { CPSession } from './../../../../../session';
 import { OrientationService } from '../orientation.services';
+import { mockSchool } from '../../../../../session/mock/school';
+import { OrientationInfoComponent } from './orientation-info.component';
 import { OrientationDetailsModule } from '../details/orientation-details.module';
 
 class MockOrientationService {
   dummy;
-  mockPrograms = require('../mock.json');
 
   getProgramById(programId: number, search: any) {
-    this.dummy = [search];
-    const program = this.mockPrograms.filter((item) => item.id === programId);
+    this.dummy = [programId, search];
 
-    return Observable.of(program);
+    return Observable.of({});
   }
 }
 
 describe('OrientationInfoComponent', () => {
   let spy;
+  let search;
   let title: HTMLElement;
   let component: OrientationInfoComponent;
   let service: OrientationService;
@@ -57,24 +58,33 @@ describe('OrientationInfoComponent', () => {
       fixture = TestBed.createComponent(OrientationInfoComponent);
       component = fixture.componentInstance;
       service = TestBed.get(OrientationService);
-      spy = spyOn(component, 'fetch');
       component.loading = false;
+      component.orientationId = 84;
+      search = new URLSearchParams();
+      component.session.g.set('school', mockSchool);
+      search.append('school_id', component.session.g.get('school').id.toString());
+      fixture.detectChanges();
     });
   }));
 
-  it('should display orientation program Title', () => {
-    service.getProgramById(84, null).subscribe((res) => component.selectedProgram = res[0]);
+  it('should display orientation program Title', async(() => {
+    spy = spyOn(component.service, 'getProgramById').and.returnValue(mockProgram);
+    component.ngOnInit();
 
     fixture.detectChanges();
     title = fixture.nativeElement.querySelector('.orientation__title');
-    expect(title.textContent).toEqual('Hello World!');
-  });
+
+    expect(title.textContent).toEqual(component.selectedProgram.name);
+    expect(spy).toHaveBeenCalledWith(component.orientationId, search);
+    expect(spy.calls.count()).toBe(1);
+  }));
 
   it('should fetch orientation program by Id', () => {
-    expect(spy).not.toHaveBeenCalled();
-    component.fetch();
-    expect(spy).toHaveBeenCalled();
-    expect(service.getProgramById(84, null)).toEqual(mockProgram);
+    spy = spyOn(component.service, 'getProgramById').and.returnValue(mockProgram);
+    component.ngOnInit();
+
+    expect(spy).toHaveBeenCalledWith(component.orientationId, search);
+    expect(spy.calls.count()).toBe(1);
   });
 
 });
