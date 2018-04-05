@@ -28,7 +28,7 @@ export class EventsService extends BaseService {
     return `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
   }
 
-  getEventById(id: number) {
+  getEventById(id: number, {}) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${
       API.ENDPOINTS.EVENT
     }/${id}`;
@@ -65,13 +65,13 @@ export class EventsService extends BaseService {
     });
   }
 
-  createEvent(body: any) {
+  createEvent(body: any, {}) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT}/`;
 
     return super.post(url, body).map((res) => res.json());
   }
 
-  updateEvent(body: any, eventId: number) {
+  updateEvent(body: any, eventId: number, {}) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${
       API.ENDPOINTS.EVENT
     }/${eventId}`;
@@ -79,7 +79,7 @@ export class EventsService extends BaseService {
     return super.update(url, body).map((res) => res.json());
   }
 
-  deleteEventById(eventId: number) {
+  deleteEventById(eventId: number, {}) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${
       API.ENDPOINTS.EVENT
     }/${eventId}`;
