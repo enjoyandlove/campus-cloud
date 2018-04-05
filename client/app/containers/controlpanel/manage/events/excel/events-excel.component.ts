@@ -165,7 +165,6 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
 
     return this.fb.group({
       store_id: [store_id ? store_id : null, !this.isOrientation ? Validators.required : null],
-      calendar_id: [this.orientationId, this.isOrientation ? Validators.required : null],
       room: [event.room],
       is_all_day: [IsAllDay.enabled],
       title: [event.title, Validators.required],
@@ -406,7 +405,6 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       }
       let _event = {
         title: events[key].title,
-        calendar_id: this.orientationId,
         is_all_day: IsAllDay.disabled,
         store_id: store_id ? store_id : events[key].store_id,
         description: events[key].description,
@@ -430,7 +428,13 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       _events.push(_event);
     });
 
-    this.service.createEvent(_events).subscribe(
+    const search = new URLSearchParams();
+    if (this.orientationId) {
+      search.append('school_id', this.session.g.get('school').id);
+      search.append('calendar_id', this.orientationId.toString());
+    }
+
+    this.service.createEvent(_events, search).subscribe(
       (_) => {
         this.router.navigate([this.urlPrefix]);
 
