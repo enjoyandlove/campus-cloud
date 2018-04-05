@@ -14,6 +14,9 @@ import { URLSearchParams } from '@angular/http';
 import { CPSession } from './../../../../../session';
 import { OrientationService } from '../orientation.services';
 import { CPI18nService } from '../../../../../shared/services/i18n.service';
+import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { OrientationUtilsService } from '../orientation.utils.service';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'cp-orientation-program-edit',
@@ -41,6 +44,7 @@ export class OrientationProgramEditComponent implements OnInit {
     public el: ElementRef,
     public fb: FormBuilder,
     public session: CPSession,
+    private store: Store<any>,
     public cpI18n: CPI18nService,
     public service: OrientationService
   ) {}
@@ -66,6 +70,10 @@ export class OrientationProgramEditComponent implements OnInit {
     this.service
       .editProgram(this.orientationProgram.id, this.form.value, search)
       .subscribe((editedProgram) => {
+        this.store.dispatch({
+          type: HEADER_UPDATE,
+          payload: this.utils.buildHeader(editedProgram),
+        });
         this.edited.emit(editedProgram);
         this.resetModal();
       });

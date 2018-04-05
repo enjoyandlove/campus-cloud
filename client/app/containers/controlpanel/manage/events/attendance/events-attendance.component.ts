@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { EventsService } from '../events.service';
+import { CPSession } from './../../../../../session';
 import { CPDate } from '../../../../../shared/utils/date';
 import { EventUtilService } from './../events.utils.service';
 import { BaseComponent } from '../../../../../base/base.component';
@@ -11,7 +12,7 @@ import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 @Component({
   selector: 'cp-events-attendance',
   templateUrl: './events-attendance.component.html',
-  styleUrls: ['./events-attendance.component.scss'],
+  styleUrls: ['./events-attendance.component.scss']
 })
 export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   @Input() isClub: boolean;
@@ -19,6 +20,8 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   @Input() serviceId: number;
   @Input() isService: boolean;
   @Input() isAthletic: number;
+  @Input() orientationId: number;
+  @Input() isOrientation: boolean;
 
   event;
   urlPrefix;
@@ -27,10 +30,11 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   eventId: number;
 
   constructor(
+    public session: CPSession,
     private store: Store<IHeader>,
     private route: ActivatedRoute,
     private service: EventsService,
-    private utils: EventUtilService,
+    private utils: EventUtilService
   ) {
     super();
     this.eventId = this.route.snapshot.params['eventId'];
@@ -43,7 +47,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
 
       this.buildHeader(event.data);
 
-      this.isUpcoming = this.event.end > CPDate.toEpoch(new Date());
+      this.isUpcoming = this.event.end > CPDate.toEpoch(CPDate.now(), this.session.tz);
     });
   }
 
@@ -57,15 +61,15 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
 
       crumbs: {
         url: this.urlPrefix,
-        label: 'events',
+        label: 'events'
       },
 
-      children: [...children],
+      children: [...children]
     };
 
     this.store.dispatch({
       type: HEADER_UPDATE,
-      payload,
+      payload
     });
   }
 
@@ -74,6 +78,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       this.clubId,
       this.serviceId,
       this.isAthletic,
+      this.orientationId,
     );
     this.fetch();
   }

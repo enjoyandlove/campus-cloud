@@ -28,6 +28,8 @@ const state = {
 })
 export class AttendancePastComponent extends BaseComponent implements OnInit {
   @Input() event: any;
+  @Input() isOrientation: boolean;
+
   loading;
   attendees;
   attendeeFeedback;
@@ -37,7 +39,7 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
 
   constructor(
     private cpI18n: CPI18nService,
-    private eventService: EventsService,
+    private service: EventsService,
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -50,7 +52,7 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
     search.append('sort_direction', this.state.sort_direction);
     search.append('search_text', this.state.search_text);
 
-    const stream$ = this.eventService.getEventAttendanceByEventId(
+    const stream$ = this.service.getEventAttendanceByEventId(
       this.startRange,
       this.endRange,
       search,
@@ -85,7 +87,7 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
     search.append('event_id', this.event.id);
     search.append('all', '1');
 
-    const stream$ = this.eventService.getEventAttendanceByEventId(
+    const stream$ = this.service.getEventAttendanceByEventId(
       this.startRange,
       this.endRange,
       search,

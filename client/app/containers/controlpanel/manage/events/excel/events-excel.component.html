@@ -10,6 +10,7 @@
         [serviceId]="serviceId"
         [isService]="isService"
         [isChecked]="isChecked"
+        [isOrientation]="isOrientation"
         (bulkChange)="onBulkChange($event)"
         (checkAll)="onCheckAll($event)"
         (hostChange)="onHostBulkChange($event)"
@@ -32,9 +33,9 @@
               *ngFor="let event of form.controls.events.controls; let i=index">
               <div [formGroupName]="i" class="col-xs-12">
                 <div class="row form__item">
-                  <div [class]="[storeId || clubId ? 'col-xs-5 text-truncate' : 'col-xs-3 text-truncate']">
+                  <div [class]="[storeId || clubId || isOrientation ? 'col-xs-5 text-truncate' : 'col-xs-3 text-truncate']">
                     <div class="row margin-top">
-                      <div [class]="[storeId || clubId? 'col-xs-3 no-left-padding' : 'col-xs-4 no-left-padding']">
+                      <div [class]="[storeId || clubId || isOrientation ? 'col-xs-3 no-left-padding' : 'col-xs-4 no-left-padding']">
                         <cp-checkbox
                           class="checkbox pull-left"
                           [isChecked]="isSingleChecked[i].checked"
@@ -62,7 +63,7 @@
                         </div>
                         </div>
 
-                      <div [class]="[storeId || clubId? 'col-xs-9 no-left-padding text-truncate' : 'col-xs-8 no-left-padding text-truncate']">
+                      <div [class]="[storeId || clubId || isOrientation ? 'col-xs-9 no-left-padding text-truncate' : 'col-xs-8 no-left-padding text-truncate']">
                         <span class="event__title">
                           <strong>{{ event.controls.title.value }}</strong>
                         </span>
@@ -73,7 +74,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-xs-2" *ngIf="!storeId && !clubId">
+                  <div class="col-xs-2" *ngIf="!storeId && !clubId && !isOrientation">
                     <label i18n>{{ 'host' | cpI18n }}</label>
                     <cp-dropdown
                       [selectedItem]="selectedHost[i]"
@@ -135,7 +136,7 @@
         <div class="row">
           <div class="col-xs-12">
             <div class="pull-right">
-              <a [routerLink]="['/manage/events']"
+              <a [routerLink]="[urlPrefix]"
                 class="cpbtn cpbtn--cancel" i18n>
                 {{ 'cancel' | cpI18n }}
               </a>

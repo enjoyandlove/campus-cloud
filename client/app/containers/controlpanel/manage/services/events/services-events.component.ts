@@ -15,6 +15,7 @@ import { EventsService } from '../../events/events.service';
 import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants';
 import { EventsComponent } from '../../events/list/base/events.component';
 import { CPI18nService } from '../../../../../shared/services/index';
+import { OrientationEventsService } from '../../orientation/events/orientation.events.service';
 
 @Component({
   selector: 'cp-services-events',
@@ -35,6 +36,7 @@ export class ServicesEventsComponent extends EventsComponent {
     private store: Store<IHeader>,
     public eventsService: EventsService,
     private serviceService: ServicesService,
+    public orientationEventService: OrientationEventsService,
   ) {
     super(session, cpI18n, eventsService);
     this.serviceId = this.route.snapshot.params['serviceId'];

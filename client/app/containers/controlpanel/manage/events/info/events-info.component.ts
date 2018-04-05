@@ -24,6 +24,8 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   @Input() serviceId: number;
   @Input() isService: boolean;
   @Input() isAthletic: number;
+  @Input() orientationId: number;
+  @Input() isOrientation: boolean;
   @Input() resourceBanner: IResourceBanner;
 
   event;
@@ -42,14 +44,12 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
     public cpI18n: CPI18nService,
     private store: Store<IHeader>,
     private route: ActivatedRoute,
-    private service: EventsService,
     public utils: EventUtilService,
+    private service: EventsService,
   ) {
     super();
     this.dateFormat = FORMAT.DATETIME;
     this.eventId = this.route.snapshot.params['eventId'];
-
-    this.fetch();
   }
 
   private fetch() {
@@ -64,6 +64,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
         this.clubId,
         this.serviceId,
         this.isAthletic,
+        this.orientationId,
       );
 
       this.banner =
@@ -105,5 +106,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.fetch();
+  }
 }

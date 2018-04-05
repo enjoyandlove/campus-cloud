@@ -1,16 +1,16 @@
 import { CPDate } from './date';
 
-import * as moment from 'moment';
-
-const mockDateObj = moment('December 22nd 2016, 2:00 pm', 'MMMM Do YYYY, h:mm a');
-const mockEpochDate = 1482433200;
+const dateStr = '2018-03-29T14:22:17.592Z';
+const mockEpochDate = 1522347737;
 
 describe('CPDate', () => {
   it('Should convert a valid Date object to epoch time', () => {
-    expect(CPDate.toEpoch(mockDateObj)).toBe(mockEpochDate);
+    expect(CPDate.toEpoch(dateStr, 'America/Toronto')).toBe(mockEpochDate);
   });
 
   it('Should convert an epoch timestamp into a valid Date Object', () => {
-    expect(CPDate.fromEpoch(mockEpochDate)).toEqual(mockDateObj.toDate());
+    expect(CPDate.fromEpoch(mockEpochDate, 'America/Toronto').toISOString()).toEqual(
+      '2018-03-29T18:22:17.000Z'
+    );
   });
 });
