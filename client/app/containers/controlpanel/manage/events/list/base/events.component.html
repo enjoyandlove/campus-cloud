@@ -55,6 +55,7 @@
 <cp-modal modalId="deleteEventsModal">
   <cp-events-delete
     [event]="deleteEvent"
+    [orientationId]="orientationId"
     [isOrientation]="orientation"
     (deletedEvent)="onDeletedEvent($event)">
   </cp-events-delete>

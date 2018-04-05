@@ -157,7 +157,13 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       this.updateTime();
     }
 
-    this.service.updateEvent(data, this.eventId).subscribe(
+    const search = new URLSearchParams();
+    if (this.orientationId) {
+      search.append('school_id', this.session.g.get('school').id);
+      search.append('calendar_id', this.orientationId.toString());
+    }
+
+    this.service.updateEvent(data, this.eventId, search).subscribe(
       (_) => {
         this.router.navigate([this.urlPrefix]);
       },
@@ -311,13 +317,16 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   private fetch() {
     let stores$ = Observable.of([]);
     const school = this.session.g.get('school');
+    const orientationId = this.orientationId ? this.orientationId.toString() : null;
     const search: URLSearchParams = new URLSearchParams();
     search.append('school_id', school.id.toString());
+    search.append('calendar_id', orientationId);
 
     if (!this.isClub && !this.isService && !this.isOrientation) {
       stores$ = this.storeService.getStores(search);
     }
-    const event$ = this.service.getEventById(this.eventId);
+
+    const event$ = this.service.getEventById(this.eventId, search);
     const stream$ = Observable.combineLatest(event$, stores$);
 
     super

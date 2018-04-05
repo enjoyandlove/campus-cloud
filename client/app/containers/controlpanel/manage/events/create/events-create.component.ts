@@ -250,7 +250,13 @@ export class EventsCreateComponent implements OnInit {
       this.updateTime();
     }
 
-    this.service.createEvent(this.form.value).subscribe(
+    const search = new URLSearchParams();
+    if (this.orientationId) {
+      search.append('school_id', this.session.g.get('school').id);
+      search.append('calendar_id', this.orientationId.toString());
+    }
+
+    this.service.createEvent(this.form.value, search).subscribe(
       (res) => {
         this.urlPrefix = this.getUrlPrefix(res.id);
         this.router.navigate([this.urlPrefix]);
@@ -371,7 +377,6 @@ export class EventsCreateComponent implements OnInit {
     this.form = this.fb.group({
       title: [null, Validators.required],
       store_id: [store_id ? store_id : null, !this.isOrientation ? Validators.required : null],
-      calendar_id: [this.orientationId, this.isOrientation ? Validators.required : null],
       location: [null],
       room_data: [null],
       city: [null],
