@@ -1,3 +1,4 @@
+import { mockSchool } from './../../../../../session/mock/school';
 /*
  * Testing a simple Angular 2 component
  * More info: https://angular.io/docs/ts/latest/guide/testing.html#!#simple-component-test
@@ -16,7 +17,7 @@ import 'rxjs';
 import { StudentsService } from './../students.service';
 import { CPSession } from './../../../../../session/index';
 import { mockUser } from './../../../../../session/mock/user';
-import mockSession from './../../../../../session/mock/session';
+import { MockCPSession } from './../../../../../session/mock/session';
 import { SharedModule } from './../../../../../shared/shared.module';
 import { StudentsProfileComponent } from './students-profile.component';
 import { snackBarReducer, headerReducer } from '../../../../../reducers';
@@ -24,10 +25,10 @@ import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 class MockHttp {}
 
-class MockStudentsService {
+const mockStudentsService = {
   getStudentById() {
     return Observable.of(mockUser);
-  }
+  },
 
   getEngagements() {
     return Observable.of([
@@ -55,7 +56,7 @@ class MockStudentsService {
       }
     ]);
   }
-}
+};
 
 describe('StudentsProfileComponent', () => {
   let store: Store<any>;
@@ -75,11 +76,10 @@ describe('StudentsProfileComponent', () => {
         })
       ],
       providers: [
-        CPSession,
         CPI18nService,
-        { provide: CPSession, useValue: mockSession },
+        { provide: CPSession, useClass: MockCPSession },
         { provide: Http, useClass: MockHttp },
-        { provide: StudentsService, useClass: MockStudentsService },
+        { provide: StudentsService, useValue: mockStudentsService },
         {
           provide: ActivatedRoute,
           useValue: {
@@ -99,13 +99,15 @@ describe('StudentsProfileComponent', () => {
 
     fixture = TestBed.createComponent(StudentsProfileComponent);
     comp = fixture.componentInstance;
+    comp.session.g.set('school', mockSchool);
 
     comp.studentId = 1;
+    // fixture.detectChanges();
   });
 
   it('should teardown compose', () => {
     comp.onComposeTeardown();
-    fixture.detectChanges();
+
     expect(comp.messageData).toBeFalsy();
     expect(comp.isStudentComposeModal).toBeFalsy();
   });
@@ -145,26 +147,29 @@ describe('StudentsProfileComponent', () => {
     expect(comp.loadingStudentData).toBeTruthy();
   });
 
-  it('should update stuent to match mocked service', () => {
+  it('should update student to match mocked service', () => {
     comp.fetchStudentData();
     fixture.detectChanges();
     expect(comp.student).toEqual(mockUser);
     expect(comp.loadingStudentData).toBeFalsy();
   });
 
-  xit('should populate header', () => {
+  it('should populate header', () => {
     const expected = {
-      heading: 'Mock User',
+      heading: '[NOTRANSLATE]Mock User[NOTRANSLATE]',
       subheading: null,
       em: null,
+      crumbs: { url: 'students', label: 'students' },
       children: []
     };
     comp.fetchStudentData();
 
-    store.select('HEADER').subscribe((payload) => expect(payload).toEqual(expected));
+    store.select('HEADER').subscribe((payload) => {
+      expect(payload).toEqual(expected);
+    });
   });
 
-  xit('Spy on real service test', (done) => {
+  it('Spy on real service test', (done) => {
     const spy = spyOn(service, 'getStudentById').and.returnValue(Observable.of('Sopa'));
 
     fixture.detectChanges();
