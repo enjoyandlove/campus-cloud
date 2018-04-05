@@ -1,9 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs/Observable';
+import { URLSearchParams } from '@angular/http';
 
 import { TodosModule } from '../todos.module';
 import { TodosService } from '../todos.service';
 import { CPSession } from '../../../../../../session';
+import { mockSchool } from '../../../../../../session/mock/school';
 import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 import { OrientationTodosDeleteComponent } from './orientation-todos-delete.component';
 
@@ -26,7 +28,7 @@ class MockTodosService {
 
 describe('OrientationTodosDeleteComponent', () => {
   let spy;
-  let spyservice;
+  let search;
   let service: TodosService;
   let component: OrientationTodosDeleteComponent;
   let fixture: ComponentFixture<OrientationTodosDeleteComponent>;
@@ -45,7 +47,17 @@ describe('OrientationTodosDeleteComponent', () => {
         fixture = TestBed.createComponent(OrientationTodosDeleteComponent);
         component = fixture.componentInstance;
         service = TestBed.get(TodosService);
-        spy = spyOn(component, 'onDelete');
+
+        search = new URLSearchParams();
+        component.session.g.set('school', mockSchool);
+        search.append('school_id', component.session.g.get('school').id.toString());
+
+        component.todo = {
+          id: 54856,
+          name: 'Hello World!',
+          description: 'This is description',
+          due_date: 1557637200
+        };
       });
   }));
 
@@ -56,12 +68,12 @@ describe('OrientationTodosDeleteComponent', () => {
   });
 
   it('should delete todo', () => {
-    component.onDelete();
-    expect(spy).toHaveBeenCalledWith();
+    spy = spyOn(component.service, 'deleteTodo').and.returnValue(Observable.of({}));
 
-    spyservice = spyOn(service, 'deleteTodo');
-    service.deleteTodo(240786, null);
-    expect(spyservice).toHaveBeenCalledWith(240786, null);
+    component.onDelete();
+    expect(spy).toHaveBeenCalledWith(component.todo.id, search);
+    expect(spy.calls.count()).toBe(1);
+
   });
 
 });

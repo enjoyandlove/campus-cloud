@@ -1,42 +1,32 @@
-/*tslint:disable:max-line-length*/
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs/Observable';
 import { FormBuilder } from '@angular/forms';
+import { URLSearchParams } from '@angular/http';
 
 import { TodosModule } from '../todos.module';
 import { TodosService } from '../todos.service';
 import { CPSession } from '../../../../../../session';
+import { mockSchool } from '../../../../../../session/mock/school';
 import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 import { OrientationTodosEditComponent } from './orientation-todos-edit.component';
 
 class MockTodosService {
   dummy;
-  todo;
-  mockTodos = require('../mockTodos.json');
 
   editTodo(todoId: number, body: any, search: any) {
-    this.dummy = [search];
-    this.todo = this.mockTodos.filter((item) => item.id === todoId);
-    this.todo = body;
+    this.dummy = [todoId, body, search];
 
-    return Observable.of(this.todo);
+    return Observable.of({});
   }
 
 }
 
 describe('OrientationTodosEditComponent', () => {
   let spy;
-  let spyService;
+  let search;
   let service: TodosService;
   let component: OrientationTodosEditComponent;
   let fixture: ComponentFixture<OrientationTodosEditComponent>;
-
-  const editTodo = {
-    'id': 25,
-    'name': 'Hello World!',
-    'due_date': 1515625016,
-    'description': 'Some description',
-  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -53,6 +43,11 @@ describe('OrientationTodosEditComponent', () => {
         fixture = TestBed.createComponent(OrientationTodosEditComponent);
         component = fixture.componentInstance;
         service = TestBed.get(TodosService);
+
+        search = new URLSearchParams();
+        component.session.g.set('school', mockSchool);
+        search.append('school_id', component.session.g.get('school').id.toString());
+
         component.todo = {
           id: 55,
           name: 'Hello World!',
@@ -74,9 +69,10 @@ describe('OrientationTodosEditComponent', () => {
   });
 
   it('form validation - max length 225 - should fail', () => {
-    component.form.controls['name'].setValue('Hello World!');
+    const charCount226 = 'a'.repeat(226);
+
+    component.form.controls['name'].setValue(charCount226);
     component.form.controls['due_date'].setValue(1515625016);
-    component.form.controls['name'].setValue('This is the text which we are testing the length of 225 thats why we are entering this text greater than 225 to verify the unit test.  The total length of this string is 226 just to make sure its greater than 225 thanks you ..');
     expect(component.form.valid).toBeFalsy();
   });
 
@@ -91,13 +87,12 @@ describe('OrientationTodosEditComponent', () => {
   });
 
   it('should update todo', () => {
-    spy = spyOn(component, 'onSubmit');
+    spyOn(component, 'resetModal');
+    spy = spyOn(component.service, 'editTodo').and.returnValue(Observable.of({}));
     component.onSubmit();
-    expect(spy).toHaveBeenCalledWith();
 
-    spyService = spyOn(service, 'editTodo');
-    service.editTodo(25, editTodo, null);
-    expect(spyService).toHaveBeenCalledWith(25, editTodo, null);
+    expect(spy).toHaveBeenCalled();
+    expect(spy.calls.count()).toBe(1);
   });
 
 });
