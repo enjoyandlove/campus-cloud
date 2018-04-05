@@ -65,6 +65,8 @@ export const API_ENDPOINTS = {
 
   ASSESS_ENGAGEMENT: 'assess_engagement',
 
+  ORIENTATION_EVENTS: 'orientation_item',
+
   CALENDAR_ITEMS: 'academic_calendar_item',
 
   STUDENT_ENGAGEMENT: 'student_engagement',
@@ -91,5 +93,5 @@ export const API_ENDPOINTS = {
 
   DASHBOARD_INTEGRATION_STATUS: 'analytics/integration_status',
 
-  DASHBOARD_GENERAL_INFORMATION: 'analytics/general_information',
+  DASHBOARD_GENERAL_INFORMATION: 'analytics/general_information'
 };

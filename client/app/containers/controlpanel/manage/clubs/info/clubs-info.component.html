@@ -51,14 +51,16 @@
                       {{ 'download' | cpI18n }}
                     </a>
                   </span>
-                  <span> / </span>
-                  <span>
-                    <cp-upload-button
-                      buttonText="Reupload"
-                      buttonClass="cpbtn cpbtn--link"
-                      (fileUpload)="onFileAdded($event)">
-                    </cp-upload-button>
-                  </span>
+                  <ng-container *ngIf="!limitedAdmin">
+                    <span> / </span>
+                    <span>
+                      <cp-upload-button
+                        buttonText="Reupload"
+                        buttonClass="cpbtn cpbtn--link"
+                        (fileUpload)="onFileAdded($event)">
+                      </cp-upload-button>
+                    </span>
+                  </ng-container>
                 </div>
               </div>
 
@@ -139,6 +141,22 @@
             class="map__container"
             [draggable]="draggable">
           </cp-maps>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row club-notes" *ngIf="club.notes?.length && !limitedAdmin">
+      <div class="col-xs-8 col-xs-offset-2">
+        <div class="cp-card">
+          <p class="club-notes__title">{{ 'club_info_notes' | cpI18n }}</p>
+          <div 
+            class="club-notes__item" 
+            *ngFor="let note of club.notes | cpNoteToText">
+            <strong class="club-notes__question">{{note.question}}</strong>
+            <ng-container *ngFor="let answer of note.answers">
+              <p class="club-notes__answer">{{answer}}</p>
+            </ng-container>
+          </div>
         </div>
       </div>
     </div>

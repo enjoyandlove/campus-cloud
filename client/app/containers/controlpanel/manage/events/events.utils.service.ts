@@ -3,6 +3,7 @@ import IEvent from './event.interface';
 import { Injectable } from '@angular/core';
 import { EventAttendance } from './event.status';
 import { CPDate } from './../../../../shared/utils/date/date';
+import { CP_PRIVILEGES_MAP } from '../../../../shared/constants';
 
 @Injectable()
 export class EventUtilService {
@@ -32,7 +33,7 @@ export class EventUtilService {
     return '/manage/events';
   }
 
-  builidUrlPrefixEvents(
+  buildUrlPrefixEvents(
     clubId: number = null,
     serviceId: number = null,
     athleticId: number = null,
@@ -45,10 +46,29 @@ export class EventUtilService {
     } else if (serviceId) {
       return `/manage/services/${serviceId}/events/${eventId}`;
     } else if (orientationId) {
-      return `/manage/orientation/${orientationId}/events`;
+      return `/manage/orientation/${orientationId}/events/${eventId}`;
     }
 
     return `/manage/events/${eventId}`;
+  }
+
+  buildUrlPrefixExcel(
+    orientationId: number = null,
+    athleticId: number = null,
+    serviceId: number = null,
+    clubId: number = null,
+  ) {
+    if (orientationId) {
+      return `/manage/orientation/${orientationId}/events/import/excel`;
+    } else if (athleticId) {
+      return `/manage/athletics/${clubId}/events/import/excel`;
+    } else if (serviceId) {
+      return `/manage/services/${serviceId}/events/import/excel`;
+    } else if (clubId) {
+      return `/manage/clubs/${clubId}/events/import/excel`;
+    }
+
+    return `/manage/events/import/excel`;
   }
 
   getSubNavChildren(event, urlPrefix) {
@@ -68,5 +88,9 @@ export class EventUtilService {
     ];
 
     return pastEvent && attendanceEnabled ? children : [];
+  }
+
+  getPrivilegeType(type: boolean) {
+    return type ? CP_PRIVILEGES_MAP.orientation.toString() : CP_PRIVILEGES_MAP.events.toString();
   }
 }

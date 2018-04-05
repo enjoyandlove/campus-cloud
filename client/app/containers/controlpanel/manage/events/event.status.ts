@@ -19,6 +19,11 @@ export enum EventSortDirection {
   'desc' = 'desc',
 }
 
+export enum IsAllDay {
+  'enabled' = 1,
+  'disabled' = 0,
+}
+
 export enum EventVerificationMethod {
   'web' = 1,
   'hostQR' = 2,

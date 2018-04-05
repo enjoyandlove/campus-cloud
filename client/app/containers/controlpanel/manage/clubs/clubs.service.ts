@@ -25,19 +25,15 @@ export class ClubsService extends BaseService {
   }
 
   getClubById(serviceId: number, search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.CLUBS
-    }/${serviceId}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CLUBS}/${serviceId}`;
 
     return super.get(url, { search }).map((res) => res.json());
   }
 
   deleteClubById(serviceId: number) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.CLUBS
-    }/${serviceId}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CLUBS}/${serviceId}`;
 
-    return super.delete(url).map((res) => res.json());
+    return super.delete(url, null, true).map((res) => res.json());
   }
 
   createClub(body, search: URLSearchParams) {
@@ -47,9 +43,7 @@ export class ClubsService extends BaseService {
   }
 
   updateClub(body, clubId: number, search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.CLUBS
-    }/${clubId}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CLUBS}/${clubId}`;
 
     return super.update(url, body, { search }).map((res) => res.json());
   }
@@ -57,7 +51,7 @@ export class ClubsService extends BaseService {
   setModalClubs(clubs: any[]): void {
     this.store.dispatch({
       type: CLUBS_MODAL_SET,
-      payload: clubs,
+      payload: clubs
     });
   }
 }

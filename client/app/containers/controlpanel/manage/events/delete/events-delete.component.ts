@@ -1,8 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { URLSearchParams } from '@angular/http';
 
 import { EventsService } from '../events.service';
+import { CPSession } from '../../../../../session';
 import { CPI18nService } from '../../../../../shared/services';
-import { OrientationService } from '../../orientation/orientation.services';
 
 declare var $: any;
 
@@ -13,21 +14,26 @@ declare var $: any;
 })
 export class EventsDeleteComponent implements OnInit {
   @Input() event: any;
+  @Input() orientationId: number;
   @Input() isOrientation: boolean;
   @Output() deletedEvent: EventEmitter<number> = new EventEmitter();
 
-  service;
   buttonData;
 
   constructor(
+    public session: CPSession,
     private cpI18n: CPI18nService,
-    private eventService: EventsService,
-    private orientationService: OrientationService,
+    private service: EventsService,
   ) {}
 
   onDelete() {
-    this.service = this.isOrientation ? this.orientationService : this.eventService;
-    this.service.deleteEventById(this.event.id).subscribe(() => {
+    const search = new URLSearchParams();
+    if (this.orientationId) {
+      search.append('school_id', this.session.g.get('school').id);
+      search.append('calendar_id', this.orientationId.toString());
+    }
+
+    this.service.deleteEventById(this.event.id, search).subscribe(() => {
       this.deletedEvent.emit(this.event.id);
 
       $('#deleteEventsModal').modal('hide');

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { EventsService } from '../../../../events/events.service';
+import { OrientationEventsService } from '../../orientation.events.service';
 
 @Component({
   selector: 'cp-orientation-events-info',
@@ -7,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
               [isOrientation]="isOrientation"
               [orientationId]="orientationId">
              </cp-events-info>`,
+  providers: [{ provide: EventsService, useClass: OrientationEventsService }]
 })
 export class OrientationEventsInfoComponent implements OnInit {
   isOrientation = true;

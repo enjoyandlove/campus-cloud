@@ -22,7 +22,7 @@ import { CalendarsModule } from '../calendars/calendars.module';
     OrientationListActionBoxComponent,
     OrientationProgramCreateComponent,
     OrientationProgramDeleteComponent,
-    OrientationDuplicateProgramComponent,
+    OrientationDuplicateProgramComponent
   ],
 
   imports: [
@@ -34,10 +34,6 @@ import { CalendarsModule } from '../calendars/calendars.module';
     CalendarsModule
   ],
 
-  providers: [
-    OrientationService,
-    OrientationUtilsService
-  ]
+  providers: [OrientationService, OrientationUtilsService]
 })
-
 export class OrientationModule {}

@@ -14,6 +14,7 @@ require('zone.js/dist/async-test');
 require('zone.js/dist/fake-async-test');
 
 import 'jquery';
+import 'rxjs/add/observable/of';
 require('node_modules/bootstrap-sass/assets/javascripts/bootstrap.min');
 
 /*
@@ -38,4 +39,7 @@ appContext.keys().forEach(appContext);
 var testing = require('@angular/core/testing');
 var browser = require('@angular/platform-browser-dynamic/testing');
 
-testing.TestBed.initTestEnvironment(browser.BrowserDynamicTestingModule, browser.platformBrowserDynamicTesting());
+testing.TestBed.initTestEnvironment(
+  browser.BrowserDynamicTestingModule,
+  browser.platformBrowserDynamicTesting()
+);

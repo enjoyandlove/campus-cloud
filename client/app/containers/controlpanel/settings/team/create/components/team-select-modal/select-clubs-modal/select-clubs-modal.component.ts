@@ -7,17 +7,14 @@ import { CPSession } from '../../../../../../../../session';
 import { ClubsService } from '../../../../../../manage/clubs/clubs.service';
 import { CP_PRIVILEGES_MAP } from '../../../../../../../../shared/constants';
 import { BaseTeamSelectModalComponent } from '../base/team-select-modal.component';
-import {
-  clubAthleticStatus,
-  isClubAthletic,
-} from '../../../../team.utils.service';
+import { clubAthleticStatus, isClubAthletic } from '../../../../team.utils.service';
+import { clubOnlyPermissions } from '../permissions';
 
 @Component({
   selector: 'cp-select-clubs-modal',
-  templateUrl: './select-clubs-modal.component.html',
+  templateUrl: './select-clubs-modal.component.html'
 })
-export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent
-  implements OnInit {
+export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent implements OnInit {
   @Input() selectedClubs: any;
   @Input() reset: Observable<boolean>;
 
@@ -27,9 +24,10 @@ export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent
 
   data$: BehaviorSubject<any> = new BehaviorSubject({});
 
-  constructor(private session: CPSession, private service: ClubsService) {
-    super();
+  constructor(public session: CPSession, private service: ClubsService) {
+    super(session);
     this.privilegeType = CP_PRIVILEGES_MAP.clubs;
+    this.privileges = clubOnlyPermissions;
   }
 
   doReset() {
@@ -43,9 +41,7 @@ export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent
 
     this.service
       .getClubs(search, 1, 1000)
-      .map((clubs) =>
-        clubs.filter((club) => club.status === clubAthleticStatus.active),
-      )
+      .map((clubs) => clubs.filter((club) => club.status === clubAthleticStatus.active))
       .subscribe((clubs) => {
         let res = {};
         const selected = {};
@@ -54,7 +50,11 @@ export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent
           clubs.map((club) => {
             if (Object.keys(this.selectedClubs).includes(club.id.toString())) {
               if (CP_PRIVILEGES_MAP.clubs in this.selectedClubs[club.id]) {
-                selected[club.id] = club;
+                selected[club.id] = {
+                  ...club,
+                  write: this.selectedClubs[club.id][CP_PRIVILEGES_MAP.clubs].w,
+                  read: this.selectedClubs[club.id][CP_PRIVILEGES_MAP.clubs].r
+                };
               }
             }
 
@@ -63,14 +63,14 @@ export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent
               // we pass the id to the selected object
               // to populate the modal state....
               selected[club.id] = Object.assign({}, selected[club.id], {
-                id: club.id,
+                id: club.id
               });
             }
           });
         }
         res = {
           data: clubs,
-          selected: selected,
+          selected: selected
         };
 
         this.data$.next(res);

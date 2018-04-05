@@ -6,7 +6,7 @@ import {
   Input,
   OnInit,
   Output,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
@@ -21,7 +21,7 @@ import { Store } from '@ngrx/store';
 @Component({
   selector: 'cp-orientation-program-edit',
   templateUrl: './orientation-program-edit.component.html',
-  styleUrls: ['./orientation-program-edit.component.scss'],
+  styleUrls: ['./orientation-program-edit.component.scss']
 })
 export class OrientationProgramEditComponent implements OnInit {
   @ViewChild('editForm') editForm;
@@ -82,17 +82,9 @@ export class OrientationProgramEditComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      name: [
-        this.orientationProgram.name,
-        [Validators.required, Validators.maxLength(225)],
-      ],
-      description: [
-        this.orientationProgram.description,
-        Validators.maxLength(512)
-      ],
-      has_membership: [
-        this.orientationProgram.has_membership
-      ],
+      name: [this.orientationProgram.name, [Validators.required, Validators.maxLength(225)]],
+      description: [this.orientationProgram.description, Validators.maxLength(512)],
+      has_membership: [this.orientationProgram.has_membership]
     });
 
     this.buttonData = Object.assign({}, this.buttonData, {

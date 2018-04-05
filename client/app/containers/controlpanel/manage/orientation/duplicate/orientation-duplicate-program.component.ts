@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
+import { Router } from '@angular/router';
 
 import { OrientationService } from '../orientation.services';
 import { CPI18nService } from '../../../../../shared/services/i18n.service';
@@ -24,13 +25,6 @@ export class OrientationDuplicateProgramComponent implements OnInit {
 
   @Input() orientationProgram;
 
-  @Output()
-  created: EventEmitter<{
-    id: number;
-    name: string;
-    description: string;
-    is_membership: number;
-  }> = new EventEmitter();
   @Output() resetDuplicateModal: EventEmitter<null> = new EventEmitter();
 
   buttonData;
@@ -40,6 +34,7 @@ export class OrientationDuplicateProgramComponent implements OnInit {
   constructor(
     public el: ElementRef,
     public fb: FormBuilder,
+    public router: Router,
     public session: CPSession,
     public cpI18n: CPI18nService,
     public service: OrientationService,
@@ -66,9 +61,10 @@ export class OrientationDuplicateProgramComponent implements OnInit {
     this.service
       .duplicateProgram(this.orientationProgram.id, this.form.value, search)
       .subscribe((duplicateProgram) => {
-        // todo: redirect to event page when program created
-        this.created.emit(duplicateProgram);
         this.resetModal();
+        this.router.navigate([
+          `/manage/orientation/${duplicateProgram.id}/events`,
+        ]);
       });
   }
 
@@ -77,7 +73,7 @@ export class OrientationDuplicateProgramComponent implements OnInit {
       id: [this.orientationProgram.id],
       name: [null, [Validators.required, Validators.maxLength(225)]],
       description: [null, Validators.maxLength(512)],
-      is_membership: [this.orientationProgram.is_membership],
+      has_membership: [this.orientationProgram.has_membership],
     });
 
     this.buttonData = Object.assign({}, this.buttonData, {
