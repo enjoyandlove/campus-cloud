@@ -1,4 +1,3 @@
-/*tslint:disable:max-classes-per-file*/
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Store, StoreModule } from '@ngrx/store';
@@ -150,6 +149,6 @@ describe('EngagementComponent', () => {
   xit('buildSearchHeaders', () => {
     component.onDoFilter(mockFilterState);
     fixture.detectChanges();
-    // console.log(component.buildSearchHeaders().paramsMap.toJSON());
+    console.log(component.buildSearchHeaders().paramsMap.toJSON());
   });
 });
