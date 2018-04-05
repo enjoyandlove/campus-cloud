@@ -16,4 +16,4 @@ export interface ISchool {
   short_name: string;
   wall_unlock_num: number;
   wall_unlocked: boolean;
-}
+};

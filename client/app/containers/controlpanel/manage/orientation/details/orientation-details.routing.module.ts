@@ -22,11 +22,11 @@ const appRoutes: Routes = [
          path: 'members',
          loadChildren: '../members/members.module#ClubsMembersModule',
        },*/
-    ]
-  }
+    ],
+  },
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class OrientationDetailsRoutingModule {}

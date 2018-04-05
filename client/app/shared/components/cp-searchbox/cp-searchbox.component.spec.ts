@@ -30,7 +30,7 @@ describe('CPSearchBoxComponent', () => {
 
     component
       .stream$
-      .switchMap((query) => {
+      .switchMap(query => {
         const queryEmit$ = component.query;
         const isSearch$ = component.isSearch$;
         const searchingEmit$ = component.searching;
@@ -41,7 +41,7 @@ describe('CPSearchBoxComponent', () => {
 
         return Observable.combineLatest(queryEmit$, isSearch$, searchingEmit$);
       })
-      .subscribe((res) => {
+      .subscribe(res => {
         fixture.detectChanges();
 
         expect(res[0]).toBe('hello world');
@@ -49,7 +49,7 @@ describe('CPSearchBoxComponent', () => {
         expect(res[2]).toBeFalsy();
       }
       );
-  });
+  })
 
   it('Should clear input', () => {
     const query$ = component.query;
@@ -57,7 +57,7 @@ describe('CPSearchBoxComponent', () => {
 
     const stream$ = Observable.combineLatest(query$, isSearch$);
 
-    stream$.subscribe((res) => {
+    stream$.subscribe(res => {
       fixture.detectChanges();
       expect(component.q.nativeElement.value).toEqual('');
       expect(res[0]).toBeNull();
@@ -65,7 +65,7 @@ describe('CPSearchBoxComponent', () => {
     });
 
     component.onClear();
-  });
+  })
 
   it('Should emit an empty value', () => {
     component.ngAfterViewInit();
@@ -74,7 +74,7 @@ describe('CPSearchBoxComponent', () => {
 
     component
       .stream$
-      .switchMap((_) => {
+      .switchMap(_ => {
         const queryEmit$ = component.query;
         const isSearch$ = component.isSearch$;
         const searchingEmit$ = component.searching;
@@ -85,7 +85,7 @@ describe('CPSearchBoxComponent', () => {
 
         return Observable.combineLatest(queryEmit$, isSearch$, searchingEmit$);
       })
-      .subscribe((res) => {
+      .subscribe(res => {
         fixture.detectChanges();
 
         expect(res[0]).toBeNull();
@@ -93,5 +93,5 @@ describe('CPSearchBoxComponent', () => {
         expect(res[2]).toBeFalsy();
       }
       );
-  });
-});
+  })
+})

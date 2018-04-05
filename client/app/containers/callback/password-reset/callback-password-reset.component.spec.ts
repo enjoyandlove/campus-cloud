@@ -1,4 +1,3 @@
-/*tslint:disable:max-classes-per-file */
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { StoreModule } from '@ngrx/store';
@@ -34,7 +33,7 @@ class MockActivatedRoute {
     params: {
       'key': 123
     }
-  };
+  }
 }
 
 describe('Password Reset', () => {
@@ -66,10 +65,10 @@ describe('Password Reset', () => {
        template: '<div>No Template</div>'
      }
    })
-   .compileComponents();
+   .compileComponents()
  }));
 
-  beforeEach(() => {
+ beforeEach(() => {
     fixture = TestBed.createComponent(CallbackPasswordResetComponent);
     comp = fixture.componentInstance;
     errorService = TestBed.get(ErrorService);
@@ -77,7 +76,8 @@ describe('Password Reset', () => {
 
     spyError = spyOn(errorService, 'handleError');
     spySubmit = spyOn(authService, 'submitPasswordReset').and.returnValue(Observable.of(true));
- });
+ })
+
 
   it('Should read Key from url', fakeAsync(() => {
     expect(comp.isSubmitted).toBeFalsy();
@@ -91,11 +91,11 @@ describe('Password Reset', () => {
     comp.form.controls['new_password'].setValue(new_password);
     comp.form.controls['confirmPassword'].setValue(confirm_password);
 
-    comp.onSubmit({new_password, confirm_password});
+    comp.onSubmit({new_password, confirm_password})
 
     expect(spyError).toHaveBeenCalled();
     expect(spySubmit).not.toHaveBeenCalled();
-  });
+  })
 
   it('should handle success', () => {
     const new_password = 123456;
@@ -104,9 +104,9 @@ describe('Password Reset', () => {
     comp.form.controls['new_password'].setValue(new_password);
     comp.form.controls['confirmPassword'].setValue(confirm_password);
 
-    comp.onSubmit({new_password, confirm_password});
+    comp.onSubmit({new_password, confirm_password})
     expect(comp.isSubmitted).toBeDefined();
     expect(spyError).not.toHaveBeenCalled();
     expect(spySubmit).toHaveBeenCalled();
-  });
+  })
 });

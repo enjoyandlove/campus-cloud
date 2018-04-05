@@ -46,7 +46,8 @@ export class OrientationProgramEditComponent implements OnInit {
     public session: CPSession,
     private store: Store<any>,
     public cpI18n: CPI18nService,
-    public service: OrientationService
+    public service: OrientationService,
+    public utils: OrientationUtilsService,
   ) {}
 
   @HostListener('document:click', ['$event'])

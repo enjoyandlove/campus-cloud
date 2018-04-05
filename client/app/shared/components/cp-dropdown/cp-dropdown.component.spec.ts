@@ -13,7 +13,6 @@ const fakeItems = [
 ];
 
 describe('CPDropdownComponent', () => {
-  let spy;
   let comp: CPDropdownComponent;
   const _reset = new BehaviorSubject(false);
 
@@ -53,7 +52,7 @@ describe('CPDropdownComponent', () => {
     comp.ngOnInit();
     expect(comp.tooltipText).toBe(expectedToolTip);
 
-    spy = spyOn(comp, 'resetDropdown');
+    let spy = spyOn(comp, 'resetDropdown');
 
     comp.reset.subscribe((reset) => {
       if (reset) {

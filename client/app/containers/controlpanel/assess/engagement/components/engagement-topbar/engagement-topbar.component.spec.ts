@@ -1,4 +1,3 @@
-/*tslint:disable:max-classes-per-file*/
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
@@ -22,12 +21,12 @@ class MockActivatedRoute {
 
   snapshot = {
     queryParams: {}
-  };
+  }
 }
 
 class MockSession {
   g = new Map();
-}
+};
 
 describe('EngagementTopBarComponent', () => {
   // let session: CPSession;
@@ -47,7 +46,7 @@ describe('EngagementTopBarComponent', () => {
       set: {
         template: '<div>No Template</div>'
       }
-    });
+    })
     fixture = TestBed.createComponent(EngagementTopBarComponent);
     comp    = fixture.componentInstance;
 
@@ -66,5 +65,6 @@ describe('EngagementTopBarComponent', () => {
     expect(comp.hasRouteData).not.toBeDefined();
     expect(stateFromUrlSpy).not.toHaveBeenCalled();
     expect(initStateSpy).toHaveBeenCalledTimes(1);
-  });
-});
+  })
+})
+

@@ -9,4 +9,4 @@ export interface ILink {
   img_url: string;
   open_in_browser: boolean;
   is_system: boolean;
-}
+};
