@@ -1,16 +1,17 @@
 /*tslint:disable:max-line-length */
-
 import { Component, OnInit, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ActivatedRoute } from '@angular/router';
+import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
-import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { EventsService } from '../events.service';
+import { CPSession } from '../../../../../session';
 import { FORMAT } from '../../../../../shared/pipes/date';
 import { EventUtilService } from './../events.utils.service';
 import { BaseComponent } from '../../../../../base/base.component';
 import { CPI18nService } from '../../../../../shared/services/index';
+import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { IResourceBanner } from '../../../../../shared/components/cp-resource-banner/cp-resource.interface';
 
 @Component({
@@ -41,6 +42,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   defaultImage = require('public/default/image.png');
 
   constructor(
+    public session: CPSession,
     public cpI18n: CPI18nService,
     private store: Store<IHeader>,
     private route: ActivatedRoute,
@@ -55,7 +57,13 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   private fetch() {
     super.isLoading().subscribe((res) => (this.loading = res));
 
-    super.fetchData(this.service.getEventById(this.eventId)).then((event) => {
+    const search = new URLSearchParams();
+    if (this.orientationId) {
+      search.append('school_id', this.session.g.get('school').id);
+      search.append('calendar_id', this.orientationId.toString());
+    }
+
+    super.fetchData(this.service.getEventById(this.eventId, search)).then((event) => {
       this.event = event.data;
 
       this.isPastEvent = this.utils.isPastEvent(this.event);
