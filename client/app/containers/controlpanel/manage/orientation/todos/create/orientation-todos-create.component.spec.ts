@@ -2,10 +2,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs/Observable';
 import { FormBuilder } from '@angular/forms';
+import { URLSearchParams } from '@angular/http';
 
 import { TodosModule } from '../todos.module';
 import { TodosService } from '../todos.service';
 import { CPSession } from '../../../../../../session';
+import { mockSchool } from '../../../../../../session/mock/school';
 import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 import { OrientationTodosCreateComponent } from './orientation-todos-create.component';
 
@@ -21,16 +23,9 @@ class MockTodosService {
 
 describe('OrientationTodosCreateComponent', () => {
   let spy;
-  let spyService;
   let service: TodosService;
   let component: OrientationTodosCreateComponent;
   let fixture: ComponentFixture<OrientationTodosCreateComponent>;
-
-  const mockTodo = {
-    'name': 'Hello World!',
-    'due_date': 1515625016,
-    'description': 'Some description',
-  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -47,6 +42,10 @@ describe('OrientationTodosCreateComponent', () => {
         fixture = TestBed.createComponent(OrientationTodosCreateComponent);
         component = fixture.componentInstance;
         service = TestBed.get(TodosService);
+
+        const search = new URLSearchParams();
+        component.session.g.set('school', mockSchool);
+        search.append('school_id', component.session.g.get('school').id);
         component.ngOnInit();
       });
   }));
@@ -79,13 +78,18 @@ describe('OrientationTodosCreateComponent', () => {
   });
 
   it('should insert todo', () => {
-    spy = spyOn(component, 'onSubmit');
-    component.onSubmit();
-    expect(spy).toHaveBeenCalledWith();
+    spyOn(component, 'resetModal');
+    spy = spyOn(component.service, 'createTodo').and.returnValue(Observable.of([]));
 
-    spyService = spyOn(service, 'createTodo');
-    service.createTodo(mockTodo, null);
-    expect(spyService).toHaveBeenCalledWith(mockTodo, null);
+    component.form = component.fb.group({
+      name: ['Hello World!'],
+      description: ['This is description'],
+      due_date: [1515625016],
+    });
+
+    component.onSubmit();
+    expect(spy).toHaveBeenCalled();
+    expect(spy.calls.count()).toBe(1);
   });
 
   });
