@@ -11,9 +11,12 @@ import { OrientationUtilsService } from '../orientation.utils.service';
 
 @Component({
   selector: 'cp-orientation-details',
-  template: '<router-outlet></router-outlet>',
+  template: '<router-outlet></router-outlet>'
 })
 export class OrientationDetailsComponent extends BaseComponent implements OnInit {
+  @Input() isOrientation = false;
+
+  labels;
   loading;
   orientationId: number;
 

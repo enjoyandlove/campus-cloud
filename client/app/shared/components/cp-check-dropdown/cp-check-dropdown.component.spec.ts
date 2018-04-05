@@ -34,7 +34,7 @@ describe('CPCheckDropdownComponent (inline template)', () => {
         action: null,
         decsritpion: 'mock description 2'
       }
-    ]
+    ];
 
     comp.reset = Observable.of(false);
 
@@ -42,7 +42,7 @@ describe('CPCheckDropdownComponent (inline template)', () => {
       label: 'expected label',
       action: null,
       decsritpion: 'expected description'
-    }
+    };
 
     fixture.detectChanges();
   });
@@ -56,7 +56,7 @@ describe('CPCheckDropdownComponent (inline template)', () => {
   it('when selectedItem present use it for the button text', () => {
     fixture.detectChanges();
 
-    comp.selectedItem = expected
+    comp.selectedItem = expected;
 
     fixture.detectChanges();
 
@@ -69,5 +69,5 @@ describe('CPCheckDropdownComponent (inline template)', () => {
     fixture.detectChanges();
 
     expect(comp.selectedItem).toBe(expected);
-  })
+  });
 });

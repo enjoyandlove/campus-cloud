@@ -1,4 +1,4 @@
-import { mockSchool } from './../../../../../session/mock/school';
+/*tslint:disable:max-classes-per-file*/
 /*
  * Testing a simple Angular 2 component
  * More info: https://angular.io/docs/ts/latest/guide/testing.html#!#simple-component-test
