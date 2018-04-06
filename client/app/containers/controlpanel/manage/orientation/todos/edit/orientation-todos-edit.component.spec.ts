@@ -1,4 +1,4 @@
-import { async, ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs/Observable';
 import { FormBuilder } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
@@ -89,8 +89,8 @@ describe('OrientationTodosEditComponent', () => {
   it('should update todo', () => {
     spyOn(component, 'resetModal');
     spy = spyOn(component.service, 'editTodo').and.returnValue(Observable.of({}));
-    component.onSubmit();
 
+    component.onSubmit();
     expect(spy).toHaveBeenCalled();
     expect(spy.calls.count()).toBe(1);
   });

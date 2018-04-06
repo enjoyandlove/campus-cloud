@@ -1,4 +1,4 @@
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { async, fakeAsync, tick, TestBed, ComponentFixture } from '@angular/core/testing';
 import { Observable } from 'rxjs/Observable';
 import { URLSearchParams } from '@angular/http';
 
