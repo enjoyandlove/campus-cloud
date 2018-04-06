@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { URLSearchParams } from '@angular/http';
 
 import { EventsService } from '../events.service';
 import { CPSession } from '../../../../../session';
@@ -8,7 +9,6 @@ import { CPDate } from '../../../../../shared/utils/date';
 import { EventUtilService } from './../events.utils.service';
 import { BaseComponent } from '../../../../../base/base.component';
 import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-import { URLSearchParams } from '@angular/http';
 
 @Component({
   selector: 'cp-events-attendance',
