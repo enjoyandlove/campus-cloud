@@ -2,13 +2,13 @@ import { Component, OnInit, Input } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
+import { CPSession } from './../../../../../../../../../session';
 import { ProvidersService } from '../../../../../providers.service';
 import { FORMAT } from '../../../../../../../../../shared/pipes/date';
+import { CPDate } from './../../../../../../../../../shared/utils/date/date';
 import { BaseComponent } from '../../../../../../../../../base/base.component';
 import { createSpreadSheet } from './../../../../../../../../../shared/utils/csv/parser';
 import { CPI18nService } from './../../../../../../../../../shared/services/i18n.service';
-
-import { unix } from 'moment';
 
 interface IState {
   search_text: string;
@@ -19,16 +19,15 @@ interface IState {
 const state: IState = {
   search_text: null,
   sort_field: 'check_in_time',
-  sort_direction: 'desc',
+  sort_direction: 'desc'
 };
 
 @Component({
   selector: 'cp-providers-attendees-list',
   templateUrl: './providers-attendees-list.component.html',
-  styleUrls: ['./providers-attendees-list.component.scss'],
+  styleUrls: ['./providers-attendees-list.component.scss']
 })
-export class ServicesProvidersAttendeesListComponent extends BaseComponent
-  implements OnInit {
+export class ServicesProvidersAttendeesListComponent extends BaseComponent implements OnInit {
   @Input() serviceId: number;
   @Input() providerId: number;
   @Input() query: Observable<string>;
@@ -42,8 +41,9 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent
   defaultImage = require('public/default/user.png');
 
   constructor(
+    public session: CPSession,
     private cpI18n: CPI18nService,
-    private providersService: ProvidersService,
+    private providersService: ProvidersService
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -60,7 +60,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent
     const stream$ = this.providersService.getProviderAssessments(
       this.startRange,
       this.endRange,
-      search,
+      search
     );
 
     super.fetchData(stream$).then((res) => {
@@ -87,7 +87,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent
     const stream$ = this.providersService.getProviderAssessments(
       this.startRange,
       this.endRange,
-      search,
+      search
     );
 
     return stream$.toPromise();
@@ -97,7 +97,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent
     this.state = {
       ...this.state,
       sort_field,
-      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc',
+      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc'
     };
 
     this.fetch();
@@ -114,38 +114,37 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent
             this.cpI18n.translate('feedback'),
             this.cpI18n.translate('services_label_checked_in_method'),
             this.cpI18n.translate('services_label_checked_in_time'),
-            this.cpI18n.translate('student_id'),
+            this.cpI18n.translate('student_id')
           ];
 
           const check_in_method = {
             1: 'Web check-in',
-            3: 'App check-in',
+            3: 'App check-in'
           };
 
           assessments = assessments.map((item) => {
             return {
-              [this.cpI18n.translate('services_label_attendee_name')]: `${
-                item.firstname
-              } ${item.lastname}`,
+              [this.cpI18n.translate('services_label_attendee_name')]: `${item.firstname} ${
+                item.lastname
+              }`,
 
               [this.cpI18n.translate('email')]: item.email,
 
               [this.cpI18n.translate('average_rating')]:
-                item.feedback_rating === -1
-                  ? 'N/A'
-                  : item.feedback_rating / 100 * 5,
+                item.feedback_rating === -1 ? 'N/A' : item.feedback_rating / 100 * 5,
 
               [this.cpI18n.translate('feedback')]: item.feedback_text,
 
-              [this.cpI18n.translate(
-                'services_label_checked_in_method',
-              )]: check_in_method[item.check_in_method],
+              [this.cpI18n.translate('services_label_checked_in_method')]: check_in_method[
+                item.check_in_method
+              ],
 
-              [this.cpI18n.translate('services_label_checked_in_time')]: unix(
+              [this.cpI18n.translate('services_label_checked_in_time')]: CPDate.fromEpoch(
                 item.check_in_time,
+                this.session.tz
               ).format('MMMM Do YYYY - h:mm a'),
 
-              [this.cpI18n.translate('student_id')]: item.student_identifier,
+              [this.cpI18n.translate('student_id')]: item.student_identifier
             };
           });
 
@@ -161,14 +160,14 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent
 
     this.checkinMethods = {
       '1': {
-        label: 'Web check-in',
+        label: 'Web check-in'
       },
       '2': {
-        label: 'Web Based QR scan',
+        label: 'Web Based QR scan'
       },
       '3': {
-        label: 'App check-in',
-      },
+        label: 'App check-in'
+      }
     };
   }
 }

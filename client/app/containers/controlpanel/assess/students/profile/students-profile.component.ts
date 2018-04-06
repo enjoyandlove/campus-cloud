@@ -14,8 +14,6 @@ import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
 import { createSpreadSheet } from './../../../../../shared/utils/csv/parser';
 import { STAR_SIZE } from './../../../../../shared/components/cp-stars/cp-stars.component';
 
-import * as moment from 'moment';
-
 declare var $;
 
 const isSameDay = (dateOne, dateTwo, tz): boolean => {
@@ -196,14 +194,17 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
 
           [this.cpI18n.translate('type')]: type[item.type],
 
-          [this.cpI18n.translate('assess_checkin_date')]: moment
-            .unix(item.time_epoch)
-            .format('MMMM Do YYYY - h:mm a'),
+          [this.cpI18n.translate('assess_checkin_date')]: CPDate.fromEpoch(
+            item.time_epoch,
+            this.session.tz
+          ).format('MMMM Do YYYY - h:mm a'),
 
           [this.cpI18n.translate('assess_response_date')]:
             item.feedback_time_epoch === 0
               ? 'No Feedback Provided'
-              : moment.unix(item.feedback_time_epoch).format('MMMM Do YYYY - h:mm a'),
+              : CPDate.fromEpoch(item.feedback_time_epoch, this.session.tz).format(
+                  'MMMM Do YYYY - h:mm a'
+                ),
 
           [this.cpI18n.translate('rating')]:
             item.user_rating_percent === -1
