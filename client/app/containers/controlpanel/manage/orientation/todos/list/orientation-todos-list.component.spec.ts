@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Observable } from 'rxjs/Observable';
 import { URLSearchParams } from '@angular/http';
 
@@ -66,12 +66,15 @@ describe('OrientationTodosListComponent', () => {
     expect(component.launchCreateModal).toBeTruthy();
   });
 
-  it('should fetch list of todos', () => {
+  it('should fetch list of todos', fakeAsync(() => {
     spy = spyOn(component.service, 'getTodos').and.returnValue(Observable.of(mockTodos));
     component.ngOnInit();
 
+    tick();
     expect(spy).toHaveBeenCalled();
     expect(spy.calls.count()).toBe(1);
-  });
+    expect(component.state.todos.length).toEqual(mockTodos.length);
+
+  }));
 
 });

@@ -11,18 +11,11 @@ import { OrientationTodosDeleteComponent } from './orientation-todos-delete.comp
 
 class MockTodosService {
   dummy;
-  mockTodo = [{
-      'due_date': 1515625016,
-      'description': 'Some description',
-      'id': 240786,
-      'name': 'Hello World!'
-  }];
 
   deleteTodo(todoId: number, search: any) {
-    this.dummy = [search];
-    const afterDeletedTodo = this.mockTodo.filter((item) => item.id !== todoId);
+    this.dummy = [todoId, search];
 
-    return Observable.of(afterDeletedTodo);
+    return Observable.of(Observable.of({}));
   }
 }
 
@@ -71,9 +64,8 @@ describe('OrientationTodosDeleteComponent', () => {
     spy = spyOn(component.service, 'deleteTodo').and.returnValue(Observable.of({}));
 
     component.onDelete();
-    expect(spy).toHaveBeenCalledWith(component.todo.id, search);
     expect(spy.calls.count()).toBe(1);
-
+    expect(spy).toHaveBeenCalledWith(component.todo.id, search);
   });
 
 });
