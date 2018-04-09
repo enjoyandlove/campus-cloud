@@ -36,12 +36,11 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
     public session: CPSession,
     public cpI18n: CPI18nService,
     public store: Store<IHeader>,
-    private service: OrientationService,
+    public service: OrientationService,
     public headerService: ManageHeaderService
   ) {
     super();
     super.isLoading().subscribe((loading) => (this.loading = loading));
-    this.fetch();
   }
 
   @HostListener('document:click', ['$event'])
@@ -92,7 +91,7 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
     });
   }
 
-  private fetch() {
+  public fetch() {
     const search = new URLSearchParams();
     search.append('search_str', this.state.search_str);
     search.append('sort_field', this.state.sort_field);
@@ -114,12 +113,6 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
     this.fetch();
   }
 
-  // todo might be removed as we redirect to event
-  onCreated(newProgram: any): void {
-    this.launchCreateModal = false;
-    this.state.orientationPrograms = [newProgram, ...this.state.orientationPrograms];
-  }
-
   onDeleted(programId: number) {
     this.selectedProgram = null;
     this.launchDeleteModal = false;
@@ -138,5 +131,6 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.buildHeader();
+    this.fetch();
   }
 }

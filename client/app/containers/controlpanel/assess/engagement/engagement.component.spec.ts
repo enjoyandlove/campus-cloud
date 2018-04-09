@@ -16,32 +16,32 @@ import { HEADER_UPDATE } from './../../../../reducers/header.reducer';
 import { SNACKBAR_SHOW } from './../../../../reducers/snackbar.reducer';
 
 const mockFilterState = {
-  'engagement': {
-    'route_id': 'all',
-    'label': 'All Engagements',
-    'data': {
-      'type': null,
-      'value': 0,
-      'queryParam': 'scope'
+  engagement: {
+    route_id: 'all',
+    label: 'All Engagements',
+    data: {
+      type: null,
+      value: 0,
+      queryParam: 'scope'
     }
   },
-  'for': {
-    'route_id': 'all_students',
-    'label': 'All Students',
-    'listId': null
+  for: {
+    route_id: 'all_students',
+    label: 'All Students',
+    listId: null
   },
-  'range': {
-    'route_id': 'last_week',
-    'label': 'Last 7 Days',
-    'payload': {
-      'metric': 'daily',
-      'range': {
-        'end': 1508180917,
-        'start': 1507608000
+  range: {
+    route_id: 'last_week',
+    label: 'Last 7 Days',
+    payload: {
+      metric: 'daily',
+      range: {
+        end: 1508180917,
+        start: 1507608000
       }
     }
   }
-}
+};
 
 class MockEngagementService {
   getChartData() {
@@ -51,11 +51,17 @@ class MockEngagementService {
 
 class MockSession {
   g = new Map();
-};
+
+  get tz() {
+    return 'America/Toronto';
+  }
+}
 
 class MockRouter {
-  navigate(url: string) { return url; }
-};
+  navigate(url: string) {
+    return url;
+  }
+}
 
 describe('EngagementComponent', () => {
   let storeSpy;
@@ -73,20 +79,19 @@ describe('EngagementComponent', () => {
           SNACKBAR: snackBarReducer
         })
       ],
-      declarations: [ EngagementComponent ],
+      declarations: [EngagementComponent],
       providers: [
         CPI18nService,
-        { provide: Router,  useClass: MockRouter },
+        { provide: Router, useClass: MockRouter },
         { provide: CPSession, useClass: MockSession },
-        { provide: EngagementService, useClass: MockEngagementService },
+        { provide: EngagementService, useClass: MockEngagementService }
       ],
       schemas: [NO_ERRORS_SCHEMA]
-    })
-    .overrideComponent(EngagementComponent, {
+    }).overrideComponent(EngagementComponent, {
       set: {
         template: '<div>No need of child components</div>'
       }
-    })
+    });
 
     store = TestBed.get(Store);
     storeSpy = spyOn(store, 'dispatch').and.callThrough();
@@ -109,7 +114,7 @@ describe('EngagementComponent', () => {
 
     expect(component.isComposeModal).toBeTruthy();
     expect(component.messageData).toEqual(expected);
-  })
+  });
 
   it('onFlashMessage', () => {
     component.onFlashMessage();
@@ -122,7 +127,7 @@ describe('EngagementComponent', () => {
       }
     };
     expect(storeSpy).toHaveBeenCalledWith(expected);
-  })
+  });
 
   it('ngOnInit', () => {
     component.ngOnInit();
@@ -132,18 +137,18 @@ describe('EngagementComponent', () => {
       payload: require('../assess.header.json')
     };
     expect(storeSpy).toHaveBeenCalledWith(expected);
-  })
+  });
 
   it('onComposeTeardown', () => {
     component.onComposeTeardown();
 
     expect(component.isComposeModal).toBeFalsy();
     expect(component.messageData).toBeNull();
-  })
+  });
 
   xit('buildSearchHeaders', () => {
     component.onDoFilter(mockFilterState);
     fixture.detectChanges();
     console.log(component.buildSearchHeaders().paramsMap.toJSON());
-  })
-})
+  });
+});
