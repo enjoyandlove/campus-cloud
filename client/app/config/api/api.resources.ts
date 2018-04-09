@@ -95,6 +95,8 @@ export const API_ENDPOINTS = {
 
   DASHBOARD_INTEGRATION_STATUS: 'analytics/integration_status',
 
+  ORIENTATION_EVENTS_ASSESSMENT: 'orientation_item_assessment',
+
   EXTERNAL_USER_EVENT_FEEDBACK: 'external_user_event_feedback',
 
   DASHBOARD_GENERAL_INFORMATION: 'analytics/general_information'

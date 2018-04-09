@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
 import { EventsService } from '../../../events.service';
+import { CPSession } from '../../../../../../../session';
 import { BaseComponent } from '../../../../../../../base/base.component';
 import { STAR_SIZE } from '../../../../../../../shared/components/cp-stars';
 import { createSpreadSheet } from './../../../../../../../shared/utils/csv/parser';
@@ -16,7 +17,7 @@ interface IState {
 }
 
 const state = {
-  sort_field: 'name',
+  sort_field: 'firstname',
   sort_direction: 'asc',
   search_text: null,
 };
@@ -28,6 +29,7 @@ const state = {
 })
 export class AttendancePastComponent extends BaseComponent implements OnInit {
   @Input() event: any;
+  @Input() orientationId: number;
   @Input() isOrientation: boolean;
 
   loading;
@@ -38,6 +40,7 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
   detailStarSize = STAR_SIZE.LARGE;
 
   constructor(
+    public session: CPSession,
     private cpI18n: CPI18nService,
     private service: EventsService,
   ) {
@@ -52,6 +55,10 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
     search.append('sort_direction', this.state.sort_direction);
     search.append('search_text', this.state.search_text);
 
+    if (this.isOrientation) {
+      search.append('school_id', this.session.g.get('school').id);
+      search.append('calendar_id', this.orientationId.toString());
+    }
     const stream$ = this.service.getEventAttendanceByEventId(
       this.startRange,
       this.endRange,
