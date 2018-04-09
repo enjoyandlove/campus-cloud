@@ -20,7 +20,7 @@ export class CPSession {
   private _defaultHost = null;
 
   get tz() {
-    return this.g.get('school').tz_zoneinfo_str;
+    return this.g.get('school') ? this.g.get('school').tz_zoneinfo_str : 'America/Toronto';
   }
 
   get isSuperAdmin() {
