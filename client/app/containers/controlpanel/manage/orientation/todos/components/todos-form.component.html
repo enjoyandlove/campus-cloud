@@ -2,7 +2,7 @@
   <div class="row form-group">
     <div class="col-xs-12">
       <label>
-        {{ 'calendars_label_name' | cpI18n }}
+        {{ 'name' | cpI18n }}
         <span class="pull-right">
           {{ form.controls.name.value ? form.controls.name.value.length : 0 }}/225
         </span>
@@ -13,11 +13,22 @@
         formControlName="name">
     </div>
   </div>
+  <div class="row item-details">
+    <div class="col-xs-6">
+      <label>
+        {{ 'due_date' | cpI18n }}
+      </label>
+      <cp-datepicker
+        [options]="dueDate"
+        [error]="formError && form.controls['due_date'].hasError('required')">
+      </cp-datepicker>
+    </div>
+  </div>
   <br>
   <div class="row">
     <div class="col-xs-12">
       <label>
-        {{ 'calendars_label_description' | cpI18n }}
+        {{ 'description' | cpI18n }}
         <span class="pull-right">
           {{ form.controls.description.value ? form.controls.description.value.length : 0 }}/512
         </span>
@@ -26,22 +37,6 @@
         class="form-control"
         formControlName="description">
       </textarea>
-    </div>
-  </div>
-  <br>
-  <div class="row" *ngIf="isOrientation">
-    <div class="col-xs-10">
-      <label>{{ 'orientation_enable_membership' | cpI18n }}</label>
-      <p>{{ 'orientation_enable_membership_description' | cpI18n }}</p>
-    </div>
-    <div class="col-xs-2">
-      <span class="pull-right">
-        <cp-switch
-          [id]="orientationProgram?.id"
-          [isChecked]="isChecked"
-          (toggle)="toggleMembership($event)">
-        </cp-switch>
-      </span>
     </div>
   </div>
 </form>

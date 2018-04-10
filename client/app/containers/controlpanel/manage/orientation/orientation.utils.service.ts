@@ -14,7 +14,7 @@ export class OrientationUtilsService {
       // links = [{ label: 'Feeds', link: 'feeds' }, ...links];
     }
 
-    // links = [{ label: 'To-Dos', link: 'todos' }, ...links];
+    links = [{ label: 'To-Dos', link: 'todos' }, ...links];
     links = [{ label: 'Events', link: 'events'}, ...links];
 
     return links;
