@@ -16,7 +16,7 @@ interface IState {
 }
 
 const state = {
-  sort_field: 'name',
+  sort_field: 'firstname',
   sort_direction: 'asc',
   search_text: null
 };
@@ -28,6 +28,7 @@ const state = {
 })
 export class AttendancePastComponent extends BaseComponent implements OnInit {
   @Input() event: any;
+  @Input() orientationId: number;
   @Input() isOrientation: boolean;
 
   loading;
@@ -53,6 +54,10 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
     search.append('sort_direction', this.state.sort_direction);
     search.append('search_text', this.state.search_text);
 
+    if (this.isOrientation) {
+      search.append('school_id', this.session.g.get('school').id);
+      search.append('calendar_id', this.orientationId.toString());
+    }
     const stream$ = this.service.getEventAttendanceByEventId(
       this.startRange,
       this.endRange,
@@ -88,6 +93,10 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
     search.append('event_id', this.event.id);
     search.append('all', '1');
 
+    if (this.isOrientation) {
+      search.append('school_id', this.session.g.get('school').id);
+      search.append('calendar_id', this.orientationId.toString());
+    }
     const stream$ = this.service.getEventAttendanceByEventId(
       this.startRange,
       this.endRange,
