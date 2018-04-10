@@ -17,7 +17,6 @@ import { FeedsModule } from '../../feeds/feeds.module';
 import { EventsModule } from '../../events/events.module';
 import { CalendarsModule } from '../../calendars/calendars.module';
 import { OrientationService } from '../orientation.services';
-import { TodosService } from '../todos/todos.service';
 
 @NgModule({
   declarations: [
@@ -37,6 +36,6 @@ import { TodosService } from '../todos/todos.service';
     CalendarsModule
   ],
 
-  providers: [OrientationService, TodosService],
+  providers: [OrientationService],
 })
 export class OrientationDetailsModule {}
