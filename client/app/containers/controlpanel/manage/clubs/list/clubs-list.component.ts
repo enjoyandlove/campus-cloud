@@ -84,6 +84,10 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
+    if (this.isAthletic === isClubAthletic.athletic) {
+      search.append('category_id', isClubAthletic.athletic.toString());
+    }
+
     this.clubsService.updateClub({ status: this.ACTIVE_STATUS }, clubId, search).subscribe(
       (updatedClub) => {
         this.state = {
