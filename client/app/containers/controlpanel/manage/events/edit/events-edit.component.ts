@@ -13,29 +13,24 @@ import { FORMAT } from '../../../../../shared/pipes/date';
 import { CPSession, ISchool } from '../../../../../session';
 import { CPMap, CPDate } from '../../../../../shared/utils';
 import { BaseComponent } from '../../../../../base/base.component';
-import {
-  ErrorService,
-  StoreService,
-  AdminService,
-} from '../../../../../shared/services';
+import { ErrorService, StoreService, AdminService } from '../../../../../shared/services';
 
-import { EventAttendance, IsAllDay } from '../event.status';
+import { EventAttendance } from '../event.status';
 import { EventUtilService } from '../events.utils.service';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
-import * as moment from 'moment';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
 const FORMAT_WITHOUT_TIME = 'F j, Y';
 const COMMON_DATE_PICKER_OPTIONS = {
   altInput: true,
   enableTime: true,
-  altFormat: 'F j, Y h:i K',
+  altFormat: 'F j, Y h:i K'
 };
 
 @Component({
   selector: 'cp-events-edit',
   templateUrl: './events-edit.component.html',
-  styleUrls: ['./events-edit.component.scss'],
+  styleUrls: ['./events-edit.component.scss']
 })
 export class EventsEditComponent extends BaseComponent implements OnInit {
   @Input() storeId: number;
@@ -87,7 +82,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     private adminService: AdminService,
     private storeService: StoreService,
     private errorService: ErrorService,
-    private service: EventsService,
+    private service: EventsService
   ) {
     super();
     this.school = this.session.g.get('school');
@@ -147,7 +142,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    if (this.form.controls['end'].value <= Math.round(new Date().getTime() / 1000)) {
+    if (this.form.controls['end'].value <= CPDate.now().unix()) {
       this.isDateError = true;
       this.formMissingFields = true;
       this.form.controls['end'].setErrors({ required: true });
@@ -205,7 +200,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       event_manager_id: [res.event_manager_id],
       attendance_manager_email: [res.attendance_manager_email],
       custom_basic_feedback_label: [res.custom_basic_feedback_label],
-      is_all_day: [res.is_all_day],
+      is_all_day: [res.is_all_day]
     });
 
     this.updateDatePicker();
@@ -227,16 +222,16 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
     this.startdatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: CPDate.fromEpoch(this.form.controls['start'].value),
-      onClose: function(date) {
-        _self.form.controls['start'].setValue(CPDate.toEpoch(date[0]));
+      defaultDate: CPDate.fromEpoch(this.form.controls['start'].value, _self.session.tz).format(),
+      onClose: function(_, dateStr) {
+        _self.form.controls['start'].setValue(CPDate.toEpoch(dateStr, _self.session.tz));
       }
     };
     this.enddatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: CPDate.fromEpoch(this.form.controls['end'].value),
-      onClose: function(date) {
-        _self.form.controls['end'].setValue(CPDate.toEpoch(date[0]));
+      defaultDate: CPDate.fromEpoch(this.form.controls['end'].value, _self.session.tz).format(),
+      onClose: function(_, dateStr) {
+        _self.form.controls['end'].setValue(CPDate.toEpoch(dateStr, _self.session.tz));
       }
     };
   }
@@ -260,18 +255,16 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   updateTime() {
     const startDateAtMidnight = CPDate.fromEpoch(
       this.form.controls['start'].value,
-    ).setHours(0, 0, 0, 0);
+      this.session.tz
+    ).startOf('day');
 
     const endDateAtMidnight = CPDate.fromEpoch(
       this.form.controls['end'].value,
-    ).setHours(23, 59, 59, 0);
+      this.session.tz
+    ).endOf('day');
 
-    this.form.controls['start'].setValue(
-      CPDate.toEpoch(moment(startDateAtMidnight).toDate()),
-    );
-    this.form.controls['end'].setValue(
-      CPDate.toEpoch(moment(endDateAtMidnight).toDate()),
-    );
+    this.form.controls['start'].setValue(CPDate.toEpoch(startDateAtMidnight, this.session.tz));
+    this.form.controls['end'].setValue(CPDate.toEpoch(endDateAtMidnight, this.session.tz));
   }
 
   onSelectedManager(manager): void {
@@ -280,7 +273,6 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
   onAllDayToggle(value) {
     this.toggleDatePickerTime(value);
-    value = value ? IsAllDay.enabled : IsAllDay.disabled;
     this.form.controls['is_all_day'].setValue(value);
   }
 
