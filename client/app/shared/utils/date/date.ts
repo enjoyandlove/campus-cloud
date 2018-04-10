@@ -1,16 +1,21 @@
-import * as moment from 'moment';
+import * as moment from 'moment-timezone';
 
-function toEpoch(date) {
-  const d = moment(date).toDate();
-
-  return Math.round(d.getTime() / 1000);
+function now(): moment.Moment {
+  return moment();
 }
 
-function fromEpoch(epoch) {
-  return moment(epoch * 1000).toDate();
+function toEpoch(date, tz): number {
+  const dateWithNoTzData = moment.parseZone(date).format('YYYY-MM-DD HH:mm:ss');
+
+  return moment.tz(dateWithNoTzData, tz).unix();
+}
+
+function fromEpoch(timestamp, tz): moment.Moment {
+  return moment.tz(timestamp * 1000, tz);
 }
 
 export const CPDate = {
+  now,
   toEpoch,
-  fromEpoch,
+  fromEpoch
 };

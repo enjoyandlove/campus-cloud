@@ -55,6 +55,8 @@ class CSVParser:
 
         return error
 
+    def date_str_to_formated_date(self, date_input, format="%Y-%m-%d %H:%M:%S"):
+        return parse(date_input).strftime(format)
 
     def date_not_in_past(self, date_value):
         date_value = parse(date_value)
