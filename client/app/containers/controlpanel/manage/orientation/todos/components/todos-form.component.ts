@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
+import { CPSession } from '../../../../../../session';
 import { CPDate } from '../../../../../../shared/utils';
 import { ITodo } from '../../../orientation/todos/todos.interface';
 
@@ -29,15 +30,17 @@ export class TodosFormComponent implements OnInit {
 
   dueDate;
 
-  constructor() {}
+  constructor(private session: CPSession) {}
 
   ngOnInit() {
     const _self = this;
+    const due_date = this.form.controls['due_date'].value;
     this.dueDate = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: CPDate.fromEpoch(this.form.controls['due_date'].value),
+      defaultDate: due_date ?
+        CPDate.fromEpoch(this.form.controls['due_date'].value, _self.session.tz).format() : null,
       onClose: function(_, dateStr) {
-        _self.form.controls['due_date'].setValue(CPDate.toEpoch(dateStr));
+        _self.form.controls['due_date'].setValue(CPDate.toEpoch(dateStr, _self.session.tz));
       },
     };
   }
