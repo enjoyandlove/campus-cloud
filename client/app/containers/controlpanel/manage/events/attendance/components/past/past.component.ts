@@ -2,13 +2,12 @@ import { Component, OnInit, Input } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
 import { EventsService } from '../../../events.service';
-import { CPSession } from '../../../../../../../session';
+import { CPSession } from './../../../../../../../session';
+import { CPDate } from './../../../../../../../shared/utils/date/date';
 import { BaseComponent } from '../../../../../../../base/base.component';
 import { STAR_SIZE } from '../../../../../../../shared/components/cp-stars';
 import { createSpreadSheet } from './../../../../../../../shared/utils/csv/parser';
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
-
-import { unix } from 'moment';
 
 interface IState {
   sort_field: string;
@@ -19,13 +18,13 @@ interface IState {
 const state = {
   sort_field: 'firstname',
   sort_direction: 'asc',
-  search_text: null,
+  search_text: null
 };
 
 @Component({
   selector: 'cp-attendance-past',
   templateUrl: './past.component.html',
-  styleUrls: ['./past.component.scss'],
+  styleUrls: ['./past.component.scss']
 })
 export class AttendancePastComponent extends BaseComponent implements OnInit {
   @Input() event: any;
@@ -42,7 +41,7 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
   constructor(
     public session: CPSession,
     private cpI18n: CPI18nService,
-    private service: EventsService,
+    private service: EventsService
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -62,7 +61,7 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
     const stream$ = this.service.getEventAttendanceByEventId(
       this.startRange,
       this.endRange,
-      search,
+      search
     );
 
     super
@@ -84,7 +83,7 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
   doSort(sort_field) {
     this.state = Object.assign({}, this.state, {
       sort_field,
-      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc',
+      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc'
     });
     this.fetch();
   }
@@ -97,7 +96,7 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
     const stream$ = this.service.getEventAttendanceByEventId(
       this.startRange,
       this.endRange,
-      search,
+      search
     );
 
     stream$.toPromise().then((attendees) => {
@@ -109,37 +108,33 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
         this.cpI18n.translate('rating'),
         this.cpI18n.translate('events_user_feedback'),
         this.cpI18n.translate('events_checked_in_method'),
-        this.cpI18n.translate('student_id'),
+        this.cpI18n.translate('student_id')
       ];
 
       const check_in_method = {
         1: 'Web',
-        3: 'QR Code',
+        3: 'QR Code'
       };
 
       const rsvp = {
         1: this.cpI18n.translate('yes'),
-        0: this.cpI18n.translate('no'),
+        0: this.cpI18n.translate('no')
       };
 
       attendees = attendees.map((item) => {
         return {
-          [this.cpI18n.translate('events_attendant')]: `${item.firstname} ${
-            item.lastname
-          }`,
+          [this.cpI18n.translate('events_attendant')]: `${item.firstname} ${item.lastname}`,
 
           [this.cpI18n.translate('events_attendee_email')]: item.email,
 
           [this.cpI18n.translate('rsvp')]: rsvp[item.rsvp],
 
           [this.cpI18n.translate('events_checked_in_time')]:
-            item.feedback_rating === -1
-              ? ''
-              : (item.feedback_rating * 5 / 100).toFixed(2),
-
-          [this.cpI18n.translate('rating')]: unix(item.check_in_time).format(
-            'MMMM Do YYYY - h:mm a',
-          ),
+            item.feedback_rating === -1 ? '' : (item.feedback_rating * 5 / 100).toFixed(2),
+          [this.cpI18n.translate('rating')]: CPDate.fromEpoch(
+            item.check_in_time,
+            this.session.tz
+          ).format('MMMM Do YYYY - h:mm a'),
 
           [this.cpI18n.translate('events_user_feedback')]: item.feedback_text,
 
@@ -147,7 +142,7 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
             item.check_in_method
           ],
 
-          [this.cpI18n.translate('student_id')]: item.student_identifier,
+          [this.cpI18n.translate('student_id')]: item.student_identifier
         };
       });
 
@@ -157,7 +152,7 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
 
   onViewFeedback(attendee): void {
     attendee = Object.assign({}, attendee, {
-      maxRate: this.event.rating_scale_maximum,
+      maxRate: this.event.rating_scale_maximum
     });
 
     this.attendeeFeedback = attendee;

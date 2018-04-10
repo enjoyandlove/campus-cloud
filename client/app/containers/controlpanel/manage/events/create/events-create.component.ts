@@ -9,7 +9,7 @@ import {
   ErrorService,
   StoreService,
   AdminService,
-  CPI18nService,
+  CPI18nService
 } from '../../../../../shared/services';
 
 import { EventsService } from '../events.service';
@@ -19,7 +19,6 @@ import { EventAttendance, EventFeedback, isAllDay } from '../event.status';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 import { EventUtilService } from '../events.utils.service';
-import * as moment from 'moment';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
 const FORMAT_WITHOUT_TIME = 'F j, Y';
@@ -27,13 +26,13 @@ const COMMON_DATE_PICKER_OPTIONS = {
   utc: true,
   altInput: true,
   enableTime: true,
-  altFormat: 'F j, Y h:i K',
+  altFormat: 'F j, Y h:i K'
 };
 
 @Component({
   selector: 'cp-events-create',
   templateUrl: './events-create.component.html',
-  styleUrls: ['./events-create.component.scss'],
+  styleUrls: ['./events-create.component.scss']
 })
 export class EventsCreateComponent implements OnInit {
   @Input() storeId: number;
@@ -75,7 +74,7 @@ export class EventsCreateComponent implements OnInit {
     private utils: EventUtilService,
     private adminService: AdminService,
     private storeService: StoreService,
-    private errorService: ErrorService,
+    private errorService: ErrorService
   ) {
     this.school = this.session.g.get('school');
     const search: URLSearchParams = new URLSearchParams();
@@ -91,12 +90,12 @@ export class EventsCreateComponent implements OnInit {
       heading: 'events_create_heading',
       subheading: null,
       em: null,
-      children: [],
+      children: []
     };
 
     this.storeHeader.dispatch({
       type: HEADER_UPDATE,
-      payload,
+      payload
     });
   }
 
@@ -123,21 +122,21 @@ export class EventsCreateComponent implements OnInit {
         return [
           {
             label: '---',
-            value: null,
+            value: null
           },
           ...admins.map((admin) => {
             return {
               label: `${admin.firstname} ${admin.lastname}`,
-              value: admin.id,
+              value: admin.id
             };
-          }),
+          })
         ];
       })
       .subscribe(
         (managers) => (this.managers = managers),
         (err) => {
           throw new Error(err);
-        },
+        }
       );
   }
 
@@ -152,10 +151,7 @@ export class EventsCreateComponent implements OnInit {
   }
 
   onResetMap() {
-    CPMap.setFormLocationData(
-      this.form,
-      CPMap.resetLocationFields(this.school),
-    );
+    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields(this.school));
     this.centerMap(this.school.latitude, this.school.longitude);
   }
 
@@ -216,16 +212,14 @@ export class EventsCreateComponent implements OnInit {
       return;
     }
 
-    if (
-      this.form.controls['event_attendance'].value === EventAttendance.enabled
-    ) {
+    if (this.form.controls['event_attendance'].value === EventAttendance.enabled) {
       const managerId = this.form.controls['event_manager_id'];
 
       if (!managerId.value) {
         this.formError = true;
         managerId.setErrors({ required: true });
         this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: false,
+          disabled: false
         });
 
         return;
@@ -236,23 +230,17 @@ export class EventsCreateComponent implements OnInit {
       this.isDateError = true;
       this.formError = true;
       this.form.controls['end'].setErrors({ required: true });
-      this.dateErrorMessage = this.cpI18n.translate(
-        'events_error_end_date_before_start',
-      );
+      this.dateErrorMessage = this.cpI18n.translate('events_error_end_date_before_start');
       this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
 
       return;
     }
 
-    if (
-      this.form.controls['end'].value <= Math.round(new Date().getTime() / 1000)
-    ) {
+    if (this.form.controls['end'].value <= Math.round(CPDate.now().unix())) {
       this.isDateError = true;
       this.formError = true;
       this.form.controls['end'].setErrors({ required: true });
-      this.dateErrorMessage = this.cpI18n.translate(
-        'events_error_end_date_after_now',
-      );
+      this.dateErrorMessage = this.cpI18n.translate('events_error_end_date_after_now');
       this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
 
       return;
@@ -276,14 +264,14 @@ export class EventsCreateComponent implements OnInit {
       (err) => {
         this.errorService.handleError(err);
         this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: false,
+          disabled: false
         });
-      },
+      }
     );
   }
 
   getUrlPrefix(eventId) {
-   return this.utils.buildUrlPrefixEvents(
+    return this.utils.buildUrlPrefixEvents(
       this.clubId,
       this.serviceId,
       this.isAthletic,
@@ -315,18 +303,16 @@ export class EventsCreateComponent implements OnInit {
   updateTime() {
     const startDateAtMidnight = CPDate.fromEpoch(
       this.form.controls['start'].value,
-    ).setHours(0, 0, 0, 0);
+      this.session.tz
+    ).startOf('day');
 
     const endDateAtMidnight = CPDate.fromEpoch(
       this.form.controls['end'].value,
-    ).setHours(23, 59, 59, 0);
+      this.session.tz
+    ).endOf('day');
 
-    this.form.controls['start'].setValue(
-      CPDate.toEpoch(moment(startDateAtMidnight).toDate()),
-    );
-    this.form.controls['end'].setValue(
-      CPDate.toEpoch(moment(endDateAtMidnight).toDate()),
-    );
+    this.form.controls['start'].setValue(CPDate.toEpoch(startDateAtMidnight, this.session.tz));
+    this.form.controls['end'].setValue(CPDate.toEpoch(endDateAtMidnight, this.session.tz));
   }
 
   onAllDayToggle(value) {
@@ -336,19 +322,17 @@ export class EventsCreateComponent implements OnInit {
 
   ngOnInit() {
     this.eventManager = Object.assign({}, this.eventManager, {
-      content: this.cpI18n.translate('events_event_manager_tooltip'),
+      content: this.cpI18n.translate('events_event_manager_tooltip')
     });
     this.attendanceManager = Object.assign({}, this.attendanceManager, {
-      content: this.cpI18n.translate('events_attendance_manager_tooltip'),
+      content: this.cpI18n.translate('events_attendance_manager_tooltip')
     });
 
     this.studentFeedback = Object.assign({}, this.studentFeedback, {
-      content: this.cpI18n.translate('events_event_feedback_tooltip'),
+      content: this.cpI18n.translate('events_event_feedback_tooltip')
     });
 
-    let store_id = this.session.defaultHost
-      ? this.session.defaultHost.value
-      : null;
+    let store_id = this.session.defaultHost ? this.session.defaultHost.value : null;
 
     // fetch managers by service
     if (this.storeId) {
@@ -370,23 +354,23 @@ export class EventsCreateComponent implements OnInit {
 
     this.buttonData = {
       class: 'primary',
-      text: this.cpI18n.translate('events_button_new'),
+      text: this.cpI18n.translate('events_button_new')
     };
 
     this.booleanOptions = [
       {
         label: this.cpI18n.translate('event_enabled'),
-        action: EventFeedback.enabled,
+        action: EventFeedback.enabled
       },
       {
         label: this.cpI18n.translate('events_disabled'),
-        action: EventFeedback.disabled,
-      },
+        action: EventFeedback.disabled
+      }
     ];
 
     this.mapCenter = new BehaviorSubject({
       lat: this.school.latitude,
-      lng: this.school.longitude,
+      lng: this.school.longitude
     });
 
     this.form = this.fb.group({
@@ -418,16 +402,16 @@ export class EventsCreateComponent implements OnInit {
 
     this.startdatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      onClose: function(date) {
-        _self.form.controls['start'].setValue(CPDate.toEpoch(date[0]));
-      },
+      onClose: function(_, dataStr) {
+        _self.form.controls['start'].setValue(CPDate.toEpoch(dataStr, _self.session.tz));
+      }
     };
 
     this.enddatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      onClose: function(date) {
-        _self.form.controls['end'].setValue(CPDate.toEpoch(date[0]));
-      },
+      onClose: function(_, dataStr) {
+        _self.form.controls['end'].setValue(CPDate.toEpoch(dataStr, _self.session.tz));
+      }
     };
   }
 }
