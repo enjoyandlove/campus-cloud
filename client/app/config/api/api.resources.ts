@@ -91,7 +91,13 @@ export const API_ENDPOINTS = {
 
   DASHBORD_USER_ACQUISITION: 'analytics/user_acquisition',
 
+  EXTERNAL_USER_EVENT_CHECKIN: 'external_user_event_checkin',
+
   DASHBOARD_INTEGRATION_STATUS: 'analytics/integration_status',
+
+  ORIENTATION_EVENTS_ASSESSMENT: 'orientation_item_assessment',
+
+  EXTERNAL_USER_EVENT_FEEDBACK: 'external_user_event_feedback',
 
   DASHBOARD_GENERAL_INFORMATION: 'analytics/general_information'
 };
