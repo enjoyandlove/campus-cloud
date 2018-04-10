@@ -93,6 +93,10 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
     search.append('event_id', this.event.id);
     search.append('all', '1');
 
+    if (this.isOrientation) {
+      search.append('school_id', this.session.g.get('school').id);
+      search.append('calendar_id', this.orientationId.toString());
+    }
     const stream$ = this.service.getEventAttendanceByEventId(
       this.startRange,
       this.endRange,
