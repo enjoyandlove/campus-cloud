@@ -15,7 +15,6 @@ import { ITodo } from '../todos.interface';
 import { TodosService } from '../todos.service';
 import { CPSession } from './../../../../../../session';
 import { CPI18nService } from '../../../../../../shared/services/i18n.service';
-import { OrientationUtilsService } from '../../orientation.utils.service';
 
 @Component({
   selector: 'cp-orientation-todos-edit',
@@ -39,7 +38,6 @@ export class OrientationTodosEditComponent implements OnInit {
     public session: CPSession,
     public cpI18n: CPI18nService,
     public service: TodosService,
-    public utils: OrientationUtilsService,
   ) {}
 
   @HostListener('document:click', ['$event'])
@@ -71,17 +69,9 @@ export class OrientationTodosEditComponent implements OnInit {
   ngOnInit() {
     this.form = this.fb.group({
       id: [this.todo.id],
-      name: [
-        this.todo.name,
-        [Validators.required, Validators.maxLength(225)],
-      ],
-      description: [
-        this.todo.description,
-        Validators.maxLength(512)
-      ],
-      due_date: [
-        this.todo.due_date
-      ],
+      name: [this.todo.name, [Validators.required, Validators.maxLength(225)]],
+      description: [this.todo.description, Validators.maxLength(512)],
+      due_date: [this.todo.due_date, Validators.required],
     });
 
     this.buttonData = Object.assign({}, this.buttonData, {
