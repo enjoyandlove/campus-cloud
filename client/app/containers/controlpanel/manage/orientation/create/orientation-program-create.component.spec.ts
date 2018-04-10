@@ -1,4 +1,3 @@
-/*tslint:disable:max-line-length*/
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { Observable } from 'rxjs/Observable';
 import { FormBuilder } from '@angular/forms';
@@ -79,7 +78,9 @@ describe('OrientationProgramCreateComponent', () => {
   });
 
   it('form validation - max length 225 - should fail', () => {
-    component.form.controls['name'].setValue('This is the text which we are testing the length of 225 thats why we are entering this text greater than 225 to verify the unit test.  The total length of this string is 226 just to make sure its greater than 225 thanks you ..');
+    const charCount226 = 'a'.repeat(226);
+
+    component.form.controls['name'].setValue(charCount226);
     expect(component.form.valid).toBeFalsy();
   });
 

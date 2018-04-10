@@ -1,5 +1,4 @@
 import { URLSearchParams, Http } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -10,8 +9,6 @@ import { Store } from '@ngrx/store';
 
 @Injectable()
 export class OrientationEventsService extends EventsService {
-  dummy;
-
   constructor(http: Http, router: Router, private stores: Store<any>) {
     super(http, router, stores);
 
@@ -55,9 +52,12 @@ export class OrientationEventsService extends EventsService {
     endRage: number,
     search?: URLSearchParams,
   ) {
-    this.dummy = [startRage, endRage, search];
+    const common = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.ORIENTATION_EVENTS_ASSESSMENT
+      }`;
+    const url = `${common}/${startRage};${endRage}`;
 
-    return Observable.of([]).delay(300);
+    return super.get(url, { search }).map((res) => res.json());
   }
 
   setModalEvents(events: any[]): void {
