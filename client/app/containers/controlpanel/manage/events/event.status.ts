@@ -26,7 +26,7 @@ export enum EventVerificationMethod {
   'QR' = 4,
 }
 
-export const IsAllDay = {
+export const isAllDay = {
   'enabled': true,
   'disabled': false,
 };

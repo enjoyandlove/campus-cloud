@@ -37,7 +37,7 @@ export class ListUpcomingComponent implements OnInit {
 
   sort: ISort = sort;
   canDelete;
-  routerLink;
+  eventCheckinRoute;
   dateFormat = FORMAT.SHORT;
   attendanceEnabled = EventAttendance.enabled;
 
@@ -61,7 +61,7 @@ export class ListUpcomingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.routerLink = this.utils.getEventCheckInLink(this.isOrientation);
+    this.eventCheckinRoute = this.utils.getEventCheckInLink(this.isOrientation);
     const scholAccess = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.events);
     const accountAccess = canAccountLevelReadResource(this.session.g, CP_PRIVILEGES_MAP.events);
     this.canDelete = scholAccess || accountAccess || this.isOrientation;

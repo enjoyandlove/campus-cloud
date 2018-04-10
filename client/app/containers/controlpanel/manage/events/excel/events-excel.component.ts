@@ -17,7 +17,7 @@ import { CPI18nPipe } from './../../../../../shared/pipes/i18n/i18n.pipe';
 import { STATUS } from '../../../../../shared/constants';
 import { CPImageUploadComponent } from '../../../../../shared/components';
 import { EventUtilService } from '../events.utils.service';
-import { EventAttendance, EventFeedback, IsAllDay } from '../event.status';
+import { EventAttendance, EventFeedback, isAllDay } from '../event.status';
 import {
   FileUploadService,
   CPI18nService,
@@ -166,7 +166,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     return this.fb.group({
       store_id: [store_id ? store_id : null, !this.isOrientation ? Validators.required : null],
       room: [event.room],
-      is_all_day: [IsAllDay.enabled],
+      is_all_day: [isAllDay.enabled],
       title: [event.title, Validators.required],
       poster_url: [null, Validators.required],
       poster_thumb_url: [null, Validators.required],
@@ -405,7 +405,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       }
       let _event = {
         title: events[key].title,
-        is_all_day: IsAllDay.disabled,
+        is_all_day: isAllDay.disabled,
         store_id: store_id ? store_id : events[key].store_id,
         description: events[key].description,
         end: events[key].end,

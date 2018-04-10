@@ -69,7 +69,7 @@
 
       <span class="col-xs-3 text-truncate">
         <a
-          [routerLink]="[routerLink + event.encrypted_id]"
+          [routerLink]="[eventCheckinRoute + event.encrypted_id]"
           *ngIf="event.event_attendance === attendanceEnabled"
           class="cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--secondary">
           {{ 'events_check_in_details' | cpI18n }}

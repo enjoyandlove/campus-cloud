@@ -15,7 +15,7 @@ import {
 import { EventsService } from '../events.service';
 import { CPSession, ISchool } from '../../../../../session';
 import { CPMap, CPDate } from '../../../../../shared/utils';
-import { EventAttendance, EventFeedback, IsAllDay } from '../event.status';
+import { EventAttendance, EventFeedback, isAllDay } from '../event.status';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 import { EventUtilService } from '../events.utils.service';
@@ -411,7 +411,7 @@ export class EventsCreateComponent implements OnInit {
       event_manager_id: [null],
       attendance_manager_email: [null],
       custom_basic_feedback_label: [null],
-      is_all_day: [IsAllDay.disabled],
+      is_all_day: [isAllDay.disabled],
     });
 
     const _self = this;
