@@ -1,6 +1,6 @@
-import { async, fakeAsync, tick, TestBed, ComponentFixture } from '@angular/core/testing';
-import { HttpModule, URLSearchParams } from '@angular/http';
-import { ActivatedRoute, Router } from '@angular/router';
+import { async, TestBed, ComponentFixture } from '@angular/core/testing';
+import { URLSearchParams } from '@angular/http';
+import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { StoreModule } from '@ngrx/store';
 
@@ -8,37 +8,31 @@ import { EventsModule } from '../events.module';
 import { EventsService } from '../events.service';
 import { CPSession } from '../../../../../session';
 import { EventUtilService } from '../events.utils.service';
-import { EventsInfoComponent } from './events-info.component';
 import { CPI18nService } from '../../../../../shared/services';
 import { mockSchool } from '../../../../../session/mock/school';
 import { headerReducer, snackBarReducer } from '../../../../../reducers';
+import { EventsAttendanceComponent } from './events-attendance.component';
 
 class MockService {
   dummy;
 
-  getEventById(eventId: number, search: any) {
-    this.dummy = [eventId, search];
+  getEventById(id: number, search: any) {
+    this.dummy = [id, search];
 
     return Observable.of({});
   }
 }
 
-class RouterMock {
-  navigate() {
-  }
-}
-
-describe('EventInfoComponent', () => {
+describe('EventAttendanceComponent', () => {
   let spy;
   let search;
   let service: EventsService;
-  let component: EventsInfoComponent;
-  let fixture: ComponentFixture<EventsInfoComponent>;
+  let component: EventsAttendanceComponent;
+  let fixture: ComponentFixture<EventsAttendanceComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpModule,
         EventsModule,
         StoreModule.forRoot({
           HEADER: headerReducer,
@@ -49,24 +43,23 @@ describe('EventInfoComponent', () => {
         CPSession,
         CPI18nService,
         EventUtilService,
-        { provide: Router, useClass: RouterMock},
         { provide: EventsService, useClass: MockService },
         { provide: ActivatedRoute,
           useValue: {
             snapshot: {
-              params: Observable.of({ eventId: 15845 }),
+              params: Observable.of({ eventId: 1001 }),
             },
           }
         }
       ]
     }).compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(EventsInfoComponent);
+        fixture = TestBed.createComponent(EventsAttendanceComponent);
         service = TestBed.get(EventsService);
 
         component = fixture.componentInstance;
-        component.eventId = 15845;
-        component.orientationId = 1001;
+        component.eventId = 1001;
+        component.orientationId = 5425;
         component.session.g.set('school', mockSchool);
 
         search = new URLSearchParams();
@@ -77,13 +70,12 @@ describe('EventInfoComponent', () => {
       });
   }));
 
-  it('should fetch orientation event by Id', fakeAsync(() => {
+  it('should get orientation event by Id', () => {
     spyOn(component, 'buildHeader');
     spy = spyOn(component.service, 'getEventById').and.returnValue(Observable.of({}));
-    component.fetch();
 
-    tick();
+    component.fetch();
+    expect(spy).toHaveBeenCalledWith(component.eventId , search);
     expect(spy.calls.count()).toBe(1);
-    expect(spy).toHaveBeenCalledWith(component.eventId, search);
-  }));
+  });
 });

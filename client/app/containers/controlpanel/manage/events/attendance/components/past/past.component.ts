@@ -41,13 +41,13 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
   constructor(
     public session: CPSession,
     private cpI18n: CPI18nService,
-    private service: EventsService
+    public service: EventsService
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
   }
 
-  private fetch() {
+  public fetch() {
     const search = new URLSearchParams();
     search.append('event_id', this.event.id);
     search.append('sort_field', this.state.sort_field);
