@@ -806,6 +806,26 @@
     "message": "Club Notes",
     "description": "As a club super editor, view a club info page with club notes. "
   },
+  "club_membership_disabled_title": {
+    "message": "Disabled",
+    "description": "Create Club > Membership"
+  },
+  "club_membership_enabled_title": {
+    "message": "Enabled",
+    "description": "Create Club > Membership"
+  },
+  "club_status_active": {
+    "message": "Active",
+    "description": "Create Club > Status"
+  },
+  "club_status_inactive": {
+    "message": "Inactive",
+    "description": "Create Club > Status"
+  },
+  "club_status_pending": {
+    "message": "Pending",
+    "description": "Create Club > Status"
+  },
   "comment": {
     "message": "Comment",
     "description": "Walls Comment"
