@@ -40,8 +40,8 @@ export class PrivilegesGuard implements CanActivate, CanActivateChild {
   canActivate(activatedRoute, state) {
     this.setZendesk(activatedRoute.data);
 
-    if (this.getUrlSegments(state.url)) {
-      return this.hasPrivileges(this.getUrlSegments(state.url));
+    if (this.getParentModuleNameByRouteConfig(state.url)) {
+      return this.hasPrivileges(this.getParentModuleNameByRouteConfig(state.url));
     }
 
     return true;
@@ -126,7 +126,7 @@ export class PrivilegesGuard implements CanActivate, CanActivateChild {
     }
   }
 
-  getUrlSegments(url) {
+  getParentModuleNameByRouteConfig(url) {
     const tree = this.router.parseUrl(url);
     const children = tree.root.children[PRIMARY_OUTLET];
     const segments = children.segments;
