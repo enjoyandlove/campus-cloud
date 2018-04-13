@@ -1,8 +1,8 @@
 import { ErrorHandler } from '@angular/core';
 
 import { isProd } from './../env';
-import { AuthGuard } from '../guards';
 import { CPSession } from '../../session';
+import { AuthGuard, PrivilegesGuard } from '../guards';
 
 import {
   CPI18nService,
@@ -18,6 +18,7 @@ const COMMON_APP_PROVIDERS = [
   ErrorService,
   CPI18nService,
   ZendeskService,
+  PrivilegesGuard,
 ];
 
 const PROD_APP_PROVIDERS = [
