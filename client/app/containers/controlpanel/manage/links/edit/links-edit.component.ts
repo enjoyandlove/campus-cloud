@@ -1,11 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  OnChanges,
-  Output,
-  EventEmitter,
-} from '@angular/core';
+import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Headers } from '@angular/http';
 
@@ -22,7 +15,7 @@ declare var $: any;
 @Component({
   selector: 'cp-links-edit',
   templateUrl: './links-edit.component.html',
-  styleUrls: ['./links-edit.component.scss'],
+  styleUrls: ['./links-edit.component.scss']
 })
 export class LinksEditComponent implements OnInit, OnChanges {
   @Input() link: any;
@@ -30,13 +23,14 @@ export class LinksEditComponent implements OnInit, OnChanges {
   @Output() resetEditModal: EventEmitter<null> = new EventEmitter();
 
   imageError;
+  tooltipContent;
   form: FormGroup;
 
   constructor(
     private fb: FormBuilder,
     public cpI18n: CPI18nService,
     private service: LinksService,
-    private fileUploadService: FileUploadService,
+    private fileUploadService: FileUploadService
   ) {}
 
   buildForm() {
@@ -45,7 +39,7 @@ export class LinksEditComponent implements OnInit, OnChanges {
       name: [this.link.name, Validators.required],
       school_id: [this.link.school_id, Validators.required],
       description: [this.link.description, Validators.maxLength(512)],
-      img_url: [this.link.img_url],
+      img_url: [this.link.img_url]
     });
   }
 
@@ -61,9 +55,7 @@ export class LinksEditComponent implements OnInit, OnChanges {
 
     const headers = new Headers();
     const url = this.service.getUploadImageUrl();
-    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(
-      appStorage.keys.SESSION,
-    )}`;
+    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
 
     headers.append('Authorization', auth);
 
@@ -73,7 +65,7 @@ export class LinksEditComponent implements OnInit, OnChanges {
       },
       (err) => {
         throw new Error(err);
-      },
+      }
     );
   }
 
@@ -91,7 +83,7 @@ export class LinksEditComponent implements OnInit, OnChanges {
       },
       (err) => {
         throw new Error(err);
-      },
+      }
     );
   }
 
@@ -105,5 +97,14 @@ export class LinksEditComponent implements OnInit, OnChanges {
     this.resetEditModal.emit();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    const zendesk = 'https://oohlalamobile.zendesk.com/hc/en-us/articles';
+    this.tooltipContent = {
+      content: '',
+      link: {
+        url: `${zendesk}/360001101794-What-size-images-should-I-use-in-Campus-Cloud-`,
+        text: this.cpI18n.translate('learn_more')
+      }
+    };
+  }
 }
