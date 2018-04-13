@@ -55,7 +55,7 @@ export class PrivilegesGuard implements CanActivate, CanActivateChild {
       'athletics',
       'calendars',
       'services',
-      'lists',
+      'audience',
       'links',
       'locations',
       'announcements',
@@ -77,7 +77,7 @@ export class PrivilegesGuard implements CanActivate, CanActivateChild {
 
       services: CP_PRIVILEGES_MAP.services,
 
-      lists: CP_PRIVILEGES_MAP.campus_announcements,
+      audience: CP_PRIVILEGES_MAP.campus_announcements,
 
       calendars: CP_PRIVILEGES_MAP.calendar,
 
@@ -133,5 +133,4 @@ export class PrivilegesGuard implements CanActivate, CanActivateChild {
 
     return segments[1].path;
   }
-
 }
