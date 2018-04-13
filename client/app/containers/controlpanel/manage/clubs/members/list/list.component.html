@@ -118,6 +118,7 @@
         *ngIf="isEdit"
         [groupId]="groupId"
         [member]="editMember"
+        [orientationId]="orientationId"
         (edited)="forceRefresh()"
         (teardown)="isEdit = false">
       </cp-members-edit>
@@ -127,6 +128,7 @@
       <cp-members-delete
         [groupId]="groupId"
         [member]="deleteMember"
+        [orientationId]="orientationId"
         (deleted)="forceRefresh()">
       </cp-members-delete>
     </cp-modal>
@@ -134,6 +136,8 @@
     <cp-modal modalId="membersCreate">
       <cp-members-create
         [groupId]="groupId"
+        [isOrientation]="isOrientation"
+        [orientationId]="orientationId"
         (added)="forceRefresh()">
       </cp-members-create>
     </cp-modal>

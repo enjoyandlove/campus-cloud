@@ -32,6 +32,7 @@ const state: IState = {
 })
 export class ClubsMembersComponent extends BaseComponent implements OnInit {
   @Input() isOrientation: boolean;
+  @Input() orientationId: number;
   @Input() isAthletic = isClubAthletic.club;
 
   isEdit;
@@ -80,14 +81,17 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
     const memberSearch = new URLSearchParams();
     const schoolId = this.session.g.get('school').id.toString();
     const clubId = this.route.snapshot.parent.parent.parent.params['clubId'];
+    const calendar_id = this.orientationId ? this.orientationId.toString() : null;
 
     memberSearch.append('school_id', schoolId);
+    memberSearch.append('calendar_id', calendar_id);
     memberSearch.append('sort_field', this.state.sort_field);
     memberSearch.append('sort_direction', this.state.sort_direction);
     memberSearch.append('category_id', this.isAthletic.toString());
 
     groupSearch.append('store_id', clubId);
     groupSearch.append('school_id', schoolId);
+    groupSearch.append('calendar_id', calendar_id);
     groupSearch.append('category_id', this.isAthletic.toString());
 
     const socialGroupDetails$ = this.membersService.getSocialGroupDetails(

@@ -14,6 +14,8 @@ declare var $: any;
 export class ClubsMembersDeleteComponent implements OnInit {
   @Input() member: any;
   @Input() groupId: number;
+  @Input() orientationId: number;
+
   @Output() deleted: EventEmitter<number> = new EventEmitter();
 
   buttonData;
@@ -24,6 +26,7 @@ export class ClubsMembersDeleteComponent implements OnInit {
     this.service
       .removeMember(
         {
+          calendar_id: this.orientationId,
           member_type: -1,
           group_id: this.groupId,
         },

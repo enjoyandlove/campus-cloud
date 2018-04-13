@@ -25,6 +25,8 @@ declare var $: any;
 export class ClubsMembersEditComponent implements OnInit {
   @Input() member: any;
   @Input() groupId: number;
+  @Input() orientationId: number;
+
   @ViewChild('input') input: ElementRef;
   @Output() edited: EventEmitter<any> = new EventEmitter();
   @Output() teardown: EventEmitter<null> = new EventEmitter();
@@ -68,6 +70,7 @@ export class ClubsMembersEditComponent implements OnInit {
     }
 
     const group_id = this.groupId;
+    const calendar_id = this.orientationId;
     const member_type = this.form.value.member_type;
     const member_position =
       this.form.value.member_type === MemberType.executive
@@ -75,7 +78,7 @@ export class ClubsMembersEditComponent implements OnInit {
         : '';
 
     this.service
-      .addMember({ member_type, group_id, member_position }, this.member.id)
+      .addMember({ member_type, group_id, member_position, calendar_id }, this.member.id)
       .subscribe(
         (member) => {
           this.edited.emit(member);

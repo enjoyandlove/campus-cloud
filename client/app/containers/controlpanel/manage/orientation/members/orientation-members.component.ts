@@ -1,15 +1,20 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'cp-orientation-members',
   template: `<cp-clubs-members
-              [isOrientation]="isOrientation">
+              [isOrientation]="isOrientation"
+              [orientationId]="orientationId">
              </cp-clubs-members>`,
 })
 export class OrientationMembersComponent implements OnInit {
-  @Input() isOrientation;
+  isOrientation: boolean;
+  orientationId: number;
 
-  constructor() {}
+  constructor(private route: ActivatedRoute) {
+    this.orientationId = this.route.parent.snapshot.parent.params['orientationId'];
+  }
 
   ngOnInit() {}
 }
