@@ -45,7 +45,7 @@ describe('AttendanceUpcomingComponent', () => {
     fixture.detectChanges();
 
     const eventElement = bannerEl.querySelector('div.row div.event');
-    console.log(eventElement);
+
     const title = eventElement.children[0].querySelector('p.resource-banner__title');
     const details = eventElement.children[1].querySelector('div.event__details div div');
     const description = eventElement.children[2].querySelector('p.no-margin-bottom');

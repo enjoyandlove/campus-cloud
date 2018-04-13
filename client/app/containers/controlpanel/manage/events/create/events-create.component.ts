@@ -65,25 +65,17 @@ export class EventsCreateComponent implements OnInit {
   managers: Array<any> = [{ label: '---' }];
 
   constructor(
-    private router: Router,
+    public router: Router,
     private fb: FormBuilder,
-    private session: CPSession,
+    public session: CPSession,
     public cpI18n: CPI18nService,
-    private storeHeader: Store<any>,
-    private service: EventsService,
+    public storeHeader: Store<any>,
+    public service: EventsService,
     private utils: EventUtilService,
-    private adminService: AdminService,
-    private storeService: StoreService,
-    private errorService: ErrorService
-  ) {
-    this.school = this.session.g.get('school');
-    const search: URLSearchParams = new URLSearchParams();
-
-    this.buildHeader();
-    search.append('school_id', this.school.id.toString());
-
-    this.stores$ = this.storeService.getStores(search);
-  }
+    public adminService: AdminService,
+    public storeService: StoreService,
+    public errorService: ErrorService
+  ) {}
 
   buildHeader() {
     const payload = {
@@ -321,6 +313,14 @@ export class EventsCreateComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.school = this.session.g.get('school');
+    const search: URLSearchParams = new URLSearchParams();
+
+    this.buildHeader();
+    search.append('school_id', this.school.id.toString());
+
+    this.stores$ = this.storeService.getStores(search);
+
     this.eventManager = Object.assign({}, this.eventManager, {
       content: this.cpI18n.translate('events_event_manager_tooltip')
     });
