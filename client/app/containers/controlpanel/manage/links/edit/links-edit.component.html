@@ -42,7 +42,12 @@
           </textarea>
         </div>
         <div class="col-xs-4">
-          <label i18n>{{ 'link_label_link_banner' | cpI18n  }}</label>
+          <label i18n>
+            {{ 'link_label_link_banner' | cpI18n  }}
+            <cp-tooltip
+              [toolTipContent]="tooltipContent">
+            </cp-tooltip>
+          </label>
           <div
             *ngIf="form.controls['img_url'].value"
             class="banner__wrapper banner__wrapper--with-image"

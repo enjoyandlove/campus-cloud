@@ -10,6 +10,9 @@
               <p class="card__title" i18n>{{ 'customization_title' | cpI18n }}</p>
               <p class="text-muted" i18n>
                 {{ 'customization_description' | cpI18n }}
+                <cp-tooltip
+                  [toolTipContent]="customizeBannerTooltip">
+                </cp-tooltip>
               </p>
             </div>
           </div>
