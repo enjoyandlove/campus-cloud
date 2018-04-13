@@ -11,38 +11,45 @@ import {
   CalendarsItemsEditComponent,
 } from './items';
 
+import { PrivilegesGuard } from '../../../../config/guards';
 import { CalendarsItemsBulkCreateComponent } from './items/bulk-create/calendats-items-bulk-create.component';
 
 const appRoutes: Routes = [
   {
     path: '',
+    canActivate: [PrivilegesGuard],
     component: CalendarsListComponent,
     data: { zendesk: 'calendars' },
   },
   {
     path: ':calendarId',
+    canActivate: [PrivilegesGuard],
     component: CalendarsDetailComponent,
     data: { zendesk: 'calendars' },
   },
   // TODO Split to its own module
   {
     path: ':calendarId/items/create',
+    canActivate: [PrivilegesGuard],
     component: CalendarsItemCreateComponent,
     data: { zendesk: 'calendars' },
   },
   {
     path: ':calendarId/items/import',
     data: { zendesk: 'calendars' },
+    canActivate: [PrivilegesGuard],
     component: CalendarsItemsBulkCreateComponent,
   },
   {
     path: ':calendarId/items/:itemId',
     data: { zendesk: 'calendars' },
+    canActivate: [PrivilegesGuard],
     component: CalendarsItemsDetailsComponent,
   },
   {
     path: ':calendarId/items/:itemId/edit',
     data: { zendesk: 'calendars' },
+    canActivate: [PrivilegesGuard],
     component: CalendarsItemsEditComponent,
   },
 ];
