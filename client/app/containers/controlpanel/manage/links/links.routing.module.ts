@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
  * CRUD
  */
 import { LinksListComponent } from './list';
+import { PrivilegesGuard } from '../../../../config/guards';
 
 const appRoutes: Routes = [
   {
@@ -14,7 +15,12 @@ const appRoutes: Routes = [
     data: { zendesk: 'links' },
   },
 
-  { path: '', component: LinksListComponent, data: { zendesk: 'links' } },
+  {
+    path: '',
+    canActivate: [PrivilegesGuard],
+    component: LinksListComponent,
+    data: { zendesk: 'links' }
+  },
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],

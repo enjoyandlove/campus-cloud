@@ -6,8 +6,6 @@ import { CPI18nService } from '../../../../../../../shared/services';
 import { CPDate, CPMap } from '../../../../../../../shared/utils';
 import { CalendarsItemsService } from '../../item.utils.service';
 
-import * as moment from 'moment';
-
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
 const FORMAT_WITHOUT_TIME = 'F j, Y';
 
@@ -15,13 +13,13 @@ const COMMON_DATE_PICKER_OPTIONS = {
   // utc: true,
   altInput: true,
   enableTime: true,
-  altFormat: FORMAT_WITH_TIME,
+  altFormat: FORMAT_WITH_TIME
 };
 
 @Component({
   selector: 'cp-item-form',
   templateUrl: './item-form.component.html',
-  styleUrls: ['./item-form.component.scss'],
+  styleUrls: ['./item-form.component.scss']
 })
 export class CalendarsItemFormComponent implements OnInit {
   @Input() form: FormGroup;
@@ -38,7 +36,7 @@ export class CalendarsItemFormComponent implements OnInit {
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public utils: CalendarsItemsService,
+    public utils: CalendarsItemsService
   ) {}
 
   toggleDatePickerTime(checked) {
@@ -47,31 +45,29 @@ export class CalendarsItemFormComponent implements OnInit {
     this.startdatePickerOpts = {
       ...this.startdatePickerOpts,
       enableTime: !checked,
-      dateFormat: dateFormat,
+      dateFormat: dateFormat
     };
 
     this.enddatePickerOpts = {
       ...this.enddatePickerOpts,
       enableTime: !checked,
-      dateFormat: dateFormat,
+      dateFormat: dateFormat
     };
   }
 
   updateTime() {
     const startDateAtMidnight = CPDate.fromEpoch(
       this.form.controls['start'].value,
-    ).setHours(0, 0, 0, 0);
+      this.session.tz
+    ).startOf('day');
 
     const endDateAtMidnight = CPDate.fromEpoch(
       this.form.controls['end'].value,
-    ).setHours(23, 59, 59, 0);
+      this.session.tz
+    ).endOf('day');
 
-    this.form.controls['start'].setValue(
-      CPDate.toEpoch(moment(startDateAtMidnight).toDate()),
-    );
-    this.form.controls['end'].setValue(
-      CPDate.toEpoch(moment(endDateAtMidnight).toDate()),
-    );
+    this.form.controls['start'].setValue(CPDate.toEpoch(startDateAtMidnight, this.session.tz));
+    this.form.controls['end'].setValue(CPDate.toEpoch(endDateAtMidnight, this.session.tz));
   }
 
   onAllDayToggle(checked: boolean) {
@@ -144,34 +140,32 @@ export class CalendarsItemFormComponent implements OnInit {
 
     this.mapCenter = new BehaviorSubject({
       lat: this.session.g.get('school').latitude,
-      lng: this.session.g.get('school').longitude,
+      lng: this.session.g.get('school').longitude
     });
 
     this.startdatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: CPDate.fromEpoch(this.form.controls['start'].value),
-      onClose: function(date) {
-        _self.form.controls['start'].setValue(CPDate.toEpoch(date[0]));
-      },
+      defaultDate: CPDate.fromEpoch(this.form.controls['start'].value, _self.session.tz).format(),
+      onClose: function(_, dateStr) {
+        _self.form.controls['start'].setValue(CPDate.toEpoch(dateStr, _self.session.tz));
+      }
     };
 
     this.enddatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: CPDate.fromEpoch(this.form.controls['end'].value),
-      onClose: function(date) {
-        _self.form.controls['end'].setValue(CPDate.toEpoch(date[0]));
-      },
+      defaultDate: CPDate.fromEpoch(this.form.controls['end'].value, _self.session.tz).format(),
+      onClose: function(_, dateStr) {
+        _self.form.controls['end'].setValue(CPDate.toEpoch(dateStr, _self.session.tz));
+      }
     };
 
     const submitEdit = this.cpI18n.translate('save');
-    const submitCreate = this.cpI18n.translate(
-      'calendars_form_submit_button_new',
-    );
+    const submitCreate = this.cpI18n.translate('calendars_form_submit_button_new');
     const isEditForm = this.form.controls['title'].value !== null;
 
     this.buttonData = {
       class: 'primary',
-      text: isEditForm ? submitEdit : submitCreate,
+      text: isEditForm ? submitEdit : submitCreate
     };
   }
 

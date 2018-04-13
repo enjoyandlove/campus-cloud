@@ -1,0 +1,42 @@
+<form [formGroup]="form">
+  <div class="row form-group">
+    <div class="col-xs-12">
+      <label>
+        {{ 'name' | cpI18n }}
+        <span class="pull-right">
+          {{ form.controls.name.value ? form.controls.name.value.length : 0 }}/225
+        </span>
+      </label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="name">
+    </div>
+  </div>
+  <div class="row item-details">
+    <div class="col-xs-6">
+      <label>
+        {{ 'due_date' | cpI18n }}
+      </label>
+      <cp-datepicker
+        [options]="dueDate"
+        [error]="formError && form.controls['due_date'].hasError('required')">
+      </cp-datepicker>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-xs-12">
+      <label>
+        {{ 'description' | cpI18n }}
+        <span class="pull-right">
+          {{ form.controls.description.value ? form.controls.description.value.length : 0 }}/512
+        </span>
+      </label>
+      <textarea
+        class="form-control"
+        formControlName="description">
+      </textarea>
+    </div>
+  </div>
+</form>
