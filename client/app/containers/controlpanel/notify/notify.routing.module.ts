@@ -1,21 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AuthGuard } from '../../../config/guards';
+import { AuthGuard, PrivilegesGuard } from '../../../config/guards';
 
 import { NotifyComponent } from './notify.component';
 
 const appRoutes: Routes = [
-  // { path: '', redirectTo: 'events', pathMatch: 'full' },
+  { path: '', redirectTo: 'announcements', pathMatch: 'full' },
 
   {
     path: '',
     component: NotifyComponent,
     canActivate: [AuthGuard],
-    canActivateChild: [AuthGuard],
+    canActivateChild: [PrivilegesGuard],
     children: [
       {
-        path: '',
+        path: 'announcements',
         loadChildren:
           './announcements/announcements.module#AnnouncementsModule',
       },
