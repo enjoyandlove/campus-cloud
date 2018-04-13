@@ -14,7 +14,7 @@ const appRoutes: Routes = [
     children: [
       {
         path: 'dashboard',
-        loadChildren: './dashboard/dashboard.module#DashboardModule',
+        loadChildren: './dashboard/dashboard.module#DashboardModule'
       },
 
       { path: 'manage', loadChildren: './manage/manage.module#ManageModule' },
@@ -23,31 +23,33 @@ const appRoutes: Routes = [
 
       { path: 'assess', loadChildren: './assess/assess.module#AssessModule' },
 
+      { path: 'audience', loadChildren: './audience/audience.module#AudienceModule' },
+
       {
         path: 'customise',
-        loadChildren: './customise/customise.module#CustomiseModule',
+        loadChildren: './customise/customise.module#CustomiseModule'
       },
 
       {
         path: 'account',
-        loadChildren: './account/account.module#AccountModule',
+        loadChildren: './account/account.module#AccountModule'
       },
 
       {
         path: 'demo',
-        loadChildren: './request-demo/request-demo.module#RequestDemoModule',
+        loadChildren: './request-demo/request-demo.module#RequestDemoModule'
       },
 
       {
         path: 'settings',
-        loadChildren: './settings/settings.module#SettingsModule',
-      },
-    ],
-  },
+        loadChildren: './settings/settings.module#SettingsModule'
+      }
+    ]
+  }
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
   providers: [CPPreloadStrategy],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class ControlPanelRoutingModule {}
