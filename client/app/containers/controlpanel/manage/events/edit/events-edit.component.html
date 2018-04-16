@@ -125,7 +125,8 @@
     </div>
 
     <div class="col-xs-6">
-      <div class="cp-card">
+      <fieldset [disabled]="isOrientation">
+      <div class="cp-card" [class.isDisabled]="isOrientation">
         <div class="row">
           <div class="col-xs-12">
             <p class="title" i18n>{{ 'assessment' | cpI18n }}</p>
@@ -197,6 +198,7 @@
           </div>
         </div>
       </div>
+      </fieldset>
     </div>
 
     <div class="footer">
