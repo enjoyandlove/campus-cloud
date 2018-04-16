@@ -130,16 +130,16 @@
           <div class="row">
             <div class="col-xs-12">
               <p class="title" i18n>{{ 'assessment' | cpI18n }}</p>
-              <div class="col-xs-12 temporarily_disabled" *ngIf="isOrientation">
-                <div class="col-xs-1 temp-icon"><i class="material-icons">info_outline</i></div>
-                <div class="col-xs-11 temp-text">{{ 'temporarily_disabled' | cpI18n }}</div>
-              </div>
               <span class="pull-right">
               <cp-switch
                 (toggle)="toggleEventAttendance($event)"
                 [isChecked]="form.controls.event_attendance.value === attendanceEnabled">
               </cp-switch>
             </span>
+              <div class="col-xs-12 temporarily_disabled" *ngIf="isOrientation">
+                <div class="col-xs-1 temp-icon"><i class="material-icons">info_outline</i></div>
+                <div class="col-xs-11 temp-text">{{ 'temporarily_disabled' | cpI18n }}</div>
+              </div>
             </div>
           </div>
 
