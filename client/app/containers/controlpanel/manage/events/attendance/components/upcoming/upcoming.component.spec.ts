@@ -7,7 +7,7 @@ import { EventsModule } from '../../../events.module';
 import { CPSession } from '../../../../../../../session';
 import { AttendanceUpcomingComponent } from './upcoming.component';
 
-describe('AttendanceUpcomingComponent', () => {
+fdescribe('AttendanceUpcomingComponent', () => {
   let component: AttendanceUpcomingComponent;
   let fixture: ComponentFixture<AttendanceUpcomingComponent>;
 
@@ -47,7 +47,7 @@ describe('AttendanceUpcomingComponent', () => {
     const eventElement = bannerEl.querySelector('div.row div.event');
 
     const title = eventElement.children[0].querySelector('p.resource-banner__title');
-    const details = eventElement.children[1].querySelector('div.event__details div div');
+    const details = bannerEl.querySelector('div.event__details div div');
     const description = eventElement.children[2].querySelector('p.no-margin-bottom');
 
     const startDate = details.children[0].querySelector('div.col-xs-9');
