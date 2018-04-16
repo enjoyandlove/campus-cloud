@@ -66,7 +66,7 @@ export class EventsCreateComponent implements OnInit {
 
   constructor(
     public router: Router,
-    private fb: FormBuilder,
+    public fb: FormBuilder,
     public session: CPSession,
     public cpI18n: CPI18nService,
     public storeHeader: Store<any>,
