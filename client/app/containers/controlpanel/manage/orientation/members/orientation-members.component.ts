@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
              </cp-clubs-members>`,
 })
 export class OrientationMembersComponent implements OnInit {
-  isOrientation: boolean;
+  isOrientation = true;
   orientationId: number;
 
   constructor(private route: ActivatedRoute) {

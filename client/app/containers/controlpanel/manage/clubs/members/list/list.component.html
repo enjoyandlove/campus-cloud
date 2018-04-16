@@ -74,12 +74,12 @@
               <br>
               <span
                 class="text-muted"
-                *ngIf="member.member_type === excutiveType">
+                *ngIf="member.member_type === executiveLeaderType">
                 {{ member.member_position }}
               </span>
             </span>
             <span class="col-xs-2 text-truncate">
-              {{ member.member_type === excutiveType ? 'Executive' : 'Member' }}
+              {{ member.member_type === executiveLeaderType ? executiveLeader : 'member' | cpI18n }}
             </span>
 
             <span class="col-xs-4 text-truncate">
@@ -118,6 +118,7 @@
         *ngIf="isEdit"
         [groupId]="groupId"
         [member]="editMember"
+        [isOrientation]="isOrientation"
         [orientationId]="orientationId"
         (edited)="forceRefresh()"
         (teardown)="isEdit = false">

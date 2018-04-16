@@ -12,7 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { MemberType } from '../member.status';
 import { MembersService } from '../members.service';
-
+import { MembersUtilsService } from '../members.utils.service';
 import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 
 declare var $: any;
@@ -26,6 +26,7 @@ export class ClubsMembersEditComponent implements OnInit {
   @Input() member: any;
   @Input() groupId: number;
   @Input() orientationId: number;
+  @Input() isOrientation: boolean;
 
   @ViewChild('input') input: ElementRef;
   @Output() edited: EventEmitter<any> = new EventEmitter();
@@ -36,12 +37,14 @@ export class ClubsMembersEditComponent implements OnInit {
   defaultType;
   members = [];
   form: FormGroup;
-  isExecutive = MemberType.executive;
+  executiveLeaderKey;
+  isExecutiveLeader = MemberType.executive_leader;
 
   constructor(
     private fb: FormBuilder,
     private cpI18n: CPI18nService,
     private service: MembersService,
+    private utils: MembersUtilsService,
   ) {}
 
   onMemberSelected(member) {
@@ -73,7 +76,7 @@ export class ClubsMembersEditComponent implements OnInit {
     const calendar_id = this.orientationId;
     const member_type = this.form.value.member_type;
     const member_position =
-      this.form.value.member_type === MemberType.executive
+      this.form.value.member_type === MemberType.executive_leader
         ? this.form.value.member_position
         : '';
 
@@ -93,14 +96,15 @@ export class ClubsMembersEditComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.executiveLeaderKey = this.orientationId ? 'leader' : 'executive';
     this.memberTypes = [
       {
         label: this.cpI18n.translate('member'),
         action: MemberType.member,
       },
       {
-        label: this.cpI18n.translate('executive'),
-        action: MemberType.executive,
+        label: this.utils.getMemberType(this.isOrientation),
+        action: MemberType.executive_leader,
       },
     ];
 

@@ -10,6 +10,7 @@ import { CPSession } from '../../../../../../session';
 
 import { BaseComponent } from '../../../../../../base/base.component';
 import { isClubAthletic } from '../../clubs.athletics.labels';
+import { MembersUtilsService } from '../members.utils.service';
 
 declare var $: any;
 
@@ -42,15 +43,17 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
   isDelete;
   query = null;
   hasSSO = false;
+  executiveLeader;
   editMember = '';
   deleteMember = '';
   state: IState = state;
-  excutiveType = MemberType.executive;
+  executiveLeaderType = MemberType.executive_leader;
   defaultImage = require('public/default/user.png');
 
   constructor(
     private session: CPSession,
     private route: ActivatedRoute,
+    private utils: MembersUtilsService,
     private membersService: MembersService,
   ) {
     super();
@@ -134,5 +137,6 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     this.fetch();
     this.hasSSO = this.session.hasSSO;
+    this.executiveLeader = this.utils.getMemberType(this.isOrientation);
   }
 }
