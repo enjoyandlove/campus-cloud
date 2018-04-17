@@ -10,6 +10,7 @@
 
       <cp-feed-input-box
         [clubId]="clubId"
+        [orientationId]="orientationId"
         [isCampusWallView]="isCampusWallView$"
         [disablePost]="state.currentView ? state.currentView.postingMemberType === disablePost : false"
         (created)="onCreated($event)">
@@ -23,6 +24,7 @@
           (moved)="fetch()"
           [clubId]="clubId"
           (deleted)="onDeleted($event)"
+          [orientationId]="orientationId"
           *ngFor="let feed of state.feeds"
           [isCampusWallView]="isCampusWallView$"
           [isFilteredByRemovedPosts]="isFilteredByRemovedPosts$"

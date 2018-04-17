@@ -13,10 +13,13 @@ import { CPSession } from '../../../../../../../session';
 })
 export class FeedSettingsComponent implements OnInit {
   @Input() clubId: number;
+  @Input() orientationId: number;
 
   @Output() updateWallSettings: EventEmitter<null> = new EventEmitter();
 
   walls;
+  wallName;
+  modalTitle;
   privileges;
   form: FormGroup;
 
@@ -32,6 +35,10 @@ export class FeedSettingsComponent implements OnInit {
   private fetch() {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
+
+    if (this.orientationId) {
+      search.append('calendar_id', this.orientationId.toString());
+    }
 
     this.feedsService
       .getSocialGroups(search)
@@ -51,6 +58,12 @@ export class FeedSettingsComponent implements OnInit {
         if (this.clubId) {
           _groups = _groups.filter(
             (group) => group.related_obj_id === +this.clubId,
+          );
+        }
+
+        if (this.orientationId) {
+          _groups = _groups.filter(
+            (group) => group.related_obj_id === +this.orientationId,
           );
         }
 
@@ -121,6 +134,14 @@ export class FeedSettingsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.wallName = this.orientationId
+      ? this.cpI18n.translate('orientation_wall_name')
+      : this.cpI18n.translate('feeds_wall_name');
+
+    this.modalTitle = this.orientationId
+      ? this.cpI18n.translate('orientation_feeds_wall_settings_modal_title')
+      : this.cpI18n.translate('feeds_wall_settings_modal_title');
+
     this.fetch();
     this.form = this.fb.group({
       walls: this.fb.array([]),
