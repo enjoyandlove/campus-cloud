@@ -149,7 +149,7 @@
                 <div class="form-group">
                   <label i18n>{{ 'events_event_manager' | cpI18n }}
                     <cp-tooltip
-                      [toolTipContent]="eventManager">
+                      [toolTipContent]="eventManagerToolTip">
                     </cp-tooltip>
                   </label>
                   <cp-dropdown
@@ -164,7 +164,7 @@
                 <div class="form-group">
                   <label i18n>{{ 'events_attendance_manager_full' | cpI18n }}
                     <cp-tooltip
-                      [toolTipContent]="attendanceManager">
+                      [toolTipContent]="attendanceManagerToolTip">
                     </cp-tooltip>
                   </label>
                   <input
@@ -179,7 +179,7 @@
               <div class="col-xs-6">
                 <label i18n>{{ 'student_feedback' | cpI18n }}
                   <cp-tooltip
-                    [toolTipContent]="studentFeedback">
+                    [toolTipContent]="studentFeedbackToolTip">
                   </cp-tooltip>
                 </label>
                 <cp-dropdown
@@ -191,7 +191,7 @@
               </div>
             </div>
 
-            <div class="row form-group" *ngIf="form.controls['event_feedback'].value === 1">
+            <div class="row form-group" *ngIf="form.controls['event_feedback'].value === eventFeedbackEnabled">
               <div class="col-xs-12">
                 <label i18n>{{ 'events_default_question' | cpI18n }}</label>
                 <input
