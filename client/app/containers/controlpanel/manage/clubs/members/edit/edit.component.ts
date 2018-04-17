@@ -25,7 +25,6 @@ declare var $: any;
 export class ClubsMembersEditComponent implements OnInit {
   @Input() member: any;
   @Input() groupId: number;
-  @Input() orientationId: number;
   @Input() isOrientation: boolean;
 
   @ViewChild('input') input: ElementRef;
@@ -37,7 +36,6 @@ export class ClubsMembersEditComponent implements OnInit {
   defaultType;
   members = [];
   form: FormGroup;
-  executiveLeaderKey;
   isExecutiveLeader = MemberType.executive_leader;
 
   constructor(
@@ -73,7 +71,6 @@ export class ClubsMembersEditComponent implements OnInit {
     }
 
     const group_id = this.groupId;
-    const calendar_id = this.orientationId;
     const member_type = this.form.value.member_type;
     const member_position =
       this.form.value.member_type === MemberType.executive_leader
@@ -81,7 +78,7 @@ export class ClubsMembersEditComponent implements OnInit {
         : '';
 
     this.service
-      .addMember({ member_type, group_id, member_position, calendar_id }, this.member.id)
+      .addMember({ member_type, group_id, member_position }, this.member.id)
       .subscribe(
         (member) => {
           this.edited.emit(member);
@@ -96,7 +93,6 @@ export class ClubsMembersEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.executiveLeaderKey = this.orientationId ? 'leader' : 'executive';
     this.memberTypes = [
       {
         label: this.cpI18n.translate('member'),

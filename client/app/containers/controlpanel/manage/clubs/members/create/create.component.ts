@@ -28,7 +28,6 @@ declare var $: any;
 })
 export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
   @Input() groupId: number;
-  @Input() orientationId: number;
   @Input() isOrientation: boolean;
 
   @ViewChild('input') input: ElementRef;
@@ -126,13 +125,12 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
     }
 
     const group_id = this.groupId;
-    const calendar_id = this.orientationId;
     const member_position = this.form.value.member_position;
     const member_type = this.form.value.member_type;
 
     this.service
       .addMember(
-        { member_type, group_id, member_position, calendar_id },
+        { member_type, group_id, member_position },
         this.form.value.member,
       )
       .subscribe(

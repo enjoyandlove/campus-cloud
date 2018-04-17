@@ -87,7 +87,6 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
     const calendar_id = this.orientationId ? this.orientationId.toString() : null;
 
     memberSearch.append('school_id', schoolId);
-    memberSearch.append('calendar_id', calendar_id);
     memberSearch.append('sort_field', this.state.sort_field);
     memberSearch.append('sort_direction', this.state.sort_direction);
     memberSearch.append('category_id', this.isAthletic.toString());
