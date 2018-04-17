@@ -49,17 +49,18 @@ export class EventsCreateComponent implements OnInit {
   urlPrefix;
   buttonData;
   isDateError;
-  eventManager;
   booleanOptions;
-  studentFeedback;
   school: ISchool;
   form: FormGroup;
   dateErrorMessage;
-  attendanceManager;
   formError = false;
   attendance = false;
   enddatePickerOpts;
   startdatePickerOpts;
+  eventFeedbackEnabled;
+  eventManagerToolTip;
+  studentFeedbackToolTip;
+  attendanceManagerToolTip;
   mapCenter: BehaviorSubject<any>;
   newAddress = new BehaviorSubject(null);
   managers: Array<any> = [{ label: '---' }];
@@ -321,14 +322,16 @@ export class EventsCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.eventManager = Object.assign({}, this.eventManager, {
+    this.eventFeedbackEnabled = EventFeedback.enabled;
+
+    this.eventManagerToolTip = Object.assign({}, this.eventManagerToolTip, {
       content: this.cpI18n.translate('events_event_manager_tooltip')
     });
-    this.attendanceManager = Object.assign({}, this.attendanceManager, {
+    this.attendanceManagerToolTip = Object.assign({}, this.attendanceManagerToolTip, {
       content: this.cpI18n.translate('events_attendance_manager_tooltip')
     });
 
-    this.studentFeedback = Object.assign({}, this.studentFeedback, {
+    this.studentFeedbackToolTip = Object.assign({}, this.studentFeedbackToolTip, {
       content: this.cpI18n.translate('events_event_feedback_tooltip')
     });
 
