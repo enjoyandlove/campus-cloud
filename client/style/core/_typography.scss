@@ -1,6 +1,6 @@
 @import 'colors';
-@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
-@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,700");
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
 
 body {
   font-family: 'Open Sans', sans-serif;
@@ -32,11 +32,11 @@ p.no-margin {
 
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
 }
 
@@ -46,6 +46,10 @@ p.no-margin {
 
 .text-capitalize {
   text-transform: capitalize;
+}
+
+.render_line_breaks {
+  white-space: pre-wrap;
 }
 
 a {
@@ -76,7 +80,6 @@ a {
   display: inline-block;
   background: $color-danger;
   margin-top: 0 !important;
-
 }
 
 @mixin font-heading() {
