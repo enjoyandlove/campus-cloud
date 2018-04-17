@@ -46,13 +46,12 @@ describe('AttendanceUpcomingComponent', () => {
 
     const eventElement = bannerEl.querySelector('div.row div.event');
 
-    const title = eventElement.children[0].querySelector('p.resource-banner__title');
-    const details = bannerEl.querySelector('div.event__details div div');
-    const description = eventElement.children[2].querySelector('p.no-margin-bottom');
+    const title = eventElement.querySelector('p.resource-banner__title');
+    const description = eventElement.querySelector('p.description');
 
-    const startDate = details.children[0].querySelector('div.col-xs-9');
-    const endDate = details.children[1].querySelector('div.col-xs-9');
-    const address = details.children[2].querySelector('div.col-xs-9');
+    const startDate = eventElement.querySelector('div.start-date');
+    const endDate = eventElement.querySelector('div.end-date');
+    const address = eventElement.querySelector('div.address');
 
     expect(title.textContent).toEqual('This is title');
     expect(description.textContent).toContain('This is description');

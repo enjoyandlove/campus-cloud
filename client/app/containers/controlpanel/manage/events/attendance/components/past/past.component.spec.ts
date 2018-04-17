@@ -87,8 +87,7 @@ describe('AttendancePastComponent', () => {
 
     const bannerDe: DebugElement = fixture.debugElement;
     const bannerEl: HTMLElement = bannerDe.nativeElement;
-    const eventElement = bannerEl.querySelector('div.cp-table__header');
-    const rsvp = eventElement.querySelector('div.col-xs-1');
+    const rsvp = bannerEl.querySelector('div.cp-table__header div.rsvp_column');
     expect(rsvp).toBeNull();
   }));
 
