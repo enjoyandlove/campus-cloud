@@ -51,10 +51,6 @@ describe('EventDeleteComponent', () => {
         component.session.g.set('school', mockSchool);
 
         search = new URLSearchParams();
-        if (component.orientationId) {
-          search.append('school_id', component.session.g.get('school').id);
-          search.append('calendar_id', component.orientationId.toString());
-        }
       });
   }));
 
@@ -66,7 +62,11 @@ describe('EventDeleteComponent', () => {
   });
 
   it('should delete orientation event', () => {
+    component.orientationId = 10045;
     spy = spyOn(component.service, 'deleteEventById').and.returnValue(Observable.of({}));
+
+    search.append('school_id', component.session.g.get('school').id);
+    search.append('calendar_id', component.orientationId.toString());
 
     component.onDelete();
     expect(component.buttonData.disabled).toBeFalsy();

@@ -59,22 +59,20 @@ describe('EventAttendanceComponent', () => {
 
         component = fixture.componentInstance;
         component.eventId = 1001;
-        component.orientationId = 5425;
         component.session.g.set('school', mockSchool);
 
         search = new URLSearchParams();
-        if (component.orientationId) {
-          search.append('school_id', component.session.g.get('school').id);
-          search.append('calendar_id', component.orientationId.toString());
-        }
       });
   }));
 
   it('should get orientation event by Id', () => {
+    component.orientationId = 5425;
     spyOn(component, 'buildHeader');
     spy = spyOn(component.service, 'getEventById').and.returnValue(Observable.of({}));
 
     component.fetch();
+    search.append('school_id', component.session.g.get('school').id);
+    search.append('calendar_id', component.orientationId.toString());
     expect(spy).toHaveBeenCalledWith(component.eventId , search);
     expect(spy.calls.count()).toBe(1);
   });

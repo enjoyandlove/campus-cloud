@@ -7,7 +7,7 @@ import { EventsModule } from '../../../events.module';
 import { CPSession } from '../../../../../../../session';
 import { AttendanceUpcomingComponent } from './upcoming.component';
 
-fdescribe('AttendanceUpcomingComponent', () => {
+describe('AttendanceUpcomingComponent', () => {
   let component: AttendanceUpcomingComponent;
   let fixture: ComponentFixture<AttendanceUpcomingComponent>;
 

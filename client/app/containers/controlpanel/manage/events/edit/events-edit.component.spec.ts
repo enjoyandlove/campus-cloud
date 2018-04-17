@@ -1,6 +1,6 @@
 import { async, TestBed, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpModule, URLSearchParams } from '@angular/http';
+import { HttpModule } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { FormBuilder } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
@@ -38,7 +38,6 @@ class MockService {
 
 describe('EventEditComponent', () => {
   let spy;
-  let search;
   let storeService;
   let service: EventsService;
   let component: EventsEditComponent;
@@ -92,18 +91,11 @@ describe('EventEditComponent', () => {
         storeService = TestBed.get(StoreService);
 
         component = fixture.componentInstance;
-        component.orientationId = 1001;
-        component.isOrientation = true;
         component.eventId = 1002;
         component.session.g.set('school', mockSchool);
 
-        search = new URLSearchParams();
-        if (component.orientationId) {
-          search.append('school_id', component.session.g.get('school').id);
-          search.append('calendar_id', component.orientationId.toString());
-        }
-
         component.ngOnInit();
+
         spyOn(component, 'router');
         spyOn(component, 'buildHeader');
         spyOn(component.service, 'getEventById').and.returnValue(Observable.of(mockEvent));
@@ -153,6 +145,8 @@ describe('EventEditComponent', () => {
   });
 
   it('form validation should fail - end date should be greater than start date', fakeAsync(() => {
+    component.orientationId = 1001;
+    component.isOrientation = true;
     const dateError = component.cpI18n.translate('events_error_end_date_before_start');
     component.fetch();
     tick();
@@ -167,6 +161,8 @@ describe('EventEditComponent', () => {
   }));
 
   it('form validation should fail - event end date should be in future', fakeAsync(() => {
+    component.orientationId = 1001;
+    component.isOrientation = true;
     const dateError = component.cpI18n.translate('events_error_end_date_after_now');
     component.fetch();
     tick();
@@ -182,6 +178,8 @@ describe('EventEditComponent', () => {
   }));
 
   it('should edit an event', fakeAsync(() => {
+    component.orientationId = 1001;
+    component.isOrientation = true;
     component.fetch();
     tick();
 

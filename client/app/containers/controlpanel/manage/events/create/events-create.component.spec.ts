@@ -1,6 +1,6 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpModule, URLSearchParams } from '@angular/http';
+import { HttpModule } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { FormBuilder } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
@@ -32,7 +32,6 @@ class MockService {
 
 describe('EventCreateComponent', () => {
   let spy;
-  let search;
   let storeService;
   let service: EventsService;
   let component: EventsCreateComponent;
@@ -66,16 +65,9 @@ describe('EventCreateComponent', () => {
         storeService = TestBed.get(StoreService);
 
         component = fixture.componentInstance;
-        component.orientationId = 1001;
         component.session.g.set('school', mockSchool);
-
-        search = new URLSearchParams();
-        if (component.orientationId) {
-          search.append('school_id', component.session.g.get('school').id);
-          search.append('calendar_id', component.orientationId.toString());
-        }
-
         component.ngOnInit();
+
         component.form = component.fb.group({
           title: ['This is Event title'],
           store_id: [2445],
@@ -161,6 +153,7 @@ describe('EventCreateComponent', () => {
 
   it('form validation should fail - event end date should be in future', () => {
     const dateError = component.cpI18n.translate('events_error_end_date_after_now');
+
     component.form.controls['start'].setValue(1460806527);
     component.form.controls['end'].setValue(1492342527);
     component.onSubmit();
@@ -172,6 +165,9 @@ describe('EventCreateComponent', () => {
   });
 
   it('should create an event', () => {
+    component.isOrientation = true;
+    component.orientationId = 1001;
+
     component.onSubmit();
 
     expect(spy).toHaveBeenCalled();

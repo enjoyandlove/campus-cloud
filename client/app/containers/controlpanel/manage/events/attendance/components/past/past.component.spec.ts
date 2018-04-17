@@ -1,13 +1,14 @@
-import { async, TestBed, ComponentFixture } from '@angular/core/testing';
+import { async, TestBed, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
 import { HttpModule, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { DebugElement } from '@angular/core';
 
 import { EventsModule } from '../../../events.module';
 import { EventsService } from '../../../events.service';
 import { CPSession } from '../../../../../../../session';
+import { AttendancePastComponent } from './past.component';
 import { CPI18nService } from '../../../../../../../shared/services';
 import { mockSchool } from '../../../../../../../session/mock/school';
-import { AttendancePastComponent } from './past.component';
 
 class MockService {
   dummy;
@@ -26,6 +27,20 @@ describe('AttendancePastComponent', () => {
   let component: AttendancePastComponent;
   let fixture: ComponentFixture<AttendancePastComponent>;
 
+  const pastEvents = [
+    {
+      'firstname': 'John',
+      'feedback_time': 1523276904,
+      'lastname': 'Paul',
+      'student_identifier': '',
+      'feedback_rating': 80,
+      'check_in_time': 1523276757,
+      'feedback_text': 'Good job man!',
+      'check_in_method': 1,
+      'email': 'jp@gmail.com'
+    }
+  ];
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -43,8 +58,7 @@ describe('AttendancePastComponent', () => {
         service = TestBed.get(EventsService);
 
         component = fixture.componentInstance;
-        component.isOrientation = true;
-        component.orientationId = 1001;
+        component.isLoading().subscribe((_) => component.loading = false);
         component.session.g.set('school', mockSchool);
         component.event = {
           id: 5125
@@ -55,17 +69,38 @@ describe('AttendancePastComponent', () => {
         search.append('sort_field', component.state.sort_field);
         search.append('sort_direction', component.state.sort_direction);
         search.append('search_text', component.state.search_text);
-
-        if (component.orientationId) {
-          search.append('school_id', component.session.g.get('school').id);
-          search.append('calendar_id', component.orientationId.toString());
-        }
       });
   }));
 
-  it('should fetch event attendees by event Id', () => {
+  it('should not have RSVP column for orientation events', fakeAsync(() => {
+    spy = spyOn(component.service, 'getEventAttendanceByEventId')
+      .and.returnValue(Observable.of(pastEvents));
+
+    component.isOrientation = true;
+    component.orientationId = 1001;
+    search.append('school_id', component.session.g.get('school').id);
+    search.append('calendar_id', component.orientationId.toString());
+    component.fetch();
+    tick();
+
+    fixture.detectChanges();
+
+    const bannerDe: DebugElement = fixture.debugElement;
+    const bannerEl: HTMLElement = bannerDe.nativeElement;
+    const eventElement = bannerEl.querySelector('div.cp-table__header');
+    const rsvp = eventElement.querySelector('div.col-xs-1');
+    expect(rsvp).toBeNull();
+  }));
+
+  it('should fetch orientation event attendees by event Id', () => {
     spy = spyOn(component.service, 'getEventAttendanceByEventId')
       .and.returnValue(Observable.of({}));
+
+    component.isOrientation = true;
+    component.orientationId = 1001;
+    search.append('school_id', component.session.g.get('school').id);
+    search.append('calendar_id', component.orientationId.toString());
+
     component.fetch();
 
     expect(spy.calls.count()).toBe(1);
