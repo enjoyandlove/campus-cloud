@@ -20,14 +20,14 @@
           </fieldset>
         </div>
 
-        <div [class]="[clubId || orientationId ? 'col-xs-3' : 'col-xs-3 no-left-padding']">
+        <div [class]="[!campusWallView ? 'col-xs-3' : 'col-xs-3 no-left-padding']">
           <cp-dropdown
             [items]="posts"
             (selected)="onFlaggedOrRemoved($event.action)">
           </cp-dropdown>
         </div>
 
-        <div [class]="[clubId || orientationId? 'col-xs-1 no-left-padding pull-right' : 'col-xs-1 no-left-padding']">
+        <div [class]="[!campusWallView ? 'col-xs-1 no-left-padding pull-right' : 'col-xs-1 no-left-padding']">
           <button
             type="button"
             class="cpbtn cpbtn--cancel"
