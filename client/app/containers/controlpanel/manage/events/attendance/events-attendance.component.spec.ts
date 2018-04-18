@@ -65,7 +65,7 @@ describe('EventAttendanceComponent', () => {
       });
   }));
 
-  it('should get event by Id', () => {
+  it('URLSearchparams does not include calendar_id or school_id', () => {
     spyOn(component, 'buildHeader');
     spy = spyOn(component.service, 'getEventById').and.returnValue(Observable.of({}));
 
@@ -74,7 +74,7 @@ describe('EventAttendanceComponent', () => {
     expect(spy.calls.count()).toBe(1);
   });
 
-  it('should get orientation event by Id', () => {
+  it('URLSearchparams includes calendar_id and school_id', () => {
     component.orientationId = 5425;
     spyOn(component, 'buildHeader');
     spy = spyOn(component.service, 'getEventById').and.returnValue(Observable.of({}));
