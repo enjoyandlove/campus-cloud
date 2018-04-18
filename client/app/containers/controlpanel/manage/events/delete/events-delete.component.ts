@@ -23,7 +23,7 @@ export class EventsDeleteComponent implements OnInit {
   constructor(
     public session: CPSession,
     private cpI18n: CPI18nService,
-    private service: EventsService,
+    public service: EventsService,
   ) {}
 
   onDelete() {
