@@ -12,6 +12,7 @@ import { ClubsMembersComponent } from './list';
 import { ClubsMembersActionBoxComponent } from './list/components';
 import { ClubsMembersRoutingModule } from './members.routing.module';
 import { MembersService } from './members.service';
+import { MembersUtilsService } from './members.utils.service';
 
 /**
  * CRUD
@@ -42,6 +43,6 @@ import { MembersService } from './members.service';
     ClubsMembersDeleteComponent,
   ],
 
-  providers: [MembersService],
+  providers: [MembersService, MembersUtilsService],
 })
 export class ClubsMembersModule {}
