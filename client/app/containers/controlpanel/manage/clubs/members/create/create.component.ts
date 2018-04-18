@@ -17,6 +17,7 @@ import { CPSession } from '../../../../../../session';
 import { CPI18nService } from '../../../../../../shared/services/index';
 import { MemberType } from '../member.status';
 import { MembersService } from '../members.service';
+import { MembersUtilsService } from '../members.utils.service';
 
 declare var $: any;
 
@@ -27,6 +28,8 @@ declare var $: any;
 })
 export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
   @Input() groupId: number;
+  @Input() isOrientation: boolean;
+
   @ViewChild('input') input: ElementRef;
   @Output() added: EventEmitter<any> = new EventEmitter();
 
@@ -35,7 +38,7 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
   memberTypes;
   members = [];
   form: FormGroup;
-  isExecutive = MemberType.executive;
+  isExecutiveLeader = MemberType.executive_leader;
   reset$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
@@ -43,6 +46,7 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
     private session: CPSession,
     private cpI18n: CPI18nService,
     private service: MembersService,
+    private utils: MembersUtilsService,
   ) {}
 
   ngAfterViewInit() {
@@ -116,7 +120,7 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    if (this.form.value.member_type !== MemberType.executive) {
+    if (this.form.value.member_type !== MemberType.executive_leader) {
       this.form.controls['member_position'].setValue(null);
     }
 
@@ -161,8 +165,8 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
         action: MemberType.member,
       },
       {
-        label: this.cpI18n.translate('executive'),
-        action: MemberType.executive,
+        label: this.utils.getMemberType(this.isOrientation),
+        action: MemberType.executive_leader,
       },
     ];
 

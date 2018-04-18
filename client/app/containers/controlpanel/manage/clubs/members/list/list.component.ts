@@ -11,6 +11,7 @@ import { CPSession } from '../../../../../../session';
 
 import { BaseComponent } from '../../../../../../base/base.component';
 import { isClubAthletic } from '../../clubs.athletics.labels';
+import { MembersUtilsService } from '../members.utils.service';
 
 declare var $: any;
 
@@ -32,6 +33,8 @@ const state: IState = {
   styleUrls: ['./list.component.scss']
 })
 export class ClubsMembersComponent extends BaseComponent implements OnInit {
+  @Input() isOrientation: boolean;
+  @Input() orientationId: number;
   @Input() isAthletic = isClubAthletic.club;
 
   clubId;
@@ -42,16 +45,18 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
   isDelete;
   query = null;
   hasSSO = false;
+  executiveLeader;
   editMember = '';
   deleteMember = '';
   limitedAdmin = true;
   state: IState = state;
-  excutiveType = MemberType.executive;
+  executiveLeaderType = MemberType.executive_leader;
   defaultImage = require('public/default/user.png');
 
   constructor(
     private session: CPSession,
     private route: ActivatedRoute,
+    private utils: MembersUtilsService,
     public helper: ClubsUtilsService,
     private membersService: MembersService
   ) {
@@ -82,6 +87,7 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
     const groupSearch = new URLSearchParams();
     const memberSearch = new URLSearchParams();
     const schoolId = this.session.g.get('school').id.toString();
+    const calendar_id = this.orientationId ? this.orientationId.toString() : null;
 
     memberSearch.append('school_id', schoolId);
     memberSearch.append('sort_field', this.state.sort_field);
@@ -90,6 +96,7 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
 
     groupSearch.append('store_id', this.clubId);
     groupSearch.append('school_id', schoolId);
+    groupSearch.append('calendar_id', calendar_id);
     groupSearch.append('category_id', this.isAthletic.toString());
 
     const socialGroupDetails$ = this.membersService.getSocialGroupDetails(groupSearch);
@@ -134,5 +141,6 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
     this.fetch();
 
     this.hasSSO = this.session.hasSSO;
+    this.executiveLeader = this.utils.getMemberType(this.isOrientation);
   }
 }
