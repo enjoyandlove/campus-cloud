@@ -1,18 +1,19 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { URLSearchParams } from '@angular/http';
 
 import { EventsService } from '../events.service';
+import { CPSession } from '../../../../../session';
 import { CPDate } from '../../../../../shared/utils/date';
 import { EventUtilService } from './../events.utils.service';
 import { BaseComponent } from '../../../../../base/base.component';
 import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-import { OrientationService } from '../../orientation/orientation.services';
 
 @Component({
   selector: 'cp-events-attendance',
   templateUrl: './events-attendance.component.html',
-  styleUrls: ['./events-attendance.component.scss'],
+  styleUrls: ['./events-attendance.component.scss']
 })
 export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   @Input() isClub: boolean;
@@ -24,35 +25,40 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   @Input() isOrientation: boolean;
 
   event;
-  service;
   urlPrefix;
   isUpcoming;
   loading = true;
   eventId: number;
 
   constructor(
+    public session: CPSession,
     private store: Store<IHeader>,
     private route: ActivatedRoute,
-    private utils: EventUtilService,
-    private eventService: EventsService,
-    private orientationService: OrientationService,
+    public service: EventsService,
+    private utils: EventUtilService
   ) {
     super();
     this.eventId = this.route.snapshot.params['eventId'];
     super.isLoading().subscribe((res) => (this.loading = res));
   }
 
-  private fetch() {
-    super.fetchData(this.service.getEventById(this.eventId)).then((event) => {
+  public fetch() {
+    const search = new URLSearchParams();
+    if (this.orientationId) {
+      search.append('school_id', this.session.g.get('school').id);
+      search.append('calendar_id', this.orientationId.toString());
+    }
+
+    super.fetchData(this.service.getEventById(this.eventId, search)).then((event) => {
       this.event = event.data;
 
       this.buildHeader(event.data);
 
-      this.isUpcoming = this.event.end > CPDate.toEpoch(new Date());
+      this.isUpcoming = this.event.end > CPDate.toEpoch(CPDate.now(), this.session.tz);
     });
   }
 
-  private buildHeader(event) {
+  public buildHeader(event) {
     const children = this.utils.getSubNavChildren(event, this.urlPrefix);
 
     const payload = {
@@ -62,21 +68,19 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
 
       crumbs: {
         url: this.urlPrefix,
-        label: 'events',
+        label: 'events'
       },
 
-      children: [...children],
+      children: [...children]
     };
 
     this.store.dispatch({
       type: HEADER_UPDATE,
-      payload,
+      payload
     });
   }
 
   ngOnInit() {
-    this.service = this.isOrientation ? this.orientationService : this.eventService;
-
     this.urlPrefix = this.utils.buildUrlPrefix(
       this.clubId,
       this.serviceId,

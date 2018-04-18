@@ -23,7 +23,7 @@ import { ClubsModule } from '../clubs/clubs.module';
     OrientationListActionBoxComponent,
     OrientationProgramCreateComponent,
     OrientationProgramDeleteComponent,
-    OrientationDuplicateProgramComponent,
+    OrientationDuplicateProgramComponent
   ],
 
   imports: [
@@ -36,10 +36,6 @@ import { ClubsModule } from '../clubs/clubs.module';
     ClubsModule
   ],
 
-  providers: [
-    OrientationService,
-    OrientationUtilsService
-  ]
+  providers: [OrientationService, OrientationUtilsService]
 })
-
 export class OrientationModule {}

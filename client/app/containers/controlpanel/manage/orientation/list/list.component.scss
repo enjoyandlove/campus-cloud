@@ -10,9 +10,10 @@
 }
 
 .cp-form {
+  overflow: inherit;
+  float: left;
 
   &__header {
-
     span.hover {
       position: relative;
 
@@ -51,6 +52,5 @@
         }
       }
     }
-
   }
 }

@@ -4,6 +4,7 @@
   <div *ngSwitchCase="false">
     <cp-attendance-past
       [event]="event"
+      [orientationId]="orientationId"
       [isOrientation]="isOrientation"
       *ngIf="!isUpcoming">
     </cp-attendance-past>

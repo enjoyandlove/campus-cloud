@@ -12,37 +12,17 @@
         [props]="props" >
       </cp-upload-button>
     </div>
-
-    <!--<div class="col-xs-2">
-      <cp-dropdown
-        [items]="stores"
-        (selected)="hostChange.emit($event)">
-      </cp-dropdown>
-    </div>-->
-    <!--<div class="col-xs-2 no-left-padding">
+    
+    <div class="col-xs-2 no-left-padding">
       <cp-import-action-dropdown
+        [props]="props"
         [storeId]="storeId"
         [clubId]="clubId"
         [isClub]="isClub"
         [serviceId]="serviceId"
         [isService]="isService"
+        [isOrientation]="isOrientation"
         (bulkAction)="bulkChange.emit($event)">
       </cp-import-action-dropdown>
-    </div>-->
-    <!--<div class="col-xs-2">
-      <button
-        type="button"
-        (click)="deleteEvent.emit()"
-        class="cpbtn cpbtn--danger" i18n>
-        Delete
-      </button>
     </div>
-    <div class="pull-right">
-      <button
-        type="button"
-        class="cpbtn cpbtn--secondary" i18n
-        data-toggle="modal" data-target="#excelEventsModal">
-        Upload Another Excel File
-      </button>
-    </div>-->
   </div>

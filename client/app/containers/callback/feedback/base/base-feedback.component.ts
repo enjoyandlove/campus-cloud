@@ -15,9 +15,15 @@ export class BaseFeedbackComponent implements OnInit {
   @Input() isSubmitted: Observable<boolean>;
   @Output() send: EventEmitter<any> = new EventEmitter();
 
+  pageTitle;
+
   constructor(public cpI18n: CPI18nService) {}
 
   ngOnInit() {
+    this.pageTitle = this.isService
+      ? this.cpI18n.translate('feedback_label_service_feedback')
+      : this.cpI18n.translate('feedback_label_event_feedback');
+
     if (!this.isEvent && !this.isService) {
       console.warn('BaseFeedbackComponent, needs an isEvent or isService');
     }

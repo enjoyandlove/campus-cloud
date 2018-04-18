@@ -11,26 +11,24 @@ import { CPSession } from './../../../../../session';
   templateUrl: './orientation-info.component.html',
   styleUrls: ['./orientation-info.component.scss']
 })
-
 export class OrientationInfoComponent extends BaseComponent implements OnInit {
   loading;
-  selectedProgram = [];
+  selectedProgram;
   orientationId: number;
   launchEditModal = false;
 
   constructor(
     public session: CPSession,
     private route: ActivatedRoute,
-    private service: OrientationService
+    public service: OrientationService
   ) {
     super();
     this.orientationId = this.route.parent.snapshot.params['orientationId'];
 
     super.isLoading().subscribe((loading) => (this.loading = loading));
-    this.fetch();
   }
 
-  private fetch() {
+  public fetch() {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
@@ -45,7 +43,8 @@ export class OrientationInfoComponent extends BaseComponent implements OnInit {
       () => {
         $('#programEdit').modal();
       },
-      1,
+
+      1
     );
   }
 
@@ -54,6 +53,7 @@ export class OrientationInfoComponent extends BaseComponent implements OnInit {
     this.selectedProgram = editedProgram;
   }
 
-  ngOnInit() {}
-
+  ngOnInit() {
+    this.fetch();
+  }
 }

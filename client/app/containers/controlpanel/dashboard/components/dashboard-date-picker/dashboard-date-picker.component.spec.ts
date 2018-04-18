@@ -1,17 +1,31 @@
 import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 
+import { CPSession } from './../../../../../session';
 import { DashboardDatePickerComponent } from '../index';
+import { CPDate } from './../../../../../shared/utils/date/date';
 import { DashboardUtilsService } from '../../dashboard.utils.service';
+import { CPDatePipe } from './../../../../../shared/pipes/date/date.pipe';
 
-let pickerOptions = {
+class MockCPSession extends CPSession {
+  get tz() {
+    return 'America/Toronto';
+  }
+}
+
+const mockSession = new MockCPSession();
+
+const pickerOptions = {
   utc: true,
   inline: true,
   mode: 'range',
   altInput: true,
-  maxDate: new Date(Date.now() - 24 * 3600 * 1000),
+  maxDate: CPDate.now()
+    .subtract(1, 'days')
+    .startOf('day')
+    .format(),
   enableTime: false,
   altFormat: 'F j, Y'
-}
+};
 
 declare var $: any;
 import 'flatpickr';
@@ -21,22 +35,27 @@ describe('DashboardDatePickerComponent', () => {
   let comp: DashboardDatePickerComponent;
   let fixture: ComponentFixture<DashboardDatePickerComponent>;
 
-  beforeEach( async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ DashboardDatePickerComponent ],
-      providers: [ DashboardUtilsService ]
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        declarations: [DashboardDatePickerComponent],
+        providers: [DashboardUtilsService, { provide: CPSession, useClass: MockCPSession }]
+      });
+      // .compileComponents(); // compile template and css
     })
-    // .compileComponents(); // compile template and css
-  }));
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DashboardDatePickerComponent);
     comp = fixture.componentInstance;
 
-    comp.picker = $(comp.calendarEl.nativeElement).flatpickr(pickerOptions)
+    comp.picker = $(comp.calendarEl.nativeElement).flatpickr(pickerOptions);
+    comp.datePipe = new CPDatePipe(mockSession);
+    comp.session = TestBed.get(CPSession);
 
     spyOn(comp.dateChange, 'emit');
     spyOn(comp.picker, 'clear');
+    spyOn(comp.session, 'tz').and.returnValue('America/Toronto');
 
     helper = TestBed.get(DashboardUtilsService);
   });
@@ -51,7 +70,7 @@ describe('DashboardDatePickerComponent', () => {
     fixture.detectChanges();
 
     expect(comp.selected).toEqual(expected);
-  })
+  });
 
   it('triggerChange', () => {
     const expected = helper.last30Days();
@@ -61,23 +80,24 @@ describe('DashboardDatePickerComponent', () => {
     comp.triggerChange();
 
     expect(comp.dateChange.emit).toHaveBeenCalledWith(expected);
-  })
+  });
 
   it('resetCalendar', () => {
     comp.resetCalendar();
 
     expect(comp.picker.clear).toHaveBeenCalled();
-  })
+  });
 
   it('onDateChanged', () => {
-    const date1 = new Date('2017-12-04T05:00:00.000Z');
-    const date2 = new Date('2017-12-06T05:00:00.000Z');
+    const moment = require('moment');
+    const date1 = moment('2017-12-04');
+    const date2 = moment('2017-12-06');
 
     const expected = {
       start: 1512363600,
       end: 1512622799,
-      label: 'Dec 4, 2017 - Dec 6, 2017',
-    }
+      label: 'Dec 4th, 2017 - Dec 6th, 2017'
+    };
 
     spyOn(comp, 'setLabel');
     spyOn(comp, 'triggerChange');
@@ -87,5 +107,5 @@ describe('DashboardDatePickerComponent', () => {
     expect(comp.setLabel).toHaveBeenCalledWith(expected);
 
     expect(comp.triggerChange).toHaveBeenCalled();
-  })
-})
+  });
+});

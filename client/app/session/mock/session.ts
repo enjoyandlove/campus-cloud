@@ -11,10 +11,7 @@ import { mockUser } from './user';
 export * from '../user.interface';
 export * from '../school.interface';
 
-export const accountsToStoreMap = (
-  accountsMap: Array<number>,
-  accountPrivileges,
-) => {
+export const accountsToStoreMap = (accountsMap: Array<number>, accountPrivileges) => {
   /**
    * @return obj similar to account_privielges but with
    * only the storeId that the user has access to
@@ -31,14 +28,16 @@ export const accountsToStoreMap = (
 };
 
 // @Injectable()
-class MockCPSession {
+export class MockCPSession {
   public g = new Map();
+
+  get tz() {
+    return 'America/Toronto';
+  }
 
   canStoreReadAndWriteResource(storeId: number, privilegeType: number) {
     if (storeId in this.g.get('user').account_level_privileges) {
-      return (
-        privilegeType in this.g.get('user').account_level_privileges[storeId]
-      );
+      return privilegeType in this.g.get('user').account_level_privileges[storeId];
     }
 
     return false;
@@ -47,17 +46,13 @@ class MockCPSession {
   canAccountLevelReadResource(privilegeType: number) {
     let hasAccountAccess = false;
 
-    this.g
-      .get('user')
-      .account_mapping[this.g.get('school').id].forEach((store) => {
-        Object.keys(this.g.get('user').account_level_privileges[store]).forEach(
-          (privilege) => {
-            if (privilegeType === +privilege) {
-              hasAccountAccess = true;
-            }
-          },
-        );
+    this.g.get('user').account_mapping[this.g.get('school').id].forEach((store) => {
+      Object.keys(this.g.get('user').account_level_privileges[store]).forEach((privilege) => {
+        if (privilegeType === +privilege) {
+          hasAccountAccess = true;
+        }
       });
+    });
 
     return hasAccountAccess;
   }
@@ -67,15 +62,11 @@ class MockCPSession {
       return false;
     }
 
-    if (
-      !(this.g.get('school').id in this.g.get('user').school_level_privileges)
-    ) {
+    if (!(this.g.get('school').id in this.g.get('user').school_level_privileges)) {
       return false;
     }
 
-    const schoolPrivileges = this.g.get('user').school_level_privileges[
-      this.g.get('school').id
-    ];
+    const schoolPrivileges = this.g.get('user').school_level_privileges[this.g.get('school').id];
 
     if (privilegeType in schoolPrivileges) {
       return schoolPrivileges[privilegeType].r;
@@ -89,15 +80,11 @@ class MockCPSession {
       return false;
     }
 
-    if (
-      !(this.g.get('school').id in this.g.get('user').school_level_privileges)
-    ) {
+    if (!(this.g.get('school').id in this.g.get('user').school_level_privileges)) {
       return false;
     }
 
-    const schoolPrivileges = this.g.get('user').school_level_privileges[
-      this.g.get('school').id
-    ];
+    const schoolPrivileges = this.g.get('user').school_level_privileges[this.g.get('school').id];
 
     if (privilegeType in schoolPrivileges) {
       return schoolPrivileges[privilegeType].w;

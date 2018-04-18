@@ -20,6 +20,7 @@
       </div>
       <div class="col-xs-3">
         <button
+          [disabled]="disabled"
           class="cpbtn cpbtn--primary pull-right"
           (click)="nextStep(currentStep)">
           {{ currentStep >= totalSteps.length ? ('done' | cpI18n) : ('next' | cpI18n) }}

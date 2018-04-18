@@ -9,7 +9,7 @@ import {
   OnInit,
   Output,
   ViewChild,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
 import * as moment from 'moment';
 /**
@@ -31,10 +31,9 @@ declare var $: any;
   selector: 'cp-small-datepicker',
   templateUrl: './cp-small-datepicker.component.html',
   styleUrls: ['./cp-small-datepicker.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
-export class CPSmallDatePickerComponent
-  implements AfterViewInit, OnInit, OnChanges {
+export class CPSmallDatePickerComponent implements AfterViewInit, OnInit, OnChanges {
   @Input() options: any;
   @ViewChild('input') input: ElementRef;
   @Output() reset: EventEmitter<null> = new EventEmitter();
@@ -67,23 +66,12 @@ export class CPSmallDatePickerComponent
     this.options = Object.assign({}, this.options, {
       onChange: function(dates) {
         if (dates.length === 2) {
-          dates = [
-            moment(dates[0])
-              .hours(0)
-              .minutes(0)
-              .seconds(0)
-              .toDate(),
-            moment(dates[1])
-              .hours(23)
-              .minutes(59)
-              .seconds(59)
-              .toDate(),
-          ];
+          dates = [moment(dates[0]).startOf('day'), moment(dates[1]).endOf('day')];
           self.rangeChange.emit(dates);
 
           return;
         }
-      },
+      }
     });
 
     if (this.locale === 'fr-CA') {

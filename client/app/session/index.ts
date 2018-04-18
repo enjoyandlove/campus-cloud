@@ -19,32 +19,18 @@ export class CPSession {
   public g = new Map();
   private _defaultHost = null;
 
-  get isSuperAdmin() {
-    const clubsSchoolWide = canSchoolWriteResource(
-      this.g,
-      CP_PRIVILEGES_MAP.clubs,
-    );
-    const assessSchoolWide = canSchoolWriteResource(
-      this.g,
-      CP_PRIVILEGES_MAP.assessment,
-    );
-    const serviceSchoolWide = canSchoolWriteResource(
-      this.g,
-      CP_PRIVILEGES_MAP.services,
-    );
-    const moderationSchoolWide = canSchoolWriteResource(
-      this.g,
-      CP_PRIVILEGES_MAP.moderation,
-    );
+  get tz() {
+    return this.g.get('school') ? this.g.get('school').tz_zoneinfo_str : 'America/Toronto';
+  }
 
-    const eventSchoolWide = canSchoolWriteResource(
-      this.g,
-      CP_PRIVILEGES_MAP.events,
-    );
-    const manageAndAssessEvent = canSchoolWriteResource(
-      this.g,
-      CP_PRIVILEGES_MAP.event_attendance,
-    );
+  get isSuperAdmin() {
+    const clubsSchoolWide = canSchoolWriteResource(this.g, CP_PRIVILEGES_MAP.clubs);
+    const assessSchoolWide = canSchoolWriteResource(this.g, CP_PRIVILEGES_MAP.assessment);
+    const serviceSchoolWide = canSchoolWriteResource(this.g, CP_PRIVILEGES_MAP.services);
+    const moderationSchoolWide = canSchoolWriteResource(this.g, CP_PRIVILEGES_MAP.moderation);
+
+    const eventSchoolWide = canSchoolWriteResource(this.g, CP_PRIVILEGES_MAP.events);
+    const manageAndAssessEvent = canSchoolWriteResource(this.g, CP_PRIVILEGES_MAP.event_attendance);
 
     return (
       clubsSchoolWide &&

@@ -53,12 +53,14 @@
                 <label i18n>{{ labels.create_edit_status | cpI18n }}</label>
                 <div class="row">
                   <div class="col-xs-12">
-                    <cp-check-dropdown
-                      [items]="statusTypes"
-                      [selectedItem]="defaultStatus"
-                      buttonClass="cpbtn cpbtn--cancel"
-                      (selected)="onSelectedStatus($event)">
-                    </cp-check-dropdown>
+                    <fieldset [disabled]="limitedAdmin">
+                      <cp-check-dropdown
+                        [items]="statusTypes"
+                        [selectedItem]="defaultStatus"
+                        buttonClass="cpbtn cpbtn--cancel"
+                        (selected)="onSelectedStatus($event)">
+                      </cp-check-dropdown>
+                  </fieldset>
                   </div>
                 </div>
               </div>

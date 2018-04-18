@@ -15,7 +15,7 @@ const state: IState = {
 };
 
 @Component({
-  selector: 'cp-checkin-service',
+  selector: 'cp-checkin-events',
   templateUrl: './checkin-events.component.html',
   styleUrls: ['./checkin-events.component.scss'],
 })

@@ -4,12 +4,18 @@ import { RouterModule, Routes } from '@angular/router';
 import { CallbackComponent } from './callback.component';
 import { CallbackPasswordResetComponent } from './password-reset';
 
-import { CheckinEventsComponent, CheckinServiceComponent } from './checkin';
-
-import { FeedbackEventComponent, FeedbackServiceComponent } from './feedback';
-
 import { AdminInviteComponent } from './admin-invite';
 
+import {
+  CheckinEventsComponent,
+  CheckinServiceComponent,
+  CheckinOrientationEventsComponent,
+} from './checkin';
+import {
+  FeedbackEventComponent,
+  FeedbackServiceComponent,
+  FeedbackOrientationEventComponent,
+} from './feedback';
 const appRoutes: Routes = [
   {
     path: '',
@@ -33,6 +39,11 @@ const appRoutes: Routes = [
         data: { zendesk: 'assessment' },
       },
       {
+        path: 'feedback/o/:event',
+        component: FeedbackOrientationEventComponent,
+        data: { zendesk: 'assessment' },
+      },
+      {
         path: 'feedback/s/:service',
         component: FeedbackServiceComponent,
         data: { zendesk: 'assessment' },
@@ -41,6 +52,11 @@ const appRoutes: Routes = [
       {
         path: 'checkin/e/:event',
         component: CheckinEventsComponent,
+        data: { zendesk: 'assessment' },
+      },
+      {
+        path: 'checkin/o/:event',
+        component: CheckinOrientationEventsComponent,
         data: { zendesk: 'assessment' },
       },
       {

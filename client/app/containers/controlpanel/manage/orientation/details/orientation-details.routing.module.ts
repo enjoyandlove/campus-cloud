@@ -11,6 +11,8 @@ const appRoutes: Routes = [
     children: [
       { path: 'info', component: OrientationInfoComponent },
 
+      { path: 'todos', loadChildren: '../todos/todos.module#TodosModule' },
+
     //  { path: 'feeds', component: ClubsWallComponent },
 
       {

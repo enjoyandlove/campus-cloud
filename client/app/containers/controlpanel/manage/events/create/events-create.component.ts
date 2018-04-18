@@ -9,30 +9,30 @@ import {
   ErrorService,
   StoreService,
   AdminService,
-  CPI18nService,
+  CPI18nService
 } from '../../../../../shared/services';
 
 import { EventsService } from '../events.service';
 import { CPSession, ISchool } from '../../../../../session';
 import { CPMap, CPDate } from '../../../../../shared/utils';
-import { EventAttendance, EventFeedback } from '../event.status';
-import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants';
+import { EventAttendance, EventFeedback, isAllDay } from '../event.status';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
-import { OrientationService } from '../../orientation/orientation.services';
 import { EventUtilService } from '../events.utils.service';
 
+const FORMAT_WITH_TIME = 'F j, Y h:i K';
+const FORMAT_WITHOUT_TIME = 'F j, Y';
 const COMMON_DATE_PICKER_OPTIONS = {
   utc: true,
   altInput: true,
   enableTime: true,
-  altFormat: 'F j, Y h:i K',
+  altFormat: 'F j, Y h:i K'
 };
 
 @Component({
   selector: 'cp-events-create',
   templateUrl: './events-create.component.html',
-  styleUrls: ['./events-create.component.scss'],
+  styleUrls: ['./events-create.component.scss']
 })
 export class EventsCreateComponent implements OnInit {
   @Input() storeId: number;
@@ -46,58 +46,49 @@ export class EventsCreateComponent implements OnInit {
   @Input() toolTipContent: IToolTipContent;
 
   stores$;
-  service;
   urlPrefix;
   buttonData;
   isDateError;
-  eventManager;
   booleanOptions;
-  studentFeedback;
   school: ISchool;
   form: FormGroup;
   dateErrorMessage;
-  attendanceManager;
   formError = false;
   attendance = false;
   enddatePickerOpts;
   startdatePickerOpts;
+  eventFeedbackEnabled;
+  eventManagerToolTip;
+  studentFeedbackToolTip;
+  attendanceManagerToolTip;
   mapCenter: BehaviorSubject<any>;
   newAddress = new BehaviorSubject(null);
   managers: Array<any> = [{ label: '---' }];
 
   constructor(
-    private router: Router,
-    private fb: FormBuilder,
-    private session: CPSession,
+    public router: Router,
+    public fb: FormBuilder,
+    public session: CPSession,
     public cpI18n: CPI18nService,
-    private storeHeader: Store<any>,
+    public storeHeader: Store<any>,
+    public service: EventsService,
     private utils: EventUtilService,
-    private adminService: AdminService,
-    private storeService: StoreService,
-    private errorService: ErrorService,
-    private eventService: EventsService,
-    private orientationService: OrientationService,
-  ) {
-    this.school = this.session.g.get('school');
-    const search: URLSearchParams = new URLSearchParams();
-
-    this.buildHeader();
-    search.append('school_id', this.school.id.toString());
-
-    this.stores$ = this.storeService.getStores(search);
-  }
+    public adminService: AdminService,
+    public storeService: StoreService,
+    public errorService: ErrorService
+  ) {}
 
   buildHeader() {
     const payload = {
       heading: 'events_create_heading',
       subheading: null,
       em: null,
-      children: [],
+      children: []
     };
 
     this.storeHeader.dispatch({
       type: HEADER_UPDATE,
-      payload,
+      payload
     });
   }
 
@@ -116,7 +107,7 @@ export class EventsCreateComponent implements OnInit {
 
     search.append('store_id', storeId);
     search.append('school_id', this.school.id.toString());
-    search.append('privilege_type', CP_PRIVILEGES_MAP.events.toString());
+    search.append('privilege_type', this.utils.getPrivilegeType(this.isOrientation));
 
     this.adminService
       .getAdminByStoreId(search)
@@ -124,21 +115,21 @@ export class EventsCreateComponent implements OnInit {
         return [
           {
             label: '---',
-            value: null,
+            value: null
           },
           ...admins.map((admin) => {
             return {
               label: `${admin.firstname} ${admin.lastname}`,
-              value: admin.id,
+              value: admin.id
             };
-          }),
+          })
         ];
       })
       .subscribe(
         (managers) => (this.managers = managers),
         (err) => {
           throw new Error(err);
-        },
+        }
       );
   }
 
@@ -148,15 +139,12 @@ export class EventsCreateComponent implements OnInit {
   }
 
   toggleEventAttendance(value) {
-    value = value ? 1 : 0;
+    value = value ? EventAttendance.enabled : EventAttendance.disabled;
     this.form.controls['event_attendance'].setValue(value);
   }
 
   onResetMap() {
-    CPMap.setFormLocationData(
-      this.form,
-      CPMap.resetLocationFields(this.school),
-    );
+    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields(this.school));
     this.centerMap(this.school.latitude, this.school.longitude);
   }
 
@@ -217,17 +205,17 @@ export class EventsCreateComponent implements OnInit {
       return;
     }
 
-    if (
-      this.form.controls['event_attendance'].value === EventAttendance.enabled
-    ) {
+    if (this.form.controls['event_attendance'].value === EventAttendance.enabled) {
       const managerId = this.form.controls['event_manager_id'];
 
       if (!managerId.value) {
         this.formError = true;
         managerId.setErrors({ required: true });
         this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: false,
+          disabled: false
         });
+
+        return;
       }
     }
 
@@ -235,29 +223,33 @@ export class EventsCreateComponent implements OnInit {
       this.isDateError = true;
       this.formError = true;
       this.form.controls['end'].setErrors({ required: true });
-      this.dateErrorMessage = this.cpI18n.translate(
-        'events_error_end_date_before_start',
-      );
+      this.dateErrorMessage = this.cpI18n.translate('events_error_end_date_before_start');
       this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
 
       return;
     }
 
-    if (
-      this.form.controls['end'].value <= Math.round(new Date().getTime() / 1000)
-    ) {
+    if (this.form.controls['end'].value <= Math.round(CPDate.now().unix())) {
       this.isDateError = true;
       this.formError = true;
       this.form.controls['end'].setErrors({ required: true });
-      this.dateErrorMessage = this.cpI18n.translate(
-        'events_error_end_date_after_now',
-      );
+      this.dateErrorMessage = this.cpI18n.translate('events_error_end_date_after_now');
       this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
 
       return;
     }
 
-    this.service.createEvent(this.form.value).subscribe(
+    if (this.form.controls['is_all_day'].value) {
+      this.updateTime();
+    }
+
+    const search = new URLSearchParams();
+    if (this.orientationId) {
+      search.append('school_id', this.session.g.get('school').id);
+      search.append('calendar_id', this.orientationId.toString());
+    }
+
+    this.service.createEvent(this.form.value, search).subscribe(
       (res) => {
         this.urlPrefix = this.getUrlPrefix(res.id);
         this.router.navigate([this.urlPrefix]);
@@ -265,14 +257,14 @@ export class EventsCreateComponent implements OnInit {
       (err) => {
         this.errorService.handleError(err);
         this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: false,
+          disabled: false
         });
-      },
+      }
     );
   }
 
   getUrlPrefix(eventId) {
-   return this.utils.builidUrlPrefixEvents(
+    return this.utils.buildUrlPrefixEvents(
       this.clubId,
       this.serviceId,
       this.isAthletic,
@@ -285,27 +277,66 @@ export class EventsCreateComponent implements OnInit {
     this.form.controls['event_feedback'].setValue(option.action);
   }
 
-  onAllDayToggle(checked: boolean) {
-    this.form.controls['is_all_day'].setValue(checked);
+  toggleDatePickerTime(checked) {
+    const dateFormat = checked ? FORMAT_WITHOUT_TIME : FORMAT_WITH_TIME;
+
+    this.startdatePickerOpts = {
+      ...this.startdatePickerOpts,
+      enableTime: !checked,
+      dateFormat
+    };
+
+    this.enddatePickerOpts = {
+      ...this.enddatePickerOpts,
+      enableTime: !checked,
+      dateFormat
+    };
+  }
+
+  updateTime() {
+    const startDateAtMidnight = CPDate.fromEpoch(
+      this.form.controls['start'].value,
+      this.session.tz
+    ).startOf('day');
+
+    const endDateAtMidnight = CPDate.fromEpoch(
+      this.form.controls['end'].value,
+      this.session.tz
+    ).endOf('day');
+
+    this.form.controls['start'].setValue(CPDate.toEpoch(startDateAtMidnight, this.session.tz));
+    this.form.controls['end'].setValue(CPDate.toEpoch(endDateAtMidnight, this.session.tz));
+  }
+
+  onAllDayToggle(value) {
+    this.toggleDatePickerTime(value);
+    this.form.controls['is_all_day'].setValue(value);
   }
 
   ngOnInit() {
-    this.service = this.isOrientation ? this.orientationService : this.eventService;
+    this.eventFeedbackEnabled = EventFeedback.enabled;
 
-    this.eventManager = Object.assign({}, this.eventManager, {
-      content: this.cpI18n.translate('events_event_manager_tooltip'),
-    });
-    this.attendanceManager = Object.assign({}, this.attendanceManager, {
-      content: this.cpI18n.translate('events_attendance_manager_tooltip'),
+    this.school = this.session.g.get('school');
+    const search: URLSearchParams = new URLSearchParams();
+
+    this.buildHeader();
+    search.append('school_id', this.school.id.toString());
+
+    this.stores$ = this.storeService.getStores(search);
+
+    this.eventManagerToolTip = Object.assign({}, this.eventManagerToolTip, {
+      content: this.cpI18n.translate('events_event_manager_tooltip')
     });
 
-    this.studentFeedback = Object.assign({}, this.studentFeedback, {
-      content: this.cpI18n.translate('events_event_feedback_tooltip'),
+    this.attendanceManagerToolTip = Object.assign({}, this.attendanceManagerToolTip, {
+      content: this.cpI18n.translate('events_attendance_manager_tooltip')
     });
 
-    let store_id = this.session.defaultHost
-      ? this.session.defaultHost.value
-      : null;
+    this.studentFeedbackToolTip = Object.assign({}, this.studentFeedbackToolTip, {
+      content: this.cpI18n.translate('events_event_feedback_tooltip')
+    });
+
+    let store_id = this.session.defaultHost ? this.session.defaultHost.value : null;
 
     // fetch managers by service
     if (this.storeId) {
@@ -319,35 +350,36 @@ export class EventsCreateComponent implements OnInit {
       this.fetchManagersBySelectedStore(this.clubId);
     }
 
-    // load managers for default host
-    if (this.session.defaultHost) {
+    if (this.isOrientation) {
+      this.fetchManagersBySelectedStore(null);
+    } else if (this.session.defaultHost) {
       this.fetchManagersBySelectedStore(store_id);
     }
 
     this.buttonData = {
       class: 'primary',
-      text: this.cpI18n.translate('events_button_new'),
+      text: this.cpI18n.translate('events_button_new')
     };
 
     this.booleanOptions = [
       {
         label: this.cpI18n.translate('event_enabled'),
-        action: EventFeedback.enabled,
+        action: EventFeedback.enabled
       },
       {
         label: this.cpI18n.translate('events_disabled'),
-        action: EventFeedback.disabled,
-      },
+        action: EventFeedback.disabled
+      }
     ];
 
     this.mapCenter = new BehaviorSubject({
       lat: this.school.latitude,
-      lng: this.school.longitude,
+      lng: this.school.longitude
     });
 
     this.form = this.fb.group({
       title: [null, Validators.required],
-      store_id: [store_id ? store_id : null, Validators.required],
+      store_id: [store_id ? store_id : null, !this.isOrientation ? Validators.required : null],
       location: [null],
       room_data: [null],
       city: [null],
@@ -367,23 +399,23 @@ export class EventsCreateComponent implements OnInit {
       event_manager_id: [null],
       attendance_manager_email: [null],
       custom_basic_feedback_label: [null],
-      is_all_day: [null],
+      is_all_day: [isAllDay.disabled],
     });
 
     const _self = this;
 
     this.startdatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      onClose: function(date) {
-        _self.form.controls['start'].setValue(CPDate.toEpoch(date[0]));
-      },
+      onClose: function(_, dataStr) {
+        _self.form.controls['start'].setValue(CPDate.toEpoch(dataStr, _self.session.tz));
+      }
     };
 
     this.enddatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      onClose: function(date) {
-        _self.form.controls['end'].setValue(CPDate.toEpoch(date[0]));
-      },
+      onClose: function(_, dataStr) {
+        _self.form.controls['end'].setValue(CPDate.toEpoch(dataStr, _self.session.tz));
+      }
     };
   }
 }
