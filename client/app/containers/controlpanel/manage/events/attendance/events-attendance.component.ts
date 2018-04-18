@@ -34,7 +34,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     public session: CPSession,
     private store: Store<IHeader>,
     private route: ActivatedRoute,
-    private service: EventsService,
+    public service: EventsService,
     private utils: EventUtilService
   ) {
     super();
@@ -42,7 +42,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     super.isLoading().subscribe((res) => (this.loading = res));
   }
 
-  private fetch() {
+  public fetch() {
     const search = new URLSearchParams();
     if (this.orientationId) {
       search.append('school_id', this.session.g.get('school').id);
@@ -58,7 +58,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     });
   }
 
-  private buildHeader(event) {
+  public buildHeader(event) {
     const children = this.utils.getSubNavChildren(event, this.urlPrefix);
 
     const payload = {
