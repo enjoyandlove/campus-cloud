@@ -65,6 +65,15 @@ describe('EventAttendanceComponent', () => {
       });
   }));
 
+  it('should get event by Id', () => {
+    spyOn(component, 'buildHeader');
+    spy = spyOn(component.service, 'getEventById').and.returnValue(Observable.of({}));
+
+    component.fetch();
+    expect(spy).toHaveBeenCalledWith(component.eventId , search);
+    expect(spy.calls.count()).toBe(1);
+  });
+
   it('should get orientation event by Id', () => {
     component.orientationId = 5425;
     spyOn(component, 'buildHeader');

@@ -91,6 +91,16 @@ describe('AttendancePastComponent', () => {
     expect(rsvp).toBeNull();
   }));
 
+  it('should fetch event attendees by event Id', () => {
+    spy = spyOn(component.service, 'getEventAttendanceByEventId')
+      .and.returnValue(Observable.of({}));
+
+    component.fetch();
+
+    expect(spy.calls.count()).toBe(1);
+    expect(spy).toHaveBeenCalledWith(component.startRange, component.endRange, search);
+  });
+
   it('should fetch orientation event attendees by event Id', () => {
     spy = spyOn(component.service, 'getEventAttendanceByEventId')
       .and.returnValue(Observable.of({}));
