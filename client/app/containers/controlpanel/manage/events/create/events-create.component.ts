@@ -314,6 +314,8 @@ export class EventsCreateComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.eventFeedbackEnabled = EventFeedback.enabled;
+
     this.school = this.session.g.get('school');
     const search: URLSearchParams = new URLSearchParams();
 
