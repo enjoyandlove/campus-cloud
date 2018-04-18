@@ -15,7 +15,6 @@ import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-
 export class OrientationListComponent extends BaseComponent implements OnInit {
   isOpen;
   loading;
@@ -29,7 +28,7 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
     orientationPrograms: [],
     search_str: null,
     sort_field: 'name',
-    sort_direction: 'asc',
+    sort_direction: 'asc'
   };
 
   constructor(
@@ -37,11 +36,11 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
     public session: CPSession,
     public cpI18n: CPI18nService,
     public store: Store<IHeader>,
-    private service: OrientationService,
-    public headerService: ManageHeaderService) {
+    public service: OrientationService,
+    public headerService: ManageHeaderService
+  ) {
     super();
     super.isLoading().subscribe((loading) => (this.loading = loading));
-    this.fetch();
   }
 
   @HostListener('document:click', ['$event'])
@@ -60,7 +59,8 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
       () => {
         $('#programCreate').modal();
       },
-      1,
+
+      1
     );
   }
 
@@ -87,11 +87,11 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
   buildHeader() {
     this.store.dispatch({
       type: HEADER_UPDATE,
-      payload: this.headerService.filterByPrivileges(),
+      payload: this.headerService.filterByPrivileges()
     });
   }
 
-  private fetch() {
+  public fetch() {
     const search = new URLSearchParams();
     search.append('search_str', this.state.search_str);
     search.append('sort_field', this.state.sort_field);
@@ -107,7 +107,7 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
     this.state = {
       ...this.state,
       sort_field: sort_field,
-      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc',
+      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc'
     };
 
     this.fetch();
@@ -119,8 +119,8 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
 
     this.state = Object.assign({}, this.state, {
       orientationPrograms: this.state.orientationPrograms.filter(
-        (program) => program.id !== programId,
-      ),
+        (program) => program.id !== programId
+      )
     });
 
     if (this.state.orientationPrograms.length === 0 && this.pageNumber > 1) {
@@ -131,5 +131,6 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.buildHeader();
+    this.fetch();
   }
 }

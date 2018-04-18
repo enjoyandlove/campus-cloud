@@ -15,6 +15,7 @@ import { OrientationDuplicateProgramComponent } from './duplicate';
 import { OrientationListActionBoxComponent } from './list/components/action-box';
 
 import { CalendarsModule } from '../calendars/calendars.module';
+import { ClubsModule } from '../clubs/clubs.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,7 @@ import { CalendarsModule } from '../calendars/calendars.module';
     OrientationListActionBoxComponent,
     OrientationProgramCreateComponent,
     OrientationProgramDeleteComponent,
-    OrientationDuplicateProgramComponent,
+    OrientationDuplicateProgramComponent
   ],
 
   imports: [
@@ -31,13 +32,10 @@ import { CalendarsModule } from '../calendars/calendars.module';
     RouterModule,
     ReactiveFormsModule,
     OrientationRoutingModule,
-    CalendarsModule
+    CalendarsModule,
+    ClubsModule
   ],
 
-  providers: [
-    OrientationService,
-    OrientationUtilsService
-  ]
+  providers: [OrientationService, OrientationUtilsService]
 })
-
 export class OrientationModule {}

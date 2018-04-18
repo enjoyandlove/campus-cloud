@@ -14,7 +14,6 @@ import { CPI18nService } from '../../../../../../../shared/services';
 export class FacebookEventsCreateComponent implements OnInit {
   @Input() clubId: number;
   @Input() storeId: number;
-  @Input() orientationId: number;
   @Input() stores: Array<any>;
   @Output() created: EventEmitter<null> = new EventEmitter();
 
@@ -53,9 +52,7 @@ export class FacebookEventsCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    let store_id = this.session.defaultHost
-      ? this.session.defaultHost.value
-      : null;
+    let store_id;
 
     if (this.storeId) {
       store_id = this.storeId;

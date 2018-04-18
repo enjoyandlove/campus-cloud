@@ -1,5 +1,5 @@
 export enum MemberType {
-  'executive' = 2,
+  'executive_leader' = 2,
   'owner' = 1,
   'member' = 0,
 }

@@ -1,18 +1,18 @@
 /*tslint:disable:max-line-length */
-
 import { Component, OnInit, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ActivatedRoute } from '@angular/router';
+import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
-import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { EventsService } from '../events.service';
+import { CPSession } from '../../../../../session';
 import { FORMAT } from '../../../../../shared/pipes/date';
 import { EventUtilService } from './../events.utils.service';
 import { BaseComponent } from '../../../../../base/base.component';
 import { CPI18nService } from '../../../../../shared/services/index';
+import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { IResourceBanner } from '../../../../../shared/components/cp-resource-banner/cp-resource.interface';
-import { OrientationService } from '../../orientation/orientation.services';
 
 @Component({
   selector: 'cp-events-info',
@@ -31,7 +31,6 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
 
   event;
   banner;
-  service;
   urlPrefix;
   dateFormat;
   isPastEvent;
@@ -43,22 +42,28 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   defaultImage = require('public/default/image.png');
 
   constructor(
+    public session: CPSession,
     public cpI18n: CPI18nService,
     private store: Store<IHeader>,
     private route: ActivatedRoute,
     public utils: EventUtilService,
-    private eventService: EventsService,
-    private orientationService: OrientationService,
+    public service: EventsService,
   ) {
     super();
     this.dateFormat = FORMAT.DATETIME;
     this.eventId = this.route.snapshot.params['eventId'];
   }
 
-  private fetch() {
+  public fetch() {
     super.isLoading().subscribe((res) => (this.loading = res));
 
-    super.fetchData(this.service.getEventById(this.eventId)).then((event) => {
+    const search = new URLSearchParams();
+    if (this.orientationId) {
+      search.append('school_id', this.session.g.get('school').id);
+      search.append('calendar_id', this.orientationId.toString());
+    }
+
+    super.fetchData(this.service.getEventById(this.eventId, search)).then((event) => {
       this.event = event.data;
 
       this.isPastEvent = this.utils.isPastEvent(this.event);
@@ -90,7 +95,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
     });
   }
 
-  private buildHeader(event) {
+  public buildHeader(event) {
     const children = this.utils.getSubNavChildren(event, this.urlPrefix);
 
     const payload = {
@@ -110,7 +115,6 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.service = this.isOrientation ? this.orientationService : this.eventService;
     this.fetch();
   }
 }

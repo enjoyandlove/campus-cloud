@@ -12,7 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { MemberType } from '../member.status';
 import { MembersService } from '../members.service';
-
+import { MembersUtilsService } from '../members.utils.service';
 import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 
 declare var $: any;
@@ -25,6 +25,8 @@ declare var $: any;
 export class ClubsMembersEditComponent implements OnInit {
   @Input() member: any;
   @Input() groupId: number;
+  @Input() isOrientation: boolean;
+
   @ViewChild('input') input: ElementRef;
   @Output() edited: EventEmitter<any> = new EventEmitter();
   @Output() teardown: EventEmitter<null> = new EventEmitter();
@@ -34,12 +36,13 @@ export class ClubsMembersEditComponent implements OnInit {
   defaultType;
   members = [];
   form: FormGroup;
-  isExecutive = MemberType.executive;
+  isExecutiveLeader = MemberType.executive_leader;
 
   constructor(
     private fb: FormBuilder,
     private cpI18n: CPI18nService,
     private service: MembersService,
+    private utils: MembersUtilsService,
   ) {}
 
   onMemberSelected(member) {
@@ -70,7 +73,7 @@ export class ClubsMembersEditComponent implements OnInit {
     const group_id = this.groupId;
     const member_type = this.form.value.member_type;
     const member_position =
-      this.form.value.member_type === MemberType.executive
+      this.form.value.member_type === MemberType.executive_leader
         ? this.form.value.member_position
         : '';
 
@@ -96,8 +99,8 @@ export class ClubsMembersEditComponent implements OnInit {
         action: MemberType.member,
       },
       {
-        label: this.cpI18n.translate('executive'),
-        action: MemberType.executive,
+        label: this.utils.getMemberType(this.isOrientation),
+        action: MemberType.executive_leader,
       },
     ];
 

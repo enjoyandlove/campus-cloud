@@ -1,19 +1,28 @@
 import { Injectable } from '@angular/core';
+import { get as _get } from 'lodash';
 
 import { IClub } from './club.interface';
 import { ClubStatus } from './club.status';
-
 import { CP_PRIVILEGES_MAP } from './../../../../shared/constants/privileges';
 
 import {
+  canStoreReadResource,
   canSchoolReadResource,
-  canStoreReadAndWriteResource,
+  canSchoolWriteResource,
+  canStoreReadAndWriteResource
 } from './../../../../shared/utils/privileges/privileges';
 
 @Injectable()
 export class ClubsUtilsService {
   isSJSU(club: IClub) {
-    return 'advisor_firstname' in club || false;
+    return _get(club, 'advisor_firstname', false);
+  }
+
+  limitedAdmin(sessionG, storeId) {
+    return (
+      !canStoreReadAndWriteResource(sessionG, storeId, CP_PRIVILEGES_MAP.clubs) &&
+      !canSchoolWriteResource(sessionG, CP_PRIVILEGES_MAP.clubs)
+    );
   }
 
   getSubNavChildren(club: IClub, session) {
@@ -23,15 +32,13 @@ export class ClubsUtilsService {
 
     const clubIsPending = club.status !== ClubStatus.pending;
 
-    const schoolAccess = (permission) =>
-      canSchoolReadResource(session.g, permission);
+    const schoolAccess = (permission) => canSchoolReadResource(session.g, permission);
 
     const storeAccess = (permission) => {
-      return canStoreReadAndWriteResource(session.g, club.id, permission);
+      return canStoreReadResource(session.g, club.id, permission);
     };
 
-    const schoolOrStoreAccess = (permission) =>
-      schoolAccess(permission) || storeAccess(permission);
+    const schoolOrStoreAccess = (permission) => schoolAccess(permission) || storeAccess(permission);
 
     if (clubIsActive && schoolOrStoreAccess(CP_PRIVILEGES_MAP.events)) {
       links = ['Events', ...links];

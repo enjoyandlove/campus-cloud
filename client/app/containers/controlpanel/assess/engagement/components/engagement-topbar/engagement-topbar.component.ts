@@ -36,7 +36,7 @@ interface IState {
 @Component({
   selector: 'cp-engagement-topbar',
   templateUrl: './engagement-topbar.component.html',
-  styleUrls: ['./engagement-topbar.component.scss'],
+  styleUrls: ['./engagement-topbar.component.scss']
 })
 export class EngagementTopBarComponent implements OnInit {
   @Output() doFilter: EventEmitter<IState> = new EventEmitter();
@@ -59,7 +59,7 @@ export class EngagementTopBarComponent implements OnInit {
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
-    private route: ActivatedRoute,
+    private route: ActivatedRoute
   ) {}
 
   onDateRangeChange(payload) {
@@ -83,16 +83,16 @@ export class EngagementTopBarComponent implements OnInit {
   initState() {
     this.state = {
       engagement: {
-        ...this.commonEngageMentFilter[0],
+        ...this.commonEngageMentFilter[0]
       },
 
       for: {
-        ...this.commonStudentFilter[0],
+        ...this.commonStudentFilter[0]
       },
 
       range: {
-        ...this.dateFilter[0],
-      },
+        ...this.dateFilter[0]
+      }
     };
   }
 
@@ -105,20 +105,16 @@ export class EngagementTopBarComponent implements OnInit {
 
     this.state = Object.assign({}, this.state, {
       engagement: {
-        ...this.getFromArray(
-          this.engageMentFilter,
-          'route_id',
-          routeParams.engagement,
-        ),
+        ...this.getFromArray(this.engageMentFilter, 'route_id', routeParams.engagement)
       },
 
       for: {
-        ...this.getFromArray(this.studentFilter, 'route_id', routeParams.for),
+        ...this.getFromArray(this.studentFilter, 'route_id', routeParams.for)
       },
 
       range: {
-        ...this.getFromArray(this.dateFilter, 'route_id', routeParams.range),
-      },
+        ...this.getFromArray(this.dateFilter, 'route_id', routeParams.range)
+      }
     });
 
     this.doFilter.emit(this.state);
@@ -128,13 +124,14 @@ export class EngagementTopBarComponent implements OnInit {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    const now = CPDate.toEpoch(new Date());
+    const now = CPDate.toEpoch(CPDate.now(), this.session.tz);
     const lastWeek = CPDate.toEpoch(
       moment()
         .subtract(6, 'days')
         .hours(0)
         .minutes(0)
         .seconds(0),
+      this.session.tz
     );
     const lastMonth = CPDate.toEpoch(
       moment()
@@ -142,6 +139,7 @@ export class EngagementTopBarComponent implements OnInit {
         .hours(0)
         .minutes(0)
         .seconds(0),
+      this.session.tz
     );
     const sixWeeks = CPDate.toEpoch(
       moment()
@@ -149,6 +147,7 @@ export class EngagementTopBarComponent implements OnInit {
         .hours(0)
         .minutes(0)
         .seconds(0),
+      this.session.tz
     );
     const threeMonths = CPDate.toEpoch(
       moment()
@@ -156,6 +155,7 @@ export class EngagementTopBarComponent implements OnInit {
         .hours(0)
         .minutes(0)
         .seconds(0),
+      this.session.tz
     );
 
     this.dateFilter = [
@@ -166,9 +166,9 @@ export class EngagementTopBarComponent implements OnInit {
           metric: 'daily',
           range: {
             end: now,
-            start: lastWeek,
-          },
-        },
+            start: lastWeek
+          }
+        }
       },
       {
         route_id: 'last_month',
@@ -177,9 +177,9 @@ export class EngagementTopBarComponent implements OnInit {
           metric: 'daily',
           range: {
             end: now,
-            start: lastMonth,
-          },
-        },
+            start: lastMonth
+          }
+        }
       },
       {
         route_id: 'last_six_weeks',
@@ -188,9 +188,9 @@ export class EngagementTopBarComponent implements OnInit {
           metric: 'weekly',
           range: {
             end: now,
-            start: sixWeeks,
-          },
-        },
+            start: sixWeeks
+          }
+        }
       },
       {
         route_id: 'last_three_months',
@@ -199,10 +199,10 @@ export class EngagementTopBarComponent implements OnInit {
           metric: 'monthly',
           range: {
             end: now,
-            start: threeMonths,
-          },
-        },
-      },
+            start: threeMonths
+          }
+        }
+      }
     ];
 
     this.commonEngageMentFilter = [
@@ -212,8 +212,8 @@ export class EngagementTopBarComponent implements OnInit {
         data: {
           type: null,
           value: 0,
-          queryParam: 'scope',
-        },
+          queryParam: 'scope'
+        }
       },
       {
         route_id: 'all_services',
@@ -221,8 +221,8 @@ export class EngagementTopBarComponent implements OnInit {
         data: {
           type: 'services',
           value: 1,
-          queryParam: 'scope',
-        },
+          queryParam: 'scope'
+        }
       },
       {
         route_id: 'all_events',
@@ -230,17 +230,17 @@ export class EngagementTopBarComponent implements OnInit {
         data: {
           type: 'events',
           value: 2,
-          queryParam: 'scope',
-        },
-      },
+          queryParam: 'scope'
+        }
+      }
     ];
 
     this.commonStudentFilter = [
       {
         route_id: 'all_students',
         label: this.cpI18n.translate('assess_all_students'),
-        listId: null,
-      },
+        listId: null
+      }
     ];
 
     this.route.data.subscribe((res: any) => {
@@ -252,7 +252,7 @@ export class EngagementTopBarComponent implements OnInit {
         _engagements.push({
           label: this.cpI18n.translate('services'),
           value: null,
-          heading: true,
+          heading: true
         });
       }
 
@@ -263,7 +263,7 @@ export class EngagementTopBarComponent implements OnInit {
             .split(' ')
             .join('_'),
           label: list.name,
-          listId: list.id,
+          listId: list.id
         });
       });
 
@@ -277,8 +277,8 @@ export class EngagementTopBarComponent implements OnInit {
           data: {
             type: 'services',
             value: service.id,
-            queryParam: 'service_id',
-          },
+            queryParam: 'service_id'
+          }
         });
       });
 

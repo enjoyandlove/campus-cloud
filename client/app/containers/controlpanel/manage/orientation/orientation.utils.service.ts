@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ProgramMembership } from './orientation.status';
 
 @Injectable()
 export class OrientationUtilsService {
@@ -8,12 +9,12 @@ export class OrientationUtilsService {
 
     links = [{ label: 'Info', link: 'info'}, ...links];
 
-    if (hasMembership === 1) {
-      // links = [{ label: 'Members', link: 'members' }, ...links];
+    if (hasMembership === ProgramMembership.enabled) {
+      links = [{ label: 'Members', link: 'members' }, ...links];
       links = [{ label: 'Feeds', link: 'feeds' }, ...links];
     }
 
-    // links = [{ label: 'To-Dos', link: 'todos' }, ...links];
+    links = [{ label: 'To-Dos', link: 'todos' }, ...links];
     links = [{ label: 'Events', link: 'events'}, ...links];
 
     return links;

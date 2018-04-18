@@ -62,6 +62,8 @@ def import_events(request):
                 return JsonResponse({"error": '%s not in valid format' % column},
                                     safe=False, status=400)
 
+            item[column] = parser.date_str_to_formated_date(item[column])
+
 
         if parser.date_not_in_past(item['start_date']) is False:
             return JsonResponse({"error": 'Start date can not be in the past'},
@@ -72,7 +74,6 @@ def import_events(request):
                                                     item['start_date']) is False:
             return JsonResponse({"error": 'Start date can not be greater than end date'},
                                 safe=False, status=400)
-
 
     return JsonResponse(json.dumps(parsed_data), safe=False)
 

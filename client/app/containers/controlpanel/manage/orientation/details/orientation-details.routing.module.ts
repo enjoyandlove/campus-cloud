@@ -12,6 +12,9 @@ const appRoutes: Routes = [
     children: [
       { path: 'info', component: OrientationInfoComponent },
 
+      { path: 'todos', loadChildren: '../todos/todos.module#TodosModule' },
+
+    //  { path: 'feeds', component: ClubsWallComponent },
       { path: 'feeds', component: OrientationWallComponent },
 
       {
@@ -19,10 +22,10 @@ const appRoutes: Routes = [
          loadChildren: '../events/orientation-events.module#OrientationEventsModule',
        },
 
-     /*{
-         path: 'members',
-         loadChildren: '../members/members.module#ClubsMembersModule',
-       },*/
+      {
+        path: 'members',
+        loadChildren: '../members/orientation-members.module#OrientationMembersModule',
+      },
     ],
   },
 ];

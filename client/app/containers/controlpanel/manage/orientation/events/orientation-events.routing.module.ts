@@ -7,7 +7,6 @@ import {
   OrientationEventsEditComponent,
   OrientationEventsExcelComponent,
   OrientationEventsCreateComponent,
-  OrientationEventsFacebookComponent,
   OrientationEventsAttendanceComponent
 } from './components';
 
@@ -42,12 +41,7 @@ const appRoutes: Routes = [
     path: 'import/excel',
     component: OrientationEventsExcelComponent,
     data: { zendesk: 'import orientation events via csv' },
-  },
-  {
-    path: 'import/facebook',
-    component: OrientationEventsFacebookComponent,
-    data: { zendesk: 'import orientation events via facebook' },
-  },
+  }
 ];
 
 @NgModule({

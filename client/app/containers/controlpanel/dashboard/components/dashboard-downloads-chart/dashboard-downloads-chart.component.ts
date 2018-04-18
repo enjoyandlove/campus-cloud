@@ -1,19 +1,13 @@
 /* tslint:disable: max-line-length */
-import {
-  Input,
-  OnInit,
-  Component,
-  ViewChild,
-  ElementRef,
-  ViewEncapsulation,
-} from '@angular/core';
+import { Input, OnInit, Component, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
 
 const Chartist = require('chartist');
 require('chartist-plugin-tooltips');
 
 import * as moment from 'moment';
-import { CPDate } from '../../../../../shared/utils';
 
+import { CPSession } from '../../../../../session';
+import { CPDate } from '../../../../../shared/utils';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { DivideBy } from './../dashboard-downloads-registration/dashboard-downloads-registration.component';
 import { CPStatsFormatterPipe } from '../../../assess/engagement/components/engagement-stats/pipes/stats-formatter.pipe';
@@ -22,7 +16,7 @@ import { CPStatsFormatterPipe } from '../../../assess/engagement/components/enga
   selector: 'cp-dashboard-downloads-chart',
   templateUrl: './dashboard-downloads-chart.component.html',
   styleUrls: ['./dashboard-downloads-chart.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class DashboardDownloadsChartComponent implements OnInit {
   @ViewChild('chartHost') chartHost: ElementRef;
@@ -38,10 +32,10 @@ export class DashboardDownloadsChartComponent implements OnInit {
     this.drawChart();
   }
 
-  constructor() {}
+  constructor(public session: CPSession) {}
 
   dailyLabel(index) {
-    const date = CPDate.toEpoch(moment(this.range.start).add(index, 'days'));
+    const date = CPDate.toEpoch(moment(this.range.start).add(index, 'days'), this.session.tz);
 
     return moment
       .unix(date)
@@ -52,9 +46,9 @@ export class DashboardDownloadsChartComponent implements OnInit {
   weeklyLabel(index) {
     const weekOne = moment(this.range.start).add(index, 'weeks');
 
-    const weekStart = CPDate.toEpoch(weekOne);
+    const weekStart = CPDate.toEpoch(weekOne, this.session.tz);
 
-    const weekEnd = CPDate.toEpoch(weekOne.add(1, 'weeks'));
+    const weekEnd = CPDate.toEpoch(weekOne.add(1, 'weeks'), this.session.tz);
 
     return `${moment
       .unix(weekStart)
@@ -66,7 +60,7 @@ export class DashboardDownloadsChartComponent implements OnInit {
   }
 
   monthlyLabel(index) {
-    const date = CPDate.toEpoch(moment(this.range.start).add(index, 'months'));
+    const date = CPDate.toEpoch(moment(this.range.start).add(index, 'months'), this.session.tz);
 
     return moment
       .unix(date)
@@ -79,6 +73,7 @@ export class DashboardDownloadsChartComponent implements OnInit {
       moment(this.range.start)
         .locale(CPI18nService.getLocale())
         .add(index, 'quarters'),
+      this.session.tz
     );
 
     return moment
@@ -123,7 +118,7 @@ export class DashboardDownloadsChartComponent implements OnInit {
       return serie.map((item, index) => {
         return {
           meta: chartName + this.labelByDivider(index),
-          value: item,
+          value: item
         };
       });
     });
@@ -133,7 +128,7 @@ export class DashboardDownloadsChartComponent implements OnInit {
     const data = {
       labels: this.buildLabels(),
 
-      series: this.buildSeries(),
+      series: this.buildSeries()
     };
 
     const highestDownload = Math.max.apply(Math, this.series[0]);
@@ -141,9 +136,7 @@ export class DashboardDownloadsChartComponent implements OnInit {
     const highestRegistration = Math.max.apply(Math, this.series[1]);
 
     const highestNoInArray =
-      highestDownload > highestRegistration
-        ? highestDownload
-        : highestRegistration;
+      highestDownload > highestRegistration ? highestDownload : highestRegistration;
 
     const high = highestNoInArray + 5 - (highestNoInArray + 5) % 5;
 
@@ -157,15 +150,15 @@ export class DashboardDownloadsChartComponent implements OnInit {
       chartPadding: {
         top: 5,
 
-        right: 20,
+        right: 20
       },
 
       plugins: [
         Chartist.plugins.tooltip({
           class: 'cp-dsh-downloads',
 
-          pointClass: 'cp-dsh-point',
-        }),
+          pointClass: 'cp-dsh-point'
+        })
       ],
 
       lineSmooth: false,
@@ -177,7 +170,7 @@ export class DashboardDownloadsChartComponent implements OnInit {
 
         point: 'cp-dsh-point',
 
-        label: 'cp-label',
+        label: 'cp-label'
       },
 
       axisY: {
@@ -185,7 +178,7 @@ export class DashboardDownloadsChartComponent implements OnInit {
           const formatter = new CPStatsFormatterPipe();
 
           return value % 1 === 0 ? formatter.transform(value) : null;
-        },
+        }
       },
 
       axisX: {
@@ -194,7 +187,7 @@ export class DashboardDownloadsChartComponent implements OnInit {
         showGrid: false,
 
         labelOffset: {
-          x: 0,
+          x: 0
         },
 
         labelInterpolationFnc: function skipLabels(value, index) {
@@ -220,21 +213,17 @@ export class DashboardDownloadsChartComponent implements OnInit {
           }
 
           return value;
-        }.bind(this),
-      },
+        }.bind(this)
+      }
     };
 
-    const chart = new Chartist.Line(
-      this.chartHost.nativeElement,
-      data,
-      options,
-    );
+    const chart = new Chartist.Line(this.chartHost.nativeElement, data, options);
 
     chart.on(
       'created',
       function() {
         this.isChartDataReady = true;
-      }.bind(this),
+      }.bind(this)
     );
   }
 
