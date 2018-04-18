@@ -7,12 +7,13 @@ import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
-import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { EventsService } from '../events.service';
+import { isProd } from './../../../../../config/env';
 import { FORMAT } from '../../../../../shared/pipes/date';
 import { CPSession, ISchool } from '../../../../../session';
 import { CPMap, CPDate } from '../../../../../shared/utils';
 import { BaseComponent } from '../../../../../base/base.component';
+import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { ErrorService, StoreService, AdminService } from '../../../../../shared/services';
 
 import { EventAttendance, EventFeedback } from '../event.status';
@@ -65,6 +66,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   originalAttnFeedback;
   eventFeedbackEnabled;
   eventManagerToolTip;
+  production = isProd;
   studentFeedbackToolTip;
   attendanceManagerToolTip;
   formMissingFields = false;
