@@ -58,6 +58,7 @@ export class FeedFiltersComponent implements OnInit {
   channels;
   channels$;
   state: IState;
+  campusWallView;
   socialGroups = [];
   walls$: Observable<any>;
 
@@ -244,5 +245,6 @@ export class FeedFiltersComponent implements OnInit {
 
     this.fetch();
     this.doFilter.emit(this.state);
+    this.campusWallView = !this.clubId && !this.orientationId;
   }
 }
