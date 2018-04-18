@@ -106,17 +106,17 @@ describe('EventCreateComponent', () => {
 
   it('should have event manager tooltip', () => {
       const eventManager = component.cpI18n.translate('events_event_manager_tooltip');
-      expect(component.eventManager.content).toEqual(eventManager);
+      expect(component.eventManagerToolTip.content).toEqual(eventManager);
   });
 
   it('should have attendance Manager tooltip', () => {
       const attendanceManager = component.cpI18n.translate('events_attendance_manager_tooltip');
-      expect(component.attendanceManager.content).toEqual(attendanceManager);
+      expect(component.attendanceManagerToolTip.content).toEqual(attendanceManager);
   });
 
   it('should have student feedback tooltip', () => {
       const studentFeedback = component.cpI18n.translate('events_event_feedback_tooltip');
-      expect(component.studentFeedback.content).toEqual(studentFeedback);
+      expect(component.studentFeedbackToolTip.content).toEqual(studentFeedback);
   });
 
   it('form validation should fail required fields missing', () => {
