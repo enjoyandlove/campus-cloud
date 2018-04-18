@@ -5,7 +5,7 @@
   "children": [
     {
       "label": "announcements",
-      "url": "/notify"
+      "url": "/notify/announcements"
     },
     {
       "label": "templates",
