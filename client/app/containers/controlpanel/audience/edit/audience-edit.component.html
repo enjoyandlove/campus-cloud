@@ -2,7 +2,7 @@
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-xs-12 text-center">
-        <span i18n><strong>{{ 'lists_edit_modal_title' | cpI18n }}</strong></span>
+        <span><strong>{{ 'lists_edit_modal_title' | cpI18n }}</strong></span>
 
         <span
           data-dismiss="modal"
@@ -16,27 +16,24 @@
 
   <div class="cpmodal__body">
     <div class="row">
-      <div class="col-xs-12">
+      <div class="col-xs-6">
         <form [formGroup]="form">
           <div class="form-group">
-            <label i18n>{{ 'lists_label_list_name' | cpI18n }}</label>
+            <label>{{ 'lists_label_list_name' | cpI18n }}</label>
             <input
               type="text"
               class="form-control"
               formControlName="name">
           </div>
-
-          <div class="form-group">
-            <label i18n>{{ 'users' | cpI18n }}</label>
-            <cp-typeahead
-              [props]="typeAheadOpts"
-              (query)="onSearch($event)"
-              (selection)="onSelection($event)">
-            </cp-typeahead>
-          </div>
-        </form>
+          </form>
       </div>
     </div>
+    <cp-audience-new-body 
+      [importButton]="false"
+      [withChips]="audience.users"
+      [disableTypeSelection]="true"
+      (selected)="onAudienceSelected($event)">
+    </cp-audience-new-body>
   </div>
 
   <div class="cpmodal__footer">
@@ -46,17 +43,14 @@
           type="button"
           data-dismiss="modal"
           (click)="resetModal()"
-          class="cpbtn cpbtn--cancel" i18n>
+          class="cpbtn cpbtn--cancel">
           {{ 'cancel' | cpI18n }}
         </button>
 
-        <button
-          type="button"
-          (click)="doSubmit()"
-          [disabled]="!form.valid"
-          class="cpbtn cpbtn--primary"i18n>
-          {{ 'update' | cpI18n }}
-        </button>
+        <cp-button
+          [props]="buttonData"
+          (buttonClick)="doSubmit()">
+        </cp-button>
       </div>
     </div>
   </div>

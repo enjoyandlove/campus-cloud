@@ -9,6 +9,8 @@ import { CPI18nService } from './../../../shared/services/i18n.service';
 })
 export class AudienceNewBodyComponent implements OnInit {
   @Input() importButton = true;
+  @Input() withChips: Array<any> = [];
+  @Input() disableTypeSelection = false;
 
   @Output() importClick: EventEmitter<null> = new EventEmitter();
   @Output() selected: EventEmitter<Array<number>> = new EventEmitter();
@@ -43,6 +45,6 @@ export class AudienceNewBodyComponent implements OnInit {
       }
     ];
 
-    this.message = `0 ${this.cpI18n.translate('audience_counter_users')}`;
+    this.message = `${this.withChips.length} ${this.cpI18n.translate('audience_counter_users')}`;
   }
 }

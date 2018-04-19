@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { URLSearchParams } from '@angular/http';
 
@@ -12,6 +12,8 @@ import { CPI18nService } from '../../../shared/services';
   styleUrls: ['./audience-users-typeahead.component.scss']
 })
 export class AudienceUsersTypeaheadComponent implements OnInit {
+  @Input() withChips: Array<any> = [];
+
   @Output() users: EventEmitter<Array<number>> = new EventEmitter();
 
   chips = [];
@@ -69,7 +71,8 @@ export class AudienceUsersTypeaheadComponent implements OnInit {
       isUsers: true,
       canSearch: true,
       unsetOverflow: true,
-      reset: this.resetChips$
+      reset: this.resetChips$,
+      defaultValues: this.withChips
     };
   }
 }

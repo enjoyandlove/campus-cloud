@@ -10,13 +10,10 @@ import {
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { CPSession } from '../../../../session';
-import { CPI18nService } from '../../../../shared/services/index';
 import { AudienceService } from '../audience.service';
-
-declare var $: any;
+import { CPI18nService } from './../../../../shared/services/i18n.service';
 
 @Component({
   selector: 'cp-audience-edit',
@@ -28,18 +25,16 @@ export class AuidenceEditComponent implements OnInit {
   @Output() edited: EventEmitter<any> = new EventEmitter();
   @Output() reset: EventEmitter<null> = new EventEmitter();
 
+  buttonData;
   chipOptions;
-  typeAheadOpts;
   form: FormGroup;
-  hasUsersAudienceChanged;
-  resetChips$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
     private el: ElementRef,
     private fb: FormBuilder,
     private session: CPSession,
-    private service: AudienceService,
-    private cpI18n: CPI18nService
+    public cpI18n: CPI18nService,
+    private service: AudienceService
   ) {}
 
   @HostListener('document:click', ['$event'])
@@ -54,15 +49,7 @@ export class AuidenceEditComponent implements OnInit {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    let data = Object.assign({}, this.form.value);
-
-    if (!this.hasUsersAudienceChanged) {
-      data = Object.assign({}, this.form.value, {
-        user_ids: this.form.value.user_ids.map((user) => user.id)
-      });
-    }
-
-    this.service.updateAudience(this.audience.id, data, search).subscribe(
+    this.service.updateAudience(this.audience.id, this.form.value, search).subscribe(
       (_) => {
         $('#audienceEdit').modal('hide');
         this.edited.emit(this.form.value);
@@ -77,20 +64,10 @@ export class AuidenceEditComponent implements OnInit {
   resetModal() {
     this.form.reset();
     this.reset.emit();
-    this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
-      reset: this.resetChips$.next(true)
-    });
   }
 
-  onHandleRemove(id) {
-    this.hasUsersAudienceChanged = true;
-    if (this.hasUsersAudienceChanged) {
-      this.audience = Object.assign({}, this.audience, {
-        users: this.audience.users.filter((user) => user.id !== id)
-      });
-    }
-
-    this.form.controls['user_ids'].setValue(this.audience.users);
+  onAudienceSelected(selected) {
+    this.form.controls['user_ids'].setValue(selected);
   }
 
   buildChips() {
@@ -102,42 +79,6 @@ export class AuidenceEditComponent implements OnInit {
     });
   }
 
-  onSelection(type) {
-    this.hasUsersAudienceChanged = true;
-
-    this.form.controls['user_ids'].setValue(type.ids);
-  }
-
-  onSearch(query) {
-    const search = new URLSearchParams();
-    search.append('search_str', query);
-    search.append('school_id', this.session.g.get('school').id.toString());
-
-    this.service
-      .getUsers(search)
-      .map((users) => {
-        const _users = [];
-
-        users.forEach((user) => {
-          _users.push({
-            label: `${user.email}`,
-            id: user.id
-          });
-        });
-
-        if (!_users.length) {
-          _users.push({ label: `${this.cpI18n.translate('no_results')}...` });
-        }
-
-        return _users;
-      })
-      .subscribe((suggestions) => {
-        this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
-          suggestions
-        });
-      });
-  }
-
   ngOnInit() {
     this.chipOptions = {
       icon: 'account_box',
@@ -145,19 +86,21 @@ export class AuidenceEditComponent implements OnInit {
       withAvatar: true
     };
 
-    const users = this.buildChips();
-
-    this.typeAheadOpts = {
-      suggestions: [],
-      withSwitcher: false,
-      defaultValues: users
+    this.buttonData = {
+      class: 'primary',
+      disabled: false,
+      text: this.cpI18n.translate('update')
     };
 
-    this.audience = Object.assign({}, this.audience, { users });
+    this.audience = Object.assign({}, this.audience, { users: this.buildChips() });
 
     this.form = this.fb.group({
       name: [this.audience.name, Validators.required],
       user_ids: [this.audience.users, Validators.required]
+    });
+
+    this.form.valueChanges.subscribe(() => {
+      this.buttonData = { ...this.buttonData, disabled: !this.form.valid };
     });
   }
 }
