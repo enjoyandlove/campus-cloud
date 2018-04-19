@@ -2,10 +2,12 @@
   <div class="row">
     <div class="col-xs-6">
       <label>{{'audience_label_type' | cpI18n}}</label>
-      <cp-dropdown 
-        [items]="audienceTypes" 
-        (selected)="onTypeSelected($event)">
-      </cp-dropdown>
+      <fieldset [disabled]="disableTypeSelection">
+        <cp-dropdown 
+          [items]="audienceTypes" 
+          (selected)="onTypeSelected($event)">
+        </cp-dropdown>
+      </fieldset>
     </div>
   </div>
   <div class="row content">
@@ -13,6 +15,7 @@
       <cp-audience-custom 
         [message]="message"
         *ngIf="state.custom"
+        [withChips]="withChips"
         (users)="onUsers($event)"
         [importButton]="importButton"
         (importClick)="importClick.emit()">

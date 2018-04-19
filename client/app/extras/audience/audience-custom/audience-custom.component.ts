@@ -10,6 +10,7 @@ import { CPI18nService } from './../../../shared/services/i18n.service';
 export class AudienceCustomComponent implements OnInit {
   @Input() message: string;
   @Input() importButton = true;
+  @Input() withChips: Array<any>;
 
   @Output() importClick: EventEmitter<null> = new EventEmitter();
   @Output() users: EventEmitter<Array<number>> = new EventEmitter();
