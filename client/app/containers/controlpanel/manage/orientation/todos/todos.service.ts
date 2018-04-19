@@ -1,16 +1,12 @@
 import { URLSearchParams, Http } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-// import { API } from '../../../../../config/api';
+import { API } from '../../../../../config/api';
 import { BaseService } from '../../../../../base';
 
 @Injectable()
 export class TodosService extends BaseService {
-  dummy;
-  mockJson = require('./mockTodos.json');
-
   constructor(http: Http, router: Router) {
     super(http, router);
 
@@ -18,27 +14,33 @@ export class TodosService extends BaseService {
   }
 
   getTodos(startRage: number, endRage: number, search?: URLSearchParams) {
-    this.dummy = [startRage, endRage, search];
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.ORIENTATION_TODOS
+      }/${startRage};${endRage}`;
 
-    return Observable.of(this.mockJson).delay(300);
+    return super.get(url, { search }).map((res) => res.json());
   }
 
   createTodo(body, search?: URLSearchParams) {
-    this.dummy = [body, search];
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ORIENTATION_TODOS}/`;
 
-    return Observable.of(body).delay(300);
+    return super.post(url, body, { search }).map((res) => res.json());
   }
 
   deleteTodo(id, search?: URLSearchParams) {
-    this.dummy = [id, search];
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.ORIENTATION_TODOS
+      }/${id}`;
 
-    return Observable.of(this.mockJson).delay(300);
+    return super.delete(url, { search }).map((res) => res.json());
   }
 
   editTodo(id, body, search?: URLSearchParams) {
-    this.dummy = [body, id, search];
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.ORIENTATION_TODOS
+      }/${id}`;
 
-    return Observable.of(body).delay(300);
+    return super.update(url, body, { search }).map((res) => res.json());
   }
 
 }

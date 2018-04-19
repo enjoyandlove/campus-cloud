@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs/Observable';
 import { FormBuilder } from '@angular/forms';
-import { URLSearchParams } from '@angular/http';
+import { ActivatedRoute } from '@angular/router';
 
 import { TodosModule } from '../todos.module';
 import { TodosService } from '../todos.service';
@@ -33,7 +33,18 @@ describe('OrientationTodosCreateComponent', () => {
         CPSession,
         FormBuilder,
         CPI18nService,
-        { provide: TodosService, useClass: MockTodosService }
+        { provide: TodosService, useClass: MockTodosService },
+        { provide: ActivatedRoute,
+          useValue: {
+            snapshot: {
+              parent: {
+                parent: {
+                  params: Observable.of({ orientationId: 1 })
+                }
+              }
+            },
+          }
+        }
       ]
     })
       .compileComponents()
@@ -42,9 +53,7 @@ describe('OrientationTodosCreateComponent', () => {
         component = fixture.componentInstance;
         service = TestBed.get(TodosService);
 
-        const search = new URLSearchParams();
         component.session.g.set('school', mockSchool);
-        search.append('school_id', component.session.g.get('school').id);
         component.ngOnInit();
       });
   }));
@@ -54,16 +63,16 @@ describe('OrientationTodosCreateComponent', () => {
   });
 
   it('form validation - should pass', () => {
-    component.form.controls['name'].setValue('Hello World!');
-    component.form.controls['due_date'].setValue(1515625016);
+    component.form.controls['title'].setValue('Hello World!');
+    component.form.controls['end'].setValue(1515625016);
     expect(component.form.valid).toBeTruthy();
   });
 
   it('form validation - max length 225 - should fail', () => {
     const charCount226 = 'a'.repeat(226);
 
-    component.form.controls['name'].setValue(charCount226);
-    component.form.controls['due_date'].setValue(1515625016);
+    component.form.controls['title'].setValue(charCount226);
+    component.form.controls['end'].setValue(1515625016);
     expect(component.form.valid).toBeFalsy();
   });
 
@@ -72,19 +81,20 @@ describe('OrientationTodosCreateComponent', () => {
   });
 
   it('cp button should have disabled state FALSE', () => {
-    component.form.controls['name'].setValue('Hello World!');
-    component.form.controls['due_date'].setValue(1515625016);
+    component.form.controls['title'].setValue('Hello World!');
+    component.form.controls['end'].setValue(1515625016);
     expect(component.buttonData.disabled).toBeFalsy();
   });
 
   it('should insert todo', () => {
+    component.orientationId = 4525;
     spyOn(component, 'resetModal');
     spy = spyOn(component.service, 'createTodo').and.returnValue(Observable.of([]));
 
     component.form = component.fb.group({
-      name: ['Hello World!'],
+      title: ['Hello World!'],
       description: ['This is description'],
-      due_date: [1515625016],
+      end: [1515625016],
     });
 
     component.onSubmit();

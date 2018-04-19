@@ -10,6 +10,7 @@ const FORMAT_WITH_TIME = 'F j, Y h:i K';
 const COMMON_DATE_PICKER_OPTIONS = {
   altInput: true,
   enableTime: true,
+  minDate: 'today',
   altFormat: FORMAT_WITH_TIME,
 };
 
@@ -24,7 +25,7 @@ export class TodosFormComponent implements OnInit {
 
   @Output()
   submitted: EventEmitter<{
-    name: string;
+    title: string;
     description: string;
   }> = new EventEmitter();
 
@@ -34,13 +35,13 @@ export class TodosFormComponent implements OnInit {
 
   ngOnInit() {
     const _self = this;
-    const due_date = this.form.controls['due_date'].value;
+    const due_date = this.form.controls['end'].value;
     this.dueDate = {
       ...COMMON_DATE_PICKER_OPTIONS,
       defaultDate: due_date ?
-        CPDate.fromEpoch(this.form.controls['due_date'].value, _self.session.tz).format() : null,
+        CPDate.fromEpoch(this.form.controls['end'].value, _self.session.tz).format() : null,
       onClose: function(_, dateStr) {
-        _self.form.controls['due_date'].setValue(CPDate.toEpoch(dateStr, _self.session.tz));
+        _self.form.controls['end'].setValue(CPDate.toEpoch(dateStr, _self.session.tz));
       },
     };
   }

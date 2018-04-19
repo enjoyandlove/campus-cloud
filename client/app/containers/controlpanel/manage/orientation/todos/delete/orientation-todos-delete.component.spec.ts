@@ -47,9 +47,9 @@ describe('OrientationTodosDeleteComponent', () => {
 
         component.todo = {
           id: 54856,
-          name: 'Hello World!',
+          title: 'Hello World!',
           description: 'This is description',
-          due_date: 1557637200
+          end: 1557637200
         };
       });
   }));

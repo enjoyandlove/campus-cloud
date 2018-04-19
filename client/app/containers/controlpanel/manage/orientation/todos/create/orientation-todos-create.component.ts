@@ -15,6 +15,7 @@ import { CPSession } from './../../../../../../session';
 import { TodosService } from '../todos.service';
 import { CPI18nService } from '../../../../../../shared/services/i18n.service';
 import { ITodo } from '../todos.interface';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'cp-orientation-todo-create',
@@ -29,6 +30,7 @@ export class OrientationTodosCreateComponent implements OnInit {
 
   buttonData;
   form: FormGroup;
+  orientationId: number;
 
   constructor(
     public el: ElementRef,
@@ -36,6 +38,7 @@ export class OrientationTodosCreateComponent implements OnInit {
     public session: CPSession,
     public cpI18n: CPI18nService,
     public service: TodosService,
+    public route: ActivatedRoute,
   ) {}
 
   @HostListener('document:click', ['$event'])
@@ -55,6 +58,7 @@ export class OrientationTodosCreateComponent implements OnInit {
   onSubmit() {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id);
+    search.append('calendar_id', this.orientationId.toString());
 
     this.service
       .createTodo(this.form.value, search)
@@ -65,10 +69,11 @@ export class OrientationTodosCreateComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.orientationId = this.route.snapshot.parent.parent.params['orientationId'];
     this.form = this.fb.group({
-      name: [null, [Validators.required, Validators.maxLength(225)]],
+      title: [null, [Validators.required, Validators.maxLength(225)]],
       description: [null, Validators.maxLength(512)],
-      due_date: [null, Validators.required],
+      end: [null, Validators.required],
     });
 
     this.buttonData = Object.assign({}, this.buttonData, {
