@@ -22,7 +22,7 @@
     "message": "Copier mes permissions Campus Cloud"
   },
   "admin_all_athletics": {
-    "message": "Tous les clubs d'athlétisme"
+    "message": "Tous les clubs sportifs"
   },
   "admin_all_clubs": {
     "message": "Tous les clubs"
@@ -40,11 +40,11 @@
     "message": "Voir le tableau de bord d'évaluation"
   },
   "admin_athletics_owner": {
-    "message": "Propriétaire du club d'athlétisme"
+    "message": "Gestionnaire de club sportif"
   },
   "admin_athletics_owner_help": {
     "message":
-      "Créer de nouveaux clubs d'athlétisme; gérer les coordonnées, les événements et les membres pour tous les clubs ou une sélection de clubs"
+      "Créer de nouveaux clubs sportifs; gérer les coordonnées, les événements et les membres pour tous les clubs ou une sélection de clubs"
   },
   "admin_campus_announcements": {
     "message": "Annonces normales"
@@ -65,7 +65,7 @@
     "description": "Create Team Member > Select Clubs > Select a club > drop down menu"
   },
   "admin_club_owner": {
-    "message": "Propriétaire du club"
+    "message": "Gestionnaire de groupe"
   },
   "admin_club_owner_help": {
     "message": "Créer de nouveaux clubs; gérer les coordonnées, les événements et les membres"
@@ -143,7 +143,7 @@
     "message": "Rechercher par nom ou courriel..."
   },
   "admin_select_athletics": {
-    "message": "Sélectionner club d'athlétisme"
+    "message": "Sélectionner club sportif"
   },
   "admin_select_clubs": {
     "message": "Sélectionner clubs"
@@ -459,28 +459,28 @@
     "message": "Total des services"
   },
   "athletics": {
-    "message": "Clubs d'athlétisme"
+    "message": "Clubs sportifs"
   },
   "athletics_all_athletics": {
-    "message": "Tous les clubs d'athlétisme"
+    "message": "Tous les clubs sportifs"
   },
   "athletics_button_create": {
-    "message": "Créer club d'athlétisme"
+    "message": "Créer club sportif"
   },
   "athletics_delete_modal_title": {
-    "message": "Supprimer club d'athlétisme"
+    "message": "Supprimer club sportif"
   },
   "athletics_import_button_submit": {
-    "message": "Importer clubs d'athlétisme"
+    "message": "Importer clubs sportifs"
   },
   "athletics_import_heading": {
-    "message": "Importer des clubs d'athlétisme depuis un fichier"
+    "message": "Importer des clubs sportifs depuis un fichier"
   },
   "athletics_import_items_to_import": {
-    "message": "Le fichier contient des données pour %s club(s) d'athlétisme."
+    "message": "Le fichier contient des données pour %s club(s) sportif(s)"
   },
   "athletics_label_athletic_banner": {
-    "message": "Bannière du club d'athlétisme"
+    "message": "Bannière du club sportif"
   },
   "athletics_label_athletic_description": {
     "message": "Description"
@@ -498,7 +498,7 @@
     "message": "Statut"
   },
   "athletics_label_edit_athletic": {
-    "message": "Editer club d'athlétisme"
+    "message": "Editer club sportifs"
   },
   "attendee": {
     "message": "Présent"
@@ -807,6 +807,22 @@
     "message": "Notes du club",
     "description": "As a club super editor, view a club info page with club notes. "
   },
+  "club_membership_disabled_title": {
+    "message": "Désactivé",
+    "description": "Create Club > Membership"
+  },
+  "club_membership_enabled_title": {
+    "message": "Activé",
+    "description": "Create Club > Membership"
+  },
+  "club_status_inactive": {
+    "message": "Inactif",
+    "description": "Create Club > Status"
+  },
+  "club_status_pending": {
+    "message": "En attente",
+    "description": "Create Club > Status"
+  },
   "comment": {
     "message": "Commentaire",
     "description": "Walls Comment"
@@ -857,7 +873,7 @@
     "message": "Téléverser fichier CSV"
   },
   "customise": {
-    "message": "Personaliser"
+    "message": "Personnaliser"
   },
   "customise_banner": {
     "message": "Bannière"

@@ -125,8 +125,8 @@
     </div>
 
     <div class="col-xs-6">
-      <fieldset [disabled]="isOrientation">
-        <div class="cp-card" [class.isDisabled]="isOrientation">
+      <fieldset [disabled]="isOrientation && production">
+        <div class="cp-card" [class.isDisabled]="isOrientation && production">
           <div class="row">
             <div class="col-xs-12">
               <p class="title" i18n>{{ 'assessment' | cpI18n }}</p>

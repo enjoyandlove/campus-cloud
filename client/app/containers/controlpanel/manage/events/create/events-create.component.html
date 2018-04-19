@@ -119,19 +119,21 @@
     </div>
 
     <div class="col-xs-6">
-      <fieldset [disabled]="isOrientation">
-        <div class="cp-card" [class.isDisabled]="isOrientation">
+      <fieldset [disabled]="isOrientation && production">
+        <div class="cp-card" [class.isDisabled]="isOrientation && production">
           <div class="row">
             <div class="col-xs-12">
               <p class="title" i18n>{{ 'assessment' | cpI18n }}</p>
               <span class="pull-right">
-              <cp-switch
-                [id]="attendance"
-                (toggle)="attendance = !attendance"
-                (toggle)="toggleEventAttendance($event)">
-              </cp-switch>
-            </span>
-              <div class="col-xs-12 temporarily_disabled" *ngIf="isOrientation">
+                <cp-switch
+                  [id]="attendance"
+                  (toggle)="attendance = !attendance"
+                  (toggle)="toggleEventAttendance($event)">
+                </cp-switch>
+              </span>
+              <div 
+                class="col-xs-12 temporarily_disabled" 
+                *ngIf="isOrientation && production">
                 <div class="col-xs-1 temp-icon"><i class="material-icons">info_outline</i></div>
                 <div class="col-xs-11 temp-text">{{ 'temporarily_disabled' | cpI18n }}</div>
               </div>
@@ -184,7 +186,9 @@
               </div>
             </div>
 
-            <div class="row form-group" *ngIf="form.controls['event_feedback'].value === eventFeedbackEnabled">
+            <div 
+              class="row form-group" 
+              *ngIf="form.controls['event_feedback'].value === eventFeedbackEnabled">
               <div class="col-xs-12">
                 <label i18n>{{ 'events_default_question' | cpI18n }}</label>
                 <input

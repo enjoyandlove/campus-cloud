@@ -13,12 +13,13 @@ import {
 } from '../../../../../shared/services';
 
 import { EventsService } from '../events.service';
+import { isProd } from './../../../../../config/env';
 import { CPSession, ISchool } from '../../../../../session';
 import { CPMap, CPDate } from '../../../../../shared/utils';
+import { EventUtilService } from '../events.utils.service';
 import { EventAttendance, EventFeedback, isAllDay } from '../event.status';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
-import { EventUtilService } from '../events.utils.service';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
 const FORMAT_WITHOUT_TIME = 'F j, Y';
@@ -59,6 +60,7 @@ export class EventsCreateComponent implements OnInit {
   startdatePickerOpts;
   eventFeedbackEnabled;
   eventManagerToolTip;
+  production = isProd;
   studentFeedbackToolTip;
   attendanceManagerToolTip;
   mapCenter: BehaviorSubject<any>;
@@ -399,7 +401,7 @@ export class EventsCreateComponent implements OnInit {
       event_manager_id: [null],
       attendance_manager_email: [null],
       custom_basic_feedback_label: [null],
-      is_all_day: [isAllDay.disabled],
+      is_all_day: [isAllDay.disabled]
     });
 
     const _self = this;

@@ -122,7 +122,9 @@ export class AuthGuard implements CanActivate {
   canActivate(activatedRoute, state) {
     this.setZendesk(activatedRoute.data);
 
-    const sessionKey = appStorage.get(appStorage.keys.SESSION);
+    const sessionKey = appStorage.storageAvailable()
+      ? appStorage.get(appStorage.keys.SESSION)
+      : null;
 
     if (sessionKey) {
       if (!this.session.g.size) {
