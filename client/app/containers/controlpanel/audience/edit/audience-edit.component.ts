@@ -157,7 +157,6 @@ export class AuidenceEditComponent implements OnInit {
 
     this.form = this.fb.group({
       name: [this.audience.name, Validators.required],
-      description: [this.audience.description || null],
       user_ids: [this.audience.users, Validators.required]
     });
   }

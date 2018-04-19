@@ -5,7 +5,7 @@ import { CPI18nService } from './../../../../../shared/services/i18n.service';
 @Component({
   selector: 'cp-announcements-confirm',
   templateUrl: './announcements-confirm.component.html',
-  styleUrls: ['./announcements-confirm.component.scss'],
+  styleUrls: ['./announcements-confirm.component.scss']
 })
 export class AnnouncementsConfirmComponent implements OnInit {
   @Input() state: any;
@@ -18,6 +18,11 @@ export class AnnouncementsConfirmComponent implements OnInit {
 
   constructor(private cpI18n: CPI18nService) {}
 
+  doTeardown() {
+    $('#announcementConfirmModal').modal('hide');
+    this.teardown.emit();
+  }
+
   onCofirm() {
     this.confirmed.emit();
   }
@@ -28,9 +33,7 @@ export class AnnouncementsConfirmComponent implements OnInit {
     }
 
     if (this.state.isCampusWide && this.state.isEmergency) {
-      return this.cpI18n.translate(
-        'announcement_confirm_campus_wide_and_emergency',
-      );
+      return this.cpI18n.translate('announcement_confirm_campus_wide_and_emergency');
     }
 
     if (this.state.isCampusWide && !this.state.isEmergency) {
@@ -49,9 +52,7 @@ export class AnnouncementsConfirmComponent implements OnInit {
       return this.cpI18n.translate('announcement_confirm_campus_wide_body');
     }
     if (this.state.isCampusWide && this.state.isEmergency) {
-      return this.cpI18n.translate(
-        'announcement_confirm_campus_wide_and_emergency_body',
-      );
+      return this.cpI18n.translate('announcement_confirm_campus_wide_and_emergency_body');
     }
 
     if (this.state.isCampusWide && !this.state.isEmergency) {

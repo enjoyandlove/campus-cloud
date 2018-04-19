@@ -15,7 +15,7 @@ declare var $: any;
 @Component({
   selector: 'cp-links-create',
   templateUrl: './links-create.component.html',
-  styleUrls: ['./links-create.component.scss'],
+  styleUrls: ['./links-create.component.scss']
 })
 export class LinksCreateComponent implements OnInit {
   @Output() createLink: EventEmitter<ILink> = new EventEmitter();
@@ -23,6 +23,7 @@ export class LinksCreateComponent implements OnInit {
 
   storeId;
   imageError;
+  tooltipContent;
   form: FormGroup;
 
   constructor(
@@ -30,7 +31,7 @@ export class LinksCreateComponent implements OnInit {
     private session: CPSession,
     public cpI18n: CPI18nService,
     private service: LinksService,
-    private fileUploadService: FileUploadService,
+    private fileUploadService: FileUploadService
   ) {}
 
   buildForm() {
@@ -39,7 +40,7 @@ export class LinksCreateComponent implements OnInit {
       link_url: [null, Validators.required],
       school_id: [this.storeId, Validators.required],
       description: [null, Validators.maxLength(512)],
-      img_url: [null],
+      img_url: [null]
     });
   }
 
@@ -55,9 +56,7 @@ export class LinksCreateComponent implements OnInit {
 
     const headers = new Headers();
     const url = this.service.getUploadImageUrl();
-    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(
-      appStorage.keys.SESSION,
-    )}`;
+    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
 
     headers.append('Authorization', auth);
 
@@ -67,7 +66,7 @@ export class LinksCreateComponent implements OnInit {
       },
       (err) => {
         throw new Error(err);
-      },
+      }
     );
   }
 
@@ -88,7 +87,15 @@ export class LinksCreateComponent implements OnInit {
   }
 
   ngOnInit() {
+    const zendesk = 'https://oohlalamobile.zendesk.com/hc/en-us/articles';
     this.storeId = this.session.g.get('school').id;
     this.buildForm();
+    this.tooltipContent = {
+      content: '',
+      link: {
+        url: `${zendesk}/360001101794-What-size-images-should-I-use-in-Campus-Cloud-`,
+        text: this.cpI18n.translate('learn_more')
+      }
+    };
   }
 }

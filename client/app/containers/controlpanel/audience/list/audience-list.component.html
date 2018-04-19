@@ -34,9 +34,12 @@
               </span>
             </span>
             <span class="col-xs-2">
+              {{ 'type' | cpI18n }}
+            </span>
+            <span class="col-xs-2">
               {{ 'lists_number_of_users' | cpI18n }}
             </span>
-            <span class="col-xs-1 col-xs-offset-4"></span>
+            <span class="col-xs-1 col-xs-offset-2"></span>
           </div>
         </li>
 
@@ -52,19 +55,21 @@
                 data-toggle="modal" data-target="#audienceEdit">
                 <strong>{{ audience.name }}</strong>
               </button>
-              <br>
-              {{ audience.description }}
             </span>
 
-            <span class="col-xs-2" i18n>
-              {{ audience.users.length }}
+            <span class="col-xs-2">
+              {{ audience.type }}
+            </span>
+
+            <span class="col-xs-2 hover" (click)="downloadAudience(audience)">
+              {{ audience.users.length }} {{ 'users' | cpI18n }}
             </span>
 
             <span
               (click)="deleteAudience = audience;"
               (click)="isAudienceDelete = true"
               data-toggle="modal" data-target="#audienceDeleteModal"
-              class="col-xs-1 col-xs-offset-4 hover delete-list text-center">
+              class="col-xs-1 col-xs-offset-2 hover delete-list text-center">
               &times;
             </span>
           </div>

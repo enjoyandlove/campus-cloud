@@ -15,6 +15,9 @@
   </div>
 
   <div class="cpmodal__body">
+    
+    <ng-content></ng-content>
+
     <div class="row">
       <div class="col-xs-12">
         <p i18n>
@@ -28,6 +31,7 @@
         <small i18n>{{ 'csv_modal_instruction' | cpI18n }}</small>
       </div>
     </div>
+
     <div class="row">
       <div class="col-xs-12">
         <div class="dropzone" [class.isError]="isError">

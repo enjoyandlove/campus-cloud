@@ -1,0 +1,29 @@
+<div class="cp-card">
+  <p class="section__name">{{'audience' | cpI18n}}</p>
+  <div class="row">
+    <div class="col-xs-12">
+      <cp-tabs>
+        <cp-tab [title]="savedAudienceTitle">
+          <div class="saved_audience">
+            <div class="row">
+              <div class="col-xs-6">
+                <cp-audience-saved-body 
+                  (selected)="onSelectedAudience($event)">
+                </cp-audience-saved-body>
+              </div>
+              <div class="col-xs-6 text-right saved_audience__counter">
+                <cp-audience-counter [message]="message"></cp-audience-counter>
+              </div>
+            </div>  
+          </div>
+        </cp-tab>
+        <cp-tab [title]="newAudienceTitle">
+          <cp-audience-new-body 
+            (selected)="onUsers($event)"
+            (importClick)="importClick.emit()">
+          </cp-audience-new-body>
+        </cp-tab>
+      </cp-tabs>
+    </div>
+  </div>
+</div>

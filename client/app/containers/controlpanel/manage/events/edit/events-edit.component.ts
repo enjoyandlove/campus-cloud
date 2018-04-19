@@ -15,7 +15,7 @@ import { CPMap, CPDate } from '../../../../../shared/utils';
 import { BaseComponent } from '../../../../../base/base.component';
 import { ErrorService, StoreService, AdminService } from '../../../../../shared/services';
 
-import { EventAttendance } from '../event.status';
+import { EventAttendance, EventFeedback } from '../event.status';
 import { EventUtilService } from '../events.utils.service';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 
@@ -49,23 +49,24 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   dateFormat;
   serverError;
   isDateError;
-  eventManager;
   originalHost;
   booleanOptions;
   loading = true;
   school: ISchool;
   eventId: number;
   form: FormGroup;
-  studentFeedback;
   selectedManager;
   dateErrorMessage;
-  attendanceManager;
   enddatePickerOpts;
   attendanceEnabled;
   attendance = false;
   isFormReady = false;
   startdatePickerOpts;
   originalAttnFeedback;
+  eventFeedbackEnabled;
+  eventManagerToolTip;
+  studentFeedbackToolTip;
+  attendanceManagerToolTip;
   formMissingFields = false;
   mapCenter: BehaviorSubject<any>;
   newAddress = new BehaviorSubject(null);
@@ -425,14 +426,14 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.eventManager = Object.assign({}, this.eventManager, {
+    this.eventManagerToolTip = Object.assign({}, this.eventManagerToolTip, {
       content: this.cpI18n.translate('events_event_manager_tooltip')
     });
-    this.attendanceManager = Object.assign({}, this.attendanceManager, {
+    this.attendanceManagerToolTip = Object.assign({}, this.attendanceManagerToolTip, {
       content: this.cpI18n.translate('events_attendance_manager_tooltip')
     });
 
-    this.studentFeedback = Object.assign({}, this.studentFeedback, {
+    this.studentFeedbackToolTip = Object.assign({}, this.studentFeedbackToolTip, {
       content: this.cpI18n.translate('events_event_feedback_tooltip')
     });
 
@@ -462,6 +463,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     ];
 
     this.attendanceEnabled = EventAttendance.enabled;
+    this.eventFeedbackEnabled = EventFeedback.enabled;
     this.fetch();
     this.buildHeader();
   }

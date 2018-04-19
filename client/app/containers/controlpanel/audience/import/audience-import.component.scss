@@ -1,5 +1,10 @@
+@import '~styles/components/form';
 @import '~styles/components/modal';
 @import '~styles/components/button';
+
+.row {
+  margin-bottom: 15px;
+}
 
 button i {
   font-size: 18px;

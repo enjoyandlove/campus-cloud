@@ -1,3 +1,4 @@
+import { CPTabsComponent } from './components/cp-tabs/components/cp-tabs/cp-tabs.component';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -5,11 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { CPTrackerDirective } from './directives';
 import { CPDatePipe, CPFilterPipe, CPI18nPipe } from './pipes';
-import {
-  FileUploadService,
-  StoreService,
-  CPLocationsService,
-} from './services';
+import { FileUploadService, StoreService, CPLocationsService } from './services';
 import { CPTrackingService } from './services/tracking.service';
 import { CPFIlterByLength } from './pipes/array/filter-by-length.pipe';
 
@@ -49,12 +46,15 @@ import {
   CPOnboardingComponent,
   CPStepperComponent,
   CPListModalComponent,
+  CPTabComponent
 } from './components';
 import { LocationsService } from '../containers/controlpanel/manage/locations/locations.service';
 import { CPMapsService } from './services/maps.service';
 
 @NgModule({
   declarations: [
+    CPTabComponent,
+    CPTabsComponent,
     CPFIlterByLength,
     CPTopBarComponent,
     CPMapsComponent,
@@ -98,7 +98,7 @@ import { CPMapsService } from './services/maps.service';
     CPTopBanerComponent,
     CPOnboardingComponent,
     CPStepperComponent,
-    CPListModalComponent,
+    CPListModalComponent
   ],
 
   imports: [CommonModule, RouterModule, ReactiveFormsModule],
@@ -109,10 +109,12 @@ import { CPMapsService } from './services/maps.service';
     CPTrackingService,
     CPLocationsService,
     LocationsService,
-    CPMapsService,
+    CPMapsService
   ],
 
   exports: [
+    CPTabComponent,
+    CPTabsComponent,
     CPFIlterByLength,
     CPTopBarComponent,
     CPMapsComponent,
@@ -156,7 +158,7 @@ import { CPMapsService } from './services/maps.service';
     CPTopBanerComponent,
     CPOnboardingComponent,
     CPStepperComponent,
-    CPListModalComponent,
-  ],
+    CPListModalComponent
+  ]
 })
 export class SharedModule {}
