@@ -111,10 +111,7 @@ export class FeedInputBoxComponent implements OnInit {
     }
 
     if (this.orientationId) {
-      delete body['store_id'];
-      body = Object.assign({}, body, {
-        calendar_id: this.orientationId,
-      });
+      body = this.asCalendarFormat(body);
     }
 
     const groupWall$ = this.feedsService.replyToGroupThread(body);
@@ -126,8 +123,7 @@ export class FeedInputBoxComponent implements OnInit {
 
   postToWall(formData): Promise<any> {
     if (this.orientationId) {
-      delete formData['store_id'];
-      formData = { ...formData, calendar_id: this.orientationId };
+      formData = this.asCalendarFormat(formData);
     }
 
     const groupWall$ = this.feedsService.postToGroupWall(formData);
@@ -135,6 +131,12 @@ export class FeedInputBoxComponent implements OnInit {
     const stream$ = this._isCampusWallView ? groupWall$ : campusWall$;
 
     return stream$.toPromise();
+  }
+
+  asCalendarFormat(data) {
+    delete data['store_id'];
+
+    return {...data, calendar_id: this.orientationId };
   }
 
   handleError({ status = 400 }) {

@@ -84,7 +84,7 @@ describe('EventCreateComponent', () => {
           start: [1523851200],
           poster_url: ['image.jpeg'],
           poster_thumb_url: ['image.jpeg'],
-          end: [1524110399],
+          end: [1871304787],
           description: ['This is event description.'],
           event_feedback: [EventFeedback.enabled],
           event_manager_id: [null],
@@ -99,9 +99,12 @@ describe('EventCreateComponent', () => {
       });
   }));
 
-  it('should isAllDay be true', () => {
+  it('should toggle is_all_day', () => {
     component.onAllDayToggle(true);
     expect(component.form.controls['is_all_day'].value).toBeTruthy();
+
+    component.onAllDayToggle(false);
+    expect(component.form.controls['is_all_day'].value).toBeFalsy();
   });
 
   it('should have event manager tooltip', () => {
@@ -165,7 +168,6 @@ describe('EventCreateComponent', () => {
   });
 
   it('should create an event', () => {
-    component.isOrientation = true;
     component.orientationId = 1001;
 
     component.onSubmit();

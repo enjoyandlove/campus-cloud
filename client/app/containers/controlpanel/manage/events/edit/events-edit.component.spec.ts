@@ -47,7 +47,7 @@ describe('EventEditComponent', () => {
     'id': 1617104,
     'store_i': 2756,
     'city': '',
-    'end': 1524110399,
+    'end': 1871304787,
     'title': 'Winter Term Intl Travel Session',
     'start': 1523851200,
     'location': 'WCC 2036 Milstein East B',
@@ -104,9 +104,12 @@ describe('EventEditComponent', () => {
       });
   }));
 
-  it('should isAllDay be true', () => {
+  it('should toggle is_all_day', () => {
     component.onAllDayToggle(true);
     expect(component.form.controls['is_all_day'].value).toBeTruthy();
+
+    component.onAllDayToggle(false);
+    expect(component.form.controls['is_all_day'].value).toBeFalsy();
   });
 
   it('should have event manager tooltip', () => {
