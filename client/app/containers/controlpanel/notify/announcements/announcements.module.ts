@@ -8,9 +8,11 @@ import { AnnouncementDeleteComponent } from './delete';
 import { AnnouncementsConfirmComponent } from './confirm';
 import { AnnouncementsComposeComponent } from './compose';
 
+import { ExtrasAudienceModule } from './../../../../extras/audience/audience.module';
+
 import {
   AnnouncementsListActionBoxComponent,
-  AnnouncementsListRecipientsComponent,
+  AnnouncementsListRecipientsComponent
 } from './list/components';
 
 import { AnnouncementsRoutingModule } from './announcements.routing.module';
@@ -24,22 +26,23 @@ import { AnnouncementsService } from './announcements.service';
     AnnouncementsComposeComponent,
     AnnouncementsConfirmComponent,
     AnnouncementDeleteComponent,
-    AnnouncementsListRecipientsComponent,
+    AnnouncementsListRecipientsComponent
   ],
 
   exports: [
     AnnouncementsComposeComponent,
     AnnouncementsConfirmComponent,
-    AnnouncementsListRecipientsComponent,
+    AnnouncementsListRecipientsComponent
   ],
 
   imports: [
     CommonModule,
     SharedModule,
+    ExtrasAudienceModule,
     AnnouncementsRoutingModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
 
-  providers: [AnnouncementsService],
+  providers: [AnnouncementsService]
 })
 export class AnnouncementsModule {}

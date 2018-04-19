@@ -1,37 +1,33 @@
-import {
-  Component,
-  OnInit,
-  Output,
-  EventEmitter,
-  OnDestroy,
-  Input,
-} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, Input } from '@angular/core';
+// import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { URLSearchParams } from '@angular/http';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 
 import { CPSession } from '../../../../../session';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { AnnouncementsService } from '../announcements.service';
 import { CP_PRIVILEGES_MAP, STATUS } from '../../../../../shared/constants';
 import { StoreService, CPI18nService } from '../../../../../shared/services';
+import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 
-declare var $: any;
+// declare var $: any;
 
 interface IState {
   isUrgent: boolean;
-  isToUsers: boolean;
   isToLists: boolean;
+  isToUsers: boolean;
   isEmergency: boolean;
   isCampusWide: boolean;
 }
 
 const state: IState = {
   isUrgent: false,
-  isToUsers: true,
   isToLists: false,
+  isToUsers: false,
   isEmergency: false,
-  isCampusWide: false,
+  isCampusWide: true
 };
 
 const THROTTLED_STATUS = 1;
@@ -39,26 +35,25 @@ const THROTTLED_STATUS = 1;
 @Component({
   selector: 'cp-announcements-compose',
   templateUrl: './announcements-compose.component.html',
-  styleUrls: ['./announcements-compose.component.scss'],
+  styleUrls: ['./announcements-compose.component.scss']
 })
-export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
+export class AnnouncementsComposeComponent implements OnInit {
   @Input() toolTipContent: IToolTipContent;
 
-  @Output() created: EventEmitter<any> = new EventEmitter();
-  @Output() teardown: EventEmitter<null> = new EventEmitter();
+  // @Output() created: EventEmitter<any> = new EventEmitter();
+  // @Output() teardown: EventEmitter<null> = new EventEmitter();
 
   stores$;
-
   isError;
   sendAsName;
+  buttonData;
   errorMessage;
   selectedType;
-  typeAheadOpts;
-  chips = [];
+  // typeAheadOpts;
+  // chips = [];
   form: FormGroup;
-  isFormValid = false;
-  resetChips$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  resetCustomFields$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  // resetChips$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  // resetCustomFields$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   URGENT_TYPE = 1;
   EMERGENCY_TYPE = 0;
@@ -66,24 +61,26 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   USERS_TYPE = 1;
   LISTS_TYPE = 2;
 
-  suggestions = [];
+  // suggestions = [];
 
   state: IState = state;
   shouldConfirm = false;
 
   subject_prefix = {
     label: null,
-    type: null,
+    type: null
   };
 
   types;
 
   constructor(
+    public router: Router,
     public fb: FormBuilder,
     public session: CPSession,
     public cpI18n: CPI18nService,
+    public store: Store<IHeader>,
     public storeService: StoreService,
-    public service: AnnouncementsService,
+    public service: AnnouncementsService
   ) {
     const school = this.session.g.get('school');
     const search: URLSearchParams = new URLSearchParams();
@@ -92,34 +89,38 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     this.stores$ = this.storeService.getStores(search);
   }
 
-  doUserSearch(query) {
-    const search = new URLSearchParams();
-    search.append('search_str', query);
-    search.append('school_id', this.session.g.get('school').id.toString());
+  onAudienceChange(audienceId) {
+    if (audienceId) {
+      this.state = {
+        ...this.state,
+        isToUsers: false,
+        isToLists: true,
+        isCampusWide: false
+      };
+      this.form.controls['list_ids'].setValue([audienceId]);
+      this.form.controls['is_school_wide'].setValue(false);
+    } else {
+      this.state = {
+        ...this.state,
+        isToUsers: false,
+        isToLists: false,
+        isCampusWide: true
+      };
+      this.form.controls['list_ids'].setValue([]);
+      this.form.controls['is_school_wide'].setValue(true);
+    }
+  }
 
-    this.service
-      .getUsers(search)
-      .map((users) => {
-        const _users = [];
-
-        users.forEach((user) => {
-          _users.push({
-            label: `${user.firstname} ${user.lastname}`,
-            id: user.id,
-          });
-        });
-
-        if (!_users.length) {
-          _users.push({ label: this.cpI18n.translate('no_results') });
-        }
-
-        return _users;
-      })
-      .subscribe((suggestions) => {
-        this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
-          suggestions,
-        });
-      });
+  onSelectedUsers(users) {
+    this.state = {
+      ...this.state,
+      isToUsers: true,
+      isToLists: false,
+      isCampusWide: false
+    };
+    this.form.controls['list_ids'].setValue([]);
+    this.form.controls['user_ids'].setValue(users);
+    this.form.controls['is_school_wide'].setValue(false);
   }
 
   getSubjectLength(): number {
@@ -136,68 +137,24 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     return length;
   }
 
-  onSearch(query) {
-    if (this.state.isToUsers) {
-      this.doUserSearch(query);
+  // resetModal() {
+  //   this.form.reset();
+  //   this.isError = false;
+  //   this.shouldConfirm = false;
+  //   this.state.isCampusWide = false;
+  //   this.resetCustomFields$.next(true);
 
-      return;
-    }
+  //   this.subject_prefix = {
+  //     label: null,
+  //     type: null
+  //   };
 
-    this.doListsSearch(query);
-  }
+  //   $('#composeModal').modal('hide');
 
-  doListsSearch(query) {
-    const search = new URLSearchParams();
-    search.append('search_str', query);
-    search.append('school_id', this.session.g.get('school').id.toString());
+  //   this.resetChips();
 
-    this.service
-      .getLists(search, 1, 400)
-      .map((lists) => {
-        const _lists = [];
-
-        lists.forEach((list) => {
-          _lists.push({
-            label: `${list.name}`,
-            id: list.id,
-          });
-        });
-
-        if (!_lists.length) {
-          _lists.push({ label: this.cpI18n.translate('no_results') });
-        }
-
-        return _lists;
-      })
-      .subscribe((suggestions) => {
-        this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
-          suggestions,
-        });
-      });
-  }
-
-  getTypeFromArray(id) {
-    return this.types.filter((type) => type.id === id)[0];
-  }
-
-  resetModal() {
-    this.form.reset();
-    this.isError = false;
-    this.shouldConfirm = false;
-    this.state.isCampusWide = false;
-    this.resetCustomFields$.next(true);
-
-    this.subject_prefix = {
-      label: null,
-      type: null,
-    };
-
-    $('#composeModal').modal('hide');
-
-    this.resetChips();
-
-    this.teardown.emit();
-  }
+  //   this.teardown.emit();
+  // }
 
   onSelectedStore(store) {
     this.sendAsName = store.label;
@@ -205,65 +162,53 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   }
 
   doValidate() {
-    if (this.state.isEmergency || this.state.isCampusWide) {
-      this.shouldConfirm = true;
-      this.doChipsSelected();
+    this.shouldConfirm = this.state.isEmergency || this.state.isCampusWide;
 
-      return;
-    }
-    this.doSubmit();
-  }
+    if (!this.shouldConfirm) {
+      this.doSubmit();
+    } else {
+      setTimeout(
+        () => {
+          $('#announcementConfirmModal').modal();
+        },
 
-  doChipsSelected() {
-    this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
-      isUsers: this.state.isToUsers,
-    });
-
-    if (this.chips.length) {
-      this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
-        defaultValues: this.chips.map((data) => {
-          return {
-            id: data.id,
-            label: data.label,
-          };
-        }),
-      });
+        1
+      );
     }
   }
 
-  onHandleToggle(status) {
-    this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
-      isUsers: true,
-      defaultValues: []
-    });
+  // doChipsSelected() {
+  //   this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
+  //     isUsers: this.state.isToUsers
+  //   });
 
-    this.state = Object.assign({}, this.state, {
-      isToLists: false,
-      isToUsers: status ? false : true,
-      isCampusWide: !this.state.isCampusWide,
-    });
-
-    this.form.controls['user_ids'].setValue([]);
-    this.form.controls['list_ids'].setValue([]);
-    this.form.controls['is_school_wide'].setValue(status);
-  }
+  //   if (this.chips.length) {
+  //     this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
+  //       defaultValues: this.chips.map((data) => {
+  //         return {
+  //           id: data.id,
+  //           label: data.label
+  //         };
+  //       })
+  //     });
+  //   }
+  // }
 
   doSubmit() {
     this.isError = false;
+    $('#announcementConfirmModal').modal('hide');
 
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    const prefix = this.subject_prefix.label
-      ? this.subject_prefix.label.toUpperCase()
-      : '';
+    const prefix = this.subject_prefix.label ? this.subject_prefix.label.toUpperCase() : '';
 
     let data = {
       store_id: this.form.value.store_id,
       is_school_wide: this.form.value.is_school_wide,
       subject: `${prefix} ${this.form.value.subject}`,
       message: `${this.form.value.message} \n ${this.sendAsName}`,
-      priority: this.form.value.priority,
+      priority: this.form.value.priority
     };
 
     if (this.state.isToUsers && !this.state.isCampusWide) {
@@ -281,21 +226,17 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
           this.isError = true;
           this.errorMessage = `Message not sent, \n
-          please wait ${(
-            res.timeout / 60
-          ).toFixed()} minutes before trying again`;
+          please wait ${(res.timeout / 60).toFixed()} minutes before trying again`;
 
           return;
         }
-        this.form.reset();
-        this.created.emit(this.form.value);
-        this.resetModal();
+        this.router.navigate(['/notify/announcements']);
       },
       (_) => {
         this.isError = true;
         this.shouldConfirm = false;
         this.errorMessage = STATUS.SOMETHING_WENT_WRONG;
-      },
+      }
     );
   }
 
@@ -306,7 +247,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   onTypeChanged(type): void {
     this.subject_prefix = {
       label: null,
-      type: null,
+      type: null
     };
     this.state.isUrgent = type.action === this.URGENT_TYPE;
     this.state.isEmergency = type.action === this.EMERGENCY_TYPE;
@@ -314,59 +255,19 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     if (this.state.isEmergency) {
       this.subject_prefix = {
         label: this.cpI18n.translate('emergency'),
-        type: 'danger',
+        type: 'danger'
       };
     }
 
     if (this.state.isUrgent) {
       this.subject_prefix = {
         label: this.cpI18n.translate('urgent'),
-        type: 'warning',
+        type: 'warning'
       };
     }
 
     this.form.controls['priority'].setValue(type.action);
     this.selectedType = this.getObjectFromTypesArray(type.action);
-  }
-
-  ngOnDestroy() {
-    this.resetModal();
-  }
-
-  onTypeAheadChange(type) {
-    this.chips = type.chips;
-    if (this.state.isToUsers) {
-      this.form.controls['user_ids'].setValue(type.ids);
-      this.form.controls['list_ids'].setValue([]);
-    }
-    if (this.state.isToLists) {
-      this.form.controls['list_ids'].setValue(type.ids);
-      this.form.controls['user_ids'].setValue([]);
-    }
-  }
-
-  resetChips() {
-    this.resetChips$.next(true);
-  }
-
-  onSwitchSearchType(type) {
-    switch (type) {
-      case this.USERS_TYPE:
-        this.state = Object.assign({}, this.state, {
-          isToUsers: true,
-          isToLists: false,
-        });
-        break;
-      case this.LISTS_TYPE:
-        this.state = Object.assign({}, this.state, {
-          isToUsers: false,
-          isToLists: true,
-        });
-        break;
-    }
-
-    this.form.controls['user_ids'].setValue([]);
-    this.form.controls['list_ids'].setValue([]);
   }
 
   getObjectFromTypesArray(id) {
@@ -381,14 +282,33 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     return result;
   }
 
-  ngOnInit() {
-    const defaultHost = this.session.defaultHost
-      ? this.session.defaultHost.value
-      : null;
+  buildHeader() {
+    this.store.dispatch({
+      type: HEADER_UPDATE,
+      payload: {
+        heading: 'announcements_heading_create',
+        subheading: null,
+        em: null,
+        children: []
+      }
+    });
+  }
 
-    this.sendAsName = this.session.defaultHost
-      ? this.session.defaultHost.label
-      : undefined;
+  onImportClick() {
+    // console.log('modal');
+  }
+
+  ngOnInit() {
+    this.buildHeader();
+
+    this.buttonData = {
+      text: 'send',
+      class: 'primary',
+      disabled: true
+    };
+    const defaultHost = this.session.defaultHost ? this.session.defaultHost.value : null;
+
+    this.sendAsName = this.session.defaultHost ? this.session.defaultHost.label : undefined;
 
     this.toolTipContent = Object.assign({}, this.toolTipContent, {
       content: this.cpI18n.translate('notify_announcement_template_to_tooltip'),
@@ -396,25 +316,18 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
         text: this.cpI18n.translate('lists_button_create'),
         url:
           'https://oohlalamobile.zendesk.com/hc/en-us/articles/' +
-          '115004330554-Create-a-List-of-Students',
-      },
+          '115004330554-Create-a-List-of-Students'
+      }
     });
 
     let canDoEmergency;
 
-    this.typeAheadOpts = {
-      withSwitcher: true,
-      suggestions: this.suggestions,
-      reset: this.resetChips$,
-      unsetOverflow: true,
-    };
     const schoolPrivileges = this.session.g.get('user').school_level_privileges[
       this.session.g.get('school').id
     ];
 
     try {
-      canDoEmergency =
-        schoolPrivileges[CP_PRIVILEGES_MAP.emergency_announcement].w;
+      canDoEmergency = schoolPrivileges[CP_PRIVILEGES_MAP.emergency_announcement].w;
     } catch (error) {
       canDoEmergency = false;
     }
@@ -422,19 +335,17 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     this.types = require('./announcement-types').types;
 
     if (!canDoEmergency) {
-      this.types = this.types.filter(
-        (type) => type.action !== this.EMERGENCY_TYPE,
-      );
+      this.types = this.types.filter((type) => type.action !== this.EMERGENCY_TYPE);
     }
 
     this.form = this.fb.group({
       store_id: [defaultHost, Validators.required],
       user_ids: [[]],
       list_ids: [[]],
-      is_school_wide: false,
+      is_school_wide: true,
       subject: [null, [Validators.required, Validators.maxLength(128)]],
       message: [null, [Validators.required, Validators.maxLength(400)]],
-      priority: [this.types[0].action, Validators.required],
+      priority: [this.types[0].action, Validators.required]
     });
 
     this.form.valueChanges.subscribe((_) => {
@@ -444,19 +355,17 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
       if (this.state.isToLists) {
         if (this.form.controls['list_ids'].value) {
-          isValid =
-            this.form.controls['list_ids'].value.length >= 1 && this.form.valid;
+          isValid = this.form.controls['list_ids'].value.length >= 1 && this.form.valid;
         }
       }
 
-      if (this.state.isToUsers) {
-        if (this.form.controls['user_ids'].value) {
-          isValid =
-            this.form.controls['user_ids'].value.length >= 1 && this.form.valid;
-        }
-      }
+      // if (this.state.isToUsers) {
+      //   if (this.form.controls['user_ids'].value) {
+      //     isValid = this.form.controls['user_ids'].value.length >= 1 && this.form.valid;
+      //   }
+      // }
 
-      this.isFormValid = isValid;
+      this.buttonData = { ...this.buttonData, disabled: !isValid };
     });
   }
 }

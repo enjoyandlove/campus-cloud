@@ -1,4 +1,14 @@
 <cp-upload-modal
   [props]="options"
-  (navigate)="onNavigate()">
+  (navigate)="onSave()">
+  <div class="row">
+    <div class="col-xs-12">
+      <form [formGroup]="form">
+        <div class="from-group">
+          <label>{{'audience_import_modal_label_name' | cpI18n}}</label>
+          <input type="text" class="form-control" formControlName="name">
+        </div>
+      </form>
+    </div>
+  </div>
 </cp-upload-modal>

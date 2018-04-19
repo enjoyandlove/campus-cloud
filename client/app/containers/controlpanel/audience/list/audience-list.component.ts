@@ -5,6 +5,7 @@ import { CPSession } from '../../../../session';
 import { AudienceService } from '../audience.service';
 import { BaseComponent } from '../../../../base/base.component';
 import { CPI18nService } from '../../../../shared/services/index';
+import { createSpreadSheet } from './../../../../shared/utils/csv/parser';
 
 interface IState {
   audiences: Array<any>;
@@ -53,6 +54,24 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
     };
 
     this.fetch();
+  }
+
+  downloadAudience(audience) {
+    const columns = [
+      this.cpI18n.translate('first_name'),
+      this.cpI18n.translate('last_name'),
+      this.cpI18n.translate('email')
+    ];
+
+    const data = audience.users.map((user) => {
+      return {
+        [this.cpI18n.translate('first_name')]: user.firstname,
+        [this.cpI18n.translate('last_name')]: user.lastname,
+        [this.cpI18n.translate('email')]: user.email
+      };
+    });
+
+    createSpreadSheet(data, columns, `${audience.name}`);
   }
 
   private fetch() {

@@ -1,0 +1,22 @@
+<div class="audience">
+  <div class="row">
+    <div class="col-xs-6">
+      <label>{{'audience_label_type' | cpI18n}}</label>
+      <cp-dropdown 
+        [items]="audienceTypes" 
+        (selected)="onTypeSelected($event)">
+      </cp-dropdown>
+    </div>
+  </div>
+  <div class="row content">
+    <div class="col-xs-12">
+      <cp-audience-custom 
+        [message]="message"
+        *ngIf="state.custom"
+        (users)="onUsers($event)"
+        [importButton]="importButton"
+        (importClick)="importClick.emit()">
+      </cp-audience-custom>
+    </div>
+  </div>
+</div>
