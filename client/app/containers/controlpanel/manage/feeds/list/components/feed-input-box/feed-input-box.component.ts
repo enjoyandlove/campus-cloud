@@ -35,6 +35,7 @@ export class FeedInputBoxComponent implements OnInit {
   @Input() threadId: number;
   @Input() postType: number;
   @Input() replyView: boolean;
+  @Input() orientationId: number;
   @Input() disablePost: boolean; // TODO REMOVE
   @Input() isCampusWallView: Observable<any>;
   @Output() created: EventEmitter<null> = new EventEmitter();
@@ -109,6 +110,10 @@ export class FeedInputBoxComponent implements OnInit {
       });
     }
 
+    if (this.orientationId) {
+      body = this.asCalendarFormat(body);
+    }
+
     const groupWall$ = this.feedsService.replyToGroupThread(body);
     const campusWall$ = this.feedsService.replyToCampusThread(body);
     const stream$ = this._isCampusWallView ? groupWall$ : campusWall$;
@@ -117,11 +122,21 @@ export class FeedInputBoxComponent implements OnInit {
   }
 
   postToWall(formData): Promise<any> {
+    if (this.orientationId) {
+      formData = this.asCalendarFormat(formData);
+    }
+
     const groupWall$ = this.feedsService.postToGroupWall(formData);
     const campusWall$ = this.feedsService.postToCampusWall(formData);
     const stream$ = this._isCampusWallView ? groupWall$ : campusWall$;
 
     return stream$.toPromise();
+  }
+
+  asCalendarFormat(data) {
+    delete data['store_id'];
+
+    return {...data, calendar_id: this.orientationId };
   }
 
   handleError({ status = 400 }) {

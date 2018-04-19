@@ -46,6 +46,7 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   @Input() clubId: number;
   @Input() selectedItem: any;
   @Input() isClubsView: boolean;
+  @Input() orientationId: number;
 
   feeds;
   groups;
