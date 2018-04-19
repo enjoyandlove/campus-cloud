@@ -69,9 +69,9 @@ export class OrientationTodosEditComponent implements OnInit {
   ngOnInit() {
     this.form = this.fb.group({
       id: [this.todo.id],
-      name: [this.todo.name, [Validators.required, Validators.maxLength(225)]],
+      title: [this.todo.title, [Validators.required, Validators.maxLength(225)]],
       description: [this.todo.description, Validators.maxLength(512)],
-      due_date: [this.todo.due_date, Validators.required],
+      end: [this.todo.end, Validators.required],
     });
 
     this.buttonData = Object.assign({}, this.buttonData, {

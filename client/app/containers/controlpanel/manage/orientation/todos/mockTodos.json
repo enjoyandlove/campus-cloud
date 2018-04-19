@@ -1,98 +1,98 @@
 [
   {
-    "due_date": 1454006375,
+    "end": 1454006375,
     "description": "fdsa",
     "id": 173475,
-    "name": "234s eee"
+    "title": "234s eee"
   },
   {
-    "due_date": 1478101078,
+    "end": 1478101078,
     "description": "Important dates\n",
     "id": 228964,
-    "name": "Academic Calendar 2016/17"
+    "title": "Academic Calendar 2016/17"
   },
   {
-    "due_date": 1515625016,
+    "end": 1515625016,
     "description": "Some description",
     "id": 240786,
-    "name": "Anas Calendar"
+    "title": "Anas Calendar"
   },
   {
-    "due_date": 1429634838,
+    "end": 1429634838,
     "description": "regehe",
     "id": 120266,
-    "name": "Fall Semester "
+    "title": "Fall Semester "
   },
   {
-    "due_date": 1516377388,
+    "end": 1516377388,
     "description": " Gaucheti\u00e8re ",
     "id": 240815,
-    "name": "Gaucheti\u00e8re"
+    "title": "Gaucheti\u00e8re"
   },
   {
-    "due_date": 1519059719,
+    "end": 1519059719,
     "description": "just a reminder(s)",
     "id": 240836,
-    "name": "I love Orange Juice"
+    "title": "I love Orange Juice"
   },
   {
-    "due_date": 1516778039,
+    "end": 1516778039,
     "description": "",
     "id": 240827,
-    "name": "kum test"
+    "title": "kum test"
   },
   {
-    "due_date": 1516777903,
+    "end": 1516777903,
     "description": "test1234",
     "id": 240826,
-    "name": "Kumail-test1"
+    "title": "Kumail-test1"
   },
   {
-    "due_date": 1516647869,
+    "end": 1516647869,
     "description": "sdf",
     "id": 240824,
-    "name": "sdfsdf"
+    "title": "sdfsdf"
   },
   {
-    "due_date": 1426006347,
+    "end": 1426006347,
     "description": "The Summer Wind came floating in from across the sea",
     "id": 117935,
-    "name": "Summer breeze"
+    "title": "Summer breeze"
   },
   {
-    "due_date": 1516310549,
+    "end": 1516310549,
     "description": "test",
     "id": 240813,
-    "name": "test"
+    "title": "test"
   },
   {
-    "due_date": 1450365254,
+    "end": 1450365254,
     "description": "Test calendar title edit 2",
     "id": 168702,
-    "name": "Test calendar title edit 2"
+    "title": "Test calendar title edit 2"
   },
   {
-    "due_date": 1516310797,
+    "end": 1516310797,
     "description": "in the station\n",
     "id": 240814,
-    "name": "testation"
+    "title": "testation"
   },
   {
-    "due_date": 1466174390,
+    "end": 1466174390,
     "description": "Test\n",
     "id": 179676,
-    "name": "Testing"
+    "title": "Testing"
   },
   {
-    "due_date": 1516303760,
+    "end": 1516303760,
     "description": "Everything to do with Quality happens in accordance with this list.  UPDATE",
     "id": 240811,
-    "name": "THIS IS A QA Calendar"
+    "title": "THIS IS A QA Calendar"
   },
   {
-    "due_date": 1516116513,
+    "end": 1516116513,
     "description": "",
     "id": 240809,
-    "name": "Whats with the long strings...."
+    "title": "Whats with the long strings...."
   }
 ]

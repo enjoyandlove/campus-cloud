@@ -1,6 +1,6 @@
 import { async, fakeAsync, tick, TestBed, ComponentFixture } from '@angular/core/testing';
 import { Observable } from 'rxjs/Observable';
-import { URLSearchParams } from '@angular/http';
+import { ActivatedRoute } from '@angular/router';
 
 import { TodosModule } from '../todos.module';
 import { TodosService } from '../todos.service';
@@ -22,7 +22,6 @@ class MockTodosService {
 
 describe('OrientationTodosListComponent', () => {
   let spy;
-  let search;
   let service: TodosService;
   let component: OrientationTodosListComponent;
   let fixture: ComponentFixture<OrientationTodosListComponent>;
@@ -35,7 +34,18 @@ describe('OrientationTodosListComponent', () => {
       providers: [
         CPSession,
         CPI18nService,
-        { provide: TodosService, useClass: MockTodosService }
+        { provide: TodosService, useClass: MockTodosService },
+        { provide: ActivatedRoute,
+          useValue: {
+            snapshot: {
+              parent: {
+                parent: {
+                  params: Observable.of({ orientationId: 1 })
+                }
+              }
+            },
+          }
+        }
       ]
     })
       .compileComponents()
@@ -45,13 +55,8 @@ describe('OrientationTodosListComponent', () => {
         service = TestBed.get(TodosService);
 
         component.session.g.set('school', mockSchool);
-
-        search = new URLSearchParams();
-        search.append('search_str', component.state.search_str);
-        search.append('sort_field', component.state.sort_field);
-        search.append('sort_direction', component.state.sort_direction);
-        search.append('school_id', component.session.g.get('school').id.toString());
-
+        component.orientationId = 5452;
+        spy = spyOn(component.service, 'getTodos').and.returnValue(Observable.of(mockTodos));
       });
   }));
 
@@ -67,7 +72,6 @@ describe('OrientationTodosListComponent', () => {
   });
 
   it('should fetch list of todos', fakeAsync(() => {
-    spy = spyOn(component.service, 'getTodos').and.returnValue(Observable.of(mockTodos));
     component.ngOnInit();
 
     tick();
