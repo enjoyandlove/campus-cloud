@@ -16,6 +16,7 @@ import {
   mobileReducer,
   servicesModalReducer,
   snackBarReducer,
+  audienceReducer
 } from '../../reducers';
 
 const APP_STATE_MODULE = StoreModule.forRoot({
@@ -24,8 +25,9 @@ const APP_STATE_MODULE = StoreModule.forRoot({
   HEADER: headerReducer,
   MOBILE: mobileReducer,
   SNACKBAR: snackBarReducer,
+  AUDIENCE: audienceReducer,
   EVENTS_MODAL: eventsModalReducer,
-  SERVICES_MODAL: servicesModalReducer,
+  SERVICES_MODAL: servicesModalReducer
 });
 
 export const APP_MODULES = [
@@ -37,5 +39,5 @@ export const APP_MODULES = [
   ReactiveFormsModule,
   ControlPanelModule,
   TopLevelRoutesModule,
-  AuthModule,
+  AuthModule
 ];

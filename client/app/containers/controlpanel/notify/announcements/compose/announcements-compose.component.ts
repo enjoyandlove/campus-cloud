@@ -7,8 +7,10 @@ import { Store } from '@ngrx/store';
 
 import { CPSession } from '../../../../../session';
 import { AnnouncementsService } from '../announcements.service';
+import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
 import { CP_PRIVILEGES_MAP, STATUS } from '../../../../../shared/constants';
 import { StoreService, CPI18nService } from '../../../../../shared/services';
+import { AUDIENCE_IMPORTED } from './../../../../../reducers/audience.reducer';
 import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 
@@ -52,6 +54,7 @@ export class AnnouncementsComposeComponent implements OnInit {
   // typeAheadOpts;
   // chips = [];
   form: FormGroup;
+  isAudienceImport = false;
   // resetChips$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   // resetCustomFields$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
@@ -87,6 +90,28 @@ export class AnnouncementsComposeComponent implements OnInit {
     search.append('school_id', school.id.toString());
 
     this.stores$ = this.storeService.getStores(search);
+  }
+
+  onImportError() {
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        sticky: true,
+        class: 'danger',
+        body: this.cpI18n.translate('something_went_wrong')
+      }
+    });
+  }
+
+  onImportSuccess({ id }) {
+    this.store.dispatch({
+      type: AUDIENCE_IMPORTED,
+      payload: {
+        audience_id: id,
+        new_audience_active: false,
+        saved_audience_active: true
+      }
+    });
   }
 
   onAudienceChange(audienceId) {
@@ -295,7 +320,15 @@ export class AnnouncementsComposeComponent implements OnInit {
   }
 
   onImportClick() {
-    // console.log('modal');
+    this.isAudienceImport = true;
+
+    setTimeout(
+      () => {
+        $('#audienceImport').modal();
+      },
+
+      1
+    );
   }
 
   ngOnInit() {

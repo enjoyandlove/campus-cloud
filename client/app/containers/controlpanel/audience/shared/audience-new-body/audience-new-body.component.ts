@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
-import { CPI18nService } from './../../../shared/services/i18n.service';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 @Component({
   selector: 'cp-audience-new-body',

@@ -1,10 +1,11 @@
+/*tslint:disable:max-line-length */
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { URLSearchParams } from '@angular/http';
 
-import { CPSession } from '../../../session';
-import { AudienceService } from './../../../containers/controlpanel/audience/audience.service';
-import { CPI18nService } from '../../../shared/services';
+import { CPSession } from '../../../../../session';
+import { AudienceService } from './../../../../../containers/controlpanel/audience/audience.service';
+import { CPI18nService } from '../../../../../shared/services';
 
 @Component({
   selector: 'cp-audience-users-typeahead',

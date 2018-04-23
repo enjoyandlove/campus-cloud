@@ -1,4 +1,3 @@
-import { CPTabsComponent } from './components/cp-tabs/components/cp-tabs/cp-tabs.component';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -6,9 +5,10 @@ import { RouterModule } from '@angular/router';
 
 import { CPTrackerDirective } from './directives';
 import { CPDatePipe, CPFilterPipe, CPI18nPipe } from './pipes';
-import { FileUploadService, StoreService, CPLocationsService } from './services';
 import { CPTrackingService } from './services/tracking.service';
 import { CPFIlterByLength } from './pipes/array/filter-by-length.pipe';
+import { FileUploadService, StoreService, CPLocationsService } from './services';
+import { CPTabsComponent } from './components/cp-tabs/components/cp-tabs/cp-tabs.component';
 
 import {
   CPAvatarComponent,
@@ -46,7 +46,10 @@ import {
   CPOnboardingComponent,
   CPStepperComponent,
   CPListModalComponent,
-  CPTabComponent
+  CPTabComponent,
+  CPUploadModalBodyComponent,
+  CPUploadModalFooterComponent,
+  CPUploadModalHeaderComponent
 } from './components';
 import { LocationsService } from '../containers/controlpanel/manage/locations/locations.service';
 import { CPMapsService } from './services/maps.service';
@@ -98,7 +101,10 @@ import { CPMapsService } from './services/maps.service';
     CPTopBanerComponent,
     CPOnboardingComponent,
     CPStepperComponent,
-    CPListModalComponent
+    CPListModalComponent,
+    CPUploadModalBodyComponent,
+    CPUploadModalHeaderComponent,
+    CPUploadModalFooterComponent
   ],
 
   imports: [CommonModule, RouterModule, ReactiveFormsModule],
@@ -158,7 +164,10 @@ import { CPMapsService } from './services/maps.service';
     CPTopBanerComponent,
     CPOnboardingComponent,
     CPStepperComponent,
-    CPListModalComponent
+    CPListModalComponent,
+    CPUploadModalBodyComponent,
+    CPUploadModalHeaderComponent,
+    CPUploadModalFooterComponent
   ]
 })
 export class SharedModule {}

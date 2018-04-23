@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { URLSearchParams } from '@angular/http';
 
 import { isDev } from '../../../../config/env';
@@ -14,6 +15,12 @@ import { FileUploadService, CPI18nService } from '../../../../shared/services';
 })
 export class AudienceImportComponent implements OnInit {
   @Output() launchCreateModal: EventEmitter<any> = new EventEmitter();
+
+  @Output() error: EventEmitter<null> = new EventEmitter();
+  @Output() success: EventEmitter<number> = new EventEmitter();
+
+  ready$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  reset$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   users;
   options;
@@ -48,11 +55,28 @@ export class AudienceImportComponent implements OnInit {
       });
   }
 
-  onSave() {
-    // $('#audienceImport').modal('hide');
+  onParsedSuccess() {
+    this.form.controls['user_emails'].setValue(this.users.map((user) => user.email));
+    this.ready$.next(this.form.valid);
+  }
+
+  doReset() {
+    this.reset$.next(true);
+    this.ready$.next(false);
+  }
+
+  doSubmit() {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
-    this.form.controls['user_emails'].setValue(this.users.map((user) => user.email));
+
+    this.service.createAudience(this.form.value, search).subscribe(
+      (res) => {
+        this.form.reset();
+        this.reset$.next(true);
+        this.success.emit(res);
+      },
+      () => this.error.emit()
+    );
   }
 
   ngOnInit() {
@@ -60,6 +84,8 @@ export class AudienceImportComponent implements OnInit {
       name: [null, Validators.required],
       user_emails: [[], Validators.required]
     });
+
+    this.form.valueChanges.subscribe(() => this.ready$.next(this.form.valid));
 
     this.fileName = 'mass_user_upload.csv';
 

@@ -109,6 +109,8 @@
   modalId="audienceImport"
   *ngIf="isAudienceImport">
   <cp-audience-import
+    (error)="onImportError($event)"
+    (success)="onImportSuccess($event)"
     (teardown)="isAudienceImport = !isAudienceImport"
     (launchCreateModal)="onLaunchCreateModal($event)">
   </cp-audience-import>

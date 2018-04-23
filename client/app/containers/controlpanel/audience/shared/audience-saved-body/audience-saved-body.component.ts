@@ -1,11 +1,13 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+/*tslint:disable:max-line-length */
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 import { get as _get } from 'lodash';
 
-import { CPSession } from '../../../session';
+import { CPSession } from '../../../../../session';
 
-import { AudienceService } from './../../../containers/controlpanel/audience/audience.service';
-import { CPI18nService } from '../../../shared/services';
+import { AudienceService } from './../../../../../containers/controlpanel/audience/audience.service';
+import { CPI18nService } from './../../../../../shared/services';
 
 @Component({
   selector: 'cp-audience-saved-body',
@@ -13,13 +15,18 @@ import { CPI18nService } from '../../../shared/services';
   styleUrls: ['./audience-saved-body.component.scss']
 })
 export class AudienceSavedBodyComponent implements OnInit {
+  @Input() importedAudience: Observable<{ label: string; action: number }>;
+
   @Output() selected: EventEmitter<{ action: number; heading: string }> = new EventEmitter();
+
+  audiences;
   audiences$;
+  selectedItem;
 
   constructor(
     public session: CPSession,
-    public service: AudienceService,
-    public cpI18n: CPI18nService
+    public cpI18n: CPI18nService,
+    public service: AudienceService
   ) {}
 
   parsedAudience(audiences): Array<any> {
@@ -42,6 +49,7 @@ export class AudienceSavedBodyComponent implements OnInit {
     if (audiences.length) {
       audiences.unshift(heading);
     }
+    this.audiences = audiences;
 
     return audiences;
   }
@@ -71,5 +79,13 @@ export class AudienceSavedBodyComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetch();
+
+    this.importedAudience.subscribe((audienceId) => {
+      if (audienceId) {
+        this.selectedItem = this.audiences.filter((audience) => audience.action === audienceId)[0];
+
+        this.selected.emit(this.selectedItem);
+      }
+    });
   }
 }

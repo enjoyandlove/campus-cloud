@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-import { CPI18nService } from './../../../shared/services/i18n.service';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 @Component({
   selector: 'cp-audience-custom',

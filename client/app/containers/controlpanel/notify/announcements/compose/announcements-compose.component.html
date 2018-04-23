@@ -112,12 +112,25 @@
   </div>
 </div>
 
-<cp-modal modalId="announcementConfirmModal" *ngIf="shouldConfirm">
-    <cp-announcements-confirm
-      [state]="state"
-      (confirmed)="onConfirmed()"
-      (teardown)="shouldConfirm = false">
-    </cp-announcements-confirm>
+<cp-modal
+  modalId="audienceImport"
+  *ngIf="isAudienceImport">
+  <cp-audience-import
+    (error)="onImportError($event)"
+    (success)="onImportSuccess($event)"
+    (teardown)="isAudienceImport = !isAudienceImport"
+    (launchCreateModal)="onLaunchCreateModal($event)">
+  </cp-audience-import>
+</cp-modal>
+
+<cp-modal 
+  modalId="announcementConfirmModal" 
+  *ngIf="shouldConfirm">
+  <cp-announcements-confirm
+    [state]="state"
+    (confirmed)="onConfirmed()"
+    (teardown)="shouldConfirm = false">
+  </cp-announcements-confirm>
 </cp-modal>
 <!-- <div [ngSwitch]="shouldConfirm">
   <div class="cpmodal" *ngSwitchCase="false">

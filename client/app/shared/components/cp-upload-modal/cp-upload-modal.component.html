@@ -1,90 +1,23 @@
 <div class="cpmodal">
   <div class="cpmodal__header">
-    <div class="row">
-      <div class="col-xs-12">
-        <span i18n><strong>{{ 'csv_modal_title' | cpI18n }}</strong></span>
-
-        <span
-          data-dismiss="modal"
-          (click)="resetValues()"
-          class="pull-right hover cpmodal__header__close">
-          &times;
-        </span>
-      </div>
-    </div>
+    <cp-upload-modal-header 
+      (reset)="doReset()">
+    </cp-upload-modal-header>
   </div>
 
   <div class="cpmodal__body">
-    
-    <ng-content></ng-content>
-
-    <div class="row">
-      <div class="col-xs-12">
-        <p i18n>
-          {{ 'csv_modal_body' | cpI18n }}
-          <a [href]="props.templateUrl" download
-            class="cpbtn cpbtn--link" i18n>
-            {{ 'csv_modal_anchor_text' | cpI18n }}
-          </a>
-        </p>
-
-        <small i18n>{{ 'csv_modal_instruction' | cpI18n }}</small>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-xs-12">
-        <div class="dropzone" [class.isError]="isError">
-          <input
-          id="file"
-          type="file"
-          name="file"
-          class="dropzone__input"
-          (change)="onChange($event)" />
-        <label
-          for="file"
-          class="dropzone__label" i18n
-          *ngIf="!processing">
-          <i class="material-icons">cloud_upload</i>
-          <span *ngIf="!isError">
-            {{ fileName ? fileName : cpI18n.translate('csv_modal_button_text') }}
-          </span>
-
-          <span *ngIf="isError">{{ errorMessage }}</span>
-        </label>
-
-        <label
-          for="file"
-          class="dropzone__label" i18n
-          *ngIf="processing">
-          <i class="material-icons loading">refresh</i>
-          <span>{{ 'uploading' | cpI18n }}....</span>
-        </label>
-        </div>
-      </div>
-    </div>
+    <cp-upload-modal-body 
+      [reset]="reset$"
+      [props]="props"
+      (ready)="ready$.next(true)">
+    </cp-upload-modal-body>
   </div>
 
   <div class="cpmodal__footer">
-    <div class="row">
-      <div class="col-xs-12 text-right">
-        <button
-          type="button"
-          (click)="resetValues()"
-          class="cpbtn cpbtn--cancel"
-          data-dismiss="modal" i18n>
-          {{ 'cancel' | cpI18n }}
-        </button>
-
-        <button
-          type="button"
-          (click)="onNavigate()"
-          [disabled]="!isReady"
-          class="cpbtn cpbtn--primary"
-          data-dismiss="modal" i18n>
-          {{ 'import' | cpI18n }}
-        </button>
-      </div>
-    </div>
+    <cp-upload-modal-footer 
+      [valid]="ready$"
+      (navigate)="onNavigate()"
+      (reset)="doReset()">
+    </cp-upload-modal-footer>
   </div>
 </div>
