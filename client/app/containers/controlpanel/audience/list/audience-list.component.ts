@@ -59,13 +59,20 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
     this.fetch();
   }
 
-  onImportError() {
+  onImportError(err) {
+    let message = this.cpI18n.translate('something_went_wrong');
+
+    const error = JSON.parse(err._body).error;
+    if (error === 'Database Error') {
+      message = this.cpI18n.translate('audience_create_error_duplicate_audience');
+    }
+
     this.store.dispatch({
       type: SNACKBAR_SHOW,
       payload: {
         sticky: true,
         class: 'danger',
-        body: this.cpI18n.translate('something_went_wrong')
+        body: message
       }
     });
   }

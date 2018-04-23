@@ -75,7 +75,7 @@ export class AudienceImportComponent implements OnInit {
         this.reset$.next(true);
         this.success.emit(res);
       },
-      () => this.error.emit()
+      (err) => this.error.emit(err)
     );
   }
 
