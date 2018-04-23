@@ -18,8 +18,8 @@ export class AudienceNewBodyComponent implements OnInit {
   message;
   audienceTypes;
   state = {
-    custom: true,
-    dyanmic: false
+    custom: false,
+    dynamic: true
   };
 
   constructor(public cpI18n: CPI18nService) {}
@@ -28,7 +28,7 @@ export class AudienceNewBodyComponent implements OnInit {
     this.state = {
       ...this.state,
       custom: action === 'custom',
-      dyanmic: action === 'dyanmic'
+      dynamic: action === 'dynamic'
     };
   }
 
@@ -39,6 +39,10 @@ export class AudienceNewBodyComponent implements OnInit {
 
   ngOnInit(): void {
     this.audienceTypes = [
+      {
+        action: 'dynamic',
+        label: this.cpI18n.translate('audience_type_dynamic')
+      },
       {
         action: 'custom',
         label: this.cpI18n.translate('audience_type_custom')

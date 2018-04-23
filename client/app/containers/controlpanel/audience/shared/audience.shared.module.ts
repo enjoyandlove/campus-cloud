@@ -6,6 +6,7 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from './../../../../shared/shared.module';
 import { AudienceCardComponent } from './audience-card/audience-card.component';
 import { AudienceCustomComponent } from './audience-custom/audience-custom.component';
+import { AudienceDynamicComponent } from './audience-dynamic/audience-dynamic.component';
 import { AudienceCounterComponent } from './audience-counter/audience-counter.component';
 import { AudienceNewBodyComponent } from './audience-new-body/audience-new-body.component';
 
@@ -20,6 +21,7 @@ import { AudienceService } from './../../../../containers/controlpanel/audience/
     AudienceCustomComponent,
     AudienceCounterComponent,
     AudienceNewBodyComponent,
+    AudienceDynamicComponent,
     AudienceSavedBodyComponent,
     AudienceSaveModalComponent,
     AudienceUsersTypeaheadComponent
