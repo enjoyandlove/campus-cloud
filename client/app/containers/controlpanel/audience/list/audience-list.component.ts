@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
+import { Store } from '@ngrx/store';
 
 import { CPSession } from '../../../../session';
 import { AudienceService } from '../audience.service';
 import { BaseComponent } from '../../../../base/base.component';
 import { CPI18nService } from '../../../../shared/services/index';
 import { createSpreadSheet } from './../../../../shared/utils/csv/parser';
+import { ISnackbar, SNACKBAR_SHOW } from '../../../../reducers/snackbar.reducer';
 
 interface IState {
   audiences: Array<any>;
@@ -38,6 +40,7 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
   constructor(
     private session: CPSession,
     public cpI18n: CPI18nService,
+    public store: Store<ISnackbar>,
     private service: AudienceService
   ) {
     super();
@@ -54,6 +57,30 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
     };
 
     this.fetch();
+  }
+
+  onImportError() {
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        sticky: true,
+        class: 'danger',
+        body: this.cpI18n.translate('something_went_wrong')
+      }
+    });
+  }
+
+  onImportSuccess(newAudiences) {
+    this.state = { ...this.state, audiences: [newAudiences, ...this.state.audiences] };
+
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        sticky: true,
+        class: 'success',
+        body: this.cpI18n.translate('audience_import_success_message')
+      }
+    });
   }
 
   downloadAudience(audience) {

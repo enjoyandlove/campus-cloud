@@ -13,7 +13,7 @@ import { AudienceListActionBoxComponent } from './list/components';
 
 import { AudienceService } from './audience.service';
 import { AudienceRoutingModule } from './audience.routing.module';
-import { ExtrasAudienceModule } from './../../../extras/audience/audience.module';
+import { AudienceSharedModule } from './shared/audience.shared.module';
 
 @NgModule({
   declarations: [
@@ -29,10 +29,12 @@ import { ExtrasAudienceModule } from './../../../extras/audience/audience.module
   imports: [
     CommonModule,
     SharedModule,
-    ExtrasAudienceModule,
+    AudienceSharedModule,
     AudienceRoutingModule,
     ReactiveFormsModule
   ],
+
+  exports: [AudienceImportComponent],
 
   providers: [AudienceService]
 })

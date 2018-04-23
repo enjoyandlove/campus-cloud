@@ -1,14 +1,34 @@
-<cp-upload-modal
-  [props]="options"
-  (navigate)="onSave()">
-  <div class="row">
-    <div class="col-xs-12">
-      <form [formGroup]="form">
-        <div class="from-group">
-          <label>{{'audience_import_modal_label_name' | cpI18n}}</label>
-          <input type="text" class="form-control" formControlName="name">
-        </div>
-      </form>
-    </div>
+<div class="cpmodal">
+  <div class="cpmodal__header">
+    <cp-upload-modal-header 
+      (reset)="doReset()">
+    </cp-upload-modal-header>
   </div>
-</cp-upload-modal>
+
+  <div class="cpmodal__body">
+    <div class="row">
+      <div class="col-xs-12">
+        <form [formGroup]="form">
+          <div class="form-group">
+            <label>{{'audience_name' | cpI18n}}</label>
+            <input type="text" class="form-control" formControlName="name">
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <cp-upload-modal-body 
+      [reset]="reset$"
+      [props]="options"
+      (ready)="onParsedSuccess()">
+    </cp-upload-modal-body>
+  </div>
+
+  <div class="cpmodal__footer">
+    <cp-upload-modal-footer 
+      [valid]="ready$"
+      (navigate)="doSubmit()"
+      (reset)="doReset()">
+    </cp-upload-modal-footer>
+  </div>
+</div>
