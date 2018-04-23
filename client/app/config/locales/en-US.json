@@ -1014,6 +1014,9 @@
   "download_csv": {
     "message": "Download CSV File"
   },
+  "due_date": {
+    "message": "Due Date"
+  },
   "duplicate_entry": {
     "message": "There is already a user with that email address."
   },
@@ -1982,6 +1985,18 @@
   },
   "to": {
     "message": "To"
+  },
+  "to-dos": {
+    "message": "To-do's"
+  },
+  "todos_create": {
+    "message": "Create To-do"
+  },
+  "todos_delete": {
+    "message": "Delete To-do"
+  },
+  "todos_new": {
+    "message": "Create To-do"
   },
   "tooltip_more_text": {
     "message": "(%s) More"
