@@ -1,14 +1,21 @@
-import { Component, OnInit, Input, Output, EventEmitter, ElementRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+  HostListener,
+  ElementRef
+} from '@angular/core';
 
 @Component({
   selector: 'cp-dropdown-multiselect',
   templateUrl: './cp-dropdown-multiselect.component.html',
   styleUrls: ['./cp-dropdown-multiselect.component.scss']
 })
-export class CPDropdownMultiSelectComponent implements OnInit {
+export class CPDropdownMultiSelectComponent implements OnInit, OnChanges {
   @Input() items: Array<any> = [];
-
-  @Input() placeholder;
 
   @Output() selection: EventEmitter<Array<any>> = new EventEmitter();
 
@@ -19,8 +26,25 @@ export class CPDropdownMultiSelectComponent implements OnInit {
 
   constructor(public el: ElementRef) {}
 
+  @HostListener('window:click', ['$event'])
+  onClick(event) {
+    if (event.target.contains(this.el.nativeElement)) {
+      this.state = { ...this.state, open: false };
+    }
+  }
+
   toggleDropdown() {
     this.state = { ...this.state, open: !this.state.open };
+  }
+
+  ngOnChanges() {
+    if (!this.items.filter((item) => item.selected).length) {
+      this.state = { ...this.state, label: null };
+
+      this.items.map((opt) => (opt.selected = false));
+
+      this.selection.emit([]);
+    }
   }
 
   onToggle(option) {

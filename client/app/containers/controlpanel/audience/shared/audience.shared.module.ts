@@ -1,3 +1,4 @@
+import { AudienceSharedService } from './audience.shared.service';
 /*tslint:disable:max-line-length*/
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -14,9 +15,11 @@ import { AudienceSaveModalComponent } from './audience-save-modal/audience-save-
 import { AudienceSavedBodyComponent } from './audience-saved-body/audience-saved-body.component';
 import { AudienceUsersTypeaheadComponent } from './audience-users-typeahead/audience-users-typeahead.component';
 import { AudienceService } from './../../../../containers/controlpanel/audience/audience.service';
+import { AudienceFilterPipe } from './filters.pipe';
 
 @NgModule({
   declarations: [
+    AudienceFilterPipe,
     AudienceCardComponent,
     AudienceCustomComponent,
     AudienceCounterComponent,
@@ -29,7 +32,7 @@ import { AudienceService } from './../../../../containers/controlpanel/audience/
 
   imports: [CommonModule, SharedModule, ReactiveFormsModule],
 
-  providers: [AudienceService],
+  providers: [AudienceService, AudienceSharedService],
 
   exports: [
     AudienceCardComponent,

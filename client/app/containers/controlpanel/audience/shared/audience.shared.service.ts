@@ -1,4 +1,5 @@
 import { Http, URLSearchParams } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -11,6 +12,21 @@ export class AudienceSharedService extends BaseService {
     super(http, router);
 
     Object.setPrototypeOf(this, AudienceSharedService.prototype);
+  }
+
+  getDynamic(): Observable<any> {
+    return Observable.of([
+      {
+        id: 36,
+        title_text: 'Ethnicity',
+        choices: ['White', 'Black', 'Hispanic', 'Asian', 'American Indian', 'Pacific Islander']
+      },
+      {
+        id: 37,
+        title_text: 'Year of Study',
+        choices: ['First', 'Second', 'Third', 'Fourth']
+      }
+    ]).delay(400);
   }
 
   getAudience(startRange: number, endRange: number, search: URLSearchParams) {

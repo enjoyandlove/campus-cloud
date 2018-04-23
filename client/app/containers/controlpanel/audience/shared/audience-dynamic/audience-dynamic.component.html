@@ -3,9 +3,47 @@
     <label>{{'audience_label_filters' | cpI18n}}</label>
   </div>
 </div>
-<div class="row">
-  <div class="col-xs-6"></div>
-  <div class="col-xs-6">
-    <!-- <cp-dropdown-multiselect></cp-dropdown-multiselect> -->
+
+<form [formGroup]="form">
+  <div 
+    class="group-item"
+    formArrayName="filters"
+    *ngFor="let item of form.get('filters').controls; let i = index;">
+    <div [formGroupName]="i">
+      <div class="row">
+        <div class="col-xs-11">
+          <div class="row">
+            <div class="col-xs-6">
+              <cp-dropdown  
+                (selected)="onFilterSelected($event, i)"
+                [items]="filters$ | async | cpAudienceFilterPipe:usedFiltersAsArray()">
+              </cp-dropdown>
+            </div>
+            <div class="col-xs-6">
+              <cp-dropdown-multiselect 
+                (selection)="onChoices($event, i)"
+                [items]="selectedFilterOptions[i]">
+              </cp-dropdown-multiselect>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-1 delete-button hover" *ngIf="i > 0">
+          <span (click)="removeFilterGroup(i)">&times;</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div class="row footer">
+  <div class="col-xs-12">
+    <button type='button' (click)="fakeSubmit()">Submit</button>
+    <button 
+      type="button" 
+      (click)="addFilterGroup()" 
+      class="cpbtn cpbtn--link"
+      [disabled]="state.filterCount === maxFilterCount">
+      {{'audience_add_filter_button' | cpI18n}}
+    </button>
   </div>
 </div>
