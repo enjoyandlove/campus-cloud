@@ -1,0 +1,50 @@
+<div class="cpmodal">
+    <div class="cpmodal__header">
+      <div class="row">
+        <div class="col-xs-12 text-center">
+          <span i18n><strong>{{ 'save_audience_modal_title' | cpI18n }}</strong></span>
+  
+          <span
+            data-dismiss="modal"
+            (click)="resetModal()"
+            class="pull-right hover cpmodal__header__close">
+            &times;
+          </span>
+        </div>
+      </div>
+    </div>
+  
+    <div class="cpmodal__body">
+      <form [formGroup]="form">
+        <div class="row form-group">
+          <div class="col-xs-12">
+            <label i18n>{{ 'audience_modal_label_audience_name' | cpI18n }}</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="name">
+          </div>
+        </div>
+      </form>
+    </div>
+  
+    <div class="cpmodal__footer">
+      <div class="row">
+        <div class="col-xs-6 col-xs-offset-6 text-right">
+          <button
+            type="button"
+            data-dismiss="modal"
+            (click)="resetModal()"
+            class="cpbtn cpbtn--cancel" i18n>
+            {{ 'cancel' | cpI18n }}
+          </button>
+
+          <cp-button
+            [props]="buttonData"
+            (buttonClick)="doSubmit()">
+          </cp-button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
