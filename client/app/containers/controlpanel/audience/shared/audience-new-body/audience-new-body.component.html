@@ -20,6 +20,7 @@
         [importButton]="importButton"
         (importClick)="importClick.emit()">
       </cp-audience-custom>
+      <cp-audience-dynamic *ngIf="state.dynamic"></cp-audience-dynamic>
     </div>
   </div>
 </div>

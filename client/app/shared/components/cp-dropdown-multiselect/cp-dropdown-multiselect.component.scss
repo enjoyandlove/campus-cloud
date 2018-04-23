@@ -1,0 +1,59 @@
+@import '~styles/core/colors';
+@import '~styles/components/button';
+
+:host {
+  width: 100%;
+  display: block;
+}
+
+.component {
+  position: relative;
+
+  &__button {
+    width: 100%;
+    position: relative;
+
+    i {
+      top: 2px;
+      right: 8px;
+      line-height: 1;
+      font-size: 18px;
+      position: absolute;
+      transition: transform 200ms ease-in-out;
+    }
+  }
+
+  &__content {
+    top: 40px;
+    z-index: 1;
+    width: 100%;
+    padding-left: 0;
+    list-style: none;
+    position: absolute;
+    border-radius: 4px;
+    background: $color-white;
+    border: 1px solid $border-color;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.3);
+
+    li {
+      padding: 10px;
+      transition: all 200ms ease-in-out;
+
+      p {
+        margin-bottom: 0;
+      }
+
+      &:hover {
+        color: $color-white;
+        background: $color-brand;
+      }
+    }
+  }
+}
+
+cp-checkbox {
+  top: -12px;
+  margin-right: 0px;
+  position: relative;
+  display: inline-block;
+}
