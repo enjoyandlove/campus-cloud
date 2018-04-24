@@ -15,9 +15,9 @@ import {
   styleUrls: ['./cp-dropdown-multiselect.component.scss']
 })
 export class CPDropdownMultiSelectComponent implements OnInit, OnChanges {
-  @Input() items: Array<any> = [];
+  @Input() items: Array<{ action: number; label: string; selected: boolean }> = [];
 
-  @Output() selection: EventEmitter<Array<any>> = new EventEmitter();
+  @Output() selection: EventEmitter<Array<number>> = new EventEmitter();
 
   state = {
     open: false,
@@ -43,7 +43,7 @@ export class CPDropdownMultiSelectComponent implements OnInit, OnChanges {
 
       this.items.map((opt) => (opt.selected = false));
 
-      this.selection.emit([]);
+      // this.selection.emit([]);
     }
   }
 
@@ -54,7 +54,7 @@ export class CPDropdownMultiSelectComponent implements OnInit, OnChanges {
 
     this.state = { ...this.state, label: selected.map((item) => item.label).join(', ') };
 
-    this.selection.emit(selected);
+    this.selection.emit(selected.map((item) => item.action));
   }
 
   ngOnInit(): void {}

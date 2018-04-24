@@ -1,6 +1,8 @@
 import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { URLSearchParams } from '@angular/http';
 
+import { CPSession } from './../../../../../session';
 import { CPI18nService } from '../../../../../shared/services';
 import { AudienceSharedService } from './../audience.shared.service';
 
@@ -10,6 +12,8 @@ import { AudienceSharedService } from './../audience.shared.service';
   styleUrls: ['./audience-dynamic.component.scss']
 })
 export class AudienceDynamicComponent implements OnInit {
+  @Output() filters: EventEmitter<any> = new EventEmitter();
+
   form: FormGroup;
 
   filters$;
@@ -25,6 +29,7 @@ export class AudienceDynamicComponent implements OnInit {
 
   constructor(
     public fb: FormBuilder,
+    public session: CPSession,
     public cpI18n: CPI18nService,
     public service: AudienceSharedService
   ) {}
@@ -34,6 +39,10 @@ export class AudienceDynamicComponent implements OnInit {
   }
 
   onFilterSelected({ id, choices }, index) {
+    /**
+     * top option in the dropdown
+     * id is set to null we reset all fields
+     */
     if (!id) {
       this.selectedFilterOptions[index] = [];
       this.state = {
@@ -46,19 +55,27 @@ export class AudienceDynamicComponent implements OnInit {
 
     this.selectedFilterOptions[index] = choices.map((choice) => {
       return {
-        action: choice,
-        label: choice,
+        action: choice.id,
+        label: choice.text,
         selected: false
       };
     });
+
+    const controls = <FormArray>this.form.controls['filters'];
+    const formGroup = <FormGroup>controls.at(index);
+
+    formGroup.controls['attr_id'].setValue(id);
+
+    this.filters.emit(this.form.value.filters);
   }
 
-  onChoices() {
-    // console.log(choices, index);
-  }
+  onChoices(choices, index) {
+    const controls = <FormArray>this.form.controls['filters'];
+    const formGroup = <FormGroup>controls.at(index);
 
-  fakeSubmit() {
-    // console.log(this.form.value);
+    formGroup.controls['choices'].setValue(choices);
+
+    this.filters.emit(this.form.value.filters);
   }
 
   addFilterGroup() {
@@ -68,7 +85,7 @@ export class AudienceDynamicComponent implements OnInit {
 
     control.push(
       this.fb.group({
-        filterName: [null, Validators.required],
+        attr_id: [null, Validators.required],
         choices: [[], Validators.required]
       })
     );
@@ -93,8 +110,11 @@ export class AudienceDynamicComponent implements OnInit {
 
     this.addFilterGroup();
 
+    const search = new URLSearchParams();
+    search.append('school_id', this.session.g.get('school').id);
+
     this.filters$ = this.service
-      .getDynamic()
+      .getFilters(search)
       .startWith([
         {
           label: this.cpI18n.translate('select'),

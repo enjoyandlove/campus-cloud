@@ -5,6 +5,7 @@
       <fieldset [disabled]="disableTypeSelection">
         <cp-dropdown 
           [items]="audienceTypes" 
+          [selectedItem]="selectedType"
           (selected)="onTypeSelected($event)">
         </cp-dropdown>
       </fieldset>
@@ -20,7 +21,11 @@
         [importButton]="importButton"
         (importClick)="importClick.emit()">
       </cp-audience-custom>
-      <cp-audience-dynamic *ngIf="state.dynamic"></cp-audience-dynamic>
+
+      <cp-audience-dynamic 
+        *ngIf="state.dynamic"
+        (filters)="onFilters($event)">
+      </cp-audience-dynamic>
     </div>
   </div>
 </div>

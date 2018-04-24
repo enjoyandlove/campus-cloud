@@ -33,8 +33,15 @@
                 </i>
               </span>
             </span>
-            <span class="col-xs-2">
+            <span 
+              class="col-xs-2 hover"
+              (click)="doSort('type')">
               {{ 'type' | cpI18n }}
+              <span *ngIf="state.sort_field === 'type'">
+                <i class="material-icons">
+                  {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+                </i>
+              </span>
             </span>
             <span class="col-xs-2">
               {{ 'lists_number_of_users' | cpI18n }}
@@ -123,7 +130,7 @@
 
 <cp-modal modalId="audienceEdit" *ngIf="isAudienceEdit">
   <cp-audience-edit
-    [audience]="editAudience"
+    [audienceId]="editAudience.id"
     (reset)="isAudienceEdit = false"
     (edited)="onEditedAudience($event)">
   </cp-audience-edit>

@@ -15,25 +15,31 @@
   </div>
 
   <div class="cpmodal__body">
-    <div class="row">
-      <div class="col-xs-6">
-        <form [formGroup]="form">
-          <div class="form-group">
-            <label>{{ 'lists_label_list_name' | cpI18n }}</label>
-            <input
-              type="text"
-              class="form-control"
-              formControlName="name">
+    <ng-container [ngSwitch]="loading">
+      <cp-spinner *ngSwitchCase="true"></cp-spinner>
+      <ng-container *ngSwitchCase="false">
+        <div class="row">
+          <div class="col-xs-6">
+            <form [formGroup]="form">
+              <div class="form-group">
+                <label>{{ 'lists_label_list_name' | cpI18n }}</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="name">
+              </div>
+              </form>
           </div>
-          </form>
-      </div>
-    </div>
-    <cp-audience-new-body 
-      [importButton]="false"
-      [withChips]="audience.users"
-      [disableTypeSelection]="true"
-      (selected)="onAudienceSelected($event)">
-    </cp-audience-new-body>
+        </div>
+        <cp-audience-new-body 
+          [importButton]="false"
+          [withChips]="audience.users"
+          [disableTypeSelection]="true"
+          [defaultView]="defaultAudienceView"
+          (selected)="onAudienceSelected($event)">
+        </cp-audience-new-body>
+      </ng-container>
+    </ng-container>
   </div>
 
   <div class="cpmodal__footer">
@@ -55,3 +61,4 @@
     </div>
   </div>
 </div>
+
