@@ -1,6 +1,6 @@
 export enum ProgramMembership {
   'enabled' = 1,
-  'disabled' = -1
+  'disabled' = 0
 }
 
 export enum ProgramDuration {
