@@ -3,6 +3,7 @@ import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
 import { CPSession } from '../../../../session';
+import { AudienceType } from './../audience.status';
 import { AudienceService } from '../audience.service';
 import { BaseComponent } from '../../../../base/base.component';
 import { CPI18nService } from '../../../../shared/services/index';
@@ -36,6 +37,7 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
   isAudienceImport;
   isAudienceCreate;
   state: IState = state;
+  custom = AudienceType.custom;
 
   constructor(
     private session: CPSession,
@@ -90,22 +92,38 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
     });
   }
 
-  downloadAudience(audience) {
+  downloadAudience({ id }) {
     const columns = [
       this.cpI18n.translate('first_name'),
       this.cpI18n.translate('last_name'),
       this.cpI18n.translate('email')
     ];
+    const search = new URLSearchParams();
+    search.append('school_id', this.session.g.get('school').id.toString());
 
-    const data = audience.users.map((user) => {
-      return {
-        [this.cpI18n.translate('first_name')]: user.firstname,
-        [this.cpI18n.translate('last_name')]: user.lastname,
-        [this.cpI18n.translate('email')]: user.email
-      };
-    });
-
-    createSpreadSheet(data, columns, `${audience.name}`);
+    this.service
+      .getAudienceById(id, search)
+      .toPromise()
+      .then(({ users, name }) => {
+        const data = users.map((user) => {
+          return {
+            [this.cpI18n.translate('first_name')]: user.firstname,
+            [this.cpI18n.translate('last_name')]: user.lastname,
+            [this.cpI18n.translate('email')]: user.email
+          };
+        });
+        createSpreadSheet(data, columns, `${name}`);
+      })
+      .catch(() =>
+        this.store.dispatch({
+          type: SNACKBAR_SHOW,
+          payload: {
+            sticky: true,
+            class: 'danger',
+            body: this.cpI18n.translate('something_went_wrong')
+          }
+        })
+      );
   }
 
   private fetch() {
