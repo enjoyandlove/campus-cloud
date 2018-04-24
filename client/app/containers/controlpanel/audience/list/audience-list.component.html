@@ -58,11 +58,16 @@
             </span>
 
             <span class="col-xs-2">
-              {{ audience.type }}
+              <ng-container *ngIf="audience.type === custom">
+                {{'audience_type_custom' | cpI18n}}
+              </ng-container>
+              <ng-container *ngIf="audience.type !== custom">
+                {{'audience_type_dynamic' | cpI18n}}
+              </ng-container>
             </span>
 
             <span class="col-xs-2 hover" (click)="downloadAudience(audience)">
-              {{ audience.users.length }} {{ 'users' | cpI18n }}
+              {{ audience.count }} {{ 'users' | cpI18n }}
             </span>
 
             <span

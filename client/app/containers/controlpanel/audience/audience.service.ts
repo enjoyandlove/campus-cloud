@@ -28,6 +28,12 @@ export class AudienceService extends BaseService {
     return super.get(url, { search }).map((res) => res.json());
   }
 
+  getAudienceById(audienceId: number, search: URLSearchParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER_LIST}/${audienceId}`;
+
+    return super.get(url, { search }).map((res) => res.json());
+  }
+
   deleteAudience(audienceId: number, search: URLSearchParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER_LIST}/${audienceId}`;
 
