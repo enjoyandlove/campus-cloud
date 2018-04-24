@@ -9,8 +9,9 @@ import {
   Output
 } from '@angular/core';
 
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { get as _get } from 'lodash';
 
 import { CPSession } from '../../../../session';
 import { AudienceService } from '../audience.service';
@@ -53,11 +54,9 @@ export class AduienceCreateComponent implements OnInit, OnDestroy {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    const data = Object.assign({}, this.form.value);
-
-    this.service.createAudience(data, search).subscribe(
+    this.service.createAudience(this.form.value, search).subscribe(
       (_) => {
-        this.created.emit(data);
+        this.created.emit(this.form.value);
         this.resetModal();
       },
       (err) => {
@@ -80,22 +79,67 @@ export class AduienceCreateComponent implements OnInit, OnDestroy {
     $('#audienceCreate').modal('hide');
   }
 
+  onAudienceSelected(userIds) {
+    this.form.controls['user_ids'].setValue(userIds);
+  }
+
+  onFiltersSelected(filters) {
+    this.form.controls['filters'].setValue(filters);
+  }
+
+  onAudienceTypeChange({ custom, dynamic }) {
+    if (custom) {
+      this.form.addControl('user_ids', new FormControl(null, Validators.required));
+      this.form.removeControl('filters');
+    }
+    if (dynamic) {
+      this.form.addControl('filters', new FormControl(null, Validators.required));
+      this.form.removeControl('user_ids');
+    }
+  }
+
+  validate() {
+    let isValid = true;
+
+    const filters = _get(this.form.controls, 'filters', false);
+    const user_ids = _get(this.form.controls, 'user_ids', false);
+
+    if (!this.form.controls['name'].value) {
+      isValid = false;
+    }
+
+    if (user_ids) {
+      isValid = this.form.controls['user_ids'].value;
+    }
+
+    if (filters) {
+      const control = this.form.controls['filters'];
+
+      if (control.value) {
+        control.value.forEach((filter) => {
+          if (!filter['attr_id'] || !filter['choices'].length) {
+            isValid = false;
+          }
+        });
+      } else {
+        isValid = false;
+      }
+    }
+
+    return isValid;
+  }
+
   ngOnDestroy() {
     this.resetModal();
   }
 
-  onAudienceSelected(selected) {
-    this.form.controls['user_ids'].setValue(selected);
-  }
-
   ngOnInit() {
     this.form = this.fb.group({
-      name: [null, Validators.required],
-      user_ids: [null, Validators.required]
+      name: [null, Validators.required]
     });
 
     this.form.valueChanges.subscribe(() => {
-      this.buttonData = { ...this.buttonData, disabled: !this.form.valid };
+      this.buttonData = { ...this.buttonData, disabled: !this.validate() };
     });
 
     this.buttonData = {

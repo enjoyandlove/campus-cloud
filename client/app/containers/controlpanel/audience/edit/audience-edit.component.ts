@@ -1,3 +1,4 @@
+import { SNACKBAR_SHOW } from './../../../../reducers/snackbar.reducer';
 import {
   Component,
   ElementRef,
@@ -8,34 +9,45 @@ import {
   Output
 } from '@angular/core';
 
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
+import { Store } from '@ngrx/store';
 
 import { CPSession } from '../../../../session';
+import { AudienceType } from './../audience.status';
 import { AudienceService } from '../audience.service';
+import { ISnackbar } from '../../../../reducers/snackbar.reducer';
 import { CPI18nService } from './../../../../shared/services/i18n.service';
+import { BaseComponent } from '../../../../base';
 
 @Component({
   selector: 'cp-audience-edit',
   templateUrl: './audience-edit.component.html',
   styleUrls: ['./audience-edit.component.scss']
 })
-export class AuidenceEditComponent implements OnInit {
-  @Input() audience: any;
+export class AuidenceEditComponent extends BaseComponent implements OnInit {
+  @Input() audienceId: number;
+
   @Output() edited: EventEmitter<any> = new EventEmitter();
   @Output() reset: EventEmitter<null> = new EventEmitter();
 
+  loading;
+  audience;
   buttonData;
-  chipOptions;
   form: FormGroup;
+  defaultAudienceView;
 
   constructor(
     private el: ElementRef,
     private fb: FormBuilder,
     private session: CPSession,
     public cpI18n: CPI18nService,
+    public store: Store<ISnackbar>,
     private service: AudienceService
-  ) {}
+  ) {
+    super();
+    super.isLoading().subscribe((loading) => (this.loading = loading));
+  }
 
   @HostListener('document:click', ['$event'])
   onClick(event) {
@@ -49,14 +61,21 @@ export class AuidenceEditComponent implements OnInit {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    this.service.updateAudience(this.audience.id, this.form.value, search).subscribe(
+    this.service.updateAudience(this.audienceId, this.form.value, search).subscribe(
       (_) => {
         $('#audienceEdit').modal('hide');
         this.edited.emit(this.form.value);
         this.resetModal();
       },
-      (err) => {
-        throw new Error(err);
+      () => {
+        this.store.dispatch({
+          type: SNACKBAR_SHOW,
+          payload: {
+            sticky: true,
+            class: 'danger',
+            body: this.cpI18n.translate('something_went_wrong')
+          }
+        });
       }
     );
   }
@@ -79,28 +98,52 @@ export class AuidenceEditComponent implements OnInit {
     });
   }
 
+  initpCustom() {
+    this.form.addControl('user_ids', new FormControl(this.audience.users, Validators.required));
+
+    this.audience = Object.assign({}, this.audience, { users: this.buildChips() });
+  }
+
+  initDynamic() {
+    this.form.addControl('filters', new FormControl(this.audience.users, Validators.required));
+  }
+
+  fetch() {
+    const search = new URLSearchParams();
+    search.append('school_id', this.session.g.get('school').id);
+
+    const stream$ = this.service.getAudienceById(this.audienceId, search);
+
+    super.fetchData(stream$).then((audience) => {
+      this.audience = audience.data;
+
+      this.form = this.fb.group({
+        name: [this.audience.name, Validators.required]
+      });
+
+      this.form.valueChanges.subscribe(() => {
+        this.buttonData = { ...this.buttonData, disabled: !this.form.valid };
+      });
+
+      this.defaultAudienceView = this.audience.type;
+
+      if (this.audience.type === AudienceType.custom) {
+        this.initpCustom();
+      }
+
+      if (this.audience.type === AudienceType.dynamic) {
+        this.initDynamic();
+      }
+    });
+  }
+
   ngOnInit() {
-    this.chipOptions = {
-      icon: 'account_box',
-      withClose: true,
-      withAvatar: true
-    };
+    this.fetch();
 
     this.buttonData = {
       class: 'primary',
       disabled: false,
       text: this.cpI18n.translate('update')
     };
-
-    this.audience = Object.assign({}, this.audience, { users: this.buildChips() });
-
-    this.form = this.fb.group({
-      name: [this.audience.name, Validators.required],
-      user_ids: [this.audience.users, Validators.required]
-    });
-
-    this.form.valueChanges.subscribe(() => {
-      this.buttonData = { ...this.buttonData, disabled: !this.form.valid };
-    });
   }
 }

@@ -14,19 +14,10 @@ export class AudienceSharedService extends BaseService {
     Object.setPrototypeOf(this, AudienceSharedService.prototype);
   }
 
-  getDynamic(): Observable<any> {
-    return Observable.of([
-      {
-        id: 36,
-        title_text: 'Ethnicity',
-        choices: ['White', 'Black', 'Hispanic', 'Asian', 'American Indian', 'Pacific Islander']
-      },
-      {
-        id: 37,
-        title_text: 'Year of Study',
-        choices: ['First', 'Second', 'Third', 'Fourth']
-      }
-    ]).delay(400);
+  getFilters(search: URLSearchParams): Observable<any> {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.AUDIENCE_FILTERS}/`;
+
+    return super.get(url, { search }).map((res) => res.json());
   }
 
   getAudience(startRange: number, endRange: number, search: URLSearchParams) {

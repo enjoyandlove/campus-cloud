@@ -57,9 +57,10 @@ export const API_ENDPOINTS = {
   STUDENT_PROFILE: 'student_profile',
 
   TEMPLATE: 'announcement_template',
-  // Event assessment
 
   EVENT_ASSESMENT: 'event_assessment',
+
+  AUDIENCE_FILTERS: 'filter_attribute',
 
   SERVICE_PROVIDER: 'service_provider',
 

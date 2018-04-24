@@ -15,9 +15,9 @@
   </div>
 
   <div class="cpmodal__body">
-    <div class="row">
-      <div class="col-xs-6">
-        <form [formGroup]="form">
+    <form [formGroup]="form">
+      <div class="row">
+        <div class="col-xs-6">
           <div class="form-group">
             <label>{{ 'lists_label_list_name' | cpI18n }}</label>
             <input
@@ -25,13 +25,15 @@
               class="form-control"
               formControlName="name">
           </div>
-          </form>
+        </div>
       </div>
-    </div>
-    <cp-audience-new-body 
-      [importButton]="false"
-      (selected)="onAudienceSelected($event)">
-    </cp-audience-new-body>
+      <cp-audience-new-body 
+        [importButton]="false"
+        (users)="onAudienceSelected($event)"
+        (audienceType)="onAudienceTypeChange($event)"
+        (filters)="onFiltersSelected($event)">
+      </cp-audience-new-body>
+    </form>
   </div>
 
   <div class="cpmodal__footer">
