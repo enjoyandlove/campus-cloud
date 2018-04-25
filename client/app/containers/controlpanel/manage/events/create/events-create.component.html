@@ -4,7 +4,7 @@
       <div class="cp-card">
         <div class="row">
           <div class="col-xs-12">
-            <p class="title" i18n>{{ 'events_event_banner' | cpI18n }}</p>
+            <p class="title">{{ 'events_event_banner' | cpI18n }}</p>
             <div class="row margin-top">
               <cp-image-upload
                 (uploaded)="onUploadedImage($event)"
@@ -16,9 +16,9 @@
 
         <div class="row event-details">
           <div class="col-xs-12">
-            <p class="title" i18n>{{ 'events_event_details' | cpI18n }}</p>
+            <p class="title">{{ 'events_event_details' | cpI18n }}</p>
             <div class="form-group margin-top">
-              <label i18n>{{ 'events_event_name' | cpI18n }}</label>
+              <label>{{ 'events_event_name' | cpI18n }}</label>
               <input
                 type="text"
                 class="form-control"
@@ -28,7 +28,7 @@
 
             <div class="row form-group" *ngIf="!isClub && !isService && !isOrientation">
               <div class="col-xs-12">
-                <label i18n>{{ 'select_host' | cpI18n }}</label>
+                <label>{{ 'select_host' | cpI18n }}</label>
                 <cp-dropdown
                   [items]="stores$ | async"
                   [selectedItem]="session.defaultHost"
@@ -40,14 +40,14 @@
 
             <div class="row form-group">
               <div class="col-xs-6">
-                <label i18n>{{ 'start_date' | cpI18n }}</label>
+                <label>{{ 'start_date' | cpI18n }}</label>
                 <cp-datepicker
                   [options]="startdatePickerOpts"
                   [error]="formError && form.controls['start'].hasError('required')">
                 </cp-datepicker>
               </div>
               <div class="col-xs-6">
-                <label i18n>{{ 'end_date' | cpI18n }}</label>
+                <label>{{ 'end_date' | cpI18n }}</label>
                 <cp-datepicker
                   [options]="enddatePickerOpts"
                   [error]="formError && form.controls['end'].hasError('required')">
@@ -61,18 +61,18 @@
                   class="checkbox"
                   (toggle)="onAllDayToggle($event)">
                 </cp-checkbox>
-                <label i18n>{{ 'all_day' | cpI18n }}</label>
+                <label>{{ 'all_day' | cpI18n }}</label>
               </div>
             </div>
 
             <div class="form-group">
-              <label i18n>{{ 'events_event_description' | cpI18n }}</label>
+              <label>{{ 'events_event_description' | cpI18n }}</label>
               <textarea formControlName="description"></textarea>
             </div>
 
             <div class="row">
               <div class="col-xs-12">
-                <label i18n>{{ 'location' | cpI18n }}</label>
+                <label>{{ 'location' | cpI18n }}</label>
                 <div class="row form-group">
                   <div class="col-xs-12">
                     <cp-place-autocomplete
@@ -85,7 +85,7 @@
                 </div>
                 <div class="row form-group">
                   <div class="col-xs-6">
-                    <label i18n>{{ 'building' | cpI18n }}</label>
+                    <label>{{ 'building' | cpI18n }}</label>
                     <input
                       type="text"
                       class="form-control"
@@ -93,7 +93,7 @@
                   </div>
 
                   <div class="col-xs-6">
-                    <label i18n>{{ 'room' | cpI18n }}</label>
+                    <label>{{ 'room' | cpI18n }}</label>
                     <input
                       type="text"
                       class="form-control"
@@ -123,7 +123,7 @@
         <div class="cp-card" [class.isDisabled]="isOrientation && production">
           <div class="row">
             <div class="col-xs-12">
-              <p class="title" i18n>{{ 'assessment' | cpI18n }}</p>
+              <p class="title">{{ 'assessment' | cpI18n }}</p>
               <span class="pull-right">
                 <cp-switch
                   [id]="attendance"
@@ -144,7 +144,7 @@
             <div class="row margin-top">
               <div class="col-xs-6">
                 <div class="form-group">
-                  <label i18n>{{ 'events_event_manager' | cpI18n }}
+                  <label>{{ 'events_event_manager' | cpI18n }}
                     <cp-tooltip
                       [toolTipContent]="eventManagerToolTip">
                     </cp-tooltip>
@@ -158,7 +158,7 @@
               </div>
               <div class="col-xs-6">
                 <div class="form-group">
-                  <label i18n>{{ 'events_attendance_manager_full' | cpI18n }}
+                  <label>{{ 'events_attendance_manager_full' | cpI18n }}
                     <cp-tooltip
                       [toolTipContent]="attendanceManagerToolTip">
                     </cp-tooltip>
@@ -173,7 +173,7 @@
 
             <div class="row form-group">
               <div class="col-xs-6">
-                <label i18n>{{ 'student_feedback' | cpI18n }}
+                <label>{{ 'student_feedback' | cpI18n }}
                   <cp-tooltip
                     [toolTipContent]="studentFeedbackToolTip">
                   </cp-tooltip>
@@ -190,7 +190,7 @@
               class="row form-group" 
               *ngIf="form.controls['event_feedback'].value === eventFeedbackEnabled">
               <div class="col-xs-12">
-                <label i18n>{{ 'events_default_question' | cpI18n }}</label>
+                <label>{{ 'events_default_question' | cpI18n }}</label>
                 <input
                   type="text"
                   class="form-control"
@@ -208,12 +208,12 @@
           <div class="row">
             <div class="col-xs-12">
               <div class="text-right">
-                <label class="error" *ngIf="formError" i18n>
+                <label class="error" *ngIf="formError">
                   <span>&#x26A0;</span>
                   {{ isDateError ? dateErrorMessage : cpI18n.translate('error_fill_out_marked_fields') }}
                 </label>
                 <a [routerLink]="['../']"
-                   class="cpbtn cpbtn--cancel" i18n>
+                   class="cpbtn cpbtn--cancel">
                   {{ 'cancel' | cpI18n }}
                 </a>
                 <cp-button
