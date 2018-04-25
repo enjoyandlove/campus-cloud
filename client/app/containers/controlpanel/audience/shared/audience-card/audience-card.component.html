@@ -20,7 +20,8 @@
         </cp-tab>
         <cp-tab [title]="newAudienceTitle">
           <cp-audience-new-body 
-            (selected)="onUsers($event)"
+            (users)="onUsers($event)"
+            (filters)="onFilters($event)"
             (importClick)="importClick.emit()">
           </cp-audience-new-body>
         </cp-tab>
