@@ -23,6 +23,7 @@
       </cp-audience-custom>
 
       <cp-audience-dynamic 
+        [message]="message"
         [audience]="audience"
         *ngIf="state.dynamic"
         (filters)="onFilters($event)">

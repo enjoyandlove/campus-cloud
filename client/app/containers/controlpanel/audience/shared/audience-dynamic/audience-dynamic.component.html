@@ -39,7 +39,7 @@
     </form>
     
     <div class="row footer">
-      <div class="col-xs-12">
+      <div class="col-xs-6">
         <button 
           type="button" 
           (click)="addFilterGroup()" 
@@ -47,6 +47,9 @@
           [disabled]="state.filterCount === maxFilterCount">
           {{'audience_add_filter_button' | cpI18n}}
         </button>
+      </div>
+      <div class="col-xs-6">
+        <cp-audience-counter [message]="message"></cp-audience-counter>
       </div>
     </div>
   </ng-container>

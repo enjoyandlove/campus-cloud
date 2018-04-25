@@ -1,6 +1,5 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
-// import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -14,12 +13,11 @@ import { AUDIENCE_IMPORTED } from './../../../../../reducers/audience.reducer';
 import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 
-// declare var $: any;
-
 interface IState {
   isUrgent: boolean;
   isToLists: boolean;
   isToUsers: boolean;
+  isToFilters: boolean;
   isEmergency: boolean;
   isCampusWide: boolean;
 }
@@ -28,6 +26,7 @@ const state: IState = {
   isUrgent: false,
   isToLists: false,
   isToUsers: false,
+  isToFilters: false,
   isEmergency: false,
   isCampusWide: true
 };
@@ -42,29 +41,20 @@ const THROTTLED_STATUS = 1;
 export class AnnouncementsComposeComponent implements OnInit {
   @Input() toolTipContent: IToolTipContent;
 
-  // @Output() created: EventEmitter<any> = new EventEmitter();
-  // @Output() teardown: EventEmitter<null> = new EventEmitter();
-
   stores$;
   isError;
   sendAsName;
   buttonData;
   errorMessage;
   selectedType;
-  // typeAheadOpts;
-  // chips = [];
   form: FormGroup;
   isAudienceImport = false;
-  // resetChips$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  // resetCustomFields$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   URGENT_TYPE = 1;
   EMERGENCY_TYPE = 0;
 
   USERS_TYPE = 1;
   LISTS_TYPE = 2;
-
-  // suggestions = [];
 
   state: IState = state;
   shouldConfirm = false;
@@ -129,7 +119,8 @@ export class AnnouncementsComposeComponent implements OnInit {
         ...this.state,
         isToUsers: false,
         isToLists: false,
-        isCampusWide: true
+        isCampusWide: true,
+        isToFilters: false
       };
       this.form.controls['list_ids'].setValue([]);
       this.form.controls['is_school_wide'].setValue(true);
@@ -141,7 +132,8 @@ export class AnnouncementsComposeComponent implements OnInit {
       ...this.state,
       isToUsers: true,
       isToLists: false,
-      isCampusWide: false
+      isCampusWide: false,
+      isToFilters: false
     };
     this.form.controls['list_ids'].setValue([]);
     this.form.controls['user_ids'].setValue(users);
@@ -161,25 +153,6 @@ export class AnnouncementsComposeComponent implements OnInit {
 
     return length;
   }
-
-  // resetModal() {
-  //   this.form.reset();
-  //   this.isError = false;
-  //   this.shouldConfirm = false;
-  //   this.state.isCampusWide = false;
-  //   this.resetCustomFields$.next(true);
-
-  //   this.subject_prefix = {
-  //     label: null,
-  //     type: null
-  //   };
-
-  //   $('#composeModal').modal('hide');
-
-  //   this.resetChips();
-
-  //   this.teardown.emit();
-  // }
 
   onSelectedStore(store) {
     this.sendAsName = store.label;
@@ -201,23 +174,6 @@ export class AnnouncementsComposeComponent implements OnInit {
       );
     }
   }
-
-  // doChipsSelected() {
-  //   this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
-  //     isUsers: this.state.isToUsers
-  //   });
-
-  //   if (this.chips.length) {
-  //     this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
-  //       defaultValues: this.chips.map((data) => {
-  //         return {
-  //           id: data.id,
-  //           label: data.label
-  //         };
-  //       })
-  //     });
-  //   }
-  // }
 
   doSubmit() {
     this.isError = false;
@@ -242,6 +198,10 @@ export class AnnouncementsComposeComponent implements OnInit {
 
     if (this.state.isToLists && !this.state.isCampusWide) {
       data = Object.assign({}, data, { list_ids: this.form.value.list_ids });
+    }
+
+    if (this.state.isToFilters && !this.state.isCampusWide) {
+      data = Object.assign({}, data, { filters: this.form.value.filters });
     }
 
     this.service.postAnnouncements(search, data).subscribe(
@@ -305,6 +265,18 @@ export class AnnouncementsComposeComponent implements OnInit {
     });
 
     return result;
+  }
+
+  onSelectedFilters(filters) {
+    this.state = {
+      ...this.state,
+      isToUsers: false,
+      isToLists: false,
+      isCampusWide: false,
+      isToFilters: true
+    };
+
+    this.form.controls['filters'].setValue(filters);
   }
 
   buildHeader() {
@@ -375,6 +347,7 @@ export class AnnouncementsComposeComponent implements OnInit {
       store_id: [defaultHost, Validators.required],
       user_ids: [[]],
       list_ids: [[]],
+      filters: [[]],
       is_school_wide: true,
       subject: [null, [Validators.required, Validators.maxLength(128)]],
       message: [null, [Validators.required, Validators.maxLength(400)]],
@@ -391,12 +364,6 @@ export class AnnouncementsComposeComponent implements OnInit {
           isValid = this.form.controls['list_ids'].value.length >= 1 && this.form.valid;
         }
       }
-
-      // if (this.state.isToUsers) {
-      //   if (this.form.controls['user_ids'].value) {
-      //     isValid = this.form.controls['user_ids'].value.length >= 1 && this.form.valid;
-      //   }
-      // }
 
       this.buttonData = { ...this.buttonData, disabled: !isValid };
     });

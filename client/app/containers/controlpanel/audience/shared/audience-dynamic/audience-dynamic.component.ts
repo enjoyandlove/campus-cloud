@@ -15,6 +15,7 @@ import { AudienceSharedService } from './../audience.shared.service';
 })
 export class AudienceDynamicComponent extends BaseComponent implements OnInit {
   @Input() audience = null;
+  @Input() message: string;
 
   @Output() filters: EventEmitter<any> = new EventEmitter();
 

@@ -37,12 +37,12 @@ export class AudienceSavedBodyComponent implements OnInit {
     };
 
     audiences = audiences.map((audience) => {
-      const users = _get(audience, 'users', []);
+      const users = _get(audience, 'count', null);
 
       return {
         action: audience.id,
         label: audience.name,
-        userCount: users.length
+        userCount: users
       };
     });
 

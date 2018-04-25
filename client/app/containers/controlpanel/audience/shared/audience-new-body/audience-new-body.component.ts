@@ -37,7 +37,14 @@ export class AudienceNewBodyComponent implements OnInit {
       dynamic: action === AudienceType.dynamic
     };
 
+    this.message = null;
+
     this.audienceType.emit(this.state);
+  }
+
+  getUserCount() {
+    // console.log(filters);
+    this.message = 'Missing';
   }
 
   onUsers(users) {
@@ -46,6 +53,8 @@ export class AudienceNewBodyComponent implements OnInit {
   }
 
   onFilters(filters) {
+    this.getUserCount();
+
     this.filters.emit(filters);
   }
 
@@ -70,12 +79,8 @@ export class AudienceNewBodyComponent implements OnInit {
       (audience) => audience.action === this.defaultView
     )[0];
 
-    if (this.defaultView === AudienceType.custom) {
-      this.message = `${this.withChips.length} ${this.cpI18n.translate('audience_counter_users')}`;
-    }
-
-    if (this.defaultView === AudienceType.dynamic) {
-      this.message = 'Dynamic List Message';
+    if (this.audience) {
+      this.message = `${this.audience.count} ${this.cpI18n.translate('audience_counter_users')}`;
     }
 
     this.audienceType.emit(this.state);

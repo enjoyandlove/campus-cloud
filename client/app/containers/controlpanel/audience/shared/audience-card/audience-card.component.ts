@@ -25,6 +25,7 @@ export class AudienceCardComponent implements OnInit, AfterViewInit {
   @Output() importClick: EventEmitter<null> = new EventEmitter();
   @Output() selectedAudience: EventEmitter<number> = new EventEmitter();
   @Output() selectedUsers: EventEmitter<Array<number>> = new EventEmitter();
+  @Output() selectedFilters: EventEmitter<Array<number>> = new EventEmitter();
 
   message;
   newAudienceTitle;
@@ -63,6 +64,10 @@ export class AudienceCardComponent implements OnInit, AfterViewInit {
 
   onUsers(users) {
     this.selectedUsers.emit(users);
+  }
+
+  onFilters(filters) {
+    this.selectedFilters.emit(filters);
   }
 
   ngOnInit(): void {
