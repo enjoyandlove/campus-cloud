@@ -5,7 +5,6 @@ import {
   Output,
   EventEmitter,
   OnChanges,
-  HostListener,
   ElementRef
 } from '@angular/core';
 
@@ -26,17 +25,6 @@ export class CPDropdownMultiSelectComponent implements OnInit, OnChanges {
 
   constructor(public el: ElementRef) {}
 
-  @HostListener('window:click', ['$event'])
-  onClick(event) {
-    if (event.target.contains(this.el.nativeElement)) {
-      this.state = { ...this.state, open: false };
-    }
-  }
-
-  toggleDropdown() {
-    this.state = { ...this.state, open: !this.state.open };
-  }
-
   ngOnChanges() {
     if (!this.items.filter((item) => item.selected).length) {
       this.state = { ...this.state, label: null };
@@ -47,15 +35,32 @@ export class CPDropdownMultiSelectComponent implements OnInit, OnChanges {
     }
   }
 
-  onToggle(option) {
+  buildLabel(selected) {
+    return selected.map((item) => item.label).join(', ');
+  }
+
+  updateLabel(selected) {
+    this.state = { ...this.state, label: selected.map((item) => item.label).join(', ') };
+  }
+
+  onToggle(event: Event, option) {
+    // prevent BS dropdown from closing
+    event.stopPropagation();
+
     option.selected = !option.selected;
 
     const selected = this.items.filter((opt) => opt.selected);
 
-    this.state = { ...this.state, label: selected.map((item) => item.label).join(', ') };
+    this.updateLabel(selected);
 
     this.selection.emit(selected.map((item) => item.action));
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const selected = this.items.filter((item) => item.selected);
+
+    if (selected.length) {
+      this.updateLabel(selected);
+    }
+  }
 }

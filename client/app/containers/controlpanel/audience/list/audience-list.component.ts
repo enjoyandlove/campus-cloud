@@ -14,6 +14,7 @@ interface IState {
   audiences: Array<any>;
   search_str: string;
   sort_field: string;
+  list_type: number;
   sort_direction: string;
 }
 
@@ -21,6 +22,7 @@ const state: IState = {
   audiences: [],
   search_str: null,
   sort_field: 'name',
+  list_type: null,
   sort_direction: 'asc'
 };
 
@@ -92,6 +94,12 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
     });
   }
 
+  onFilterByListType(list_type) {
+    this.state = { ...this.state, list_type };
+
+    this.fetch();
+  }
+
   downloadAudience({ id }) {
     const columns = [
       this.cpI18n.translate('first_name'),
@@ -131,6 +139,9 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
     search.append('search_str', this.state.search_str);
     search.append('sort_field', this.state.sort_field);
     search.append('sort_direction', this.state.sort_direction);
+    if (this.state.list_type !== null) {
+      search.append('list_type', this.state.list_type.toString());
+    }
     search.append('school_id', this.session.g.get('school').id.toString());
 
     const stream$ = this.service.getAudiences(search, this.startRange, this.endRange);

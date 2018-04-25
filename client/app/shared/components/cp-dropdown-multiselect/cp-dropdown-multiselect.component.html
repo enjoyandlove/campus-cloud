@@ -1,6 +1,6 @@
 <div class="component">
   <button 
-    (click)="toggleDropdown()"
+    data-toggle="dropdown"
     [disabled]="!items.length"
     class="cpbtn cpbtn--cancel text-truncate component__button">
     <div class="row">
@@ -13,14 +13,14 @@
     </div>
   </button>
   
-  <ul class="component__content" *ngIf="state.open">
+  <ul class="component__content">
     <li 
       class="hover"
-      (click)="onToggle(opt)"
+      (click)="onToggle($event, opt)"
       *ngFor="let opt of items">
       <p>
         <cp-checkbox 
-          (toggle)="onToggle(opt)"
+          (toggle)="onToggle($event, opt)"
           [isChecked]="opt.selected"></cp-checkbox>
         {{opt.label}}
       </p>

@@ -2,6 +2,7 @@
   <div class="col-xs-12">
     <cp-audience-list-action-box
       (search)="onSearch($event)"
+      (filterBy)="onFilterByListType($event)"
       (launchCreateModal)="onLaunchCreateModal()"
       (launchImportModal)="onLaunchImportModal()">
     </cp-audience-list-action-box>
@@ -34,14 +35,8 @@
               </span>
             </span>
             <span 
-              class="col-xs-2 hover"
-              (click)="doSort('type')">
+              class="col-xs-2">
               {{ 'type' | cpI18n }}
-              <span *ngIf="state.sort_field === 'type'">
-                <i class="material-icons">
-                  {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
-                </i>
-              </span>
             </span>
             <span class="col-xs-2">
               {{ 'lists_number_of_users' | cpI18n }}

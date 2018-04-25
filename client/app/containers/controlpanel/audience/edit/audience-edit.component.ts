@@ -85,8 +85,12 @@ export class AuidenceEditComponent extends BaseComponent implements OnInit {
     this.reset.emit();
   }
 
-  onAudienceSelected(selected) {
-    this.form.controls['user_ids'].setValue(selected);
+  onAudienceSelected(userIds) {
+    this.form.controls['user_ids'].setValue(userIds);
+  }
+
+  onFiltersSelected(filters) {
+    this.form.controls['filters'].setValue(filters);
   }
 
   buildChips() {
@@ -98,14 +102,22 @@ export class AuidenceEditComponent extends BaseComponent implements OnInit {
     });
   }
 
-  initpCustom() {
-    this.form.addControl('user_ids', new FormControl(this.audience.users, Validators.required));
+  initCustom() {
+    const userIds = this.audience.users.map((user) => user.id);
+    this.form.addControl('user_ids', new FormControl(userIds, Validators.required));
 
     this.audience = Object.assign({}, this.audience, { users: this.buildChips() });
   }
 
   initDynamic() {
-    this.form.addControl('filters', new FormControl(this.audience.users, Validators.required));
+    const filters = this.audience.filters.map(({ attr_id, choices }) => {
+      return {
+        attr_id,
+        choices
+      };
+    });
+
+    this.form.addControl('filters', new FormControl(filters, Validators.required));
   }
 
   fetch() {
@@ -128,7 +140,7 @@ export class AuidenceEditComponent extends BaseComponent implements OnInit {
       this.defaultAudienceView = this.audience.type;
 
       if (this.audience.type === AudienceType.custom) {
-        this.initpCustom();
+        this.initCustom();
       }
 
       if (this.audience.type === AudienceType.dynamic) {

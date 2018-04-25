@@ -32,11 +32,13 @@
           </div>
         </div>
         <cp-audience-new-body 
+          [audience]="audience"
           [importButton]="false"
           [withChips]="audience.users"
           [disableTypeSelection]="true"
           [defaultView]="defaultAudienceView"
-          (selected)="onAudienceSelected($event)">
+          (filters)="onFiltersSelected($event)"
+          (users)="onAudienceSelected($event)">
         </cp-audience-new-body>
       </ng-container>
     </ng-container>

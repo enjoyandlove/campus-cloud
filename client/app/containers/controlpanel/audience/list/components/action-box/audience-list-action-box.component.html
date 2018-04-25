@@ -1,7 +1,17 @@
 <div class="cp-card">
   <div class="row">
-    <div class="col-xs-3 pull-left">
-      <cp-searchbox (query)="search.emit($event)"></cp-searchbox>
+    <div class="col-xs-6 pull-left">
+      <div class="row">
+        <div class="col-xs-8">
+          <cp-searchbox (query)="search.emit($event)"></cp-searchbox>
+        </div>
+        <div class="col-xs-4">
+          <cp-dropdown 
+            [items]="listTypes" 
+            (selected)="onListSelected($event)">
+          </cp-dropdown>
+        </div>
+      </div>
     </div>
     <div class="col-xs-3 pull-right text-right">
       <button
