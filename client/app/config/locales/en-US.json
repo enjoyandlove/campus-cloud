@@ -624,7 +624,7 @@
     "message": "Name"
   },
   "calendars_no_results_found": {
-    "message": "No Calendars found"
+    "message": "No calendars found"
   },
   "campus_wall": {
     "message": "Campus Wall"
@@ -788,7 +788,7 @@
     "message": "Name (requires a campus app account)"
   },
   "clubs_no_members_found": {
-    "message": "No Members Found"
+    "message": "No members found"
   },
   "clubs_no_results": {
     "message": "No clubs found"
@@ -805,6 +805,26 @@
   "club_info_notes": {
     "message": "Club Notes",
     "description": "As a club super editor, view a club info page with club notes. "
+  },
+  "club_membership_disabled_title": {
+    "message": "Disabled",
+    "description": "Create Club > Membership"
+  },
+  "club_membership_enabled_title": {
+    "message": "Enabled",
+    "description": "Create Club > Membership"
+  },
+  "club_status_active": {
+    "message": "Active",
+    "description": "Create Club > Status"
+  },
+  "club_status_inactive": {
+    "message": "Inactive",
+    "description": "Create Club > Status"
+  },
+  "club_status_pending": {
+    "message": "Pending",
+    "description": "Create Club > Status"
   },
   "comment": {
     "message": "Comment",
@@ -993,6 +1013,9 @@
   },
   "download_csv": {
     "message": "Download CSV File"
+  },
+  "due_date": {
+    "message": "Due Date"
   },
   "duplicate_entry": {
     "message": "There is already a user with that email address."
@@ -1371,6 +1394,11 @@
   "last_name": {
     "message": "Last Name"
   },
+  "leader": {
+    "message": "Leader",
+    "description":
+      "Manage > Orientation > Program > view program details \r\nAdd Member > Member Type dropdown"
+  },
   "links": {
     "message": "Links"
   },
@@ -1610,8 +1638,16 @@
   "orientation_enable_membership_description": {
     "message": "Creates an orientation wall where members can post messages."
   },
+  "orientation_feeds_wall_settings_modal_title": {
+    "message": "Orientation Wall Settings",
+    "description": "Manage > Orientation > choose a program > Walls > Settings"
+  },
   "orientation_no_results_found": {
     "message": "No Programs found"
+  },
+  "orientation_wall_name": {
+    "message": "Program Name",
+    "description": "Manage > Orientation > choose program > Settings"
   },
   "password": {
     "message": "Password"
@@ -1957,11 +1993,31 @@
   "templates_delete_modal_title": {
     "message": "Delete Template"
   },
+  "temporarily_disabled": {
+    "message": "Will be implemented in a future app release",
+    "description": "orientation event > edit > assessment"
+  },
   "title": {
     "message": "Title"
   },
   "to": {
     "message": "To"
+  },
+  "to-dos": {
+    "message": "To-do's"
+  },
+  "todos_create": {
+    "message": "Create To-do"
+  },
+  "todos_delete": {
+    "message": "Delete To-do"
+  },
+  "todos_new": {
+    "message": "Create To-do"
+  },
+  "todos_no_results_found": {
+    "message": "No to-do's found",
+    "description": "Orientation Calendar > To-do's > no results"
   },
   "tooltip_more_text": {
     "message": "(%s) More"
