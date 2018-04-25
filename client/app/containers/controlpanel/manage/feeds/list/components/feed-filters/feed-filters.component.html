@@ -3,14 +3,14 @@
     <div class="cp-card">
 
       <div class="row">
-        <div class="col-xs-4" *ngIf="!clubId">
+        <div class="col-xs-4" *ngIf="campusWallView">
           <cp-dropdown
             [items]="walls$ | async"
             (selected)="onFilterSelected($event, 'wall_type')">
           </cp-dropdown>
         </div>
 
-        <div class="col-xs-4 no-left-padding" *ngIf="!clubId">
+        <div class="col-xs-4 no-left-padding" *ngIf="campusWallView">
           <fieldset [disabled]="state.wall_type !== 1">
             <cp-dropdown
               [items]="channels$ | async"
@@ -20,14 +20,14 @@
           </fieldset>
         </div>
 
-        <div [class]="[clubId ? 'col-xs-3' : 'col-xs-3 no-left-padding']">
+        <div [class]="[!campusWallView ? 'col-xs-3' : 'col-xs-3 no-left-padding']">
           <cp-dropdown
             [items]="posts"
             (selected)="onFlaggedOrRemoved($event.action)">
           </cp-dropdown>
         </div>
 
-        <div [class]="[clubId ? 'col-xs-1 no-left-padding pull-right' : 'col-xs-1 no-left-padding']">
+        <div [class]="[!campusWallView ? 'col-xs-1 no-left-padding pull-right' : 'col-xs-1 no-left-padding']">
           <button
             type="button"
             class="cpbtn cpbtn--cancel"
@@ -43,6 +43,7 @@
 <cp-modal modalId="settingsModal">
   <cp-feed-settings-modal
     [clubId]="clubId"
+    [orientationId]="orientationId"
     (updateWallSettings)="onUpdateWallSettings($event)">
   </cp-feed-settings-modal>
 </cp-modal>

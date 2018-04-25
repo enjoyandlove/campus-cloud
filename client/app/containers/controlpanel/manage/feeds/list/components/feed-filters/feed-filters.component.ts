@@ -49,6 +49,7 @@ const state: IState = {
 })
 export class FeedFiltersComponent implements OnInit {
   @Input() clubId: number;
+  @Input() orientationId: number;
   @Input() selectedItem: any;
 
   @Output() doFilter: EventEmitter<IState> = new EventEmitter();
@@ -57,6 +58,7 @@ export class FeedFiltersComponent implements OnInit {
   channels;
   channels$;
   state: IState;
+  campusWallView;
   socialGroups = [];
   walls$: Observable<any>;
 
@@ -210,10 +212,17 @@ export class FeedFiltersComponent implements OnInit {
       },
     ];
 
-    if (this.clubId) {
+    if (this.clubId || this.orientationId) {
+      let group_id;
       const search = new URLSearchParams();
       search.append('school_id', this.session.g.get('school').id.toString());
-      search.append('store_id', this.clubId.toString());
+      if (this.clubId) {
+        group_id = this.clubId;
+        search.append('store_id', this.clubId.toString());
+      } else if (this.orientationId) {
+        group_id = this.orientationId;
+        search.append('calendar_id', this.orientationId.toString());
+      }
 
       const getGroup = this.feedsService.getSocialGroups(search).toPromise();
 
@@ -221,7 +230,7 @@ export class FeedFiltersComponent implements OnInit {
         const group = groups[0];
         this.state = Object.assign({}, this.state, {
           wall_type: group.id,
-          group_id: this.clubId,
+          group_id: group_id,
           flagged_by_users_only: null,
           removed_by_moderators_only: null,
           postingMemberType: group.min_posting_member_type,
@@ -236,5 +245,6 @@ export class FeedFiltersComponent implements OnInit {
 
     this.fetch();
     this.doFilter.emit(this.state);
+    this.campusWallView = !this.clubId && !this.orientationId;
   }
 }

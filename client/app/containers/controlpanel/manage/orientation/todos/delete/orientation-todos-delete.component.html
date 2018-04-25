@@ -1,0 +1,43 @@
+<div class="cpmodal">
+  <div class="cpmodal__header">
+    <div class="row">
+      <div class="col-xs-12 text-center">
+        <span><strong>{{ 'todos_delete' | cpI18n }}</strong></span>
+
+        <span
+          data-dismiss="modal"
+          class="pull-right hover cpmodal__header__close">
+            &times;
+          </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cpmodal__body">
+    <div class="row">
+      <div class="col-xs-12">
+        <p class="text-center">
+          {{ 'orientation_delete_modal_body' | cpI18n:todo.title }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cpmodal__footer">
+    <div class="row">
+      <div class="col-xs-6 col-xs-offset-6 text-right">
+        <button
+          type="button"
+          class="cpbtn cpbtn--cancel"
+          data-dismiss="modal">
+          {{ 'cancel' | cpI18n }}
+        </button>
+
+        <cp-button
+          [props]="buttonData"
+          (buttonClick)="onDelete()">
+        </cp-button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -5,33 +5,27 @@ import { Store } from '@ngrx/store';
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
 import { BannerService } from '../banner.service';
-import {
-  ISnackbar,
-  SNACKBAR_SHOW,
-} from '../../../../../reducers/snackbar.reducer';
-import {
-  CPI18nService,
-  CPCroppieService,
-} from '../../../../../shared/services/index';
+import { ISnackbar, SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
+import { CPI18nService, CPCroppieService } from '../../../../../shared/services/index';
 
 @Component({
   selector: 'cp-banner-list',
   templateUrl: './banner-list.component.html',
-  styleUrls: ['./banner-list.component.scss'],
+  styleUrls: ['./banner-list.component.scss']
 })
-export class BannerListComponent extends BaseComponent
-  implements OnInit {
+export class BannerListComponent extends BaseComponent implements OnInit {
   isEdit;
   loading;
   originalImage;
   uploading = false;
+  customizeBannerTooltip;
   canvas: CPCroppieService;
 
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
     public store: Store<ISnackbar>,
-    public service: BannerService,
+    public service: BannerService
   ) {
     super();
     super.isLoading().subscribe((loading) => (this.loading = loading));
@@ -53,19 +47,17 @@ export class BannerListComponent extends BaseComponent
         this.canvasInit(image);
       },
 
-      5,
+      5
     );
   }
 
-  onSuccess(
-    message = this.cpI18n.translate('customization_image_upload_success'),
-  ) {
+  onSuccess(message = this.cpI18n.translate('customization_image_upload_success')) {
     this.store.dispatch({
       type: SNACKBAR_SHOW,
       payload: {
         body: message,
-        autoClose: true,
-      },
+        autoClose: true
+      }
     });
   }
 
@@ -75,8 +67,8 @@ export class BannerListComponent extends BaseComponent
       payload: {
         autoClose: true,
         class: 'danger',
-        body: message,
-      },
+        body: message
+      }
     });
   }
 
@@ -98,7 +90,7 @@ export class BannerListComponent extends BaseComponent
       enableOrientation: true,
       viewport: { width: 320, height: 180 },
       boundary: { width: 665, height: 270 },
-      url: `${image}?disableCache=true`,
+      url: `${image}?disableCache=true`
     };
 
     this.canvas = new CPCroppieService(hostEl, canvasOptions);
@@ -108,13 +100,13 @@ export class BannerListComponent extends BaseComponent
     return this.canvas.result({
       type: 'base64',
       size: 'original',
-      format: 'jpeg',
+      format: 'jpeg'
     });
   }
 
   uploadBase64Image(base64ImageData: string) {
     const body = {
-      base64_image: base64ImageData,
+      base64_image: base64ImageData
     };
 
     return this.service.uploadBase64Image(body).toPromise();
@@ -129,9 +121,7 @@ export class BannerListComponent extends BaseComponent
         const search = new URLSearchParams();
         search.append('school_id', this.session.g.get('school').id);
 
-        return this.service
-          .updateSchoolImage(savedBase64Image.image_url, search)
-          .toPromise();
+        return this.service.updateSchoolImage(savedBase64Image.image_url, search).toPromise();
       })
       .then((res) => {
         this.originalImage = res.cover_photo_url;
@@ -145,6 +135,14 @@ export class BannerListComponent extends BaseComponent
   }
 
   ngOnInit() {
+    const zendesk = 'https://oohlalamobile.zendesk.com/hc/en-us/articles';
     this.loadImage();
+    this.customizeBannerTooltip = {
+      content: '',
+      link: {
+        url: `${zendesk}/360001101794-What-size-images-should-I-use-in-Campus-Cloud-`,
+        text: this.cpI18n.translate('learn_more')
+      }
+    };
   }
 }

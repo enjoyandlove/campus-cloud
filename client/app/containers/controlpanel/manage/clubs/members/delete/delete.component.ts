@@ -14,6 +14,7 @@ declare var $: any;
 export class ClubsMembersDeleteComponent implements OnInit {
   @Input() member: any;
   @Input() groupId: number;
+
   @Output() deleted: EventEmitter<number> = new EventEmitter();
 
   buttonData;

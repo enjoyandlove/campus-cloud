@@ -7,30 +7,30 @@ const i18n = new CPI18nPipe();
 export const statusTypes = [
   {
     action: ClubStatus.active,
-    label: 'Active',
-    description: i18n.transform('clubs_status_active'),
+    label: i18n.transform('club_status_active'),
+    description: i18n.transform('clubs_status_active')
   },
   {
     action: ClubStatus.inactive,
-    label: 'Inactive',
-    description: i18n.transform('clubs_status_inactive'),
+    label: i18n.transform('club_status_inactive'),
+    description: i18n.transform('clubs_status_inactive')
   },
   {
     action: ClubStatus.pending,
-    label: 'Pending',
-    description: i18n.transform('clubs_status_pending'),
-  },
+    label: i18n.transform('club_status_pending'),
+    description: i18n.transform('clubs_status_pending')
+  }
 ];
 
 export const membershipTypes = [
   {
     action: true,
-    label: 'Enabled',
-    description: i18n.transform('clubs_membership_enabled'),
+    label: i18n.transform('club_membership_enabled_title'),
+    description: i18n.transform('clubs_membership_enabled')
   },
   {
     action: false,
-    label: 'Disabled',
-    description: i18n.transform('clubs_membership_disabled'),
-  },
+    label: i18n.transform('club_membership_disabled_title'),
+    description: i18n.transform('clubs_membership_disabled')
+  }
 ];

@@ -13,8 +13,8 @@
               </a>
               <a
                 class="cpbtn cpbtn--primary"
-                *ngIf="event.event_attendance === 1"
-                [routerLink]="['/cb/checkin/e/' + event.encrypted_id]" i18n>
+                *ngIf="event.event_attendance === attendanceEnabled"
+                [routerLink]="[eventCheckinRoute + event.encrypted_id]">
                 {{ 'events_check_in_details' | cpI18n }}
               </a>
             </div>
@@ -32,7 +32,7 @@
                 <div class="col-xs-3">
                   <p><strong i18n>{{ 'starts' | cpI18n }}</strong></p>
                 </div>
-                <div class="col-xs-9">
+                <div class="col-xs-9 start-date">
                   <p>{{ event.start | cpDatePipe:dateFormat }}</p>
                 </div>
               </div>
@@ -41,7 +41,7 @@
                 <div class="col-xs-3">
                   <p><strong i18n>{{ 'ends' | cpI18n }}</strong></p>
                 </div>
-                <div class="col-xs-9">
+                <div class="col-xs-9 end-date">
                   {{ event.end | cpDatePipe:dateFormat }}
                 </div>
               </div>
@@ -50,7 +50,7 @@
                 <div class="col-xs-3">
                   <p><strong i18n>{{ 'location' | cpI18n }}</strong></p>
                 </div>
-                <div class="col-xs-9">
+                <div class="col-xs-9 address">
                   <p>{{ event.address }}</p>
                 </div>
               </div>
@@ -73,7 +73,7 @@
       <div class="col-xs-12">
         <div class="cp-card">
           <p><strong>{{ 'description' | cpI18n }}</strong></p>
-          <p class="no-margin-bottom">{{ event.description }}</p>
+          <p class="no-margin-bottom description render_line_breaks">{{ event.description }}</p>
         </div>
       </div>
     </div>

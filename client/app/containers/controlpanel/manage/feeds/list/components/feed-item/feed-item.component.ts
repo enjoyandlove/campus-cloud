@@ -15,6 +15,7 @@ declare var $: any;
 export class FeedItemComponent implements OnInit {
   @Input() feed: any;
   @Input() clubId: number;
+  @Input() orientationId: number;
   @Input() isCampusWallView: Observable<any>;
   @Input() isFilteredByRemovedPosts: Observable<any>;
 

@@ -10,11 +10,11 @@ export class OrientationUtilsService {
     links = [{ label: 'Info', link: 'info'}, ...links];
 
     if (hasMembership === ProgramMembership.enabled) {
-      // links = [{ label: 'Members', link: 'members' }, ...links];
-      // links = [{ label: 'Feeds', link: 'feeds' }, ...links];
+      links = [{ label: 'Members', link: 'members' }, ...links];
+      links = [{ label: 'Feeds', link: 'feeds' }, ...links];
     }
 
-    // links = [{ label: 'To-Dos', link: 'todos' }, ...links];
+    links = [{ label: 'To-Dos', link: 'todos' }, ...links];
     links = [{ label: 'Events', link: 'events'}, ...links];
 
     return links;

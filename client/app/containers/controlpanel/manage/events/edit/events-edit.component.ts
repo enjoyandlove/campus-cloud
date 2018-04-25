@@ -7,15 +7,16 @@ import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
-import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { EventsService } from '../events.service';
+import { isProd } from './../../../../../config/env';
 import { FORMAT } from '../../../../../shared/pipes/date';
 import { CPSession, ISchool } from '../../../../../session';
 import { CPMap, CPDate } from '../../../../../shared/utils';
 import { BaseComponent } from '../../../../../base/base.component';
+import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { ErrorService, StoreService, AdminService } from '../../../../../shared/services';
 
-import { EventAttendance, IsAllDay } from '../event.status';
+import { EventAttendance, EventFeedback } from '../event.status';
 import { EventUtilService } from '../events.utils.service';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 
@@ -49,40 +50,42 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   dateFormat;
   serverError;
   isDateError;
-  eventManager;
   originalHost;
   booleanOptions;
   loading = true;
   school: ISchool;
   eventId: number;
   form: FormGroup;
-  studentFeedback;
   selectedManager;
   dateErrorMessage;
-  attendanceManager;
   enddatePickerOpts;
   attendanceEnabled;
   attendance = false;
   isFormReady = false;
   startdatePickerOpts;
   originalAttnFeedback;
+  eventFeedbackEnabled;
+  eventManagerToolTip;
+  production = isProd;
+  studentFeedbackToolTip;
+  attendanceManagerToolTip;
   formMissingFields = false;
   mapCenter: BehaviorSubject<any>;
   newAddress = new BehaviorSubject(null);
   managers: Array<any> = [{ label: '---' }];
 
   constructor(
-    private router: Router,
-    private fb: FormBuilder,
-    private session: CPSession,
+    public router: Router,
+    public fb: FormBuilder,
+    public session: CPSession,
     public cpI18n: CPI18nService,
     private store: Store<IHeader>,
     private route: ActivatedRoute,
     private utils: EventUtilService,
     private adminService: AdminService,
-    private storeService: StoreService,
+    public storeService: StoreService,
     private errorService: ErrorService,
-    private service: EventsService
+    public service: EventsService
   ) {
     super();
     this.school = this.session.g.get('school');
@@ -176,7 +179,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     );
   }
 
-  private buildForm(res) {
+  public buildForm(res) {
     this.form = this.fb.group({
       title: [res.title, Validators.required],
       store_id: [res.store_id, !this.isOrientation ? Validators.required : null],
@@ -273,7 +276,6 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
   onAllDayToggle(value) {
     this.toggleDatePickerTime(value);
-    value = value ? IsAllDay.enabled : IsAllDay.disabled;
     this.form.controls['is_all_day'].setValue(value);
   }
 
@@ -314,7 +316,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       });
   }
 
-  private fetch() {
+  public fetch() {
     let stores$ = Observable.of([]);
     const school = this.session.g.get('school');
     const orientationId = this.orientationId ? this.orientationId.toString() : null;
@@ -344,7 +346,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       .catch((err) => this.errorService.handleError(err));
   }
 
-  private buildHeader() {
+  public buildHeader() {
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
@@ -426,14 +428,14 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.eventManager = Object.assign({}, this.eventManager, {
+    this.eventManagerToolTip = Object.assign({}, this.eventManagerToolTip, {
       content: this.cpI18n.translate('events_event_manager_tooltip')
     });
-    this.attendanceManager = Object.assign({}, this.attendanceManager, {
+    this.attendanceManagerToolTip = Object.assign({}, this.attendanceManagerToolTip, {
       content: this.cpI18n.translate('events_attendance_manager_tooltip')
     });
 
-    this.studentFeedback = Object.assign({}, this.studentFeedback, {
+    this.studentFeedbackToolTip = Object.assign({}, this.studentFeedbackToolTip, {
       content: this.cpI18n.translate('events_event_feedback_tooltip')
     });
 
@@ -463,6 +465,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     ];
 
     this.attendanceEnabled = EventAttendance.enabled;
+    this.eventFeedbackEnabled = EventFeedback.enabled;
     this.fetch();
     this.buildHeader();
   }

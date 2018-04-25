@@ -47,14 +47,14 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
     private store: Store<IHeader>,
     private route: ActivatedRoute,
     public utils: EventUtilService,
-    private service: EventsService,
+    public service: EventsService,
   ) {
     super();
     this.dateFormat = FORMAT.DATETIME;
     this.eventId = this.route.snapshot.params['eventId'];
   }
 
-  private fetch() {
+  public fetch() {
     super.isLoading().subscribe((res) => (this.loading = res));
 
     const search = new URLSearchParams();
@@ -95,7 +95,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
     });
   }
 
-  private buildHeader(event) {
+  public buildHeader(event) {
     const children = this.utils.getSubNavChildren(event, this.urlPrefix);
 
     const payload = {
