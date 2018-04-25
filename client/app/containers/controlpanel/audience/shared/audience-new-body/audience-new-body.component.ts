@@ -9,6 +9,7 @@ import { CPI18nService } from './../../../../../shared/services/i18n.service';
   styleUrls: ['./audience-new-body.component.scss']
 })
 export class AudienceNewBodyComponent implements OnInit {
+  @Input() audience;
   @Input() importButton = true;
   @Input() withChips: Array<any> = [];
   @Input() disableTypeSelection = false;

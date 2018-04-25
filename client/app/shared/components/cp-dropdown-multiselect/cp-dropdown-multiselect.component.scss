@@ -9,6 +9,12 @@
 .component {
   position: relative;
 
+  &.open {
+    .component__content {
+      display: block;
+    }
+  }
+
   &__button {
     width: 100%;
     position: relative;
@@ -27,6 +33,7 @@
     top: 40px;
     z-index: 1;
     width: 100%;
+    display: none;
     padding-left: 0;
     list-style: none;
     position: absolute;

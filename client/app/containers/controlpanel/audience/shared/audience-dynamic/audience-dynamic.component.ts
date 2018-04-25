@@ -1,7 +1,9 @@
 import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
+import { find } from 'lodash';
 
+import { BaseComponent } from '../../../../../base';
 import { CPSession } from './../../../../../session';
 import { CPI18nService } from '../../../../../shared/services';
 import { AudienceSharedService } from './../audience.shared.service';
@@ -11,12 +13,16 @@ import { AudienceSharedService } from './../audience.shared.service';
   templateUrl: './audience-dynamic.component.html',
   styleUrls: ['./audience-dynamic.component.scss']
 })
-export class AudienceDynamicComponent implements OnInit {
+export class AudienceDynamicComponent extends BaseComponent implements OnInit {
+  @Input() audience = null;
+
   @Output() filters: EventEmitter<any> = new EventEmitter();
 
   form: FormGroup;
 
-  filters$;
+  loading;
+  filtersData;
+  selectedItem = [];
   maxFilterCount = 5;
 
   selectedFilterOptions = {};
@@ -32,10 +38,21 @@ export class AudienceDynamicComponent implements OnInit {
     public session: CPSession,
     public cpI18n: CPI18nService,
     public service: AudienceSharedService
-  ) {}
+  ) {
+    super();
+    super.isLoading().subscribe((loading) => (this.loading = loading));
+  }
 
   usedFiltersAsArray() {
     return Object.values(this.state.usedFilters);
+  }
+
+  parseChoice(choice, selected = false) {
+    return {
+      action: choice.id,
+      label: choice.text,
+      selected
+    };
   }
 
   onFilterSelected({ id, choices }, index) {
@@ -53,13 +70,7 @@ export class AudienceDynamicComponent implements OnInit {
 
     this.state = { ...this.state, usedFilters: { ...this.state.usedFilters, [index]: id } };
 
-    this.selectedFilterOptions[index] = choices.map((choice) => {
-      return {
-        action: choice.id,
-        label: choice.text,
-        selected: false
-      };
-    });
+    this.selectedFilterOptions[index] = choices.map((choice) => this.parseChoice(choice));
 
     const controls = <FormArray>this.form.controls['filters'];
     const formGroup = <FormGroup>controls.at(index);
@@ -78,15 +89,15 @@ export class AudienceDynamicComponent implements OnInit {
     this.filters.emit(this.form.value.filters);
   }
 
-  addFilterGroup() {
+  addFilterGroup(filter = { attr_id: null, choices: [] }) {
     this.state = { ...this.state, filterCount: this.state.filterCount + 1 };
 
     const control = <FormArray>this.form.controls['filters'];
 
     control.push(
       this.fb.group({
-        attr_id: [null, Validators.required],
-        choices: [[], Validators.required]
+        attr_id: [filter.attr_id, Validators.required],
+        choices: [filter.choices, Validators.required]
       })
     );
 
@@ -101,19 +112,39 @@ export class AudienceDynamicComponent implements OnInit {
     control.removeAt(index);
 
     this.state = { ...this.state, filterCount: this.state.filterCount - 1 };
+
+    this.filters.emit(this.form.value.filters);
   }
 
-  ngOnInit(): void {
-    this.form = this.fb.group({
-      filters: this.fb.array([])
+  preloadFilters() {
+    this.audience.filters.forEach((filter, index) => {
+      // update usedFilters
+      this.state = {
+        ...this.state,
+        usedFilters: { ...this.state.usedFilters, [index]: filter.attr_id }
+      };
+
+      // add row
+      this.addFilterGroup(filter);
+
+      // populate filter label
+      this.selectedItem.push(find(this.filtersData, (f: any) => f.id === filter.attr_id));
+
+      // populate choices
+      const choices = this.selectedItem[index].choices;
+      const isSelected = (id) => filter.choices.includes(id);
+
+      this.selectedFilterOptions[index] = choices.map((choice) =>
+        this.parseChoice(choice, isSelected(choice.id))
+      );
     });
+  }
 
-    this.addFilterGroup();
-
+  fetch() {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id);
 
-    this.filters$ = this.service
+    const stream$ = this.service
       .getFilters(search)
       .startWith([
         {
@@ -137,5 +168,19 @@ export class AudienceDynamicComponent implements OnInit {
           })
         ];
       });
+
+    super.fetchData(stream$).then(({ data }) => {
+      this.filtersData = data;
+
+      this.audience ? this.preloadFilters() : this.addFilterGroup();
+    });
+  }
+
+  ngOnInit(): void {
+    this.form = this.fb.group({
+      filters: this.fb.array([])
+    });
+
+    this.fetch();
   }
 }
