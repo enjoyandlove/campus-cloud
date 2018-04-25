@@ -1,4 +1,3 @@
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 /*tslint:disable:max-line-length*/
 import {
   Component,
@@ -10,6 +9,7 @@ import {
   QueryList
 } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { CPTabComponent } from './../../../../../shared/components/cp-tabs/components/cp-tab/cp-tab.component';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
