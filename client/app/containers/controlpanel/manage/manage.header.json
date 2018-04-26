@@ -50,7 +50,6 @@
     },
     {
       "privilege": 17,
-      "hiddenInProd": true,
       "label": "orientation",
       "url": "/manage/orientation"
     }
