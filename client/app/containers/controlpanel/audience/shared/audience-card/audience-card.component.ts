@@ -23,6 +23,8 @@ export class AudienceCardComponent implements OnInit, AfterViewInit {
   @ViewChildren(CPTabComponent) tabs: QueryList<CPTabComponent>;
 
   @Output() importClick: EventEmitter<null> = new EventEmitter();
+  @Output() resetNewAduience: EventEmitter<null> = new EventEmitter();
+  @Output() resetSavedAduience: EventEmitter<null> = new EventEmitter();
   @Output() selectedAudience: EventEmitter<number> = new EventEmitter();
   @Output() selectedUsers: EventEmitter<Array<number>> = new EventEmitter();
   @Output() selectedFilters: EventEmitter<Array<number>> = new EventEmitter();
@@ -33,6 +35,15 @@ export class AudienceCardComponent implements OnInit, AfterViewInit {
   importedAudience$: BehaviorSubject<{ label: string; action: number }> = new BehaviorSubject(null);
 
   constructor(public cpI18n: CPI18nService, public store: Store<any>) {}
+
+  onTabClick({ id }) {
+    if (id === 'saved') {
+      this.resetNewAduience.emit();
+    }
+    if (id === 'new') {
+      this.resetSavedAduience.emit();
+    }
+  }
 
   ngAfterViewInit() {
     this.store

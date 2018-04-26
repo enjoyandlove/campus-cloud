@@ -7,10 +7,7 @@ import { API } from '../../../../config/api';
 
 @Injectable()
 export class AnnouncementsService extends BaseService {
-  constructor(
-    http: Http,
-    router: Router
-  ) {
+  constructor(http: Http, router: Router) {
     super(http, router);
 
     Object.setPrototypeOf(this, AnnouncementsService.prototype);
@@ -20,6 +17,12 @@ export class AnnouncementsService extends BaseService {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER}/`;
 
     return super.get(url, { search }).map((res) => res.json());
+  }
+
+  createAudience(body: any, search: URLSearchParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER_LIST}/`;
+
+    return super.post(url, body, { search }).map((res) => res.json());
   }
 
   getLists(search: URLSearchParams, startRange: number, endRange: number) {

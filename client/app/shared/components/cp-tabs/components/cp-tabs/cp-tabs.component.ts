@@ -1,4 +1,12 @@
-import { OnInit, QueryList, Component, ContentChildren, AfterContentInit } from '@angular/core';
+import {
+  OnInit,
+  QueryList,
+  Component,
+  ContentChildren,
+  AfterContentInit,
+  Output,
+  EventEmitter
+} from '@angular/core';
 
 import { CPTabComponent } from './../cp-tab/cp-tab.component';
 
@@ -8,6 +16,8 @@ import { CPTabComponent } from './../cp-tab/cp-tab.component';
   styleUrls: ['./cp-tabs.component.scss']
 })
 export class CPTabsComponent implements OnInit, AfterContentInit {
+  @Output() tabClick: EventEmitter<any> = new EventEmitter();
+
   @ContentChildren(CPTabComponent) tabs: QueryList<CPTabComponent>;
 
   constructor() {}
@@ -18,6 +28,8 @@ export class CPTabsComponent implements OnInit, AfterContentInit {
 
     // activate the tab the user has clicked on.
     tab.active = true;
+
+    this.tabClick.emit(tab);
   }
 
   ngAfterContentInit() {

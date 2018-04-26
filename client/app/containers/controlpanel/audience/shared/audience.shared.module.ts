@@ -40,6 +40,7 @@ import { AudienceFilterPipe } from './filters.pipe';
     AudienceCounterComponent,
     AudienceNewBodyComponent,
     AudienceSavedBodyComponent,
+    AudienceSaveModalComponent,
     AudienceUsersTypeaheadComponent
   ]
 })
