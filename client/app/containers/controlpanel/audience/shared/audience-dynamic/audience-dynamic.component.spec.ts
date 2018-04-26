@@ -16,15 +16,17 @@ class MockService {
 
     return Observable.of([
       {
-        id: 1,
-        label: 'hello',
-        choices: []
+        count: 0,
+        type: 1,
+        id: 351,
+        filters: [{ attr_id: 40, choices_text: ['TRUE', 'FALSE'], choices: [49, 50] }],
+        name: '## A new Dynamic List'
       }
     ]);
   }
 }
 
-fdescribe('AudienceDynamicComponent', () => {
+describe('AudienceDynamicComponent', () => {
   let session: CPSession;
   let comp: AudienceDynamicComponent;
   let fixture: ComponentFixture<AudienceDynamicComponent>;
@@ -42,6 +44,7 @@ fdescribe('AudienceDynamicComponent', () => {
 
     fixture = TestBed.createComponent(AudienceDynamicComponent);
     comp = fixture.componentInstance;
+    comp.selectedItem = [];
     session = TestBed.get(CPSession);
     session.g.set('school', { id: 1 });
   });
@@ -75,8 +78,8 @@ fdescribe('AudienceDynamicComponent', () => {
     })
   );
 
-  it('preloadFilters', () => {
-    comp.selectedItem = [];
+  xit('preloadFilters', () => {
+    // comp.selectedItem = [];
 
     comp.filtersData = [
       {
@@ -98,8 +101,6 @@ fdescribe('AudienceDynamicComponent', () => {
 
     fixture.detectChanges();
 
-    // comp.preloadFilters();
-
-    console.log(comp.state);
+    comp.preloadFilters();
   });
 });
