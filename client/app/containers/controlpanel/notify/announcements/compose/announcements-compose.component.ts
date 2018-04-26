@@ -167,7 +167,12 @@ export class AnnouncementsComposeComponent implements OnInit {
   onTeardownAudienceSaveModal() {
     $('#audienceSaveModal').modal('hide');
 
-    this.buttonData = { ...this.buttonData, disabled: false };
+    this.state = {
+      ...this.state,
+      triggerSaveModal: false
+    };
+
+    this.doSubmit();
   }
 
   onAudienceNamed({ name }) {
@@ -192,7 +197,23 @@ export class AnnouncementsComposeComponent implements OnInit {
         $('#audienceSaveModal').modal('hide');
         this.doSubmit();
       })
-      .catch(() => $('#audienceSaveModal').modal('hide'));
+      .catch(() => {
+        $('#audienceSaveModal').modal('hide');
+
+        this.store.dispatch({
+          type: SNACKBAR_SHOW,
+          payload: {
+            sticky: true,
+            class: 'danger',
+            body: this.cpI18n.translate('something_went_wrong')
+          }
+        });
+
+        this.buttonData = {
+          ...this.buttonData,
+          disabled: false
+        };
+      });
   }
 
   onResetNewAduience() {
