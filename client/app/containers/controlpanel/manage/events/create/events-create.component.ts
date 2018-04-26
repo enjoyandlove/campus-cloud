@@ -13,12 +13,13 @@ import {
 } from '../../../../../shared/services';
 
 import { EventsService } from '../events.service';
+import { isProd } from './../../../../../config/env';
 import { CPSession, ISchool } from '../../../../../session';
 import { CPMap, CPDate } from '../../../../../shared/utils';
-import { EventAttendance, EventFeedback, IsAllDay } from '../event.status';
+import { EventUtilService } from '../events.utils.service';
+import { EventAttendance, EventFeedback, isAllDay } from '../event.status';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
-import { EventUtilService } from '../events.utils.service';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
 const FORMAT_WITHOUT_TIME = 'F j, Y';
@@ -49,41 +50,35 @@ export class EventsCreateComponent implements OnInit {
   urlPrefix;
   buttonData;
   isDateError;
-  eventManager;
   booleanOptions;
-  studentFeedback;
   school: ISchool;
   form: FormGroup;
   dateErrorMessage;
-  attendanceManager;
   formError = false;
   attendance = false;
   enddatePickerOpts;
   startdatePickerOpts;
+  eventFeedbackEnabled;
+  eventManagerToolTip;
+  production = isProd;
+  studentFeedbackToolTip;
+  attendanceManagerToolTip;
   mapCenter: BehaviorSubject<any>;
   newAddress = new BehaviorSubject(null);
   managers: Array<any> = [{ label: '---' }];
 
   constructor(
-    private router: Router,
-    private fb: FormBuilder,
-    private session: CPSession,
+    public router: Router,
+    public fb: FormBuilder,
+    public session: CPSession,
     public cpI18n: CPI18nService,
-    private storeHeader: Store<any>,
-    private service: EventsService,
+    public storeHeader: Store<any>,
+    public service: EventsService,
     private utils: EventUtilService,
-    private adminService: AdminService,
-    private storeService: StoreService,
-    private errorService: ErrorService
-  ) {
-    this.school = this.session.g.get('school');
-    const search: URLSearchParams = new URLSearchParams();
-
-    this.buildHeader();
-    search.append('school_id', this.school.id.toString());
-
-    this.stores$ = this.storeService.getStores(search);
-  }
+    public adminService: AdminService,
+    public storeService: StoreService,
+    public errorService: ErrorService
+  ) {}
 
   buildHeader() {
     const payload = {
@@ -226,6 +221,10 @@ export class EventsCreateComponent implements OnInit {
       }
     }
 
+    if (this.form.controls['is_all_day'].value) {
+      this.updateTime();
+    }
+
     if (this.form.controls['end'].value <= this.form.controls['start'].value) {
       this.isDateError = true;
       this.formError = true;
@@ -244,10 +243,6 @@ export class EventsCreateComponent implements OnInit {
       this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
 
       return;
-    }
-
-    if (this.form.controls['is_all_day'].value) {
-      this.updateTime();
     }
 
     const search = new URLSearchParams();
@@ -317,19 +312,29 @@ export class EventsCreateComponent implements OnInit {
 
   onAllDayToggle(value) {
     this.toggleDatePickerTime(value);
-    value = value ? IsAllDay.enabled : IsAllDay.disabled;
     this.form.controls['is_all_day'].setValue(value);
   }
 
   ngOnInit() {
-    this.eventManager = Object.assign({}, this.eventManager, {
+    this.eventFeedbackEnabled = EventFeedback.enabled;
+
+    this.school = this.session.g.get('school');
+    const search: URLSearchParams = new URLSearchParams();
+
+    this.buildHeader();
+    search.append('school_id', this.school.id.toString());
+
+    this.stores$ = this.storeService.getStores(search);
+
+    this.eventManagerToolTip = Object.assign({}, this.eventManagerToolTip, {
       content: this.cpI18n.translate('events_event_manager_tooltip')
     });
-    this.attendanceManager = Object.assign({}, this.attendanceManager, {
+
+    this.attendanceManagerToolTip = Object.assign({}, this.attendanceManagerToolTip, {
       content: this.cpI18n.translate('events_attendance_manager_tooltip')
     });
 
-    this.studentFeedback = Object.assign({}, this.studentFeedback, {
+    this.studentFeedbackToolTip = Object.assign({}, this.studentFeedbackToolTip, {
       content: this.cpI18n.translate('events_event_feedback_tooltip')
     });
 
@@ -396,7 +401,7 @@ export class EventsCreateComponent implements OnInit {
       event_manager_id: [null],
       attendance_manager_email: [null],
       custom_basic_feedback_label: [null],
-      is_all_day: [IsAllDay.disabled]
+      is_all_day: [isAllDay.disabled]
     });
 
     const _self = this;

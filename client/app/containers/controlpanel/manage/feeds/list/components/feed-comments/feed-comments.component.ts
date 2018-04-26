@@ -22,6 +22,8 @@ const state: IState = {
 export class FeedCommentsComponent extends BaseComponent implements OnInit {
   @Input() feed;
   @Input() clubId: number;
+  @Input() postType: number;
+  @Input() orientationId: number;
   @Input() isCampusWallView: Observable<number>;
   @Output() deleted: EventEmitter<null> = new EventEmitter();
   @Output() replied: EventEmitter<null> = new EventEmitter();

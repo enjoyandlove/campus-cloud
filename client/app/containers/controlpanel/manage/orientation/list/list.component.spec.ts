@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, fakeAsync, tick, TestBed, ComponentFixture } from '@angular/core/testing';
 import { Observable } from 'rxjs/Observable';
 import { Store, StoreModule } from '@ngrx/store';
 import { URLSearchParams } from '@angular/http';
@@ -71,11 +71,13 @@ describe('OrientationListComponent', () => {
     expect(component.state.search_str).toEqual('hello world');
   });
 
-  it('should fetch list of orientation programs', () => {
+  it('should fetch list of orientation programs', fakeAsync(() => {
     spy = spyOn(component.service, 'getPrograms').and.returnValue(Observable.of(mockPrograms));
     component.ngOnInit();
 
+    tick();
     expect(spy.calls.count()).toBe(1);
+    expect(component.state.orientationPrograms.length).toEqual(mockPrograms.length);
     expect(spy).toHaveBeenCalledWith(component.startRange, component.endRange, search);
-  });
+  }));
 });

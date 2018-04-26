@@ -59,7 +59,7 @@ export class OrientationDuplicateProgramComponent implements OnInit {
     search.append('school_id', this.session.g.get('school').id);
 
     this.service
-      .duplicateProgram(this.orientationProgram.id, this.form.value, search)
+      .duplicateProgram(this.form.value, search)
       .subscribe((duplicateProgram) => {
         this.resetModal();
         this.router.navigate([
@@ -70,7 +70,7 @@ export class OrientationDuplicateProgramComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      id: [this.orientationProgram.id],
+      clone_calendar_id: [this.orientationProgram.id],
       name: [null, [Validators.required, Validators.maxLength(225)]],
       description: [null, Validators.maxLength(512)],
       has_membership: [this.orientationProgram.has_membership],

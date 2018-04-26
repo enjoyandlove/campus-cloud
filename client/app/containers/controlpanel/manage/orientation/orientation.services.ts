@@ -1,5 +1,4 @@
 import { URLSearchParams, Http } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -8,8 +7,6 @@ import { BaseService } from '../../../../base';
 
 @Injectable()
 export class OrientationService extends BaseService {
-  dummy;
-
   constructor(http: Http, router: Router) {
     super(http, router);
 
@@ -48,9 +45,9 @@ export class OrientationService extends BaseService {
     return super.delete(url, { search }).map((res) => res.json());
   }
 
-  duplicateProgram(programId: number, body: any, search: URLSearchParams) {
-    this.dummy = [programId, body, search];
+  duplicateProgram(body: any, search: URLSearchParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ORIENTATION}/`;
 
-    return Observable.of(body).delay(300);
+    return super.post(url, body, { search }).map((res) => res.json());
   }
 }

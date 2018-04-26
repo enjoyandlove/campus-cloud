@@ -43,8 +43,7 @@
     "message": "Athletics Club Owner"
   },
   "admin_athletics_owner_help": {
-    "message":
-      "Create new athletics clubs; manage information, events and membership for all clubs or select clubs"
+    "message": "Create new athletics clubs; manage information, events and membership for all clubs or select clubs"
   },
   "admin_campus_announcements": {
     "message": "Regular Announcements"
@@ -67,8 +66,7 @@
     "message": "Club Owner"
   },
   "admin_club_owner_help": {
-    "message":
-      "Create new clubs; manage information, events and membership for all clubs or select clubs"
+    "message": "Create new clubs; manage information, events and membership for all clubs or select clubs"
   },
   "admin_club_service_modal_title": {
     "message": "Select %s"
@@ -155,8 +153,7 @@
     "message": "Service Executive"
   },
   "admin_service_owner_help": {
-    "message":
-      "Create new services; manage information, events and assessment for all services or select services"
+    "message": "Create new services; manage information, events and assessment for all services or select services"
   },
   "all": {
     "message": "All Categories"
@@ -192,8 +189,7 @@
     "message": "Delete Announcement"
   },
   "announcements_emergency_help": {
-    "message":
-      "Overrides the user's push notifications settings and forces them to acknowledge the message"
+    "message": "Overrides the user's push notifications settings and forces them to acknowledge the message"
   },
   "announcements_not_sent": {
     "message": "Message not sent, please wait %s minutes before trying again"
@@ -283,29 +279,25 @@
     "message": "Check-in Item"
   },
   "assess_demo_feature_four_description": {
-    "message":
-      "Assessment enables you to easily identify which students are disengaged and send them targeted communications via the campus app."
+    "message": "Assessment enables you to easily identify which students are disengaged and send them targeted communications via the campus app."
   },
   "assess_demo_feature_four_title": {
     "message": "Identify and Communicate"
   },
   "assess_demo_feature_one_description": {
-    "message":
-      "Conveniently track student attendance at campus events and services without any additional hardware or software."
+    "message": "Conveniently track student attendance at campus events and services without any additional hardware or software."
   },
   "assess_demo_feature_one_title": {
     "message": "Communicate with Students"
   },
   "assess_demo_feature_three_description": {
-    "message":
-      "Positive student engagement is the key to success. Get detailed insights on how students engaged and interacted with events or services."
+    "message": "Positive student engagement is the key to success. Get detailed insights on how students engaged and interacted with events or services."
   },
   "assess_demo_feature_three_title": {
     "message": "Actionable Insights"
   },
   "assess_demo_feature_two_description": {
-    "message":
-      "Get real-time feedback and input from your students on programs, including answers to custom questions for any events or services."
+    "message": "Get real-time feedback and input from your students on programs, including answers to custom questions for any events or services."
   },
   "assess_demo_feature_two_title": {
     "message": "Attendance Tracking"
@@ -326,8 +318,7 @@
     "message": "or email us at cm@oohlalamobile.com"
   },
   "assess_demo_hero_description": {
-    "message":
-      "OOHLALA Assessment enables you to measure and assess student activity outside of the classroom"
+    "message": "OOHLALA Assessment enables you to measure and assess student activity outside of the classroom"
   },
   "assess_demo_hero_title": {
     "message": "Measure Student Engagement Anywhere on Campus"
@@ -624,7 +615,7 @@
     "message": "Name"
   },
   "calendars_no_results_found": {
-    "message": "No Calendars found"
+    "message": "No calendars found"
   },
   "campus_wall": {
     "message": "Campus Wall"
@@ -658,20 +649,16 @@
   },
   "checkin_header_title": {
     "message": "Check-in",
-    "description":
-      "Public Check-In Page (Title)\r\nhttps://ccstaging.oohlalamobile.com/#/cb/checkin/e/pNmRN94bVUbUI9qtz89i5A"
+    "description": "Public Check-In Page (Title)\r\nhttps://ccstaging.oohlalamobile.com/#/cb/checkin/e/pNmRN94bVUbUI9qtz89i5A"
   },
   "checkin_instructions_one": {
-    "message":
-      "We use QR codes to help attendees check in to an event. Be sure to print or share the QR  code with your event attendance organizer."
+    "message": "We use QR codes to help attendees check in to an event. Be sure to print or share the QR  code with your event attendance organizer."
   },
   "checkin_instructions_three": {
-    "message":
-      "You can view attendance statistics in Event Info. Be sure to come back to view feedback and ratings."
+    "message": "You can view attendance statistics in Event Info. Be sure to come back to view feedback and ratings."
   },
   "checkin_instructions_two": {
-    "message":
-      "Attendees can check in by scanning the QR code with the app. QR Codes can be printed or shown directly on a laptop, phone or tablet screen"
+    "message": "Attendees can check in by scanning the QR code with the app. QR Codes can be printed or shown directly on a laptop, phone or tablet screen"
   },
   "checkin_list": {
     "message": "Attendee List"
@@ -702,8 +689,7 @@
   },
   "clubs_delete_error_unauthorized": {
     "message": "You do not have permission to delete this club.",
-    "description":
-      "In Manage Clubs, try to delete a club for which you have only the Limited Edit permission"
+    "description": "In Manage Clubs, try to delete a club for which you have only the Limited Edit permission"
   },
   "clubs_delete_modal_body": {
     "message": "Are you sure you want to delete %s?"
@@ -788,7 +774,7 @@
     "message": "Name (requires a campus app account)"
   },
   "clubs_no_members_found": {
-    "message": "No Members Found"
+    "message": "No members found"
   },
   "clubs_no_results": {
     "message": "No clubs found"
@@ -805,6 +791,26 @@
   "club_info_notes": {
     "message": "Club Notes",
     "description": "As a club super editor, view a club info page with club notes. "
+  },
+  "club_membership_disabled_title": {
+    "message": "Disabled",
+    "description": "Create Club > Membership"
+  },
+  "club_membership_enabled_title": {
+    "message": "Enabled",
+    "description": "Create Club > Membership"
+  },
+  "club_status_active": {
+    "message": "Active",
+    "description": "Create Club > Status"
+  },
+  "club_status_inactive": {
+    "message": "Inactive",
+    "description": "Create Club > Status"
+  },
+  "club_status_pending": {
+    "message": "Pending",
+    "description": "Create Club > Status"
   },
   "comment": {
     "message": "Comment",
@@ -994,6 +1000,9 @@
   "download_csv": {
     "message": "Download CSV File"
   },
+  "due_date": {
+    "message": "Due Date"
+  },
   "duplicate_entry": {
     "message": "There is already a user with that email address."
   },
@@ -1057,8 +1066,7 @@
     "message": "Attendance Manager"
   },
   "events_attendance_manager_tooltip": {
-    "message":
-      "Any valid email address.  The Attendance Manager receives email instructions about setting up check-ins for the event."
+    "message": "Any valid email address.  The Attendance Manager receives email instructions about setting up check-ins for the event."
   },
   "events_attendant": {
     "message": "Attendant"
@@ -1118,15 +1126,13 @@
     "message": "Event Details"
   },
   "events_event_feedback_tooltip": {
-    "message":
-      "Events with Feedback enabled use a push notification to gather student feedback, including a star rating and response to the feedback question."
+    "message": "Events with Feedback enabled use a push notification to gather student feedback, including a star rating and response to the feedback question."
   },
   "events_event_manager": {
     "message": "Event Manager"
   },
   "events_event_manager_tooltip": {
-    "message":
-      "Select a Host (a Club or Service) before you select an Event Manager.  The Event Manager receives emails related to checking in users, and assessment reports once the event is finished."
+    "message": "Select a Host (a Club or Service) before you select an Event Manager.  The Event Manager receives emails related to checking in users, and assessment reports once the event is finished."
   },
   "events_event_name": {
     "message": "Event Name"
@@ -1138,8 +1144,7 @@
     "message": "Import Events from Facebook"
   },
   "events_facebook_help": {
-    "message":
-      "Provide the link to the Facebook event page (e.g., https://www.facebook.com/oohlalamobileapp/events/)."
+    "message": "Provide the link to the Facebook event page (e.g., https://www.facebook.com/oohlalamobileapp/events/)."
   },
   "events_facebook_label_host": {
     "message": "Select Host"
@@ -1206,8 +1211,7 @@
   },
   "feedback_label_event_feedback": {
     "message": "Event Feedback",
-    "description":
-      "Single Event \r\nhttps://projects.invisionapp.com/d/main#/console/10688612/232187816/preview"
+    "description": "Single Event \r\nhttps://projects.invisionapp.com/d/main#/console/10688612/232187816/preview"
   },
   "feedback_label_rate_event": {
     "message": "Rate Event"
@@ -1322,8 +1326,7 @@
     "message": "February 12, 2018"
   },
   "ga_onboarding_text_1": {
-    "message":
-      "Campus Cloud is changing. We're making it a faster, powerful and smoother experience for you."
+    "message": "Campus Cloud is changing. We're making it a faster, powerful and smoother experience for you."
   },
   "ga_onboarding_text_2": {
     "message": "The new Campus Cloud will become the default experience on"
@@ -1332,8 +1335,7 @@
     "message": "and the older version will no longer be accessible."
   },
   "ga_onboarding_text_4": {
-    "message":
-      "You can learn all about the new Campus Cloud with guides, how-tos and troubleshooting in our new"
+    "message": "You can learn all about the new Campus Cloud with guides, how-tos and troubleshooting in our new"
   },
   "ga_onboarding_text_5": {
     "message": "If you have any questions, comments or feedback, we'd love to hear from you:"
@@ -1370,6 +1372,10 @@
   },
   "last_name": {
     "message": "Last Name"
+  },
+  "leader": {
+    "message": "Leader",
+    "description": "Manage > Orientation > Program > view program details \r\nAdd Member > Member Type dropdown"
   },
   "links": {
     "message": "Links"
@@ -1423,8 +1429,7 @@
     "message": "Edit List"
   },
   "lists_error_template_conflict": {
-    "message":
-      "This list is being used in a notification template. To delete this list, first delete all templates addressed to this list, and try again."
+    "message": "This list is being used in a notification template. To delete this list, first delete all templates addressed to this list, and try again."
   },
   "lists_label_list_description": {
     "message": "Description"
@@ -1482,12 +1487,10 @@
     "message": "Manage"
   },
   "manage_create_service_category_tooltip": {
-    "message":
-      "Select a category for your service.  Categories help filter and group content in the campus app."
+    "message": "Select a category for your service.  Categories help filter and group content in the campus app."
   },
   "manage_create_service_feedback_tooltip": {
-    "message":
-      "Services with Feedback enabled use a push notification to gather student feedback, including a star rating and response to the feedback question."
+    "message": "Services with Feedback enabled use a push notification to gather student feedback, including a star rating and response to the feedback question."
   },
   "manage_team_members": {
     "message": "Team Members"
@@ -1538,8 +1541,7 @@
     "message": "Recipients"
   },
   "notify_announcement_template_to_tooltip": {
-    "message":
-      "Notifications can be sent to app users, which you can group together into Lists.  For more info:"
+    "message": "Notifications can be sent to app users, which you can group together into Lists.  For more info:"
   },
   "no_admins_found": {
     "message": "No Admins found"
@@ -1610,8 +1612,16 @@
   "orientation_enable_membership_description": {
     "message": "Creates an orientation wall where members can post messages."
   },
+  "orientation_feeds_wall_settings_modal_title": {
+    "message": "Orientation Wall Settings",
+    "description": "Manage > Orientation > choose a program > Walls > Settings"
+  },
   "orientation_no_results_found": {
     "message": "No Programs found"
+  },
+  "orientation_wall_name": {
+    "message": "Program Name",
+    "description": "Manage > Orientation > choose program > Settings"
   },
   "password": {
     "message": "Password"
@@ -1623,8 +1633,7 @@
     "message": "Your password must contain at least 6 characters."
   },
   "password_requirements_special_char": {
-    "message":
-      "For added security, use numbers, letters and special characters such as @, #, $, &, etc"
+    "message": "For added security, use numbers, letters and special characters such as @, #, $, &, etc"
   },
   "password_reset_success": {
     "message": "Password saved, redirecting you to the login page"
@@ -1683,8 +1692,7 @@
     "message": "The OOHLALA Team."
   },
   "release_notes_p_two": {
-    "message":
-      "Should you wish to return to the old Campus Cloud, you can always do so by clicking on the banner at the top of the screen. If you wish to provide any feedback on your experience with the new Campus Cloud, please contact us at "
+    "message": "Should you wish to return to the old Campus Cloud, you can always do so by clicking on the banner at the top of the screen. If you wish to provide any feedback on your experience with the new Campus Cloud, please contact us at "
   },
   "release_notes_sept_6_item_one": {
     "message": "Student comments are now included in downloaded Assessment data"
@@ -1845,8 +1853,7 @@
     "message": "No services found"
   },
   "services_providers_no_results": {
-    "message":
-      "There are no service providers for this service.  Use \"Create Service Provider\" to create one. \n\nService Providers are used to track attendance check-ins and gather student feedback."
+    "message": "There are no service providers for this service.  Use \"Create Service Provider\" to create one. \n\nService Providers are used to track attendance check-ins and gather student feedback."
   },
   "services_provider_button_add_another": {
     "message": "Add another Service Provider"
@@ -1886,8 +1893,7 @@
   },
   "service_or_service_provider_error_not_found": {
     "message": "The service provider does not exist.",
-    "description":
-      "Create a service with assessment,\r\nAdd a service provider to that service\r\nOpen the ckeckin view on a new tab\r\nDelete the Service provider\r\nRefresh the checkin view and check your console"
+    "description": "Create a service with assessment,\r\nAdd a service provider to that service\r\nOpen the ckeckin view on a new tab\r\nDelete the Service provider\r\nRefresh the checkin view and check your console"
   },
   "service_provider": {
     "message": "Service Provider"
@@ -1918,8 +1924,7 @@
   },
   "student_engagements": {
     "message": "Student Engagement",
-    "description":
-      "Graph title\r\nhttps://ccstaging.oohlalamobile.com/#/assess/dashboard?engagement=all&for=all_students&range=last_week"
+    "description": "Graph title\r\nhttps://ccstaging.oohlalamobile.com/#/assess/dashboard?engagement=all&for=all_students&range=last_week"
   },
   "student_feedback": {
     "message": "Feedback"
@@ -1957,11 +1962,31 @@
   "templates_delete_modal_title": {
     "message": "Delete Template"
   },
+  "temporarily_disabled": {
+    "message": "Will be implemented in a future app release",
+    "description": "orientation event > edit > assessment"
+  },
   "title": {
     "message": "Title"
   },
   "to": {
     "message": "To"
+  },
+  "to-dos": {
+    "message": "To-do's"
+  },
+  "todos_create": {
+    "message": "Create To-do"
+  },
+  "todos_delete": {
+    "message": "Delete To-do"
+  },
+  "todos_new": {
+    "message": "Create To-do"
+  },
+  "todos_no_results_found": {
+    "message": "No to-do's found",
+    "description": "Orientation Calendar > To-do's > no results"
   },
   "tooltip_more_text": {
     "message": "(%s) More"

@@ -12,7 +12,6 @@ const appRoutes: Routes = [
     path: '',
     component: ManageComponent,
     canActivate: [AuthGuard],
-    canActivateChild: [AuthGuard],
     children: [
       {
         path: 'events',
