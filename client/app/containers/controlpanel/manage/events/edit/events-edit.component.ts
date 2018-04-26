@@ -134,6 +134,10 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
+    if (this.form.controls['is_all_day'].value) {
+      this.updateTime();
+    }
+
     if (this.form.controls['end'].value <= this.form.controls['start'].value) {
       this.isDateError = true;
       this.formMissingFields = true;
@@ -154,10 +158,6 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
 
       return;
-    }
-
-    if (this.form.controls['is_all_day'].value) {
-      this.updateTime();
     }
 
     const search = new URLSearchParams();
