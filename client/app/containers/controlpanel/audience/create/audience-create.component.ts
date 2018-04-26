@@ -99,17 +99,17 @@ export class AduienceCreateComponent implements OnInit, OnDestroy {
   }
 
   validate() {
-    let isValid = true;
+    let validaName = false;
+    let validaUsersIds = true;
+    let validaFilters = true;
 
-    const filters = _get(this.form.controls, 'filters', false);
-    const user_ids = _get(this.form.controls, 'user_ids', false);
+    const filters = _get(this.form.controls.filters, 'value', false);
+    const user_ids = _get(this.form.controls.user_ids, 'value', false);
 
-    if (!this.form.controls['name'].value) {
-      isValid = false;
-    }
+    validaName = !!this.form.controls['name'].value;
 
     if (user_ids) {
-      isValid = this.form.controls['user_ids'].value;
+      validaUsersIds = this.form.controls['user_ids'].value;
     }
 
     if (filters) {
@@ -118,15 +118,13 @@ export class AduienceCreateComponent implements OnInit, OnDestroy {
       if (control.value) {
         control.value.forEach((filter) => {
           if (!filter['attr_id'] || !filter['choices'].length) {
-            isValid = false;
+            validaFilters = false;
           }
         });
-      } else {
-        isValid = false;
       }
     }
 
-    return isValid;
+    return validaName && validaUsersIds && validaFilters && (filters || user_ids);
   }
 
   ngOnDestroy() {

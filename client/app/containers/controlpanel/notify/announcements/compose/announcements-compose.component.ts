@@ -20,6 +20,7 @@ interface IState {
   isToFilters: boolean;
   isEmergency: boolean;
   isCampusWide: boolean;
+  triggerSaveModal: boolean;
 }
 
 const state: IState = {
@@ -28,7 +29,8 @@ const state: IState = {
   isToUsers: false,
   isToFilters: false,
   isEmergency: false,
-  isCampusWide: true
+  isCampusWide: true,
+  triggerSaveModal: false
 };
 
 const THROTTLED_STATUS = 1;
@@ -110,7 +112,8 @@ export class AnnouncementsComposeComponent implements OnInit {
         ...this.state,
         isToUsers: false,
         isToLists: true,
-        isCampusWide: false
+        isCampusWide: false,
+        triggerSaveModal: false
       };
       this.form.controls['list_ids'].setValue([audienceId]);
       this.form.controls['is_school_wide'].setValue(false);
@@ -120,7 +123,8 @@ export class AnnouncementsComposeComponent implements OnInit {
         isToUsers: false,
         isToLists: false,
         isCampusWide: true,
-        isToFilters: false
+        isToFilters: false,
+        triggerSaveModal: false
       };
       this.form.controls['list_ids'].setValue([]);
       this.form.controls['is_school_wide'].setValue(true);
@@ -133,7 +137,8 @@ export class AnnouncementsComposeComponent implements OnInit {
       isToUsers: true,
       isToLists: false,
       isCampusWide: false,
-      isToFilters: false
+      isToFilters: false,
+      triggerSaveModal: true
     };
     this.form.controls['list_ids'].setValue([]);
     this.form.controls['user_ids'].setValue(users);
@@ -159,8 +164,67 @@ export class AnnouncementsComposeComponent implements OnInit {
     this.form.controls['store_id'].setValue(store.value);
   }
 
+  onTeardownAudienceSaveModal() {
+    $('#audienceSaveModal').modal('hide');
+
+    this.buttonData = { ...this.buttonData, disabled: false };
+  }
+
+  onAudienceNamed({ name }) {
+    let data = {};
+    data = { ...data, name };
+
+    if (this.state.isToUsers) {
+      data = { ...data, user_ids: this.form.value.user_ids };
+    }
+
+    if (this.state.isToFilters) {
+      data = { ...data, filters: this.form.value.filters };
+    }
+
+    const search = new URLSearchParams();
+    search.append('school_id', this.session.g.get('school').id);
+
+    this.service
+      .createAudience(data, search)
+      .toPromise()
+      .then(() => {
+        $('#audienceSaveModal').modal('hide');
+        this.doSubmit();
+      })
+      .catch(() => $('#audienceSaveModal').modal('hide'));
+  }
+
+  onResetNewAduience() {
+    this.state = {
+      ...this.state,
+      isToUsers: false,
+      isToLists: false,
+      isCampusWide: false,
+      isToFilters: true,
+      triggerSaveModal: true
+    };
+  }
+
+  onResetSavedAduience() {
+    this.state = {
+      ...this.state,
+      isToUsers: false,
+      isToLists: false,
+      isCampusWide: true,
+      isToFilters: false,
+      triggerSaveModal: false
+    };
+  }
+
   doValidate() {
     this.shouldConfirm = this.state.isEmergency || this.state.isCampusWide;
+
+    if (this.state.triggerSaveModal) {
+      $('#audienceSaveModal').modal();
+
+      return;
+    }
 
     if (!this.shouldConfirm) {
       this.doSubmit();
@@ -273,7 +337,8 @@ export class AnnouncementsComposeComponent implements OnInit {
       isToUsers: false,
       isToLists: false,
       isCampusWide: false,
-      isToFilters: true
+      isToFilters: true,
+      triggerSaveModal: true
     };
 
     this.form.controls['filters'].setValue(filters);

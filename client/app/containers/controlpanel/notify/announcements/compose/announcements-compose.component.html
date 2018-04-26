@@ -3,7 +3,9 @@
   <div class="col-xs-8 col-xs-offset-2">
     <cp-audience-card 
       (importClick)="onImportClick()"
+      (resetNewAduience)="onResetNewAduience()"
       (selectedUsers)="onSelectedUsers($event)"
+      (resetSavedAduience)="onResetSavedAduience()"
       (selectedAudience)="onAudienceChange($event)"
       (selectedFilters)="onSelectedFilters($event)">
     </cp-audience-card>
@@ -122,6 +124,13 @@
     (teardown)="isAudienceImport = !isAudienceImport"
     (launchCreateModal)="onLaunchCreateModal($event)">
   </cp-audience-import>
+</cp-modal>
+
+<cp-modal modalId="audienceSaveModal">
+  <cp-audience-save-modal 
+    (onSubmit)="onAudienceNamed($event)"
+    (teardown)="onTeardownAudienceSaveModal()">
+  </cp-audience-save-modal>
 </cp-modal>
 
 <cp-modal 

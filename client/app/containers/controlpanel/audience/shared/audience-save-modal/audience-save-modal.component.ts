@@ -1,5 +1,5 @@
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
 
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
@@ -9,6 +9,9 @@ import { CPI18nService } from './../../../../../shared/services/i18n.service';
   styleUrls: ['./audience-save-modal.component.scss']
 })
 export class AudienceSaveModalComponent implements OnInit {
+  @Output() teardown: EventEmitter<null> = new EventEmitter();
+  @Output() onSubmit: EventEmitter<{ name: string }> = new EventEmitter();
+
   buttonData;
   form: FormGroup;
 
@@ -16,10 +19,11 @@ export class AudienceSaveModalComponent implements OnInit {
 
   resetModal() {
     this.form.reset();
+    this.teardown.emit();
   }
 
   doSubmit() {
-    // console.log(this.form.value);
+    this.onSubmit.emit(this.form.value);
   }
 
   ngOnInit(): void {
