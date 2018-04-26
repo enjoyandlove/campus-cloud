@@ -14,10 +14,9 @@ import { FileUploadService, CPI18nService } from '../../../../shared/services';
   styleUrls: ['./audience-import.component.scss']
 })
 export class AudienceImportComponent implements OnInit {
-  @Output() launchCreateModal: EventEmitter<any> = new EventEmitter();
-
   @Output() error: EventEmitter<null> = new EventEmitter();
   @Output() success: EventEmitter<number> = new EventEmitter();
+  @Output() launchCreateModal: EventEmitter<any> = new EventEmitter();
 
   ready$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   reset$: BehaviorSubject<boolean> = new BehaviorSubject(false);
