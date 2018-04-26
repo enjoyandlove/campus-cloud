@@ -76,6 +76,8 @@ fdescribe('AudienceDynamicComponent', () => {
   );
 
   it('preloadFilters', () => {
+    comp.selectedItem = [];
+
     comp.filtersData = [
       {
         count: 0,
@@ -88,7 +90,7 @@ fdescribe('AudienceDynamicComponent', () => {
     comp.audience = {
       count: 0,
       users: [],
-      filters: [{ attr_id: 351, choices_text: ['TRUE', 'FALSE'], choices: [49, 50] }],
+      filters: [{ attr_id: 40, choices_text: ['TRUE', 'FALSE'], choices: [49, 50] }],
       type: 1,
       id: 351,
       name: '## A new Dynamic List'
@@ -96,7 +98,7 @@ fdescribe('AudienceDynamicComponent', () => {
 
     fixture.detectChanges();
 
-    comp.preloadFilters();
+    // comp.preloadFilters();
 
     console.log(comp.state);
   });
