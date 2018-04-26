@@ -498,7 +498,7 @@
     "message": "Statut"
   },
   "athletics_label_edit_athletic": {
-    "message": "Editer club sportifs"
+    "message": "Éditer club sportif"
   },
   "attendee": {
     "message": "Présent"
@@ -815,6 +815,10 @@
     "message": "Activé",
     "description": "Create Club > Membership"
   },
+  "club_status_active": {
+    "message": "Actif",
+    "description": "Create Club > Status"
+  },
   "club_status_inactive": {
     "message": "Inactif",
     "description": "Create Club > Status"
@@ -1010,6 +1014,9 @@
   },
   "download_csv": {
     "message": "Télécharger fichier CSV"
+  },
+  "due_date": {
+    "message": "Date limite"
   },
   "duplicate_entry": {
     "message": "Il y a déjà un utilisateur avec cette adresse courriel."
@@ -1389,6 +1396,11 @@
   "last_name": {
     "message": "Nom de famille"
   },
+  "leader": {
+    "message": "Chef",
+    "description":
+      "Manage > Orientation > Program > view program details \r\nAdd Member > Member Type dropdown"
+  },
   "links": {
     "message": "Liens"
   },
@@ -1630,8 +1642,16 @@
   "orientation_enable_membership_description": {
     "message": "Créé un mur d'orientation où les membres peuvent publier des messages."
   },
+  "orientation_feeds_wall_settings_modal_title": {
+    "message": "Réglages du mur d'orientation",
+    "description": "Manage > Orientation > choose a program > Walls > Settings"
+  },
   "orientation_no_results_found": {
     "message": "Aucun programme trouvé"
+  },
+  "orientation_wall_name": {
+    "message": "Nom du programme",
+    "description": "Manage > Orientation > choose program > Settings"
   },
   "password": {
     "message": "Mot de passe"
@@ -1977,11 +1997,31 @@
   "templates_delete_modal_title": {
     "message": "Supprimer modèle"
   },
+  "temporarily_disabled": {
+    "message": "Sera implémenté dans une version future de l'application",
+    "description": "orientation event > edit > assessment"
+  },
   "title": {
     "message": "Titre"
   },
   "to": {
     "message": "À"
+  },
+  "to-dos": {
+    "message": "Dates limites"
+  },
+  "todos_create": {
+    "message": "Créer date limite"
+  },
+  "todos_delete": {
+    "message": "Supprimer date limite"
+  },
+  "todos_new": {
+    "message": "Créer date limite"
+  },
+  "todos_no_results_found": {
+    "message": "Aucune date limite trouvée",
+    "description": "Orientation Calendar > To-do's > no results"
   },
   "tooltip_more_text": {
     "message": "(%s) More"

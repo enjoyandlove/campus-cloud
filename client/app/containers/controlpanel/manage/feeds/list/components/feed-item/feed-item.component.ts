@@ -10,11 +10,12 @@ declare var $: any;
 @Component({
   selector: 'cp-feed-item',
   templateUrl: './feed-item.component.html',
-  styleUrls: ['./feed-item.component.scss'],
+  styleUrls: ['./feed-item.component.scss']
 })
 export class FeedItemComponent implements OnInit {
   @Input() feed: any;
   @Input() clubId: number;
+  @Input() orientationId: number;
   @Input() isCampusWallView: Observable<any>;
   @Input() isFilteredByRemovedPosts: Observable<any>;
 
@@ -42,7 +43,7 @@ export class FeedItemComponent implements OnInit {
             $('#approveFeedModal').modal();
           },
 
-          1,
+          1
         );
         break;
       case 2:
@@ -52,7 +53,7 @@ export class FeedItemComponent implements OnInit {
             $('#moveFeedModal').modal();
           },
 
-          1,
+          1
         );
         break;
       case 3:
@@ -62,7 +63,7 @@ export class FeedItemComponent implements OnInit {
             $('#deleteFeedModal').modal();
           },
 
-          1,
+          1
         );
         break;
     }
@@ -70,13 +71,13 @@ export class FeedItemComponent implements OnInit {
 
   onDeletedComment() {
     this.feed = Object.assign({}, this.feed, {
-      comment_count: this.feed.comment_count - 1,
+      comment_count: this.feed.comment_count - 1
     });
   }
 
   onReplied() {
     this.feed = Object.assign({}, this.feed, {
-      comment_count: this.feed.comment_count + 1,
+      comment_count: this.feed.comment_count + 1
     });
   }
 
@@ -88,12 +89,8 @@ export class FeedItemComponent implements OnInit {
   ngOnInit() {
     this.requiresApproval$.next(this.feed.dislikes > 0 && this.feed.flag !== 2);
 
-    this.isCampusWallView.subscribe(
-      (res) => (this._isCampusWallView = res.type),
-    );
+    this.isCampusWallView.subscribe((res) => (this._isCampusWallView = res.type));
 
-    this.isFilteredByRemovedPosts.subscribe(
-      (res) => (this.isRemovedPosts = res),
-    );
+    this.isFilteredByRemovedPosts.subscribe((res) => (this.isRemovedPosts = res));
   }
 }

@@ -57,7 +57,9 @@
               {{ program.description }}
             </span>
             <span class="col-xs-3 text-truncate">
-              {{ program.active_from | cpDatePipe:dateFormat }} - {{ program.active_until | cpDatePipe:dateFormat }}
+              <div *ngIf="program.active_from !== noDuration && program.active_until !== noDuration">
+                {{ program.active_from | cpDatePipe:dateFormat }} - {{ program.active_until | cpDatePipe:dateFormat }}
+              </div>
             </span>
             <span class="col-xs-2">
               {{ program.members_count }}

@@ -9,14 +9,17 @@ import { CPSession } from '../../../../../../../session';
 @Component({
   selector: 'cp-feed-settings-modal',
   templateUrl: './feed-settings-modal.component.html',
-  styleUrls: ['./feed-settings-modal.component.scss'],
+  styleUrls: ['./feed-settings-modal.component.scss']
 })
 export class FeedSettingsComponent implements OnInit {
   @Input() clubId: number;
+  @Input() orientationId: number;
 
   @Output() updateWallSettings: EventEmitter<null> = new EventEmitter();
 
   walls;
+  wallName;
+  modalTitle;
   privileges;
   form: FormGroup;
 
@@ -24,7 +27,7 @@ export class FeedSettingsComponent implements OnInit {
     private fb: FormBuilder,
     private session: CPSession,
     private cpI18n: CPI18nService,
-    private feedsService: FeedsService,
+    private feedsService: FeedsService
   ) {
     this.feedsService.getSocialGroups();
   }
@@ -32,6 +35,10 @@ export class FeedSettingsComponent implements OnInit {
   private fetch() {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
+
+    if (this.orientationId) {
+      search.append('calendar_id', this.orientationId.toString());
+    }
 
     this.feedsService
       .getSocialGroups(search)
@@ -44,14 +51,16 @@ export class FeedSettingsComponent implements OnInit {
             name: group.name,
             related_obj_id: group.related_obj_id,
             min_posting_member_type: group.min_posting_member_type,
-            min_commenting_member_type: group.min_commenting_member_type,
+            min_commenting_member_type: group.min_commenting_member_type
           });
         });
 
         if (this.clubId) {
-          _groups = _groups.filter(
-            (group) => group.related_obj_id === +this.clubId,
-          );
+          _groups = _groups.filter((group) => group.related_obj_id === +this.clubId);
+        }
+
+        if (this.orientationId) {
+          _groups = _groups.filter((group) => group.related_obj_id === +this.orientationId);
         }
 
         return _groups;
@@ -65,14 +74,8 @@ export class FeedSettingsComponent implements OnInit {
     return this.fb.group({
       name: [wall.name, Validators.required],
       wall_id: [wall.id, Validators.required],
-      min_posting_member_type: [
-        wall.min_posting_member_type,
-        Validators.required,
-      ],
-      min_commenting_member_type: [
-        wall.min_commenting_member_type,
-        Validators.required,
-      ],
+      min_posting_member_type: [wall.min_posting_member_type, Validators.required],
+      min_commenting_member_type: [wall.min_commenting_member_type, Validators.required]
     });
   }
 
@@ -121,24 +124,32 @@ export class FeedSettingsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.wallName = this.orientationId
+      ? this.cpI18n.translate('orientation_wall_name')
+      : this.cpI18n.translate('feeds_wall_name');
+
+    this.modalTitle = this.orientationId
+      ? this.cpI18n.translate('orientation_feeds_wall_settings_modal_title')
+      : this.cpI18n.translate('feeds_wall_settings_modal_title');
+
     this.fetch();
     this.form = this.fb.group({
-      walls: this.fb.array([]),
+      walls: this.fb.array([])
     });
 
     this.privileges = [
       {
         label: this.cpI18n.translate('no_one'),
-        action: 100,
+        action: 100
       },
       {
         label: this.cpI18n.translate('feeds_team_members'),
-        action: 3,
+        action: 3
       },
       {
         label: this.cpI18n.translate('feeds_everyone'),
-        action: 0,
-      },
+        action: 0
+      }
     ];
   }
 }

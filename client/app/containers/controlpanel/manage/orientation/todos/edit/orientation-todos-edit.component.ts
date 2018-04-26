@@ -6,7 +6,7 @@ import {
   Input,
   OnInit,
   Output,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -19,7 +19,7 @@ import { CPI18nService } from '../../../../../../shared/services/i18n.service';
 @Component({
   selector: 'cp-orientation-todos-edit',
   templateUrl: './orientation-todos-edit.component.html',
-  styleUrls: ['./orientation-todos-edit.component.scss'],
+  styleUrls: ['./orientation-todos-edit.component.scss']
 })
 export class OrientationTodosEditComponent implements OnInit {
   @ViewChild('editForm') editForm;
@@ -37,7 +37,7 @@ export class OrientationTodosEditComponent implements OnInit {
     public fb: FormBuilder,
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public service: TodosService,
+    public service: TodosService
   ) {}
 
   @HostListener('document:click', ['$event'])
@@ -58,20 +58,18 @@ export class OrientationTodosEditComponent implements OnInit {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id);
 
-    this.service
-      .editTodo(this.todo.id, this.form.value, search)
-      .subscribe((editedTodo) => {
-         this.edited.emit(editedTodo);
-         this.resetModal();
-      });
+    this.service.editTodo(this.todo.id, this.form.value, search).subscribe((editedTodo) => {
+      this.edited.emit(editedTodo);
+      this.resetModal();
+    });
   }
 
   ngOnInit() {
     this.form = this.fb.group({
       id: [this.todo.id],
-      name: [this.todo.name, [Validators.required, Validators.maxLength(225)]],
+      title: [this.todo.title, [Validators.required, Validators.maxLength(225)]],
       description: [this.todo.description, Validators.maxLength(512)],
-      due_date: [this.todo.due_date, Validators.required],
+      end: [this.todo.end, Validators.required]
     });
 
     this.buttonData = Object.assign({}, this.buttonData, {

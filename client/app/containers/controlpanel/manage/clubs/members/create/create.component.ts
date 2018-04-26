@@ -6,7 +6,7 @@ import {
   Input,
   OnInit,
   Output,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
@@ -17,16 +17,19 @@ import { CPSession } from '../../../../../../session';
 import { CPI18nService } from '../../../../../../shared/services/index';
 import { MemberType } from '../member.status';
 import { MembersService } from '../members.service';
+import { MembersUtilsService } from '../members.utils.service';
 
 declare var $: any;
 
 @Component({
   selector: 'cp-members-create',
   templateUrl: './create.component.html',
-  styleUrls: ['./create.component.scss'],
+  styleUrls: ['./create.component.scss']
 })
 export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
   @Input() groupId: number;
+  @Input() isOrientation: boolean;
+
   @ViewChild('input') input: ElementRef;
   @Output() added: EventEmitter<any> = new EventEmitter();
 
@@ -35,7 +38,7 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
   memberTypes;
   members = [];
   form: FormGroup;
-  isExecutive = MemberType.executive;
+  isExecutiveLeader = MemberType.executive_leader;
   reset$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
@@ -43,6 +46,7 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
     private session: CPSession,
     private cpI18n: CPI18nService,
     private service: MembersService,
+    private utils: MembersUtilsService
   ) {}
 
   ngAfterViewInit() {
@@ -78,7 +82,7 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
           return members.map((member) => {
             return {
               label: `${member.firstname} ${member.lastname}`,
-              id: member.id,
+              id: member.id
             };
           });
         });
@@ -116,7 +120,7 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    if (this.form.value.member_type !== MemberType.executive) {
+    if (this.form.value.member_type !== MemberType.executive_leader) {
       this.form.controls['member_position'].setValue(null);
     }
 
@@ -125,26 +129,23 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
     const member_type = this.form.value.member_type;
 
     this.service
-      .addMember(
-        { member_type, group_id, member_position },
-        this.form.value.member,
-      )
+      .addMember({ member_type, group_id, member_position }, this.form.value.member)
       .subscribe(
         (member) => {
           this.added.emit(member);
           $('#membersCreate').modal('hide');
           this.doReset();
           this.buttonData = Object.assign({}, this.buttonData, {
-            disabled: true,
+            disabled: true
           });
           this.reset$.next(true);
         },
         (err) => {
           this.buttonData = Object.assign({}, this.buttonData, {
-            disabled: true,
+            disabled: true
           });
           throw new Error(err);
-        },
+        }
       );
   }
 
@@ -152,29 +153,29 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
     this.buttonData = {
       text: this.cpI18n.translate('save'),
       disabled: true,
-      class: 'primary',
+      class: 'primary'
     };
 
     this.memberTypes = [
       {
         label: this.cpI18n.translate('member'),
-        action: MemberType.member,
+        action: MemberType.member
       },
       {
-        label: this.cpI18n.translate('executive'),
-        action: MemberType.executive,
-      },
+        label: this.utils.getMemberType(this.isOrientation),
+        action: MemberType.executive_leader
+      }
     ];
 
     this.form = this.fb.group({
       member: [null, Validators.required],
       member_type: [this.memberTypes[0].action, Validators.required],
-      member_position: [null],
+      member_position: [null]
     });
 
     this.form.valueChanges.subscribe((_) => {
       this.buttonData = Object.assign({}, this.buttonData, {
-        disabled: !this.form.valid,
+        disabled: !this.form.valid
       });
     });
   }

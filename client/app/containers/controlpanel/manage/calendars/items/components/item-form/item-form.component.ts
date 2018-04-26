@@ -145,19 +145,31 @@ export class CalendarsItemFormComponent implements OnInit {
 
     this.startdatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: CPDate.fromEpoch(this.form.controls['start'].value, _self.session.tz).format(),
       onClose: function(_, dateStr) {
         _self.form.controls['start'].setValue(CPDate.toEpoch(dateStr, _self.session.tz));
       }
     };
 
+    if (this.form.controls['start'].value) {
+      this.startdatePickerOpts = {
+        ...this.startdatePickerOpts,
+        defaultDate: CPDate.fromEpoch(this.form.controls['start'].value, _self.session.tz).format()
+      };
+    }
+
     this.enddatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: CPDate.fromEpoch(this.form.controls['end'].value, _self.session.tz).format(),
       onClose: function(_, dateStr) {
         _self.form.controls['end'].setValue(CPDate.toEpoch(dateStr, _self.session.tz));
       }
     };
+
+    if (this.form.controls['end'].value) {
+      this.enddatePickerOpts = {
+        ...this.enddatePickerOpts,
+        defaultDate: CPDate.fromEpoch(this.form.controls['end'].value, _self.session.tz).format()
+      };
+    }
 
     const submitEdit = this.cpI18n.translate('save');
     const submitCreate = this.cpI18n.translate('calendars_form_submit_button_new');

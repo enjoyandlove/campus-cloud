@@ -18,7 +18,6 @@ class MockTodosService {
 
     return Observable.of({});
   }
-
 }
 
 describe('OrientationTodosEditComponent', () => {
@@ -28,57 +27,59 @@ describe('OrientationTodosEditComponent', () => {
   let component: OrientationTodosEditComponent;
   let fixture: ComponentFixture<OrientationTodosEditComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [TodosModule],
-      providers: [
-        CPSession,
-        FormBuilder,
-        CPI18nService,
-        { provide: TodosService, useClass: MockTodosService }
-      ]
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        imports: [TodosModule],
+        providers: [
+          CPSession,
+          FormBuilder,
+          CPI18nService,
+          { provide: TodosService, useClass: MockTodosService }
+        ]
+      })
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(OrientationTodosEditComponent);
+          component = fixture.componentInstance;
+          service = TestBed.get(TodosService);
+
+          search = new URLSearchParams();
+          component.session.g.set('school', mockSchool);
+          search.append('school_id', component.session.g.get('school').id.toString());
+
+          component.todo = {
+            id: 55,
+            title: 'Hello World!',
+            end: 1515625016,
+            description: 'test description'
+          };
+          component.ngOnInit();
+        });
     })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(OrientationTodosEditComponent);
-        component = fixture.componentInstance;
-        service = TestBed.get(TodosService);
-
-        search = new URLSearchParams();
-        component.session.g.set('school', mockSchool);
-        search.append('school_id', component.session.g.get('school').id.toString());
-
-        component.todo = {
-          id: 55,
-          name: 'Hello World!',
-          due_date: 1515625016,
-          description: 'test description'
-        };
-        component.ngOnInit();
-      });
-  }));
+  );
 
   it('form validation - should pass', () => {
     expect(component.form.valid).toBeTruthy();
   });
 
   it('form validation - should fail', () => {
-    component.form.controls['name'].setValue(null);
-    component.form.controls['due_date'].setValue(null);
+    component.form.controls['title'].setValue(null);
+    component.form.controls['end'].setValue(null);
     expect(component.form.valid).toBeFalsy();
   });
 
   it('form validation - max length 225 - should fail', () => {
     const charCount226 = 'a'.repeat(226);
 
-    component.form.controls['name'].setValue(charCount226);
-    component.form.controls['due_date'].setValue(1515625016);
+    component.form.controls['title'].setValue(charCount226);
+    component.form.controls['end'].setValue(1515625016);
     expect(component.form.valid).toBeFalsy();
   });
 
   it('cp button should have disabled state TRUE', () => {
-    component.form.controls['name'].setValue(null);
-    component.form.controls['due_date'].setValue(null);
+    component.form.controls['title'].setValue(null);
+    component.form.controls['end'].setValue(null);
     expect(component.buttonData.disabled).toBeTruthy();
   });
 
@@ -94,5 +95,4 @@ describe('OrientationTodosEditComponent', () => {
     expect(spy).toHaveBeenCalled();
     expect(spy.calls.count()).toBe(1);
   });
-
 });

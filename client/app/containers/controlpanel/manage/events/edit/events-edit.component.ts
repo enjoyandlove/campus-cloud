@@ -7,12 +7,13 @@ import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
-import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { EventsService } from '../events.service';
+import { isProd } from './../../../../../config/env';
 import { FORMAT } from '../../../../../shared/pipes/date';
 import { CPSession, ISchool } from '../../../../../session';
 import { CPMap, CPDate } from '../../../../../shared/utils';
 import { BaseComponent } from '../../../../../base/base.component';
+import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { ErrorService, StoreService, AdminService } from '../../../../../shared/services';
 
 import { EventAttendance, EventFeedback } from '../event.status';
@@ -65,6 +66,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   originalAttnFeedback;
   eventFeedbackEnabled;
   eventManagerToolTip;
+  production = isProd;
   studentFeedbackToolTip;
   attendanceManagerToolTip;
   formMissingFields = false;
@@ -73,17 +75,17 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   managers: Array<any> = [{ label: '---' }];
 
   constructor(
-    private router: Router,
-    private fb: FormBuilder,
-    private session: CPSession,
+    public router: Router,
+    public fb: FormBuilder,
+    public session: CPSession,
     public cpI18n: CPI18nService,
     private store: Store<IHeader>,
     private route: ActivatedRoute,
     private utils: EventUtilService,
     private adminService: AdminService,
-    private storeService: StoreService,
+    public storeService: StoreService,
     private errorService: ErrorService,
-    private service: EventsService
+    public service: EventsService
   ) {
     super();
     this.school = this.session.g.get('school');
@@ -132,6 +134,10 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
+    if (this.form.controls['is_all_day'].value) {
+      this.updateTime();
+    }
+
     if (this.form.controls['end'].value <= this.form.controls['start'].value) {
       this.isDateError = true;
       this.formMissingFields = true;
@@ -154,10 +160,6 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    if (this.form.controls['is_all_day'].value) {
-      this.updateTime();
-    }
-
     const search = new URLSearchParams();
     if (this.orientationId) {
       search.append('school_id', this.session.g.get('school').id);
@@ -177,7 +179,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     );
   }
 
-  private buildForm(res) {
+  public buildForm(res) {
     this.form = this.fb.group({
       title: [res.title, Validators.required],
       store_id: [res.store_id, !this.isOrientation ? Validators.required : null],
@@ -314,7 +316,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       });
   }
 
-  private fetch() {
+  public fetch() {
     let stores$ = Observable.of([]);
     const school = this.session.g.get('school');
     const orientationId = this.orientationId ? this.orientationId.toString() : null;
@@ -344,7 +346,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       .catch((err) => this.errorService.handleError(err));
   }
 
-  private buildHeader() {
+  public buildHeader() {
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {

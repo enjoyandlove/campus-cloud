@@ -26,33 +26,31 @@ describe('OrientationTodosDeleteComponent', () => {
   let component: OrientationTodosDeleteComponent;
   let fixture: ComponentFixture<OrientationTodosDeleteComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [TodosModule],
-      providers: [
-        CPSession,
-        CPI18nService,
-        { provide: TodosService, useClass: MockTodosService }
-      ]
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        imports: [TodosModule],
+        providers: [CPSession, CPI18nService, { provide: TodosService, useClass: MockTodosService }]
+      })
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(OrientationTodosDeleteComponent);
+          component = fixture.componentInstance;
+          service = TestBed.get(TodosService);
+
+          search = new URLSearchParams();
+          component.session.g.set('school', mockSchool);
+          search.append('school_id', component.session.g.get('school').id.toString());
+
+          component.todo = {
+            id: 54856,
+            title: 'Hello World!',
+            description: 'This is description',
+            end: 1557637200
+          };
+        });
     })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(OrientationTodosDeleteComponent);
-        component = fixture.componentInstance;
-        service = TestBed.get(TodosService);
-
-        search = new URLSearchParams();
-        component.session.g.set('school', mockSchool);
-        search.append('school_id', component.session.g.get('school').id.toString());
-
-        component.todo = {
-          id: 54856,
-          name: 'Hello World!',
-          description: 'This is description',
-          due_date: 1557637200
-        };
-      });
-  }));
+  );
 
   it('buttonData should have "Delete" label & "Danger class"', () => {
     component.ngOnInit();
@@ -67,5 +65,4 @@ describe('OrientationTodosDeleteComponent', () => {
     expect(spy.calls.count()).toBe(1);
     expect(spy).toHaveBeenCalledWith(component.todo.id, search);
   });
-
 });

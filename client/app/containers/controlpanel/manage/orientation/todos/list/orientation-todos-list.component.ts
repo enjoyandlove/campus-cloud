@@ -6,6 +6,8 @@ import { TodosService } from '../todos.service';
 import { CPSession } from '../../../../../../session';
 import { BaseComponent } from '../../../../../../base';
 import { FORMAT } from '../../../../../../shared/pipes/date/date.pipe';
+import { ActivatedRoute } from '@angular/router';
+import { CPI18nService } from '../../../../../../shared/services';
 
 @Component({
   selector: 'cp-orientation-todos-list',
@@ -15,6 +17,7 @@ import { FORMAT } from '../../../../../../shared/pipes/date/date.pipe';
 export class OrientationTodosListComponent extends BaseComponent implements OnInit {
   loading;
   selectedTodo = null;
+  orientationId: number;
   launchEditModal = false;
   launchDeleteModal = false;
   launchCreateModal = false;
@@ -23,16 +26,19 @@ export class OrientationTodosListComponent extends BaseComponent implements OnIn
   state = {
     todos: [],
     search_str: null,
-    sort_field: 'name',
-    sort_direction: 'asc',
+    sort_field: null,
+    sort_direction: 'asc'
   };
 
   constructor(
     public session: CPSession,
+    public cpI18n: CPI18nService,
     public service: TodosService,
+    public route: ActivatedRoute
   ) {
     super();
     super.isLoading().subscribe((loading) => (this.loading = loading));
+    this.orientationId = this.route.snapshot.parent.parent.params['orientationId'];
   }
 
   onPaginationNext() {
@@ -60,6 +66,7 @@ export class OrientationTodosListComponent extends BaseComponent implements OnIn
     search.append('search_str', this.state.search_str);
     search.append('sort_field', this.state.sort_field);
     search.append('sort_direction', this.state.sort_direction);
+    search.append('calendar_id', this.orientationId.toString());
     search.append('school_id', this.session.g.get('school').id.toString());
 
     super
@@ -71,7 +78,7 @@ export class OrientationTodosListComponent extends BaseComponent implements OnIn
     this.state = {
       ...this.state,
       sort_field: sort_field,
-      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc',
+      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc'
     };
 
     this.fetch();
@@ -85,7 +92,7 @@ export class OrientationTodosListComponent extends BaseComponent implements OnIn
         $('#todoCreate').modal();
       },
 
-      1,
+      1
     );
   }
 
@@ -99,10 +106,7 @@ export class OrientationTodosListComponent extends BaseComponent implements OnIn
     this.selectedTodo = null;
 
     this.state = Object.assign({}, this.state, {
-      todos: this.state.todos.map(
-        (todo) =>
-          todo.id === editTodo.id ? editTodo : todo,
-      ),
+      todos: this.state.todos.map((todo) => (todo.id === editTodo.id ? editTodo : todo))
     });
   }
 

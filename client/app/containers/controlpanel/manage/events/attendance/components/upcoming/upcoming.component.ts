@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
+import { EventAttendance } from '../../../event.status';
 import { FORMAT } from '../../../../../../../shared/pipes/date';
-import {
-  IResourceBanner
-} from '../../../../../../../shared/components/cp-resource-banner/cp-resource.interface';
+import { EventUtilService } from '../../../events.utils.service';
+import { IResourceBanner } from '../../../../../../../shared/components/cp-resource-banner/cp-resource.interface';
 
 @Component({
   selector: 'cp-attendance-upcoming',
@@ -13,27 +13,28 @@ import {
 })
 export class AttendanceUpcomingComponent implements OnInit {
   @Input() event: any;
+  @Input() isOrientation: boolean;
   @Input() resourceBanner: IResourceBanner;
 
   banner;
   mapCenter;
   dateFormat;
+  eventCheckinRoute;
   draggable = false;
   format = FORMAT.DATETIME;
+  attendanceEnabled = EventAttendance.enabled;
 
-  constructor() { }
+  constructor(public utils: EventUtilService) {}
 
   ngOnInit() {
-    this.banner = this.event.poster_url === '' ?
-                  this.event.store_logo_url : this.event.poster_url;
+    this.eventCheckinRoute = this.utils.getEventCheckInLink(this.isOrientation);
+    this.banner = this.event.poster_url === '' ? this.event.store_logo_url : this.event.poster_url;
 
     this.dateFormat = FORMAT.DATETIME;
-    this.mapCenter = new BehaviorSubject(
-    {
+    this.mapCenter = new BehaviorSubject({
       lat: this.event.latitude,
       lng: this.event.longitude
-    }
-    );
+    });
 
     this.resourceBanner = {
       image: this.banner,

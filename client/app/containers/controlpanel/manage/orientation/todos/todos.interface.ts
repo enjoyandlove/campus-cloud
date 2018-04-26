@@ -1,6 +1,6 @@
 export interface ITodo {
   id?: number;
-  name: string;
+  title: string;
   description: string;
-  due_date?: number;
+  end?: number;
 }

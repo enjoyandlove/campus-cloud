@@ -10,7 +10,7 @@ declare var $: any;
 @Component({
   selector: 'cp-events-delete',
   templateUrl: './events-delete.component.html',
-  styleUrls: ['./events-delete.component.scss'],
+  styleUrls: ['./events-delete.component.scss']
 })
 export class EventsDeleteComponent implements OnInit {
   @Input() event: any;
@@ -23,7 +23,7 @@ export class EventsDeleteComponent implements OnInit {
   constructor(
     public session: CPSession,
     private cpI18n: CPI18nService,
-    private service: EventsService,
+    public service: EventsService
   ) {}
 
   onDelete() {
@@ -45,7 +45,7 @@ export class EventsDeleteComponent implements OnInit {
   ngOnInit() {
     this.buttonData = {
       text: this.cpI18n.translate('delete'),
-      class: 'danger',
+      class: 'danger'
     };
   }
 }

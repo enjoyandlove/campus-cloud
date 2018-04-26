@@ -64,6 +64,8 @@ export const API_ENDPOINTS = {
 
   SERVICE_PROVIDER: 'service_provider',
 
+  ORIENTATION_TODOS: 'orientation_todos',
+
   ASSESS_ENGAGEMENT: 'assess_engagement',
 
   ORIENTATION_EVENTS: 'orientation_item',

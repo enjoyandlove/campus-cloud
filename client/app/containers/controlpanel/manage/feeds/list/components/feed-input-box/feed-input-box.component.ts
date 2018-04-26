@@ -3,38 +3,28 @@ import { Headers, URLSearchParams } from '@angular/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  FormControl,
-} from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
-import {
-  StoreService,
-  FileUploadService,
-} from '../../../../../../../shared/services';
+import { StoreService, FileUploadService } from '../../../../../../../shared/services';
 
 import { API } from '../../../../../../../config/api';
 import { FeedsService } from '../../../feeds.service';
 import { appStorage } from '../../../../../../../shared/utils';
 import { CPSession, ISchool } from '../../../../../../../session';
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
-import {
-  ISnackbar,
-  SNACKBAR_SHOW,
-} from './../../../../../../../reducers/snackbar.reducer';
+import { ISnackbar, SNACKBAR_SHOW } from './../../../../../../../reducers/snackbar.reducer';
 
 @Component({
   selector: 'cp-feed-input-box',
   templateUrl: './feed-input-box.component.html',
-  styleUrls: ['./feed-input-box.component.scss'],
+  styleUrls: ['./feed-input-box.component.scss']
 })
 export class FeedInputBoxComponent implements OnInit {
   @Input() clubId: number;
   @Input() threadId: number;
   @Input() postType: number;
   @Input() replyView: boolean;
+  @Input() orientationId: number;
   @Input() disablePost: boolean; // TODO REMOVE
   @Input() isCampusWallView: Observable<any>;
   @Output() created: EventEmitter<null> = new EventEmitter();
@@ -59,7 +49,7 @@ export class FeedInputBoxComponent implements OnInit {
     public store: Store<ISnackbar>,
     private feedsService: FeedsService,
     private storeService: StoreService,
-    private fileUploadService: FileUploadService,
+    private fileUploadService: FileUploadService
   ) {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
@@ -73,14 +63,14 @@ export class FeedInputBoxComponent implements OnInit {
         const _channels = [
           {
             label: '---',
-            action: null,
-          },
+            action: null
+          }
         ];
 
         channels.forEach((channel) => {
           const _channel = {
             label: channel.name,
-            action: channel.id,
+            action: channel.id
           };
 
           _channels.push(_channel);
@@ -90,23 +80,22 @@ export class FeedInputBoxComponent implements OnInit {
       });
   }
 
-  replyToThread({
-    message,
-    message_image_url_list,
-    school_id,
-    store_id,
-  }): Promise<any> {
+  replyToThread({ message, message_image_url_list, school_id, store_id }): Promise<any> {
     let body = {
       school_id,
       store_id,
       comment: message,
-      thread_id: this.threadId,
+      thread_id: this.threadId
     };
 
     if (message_image_url_list) {
       body = Object.assign({}, body, {
-        comment_image_url_list: [...message_image_url_list],
+        comment_image_url_list: [...message_image_url_list]
       });
+    }
+
+    if (this.orientationId) {
+      body = this.asCalendarFormat(body);
     }
 
     const groupWall$ = this.feedsService.replyToGroupThread(body);
@@ -117,11 +106,21 @@ export class FeedInputBoxComponent implements OnInit {
   }
 
   postToWall(formData): Promise<any> {
+    if (this.orientationId) {
+      formData = this.asCalendarFormat(formData);
+    }
+
     const groupWall$ = this.feedsService.postToGroupWall(formData);
     const campusWall$ = this.feedsService.postToCampusWall(formData);
     const stream$ = this._isCampusWallView ? groupWall$ : campusWall$;
 
     return stream$.toPromise();
+  }
+
+  asCalendarFormat(data) {
+    delete data['store_id'];
+
+    return { ...data, calendar_id: this.orientationId };
   }
 
   handleError({ status = 400 }) {
@@ -134,8 +133,8 @@ export class FeedInputBoxComponent implements OnInit {
         body: status === 403 ? forbidden : somethingWentWrong,
         class: 'danger',
         sticky: true,
-        autoClose: true,
-      },
+        autoClose: true
+      }
     });
   }
 
@@ -164,7 +163,7 @@ export class FeedInputBoxComponent implements OnInit {
       store_id: data.store_id,
       school_id: this.session.g.get('school').id,
       message: data.message,
-      message_image_url_list: data.message_image_url_list,
+      message_image_url_list: data.message_image_url_list
     };
 
     if (this._isCampusWallView) {
@@ -213,9 +212,7 @@ export class FeedInputBoxComponent implements OnInit {
 
     const headers = new Headers();
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
-    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(
-      appStorage.keys.SESSION,
-    )}`;
+    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
 
     headers.append('Authorization', auth);
 
@@ -228,12 +225,10 @@ export class FeedInputBoxComponent implements OnInit {
   ngOnInit() {
     this.buttonData = {
       class: 'primary',
-      text: this.cpI18n.translate('walls_button_create_post'),
+      text: this.cpI18n.translate('walls_button_create_post')
     };
 
-    const defaultHost = this.session.defaultHost
-      ? this.session.defaultHost.value
-      : null;
+    const defaultHost = this.session.defaultHost ? this.session.defaultHost.value : null;
 
     this.school = this.session.g.get('school');
 
@@ -243,7 +238,7 @@ export class FeedInputBoxComponent implements OnInit {
       store_id: [defaultHost, Validators.required],
       post_type: [this.replyView ? this.postType : null, Validators.required],
       message: [null, [Validators.required, Validators.maxLength(500)]],
-      message_image_url_list: [null],
+      message_image_url_list: [null]
     });
 
     this.form.valueChanges.subscribe(() => {
@@ -262,10 +257,7 @@ export class FeedInputBoxComponent implements OnInit {
       }
 
       if (this.form) {
-        this.form.registerControl(
-          'post_type',
-          new FormControl(null, Validators.required),
-        );
+        this.form.registerControl('post_type', new FormControl(null, Validators.required));
         this.form.controls['store_id'].setValue(defaultHost);
       }
 

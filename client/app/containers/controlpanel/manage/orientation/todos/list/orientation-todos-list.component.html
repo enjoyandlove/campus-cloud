@@ -23,7 +23,7 @@
           <div class="row">
             <span
               class="col-xs-5 hover"
-              (click)="doSort('name')">
+              (click)="doSort('title')">
               {{ 'name' | cpI18n }}
               <span *ngIf="state.sort_field === 'name'">
                 <i class="material-icons">
@@ -33,9 +33,9 @@
             </span>
             <span
               class="col-xs-5 hover"
-              (click)="doSort('due_date')">
+              (click)="doSort('end')">
               {{ 'due_date' | cpI18n }}
-              <span *ngIf="state.sort_field === 'due_date'">
+              <span *ngIf="state.sort_field === 'end'">
                 <i class="material-icons">
                   {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
                 </i>
@@ -53,13 +53,13 @@
               class="col-xs-5 text-truncate hover"
               (click)="launchEditModal = true; selectedTodo = todo">
                 <strong>
-                  {{ todo.name }}
+                  {{ todo.title }}
                 </strong>
               <br>
               {{ todo.description }}
             </span>
             <span class="col-xs-5 text-truncate">
-              {{ todo.due_date | cpDatePipe:dateFormat }}
+              {{ todo.end | cpDatePipe:dateFormat }}
             </span>
             <span class="col-xs-2 text-right">
               <span

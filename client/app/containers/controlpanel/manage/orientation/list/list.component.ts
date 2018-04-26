@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { ManageHeaderService } from '../../utils';
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
+import { ProgramDuration } from '../orientation.status';
 import { OrientationService } from '../orientation.services';
 import { CPI18nService } from '../../../../../shared/services';
 import { FORMAT } from '../../../../../shared/pipes/date/date.pipe';
@@ -18,6 +19,7 @@ import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 export class OrientationListComponent extends BaseComponent implements OnInit {
   isOpen;
   loading;
+  noDuration;
   selectedProgram = null;
   launchDeleteModal = false;
   launchCreateModal = false;
@@ -130,6 +132,7 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.noDuration = ProgramDuration.disabled;
     this.buildHeader();
     this.fetch();
   }

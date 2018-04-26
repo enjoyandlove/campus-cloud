@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { OrientationInfoComponent } from '../info';
+import { OrientationWallComponent } from '../wall';
 import { OrientationProgramEditComponent } from '../edit';
 import { OrientationDetailsComponent } from './orientation-details.component';
 
@@ -21,6 +22,7 @@ import { OrientationService } from '../orientation.services';
 @NgModule({
   declarations: [
     OrientationInfoComponent,
+    OrientationWallComponent,
     OrientationDetailsComponent,
     OrientationProgramEditComponent
   ],
@@ -36,6 +38,6 @@ import { OrientationService } from '../orientation.services';
     CalendarsModule
   ],
 
-  providers: [OrientationService],
+  providers: [OrientationService]
 })
 export class OrientationDetailsModule {}
