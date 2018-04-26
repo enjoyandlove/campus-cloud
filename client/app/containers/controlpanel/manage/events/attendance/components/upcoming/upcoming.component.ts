@@ -1,3 +1,4 @@
+/*tslint:disable:max-line-length */
 import { Component, OnInit, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
