@@ -30,8 +30,6 @@ export class CPDropdownMultiSelectComponent implements OnInit, OnChanges {
       this.state = { ...this.state, label: null };
 
       this.items.map((opt) => (opt.selected = false));
-
-      // this.selection.emit([]);
     }
   }
 
