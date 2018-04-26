@@ -6,6 +6,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./cp-tab.component.scss']
 })
 export class CPTabComponent {
+  @Input() id: string;
   @Input() title: string;
   @Input() active = false;
 

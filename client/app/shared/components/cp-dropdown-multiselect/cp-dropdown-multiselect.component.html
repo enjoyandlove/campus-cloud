@@ -20,7 +20,7 @@
       *ngFor="let opt of items">
       <p>
         <cp-checkbox 
-          (toggle)="onToggle($event, opt)"
+          (toggle)="onToggle(null, opt)"
           [isChecked]="opt.selected"></cp-checkbox>
         {{opt.label}}
       </p>

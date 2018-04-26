@@ -14,8 +14,6 @@ import { AudienceService } from '../audience.service';
 import { CPSession } from '../../../../session';
 import { CPI18nService } from '../../../../shared/services/index';
 
-declare var $: any;
-
 const AUDIENCE_USED_IN_TEMPLATE = 409;
 
 @Component({

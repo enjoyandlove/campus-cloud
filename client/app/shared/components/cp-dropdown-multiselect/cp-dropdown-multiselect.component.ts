@@ -44,8 +44,10 @@ export class CPDropdownMultiSelectComponent implements OnInit, OnChanges {
   }
 
   onToggle(event: Event, option) {
-    // prevent BS dropdown from closing
-    event.stopPropagation();
+    if (event) {
+      // prevent BS dropdown from closing
+      event.stopPropagation();
+    }
 
     option.selected = !option.selected;
 
