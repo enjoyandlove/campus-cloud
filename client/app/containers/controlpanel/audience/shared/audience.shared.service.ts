@@ -20,6 +20,12 @@ export class AudienceSharedService extends BaseService {
     return super.get(url, { search }).map((res) => res.json());
   }
 
+  getUserCount(body, search: URLSearchParams): Observable<any> {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER_LIST}/`;
+
+    return super.post(url, body, { search }).map((res) => res.json());
+  }
+
   getAudience(startRange: number, endRange: number, search: URLSearchParams) {
     const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER_LIST}`;
 
