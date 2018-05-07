@@ -20,7 +20,7 @@ interface IState {
 @Component({
   selector: 'cp-templates-list',
   templateUrl: './templates-list.component.html',
-  styleUrls: ['./templates-list.component.scss'],
+  styleUrls: ['./templates-list.component.scss']
 })
 export class TemplatesListComponent extends BaseComponent implements OnInit {
   loading;
@@ -40,7 +40,7 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
     search_str: null,
     templates: [],
     sort_field: 'name',
-    sort_direction: 'asc',
+    sort_direction: 'asc'
   };
 
   constructor(
@@ -49,7 +49,7 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
     private session: CPSession,
     private route: ActivatedRoute,
     private cpI18n: CPI18nService,
-    private service: TemplatesService,
+    private service: TemplatesService
   ) {
     super();
     super.isLoading().subscribe((loading) => (this.loading = loading));
@@ -72,7 +72,7 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
     this.state = {
       ...this.state,
       sort_field: sort_field,
-      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc',
+      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc'
     };
 
     this.fetch();
@@ -85,11 +85,7 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
     search.append('sort_direction', this.state.sort_direction);
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    const stream$ = this.service.getTemplates(
-      this.startRange,
-      this.endRange,
-      search,
-    );
+    const stream$ = this.service.getTemplates(this.startRange, this.endRange, search);
 
     super.fetchData(stream$).then((res) => {
       this.state = Object.assign({}, this.state, { templates: res.data });
@@ -106,7 +102,7 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
 
   onDeleted(id) {
     this.state = Object.assign({}, this.state, {
-      templates: this.state.templates.filter((template) => template.id !== id),
+      templates: this.state.templates.filter((template) => template.id !== id)
     });
 
     if (this.state.templates.length === 0 && this.pageNumber > 1) {
@@ -124,7 +120,7 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
         $('#deleteTemplateModal').modal();
       },
 
-      1,
+      1
     );
   }
 
@@ -133,8 +129,8 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
       type: SNACKBAR_SHOW,
       payload: {
         body: this.cpI18n.translate('announcement_success_sent'),
-        autoClose: true,
-      },
+        autoClose: true
+      }
     });
 
     $('#templateComposeModal').modal('hide');
@@ -152,7 +148,7 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
         $('#templateCreateModal').modal();
       },
 
-      1,
+      1
     );
   }
 
@@ -160,8 +156,8 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
     this.router.navigate(['/notify/templates'], {
       queryParams: {
         template: base64.encode(template.id.toString()),
-        school: base64.encode(this.session.g.get('school').id.toString()),
-      },
+        school: base64.encode(this.session.g.get('school').id.toString())
+      }
     });
   }
   doComposeModalTeardown() {
@@ -181,7 +177,7 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
         $('#templateComposeModal').modal();
       },
 
-      1,
+      1
     );
   }
 
@@ -201,7 +197,7 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
             $('#templateComposeModal').modal();
           },
 
-          1,
+          1
         );
       })
       .catch((_) => null);

@@ -11,7 +11,7 @@ import { DashboardUtilsService } from './../../dashboard.utils.service';
 @Component({
   selector: 'cp-dashboard-top-resource',
   templateUrl: './dashboard-top-resource.component.html',
-  styleUrls: ['./dashboard-top-resource.component.scss'],
+  styleUrls: ['./dashboard-top-resource.component.scss']
 })
 export class DashboardTopResourceComponent implements OnInit {
   isSuperAdmin;
@@ -24,7 +24,7 @@ export class DashboardTopResourceComponent implements OnInit {
   constructor(
     public router: Router,
     private session: CPSession,
-    private helper: DashboardUtilsService,
+    private helper: DashboardUtilsService
   ) {}
 
   ngOnInit() {

@@ -9,15 +9,12 @@ import { LocationsService } from '../../containers/controlpanel/manage/locations
 const defaultOptions: google.maps.places.AutocompletionRequest = {
   offset: 5,
   input: null,
-  radius: 500,
+  radius: 500
 };
 
 @Injectable()
 export class CPLocationsService {
-  constructor(
-    public locationsService: LocationsService,
-    public session: CPSession,
-  ) {}
+  constructor(public locationsService: LocationsService, public session: CPSession) {}
 
   getLocations(input: string) {
     const search = new URLSearchParams();
@@ -29,26 +26,24 @@ export class CPLocationsService {
         label: 'Your Locations',
         heading: true,
         value: null,
-        isGoogle: false,
-      },
+        isGoogle: false
+      }
     ];
 
-    return this.locationsService
-      .getLocations(1, 1000, search)
-      .map((locations) => {
-        return results.concat(
-          locations.map((location) => {
-            return {
-              label_dark: location.name,
-              label_medium: location.address,
-              full_label: location.address,
-              heading: false,
-              value: location,
-              isGoogle: false,
-            };
-          }),
-        );
-      });
+    return this.locationsService.getLocations(1, 1000, search).map((locations) => {
+      return results.concat(
+        locations.map((location) => {
+          return {
+            label_dark: location.name,
+            label_medium: location.address,
+            full_label: location.address,
+            heading: false,
+            value: location,
+            isGoogle: false
+          };
+        })
+      );
+    });
   }
 
   geoCode(location): Promise<any> {
@@ -56,9 +51,7 @@ export class CPLocationsService {
       const service = new google.maps.Geocoder();
 
       service.geocode({ location }, (data, status) => {
-        status === google.maps.GeocoderStatus.OK
-          ? resolve(data[0])
-          : reject(status);
+        status === google.maps.GeocoderStatus.OK ? resolve(data[0]) : reject(status);
       });
     });
   }
@@ -68,9 +61,7 @@ export class CPLocationsService {
       const service = new google.maps.Geocoder();
 
       service.geocode({ address: address }, (data, status) => {
-        status === google.maps.GeocoderStatus.OK
-          ? resolve(data[0])
-          : reject(status);
+        status === google.maps.GeocoderStatus.OK ? resolve(data[0]) : reject(status);
       });
     });
   }
@@ -79,19 +70,18 @@ export class CPLocationsService {
     const location = new google.maps.LatLng(lat, lng);
     const service = new google.maps.places.AutocompleteService();
 
-    const options: google.maps.places.AutocompletionRequest = Object.assign(
-      {},
-      defaultOptions,
-      { input, location },
-    );
+    const options: google.maps.places.AutocompletionRequest = Object.assign({}, defaultOptions, {
+      input,
+      location
+    });
 
     const results: Array<any> = [
       {
         label: 'Google Maps Results',
         heading: true,
         value: null,
-        isGoogle: false,
-      },
+        isGoogle: false
+      }
     ];
 
     const promise = new Promise((resolve) => {
@@ -102,9 +92,7 @@ export class CPLocationsService {
 
         suggestions.map((suggestion: any) => {
           const mainText = `${suggestion.structured_formatting.main_text}`;
-          const secondaryText = `${
-            suggestion.structured_formatting.secondary_text
-          }`;
+          const secondaryText = `${suggestion.structured_formatting.secondary_text}`;
 
           results.push({
             label_dark: `${mainText}`,
@@ -112,7 +100,7 @@ export class CPLocationsService {
             full_label: `${mainText}, ${secondaryText}`,
             heading: false,
             value: suggestion.place_id,
-            isGoogle: true,
+            isGoogle: true
           });
         });
         resolve(results);

@@ -9,7 +9,7 @@ import { CPI18nService } from '../../../../../../../shared/services';
 @Component({
   selector: 'cp-facebook-events-create',
   templateUrl: './create.component.html',
-  styleUrls: ['./create.component.scss'],
+  styleUrls: ['./create.component.scss']
 })
 export class FacebookEventsCreateComponent implements OnInit {
   @Input() clubId: number;
@@ -24,7 +24,7 @@ export class FacebookEventsCreateComponent implements OnInit {
     private fb: FormBuilder,
     private session: CPSession,
     private cpI18n: CPI18nService,
-    private eventsService: EventsService,
+    private eventsService: EventsService
   ) {}
 
   onSubmit(data) {
@@ -43,7 +43,7 @@ export class FacebookEventsCreateComponent implements OnInit {
 
           return;
         }
-      },
+      }
     );
   }
 
@@ -64,7 +64,7 @@ export class FacebookEventsCreateComponent implements OnInit {
 
     this.form = this.fb.group({
       url: [null, Validators.required],
-      store_id: [store_id ? store_id : null, Validators.required],
+      store_id: [store_id ? store_id : null, Validators.required]
     });
   }
 }

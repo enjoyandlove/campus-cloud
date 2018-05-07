@@ -11,11 +11,11 @@ const appRoutes: Routes = [
     path: 'change-password',
     data: { zendesk: 'password' },
     component: ChangePasswordComponent,
-    canActivate: [AuthGuard],
-  },
+    canActivate: [AuthGuard]
+  }
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class AccountRoutingModule {}

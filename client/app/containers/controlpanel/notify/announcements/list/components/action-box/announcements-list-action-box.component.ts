@@ -27,10 +27,7 @@ export class AnnouncementsListActionBoxComponent implements OnInit {
   canCompose;
   state: IState = state;
 
-  constructor(
-    private session: CPSession,
-    private cpI18n: CPI18nService
-  ) { }
+  constructor(private session: CPSession, private cpI18n: CPI18nService) {}
 
   onSearch(query) {
     this.state = Object.assign({}, this.state, { query });
@@ -43,27 +40,28 @@ export class AnnouncementsListActionBoxComponent implements OnInit {
   }
 
   ngOnInit() {
-    const schoolPrivilege = this.session.g.get('user')
-                            .school_level_privileges[this.session.g.get('school').id];
+    const schoolPrivilege = this.session.g.get('user').school_level_privileges[
+      this.session.g.get('school').id
+    ];
 
     this.canCompose = schoolPrivilege[CP_PRIVILEGES_MAP.campus_announcements].w;
 
     this.types = [
       {
-        'label': this.cpI18n.translate('all'),
-        'action': null
+        label: this.cpI18n.translate('all'),
+        action: null
       },
       {
-        'label': this.cpI18n.translate('regular'),
-        'action': 2
+        label: this.cpI18n.translate('regular'),
+        action: 2
       },
       {
-        'label': this.cpI18n.translate('urgent'),
-        'action': 1
+        label: this.cpI18n.translate('urgent'),
+        action: 1
       },
       {
-        'label': this.cpI18n.translate('emergency'),
-        'action': 0
+        label: this.cpI18n.translate('emergency'),
+        action: 0
       }
     ];
   }

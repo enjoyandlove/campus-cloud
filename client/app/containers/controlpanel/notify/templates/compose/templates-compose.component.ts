@@ -1,12 +1,5 @@
 /* tslint:disable:max-line-length */
-import {
-  Component,
-  Input,
-  OnInit,
-  OnDestroy,
-  HostListener,
-  ElementRef,
-} from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, HostListener, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { CPSession } from './../../../../../session/index';
@@ -19,7 +12,7 @@ import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-
 @Component({
   selector: 'cp-templates-compose',
   templateUrl: './templates-compose.component.html',
-  styleUrls: ['./templates-compose.component.scss'],
+  styleUrls: ['./templates-compose.component.scss']
 })
 export class TemplatesComposeComponent extends AnnouncementsComposeComponent
   implements OnInit, OnDestroy {
@@ -35,7 +28,7 @@ export class TemplatesComposeComponent extends AnnouncementsComposeComponent
     public session: CPSession,
     public cpI18n: CPI18nService,
     public storeService: StoreService,
-    public service: AnnouncementsService,
+    public service: AnnouncementsService
   ) {
     super(fb, session, cpI18n, storeService, service);
   }
@@ -123,7 +116,7 @@ export class TemplatesComposeComponent extends AnnouncementsComposeComponent
       isToUsers: 'user_details' in this.data,
       isCampusWide: this.data.is_school_wide,
       isUrgent: this.data.priority === this.URGENT_TYPE,
-      isEmergency: this.data.priority === this.EMERGENCY_TYPE,
+      isEmergency: this.data.priority === this.EMERGENCY_TYPE
     });
   }
 
@@ -132,19 +125,19 @@ export class TemplatesComposeComponent extends AnnouncementsComposeComponent
       case this.EMERGENCY_TYPE:
         this.subject_prefix = {
           label: this.cpI18n.translate('emergency'),
-          type: 'danger',
+          type: 'danger'
         };
         break;
       case this.URGENT_TYPE:
         this.subject_prefix = {
           label: this.cpI18n.translate('urgent'),
-          type: 'warning',
+          type: 'warning'
         };
         break;
       default:
         this.subject_prefix = {
           label: null,
-          type: null,
+          type: null
         };
         break;
     }
@@ -178,9 +171,9 @@ export class TemplatesComposeComponent extends AnnouncementsComposeComponent
         defaultValues: this.data.list_details.map((list) => {
           return {
             id: list.id,
-            label: list.name,
+            label: list.name
           };
-        }),
+        })
       });
     }
 
@@ -189,9 +182,9 @@ export class TemplatesComposeComponent extends AnnouncementsComposeComponent
         defaultValues: this.data.user_details.map((user) => {
           return {
             id: user.id,
-            label: user.email,
+            label: user.email
           };
-        }),
+        })
       });
     }
   }
@@ -203,8 +196,8 @@ export class TemplatesComposeComponent extends AnnouncementsComposeComponent
         text: this.cpI18n.translate('lists_button_create'),
         url:
           'https://oohlalamobile.zendesk.com/hc/en-us/articles/' +
-          '115004330554-Create-a-List-of-Students',
-      },
+          '115004330554-Create-a-List-of-Students'
+      }
     });
     super.ngOnInit();
 
@@ -217,7 +210,7 @@ export class TemplatesComposeComponent extends AnnouncementsComposeComponent
 
     this.selectedHost = {
       label: this.data.store_name,
-      value: this.data.store_id,
+      value: this.data.store_id
     };
   }
 }

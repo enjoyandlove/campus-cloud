@@ -1,0 +1,37 @@
+@import '~styles/components/card';
+@import '~styles/components/button';
+@import '~styles/core/typography';
+
+$img_height: 108px;
+$img_width: 108px;
+
+p.no-margin-bottom {
+  margin-bottom: 0;
+}
+
+.cp-card {
+  @include card-margin();
+
+  margin-bottom: 0;
+}
+
+.job {
+  &__title {
+    @include font-semi-bold();
+    @include font-24px();
+
+    margin-top: 15px;
+    margin-bottom: 0;
+  }
+
+  &__description {
+    margin-top: 20px;
+  }
+
+  &__image {
+    width: $img_width;
+    border-radius: 4px;
+    height: $img_height;
+    border: 1px solid $border-color;
+  }
+}

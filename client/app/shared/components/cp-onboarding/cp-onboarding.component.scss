@@ -1,7 +1,6 @@
 @import '~styles/core/typography';
 
 .cpmodal {
-
   &__body {
     padding-top: 40px;
     min-height: 321px;
@@ -12,7 +11,7 @@
 
     p,
     span {
-      @include font-16px()
+      @include font-16px();
     }
   }
 }

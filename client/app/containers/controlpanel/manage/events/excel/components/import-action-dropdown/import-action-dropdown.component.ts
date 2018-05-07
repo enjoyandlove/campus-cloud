@@ -107,9 +107,10 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
   }
 
   toggleEventAttendance() {
-    const value = this.state.event_attendance === EventAttendance.disabled
-      ? EventAttendance.enabled
-      : EventAttendance.disabled;
+    const value =
+      this.state.event_attendance === EventAttendance.disabled
+        ? EventAttendance.enabled
+        : EventAttendance.disabled;
 
     this.state = Object.assign({}, this.state, { event_attendance: value });
 

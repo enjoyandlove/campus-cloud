@@ -15,7 +15,7 @@ import {
   ClubsEventsAttendanceComponent,
   ClubsEventsCreateComponent,
   ClubsEventsExcelComponent,
-  ClubsEventsFacebookComponent,
+  ClubsEventsFacebookComponent
 } from './components';
 
 /**
@@ -30,7 +30,7 @@ import {
     ClubsEventInfoComponent,
     ClubsEventEditComponent,
     ClubsEventsFacebookComponent,
-    ClubsEventsExcelComponent,
+    ClubsEventsExcelComponent
   ],
 
   imports: [
@@ -39,7 +39,7 @@ import {
     RouterModule,
     ReactiveFormsModule,
     ClubsEventsRoutingModule,
-    EventsModule,
+    EventsModule
   ],
 
   exports: [
@@ -49,9 +49,9 @@ import {
     ClubsEventInfoComponent,
     ClubsEventEditComponent,
     ClubsEventsFacebookComponent,
-    ClubsEventsExcelComponent,
+    ClubsEventsExcelComponent
   ],
 
-  providers: [],
+  providers: []
 })
 export class ClubsEventsModule {}

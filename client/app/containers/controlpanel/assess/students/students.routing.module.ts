@@ -8,17 +8,17 @@ const studentsRoutes: Routes = [
   {
     path: '',
     data: { zendesk: 'Students List' },
-    component: StudentsListComponent,
+    component: StudentsListComponent
   },
 
   {
     path: ':studentId',
     data: { zendesk: 'Student Profile' },
-    component: StudentsProfileComponent,
-  },
+    component: StudentsProfileComponent
+  }
 ];
 @NgModule({
   imports: [RouterModule.forChild(studentsRoutes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class StudentsRoutingModule {}

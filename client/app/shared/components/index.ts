@@ -1,5 +1,6 @@
 export * from './cp-chip';
 export * from './cp-maps';
+export * from './cp-tabs';
 export * from './cp-stars';
 export * from './cp-alert';
 export * from './cp-modal';

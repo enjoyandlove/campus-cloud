@@ -7,11 +7,11 @@ const templatesRoutes: Routes = [
   {
     path: '',
     component: TemplatesListComponent,
-    data: { zendesk: 'notify' },
-  },
+    data: { zendesk: 'notify' }
+  }
 ];
 @NgModule({
   imports: [RouterModule.forChild(templatesRoutes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class TemplatesRoutingModule {}

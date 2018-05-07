@@ -2,10 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
-import {
-  IHeader,
-  HEADER_UPDATE
-} from '../../../reducers/header.reducer';
+import { IHeader, HEADER_UPDATE } from '../../../reducers/header.reducer';
 
 @Component({
   selector: 'cp-notify',
@@ -14,7 +11,7 @@ import {
   <div class="cp-wrapper cp-wrapper--outer">
     <router-outlet></router-outlet>
   </div>
-  `,
+  `
 })
 export class NotifyComponent implements OnInit {
   headerData$: Observable<IHeader>;

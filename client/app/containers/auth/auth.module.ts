@@ -14,6 +14,6 @@ import { AuthService } from './auth.service';
 @NgModule({
   declarations: [LoginComponent, LogoutComponent, LostPasswordComponent],
   imports: [BrowserModule, ReactiveFormsModule, SharedModule, RouterModule],
-  providers: [AuthService],
+  providers: [AuthService]
 })
 export class AuthModule {}

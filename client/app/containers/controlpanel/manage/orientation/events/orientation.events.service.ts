@@ -18,7 +18,7 @@ export class OrientationEventsService extends EventsService {
   getEvents(startRage: number, endRage: number, search?: URLSearchParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${
       API.ENDPOINTS.ORIENTATION_EVENTS
-      }/${startRage};${endRage}`;
+    }/${startRage};${endRage}`;
 
     return super.get(url, { search }).map((res) => res.json());
   }
@@ -26,35 +26,31 @@ export class OrientationEventsService extends EventsService {
   createEvent(body: any, search: URLSearchParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ORIENTATION_EVENTS}/`;
 
-    return super.post(url, body, {search}).map((res) => res.json());
+    return super.post(url, body, { search }).map((res) => res.json());
   }
 
   updateEvent(body: any, eventId: number, search: URLSearchParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ORIENTATION_EVENTS}/${eventId}`;
 
-    return super.update(url, body, {search}).map((res) => res.json());
+    return super.update(url, body, { search }).map((res) => res.json());
   }
 
   getEventById(id: number, search: URLSearchParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ORIENTATION_EVENTS}/${id}`;
 
-    return super.get(url, {search}).map((res) => res.json());
+    return super.get(url, { search }).map((res) => res.json());
   }
 
   deleteEventById(eventId: number, search: URLSearchParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ORIENTATION_EVENTS}/${eventId}`;
 
-    return super.delete(url, {search}).map((res) => res.json());
+    return super.delete(url, { search }).map((res) => res.json());
   }
 
-  getEventAttendanceByEventId(
-    startRage: number,
-    endRage: number,
-    search?: URLSearchParams,
-  ) {
+  getEventAttendanceByEventId(startRage: number, endRage: number, search?: URLSearchParams) {
     const common = `${API.BASE_URL}/${API.VERSION.V1}/${
       API.ENDPOINTS.ORIENTATION_EVENTS_ASSESSMENT
-      }`;
+    }`;
     const url = `${common}/${startRage};${endRage}`;
 
     return super.get(url, { search }).map((res) => res.json());
@@ -63,7 +59,7 @@ export class OrientationEventsService extends EventsService {
   setModalEvents(events: any[]): void {
     this.stores.dispatch({
       type: EVENTS_MODAL_SET,
-      payload: events,
+      payload: events
     });
   }
 }

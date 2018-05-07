@@ -2,8 +2,6 @@
 @import '~styles/core/typography';
 @import '~styles/components/button';
 
-
-
 .stats {
   padding-left: 0;
   list-style: none;
@@ -25,7 +23,6 @@
       transition: color 300ms ease-in-out;
 
       &.with-tooltip {
-
         &:hover {
           cursor: pointer;
         }

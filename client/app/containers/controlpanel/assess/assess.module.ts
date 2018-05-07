@@ -11,6 +11,6 @@ import { AssessRoutingModule } from './assess.routing.module';
 
   imports: [CommonModule, SharedModule, AssessRoutingModule],
 
-  providers: [],
+  providers: []
 })
 export class AssessModule {}

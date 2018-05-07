@@ -8,7 +8,7 @@ import { CPI18nService } from '../../services';
 @Component({
   selector: 'cp-school-switch',
   templateUrl: './school-switch.component.html',
-  styleUrls: ['./school-switch.component.scss'],
+  styleUrls: ['./school-switch.component.scss']
 })
 export class SchoolSwitchComponent implements OnInit {
   @Output() close: EventEmitter<null> = new EventEmitter();
@@ -50,16 +50,14 @@ export class SchoolSwitchComponent implements OnInit {
 
     const user: IUser = this.session.g.get('user');
 
-    let schoolPrivileges =
-      user.school_level_privileges[this.session.g.get('school').id];
+    let schoolPrivileges = user.school_level_privileges[this.session.g.get('school').id];
 
     this.canManageAdmins = false;
 
     if (schoolPrivileges) {
       const manage_admin = schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin];
 
-      schoolPrivileges =
-        user.school_level_privileges[this.session.g.get('school').id];
+      schoolPrivileges = user.school_level_privileges[this.session.g.get('school').id];
 
       this.canManageAdmins = manage_admin ? manage_admin : false;
     }

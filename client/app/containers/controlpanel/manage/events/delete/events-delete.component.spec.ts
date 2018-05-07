@@ -27,32 +27,29 @@ describe('EventDeleteComponent', () => {
   let component: EventsDeleteComponent;
   let fixture: ComponentFixture<EventsDeleteComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        EventsModule,
-      ],
-      providers: [
-        CPSession,
-        CPI18nService,
-        { provide: EventsService, useClass: MockService },
-      ]
-    }).compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(EventsDeleteComponent);
-        service = TestBed.get(EventsService);
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        imports: [EventsModule],
+        providers: [CPSession, CPI18nService, { provide: EventsService, useClass: MockService }]
+      })
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(EventsDeleteComponent);
+          service = TestBed.get(EventsService);
 
-        component = fixture.componentInstance;
-        component.event = {
-          id: 1001
-        };
+          component = fixture.componentInstance;
+          component.event = {
+            id: 1001
+          };
 
-        eventId = component.event.id;
-        component.session.g.set('school', mockSchool);
+          eventId = component.event.id;
+          component.session.g.set('school', mockSchool);
 
-        search = new URLSearchParams();
-      });
-  }));
+          search = new URLSearchParams();
+        });
+    })
+  );
 
   it('buttonData should have "Delete" label & "Danger class"', () => {
     component.ngOnInit();

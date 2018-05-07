@@ -17,13 +17,13 @@ const state: IState = {
   lists: [],
   search_str: null,
   sort_field: 'name',
-  sort_direction: 'asc',
+  sort_direction: 'asc'
 };
 
 @Component({
   selector: 'cp-lists-list',
   templateUrl: './lists-list.component.html',
-  styleUrls: ['./lists-list.component.scss'],
+  styleUrls: ['./lists-list.component.scss']
 })
 export class ListsListComponent extends BaseComponent implements OnInit {
   loading;
@@ -37,7 +37,7 @@ export class ListsListComponent extends BaseComponent implements OnInit {
   constructor(
     private session: CPSession,
     public cpI18n: CPI18nService,
-    private listsService: ListsService,
+    private listsService: ListsService
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -49,7 +49,7 @@ export class ListsListComponent extends BaseComponent implements OnInit {
     this.state = {
       ...this.state,
       sort_field: sort_field,
-      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc',
+      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc'
     };
 
     this.fetch();
@@ -62,18 +62,11 @@ export class ListsListComponent extends BaseComponent implements OnInit {
     search.append('sort_direction', this.state.sort_direction);
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    const stream$ = this.listsService.getLists(
-      search,
-      this.startRange,
-      this.endRange,
-    );
+    const stream$ = this.listsService.getLists(search, this.startRange, this.endRange);
 
     super
       .fetchData(stream$)
-      .then(
-        (res) =>
-          (this.state = Object.assign({}, this.state, { lists: res.data })),
-      );
+      .then((res) => (this.state = Object.assign({}, this.state, { lists: res.data })));
   }
 
   onSearch(search_str) {
@@ -110,7 +103,7 @@ export class ListsListComponent extends BaseComponent implements OnInit {
         $('#listsCreate').modal();
       },
 
-      1,
+      1
     );
   }
 
@@ -121,7 +114,7 @@ export class ListsListComponent extends BaseComponent implements OnInit {
         $('#listsImport').modal();
       },
 
-      1,
+      1
     );
   }
 
