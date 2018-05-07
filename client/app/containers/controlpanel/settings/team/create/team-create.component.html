@@ -148,27 +148,6 @@
         </fieldset>
         <!-- END Athletics Owner -->
 
-        <!-- Audience -->
-        <fieldset [disabled]="!canReadAudience">
-          <div class="section__item">
-            <div class="row">
-              <div class="col-xs-8">
-                <p class="section-sub-title">{{ 'admin_audience_title' | cpI18n }}</p>
-                <p class="section-description">
-                  {{ 'admin_audience_help' | cpI18n }}
-                </p>
-              </div>
-              <div class="col-xs-4">
-                <cp-dropdown
-                  [items]="audienceMenu"
-                  (selected)="onAudienceSelected($event)">
-                </cp-dropdown>
-              </div>
-            </div>
-          </div>
-        </fieldset>
-        <!-- END Audience -->
-
         <!-- Events -->
         <fieldset [disabled]="!canReadEvents">
           <div class="section__item">

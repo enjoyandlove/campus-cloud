@@ -23,8 +23,7 @@ import {
   serviceMenu,
   athleticMenu,
   manageAdminMenu,
-  TeamUtilsService,
-  audienceMenuStatus
+  TeamUtilsService
 } from '../team.utils.service';
 
 declare var $: any;
@@ -45,13 +44,11 @@ export class TeamCreateComponent implements OnInit {
   isFormError;
   canReadClubs;
   manageAdmins;
-  audienceMenu;
   servicesMenu;
   isClubsModal;
   canReadEvents;
   athleticsMenu;
   isServiceModal;
-  canReadAudience;
   canReadServices;
   form: FormGroup;
   isAthleticsModal;
@@ -100,25 +97,6 @@ export class TeamCreateComponent implements OnInit {
         disabled: !this.form.valid
       });
     });
-  }
-
-  onAudienceSelected(audience) {
-    if (audience.action === audienceMenuStatus.noAccess) {
-      if (CP_PRIVILEGES_MAP.campus_announcements in this.schoolPrivileges) {
-        delete this.schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements];
-      }
-
-      return;
-    }
-
-    if (audience.action === audienceMenuStatus.allAccess) {
-      this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
-        [CP_PRIVILEGES_MAP.campus_announcements]: {
-          r: true,
-          w: true
-        }
-      });
-    }
   }
 
   onSubmit(data) {
@@ -528,8 +506,6 @@ export class TeamCreateComponent implements OnInit {
       canSchoolReadResource(session, CP_PRIVILEGES_MAP.clubs) ||
       canAccountLevelReadResource(session, CP_PRIVILEGES_MAP.clubs);
 
-    this.canReadAudience = canSchoolReadResource(session, CP_PRIVILEGES_MAP.campus_announcements);
-
     this.canReadAthletics =
       canSchoolReadResource(session, CP_PRIVILEGES_MAP.athletics) ||
       canAccountLevelReadResource(session, CP_PRIVILEGES_MAP.athletics);
@@ -578,9 +554,6 @@ export class TeamCreateComponent implements OnInit {
     this.servicesMenu = this.utils.servicesDropdown(
       servicesPrivilegeSchool,
       servicesPrivilegeAccount
-    );
-    this.audienceMenu = this.utils.audienceDropdown(
-      schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements]
     );
     this.manageAdmins = this.utils.manageAdminDropdown(manageAdminPrivilege);
   }

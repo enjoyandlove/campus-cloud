@@ -46,7 +46,6 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   privileges;
   editingUser;
   isFormError;
-  audienceMenu;
   manageAdmins;
   servicesMenu;
   isClubsModal;
@@ -55,7 +54,6 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   canReadEvents;
   athleticsMenu;
   isServiceModal;
-  canReadAudience;
   canReadServices;
   form: FormGroup;
   isAthleticsModal;
