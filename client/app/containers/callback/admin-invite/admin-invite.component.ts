@@ -10,7 +10,7 @@ import { CPI18nService, ErrorService } from '../../../shared/services';
 @Component({
   selector: 'cp-admin-invite',
   templateUrl: './admin-invite.component.html',
-  styleUrls: ['./admin-invite.component.scss'],
+  styleUrls: ['./admin-invite.component.scss']
 })
 export class AdminInviteComponent implements OnInit, OnDestroy {
   key: string;
@@ -24,7 +24,7 @@ export class AdminInviteComponent implements OnInit, OnDestroy {
     private error: ErrorService,
     public cpI18n: CPI18nService,
     private route: ActivatedRoute,
-    private authService: AuthService,
+    private authService: AuthService
   ) {
     this.key = this.route.snapshot.params['key'];
   }
@@ -34,11 +34,9 @@ export class AdminInviteComponent implements OnInit, OnDestroy {
       (_) => this.handleSuccess(),
       (_) => {
         this.error.handleError({
-          reason: this.cpI18n.translate(
-            'admin_invite_invalid_invite_key_error',
-          ),
+          reason: this.cpI18n.translate('admin_invite_invalid_invite_key_error')
         });
-      },
+      }
     );
   }
 
@@ -49,7 +47,7 @@ export class AdminInviteComponent implements OnInit, OnDestroy {
         this.router.navigate(['/login']);
       },
 
-      1500,
+      1500
     );
   }
 
@@ -66,7 +64,7 @@ export class AdminInviteComponent implements OnInit, OnDestroy {
 
     this.form = this.fb.group({
       admin_invite_key: [this.key, Validators.required],
-      new_password: [null, [Validators.required, Validators.minLength(6)]],
+      new_password: [null, [Validators.required, Validators.minLength(6)]]
     });
   }
 }

@@ -10,17 +10,17 @@ const appRoutes: Routes = [
   {
     path: 'invite',
     component: TeamCreateComponent,
-    data: { zendesk: 'team' },
+    data: { zendesk: 'team' }
   },
   {
     path: ':adminId/edit',
     component: TeamEditComponent,
-    data: { zendesk: 'tema' },
-  },
+    data: { zendesk: 'tema' }
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class TeamRoutingModule {}

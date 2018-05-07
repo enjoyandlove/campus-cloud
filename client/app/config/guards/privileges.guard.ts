@@ -133,5 +133,4 @@ export class PrivilegesGuard implements CanActivate, CanActivateChild {
 
     return segments[1].path;
   }
-
 }

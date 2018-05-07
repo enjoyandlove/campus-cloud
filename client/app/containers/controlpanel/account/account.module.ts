@@ -11,14 +11,8 @@ import { AccountRoutingModule } from './account.routing.module';
 @NgModule({
   declarations: [ChangePasswordComponent],
 
-  imports: [
-    CommonModule,
-    RouterModule,
-    ReactiveFormsModule,
-    SharedModule,
-    AccountRoutingModule,
-  ],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, SharedModule, AccountRoutingModule],
 
-  providers: [AccountService],
+  providers: [AccountService]
 })
 export class AccountModule {}

@@ -24,7 +24,7 @@ import { MembersUtilsService } from './members.utils.service';
     ClubsMembersActionBoxComponent,
     ClubsMembersCreateComponent,
     ClubsMembersEditComponent,
-    ClubsMembersDeleteComponent,
+    ClubsMembersDeleteComponent
   ],
 
   imports: [
@@ -32,7 +32,7 @@ import { MembersUtilsService } from './members.utils.service';
     SharedModule,
     RouterModule,
     ReactiveFormsModule,
-    ClubsMembersRoutingModule,
+    ClubsMembersRoutingModule
   ],
 
   exports: [
@@ -40,9 +40,9 @@ import { MembersUtilsService } from './members.utils.service';
     ClubsMembersActionBoxComponent,
     ClubsMembersCreateComponent,
     ClubsMembersEditComponent,
-    ClubsMembersDeleteComponent,
+    ClubsMembersDeleteComponent
   ],
 
-  providers: [MembersService, MembersUtilsService],
+  providers: [MembersService, MembersUtilsService]
 })
 export class ClubsMembersModule {}

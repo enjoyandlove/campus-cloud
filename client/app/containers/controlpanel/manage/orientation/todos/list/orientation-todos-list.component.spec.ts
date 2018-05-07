@@ -28,37 +28,40 @@ describe('OrientationTodosListComponent', () => {
 
   const mockTodos = require('../../mock.json');
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [TodosModule],
-      providers: [
-        CPSession,
-        CPI18nService,
-        { provide: TodosService, useClass: MockTodosService },
-        { provide: ActivatedRoute,
-          useValue: {
-            snapshot: {
-              parent: {
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        imports: [TodosModule],
+        providers: [
+          CPSession,
+          CPI18nService,
+          { provide: TodosService, useClass: MockTodosService },
+          {
+            provide: ActivatedRoute,
+            useValue: {
+              snapshot: {
                 parent: {
-                  params: Observable.of({ orientationId: 1 })
+                  parent: {
+                    params: Observable.of({ orientationId: 1 })
+                  }
                 }
               }
-            },
+            }
           }
-        }
-      ]
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(OrientationTodosListComponent);
-        component = fixture.componentInstance;
-        service = TestBed.get(TodosService);
+        ]
+      })
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(OrientationTodosListComponent);
+          component = fixture.componentInstance;
+          service = TestBed.get(TodosService);
 
-        component.session.g.set('school', mockSchool);
-        component.orientationId = 5452;
-        spy = spyOn(component.service, 'getTodos').and.returnValue(Observable.of(mockTodos));
-      });
-  }));
+          component.session.g.set('school', mockSchool);
+          component.orientationId = 5452;
+          spy = spyOn(component.service, 'getTodos').and.returnValue(Observable.of(mockTodos));
+        });
+    })
+  );
 
   it('should search string', () => {
     component.onSearch('hello world');
@@ -71,14 +74,15 @@ describe('OrientationTodosListComponent', () => {
     expect(component.launchCreateModal).toBeTruthy();
   });
 
-  it('should fetch list of todos', fakeAsync(() => {
-    component.ngOnInit();
+  it(
+    'should fetch list of todos',
+    fakeAsync(() => {
+      component.ngOnInit();
 
-    tick();
-    expect(spy).toHaveBeenCalled();
-    expect(spy.calls.count()).toBe(1);
-    expect(component.state.todos.length).toEqual(mockTodos.length);
-
-  }));
-
+      tick();
+      expect(spy).toHaveBeenCalled();
+      expect(spy.calls.count()).toBe(1);
+      expect(component.state.todos.length).toEqual(mockTodos.length);
+    })
+  );
 });

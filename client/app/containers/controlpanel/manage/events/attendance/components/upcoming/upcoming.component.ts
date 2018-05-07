@@ -4,9 +4,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { EventAttendance } from '../../../event.status';
 import { FORMAT } from '../../../../../../../shared/pipes/date';
 import { EventUtilService } from '../../../events.utils.service';
-import {
-  IResourceBanner
-} from '../../../../../../../shared/components/cp-resource-banner/cp-resource.interface';
+import { IResourceBanner } from '../../../../../../../shared/components/cp-resource-banner/cp-resource.interface';
 
 @Component({
   selector: 'cp-attendance-upcoming',
@@ -26,20 +24,17 @@ export class AttendanceUpcomingComponent implements OnInit {
   format = FORMAT.DATETIME;
   attendanceEnabled = EventAttendance.enabled;
 
-  constructor(public utils: EventUtilService) { }
+  constructor(public utils: EventUtilService) {}
 
   ngOnInit() {
     this.eventCheckinRoute = this.utils.getEventCheckInLink(this.isOrientation);
-    this.banner = this.event.poster_url === '' ?
-                  this.event.store_logo_url : this.event.poster_url;
+    this.banner = this.event.poster_url === '' ? this.event.store_logo_url : this.event.poster_url;
 
     this.dateFormat = FORMAT.DATETIME;
-    this.mapCenter = new BehaviorSubject(
-    {
+    this.mapCenter = new BehaviorSubject({
       lat: this.event.latitude,
       lng: this.event.longitude
-    }
-    );
+    });
 
     this.resourceBanner = {
       image: this.banner,

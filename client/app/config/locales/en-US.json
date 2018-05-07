@@ -1038,6 +1038,9 @@
   "error": {
     "message": "Error"
   },
+  "error_allow_local_storage_to_continue": {
+    "message": "Your browser does not allow cookies.  Enable cookies in your browser to continue."
+  },
   "error_file_is_too_big": {
     "message": "File too Big"
   },
@@ -1376,6 +1379,10 @@
   "leader": {
     "message": "Leader",
     "description": "Manage > Orientation > Program > view program details \r\nAdd Member > Member Type dropdown"
+  },
+  "learn_more": {
+    "message": "Learn more",
+    "description": "Manage > Links > Create Link"
   },
   "links": {
     "message": "Links"
@@ -1980,6 +1987,10 @@
   },
   "todos_delete": {
     "message": "Delete To-do"
+  },
+  "todos_edit": {
+    "message": "Edit To-do",
+    "description": "Orientation > to-do > edit"
   },
   "todos_new": {
     "message": "Create To-do"

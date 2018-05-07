@@ -85,7 +85,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       this.clubId,
       this.serviceId,
       this.isAthletic,
-      this.orientationId,
+      this.orientationId
     );
     this.fetch();
   }

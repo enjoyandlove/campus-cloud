@@ -6,15 +6,13 @@ import { CPI18nService } from '../../services';
   templateUrl: './cp-onboarding.component.html',
   styleUrls: ['./cp-onboarding.component.scss']
 })
-
 export class CPOnboardingComponent implements OnInit {
   @Input() range: number;
   @Input() currentStep: number;
 
   onBoardingSteps;
 
-  constructor(private cpI18n: CPI18nService) {
-  }
+  constructor(private cpI18n: CPI18nService) {}
 
   getCurrentSlide(event: number): void {
     this.currentStep = event;
@@ -47,7 +45,7 @@ export class CPOnboardingComponent implements OnInit {
         img: require('public/png/onboarding/step_4.png'),
         title: this.cpI18n.translate('on_boarding_step_4_title'),
         description: this.cpI18n.translate('on_boarding_step_4_description')
-      },
+      }
     ];
 
     this.range = this.onBoardingSteps.length;

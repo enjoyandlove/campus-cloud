@@ -1,10 +1,4 @@
-import {
-  Input,
-  OnInit,
-  Output,
-  Component,
-  EventEmitter,
-} from '@angular/core';
+import { Input, OnInit, Output, Component, EventEmitter } from '@angular/core';
 
 import * as moment from 'moment';
 import { CPI18nService } from '../../../../../../shared/services';
@@ -23,12 +17,12 @@ interface IProps {
 @Component({
   selector: 'cp-engagement-stats',
   templateUrl: './engagement-stats.component.html',
-  styleUrls: ['./engagement-stats.component.scss'],
+  styleUrls: ['./engagement-stats.component.scss']
 })
 export class EngagementStatsComponent implements OnInit {
   @Input() props: IProps;
   @Output() download: EventEmitter<number> = new EventEmitter();
-  @Output() doCompose: EventEmitter<{ name: string, userIds: Array<number> }> = new EventEmitter();
+  @Output() doCompose: EventEmitter<{ name: string; userIds: Array<number> }> = new EventEmitter();
 
   loading;
   noEngagementPercentage;
@@ -39,9 +33,7 @@ export class EngagementStatsComponent implements OnInit {
   ZERO_ENGAGEMENT = 3;
   REPEAT_ENGAGEMENT = 1;
 
-  constructor(
-    public cpI18n: CPI18nService
-  ) { }
+  constructor(public cpI18n: CPI18nService) {}
 
   onCompose(listName, userIds) {
     const { starts, ends } = this.props;
@@ -60,13 +52,13 @@ export class EngagementStatsComponent implements OnInit {
       return 0;
     }
 
-    const percentage = (this.props[key].length * 100) / total;
+    const percentage = this.props[key].length * 100 / total;
 
     return percentage === 0 ? percentage : percentage.toFixed(1);
   }
 
   ngOnInit() {
-    $(function () {
+    $(function() {
       $('[data-toggle="tooltip"]').tooltip();
     });
 

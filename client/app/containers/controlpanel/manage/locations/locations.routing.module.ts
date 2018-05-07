@@ -9,11 +9,11 @@ const appRoutes: Routes = [
     path: '',
     canActivate: [PrivilegesGuard],
     component: LocationsListComponent,
-    data: { zendesk: 'locations' },
-  },
+    data: { zendesk: 'locations' }
+  }
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class LocationsRoutingModule {}

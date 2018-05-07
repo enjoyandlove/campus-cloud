@@ -19,33 +19,28 @@ const state: IState = {
   providers: [],
   search_text: null,
   sort_direction: 'asc',
-  sort_field: 'provider_name',
+  sort_field: 'provider_name'
 };
 
 @Component({
   selector: 'cp-providers-list',
   templateUrl: './providers-list.component.html',
-  styleUrls: ['./providers-list.component.scss'],
+  styleUrls: ['./providers-list.component.scss']
 })
-export class ServicesProvidersListComponent extends BaseComponent
-  implements OnInit {
+export class ServicesProvidersListComponent extends BaseComponent implements OnInit {
   @Input() serviceId: number;
   @Input() query: Observable<string>;
   @Input() reload: Observable<boolean>;
   @Input() download: Observable<boolean>;
   @Input() serviceWithFeedback: Observable<boolean>;
-  @Output()
-  providersLength$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  @Output() providersLength$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   loading;
   deleteProvider = '';
   state: IState = state;
   displayRatingColumn = true;
 
-  constructor(
-    private cpI18n: CPI18nService,
-    private providersService: ProvidersService,
-  ) {
+  constructor(private cpI18n: CPI18nService, private providersService: ProvidersService) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
   }
@@ -64,7 +59,7 @@ export class ServicesProvidersListComponent extends BaseComponent
     this.state = {
       ...this.state,
       sort_field,
-      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc',
+      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc'
     };
     this.fetch();
   }
@@ -77,13 +72,7 @@ export class ServicesProvidersListComponent extends BaseComponent
     search.append('sort_direction', this.state.sort_direction);
 
     super
-      .fetchData(
-        this.providersService.getProviders(
-          this.startRange,
-          this.endRange,
-          search,
-        ),
-      )
+      .fetchData(this.providersService.getProviders(this.startRange, this.endRange, search))
       .then((res) => {
         this.state = Object.assign({}, this.state, { providers: res.data });
         this.providersLength$.next(res.data.length > 0);
@@ -93,16 +82,12 @@ export class ServicesProvidersListComponent extends BaseComponent
 
   onDeleted(providerId) {
     this.state = Object.assign({}, this.state, {
-      providers: this.state.providers.filter(
-        (provider) => provider.id !== providerId,
-      ),
+      providers: this.state.providers.filter((provider) => provider.id !== providerId)
     });
   }
 
   ngOnInit() {
-    this.serviceWithFeedback.subscribe(
-      (withRating) => (this.displayRatingColumn = withRating),
-    );
+    this.serviceWithFeedback.subscribe((withRating) => (this.displayRatingColumn = withRating));
 
     this.query.subscribe((search_text) => {
       this.state = Object.assign({}, this.state, { search_text });
@@ -121,11 +106,7 @@ export class ServicesProvidersListComponent extends BaseComponent
         search.append('service_id', this.serviceId.toString());
         search.append('all', '1');
 
-        const stream$ = this.providersService.getProviders(
-          this.startRange,
-          this.endRange,
-          search,
-        );
+        const stream$ = this.providersService.getProviders(this.startRange, this.endRange, search);
 
         stream$.toPromise().then((providers) => {
           const columns = [
@@ -133,7 +114,7 @@ export class ServicesProvidersListComponent extends BaseComponent
             this.cpI18n.translate('email'),
             this.cpI18n.translate('average_rating'),
             this.cpI18n.translate('total_ratings'),
-            this.cpI18n.translate('services_total_visits'),
+            this.cpI18n.translate('services_total_visits')
           ];
 
           providers = providers.map((data) => {
@@ -150,9 +131,7 @@ export class ServicesProvidersListComponent extends BaseComponent
 
               [this.cpI18n.translate('total_ratings')]: data.num_ratings,
 
-              [this.cpI18n.translate(
-                'services_total_visits',
-              )]: data.total_visits,
+              [this.cpI18n.translate('services_total_visits')]: data.total_visits
             };
           });
 

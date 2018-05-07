@@ -8,10 +8,9 @@ import { DashboardService } from './../../dashboard.service';
 @Component({
   selector: 'cp-dashboard-social-activity',
   templateUrl: './dashboard-social-activity.component.html',
-  styleUrls: ['./dashboard-social-activity.component.scss'],
+  styleUrls: ['./dashboard-social-activity.component.scss']
 })
-export class DashboardSocialActivyComponent extends BaseComponent
-  implements OnInit {
+export class DashboardSocialActivyComponent extends BaseComponent implements OnInit {
   @Output() ready: EventEmitter<boolean> = new EventEmitter();
 
   _dates;
@@ -40,7 +39,7 @@ export class DashboardSocialActivyComponent extends BaseComponent
         return prev + curr;
       },
 
-      0,
+      0
     );
 
     return data.series.map((item) => (item * 100 / total).toFixed(1)).reverse();
@@ -57,7 +56,7 @@ export class DashboardSocialActivyComponent extends BaseComponent
     super.fetchData(stream$).then((res) => {
       this.chartData = {
         ...res.data,
-        percentage: this.calculatePercentage(res.data),
+        percentage: this.calculatePercentage(res.data)
       };
     });
   }

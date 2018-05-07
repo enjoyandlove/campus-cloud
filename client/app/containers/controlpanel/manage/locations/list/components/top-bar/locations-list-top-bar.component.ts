@@ -9,9 +9,9 @@ export class LocationsListTopBarComponent implements OnInit {
   @Output() search: EventEmitter<string> = new EventEmitter();
   @Output() launchModal: EventEmitter<null> = new EventEmitter();
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   onSearch(query) {
     this.search.emit(query);

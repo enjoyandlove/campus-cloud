@@ -16,9 +16,7 @@ export class AdminService extends BaseService {
   }
 
   getAdmins(startRage: number, endRage: number, search?: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.ADMIN
-    }/${startRage};${endRage}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/${startRage};${endRage}`;
 
     return super.get(url, { search }).map((res) => res.json());
   }
@@ -30,17 +28,13 @@ export class AdminService extends BaseService {
   }
 
   getAdminById(adminId: number) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.ADMIN
-    }/${adminId}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/${adminId}`;
 
     return super.get(url).map((res) => res.json());
   }
 
   deleteAdminById(adminId: number) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.ADMIN
-    }/${adminId}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/${adminId}`;
 
     return super
       .delete(url, null, true)
@@ -55,9 +49,7 @@ export class AdminService extends BaseService {
   }
 
   updateAdmin(adminId: number, data: any) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.ADMIN
-    }/${adminId}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/${adminId}`;
 
     return super.update(url, data, null, true).map((res) => res.json());
   }

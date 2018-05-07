@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 
 import {
   accountsToStoreMap,
-  canAccountLevelReadResource,
+  canAccountLevelReadResource
 } from './../../../../../shared/utils/privileges/privileges';
 
 import { TEAM_ACCESS } from '../utils';
@@ -14,15 +14,8 @@ import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base/base.component';
 import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
-import {
-  CP_PRIVILEGES,
-  CP_PRIVILEGES_MAP,
-} from '../../../../../shared/constants';
-import {
-  AdminService,
-  ErrorService,
-  CPI18nService,
-} from '../../../../../shared/services';
+import { CP_PRIVILEGES, CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
+import { AdminService, ErrorService, CPI18nService } from '../../../../../shared/services';
 
 import {
   serviceMenu,
@@ -30,7 +23,7 @@ import {
   eventMenu,
   TeamUtilsService,
   manageAdminMenu,
-  athleticMenu,
+  athleticMenu
 } from '../team.utils.service';
 
 declare var $: any;
@@ -38,7 +31,7 @@ declare var $: any;
 @Component({
   selector: 'cp-team-edit',
   templateUrl: './team-edit.component.html',
-  styleUrls: ['./team-edit.component.scss'],
+  styleUrls: ['./team-edit.component.scss']
 })
 export class TeamEditComponent extends BaseComponent implements OnInit {
   user;
@@ -88,7 +81,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     private cpI18n: CPI18nService,
     public utils: TeamUtilsService,
     private adminService: AdminService,
-    private errorService: ErrorService,
+    private errorService: ErrorService
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -101,34 +94,25 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   updateServicesDropdownLabel() {
     const numberOfServices = this.utils.getNumberOf(
       CP_PRIVILEGES_MAP.services,
-      this.accountPrivileges,
+      this.accountPrivileges
     );
 
-    this.servicesCount = numberOfServices
-      ? { label: `${numberOfServices} Service(s)` }
-      : null;
+    this.servicesCount = numberOfServices ? { label: `${numberOfServices} Service(s)` } : null;
   }
 
   updateClubsDropdownLabel() {
-    const numberOfClubs = this.utils.getNumberOf(
-      CP_PRIVILEGES_MAP.clubs,
-      this.accountPrivileges,
-    );
+    const numberOfClubs = this.utils.getNumberOf(CP_PRIVILEGES_MAP.clubs, this.accountPrivileges);
 
-    this.clubsCount = numberOfClubs
-      ? { label: `${numberOfClubs} Club(s)` }
-      : null;
+    this.clubsCount = numberOfClubs ? { label: `${numberOfClubs} Club(s)` } : null;
   }
 
   updateAthleticsDropdownLabel() {
     const numberOfAthletics = this.utils.getNumberOf(
       CP_PRIVILEGES_MAP.athletics,
-      this.accountPrivileges,
+      this.accountPrivileges
     );
 
-    this.athleticsCount = numberOfAthletics
-      ? { label: `${numberOfAthletics} Athletic(s)` }
-      : null;
+    this.athleticsCount = numberOfAthletics ? { label: `${numberOfAthletics} Athletic(s)` } : null;
   }
 
   private fetch() {
@@ -138,24 +122,18 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     super.fetchData(admin$).then((user) => {
       this.editingUser = user.data;
 
-      this.isCurrentUser =
-        this.editingUser.id === this.session.g.get('user').id;
+      this.isCurrentUser = this.editingUser.id === this.session.g.get('user').id;
 
-      this.buildHeader(
-        `${this.editingUser.firstname} ${this.editingUser.lastname}`,
-      );
+      this.buildHeader(`${this.editingUser.firstname} ${this.editingUser.lastname}`);
 
       this.buildForm(this.editingUser);
 
       this.schoolPrivileges = Object.assign(
         {},
-        this.editingUser.school_level_privileges[this.schoolId],
+        this.editingUser.school_level_privileges[this.schoolId]
       );
 
-      this.accountPrivileges = Object.assign(
-        {},
-        this.editingUser.account_level_privileges,
-      );
+      this.accountPrivileges = Object.assign({}, this.editingUser.account_level_privileges);
 
       if (!this.schoolPrivileges[CP_PRIVILEGES_MAP.services]) {
         this.updateServicesDropdownLabel();
@@ -170,10 +148,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       }
 
       this.isAllAccessEnabled =
-        isEqual(
-          this.schoolPrivileges,
-          this.user.school_level_privileges[this.schoolId],
-        ) &&
+        isEqual(this.schoolPrivileges, this.user.school_level_privileges[this.schoolId]) &&
         isEqual(this.accountPrivileges, this.user.account_level_privileges);
     });
   }
@@ -184,8 +159,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     }
     let selected;
     const school_level_privileges = this.schoolPrivileges;
-    const service_privilege =
-      school_level_privileges[CP_PRIVILEGES_MAP.services];
+    const service_privilege = school_level_privileges[CP_PRIVILEGES_MAP.services];
 
     if (!service_privilege) {
       selected = this.servicesMenu[0];
@@ -235,8 +209,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
     let selected;
     const school_level_privileges = this.schoolPrivileges;
-    const athletics_privilege =
-      school_level_privileges[CP_PRIVILEGES_MAP.athletics];
+    const athletics_privilege = school_level_privileges[CP_PRIVILEGES_MAP.athletics];
 
     if (!athletics_privilege) {
       selected = this.athleticsMenu[0];
@@ -257,9 +230,10 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   eventsDefaultPermission() {
     const school_level_privileges = this.schoolPrivileges;
 
-    const eventPrivilege = school_level_privileges[
-      CP_PRIVILEGES_MAP.events
-    ] || { r: false, w: false };
+    const eventPrivilege = school_level_privileges[CP_PRIVILEGES_MAP.events] || {
+      r: false,
+      w: false
+    };
 
     const eventAssessmentPrivilege = school_level_privileges[
       CP_PRIVILEGES_MAP.event_attendance
@@ -281,12 +255,12 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
         heading: `[NOTRANSLATE]${name}[NOTRANSLATE]`,
         crumbs: {
           url: this.isProfileView ? null : '/settings/team',
-          label: this.isProfileView ? null : 'team_settings',
+          label: this.isProfileView ? null : 'team_settings'
         },
         subheading: null,
         em: null,
-        children: [],
-      },
+        children: []
+      }
     });
   }
 
@@ -294,12 +268,12 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     this.form = this.fb.group({
       firstname: [profile.firstname, Validators.required],
       lastname: [profile.lastname, Validators.required],
-      email: [profile.email, Validators.required],
+      email: [profile.email, Validators.required]
     });
 
     this.form.valueChanges.subscribe((_) => {
       this.buttonData = Object.assign({}, this.buttonData, {
-        disabled: !this.form.valid,
+        disabled: !this.form.valid
       });
     });
   }
@@ -311,7 +285,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     if (!this.form.valid) {
       this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       this.errorService.handleError({
-        reason: this.cpI18n.translate('all_fields_are_required'),
+        reason: this.cpI18n.translate('all_fields_are_required')
       });
 
       return;
@@ -320,19 +294,17 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     let _data: any = {
       school_level_privileges: {
         [this.schoolId]: {
-          ...this.schoolPrivileges,
-        },
+          ...this.schoolPrivileges
+        }
       },
       account_level_privileges: {
-        ...this.accountPrivileges,
-      },
+        ...this.accountPrivileges
+      }
     };
 
     const isEmpty = require('lodash').isEmpty;
     const emptyAccountPrivileges = isEmpty(_data.account_level_privileges);
-    const emptySchoolPrivileges = isEmpty(
-      _data.school_level_privileges[this.schoolId],
-    );
+    const emptySchoolPrivileges = isEmpty(_data.school_level_privileges[this.schoolId]);
 
     if (emptyAccountPrivileges && emptySchoolPrivileges) {
       this.formError = this.cpI18n.translate('admins_error_no_access_granted');
@@ -354,10 +326,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     }
 
     this.adminService.updateAdmin(this.adminId, _data).subscribe(
-      () =>
-        this.router.navigate([
-          this.currentUserCanManage ? '/settings/team' : '/dashboard',
-        ]),
+      () => this.router.navigate([this.currentUserCanManage ? '/settings/team' : '/dashboard']),
       (err) => {
         if (err.status === 403) {
           $('#teamUnauthorziedModal').modal();
@@ -374,7 +343,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
         }
 
         this.formError = this.cpI18n.translate('all_fields_are_required');
-      },
+      }
     );
   }
 
@@ -397,8 +366,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
         [CP_PRIVILEGES_MAP.manage_admin]: {
           r: true,
-          w: true,
-        },
+          w: true
+        }
       });
     }
   }
@@ -409,14 +378,11 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
         {},
         accountsToStoreMap(
           this.session.g.get('user').account_mapping[this.schoolId],
-          this.user.account_level_privileges,
-        ),
+          this.user.account_level_privileges
+        )
       );
 
-      this.schoolPrivileges = Object.assign(
-        {},
-        this.user.school_level_privileges[this.schoolId],
-      );
+      this.schoolPrivileges = Object.assign({}, this.user.school_level_privileges[this.schoolId]);
 
       return;
     }
@@ -429,15 +395,9 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     this.doServicesCleanUp();
 
     const servicesLength = Object.keys(services).length;
-    this.servicesCount = servicesLength
-      ? { label: `${servicesLength} Service(s)` }
-      : null;
+    this.servicesCount = servicesLength ? { label: `${servicesLength} Service(s)` } : null;
 
-    this.accountPrivileges = Object.assign(
-      {},
-      this.accountPrivileges,
-      ...services,
-    );
+    this.accountPrivileges = Object.assign({}, this.accountPrivileges, ...services);
   }
 
   onServicesSelected(service) {
@@ -448,7 +408,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
           $('#selectServicesModal').modal();
         },
 
-        1,
+        1
       );
 
       return;
@@ -470,8 +430,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
       [CP_PRIVILEGES_MAP.services]: {
         r: service.action === 2 ? true : true,
-        w: service.action === 2 ? false : true,
-      },
+        w: service.action === 2 ? false : true
+      }
     });
   }
 
@@ -532,25 +492,15 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     const clubsLength = Object.keys(clubs).length;
     this.clubsCount = clubsLength ? { label: `${clubsLength} Club(s)` } : null;
 
-    this.accountPrivileges = Object.assign(
-      {},
-      this.accountPrivileges,
-      ...clubs,
-    );
+    this.accountPrivileges = Object.assign({}, this.accountPrivileges, ...clubs);
   }
 
   onAthleticsModalSelected(athletics) {
     this.doAthleticsCleanUp();
     const athleticsLength = Object.keys(athletics).length;
-    this.athleticsCount = athleticsLength
-      ? { label: `${athleticsLength} Athletic(s)` }
-      : null;
+    this.athleticsCount = athleticsLength ? { label: `${athleticsLength} Athletic(s)` } : null;
 
-    this.accountPrivileges = Object.assign(
-      {},
-      this.accountPrivileges,
-      ...athletics,
-    );
+    this.accountPrivileges = Object.assign({}, this.accountPrivileges, ...athletics);
   }
 
   onClubsSelected(club) {
@@ -561,7 +511,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
           $('#selectClubsModal').modal();
         },
 
-        1,
+        1
       );
 
       return;
@@ -583,22 +533,22 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
           r: true,
           w: this.session.g.get('user').school_level_privileges[this.schoolId][
             CP_PRIVILEGES_MAP.clubs
-          ].w,
+          ].w
         },
 
         [CP_PRIVILEGES_MAP.moderation]: {
           r: true,
           w: this.session.g.get('user').school_level_privileges[this.schoolId][
             CP_PRIVILEGES_MAP.clubs
-          ].w,
+          ].w
         },
 
         [CP_PRIVILEGES_MAP.membership]: {
           r: true,
           w: this.session.g.get('user').school_level_privileges[this.schoolId][
             CP_PRIVILEGES_MAP.clubs
-          ].w,
-        },
+          ].w
+        }
       });
     }
   }
@@ -611,7 +561,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
           $('#selectAthleticsModal').modal();
         },
 
-        1,
+        1
       );
 
       return;
@@ -633,22 +583,22 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
           r: true,
           w: this.session.g.get('user').school_level_privileges[this.schoolId][
             CP_PRIVILEGES_MAP.athletics
-          ].w,
+          ].w
         },
 
         [CP_PRIVILEGES_MAP.moderation]: {
           r: true,
           w: this.session.g.get('user').school_level_privileges[this.schoolId][
             CP_PRIVILEGES_MAP.athletics
-          ].w,
+          ].w
         },
 
         [CP_PRIVILEGES_MAP.membership]: {
           r: true,
           w: this.session.g.get('user').school_level_privileges[this.schoolId][
             CP_PRIVILEGES_MAP.athletics
-          ].w,
-        },
+          ].w
+        }
       });
     }
   }
@@ -673,8 +623,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
         [CP_PRIVILEGES_MAP.events]: {
           r: true,
-          w: true,
-        },
+          w: true
+        }
       });
     }
 
@@ -682,13 +632,13 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
         [CP_PRIVILEGES_MAP.events]: {
           r: true,
-          w: true,
+          w: true
         },
 
         [CP_PRIVILEGES_MAP.event_attendance]: {
           r: true,
-          w: true,
-        },
+          w: true
+        }
       });
     }
   }
@@ -737,15 +687,13 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    const privilege = this.user.school_level_privileges[this.schoolId][
-      privilegeNo
-    ];
+    const privilege = this.user.school_level_privileges[this.schoolId][privilegeNo];
 
     this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
       [privilegeNo]: {
         r: privilege.r,
-        w: privilege.w,
-      },
+        w: privilege.w
+      }
     });
 
     this.handleDependencies(privilegeNo, privilegeExtraData.deps);
@@ -758,11 +706,10 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
     this.buttonData = {
       class: 'primary',
-      text: this.cpI18n.translate('update'),
+      text: this.cpI18n.translate('update')
     };
 
-    const schoolPrivileges =
-      this.user.school_level_privileges[this.schoolId] || {};
+    const schoolPrivileges = this.user.school_level_privileges[this.schoolId] || {};
 
     this.currentUserCanManage =
       CP_PRIVILEGES_MAP.manage_admin in schoolPrivileges
@@ -770,58 +717,42 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
         : false;
 
     this.canReadEvents = schoolPrivileges[CP_PRIVILEGES_MAP.events] || false;
-    this.canReadServices =
-      schoolPrivileges[CP_PRIVILEGES_MAP.services] || false;
-    this.formData = TEAM_ACCESS.getMenu(
-      this.user.school_level_privileges[this.schoolId],
-    );
+    this.canReadServices = schoolPrivileges[CP_PRIVILEGES_MAP.services] || false;
+    this.formData = TEAM_ACCESS.getMenu(this.user.school_level_privileges[this.schoolId]);
 
     const clubsPrivilegeSchool = schoolPrivileges[CP_PRIVILEGES_MAP.clubs];
 
-    const clubsPrivilegeAccount = canAccountLevelReadResource(
-      session,
-      CP_PRIVILEGES_MAP.clubs,
-    );
+    const clubsPrivilegeAccount = canAccountLevelReadResource(session, CP_PRIVILEGES_MAP.clubs);
 
-    const athleticsPrivilegeSchool =
-      schoolPrivileges[CP_PRIVILEGES_MAP.athletics];
+    const athleticsPrivilegeSchool = schoolPrivileges[CP_PRIVILEGES_MAP.athletics];
 
     const athleticsPrivilegeAccount = canAccountLevelReadResource(
       session,
-      CP_PRIVILEGES_MAP.athletics,
+      CP_PRIVILEGES_MAP.athletics
     );
 
     const eventsPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.events];
 
-    const servicesPrivilegeSchool =
-      schoolPrivileges[CP_PRIVILEGES_MAP.services];
+    const servicesPrivilegeSchool = schoolPrivileges[CP_PRIVILEGES_MAP.services];
 
     const servicesPrivilegeAccount = canAccountLevelReadResource(
       session,
-      CP_PRIVILEGES_MAP.services,
+      CP_PRIVILEGES_MAP.services
     );
 
-    const manageAdminPrivilege =
-      schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin];
-    const eventsAssessmentPrivilege =
-      schoolPrivileges[CP_PRIVILEGES_MAP.event_attendance];
+    const manageAdminPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin];
+    const eventsAssessmentPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.event_attendance];
 
     this.manageAdmins = this.utils.manageAdminDropdown(manageAdminPrivilege);
-    this.clubsMenu = this.utils.clubsDropdown(
-      clubsPrivilegeSchool,
-      clubsPrivilegeAccount,
-    );
+    this.clubsMenu = this.utils.clubsDropdown(clubsPrivilegeSchool, clubsPrivilegeAccount);
     this.athleticsMenu = this.utils.athleticsDropdown(
       athleticsPrivilegeSchool,
-      athleticsPrivilegeAccount,
+      athleticsPrivilegeAccount
     );
-    this.eventsMenu = this.utils.eventsDropdown(
-      eventsPrivilege,
-      eventsAssessmentPrivilege,
-    );
+    this.eventsMenu = this.utils.eventsDropdown(eventsPrivilege, eventsAssessmentPrivilege);
     this.servicesMenu = this.utils.servicesDropdown(
       servicesPrivilegeSchool,
-      servicesPrivilegeAccount,
+      servicesPrivilegeAccount
     );
   }
 }

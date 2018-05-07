@@ -12,17 +12,17 @@
     margin: 10px 0 0 -70px;
   }
   ul li {
-      width: 13px;
-      height: 13px;
-      list-style: none;
-      border-radius: 13px;
-      display: inline-block;
-      -moz-border-radius: 13px;
-      -webkit-border-radius: 13px;
-      background: $color-light-grey;
-      margin-left: 12px;
-      &.current {
-        background: $color-med-grey;
+    width: 13px;
+    height: 13px;
+    list-style: none;
+    border-radius: 13px;
+    display: inline-block;
+    -moz-border-radius: 13px;
+    -webkit-border-radius: 13px;
+    background: $color-light-grey;
+    margin-left: 12px;
+    &.current {
+      background: $color-med-grey;
     }
   }
 }

@@ -6,7 +6,7 @@ import { CPDate } from '../../../../../../../shared/utils';
 @Component({
   selector: 'cp-feed-header',
   templateUrl: './feed-header.component.html',
-  styleUrls: ['./feed-header.component.scss'],
+  styleUrls: ['./feed-header.component.scss']
 })
 export class FeedHeaderComponent {
   @Input() feed: any;
@@ -17,16 +17,12 @@ export class FeedHeaderComponent {
   FORMAT = FORMAT.DATETIME;
 
   loadCategory(item) {
-    this.state = Object.assign(
-      {},
-      this.state,
-      {
-        post_types: item.post_type,
-        wall_type: 1,
-        label: item.channelName,
-        action: item.post_type
-      }
-    );
+    this.state = Object.assign({}, this.state, {
+      post_types: item.post_type,
+      wall_type: 1,
+      label: item.channelName,
+      action: item.post_type
+    });
     this.filterByCategory.emit(this.state);
   }
 }

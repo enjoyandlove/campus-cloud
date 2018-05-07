@@ -1,5 +1,4 @@
-const keyStr =
-  'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+const keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
 
 function _utf8_encode(string) {
   string = string.replace(/\r\n/g, '\n');
@@ -43,9 +42,7 @@ function _utf8_decode(utftext) {
     } else {
       c2 = utftext.charCodeAt(i + 1);
       c3 = utftext.charCodeAt(i + 2);
-      string += String.fromCharCode(
-        ((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63),
-      );
+      string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
       i += 3;
     }
   }
@@ -118,5 +115,5 @@ function decode(input) {
 
 export const base64 = {
   encode,
-  decode,
+  decode
 };

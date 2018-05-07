@@ -33,55 +33,60 @@ describe('OrientationProgramEditComponent', () => {
   let fixture: ComponentFixture<OrientationProgramEditComponent>;
 
   const editProgram = {
-    'id': 84,
-    'name': 'This is new edited name',
-    'description': 'this is new edited description',
-    'events': 20,
-    'members': 30,
-    'start': '1557637200',
-    'end': '1557637200',
-    'has_membership': 1
+    id: 84,
+    name: 'This is new edited name',
+    description: 'this is new edited description',
+    events: 20,
+    members: 30,
+    start: '1557637200',
+    end: '1557637200',
+    has_membership: 1
   };
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        OrientationDetailsModule,
-        StoreModule.forRoot({
-          HEADER: headerReducer,
-          SNACKBAR: snackBarReducer
-        })],
-      providers: [
-        CPSession,
-        FormBuilder,
-        CPI18nService,
-        OrientationUtilsService,
-        { provide: OrientationService, useClass: MockOrientationService },
-      ]
-    }).compileComponents().then(() => {
-      store = TestBed.get(Store);
-      storeSpy = spyOn(store, 'dispatch').and.callThrough();
-      fixture = TestBed.createComponent(OrientationProgramEditComponent);
-      component = fixture.componentInstance;
-      service = TestBed.get(OrientationService);
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          OrientationDetailsModule,
+          StoreModule.forRoot({
+            HEADER: headerReducer,
+            SNACKBAR: snackBarReducer
+          })
+        ],
+        providers: [
+          CPSession,
+          FormBuilder,
+          CPI18nService,
+          OrientationUtilsService,
+          { provide: OrientationService, useClass: MockOrientationService }
+        ]
+      })
+        .compileComponents()
+        .then(() => {
+          store = TestBed.get(Store);
+          storeSpy = spyOn(store, 'dispatch').and.callThrough();
+          fixture = TestBed.createComponent(OrientationProgramEditComponent);
+          component = fixture.componentInstance;
+          service = TestBed.get(OrientationService);
 
-      search = new URLSearchParams();
-      component.session.g.set('school', mockSchool);
-      search.append('school_id', component.session.g.get('school').id.toString());
+          search = new URLSearchParams();
+          component.session.g.set('school', mockSchool);
+          search.append('school_id', component.session.g.get('school').id.toString());
 
-      component.orientationProgram = {
-        id: 84,
-        name: 'This is new edited name',
-        description: 'this is new edited description',
-        events: 20,
-        members: 30,
-        start: 1557637200,
-        end: 1557637200,
-        has_membership: 1
-      };
-      component.ngOnInit();
-    });
-  }));
+          component.orientationProgram = {
+            id: 84,
+            name: 'This is new edited name',
+            description: 'this is new edited description',
+            events: 20,
+            members: 30,
+            start: 1557637200,
+            end: 1557637200,
+            has_membership: 1
+          };
+          component.ngOnInit();
+        });
+    })
+  );
 
   it('form validation - should fail', () => {
     component.form.controls['name'].setValue(null);
@@ -116,5 +121,4 @@ describe('OrientationProgramEditComponent', () => {
     expect(spy).toHaveBeenCalled();
     expect(spy.calls.count()).toBe(1);
   });
-
 });

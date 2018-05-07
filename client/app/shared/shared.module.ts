@@ -5,11 +5,7 @@ import { RouterModule } from '@angular/router';
 
 import { CPTrackerDirective } from './directives';
 import { CPDatePipe, CPFilterPipe, CPI18nPipe } from './pipes';
-import {
-  FileUploadService,
-  StoreService,
-  CPLocationsService,
-} from './services';
+import { FileUploadService, StoreService, CPLocationsService } from './services';
 import { CPTrackingService } from './services/tracking.service';
 import { CPFIlterByLength } from './pipes/array/filter-by-length.pipe';
 
@@ -48,7 +44,7 @@ import {
   CPTopBanerComponent,
   CPOnboardingComponent,
   CPStepperComponent,
-  CPListModalComponent,
+  CPListModalComponent
 } from './components';
 import { LocationsService } from '../containers/controlpanel/manage/locations/locations.service';
 import { CPMapsService } from './services/maps.service';
@@ -98,7 +94,7 @@ import { CPMapsService } from './services/maps.service';
     CPTopBanerComponent,
     CPOnboardingComponent,
     CPStepperComponent,
-    CPListModalComponent,
+    CPListModalComponent
   ],
 
   imports: [CommonModule, RouterModule, ReactiveFormsModule],
@@ -109,7 +105,7 @@ import { CPMapsService } from './services/maps.service';
     CPTrackingService,
     CPLocationsService,
     LocationsService,
-    CPMapsService,
+    CPMapsService
   ],
 
   exports: [
@@ -156,7 +152,7 @@ import { CPMapsService } from './services/maps.service';
     CPTopBanerComponent,
     CPOnboardingComponent,
     CPStepperComponent,
-    CPListModalComponent,
-  ],
+    CPListModalComponent
+  ]
 })
 export class SharedModule {}

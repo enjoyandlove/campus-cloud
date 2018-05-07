@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'cp-clubs-events-info',
-  templateUrl: './clubs-events-info.component.html',
+  templateUrl: './clubs-events-info.component.html'
 })
 export class ClubsEventInfoComponent implements OnInit {
   @Input() isAthletic;

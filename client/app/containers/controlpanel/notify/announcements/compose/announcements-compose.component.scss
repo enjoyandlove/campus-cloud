@@ -36,7 +36,6 @@
   &__input {
     width: 100%;
   }
-
 }
 
 label {
@@ -77,8 +76,6 @@ label {
 
   &.isActive {
     border: 1px solid $color-success;
-    background-color: rgba(40,202,66,0.06);
+    background-color: rgba(40, 202, 66, 0.06);
   }
 }
-
-

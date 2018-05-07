@@ -10,18 +10,14 @@ import { BaseComponent } from '../../../../../../base';
 import { FORMAT } from '../../../../../../shared/pipes';
 import { CPSession } from './../../../../../../session';
 import { CalendarsService } from '../../calendars.services';
-import {
-  HEADER_UPDATE,
-  IHeader,
-} from '../../../../../../reducers/header.reducer';
+import { HEADER_UPDATE, IHeader } from '../../../../../../reducers/header.reducer';
 
 @Component({
   selector: 'cp-calendars-items-details',
   templateUrl: './calendars-items-details.component.html',
-  styleUrls: ['./calendars-items-details.component.scss'],
+  styleUrls: ['./calendars-items-details.component.scss']
 })
-export class CalendarsItemsDetailsComponent extends BaseComponent
-  implements OnInit {
+export class CalendarsItemsDetailsComponent extends BaseComponent implements OnInit {
   item;
   mapCenter;
   itemId: number;
@@ -35,7 +31,7 @@ export class CalendarsItemsDetailsComponent extends BaseComponent
     public session: CPSession,
     public route: ActivatedRoute,
     public store: Store<IHeader>,
-    public service: CalendarsService,
+    public service: CalendarsService
   ) {
     super();
 
@@ -55,10 +51,10 @@ export class CalendarsItemsDetailsComponent extends BaseComponent
         em: null,
         crumbs: {
           url: `/manage/calendars/${this.calendar.id}`,
-          label: `[NOTRANSLATE]${this.calendar.name}[NOTRANSLATE]`,
+          label: `[NOTRANSLATE]${this.calendar.name}[NOTRANSLATE]`
         },
-        children: [],
-      },
+        children: []
+      }
     });
   }
 
@@ -68,16 +64,10 @@ export class CalendarsItemsDetailsComponent extends BaseComponent
     itemSearch.append('school_id', this.session.g.get('school').id.toString());
     itemSearch.append('academic_calendar_id', this.calendarId.toString());
 
-    calendarSearch.append(
-      'school_id',
-      this.session.g.get('school').id.toString(),
-    );
+    calendarSearch.append('school_id', this.session.g.get('school').id.toString());
 
     const item$ = this.service.getItemById(this.itemId, itemSearch);
-    const calendar$ = this.service.getCalendarById(
-      this.calendarId,
-      calendarSearch,
-    );
+    const calendar$ = this.service.getCalendarById(this.calendarId, calendarSearch);
     const stream$ = Observable.combineLatest(item$, calendar$);
 
     super.fetchData(stream$).then((res) => {
@@ -88,7 +78,7 @@ export class CalendarsItemsDetailsComponent extends BaseComponent
 
       this.mapCenter = new BehaviorSubject({
         lat: this.item.latitude,
-        lng: this.item.longitude,
+        lng: this.item.longitude
       });
     });
   }

@@ -14,9 +14,7 @@ export class BannerService extends BaseService {
   }
 
   getCoverImage(search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.COVER_PHOTO
-    }/`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.COVER_PHOTO}/`;
 
     return super.get(url, { search }).map((res) => res.json());
   }
@@ -28,12 +26,8 @@ export class BannerService extends BaseService {
   }
 
   updateSchoolImage(imageUrl: string, search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.COVER_PHOTO
-    }/`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.COVER_PHOTO}/`;
 
-    return super
-      .update(url, { cover_photo_url: imageUrl }, { search })
-      .map((res) => res.json());
+    return super.update(url, { cover_photo_url: imageUrl }, { search }).map((res) => res.json());
   }
 }

@@ -10,7 +10,7 @@ declare var $: any;
 @Component({
   selector: 'cp-facebook-delete',
   templateUrl: './delete.component.html',
-  styleUrls: ['./delete.component.scss'],
+  styleUrls: ['./delete.component.scss']
 })
 export class FacebookEventsDeleteComponent implements OnInit {
   @Input() link: any;
@@ -21,7 +21,7 @@ export class FacebookEventsDeleteComponent implements OnInit {
   constructor(
     private session: CPSession,
     private cpI18n: CPI18nService,
-    private eventsService: EventsService,
+    private eventsService: EventsService
   ) {}
 
   onDelete() {
@@ -30,21 +30,19 @@ export class FacebookEventsDeleteComponent implements OnInit {
 
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    this.eventsService
-      .deleteFacebookEventByLinkId(linkId, search)
-      .subscribe((_) => {
-        this.deleted.emit();
-        this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: false,
-        });
-        $('#facebookDelete').modal('hide');
+    this.eventsService.deleteFacebookEventByLinkId(linkId, search).subscribe((_) => {
+      this.deleted.emit();
+      this.buttonData = Object.assign({}, this.buttonData, {
+        disabled: false
       });
+      $('#facebookDelete').modal('hide');
+    });
   }
 
   ngOnInit() {
     this.buttonData = {
       class: 'danger',
-      text: this.cpI18n.translate('delete'),
+      text: this.cpI18n.translate('delete')
     };
   }
 }

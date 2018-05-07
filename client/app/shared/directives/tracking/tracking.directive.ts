@@ -5,7 +5,7 @@ import { CPTrackingService } from './../../services/tracking.service';
 
 export const CP_TRACK_TO = {
   GA: 'ga',
-  AMPLITUDE: 'am',
+  AMPLITUDE: 'am'
 };
 
 export interface IEventData {
@@ -17,7 +17,7 @@ export interface IEventData {
 
 @Directive({
   selector: '[cpTracker]',
-  providers: [CPTrackingService],
+  providers: [CPTrackingService]
 })
 export class CPTrackerDirective {
   @Input() eventData: IEventData;
@@ -40,7 +40,7 @@ export class CPTrackerDirective {
       this.cpTracker.gaEmitEvent(
         this.eventData.eventAction,
         this.eventData.eventCategory,
-        this.eventData.eventLabel,
+        this.eventData.eventLabel
       );
     }
   }

@@ -15,7 +15,7 @@ import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
 
 @Component({
   selector: 'cp-clubs-events',
-  templateUrl: './clubs-events.component.html',
+  templateUrl: './clubs-events.component.html'
 })
 export class ClubsEventsComponent extends BaseComponent implements OnInit {
   @Input() isAthletic = isClubAthletic.club;
@@ -32,7 +32,7 @@ export class ClubsEventsComponent extends BaseComponent implements OnInit {
     private session: CPSession,
     private route: ActivatedRoute,
     private utils: ClubsUtilsService,
-    private clubsService: ClubsService,
+    private clubsService: ClubsService
   ) {
     super();
 
@@ -46,12 +46,10 @@ export class ClubsEventsComponent extends BaseComponent implements OnInit {
     search.append('school_id', this.session.g.get('school').id.toString());
     search.append('category_id', this.isAthletic.toString());
 
-    super
-      .fetchData(this.clubsService.getClubById(this.clubId, search))
-      .then((club) => {
-        this.club = club.data;
-        this.buildHeader();
-      });
+    super.fetchData(this.clubsService.getClubById(this.clubId, search)).then((club) => {
+      this.club = club.data;
+      this.buildHeader();
+    });
   }
 
   buildHeader() {
@@ -59,7 +57,7 @@ export class ClubsEventsComponent extends BaseComponent implements OnInit {
 
     this.store.dispatch({
       type: HEADER_UPDATE,
-      payload,
+      payload
     });
   }
 
@@ -72,10 +70,10 @@ export class ClubsEventsComponent extends BaseComponent implements OnInit {
           this.router.url === `/manage/` + this.labels.club_athletic + `/${this.clubId}/events`
             ? this.labels.club_athletic
             : this.labels.club_athletic + `/${this.clubId}`,
-        label: this.labels.club_athletic,
+        label: this.labels.club_athletic
       },
       em: null,
-      children: [],
+      children: []
     };
 
     const links = this.utils.getSubNavChildren(this.club, this.session);
@@ -83,7 +81,7 @@ export class ClubsEventsComponent extends BaseComponent implements OnInit {
     links.forEach((link) => {
       menu.children.push({
         label: link.toLocaleLowerCase(),
-        url: `/manage/` + this.labels.club_athletic + `/${this.clubId}/${link.toLocaleLowerCase()}`,
+        url: `/manage/` + this.labels.club_athletic + `/${this.clubId}/${link.toLocaleLowerCase()}`
       });
     });
 

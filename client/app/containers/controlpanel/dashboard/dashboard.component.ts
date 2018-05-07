@@ -15,7 +15,7 @@ const isTileReady = (val) => !!val;
 @Component({
   selector: 'cp-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss'],
+  styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
   headerData;
@@ -40,7 +40,7 @@ export class DashboardComponent implements OnInit {
     private session: CPSession,
     private route: ActivatedRoute,
     private cpI18n: CPI18nService,
-    private helper: DashboardUtilsService,
+    private helper: DashboardUtilsService
   ) {
     this.user = this.session.g.get('user');
   }
@@ -51,7 +51,7 @@ export class DashboardComponent implements OnInit {
     this.currentDate = Object.assign({}, this.currentDate, {
       start: +routeParams.start,
       end: +routeParams.end,
-      label: routeParams.label,
+      label: routeParams.label
     });
   }
 
@@ -68,8 +68,8 @@ export class DashboardComponent implements OnInit {
       queryParams: {
         start: this.currentDate.start,
         end: this.currentDate.end,
-        label: this.currentDate.label,
-      },
+        label: this.currentDate.label
+      }
     });
   }
 
@@ -87,11 +87,11 @@ export class DashboardComponent implements OnInit {
       heading,
       crumbs: {
         url: null,
-        label: null,
+        label: null
       },
       subheading: null,
       em: null,
-      children: [],
+      children: []
     };
   }
 
@@ -105,14 +105,14 @@ export class DashboardComponent implements OnInit {
       this.socialActivityTile$,
       this.campusTileTile$,
       this.topClubsTile$,
-      this.integrationsTile$,
+      this.integrationsTile$
     ]).subscribe((tiles) => {
       setTimeout(
         () => {
           this.areAllTilesReady = tiles.every(isTileReady);
         },
 
-        1,
+        1
       );
 
       return tiles.every(isTileReady);
@@ -120,15 +120,9 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.canAssess = canSchoolReadResource(
-      this.session.g,
-      CP_PRIVILEGES_MAP.assessment,
-    );
+    this.canAssess = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.assessment);
 
-    this.canViewClub = canSchoolReadResource(
-      this.session.g,
-      CP_PRIVILEGES_MAP.clubs,
-    );
+    this.canViewClub = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.clubs);
 
     this.currentDate = this.helper.last30Days();
 
