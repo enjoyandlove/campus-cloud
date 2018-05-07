@@ -18,7 +18,7 @@ form {
   border-radius: 4px;
   background: $color-white;
   border: 1px solid $border-color;
-  box-shadow: 0 0 2px 0 rgba(0,0,0,0.16);
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.16);
 
   @media all and (max-width: $screen-sm) {
     margin-top: 80px;

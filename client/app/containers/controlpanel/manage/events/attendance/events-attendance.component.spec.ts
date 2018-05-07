@@ -30,47 +30,51 @@ describe('EventAttendanceComponent', () => {
   let component: EventsAttendanceComponent;
   let fixture: ComponentFixture<EventsAttendanceComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        EventsModule,
-        StoreModule.forRoot({
-          HEADER: headerReducer,
-          SNACKBAR: snackBarReducer
-        })
-      ],
-      providers: [
-        CPSession,
-        CPI18nService,
-        EventUtilService,
-        { provide: EventsService, useClass: MockService },
-        { provide: ActivatedRoute,
-          useValue: {
-            snapshot: {
-              params: Observable.of({ eventId: 1001 }),
-            },
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          EventsModule,
+          StoreModule.forRoot({
+            HEADER: headerReducer,
+            SNACKBAR: snackBarReducer
+          })
+        ],
+        providers: [
+          CPSession,
+          CPI18nService,
+          EventUtilService,
+          { provide: EventsService, useClass: MockService },
+          {
+            provide: ActivatedRoute,
+            useValue: {
+              snapshot: {
+                params: Observable.of({ eventId: 1001 })
+              }
+            }
           }
-        }
-      ]
-    }).compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(EventsAttendanceComponent);
-        service = TestBed.get(EventsService);
+        ]
+      })
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(EventsAttendanceComponent);
+          service = TestBed.get(EventsService);
 
-        component = fixture.componentInstance;
-        component.eventId = 1001;
-        component.session.g.set('school', mockSchool);
+          component = fixture.componentInstance;
+          component.eventId = 1001;
+          component.session.g.set('school', mockSchool);
 
-        search = new URLSearchParams();
-      });
-  }));
+          search = new URLSearchParams();
+        });
+    })
+  );
 
   it('URLSearchparams does not include calendar_id or school_id', () => {
     spyOn(component, 'buildHeader');
     spy = spyOn(component.service, 'getEventById').and.returnValue(Observable.of({}));
 
     component.fetch();
-    expect(spy).toHaveBeenCalledWith(component.eventId , search);
+    expect(spy).toHaveBeenCalledWith(component.eventId, search);
     expect(spy.calls.count()).toBe(1);
   });
 
@@ -82,7 +86,7 @@ describe('EventAttendanceComponent', () => {
     component.fetch();
     search.append('school_id', component.session.g.get('school').id);
     search.append('calendar_id', component.orientationId.toString());
-    expect(spy).toHaveBeenCalledWith(component.eventId , search);
+    expect(spy).toHaveBeenCalledWith(component.eventId, search);
     expect(spy.calls.count()).toBe(1);
   });
 });

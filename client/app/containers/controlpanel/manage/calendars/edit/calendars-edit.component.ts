@@ -6,7 +6,7 @@ import {
   Input,
   OnInit,
   Output,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
@@ -17,7 +17,7 @@ import { CalendarsService } from '../calendars.services';
 @Component({
   selector: 'cp-calendars-edit',
   templateUrl: './calendars-edit.component.html',
-  styleUrls: ['./calendars-edit.component.scss'],
+  styleUrls: ['./calendars-edit.component.scss']
 })
 export class CalendarsEditComponent implements OnInit {
   @ViewChild('editForm') editForm;
@@ -37,7 +37,7 @@ export class CalendarsEditComponent implements OnInit {
     public el: ElementRef,
     public fb: FormBuilder,
     public session: CPSession,
-    public service: CalendarsService,
+    public service: CalendarsService
   ) {}
 
   @HostListener('document:click', ['$event'])
@@ -71,12 +71,9 @@ export class CalendarsEditComponent implements OnInit {
   ngOnInit() {
     this.form = this.fb.group({
       id: [this.calendar.id, Validators.required],
-      name: [
-        this.calendar.name,
-        [Validators.required, Validators.maxLength(225)],
-      ],
+      name: [this.calendar.name, [Validators.required, Validators.maxLength(225)]],
       created_time: [this.calendar.created_time],
-      description: [this.calendar.description, Validators.maxLength(512)],
+      description: [this.calendar.description, Validators.maxLength(512)]
     });
   }
 }

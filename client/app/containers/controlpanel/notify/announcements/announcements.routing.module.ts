@@ -7,11 +7,11 @@ const appRoutes: Routes = [
   {
     path: '',
     component: AnnouncementsListComponent,
-    data: { zendesk: 'notify' },
-  },
+    data: { zendesk: 'notify' }
+  }
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class AnnouncementsRoutingModule {}

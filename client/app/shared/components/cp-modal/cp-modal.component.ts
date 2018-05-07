@@ -2,13 +2,13 @@ import { Component, Input, OnInit } from '@angular/core';
 
 export const MODAL_TYPE = {
   DEFAULT: 'default',
-  WIDE: 'wide',
+  WIDE: 'wide'
 };
 
 @Component({
   selector: 'cp-modal',
   templateUrl: './cp-modal.component.html',
-  styleUrls: ['./cp-modal.component.scss'],
+  styleUrls: ['./cp-modal.component.scss']
 })
 export class CPModalComponent implements OnInit {
   @Input() modalId: string;

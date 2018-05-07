@@ -17,10 +17,7 @@ export class EngagementResolver implements Resolve<any> {
 
     const serviceSearch = new URLSearchParams();
     serviceSearch.append('attendance_only', SERVICE_WITH_ATTENDANCE);
-    serviceSearch.append(
-      'school_id',
-      this.session.g.get('school').id.toString(),
-    );
+    serviceSearch.append('school_id', this.session.g.get('school').id.toString());
 
     const servicesList$ = this.service
       .getServices(undefined, undefined, serviceSearch)

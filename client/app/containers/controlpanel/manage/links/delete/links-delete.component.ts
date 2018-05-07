@@ -9,7 +9,7 @@ declare var $: any;
 @Component({
   selector: 'cp-links-delete',
   templateUrl: './links-delete.component.html',
-  styleUrls: ['./links-delete.component.scss'],
+  styleUrls: ['./links-delete.component.scss']
 })
 export class LinksDeleteComponent implements OnInit {
   @Input() link: any;
@@ -21,7 +21,7 @@ export class LinksDeleteComponent implements OnInit {
   constructor(
     private service: LinksService,
     private cpI18n: CPI18nService,
-    private errorService: ErrorService,
+    private errorService: ErrorService
   ) {}
 
   onDelete() {
@@ -37,9 +37,9 @@ export class LinksDeleteComponent implements OnInit {
         this.errorService.handleError(err);
 
         this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: false,
+          disabled: false
         });
-      },
+      }
     );
   }
 
@@ -52,7 +52,7 @@ export class LinksDeleteComponent implements OnInit {
   ngOnInit() {
     this.buttonData = {
       text: this.cpI18n.translate('delete'),
-      class: 'danger',
+      class: 'danger'
     };
   }
 }

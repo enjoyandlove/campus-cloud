@@ -5,12 +5,12 @@ import { isClubAthletic } from '../../clubs/clubs.athletics.labels';
   selector: 'cp-athletics-events',
   template: `<cp-clubs-events
               [isAthletic]="isAthletic">
-             </cp-clubs-events>`,
+             </cp-clubs-events>`
 })
 export class AthleticsEventsComponent implements OnInit {
   @Input() isAthletic;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     this.isAthletic = isClubAthletic.athletic;

@@ -8,10 +8,9 @@ import { DashboardService } from './../../dashboard.service';
 @Component({
   selector: 'cp-dashboard-integrations',
   templateUrl: './dashboard-integrations.component.html',
-  styleUrls: ['./dashboard-integrations.component.scss'],
+  styleUrls: ['./dashboard-integrations.component.scss']
 })
-export class DashboardIntegrationsComponent extends BaseComponent
-  implements OnInit {
+export class DashboardIntegrationsComponent extends BaseComponent implements OnInit {
   @Output() ready: EventEmitter<boolean> = new EventEmitter();
 
   data;

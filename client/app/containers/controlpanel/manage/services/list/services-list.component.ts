@@ -22,13 +22,13 @@ const state: IState = {
   search_text: null,
   attendance_only: 0,
   sort_field: 'name',
-  sort_direction: 'asc',
+  sort_direction: 'asc'
 };
 
 @Component({
   selector: 'cp-services-list',
   templateUrl: './services-list.component.html',
-  styleUrls: ['./services-list.component.scss'],
+  styleUrls: ['./services-list.component.scss']
 })
 export class ServicesListComponent extends BaseComponent implements OnInit {
   loading;
@@ -40,7 +40,7 @@ export class ServicesListComponent extends BaseComponent implements OnInit {
     public cpI18n: CPI18nService,
     private store: Store<IHeader>,
     private service: ServicesService,
-    private headerService: ManageHeaderService,
+    private headerService: ManageHeaderService
   ) {
     super();
     this.buildHeader();
@@ -51,7 +51,7 @@ export class ServicesListComponent extends BaseComponent implements OnInit {
     this.state = {
       ...this.state,
       sort_field: sort_field,
-      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc',
+      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc'
     };
     this.fetch();
   }
@@ -68,11 +68,7 @@ export class ServicesListComponent extends BaseComponent implements OnInit {
     search.append('search_text', this.state.search_text);
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    const stream$ = this.service.getServices(
-      this.startRange,
-      this.endRange,
-      search,
-    );
+    const stream$ = this.service.getServices(this.startRange, this.endRange, search);
 
     super.fetchData(stream$).then((res) => {
       this.state = Object.assign({}, this.state, { services: res.data });
@@ -82,7 +78,7 @@ export class ServicesListComponent extends BaseComponent implements OnInit {
   private buildHeader() {
     this.store.dispatch({
       type: HEADER_UPDATE,
-      payload: this.headerService.filterByPrivileges(),
+      payload: this.headerService.filterByPrivileges()
     });
   }
 
@@ -99,7 +95,7 @@ export class ServicesListComponent extends BaseComponent implements OnInit {
   doFilter(data) {
     this.state = Object.assign({}, this.state, {
       search_text: data.search_text,
-      attendance_only: data.attendance_only,
+      attendance_only: data.attendance_only
     });
 
     this.fetch();
@@ -113,9 +109,7 @@ export class ServicesListComponent extends BaseComponent implements OnInit {
     this.deleteService = '';
     const _state = Object.assign({}, this.state);
 
-    _state.services = _state.services.filter(
-      (service) => service.id !== serviceId,
-    );
+    _state.services = _state.services.filter((service) => service.id !== serviceId);
 
     this.state = Object.assign({}, this.state, { services: _state.services });
   }

@@ -72,7 +72,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     private utils: EventUtilService,
     private adminService: AdminService,
     private storeService: StoreService,
-    private fileUploadService: FileUploadService,
+    private fileUploadService: FileUploadService
   ) {
     super();
     this.school = this.session.g.get('school');
@@ -105,7 +105,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
         heading: 'events_import_csv_heading',
         crumbs: {
           url: this.urlPrefix,
-          label: 'events',
+          label: 'events'
         },
         em: `[NOTRANSLATE]${subheading}[NOTRANSLATE]`,
         children: []
@@ -179,7 +179,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       attendance_manager_email: [null],
       event_manager_id: [null],
       event_attendance: [EventAttendance.enabled],
-      event_feedback: [EventFeedback.enabled],
+      event_feedback: [EventFeedback.enabled]
     });
   }
 
@@ -462,9 +462,9 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     const control = <FormGroup>controls.controls[index];
 
     control.controls['event_manager_id'].setValue(null);
-    control.controls['event_attendance'].setValue(checked
-      ? EventAttendance.enabled
-      : EventAttendance.disabled);
+    control.controls['event_attendance'].setValue(
+      checked ? EventAttendance.enabled : EventAttendance.disabled
+    );
   }
 
   ngOnInit() {
@@ -472,7 +472,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       this.clubId,
       this.serviceId,
       this.isAthletic,
-      this.orientationId,
+      this.orientationId
     );
 
     this.isChecked = false;

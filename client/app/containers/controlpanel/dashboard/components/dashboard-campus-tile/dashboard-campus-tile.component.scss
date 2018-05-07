@@ -11,7 +11,6 @@
 }
 
 .tile {
-
   &--title {
     @include font-24px();
     @include font-bold();
@@ -46,7 +45,7 @@
     padding: 16px 0;
     position: sticky;
     background: $color-white;
-    box-shadow: -3px 0 2px rgba(0, 0, 0, 0.01);;
+    box-shadow: -3px 0 2px rgba(0, 0, 0, 0.01);
 
     p {
       color: $color-secondary-text;

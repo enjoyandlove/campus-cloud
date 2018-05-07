@@ -5,7 +5,7 @@ import {
   Output,
   HostListener,
   ElementRef,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 
 import { URLSearchParams } from '@angular/http';
@@ -20,7 +20,7 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'cp-orientation-todo-create',
   templateUrl: './orientation-todos-create.component.html',
-  styleUrls: ['./orientation-todos-create.component.scss'],
+  styleUrls: ['./orientation-todos-create.component.scss']
 })
 export class OrientationTodosCreateComponent implements OnInit {
   @ViewChild('createForm') createForm;
@@ -38,7 +38,7 @@ export class OrientationTodosCreateComponent implements OnInit {
     public session: CPSession,
     public cpI18n: CPI18nService,
     public service: TodosService,
-    public route: ActivatedRoute,
+    public route: ActivatedRoute
   ) {}
 
   @HostListener('document:click', ['$event'])
@@ -60,12 +60,10 @@ export class OrientationTodosCreateComponent implements OnInit {
     search.append('school_id', this.session.g.get('school').id);
     search.append('calendar_id', this.orientationId.toString());
 
-    this.service
-      .createTodo(this.form.value, search)
-      .subscribe((createdTodo) => {
-        this.created.emit(createdTodo);
-        this.resetModal();
-      });
+    this.service.createTodo(this.form.value, search).subscribe((createdTodo) => {
+      this.created.emit(createdTodo);
+      this.resetModal();
+    });
   }
 
   ngOnInit() {
@@ -73,7 +71,7 @@ export class OrientationTodosCreateComponent implements OnInit {
     this.form = this.fb.group({
       title: [null, [Validators.required, Validators.maxLength(225)]],
       description: [null, Validators.maxLength(512)],
-      end: [null, Validators.required],
+      end: [null, Validators.required]
     });
 
     this.buttonData = Object.assign({}, this.buttonData, {

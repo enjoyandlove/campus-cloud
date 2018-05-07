@@ -11,7 +11,7 @@ declare var $: any;
 @Component({
   selector: 'cp-feed-move-modal',
   templateUrl: './feed-move-modal.component.html',
-  styleUrls: ['./feed-move-modal.component.scss'],
+  styleUrls: ['./feed-move-modal.component.scss']
 })
 export class FeedMoveComponent implements OnInit {
   @Input() feed: any;
@@ -27,10 +27,10 @@ export class FeedMoveComponent implements OnInit {
     private fb: FormBuilder,
     private session: CPSession,
     private cpI18n: CPI18nService,
-    private feedsService: FeedsService,
+    private feedsService: FeedsService
   ) {
     this.form = this.fb.group({
-      post_type: [null, Validators.required],
+      post_type: [null, Validators.required]
     });
   }
 
@@ -58,8 +58,8 @@ export class FeedMoveComponent implements OnInit {
         const _channels = [
           {
             label: '---',
-            action: null,
-          },
+            action: null
+          }
         ];
 
         channels.forEach((channel) => {
@@ -68,7 +68,7 @@ export class FeedMoveComponent implements OnInit {
           }
           const _channel = {
             label: channel.name,
-            action: channel.id,
+            action: channel.id
           };
 
           _channels.push(_channel);
@@ -80,12 +80,12 @@ export class FeedMoveComponent implements OnInit {
     this.buttonData = {
       class: 'primary',
       text: this.cpI18n.translate('move'),
-      disabled: true,
+      disabled: true
     };
 
     this.form.valueChanges.subscribe((_) => {
       this.buttonData = Object.assign({}, this.buttonData, {
-        disabled: !this.form.valid,
+        disabled: !this.form.valid
       });
     });
   }

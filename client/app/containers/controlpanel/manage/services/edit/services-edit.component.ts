@@ -25,13 +25,13 @@ const FEEDBACK_DISABLED = 0;
 
 const SERVICE_FEEDBACK = {
   [FEEDBACK_ENABLED]: 'Enabled',
-  [FEEDBACK_DISABLED]: 'Disabled',
+  [FEEDBACK_DISABLED]: 'Disabled'
 };
 
 @Component({
   selector: 'cp-services-edit',
   templateUrl: './services-edit.component.html',
-  styleUrls: ['./services-edit.component.scss'],
+  styleUrls: ['./services-edit.component.scss']
 })
 export class ServicesEditComponent extends BaseComponent implements OnInit {
   @Input() toolTipContent: IToolTipContent;
@@ -59,7 +59,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     id: null,
     name: null,
     type: null,
-    index: null,
+    index: null
   };
 
   constructor(
@@ -70,7 +70,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     private cpI18n: CPI18nService,
     private route: ActivatedRoute,
     private servicesService: ServicesService,
-    private providersService: ProvidersService,
+    private providersService: ProvidersService
   ) {
     super();
     this.school = this.session.g.get('school');
@@ -92,21 +92,15 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     searchAdmin.append('privilege_type', CP_PRIVILEGES_MAP.events.toString());
 
     const service$ = this.servicesService.getServiceById(this.serviceId);
-    const providers$ = this.providersService.getProviders(
-      1,
-      1000,
-      searchProviders,
-    );
-    const categories$ = this.servicesService
-      .getCategories()
-      .map((categories) => {
-        return categories.map((category) => {
-          return {
-            action: category.id,
-            label: category.name,
-          };
-        });
+    const providers$ = this.providersService.getProviders(1, 1000, searchProviders);
+    const categories$ = this.servicesService.getCategories().map((categories) => {
+      return categories.map((category) => {
+        return {
+          action: category.id,
+          label: category.name
+        };
       });
+    });
 
     const stream$ = Observable.combineLatest(service$, providers$, categories$);
     super.fetchData(stream$).then((res) => {
@@ -126,21 +120,19 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
 
       const label =
         SERVICE_FEEDBACK[
-          'enable_feedback' in this.service
-            ? this.service.enable_feedback
-            : FEEDBACK_ENABLED
+          'enable_feedback' in this.service ? this.service.enable_feedback : FEEDBACK_ENABLED
         ];
 
       this.serviceFeedback = [
         {
           label,
-          value: null,
-        },
+          value: null
+        }
       ];
 
       this.mapCenter = new BehaviorSubject({
         lat: res.data[0].latitude,
-        lng: res.data[0].longitude,
+        lng: res.data[0].longitude
       });
 
       this.storeId = res.data[0].store_id;
@@ -149,18 +141,13 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
 
       if (providers.length) {
         const control = <FormArray>this.form.controls['providers'];
-        providers.forEach((provider) =>
-          control.push(this.buildServiceProviderControl(provider)),
-        );
+        providers.forEach((provider) => control.push(this.buildServiceProviderControl(provider)));
       }
     });
   }
 
   onResetMap() {
-    CPMap.setFormLocationData(
-      this.form,
-      CPMap.resetLocationFields(this.school),
-    );
+    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields(this.school));
     this.centerMap(this.school.latitude, this.school.longitude);
   }
 
@@ -210,9 +197,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
 
   onToggleAttendance(event) {
     if (event) {
-      this.form.controls['default_basic_feedback_label'].setValue(
-        'How did you like the service?',
-      );
+      this.form.controls['default_basic_feedback_label'].setValue('How did you like the service?');
       this.form.controls['service_attendance'].setValue(1);
       this.form.controls['rating_scale_maximum'].setValue(5);
 
@@ -231,7 +216,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       index: index,
       type: 'provider',
       id: control.controls['id'].value,
-      name: control.controls['provider_name'].value,
+      name: control.controls['provider_name'].value
     };
 
     $('#serviceEditDeleteModal').modal();
@@ -247,7 +232,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       (_) => controls.removeAt(data.index),
       (err) => {
         throw new Error(err);
-      },
+      }
     );
   }
 
@@ -265,14 +250,14 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
         id: [provider.id],
         provider_name: [provider.provider_name],
         email: [provider.email],
-        custom_basic_feedback_label: [provider.custom_basic_feedback_label],
+        custom_basic_feedback_label: [provider.custom_basic_feedback_label]
       });
     }
 
     return this.fb.group({
       provider_name: [null],
       email: [null],
-      custom_basic_feedback_label: [null],
+      custom_basic_feedback_label: [null]
     });
   }
 
@@ -298,12 +283,12 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       service_attendance: [this.service.service_attendance],
       rating_scale_maximum: [this.service.rating_scale_maximum],
       default_basic_feedback_label: [this.service.default_basic_feedback_label],
-      providers: this.fb.array([]),
+      providers: this.fb.array([])
     });
 
     this.form.valueChanges.subscribe((_) => {
       this.buttonData = Object.assign({}, this.buttonData, {
-        disabled: !this.form.valid,
+        disabled: !this.form.valid
       });
     });
   }
@@ -315,8 +300,8 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
         heading: 'services_edit_heading',
         subheading: null,
         em: null,
-        children: [],
-      },
+        children: []
+      }
     });
   }
 
@@ -372,9 +357,9 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
           room_data: data.room_data,
           service_attendance: data.service_attendance,
           rating_scale_maximum: data.rating_scale_maximum,
-          default_basic_feedback_label: data.default_basic_feedback_label,
+          default_basic_feedback_label: data.default_basic_feedback_label
         },
-        this.serviceId,
+        this.serviceId
       )
       .switchMap((service) => {
         this.withAttendance = service.service_attendance;
@@ -388,8 +373,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
             id: provider.controls['id'].value,
             provider_name: provider.controls['provider_name'].value,
             email: provider.controls['email'].value,
-            custom_basic_feedback_label:
-              provider.controls['custom_basic_feedback_label'].value,
+            custom_basic_feedback_label: provider.controls['custom_basic_feedback_label'].value
           });
         });
 
@@ -411,16 +395,16 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.feedback = Object.assign({}, this.feedback, {
-      content: this.cpI18n.translate('manage_create_service_feedback_tooltip'),
+      content: this.cpI18n.translate('manage_create_service_feedback_tooltip')
     });
 
     this.category = Object.assign({}, this.category, {
-      content: this.cpI18n.translate('manage_create_service_category_tooltip'),
+      content: this.cpI18n.translate('manage_create_service_category_tooltip')
     });
 
     this.buttonData = {
       class: 'primary',
-      text: 'Save',
+      text: 'Save'
     };
   }
 }

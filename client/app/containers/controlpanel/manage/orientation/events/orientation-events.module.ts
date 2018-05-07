@@ -14,7 +14,7 @@ import {
   OrientationEventsEditComponent,
   OrientationEventsExcelComponent,
   OrientationEventsCreateComponent,
-  OrientationEventsAttendanceComponent,
+  OrientationEventsAttendanceComponent
 } from './components';
 
 @NgModule({
@@ -33,7 +33,7 @@ import {
     RouterModule,
     ReactiveFormsModule,
     OrientationEventsRoutingModule,
-    EventsModule,
+    EventsModule
   ],
 
   providers: [OrientationEventsService]

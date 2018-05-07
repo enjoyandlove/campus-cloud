@@ -19,32 +19,32 @@ const appRoutes: Routes = [
     path: 'create',
     canActivate: [PrivilegesGuard],
     component: ClubsCreateComponent,
-    data: { zendesk: 'clubs' },
+    data: { zendesk: 'clubs' }
   },
 
   {
     path: ':clubId/edit',
     canActivate: [PrivilegesGuard],
     component: ClubsEditComponent,
-    data: { zendesk: 'clubs' },
+    data: { zendesk: 'clubs' }
   },
 
   {
     path: 'import/excel',
     canActivate: [PrivilegesGuard],
     component: ClubsExcelComponent,
-    data: { zendesk: 'clubs' },
+    data: { zendesk: 'clubs' }
   },
 
   {
     path: ':clubId',
     canActivate: [PrivilegesGuard],
     data: { zendesk: 'clubs' },
-    loadChildren: './details/details.module#ClubsDetailsModule',
-  },
+    loadChildren: './details/details.module#ClubsDetailsModule'
+  }
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class ClubsRoutingModule {}

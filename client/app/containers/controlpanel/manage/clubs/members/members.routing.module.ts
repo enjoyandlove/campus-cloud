@@ -4,10 +4,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { ClubsMembersComponent } from './list';
 
 const appRoutes: Routes = [
-  { path: '', component: ClubsMembersComponent, data: { zendesk: 'clubs' } },
+  { path: '', component: ClubsMembersComponent, data: { zendesk: 'clubs' } }
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class ClubsMembersRoutingModule {}

@@ -21,7 +21,7 @@ import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
 @Component({
   selector: 'cp-clubs-create',
   templateUrl: './clubs-create.component.html',
-  styleUrls: ['./clubs-create.component.scss'],
+  styleUrls: ['./clubs-create.component.scss']
 })
 export class ClubsCreateComponent implements OnInit {
   @Input() isAthletic = isClubAthletic.club;
@@ -42,7 +42,7 @@ export class ClubsCreateComponent implements OnInit {
     private store: Store<any>,
     private session: CPSession,
     private cpI18n: CPI18nService,
-    private clubsService: ClubsService,
+    private clubsService: ClubsService
   ) {}
 
   onSubmit() {
@@ -65,10 +65,10 @@ export class ClubsCreateComponent implements OnInit {
       },
       (err) => {
         this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: false,
+          disabled: false
         });
         throw new Error(err);
-      },
+      }
     );
   }
 
@@ -85,10 +85,7 @@ export class ClubsCreateComponent implements OnInit {
   }
 
   onResetMap() {
-    CPMap.setFormLocationData(
-      this.form,
-      CPMap.resetLocationFields(this.school),
-    );
+    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields(this.school));
     this.centerMap(this.school.latitude, this.school.longitude);
   }
 
@@ -143,7 +140,7 @@ export class ClubsCreateComponent implements OnInit {
 
     this.mapCenter = new BehaviorSubject({
       lat: this.school.latitude,
-      lng: this.school.longitude,
+      lng: this.school.longitude
     });
 
     this.store.dispatch({
@@ -152,13 +149,13 @@ export class ClubsCreateComponent implements OnInit {
         heading: this.labels.create_button,
         subheading: null,
         em: null,
-        children: [],
-      },
+        children: []
+      }
     });
 
     this.buttonData = {
       class: 'primary',
-      text: this.cpI18n.translate(this.labels.create_button),
+      text: this.cpI18n.translate(this.labels.create_button)
     };
 
     this.form = this.fb.group({
@@ -179,7 +176,7 @@ export class ClubsCreateComponent implements OnInit {
       website: [null],
       phone: [null],
       email: [null],
-      category_id: this.isAthletic,
+      category_id: this.isAthletic
     });
   }
 }

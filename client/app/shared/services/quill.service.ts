@@ -4,7 +4,7 @@ import { Delta } from 'quill';
 const Quill = require('quill');
 
 const defaultOptions = {
-  theme: 'snow',
+  theme: 'snow'
 };
 
 @Injectable()

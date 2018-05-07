@@ -12,25 +12,18 @@ import { CPImageUploadComponent } from '../../../../../shared/components';
 import { CPI18nPipe } from '../../../../../shared/pipes';
 import { ClubsService } from '../clubs.service';
 import { isClubAthletic, clubAthleticLabels } from '../clubs.athletics.labels';
-import {
-  CPI18nService,
-  FileUploadService,
-} from '../../../../../shared/services';
+import { CPI18nService, FileUploadService } from '../../../../../shared/services';
 
-import {
-  HEADER_DEFAULT,
-  HEADER_UPDATE,
-} from '../../../../../reducers/header.reducer';
+import { HEADER_DEFAULT, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
 const i18n = new CPI18nPipe();
 
 @Component({
   selector: 'cp-clubs-excel',
   templateUrl: './clubs-excel.component.html',
-  styleUrls: ['./clubs-excel.component.scss'],
+  styleUrls: ['./clubs-excel.component.scss']
 })
-export class ClubsExcelComponent extends BaseComponent
-  implements OnInit, OnDestroy {
+export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDestroy {
   @Input() isAthletic = isClubAthletic.club;
 
   clubs;
@@ -47,7 +40,7 @@ export class ClubsExcelComponent extends BaseComponent
     private session: CPSession,
     private cpI18n: CPI18nService,
     private clubService: ClubsService,
-    private fileUploadService: FileUploadService,
+    private fileUploadService: FileUploadService
   ) {
     super();
     this.store.select('CLUBS').subscribe((res) => {
@@ -62,27 +55,24 @@ export class ClubsExcelComponent extends BaseComponent
   }
 
   private buildHeader() {
-    const subheading = i18n.transform(
-      this.labels.import_items,
-      this.clubs.length,
-    );
+    const subheading = i18n.transform(this.labels.import_items, this.clubs.length);
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
         heading: this.labels.import_heading,
         crumbs: {
           url: this.labels.club_athletic,
-          label: this.labels.club_athletic,
+          label: this.labels.club_athletic
         },
         em: `[NOTRANSLATE]${subheading}[NOTRANSLATE]`,
-        children: [],
-      },
+        children: []
+      }
     });
   }
 
   private buildForm() {
     this.form = this.fb.group({
-      clubs: this.fb.array([]),
+      clubs: this.fb.array([])
     });
 
     this.buildGroup();
@@ -108,7 +98,7 @@ export class ClubsExcelComponent extends BaseComponent
       description: [club.description],
       phone: [club.phone_number],
       website: [club.website],
-      category_id: [this.isAthletic],
+      category_id: [this.isAthletic]
     });
   }
 
@@ -118,10 +108,7 @@ export class ClubsExcelComponent extends BaseComponent
   }
 
   onImageUpload(image, index) {
-    const imageUpload = new CPImageUploadComponent(
-      this.cpI18n,
-      this.fileUploadService,
-    );
+    const imageUpload = new CPImageUploadComponent(this.cpI18n, this.fileUploadService);
     const promise = imageUpload.onFileUpload(image, true);
 
     promise
@@ -151,7 +138,7 @@ export class ClubsExcelComponent extends BaseComponent
       (_) => this.router.navigate(['/manage/' + this.labels.club_athletic]),
       (err) => {
         throw new Error(err);
-      },
+      }
     );
   }
 
@@ -162,12 +149,12 @@ export class ClubsExcelComponent extends BaseComponent
     this.buttonData = {
       text: this.cpI18n.translate(this.labels.import_button),
       class: 'primary',
-      disabled: true,
+      disabled: true
     };
 
     this.form.valueChanges.subscribe((_) => {
       this.buttonData = Object.assign({}, this.buttonData, {
-        disabled: !this.form.valid,
+        disabled: !this.form.valid
       });
     });
   }

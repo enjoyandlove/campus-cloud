@@ -2,7 +2,6 @@
 @import '~styles/core/typography';
 
 .tile {
-
   &--title {
     @include font-24px();
     @include font-bold();
