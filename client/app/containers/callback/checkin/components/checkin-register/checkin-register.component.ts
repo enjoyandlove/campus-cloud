@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'cp-checkin-register',
   templateUrl: './checkin-register.component.html',
-  styleUrls: ['./checkin-register.component.scss']
+  styleUrls: ['./checkin-register.component.scss'],
 })
 export class CheckinRegisterComponent implements OnInit {
   @Input() data: any;
@@ -23,7 +23,7 @@ export class CheckinRegisterComponent implements OnInit {
     this.registrationForm = this.fb.group({
       email: [null, Validators.required],
       firstname: [null, Validators.required],
-      lastname: [null, Validators.required]
+      lastname: [null, Validators.required],
     });
   }
 }

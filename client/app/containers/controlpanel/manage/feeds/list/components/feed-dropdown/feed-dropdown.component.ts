@@ -6,7 +6,7 @@ import { CPI18nService } from '../../../../../../../shared/services/index';
 @Component({
   selector: 'cp-feed-dropdown',
   templateUrl: './feed-dropdown.component.html',
-  styleUrls: ['./feed-dropdown.component.scss']
+  styleUrls: ['./feed-dropdown.component.scss'],
 })
 export class FeedDropdownComponent implements OnInit {
   @Input() isComment: boolean;
@@ -45,15 +45,17 @@ export class FeedDropdownComponent implements OnInit {
       {
         action: 3,
         isPostOnly: false,
-        label: this.cpI18n.translate(this.isComment ? 'feeds_delete_comment' : 'feeds_delete_post')
-      }
+        label: this.cpI18n.translate(
+          this.isComment ? 'feeds_delete_comment' : 'feeds_delete_post',
+        ),
+      },
     ];
 
     if (this._isCampusWallView) {
       const approveMenu = {
         action: 2,
         label: this.cpI18n.translate('feeds_move_post'),
-        isPostOnly: true
+        isPostOnly: true,
       };
 
       items = [approveMenu, ...items];
@@ -64,13 +66,15 @@ export class FeedDropdownComponent implements OnInit {
         action: 1,
         isPostOnly: false,
         label: this.cpI18n.translate(
-          this.isComment ? 'feeds_approve_comment' : 'feeds_approve_post'
-        )
+          this.isComment ? 'feeds_approve_comment' : 'feeds_approve_post',
+        ),
       };
 
       items = [flaggedMenu, ...items];
     }
 
-    this.options = this.isComment ? items.filter((item) => !item.isPostOnly) : items;
+    this.options = this.isComment
+      ? items.filter((item) => !item.isPostOnly)
+      : items;
   }
 }

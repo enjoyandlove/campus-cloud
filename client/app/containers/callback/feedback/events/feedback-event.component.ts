@@ -9,7 +9,7 @@ import { FeedbackService } from '../feedback.service';
 @Component({
   selector: 'cp-feedback-event',
   templateUrl: './feedback-event.component.html',
-  styleUrls: ['./feedback-event.component.scss']
+  styleUrls: ['./feedback-event.component.scss'],
 })
 export class FeedbackEventComponent extends BaseComponent implements OnInit {
   event;
@@ -19,7 +19,10 @@ export class FeedbackEventComponent extends BaseComponent implements OnInit {
   search: URLSearchParams = new URLSearchParams();
   isSubmitted$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
-  constructor(private route: ActivatedRoute, private feedbackService: FeedbackService) {
+  constructor(
+    private route: ActivatedRoute,
+    private feedbackService: FeedbackService,
+  ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
 
@@ -38,7 +41,7 @@ export class FeedbackEventComponent extends BaseComponent implements OnInit {
       (_) => this.isSubmitted$.next(true),
       (err) => {
         throw new Error(err);
-      }
+      },
     );
   }
 

@@ -6,15 +6,19 @@ import { BaseComponent } from '../../../../../../../base/base.component';
 
 @Component({
   selector: 'cp-services-events-create',
-  templateUrl: './services-events-create.component.html'
+  templateUrl: './services-events-create.component.html',
 })
-export class ServicesEventsCreateComponent extends BaseComponent implements OnInit {
+export class ServicesEventsCreateComponent extends BaseComponent
+  implements OnInit {
   loading;
   storeId;
   serviceId;
   isService;
 
-  constructor(private route: ActivatedRoute, private servicesService: ServicesService) {
+  constructor(
+    private route: ActivatedRoute,
+    private servicesService: ServicesService,
+  ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
 

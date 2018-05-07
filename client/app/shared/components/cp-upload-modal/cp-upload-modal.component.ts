@@ -5,7 +5,7 @@ import {
   HostListener,
   Input,
   OnInit,
-  Output
+  Output,
 } from '@angular/core';
 
 import { CPI18nService } from '../../services/index';
@@ -21,7 +21,7 @@ interface IOptions {
 @Component({
   selector: 'cp-upload-modal',
   templateUrl: './cp-upload-modal.component.html',
-  styleUrls: ['./cp-upload-modal.component.scss']
+  styleUrls: ['./cp-upload-modal.component.scss'],
 })
 export class CPUploadModalComponent implements OnInit {
   @Input() props: IOptions;
@@ -54,15 +54,16 @@ export class CPUploadModalComponent implements OnInit {
     const result = [];
     const validators = [
       {
-        exp: this.props.validExtensions.indexOf(file.name.split('.').pop()) === -1,
+        exp:
+          this.props.validExtensions.indexOf(file.name.split('.').pop()) === -1,
         error: this.cpI18n.translate('error_invalid_extension'),
-        isError: false
+        isError: false,
       },
       {
         exp: file.size > FIVE_MB,
         error: this.cpI18n.translate('error_file_is_too_big'),
-        isError: false
-      }
+        isError: false,
+      },
     ];
 
     validators.map((validator) => {

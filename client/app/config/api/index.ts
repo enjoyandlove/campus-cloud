@@ -6,13 +6,13 @@ export const API = {
   KEY: 'IUm65kXecFWch54mzJjpy63spWZX3AVp',
 
   VERSION: {
-    V1: 'v1'
+    V1: 'v1',
   },
 
   ENDPOINTS: require('./api.resources').API_ENDPOINTS,
 
   AUTH_HEADER: {
     TOKEN: 'CCToke',
-    SESSION: 'CCSess'
-  }
+    SESSION: 'CCSess',
+  },
 };

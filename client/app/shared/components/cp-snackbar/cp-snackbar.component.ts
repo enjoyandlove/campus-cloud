@@ -6,7 +6,7 @@ import { SNACKBAR_HIDE } from './../../../reducers/snackbar.reducer';
 @Component({
   selector: 'cp-snackbar',
   templateUrl: './cp-snackbar.component.html',
-  styleUrls: ['./cp-snackbar.component.scss']
+  styleUrls: ['./cp-snackbar.component.scss'],
 })
 export class CPSnackBarComponent implements OnDestroy, OnInit {
   snack;
@@ -21,7 +21,7 @@ export class CPSnackBarComponent implements OnDestroy, OnInit {
             this.doClose();
           },
 
-          this.snack.autoCloseDelay
+          this.snack.autoCloseDelay,
         );
       }
     });

@@ -13,7 +13,7 @@ import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 @Component({
   selector: 'cp-events-facebook',
   templateUrl: './events-facebook.component.html',
-  styleUrls: ['./events-facebook.component.scss']
+  styleUrls: ['./events-facebook.component.scss'],
 })
 export class EventsFacebookComponent extends BaseComponent implements OnInit {
   @Input() storeId: number;
@@ -29,7 +29,7 @@ export class EventsFacebookComponent extends BaseComponent implements OnInit {
     private session: CPSession,
     private store: Store<IHeader>,
     private utils: EventUtilService,
-    private storeService: StoreService
+    private storeService: StoreService,
   ) {
     super();
 
@@ -51,7 +51,11 @@ export class EventsFacebookComponent extends BaseComponent implements OnInit {
   }
 
   private buildHeader() {
-    const backToEvents = this.utils.buildUrlPrefix(this.clubId, this.serviceId, this.isAthletic);
+    const backToEvents = this.utils.buildUrlPrefix(
+      this.clubId,
+      this.serviceId,
+      this.isAthletic,
+    );
 
     this.store.dispatch({
       type: HEADER_UPDATE,
@@ -59,11 +63,11 @@ export class EventsFacebookComponent extends BaseComponent implements OnInit {
         heading: 'events_facebook_heading',
         crumbs: {
           url: backToEvents,
-          label: 'events'
+          label: 'events',
         },
         subheading: '',
-        children: []
-      }
+        children: [],
+      },
     });
   }
 

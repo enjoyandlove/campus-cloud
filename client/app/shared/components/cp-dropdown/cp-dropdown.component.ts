@@ -6,13 +6,12 @@ import {
   EventEmitter,
   Input,
   OnInit,
-  Output
+  Output,
 } from '@angular/core';
 
 interface IItems {
   label: string;
   action: string;
-  heading?: boolean;
   disabled?: boolean;
   tooltipText?: string;
 }
@@ -21,15 +20,15 @@ interface IItems {
   selector: 'cp-dropdown',
   templateUrl: './cp-dropdown.component.html',
   styleUrls: ['./cp-dropdown.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CPDropdownComponent implements OnInit {
   @Input() items: IItems[];
   @Input() selectedItem: any;
   @Input() isRequiredError: boolean;
   @Input() reset: Observable<boolean>;
-
-  @Output() selected: EventEmitter<{ label: string; event: string }> = new EventEmitter();
+  @Output()
+  selected: EventEmitter<{ label: string; event: string }> = new EventEmitter();
 
   query = null;
   tooltipText = null;

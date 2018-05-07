@@ -15,9 +15,13 @@ import { ClubsModule } from '../clubs/clubs.module';
     AthleticsEditComponent,
     AthleticsExcelComponent,
     AthleticsCreateComponent,
-    AthleticsDeleteComponent
+    AthleticsDeleteComponent,
   ],
 
-  imports: [AthleticsRoutingModule, ClubsModule]
+  imports: [
+    AthleticsRoutingModule,
+    ClubsModule
+  ],
+
 })
 export class AthleticsModule {}

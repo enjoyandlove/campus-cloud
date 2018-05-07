@@ -19,6 +19,7 @@ import { OrientationEventsService } from './orientation.events.service';
              </cp-events>`,
   providers: [{ provide: EventsService, useClass: OrientationEventsService }]
 })
+
 export class OrientationEventsComponent extends BaseComponent {
   isOrientation = true;
   orientationId: number;
@@ -30,8 +31,7 @@ export class OrientationEventsComponent extends BaseComponent {
     private session: CPSession,
     private route: ActivatedRoute,
     private service: OrientationService,
-    private utils: OrientationUtilsService
-  ) {
+    private utils: OrientationUtilsService) {
     super();
 
     this.orientationId = this.route.parent.snapshot.parent.params['orientationId'];
@@ -45,11 +45,13 @@ export class OrientationEventsComponent extends BaseComponent {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    super.fetchData(this.service.getProgramById(this.orientationId, search)).then((program) => {
-      this.store.dispatch({
-        type: HEADER_UPDATE,
-        payload: this.utils.buildHeader(program.data)
+    super
+      .fetchData(this.service.getProgramById(this.orientationId, search))
+      .then((program) => {
+        this.store.dispatch({
+          type: HEADER_UPDATE,
+          payload: this.utils.buildHeader(program.data),
+        });
       });
-    });
   }
 }

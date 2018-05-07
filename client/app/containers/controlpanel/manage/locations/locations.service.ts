@@ -22,13 +22,17 @@ export class LocationsService extends BaseService {
   }
 
   getLocationById(locationId: number, search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LOCATIONS}/${locationId}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.LOCATIONS
+    }/${locationId}`;
 
     return super.get(url, { search }).map((res) => res.json());
   }
 
   updateLocation(body, locationId: number, search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LOCATIONS}/${locationId}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.LOCATIONS
+    }/${locationId}`;
 
     return super.update(url, body, { search }).map((res) => res.json());
   }
@@ -40,7 +44,9 @@ export class LocationsService extends BaseService {
   }
 
   deleteLocationById(locationId: number, search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LOCATIONS}/${locationId}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.LOCATIONS
+    }/${locationId}`;
 
     return super.delete(url, { search }).map((res) => res.json());
   }

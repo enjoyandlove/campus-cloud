@@ -8,7 +8,8 @@ var autoprefixer = require('autoprefixer');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
-var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin;
 
 /**
  * Env
@@ -118,7 +119,10 @@ module.exports = (function makeWebpackConfig() {
           'angular2-router-loader',
           '@angularclass/hmr-loader'
         ],
-        exclude: [isTest ? /\.(e2e)\.ts$/ : /\.(spec|e2e)\.ts$/, /node_modules\/(?!(ng2-.+))/]
+        exclude: [
+          isTest ? /\.(e2e)\.ts$/ : /\.(spec|e2e)\.ts$/,
+          /node_modules\/(?!(ng2-.+))/
+        ]
       },
 
       // copy those assets to output

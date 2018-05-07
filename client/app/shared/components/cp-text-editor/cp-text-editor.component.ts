@@ -8,7 +8,7 @@ import {
   Output,
   OnDestroy,
   ViewChild,
-  ViewEncapsulation
+  ViewEncapsulation,
 } from '@angular/core';
 import 'node_modules/quill/dist/quill.core.css';
 import 'node_modules/quill/dist/quill.snow.css';
@@ -23,14 +23,14 @@ interface IState {
 }
 
 const state: IState = {
-  body: null
+  body: null,
 };
 
 @Component({
   selector: 'cp-text-editor',
   templateUrl: './cp-text-editor.component.html',
   styleUrls: ['./cp-text-editor.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class CPTextEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() image$: Subject<string>;
@@ -53,10 +53,10 @@ export class CPTextEditorComponent implements OnInit, AfterViewInit, OnDestroy {
 
     const options = {
       modules: {
-        toolbar: null
+        toolbar: null,
       },
       placeholder: this.cpI18n.translate('feeds_input_placeholder'),
-      theme: 'snow'
+      theme: 'snow',
     };
 
     this.quillInstance = new QuillService(el, options);
@@ -78,7 +78,7 @@ export class CPTextEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   textChangeHandler() {
     this.state = Object.assign({}, this.state, {
       withImage: this.containsImage(),
-      body: this.quillInstance.getText()
+      body: this.quillInstance.getText(),
     });
     this.contentChange.emit(this.state);
   }

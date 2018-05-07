@@ -1,4 +1,10 @@
-import { Headers, Http, RequestOptionsArgs, Response, ResponseOptions } from '@angular/http';
+import {
+  Headers,
+  Http,
+  RequestOptionsArgs,
+  Response,
+  ResponseOptions
+} from '@angular/http';
 
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -14,7 +20,9 @@ import { API } from './../config/api/index';
  */
 
 const buildCommonHeaders = () => {
-  const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
+  const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(
+    appStorage.keys.SESSION
+  )}`;
 
   return new Headers({
     'Content-Type': 'application/json',

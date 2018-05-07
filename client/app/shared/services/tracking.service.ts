@@ -9,7 +9,9 @@ export class CPTrackingService {
   static loadAmplitude(userId) {
     require('node_modules/amplitude-js/src/amplitude-snippet.js');
 
-    window.amplitude.getInstance().init('6c5441a7008b413b8d3d29f8130afae1', userId);
+    window.amplitude
+      .getInstance()
+      .init('6c5441a7008b413b8d3d29f8130afae1', userId);
   }
 
   hotJarRecordPage() {
@@ -53,7 +55,7 @@ export class CPTrackingService {
     eventCategory: string,
     eventAction: string,
     eventLabel: string = null,
-    eventValue: number = null
+    eventValue: number = null,
   ) {
     if (!isProd) {
       return;
@@ -63,7 +65,7 @@ export class CPTrackingService {
       eventCategory: eventCategory,
       eventLabel: eventLabel,
       eventAction: eventAction,
-      eventValue: eventValue
+      eventValue: eventValue,
     });
   }
 }

@@ -7,7 +7,7 @@ import { CPSession } from '../../../../../../../session';
 @Component({
   selector: 'cp-calendars-items-bulk-create-form',
   templateUrl: './calendars-items-bulk-create-form.component.html',
-  styleUrls: ['./calendars-items-bulk-create-form.component.scss']
+  styleUrls: ['./calendars-items-bulk-create-form.component.scss'],
 })
 export class CalendarsItemsBulkCreateFormComponent implements OnInit {
   @Input() form: FormGroup;
@@ -27,8 +27,12 @@ export class CalendarsItemsBulkCreateFormComponent implements OnInit {
     const control = <FormGroup>controls.controls[index];
 
     control.controls['location'].setValue('');
-    control.controls['latitude'].setValue(this.session.g.get('school').latitude);
-    control.controls['longitude'].setValue(this.session.g.get('school').longitude);
+    control.controls['latitude'].setValue(
+      this.session.g.get('school').latitude,
+    );
+    control.controls['longitude'].setValue(
+      this.session.g.get('school').longitude,
+    );
   }
 
   onPlaceChange(placeData, index) {
@@ -56,7 +60,7 @@ export class CalendarsItemsBulkCreateFormComponent implements OnInit {
   ngOnInit() {
     this.buttonData = {
       text: 'Import Items',
-      class: 'primary'
+      class: 'primary',
     };
 
     this.form.valueChanges.subscribe((_) => {

@@ -5,7 +5,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  HostListener
+  HostListener,
 } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -23,7 +23,7 @@ declare var $;
 @Component({
   selector: 'cp-engagement-compose',
   templateUrl: './engagement-compose.component.html',
-  styleUrls: ['./engagement-compose.component.scss']
+  styleUrls: ['./engagement-compose.component.scss'],
 })
 export class EngagementComposeComponent implements OnInit {
   @Input() props: { name: string; userIds: Array<number> };
@@ -43,7 +43,7 @@ export class EngagementComposeComponent implements OnInit {
     private session: CPSession,
     private cpI18n: CPI18nService,
     private service: EngagementService,
-    private storeService: StoreService
+    private storeService: StoreService,
   ) {
     const school = this.session.g.get('school');
     const search: URLSearchParams = new URLSearchParams();
@@ -67,7 +67,7 @@ export class EngagementComposeComponent implements OnInit {
     search.append('school_id', this.session.g.get('school').id.toString());
 
     data = Object.assign({}, data, {
-      message: `${data.message} ${this.sendAsName}`
+      message: `${data.message} ${this.sendAsName}`,
     });
 
     this.service.postAnnouncements(search, data).subscribe(
@@ -75,7 +75,9 @@ export class EngagementComposeComponent implements OnInit {
         if (res.status === THROTTLED_STATUS) {
           this.isError = true;
           this.errorMessage = `Message not sent, \n
-          please wait ${(res.timeout / 60).toFixed()} minutes before trying again`;
+          please wait ${(
+            res.timeout / 60
+          ).toFixed()} minutes before trying again`;
 
           return;
         }
@@ -86,7 +88,7 @@ export class EngagementComposeComponent implements OnInit {
       (_) => {
         this.isError = true;
         this.errorMessage = this.cpI18n.translate('something_went_wrong');
-      }
+      },
     );
   }
 
@@ -102,7 +104,9 @@ export class EngagementComposeComponent implements OnInit {
   }
 
   ngOnInit() {
-    const defaultHost = this.session.defaultHost ? this.session.defaultHost.value : null;
+    const defaultHost = this.session.defaultHost
+      ? this.session.defaultHost.value
+      : null;
 
     this.form = this.fb.group({
       user_ids: [this.props.userIds],
@@ -110,7 +114,7 @@ export class EngagementComposeComponent implements OnInit {
       store_id: [defaultHost, Validators.required],
       subject: [null, [Validators.required, Validators.maxLength(128)]],
       message: [null, [Validators.required, Validators.maxLength(400)]],
-      priority: [2, Validators.required]
+      priority: [2, Validators.required],
     });
   }
 }

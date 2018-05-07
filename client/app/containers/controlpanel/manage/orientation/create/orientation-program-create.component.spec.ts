@@ -23,7 +23,8 @@ class MockOrientationService {
 }
 
 class RouterMock {
-  navigate() {}
+  navigate() {
+  }
 }
 
 describe('OrientationProgramCreateComponent', () => {
@@ -34,42 +35,38 @@ describe('OrientationProgramCreateComponent', () => {
   let fixture: ComponentFixture<OrientationProgramCreateComponent>;
 
   const createdProgram = {
-    id: 84,
-    name: 'Hello World!',
-    description: 'This is description',
-    events: 12,
-    members: 10,
-    start: '1557637200',
-    end: '1557637200',
-    has_membership: 1
+    'id': 84,
+    'name': 'Hello World!',
+    'description': 'This is description',
+    'events': 12,
+    'members': 10,
+    'start': '1557637200',
+    'end': '1557637200',
+    'has_membership': 1
   };
 
-  beforeEach(
-    async(() => {
-      TestBed.configureTestingModule({
-        imports: [OrientationModule],
-        providers: [
-          CPSession,
-          FormBuilder,
-          CPI18nService,
-          { provide: Router, useClass: RouterMock },
-          { provide: OrientationService, useClass: MockOrientationService }
-        ]
-      })
-        .compileComponents()
-        .then(() => {
-          fixture = TestBed.createComponent(OrientationProgramCreateComponent);
-          component = fixture.componentInstance;
-          service = TestBed.get(OrientationService);
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      imports: [OrientationModule],
+      providers: [
+        CPSession,
+        FormBuilder,
+        CPI18nService,
+        { provide: Router, useClass: RouterMock},
+        { provide: OrientationService, useClass: MockOrientationService },
+      ]
+    }).compileComponents().then(() => {
+      fixture = TestBed.createComponent(OrientationProgramCreateComponent);
+      component = fixture.componentInstance;
+      service = TestBed.get(OrientationService);
 
-          search = new URLSearchParams();
-          component.session.g.set('school', mockSchool);
-          search.append('school_id', component.session.g.get('school').id.toString());
+      search = new URLSearchParams();
+      component.session.g.set('school', mockSchool);
+      search.append('school_id', component.session.g.get('school').id.toString());
 
-          component.ngOnInit();
-        });
-    })
-  );
+      component.ngOnInit();
+    });
+  }));
 
   it('form validation - should fail', () => {
     expect(component.form.valid).toBeFalsy();
@@ -110,4 +107,5 @@ describe('OrientationProgramCreateComponent', () => {
     expect(spy).toHaveBeenCalled();
     expect(spy.calls.count()).toBe(1);
   });
+
 });

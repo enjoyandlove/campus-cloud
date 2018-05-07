@@ -5,7 +5,7 @@ import { isClubAthletic } from '../../../../clubs/clubs.athletics.labels';
   selector: 'cp-athletics-events-facebook',
   template: `<cp-clubs-events-facebook
               [isAthletic]="isAthletic">
-             </cp-clubs-events-facebook>`
+             </cp-clubs-events-facebook>`,
 })
 export class AthleticsEventsFacebookComponent implements OnInit {
   @Input() isAthletic;

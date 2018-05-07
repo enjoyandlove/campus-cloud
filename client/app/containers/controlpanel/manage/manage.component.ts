@@ -9,7 +9,7 @@ import { IHeader, HEADER_UPDATE } from '../../../reducers/header.reducer';
 
 @Component({
   selector: 'cp-manage',
-  templateUrl: './manage.component.html'
+  templateUrl: './manage.component.html',
 })
 export class ManageComponent implements OnInit {
   user: IUser;
@@ -18,7 +18,7 @@ export class ManageComponent implements OnInit {
   constructor(
     private router: Router,
     private store: Store<any>,
-    private headerService: ManageHeaderService
+    private headerService: ManageHeaderService,
   ) {
     this.headerData$ = this.store.select('HEADER');
   }
@@ -32,7 +32,7 @@ export class ManageComponent implements OnInit {
 
     this.store.dispatch({
       type: HEADER_UPDATE,
-      payload: this.headerService.filterByPrivileges()
+      payload: this.headerService.filterByPrivileges(),
     });
   }
 }

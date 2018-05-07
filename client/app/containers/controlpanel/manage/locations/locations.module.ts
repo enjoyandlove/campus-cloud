@@ -19,11 +19,16 @@ import { LocationsRoutingModule } from './locations.routing.module';
     LocationsDeleteComponent,
     LocationsUpdateComponent,
     LocationsListTopBarComponent,
-    LocationsCreateComponent
+    LocationsCreateComponent,
   ],
 
-  imports: [CommonModule, SharedModule, LocationsRoutingModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    SharedModule,
+    LocationsRoutingModule,
+    ReactiveFormsModule,
+  ],
 
-  providers: [LocationsService]
+  providers: [LocationsService],
 })
 export class LocationsModule {}

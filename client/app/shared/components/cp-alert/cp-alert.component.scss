@@ -1,5 +1,6 @@
 @import '~styles/core/colors';
 
+
 .alerts {
   margin: 15px auto 0 auto;
 
@@ -9,7 +10,9 @@
   }
 }
 
+
 .cpalert {
+
   &-success {
     color: $color-success;
   }

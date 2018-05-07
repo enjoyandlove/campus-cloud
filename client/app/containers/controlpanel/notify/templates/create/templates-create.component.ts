@@ -1,6 +1,17 @@
 /* tslint:disable:max-line-length */
-import { Component, OnInit, OnDestroy, HostListener, ElementRef, Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  HostListener,
+  ElementRef, Input,
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
 
 import { TemplatesService } from './../templates.service';
@@ -16,7 +27,7 @@ declare var $;
 @Component({
   selector: 'cp-templates-create',
   templateUrl: './templates-create.component.html',
-  styleUrls: ['./templates-create.component.scss']
+  styleUrls: ['./templates-create.component.scss'],
 })
 export class TemplatesCreateComponent extends AnnouncementsComposeComponent
   implements OnInit, OnDestroy {
@@ -31,7 +42,7 @@ export class TemplatesCreateComponent extends AnnouncementsComposeComponent
     public cpI18n: CPI18nService,
     public storeService: StoreService,
     public service: AnnouncementsService,
-    private childService: TemplatesService
+    private childService: TemplatesService,
   ) {
     super(fb, session, cpI18n, storeService, service);
   }
@@ -77,7 +88,7 @@ export class TemplatesCreateComponent extends AnnouncementsComposeComponent
 
     this.subject_prefix = {
       label: null,
-      type: null
+      type: null,
     };
 
     $('#templateCreateModal').modal('hide');
@@ -107,7 +118,7 @@ export class TemplatesCreateComponent extends AnnouncementsComposeComponent
       is_school_wide: this.form.value.is_school_wide,
       subject: this.form.value.subject,
       message: this.form.value.message,
-      priority: this.form.value.priority
+      priority: this.form.value.priority,
     };
 
     if (this.state.isToUsers && !this.state.isCampusWide) {
@@ -127,7 +138,7 @@ export class TemplatesCreateComponent extends AnnouncementsComposeComponent
       (_) => {
         this.isError = true;
         this.errorMessage = this.cpI18n.translate('something_went_wrong');
-      }
+      },
     );
   }
 
@@ -160,9 +171,8 @@ export class TemplatesCreateComponent extends AnnouncementsComposeComponent
       content: this.cpI18n.translate('notify_announcement_template_to_tooltip'),
       link: {
         text: this.cpI18n.translate('lists_button_create'),
-        url:
-          'https://oohlalamobile.zendesk.com/hc/en-us/articles/' +
-          '115004330554-Create-a-List-of-Students'
+        url: 'https://oohlalamobile.zendesk.com/hc/en-us/articles/' +
+        '115004330554-Create-a-List-of-Students',
       }
     });
 

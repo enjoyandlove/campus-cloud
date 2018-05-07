@@ -5,7 +5,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  HostListener
+  HostListener,
 } from '@angular/core';
 
 import { URLSearchParams } from '@angular/http';
@@ -21,7 +21,7 @@ const LIST_USED_IN_TEMPLATE = 409;
 @Component({
   selector: 'cp-lists-delete',
   templateUrl: './lists-delete.component.html',
-  styleUrls: ['./lists-delete.component.scss']
+  styleUrls: ['./lists-delete.component.scss'],
 })
 export class ListsDeleteComponent implements OnInit {
   @Input() list: any;
@@ -34,7 +34,7 @@ export class ListsDeleteComponent implements OnInit {
     private el: ElementRef,
     private session: CPSession,
     private service: ListsService,
-    private cpI18n: CPI18nService
+    private cpI18n: CPI18nService,
   ) {}
 
   @HostListener('document:click', ['$event'])
@@ -60,12 +60,12 @@ export class ListsDeleteComponent implements OnInit {
         $('#listsDelete').modal('hide');
         this.deleteList.emit(this.list.id);
         this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: false
+          disabled: false,
         });
       },
       (err) => {
         this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: false
+          disabled: false,
         });
 
         if (err.status === LIST_USED_IN_TEMPLATE) {
@@ -73,14 +73,14 @@ export class ListsDeleteComponent implements OnInit {
 
           return;
         }
-      }
+      },
     );
   }
 
   ngOnInit() {
     this.buttonData = {
       class: 'danger',
-      text: this.cpI18n.translate('delete')
+      text: this.cpI18n.translate('delete'),
     };
   }
 }

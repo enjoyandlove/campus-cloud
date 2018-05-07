@@ -14,7 +14,7 @@ import { ManageHeaderService } from '../../utils';
 @Component({
   selector: 'cp-calendars-list',
   templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss']
+  styleUrls: ['./list.component.scss'],
 })
 export class CalendarsListComponent extends BaseComponent implements OnInit {
   loading;
@@ -28,7 +28,7 @@ export class CalendarsListComponent extends BaseComponent implements OnInit {
     calendars: [],
     search_str: null,
     sort_field: 'name',
-    sort_direction: 'asc'
+    sort_direction: 'asc',
   };
 
   constructor(
@@ -36,7 +36,7 @@ export class CalendarsListComponent extends BaseComponent implements OnInit {
     public cpI18n: CPI18nService,
     public store: Store<IHeader>,
     public service: CalendarsService,
-    public headerService: ManageHeaderService
+    public headerService: ManageHeaderService,
   ) {
     super();
     super.isLoading().subscribe((loading) => (this.loading = loading));
@@ -67,7 +67,7 @@ export class CalendarsListComponent extends BaseComponent implements OnInit {
   buildHeader() {
     this.store.dispatch({
       type: HEADER_UPDATE,
-      payload: this.headerService.filterByPrivileges()
+      payload: this.headerService.filterByPrivileges(),
     });
   }
 
@@ -90,7 +90,7 @@ export class CalendarsListComponent extends BaseComponent implements OnInit {
     this.state = {
       ...this.state,
       sort_field: sort_field,
-      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc'
+      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc',
     };
 
     this.fetch();
@@ -104,7 +104,7 @@ export class CalendarsListComponent extends BaseComponent implements OnInit {
         $('#calendarsCreate').modal();
       },
 
-      1
+      1,
     );
   }
 
@@ -119,8 +119,9 @@ export class CalendarsListComponent extends BaseComponent implements OnInit {
 
     this.state = Object.assign({}, this.state, {
       calendars: this.state.calendars.map(
-        (calendar) => (calendar.id === editedCalendar.id ? editedCalendar : calendar)
-      )
+        (calendar) =>
+          calendar.id === editedCalendar.id ? editedCalendar : calendar,
+      ),
     });
   }
 
@@ -129,7 +130,9 @@ export class CalendarsListComponent extends BaseComponent implements OnInit {
     this.launchDeleteModal = false;
 
     this.state = Object.assign({}, this.state, {
-      calendars: this.state.calendars.filter((calendar) => calendar.id !== calendarId)
+      calendars: this.state.calendars.filter(
+        (calendar) => calendar.id !== calendarId,
+      ),
     });
 
     if (this.state.calendars.length === 0 && this.pageNumber > 1) {

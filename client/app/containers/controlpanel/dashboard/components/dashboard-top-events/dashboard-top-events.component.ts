@@ -8,9 +8,10 @@ import { DashboardService } from './../../dashboard.service';
 @Component({
   selector: 'cp-dashboard-top-events',
   templateUrl: './dashboard-top-events.component.html',
-  styleUrls: ['./dashboard-top-events.component.scss']
+  styleUrls: ['./dashboard-top-events.component.scss'],
 })
-export class DashboardTopEventsComponent extends BaseComponent implements OnInit {
+export class DashboardTopEventsComponent extends BaseComponent
+  implements OnInit {
   @Output() ready: EventEmitter<boolean> = new EventEmitter();
 
   _dates;
@@ -41,9 +42,9 @@ export class DashboardTopEventsComponent extends BaseComponent implements OnInit
             image: item.event_poster_thumb_url,
             attendees: item.num_of_attendees,
             feedback: item.num_of_feedbacks,
-            rating: item.average_of_feedbacks
+            rating: item.average_of_feedbacks,
           };
-        })
+        }),
       );
     });
   }

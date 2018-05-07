@@ -9,12 +9,12 @@ import { AdminInviteComponent } from './admin-invite';
 import {
   CheckinEventsComponent,
   CheckinServiceComponent,
-  CheckinOrientationEventsComponent
+  CheckinOrientationEventsComponent,
 } from './checkin';
 import {
   FeedbackEventComponent,
   FeedbackServiceComponent,
-  FeedbackOrientationEventComponent
+  FeedbackOrientationEventComponent,
 } from './feedback';
 const appRoutes: Routes = [
   {
@@ -24,53 +24,53 @@ const appRoutes: Routes = [
       {
         path: 'password-reset/:key',
         data: { zendesk: 'password' },
-        component: CallbackPasswordResetComponent
+        component: CallbackPasswordResetComponent,
       },
 
       {
         path: 'invite/:key',
         component: AdminInviteComponent,
-        data: { zendesk: 'password' }
+        data: { zendesk: 'password' },
       },
 
       {
         path: 'feedback/e/:event',
         component: FeedbackEventComponent,
-        data: { zendesk: 'assessment' }
+        data: { zendesk: 'assessment' },
       },
       {
         path: 'feedback/o/:event',
         component: FeedbackOrientationEventComponent,
-        data: { zendesk: 'assessment' }
+        data: { zendesk: 'assessment' },
       },
       {
         path: 'feedback/s/:service',
         component: FeedbackServiceComponent,
-        data: { zendesk: 'assessment' }
+        data: { zendesk: 'assessment' },
       },
 
       {
         path: 'checkin/e/:event',
         component: CheckinEventsComponent,
-        data: { zendesk: 'assessment' }
+        data: { zendesk: 'assessment' },
       },
       {
         path: 'checkin/o/:event',
         component: CheckinOrientationEventsComponent,
-        data: { zendesk: 'assessment' }
+        data: { zendesk: 'assessment' },
       },
       {
         path: 'checkin/s/:service/:provider',
         data: { zendesk: 'assessment' },
-        component: CheckinServiceComponent
+        component: CheckinServiceComponent,
       },
 
-      { path: '**', redirectTo: '/login' }
-    ]
-  }
+      { path: '**', redirectTo: '/login' },
+    ],
+  },
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class CallbackRoutingModule {}

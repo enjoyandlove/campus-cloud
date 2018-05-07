@@ -24,7 +24,8 @@ class MockService {
 }
 
 class RouterMock {
-  navigate() {}
+  navigate() {
+  }
 }
 
 describe('EventInfoComponent', () => {
@@ -34,61 +35,54 @@ describe('EventInfoComponent', () => {
   let component: EventsInfoComponent;
   let fixture: ComponentFixture<EventsInfoComponent>;
 
-  beforeEach(
-    async(() => {
-      TestBed.configureTestingModule({
-        imports: [
-          HttpModule,
-          EventsModule,
-          StoreModule.forRoot({
-            HEADER: headerReducer,
-            SNACKBAR: snackBarReducer
-          })
-        ],
-        providers: [
-          CPSession,
-          CPI18nService,
-          EventUtilService,
-          { provide: Router, useClass: RouterMock },
-          { provide: EventsService, useClass: MockService },
-          {
-            provide: ActivatedRoute,
-            useValue: {
-              snapshot: {
-                params: Observable.of({ eventId: 15845 })
-              }
-            }
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        HttpModule,
+        EventsModule,
+        StoreModule.forRoot({
+          HEADER: headerReducer,
+          SNACKBAR: snackBarReducer
+        })
+      ],
+      providers: [
+        CPSession,
+        CPI18nService,
+        EventUtilService,
+        { provide: Router, useClass: RouterMock},
+        { provide: EventsService, useClass: MockService },
+        { provide: ActivatedRoute,
+          useValue: {
+            snapshot: {
+              params: Observable.of({ eventId: 15845 }),
+            },
           }
-        ]
-      })
-        .compileComponents()
-        .then(() => {
-          fixture = TestBed.createComponent(EventsInfoComponent);
-          service = TestBed.get(EventsService);
+        }
+      ]
+    }).compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(EventsInfoComponent);
+        service = TestBed.get(EventsService);
 
-          component = fixture.componentInstance;
-          component.eventId = 15845;
-          component.session.g.set('school', mockSchool);
+        component = fixture.componentInstance;
+        component.eventId = 15845;
+        component.session.g.set('school', mockSchool);
 
-          search = new URLSearchParams();
-        });
-    })
-  );
+        search = new URLSearchParams();
+      });
+  }));
 
-  it(
-    'should fetch orientation event by Id',
-    fakeAsync(() => {
-      component.orientationId = 1001;
-      search.append('school_id', component.session.g.get('school').id);
-      search.append('calendar_id', component.orientationId.toString());
+  it('should fetch orientation event by Id', fakeAsync(() => {
+    component.orientationId = 1001;
+    search.append('school_id', component.session.g.get('school').id);
+    search.append('calendar_id', component.orientationId.toString());
 
-      spyOn(component, 'buildHeader');
-      spy = spyOn(component.service, 'getEventById').and.returnValue(Observable.of({}));
-      component.fetch();
+    spyOn(component, 'buildHeader');
+    spy = spyOn(component.service, 'getEventById').and.returnValue(Observable.of({}));
+    component.fetch();
 
-      tick();
-      expect(spy.calls.count()).toBe(1);
-      expect(spy).toHaveBeenCalledWith(component.eventId, search);
-    })
-  );
+    tick();
+    expect(spy.calls.count()).toBe(1);
+    expect(spy).toHaveBeenCalledWith(component.eventId, search);
+  }));
 });

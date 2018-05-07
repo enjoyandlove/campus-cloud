@@ -49,7 +49,7 @@
     "no-var-keyword": true,
     "object-literal-sort-keys": false,
     "one-line": [true, "check-open-brace", "check-catch", "check-else", "check-whitespace"],
-    "quotemark": [false, "single"],
+    "quotemark": [true, "single"],
     "radix": true,
     "semicolon": [true, "always"],
     "ordered-imports": [

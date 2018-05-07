@@ -6,7 +6,7 @@ import {
   OnChanges,
   OnInit,
   ViewChild,
-  ViewEncapsulation
+  ViewEncapsulation,
 } from '@angular/core';
 import { CPI18nService } from '../../services/index';
 /**
@@ -20,7 +20,7 @@ import * as French from 'flatpickr/dist/l10n/fr.js';
   selector: 'cp-datepicker',
   templateUrl: './cp-datepicker.component.html',
   styleUrls: ['./cp-datepicker.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class CPDatePickerComponent implements AfterViewInit, OnInit, OnChanges {
   @ViewChild('input') input: ElementRef;

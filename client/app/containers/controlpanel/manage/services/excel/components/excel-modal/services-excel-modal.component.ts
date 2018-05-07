@@ -3,12 +3,15 @@ import { Router } from '@angular/router';
 
 import { isDev } from '../../../../../../../config/env';
 import { ServicesService } from '../../../services.service';
-import { FileUploadService, CPI18nService } from '../../../../../../../shared/services';
+import {
+  FileUploadService,
+  CPI18nService,
+} from '../../../../../../../shared/services';
 
 @Component({
   selector: 'cp-services-excel-modal',
   templateUrl: './services-excel-modal.component.html',
-  styleUrls: ['./services-excel-modal.component.scss']
+  styleUrls: ['./services-excel-modal.component.scss'],
 })
 export class ServicesExcelModalComponent implements OnInit {
   options;
@@ -18,11 +21,13 @@ export class ServicesExcelModalComponent implements OnInit {
     private router: Router,
     private cpI18n: CPI18nService,
     private service: ServicesService,
-    private fileService: FileUploadService
+    private fileService: FileUploadService,
   ) {}
 
   parser(file) {
-    const url = !isDev ? '/services/excel' : 'http://localhost:8000/services/excel';
+    const url = !isDev
+      ? '/services/excel'
+      : 'http://localhost:8000/services/excel';
 
     return this.fileService
       .uploadFile(file, url)
@@ -36,7 +41,9 @@ export class ServicesExcelModalComponent implements OnInit {
         const serverError = err.json().error;
 
         return Promise.reject(
-          serverError ? serverError : this.cpI18n.translate('something_went_wrong')
+          serverError
+            ? serverError
+            : this.cpI18n.translate('something_went_wrong'),
         );
       });
   }
@@ -48,12 +55,14 @@ export class ServicesExcelModalComponent implements OnInit {
   ngOnInit() {
     this.fileName = 'mass_service_invite_sample.csv';
 
-    const templateUrl = isDev ? `/templates/${this.fileName}` : `/dist/templates/${this.fileName}`;
+    const templateUrl = isDev
+      ? `/templates/${this.fileName}`
+      : `/dist/templates/${this.fileName}`;
 
     this.options = {
       templateUrl,
       validExtensions: ['csv'],
-      parser: this.parser.bind(this)
+      parser: this.parser.bind(this),
     };
   }
 }

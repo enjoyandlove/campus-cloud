@@ -17,7 +17,10 @@ export const addGroup = (data) => {
   });
 };
 
-export const aggregate = (data: Number[], serie: Number[]): Promise<Number[]> => {
+export const aggregate = (
+  data: Number[],
+  serie: Number[],
+): Promise<Number[]> => {
   const arr = [];
 
   data.reduce(
@@ -33,7 +36,7 @@ export const aggregate = (data: Number[], serie: Number[]): Promise<Number[]> =>
       return current;
     },
 
-    0
+    0,
   );
 
   return new Promise((resolve) => {
@@ -63,15 +66,16 @@ export enum DivideBy {
   'daily' = 0,
   'weekly' = 1,
   'monthly' = 2,
-  'quarter' = 3
+  'quarter' = 3,
 }
 
 @Component({
   selector: 'cp-dashboard-downloads-registration',
   templateUrl: './dashboard-downloads-registration.component.html',
-  styleUrls: ['./dashboard-downloads-registration.component.scss']
+  styleUrls: ['./dashboard-downloads-registration.component.scss'],
 })
-export class DashboardDownloadsRegistrationComponent extends BaseComponent implements OnInit {
+export class DashboardDownloadsRegistrationComponent extends BaseComponent
+  implements OnInit {
   @Output() ready: EventEmitter<boolean> = new EventEmitter();
 
   _dates;
@@ -83,7 +87,7 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
 
   range = {
     start: null,
-    end: null
+    end: null,
   };
 
   @Input()
@@ -113,7 +117,7 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
       .then((res) => {
         this.range = Object.assign({}, this.range, {
           start: res.data.labels[0],
-          end: res.data.labels[res.data.labels.length - 1]
+          end: res.data.labels[res.data.labels.length - 1],
         });
 
         if (res.data.series[0].length >= twoYears) {
@@ -121,7 +125,7 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
 
           return Promise.all([
             groupByQuarter(res.data.labels, res.data.series[0]),
-            groupByQuarter(res.data.labels, res.data.series[1])
+            groupByQuarter(res.data.labels, res.data.series[1]),
           ]);
         }
 
@@ -130,7 +134,7 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
 
           return Promise.all([
             groupByMonth(res.data.labels, res.data.series[0]),
-            groupByMonth(res.data.labels, res.data.series[1])
+            groupByMonth(res.data.labels, res.data.series[1]),
           ]);
         }
 
@@ -139,7 +143,7 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
 
           return Promise.all([
             groupByWeek(res.data.labels, res.data.series[0]),
-            groupByWeek(res.data.labels, res.data.series[1])
+            groupByWeek(res.data.labels, res.data.series[1]),
           ]);
         }
 
@@ -156,7 +160,7 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
         this.chartData = {
           series,
           range: this.range,
-          divider: this.divider
+          divider: this.divider,
         };
       });
   }

@@ -1,6 +1,4 @@
 export const API_ENDPOINTS = {
-  JOB: 'job',
-
   USER: 'user',
 
   CLUBS: 'club',
@@ -24,8 +22,6 @@ export const API_ENDPOINTS = {
   SERVICES: 'service',
 
   LINKS: 'campus_link',
-
-  EMPLOYER: 'employer',
 
   SOCIAL_GROUP: 'group',
 
@@ -61,10 +57,9 @@ export const API_ENDPOINTS = {
   STUDENT_PROFILE: 'student_profile',
 
   TEMPLATE: 'announcement_template',
+  // Event assessment
 
   EVENT_ASSESMENT: 'event_assessment',
-
-  AUDIENCE_FILTERS: 'filter_attribute',
 
   SERVICE_PROVIDER: 'service_provider',
 

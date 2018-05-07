@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
   template: `<cp-clubs-members
               [isOrientation]="isOrientation"
               [orientationId]="orientationId">
-             </cp-clubs-members>`
+             </cp-clubs-members>`,
 })
 export class OrientationMembersComponent implements OnInit {
   isOrientation = true;

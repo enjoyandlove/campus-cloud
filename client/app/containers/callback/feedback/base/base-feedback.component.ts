@@ -6,7 +6,7 @@ import { CPI18nService } from '../../../../shared/services/index';
 @Component({
   selector: 'cp-base-feedback',
   templateUrl: './base-feedback.component.html',
-  styleUrls: ['./base-feedback.component.scss']
+  styleUrls: ['./base-feedback.component.scss'],
 })
 export class BaseFeedbackComponent implements OnInit {
   @Input() data: any;

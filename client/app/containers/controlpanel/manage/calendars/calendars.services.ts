@@ -36,7 +36,9 @@ export class CalendarsService extends BaseService {
   }
 
   deleteCalendar(calendarId: number, search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CALENDARS}/${calendarId}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.CALENDARS
+    }/${calendarId}`;
 
     return super.delete(url, { search }).map((res) => res.json());
   }
@@ -48,24 +50,34 @@ export class CalendarsService extends BaseService {
   }
 
   editCalendar(calendarId: number, body: any, search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CALENDARS}/${calendarId}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.CALENDARS
+    }/${calendarId}`;
 
     return super.update(url, body, { search }).map((res) => res.json());
   }
 
   delteItemById(itemId: number, search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CALENDAR_ITEMS}/${itemId}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.CALENDAR_ITEMS
+    }/${itemId}`;
 
     return super.delete(url, { search }).map((res) => res.json());
   }
 
   getCalendarById(calendarId: number, search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CALENDARS}/${calendarId}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.CALENDARS
+    }/${calendarId}`;
 
     return super.get(url, { search }).map((res) => res.json());
   }
 
-  getItemsByCalendarId(startRage: number, endRage: number, search: URLSearchParams) {
+  getItemsByCalendarId(
+    startRage: number,
+    endRage: number,
+    search: URLSearchParams,
+  ) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${
       API.ENDPOINTS.CALENDAR_ITEMS
     }/${startRage};${endRage}`;
@@ -74,19 +86,25 @@ export class CalendarsService extends BaseService {
   }
 
   getItemById(itemId: number, search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CALENDAR_ITEMS}/${itemId}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.CALENDAR_ITEMS
+    }/${itemId}`;
 
     return super.get(url, { search }).map((res) => res.json());
   }
 
   createItem(body: any, search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CALENDAR_ITEMS}/`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.CALENDAR_ITEMS
+    }/`;
 
     return super.post(url, body, { search }).map((res) => res.json());
   }
 
   editItem(itemId: number, body: any, search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CALENDAR_ITEMS}/${itemId}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.CALENDAR_ITEMS
+    }/${itemId}`;
 
     return super.update(url, body, { search }).map((res) => res.json());
   }

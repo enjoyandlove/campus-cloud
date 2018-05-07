@@ -9,7 +9,7 @@ import { CPI18nService } from './../../../../../../../shared/services/i18n.servi
 @Component({
   selector: 'cp-calendars-items-import-modal',
   templateUrl: './calendars-items-import-modal.component.html',
-  styleUrls: ['./calendars-items-import-modal.component.scss']
+  styleUrls: ['./calendars-items-import-modal.component.scss'],
 })
 export class CalendarsItemsImportModalComponent implements OnInit {
   options;
@@ -21,13 +21,15 @@ export class CalendarsItemsImportModalComponent implements OnInit {
     public route: ActivatedRoute,
     private cpI18n: CPI18nService,
     private service: CalendarsService,
-    private fileService: FileUploadService
+    private fileService: FileUploadService,
   ) {
     this.calendarId = this.route.snapshot.params['calendarId'];
   }
 
   parser(file) {
-    const url = !isDev ? '/calendars/items/import' : 'http://localhost:8000/calendars/items/import';
+    const url = !isDev
+      ? '/calendars/items/import'
+      : 'http://localhost:8000/calendars/items/import';
 
     return this.fileService
       .uploadFile(file, url)
@@ -41,7 +43,9 @@ export class CalendarsItemsImportModalComponent implements OnInit {
         const serverError = err.json().error;
 
         return Promise.reject(
-          serverError ? serverError : this.cpI18n.translate('something_went_wrong')
+          serverError
+            ? serverError
+            : this.cpI18n.translate('something_went_wrong'),
         );
       });
   }
@@ -53,12 +57,14 @@ export class CalendarsItemsImportModalComponent implements OnInit {
   ngOnInit() {
     this.fileName = 'mass_calendar_item_invite_sample.csv';
 
-    const templateUrl = isDev ? `/templates/${this.fileName}` : `/dist/templates/${this.fileName}`;
+    const templateUrl = isDev
+      ? `/templates/${this.fileName}`
+      : `/dist/templates/${this.fileName}`;
 
     this.options = {
       templateUrl,
       validExtensions: ['csv'],
-      parser: this.parser.bind(this)
+      parser: this.parser.bind(this),
     };
   }
 }

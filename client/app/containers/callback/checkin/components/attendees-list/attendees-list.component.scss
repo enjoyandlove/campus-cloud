@@ -8,6 +8,7 @@
   display: block;
 }
 
+
 .attendees {
   @include card-shadow();
   border-radius: 4px;
@@ -58,3 +59,4 @@
     color: $color-success;
   }
 }
+

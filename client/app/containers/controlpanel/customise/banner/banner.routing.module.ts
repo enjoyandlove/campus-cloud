@@ -7,11 +7,11 @@ const appRoutes: Routes = [
   {
     path: '',
     data: { zendesk: 'customize' },
-    component: BannerListComponent
-  }
+    component: BannerListComponent,
+  },
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class BannerRoutingModule {}

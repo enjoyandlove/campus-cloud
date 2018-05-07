@@ -5,15 +5,19 @@ import { ServicesService } from '../../../services.service';
 import { BaseComponent } from '../../../../../../../base/base.component';
 @Component({
   selector: 'cp-services-events-attendance',
-  templateUrl: './services-events-attendance.component.html'
+  templateUrl: './services-events-attendance.component.html',
 })
-export class ServicesEventsInfoComponent extends BaseComponent implements OnInit {
+export class ServicesEventsInfoComponent extends BaseComponent
+  implements OnInit {
   loading;
   storeId;
   serviceId;
   isService;
 
-  constructor(private route: ActivatedRoute, private servicesService: ServicesService) {
+  constructor(
+    private route: ActivatedRoute,
+    private servicesService: ServicesService,
+  ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
 

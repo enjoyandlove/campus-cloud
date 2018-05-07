@@ -4,12 +4,15 @@ import { Headers } from '@angular/http';
 
 import { API } from '../../../../../../../config/api';
 import { appStorage } from '../../../../../../../shared/utils';
-import { FileUploadService, CPI18nService } from '../../../../../../../shared/services';
+import {
+  FileUploadService,
+  CPI18nService,
+} from '../../../../../../../shared/services';
 
 @Component({
   selector: 'cp-services-import-top-bar',
   templateUrl: './import-top-bar.component.html',
-  styleUrls: ['./import-top-bar.component.scss']
+  styleUrls: ['./import-top-bar.component.scss'],
 })
 export class ServicesImportTopBarComponent implements OnInit {
   @Input() categories: Observable<any>;
@@ -23,7 +26,10 @@ export class ServicesImportTopBarComponent implements OnInit {
   imageError;
   loading = true;
 
-  constructor(private fileUploadService: FileUploadService, public cpI18n: CPI18nService) {}
+  constructor(
+    private fileUploadService: FileUploadService,
+    public cpI18n: CPI18nService,
+  ) {}
 
   onFileUpload(file) {
     this.imageError = null;
@@ -37,7 +43,9 @@ export class ServicesImportTopBarComponent implements OnInit {
 
     const headers = new Headers();
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
-    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
+    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(
+      appStorage.keys.SESSION,
+    )}`;
 
     headers.append('Authorization', auth);
 
@@ -45,7 +53,7 @@ export class ServicesImportTopBarComponent implements OnInit {
       (res) => this.imageChange.emit(res.image_url),
       (err) => {
         throw new Error(err);
-      }
+      },
     );
   }
 

@@ -11,7 +11,7 @@ import {
   EngagementTopBarComponent,
   EngagementComposeComponent,
   EngagementEventsBoxComponent,
-  EngagementServicesBoxComponent
+  EngagementServicesBoxComponent,
 } from './components';
 
 import { CPStatsFormatterPipe } from './components/engagement-stats/pipes/stats-formatter.pipe';
@@ -28,13 +28,18 @@ import { EngagementRoutingModule } from './engagement.routing.module';
     EngagementEventsBoxComponent,
     EngagementServicesBoxComponent,
     EngagementComposeComponent,
-    CPStatsFormatterPipe
+    CPStatsFormatterPipe,
   ],
 
-  imports: [ReactiveFormsModule, CommonModule, SharedModule, EngagementRoutingModule],
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    SharedModule,
+    EngagementRoutingModule,
+  ],
 
   providers: [EngagementService],
 
-  exports: [CPStatsFormatterPipe]
+  exports: [CPStatsFormatterPipe],
 })
 export class EngagementModule {}

@@ -1,10 +1,14 @@
 import { saveAs } from 'file-saver';
 import { unparse } from 'papaparse';
 
-export const createSpreadSheet = (data: any[], fields: Array<string>, filename = 'download') => {
+export const createSpreadSheet = (
+  data: any[],
+  fields: Array<string>,
+  filename = 'download',
+) => {
   const parseData = unparse({
     fields,
-    data: [...data]
+    data: [...data],
   });
 
   // Microsoft Edge does not

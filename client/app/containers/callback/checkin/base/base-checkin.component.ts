@@ -25,7 +25,7 @@ declare var $;
 @Component({
   selector: 'cp-base-checkin',
   templateUrl: './base-checkin.component.html',
-  styleUrls: ['./base-checkin.component.scss']
+  styleUrls: ['./base-checkin.component.scss'],
 })
 export class BaseCheckinComponent implements OnInit {
   @Input() data: any;
@@ -46,7 +46,7 @@ export class BaseCheckinComponent implements OnInit {
           $('#checkinInternalModal').modal();
         },
 
-        1
+        1,
       );
     }
   }
@@ -75,7 +75,14 @@ export class BaseCheckinComponent implements OnInit {
       .toUpperCase();
 
     try {
-      doc.addImage(decodeURIComponent(this.data.qr_img_base64), imageFormat, 60, 60, 90, 90);
+      doc.addImage(
+        decodeURIComponent(this.data.qr_img_base64),
+        imageFormat,
+        60,
+        60,
+        90,
+        90,
+      );
     } catch (error) {
       throw new Error(error);
     }
@@ -89,10 +96,18 @@ export class BaseCheckinComponent implements OnInit {
         const fontSize = this.getPDFTitleFontSize();
         doc.setFontSize(fontSize);
         const textHeight = PAGE_HEIGHT - 130;
-        const text = <Array<string>>doc.splitTextToSize(this.data.service_name, fullWidth);
+        const text = <Array<string>>doc.splitTextToSize(
+          this.data.service_name,
+          fullWidth,
+        );
 
         text.forEach((line, index) => {
-          doc.text(line, 105, textHeight + index * (fontSize * CENTIMETER), 'center');
+          doc.text(
+            line,
+            105,
+            textHeight + index * (fontSize * CENTIMETER),
+            'center',
+          );
         });
       }
     }
@@ -102,10 +117,18 @@ export class BaseCheckinComponent implements OnInit {
         const fontSize = this.getPDFTitleFontSize();
         doc.setFontSize(fontSize);
         const textHeight = PAGE_HEIGHT - 130;
-        const text = <Array<string>>doc.splitTextToSize(this.data.title, fullWidth);
+        const text = <Array<string>>doc.splitTextToSize(
+          this.data.title,
+          fullWidth,
+        );
 
         text.forEach((line, index) => {
-          doc.text(line, 105, textHeight + index * (fontSize * CENTIMETER), 'center');
+          doc.text(
+            line,
+            105,
+            textHeight + index * (fontSize * CENTIMETER),
+            'center',
+          );
         });
       }
     }
@@ -139,12 +162,15 @@ export class BaseCheckinComponent implements OnInit {
       LEFT_MARGIN,
       PAGE_HEIGHT - 43,
       THUMB_HEIGHT,
-      THUMB_WIDTH
+      THUMB_WIDTH,
     );
 
     doc.setFontSize(20);
 
-    const pageOneFooter = doc.splitTextToSize('Scan and provide feedback on the', 130);
+    const pageOneFooter = doc.splitTextToSize(
+      'Scan and provide feedback on the',
+      130,
+    );
 
     doc.text(65, PAGE_HEIGHT - 30, pageOneFooter);
     doc.text(65, PAGE_HEIGHT - 20, `${this.data.school_name} App`);
@@ -165,7 +191,10 @@ export class BaseCheckinComponent implements OnInit {
       doc.text(
         LEFT_MARGIN + 13,
         40,
-        doc.splitTextToSize('with Service Assessment', PAGE_WIDTH - LEFT_MARGIN)
+        doc.splitTextToSize(
+          'with Service Assessment',
+          PAGE_WIDTH - LEFT_MARGIN,
+        ),
       );
     }
 
@@ -173,7 +202,7 @@ export class BaseCheckinComponent implements OnInit {
       doc.text(
         LEFT_MARGIN + 18,
         40,
-        doc.splitTextToSize('with Event Assessment', PAGE_WIDTH - LEFT_MARGIN)
+        doc.splitTextToSize('with Event Assessment', PAGE_WIDTH - LEFT_MARGIN),
       );
     }
 
@@ -181,7 +210,11 @@ export class BaseCheckinComponent implements OnInit {
     doc.setFontType('normal');
     doc.setFontStyle('italic');
     doc.setTextColor(0, 0, 0);
-    doc.text(LEFT_MARGIN, 95, doc.splitTextToSize('Student Scan Instructions', 100));
+    doc.text(
+      LEFT_MARGIN,
+      95,
+      doc.splitTextToSize('Student Scan Instructions', 100),
+    );
 
     doc.addImage(
       decodeURIComponent(this.data.app_logo_img_base64),
@@ -189,7 +222,7 @@ export class BaseCheckinComponent implements OnInit {
       LEFT_MARGIN,
       110,
       THUMB_HEIGHT,
-      THUMB_WIDTH
+      THUMB_WIDTH,
     );
 
     doc.setFontSize(26);
@@ -197,7 +230,11 @@ export class BaseCheckinComponent implements OnInit {
     doc.text(65, 123, doc.splitTextToSize('Open App', 120));
     doc.setFontSize(18);
     doc.setFontType('normal');
-    doc.text(65, 133, doc.splitTextToSize("Download it if you don't have it", 160));
+    doc.text(
+      65,
+      133,
+      doc.splitTextToSize("Download it if you don't have it", 160),
+    );
 
     doc.addImage(TAP_IMAGE, 'PNG', LEFT_MARGIN, 160, THUMB_HEIGHT, THUMB_WIDTH);
     doc.setFontSize(26);
@@ -243,7 +280,9 @@ export class BaseCheckinComponent implements OnInit {
 
   ngOnInit() {
     if (!this.isEvent && !this.isService) {
-      console.warn('BaseCheckinComponent requires an isEvent or isService input');
+      console.warn(
+        'BaseCheckinComponent requires an isEvent or isService input',
+      );
 
       return;
     }

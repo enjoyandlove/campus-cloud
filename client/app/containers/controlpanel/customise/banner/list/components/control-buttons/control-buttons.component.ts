@@ -5,7 +5,7 @@ import { CPI18nService } from '../../../../../../../shared/services';
 @Component({
   selector: 'cp-banner-control-buttons',
   templateUrl: './control-buttons.component.html',
-  styleUrls: ['./control-buttons.component.scss']
+  styleUrls: ['./control-buttons.component.scss'],
 })
 export class BannerControlButtonsComponent implements OnInit {
   @Output() save: EventEmitter<null> = new EventEmitter();
@@ -23,7 +23,7 @@ export class BannerControlButtonsComponent implements OnInit {
   ngOnInit() {
     this.buttonData = {
       class: 'primary',
-      text: this.cpI18n.translate('save')
+      text: this.cpI18n.translate('save'),
     };
   }
 }

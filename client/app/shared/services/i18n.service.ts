@@ -6,8 +6,11 @@ declare var navigator;
 
 const defaultLocale = 'en-US';
 const sourceFile = (lang) => require('../../config/locales/' + lang + '.json');
-const browserLanguage = navigator.userLanguage || navigator.language || defaultLocale;
-const locale = browserLanguage.toLowerCase().startsWith('fr') ? 'fr-CA' : 'en-US';
+const browserLanguage =
+  navigator.userLanguage || navigator.language || defaultLocale;
+const locale = browserLanguage.toLowerCase().startsWith('fr')
+  ? 'fr-CA'
+  : 'en-US';
 
 @Injectable()
 export class CPI18nService {

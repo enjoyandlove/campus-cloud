@@ -52,12 +52,6 @@
       "privilege": 17,
       "label": "orientation",
       "url": "/manage/orientation"
-    },
-    {
-      "privilege": 25,
-      "hiddenInProd": true,
-      "label": "jobs",
-      "url": "/manage/jobs"
     }
   ]
 }

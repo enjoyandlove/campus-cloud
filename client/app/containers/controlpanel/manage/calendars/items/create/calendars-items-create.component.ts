@@ -7,13 +7,16 @@ import { Store } from '@ngrx/store';
 import { ItemAllDay, IItem } from './../item.interface';
 import { CPSession } from './../../../../../../session';
 
-import { IHeader, HEADER_UPDATE } from './../../../../../../reducers/header.reducer';
+import {
+  IHeader,
+  HEADER_UPDATE,
+} from './../../../../../../reducers/header.reducer';
 import { CalendarsService } from '../../calendars.services';
 
 @Component({
   selector: 'cp-calendars-items-create',
   templateUrl: './calendars-items-create.component.html',
-  styleUrls: ['./calendars-items-create.component.scss']
+  styleUrls: ['./calendars-items-create.component.scss'],
 })
 export class CalendarsItemCreateComponent implements OnInit {
   @ViewChild('createForm') createForm;
@@ -27,7 +30,7 @@ export class CalendarsItemCreateComponent implements OnInit {
     public session: CPSession,
     public route: ActivatedRoute,
     public store: Store<IHeader>,
-    public service: CalendarsService
+    public service: CalendarsService,
   ) {
     this.calendarId = this.route.snapshot.params['calendarId'];
   }
@@ -41,10 +44,10 @@ export class CalendarsItemCreateComponent implements OnInit {
         em: null,
         crumbs: {
           url: null,
-          label: null
+          label: null,
         },
-        children: []
-      }
+        children: [],
+      },
     });
   }
 
@@ -55,7 +58,9 @@ export class CalendarsItemCreateComponent implements OnInit {
 
     this.service
       .createItem(newItem, search)
-      .subscribe((_) => this.router.navigate(['/manage/calendars/' + this.calendarId]));
+      .subscribe((_) =>
+        this.router.navigate(['/manage/calendars/' + this.calendarId]),
+      );
   }
 
   buildForm() {
@@ -75,7 +80,7 @@ export class CalendarsItemCreateComponent implements OnInit {
       street_number: [null],
       province: [null],
       latitude: [this.session.g.get('school').latitude, Validators.required],
-      longitude: [this.session.g.get('school').longitude, Validators.required]
+      longitude: [this.session.g.get('school').longitude, Validators.required],
     });
   }
 

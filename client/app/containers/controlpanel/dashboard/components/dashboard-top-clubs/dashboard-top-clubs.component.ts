@@ -10,9 +10,10 @@ import { DashboardUtilsService } from './../../dashboard.utils.service';
 @Component({
   selector: 'cp-dashboard-top-clubs',
   templateUrl: './dashboard-top-clubs.component.html',
-  styleUrls: ['./dashboard-top-clubs.component.scss']
+  styleUrls: ['./dashboard-top-clubs.component.scss'],
 })
-export class DashboardTopClubsComponent extends BaseComponent implements OnInit {
+export class DashboardTopClubsComponent extends BaseComponent
+  implements OnInit {
   @Output() ready: EventEmitter<boolean> = new EventEmitter();
 
   _dates;
@@ -31,7 +32,7 @@ export class DashboardTopClubsComponent extends BaseComponent implements OnInit 
     public router: Router,
     private session: CPSession,
     private service: DashboardService,
-    private helper: DashboardUtilsService
+    private helper: DashboardUtilsService,
   ) {
     super();
     super.isLoading().subscribe((loading) => {

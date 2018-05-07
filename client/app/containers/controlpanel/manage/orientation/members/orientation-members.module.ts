@@ -5,8 +5,14 @@ import { ClubsMembersModule } from '../../clubs/members/members.module';
 import { OrientationMembersRoutingModule } from './orientation-members.routing.module';
 
 @NgModule({
-  declarations: [OrientationMembersComponent],
+  declarations: [
+    OrientationMembersComponent
+  ],
 
-  imports: [OrientationMembersRoutingModule, ClubsMembersModule]
+  imports: [
+    OrientationMembersRoutingModule,
+    ClubsMembersModule
+  ],
+
 })
 export class OrientationMembersModule {}

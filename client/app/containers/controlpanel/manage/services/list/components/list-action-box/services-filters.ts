@@ -1,12 +1,12 @@
 export const BUTTON_DROPDOWN = {
-  button: {
-    label: 'Create Service',
-    url: '/manage/services/create'
+  'button': {
+    'label': 'Create Service',
+    'url': '/manage/services/create'
   },
-  children: [
+  'children': [
     {
-      label: 'Import Events from Excel',
-      event: 'excel'
+      'label': 'Import Events from Excel',
+      'event': 'excel'
     }
   ]
 };

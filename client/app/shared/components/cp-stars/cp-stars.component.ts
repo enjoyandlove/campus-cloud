@@ -3,13 +3,13 @@ import { Component, Input, OnInit } from '@angular/core';
 export const STAR_SIZE = {
   SMALL: 'small',
   LARGE: 'large',
-  DEFAULT: 'default'
+  DEFAULT: 'default',
 };
 
 const STAR_STATE = {
   empty: 'star_border',
   half: 'star_half',
-  full: 'star'
+  full: 'star',
 };
 
 const DISABLED = -1;
@@ -17,7 +17,7 @@ const DISABLED = -1;
 @Component({
   selector: 'cp-stars',
   templateUrl: './cp-stars.component.html',
-  styleUrls: ['./cp-stars.component.scss']
+  styleUrls: ['./cp-stars.component.scss'],
 })
 export class CPStarsComponent implements OnInit {
   @Input() maxRate: number;
@@ -34,7 +34,7 @@ export class CPStarsComponent implements OnInit {
       if (index + 1 <= this.totalRating) {
         star = Object.assign({}, star, {
           state: STAR_STATE.full,
-          filled: true
+          filled: true,
         });
         _stars.push(star);
 
@@ -44,7 +44,7 @@ export class CPStarsComponent implements OnInit {
         if (this.totalRating % 1) {
           star = Object.assign({}, star, {
             state: STAR_STATE.half,
-            filled: true
+            filled: true,
           });
           _stars.push(star);
 

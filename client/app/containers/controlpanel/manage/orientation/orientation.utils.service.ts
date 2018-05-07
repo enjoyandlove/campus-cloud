@@ -3,10 +3,11 @@ import { ProgramMembership } from './orientation.status';
 
 @Injectable()
 export class OrientationUtilsService {
+
   getSubNavChildren(hasMembership: number) {
     let links = [];
 
-    links = [{ label: 'Info', link: 'info' }, ...links];
+    links = [{ label: 'Info', link: 'info'}, ...links];
 
     if (hasMembership === ProgramMembership.enabled) {
       links = [{ label: 'Members', link: 'members' }, ...links];
@@ -14,7 +15,7 @@ export class OrientationUtilsService {
     }
 
     links = [{ label: 'To-Dos', link: 'todos' }, ...links];
-    links = [{ label: 'Events', link: 'events' }, ...links];
+    links = [{ label: 'Events', link: 'events'}, ...links];
 
     return links;
   }
@@ -24,11 +25,11 @@ export class OrientationUtilsService {
       heading: `[NOTRANSLATE]${program.name}[NOTRANSLATE]`,
       crumbs: {
         url: 'orientation',
-        label: 'orientation'
+        label: 'orientation',
       },
       subheading: null,
       em: null,
-      children: []
+      children: [],
     };
 
     const subNav = this.getSubNavChildren(program.has_membership);
@@ -36,7 +37,7 @@ export class OrientationUtilsService {
     subNav.forEach((nav) => {
       menu.children.push({
         label: nav.label.toLocaleLowerCase(),
-        url: `/manage/orientation/${program.id}/${nav.link}`
+        url: `/manage/orientation/${program.id}/${nav.link}`,
       });
     });
 

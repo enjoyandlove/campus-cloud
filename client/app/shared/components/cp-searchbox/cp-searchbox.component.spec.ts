@@ -12,7 +12,7 @@ describe('CPSearchBoxComponent', () => {
     TestBed.configureTestingModule({
       declarations: [CPSearchBoxComponent],
 
-      providers: [CPI18nService]
+      providers: [ CPI18nService ]
     });
 
     fixture = TestBed.createComponent(CPSearchBoxComponent);
@@ -28,8 +28,9 @@ describe('CPSearchBoxComponent', () => {
 
     component.stream$ = Observable.of('hello world');
 
-    component.stream$
-      .switchMap((query) => {
+    component
+      .stream$
+      .switchMap(query => {
         const queryEmit$ = component.query;
         const isSearch$ = component.isSearch$;
         const searchingEmit$ = component.searching;
@@ -40,14 +41,15 @@ describe('CPSearchBoxComponent', () => {
 
         return Observable.combineLatest(queryEmit$, isSearch$, searchingEmit$);
       })
-      .subscribe((res) => {
+      .subscribe(res => {
         fixture.detectChanges();
 
         expect(res[0]).toBe('hello world');
         expect(res[1]).toBeTruthy();
         expect(res[2]).toBeFalsy();
-      });
-  });
+      }
+      );
+  })
 
   it('Should clear input', () => {
     const query$ = component.query;
@@ -55,7 +57,7 @@ describe('CPSearchBoxComponent', () => {
 
     const stream$ = Observable.combineLatest(query$, isSearch$);
 
-    stream$.subscribe((res) => {
+    stream$.subscribe(res => {
       fixture.detectChanges();
       expect(component.q.nativeElement.value).toEqual('');
       expect(res[0]).toBeNull();
@@ -63,15 +65,16 @@ describe('CPSearchBoxComponent', () => {
     });
 
     component.onClear();
-  });
+  })
 
   it('Should emit an empty value', () => {
     component.ngAfterViewInit();
 
     component.stream$ = Observable.of('');
 
-    component.stream$
-      .switchMap((_) => {
+    component
+      .stream$
+      .switchMap(_ => {
         const queryEmit$ = component.query;
         const isSearch$ = component.isSearch$;
         const searchingEmit$ = component.searching;
@@ -82,12 +85,13 @@ describe('CPSearchBoxComponent', () => {
 
         return Observable.combineLatest(queryEmit$, isSearch$, searchingEmit$);
       })
-      .subscribe((res) => {
+      .subscribe(res => {
         fixture.detectChanges();
 
         expect(res[0]).toBeNull();
         expect(res[1]).toBeFalsy();
         expect(res[2]).toBeFalsy();
-      });
-  });
-});
+      }
+      );
+  })
+})

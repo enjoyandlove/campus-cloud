@@ -9,7 +9,7 @@ export class TemplatesTopBarComponent implements OnInit {
   @Output() create: EventEmitter<null> = new EventEmitter();
   @Output() query: EventEmitter<string> = new EventEmitter();
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 }

@@ -10,7 +10,7 @@ import {
   AthleticsEventsExcelComponent,
   AthleticsEventsCreateComponent,
   AthleticsEventsFacebookComponent,
-  AthleticsEventsAtthendanceComponent
+  AthleticsEventsAtthendanceComponent,
 } from './components';
 
 @NgModule({
@@ -21,9 +21,13 @@ import {
     AthleticsEventsExcelComponent,
     AthleticsEventsCreateComponent,
     AthleticsEventsFacebookComponent,
-    AthleticsEventsAtthendanceComponent
+    AthleticsEventsAtthendanceComponent,
   ],
 
-  imports: [AthleticsEventsRoutingModule, ClubsEventsModule]
+  imports: [
+    AthleticsEventsRoutingModule,
+    ClubsEventsModule
+  ],
+
 })
 export class AthleticsEventsModule {}

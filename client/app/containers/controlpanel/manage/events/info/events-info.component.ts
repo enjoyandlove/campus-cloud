@@ -17,7 +17,7 @@ import { IResourceBanner } from '../../../../../shared/components/cp-resource-ba
 @Component({
   selector: 'cp-events-info',
   templateUrl: './events-info.component.html',
-  styleUrls: ['./events-info.component.scss']
+  styleUrls: ['./events-info.component.scss'],
 })
 export class EventsInfoComponent extends BaseComponent implements OnInit {
   @Input() isClub: boolean;
@@ -47,7 +47,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
     private store: Store<IHeader>,
     private route: ActivatedRoute,
     public utils: EventUtilService,
-    public service: EventsService
+    public service: EventsService,
   ) {
     super();
     this.dateFormat = FORMAT.DATETIME;
@@ -72,23 +72,25 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
         this.clubId,
         this.serviceId,
         this.isAthletic,
-        this.orientationId
+        this.orientationId,
       );
 
       this.banner =
-        this.event.poster_url === '' ? this.event.store_logo_url : this.event.poster_url;
+        this.event.poster_url === ''
+          ? this.event.store_logo_url
+          : this.event.poster_url;
 
       this.buildHeader(this.event);
 
       this.mapCenter = new BehaviorSubject({
         lat: event.data.latitude,
-        lng: event.data.longitude
+        lng: event.data.longitude,
       });
 
       this.resourceBanner = {
         image: this.banner,
         heading: this.event.title,
-        subheading: this.event.store_name
+        subheading: this.event.store_name,
       };
     });
   }
@@ -101,14 +103,14 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
       subheading: '',
       crumbs: {
         url: this.urlPrefix,
-        label: 'events'
+        label: 'events',
       },
-      children: [...children]
+      children: [...children],
     };
 
     this.store.dispatch({
       type: HEADER_UPDATE,
-      payload
+      payload,
     });
   }
 
