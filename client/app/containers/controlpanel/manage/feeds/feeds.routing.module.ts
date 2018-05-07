@@ -10,10 +10,10 @@ const appRoutes: Routes = [
     canActivate: [PrivilegesGuard],
     component: FeedsListComponent,
     data: { zendesk: 'walls' }
-  },
+  }
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class FeedsRoutingModule {}

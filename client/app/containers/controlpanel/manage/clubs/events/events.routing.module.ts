@@ -13,7 +13,7 @@ import {
   ClubsEventsAttendanceComponent,
   ClubsEventsCreateComponent,
   ClubsEventsExcelComponent,
-  ClubsEventsFacebookComponent,
+  ClubsEventsFacebookComponent
 } from './components';
 
 const appRoutes: Routes = [
@@ -22,42 +22,42 @@ const appRoutes: Routes = [
   {
     path: '',
     component: ClubsEventsComponent,
-    data: { zendesk: 'clubs' },
+    data: { zendesk: 'clubs' }
   },
   {
     path: 'create',
     component: ClubsEventsCreateComponent,
-    data: { zendesk: 'clubs' },
+    data: { zendesk: 'clubs' }
   },
   {
     path: ':eventId',
     component: ClubsEventsAttendanceComponent,
-    data: { zendesk: 'clubs' },
+    data: { zendesk: 'clubs' }
   },
   {
     path: ':eventId/edit',
     component: ClubsEventEditComponent,
-    data: { zendesk: 'clubs' },
+    data: { zendesk: 'clubs' }
   },
   {
     path: ':eventId/info',
     component: ClubsEventInfoComponent,
-    data: { zendesk: 'clubs' },
+    data: { zendesk: 'clubs' }
   },
 
   {
     path: 'import/excel',
     component: ClubsEventsExcelComponent,
-    data: { zendesk: 'clubs' },
+    data: { zendesk: 'clubs' }
   },
   {
     path: 'import/facebook',
     component: ClubsEventsFacebookComponent,
-    data: { zendesk: 'clubs' },
-  },
+    data: { zendesk: 'clubs' }
+  }
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class ClubsEventsRoutingModule {}

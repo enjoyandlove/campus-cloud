@@ -28,11 +28,7 @@ const appRoutes: Routes = [
   }
 ];
 @NgModule({
-  imports: [
-    RouterModule.forChild(appRoutes)
-  ],
-  exports: [
-    RouterModule
-  ]
+  imports: [RouterModule.forChild(appRoutes)],
+  exports: [RouterModule]
 })
-export class AthleticsDetailsRoutingModule { }
+export class AthleticsDetailsRoutingModule {}

@@ -10,7 +10,7 @@ import { CPI18nService, ErrorService } from '../../../shared/services';
 @Component({
   selector: 'cp-lost-password',
   templateUrl: './lost-password.component.html',
-  styleUrls: ['./lost-password.component.scss'],
+  styleUrls: ['./lost-password.component.scss']
 })
 export class LostPasswordComponent implements OnInit, OnDestroy {
   email;
@@ -22,18 +22,18 @@ export class LostPasswordComponent implements OnInit, OnDestroy {
     private store: Store<any>,
     private error: ErrorService,
     private service: AuthService,
-    private cpI18n: CPI18nService,
+    private cpI18n: CPI18nService
   ) {
     this.form = this.fb.group({
       request_password_reset: [1],
-      email: [null, [Validators.required]],
+      email: [null, [Validators.required]]
     });
   }
 
   onSubmit(data) {
     if (!this.form.valid) {
       this.error.handleWarning({
-        reason: this.cpI18n.translate('all_fields_are_required'),
+        reason: this.cpI18n.translate('all_fields_are_required')
       });
 
       return;
@@ -45,8 +45,8 @@ export class LostPasswordComponent implements OnInit, OnDestroy {
       () => (this.isSubmitted = true),
       () =>
         this.error.handleError({
-          reason: this.cpI18n.translate('email_does_not_exist'),
-        }),
+          reason: this.cpI18n.translate('email_does_not_exist')
+        })
     );
   }
 

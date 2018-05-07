@@ -10,7 +10,7 @@ declare var $: any;
 @Component({
   selector: 'cp-feed-approve-modal',
   templateUrl: './feed-approve-modal.component.html',
-  styleUrls: ['./feed-approve-modal.component.scss'],
+  styleUrls: ['./feed-approve-modal.component.scss']
 })
 export class FeedApproveModalComponent implements OnInit {
   @Input() feed: any;
@@ -21,27 +21,16 @@ export class FeedApproveModalComponent implements OnInit {
   buttonData;
   _isCampusWallView;
 
-  constructor(
-    private cpI18n: CPI18nService,
-    private feedsService: FeedsService,
-  ) {}
+  constructor(private cpI18n: CPI18nService, private feedsService: FeedsService) {}
 
   onSubmit() {
     const data = { flag: 2 };
 
-    const approveCampusWallThread$ = this.feedsService.approveCampusWallThread(
-      this.feed.id,
-      data,
-    );
+    const approveCampusWallThread$ = this.feedsService.approveCampusWallThread(this.feed.id, data);
 
-    const approveGroupWallThread$ = this.feedsService.approveGroupWallThread(
-      this.feed.id,
-      data,
-    );
+    const approveGroupWallThread$ = this.feedsService.approveGroupWallThread(this.feed.id, data);
 
-    const stream$ = this._isCampusWallView
-      ? approveCampusWallThread$
-      : approveGroupWallThread$;
+    const stream$ = this._isCampusWallView ? approveCampusWallThread$ : approveGroupWallThread$;
 
     stream$.subscribe((_) => {
       $('#approveFeedModal').modal('hide');
@@ -54,7 +43,7 @@ export class FeedApproveModalComponent implements OnInit {
   ngOnInit() {
     this.buttonData = {
       text: this.cpI18n.translate('approve'),
-      class: 'primary',
+      class: 'primary'
     };
 
     this.isCampusWallView.subscribe((res: any) => {

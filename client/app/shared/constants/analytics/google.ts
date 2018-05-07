@@ -1,17 +1,17 @@
 const googleEventCategory = {
-  OUTBOUND: 'Outbound',
+  OUTBOUND: 'Outbound'
 };
 
 const googleEventAction = {
-  ZENDESK: 'Zendesk',
+  ZENDESK: 'Zendesk'
 };
 
 const googleEventLabel = {
-  CP_TOP_BANNER: 'CP Top Banner',
+  CP_TOP_BANNER: 'CP Top Banner'
 };
 
 export const cpTrackGoogle = {
   label: { ...googleEventLabel },
   action: { ...googleEventAction },
-  category: { ...googleEventCategory },
+  category: { ...googleEventCategory }
 };

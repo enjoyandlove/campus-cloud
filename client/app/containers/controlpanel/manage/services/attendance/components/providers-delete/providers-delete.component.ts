@@ -8,7 +8,7 @@ declare var $: any;
 @Component({
   selector: 'cp-providers-delete',
   templateUrl: './providers-delete.component.html',
-  styleUrls: ['./providers-delete.component.scss'],
+  styleUrls: ['./providers-delete.component.scss']
 })
 export class ServicesProviderDeleteComponent {
   @Input() provider: any;
@@ -21,11 +21,9 @@ export class ServicesProviderDeleteComponent {
     const search = new URLSearchParams();
     search.append('service_id', this.serviceId.toString());
 
-    this.providersService.deleteProvider(this.provider.id, search).subscribe(
-      (_) => {
-        $('#deleteProvider').modal('hide');
-        this.deleted.emit(this.provider.id);
-      },
-    );
+    this.providersService.deleteProvider(this.provider.id, search).subscribe((_) => {
+      $('#deleteProvider').modal('hide');
+      this.deleted.emit(this.provider.id);
+    });
   }
 }

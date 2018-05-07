@@ -8,10 +8,7 @@ import { CPSession } from './../../session';
 import { CPI18nService } from './i18n.service';
 import { CP_PRIVILEGES_MAP } from '../constants';
 import { BaseService } from '../../base/base.service';
-import {
-  canSchoolReadResource,
-  canAccountLevelReadResource,
-} from '../utils/privileges';
+import { canSchoolReadResource, canAccountLevelReadResource } from '../utils/privileges';
 import { isClubAthletic } from '../../containers/controlpanel/manage/clubs/clubs.athletics.labels';
 
 const cpI18n = new CPI18nService();
@@ -25,9 +22,7 @@ export class StoreService extends BaseService {
   }
 
   private getServices(search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.SERVICES
-    }/1;1000`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}/1;1000`;
 
     return super
       .get(url, { search })
@@ -36,23 +31,23 @@ export class StoreService extends BaseService {
         {
           label: cpI18n.translate('services'),
           value: null,
-          heading: true,
-        },
+          heading: true
+        }
       ])
       .map((res) => {
         const services = [
           {
             label: cpI18n.translate('services'),
             value: null,
-            heading: true,
-          },
+            heading: true
+          }
         ];
 
         const _services = res.map((store) => {
           return {
             label: store.name,
             value: store.store_id,
-            heading: false,
+            heading: false
           };
         });
 
@@ -65,9 +60,7 @@ export class StoreService extends BaseService {
   }
 
   private getAthletics(search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.CLUBS
-    }/1;1000`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CLUBS}/1;1000`;
 
     search.append('category_id', isClubAthletic.athletic.toString());
 
@@ -78,23 +71,23 @@ export class StoreService extends BaseService {
         {
           label: cpI18n.translate('athletics'),
           value: null,
-          heading: true,
-        },
+          heading: true
+        }
       ])
       .map((res) => {
         const athletics = [
           {
             label: cpI18n.translate('athletics'),
             value: null,
-            heading: true,
-          },
+            heading: true
+          }
         ];
 
         const _athletics = res.map((store) => {
           return {
             label: store.name,
             value: store.id,
-            heading: false,
+            heading: false
           };
         });
 
@@ -108,9 +101,7 @@ export class StoreService extends BaseService {
 
   private getClubs(search: URLSearchParams) {
     const ACTIVE_CLUBS = '1';
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.CLUBS
-    }/1;1000`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CLUBS}/1;1000`;
 
     if (!search) {
       search = new URLSearchParams();
@@ -126,23 +117,23 @@ export class StoreService extends BaseService {
         {
           label: cpI18n.translate('clubs'),
           value: null,
-          heading: true,
-        },
+          heading: true
+        }
       ])
       .map((res) => {
         const clubs = [
           {
             label: cpI18n.translate('clubs'),
             value: null,
-            heading: true,
-          },
+            heading: true
+          }
         ];
 
         const _clubs = res.map((store) => {
           return {
             label: store.name,
             value: store.id,
-            heading: false,
+            heading: false
           };
         });
 
@@ -154,54 +145,38 @@ export class StoreService extends BaseService {
       });
   }
 
-  getStores(
-    search: URLSearchParams,
-    placeHolder = cpI18n.translate('select_host'),
-  ) {
+  getStores(search: URLSearchParams, placeHolder = cpI18n.translate('select_host')) {
     /**
      * Check for user privileges before masking the call
      * to Stores/Clubs to avoid errors in Sentry
      */
-    const clubsSchoolAccess = canSchoolReadResource(
-      this.session.g,
-      CP_PRIVILEGES_MAP.clubs,
-    );
-    const clubsAccountAccess = canAccountLevelReadResource(
-      this.session.g,
-      CP_PRIVILEGES_MAP.clubs,
-    );
+    const clubsSchoolAccess = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.clubs);
+    const clubsAccountAccess = canAccountLevelReadResource(this.session.g, CP_PRIVILEGES_MAP.clubs);
     const canReadClubs = clubsSchoolAccess || clubsAccountAccess;
 
     const athleticsSchoolAccess = canSchoolReadResource(
       this.session.g,
-      CP_PRIVILEGES_MAP.athletics,
+      CP_PRIVILEGES_MAP.athletics
     );
     const athleticsAccountAccess = canAccountLevelReadResource(
       this.session.g,
-      CP_PRIVILEGES_MAP.athletics,
+      CP_PRIVILEGES_MAP.athletics
     );
 
     const canReadAthletics = athleticsSchoolAccess || athleticsAccountAccess;
 
-    const servicesSchoolAccess = canSchoolReadResource(
-      this.session.g,
-      CP_PRIVILEGES_MAP.services,
-    );
+    const servicesSchoolAccess = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.services);
     const servicesAccountAccess = canAccountLevelReadResource(
       this.session.g,
-      CP_PRIVILEGES_MAP.services,
+      CP_PRIVILEGES_MAP.services
     );
     const canReadServices = servicesSchoolAccess || servicesAccountAccess;
 
     const clubs$ = canReadClubs ? this.getClubs(search) : Observable.of([]);
 
-    const athletics$ = canReadAthletics
-      ? this.getAthletics(search)
-      : Observable.of([]);
+    const athletics$ = canReadAthletics ? this.getAthletics(search) : Observable.of([]);
 
-    const services$ = canReadServices
-      ? this.getServices(search)
-      : Observable.of([]);
+    const services$ = canReadServices ? this.getServices(search) : Observable.of([]);
 
     const stream$ = Observable.combineLatest(services$, clubs$, athletics$);
 
@@ -213,8 +188,8 @@ export class StoreService extends BaseService {
             heading: true,
             disabled: true,
             label: cpI18n.translate('select_host'),
-            tooltipText: cpI18n.translate('error_no_hosts_found_help'),
-          },
+            tooltipText: cpI18n.translate('error_no_hosts_found_help')
+          }
         ];
       }
 
@@ -222,19 +197,17 @@ export class StoreService extends BaseService {
         {
           label: placeHolder,
           value: null,
-          heading: false,
+          heading: false
         },
         ...res[0],
         ...res[1],
-        ...res[2],
+        ...res[2]
       ];
     });
   }
 
   getStoreById(storeId: number) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.STORE
-    }/${storeId}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.STORE}/${storeId}`;
 
     return super.get(url).map((res) => res.json());
   }

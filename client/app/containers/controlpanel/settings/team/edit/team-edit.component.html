@@ -7,10 +7,10 @@
         [formGroup]="form"
         class="col-xs-8 col-xs-offset-2 margin-bottom">
         <div class="section cp-card form-group">
-          <p class="section__title" i18n>{{ 'admin_edit_profile' | cpI18n }}</p>
+          <p class="section__title">{{ 'admin_edit_profile' | cpI18n }}</p>
           <div class="row">
             <div class="col-xs-4">
-              <label i18n>{{ 'first_name' | cpI18n }}</label>
+              <label>{{ 'first_name' | cpI18n }}</label>
               <input
                 type="text"
                 class="form-control"
@@ -19,7 +19,7 @@
             </div>
 
             <div class="col-xs-4">
-              <label i18n>{{ 'last_name' | cpI18n }}</label>
+              <label>{{ 'last_name' | cpI18n }}</label>
               <input
                 type="text"
                 class="form-control"
@@ -28,7 +28,7 @@
             </div>
 
             <div class="col-xs-4">
-              <label i18n>{{ 'email' | cpI18n }}</label>
+              <label>{{ 'email' | cpI18n }}</label>
               <input
                 type="email"
                 class="form-control"
@@ -44,8 +44,8 @@
                 [class.isEnabled]="isAllAccessEnabled">
                 <div class="row">
                   <div class="col-xs-8">
-                    <p class="section-sub-title" i18n>{{ 'admin_all_access' | cpI18n }}</p>
-                    <p class="section-description" i18n>
+                    <p class="section-sub-title">{{ 'admin_all_access' | cpI18n }}</p>
+                    <p class="section-description">
                       {{ 'admin_all_acceess_help' | cpI18n }}
                     </p>
                   </div>
@@ -71,11 +71,11 @@
           [class.isDisabled]="isAllAccessEnabled || isCurrentUser">
           <!-- Manage Team Members -->
           <div class="section__item">
-            <p class="section__title" i18n>{{ 'admin_permissions' | cpI18n }}</p>
+            <p class="section__title">{{ 'admin_permissions' | cpI18n }}</p>
             <div class="row">
               <div class="col-xs-8">
-                <p class="section-sub-title" i18n>{{ 'manage_team_members' | cpI18n }}</p>
-                <p class="section-description" i18n>
+                <p class="section-sub-title">{{ 'manage_team_members' | cpI18n }}</p>
+                <p class="section-description">
                   {{ 'admin_grant_permissions' | cpI18n }}
                 </p>
               </div>
@@ -94,8 +94,8 @@
           <div class="section__item">
             <div class="row">
               <div class="col-xs-8">
-                <p class="section-sub-title" i18n>{{ 'admin_service_owner' | cpI18n }}</p>
-                <p class="section-description" i18n>
+                <p class="section-sub-title">{{ 'admin_service_owner' | cpI18n }}</p>
+                <p class="section-description">
                   {{ 'admin_service_owner_help' | cpI18n }}
                 </p>
               </div>
@@ -114,8 +114,8 @@
           <div class="section__item">
             <div class="row">
               <div class="col-xs-8">
-                <p class="section-sub-title" i18n>{{ 'admin_club_owner' | cpI18n }}</p>
-                <p class="section-description" i18n>
+                <p class="section-sub-title">{{ 'admin_club_owner' | cpI18n }}</p>
+                <p class="section-description">
                   {{ 'admin_club_owner_help' | cpI18n }}
                 </p>
               </div>
@@ -134,8 +134,8 @@
           <div class="section__item">
             <div class="row">
               <div class="col-xs-8">
-                <p class="section-sub-title" i18n>{{ 'admin_athletics_owner' | cpI18n }}</p>
-                <p class="section-description" i18n>
+                <p class="section-sub-title">{{ 'admin_athletics_owner' | cpI18n }}</p>
+                <p class="section-description">
                   {{ 'admin_athletics_owner_help' | cpI18n }}
                 </p>
               </div>
@@ -150,12 +150,32 @@
           </div>
           <!-- END Athletics Owner -->
 
+        <!-- Audience -->
+        <div class="section__item">
+          <div class="row">
+            <div class="col-xs-8">
+              <p class="section-sub-title">{{ 'admin_audience_title' | cpI18n }}</p>
+              <p class="section-description">
+                {{ 'admin_audience_help' | cpI18n }}
+              </p>
+            </div>
+            <div class="col-xs-4">
+              <cp-dropdown
+                [items]="audienceMenu"
+                (selected)="onAudienceSelected($event)"
+                [selectedItem]="audienceDefaultPermission()">
+              </cp-dropdown>
+            </div>
+          </div>
+        </div>
+        <!-- END Audience -->
+
           <!-- Events -->
           <div class="section__item">
             <div class="row">
               <div class="col-xs-8">
-                <p class="section-sub-title" i18n>{{ 'admin_events_title' | cpI18n }}</p>
-                <p class="section-description" i18n>
+                <p class="section-sub-title">{{ 'admin_events_title' | cpI18n }}</p>
+                <p class="section-description">
                   {{ 'admin_events_help' | cpI18n }}
                 </p>
               </div>
@@ -174,8 +194,8 @@
           <div class="section__item section--content">
             <div class="row">
               <div class="col-xs-12">
-                <p class="section-sub-title" i18n>{{ 'admin_app_content' | cpI18n }}</p>
-                <p class="section-description" i18n>
+                <p class="section-sub-title">{{ 'admin_app_content' | cpI18n }}</p>
+                <p class="section-description">
                   {{ 'admin_app_content_help' | cpI18n }}
                 </p>
               </div>
@@ -190,7 +210,7 @@
                   [isChecked]="schoolPrivileges[CP_PRIVILEGES_MAP.moderation]"
                   (toggle)="checkControl($event, CP_PRIVILEGES_MAP.moderation, formData.content.feeds)">
                 </cp-checkbox>
-                <span i18n>{{ 'feeds' | cpI18n }}</span>
+                <span>{{ 'feeds' | cpI18n }}</span>
               </div>
 
               <div
@@ -202,7 +222,7 @@
                   [isChecked]="schoolPrivileges[CP_PRIVILEGES_MAP.calendar]"
                   (toggle)="checkControl($event, CP_PRIVILEGES_MAP.calendar, formData.content.calendars)">
                 </cp-checkbox>
-                <span i18n>{{ 'calendar' | cpI18n }}</span>
+                <span>{{ 'calendar' | cpI18n }}</span>
               </div>
 
               <div
@@ -214,7 +234,7 @@
                   [isChecked]="schoolPrivileges[CP_PRIVILEGES_MAP.links]"
                   (toggle)="checkControl($event, CP_PRIVILEGES_MAP.links, formData.content.links)">
                 </cp-checkbox>
-                <span i18n>{{ 'links' | cpI18n }}</span>
+                <span>{{ 'links' | cpI18n }}</span>
               </div>
             </div>
 
@@ -228,7 +248,7 @@
                   [isChecked]="schoolPrivileges[CP_PRIVILEGES_MAP.campus_maps]"
                   (toggle)="checkControl($event, CP_PRIVILEGES_MAP.campus_maps, formData.content.maps)">
                 </cp-checkbox>
-                <span i18n>{{ 'maps' | cpI18n }}</span>
+                <span>{{ 'maps' | cpI18n }}</span>
               </div>
 
               <div
@@ -240,7 +260,7 @@
                   (toggle)="checkControl($event, CP_PRIVILEGES_MAP.app_customization, formData.content.appCustomizaton)"
                   [isDisabled]="!formData.content.appCustomizaton.active">
                 </cp-checkbox>
-                <span i18n>{{ 'customise' | cpI18n }}</span>
+                <span>{{ 'customise' | cpI18n }}</span>
               </div>
 
                <div
@@ -252,7 +272,7 @@
                   [isChecked]="schoolPrivileges[CP_PRIVILEGES_MAP.orientation]"
                   (toggle)="checkControl($event, CP_PRIVILEGES_MAP.orientation, formData.content.orientation)">
                 </cp-checkbox>
-                <span i18n>{{ 'orientation' | cpI18n }}</span>
+                <span>{{ 'orientation' | cpI18n }}</span>
               </div>
             </div>
           </div>
@@ -262,8 +282,8 @@
           <div class="section__item">
             <div class="row">
               <div class="col-xs-12">
-                <p class="section-sub-title" i18n>{{ 'notify' | cpI18n }}</p>
-                <p class="section-description" i18n>
+                <p class="section-sub-title">{{ 'notify' | cpI18n }}</p>
+                <p class="section-description">
                   {{ 'admin_notify_help' | cpI18n }}
                 </p>
               </div>
@@ -280,7 +300,7 @@
                       [isDisabled]="!formData.notify.campus.active"
                       (toggle)="checkControl($event, CP_PRIVILEGES_MAP.campus_announcements, formData.notify.campus)">
                     </cp-checkbox>
-                    <span i18n>{{ 'admin_campus_announcements' | cpI18n }}</span>
+                    <span>{{ 'admin_campus_announcements' | cpI18n }}</span>
                   </div>
                   <div
                     class="col-xs-5"
@@ -291,7 +311,7 @@
                       [isChecked]="schoolPrivileges[CP_PRIVILEGES_MAP.emergency_announcement]"
                       (toggle)="checkControl($event, CP_PRIVILEGES_MAP.emergency_announcement, formData.notify.emergency)">
                     </cp-checkbox>
-                    <span i18n>{{ 'admin_emergency_announcements' | cpI18n }}</span>
+                    <span>{{ 'admin_emergency_announcements' | cpI18n }}</span>
                   </div>
                 </div>
               </div>
@@ -303,8 +323,8 @@
           <div class="section__item">
             <div class="row">
               <div class="col-xs-12">
-                <p class="section-sub-title" i18n>{{ 'assess' | cpI18n }}</p>
-                <p class="section-description" i18n>
+                <p class="section-sub-title">{{ 'assess' | cpI18n }}</p>
+                <p class="section-description">
                   {{ 'admin_assess_help' | cpI18n }}
                 </p>
               </div>
@@ -319,7 +339,7 @@
                   [isChecked]="schoolPrivileges[CP_PRIVILEGES_MAP.assessment]"
                   (toggle)="checkControl($event, CP_PRIVILEGES_MAP.assessment, formData.assess.engagement)">
                 </cp-checkbox>
-                <span i18n>{{ 'admin_engagement_dashboard' | cpI18n }}</span>
+                <span>{{ 'admin_engagement_dashboard' | cpI18n }}</span>
               </div>
             </div>
           </div>
@@ -335,7 +355,7 @@
                 <div class="pull-right">
                   <label *ngIf="isFormError"class="error">{{ formError }}</label>
                   <a [routerLink]="[currentUserCanManage ? '/settings/team' : '/dashboard']"
-                    class="cpbtn cpbtn--cancel" i18n>
+                    class="cpbtn cpbtn--cancel">
                     {{ 'cancel' | cpI18n }}
                   </a>
 

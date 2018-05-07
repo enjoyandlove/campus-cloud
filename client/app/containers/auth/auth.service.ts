@@ -10,9 +10,7 @@ export class AuthService {
   login(email: string, password: string) {
     const headers = new Headers();
 
-    const authorization = `${API.AUTH_HEADER.TOKEN} ${
-      API.KEY
-    }:${email}:${password}`;
+    const authorization = `${API.AUTH_HEADER.TOKEN} ${API.KEY}:${email}:${password}`;
 
     headers.set('Authorization', authorization);
     headers.set('Content-Type', 'application/x-www-form-urlencoded');

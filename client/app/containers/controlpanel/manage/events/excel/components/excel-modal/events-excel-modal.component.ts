@@ -10,7 +10,7 @@ import { EventUtilService } from '../../../events.utils.service';
 @Component({
   selector: 'cp-events-excel-modal',
   templateUrl: './events-excel-modal.component.html',
-  styleUrls: ['./events-excel-modal.component.scss'],
+  styleUrls: ['./events-excel-modal.component.scss']
 })
 export class EventsExcelModalComponent implements OnInit {
   @Input() storeId: number;
@@ -31,7 +31,7 @@ export class EventsExcelModalComponent implements OnInit {
     private cpI18n: CPI18nService,
     private service: EventsService,
     private utils: EventUtilService,
-    private fileService: FileUploadService,
+    private fileService: FileUploadService
   ) {}
 
   parser(file) {
@@ -49,9 +49,7 @@ export class EventsExcelModalComponent implements OnInit {
         const serverError = err.json().error;
 
         return Promise.reject(
-          serverError
-            ? serverError
-            : this.cpI18n.translate('something_went_wrong'),
+          serverError ? serverError : this.cpI18n.translate('something_went_wrong')
         );
       });
   }
@@ -70,14 +68,12 @@ export class EventsExcelModalComponent implements OnInit {
   ngOnInit() {
     this.fileName = 'mass_event_invite_sample.csv';
 
-    const templateUrl = isDev
-      ? `/templates/${this.fileName}`
-      : `/dist/templates/${this.fileName}`;
+    const templateUrl = isDev ? `/templates/${this.fileName}` : `/dist/templates/${this.fileName}`;
 
     this.options = {
       templateUrl,
       validExtensions: ['csv'],
-      parser: this.parser.bind(this),
+      parser: this.parser.bind(this)
     };
   }
 }

@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  HostListener,
-  ElementRef,
-} from '@angular/core';
+import { Component, OnInit, Input, HostListener, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { CPI18nService } from '../../../../../../../shared/services';
@@ -12,7 +6,7 @@ import { CPI18nService } from '../../../../../../../shared/services';
 @Component({
   selector: 'cp-import-confirmation-modal',
   templateUrl: './import-confirmation-modal.component.html',
-  styleUrls: ['./import-confirmation-modal.component.scss'],
+  styleUrls: ['./import-confirmation-modal.component.scss']
 })
 export class CalendarsItemsImportConfirmationComponent implements OnInit {
   @Input() response;
@@ -24,11 +18,7 @@ export class CalendarsItemsImportConfirmationComponent implements OnInit {
   success = [];
   parsing = true;
 
-  constructor(
-    public cpI18n: CPI18nService,
-    public router: Router,
-    public el: ElementRef,
-  ) {}
+  constructor(public cpI18n: CPI18nService, public router: Router, public el: ElementRef) {}
 
   @HostListener('document:click', ['$event'])
   onClick(event) {
@@ -63,7 +53,7 @@ export class CalendarsItemsImportConfirmationComponent implements OnInit {
 
     this.buttonData = {
       text: this.cpI18n.translate('ok'),
-      class: 'primary',
+      class: 'primary'
     };
   }
 }

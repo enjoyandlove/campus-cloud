@@ -3,7 +3,7 @@ import { base64 } from '../encrypt';
 const STORAGE_KEYS = {
   SESSION: 'session',
   LANGUAGE: 'language',
-  DEFAULT_SCHOOL: 'default_school',
+  DEFAULT_SCHOOL: 'default_school'
 };
 
 function storageAvailable() {
@@ -42,5 +42,5 @@ export const appStorage = {
   clear,
   remove,
   storageAvailable,
-  keys: STORAGE_KEYS,
+  keys: STORAGE_KEYS
 };

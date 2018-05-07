@@ -13,7 +13,7 @@ import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
 
 @Component({
   selector: 'cp-clubs-details',
-  template: '<router-outlet></router-outlet>',
+  template: '<router-outlet></router-outlet>'
 })
 export class ClubsDetailsComponent extends BaseComponent implements OnInit {
   @Input() isAthletic = isClubAthletic.club;
@@ -29,7 +29,7 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
     private session: CPSession,
     private route: ActivatedRoute,
     private utils: ClubsUtilsService,
-    private clubsService: ClubsService,
+    private clubsService: ClubsService
   ) {
     super();
 
@@ -43,18 +43,16 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
     search.append('school_id', this.session.g.get('school').id.toString());
     search.append('category_id', this.isAthletic.toString());
 
-    super
-      .fetchData(this.clubsService.getClubById(this.clubId, search))
-      .then((club) => {
-        this.club = club.data;
+    super.fetchData(this.clubsService.getClubById(this.clubId, search)).then((club) => {
+      this.club = club.data;
 
-        if (!this.router.url.split('/').includes('facebook')) {
-          this.store.dispatch({
-            type: HEADER_UPDATE,
-            payload: this.buildHeader(club.data.name),
-          });
-        }
-      });
+      if (!this.router.url.split('/').includes('facebook')) {
+        this.store.dispatch({
+          type: HEADER_UPDATE,
+          payload: this.buildHeader(club.data.name)
+        });
+      }
+    });
   }
 
   buildHeader(name) {
@@ -62,11 +60,11 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
       heading: `[NOTRANSLATE]${name}[NOTRANSLATE]`,
       crumbs: {
         url: this.labels.club_athletic,
-        label: this.labels.club_athletic,
+        label: this.labels.club_athletic
       },
       subheading: null,
       em: null,
-      children: [],
+      children: []
     };
 
     const links = this.utils.getSubNavChildren(this.club, this.session);
@@ -74,7 +72,7 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
     links.forEach((link) => {
       menu.children.push({
         label: link.toLocaleLowerCase(),
-        url: `/manage/` + this.labels.club_athletic + `/${this.clubId}/${link.toLocaleLowerCase()}`,
+        url: `/manage/` + this.labels.club_athletic + `/${this.clubId}/${link.toLocaleLowerCase()}`
       });
     });
 

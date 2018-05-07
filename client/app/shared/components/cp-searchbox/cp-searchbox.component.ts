@@ -9,7 +9,7 @@ import {
   Input,
   OnInit,
   Output,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 
 import { CPI18nService } from './../../services/i18n.service';
@@ -17,7 +17,7 @@ import { CPI18nService } from './../../services/i18n.service';
 @Component({
   selector: 'cp-searchbox',
   templateUrl: './cp-searchbox.component.html',
-  styleUrls: ['./cp-searchbox.component.scss'],
+  styleUrls: ['./cp-searchbox.component.scss']
 })
 export class CPSearchBoxComponent implements AfterViewInit, OnInit {
   @Input() fixed: true;

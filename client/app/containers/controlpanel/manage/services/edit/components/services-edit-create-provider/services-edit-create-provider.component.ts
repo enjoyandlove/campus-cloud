@@ -7,7 +7,7 @@ import { ProvidersService } from '../../../providers.service';
 @Component({
   selector: 'cp-services-edit-create-provider',
   templateUrl: './services-edit-create-provider.component.html',
-  styleUrls: ['./services-edit-create-provider.component.scss'],
+  styleUrls: ['./services-edit-create-provider.component.scss']
 })
 export class ServicesEditCreateProviderComponent implements OnInit {
   @Input() serviceId: number;
@@ -15,10 +15,7 @@ export class ServicesEditCreateProviderComponent implements OnInit {
 
   form: FormGroup;
 
-  constructor(
-    private fb: FormBuilder,
-    private providersService: ProvidersService,
-  ) {}
+  constructor(private fb: FormBuilder, private providersService: ProvidersService) {}
 
   onSubmit(data) {
     const search = new URLSearchParams();
@@ -34,7 +31,7 @@ export class ServicesEditCreateProviderComponent implements OnInit {
     this.form = this.fb.group({
       provider_name: [null, Validators.required],
       email: [null, Validators.required],
-      custom_basic_feedback_label: [null, Validators.required],
+      custom_basic_feedback_label: [null, Validators.required]
     });
   }
 }
