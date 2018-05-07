@@ -1,0 +1,11 @@
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+  <div *ngSwitchCase="false">
+    <cp-jobs-form
+      #editForm
+      [form]="form"
+      (submitted)="onSave($event)"
+      (isStoreRequired)="isStoreRequired($event)">
+    </cp-jobs-form>
+  </div>
+</div>

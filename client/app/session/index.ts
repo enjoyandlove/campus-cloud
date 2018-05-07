@@ -3,6 +3,7 @@
  * as part of the g (global) Map
  */
 import { Injectable } from '@angular/core';
+import { get as _get } from 'lodash';
 
 export * from './user.interface';
 export * from './school.interface';
@@ -20,7 +21,9 @@ export class CPSession {
   private _defaultHost = null;
 
   get tz() {
-    return this.g.get('school') ? this.g.get('school').tz_zoneinfo_str : 'America/Toronto';
+    const schoolTimeZone = _get(this.g.get('school'), 'tz_zoneinfo_str', null);
+
+    return schoolTimeZone ? schoolTimeZone : 'America/Toronto';
   }
 
   get isSuperAdmin() {

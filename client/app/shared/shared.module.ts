@@ -5,9 +5,10 @@ import { RouterModule } from '@angular/router';
 
 import { CPTrackerDirective } from './directives';
 import { CPDatePipe, CPFilterPipe, CPI18nPipe } from './pipes';
-import { FileUploadService, StoreService, CPLocationsService } from './services';
 import { CPTrackingService } from './services/tracking.service';
 import { CPFIlterByLength } from './pipes/array/filter-by-length.pipe';
+import { FileUploadService, StoreService, CPLocationsService } from './services';
+import { CPTabsComponent } from './components/cp-tabs/components/cp-tabs/cp-tabs.component';
 
 import {
   CPAvatarComponent,
@@ -44,13 +45,16 @@ import {
   CPTopBanerComponent,
   CPOnboardingComponent,
   CPStepperComponent,
-  CPListModalComponent
+  CPListModalComponent,
+  CPTabComponent
 } from './components';
 import { LocationsService } from '../containers/controlpanel/manage/locations/locations.service';
 import { CPMapsService } from './services/maps.service';
 
 @NgModule({
   declarations: [
+    CPTabComponent,
+    CPTabsComponent,
     CPFIlterByLength,
     CPTopBarComponent,
     CPMapsComponent,
@@ -109,6 +113,8 @@ import { CPMapsService } from './services/maps.service';
   ],
 
   exports: [
+    CPTabComponent,
+    CPTabsComponent,
     CPFIlterByLength,
     CPTopBarComponent,
     CPMapsComponent,

@@ -18,9 +18,9 @@ import { CP_PRIVILEGES, CP_PRIVILEGES_MAP } from '../../../../../shared/constant
 import { AdminService, ErrorService, CPI18nService } from '../../../../../shared/services';
 
 import {
-  serviceMenu,
   clubMenu,
   eventMenu,
+  serviceMenu,
   TeamUtilsService,
   manageAdminMenu,
   athleticMenu
@@ -46,6 +46,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   privileges;
   editingUser;
   isFormError;
+  audienceMenu;
   manageAdmins;
   servicesMenu;
   isClubsModal;
@@ -54,6 +55,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   canReadEvents;
   athleticsMenu;
   isServiceModal;
+  canReadAudience;
   canReadServices;
   form: FormGroup;
   isAthleticsModal;
