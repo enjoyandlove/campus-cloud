@@ -14,7 +14,7 @@ const initialState: ISnackbar = {
   sticky: false,
   class: 'success',
   autoClose: false,
-  autoCloseDelay: 4000
+  autoCloseDelay: 4000,
 };
 
 export function reducer(state = initialState, action): ISnackbar {

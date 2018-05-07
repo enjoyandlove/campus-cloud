@@ -22,9 +22,9 @@ const initialState: IHeader = {
   em: '',
   crumbs: {
     url: null,
-    label: null
+    label: null,
   },
-  children: []
+  children: [],
 };
 
 export function reducer(state = initialState, action) {
@@ -36,8 +36,8 @@ export function reducer(state = initialState, action) {
         payload = Object.assign({}, payload, {
           crumbs: {
             url: null,
-            label: null
-          }
+            label: null,
+          },
         });
       }
 

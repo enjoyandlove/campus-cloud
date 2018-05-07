@@ -6,7 +6,7 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  Output
+  Output,
 } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -27,7 +27,7 @@ interface IState {
 @Component({
   selector: 'cp-lists-create',
   templateUrl: './lists-create.component.html',
-  styleUrls: ['./lists-create.component.scss']
+  styleUrls: ['./lists-create.component.scss'],
 })
 export class ListsCreateComponent implements OnInit, OnDestroy {
   @Input() users: Array<any> = [];
@@ -43,7 +43,7 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
   suggestions = [];
   isFormValid = false;
   state: IState = {
-    isPristine: true
+    isPristine: true,
   };
 
   constructor(
@@ -51,7 +51,7 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private session: CPSession,
     private service: ListsService,
-    private cpI18n: CPI18nService
+    private cpI18n: CPI18nService,
   ) {}
 
   @HostListener('document:click', ['$event'])
@@ -91,7 +91,7 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
           return;
         }
         this.errorMessage = STATUS.SOMETHING_WENT_WRONG;
-      }
+      },
     );
   }
 
@@ -103,7 +103,7 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
     $('#listsCreate').modal('hide');
 
     this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
-      reset: this.resetChips$.next(true)
+      reset: this.resetChips$.next(true),
     });
   }
 
@@ -128,7 +128,7 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
         users.forEach((user) => {
           _users.push({
             label: `${user.email}`,
-            id: user.id
+            id: user.id,
           });
         });
 
@@ -141,12 +141,12 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
       .subscribe(
         (suggestions) => {
           this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
-            suggestions
+            suggestions,
           });
         },
         (err) => {
           throw new Error(err);
-        }
+        },
       );
   }
 
@@ -165,7 +165,7 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
       name: [null, Validators.required],
       description: [null],
       user_ids: [null],
-      user_emails: [null]
+      user_emails: [null],
     });
 
     this.form.valueChanges.subscribe((_) => {
@@ -177,7 +177,9 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
         valid = false;
 
         if (this.form.controls['user_emails'].value) {
-          valid = this.form.controls['user_emails'].value.length > 0 && this.form.valid;
+          valid =
+            this.form.controls['user_emails'].value.length > 0 &&
+            this.form.valid;
         }
       }
 
@@ -185,7 +187,8 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
         valid = false;
 
         if (this.form.controls['user_ids'].value) {
-          valid = this.form.controls['user_ids'].value.length > 0 && this.form.valid;
+          valid =
+            this.form.controls['user_ids'].value.length > 0 && this.form.valid;
         }
       }
 
@@ -203,7 +206,7 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
       this.users = this.users.map((user, index) => {
         return {
           label: user.email,
-          id: index
+          id: index,
         };
       });
 
@@ -212,19 +215,19 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
 
     if (this.state.isPristine) {
       this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
-        reset: this.resetChips$.next(true)
+        reset: this.resetChips$.next(true),
       });
     }
 
     this.chipOptions = {
       icon: 'account_box',
       withClose: false,
-      withAvatar: true
+      withAvatar: true,
     };
 
     this.typeAheadOpts = {
       reset: this.resetChips$,
-      suggestions: this.suggestions
+      suggestions: this.suggestions,
     };
   }
 }

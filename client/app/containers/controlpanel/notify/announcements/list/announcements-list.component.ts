@@ -20,7 +20,7 @@ const state: IState = {
   query: null,
   type: null,
   sort_field: 'sent_time',
-  sort_direction: 'desc'
+  sort_direction: 'desc',
 };
 
 declare var $: any;
@@ -28,9 +28,10 @@ declare var $: any;
 @Component({
   selector: 'cp-announcements-list',
   templateUrl: './announcements-list.component.html',
-  styleUrls: ['./announcements-list.component.scss']
+  styleUrls: ['./announcements-list.component.scss'],
 })
-export class AnnouncementsListComponent extends BaseComponent implements OnInit {
+export class AnnouncementsListComponent extends BaseComponent
+  implements OnInit {
   loading;
   buttonText;
   headerText;
@@ -46,7 +47,7 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
   constructor(
     private session: CPSession,
     private cpI18n: CPI18nService,
-    private service: AnnouncementsService
+    private service: AnnouncementsService,
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -58,7 +59,7 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
     this.state = {
       ...this.state,
       sort_field: sort_field,
-      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc'
+      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc',
     };
 
     this.fetch();
@@ -73,7 +74,7 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
         $('#deleteAnnouncementModal').modal();
       },
 
-      1
+      1,
     );
   }
 
@@ -84,7 +85,7 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
 
     this.state = Object.assign({}, this.state, {
       query: filter.query,
-      type: filter.type
+      type: filter.type,
     });
 
     if (filter.query) {
@@ -104,7 +105,7 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
         $('#viewMoreModal').modal();
       },
 
-      1
+      1,
     );
   }
 
@@ -115,13 +116,13 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
         $('#composeModal').modal();
       },
 
-      1
+      1,
     );
   }
 
   onDeleted(id) {
     this.state = Object.assign({}, this.state, {
-      messages: this.state.messages.filter((message) => message.id !== id)
+      messages: this.state.messages.filter((message) => message.id !== id),
     });
 
     if (this.state.messages.length === 0 && this.pageNumber > 1) {
@@ -141,8 +142,13 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
     search.append('school_id', this.session.g.get('school').id.toString());
 
     super
-      .fetchData(this.service.getAnnouncements(search, this.startRange, this.endRange))
-      .then((res) => (this.state = Object.assign({}, this.state, { messages: res.data })));
+      .fetchData(
+        this.service.getAnnouncements(search, this.startRange, this.endRange),
+      )
+      .then(
+        (res) =>
+          (this.state = Object.assign({}, this.state, { messages: res.data })),
+      );
   }
 
   onCreated() {
@@ -163,7 +169,7 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
     this.messageType = {
       0: this.cpI18n.translate('emergency'),
       1: this.cpI18n.translate('urgent'),
-      2: this.cpI18n.translate('regular')
+      2: this.cpI18n.translate('regular'),
     };
   }
 }

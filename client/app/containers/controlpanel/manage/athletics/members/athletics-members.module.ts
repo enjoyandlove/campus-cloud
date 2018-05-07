@@ -5,8 +5,14 @@ import { ClubsMembersModule } from '../../clubs/members/members.module';
 import { AthleticsMembersRoutingModule } from './athletics-members.routing.module';
 
 @NgModule({
-  declarations: [AthleticsMembersComponent],
+  declarations: [
+    AthleticsMembersComponent
+  ],
 
-  imports: [AthleticsMembersRoutingModule, ClubsMembersModule]
+  imports: [
+    AthleticsMembersRoutingModule,
+    ClubsMembersModule
+  ],
+
 })
 export class AthleticsMembersModule {}

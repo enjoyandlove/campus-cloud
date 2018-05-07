@@ -17,7 +17,7 @@ import {
   CheckinRegisterComponent,
   CheckinServiceComponent,
   CheckinServiceHeaderComponent,
-  CheckinOrientationEventsComponent
+  CheckinOrientationEventsComponent,
 } from './checkin';
 import { CheckinService } from './checkin/checkin.service';
 import {
@@ -27,7 +27,7 @@ import {
   FeedbackFormComponent,
   FeedbackServiceComponent,
   FeedbackStarsComponent,
-  FeedbackOrientationEventComponent
+  FeedbackOrientationEventComponent,
 } from './feedback';
 import { FeedbackService } from './feedback/feedback.service';
 import { CallbackPasswordResetComponent } from './password-reset';
@@ -57,11 +57,17 @@ import { AuthService } from '../auth/auth.service';
     AdminInviteComponent,
     CheckinInternalModalComponent,
     CheckinOrientationEventsComponent,
-    FeedbackOrientationEventComponent
+    FeedbackOrientationEventComponent,
   ],
 
-  imports: [CommonModule, ReactiveFormsModule, SharedModule, RouterModule, CallbackRoutingModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    SharedModule,
+    RouterModule,
+    CallbackRoutingModule,
+  ],
 
-  providers: [AuthService, CallbackService, CheckinService, FeedbackService]
+  providers: [AuthService, CallbackService, CheckinService, FeedbackService],
 })
 export class CallbackModule {}

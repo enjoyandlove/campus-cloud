@@ -8,8 +8,16 @@ import { AthleticsWallComponent } from '../wall';
 import { AthleticsDetailsRoutingModule } from './athletics-details.routing.module';
 
 @NgModule({
-  declarations: [AthleticsInfoComponent, AthleticsWallComponent, AthleticsDetailsComponent],
+  declarations: [
+    AthleticsInfoComponent,
+    AthleticsWallComponent,
+    AthleticsDetailsComponent,
+  ],
 
-  imports: [AthleticsDetailsRoutingModule, ClubsDetailsModule]
+  imports: [
+    AthleticsDetailsRoutingModule,
+    ClubsDetailsModule
+  ],
+
 })
 export class AthleticsDetailsModule {}

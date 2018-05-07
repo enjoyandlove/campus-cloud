@@ -10,10 +10,10 @@ const appRoutes: Routes = [
     component: ListsListComponent,
     canActivate: [PrivilegesGuard],
     data: { zendesk: 'lists' }
-  }
+  },
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class ListsRoutingModule {}

@@ -17,19 +17,19 @@ const appRoutes: Routes = [
       {
         path: 'dashboard',
         data: { zendesk: 'assessment' },
-        loadChildren: './engagement/engagement.module#EngagementModule'
+        loadChildren: './engagement/engagement.module#EngagementModule',
       },
 
       {
         path: 'students',
         data: { zendesk: 'notify' },
-        loadChildren: './students/students.module#EngagementStudentsModule'
-      }
-    ]
-  }
+        loadChildren: './students/students.module#EngagementStudentsModule',
+      },
+    ],
+  },
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AssessRoutingModule {}

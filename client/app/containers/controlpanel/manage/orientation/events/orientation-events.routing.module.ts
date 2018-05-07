@@ -14,38 +14,39 @@ const appRoutes: Routes = [
   {
     path: '',
     component: OrientationEventsComponent,
-    data: { zendesk: 'orientation events' }
+    data: { zendesk: 'orientation events' },
   },
   {
     path: 'create',
     component: OrientationEventsCreateComponent,
-    data: { zendesk: 'create orientation event' }
+    data: { zendesk: 'create orientation event' },
   },
   {
     path: ':eventId',
     component: OrientationEventsAttendanceComponent,
-    data: { zendesk: 'orientation event attendance' }
+    data: { zendesk: 'orientation event attendance' },
   },
   {
     path: ':eventId/edit',
     component: OrientationEventsEditComponent,
-    data: { zendesk: 'edit orientation event' }
+    data: { zendesk: 'edit orientation event' },
   },
   {
     path: ':eventId/info',
     component: OrientationEventsInfoComponent,
-    data: { zendesk: 'orientation event details' }
+    data: { zendesk: 'orientation event details' },
   },
 
   {
     path: 'import/excel',
     component: OrientationEventsExcelComponent,
-    data: { zendesk: 'import orientation events via csv' }
+    data: { zendesk: 'import orientation events via csv' },
   }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
+
 export class OrientationEventsRoutingModule {}

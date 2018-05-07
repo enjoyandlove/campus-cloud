@@ -12,7 +12,7 @@ const appRoutes: Routes = [
     path: 'import',
     redirectTo: '',
     pathMatch: 'full',
-    data: { zendesk: 'links' }
+    data: { zendesk: 'links' },
   },
 
   {
@@ -20,10 +20,10 @@ const appRoutes: Routes = [
     canActivate: [PrivilegesGuard],
     component: LinksListComponent,
     data: { zendesk: 'links' }
-  }
+  },
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class LinksRoutingModule {}

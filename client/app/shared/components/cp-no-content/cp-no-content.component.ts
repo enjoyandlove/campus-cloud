@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 @Component({
   selector: 'cp-no-content',
   templateUrl: './cp-no-content.component.html',
-  styleUrls: ['./cp-no-content.component.scss']
+  styleUrls: ['./cp-no-content.component.scss'],
 })
 export class CPNoContentComponent implements OnInit {
   @Input() noContentText: string;

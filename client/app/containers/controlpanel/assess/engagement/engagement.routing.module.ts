@@ -11,13 +11,13 @@ const engagementRoutes: Routes = [
     data: { zendesk: 'Assessment Dashboard' },
     component: EngagementComponent,
     resolve: {
-      data: EngagementResolver
-    }
-  }
+      data: EngagementResolver,
+    },
+  },
 ];
 @NgModule({
   imports: [RouterModule.forChild(engagementRoutes)],
   exports: [RouterModule],
-  providers: [EngagementResolver]
+  providers: [EngagementResolver],
 })
 export class EngagementRoutingModule {}

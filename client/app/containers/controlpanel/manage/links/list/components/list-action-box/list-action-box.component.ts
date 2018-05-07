@@ -9,7 +9,7 @@ export class LinksListActionBoxComponent implements OnInit {
   @Output() search: EventEmitter<string> = new EventEmitter();
   @Output() launchCreateModal: EventEmitter<null> = new EventEmitter();
 
-  constructor() {}
+  constructor() { }
 
   onSearch(query) {
     this.search.emit(query);
@@ -19,5 +19,5 @@ export class LinksListActionBoxComponent implements OnInit {
     this.launchCreateModal.emit();
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 }

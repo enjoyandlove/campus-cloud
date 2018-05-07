@@ -1,4 +1,11 @@
-import { Input, OnInit, Component, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
+import {
+  Input,
+  OnInit,
+  Component,
+  ViewChild,
+  ElementRef,
+  ViewEncapsulation,
+} from '@angular/core';
 
 const Chartist = require('chartist');
 require('chartist-plugin-tooltips');
@@ -7,7 +14,7 @@ require('chartist-plugin-tooltips');
   selector: 'cp-dashboard-social-activity-chart',
   templateUrl: './dashboard-social-activity-chart.component.html',
   styleUrls: ['./dashboard-social-activity-chart.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class DashboardSocialActivyChartComponent implements OnInit {
   @ViewChild('socialActivity') socialActivity: ElementRef;
@@ -31,7 +38,7 @@ export class DashboardSocialActivyChartComponent implements OnInit {
       return serie.map((item) => {
         return {
           meta: `${this.labels[index]} (${this.percentages[index]}%)`,
-          value: item
+          value: item,
         };
       });
     });
@@ -39,20 +46,20 @@ export class DashboardSocialActivyChartComponent implements OnInit {
 
   drawChart() {
     const data = {
-      series: this.buildSeries()
+      series: this.buildSeries(),
     };
 
     const options = {
       fullWidth: true,
 
       chartPadding: {
-        right: 0
+        right: 0,
       },
 
       plugins: [
         Chartist.plugins.tooltip({
-          class: 'cp-social-activity'
-        })
+          class: 'cp-social-activity',
+        }),
       ],
 
       lineSmooth: false,
@@ -66,7 +73,7 @@ export class DashboardSocialActivyChartComponent implements OnInit {
       horizontalBars: true,
 
       classNames: {
-        series: 'dsh-series'
+        series: 'dsh-series',
       },
 
       axisY: {
@@ -74,32 +81,36 @@ export class DashboardSocialActivyChartComponent implements OnInit {
 
         showLabel: false,
 
-        showGrid: false
+        showGrid: false,
       },
 
       axisX: {
         showGrid: false,
 
-        showLabel: false
-      }
+        showLabel: false,
+      },
     };
 
-    const chart = new Chartist.Bar(this.socialActivity.nativeElement, data, options);
+    const chart = new Chartist.Bar(
+      this.socialActivity.nativeElement,
+      data,
+      options,
+    );
 
     chart.on(
       'created',
       function() {
         this.isChartDataReady = true;
-      }.bind(this)
+      }.bind(this),
     );
 
     chart.on(
       'draw',
       function(d) {
         d.element.attr({
-          style: 'stroke-width: 45px'
+          style: 'stroke-width: 45px',
         });
-      }.bind(this)
+      }.bind(this),
     );
   }
 

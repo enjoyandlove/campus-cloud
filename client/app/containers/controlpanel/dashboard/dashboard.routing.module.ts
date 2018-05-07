@@ -10,11 +10,11 @@ const appRoutes: Routes = [
     path: '',
     canActivate: [AuthGuard],
     component: DashboardComponent,
-    data: { zendesk: 'dashboard' }
-  }
+    data: { zendesk: 'dashboard' },
+  },
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class DashboardRoutingModule {}

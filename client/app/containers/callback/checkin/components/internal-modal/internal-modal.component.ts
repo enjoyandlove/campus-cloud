@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'cp-checkin-internal-modal',
   templateUrl: './internal-modal.component.html',
-  styleUrls: ['./internal-modal.component.scss']
+  styleUrls: ['./internal-modal.component.scss'],
 })
 export class CheckinInternalModalComponent implements OnInit {
   @Input() data: any;
@@ -40,7 +40,7 @@ export class CheckinInternalModalComponent implements OnInit {
     this.form = this.fb.group({
       [this.name]: [this.data[this.name], Validators.maxLength(120)],
       provider_name: [this.data.provider_name || null],
-      school_name: [this.data.school_name]
+      school_name: [this.data.school_name],
     });
   }
 }

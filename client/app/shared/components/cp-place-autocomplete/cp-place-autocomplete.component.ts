@@ -7,7 +7,7 @@ import {
   Input,
   OnInit,
   Output,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
@@ -26,7 +26,7 @@ interface IState {
 @Component({
   selector: 'cp-place-autocomplete',
   templateUrl: './cp-place-autocomplete.component.html',
-  styleUrls: ['./cp-place-autocomplete.component.scss']
+  styleUrls: ['./cp-place-autocomplete.component.scss'],
 })
 export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
   @ViewChild('hostEl') hostEl: ElementRef;
@@ -41,14 +41,14 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
 
   state: IState = {
     input: null,
-    suggestions: []
+    suggestions: [],
   };
 
   constructor(
     private cpSession: CPSession,
     public cpI18n: CPI18nService,
     private ref: ChangeDetectorRef,
-    public service: CPLocationsService
+    public service: CPLocationsService,
   ) {}
 
   ngAfterViewInit() {
@@ -91,7 +91,7 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
     }
 
     const locationData = Object.assign({}, location.value, {
-      fromUsersLocations: true
+      fromUsersLocations: true,
     });
 
     this.placeChange.emit(locationData);
@@ -105,13 +105,15 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
   }
 
   fetchGoogleDetails(location) {
-    this.service.getLocationDetails(location.value, this.hostEl.nativeElement).subscribe(
-      (details) => {
-        details = Object.assign({}, details, { name: location.full_label });
-        this.placeChange.emit(details);
-      },
-      () => this.placeChange.emit(null)
-    );
+    this.service
+      .getLocationDetails(location.value, this.hostEl.nativeElement)
+      .subscribe(
+        (details) => {
+          details = Object.assign({}, details, { name: location.full_label });
+          this.placeChange.emit(details);
+        },
+        () => this.placeChange.emit(null),
+      );
   }
 
   noResultsIfEmpty(results: Array<any>) {
@@ -131,7 +133,10 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
   setSuggestions(suggestions): void {
     const showAll = this.disableLocations === undefined;
     const newSuggestions = showAll
-      ? [...this.noResultsIfEmpty(suggestions[0]), ...this.noResultsIfEmpty(suggestions[1])]
+      ? [
+          ...this.noResultsIfEmpty(suggestions[0]),
+          ...this.noResultsIfEmpty(suggestions[1]),
+        ]
       : [...this.noResultsIfEmpty(suggestions[1])];
 
     this.state = Object.assign({}, this.state, { suggestions: newSuggestions });

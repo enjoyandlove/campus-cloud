@@ -5,7 +5,7 @@ import { FORMAT } from '../../../../../shared/pipes/date';
 @Component({
   selector: 'cp-event-header',
   templateUrl: './event-header.component.html',
-  styleUrls: ['./event-header.component.scss']
+  styleUrls: ['./event-header.component.scss'],
 })
 export class CheckinEventHeaderComponent implements OnInit {
   @Input() event: any;

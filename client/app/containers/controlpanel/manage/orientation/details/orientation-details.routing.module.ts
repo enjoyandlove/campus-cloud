@@ -14,23 +14,23 @@ const appRoutes: Routes = [
 
       { path: 'todos', loadChildren: '../todos/todos.module#TodosModule' },
 
-      //  { path: 'feeds', component: ClubsWallComponent },
+    //  { path: 'feeds', component: ClubsWallComponent },
       { path: 'feeds', component: OrientationWallComponent },
 
       {
-        path: 'events',
-        loadChildren: '../events/orientation-events.module#OrientationEventsModule'
-      },
+         path: 'events',
+         loadChildren: '../events/orientation-events.module#OrientationEventsModule',
+       },
 
       {
         path: 'members',
-        loadChildren: '../members/orientation-members.module#OrientationMembersModule'
-      }
-    ]
-  }
+        loadChildren: '../members/orientation-members.module#OrientationMembersModule',
+      },
+    ],
+  },
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class OrientationDetailsRoutingModule {}

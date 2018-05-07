@@ -17,7 +17,7 @@ import {
   ServicesEventsExcelComponent,
   ServicesEventsCreateComponent,
   ServicesEventsFacebookComponent,
-  ServicesEventsAttendanceComponent
+  ServicesEventsAttendanceComponent,
 } from './events/components';
 
 import { ServicesProviderDetailsComponent } from './attendance/components';
@@ -35,95 +35,95 @@ const appRoutes: Routes = [
     path: '',
     data: { zendesk: 'services' },
     canActivate: [PrivilegesGuard],
-    component: ServicesListComponent
+    component: ServicesListComponent,
   },
 
   {
     path: 'create',
     canActivate: [PrivilegesGuard],
     component: ServicesCreateComponent,
-    data: { zendesk: 'services' }
+    data: { zendesk: 'services' },
   },
   {
     path: ':serviceId/info',
     canActivate: [PrivilegesGuard],
     component: ServicesInfoComponent,
-    data: { zendesk: 'services' }
+    data: { zendesk: 'services' },
   },
   {
     path: ':serviceId/edit',
     canActivate: [PrivilegesGuard],
     component: ServicesEditComponent,
-    data: { zendesk: 'services' }
+    data: { zendesk: 'services' },
   },
   {
     path: ':serviceId/events',
     canActivate: [PrivilegesGuard],
     component: ServicesEventsComponent,
-    data: { zendesk: 'services' }
+    data: { zendesk: 'services' },
   },
 
   {
     path: ':serviceId/events/create',
     data: { zendesk: 'services' },
     canActivate: [PrivilegesGuard],
-    component: ServicesEventsCreateComponent
+    component: ServicesEventsCreateComponent,
   },
   {
     path: ':serviceId/events/:eventId',
     data: { zendesk: 'services' },
     canActivate: [PrivilegesGuard],
-    component: ServicesEventsAttendanceComponent
+    component: ServicesEventsAttendanceComponent,
   },
   {
     data: { zendesk: 'services' },
     canActivate: [PrivilegesGuard],
     path: ':serviceId/events/:eventId/info',
-    component: ServicesEventsInfoComponent
+    component: ServicesEventsInfoComponent,
   },
 
   {
     data: { zendesk: 'services' },
     canActivate: [PrivilegesGuard],
     path: ':serviceId/events/:eventId/edit',
-    component: ServicesEventsEditComponent
+    component: ServicesEventsEditComponent,
   },
   {
     data: { zendesk: 'services' },
     canActivate: [PrivilegesGuard],
     path: ':serviceId/events/import/excel',
-    component: ServicesEventsExcelComponent
+    component: ServicesEventsExcelComponent,
   },
   {
     data: { zendesk: 'services' },
     canActivate: [PrivilegesGuard],
     path: ':serviceId/events/import/facebook',
-    component: ServicesEventsFacebookComponent
+    component: ServicesEventsFacebookComponent,
   },
 
   {
     path: ':serviceId',
     canActivate: [PrivilegesGuard],
     component: ServicesAttendanceComponent,
-    data: { zendesk: 'services' }
+    data: { zendesk: 'services' },
   },
 
   {
     path: ':serviceId/provider/:providerId',
     data: { zendesk: 'services' },
     canActivate: [PrivilegesGuard],
-    component: ServicesProviderDetailsComponent
+    component: ServicesProviderDetailsComponent,
   },
 
   {
     path: 'import/excel',
     canActivate: [PrivilegesGuard],
     component: ServicesExcelComponent,
-    data: { zendesk: 'services' }
-  }
+    data: { zendesk: 'services' },
+  },
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class ServicesRoutingModule {}

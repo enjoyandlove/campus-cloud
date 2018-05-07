@@ -11,7 +11,7 @@ import { CPI18nService, ErrorService } from '../../../shared/services';
 @Component({
   selector: 'cp-callback-password-reset',
   templateUrl: './callback-password-reset.component.html',
-  styleUrls: ['./callback-password-reset.component.scss']
+  styleUrls: ['./callback-password-reset.component.scss'],
 })
 export class CallbackPasswordResetComponent implements OnDestroy, OnInit {
   key: string;
@@ -25,14 +25,20 @@ export class CallbackPasswordResetComponent implements OnDestroy, OnInit {
     private error: ErrorService,
     private service: AuthService,
     private route: ActivatedRoute,
-    private cpI18n: CPI18nService
+    private cpI18n: CPI18nService,
   ) {
     this.key = this.route.snapshot.params['key'];
 
     this.form = this.fb.group({
-      new_password: [null, Validators.compose([Validators.required, Validators.minLength(6)])],
+      new_password: [
+        null,
+        Validators.compose([Validators.required, Validators.minLength(6)]),
+      ],
       password_reset_key: [this.key],
-      confirmPassword: [null, Validators.compose([Validators.required, Validators.minLength(6)])]
+      confirmPassword: [
+        null,
+        Validators.compose([Validators.required, Validators.minLength(6)]),
+      ],
     });
 
     if (!this.key) {
@@ -50,7 +56,7 @@ export class CallbackPasswordResetComponent implements OnDestroy, OnInit {
 
     if (new_password.value !== confirmPassword.value || !this.form.valid) {
       this.error.handleError({
-        reason: this.cpI18n.translate('passwords_do_not_match')
+        reason: this.cpI18n.translate('passwords_do_not_match'),
       });
 
       return;
@@ -60,8 +66,8 @@ export class CallbackPasswordResetComponent implements OnDestroy, OnInit {
       (_) => this.handleSuccess(),
       (_) =>
         this.error.handleError({
-          reason: this.cpI18n.translate('something_went_wrong')
-        })
+          reason: this.cpI18n.translate('something_went_wrong'),
+        }),
     );
   }
 
@@ -72,7 +78,7 @@ export class CallbackPasswordResetComponent implements OnDestroy, OnInit {
         this.router.navigate(['/login']);
       },
 
-      1500
+      1500,
     );
   }
 

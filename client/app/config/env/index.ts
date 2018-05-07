@@ -4,7 +4,9 @@ export const ENV = process.env.ENV;
  * General Prod
  */
 export const isProd =
-  ENV === 'production-usa' || ENV === 'production-sea' || ENV === 'production-canada';
+  ENV === 'production-usa' ||
+  ENV === 'production-sea' ||
+  ENV === 'production-canada';
 
 /**
  * General Staging

@@ -26,23 +26,26 @@ import {
   ServicesEventsExcelComponent,
   ServicesEventsCreateComponent,
   ServicesEventsFacebookComponent,
-  ServicesEventsAttendanceComponent
+  ServicesEventsAttendanceComponent,
 } from './events/components';
 
 import {
   ServicesEditDeleteModalComponent,
-  ServicesEditCreateProviderComponent
+  ServicesEditCreateProviderComponent,
 } from './edit/components';
 
 import { ServicesListActionBoxComponent } from './list/components';
 
-import { ServicesExcelModalComponent, ServicesImportTopBarComponent } from './excel/components';
+import {
+  ServicesExcelModalComponent,
+  ServicesImportTopBarComponent,
+} from './excel/components';
 
 import {
   ServicesProviderAddComponent,
   ServicesProvidersListComponent,
   ServicesProviderDeleteComponent,
-  ServicesProviderDetailsComponent
+  ServicesProviderDetailsComponent,
 } from './attendance/components';
 
 import { ServicesProvidersAttendeesListComponent } from './attendance/components/providers-details/components';
@@ -74,7 +77,7 @@ import { EventsModule } from '../events/events.module';
     ServicesEventsFacebookComponent,
     ServicesEventsExcelComponent,
     ServicesEditDeleteModalComponent,
-    ServicesEditCreateProviderComponent
+    ServicesEditCreateProviderComponent,
   ],
 
   imports: [
@@ -83,9 +86,9 @@ import { EventsModule } from '../events/events.module';
     ServicesRoutingModule,
     RouterModule,
     ReactiveFormsModule,
-    EventsModule
+    EventsModule,
   ],
 
-  providers: [ServicesService, ProvidersService, AdminService]
+  providers: [ServicesService, ProvidersService, AdminService],
 })
 export class ServicesModule {}

@@ -8,7 +8,7 @@ import { APP_PROVIDERS } from './config/providers';
   imports: [APP_MODULES],
   declarations: [APP_COMPONENTS],
   providers: [APP_PROVIDERS],
-  bootstrap: [BOOTSTRAP_COMP]
+  bootstrap: [BOOTSTRAP_COMP],
 })
 export class AppModule {
   constructor() {}

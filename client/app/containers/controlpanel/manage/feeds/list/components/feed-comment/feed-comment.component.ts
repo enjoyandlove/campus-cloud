@@ -7,7 +7,7 @@ declare var $: any;
 @Component({
   selector: 'cp-feed-comment',
   templateUrl: './feed-comment.component.html',
-  styleUrls: ['./feed-comment.component.scss']
+  styleUrls: ['./feed-comment.component.scss'],
 })
 export class FeedCommentComponent implements OnInit {
   @Input() comment: any;
@@ -30,7 +30,7 @@ export class FeedCommentComponent implements OnInit {
             $('#approveCommentModal').modal();
           },
 
-          1
+          1,
         );
         break;
       case 3:
@@ -40,7 +40,7 @@ export class FeedCommentComponent implements OnInit {
             $('#deleteFeedCommentModal').modal();
           },
 
-          1
+          1,
         );
         break;
     }
@@ -49,7 +49,9 @@ export class FeedCommentComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.requiresApproval$.next(this.comment.dislikes > 0 && this.comment.flag !== 2);
+    this.requiresApproval$.next(
+      this.comment.dislikes > 0 && this.comment.flag !== 2,
+    );
     // console.log(this);
   }
 }

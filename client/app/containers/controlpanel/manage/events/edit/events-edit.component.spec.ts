@@ -26,7 +26,7 @@ class MockService {
   updateEvent(body: any, eventId: number, search: any) {
     this.dummy = [eventId, search];
 
-    return Observable.of({ body });
+    return Observable.of({body});
   }
 
   getEventById(eventId: number, search: any) {
@@ -44,68 +44,65 @@ describe('EventEditComponent', () => {
   let fixture: ComponentFixture<EventsEditComponent>;
 
   const mockEvent = {
-    id: 1617104,
-    store_i: 2756,
-    city: '',
-    end: 1871304787,
-    title: 'Winter Term Intl Travel Session',
-    start: 1523851200,
-    location: 'WCC 2036 Milstein East B',
-    latitude: 0.0,
-    room_data: '',
-    description: 'TBD',
-    event_feedback: 0,
-    extra_data_id: 0,
-    address: '',
-    event_attendance: 0,
-    longitude: 0.0,
-    poster_url: 'https://d25cbba5lf1nun.cloudfront.net/AsmFS.png',
-    poster_thumb_url: 'https://d25cbba5lf1nun.cloudfront.net/AsmFSxT1V.png'
+    'id': 1617104,
+    'store_i': 2756,
+    'city': '',
+    'end': 1871304787,
+    'title': 'Winter Term Intl Travel Session',
+    'start': 1523851200,
+    'location': 'WCC 2036 Milstein East B',
+    'latitude': 0.0,
+    'room_data': '',
+    'description': 'TBD',
+    'event_feedback': 0,
+    'extra_data_id': 0,
+    'address': '',
+    'event_attendance': 0,
+    'longitude': 0.0,
+    'poster_url': 'https://d25cbba5lf1nun.cloudfront.net/AsmFS.png',
+    'poster_thumb_url': 'https://d25cbba5lf1nun.cloudfront.net/AsmFSxT1V.png'
   };
 
-  beforeEach(
-    async(() => {
-      TestBed.configureTestingModule({
-        imports: [
-          HttpModule,
-          EventsModule,
-          RouterTestingModule,
-          StoreModule.forRoot({
-            HEADER: headerReducer,
-            SNACKBAR: snackBarReducer
-          })
-        ],
-        providers: [
-          CPSession,
-          FormBuilder,
-          AdminService,
-          ErrorService,
-          StoreService,
-          CPI18nService,
-          EventUtilService,
-          { provide: EventsService, useClass: MockService }
-        ]
-      })
-        .compileComponents()
-        .then(() => {
-          fixture = TestBed.createComponent(EventsEditComponent);
-          service = TestBed.get(EventsService);
-          storeService = TestBed.get(StoreService);
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        HttpModule,
+        EventsModule,
+        RouterTestingModule,
+        StoreModule.forRoot({
+          HEADER: headerReducer,
+          SNACKBAR: snackBarReducer
+        })
+      ],
+      providers: [
+        CPSession,
+        FormBuilder,
+        AdminService,
+        ErrorService,
+        StoreService,
+        CPI18nService,
+        EventUtilService,
+        { provide: EventsService, useClass: MockService },
+      ]
+    }).compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(EventsEditComponent);
+        service = TestBed.get(EventsService);
+        storeService = TestBed.get(StoreService);
 
-          component = fixture.componentInstance;
-          component.eventId = 1002;
-          component.session.g.set('school', mockSchool);
+        component = fixture.componentInstance;
+        component.eventId = 1002;
+        component.session.g.set('school', mockSchool);
 
-          component.ngOnInit();
+        component.ngOnInit();
 
-          spyOn(component, 'router');
-          spyOn(component, 'buildHeader');
-          spyOn(component.service, 'getEventById').and.returnValue(Observable.of(mockEvent));
-          spyOn(component.storeService, 'getStores').and.returnValue(Observable.of({}));
-          spy = spyOn(component.service, 'updateEvent').and.returnValue(Observable.of({}));
-        });
-    })
-  );
+        spyOn(component, 'router');
+        spyOn(component, 'buildHeader');
+        spyOn(component.service, 'getEventById').and.returnValue(Observable.of(mockEvent));
+        spyOn(component.storeService, 'getStores').and.returnValue(Observable.of({}));
+        spy = spyOn(component.service, 'updateEvent').and.returnValue(Observable.of({}));
+      });
+  }));
 
   it('should toggle is_all_day', () => {
     component.onAllDayToggle(true);
@@ -150,59 +147,50 @@ describe('EventEditComponent', () => {
     expect(component.buttonData.disabled).toBeFalsy();
   });
 
-  it(
-    'form validation should fail - end date should be greater than start date',
-    fakeAsync(() => {
-      component.orientationId = 1001;
-      component.isOrientation = true;
-      const dateError = component.cpI18n.translate('events_error_end_date_before_start');
-      component.fetch();
-      tick();
+  it('form validation should fail - end date should be greater than start date', fakeAsync(() => {
+    component.orientationId = 1001;
+    component.isOrientation = true;
+    const dateError = component.cpI18n.translate('events_error_end_date_before_start');
+    component.fetch();
+    tick();
 
-      component.form.controls['end'].setValue(1492342527);
-      component.onSubmit(Observable.of({}));
+    component.form.controls['end'].setValue(1492342527);
+    component.onSubmit(Observable.of({}));
 
-      expect(component.formMissingFields).toBeTruthy();
-      expect(component.isDateError).toBeTruthy();
-      expect(component.buttonData.disabled).toBeFalsy();
-      expect(component.dateErrorMessage).toEqual(dateError);
-    })
-  );
+    expect(component.formMissingFields).toBeTruthy();
+    expect(component.isDateError).toBeTruthy();
+    expect(component.buttonData.disabled).toBeFalsy();
+    expect(component.dateErrorMessage).toEqual(dateError);
+  }));
 
-  it(
-    'form validation should fail - event end date should be in future',
-    fakeAsync(() => {
-      component.orientationId = 1001;
-      component.isOrientation = true;
-      const dateError = component.cpI18n.translate('events_error_end_date_after_now');
-      component.fetch();
-      tick();
+  it('form validation should fail - event end date should be in future', fakeAsync(() => {
+    component.orientationId = 1001;
+    component.isOrientation = true;
+    const dateError = component.cpI18n.translate('events_error_end_date_after_now');
+    component.fetch();
+    tick();
 
-      component.form.controls['start'].setValue(1460806527);
-      component.form.controls['end'].setValue(1492342527);
-      component.onSubmit(Observable.of({}));
+    component.form.controls['start'].setValue(1460806527);
+    component.form.controls['end'].setValue(1492342527);
+    component.onSubmit(Observable.of({}));
 
-      expect(component.formMissingFields).toBeTruthy();
-      expect(component.isDateError).toBeTruthy();
-      expect(component.buttonData.disabled).toBeFalsy();
-      expect(component.dateErrorMessage).toEqual(dateError);
-    })
-  );
+    expect(component.formMissingFields).toBeTruthy();
+    expect(component.isDateError).toBeTruthy();
+    expect(component.buttonData.disabled).toBeFalsy();
+    expect(component.dateErrorMessage).toEqual(dateError);
+  }));
 
-  it(
-    'should edit an event',
-    fakeAsync(() => {
-      component.orientationId = 1001;
-      component.isOrientation = true;
-      component.fetch();
-      tick();
+  it('should edit an event', fakeAsync(() => {
+    component.orientationId = 1001;
+    component.isOrientation = true;
+    component.fetch();
+    tick();
 
-      component.onSubmit(Observable.of({}));
-      expect(spy).toHaveBeenCalled();
-      expect(component.form.valid).toBeTruthy();
-      expect(component.formMissingFields).toBeFalsy();
-      expect(component.isDateError).toBeFalsy();
-      expect(spy.calls.count()).toBe(1);
-    })
-  );
+    component.onSubmit(Observable.of({}));
+    expect(spy).toHaveBeenCalled();
+    expect(component.form.valid).toBeTruthy();
+    expect(component.formMissingFields).toBeFalsy();
+    expect(component.isDateError).toBeFalsy();
+    expect(spy.calls.count()).toBe(1);
+  }));
 });

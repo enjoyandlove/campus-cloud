@@ -47,7 +47,7 @@ export class OrientationProgramEditComponent implements OnInit {
     private store: Store<any>,
     public cpI18n: CPI18nService,
     public service: OrientationService,
-    public utils: OrientationUtilsService
+    public utils: OrientationUtilsService,
   ) {}
 
   @HostListener('document:click', ['$event'])
@@ -73,7 +73,7 @@ export class OrientationProgramEditComponent implements OnInit {
       .subscribe((editedProgram) => {
         this.store.dispatch({
           type: HEADER_UPDATE,
-          payload: this.utils.buildHeader(editedProgram)
+          payload: this.utils.buildHeader(editedProgram),
         });
         this.edited.emit(editedProgram);
         this.resetModal();

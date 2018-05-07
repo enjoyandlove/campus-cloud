@@ -8,9 +8,10 @@ import { DashboardService } from './../../dashboard.service';
 @Component({
   selector: 'cp-dashboard-general-information',
   templateUrl: './dashboard-general-information.component.html',
-  styleUrls: ['./dashboard-general-information.component.scss']
+  styleUrls: ['./dashboard-general-information.component.scss'],
 })
-export class DashboardGeneralInformationComponent extends BaseComponent implements OnInit {
+export class DashboardGeneralInformationComponent extends BaseComponent
+  implements OnInit {
   @Output() ready: EventEmitter<boolean> = new EventEmitter();
 
   data;

@@ -7,7 +7,7 @@ const i18n = new CPI18nPipe();
 @Component({
   selector: 'cp-list-recipients',
   templateUrl: './list-recipients.component.html',
-  styleUrls: ['./list-recipients.component.scss']
+  styleUrls: ['./list-recipients.component.scss'],
 })
 export class AnnouncementsListRecipientsComponent implements OnInit {
   @Input() toolTipContent;
@@ -71,10 +71,9 @@ export class AnnouncementsListRecipientsComponent implements OnInit {
         this.tooltipRecipientsMore.push(item);
       });
 
-      this.moreText =
-        this.tooltipRecipientsMore.length > 0
-          ? i18n.transform('announcement_and_more_text', this.tooltipRecipientsMore.length)
-          : '';
+      this.moreText = this.tooltipRecipientsMore.length > 0
+        ? i18n.transform('announcement_and_more_text', this.tooltipRecipientsMore.length)
+        : '';
 
       this.tooltipRecipients.push(this.moreText);
       this.tooltipContent = this.tooltipRecipients.join('</br>');

@@ -14,7 +14,7 @@ interface IState {
 @Component({
   selector: 'cp-students-top-bar',
   templateUrl: './students-top-bar.component.html',
-  styleUrls: ['./students-top-bar.component.scss']
+  styleUrls: ['./students-top-bar.component.scss'],
 })
 export class StudentsTopBarComponent implements OnInit {
   @Input() listIdFromUrl: number;
@@ -26,13 +26,13 @@ export class StudentsTopBarComponent implements OnInit {
 
   state: IState = {
     search_str: null,
-    list_id: null
+    list_id: null,
   };
 
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public service: StudentsService
+    public service: StudentsService,
   ) {}
 
   onListSelected(list_id) {
@@ -54,21 +54,21 @@ export class StudentsTopBarComponent implements OnInit {
       .startWith([
         {
           label: this.cpI18n.translate('assess_all_students'),
-          id: null
-        }
+          id: null,
+        },
       ])
       .map((lists) => {
         const items = [
           {
             label: this.cpI18n.translate('assess_all_students'),
-            id: null
-          }
+            id: null,
+          },
         ];
 
         lists.map((list) => {
           list = {
             label: list.name,
-            id: list.id
+            id: list.id,
           };
 
           items.push(list);

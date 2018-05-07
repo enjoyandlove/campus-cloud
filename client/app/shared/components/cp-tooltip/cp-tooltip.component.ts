@@ -4,7 +4,7 @@ import { IToolTipContent } from './cp-tooltip.interface';
 @Component({
   selector: 'cp-tooltip',
   templateUrl: 'cp-tooltip.component.html',
-  styleUrls: ['cp-tooltip.component.scss']
+  styleUrls: ['cp-tooltip.component.scss'],
 })
 export class CPTooltipComponent implements OnInit {
   @Input() toolTipContent: IToolTipContent;
@@ -35,13 +35,13 @@ export class CPTooltipComponent implements OnInit {
 
   hover() {
     $('.pop').popover({
-      trigger: 'hover'
+      trigger: 'hover',
     });
   }
 
   click() {
     $('.pop').popover({
-      trigger: 'click'
+      trigger: 'click',
     });
   }
 
@@ -49,7 +49,7 @@ export class CPTooltipComponent implements OnInit {
     $('.pop')
       .popover({
         trigger: 'manual',
-        animation: false
+        animation: false,
       })
       .on('mouseenter', function() {
         const _this = this;
@@ -67,7 +67,7 @@ export class CPTooltipComponent implements OnInit {
             }
           },
 
-          100
+          100,
         );
       });
   }

@@ -9,7 +9,7 @@ declare var $: any;
 @Component({
   selector: 'cp-feed-delete-modal',
   templateUrl: './feed-delete-modal.component.html',
-  styleUrls: ['./feed-delete-modal.component.scss']
+  styleUrls: ['./feed-delete-modal.component.scss'],
 })
 export class FeedDeleteModalComponent implements OnInit {
   @Input() feed: any;
@@ -20,12 +20,21 @@ export class FeedDeleteModalComponent implements OnInit {
   buttonData;
   _isCampusWallView;
 
-  constructor(public cpI18n: CPI18nService, public feedsService: FeedsService) {}
+  constructor(
+    public cpI18n: CPI18nService,
+    public feedsService: FeedsService,
+  ) {}
 
   onDelete() {
-    const deleteCampusThread$ = this.feedsService.deleteCampusWallMessageByThreadId(this.feed.id);
-    const deleteGroupThread$ = this.feedsService.deleteGroupWallMessageByThreadId(this.feed.id);
-    const stream$ = this._isCampusWallView ? deleteCampusThread$ : deleteGroupThread$;
+    const deleteCampusThread$ = this.feedsService.deleteCampusWallMessageByThreadId(
+      this.feed.id,
+    );
+    const deleteGroupThread$ = this.feedsService.deleteGroupWallMessageByThreadId(
+      this.feed.id,
+    );
+    const stream$ = this._isCampusWallView
+      ? deleteCampusThread$
+      : deleteGroupThread$;
 
     stream$.subscribe((_) => {
       $('#deleteFeedModal').modal('hide');
@@ -38,7 +47,7 @@ export class FeedDeleteModalComponent implements OnInit {
   ngOnInit() {
     this.buttonData = {
       class: 'danger',
-      text: this.cpI18n.translate('delete')
+      text: this.cpI18n.translate('delete'),
     };
 
     this.isCampusWallView.subscribe((res: any) => {

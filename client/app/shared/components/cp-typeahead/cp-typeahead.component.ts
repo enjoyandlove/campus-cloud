@@ -8,7 +8,7 @@ import {
   OnDestroy,
   OnInit,
   Output,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { CPI18nService } from '../../services';
@@ -33,7 +33,7 @@ interface IProps {
 @Component({
   selector: 'cp-typeahead',
   templateUrl: './cp-typeahead.component.html',
-  styleUrls: ['./cp-typeahead.component.scss']
+  styleUrls: ['./cp-typeahead.component.scss'],
 })
 export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('input') input: ElementRef;
@@ -42,11 +42,9 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Output() query: EventEmitter<string> = new EventEmitter();
   @Output() typeChange: EventEmitter<number> = new EventEmitter();
-  @Output()
-  selection: EventEmitter<{
-    ids: Array<number>;
-    chips: Array<{ label: string; id: number }>;
-  }> = new EventEmitter();
+  @Output() selection: EventEmitter<{
+    ids: Array<number>,
+    chips: Array<{ label: string, id: number }> }> = new EventEmitter();
 
   el;
   chipOptions;
@@ -56,7 +54,7 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
     chips: [],
     isLists: false,
     isUsers: false,
-    canSearch: true
+    canSearch: true,
   };
 
   constructor(public cpI18n: CPI18nService) {}
@@ -68,7 +66,7 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
         this.props.suggestions = [];
       },
 
-      100
+      100,
     );
   }
 
@@ -97,7 +95,7 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
         },
         (err) => {
           throw new Error(err);
-        }
+        },
       );
   }
 
@@ -125,7 +123,7 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.state.ids.push(suggestion.id);
     this.state.chips.push(suggestion);
-    this.selection.emit({ ids: this.state.ids, chips: this.state.chips });
+    this.selection.emit({ids: this.state.ids, chips: this.state.chips});
   }
 
   resetList() {
@@ -135,9 +133,9 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
   onHandleRemove(id) {
     this.state = Object.assign({}, this.state, {
       ids: this.state.ids.filter((_id) => _id !== id),
-      chips: this.state.chips.filter((chip) => chip.id !== id)
+      chips: this.state.chips.filter((chip) => chip.id !== id),
     });
-    this.selection.emit({ ids: this.state.ids, chips: this.state.chips });
+    this.selection.emit({ids: this.state.ids, chips: this.state.chips});
   }
 
   shouldFocusInput() {
@@ -149,7 +147,7 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
   teardown() {
     this.state = Object.assign({}, this.state, {
       ids: [],
-      chips: []
+      chips: [],
     });
   }
 
@@ -164,19 +162,19 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
       case 1:
         this.state = Object.assign({}, this.state, {
           isUsers: true,
-          isLists: false
+          isLists: false,
         });
         this.chipOptions = Object.assign({}, this.chipOptions, {
-          icon: 'account_box'
+          icon: 'account_box',
         });
         break;
       case 2:
         this.state = Object.assign({}, this.state, {
           isUsers: false,
-          isLists: true
+          isLists: true,
         });
         this.chipOptions = Object.assign({}, this.chipOptions, {
-          icon: 'list'
+          icon: 'list',
         });
         break;
     }
@@ -192,12 +190,12 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
     this.chipOptions = {
       withClose: true,
       withAvatar: true,
-      icon: this.props.isUsers ? 'account_box' : 'list'
+      icon: this.props.isUsers ? 'account_box' : 'list',
     };
 
     if (this.props.withSwitcher) {
       this.state = Object.assign({}, this.state, {
-        isUsers: this.props.isUsers
+        isUsers: this.props.isUsers,
       });
     }
 
@@ -208,12 +206,12 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
     this.switcherMenu = [
       {
         label: this.cpI18n.translate('users'),
-        id: 1
+        id: 1,
       },
       {
         label: this.cpI18n.translate('lists'),
-        id: 2
-      }
+        id: 2,
+      },
     ];
 
     if (this.props.defaultValues) {

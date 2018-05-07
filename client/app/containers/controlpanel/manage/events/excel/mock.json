@@ -1,19 +1,15 @@
-[
-  {
+[{
     "title": "10 Anniversary of NY College",
-    "description":
-      "The Block Party is an event by our students, for our students and the campus community. It is intended as a safe and festive event that will bring students and friends together in a celebration of a year completed, and a summer soon to start. \n",
+    "description": "The Block Party is an event by our students, for our students and the campus community. It is intended as a safe and festive event that will bring students and friends together in a celebration of a year completed, and a summer soon to start. \n",
     "start_date": "2018-06-12 13:00:00",
     "end_date": "2019-03-12 14:00:00",
     "location": "3577 Rue de Bullion, Montr\u00e9al, QC H2X 3A1, Canada",
     "room": 401.0
-  },
-  {
+}, {
     "title": "25th Convocation of McGill University",
     "description": "Description",
     "start_date": "2018-05-12 08:00:00",
     "end_date": "2019-05-12 09:00:00",
     "location": "7020 Saint Vallier, QC, H2S 2R2",
     "room": 213.0
-  }
-]
+}]

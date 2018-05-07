@@ -17,18 +17,18 @@ const appRoutes: Routes = [
 
       {
         path: 'events',
-        loadChildren: '../events/events.module#ClubsEventsModule'
+        loadChildren: '../events/events.module#ClubsEventsModule',
       },
 
       {
         path: 'members',
-        loadChildren: '../members/members.module#ClubsMembersModule'
-      }
-    ]
-  }
+        loadChildren: '../members/members.module#ClubsMembersModule',
+      },
+    ],
+  },
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class ClubsDetailsRoutingModule {}

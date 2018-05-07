@@ -5,7 +5,7 @@ import {
   HostListener,
   Input,
   OnInit,
-  Output
+  Output,
 } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -21,7 +21,7 @@ declare var $: any;
 @Component({
   selector: 'cp-lists-edit',
   templateUrl: './lists-edit.component.html',
-  styleUrls: ['./lists-edit.component.scss']
+  styleUrls: ['./lists-edit.component.scss'],
 })
 export class ListsEditComponent implements OnInit {
   @Input() list: any;
@@ -39,7 +39,7 @@ export class ListsEditComponent implements OnInit {
     private fb: FormBuilder,
     private session: CPSession,
     private service: ListsService,
-    private cpI18n: CPI18nService
+    private cpI18n: CPI18nService,
   ) {}
 
   @HostListener('document:click', ['$event'])
@@ -58,7 +58,7 @@ export class ListsEditComponent implements OnInit {
 
     if (!this.hasUsersListChanged) {
       data = Object.assign({}, this.form.value, {
-        user_ids: this.form.value.user_ids.map((user) => user.id)
+        user_ids: this.form.value.user_ids.map((user) => user.id),
       });
     }
 
@@ -70,7 +70,7 @@ export class ListsEditComponent implements OnInit {
       },
       (err) => {
         throw new Error(err);
-      }
+      },
     );
   }
 
@@ -78,7 +78,7 @@ export class ListsEditComponent implements OnInit {
     this.form.reset();
     this.reset.emit();
     this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
-      reset: this.resetChips$.next(true)
+      reset: this.resetChips$.next(true),
     });
   }
 
@@ -86,7 +86,7 @@ export class ListsEditComponent implements OnInit {
     this.hasUsersListChanged = true;
     if (this.hasUsersListChanged) {
       this.list = Object.assign({}, this.list, {
-        users: this.list.users.filter((user) => user.id !== id)
+        users: this.list.users.filter((user) => user.id !== id),
       });
     }
 
@@ -99,7 +99,7 @@ export class ListsEditComponent implements OnInit {
     this.list.users.map((user) => {
       chips.push({
         label: `${user.email}`,
-        id: user.id
+        id: user.id,
       });
     });
 
@@ -125,7 +125,7 @@ export class ListsEditComponent implements OnInit {
         users.forEach((user) => {
           _users.push({
             label: `${user.email}`,
-            id: user.id
+            id: user.id,
           });
         });
 
@@ -137,7 +137,7 @@ export class ListsEditComponent implements OnInit {
       })
       .subscribe((suggestions) => {
         this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
-          suggestions
+          suggestions,
         });
       });
   }
@@ -146,7 +146,7 @@ export class ListsEditComponent implements OnInit {
     this.chipOptions = {
       icon: 'account_box',
       withClose: true,
-      withAvatar: true
+      withAvatar: true,
     };
 
     const users = this.buildChips();
@@ -154,7 +154,7 @@ export class ListsEditComponent implements OnInit {
     this.typeAheadOpts = {
       suggestions: [],
       withSwitcher: false,
-      defaultValues: users
+      defaultValues: users,
     };
 
     this.list = Object.assign({}, this.list, { users });
@@ -162,7 +162,7 @@ export class ListsEditComponent implements OnInit {
     this.form = this.fb.group({
       name: [this.list.name, Validators.required],
       description: [this.list.description || null],
-      user_ids: [this.list.users, Validators.required]
+      user_ids: [this.list.users, Validators.required],
     });
   }
 }

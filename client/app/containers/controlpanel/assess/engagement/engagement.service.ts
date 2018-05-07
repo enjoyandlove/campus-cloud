@@ -14,39 +14,51 @@ export class EngagementService extends BaseService {
   }
 
   getServices(startRange = 1, endRange = 1000, search?: URLSearchParams) {
-    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}`;
+    const common = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.SERVICES
+    }`;
     const url = `${common}/${startRange};${endRange}`;
 
     return super.get(url, { search }).map((res) => res.json());
   }
 
   postAnnouncements(search: URLSearchParams, body: any) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ANNOUNCEMENT}/`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.ANNOUNCEMENT
+    }/`;
 
     return super.post(url, body, { search }).map((res) => res.json());
   }
 
   getLists(startRange = 1, endRange = 1000, search?: URLSearchParams) {
-    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER_LIST}`;
+    const common = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.USER_LIST
+    }`;
     const url = `${common}/${startRange};${endRange}`;
 
     return super.get(url, { search }).map((res) => res.json());
   }
 
   getChartData(search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_ENGAGEMENT}/`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.ASSESS_ENGAGEMENT
+    }/`;
 
     return super.get(url, { search }).map((res) => res.json());
   }
 
   getEventsData(search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_EVENT}/`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.ASSESS_EVENT
+    }/`;
 
     return super.get(url, { search }).map((res) => res.json());
   }
 
   getServicesData(search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_SERVICE}/`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.ASSESS_SERVICE
+    }/`;
 
     return super.get(url, { search }).map((res) => res.json());
   }

@@ -6,6 +6,6 @@ import { OrientationMembersComponent } from './orientation-members.component';
 const appRoutes: Routes = [{ path: '', component: OrientationMembersComponent }];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class OrientationMembersRoutingModule {}

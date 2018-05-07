@@ -10,9 +10,10 @@ import { HEADER_UPDATE, IHeader } from '../../../reducers/header.reducer';
         <div class="cp-wrapper cp-wrapper--outer">
             <router-outlet></router-outlet>
         </div>
-    `
+    `,
 })
 export class CustomiseComponent implements OnInit {
+
   headerData$: Observable<IHeader>;
 
   constructor(private store: Store<any>) {
@@ -24,5 +25,5 @@ export class CustomiseComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 }

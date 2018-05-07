@@ -21,8 +21,7 @@ export class EventUtilService {
     clubId: number = null,
     serviceId: number = null,
     athleticId: number = null,
-    orientationId: number = null
-  ) {
+    orientationId: number = null) {
     if (athleticId) {
       return `/manage/athletics/${clubId}/events`;
     } else if (clubId) {
@@ -41,8 +40,7 @@ export class EventUtilService {
     serviceId: number = null,
     athleticId: number = null,
     orientationId: number = null,
-    eventId: number = null
-  ) {
+    eventId: number = null) {
     if (athleticId) {
       return `/manage/athletics/${clubId}/events/${eventId}`;
     } else if (clubId) {
@@ -60,7 +58,7 @@ export class EventUtilService {
     orientationId: number = null,
     athleticId: number = null,
     serviceId: number = null,
-    clubId: number = null
+    clubId: number = null,
   ) {
     if (orientationId) {
       return `/manage/orientation/${orientationId}/events/import/excel`;

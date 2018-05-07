@@ -7,7 +7,7 @@ import { CPSession } from '../../../../../session';
 @Component({
   selector: 'cp-feeds-list',
   templateUrl: './base/feeds.component.html',
-  styleUrls: ['./base/feeds.component.scss']
+  styleUrls: ['./base/feeds.component.scss'],
 })
 export class FeedsListComponent extends FeedsComponent implements OnInit {
   feeds;

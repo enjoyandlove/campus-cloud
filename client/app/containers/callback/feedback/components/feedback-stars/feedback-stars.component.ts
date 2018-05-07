@@ -3,7 +3,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 @Component({
   selector: 'cp-feedback-stars',
   templateUrl: './feedback-stars.component.html',
-  styleUrls: ['./feedback-stars.component.scss']
+  styleUrls: ['./feedback-stars.component.scss'],
 })
 export class FeedbackStarsComponent implements OnInit {
   @Output() rated: EventEmitter<number> = new EventEmitter();

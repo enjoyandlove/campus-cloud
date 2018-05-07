@@ -7,23 +7,23 @@
 }
 
 .dsh-series-a .ct-bar {
-  stroke: #f65031;
+  stroke: #F65031;
 }
 
 .dsh-series-b .ct-bar {
-  stroke: #fbab42;
+  stroke: #FBAB42;
 }
 
 .dsh-series-c .ct-bar {
-  stroke: #8cdd51;
+  stroke: #8CDD51;
 }
 
 .dsh-series-d .ct-bar {
-  stroke: #609df5;
+  stroke: #609DF5;
 }
 
 .dsh-series-e .ct-bar {
-  stroke: #989eb1;
+  stroke: #989EB1;
 }
 
 .chartist-tooltip.cp-social-activity {
@@ -39,25 +39,22 @@
   text-align: left;
   pointer-events: none;
   z-index: 1;
-  -webkit-transition: opacity 0.2s linear;
-  -moz-transition: opacity 0.2s linear;
-  -o-transition: opacity 0.2s linear;
-  transition: opacity 0.2s linear;
-}
-.chartist-tooltip.cp-social-activity:before {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  margin-left: -7px;
-  border: 7px solid transparent;
-  border-top-color: #212121;
-}
-.chartist-tooltip.cp-social-activity.tooltip-show {
-  opacity: 1;
-}
+  -webkit-transition: opacity .2s linear;
+  -moz-transition: opacity .2s linear;
+  -o-transition: opacity .2s linear;
+  transition: opacity .2s linear; }
+  .chartist-tooltip.cp-social-activity:before {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    margin-left: -7px;
+    border: 7px solid transparent;
+    border-top-color: #212121; }
+  .chartist-tooltip.cp-social-activity.tooltip-show {
+    opacity: 1; }
 
 .chartist-tooltip.cp-social-activity {
   text-align: center;

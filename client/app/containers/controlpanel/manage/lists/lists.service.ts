@@ -25,14 +25,18 @@ export class ListsService extends BaseService {
   }
 
   getLists(search: URLSearchParams, startRange: number, endRange: number) {
-    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER_LIST}`;
+    const common = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.USER_LIST
+    }`;
     const url = `${common}/${startRange};${endRange}`;
 
     return super.get(url, { search }).map((res) => res.json());
   }
 
   removeList(id: number, search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER_LIST}/${id}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.USER_LIST
+    }/${id}`;
 
     return super.delete(url, { search }).map((res) => res);
   }
@@ -44,7 +48,9 @@ export class ListsService extends BaseService {
   }
 
   updateList(listId: number, body: any, search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER_LIST}/${listId}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.USER_LIST
+    }/${listId}`;
 
     return super.update(url, body, { search }).map((res) => res.json());
   }
@@ -56,7 +62,7 @@ export class ListsService extends BaseService {
           if (list.id === +messageId) {
             return list;
           }
-        })
+        }),
       );
     });
 
@@ -70,7 +76,7 @@ export class ListsService extends BaseService {
   setModalServices(services: any[]): void {
     this.store.dispatch({
       type: SERVICES_MODAL_SET,
-      payload: services
+      payload: services,
     });
   }
 }

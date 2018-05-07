@@ -6,7 +6,7 @@ import {
   Output,
   HostListener,
   ElementRef,
-  ChangeDetectorRef
+  ChangeDetectorRef,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -20,7 +20,7 @@ import { CPI18nService } from './../../../../../shared/services/i18n.service';
 @Component({
   selector: 'cp-locations-update',
   templateUrl: './locations-update.component.html',
-  styleUrls: ['./locations-update.component.scss']
+  styleUrls: ['./locations-update.component.scss'],
 })
 export class LocationsUpdateComponent implements OnInit {
   @Input() location: any;
@@ -40,7 +40,7 @@ export class LocationsUpdateComponent implements OnInit {
     private session: CPSession,
     public cpI18n: CPI18nService,
     public cdRef: ChangeDetectorRef,
-    public service: LocationsService
+    public service: LocationsService,
   ) {}
 
   @HostListener('document:click', ['$event'])
@@ -52,7 +52,10 @@ export class LocationsUpdateComponent implements OnInit {
   }
 
   onResetMap() {
-    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields(this.school));
+    CPMap.setFormLocationData(
+      this.form,
+      CPMap.resetLocationFields(this.school),
+    );
     this.centerMap(this.school.latitude, this.school.longitude);
   }
 
@@ -60,14 +63,16 @@ export class LocationsUpdateComponent implements OnInit {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id);
 
-    this.service.updateLocation(this.form.value, this.location.id, search).subscribe((_) => {
-      $('#locationsUpdate').modal('hide');
-      this.locationUpdated.emit({
-        id: this.location.id,
-        data: this.form.value
+    this.service
+      .updateLocation(this.form.value, this.location.id, search)
+      .subscribe((_) => {
+        $('#locationsUpdate').modal('hide');
+        this.locationUpdated.emit({
+          id: this.location.id,
+          data: this.form.value,
+        });
+        this.resetModal();
       });
-      this.resetModal();
-    });
   }
 
   onMapSelection(data) {
@@ -123,7 +128,7 @@ export class LocationsUpdateComponent implements OnInit {
 
     this.mapCenter = new BehaviorSubject({
       lat: this.location.latitude,
-      lng: this.location.longitude
+      lng: this.location.longitude,
     });
 
     this.form = this.fb.group({
@@ -135,13 +140,13 @@ export class LocationsUpdateComponent implements OnInit {
       country: [this.location.country],
       postal_code: [this.location.postal_code],
       latitude: [this.location.latitude, Validators.required],
-      longitude: [this.location.longitude, Validators.required]
+      longitude: [this.location.longitude, Validators.required],
     });
 
     this.buttonData = {
       disabled: true,
       class: 'primary',
-      text: this.cpI18n.translate('update')
+      text: this.cpI18n.translate('update'),
     };
 
     this.form.valueChanges.subscribe((_) => {

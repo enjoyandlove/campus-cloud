@@ -21,11 +21,16 @@ import { ListsRoutingModule } from './lists.routing.module';
     ListsDeleteComponent,
     ListsCreateComponent,
     ListsEditComponent,
-    ListsImportComponent
+    ListsImportComponent,
   ],
 
-  imports: [CommonModule, SharedModule, ListsRoutingModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    SharedModule,
+    ListsRoutingModule,
+    ReactiveFormsModule,
+  ],
 
-  providers: [ListsService]
+  providers: [ListsService],
 })
 export class ListsModule {}

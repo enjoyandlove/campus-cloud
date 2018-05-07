@@ -16,15 +16,12 @@
     "start": 1520841600,
     "attends": 0,
     "location": "3577 Rue de Bullion, Montr\u00e9al, QC H2X 3A1, Canada",
-    "poster_url":
-      "https://s3.amazonaws.com/campus-cloud-image-use/img1hj5tpk9a4uy1tkhmahk4xjqwgic1vuvb9fsoysoukjtsvu.png",
+    "poster_url": "https://s3.amazonaws.com/campus-cloud-image-use/img1hj5tpk9a4uy1tkhmahk4xjqwgic1vuvb9fsoysoukjtsvu.png",
     "latitude": 0.0,
     "room_data": "",
     "province": "",
-    "store_logo_url":
-      "https://d3n756dfoku5i3.cloudfront.net/XDQ3nrwr0PcuXGoitQZENKWJA7tSCXkqElIkI7BzVLVGYxwoEmLTcQIEgCu4aN1C.png",
-    "description":
-      "The Block Party is an event by our students, for our students and the campus community. It is intended as a safe and festive event that will bring students and friends together in a celebration of a year completed, and a summer soon to start. \n",
+    "store_logo_url": "https://d3n756dfoku5i3.cloudfront.net/XDQ3nrwr0PcuXGoitQZENKWJA7tSCXkqElIkI7BzVLVGYxwoEmLTcQIEgCu4aN1C.png",
+    "description": "The Block Party is an event by our students, for our students and the campus community. It is intended as a safe and festive event that will bring students and friends together in a celebration of a year completed, and a summer soon to start. \n",
     "event_feedback": 0,
     "extra_data_id": 0,
     "avg_rating_percent": -1,
@@ -36,8 +33,7 @@
     "related_feedback_obj_id": -1,
     "longitude": 0.0,
     "encrypted_id": "d7h72CqxSKiN0-I3fiBROg",
-    "poster_thumb_url":
-      "https://s3.amazonaws.com/campus-cloud-image-use/img1hj5tpk9a4uy1tkhmahk4xjqwgic1vuvb9fsoysoukjtsvu.png"
+    "poster_thumb_url": "https://s3.amazonaws.com/campus-cloud-image-use/img1hj5tpk9a4uy1tkhmahk4xjqwgic1vuvb9fsoysoukjtsvu.png"
   },
   {
     "verified_checkins": 0,
@@ -56,15 +52,12 @@
     "start": 1520841600,
     "attends": 0,
     "location": "3577 Rue de Bullion, Montr\u00e9al, QC H2X 3A1, Canada",
-    "poster_url":
-      "https://s3.amazonaws.com/campus-cloud-image-use/f2j2oo6mpn57xtlmmg6c9xagg7jj8egs17pb9d1k4kts0ssfct.png",
+    "poster_url": "https://s3.amazonaws.com/campus-cloud-image-use/f2j2oo6mpn57xtlmmg6c9xagg7jj8egs17pb9d1k4kts0ssfct.png",
     "latitude": 0.0,
     "room_data": "",
     "province": "",
-    "store_logo_url":
-      "https://s3.amazonaws.com/campus-cloud-image-use/5hqor48nmhiqa4ri11gjv2ew2dfk6u3miklpdj7zfij6m4d5px.png",
-    "description":
-      "The Block Party is an event by our students, for our students and the campus community. It is intended as a safe and festive event that will bring students and friends together in a celebration of a year completed, and a summer soon to start. \n",
+    "store_logo_url": "https://s3.amazonaws.com/campus-cloud-image-use/5hqor48nmhiqa4ri11gjv2ew2dfk6u3miklpdj7zfij6m4d5px.png",
+    "description": "The Block Party is an event by our students, for our students and the campus community. It is intended as a safe and festive event that will bring students and friends together in a celebration of a year completed, and a summer soon to start. \n",
     "event_feedback": 0,
     "extra_data_id": 0,
     "avg_rating_percent": -1,
@@ -76,16 +69,14 @@
     "related_feedback_obj_id": -1,
     "longitude": 0.0,
     "encrypted_id": "xcKvImuRjLOCLCEar6fwJg",
-    "poster_thumb_url":
-      "https://s3.amazonaws.com/campus-cloud-image-use/f2j2oo6mpn57xtlmmg6c9xagg7jj8egs17pb9d1k4kts0ssfct.png"
+    "poster_thumb_url": "https://s3.amazonaws.com/campus-cloud-image-use/f2j2oo6mpn57xtlmmg6c9xagg7jj8egs17pb9d1k4kts0ssfct.png"
   },
   {
     "verified_checkins": 3,
     "store_id": 43777,
     "dislikes": 0,
     "store_name": "##100 - Service Assessment ON, Feedback OFF Edit",
-    "qr_img_url":
-      "https://s3.amazonaws.com/webservice-misc-image/huq9zulpcr3krc7q2canjw5fqj7on5nk86a3zm6opcbg05meo6lw498euesubs16.png",
+    "qr_img_url": "https://s3.amazonaws.com/webservice-misc-image/huq9zulpcr3krc7q2canjw5fqj7on5nk86a3zm6opcbg05meo6lw498euesubs16.png",
     "num_ratings": 3,
     "is_repeated": false,
     "postal_code": "",
@@ -93,21 +84,22 @@
     "custom_basic_feedback_label": "this is test question",
     "id": 1624037,
     "city": "",
-    "attend_verification_methods": [1, 2, 3],
+    "attend_verification_methods": [
+      1,
+      2,
+      3
+    ],
     "end": 1552381200,
     "title": "10 Anniversary of NY College EDIT",
     "start": 1520841600,
     "attends": 0,
     "location": "3577 Rue de Bullion, Montr\u00e9al, QC H2X 3A1, Canada",
-    "poster_url":
-      "https://s3.amazonaws.com/campus-cloud-image-use/en1u363z8mxexvwfuemt252aiyh3qk24e4jud2j9s67h8lmhj0.jpg",
+    "poster_url": "https://s3.amazonaws.com/campus-cloud-image-use/en1u363z8mxexvwfuemt252aiyh3qk24e4jud2j9s67h8lmhj0.jpg",
     "latitude": 45.5017,
     "room_data": "",
     "province": "",
-    "store_logo_url":
-      "https://s3.amazonaws.com/campus-cloud-image-use/5ebtlyy0qkcgyhxktwsp041mo390mnnmr12az992p3srnm970m.jpg",
-    "description":
-      "The Block Party is an event by our students, for our students and the campus community. It is intended as a safe and festive event that will bring students and friends together in a celebration of a year completed, and a summer soon to start. \n",
+    "store_logo_url": "https://s3.amazonaws.com/campus-cloud-image-use/5ebtlyy0qkcgyhxktwsp041mo390mnnmr12az992p3srnm970m.jpg",
+    "description": "The Block Party is an event by our students, for our students and the campus community. It is intended as a safe and festive event that will bring students and friends together in a celebration of a year completed, and a summer soon to start. \n",
     "event_feedback": 1,
     "attendance_manager_email": "kamran@gmail.com",
     "extra_data_id": 2993,
@@ -121,16 +113,14 @@
     "longitude": -73.567300000000003,
     "encrypted_id": "H82xoeHLel3R6lSux5V5tA",
     "event_manager_id": 17652,
-    "poster_thumb_url":
-      "https://s3.amazonaws.com/campus-cloud-image-use/en1u363z8mxexvwfuemt252aiyh3qk24e4jud2j9s67h8lmhj0.jpg"
+    "poster_thumb_url": "https://s3.amazonaws.com/campus-cloud-image-use/en1u363z8mxexvwfuemt252aiyh3qk24e4jud2j9s67h8lmhj0.jpg"
   },
   {
     "verified_checkins": 1,
     "store_id": 43777,
     "dislikes": 0,
     "store_name": "##100 - Service Assessment ON, Feedback OFF Edit",
-    "qr_img_url":
-      "https://s3.amazonaws.com/webservice-misc-image/dy20vv6m1jxvj5cf0m89cx1b5icha13dxybaln0ls2k18mwd2iehgkinmnpqqkxi.png",
+    "qr_img_url": "https://s3.amazonaws.com/webservice-misc-image/dy20vv6m1jxvj5cf0m89cx1b5icha13dxybaln0ls2k18mwd2iehgkinmnpqqkxi.png",
     "num_ratings": 0,
     "is_repeated": false,
     "postal_code": "",
@@ -138,21 +128,22 @@
     "custom_basic_feedback_label": "rwzxs",
     "id": 1624048,
     "city": "",
-    "attend_verification_methods": [1, 2, 3],
+    "attend_verification_methods": [
+      1,
+      2,
+      3
+    ],
     "end": 1552381200,
     "title": "10 Anniversary of NY College",
     "start": 1520841600,
     "attends": 0,
     "location": "3577 Rue de Bullion, Montr\u00e9al, QC H2X 3A1, Canada",
-    "poster_url":
-      "https://s3.amazonaws.com/campus-cloud-image-use/5dl6qtmgbjl8icc66g6r8hsh5z0p45qz46mnew2c9wefi1rlj4.jpg",
+    "poster_url": "https://s3.amazonaws.com/campus-cloud-image-use/5dl6qtmgbjl8icc66g6r8hsh5z0p45qz46mnew2c9wefi1rlj4.jpg",
     "latitude": 0.0,
     "room_data": "",
     "province": "",
-    "store_logo_url":
-      "https://s3.amazonaws.com/campus-cloud-image-use/5ebtlyy0qkcgyhxktwsp041mo390mnnmr12az992p3srnm970m.jpg",
-    "description":
-      "The Block Party is an event by our students, for our students and the campus community. It is intended as a safe and festive event that will bring students and friends together in a celebration of a year completed, and a summer soon to start. \n",
+    "store_logo_url": "https://s3.amazonaws.com/campus-cloud-image-use/5ebtlyy0qkcgyhxktwsp041mo390mnnmr12az992p3srnm970m.jpg",
+    "description": "The Block Party is an event by our students, for our students and the campus community. It is intended as a safe and festive event that will bring students and friends together in a celebration of a year completed, and a summer soon to start. \n",
     "event_feedback": 1,
     "attendance_manager_email": "test@gmail.com",
     "extra_data_id": 3002,
@@ -166,7 +157,6 @@
     "longitude": 0.0,
     "encrypted_id": "JLHb84DS1rwCGbORMilrJQ",
     "event_manager_id": 17659,
-    "poster_thumb_url":
-      "https://s3.amazonaws.com/campus-cloud-image-use/5dl6qtmgbjl8icc66g6r8hsh5z0p45qz46mnew2c9wefi1rlj4.jpg"
+    "poster_thumb_url": "https://s3.amazonaws.com/campus-cloud-image-use/5dl6qtmgbjl8icc66g6r8hsh5z0p45qz46mnew2c9wefi1rlj4.jpg"
   }
 ]

@@ -20,11 +20,17 @@ import { LinksListActionBoxComponent } from './list/components';
     LinksListComponent,
     LinksEditComponent,
     LinksDeleteComponent,
-    LinksCreateComponent
+    LinksCreateComponent,
   ],
 
-  imports: [CommonModule, SharedModule, RouterModule, ReactiveFormsModule, LinksRoutingModule],
+  imports: [
+    CommonModule,
+    SharedModule,
+    RouterModule,
+    ReactiveFormsModule,
+    LinksRoutingModule,
+  ],
 
-  providers: [LinksService]
+  providers: [LinksService],
 })
 export class LinksModule {}

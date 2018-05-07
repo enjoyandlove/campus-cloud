@@ -12,38 +12,38 @@ const appRoutes: Routes = [
     path: '',
     data: { zendesk: 'athletics' },
     canActivate: [PrivilegesGuard],
-    component: AthleticsListComponent
+    component: AthleticsListComponent,
   },
 
   {
     path: 'create',
     data: { zendesk: 'athletics' },
     canActivate: [PrivilegesGuard],
-    component: AthleticsCreateComponent
+    component: AthleticsCreateComponent,
   },
 
   {
     path: ':clubId/edit',
     data: { zendesk: 'athletics' },
     canActivate: [PrivilegesGuard],
-    component: AthleticsEditComponent
+    component: AthleticsEditComponent,
   },
 
   {
     path: 'import/excel',
     data: { zendesk: 'athletics' },
     canActivate: [PrivilegesGuard],
-    component: AthleticsExcelComponent
+    component: AthleticsExcelComponent,
   },
 
   {
     path: ':clubId',
     canActivate: [PrivilegesGuard],
-    loadChildren: './details/athletics-details.module#AthleticsDetailsModule'
-  }
+    loadChildren: './details/athletics-details.module#AthleticsDetailsModule',
+  },
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AthleticsRoutingModule {}

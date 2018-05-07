@@ -29,72 +29,71 @@ describe('AttendancePastComponent', () => {
 
   const pastEvents = [
     {
-      firstname: 'John',
-      feedback_time: 1523276904,
-      lastname: 'Paul',
-      student_identifier: '',
-      feedback_rating: 80,
-      check_in_time: 1523276757,
-      feedback_text: 'Good job man!',
-      check_in_method: 1,
-      email: 'jp@gmail.com'
+      'firstname': 'John',
+      'feedback_time': 1523276904,
+      'lastname': 'Paul',
+      'student_identifier': '',
+      'feedback_rating': 80,
+      'check_in_time': 1523276757,
+      'feedback_text': 'Good job man!',
+      'check_in_method': 1,
+      'email': 'jp@gmail.com'
     }
   ];
 
-  beforeEach(
-    async(() => {
-      TestBed.configureTestingModule({
-        imports: [HttpModule, EventsModule],
-        providers: [CPSession, CPI18nService, { provide: EventsService, useClass: MockService }]
-      })
-        .compileComponents()
-        .then(() => {
-          fixture = TestBed.createComponent(AttendancePastComponent);
-          service = TestBed.get(EventsService);
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        HttpModule,
+        EventsModule,
+      ],
+      providers: [
+        CPSession,
+        CPI18nService,
+        { provide: EventsService, useClass: MockService },
+      ]
+    }).compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(AttendancePastComponent);
+        service = TestBed.get(EventsService);
 
-          component = fixture.componentInstance;
-          component.isLoading().subscribe((_) => (component.loading = false));
-          component.session.g.set('school', mockSchool);
-          component.event = {
-            id: 5125
-          };
+        component = fixture.componentInstance;
+        component.isLoading().subscribe((_) => component.loading = false);
+        component.session.g.set('school', mockSchool);
+        component.event = {
+          id: 5125
+        };
 
-          search = new URLSearchParams();
-          search.append('event_id', component.event.id);
-          search.append('sort_field', component.state.sort_field);
-          search.append('sort_direction', component.state.sort_direction);
-          search.append('search_text', component.state.search_text);
-        });
-    })
-  );
+        search = new URLSearchParams();
+        search.append('event_id', component.event.id);
+        search.append('sort_field', component.state.sort_field);
+        search.append('sort_direction', component.state.sort_direction);
+        search.append('search_text', component.state.search_text);
+      });
+  }));
 
-  it(
-    'should not have RSVP column for orientation events',
-    fakeAsync(() => {
-      spy = spyOn(component.service, 'getEventAttendanceByEventId').and.returnValue(
-        Observable.of(pastEvents)
-      );
+  it('should not have RSVP column for orientation events', fakeAsync(() => {
+    spy = spyOn(component.service, 'getEventAttendanceByEventId')
+      .and.returnValue(Observable.of(pastEvents));
 
-      component.isOrientation = true;
-      component.orientationId = 1001;
-      search.append('school_id', component.session.g.get('school').id);
-      search.append('calendar_id', component.orientationId.toString());
-      component.fetch();
-      tick();
+    component.isOrientation = true;
+    component.orientationId = 1001;
+    search.append('school_id', component.session.g.get('school').id);
+    search.append('calendar_id', component.orientationId.toString());
+    component.fetch();
+    tick();
 
-      fixture.detectChanges();
+    fixture.detectChanges();
 
-      const bannerDe: DebugElement = fixture.debugElement;
-      const bannerEl: HTMLElement = bannerDe.nativeElement;
-      const rsvp = bannerEl.querySelector('div.cp-table__header div.rsvp_column');
-      expect(rsvp).toBeNull();
-    })
-  );
+    const bannerDe: DebugElement = fixture.debugElement;
+    const bannerEl: HTMLElement = bannerDe.nativeElement;
+    const rsvp = bannerEl.querySelector('div.cp-table__header div.rsvp_column');
+    expect(rsvp).toBeNull();
+  }));
 
   it('should fetch event attendees by event Id', () => {
-    spy = spyOn(component.service, 'getEventAttendanceByEventId').and.returnValue(
-      Observable.of({})
-    );
+    spy = spyOn(component.service, 'getEventAttendanceByEventId')
+      .and.returnValue(Observable.of({}));
 
     component.fetch();
 
@@ -103,9 +102,8 @@ describe('AttendancePastComponent', () => {
   });
 
   it('should fetch orientation event attendees by event Id', () => {
-    spy = spyOn(component.service, 'getEventAttendanceByEventId').and.returnValue(
-      Observable.of({})
-    );
+    spy = spyOn(component.service, 'getEventAttendanceByEventId')
+      .and.returnValue(Observable.of({}));
 
     component.isOrientation = true;
     component.orientationId = 1001;

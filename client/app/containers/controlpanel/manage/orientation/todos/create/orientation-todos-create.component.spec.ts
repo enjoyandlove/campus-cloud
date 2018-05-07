@@ -26,40 +26,37 @@ describe('OrientationTodosCreateComponent', () => {
   let component: OrientationTodosCreateComponent;
   let fixture: ComponentFixture<OrientationTodosCreateComponent>;
 
-  beforeEach(
-    async(() => {
-      TestBed.configureTestingModule({
-        imports: [TodosModule],
-        providers: [
-          CPSession,
-          FormBuilder,
-          CPI18nService,
-          { provide: TodosService, useClass: MockTodosService },
-          {
-            provide: ActivatedRoute,
-            useValue: {
-              snapshot: {
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      imports: [TodosModule],
+      providers: [
+        CPSession,
+        FormBuilder,
+        CPI18nService,
+        { provide: TodosService, useClass: MockTodosService },
+        { provide: ActivatedRoute,
+          useValue: {
+            snapshot: {
+              parent: {
                 parent: {
-                  parent: {
-                    params: Observable.of({ orientationId: 1 })
-                  }
+                  params: Observable.of({ orientationId: 1 })
                 }
               }
-            }
+            },
           }
-        ]
-      })
-        .compileComponents()
-        .then(() => {
-          fixture = TestBed.createComponent(OrientationTodosCreateComponent);
-          component = fixture.componentInstance;
-          service = TestBed.get(TodosService);
-
-          component.session.g.set('school', mockSchool);
-          component.ngOnInit();
-        });
+        }
+      ]
     })
-  );
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(OrientationTodosCreateComponent);
+        component = fixture.componentInstance;
+        service = TestBed.get(TodosService);
+
+        component.session.g.set('school', mockSchool);
+        component.ngOnInit();
+      });
+  }));
 
   it('form validation - should fail', () => {
     expect(component.form.valid).toBeFalsy();
@@ -97,11 +94,12 @@ describe('OrientationTodosCreateComponent', () => {
     component.form = component.fb.group({
       title: ['Hello World!'],
       description: ['This is description'],
-      end: [1515625016]
+      end: [1515625016],
     });
 
     component.onSubmit();
     expect(spy).toHaveBeenCalled();
     expect(spy.calls.count()).toBe(1);
   });
-});
+
+  });

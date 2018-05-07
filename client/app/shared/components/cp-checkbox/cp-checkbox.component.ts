@@ -4,14 +4,14 @@ import {
   EventEmitter,
   Input,
   OnInit,
-  Output
+  Output,
 } from '@angular/core';
 
 @Component({
   selector: 'cp-checkbox',
   templateUrl: './cp-checkbox.component.html',
   styleUrls: ['./cp-checkbox.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CPCheckboxComponent implements OnInit {
   @Input() isChecked: boolean;

@@ -11,7 +11,7 @@ declare var $: any;
 @Component({
   selector: 'cp-announcements-delete',
   templateUrl: './announcements-delete.component.html',
-  styleUrls: ['./announcements-delete.component.scss']
+  styleUrls: ['./announcements-delete.component.scss'],
 })
 export class AnnouncementDeleteComponent implements OnInit {
   @Input() item: any;
@@ -25,7 +25,7 @@ export class AnnouncementDeleteComponent implements OnInit {
   constructor(
     private session: CPSession,
     private cpI18n: CPI18nService,
-    private service: AnnouncementsService
+    private service: AnnouncementsService,
   ) {}
 
   doReset() {
@@ -44,23 +44,23 @@ export class AnnouncementDeleteComponent implements OnInit {
         this.deleted.emit(this.item.id);
         $('#deleteAnnouncementModal').modal('hide');
         this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: false
+          disabled: false,
         });
       },
       (_) => {
         this.isError = true;
         this.errorMessage = STATUS.SOMETHING_WENT_WRONG;
         this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: false
+          disabled: false,
         });
-      }
+      },
     );
   }
 
   ngOnInit() {
     this.buttonData = {
       class: 'danger',
-      text: this.cpI18n.translate('archive')
+      text: this.cpI18n.translate('archive'),
     };
   }
 }

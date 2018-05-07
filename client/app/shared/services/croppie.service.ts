@@ -42,7 +42,7 @@ export class CPCroppieService {
     return this.instance.result({
       type,
       size,
-      format
+      format,
     });
   }
 

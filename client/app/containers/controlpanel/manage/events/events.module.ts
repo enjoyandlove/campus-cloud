@@ -10,7 +10,7 @@ import {
   AttendancePastComponent,
   AttendanceUpcomingComponent,
   EventsFeedbackModalComponent,
-  EventsPastActionBoxComponent
+  EventsPastActionBoxComponent,
 } from './attendance/components';
 import { EventsCreateComponent } from './create';
 import { EventsDeleteComponent } from './delete';
@@ -22,13 +22,13 @@ import { EventsExcelComponent } from './excel';
 import {
   EventsExcelModalComponent,
   EventsImportActionDropdownComponent,
-  EventsImportTopBarComponent
+  EventsImportTopBarComponent,
 } from './excel/components';
 import { EventsFacebookComponent } from './facebook';
 import {
   FacebookEventsCreateComponent,
   FacebookEventsDeleteComponent,
-  FacebookEventsUpdateComponent
+  FacebookEventsUpdateComponent,
 } from './facebook/components';
 import { EventsInfoComponent } from './info';
 import { EventsListComponent } from './list';
@@ -36,7 +36,7 @@ import { EventsComponent } from './list/base/events.component';
 import {
   ListActionBoxComponent,
   ListPastComponent,
-  ListUpcomingComponent
+  ListUpcomingComponent,
 } from './list/components';
 import { OrientationEventsService } from '../orientation/events/orientation.events.service';
 
@@ -63,10 +63,16 @@ import { OrientationEventsService } from '../orientation/events/orientation.even
     FacebookEventsCreateComponent,
     FacebookEventsUpdateComponent,
     FacebookEventsDeleteComponent,
-    EventsComponent
+    EventsComponent,
   ],
 
-  imports: [CommonModule, SharedModule, EventsRoutingModule, RouterModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    SharedModule,
+    EventsRoutingModule,
+    RouterModule,
+    ReactiveFormsModule,
+  ],
 
   providers: [EventsService, EventUtilService, OrientationEventsService],
 
@@ -89,7 +95,7 @@ import { OrientationEventsService } from '../orientation/events/orientation.even
     AttendanceUpcomingComponent,
     EventsFeedbackModalComponent,
     EventsPastActionBoxComponent,
-    EventsComponent
-  ]
+    EventsComponent,
+  ],
 })
 export class EventsModule {}

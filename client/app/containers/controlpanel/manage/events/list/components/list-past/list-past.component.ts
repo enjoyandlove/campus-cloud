@@ -36,16 +36,20 @@ export class ListPastComponent implements OnInit {
   canDelete = false;
   dateFormat = FORMAT.SHORT;
 
-  constructor(private session: CPSession) {}
+  constructor(
+    private session: CPSession
+  ) { }
 
-  onDelete(event) {
-    this.deleteEvent.emit(event);
-  }
+  onDelete(event) { this.deleteEvent.emit(event); }
 
   doSort(sort_field) {
     const sort_direction = this.state.sort_direction === 'asc' ? 'desc' : 'asc';
 
-    this.sort = Object.assign({}, this.sort, { sort_field, sort_direction });
+    this.sort = Object.assign(
+      {},
+      this.sort,
+      { sort_field, sort_direction }
+    );
 
     this.sortList.emit(this.sort);
   }

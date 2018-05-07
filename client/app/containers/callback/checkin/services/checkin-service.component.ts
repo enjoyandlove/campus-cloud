@@ -11,13 +11,13 @@ interface IState {
 }
 
 const state: IState = {
-  services: []
+  services: [],
 };
 
 @Component({
   selector: 'cp-checkin-service',
   templateUrl: './checkin-service.component.html',
-  styleUrls: ['./checkin-service.component.scss']
+  styleUrls: ['./checkin-service.component.scss'],
 })
 export class CheckinServiceComponent extends BaseComponent implements OnInit {
   loading;
@@ -33,7 +33,7 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
     public route: ActivatedRoute,
     public cpI18n: CPI18nService,
     public errorService: ErrorService,
-    public checkinService: CheckinService
+    public checkinService: CheckinService,
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -46,14 +46,16 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
     this.checkinService.doServiceCheckin(data, this.search).subscribe(
       (_) => this.updateAttendeesList(data),
       (_) => {
-        this.errorService.handleError(this.cpI18n.translate('something_went_wrong'));
-      }
+        this.errorService.handleError(
+          this.cpI18n.translate('something_went_wrong'),
+        );
+      },
     );
   }
 
   updateAttendeesList(data) {
     this.state.services = Object.assign({}, this.state.services, {
-      attendees: [data, ...this.state.services['attendees']]
+      attendees: [data, ...this.state.services['attendees']],
     });
   }
 

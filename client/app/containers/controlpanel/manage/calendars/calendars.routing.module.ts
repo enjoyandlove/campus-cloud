@@ -8,7 +8,7 @@ import { CalendarsDetailComponent } from './details';
 import {
   CalendarsItemCreateComponent,
   CalendarsItemsDetailsComponent,
-  CalendarsItemsEditComponent
+  CalendarsItemsEditComponent,
 } from './items';
 
 import { PrivilegesGuard } from '../../../../config/guards';
@@ -19,42 +19,42 @@ const appRoutes: Routes = [
     path: '',
     canActivate: [PrivilegesGuard],
     component: CalendarsListComponent,
-    data: { zendesk: 'calendars' }
+    data: { zendesk: 'calendars' },
   },
   {
     path: ':calendarId',
     canActivate: [PrivilegesGuard],
     component: CalendarsDetailComponent,
-    data: { zendesk: 'calendars' }
+    data: { zendesk: 'calendars' },
   },
   // TODO Split to its own module
   {
     path: ':calendarId/items/create',
     canActivate: [PrivilegesGuard],
     component: CalendarsItemCreateComponent,
-    data: { zendesk: 'calendars' }
+    data: { zendesk: 'calendars' },
   },
   {
     path: ':calendarId/items/import',
     data: { zendesk: 'calendars' },
     canActivate: [PrivilegesGuard],
-    component: CalendarsItemsBulkCreateComponent
+    component: CalendarsItemsBulkCreateComponent,
   },
   {
     path: ':calendarId/items/:itemId',
     data: { zendesk: 'calendars' },
     canActivate: [PrivilegesGuard],
-    component: CalendarsItemsDetailsComponent
+    component: CalendarsItemsDetailsComponent,
   },
   {
     path: ':calendarId/items/:itemId/edit',
     data: { zendesk: 'calendars' },
     canActivate: [PrivilegesGuard],
-    component: CalendarsItemsEditComponent
-  }
+    component: CalendarsItemsEditComponent,
+  },
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class CalendarRoutingModule {}

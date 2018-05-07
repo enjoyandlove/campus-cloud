@@ -17,7 +17,9 @@ export class EventsService extends BaseService {
   }
 
   getEvents(startRage: number, endRage: number, search?: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT}/${startRage};${endRage}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.EVENT
+    }/${startRage};${endRage}`;
 
     return super.get(url, { search }).map((res) => res.json());
   }
@@ -27,7 +29,9 @@ export class EventsService extends BaseService {
   }
 
   getEventById(id: number, {}) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT}/${id}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.EVENT
+    }/${id}`;
 
     return super.get(url).map((res) => res.json());
   }
@@ -41,8 +45,14 @@ export class EventsService extends BaseService {
     return super.get(url, { search }).map((res) => res.json());
   }
 
-  getEventAttendanceByEventId(startRage: number, endRage: number, search?: URLSearchParams) {
-    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT_ASSESMENT}`;
+  getEventAttendanceByEventId(
+    startRage: number,
+    endRage: number,
+    search?: URLSearchParams,
+  ) {
+    const common = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.EVENT_ASSESMENT
+    }`;
     const url = `${common}/${startRage};${endRage}`;
 
     return super.get(url, { search }).map((res) => res.json());
@@ -51,7 +61,7 @@ export class EventsService extends BaseService {
   setModalEvents(events: any[]): void {
     this.store.dispatch({
       type: EVENTS_MODAL_SET,
-      payload: events
+      payload: events,
     });
   }
 
@@ -62,13 +72,17 @@ export class EventsService extends BaseService {
   }
 
   updateEvent(body: any, eventId: number, {}) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT}/${eventId}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.EVENT
+    }/${eventId}`;
 
     return super.update(url, body).map((res) => res.json());
   }
 
   deleteEventById(eventId: number, {}) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT}/${eventId}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.EVENT
+    }/${eventId}`;
 
     return super.delete(url).map((res) => res.json());
   }
@@ -92,7 +106,9 @@ export class EventsService extends BaseService {
   }
 
   deleteFacebookEventByLinkId(linkId: number, search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.FB_EVENTS}/${linkId}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.FB_EVENTS
+    }/${linkId}`;
 
     return super.delete(url, { search }).map((res) => res.json());
   }

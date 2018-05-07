@@ -11,11 +11,11 @@ export const types = [
   {
     action: 1,
     label: cpI18n.translate('urgent'),
-    description: cpI18n.translate('announcements_urgent_help')
+    description: cpI18n.translate('announcements_urgent_help'),
   },
   {
     action: 0,
     label: cpI18n.translate('emergency'),
-    description: cpI18n.translate('announcements_emergency_help')
+    description: cpI18n.translate('announcements_emergency_help'),
   }
 ];

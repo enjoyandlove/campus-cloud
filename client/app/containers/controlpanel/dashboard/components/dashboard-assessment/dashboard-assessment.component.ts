@@ -6,9 +6,10 @@ import { DashboardService } from './../../dashboard.service';
 @Component({
   selector: 'cp-dashboard-assessment',
   templateUrl: './dashboard-assessment.component.html',
-  styleUrls: ['./dashboard-assessment.component.scss']
+  styleUrls: ['./dashboard-assessment.component.scss'],
 })
-export class DashboardAssessmentComponent extends BaseComponent implements OnInit {
+export class DashboardAssessmentComponent extends BaseComponent
+  implements OnInit {
   @Output() ready: EventEmitter<boolean> = new EventEmitter();
 
   data;
@@ -39,12 +40,12 @@ export class DashboardAssessmentComponent extends BaseComponent implements OnIni
           event_total_feedback: res[0].event_total_feedback,
           service_checkins: res[1].service_checkins,
           service_feedback_rate: res[1].service_feedback_rate,
-          service_total_feedback: res[1].service_total_feedback
+          service_total_feedback: res[1].service_total_feedback,
         };
       },
       (_) => {
         this.loading = false;
-      }
+      },
     );
   }
 

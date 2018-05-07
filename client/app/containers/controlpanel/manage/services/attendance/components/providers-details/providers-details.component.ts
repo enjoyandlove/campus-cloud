@@ -8,14 +8,18 @@ import { Store } from '@ngrx/store';
 import { ProvidersService } from '../../../providers.service';
 import { BaseComponent } from '../../../../../../../base/base.component';
 import { STAR_SIZE } from '../../../../../../../shared/components/cp-stars';
-import { HEADER_UPDATE, IHeader } from '../../../../../../../reducers/header.reducer';
+import {
+  HEADER_UPDATE,
+  IHeader,
+} from '../../../../../../../reducers/header.reducer';
 
 @Component({
   selector: 'cp-providers-details',
   templateUrl: './providers-details.component.html',
-  styleUrls: ['./providers-details.component.scss']
+  styleUrls: ['./providers-details.component.scss'],
 })
-export class ServicesProviderDetailsComponent extends BaseComponent implements OnInit {
+export class ServicesProviderDetailsComponent extends BaseComponent
+  implements OnInit {
   loading;
   provider;
   serviceId;
@@ -31,7 +35,7 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
     private route: ActivatedRoute,
     private store: Store<IHeader>,
     private serviceService: ServicesService,
-    private providersService: ProvidersService
+    private providersService: ProvidersService,
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -44,7 +48,10 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
     search.append('service_id', this.serviceId);
 
     const service$ = this.serviceService.getServiceById(this.serviceId);
-    const providers$ = this.providersService.getProviderByProviderId(this.providerId, search);
+    const providers$ = this.providersService.getProviderByProviderId(
+      this.providerId,
+      search,
+    );
 
     const stream$ = service$.switchMap((service) => {
       this.serviceName = service.name;
@@ -54,7 +61,11 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
 
     super.fetchData(stream$).then((res) => {
       this.provider = res.data;
-      this.eventRating = (this.provider.avg_rating_percent * this.MAX_RATE / 100).toFixed(1);
+      this.eventRating = (
+        this.provider.avg_rating_percent *
+        this.MAX_RATE /
+        100
+      ).toFixed(1);
 
       this.buildHeader();
     });
@@ -67,12 +78,12 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
         heading: `[NOTRANSLATE]${this.provider.provider_name}[NOTRANSLATE]`,
         crumbs: {
           url: `services/${this.serviceId}`,
-          label: `[NOTRANSLATE]${this.serviceName}[NOTRANSLATE]`
+          label: `[NOTRANSLATE]${this.serviceName}[NOTRANSLATE]`,
         },
         subheading: null,
         em: null,
-        children: []
-      }
+        children: [],
+      },
     });
   }
 

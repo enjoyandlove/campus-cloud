@@ -7,7 +7,7 @@ import { CPI18nService } from '../../../../../shared/services/index';
 @Component({
   selector: 'cp-feedback-form',
   templateUrl: './feedback-form.component.html',
-  styleUrls: ['./feedback-form.component.scss']
+  styleUrls: ['./feedback-form.component.scss'],
 })
 export class FeedbackFormComponent implements OnInit {
   @Input() isEvent: boolean;
@@ -22,7 +22,9 @@ export class FeedbackFormComponent implements OnInit {
   constructor(private fb: FormBuilder, public cpI18n: CPI18nService) {}
 
   onRated(rating: number): void {
-    this.feedbackForm.controls['user_rating_percent'].setValue(rating / 5 * 100);
+    this.feedbackForm.controls['user_rating_percent'].setValue(
+      rating / 5 * 100,
+    );
   }
 
   onSubmit(): void {
@@ -32,7 +34,7 @@ export class FeedbackFormComponent implements OnInit {
   ngOnInit() {
     this.feedbackForm = this.fb.group({
       user_feedback_text: [null, Validators.required],
-      user_rating_percent: [null, Validators.required]
+      user_rating_percent: [null, Validators.required],
     });
 
     this.isSubmitted.subscribe((res) => (this._isSubmitted = res));

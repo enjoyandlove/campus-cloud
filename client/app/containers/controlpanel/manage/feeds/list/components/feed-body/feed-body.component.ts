@@ -5,7 +5,7 @@ import { CPI18nService } from '../../../../../../../shared/services/index';
 @Component({
   selector: 'cp-feed-body',
   templateUrl: './feed-body.component.html',
-  styleUrls: ['./feed-body.component.scss']
+  styleUrls: ['./feed-body.component.scss'],
 })
 export class FeedBodyComponent implements OnInit {
   @Input() feed: any;

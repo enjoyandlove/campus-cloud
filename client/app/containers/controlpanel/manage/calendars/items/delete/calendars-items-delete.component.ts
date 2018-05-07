@@ -9,7 +9,7 @@ import { CPI18nService } from './../../../../../../shared/services/i18n.service'
 @Component({
   selector: 'cp-calendars-items-delete',
   templateUrl: './calendars-items-delete.component.html',
-  styleUrls: ['./calendars-items-delete.component.scss']
+  styleUrls: ['./calendars-items-delete.component.scss'],
 })
 export class CalendarsItemsDeleteComponent implements OnInit {
   @Input() item: any;
@@ -22,7 +22,7 @@ export class CalendarsItemsDeleteComponent implements OnInit {
     public session: CPSession,
     public route: ActivatedRoute,
     private cpI18n: CPI18nService,
-    private calendarService: CalendarsService
+    private calendarService: CalendarsService,
   ) {
     this.calendarId = this.route.snapshot.params['calendarId'];
   }
@@ -44,7 +44,7 @@ export class CalendarsItemsDeleteComponent implements OnInit {
   ngOnInit() {
     this.buttonData = {
       text: this.cpI18n.translate('delete'),
-      class: 'danger'
+      class: 'danger',
     };
   }
 }

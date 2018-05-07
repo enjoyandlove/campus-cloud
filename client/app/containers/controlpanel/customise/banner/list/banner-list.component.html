@@ -7,8 +7,8 @@
         <div class="cp-card card">
           <div class="row">
             <div class="col-xs-12">
-              <p class="card__title">{{ 'customization_title' | cpI18n }}</p>
-              <p class="text-muted">
+              <p class="card__title" i18n>{{ 'customization_title' | cpI18n }}</p>
+              <p class="text-muted" i18n>
                 {{ 'customization_description' | cpI18n }}
                 <cp-tooltip
                   [toolTipContent]="customizeBannerTooltip">
@@ -48,7 +48,7 @@
                 class="control-buttons">
               </cp-banner-control-buttons>
 
-              <p class="tooltip" *ngIf="isEdit">{{ 'customization_instructions' | cpI18n }}</p>
+              <p class="tooltip" *ngIf="isEdit" i18n>{{ 'customization_instructions' | cpI18n }}</p>
             </div>
           </div>
         </div>

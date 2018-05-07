@@ -18,13 +18,13 @@ const state: IState = {
   links: [],
   search_str: null,
   sort_field: 'name',
-  sort_direction: 'asc'
+  sort_direction: 'asc',
 };
 
 @Component({
   selector: 'cp-links-list',
   templateUrl: './links-list.component.html',
-  styleUrls: ['./links-list.component.scss']
+  styleUrls: ['./links-list.component.scss'],
 })
 export class LinksListComponent extends BaseComponent implements OnInit {
   pageNext;
@@ -42,7 +42,7 @@ export class LinksListComponent extends BaseComponent implements OnInit {
   constructor(
     private session: CPSession,
     public cpI18n: CPI18nService,
-    private service: LinksService
+    private service: LinksService,
   ) {
     super();
 
@@ -75,7 +75,7 @@ export class LinksListComponent extends BaseComponent implements OnInit {
     this.state = {
       ...this.state,
       sort_field: sort_field,
-      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc'
+      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc',
     };
 
     this.fetch();
@@ -104,7 +104,7 @@ export class LinksListComponent extends BaseComponent implements OnInit {
         $('#linksCreate').modal();
       },
 
-      1
+      1,
     );
   }
 
@@ -117,7 +117,9 @@ export class LinksListComponent extends BaseComponent implements OnInit {
     this.isLinksEdit = false;
 
     this.state = Object.assign({}, this.state, {
-      links: this.state.links.map((link) => (link.id === editedLink.id ? editedLink : link))
+      links: this.state.links.map(
+        (link) => (link.id === editedLink.id ? editedLink : link),
+      ),
     });
   }
 
@@ -125,7 +127,7 @@ export class LinksListComponent extends BaseComponent implements OnInit {
     this.isLinksDelete = false;
 
     this.state = Object.assign({}, this.state, {
-      links: this.state.links.filter((link) => link.id !== linkId)
+      links: this.state.links.filter((link) => link.id !== linkId),
     });
 
     if (this.state.links.length === 0 && this.pageNumber > 1) {

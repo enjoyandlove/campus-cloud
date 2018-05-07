@@ -4,12 +4,12 @@ import { CPDropdownComponent } from './cp-dropdown.component';
 const fakeItems = [
   {
     action: '1',
-    label: 'item 1'
+    label: 'item 1',
   },
   {
     action: '2',
-    label: 'item 2'
-  }
+    label: 'item 2',
+  },
 ];
 
 describe('CPDropdownComponent', () => {
@@ -29,7 +29,7 @@ describe('CPDropdownComponent', () => {
     comp.onClick({
       action: '3',
       label: 'item 3',
-      heading: true
+      heading: true,
     });
 
     expect(comp.selectedItem).toBe(fakeItems[1]);
@@ -47,7 +47,7 @@ describe('CPDropdownComponent', () => {
     const expectedToolTip = 'toolt tip';
     comp.items[0] = Object.assign({}, comp.items[0], {
       disabled: true,
-      tooltipText: expectedToolTip
+      tooltipText: expectedToolTip,
     });
     comp.ngOnInit();
     expect(comp.tooltipText).toBe(expectedToolTip);
