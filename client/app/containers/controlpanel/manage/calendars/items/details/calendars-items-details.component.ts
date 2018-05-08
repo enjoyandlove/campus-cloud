@@ -59,12 +59,13 @@ export class CalendarsItemsDetailsComponent extends BaseComponent implements OnI
   }
 
   fetch() {
-    const calendarSearch = new HttpParams();
-    const itemSearch = new HttpParams();
-    itemSearch.append('school_id', this.session.g.get('school').id.toString());
-    itemSearch.append('academic_calendar_id', this.calendarId.toString());
-
-    calendarSearch.append('school_id', this.session.g.get('school').id.toString());
+    const calendarSearch = new HttpParams().append(
+      'school_id',
+      this.session.g.get('school').id.toString()
+    );
+    const itemSearch = new HttpParams()
+      .append('school_id', this.session.g.get('school').id.toString())
+      .append('academic_calendar_id', this.calendarId.toString());
 
     const item$ = this.service.getItemById(this.itemId, itemSearch);
     const calendar$ = this.service.getCalendarById(this.calendarId, calendarSearch);

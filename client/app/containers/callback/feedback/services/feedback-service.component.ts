@@ -17,7 +17,7 @@ export class FeedbackServiceComponent extends BaseComponent implements OnInit {
   isExist = true;
   isService = true;
   checkinId: number;
-  search: HttpParams = new HttpParams();
+  search: HttpParams;
   isSubmitted$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(private route: ActivatedRoute, private feedbackService: FeedbackService) {
@@ -47,7 +47,7 @@ export class FeedbackServiceComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.search.append('id', this.checkinId.toString());
+    this.search = new HttpParams().append('id', this.checkinId.toString());
 
     this.fetch();
   }

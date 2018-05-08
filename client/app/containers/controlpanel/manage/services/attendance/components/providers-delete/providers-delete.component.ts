@@ -18,8 +18,7 @@ export class ServicesProviderDeleteComponent {
   constructor(private providersService: ProvidersService) {}
 
   onDelete() {
-    const search = new HttpParams();
-    search.append('service_id', this.serviceId.toString());
+    const search = new HttpParams().append('service_id', this.serviceId.toString());
 
     this.providersService.deleteProvider(this.provider.id, search).subscribe((_) => {
       $('#deleteProvider').modal('hide');

@@ -59,11 +59,11 @@ describe('AttendancePastComponent', () => {
             id: 5125
           };
 
-          search = new HttpParams();
-          search.append('event_id', component.event.id);
-          search.append('sort_field', component.state.sort_field);
-          search.append('sort_direction', component.state.sort_direction);
-          search.append('search_text', component.state.search_text);
+          search = new HttpParams()
+            .append('event_id', component.event.id)
+            .append('sort_field', component.state.sort_field)
+            .append('sort_direction', component.state.sort_direction)
+            .append('search_text', component.state.search_text);
         });
     })
   );

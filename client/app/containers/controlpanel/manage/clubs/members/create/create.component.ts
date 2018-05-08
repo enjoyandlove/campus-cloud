@@ -70,9 +70,9 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
           return Observable.of([]);
         }
 
-        const search = new HttpParams();
-        search.append('search_str', query);
-        search.append('school_id', this.session.g.get('school').id.toString());
+        const search = new HttpParams()
+          .append('search_str', query)
+          .append('school_id', this.session.g.get('school').id.toString());
 
         return this.service.getMembers(search, 1, 1000).map((members) => {
           if (!members.length) {

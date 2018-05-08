@@ -24,7 +24,7 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
   isEvent = true;
   eventId: string;
   state: IState = state;
-  search: HttpParams = new HttpParams();
+  search: HttpParams;
 
   constructor(
     public router: Router,
@@ -66,7 +66,7 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.search.append('event_id', this.eventId);
+    this.search = new HttpParams().append('event_id', this.eventId);
 
     if (!this.eventId) {
       this.router.navigate(['/login']);

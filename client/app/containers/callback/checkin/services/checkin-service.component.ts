@@ -26,7 +26,7 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
   serviceId: string;
   state: IState = state;
   serviceProviderId: string;
-  search: HttpParams = new HttpParams();
+  search: HttpParams;
 
   constructor(
     public router: Router,
@@ -67,8 +67,12 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.search.append('service_id', this.serviceId);
-    this.search.append('provider_id', this.serviceProviderId);
+    this.search = new HttpParams({
+      fromObject: {
+        service_id: this.serviceId,
+        provider_id: this.serviceProviderId
+      }
+    });
 
     if (!this.serviceId || !this.serviceProviderId) {
       this.router.navigate(['/login']);

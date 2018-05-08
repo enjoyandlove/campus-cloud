@@ -29,8 +29,7 @@ export class OrientationInfoComponent extends BaseComponent implements OnInit {
   }
 
   public fetch() {
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     super
       .fetchData(this.service.getProgramById(this.orientationId, search))

@@ -12,12 +12,11 @@ export class EngagementResolver implements Resolve<any> {
   constructor(private session: CPSession, private service: EngagementService) {}
 
   resolve(): Observable<any> {
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
-    const serviceSearch = new HttpParams();
-    serviceSearch.append('attendance_only', SERVICE_WITH_ATTENDANCE);
-    serviceSearch.append('school_id', this.session.g.get('school').id.toString());
+    const serviceSearch = new HttpParams()
+      .append('attendance_only', SERVICE_WITH_ATTENDANCE)
+      .append('school_id', this.session.g.get('school').id.toString());
 
     const servicesList$ = this.service
       .getServices(undefined, undefined, serviceSearch)

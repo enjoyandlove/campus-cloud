@@ -17,9 +17,9 @@ export class CPLocationsService {
   constructor(public locationsService: LocationsService, public session: CPSession) {}
 
   getLocations(input: string) {
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id);
-    search.append('search_str', input);
+    const search = new HttpParams()
+      .append('school_id', this.session.g.get('school').id)
+      .append('search_str', input);
 
     const results: Array<any> = [
       {

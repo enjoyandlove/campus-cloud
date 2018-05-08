@@ -80,8 +80,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    const search: HttpParams = new HttpParams();
-    search.append('school_id', this.school.id.toString());
+    const search: HttpParams = new HttpParams().append('school_id', this.school.id.toString());
 
     const stores$ = this.storeService.getStores(search);
 
@@ -255,11 +254,10 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   }
 
   getManagersByHostId(storeOrClubId): Observable<any> {
-    const search: HttpParams = new HttpParams();
-
-    search.append('school_id', this.school.id.toString());
-    search.append('store_id', storeOrClubId);
-    search.append('privilege_type', this.utils.getPrivilegeType(this.isOrientation));
+    const search: HttpParams = new HttpParams()
+      .append('school_id', this.school.id.toString())
+      .append('store_id', storeOrClubId)
+      .append('privilege_type', this.utils.getPrivilegeType(this.isOrientation));
 
     return this.adminService
       .getAdminByStoreId(search)
@@ -428,10 +426,11 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       _events.push(_event);
     });
 
-    const search = new HttpParams();
+    let search = new HttpParams();
     if (this.orientationId) {
-      search.append('school_id', this.session.g.get('school').id);
-      search.append('calendar_id', this.orientationId.toString());
+      search = search
+        .append('school_id', this.session.g.get('school').id)
+        .append('calendar_id', this.orientationId.toString());
     }
 
     this.service.createEvent(_events, search).subscribe(

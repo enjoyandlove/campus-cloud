@@ -43,7 +43,6 @@ describe('OrientationProgramDeleteComponent', () => {
           component = fixture.componentInstance;
           service = TestBed.get(OrientationService);
 
-          search = new HttpParams();
           component.orientationProgram = {
             id: 84,
             name: 'Hello World',
@@ -52,7 +51,10 @@ describe('OrientationProgramDeleteComponent', () => {
 
           component.session.g.set('school', mockSchool);
           programId = component.orientationProgram.id;
-          search.append('school_id', component.session.g.get('school').id.toString());
+          search = new HttpParams().append(
+            'school_id',
+            component.session.g.get('school').id.toString()
+          );
         });
     })
   );

@@ -48,15 +48,16 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
   }
 
   public fetch() {
-    const search = new HttpParams();
-    search.append('event_id', this.event.id);
-    search.append('sort_field', this.state.sort_field);
-    search.append('sort_direction', this.state.sort_direction);
-    search.append('search_text', this.state.search_text);
+    let search = new HttpParams()
+      .append('event_id', this.event.id)
+      .append('sort_field', this.state.sort_field)
+      .append('sort_direction', this.state.sort_direction)
+      .append('search_text', this.state.search_text);
 
     if (this.isOrientation) {
-      search.append('school_id', this.session.g.get('school').id);
-      search.append('calendar_id', this.orientationId.toString());
+      search = search
+        .append('school_id', this.session.g.get('school').id)
+        .append('calendar_id', this.orientationId.toString());
     }
     const stream$ = this.service.getEventAttendanceByEventId(
       this.startRange,
@@ -89,13 +90,12 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
   }
 
   onCreateExcel() {
-    const search = new HttpParams();
-    search.append('event_id', this.event.id);
-    search.append('all', '1');
+    let search = new HttpParams().append('event_id', this.event.id).append('all', '1');
 
     if (this.isOrientation) {
-      search.append('school_id', this.session.g.get('school').id);
-      search.append('calendar_id', this.orientationId.toString());
+      search = search
+        .append('school_id', this.session.g.get('school').id)
+        .append('calendar_id', this.orientationId.toString());
     }
     const stream$ = this.service.getEventAttendanceByEventId(
       this.startRange,

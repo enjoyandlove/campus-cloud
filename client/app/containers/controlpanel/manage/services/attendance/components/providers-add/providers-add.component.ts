@@ -29,8 +29,7 @@ export class ServicesProviderAddComponent implements OnInit {
   ) {}
 
   onSubmit() {
-    const search = new HttpParams();
-    search.append('service_id', this.serviceId.toString());
+    const search = new HttpParams().append('service_id', this.serviceId.toString());
 
     this.providersService.createProvider(this.form.value, search).subscribe((res) => {
       this.form.reset();

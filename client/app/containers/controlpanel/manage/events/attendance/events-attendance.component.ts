@@ -43,10 +43,11 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   }
 
   public fetch() {
-    const search = new HttpParams();
+    let search = new HttpParams();
     if (this.orientationId) {
-      search.append('school_id', this.session.g.get('school').id);
-      search.append('calendar_id', this.orientationId.toString());
+      search = search
+        .append('school_id', this.session.g.get('school').id)
+        .append('calendar_id', this.orientationId.toString());
     }
 
     super.fetchData(this.service.getEventById(this.eventId, search)).then((event) => {

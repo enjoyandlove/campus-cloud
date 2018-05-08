@@ -82,11 +82,14 @@ export class LinksListComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    const search = new HttpParams();
-    search.append('search_str', this.state.search_str);
-    search.append('sort_field', this.state.sort_field);
-    search.append('sort_direction', this.state.sort_direction);
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams({
+      fromObject: {
+        search_str: this.state.search_str,
+        sort_field: this.state.sort_field,
+        sort_direction: this.state.sort_direction,
+        school_id: this.session.g.get('school').id.toString()
+      }
+    });
 
     const end = this.endRange;
     const start = this.startRange;

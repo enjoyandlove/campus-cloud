@@ -65,14 +65,16 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
   }
 
   fetch() {
-    const search = new HttpParams();
     const user_list_id = this.state.user_list_id ? this.state.user_list_id.toString() : null;
-
-    search.append('school_id', this.session.g.get('school').id.toString());
-    search.append('search_str', this.state.search_str);
-    search.append('sort_field', this.state.sort_field);
-    search.append('sort_direction', this.state.sort_direction);
-    search.append('user_list_id', user_list_id);
+    const search = new HttpParams({
+      fromObject: {
+        school_id: this.session.g.get('school').id.toString(),
+        search_str: this.state.search_str,
+        sort_field: this.state.sort_field,
+        sort_direction: this.state.sort_direction,
+        user_list_id: user_list_id
+      }
+    });
 
     const stream$ = this.service.getStudentsByList(search, this.startRange, this.endRange);
 

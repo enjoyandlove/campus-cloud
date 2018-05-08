@@ -120,8 +120,6 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    const search = new HttpParams();
-
     const flagged = this.state.flagged_by_users_only
       ? this.state.flagged_by_users_only.toString()
       : null;
@@ -132,15 +130,14 @@ export class FeedsComponent extends BaseComponent implements OnInit {
 
     const type = this.state.post_types ? this.state.post_types.toString() : null;
 
-    search.append('post_types', type);
-    search.append('flagged_by_users_only', flagged);
-    search.append('removed_by_moderators_only', removed);
+    let search = new HttpParams()
+      .append('post_types', type)
+      .append('flagged_by_users_only', flagged)
+      .append('removed_by_moderators_only', removed);
 
-    if (this.state.isCampusThread) {
-      search.append('school_id', this.session.g.get('school').id.toString());
-    } else {
-      search.append('group_id', this.state.wall_type.toString());
-    }
+    search = this.state.isCampusThread
+      ? search.append('school_id', this.session.g.get('school').id.toString())
+      : search.append('group_id', this.state.wall_type.toString());
 
     const stream$ = this.doAdvancedSearch(search);
 
@@ -159,8 +156,10 @@ export class FeedsComponent extends BaseComponent implements OnInit {
     const campusThread$ = this.service.getCampusWallFeeds(this.startRange, this.endRange, search);
 
     if (this.state.isCampusThread) {
-      const _search = new HttpParams();
-      _search.append('school_id', this.session.g.get('school').id.toString());
+      const _search = new HttpParams().append(
+        'school_id',
+        this.session.g.get('school').id.toString()
+      );
 
       const channels$ = this.service.getChannelsBySchoolId(1, 1000, _search);
 

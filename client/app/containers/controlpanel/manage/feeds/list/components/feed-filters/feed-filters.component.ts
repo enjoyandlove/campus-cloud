@@ -71,8 +71,7 @@ export class FeedFiltersComponent implements OnInit {
   }
 
   private fetch() {
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     this.walls$ = this.feedsService
       .getSocialGroups(search)
@@ -213,14 +212,13 @@ export class FeedFiltersComponent implements OnInit {
 
     if (this.clubId || this.orientationId) {
       let group_id;
-      const search = new HttpParams();
-      search.append('school_id', this.session.g.get('school').id.toString());
+      let search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
       if (this.clubId) {
         group_id = this.clubId;
-        search.append('store_id', this.clubId.toString());
+        search = search.append('store_id', this.clubId.toString());
       } else if (this.orientationId) {
         group_id = this.orientationId;
-        search.append('calendar_id', this.orientationId.toString());
+        search = search.append('calendar_id', this.orientationId.toString());
       }
 
       const getGroup = this.feedsService.getSocialGroups(search).toPromise();

@@ -64,17 +64,15 @@ export class EngagementComponent extends BaseComponent implements OnInit {
   }
 
   buildSearchHeaders(): HttpParams {
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
-
-    search.append(
-      this.filterState.engagement.data.queryParam,
-      this.filterState.engagement.data.value
-    );
-
-    search.append('user_list_id', this.filterState.for.listId);
-    search.append('start', `${this.filterState.range.payload.range.start}`);
-    search.append('end', `${this.filterState.range.payload.range.end}`);
+    const search = new HttpParams({
+      fromObject: {
+        school_id: this.session.g.get('school').id.toString(),
+        user_list_id: this.filterState.for.listId,
+        start: `${this.filterState.range.payload.range.start}`,
+        end: `${this.filterState.range.payload.range.end}`,
+        [this.filterState.engagement.data.queryParam]: this.filterState.engagement.data.value
+      }
+    });
 
     return search;
   }
@@ -105,11 +103,11 @@ export class EngagementComponent extends BaseComponent implements OnInit {
 
   onDownload(cohort) {
     let fileName = 'all_download_data';
-    const search = this.buildSearchHeaders();
-    search.append('download', '1');
+    let search = this.buildSearchHeaders();
+    search = search.append('download', '1');
 
     if (cohort) {
-      search.append('cohort', cohort);
+      search = search.append('cohort', cohort);
 
       switch (cohort) {
         case REPEAT_ENGAGEMENT:

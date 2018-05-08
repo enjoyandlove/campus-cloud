@@ -57,8 +57,7 @@ export class LocationsUpdateComponent implements OnInit {
   }
 
   doSubmit() {
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     this.service.updateLocation(this.form.value, this.location.id, search).subscribe((_) => {
       $('#locationsUpdate').modal('hide');

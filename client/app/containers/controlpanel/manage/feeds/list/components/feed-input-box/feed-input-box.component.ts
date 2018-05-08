@@ -57,8 +57,7 @@ export class FeedInputBoxComponent implements OnInit {
     public cpTracking: CPTrackingService,
     private fileUploadService: FileUploadService
   ) {
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     this.stores$ = this.storeService.getStores(search);
 

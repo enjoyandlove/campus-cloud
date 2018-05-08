@@ -101,10 +101,10 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
   }
 
   fetch() {
-    const search = new HttpParams();
-    search.append('start', this._dates.start);
-    search.append('end', this._dates.end);
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams()
+      .append('start', this._dates.start)
+      .append('end', this._dates.end)
+      .append('school_id', this.session.g.get('school').id);
 
     const stream$ = this.service.getDownloads(search);
 

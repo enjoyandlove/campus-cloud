@@ -64,8 +64,7 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
 
   doSubmit() {
     this.isError = false;
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     const data = Object.assign({}, this.form.value);
 
@@ -116,9 +115,12 @@ export class ListsCreateComponent implements OnInit, OnDestroy {
   }
 
   onSearch(query) {
-    const search = new HttpParams();
-    search.append('search_str', query);
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams({
+      fromObject: {
+        search_str: query,
+        school_id: this.session.g.get('school').id.toString()
+      }
+    });
 
     this.service
       .getUsers(search)

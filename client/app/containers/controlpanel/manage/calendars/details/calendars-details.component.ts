@@ -109,15 +109,19 @@ export class CalendarsDetailComponent extends BaseComponent implements OnInit {
   ngOnInit() {}
 
   private fetch() {
-    const itemSearch = new HttpParams();
-    const calendarSearch = new HttpParams();
-
-    itemSearch.append('search_str', this.state.search_str);
-    itemSearch.append('sort_field', this.state.sort_field);
-    itemSearch.append('sort_direction', this.state.sort_direction);
-    itemSearch.append('academic_calendar_id', this.calendarId.toString());
-    itemSearch.append('school_id', this.session.g.get('school').id.toString());
-    calendarSearch.append('school_id', this.session.g.get('school').id.toString());
+    const itemSearch = new HttpParams({
+      fromObject: {
+        search_str: this.state.search_str,
+        sort_field: this.state.sort_field,
+        sort_direction: this.state.sort_direction,
+        academic_calendar_id: this.calendarId.toString(),
+        school_id: this.session.g.get('school').id.toString()
+      }
+    });
+    const calendarSearch = new HttpParams().append(
+      'school_id',
+      this.session.g.get('school').id.toString()
+    );
 
     const calendar$ = this.service.getCalendarById(this.calendarId, calendarSearch);
     const items$ = this.service.getItemsByCalendarId(this.startRange, this.endRange, itemSearch);

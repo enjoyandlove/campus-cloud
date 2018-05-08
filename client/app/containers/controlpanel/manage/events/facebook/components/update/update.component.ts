@@ -59,8 +59,7 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
   }
 
   onBulkUpdate(data) {
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     const _links = [];
 
@@ -98,15 +97,14 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
   private fetch() {
     this.loading = true;
     this.isEdited = false;
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    let search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     if (this.storeId) {
-      search.append('store_id', this.storeId.toString());
+      search = search.append('store_id', this.storeId.toString());
     }
 
     if (this.clubId) {
-      search.append('store_id', this.clubId.toString());
+      search = search.append('store_id', this.clubId.toString());
     }
 
     const links$ = this.eventsService.getFacebookEvents(search).map((links: any) => {

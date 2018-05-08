@@ -23,8 +23,7 @@ export class CalendarsDeleteComponent implements OnInit {
   ) {}
 
   onDelete() {
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     this.calendarService.deleteCalendar(this.calendar.id, search).subscribe(() => {
       this.deleted.emit(this.calendar.id);

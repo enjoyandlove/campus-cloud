@@ -99,8 +99,7 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
   doSubmit() {
     this.isError = false;
 
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     let data = {
       store_id: this.form.value.store_id,

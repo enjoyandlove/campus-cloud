@@ -101,12 +101,9 @@ export class StoreService extends BaseService {
     const ACTIVE_CLUBS = '1';
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CLUBS}/1;1000`;
 
-    if (!search) {
-      search = new HttpParams();
-      search.append('status', ACTIVE_CLUBS);
-    } else {
-      search.append('status', ACTIVE_CLUBS);
-    }
+    search = search
+      ? search.append('status', ACTIVE_CLUBS)
+      : new HttpParams().append('status', ACTIVE_CLUBS);
 
     return super
       .get(url, search)

@@ -29,8 +29,7 @@ export class FacebookEventsCreateComponent implements OnInit {
 
   onSubmit(data) {
     this.errors = [];
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     this.eventsService.createFacebookEvent(data, search).subscribe(
       (_) => {

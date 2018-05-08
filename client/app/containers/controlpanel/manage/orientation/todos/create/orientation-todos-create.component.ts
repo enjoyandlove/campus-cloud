@@ -56,9 +56,9 @@ export class OrientationTodosCreateComponent implements OnInit {
   }
 
   onSubmit() {
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id);
-    search.append('calendar_id', this.orientationId.toString());
+    const search = new HttpParams()
+      .append('school_id', this.session.g.get('school').id)
+      .append('calendar_id', this.orientationId.toString());
 
     this.service.createTodo(this.form.value, search).subscribe((createdTodo) => {
       this.created.emit(createdTodo);

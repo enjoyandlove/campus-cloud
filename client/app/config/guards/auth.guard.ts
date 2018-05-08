@@ -20,8 +20,9 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   preLoadUser(): Promise<any> {
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams({
+      fromObject: { school_id: this.session.g.get('school').id.toString() }
+    });
 
     return this.adminService
       .getAdmins(1, 1, search)
@@ -64,8 +65,9 @@ export class AuthGuard implements CanActivate {
   }
 
   fetchStores(): Promise<any> {
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams({
+      fromObject: { school_id: this.session.g.get('school').id.toString() }
+    });
 
     return this.storeService.getStores(search).toPromise();
   }

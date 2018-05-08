@@ -59,8 +59,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
 
   private fetch() {
     const school = this.session.g.get('school');
-    const search: HttpParams = new HttpParams();
-    search.append('school_id', school.id.toString());
+    const search: HttpParams = new HttpParams().append('school_id', school.id.toString());
 
     const stores$ = this.storeService.getStores(search);
 
@@ -79,11 +78,10 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
   }
 
   getManagersByHostId(storeId) {
-    const search: HttpParams = new HttpParams();
-
-    search.append('school_id', this.school.id.toString());
-    search.append('store_id', storeId);
-    search.append('privilege_type', this.utils.getPrivilegeType(this.isOrientation));
+    const search: HttpParams = new HttpParams()
+      .append('school_id', this.school.id.toString())
+      .append('store_id', storeId)
+      .append('privilege_type', this.utils.getPrivilegeType(this.isOrientation));
 
     return this.adminService
       .getAdminByStoreId(search)

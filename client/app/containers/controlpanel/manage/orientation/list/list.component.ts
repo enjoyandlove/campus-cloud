@@ -94,11 +94,11 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
   }
 
   public fetch() {
-    const search = new HttpParams();
-    search.append('search_str', this.state.search_str);
-    search.append('sort_field', this.state.sort_field);
-    search.append('sort_direction', this.state.sort_direction);
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams()
+      .append('search_str', this.state.search_str)
+      .append('sort_field', this.state.sort_field)
+      .append('sort_direction', this.state.sort_direction)
+      .append('school_id', this.session.g.get('school').id.toString());
 
     super
       .fetchData(this.service.getPrograms(this.startRange, this.endRange, search))

@@ -63,12 +63,15 @@ describe('OrientationInfoComponent', () => {
           fixture = TestBed.createComponent(OrientationInfoComponent);
           component = fixture.componentInstance;
           service = TestBed.get(OrientationService);
-          search = new HttpParams();
 
           component.loading = false;
           component.orientationId = 84;
           component.session.g.set('school', mockSchool);
-          search.append('school_id', component.session.g.get('school').id.toString());
+
+          search = new HttpParams().append(
+            'school_id',
+            component.session.g.get('school').id.toString()
+          );
         });
     })
   );

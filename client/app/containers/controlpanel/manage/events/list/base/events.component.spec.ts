@@ -58,16 +58,16 @@ describe('EventsListComponent', () => {
             attendance_only: 0
           });
 
-          search = new HttpParams();
-          search.append('start', component.state.start.toString());
-          search.append('end', component.state.end.toString());
-          search.append('calendar_id', component.orientationId);
-          search.append('school_id', component.session.g.get('school').id.toString());
-          search.append('search_str', component.state.search_str);
-          search.append('exclude_current', component.state.exclude_current);
-          search.append('attendance_only', component.state.attendance_only.toString());
-          search.append('sort_field', component.state.sort_field);
-          search.append('sort_direction', component.state.sort_direction);
+          search = new HttpParams()
+            .append('start', component.state.start.toString())
+            .append('end', component.state.end.toString())
+            .append('calendar_id', component.orientationId.toString())
+            .append('school_id', component.session.g.get('school').id.toString())
+            .append('search_str', component.state.search_str)
+            .append('exclude_current', component.state.exclude_current.toString())
+            .append('attendance_only', component.state.attendance_only.toString())
+            .append('sort_field', component.state.sort_field)
+            .append('sort_direction', component.state.sort_direction);
         });
     })
   );

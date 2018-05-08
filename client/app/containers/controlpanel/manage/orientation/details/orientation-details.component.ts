@@ -32,8 +32,7 @@ export class OrientationDetailsComponent extends BaseComponent implements OnInit
   }
 
   private fetch() {
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     super.fetchData(this.service.getProgramById(this.orientationId, search)).then((program) => {
       this.store.dispatch({

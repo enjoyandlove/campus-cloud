@@ -1,8 +1,8 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { HttpParams } from '@angular/common/http';
 
 import { CPSession } from '../../../../../session';
 import { AnnouncementsService } from '../announcements.service';
@@ -306,8 +306,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     this.isError = false;
     $('#announcementConfirmModal').modal('hide');
 
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     const prefix = this.subject_prefix.label ? this.subject_prefix.label.toUpperCase() : '';
 

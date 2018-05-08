@@ -53,9 +53,9 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
   }
 
   fetch() {
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
-    search.append('category_id', this.isAthletic.toString());
+    const search = new HttpParams()
+      .append('school_id', this.session.g.get('school').id.toString())
+      .append('category_id', this.isAthletic.toString());
 
     super.fetchData(this.clubsService.getClubById(this.clubId, search)).then((res) => {
       this.club = res.data;
@@ -100,10 +100,8 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
 
   onFileAdded(file) {
     const headers = new HttpHeaders();
-    const search = new HttpParams();
     const validate = this.fileService.validFile(file);
-
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.FILE_UPLOAD}/`;
 
     const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;

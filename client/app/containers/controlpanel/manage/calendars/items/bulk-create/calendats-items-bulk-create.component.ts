@@ -51,9 +51,9 @@ export class CalendarsItemsBulkCreateComponent extends BaseComponent implements 
   }
 
   onSubmit(items: { items: IItem[] }) {
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id);
-    search.append('academic_calendar_id', this.calendarId.toString());
+    const search = new HttpParams()
+      .append('school_id', this.session.g.get('school').id)
+      .append('academic_calendar_id', this.calendarId.toString());
 
     const itemsWithNoNullValues = items.items.map((item) => CPObj.cleanNullValues(item));
 

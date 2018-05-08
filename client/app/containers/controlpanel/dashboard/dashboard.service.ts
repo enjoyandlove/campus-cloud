@@ -22,11 +22,9 @@ export class DashboardService extends BaseService {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.DASHBORD_USER_ACQUISITION}/`;
 
     return super.get(url, search).map((data) => {
-      const jsonData = data.json();
-
       return {
-        series: [jsonData.downloads.series, jsonData.registrations.series],
-        labels: jsonData.downloads.labels
+        series: [data.downloads.series, data.registrations.series],
+        labels: data.downloads.labels
       };
     });
   }
@@ -40,13 +38,11 @@ export class DashboardService extends BaseService {
         labels: []
       };
 
-      const jsonData = data.json();
-
-      res.series.push([jsonData.wall_post_likes]);
-      res.series.push([jsonData.campus_posts]);
-      res.series.push([jsonData.connections]);
-      res.series.push([jsonData.wall_comments]);
-      res.series.push([jsonData.messages]);
+      res.series.push([data.wall_post_likes]);
+      res.series.push([data.campus_posts]);
+      res.series.push([data.connections]);
+      res.series.push([data.wall_comments]);
+      res.series.push([data.messages]);
 
       res.labels.push('Messages', 'Comments', 'Connections', 'Wall Posts', 'Likes');
 

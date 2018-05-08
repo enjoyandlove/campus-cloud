@@ -49,9 +49,9 @@ export class CalendarsItemCreateComponent implements OnInit {
   }
 
   onSave(newItem: IItem) {
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id);
-    search.append('academic_calendar_id', this.calendarId.toString());
+    const search = new HttpParams()
+      .append('school_id', this.session.g.get('school').id)
+      .append('academic_calendar_id', this.calendarId.toString());
 
     this.service
       .createItem(newItem, search)

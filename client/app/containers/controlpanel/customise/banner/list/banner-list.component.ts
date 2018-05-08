@@ -76,8 +76,7 @@ export class BannerListComponent extends BaseComponent implements OnInit {
   }
 
   loadImage() {
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     const stream$ = this.service.getCoverImage(search);
     super.fetchData(stream$).then((res) => {
@@ -121,8 +120,7 @@ export class BannerListComponent extends BaseComponent implements OnInit {
       .then((base64ImageData) => this.uploadBase64Image(base64ImageData))
       .then((savedBase64Image) => {
         this.uploading = false;
-        const search = new HttpParams();
-        search.append('school_id', this.session.g.get('school').id);
+        const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
         return this.service.updateSchoolImage(savedBase64Image.image_url, search).toPromise();
       })

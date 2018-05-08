@@ -39,9 +39,12 @@ describe('OrientationTodosDeleteComponent', () => {
           component = fixture.componentInstance;
           service = TestBed.get(TodosService);
 
-          search = new HttpParams();
           component.session.g.set('school', mockSchool);
-          search.append('school_id', component.session.g.get('school').id.toString());
+
+          search = new HttpParams().append(
+            'school_id',
+            component.session.g.get('school').id.toString()
+          );
 
           component.todo = {
             id: 54856,

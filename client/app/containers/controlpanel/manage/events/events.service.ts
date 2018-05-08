@@ -32,8 +32,7 @@ export class EventsService extends BaseService {
   }
 
   getEventsByHostId(hostId: string) {
-    const search = new HttpParams();
-    search.append('store_id', hostId);
+    const search = new HttpParams().append('store_id', hostId);
 
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT}`;
 

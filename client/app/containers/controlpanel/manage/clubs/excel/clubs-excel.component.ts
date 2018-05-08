@@ -131,8 +131,7 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
       return;
     }
 
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     this.clubService.createClub(this.form.value.clubs, search).subscribe(
       (_) => this.router.navigate(['/manage/' + this.labels.club_athletic]),

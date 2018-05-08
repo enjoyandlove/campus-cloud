@@ -51,8 +51,7 @@ export class ListsEditComponent implements OnInit {
   }
 
   doSubmit() {
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     let data = Object.assign({}, this.form.value);
 
@@ -113,9 +112,9 @@ export class ListsEditComponent implements OnInit {
   }
 
   onSearch(query) {
-    const search = new HttpParams();
-    search.append('search_str', query);
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams()
+      .append('search_str', query)
+      .append('school_id', this.session.g.get('school').id.toString());
 
     this.service
       .getUsers(search)

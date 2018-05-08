@@ -46,8 +46,7 @@ export class EngagementComposeComponent implements OnInit {
     private storeService: StoreService
   ) {
     const school = this.session.g.get('school');
-    const search: HttpParams = new HttpParams();
-    search.append('school_id', school.id.toString());
+    const search = new HttpParams().append('school_id', school.id.toString());
 
     this.stores$ = this.storeService.getStores(search);
   }
@@ -63,8 +62,7 @@ export class EngagementComposeComponent implements OnInit {
   doSubmit() {
     let data = this.form.value;
     this.isError = false;
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     data = Object.assign({}, data, {
       message: `${data.message} ${this.sendAsName}`

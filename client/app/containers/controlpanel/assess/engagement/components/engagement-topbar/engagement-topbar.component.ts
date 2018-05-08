@@ -1,4 +1,3 @@
-import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 import { OnInit, Output, Component, EventEmitter } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
@@ -6,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { CPSession } from '../../../../../../session';
 import { CPDate } from '../../../../../../shared/utils/date';
+import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 
 interface IState {
   engagement: {

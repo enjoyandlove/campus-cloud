@@ -86,21 +86,20 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    const groupSearch = new HttpParams();
-    const memberSearch = new HttpParams();
     const schoolId = this.session.g.get('school').id.toString();
     const calendar_id = this.orientationId ? this.orientationId.toString() : null;
 
-    memberSearch.append('school_id', schoolId);
-    memberSearch.append('sort_field', this.state.sort_field);
-    memberSearch.append('search_str', this.state.search_str);
-    memberSearch.append('sort_direction', this.state.sort_direction);
-    memberSearch.append('category_id', this.isAthletic.toString());
+    const memberSearch = new HttpParams()
+      .append('school_id', schoolId)
+      .append('sort_field', this.state.sort_field)
+      .append('sort_direction', this.state.sort_direction)
+      .append('category_id', this.isAthletic.toString());
 
-    groupSearch.append('store_id', this.clubId);
-    groupSearch.append('school_id', schoolId);
-    groupSearch.append('calendar_id', calendar_id);
-    groupSearch.append('category_id', this.isAthletic.toString());
+    const groupSearch = new HttpParams()
+      .append('store_id', this.clubId)
+      .append('school_id', schoolId)
+      .append('calendar_id', calendar_id)
+      .append('category_id', this.isAthletic.toString());
 
     const socialGroupDetails$ = this.membersService.getSocialGroupDetails(groupSearch);
 

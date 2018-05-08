@@ -53,10 +53,10 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    const search: HttpParams = new HttpParams();
-    search.append('school_id', this.school.id.toString());
-    search.append('store_id', this.serviceId.toString());
-    search.append('privilege_type', CP_PRIVILEGES_MAP.services.toString());
+    const search: HttpParams = new HttpParams()
+      .append('school_id', this.school.id.toString())
+      .append('store_id', this.serviceId.toString())
+      .append('privilege_type', CP_PRIVILEGES_MAP.services.toString());
 
     const service$ = this.serviceService.getServiceById(this.serviceId);
 

@@ -57,9 +57,9 @@ export class CalendarsItemsEditComponent extends BaseComponent implements OnInit
   }
 
   onEdit(editedItem) {
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id);
-    search.append('academic_calendar_id', this.calendarId.toString());
+    const search = new HttpParams()
+      .append('school_id', this.session.g.get('school').id)
+      .append('academic_calendar_id', this.calendarId.toString());
 
     this.service
       .editItem(this.itemId, editedItem, search)
@@ -88,9 +88,9 @@ export class CalendarsItemsEditComponent extends BaseComponent implements OnInit
   }
 
   fetch() {
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id);
-    search.append('academic_calendar_id', this.calendarId.toString());
+    const search = new HttpParams()
+      .append('school_id', this.session.g.get('school').id)
+      .append('academic_calendar_id', this.calendarId.toString());
 
     const item$ = this.service.getItemById(this.itemId, search);
 

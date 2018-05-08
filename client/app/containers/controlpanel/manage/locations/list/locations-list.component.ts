@@ -41,11 +41,11 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    const search = new HttpParams();
-    search.append('search_str', this.state.search_str);
-    search.append('sort_field', this.state.sort_field);
-    search.append('sort_direction', this.state.sort_direction);
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams()
+      .append('search_str', this.state.search_str)
+      .append('sort_field', this.state.sort_field)
+      .append('sort_direction', this.state.sort_direction)
+      .append('school_id', this.session.g.get('school').id);
 
     const stream$ = this.locationsService.getLocations(this.startRange, this.endRange, search);
 

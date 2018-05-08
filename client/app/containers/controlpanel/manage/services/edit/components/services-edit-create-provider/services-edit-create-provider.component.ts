@@ -18,8 +18,7 @@ export class ServicesEditCreateProviderComponent implements OnInit {
   constructor(private fb: FormBuilder, private providersService: ProvidersService) {}
 
   onSubmit(data) {
-    const search = new HttpParams();
-    search.append('service_id', this.serviceId.toString());
+    const search = new HttpParams().append('service_id', this.serviceId.toString());
 
     this.providersService.createProvider(data, search).subscribe((res) => {
       this.created.emit(res);

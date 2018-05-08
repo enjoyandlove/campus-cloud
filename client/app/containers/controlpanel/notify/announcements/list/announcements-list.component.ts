@@ -122,14 +122,14 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
   }
 
   private fetch() {
-    const search = new HttpParams();
     const type = this.state.type !== null ? this.state.type.toString() : null;
 
-    search.append('priority', type);
-    search.append('search_str', this.state.query);
-    search.append('sort_field', this.state.sort_field);
-    search.append('sort_direction', this.state.sort_direction);
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams()
+      .append('priority', type)
+      .append('search_str', this.state.query)
+      .append('sort_field', this.state.sort_field)
+      .append('sort_direction', this.state.sort_direction)
+      .append('school_id', this.session.g.get('school').id.toString());
 
     super
       .fetchData(this.service.getAnnouncements(search, this.startRange, this.endRange))

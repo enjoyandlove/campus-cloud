@@ -35,9 +35,9 @@ export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent 
   }
 
   ngOnInit() {
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
-    search.append('category_id', isClubAthletic.club.toString());
+    const search = new HttpParams()
+      .append('school_id', this.session.g.get('school').id.toString())
+      .append('category_id', isClubAthletic.club.toString());
 
     this.service
       .getClubs(search, 1, 1000)

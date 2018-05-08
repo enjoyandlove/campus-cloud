@@ -177,10 +177,11 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    const search = new HttpParams();
+    let search = new HttpParams();
     if (this.orientationId) {
-      search.append('school_id', this.session.g.get('school').id);
-      search.append('calendar_id', this.orientationId.toString());
+      search = search
+        .append('school_id', this.session.g.get('school').id)
+        .append('calendar_id', this.orientationId.toString());
     }
 
     this.service.updateEvent(data, this.eventId, search).subscribe(
@@ -303,11 +304,11 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   fetchManagersBySelectedStore(storeId) {
-    const search: HttpParams = new HttpParams();
     storeId = null;
-    search.append('school_id', this.school.id.toString());
-    search.append('store_id', storeId);
-    search.append('privilege_type', this.utils.getPrivilegeType(this.isOrientation));
+    const search: HttpParams = new HttpParams()
+      .append('school_id', this.school.id.toString())
+      .append('store_id', storeId)
+      .append('privilege_type', this.utils.getPrivilegeType(this.isOrientation));
 
     this.adminService
       .getAdminByStoreId(search)
@@ -337,9 +338,9 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     let stores$ = Observable.of([]);
     const school = this.session.g.get('school');
     const orientationId = this.orientationId ? this.orientationId.toString() : null;
-    const search: HttpParams = new HttpParams();
-    search.append('school_id', school.id.toString());
-    search.append('calendar_id', orientationId);
+    const search: HttpParams = new HttpParams()
+      .append('school_id', school.id.toString())
+      .append('calendar_id', orientationId);
 
     if (!this.isClub && !this.isService && !this.isOrientation) {
       stores$ = this.storeService.getStores(search);

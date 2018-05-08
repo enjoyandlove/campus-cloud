@@ -127,7 +127,6 @@ export class EventsComponent extends BaseComponent {
   buildHeaders() {
     const end = this.endRange;
     const start = this.startRange;
-    const search = new HttpParams();
 
     const exclude_current = this.state.exclude_current
       ? this.state.exclude_current.toString()
@@ -140,17 +139,18 @@ export class EventsComponent extends BaseComponent {
       store_id = this.storeId.toString();
     }
 
-    search.append('start', this.state.start.toString());
-    search.append('end', this.state.end.toString());
-    search.append('store_id', store_id);
-    search.append('calendar_id', calendar_id);
-    search.append('school_id', this.session.g.get('school').id.toString());
-    search.append('search_str', this.state.search_str);
-    search.append('exclude_current', exclude_current);
-    search.append('attendance_only', this.state.attendance_only.toString());
+    const search = new HttpParams()
+      .append('start', this.state.start.toString())
+      .append('end', this.state.end.toString())
+      .append('store_id', store_id)
+      .append('calendar_id', calendar_id)
+      .append('school_id', this.session.g.get('school').id.toString())
+      .append('search_str', this.state.search_str)
+      .append('exclude_current', exclude_current)
+      .append('attendance_only', this.state.attendance_only.toString())
 
-    search.append('sort_field', this.state.sort_field);
-    search.append('sort_direction', this.state.sort_direction);
+      .append('sort_field', this.state.sort_field)
+      .append('sort_direction', this.state.sort_direction);
 
     this.fetch(this.service.getEvents(start, end, search));
   }

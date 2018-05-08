@@ -33,11 +33,10 @@ export class FeedSettingsComponent implements OnInit {
   }
 
   private fetch() {
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    let search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     if (this.orientationId) {
-      search.append('calendar_id', this.orientationId.toString());
+      search = search.append('calendar_id', this.orientationId.toString());
     }
 
     this.feedsService
@@ -103,8 +102,7 @@ export class FeedSettingsComponent implements OnInit {
   }
 
   updateGroup(control) {
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     this.feedsService
       .upodateSocialGroup(control.value.wall_id, control.value, search)

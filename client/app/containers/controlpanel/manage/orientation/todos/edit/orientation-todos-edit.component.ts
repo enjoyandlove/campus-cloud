@@ -55,8 +55,7 @@ export class OrientationTodosEditComponent implements OnInit {
   }
 
   onSubmit() {
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     this.service.editTodo(this.todo.id, this.form.value, search).subscribe((editedTodo) => {
       this.edited.emit(editedTodo);

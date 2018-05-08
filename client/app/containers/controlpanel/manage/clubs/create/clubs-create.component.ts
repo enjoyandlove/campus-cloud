@@ -58,9 +58,9 @@ export class ClubsCreateComponent implements OnInit {
       return;
     }
 
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
-    search.append('category_id', this.isAthletic.toString());
+    const search = new HttpParams()
+      .append('school_id', this.session.g.get('school').id.toString())
+      .append('category_id', this.isAthletic.toString());
 
     this.clubsService.createClub(this.form.value, search).subscribe(
       (res) => {

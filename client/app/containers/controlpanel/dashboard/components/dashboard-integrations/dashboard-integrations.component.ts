@@ -25,8 +25,7 @@ export class DashboardIntegrationsComponent extends BaseComponent implements OnI
   }
 
   fetch() {
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     const stream$ = this.service.getIntegrations(search);
     super.fetchData(stream$).then((res) => (this.data = res.data));

@@ -62,11 +62,11 @@ describe('OrientationListComponent', () => {
           component = fixture.componentInstance;
           component.session.g.set('school', mockSchool);
 
-          search = new HttpParams();
-          search.append('search_str', component.state.search_str);
-          search.append('sort_field', component.state.sort_field);
-          search.append('sort_direction', component.state.sort_direction);
-          search.append('school_id', component.session.g.get('school').id.toString());
+          search = new HttpParams()
+            .append('search_str', component.state.search_str)
+            .append('sort_field', component.state.sort_field)
+            .append('sort_direction', component.state.sort_direction)
+            .append('school_id', component.session.g.get('school').id.toString());
         });
     })
   );

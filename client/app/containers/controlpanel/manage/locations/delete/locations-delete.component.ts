@@ -18,8 +18,7 @@ export class LocationsDeleteComponent implements OnInit {
   constructor(public service: LocationsService, public session: CPSession) {}
 
   onDelete() {
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
     this.service.deleteLocationById(this.location.id, search).subscribe((_) => {
       this.locationDeleted.emit(this.location.id);
       $('#locationsDelete').modal('hide');

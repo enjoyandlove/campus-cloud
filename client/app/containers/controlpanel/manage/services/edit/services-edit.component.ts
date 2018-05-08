@@ -9,7 +9,6 @@ import { Observable } from 'rxjs/Observable';
 import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 import { CPSession, ISchool } from '../../../../../session';
-import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 import { CPMap } from '../../../../../shared/utils';
 import { ProvidersService } from '../providers.service';
 import { ServicesService } from '../services.service';
@@ -98,14 +97,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    const searchProviders = new HttpParams();
-    const searchAdmin = new HttpParams();
-
-    searchProviders.append('service_id', this.serviceId.toString());
-
-    searchAdmin.append('school_id', this.school.id.toString());
-    searchAdmin.append('store_id', this.serviceId.toString());
-    searchAdmin.append('privilege_type', CP_PRIVILEGES_MAP.events.toString());
+    const searchProviders = new HttpParams().append('service_id', this.serviceId.toString());
 
     const service$ = this.servicesService.getServiceById(this.serviceId);
     const providers$ = this.providersService.getProviders(1, 1000, searchProviders);
@@ -241,8 +233,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   deleteProvider(data: IServiceDeleteModal) {
     const controls = <FormArray>this.form.controls['providers'];
 
-    const search = new HttpParams();
-    search.append('service_id', this.serviceId.toString());
+    const search = new HttpParams().append('service_id', this.serviceId.toString());
 
     this.providersService.deleteProvider(data.id, search).subscribe(
       (_) => controls.removeAt(data.index),
@@ -380,7 +371,6 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       .switchMap((service) => {
         this.withAttendance = service.service_attendance;
         const providers = [];
-        const search = new HttpParams();
         const controls = <FormArray>this.form.controls['providers'];
         const providersControls = controls.controls;
 
@@ -393,7 +383,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
           });
         });
 
-        search.append('service_id', this.serviceId.toString());
+        const search = new HttpParams().append('service_id', this.serviceId.toString());
 
         return this.providersService.updateProvider(providers, search);
       })

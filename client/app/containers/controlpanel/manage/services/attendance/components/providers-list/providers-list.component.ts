@@ -65,11 +65,11 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
   }
 
   private fetch() {
-    const search = new HttpParams();
-    search.append('search_text', this.state.search_text);
-    search.append('service_id', this.serviceId.toString());
-    search.append('sort_field', this.state.sort_field);
-    search.append('sort_direction', this.state.sort_direction);
+    const search = new HttpParams()
+      .append('search_text', this.state.search_text)
+      .append('service_id', this.serviceId.toString())
+      .append('sort_field', this.state.sort_field)
+      .append('sort_direction', this.state.sort_direction);
 
     super
       .fetchData(this.providersService.getProviders(this.startRange, this.endRange, search))
@@ -102,9 +102,9 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
 
     this.download.subscribe((download) => {
       if (download) {
-        const search = new HttpParams();
-        search.append('service_id', this.serviceId.toString());
-        search.append('all', '1');
+        const search = new HttpParams()
+          .append('service_id', this.serviceId.toString())
+          .append('all', '1');
 
         const stream$ = this.providersService.getProviders(this.startRange, this.endRange, search);
 

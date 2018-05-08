@@ -55,8 +55,7 @@ export class CalendarsEditComponent implements OnInit {
   }
 
   onSubmit() {
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     this.service
       .editCalendar(this.calendar.id, this.form.value, search)

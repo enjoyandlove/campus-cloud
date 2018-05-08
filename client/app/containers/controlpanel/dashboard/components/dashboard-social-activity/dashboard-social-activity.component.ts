@@ -46,10 +46,10 @@ export class DashboardSocialActivyComponent extends BaseComponent implements OnI
   }
 
   fetch() {
-    const search = new HttpParams();
-    search.append('end', this._dates.end);
-    search.append('start', this._dates.start);
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams()
+      .append('end', this._dates.end)
+      .append('start', this._dates.start)
+      .append('school_id', this.session.g.get('school').id);
 
     const stream$ = this.service.getSocialActivity(search);
 

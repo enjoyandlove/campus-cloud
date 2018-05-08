@@ -34,8 +34,7 @@ export class TemplatesDeleteComponent implements OnInit {
 
   onDelete() {
     this.isError = false;
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     this.service.deleteTemplate(search, this.item.id).subscribe(
       (_) => {

@@ -71,8 +71,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
   }
 
   fetchStudentData() {
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     this.service.getStudentById(search, this.studentId).subscribe((student) => {
       this.student = student;
@@ -89,9 +88,9 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
   }
 
   fetch() {
-    const search = new HttpParams();
-    search.append('scope', this.state.scope.toString());
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams()
+      .append('scope', this.state.scope.toString())
+      .append('school_id', this.session.g.get('school').id.toString());
 
     const stream$ = this.service.getEngagements(
       search,
@@ -161,10 +160,10 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
   }
 
   onDownload() {
-    const search = new HttpParams();
-    search.append('scope', this.state.scope.toString());
-    search.append('all', DOWNLOAD_ALL_RECORDS.toString());
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams()
+      .append('scope', this.state.scope.toString())
+      .append('all', DOWNLOAD_ALL_RECORDS.toString())
+      .append('school_id', this.session.g.get('school').id.toString());
 
     const stream$ = this.service.getEngagements(
       search,
