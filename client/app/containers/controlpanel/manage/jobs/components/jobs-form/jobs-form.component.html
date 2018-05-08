@@ -143,7 +143,7 @@
               <div class="text-right">
                 <label class="error" *ngIf="formError">
                   <i class="material-icons">warning</i>
-                  {{ isDateError ? dateErrorMessage : cpI18n.translate('error_fill_out_marked_fields') }}
+                  {{ isDateError ? dateErrorMessage : validationError }}
                 </label>
                 <a [routerLink]="['/manage/jobs']"
                    class="cpbtn cpbtn--cancel" i18n>

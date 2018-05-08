@@ -2,6 +2,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
+import { JobsService } from '../../jobs.service';
 import { CPSession } from '../../../../../../session';
 import { CPDate } from '../../../../../../shared/utils';
 import { BaseComponent } from '../../../../../../base';
@@ -36,6 +37,7 @@ export class JobsFormComponent extends BaseComponent implements OnInit {
   employers$;
   isDateError;
   desiredStudy;
+  validationError;
   selectedEmployer;
   newEmployerTitle;
   existingEmployerTitle;
@@ -52,7 +54,8 @@ export class JobsFormComponent extends BaseComponent implements OnInit {
     public fb: FormBuilder,
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public utils: JobsUtilsService
+    public utils: JobsUtilsService,
+    public jobsService: JobsService
   ) {
     super();
   }
@@ -141,8 +144,8 @@ export class JobsFormComponent extends BaseComponent implements OnInit {
   _selectedEmployer() {
     const store_id = this.form.controls['store_id'].value;
     if (store_id) {
-      super.fetchData(this.employers$).then((employer) => {
-        this.selectedEmployer = employer.data.filter((emp) => emp.action === store_id)[0];
+      super.fetchData(this.employers$).then((employers) => {
+        this.selectedEmployer = employers.data.filter((employee) => employee.action === store_id)[0];
       });
     }
   }
@@ -151,15 +154,15 @@ export class JobsFormComponent extends BaseComponent implements OnInit {
     this.buildEmployerForm();
     this.newEmployerTitle = this.cpI18n.translate('jobs_new_employer');
     this.existingEmployerTitle = this.cpI18n.translate('jobs_existing_employer');
-
+    this.validationError = this.cpI18n.translate('error_fill_out_marked_fields');
     this.buttonData = {
       class: 'primary',
       text: this.cpI18n.translate('save')
     };
 
     this.jobsType = this.utils.getJobsType(true);
-    this.employers$ = this.utils.getEmployers('new');
     this.desiredStudy = this.utils.getDesiredStudy(true);
+    this.employers$ = this.jobsService.getEmployers('new');
 
     this._selectedEmployer();
     const _self = this;

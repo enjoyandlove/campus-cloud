@@ -1,16 +1,54 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Http } from '@angular/http';
+import { Http, URLSearchParams } from '@angular/http';
+import { CPSession } from '../../../../session';
+import { EmployerService } from './employers/employer.service';
+import { CPI18nService } from '../../../../shared/services';
 
 import { API } from '../../../../config/api';
 import { BaseService } from '../../../../base';
 
 @Injectable()
 export class JobsService extends BaseService {
-  constructor(http: Http, router: Router) {
+  constructor(
+    http: Http,
+    router: Router,
+    public session: CPSession,
+    public cpI18n: CPI18nService,
+    public employerService: EmployerService,
+    ) {
     super(http, router);
 
     Object.setPrototypeOf(this, JobsService.prototype);
+  }
+
+  getEmployers(label) {
+    const key = label === 'new' ? 'employers_new_employer' : 'employer_all_employers';
+    const search = new URLSearchParams();
+    search.append('school_id', this.session.g.get('school').id.toString());
+
+    return this.employerService
+      .getEmployers(1, 10000, search)
+      .startWith([{ label: this.cpI18n.translate(key) }])
+      .map((employers) => {
+        const _employers = [
+          {
+            label: this.cpI18n.translate(key),
+            action: null
+          }
+        ];
+
+        employers.forEach((employer) => {
+          const _employer = {
+            label: employer.name,
+            action: employer.id
+          };
+
+          _employers.push(_employer);
+        });
+
+        return _employers;
+      });
   }
 
   getJobs(startRage: number, endRage: number, search: URLSearchParams) {

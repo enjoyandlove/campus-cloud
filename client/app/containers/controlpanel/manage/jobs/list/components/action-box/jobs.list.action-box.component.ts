@@ -1,11 +1,12 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
+import { IJob } from '../../../jobs.interface';
+import { JobsService } from '../../../jobs.service';
 import { CPSession } from '../../../../../../../session';
-import { JobsUtilsService } from '../../../jobs.utils.service';
 import { CPI18nService } from '../../../../../../../shared/services/i18n.service';
 
 export interface IState {
-  jobs: any[];
+  jobs: Array<IJob>;
   store_id: number;
   search_str: string;
   sort_field: string;
@@ -36,7 +37,7 @@ export class JobsListActionBoxComponent implements OnInit {
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public utils: JobsUtilsService
+    public jobsService: JobsService
   ) {}
 
   onSearch(query) {
@@ -50,6 +51,6 @@ export class JobsListActionBoxComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.employers$ = this.utils.getEmployers('all');
+    this.employers$ = this.jobsService.getEmployers('all');
   }
 }

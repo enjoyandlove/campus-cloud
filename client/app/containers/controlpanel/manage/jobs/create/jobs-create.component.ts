@@ -7,7 +7,9 @@ import { Store } from '@ngrx/store';
 import { JobsService } from '../jobs.service';
 import { CPSession } from '../../../../../session';
 import { JobsTypeDesireStudy } from '../jobs.status';
+import { CPI18nService } from '../../../../../shared/services';
 import { EmployerService } from '../employers/employer.service';
+import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 
 @Component({
@@ -26,6 +28,7 @@ export class JobsCreateComponent implements OnInit {
     public session: CPSession,
     public service: JobsService,
     public store: Store<IHeader>,
+    public cpI18n: CPI18nService,
     public employerService: EmployerService
   ) {}
 
@@ -57,7 +60,21 @@ export class JobsCreateComponent implements OnInit {
 
         return this.service.createJob(data.job, search);
       })
-      .subscribe((job) => this.router.navigate([`/manage/jobs/${job.id}/info`]));
+      .subscribe(
+        (job) => this.router.navigate([`/manage/jobs/${job.id}/info`]),
+        (_) => this.flashMessageError()
+      );
+  }
+
+  flashMessageError() {
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        class: 'danger',
+        autoClose: true,
+        body: this.cpI18n.translate('something_went_wrong')
+      }
+    });
   }
 
   isStoreRequired(value) {

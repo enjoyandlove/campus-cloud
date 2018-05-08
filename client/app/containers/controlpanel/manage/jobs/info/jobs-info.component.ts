@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
+import { IJob } from '../jobs.interface';
 import { JobsService } from '../jobs.service';
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
@@ -16,10 +17,10 @@ import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
   styleUrls: ['./jobs-info.component.scss']
 })
 export class JobsInfoComponent extends BaseComponent implements OnInit {
-  job;
   jobId;
   loading;
   jobType;
+  job: IJob;
   dateFormat;
   desiredYear;
 
@@ -50,7 +51,7 @@ export class JobsInfoComponent extends BaseComponent implements OnInit {
         this.job.is_ug_y4,
         this.job.is_masters,
         this.job.is_phd
-      );
+      ).map((study) => study.label);
 
       this.jobType = this.utils.getJobsType(
         false,
@@ -61,10 +62,7 @@ export class JobsInfoComponent extends BaseComponent implements OnInit {
         this.job.is_credited,
         this.job.is_volunteer,
         this.job.is_oncampus
-      );
-
-      this.jobType = this.jobType.map((type) => type.label);
-      this.desiredYear = this.desiredYear.map((study) => study.label);
+      ).map((type) => type.label);
     });
   }
 

@@ -9,7 +9,12 @@
     </div>
 
     <div class="form-group">
-      <label>{{ 'employer_name' | cpI18n }}</label>
+      <label>
+        {{ 'employer_name' | cpI18n }}
+        <span class="pull-right">
+          {{ employerForm.controls.name.value ? employerForm.controls.name.value.length : 0 }}/120
+        </span>
+      </label>
       <input
         type="text"
         class="form-control"

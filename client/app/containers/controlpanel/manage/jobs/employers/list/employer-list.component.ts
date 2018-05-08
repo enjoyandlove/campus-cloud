@@ -10,7 +10,7 @@ import { CPI18nService } from '../../../../../../shared/services';
 import { HEADER_UPDATE, IHeader } from '../../../../../../reducers/header.reducer';
 
 export interface IState {
-  employers: any[];
+  employers: Array<IEmployer>;
   search_str: string;
   sort_field: string;
   sort_direction: string;

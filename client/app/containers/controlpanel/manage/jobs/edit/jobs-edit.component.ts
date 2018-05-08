@@ -7,8 +7,10 @@ import { Store } from '@ngrx/store';
 import { JobsService } from '../jobs.service';
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
+import { CPI18nService } from '../../../../../shared/services';
 import { EmployerService } from '../employers/employer.service';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
 
 @Component({
   selector: 'cp-jobs-edit',
@@ -29,6 +31,7 @@ export class JobsEditComponent extends BaseComponent implements OnInit {
     public service: JobsService,
     public route: ActivatedRoute,
     public store: Store<IHeader>,
+    public cpI18n: CPI18nService,
     public employerService: EmployerService
   ) {
     super();
@@ -59,7 +62,10 @@ export class JobsEditComponent extends BaseComponent implements OnInit {
 
     this.service
       .editJob(this.jobId, data.job, search)
-      .subscribe((job) => this.router.navigate([`/manage/jobs/${job.id}/info`]));
+      .subscribe(
+        (job) => this.router.navigate([`/manage/jobs/${job.id}/info`]),
+        (_) => this.flashMessageError()
+      );
   }
 
   editJobWithNewEmployer(data) {
@@ -73,9 +79,21 @@ export class JobsEditComponent extends BaseComponent implements OnInit {
 
         return this.service.editJob(this.jobId, data.job, search);
       })
-      .subscribe((job) => {
-        this.router.navigate([`/manage/jobs/${job.id}/info`]);
-      });
+      .subscribe(
+        (job) => this.router.navigate([`/manage/jobs/${job.id}/info`]),
+        (_) => this.flashMessageError()
+      );
+  }
+
+  flashMessageError() {
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        class: 'danger',
+        autoClose: true,
+        body: this.cpI18n.translate('something_went_wrong')
+      }
+    });
   }
 
   isStoreRequired(value) {

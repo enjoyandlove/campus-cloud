@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
+import { IJob } from '../jobs.interface';
 import { JobsService } from '../jobs.service';
 import { ManageHeaderService } from '../../utils';
 import { CPSession } from '../../../../../session';
@@ -11,7 +12,7 @@ import { FORMAT } from '../../../../../shared/pipes/date/date.pipe';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 
 export interface IState {
-  jobs: any[];
+  jobs: Array<IJob>;
   store_id: number;
   search_str: string;
   sort_field: string;

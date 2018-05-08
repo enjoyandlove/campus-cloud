@@ -71,7 +71,7 @@ export class EmployerCreateComponent implements OnInit {
 
     this.buttonData = Object.assign({}, this.buttonData, {
       class: 'primary',
-      disabled: !this.employerForm.valid,
+      disabled: true,
       text: this.cpI18n.translate('save')
     });
 

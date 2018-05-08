@@ -1,48 +1,14 @@
 /*tslint:disable:max-line-length*/
 import { Injectable } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
 
-import { CPSession } from '../../../../session';
-import { EmployerService } from './employers/employer.service';
 import { CPI18nService } from '../../../../shared/services';
 
 @Injectable()
 export class JobsUtilsService {
   constructor(
-    public session: CPSession,
     public cpI18n: CPI18nService,
-    public employerService: EmployerService
   ) {
     Object.setPrototypeOf(this, JobsUtilsService.prototype);
-  }
-
-  getEmployers(label) {
-    const key = label === 'new' ? 'employers_new_employer' : 'employer_all_employers';
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
-
-    return this.employerService
-      .getEmployers(1, 10000, search)
-      .startWith([{ label: this.cpI18n.translate(key) }])
-      .map((employers) => {
-        const _employers = [
-          {
-            label: this.cpI18n.translate(key),
-            action: null
-          }
-        ];
-
-        employers.forEach((employer) => {
-          const _employer = {
-            label: employer.name,
-            action: employer.id
-          };
-
-          _employers.push(_employer);
-        });
-
-        return _employers;
-      });
   }
 
   getDesiredStudy(
