@@ -1,7 +1,10 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { URLSearchParams } from '@angular/http';
 
+import { CPSession } from './../../../../../session';
 import { AudienceType } from './../../audience.status';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { AudienceSharedService } from '../audience.shared.service';
 
 @Component({
   selector: 'cp-audience-new-body',
@@ -28,7 +31,11 @@ export class AudienceNewBodyComponent implements OnInit {
     dynamic: false
   };
 
-  constructor(public cpI18n: CPI18nService) {}
+  constructor(
+    public session: CPSession,
+    public cpI18n: CPI18nService,
+    public service: AudienceSharedService
+  ) {}
 
   onTypeSelected({ action }) {
     this.state = {
@@ -42,9 +49,21 @@ export class AudienceNewBodyComponent implements OnInit {
     this.audienceType.emit(this.state);
   }
 
-  getUserCount() {
-    // console.log(filters);
-    this.message = 'Missing';
+  getUserCount(filters) {
+    const search = new URLSearchParams();
+    search.append('school_id', this.session.g.get('school').id);
+    search.append('count_only', '1');
+
+    const data = {
+      filters: [...filters]
+    };
+
+    this.service
+      .getUserCount(data, search)
+      .subscribe(
+        ({ count }) => (this.message = `${count} ${this.cpI18n.translate('users_found')}`),
+        () => (this.message = null)
+      );
   }
 
   onUsers(users) {
@@ -53,7 +72,7 @@ export class AudienceNewBodyComponent implements OnInit {
   }
 
   onFilters(filters) {
-    this.getUserCount();
+    this.getUserCount(filters);
 
     this.filters.emit(filters);
   }
