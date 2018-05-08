@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
 import { CPSession } from '../../../../../session';
@@ -64,7 +64,7 @@ export class TeamListComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('search_str', this.state.search_str);
     search.append('sort_field', this.state.sort_field);
     search.append('sort_direction', this.state.sort_direction);

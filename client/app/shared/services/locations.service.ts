@@ -1,4 +1,4 @@
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -17,7 +17,7 @@ export class CPLocationsService {
   constructor(public locationsService: LocationsService, public session: CPSession) {}
 
   getLocations(input: string) {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id);
     search.append('search_str', input);
 

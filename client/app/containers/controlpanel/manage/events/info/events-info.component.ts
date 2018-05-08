@@ -2,7 +2,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ActivatedRoute } from '@angular/router';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
 import { EventsService } from '../events.service';
@@ -57,7 +57,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   public fetch() {
     super.isLoading().subscribe((res) => (this.loading = res));
 
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     if (this.orientationId) {
       search.append('school_id', this.session.g.get('school').id);
       search.append('calendar_id', this.orientationId.toString());

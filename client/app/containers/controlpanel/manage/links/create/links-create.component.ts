@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Headers } from '@angular/http';
+import { HttpHeaders } from '@angular/common/http';
 
 import { ILink } from '../link.interface';
 import { API } from '../../../../../config/api';
@@ -56,14 +56,14 @@ export class LinksCreateComponent implements OnInit {
       return;
     }
 
-    const headers = new Headers();
+    const headers = new HttpHeaders();
     const url = this.service.getUploadImageUrl();
     const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
 
     headers.append('Authorization', auth);
 
     this.fileUploadService.uploadFile(file, url, headers).subscribe(
-      (res) => {
+      (res: any) => {
         this.form.controls['img_url'].setValue(res.image_url);
         this.trackUploadImageEvent();
       },

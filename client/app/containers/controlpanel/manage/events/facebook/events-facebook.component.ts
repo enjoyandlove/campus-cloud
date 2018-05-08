@@ -1,7 +1,7 @@
 import { EventUtilService } from './../events.utils.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
 import { CPSession } from '../../../../../session';
@@ -42,7 +42,7 @@ export class EventsFacebookComponent extends BaseComponent implements OnInit {
 
   private fetch() {
     const school = this.session.g.get('school');
-    const search: URLSearchParams = new URLSearchParams();
+    const search: HttpParams = new HttpParams();
     search.append('school_id', school.id.toString());
 
     const stores$ = this.storeService.getStores(search);

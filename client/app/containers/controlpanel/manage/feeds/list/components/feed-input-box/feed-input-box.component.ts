@@ -1,5 +1,5 @@
 import { Input, OnInit, Output, Component, EventEmitter } from '@angular/core';
-import { Headers, URLSearchParams } from '@angular/http';
+import { HttpParams, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
@@ -57,7 +57,7 @@ export class FeedInputBoxComponent implements OnInit {
     public cpTracking: CPTrackingService,
     private fileUploadService: FileUploadService
   ) {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     this.stores$ = this.storeService.getStores(search);
@@ -216,13 +216,13 @@ export class FeedInputBoxComponent implements OnInit {
       return;
     }
 
-    const headers = new Headers();
+    const headers = new HttpHeaders();
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
     const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
 
     headers.append('Authorization', auth);
 
-    this.fileUploadService.uploadFile(file, url, headers).subscribe((res) => {
+    this.fileUploadService.uploadFile(file, url, headers).subscribe((res: any) => {
       this.image$.next(res.image_url);
       this.form.controls['message_image_url_list'].setValue([res.image_url]);
       this.trackUploadImageEvent();

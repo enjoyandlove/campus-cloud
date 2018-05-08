@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { ILink } from '../link.interface';
 import { LinksService } from '../links.service';
@@ -82,7 +82,7 @@ export class LinksListComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('search_str', this.state.search_str);
     search.append('sort_field', this.state.sort_field);
     search.append('sort_direction', this.state.sort_direction);

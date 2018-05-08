@@ -1,7 +1,7 @@
-import { URLSearchParams } from '@angular/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
 import { IHeader, HEADER_UPDATE } from './../../../../../../reducers/header.reducer';
@@ -57,7 +57,7 @@ export class CalendarsItemsEditComponent extends BaseComponent implements OnInit
   }
 
   onEdit(editedItem) {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id);
     search.append('academic_calendar_id', this.calendarId.toString());
 
@@ -88,7 +88,7 @@ export class CalendarsItemsEditComponent extends BaseComponent implements OnInit
   }
 
   fetch() {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id);
     search.append('academic_calendar_id', this.calendarId.toString());
 

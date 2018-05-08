@@ -1,7 +1,7 @@
 import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 import { OnInit, Output, Component, EventEmitter } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { URLSearchParams } from '@angular/http';
 
 import * as moment from 'moment';
 import { CPSession } from '../../../../../../session';
@@ -121,7 +121,7 @@ export class EngagementTopBarComponent implements OnInit {
   }
 
   ngOnInit() {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     const now = CPDate.now(this.session.tz).unix();

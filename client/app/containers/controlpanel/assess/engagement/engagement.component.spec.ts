@@ -149,6 +149,5 @@ describe('EngagementComponent', () => {
   xit('buildSearchHeaders', () => {
     component.onDoFilter(mockFilterState);
     fixture.detectChanges();
-    console.log(component.buildSearchHeaders().paramsMap.toJSON());
   });
 });

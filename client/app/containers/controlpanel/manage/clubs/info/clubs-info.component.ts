@@ -1,5 +1,5 @@
+import { HttpParams, HttpHeaders } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { Headers, URLSearchParams } from '@angular/http';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -53,7 +53,7 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
   }
 
   fetch() {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id.toString());
     search.append('category_id', this.isAthletic.toString());
 
@@ -99,8 +99,8 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
   }
 
   onFileAdded(file) {
-    const headers = new Headers();
-    const search = new URLSearchParams();
+    const headers = new HttpHeaders();
+    const search = new HttpParams();
     const validate = this.fileService.validFile(file);
 
     search.append('school_id', this.session.g.get('school').id.toString());
@@ -119,7 +119,7 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
 
     this.fileService
       .uploadFile(file, url, headers)
-      .switchMap((data) => {
+      .switchMap((data: any) => {
         this.club = Object.assign({}, this.club, {
           constitution_url: data.file_uri
         });

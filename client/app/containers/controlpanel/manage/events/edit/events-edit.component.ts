@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
@@ -177,7 +177,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     if (this.orientationId) {
       search.append('school_id', this.session.g.get('school').id);
       search.append('calendar_id', this.orientationId.toString());
@@ -303,7 +303,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   fetchManagersBySelectedStore(storeId) {
-    const search: URLSearchParams = new URLSearchParams();
+    const search: HttpParams = new HttpParams();
     storeId = null;
     search.append('school_id', this.school.id.toString());
     search.append('store_id', storeId);
@@ -337,7 +337,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     let stores$ = Observable.of([]);
     const school = this.session.g.get('school');
     const orientationId = this.orientationId ? this.orientationId.toString() : null;
-    const search: URLSearchParams = new URLSearchParams();
+    const search: HttpParams = new HttpParams();
     search.append('school_id', school.id.toString());
     search.append('calendar_id', orientationId);
 

@@ -7,7 +7,8 @@ import {
   EventEmitter,
   HostListener
 } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+
+import { HttpParams } from '@angular/common/http';
 
 import {
   canSchoolWriteResource,
@@ -72,7 +73,7 @@ export class ListActionBoxComponent implements OnInit {
 
   getStores() {
     const school = this.session.g.get('school');
-    const search: URLSearchParams = new URLSearchParams();
+    const search: HttpParams = new HttpParams();
     search.append('school_id', school.id.toString());
 
     this.stores$ = this.storeService.getStores(search);
@@ -176,7 +177,8 @@ export class ListActionBoxComponent implements OnInit {
 
   trackEvent(eventName) {
     const eventProperties = {
-      ...this.cpTracking.getEventProperties(), create_page_name: amplitudeEvents.CREATE_EVENT
+      ...this.cpTracking.getEventProperties(),
+      create_page_name: amplitudeEvents.CREATE_EVENT
     };
 
     return {

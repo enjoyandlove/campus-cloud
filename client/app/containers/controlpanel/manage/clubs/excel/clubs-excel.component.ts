@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
@@ -131,7 +131,7 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
       return;
     }
 
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     this.clubService.createClub(this.form.value.clubs, search).subscribe(

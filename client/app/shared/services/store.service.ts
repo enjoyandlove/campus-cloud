@@ -1,4 +1,4 @@
-import { Http, URLSearchParams } from '@angular/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -15,18 +15,17 @@ const cpI18n = new CPI18nService();
 
 @Injectable()
 export class StoreService extends BaseService {
-  constructor(http: Http, router: Router, public session: CPSession) {
+  constructor(http: HttpClient, router: Router, public session: CPSession) {
     super(http, router);
 
     Object.setPrototypeOf(this, StoreService.prototype);
   }
 
-  private getServices(search: URLSearchParams) {
+  private getServices(search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}/1;1000`;
 
     return super
-      .get(url, { search })
-      .map((res) => res.json())
+      .get(url, search)
       .startWith([
         {
           label: cpI18n.translate('services'),
@@ -59,14 +58,13 @@ export class StoreService extends BaseService {
       });
   }
 
-  private getAthletics(search: URLSearchParams) {
+  private getAthletics(search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CLUBS}/1;1000`;
 
     search.append('category_id', isClubAthletic.athletic.toString());
 
     return super
-      .get(url, { search })
-      .map((res) => res.json())
+      .get(url, search)
       .startWith([
         {
           label: cpI18n.translate('athletics'),
@@ -99,20 +97,19 @@ export class StoreService extends BaseService {
       });
   }
 
-  private getClubs(search: URLSearchParams) {
+  private getClubs(search: HttpParams) {
     const ACTIVE_CLUBS = '1';
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CLUBS}/1;1000`;
 
     if (!search) {
-      search = new URLSearchParams();
+      search = new HttpParams();
       search.append('status', ACTIVE_CLUBS);
     } else {
       search.append('status', ACTIVE_CLUBS);
     }
 
     return super
-      .get(url, { search })
-      .map((res) => res.json())
+      .get(url, search)
       .startWith([
         {
           label: cpI18n.translate('clubs'),
@@ -145,7 +142,7 @@ export class StoreService extends BaseService {
       });
   }
 
-  getStores(search: URLSearchParams, placeHolder = cpI18n.translate('select_host')) {
+  getStores(search: HttpParams, placeHolder = cpI18n.translate('select_host')) {
     /**
      * Check for user privileges before masking the call
      * to Stores/Clubs to avoid errors in Sentry
@@ -209,6 +206,6 @@ export class StoreService extends BaseService {
   getStoreById(storeId: number) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.STORE}/${storeId}`;
 
-    return super.get(url).map((res) => res.json());
+    return super.get(url);
   }
 }

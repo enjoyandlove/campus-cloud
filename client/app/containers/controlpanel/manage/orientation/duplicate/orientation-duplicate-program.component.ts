@@ -10,7 +10,7 @@ import {
   Input
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 import { OrientationService } from '../orientation.services';
@@ -56,7 +56,7 @@ export class OrientationDuplicateProgramComponent implements OnInit {
   }
 
   onSubmit() {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id);
 
     this.service.duplicateProgram(this.form.value, search).subscribe((duplicateProgram) => {

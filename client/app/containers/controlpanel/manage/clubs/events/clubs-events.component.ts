@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
 import { BaseComponent } from '../../../../../base/base.component';
@@ -42,7 +42,7 @@ export class ClubsEventsComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id.toString());
     search.append('category_id', this.isAthletic.toString());
 

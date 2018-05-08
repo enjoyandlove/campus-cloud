@@ -1,5 +1,5 @@
 import { async, fakeAsync, tick, TestBed, ComponentFixture } from '@angular/core/testing';
-import { HttpModule, URLSearchParams } from '@angular/http';
+import { HttpClientModule, HttpParams } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { StoreModule } from '@ngrx/store';
@@ -38,7 +38,7 @@ describe('EventInfoComponent', () => {
     async(() => {
       TestBed.configureTestingModule({
         imports: [
-          HttpModule,
+          HttpClientModule,
           EventsModule,
           StoreModule.forRoot({
             HEADER: headerReducer,
@@ -70,7 +70,7 @@ describe('EventInfoComponent', () => {
           component.eventId = 15845;
           component.session.g.set('school', mockSchool);
 
-          search = new URLSearchParams();
+          search = new HttpParams();
         });
     })
   );

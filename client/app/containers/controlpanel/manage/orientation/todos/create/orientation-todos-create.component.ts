@@ -8,7 +8,7 @@ import {
   ViewChild
 } from '@angular/core';
 
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { CPSession } from './../../../../../../session';
@@ -56,7 +56,7 @@ export class OrientationTodosCreateComponent implements OnInit {
   }
 
   onSubmit() {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id);
     search.append('calendar_id', this.orientationId.toString());
 

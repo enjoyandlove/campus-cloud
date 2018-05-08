@@ -1,47 +1,47 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Http, URLSearchParams } from '@angular/http';
 
 import { API } from '../../../../config/api';
 import { BaseService } from '../../../../base/base.service';
 
 @Injectable()
 export class LocationsService extends BaseService {
-  constructor(http: Http, router: Router) {
+  constructor(http: HttpClient, router: Router) {
     super(http, router);
 
     Object.setPrototypeOf(this, LocationsService.prototype);
   }
 
-  getLocations(startRange: number, endRange: number, search: URLSearchParams) {
+  getLocations(startRange: number, endRange: number, search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${
       API.ENDPOINTS.LOCATIONS
     }/${startRange};${endRange}`;
 
-    return super.get(url, { search }).map((res) => res.json());
+    return super.get(url, search);
   }
 
-  getLocationById(locationId: number, search: URLSearchParams) {
+  getLocationById(locationId: number, search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LOCATIONS}/${locationId}`;
 
-    return super.get(url, { search }).map((res) => res.json());
+    return super.get(url, search);
   }
 
-  updateLocation(body, locationId: number, search: URLSearchParams) {
+  updateLocation(body, locationId: number, search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LOCATIONS}/${locationId}`;
 
-    return super.update(url, body, { search }).map((res) => res.json());
+    return super.update(url, body, search);
   }
 
-  createLocation(body, search: URLSearchParams) {
+  createLocation(body, search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LOCATIONS}/`;
 
-    return super.post(url, body, { search }).map((res) => res.json());
+    return super.post(url, body, search);
   }
 
-  deleteLocationById(locationId: number, search: URLSearchParams) {
+  deleteLocationById(locationId: number, search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LOCATIONS}/${locationId}`;
 
-    return super.delete(url, { search }).map((res) => res.json());
+    return super.delete(url, search);
   }
 }

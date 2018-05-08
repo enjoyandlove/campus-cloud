@@ -1,4 +1,4 @@
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { ICalendar } from './../calendars.interface';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -109,8 +109,8 @@ export class CalendarsDetailComponent extends BaseComponent implements OnInit {
   ngOnInit() {}
 
   private fetch() {
-    const itemSearch = new URLSearchParams();
-    const calendarSearch = new URLSearchParams();
+    const itemSearch = new HttpParams();
+    const calendarSearch = new HttpParams();
 
     itemSearch.append('search_str', this.state.search_str);
     itemSearch.append('sort_field', this.state.sort_field);

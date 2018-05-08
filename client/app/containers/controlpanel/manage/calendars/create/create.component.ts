@@ -9,7 +9,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { CalendarsService } from '../calendars.services';
 
@@ -50,7 +50,7 @@ export class CalendarsCreateComponent implements OnInit {
   }
 
   onSubmit() {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id);
 
     this.service.createCalendar(this.form.value, search).subscribe((createdCalendar) => {

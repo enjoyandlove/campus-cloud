@@ -8,7 +8,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { CPSession } from './../../../../../session';
@@ -54,7 +54,7 @@ export class OrientationProgramCreateComponent implements OnInit {
   }
 
   onSubmit() {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id);
 
     this.service.createProgram(this.form.value, search).subscribe((createdOrientationProgram) => {

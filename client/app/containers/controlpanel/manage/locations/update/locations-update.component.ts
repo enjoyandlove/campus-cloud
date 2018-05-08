@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { CPSession } from '../../../../../session';
 import { CPMap } from '../../../../../shared/utils';
@@ -57,7 +57,7 @@ export class LocationsUpdateComponent implements OnInit {
   }
 
   doSubmit() {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id);
 
     this.service.updateLocation(this.form.value, this.location.id, search).subscribe((_) => {

@@ -2,7 +2,7 @@ import { ServicesService } from './../../../services.service';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
 import { ProvidersService } from '../../../providers.service';
@@ -40,7 +40,7 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
   }
 
   private fetch() {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('service_id', this.serviceId);
 
     const service$ = this.serviceService.getServiceById(this.serviceId);

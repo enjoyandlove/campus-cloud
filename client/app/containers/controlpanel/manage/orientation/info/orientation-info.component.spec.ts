@@ -1,7 +1,7 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { URLSearchParams } from '@angular/http';
 
 import { CPSession } from './../../../../../session';
 import { OrientationService } from '../orientation.services';
@@ -63,7 +63,7 @@ describe('OrientationInfoComponent', () => {
           fixture = TestBed.createComponent(OrientationInfoComponent);
           component = fixture.componentInstance;
           service = TestBed.get(OrientationService);
-          search = new URLSearchParams();
+          search = new HttpParams();
 
           component.loading = false;
           component.orientationId = 84;

@@ -1,8 +1,8 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { HttpParams } from '@angular/common/http';
 
 import { CPSession } from '../../../../../session';
 import { AnnouncementsService } from '../announcements.service';
@@ -83,7 +83,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     public service: AnnouncementsService
   ) {
     const school = this.session.g.get('school');
-    const search: URLSearchParams = new URLSearchParams();
+    const search: HttpParams = new HttpParams();
     search.append('school_id', school.id.toString());
 
     this.stores$ = this.storeService.getStores(search);
@@ -222,8 +222,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       data = { ...data, filters: this.form.value.filters };
     }
 
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     this.service
       .createAudience(data, search)
@@ -307,7 +306,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     this.isError = false;
     $('#announcementConfirmModal').modal('hide');
 
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     const prefix = this.subject_prefix.label ? this.subject_prefix.label.toUpperCase() : '';

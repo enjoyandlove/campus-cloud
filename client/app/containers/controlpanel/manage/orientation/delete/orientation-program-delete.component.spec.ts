@@ -1,7 +1,7 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { URLSearchParams } from '@angular/http';
 
 import { CPSession } from './../../../../../session';
 import { OrientationModule } from '../orientation.module';
@@ -43,7 +43,7 @@ describe('OrientationProgramDeleteComponent', () => {
           component = fixture.componentInstance;
           service = TestBed.get(OrientationService);
 
-          search = new URLSearchParams();
+          search = new HttpParams();
           component.orientationProgram = {
             id: 84,
             name: 'Hello World',

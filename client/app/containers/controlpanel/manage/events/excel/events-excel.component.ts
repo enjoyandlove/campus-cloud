@@ -2,7 +2,7 @@
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -80,7 +80,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    const search: URLSearchParams = new URLSearchParams();
+    const search: HttpParams = new HttpParams();
     search.append('school_id', this.school.id.toString());
 
     const stores$ = this.storeService.getStores(search);
@@ -255,7 +255,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   }
 
   getManagersByHostId(storeOrClubId): Observable<any> {
-    const search: URLSearchParams = new URLSearchParams();
+    const search: HttpParams = new HttpParams();
 
     search.append('school_id', this.school.id.toString());
     search.append('store_id', storeOrClubId);
@@ -428,7 +428,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       _events.push(_event);
     });
 
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     if (this.orientationId) {
       search.append('school_id', this.session.g.get('school').id);
       search.append('calendar_id', this.orientationId.toString());

@@ -1,6 +1,6 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
 import { EventsModule } from '../events.module';
@@ -47,7 +47,7 @@ describe('EventDeleteComponent', () => {
           eventId = component.event.id;
           component.session.g.set('school', mockSchool);
 
-          search = new URLSearchParams();
+          search = new HttpParams();
         });
     })
   );

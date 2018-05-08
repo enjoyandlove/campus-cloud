@@ -1,6 +1,6 @@
 import { async, TestBed, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { FormBuilder } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
@@ -67,7 +67,7 @@ describe('EventEditComponent', () => {
     async(() => {
       TestBed.configureTestingModule({
         imports: [
-          HttpModule,
+          HttpClientModule,
           EventsModule,
           RouterTestingModule,
           StoreModule.forRoot({

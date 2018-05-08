@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
 import { CPSession } from '../../../../../session';
@@ -76,7 +76,7 @@ export class BannerListComponent extends BaseComponent implements OnInit {
   }
 
   loadImage() {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id);
 
     const stream$ = this.service.getCoverImage(search);
@@ -121,7 +121,7 @@ export class BannerListComponent extends BaseComponent implements OnInit {
       .then((base64ImageData) => this.uploadBase64Image(base64ImageData))
       .then((savedBase64Image) => {
         this.uploading = false;
-        const search = new URLSearchParams();
+        const search = new HttpParams();
         search.append('school_id', this.session.g.get('school').id);
 
         return this.service.updateSchoolImage(savedBase64Image.image_url, search).toPromise();

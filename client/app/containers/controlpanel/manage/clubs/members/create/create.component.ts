@@ -9,8 +9,8 @@ import {
   ViewChild
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { URLSearchParams } from '@angular/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
 import { CPSession } from '../../../../../../session';
@@ -70,7 +70,7 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
           return Observable.of([]);
         }
 
-        const search = new URLSearchParams();
+        const search = new HttpParams();
         search.append('search_str', query);
         search.append('school_id', this.session.g.get('school').id.toString());
 

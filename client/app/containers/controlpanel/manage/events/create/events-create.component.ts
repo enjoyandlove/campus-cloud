@@ -1,7 +1,7 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
@@ -107,7 +107,7 @@ export class EventsCreateComponent implements OnInit {
   }
 
   fetchManagersBySelectedStore(storeId) {
-    const search: URLSearchParams = new URLSearchParams();
+    const search: HttpParams = new HttpParams();
 
     search.append('store_id', storeId);
     search.append('school_id', this.school.id.toString());
@@ -257,7 +257,7 @@ export class EventsCreateComponent implements OnInit {
       return;
     }
 
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     if (this.orientationId) {
       search.append('school_id', this.session.g.get('school').id);
       search.append('calendar_id', this.orientationId.toString());
@@ -331,7 +331,7 @@ export class EventsCreateComponent implements OnInit {
     this.eventFeedbackEnabled = EventFeedback.enabled;
 
     this.school = this.session.g.get('school');
-    const search: URLSearchParams = new URLSearchParams();
+    const search: HttpParams = new HttpParams();
 
     this.buildHeader();
     search.append('school_id', this.school.id.toString());

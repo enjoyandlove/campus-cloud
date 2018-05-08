@@ -1,4 +1,4 @@
-import { Http, URLSearchParams } from '@angular/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -7,47 +7,47 @@ import { BaseService } from '../../../../base/base.service';
 
 @Injectable()
 export class ProvidersService extends BaseService {
-  constructor(http: Http, router: Router) {
+  constructor(http: HttpClient, router: Router) {
     super(http, router);
 
     Object.setPrototypeOf(this, ProvidersService.prototype);
   }
 
-  getProviders(startRange: number, endRange: number, search?: URLSearchParams) {
+  getProviders(startRange: number, endRange: number, search?: HttpParams) {
     const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICE_PROVIDER}`;
     const url = `${common}/${startRange};${endRange}`;
 
-    return super.get(url, { search }).map((res) => res.json());
+    return super.get(url, search);
   }
 
-  createProvider(data: any, search?: URLSearchParams) {
+  createProvider(data: any, search?: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICE_PROVIDER}/`;
 
-    return super.post(url, data, { search }).map((res) => res.json());
+    return super.post(url, data, search);
   }
 
-  updateProvider(data: any, search?: URLSearchParams) {
+  updateProvider(data: any, search?: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICE_PROVIDER}/`;
 
-    return super.update(url, data, { search }).map((res) => res.json());
+    return super.update(url, data, search);
   }
 
-  deleteProvider(providerId: number, search?: URLSearchParams) {
+  deleteProvider(providerId: number, search?: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICE_PROVIDER}/${providerId}`;
 
-    return super.delete(url, { search }).map((res) => res.json());
+    return super.delete(url, search);
   }
 
-  getProviderByProviderId(providerId: number, search?: URLSearchParams) {
+  getProviderByProviderId(providerId: number, search?: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICE_PROVIDER}/${providerId}`;
 
-    return super.get(url, { search }).map((res) => res.json());
+    return super.get(url, search);
   }
 
-  getProviderAssessments(startRange: number, endRange: number, search?: URLSearchParams) {
+  getProviderAssessments(startRange: number, endRange: number, search?: HttpParams) {
     const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICE_ASSESSMENT}`;
     const url = `${common}/${startRange};${endRange}`;
 
-    return super.get(url, { search }).map((res) => res.json());
+    return super.get(url, search);
   }
 }

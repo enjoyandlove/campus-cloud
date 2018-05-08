@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
@@ -17,7 +17,7 @@ export class FeedbackServiceComponent extends BaseComponent implements OnInit {
   isExist = true;
   isService = true;
   checkinId: number;
-  search: URLSearchParams = new URLSearchParams();
+  search: HttpParams = new HttpParams();
   isSubmitted$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(private route: ActivatedRoute, private feedbackService: FeedbackService) {

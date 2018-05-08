@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -98,8 +98,8 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    const searchProviders = new URLSearchParams();
-    const searchAdmin = new URLSearchParams();
+    const searchProviders = new HttpParams();
+    const searchAdmin = new HttpParams();
 
     searchProviders.append('service_id', this.serviceId.toString());
 
@@ -241,7 +241,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   deleteProvider(data: IServiceDeleteModal) {
     const controls = <FormArray>this.form.controls['providers'];
 
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('service_id', this.serviceId.toString());
 
     this.providersService.deleteProvider(data.id, search).subscribe(
@@ -380,7 +380,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       .switchMap((service) => {
         this.withAttendance = service.service_attendance;
         const providers = [];
-        const search = new URLSearchParams();
+        const search = new HttpParams();
         const controls = <FormArray>this.form.controls['providers'];
         const providersControls = controls.controls;
 

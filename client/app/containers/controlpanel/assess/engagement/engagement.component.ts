@@ -1,6 +1,6 @@
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
@@ -63,8 +63,8 @@ export class EngagementComponent extends BaseComponent implements OnInit {
     this.filters$.next(this.filterState);
   }
 
-  buildSearchHeaders(): URLSearchParams {
-    const search = new URLSearchParams();
+  buildSearchHeaders(): HttpParams {
+    const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     search.append(

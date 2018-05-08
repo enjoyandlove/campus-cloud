@@ -1,7 +1,7 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
 import { ItemAllDay, IItem } from './../item.interface';
@@ -49,7 +49,7 @@ export class CalendarsItemCreateComponent implements OnInit {
   }
 
   onSave(newItem: IItem) {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id);
     search.append('academic_calendar_id', this.calendarId.toString());
 

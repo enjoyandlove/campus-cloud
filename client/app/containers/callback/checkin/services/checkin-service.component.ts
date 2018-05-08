@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { CheckinService } from '../checkin.service';
@@ -26,7 +26,7 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
   serviceId: string;
   state: IState = state;
   serviceProviderId: string;
-  search: URLSearchParams = new URLSearchParams();
+  search: HttpParams = new HttpParams();
 
   constructor(
     public router: Router,

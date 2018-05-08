@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { FeedsService } from '../../../feeds.service';
 import { CPSession } from '../../../../../../../session';
@@ -48,7 +48,7 @@ export class FeedMoveComponent implements OnInit {
   }
 
   ngOnInit() {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     this.channels$ = this.feedsService

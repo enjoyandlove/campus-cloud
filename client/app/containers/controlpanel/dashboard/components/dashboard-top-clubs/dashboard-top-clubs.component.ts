@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 import { CPSession } from '../../../../../session';
@@ -41,7 +41,7 @@ export class DashboardTopClubsComponent extends BaseComponent implements OnInit 
   }
 
   fetch() {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('end', this._dates.end);
     search.append('start', this._dates.start);
     search.append('school_id', this.session.g.get('school').id);

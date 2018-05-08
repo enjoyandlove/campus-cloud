@@ -1,6 +1,6 @@
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
 import { EventsService } from '../../../events.service';
@@ -59,7 +59,7 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
   }
 
   onBulkUpdate(data) {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     const _links = [];
@@ -98,7 +98,7 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
   private fetch() {
     this.loading = true;
     this.isEdited = false;
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     if (this.storeId) {

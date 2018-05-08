@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { BaseComponent } from '../../../../../base';
 import { CPSession } from '../../../../../session';
@@ -25,7 +25,7 @@ export class DashboardIntegrationsComponent extends BaseComponent implements OnI
   }
 
   fetch() {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id);
 
     const stream$ = this.service.getIntegrations(search);

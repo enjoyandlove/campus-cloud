@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { URLSearchParams } from '@angular/http';
 
 import { CPSession } from './../../../../../../session';
 import { CalendarsService } from '../../calendars.services';
@@ -28,7 +28,7 @@ export class CalendarsItemsDeleteComponent implements OnInit {
   }
 
   onDelete() {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id);
     search.append('academic_calendar_id', this.calendarId.toString());
 

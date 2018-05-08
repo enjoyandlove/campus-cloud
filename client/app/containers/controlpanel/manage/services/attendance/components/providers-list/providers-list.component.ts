@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
 import { ProvidersService } from '../../../providers.service';
@@ -65,7 +65,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
   }
 
   private fetch() {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('search_text', this.state.search_text);
     search.append('service_id', this.serviceId.toString());
     search.append('sort_field', this.state.sort_field);
@@ -102,7 +102,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
 
     this.download.subscribe((download) => {
       if (download) {
-        const search = new URLSearchParams();
+        const search = new HttpParams();
         search.append('service_id', this.serviceId.toString());
         search.append('all', '1');
 

@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { OrientationService } from '../orientation.services';
-import { BaseComponent } from '../../../../../base';
-import { URLSearchParams } from '@angular/http';
 import { CPSession } from './../../../../../session';
+import { BaseComponent } from '../../../../../base';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'cp-orientation-info',
@@ -29,7 +29,7 @@ export class OrientationInfoComponent extends BaseComponent implements OnInit {
   }
 
   public fetch() {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     super

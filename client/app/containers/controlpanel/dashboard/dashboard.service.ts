@@ -1,7 +1,7 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Http, URLSearchParams } from '@angular/http';
 
 import { API } from '../../../config/api';
 import { BaseService } from '../../../base/index';
@@ -12,16 +12,16 @@ export class DashboardService extends BaseService {
   eventAssessment = new Subject();
   serviceAssessment = new Subject();
 
-  constructor(http: Http, router: Router) {
+  constructor(http: HttpClient, router: Router) {
     super(http, router);
 
     Object.setPrototypeOf(this, DashboardService.prototype);
   }
 
-  getDownloads(search: URLSearchParams) {
+  getDownloads(search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.DASHBORD_USER_ACQUISITION}/`;
 
-    return super.get(url, { search }).map((data) => {
+    return super.get(url, search).map((data) => {
       const jsonData = data.json();
 
       return {
@@ -31,10 +31,10 @@ export class DashboardService extends BaseService {
     });
   }
 
-  getSocialActivity(search: URLSearchParams) {
+  getSocialActivity(search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.DASHBOARD_SOCIAL_ACTIVITY}/`;
 
-    return super.get(url, { search }).map((data) => {
+    return super.get(url, search).map((data) => {
       const res = {
         series: [],
         labels: []
@@ -54,10 +54,10 @@ export class DashboardService extends BaseService {
     });
   }
 
-  getCampusTile(search: URLSearchParams) {
+  getCampusTile(search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.DASHBOARD_CAMPUS_TILE}/`;
 
-    return super.get(url, { search }).map((res) => res.json());
+    return super.get(url, search);
   }
 
   getAssessment() {
@@ -67,57 +67,53 @@ export class DashboardService extends BaseService {
     return Observable.combineLatest(eventAssessment$, serviceAssessment$);
   }
 
-  getIntegrations(search: URLSearchParams) {
+  getIntegrations(search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.DASHBOARD_INTEGRATION_STATUS}/`;
 
-    return super.get(url, { search }).map((res) => res.json());
+    return super.get(url, search);
   }
 
-  getTopClubs(search: URLSearchParams) {
+  getTopClubs(search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.DASHBOARD_TOP_CLUBS}/`;
 
-    return super.get(url, { search }).map((res) => res.json());
+    return super.get(url, search);
   }
 
-  getGeneralInformation(search: URLSearchParams) {
+  getGeneralInformation(search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.DASHBOARD_GENERAL_INFORMATION}/`;
 
-    return super.get(url, { search }).map((res) => res.json());
+    return super.get(url, search);
   }
 
-  getTopEvents(search: URLSearchParams) {
+  getTopEvents(search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_EVENT}/`;
 
-    return super.get(url, { search }).map((res) => {
-      const jsonData = res.json();
-
+    return super.get(url, search).map((res) => {
       const eventAssessment = {
-        event_checkins: jsonData.total_attendees,
-        event_feedback_rate: jsonData.avg_feedbacks,
-        event_total_feedback: jsonData.total_feedbacks
+        event_checkins: res.total_attendees,
+        event_feedback_rate: res.avg_feedbacks,
+        event_total_feedback: res.total_feedbacks
       };
 
       this.eventAssessment.next(eventAssessment);
 
-      return jsonData;
+      return res;
     });
   }
 
-  getTopServices(search: URLSearchParams) {
+  getTopServices(search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_SERVICE}/`;
 
-    return super.get(url, { search }).map((res) => {
-      const jsonData = res.json();
-
+    return super.get(url, search).map((res) => {
       const serviceAssessment = {
-        service_checkins: jsonData.total_attendees,
-        service_feedback_rate: jsonData.avg_feedbacks,
-        service_total_feedback: jsonData.total_feedbacks
+        service_checkins: res.total_attendees,
+        service_feedback_rate: res.avg_feedbacks,
+        service_total_feedback: res.total_feedbacks
       };
 
       this.serviceAssessment.next(serviceAssessment);
 
-      return jsonData;
+      return res;
     });
   }
 }

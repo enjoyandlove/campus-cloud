@@ -3,7 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Observable } from 'rxjs/Observable';
 import { FormBuilder } from '@angular/forms';
 import { Store, StoreModule } from '@ngrx/store';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { CPSession } from './../../../../../session';
 import { OrientationService } from '../orientation.services';
@@ -71,7 +71,7 @@ describe('OrientationProgramEditComponent', () => {
           component = fixture.componentInstance;
           service = TestBed.get(OrientationService);
 
-          search = new URLSearchParams();
+          search = new HttpParams();
           component.session.g.set('school', mockSchool);
           search.append('school_id', component.session.g.get('school').id.toString());
 

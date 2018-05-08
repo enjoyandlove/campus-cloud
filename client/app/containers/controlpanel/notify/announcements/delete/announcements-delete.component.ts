@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { CPSession } from '../../../../../session';
 import { STATUS } from '../../../../../shared/constants';
@@ -35,7 +35,7 @@ export class AnnouncementDeleteComponent implements OnInit {
 
   onArchive() {
     this.isError = false;
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     this.service.deleteAnnouncement(this.item.id, search).subscribe(

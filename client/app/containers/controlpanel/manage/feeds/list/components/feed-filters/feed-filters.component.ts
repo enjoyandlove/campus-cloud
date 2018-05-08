@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
 import { FeedsService } from '../../../feeds.service';
@@ -71,7 +71,7 @@ export class FeedFiltersComponent implements OnInit {
   }
 
   private fetch() {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     this.walls$ = this.feedsService
@@ -213,7 +213,7 @@ export class FeedFiltersComponent implements OnInit {
 
     if (this.clubId || this.orientationId) {
       let group_id;
-      const search = new URLSearchParams();
+      const search = new HttpParams();
       search.append('school_id', this.session.g.get('school').id.toString());
       if (this.clubId) {
         group_id = this.clubId;

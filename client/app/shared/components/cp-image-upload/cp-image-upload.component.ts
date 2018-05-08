@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Headers } from '@angular/http';
+import { HttpHeaders } from '@angular/common/http';
 
 import { API } from '../../../config/api';
 import { FileUploadService } from '../../../shared/services/file-upload.service';
@@ -50,7 +50,7 @@ export class CPImageUploadComponent implements OnInit {
 
     this.isLoading = true;
 
-    const headers = new Headers();
+    const headers = new HttpHeaders();
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
     const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
 
@@ -61,7 +61,7 @@ export class CPImageUploadComponent implements OnInit {
     }
 
     this.fileUploadService.uploadFile(file, url, headers).subscribe(
-      (res) => {
+      (res: any) => {
         this.isLoading = false;
         this.image = res.image_url;
         this.uploaded.emit(res.image_url);

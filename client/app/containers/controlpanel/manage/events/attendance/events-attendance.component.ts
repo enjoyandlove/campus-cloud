@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { URLSearchParams } from '@angular/http';
 
 import { EventsService } from '../events.service';
 import { CPSession } from '../../../../../session';
@@ -43,7 +43,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   }
 
   public fetch() {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     if (this.orientationId) {
       search.append('school_id', this.session.g.get('school').id);
       search.append('calendar_id', this.orientationId.toString());

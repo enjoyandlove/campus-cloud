@@ -1,7 +1,7 @@
 import { Store } from '@ngrx/store';
 import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
 import { Component, OnInit } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { CPSession } from '../../../../../session';
 import { FORMAT } from '../../../../../shared/pipes/date';
@@ -122,7 +122,7 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
   }
 
   private fetch() {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     const type = this.state.type !== null ? this.state.type.toString() : null;
 
     search.append('priority', type);

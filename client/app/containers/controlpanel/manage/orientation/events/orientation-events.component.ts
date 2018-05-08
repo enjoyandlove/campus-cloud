@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { URLSearchParams } from '@angular/http';
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { BaseComponent } from '../../../../../base';
@@ -42,7 +42,7 @@ export class OrientationEventsComponent extends BaseComponent {
   }
 
   private fetch() {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     super.fetchData(this.service.getProgramById(this.orientationId, search)).then((program) => {

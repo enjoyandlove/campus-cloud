@@ -1,8 +1,8 @@
-import { Headers, Http, RequestOptionsArgs, Response, ResponseOptions } from '@angular/http';
-
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import { Response, ResponseOptions } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
 
 import { appStorage, CPObj } from '../shared/utils';
 
@@ -16,7 +16,7 @@ import { API } from './../config/api/index';
 const buildCommonHeaders = () => {
   const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
 
-  return new Headers({
+  return new HttpHeaders({
     'Content-Type': 'application/json',
     Authorization: auth
   });
@@ -28,7 +28,7 @@ const emptyResponse = Observable.of(
 
 @Injectable()
 export abstract class BaseService {
-  constructor(private http: Http, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   private waitAndRetry(err): Observable<any> {
     let retries = 1;
@@ -44,11 +44,11 @@ export abstract class BaseService {
     });
   }
 
-  get(url: string, opts?: RequestOptionsArgs, silent = false) {
+  get(url: string, params?: HttpParams, silent = false) {
     const headers = buildCommonHeaders();
 
     return this.http
-      .get(url, { headers, ...opts })
+      .get(url, { headers, params })
       .retryWhen((err) => this.waitAndRetry(err))
       .catch((err) => {
         if (silent) {
@@ -63,7 +63,7 @@ export abstract class BaseService {
       });
   }
 
-  post(url: string, data: any, opts?: RequestOptionsArgs, silent = false) {
+  post(url: string, data: any, opts?: HttpParams, silent = false) {
     const headers = buildCommonHeaders();
 
     data = CPObj.cleanNullValues(data);
@@ -74,7 +74,7 @@ export abstract class BaseService {
       .catch((err) => (silent ? Observable.throw(err) : this.catchError(err)));
   }
 
-  update(url: string, data: any, opts?: RequestOptionsArgs, silent = false) {
+  update(url: string, data: any, opts?: HttpParams, silent = false) {
     const headers = buildCommonHeaders();
 
     data = CPObj.cleanNullValues(data);
@@ -85,7 +85,7 @@ export abstract class BaseService {
       .catch((err) => (silent ? Observable.throw(err) : this.catchError(err)));
   }
 
-  delete(url: string, opts?: RequestOptionsArgs, silent = false) {
+  delete(url: string, opts?: HttpParams, silent = false) {
     const headers = buildCommonHeaders();
 
     return this.http

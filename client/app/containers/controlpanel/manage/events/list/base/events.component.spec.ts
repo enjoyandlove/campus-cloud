@@ -1,5 +1,5 @@
 import { async, fakeAsync, tick, TestBed, ComponentFixture } from '@angular/core/testing';
-import { HttpModule, URLSearchParams } from '@angular/http';
+import { HttpClientModule, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 
@@ -35,7 +35,7 @@ describe('EventsListComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [HttpModule, EventsModule],
+        imports: [HttpClientModule, EventsModule],
         providers: [
           CPSession,
           CPI18nService,
@@ -58,7 +58,7 @@ describe('EventsListComponent', () => {
             attendance_only: 0
           });
 
-          search = new URLSearchParams();
+          search = new HttpParams();
           search.append('start', component.state.start.toString());
           search.append('end', component.state.end.toString());
           search.append('calendar_id', component.orientationId);

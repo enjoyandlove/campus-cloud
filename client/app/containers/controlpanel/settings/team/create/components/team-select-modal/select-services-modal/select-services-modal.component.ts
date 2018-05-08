@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
 import { ServicesService } from '../../../../../../manage/services/services.service';
@@ -31,7 +31,7 @@ export class SelectTeamServicesModalComponent extends BaseTeamSelectModalCompone
   }
 
   ngOnInit() {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     this.service.getServices(1, 1000, search).subscribe((services) => {

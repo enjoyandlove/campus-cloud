@@ -1,5 +1,5 @@
 import { Input, OnInit, Component } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
 import { EngagementService } from '../../engagement.service';
@@ -73,7 +73,7 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
 
     const list_id = this.state.list_id ? this.state.list_id.toString() : null;
 
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('sort_by', this.state.sortBy);
     search.append('end', this.state.end.toString());
     search.append('start', this.state.start.toString());

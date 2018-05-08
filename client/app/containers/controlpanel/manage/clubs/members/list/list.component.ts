@@ -2,7 +2,7 @@ import { ClubsUtilsService } from './../../clubs.utils.service';
 import { ActivatedRoute } from '@angular/router';
 
 import { Component, Input, OnInit } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { MemberType } from '../member.status';
 import { MembersService } from '../members.service';
@@ -86,8 +86,8 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    const groupSearch = new URLSearchParams();
-    const memberSearch = new URLSearchParams();
+    const groupSearch = new HttpParams();
+    const memberSearch = new HttpParams();
     const schoolId = this.session.g.get('school').id.toString();
     const calendar_id = this.orientationId ? this.orientationId.toString() : null;
 

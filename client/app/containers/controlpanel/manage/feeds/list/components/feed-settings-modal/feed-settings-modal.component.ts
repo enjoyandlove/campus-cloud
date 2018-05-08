@@ -1,7 +1,7 @@
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { FeedsService } from '../../../feeds.service';
 import { CPSession } from '../../../../../../../session';
@@ -33,7 +33,7 @@ export class FeedSettingsComponent implements OnInit {
   }
 
   private fetch() {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     if (this.orientationId) {
@@ -103,7 +103,7 @@ export class FeedSettingsComponent implements OnInit {
   }
 
   updateGroup(control) {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     this.feedsService

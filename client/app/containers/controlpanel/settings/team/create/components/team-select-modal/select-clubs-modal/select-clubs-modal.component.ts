@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
 import { CPSession } from '../../../../../../../../session';
@@ -35,7 +35,7 @@ export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent 
   }
 
   ngOnInit() {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id.toString());
     search.append('category_id', isClubAthletic.club.toString());
 

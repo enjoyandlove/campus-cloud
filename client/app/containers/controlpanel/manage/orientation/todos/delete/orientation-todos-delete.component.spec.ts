@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { URLSearchParams } from '@angular/http';
 
 import { TodosModule } from '../todos.module';
 import { TodosService } from '../todos.service';
@@ -39,7 +39,7 @@ describe('OrientationTodosDeleteComponent', () => {
           component = fixture.componentInstance;
           service = TestBed.get(TodosService);
 
-          search = new URLSearchParams();
+          search = new HttpParams();
           component.session.g.set('school', mockSchool);
           search.append('school_id', component.session.g.get('school').id.toString());
 

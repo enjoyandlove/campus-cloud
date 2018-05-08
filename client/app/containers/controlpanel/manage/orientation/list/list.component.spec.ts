@@ -2,7 +2,7 @@ import { async, fakeAsync, tick, TestBed, ComponentFixture } from '@angular/core
 import { RouterTestingModule } from '@angular/router/testing';
 import { Observable } from 'rxjs/Observable';
 import { Store, StoreModule } from '@ngrx/store';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { ManageHeaderService } from '../../utils';
 import { CPSession } from '../../../../../session';
@@ -62,7 +62,7 @@ describe('OrientationListComponent', () => {
           component = fixture.componentInstance;
           component.session.g.set('school', mockSchool);
 
-          search = new URLSearchParams();
+          search = new HttpParams();
           search.append('search_str', component.state.search_str);
           search.append('sort_field', component.state.sort_field);
           search.append('sort_direction', component.state.sort_direction);

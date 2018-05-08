@@ -2,7 +2,7 @@ import { IItem } from './../item.interface';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
@@ -51,7 +51,7 @@ export class CalendarsItemsBulkCreateComponent extends BaseComponent implements 
   }
 
   onSubmit(items: { items: IItem[] }) {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id);
     search.append('academic_calendar_id', this.calendarId.toString());
 

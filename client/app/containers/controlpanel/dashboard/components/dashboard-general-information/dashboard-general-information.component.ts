@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { BaseComponent } from '../../../../../base';
 import { CPSession } from './../../../../../session';
@@ -33,7 +33,7 @@ export class DashboardGeneralInformationComponent extends BaseComponent implemen
   }
 
   fetch() {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
 
     search.append('end', this._dates.end);
     search.append('start', this._dates.start);

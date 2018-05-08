@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs/Observable';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -59,8 +59,8 @@ export class CalendarsItemsDetailsComponent extends BaseComponent implements OnI
   }
 
   fetch() {
-    const calendarSearch = new URLSearchParams();
-    const itemSearch = new URLSearchParams();
+    const calendarSearch = new HttpParams();
+    const itemSearch = new HttpParams();
     itemSearch.append('school_id', this.session.g.get('school').id.toString());
     itemSearch.append('academic_calendar_id', this.calendarId.toString());
 

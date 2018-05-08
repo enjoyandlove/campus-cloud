@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { EventsService } from '../../../events.service';
 import { CPSession } from './../../../../../../../session';
@@ -48,7 +48,7 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
   }
 
   public fetch() {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('event_id', this.event.id);
     search.append('sort_field', this.state.sort_field);
     search.append('sort_direction', this.state.sort_direction);
@@ -89,7 +89,7 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
   }
 
   onCreateExcel() {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('event_id', this.event.id);
     search.append('all', '1');
 

@@ -1,5 +1,5 @@
 import { async, TestBed, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
-import { HttpModule, URLSearchParams } from '@angular/http';
+import { HttpClientModule, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { DebugElement } from '@angular/core';
 
@@ -44,7 +44,7 @@ describe('AttendancePastComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [HttpModule, EventsModule],
+        imports: [HttpClientModule, EventsModule],
         providers: [CPSession, CPI18nService, { provide: EventsService, useClass: MockService }]
       })
         .compileComponents()
@@ -59,7 +59,7 @@ describe('AttendancePastComponent', () => {
             id: 5125
           };
 
-          search = new URLSearchParams();
+          search = new HttpParams();
           search.append('event_id', component.event.id);
           search.append('sort_field', component.state.sort_field);
           search.append('sort_direction', component.state.sort_direction);

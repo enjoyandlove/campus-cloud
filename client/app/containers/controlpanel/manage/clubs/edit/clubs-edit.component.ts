@@ -2,7 +2,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, Input, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
 import { ClubsService } from '../clubs.service';
@@ -69,7 +69,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
   }
 
   fetch() {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id.toString());
     search.append('category_id', this.isAthletic.toString());
 
@@ -139,7 +139,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    const search = new URLSearchParams();
+    const search = new HttpParams();
 
     search.append('school_id', this.session.g.get('school').id.toString());
     search.append('category_id', this.isAthletic.toString());

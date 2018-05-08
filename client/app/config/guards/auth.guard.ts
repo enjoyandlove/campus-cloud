@@ -1,6 +1,5 @@
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
-
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as Raven from 'raven-js';
 
@@ -21,7 +20,7 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   preLoadUser(): Promise<any> {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     return this.adminService
@@ -65,7 +64,7 @@ export class AuthGuard implements CanActivate {
   }
 
   fetchStores(): Promise<any> {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     return this.storeService.getStores(search).toPromise();

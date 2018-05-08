@@ -1,6 +1,6 @@
 import { CPSession } from './../../../../session/index';
 import { EngagementService } from './engagement.service';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
@@ -12,10 +12,10 @@ export class EngagementResolver implements Resolve<any> {
   constructor(private session: CPSession, private service: EngagementService) {}
 
   resolve(): Observable<any> {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    const serviceSearch = new URLSearchParams();
+    const serviceSearch = new HttpParams();
     serviceSearch.append('attendance_only', SERVICE_WITH_ATTENDANCE);
     serviceSearch.append('school_id', this.session.g.get('school').id.toString());
 

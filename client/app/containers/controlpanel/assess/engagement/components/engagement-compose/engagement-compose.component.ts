@@ -7,7 +7,7 @@ import {
   EventEmitter,
   HostListener
 } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -46,7 +46,7 @@ export class EngagementComposeComponent implements OnInit {
     private storeService: StoreService
   ) {
     const school = this.session.g.get('school');
-    const search: URLSearchParams = new URLSearchParams();
+    const search: HttpParams = new HttpParams();
     search.append('school_id', school.id.toString());
 
     this.stores$ = this.storeService.getStores(search);
@@ -63,7 +63,7 @@ export class EngagementComposeComponent implements OnInit {
   doSubmit() {
     let data = this.form.value;
     this.isError = false;
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     data = Object.assign({}, data, {

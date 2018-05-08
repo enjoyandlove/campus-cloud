@@ -1,8 +1,8 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { URLSearchParams } from '@angular/http';
 
 import { CPSession } from './../../../../../session';
 import { OrientationModule } from '../orientation.module';
@@ -62,7 +62,7 @@ describe('OrientationProgramCreateComponent', () => {
           component = fixture.componentInstance;
           service = TestBed.get(OrientationService);
 
-          search = new URLSearchParams();
+          search = new HttpParams();
           component.session.g.set('school', mockSchool);
           search.append('school_id', component.session.g.get('school').id.toString());
 

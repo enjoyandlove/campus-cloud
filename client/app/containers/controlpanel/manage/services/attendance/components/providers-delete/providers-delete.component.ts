@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { ProvidersService } from '../../../providers.service';
 
@@ -18,7 +18,7 @@ export class ServicesProviderDeleteComponent {
   constructor(private providersService: ProvidersService) {}
 
   onDelete() {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('service_id', this.serviceId.toString());
 
     this.providersService.deleteProvider(this.provider.id, search).subscribe((_) => {

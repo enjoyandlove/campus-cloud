@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { EventsService } from '../../events.service';
 import { CPSession } from '../../../../../../session';
@@ -127,7 +127,7 @@ export class EventsComponent extends BaseComponent {
   buildHeaders() {
     const end = this.endRange;
     const start = this.startRange;
-    const search = new URLSearchParams();
+    const search = new HttpParams();
 
     const exclude_current = this.state.exclude_current
       ? this.state.exclude_current.toString()

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
 import { BaseComponent } from '../../../../../../../base/base.component';
@@ -57,7 +57,7 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('thread_id', this.feed.id.toString());
 
     if (this._isCampusWallView) {

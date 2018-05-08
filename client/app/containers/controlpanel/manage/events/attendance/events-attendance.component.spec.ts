@@ -1,5 +1,5 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { StoreModule } from '@ngrx/store';
@@ -64,12 +64,12 @@ describe('EventAttendanceComponent', () => {
           component.eventId = 1001;
           component.session.g.set('school', mockSchool);
 
-          search = new URLSearchParams();
+          search = new HttpParams();
         });
     })
   );
 
-  it('URLSearchparams does not include calendar_id or school_id', () => {
+  it('HttpParams does not include calendar_id or school_id', () => {
     spyOn(component, 'buildHeader');
     spy = spyOn(component.service, 'getEventById').and.returnValue(Observable.of({}));
 
@@ -78,7 +78,7 @@ describe('EventAttendanceComponent', () => {
     expect(spy.calls.count()).toBe(1);
   });
 
-  it('URLSearchparams includes calendar_id and school_id', () => {
+  it('HttpParams includes calendar_id and school_id', () => {
     component.orientationId = 5425;
     spyOn(component, 'buildHeader');
     spy = spyOn(component.service, 'getEventById').and.returnValue(Observable.of({}));

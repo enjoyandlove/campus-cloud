@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
 import { FeedsService } from '../../feeds.service';
@@ -120,7 +120,7 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
 
     const flagged = this.state.flagged_by_users_only
       ? this.state.flagged_by_users_only.toString()
@@ -159,7 +159,7 @@ export class FeedsComponent extends BaseComponent implements OnInit {
     const campusThread$ = this.service.getCampusWallFeeds(this.startRange, this.endRange, search);
 
     if (this.state.isCampusThread) {
-      const _search = new URLSearchParams();
+      const _search = new HttpParams();
       _search.append('school_id', this.session.g.get('school').id.toString());
 
       const channels$ = this.service.getChannelsBySchoolId(1, 1000, _search);

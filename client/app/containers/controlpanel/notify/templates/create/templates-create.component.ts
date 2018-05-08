@@ -2,7 +2,7 @@ import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants/privileges'
 /* tslint:disable:max-line-length */
 import { Component, OnInit, OnDestroy, HostListener, ElementRef, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { TemplatesService } from './../templates.service';
 import { CPSession } from './../../../../../session/index';
@@ -99,7 +99,7 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
   doSubmit() {
     this.isError = false;
 
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     let data = {

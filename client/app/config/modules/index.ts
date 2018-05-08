@@ -1,6 +1,6 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 
 import { TopLevelRoutesModule } from '../../app.routing';
@@ -32,7 +32,7 @@ const APP_STATE_MODULE = StoreModule.forRoot({
 
 export const APP_MODULES = [
   APP_STATE_MODULE,
-  HttpModule,
+  HttpClientModule,
   FormsModule,
   BrowserModule,
   SharedModule,

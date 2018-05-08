@@ -1,5 +1,5 @@
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Headers, Http, RequestOptionsArgs } from '@angular/http';
 import { Router } from '@angular/router';
 
 import { API } from '../../config/api';
@@ -11,7 +11,7 @@ import { Observable } from 'rxjs/Observable';
 const buildTokenHeaders = () => {
   const auth = `${API.AUTH_HEADER.TOKEN} ${API.KEY}`;
 
-  return new Headers({
+  return new HttpHeaders({
     'Content-Type': 'application/json',
     Authorization: auth
   });
@@ -19,11 +19,11 @@ const buildTokenHeaders = () => {
 
 @Injectable()
 export class CallbackService extends BaseService {
-  constructor(public _http: Http, public _router: Router) {
+  constructor(public _http: HttpClient, public _router: Router) {
     super(_http, _router);
   }
 
-  get(url: string, opts?: RequestOptionsArgs, silent = false) {
+  get(url: string, opts?: HttpParams, silent = false) {
     const headers = buildTokenHeaders();
 
     return this._http
@@ -33,7 +33,7 @@ export class CallbackService extends BaseService {
       .catch((err) => (silent ? Observable.throw(err) : super.catchError(err)));
   }
 
-  post(url: string, data: any, opts?: RequestOptionsArgs) {
+  post(url: string, data: any, opts?: HttpParams) {
     const headers = buildTokenHeaders();
 
     data = CPObj.cleanNullValues(data);
@@ -44,7 +44,7 @@ export class CallbackService extends BaseService {
       .catch((err) => this.catchError(err));
   }
 
-  update(url: string, data: any, opts?: RequestOptionsArgs) {
+  update(url: string, data: any, opts?: HttpParams) {
     const headers = buildTokenHeaders();
 
     data = CPObj.cleanNullValues(data);
@@ -56,7 +56,7 @@ export class CallbackService extends BaseService {
       .catch((err) => this.catchError(err));
   }
 
-  delete(url: string, opts?: RequestOptionsArgs) {
+  delete(url: string, opts?: HttpParams) {
     const headers = buildTokenHeaders();
 
     return this._http

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
 import { ServicesService } from '../services.service';
@@ -57,7 +57,7 @@ export class ServicesListComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     const attendance_only = this.state.attendance_only
       ? this.state.attendance_only.toString()
       : null;

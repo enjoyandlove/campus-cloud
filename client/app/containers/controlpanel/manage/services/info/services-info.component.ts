@@ -1,8 +1,8 @@
 /*tslint:disable:max-line-length */
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, Input, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
@@ -53,7 +53,7 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    const search: URLSearchParams = new URLSearchParams();
+    const search: HttpParams = new HttpParams();
     search.append('school_id', this.school.id.toString());
     search.append('store_id', this.serviceId.toString());
     search.append('privilege_type', CP_PRIVILEGES_MAP.services.toString());

@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Headers } from '@angular/http';
+import { HttpHeaders } from '@angular/common/http';
 
 import { API } from '../../../.././../../../config/api';
 import { STATUS } from '../../../.././../../../shared/constants';
@@ -42,14 +42,14 @@ export class BannerUploadButtonComponent implements OnInit {
     }
 
     this.uploading = true;
-    const headers = new Headers();
+    const headers = new HttpHeaders();
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
     const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
 
     headers.append('Authorization', auth);
 
     this.fileUploadService.uploadFile(file, url, headers).subscribe(
-      (res) => {
+      (res: any) => {
         this.uploading = false;
         this.upload.emit(res.image_url);
       },

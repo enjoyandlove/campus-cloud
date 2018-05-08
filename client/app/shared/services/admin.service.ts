@@ -1,4 +1,4 @@
-import { Http, URLSearchParams } from '@angular/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -9,28 +9,28 @@ import { API } from '../../config/api';
 
 @Injectable()
 export class AdminService extends BaseService {
-  constructor(http: Http, router: Router) {
+  constructor(http: HttpClient, router: Router) {
     super(http, router);
 
     Object.setPrototypeOf(this, AdminService.prototype);
   }
 
-  getAdmins(startRage: number, endRage: number, search?: URLSearchParams) {
+  getAdmins(startRage: number, endRage: number, search?: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/${startRage};${endRage}`;
 
-    return super.get(url, { search }).map((res) => res.json());
+    return super.get(url, search);
   }
 
-  getAdminByStoreId(search: URLSearchParams) {
+  getAdminByStoreId(search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/`;
 
-    return super.get(url, { search }).map((res) => res.json());
+    return super.get(url, search);
   }
 
   getAdminById(adminId: number) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/${adminId}`;
 
-    return super.get(url).map((res) => res.json());
+    return super.get(url);
   }
 
   deleteAdminById(adminId: number) {
@@ -38,19 +38,19 @@ export class AdminService extends BaseService {
 
     return super
       .delete(url, null, true)
-      .map((res) => res.json())
+
       .catch((err) => Observable.throw(err));
   }
 
   createAdmin(data: any) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/`;
 
-    return super.post(url, data).map((res) => res.json());
+    return super.post(url, data);
   }
 
   updateAdmin(adminId: number, data: any) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/${adminId}`;
 
-    return super.update(url, data, null, true).map((res) => res.json());
+    return super.update(url, data, null, true);
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { BaseComponent } from '../../../../../base';
 import { CPSession } from './../../../../../session';
@@ -101,7 +101,7 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
   }
 
   fetch() {
-    const search = new URLSearchParams();
+    const search = new HttpParams();
     search.append('start', this._dates.start);
     search.append('end', this._dates.end);
     search.append('school_id', this.session.g.get('school').id);
