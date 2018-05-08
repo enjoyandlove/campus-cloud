@@ -106,6 +106,8 @@ export class AudienceDynamicComponent extends BaseComponent implements OnInit {
   }
 
   removeFilterGroup(index) {
+    this.state = { ...this.state, usedFilters: delete this.state.usedFilters[index] };
+
     this.selectedFilterOptions[index] = [];
 
     const control = <FormArray>this.form.controls['filters'];
