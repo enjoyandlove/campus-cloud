@@ -15,6 +15,8 @@ import { CPI18nService } from './../../../../../shared/services';
   styleUrls: ['./audience-saved-body.component.scss']
 })
 export class AudienceSavedBodyComponent implements OnInit {
+  @Input() reset: Observable<boolean>;
+
   @Input() importedAudience: Observable<{ label: string; action: number }>;
 
   @Output() selected: EventEmitter<{ action: number; heading: string }> = new EventEmitter();
