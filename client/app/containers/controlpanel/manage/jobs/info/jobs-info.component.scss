@@ -15,7 +15,7 @@ p.no-margin-bottom {
   margin-bottom: 0;
 }
 
-.job {
+.job, .employer {
   &__title {
     @include font-semi-bold();
     @include font-24px();
@@ -24,7 +24,8 @@ p.no-margin-bottom {
     margin-bottom: 0;
   }
 
-  &__description {
+  &__description,
+  &__how-to-apply {
     margin-top: 20px;
   }
 
