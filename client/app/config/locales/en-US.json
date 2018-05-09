@@ -1538,6 +1538,10 @@
     "message": "Learn more",
     "description": "Manage > Links > Create Link"
   },
+  "learn_more": {
+    "message": "Learn more",
+    "description": "Manage > Links > Create Link"
+  },
   "links": {
     "message": "Links"
   },

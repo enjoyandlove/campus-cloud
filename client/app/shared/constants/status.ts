@@ -49,5 +49,5 @@ export const STATUS = {
 
   WRONG_EXTENSION: 'Unsupported file type',
 
-  WRONG_EXTENSION_IMAGE: 'Please upload a JPG or PNG image',
+  WRONG_EXTENSION_IMAGE: 'Please upload a JPG or PNG image'
 };

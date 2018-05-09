@@ -5,7 +5,7 @@ import { isClubAthletic } from '../../../../clubs/clubs.athletics.labels';
   selector: 'cp-athletics-events-create',
   template: `<cp-clubs-events-create
               [isAthletic]="isAthletic">
-             </cp-clubs-events-create>`,
+             </cp-clubs-events-create>`
 })
 export class AthleticsEventsCreateComponent implements OnInit {
   @Input() isAthletic;

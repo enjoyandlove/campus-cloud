@@ -18,13 +18,13 @@ const state: IState = {
   locations: [],
   search_str: null,
   sort_field: 'name',
-  sort_direction: 'asc',
+  sort_direction: 'asc'
 };
 
 @Component({
   selector: 'cp-locations-list',
   templateUrl: './locations-list.component.html',
-  styleUrls: ['./locations-list.component.scss'],
+  styleUrls: ['./locations-list.component.scss']
 })
 export class LocationsListComponent extends BaseComponent implements OnInit {
   loading;
@@ -33,10 +33,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
   updateLocation = '';
   state: IState = state;
 
-  constructor(
-    private locationsService: LocationsService,
-    public session: CPSession,
-  ) {
+  constructor(private locationsService: LocationsService, public session: CPSession) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
 
@@ -50,11 +47,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
     search.append('sort_direction', this.state.sort_direction);
     search.append('school_id', this.session.g.get('school').id);
 
-    const stream$ = this.locationsService.getLocations(
-      this.startRange,
-      this.endRange,
-      search,
-    );
+    const stream$ = this.locationsService.getLocations(this.startRange, this.endRange, search);
 
     super.fetchData(stream$).then((res) => {
       this.state = Object.assign({}, this.state, { locations: res.data });
@@ -85,7 +78,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
     this.state = {
       ...this.state,
       sort_field: sort_field,
-      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc',
+      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc'
     };
 
     this.fetch();
@@ -98,13 +91,13 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
         $('#locationsCreate').modal();
       },
 
-      1,
+      1
     );
   }
 
   onLocationCreated(location) {
     this.state = Object.assign({}, this.state, {
-      locations: [location, ...this.state.locations],
+      locations: [location, ...this.state.locations]
     });
   }
 
@@ -116,7 +109,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
         }
 
         return _location;
-      }),
+      })
     });
 
     this.state = Object.assign({}, this.state, _state);

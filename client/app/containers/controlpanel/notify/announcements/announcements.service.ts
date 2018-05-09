@@ -7,10 +7,7 @@ import { API } from '../../../../config/api';
 
 @Injectable()
 export class AnnouncementsService extends BaseService {
-  constructor(
-    http: Http,
-    router: Router
-  ) {
+  constructor(http: Http, router: Router) {
     super(http, router);
 
     Object.setPrototypeOf(this, AnnouncementsService.prototype);

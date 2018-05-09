@@ -9,36 +9,36 @@ export enum clubAthleticStatus {
 
 export enum isClubAthletic {
   club = 0,
-  athletic = 16,
+  athletic = 16
 }
 
 export enum clubMenu {
   noAccess = null,
   selectClubs = 2,
-  allClubs = 3,
+  allClubs = 3
 }
 
 export enum athleticMenu {
   noAccess = null,
   selectAthletic = 2,
-  allAthletics = 3,
+  allAthletics = 3
 }
 
 export enum serviceMenu {
   noAccess = null,
   selectServices = 2,
-  allServices = 3,
+  allServices = 3
 }
 
 export enum eventMenu {
   noAccess = null,
   manageEvents = 2,
-  manageEventsAndAssess = 3,
+  manageEventsAndAssess = 3
 }
 
 export enum manageAdminMenu {
   disabled = null,
-  enabled = 1,
+  enabled = 1
 }
 
 @Injectable()
@@ -47,13 +47,13 @@ export class TeamUtilsService {
 
   eventsDropdown(
     eventPrivilege = { r: false, w: false },
-    eventAssessmentPrivilege = { r: false, w: false },
+    eventAssessmentPrivilege = { r: false, w: false }
   ): Array<any> {
     let items = [
       {
         label: this.cpI18n.translate('admin_no_access'),
-        action: eventMenu.noAccess,
-      },
+        action: eventMenu.noAccess
+      }
     ];
 
     if (!eventPrivilege.r) {
@@ -65,8 +65,8 @@ export class TeamUtilsService {
         ...items,
         {
           label: this.cpI18n.translate('admin_manage_events'),
-          action: eventMenu.manageEvents,
-        },
+          action: eventMenu.manageEvents
+        }
       ];
     }
 
@@ -75,8 +75,8 @@ export class TeamUtilsService {
         ...items,
         {
           label: this.cpI18n.translate('admin_manage_and_assess_events'),
-          action: eventMenu.manageEventsAndAssess,
-        },
+          action: eventMenu.manageEventsAndAssess
+        }
       ];
     }
 
@@ -99,8 +99,8 @@ export class TeamUtilsService {
     let items = [
       {
         label: this.cpI18n.translate('team_member_disabled'),
-        action: manageAdminMenu.disabled,
-      },
+        action: manageAdminMenu.disabled
+      }
     ];
 
     if (!privilege) {
@@ -112,8 +112,8 @@ export class TeamUtilsService {
         ...items,
         {
           label: this.cpI18n.translate('admin_enabled'),
-          action: manageAdminMenu.enabled,
-        },
+          action: manageAdminMenu.enabled
+        }
       ];
     }
 
@@ -124,8 +124,8 @@ export class TeamUtilsService {
     let items = [
       {
         label: this.cpI18n.translate('admin_no_access'),
-        action: clubMenu.noAccess,
-      },
+        action: clubMenu.noAccess
+      }
     ];
 
     if (!schoolLevel.w && !accountLevel) {
@@ -137,8 +137,8 @@ export class TeamUtilsService {
         ...items,
         {
           label: this.cpI18n.translate('admin_select_clubs'),
-          action: clubMenu.selectClubs,
-        },
+          action: clubMenu.selectClubs
+        }
       ];
     }
 
@@ -147,12 +147,12 @@ export class TeamUtilsService {
         ...items,
         {
           label: this.cpI18n.translate('admin_select_clubs'),
-          action: clubMenu.selectClubs,
+          action: clubMenu.selectClubs
         },
         {
           label: this.cpI18n.translate('admin_all_clubs'),
-          action: clubMenu.allClubs,
-        },
+          action: clubMenu.allClubs
+        }
       ];
     }
 
@@ -163,8 +163,8 @@ export class TeamUtilsService {
     let items = [
       {
         label: this.cpI18n.translate('admin_no_access'),
-        action: athleticMenu.noAccess,
-      },
+        action: athleticMenu.noAccess
+      }
     ];
 
     if (!schoolLevel.w && !accountLevel) {
@@ -176,8 +176,8 @@ export class TeamUtilsService {
         ...items,
         {
           label: this.cpI18n.translate('admin_select_clubs'),
-          action: athleticMenu.selectAthletic,
-        },
+          action: athleticMenu.selectAthletic
+        }
       ];
     }
 
@@ -186,12 +186,12 @@ export class TeamUtilsService {
         ...items,
         {
           label: this.cpI18n.translate('admin_select_clubs'),
-          action: athleticMenu.selectAthletic,
+          action: athleticMenu.selectAthletic
         },
         {
           label: this.cpI18n.translate('admin_all_clubs'),
-          action: athleticMenu.allAthletics,
-        },
+          action: athleticMenu.allAthletics
+        }
       ];
     }
 
@@ -202,8 +202,8 @@ export class TeamUtilsService {
     let items = [
       {
         label: this.cpI18n.translate('admin_no_access'),
-        action: serviceMenu.noAccess,
-      },
+        action: serviceMenu.noAccess
+      }
     ];
 
     if (!schoolLevel.w && !accountLevel) {
@@ -215,8 +215,8 @@ export class TeamUtilsService {
         ...items,
         {
           label: this.cpI18n.translate('admin_select_services'),
-          action: serviceMenu.selectServices,
-        },
+          action: serviceMenu.selectServices
+        }
       ];
     }
 
@@ -225,12 +225,12 @@ export class TeamUtilsService {
         ...items,
         {
           label: this.cpI18n.translate('admin_select_services'),
-          action: serviceMenu.selectServices,
+          action: serviceMenu.selectServices
         },
         {
           label: this.cpI18n.translate('admin_all_services'),
-          action: serviceMenu.allServices,
-        },
+          action: serviceMenu.allServices
+        }
       ];
     }
 

@@ -32,23 +32,25 @@ describe('CPStepperComponent', () => {
     }
   };
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ CPStepperComponent ],
-      providers: [
-        CPSession,
-        { provide: AdminService, useClass: MockAdminService },
-      ]
-    }) .overrideComponent(CPStepperComponent, {
-      set: {
-        template: '<div>No Template</div>'
-      }
-    }).compileComponents().then(() => {
-      fixture = TestBed.createComponent(CPStepperComponent);
-      comp = fixture.componentInstance;
-      service = TestBed.get(AdminService);
-    });
-  }));
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        declarations: [CPStepperComponent],
+        providers: [CPSession, { provide: AdminService, useClass: MockAdminService }]
+      })
+        .overrideComponent(CPStepperComponent, {
+          set: {
+            template: '<div>No Template</div>'
+          }
+        })
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(CPStepperComponent);
+          comp = fixture.componentInstance;
+          service = TestBed.get(AdminService);
+        });
+    })
+  );
 
   it('backStep() should decrement current step', () => {
     comp.backStep(2);
@@ -71,5 +73,4 @@ describe('CPStepperComponent', () => {
     expect(spy).toHaveBeenCalled();
     expect(service.updateAdmin(id, body)).toBeTruthy();
   });
-
 });

@@ -7,16 +7,17 @@ import { CPCheckDropdownComponent } from './cp-check-dropdown.component';
 import 'rxjs/add/observable/of';
 
 describe('CPCheckDropdownComponent (inline template)', () => {
-
   let expected;
   let comp: CPCheckDropdownComponent;
   let fixture: ComponentFixture<CPCheckDropdownComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [CPCheckDropdownComponent],
-    });
-  }));
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        declarations: [CPCheckDropdownComponent]
+      });
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CPCheckDropdownComponent);
@@ -34,7 +35,7 @@ describe('CPCheckDropdownComponent (inline template)', () => {
         action: null,
         decsritpion: 'mock description 2'
       }
-    ]
+    ];
 
     comp.reset = Observable.of(false);
 
@@ -42,7 +43,7 @@ describe('CPCheckDropdownComponent (inline template)', () => {
       label: 'expected label',
       action: null,
       decsritpion: 'expected description'
-    }
+    };
 
     fixture.detectChanges();
   });
@@ -56,7 +57,7 @@ describe('CPCheckDropdownComponent (inline template)', () => {
   it('when selectedItem present use it for the button text', () => {
     fixture.detectChanges();
 
-    comp.selectedItem = expected
+    comp.selectedItem = expected;
 
     fixture.detectChanges();
 
@@ -69,5 +70,5 @@ describe('CPCheckDropdownComponent (inline template)', () => {
     fixture.detectChanges();
 
     expect(comp.selectedItem).toBe(expected);
-  })
+  });
 });

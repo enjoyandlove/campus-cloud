@@ -16,34 +16,26 @@ export class ServicesService extends BaseService {
   }
 
   getServices(startRange: number, endRange: number, search?: URLSearchParams) {
-    const common = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.SERVICES
-    }`;
+    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}`;
     const url = `${common}/${startRange};${endRange}`;
 
     return super.get(url, { search }).map((res) => res.json());
   }
 
   getCategories() {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.SERVICES_CATEGORY
-    }/1;1000`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES_CATEGORY}/1;1000`;
 
     return super.get(url).map((res) => res.json());
   }
 
   getServiceById(serviceId: number) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.SERVICES
-    }/${serviceId}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}/${serviceId}`;
 
     return super.get(url).map((res) => res.json());
   }
 
   deleteService(serviceId: number) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.SERVICES
-    }/${serviceId}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}/${serviceId}`;
 
     return super.delete(url).map((res) => res.json());
   }
@@ -55,9 +47,7 @@ export class ServicesService extends BaseService {
   }
 
   updateService(data: any, serviceId: number) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.SERVICES
-    }/${serviceId}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}/${serviceId}`;
 
     return super.update(url, data).map((res) => res.json());
   }
@@ -65,7 +55,7 @@ export class ServicesService extends BaseService {
   setModalServices(services: any[]): void {
     this.store.dispatch({
       type: SERVICES_MODAL_SET,
-      payload: services,
+      payload: services
     });
   }
 }

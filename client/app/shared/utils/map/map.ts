@@ -27,7 +27,7 @@ const map = {
   street_name: 'route',
   postal_code: 'postal_code',
   street_number: 'street_number',
-  province: 'administrative_area_level_1',
+  province: 'administrative_area_level_1'
 };
 
 function locationAsObject(location) {
@@ -35,15 +35,11 @@ function locationAsObject(location) {
 
   return {
     latitude: googleCords.lat,
-    longitude: googleCords.lng,
+    longitude: googleCords.lng
   };
 }
 
-function getValueFromAddressComponent(
-  addressComp: any[],
-  field: string,
-  long?: boolean,
-) {
+function getValueFromAddressComponent(addressComp: any[], field: string, long?: boolean) {
   let result = null;
 
   addressComp.map((data) => {
@@ -73,7 +69,7 @@ function getBaseMapObject(data) {
     street_number: null,
     province: null,
     latitude: null,
-    longitude: null,
+    longitude: null
   };
 
   if (!data) {
@@ -86,15 +82,12 @@ function getBaseMapObject(data) {
       street_number: '',
       province: '',
       latitude: null,
-      longitude: null,
+      longitude: null
     };
   }
 
   Object.keys(map).map((item) => {
-    obj[item] = getValueFromAddressComponent(
-      data.address_components,
-      map[item],
-    );
+    obj[item] = getValueFromAddressComponent(data.address_components, map[item]);
   });
 
   obj = Object.assign({}, obj, { ...locationAsObject(data.geometry.location) });
@@ -111,7 +104,7 @@ const resetLocationFields = (school) => {
     location: '',
     postal_code: '',
     latitude: school.latitude,
-    longitude: school.longitude,
+    longitude: school.longitude
   };
 };
 
@@ -135,5 +128,5 @@ export const CPMap = {
   getBaseMapObject,
   setFormLocationData,
   resetLocationFields,
-  getValueFromAddressComponent,
+  getValueFromAddressComponent
 };

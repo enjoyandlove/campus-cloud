@@ -5,13 +5,13 @@ import { CPTrackingService } from './../../services/tracking.service';
 
 @Component({
   selector: 'cp-trackers',
-  templateUrl: './cp-trackers.component.html',
+  templateUrl: './cp-trackers.component.html'
 })
 export class CPTrackersComponent implements OnInit {
   constructor(
     public router: Router,
     public route: ActivatedRoute,
-    public cpTrackingService: CPTrackingService,
+    public cpTrackingService: CPTrackingService
   ) {}
 
   listenForRouteChanges() {

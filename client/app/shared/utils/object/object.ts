@@ -15,5 +15,5 @@ function cleanNullValues(obj: any): any {
 }
 
 export const CPObj = {
-  cleanNullValues,
+  cleanNullValues
 };

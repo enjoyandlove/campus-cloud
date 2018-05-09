@@ -3,13 +3,13 @@ import { Component, OnInit } from '@angular/core';
 export const AVATAR_SIZE = {
   SMALL: 'small',
   LARGE: 'large',
-  DEFAULT: 'default',
+  DEFAULT: 'default'
 };
 
 @Component({
   selector: 'cp-avatar',
   templateUrl: './cp-avatar.component.html',
-  styleUrls: ['./cp-avatar.component.scss'],
+  styleUrls: ['./cp-avatar.component.scss']
 })
 export class CPAvatarComponent implements OnInit {
   isLoading;

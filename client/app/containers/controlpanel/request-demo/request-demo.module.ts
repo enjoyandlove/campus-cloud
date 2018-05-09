@@ -11,6 +11,6 @@ import { RequestDemoRoutingModule } from './request-demo.routing.module';
 
   imports: [CommonModule, SharedModule, RequestDemoRoutingModule],
 
-  providers: [],
+  providers: []
 })
 export class RequestDemoModule {}

@@ -16,7 +16,7 @@ interface IProps {
 @Component({
   selector: 'cp-button',
   templateUrl: './cp-button.component.html',
-  styleUrls: ['./cp-button.component.scss'],
+  styleUrls: ['./cp-button.component.scss']
 })
 export class CPButtonComponent implements OnInit {
   @Input() props: IProps;

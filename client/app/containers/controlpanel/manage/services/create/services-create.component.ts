@@ -21,7 +21,7 @@ const FEEDBACK_DISABLED = 0;
 @Component({
   selector: 'cp-services-create',
   templateUrl: './services-create.component.html',
-  styleUrls: ['./services-create.component.scss'],
+  styleUrls: ['./services-create.component.scss']
 })
 export class ServicesCreateComponent implements OnInit {
   @Input() toolTipContent: IToolTipContent;
@@ -41,12 +41,12 @@ export class ServicesCreateComponent implements OnInit {
   feedbackOptions = [
     {
       label: this.cpI18n.translate('service_enabled'),
-      value: FEEDBACK_ENABLED,
+      value: FEEDBACK_ENABLED
     },
     {
       label: this.cpI18n.translate('services_disabled'),
-      value: FEEDBACK_DISABLED,
-    },
+      value: FEEDBACK_DISABLED
+    }
   ];
 
   constructor(
@@ -55,7 +55,7 @@ export class ServicesCreateComponent implements OnInit {
     private session: CPSession,
     private store: Store<IHeader>,
     private cpI18n: CPI18nService,
-    private servicesService: ServicesService,
+    private servicesService: ServicesService
   ) {
     this.buildHeader();
     this.categories$ = this.servicesService
@@ -65,13 +65,13 @@ export class ServicesCreateComponent implements OnInit {
         const _categories = [
           {
             label: '---',
-            action: null,
-          },
+            action: null
+          }
         ];
         categories.map((category) => {
           _categories.push({
             action: category.id,
-            label: category.name,
+            label: category.name
           });
         });
 
@@ -80,10 +80,7 @@ export class ServicesCreateComponent implements OnInit {
   }
 
   onResetMap() {
-    CPMap.setFormLocationData(
-      this.form,
-      CPMap.resetLocationFields(this.school),
-    );
+    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields(this.school));
     this.centerMap(this.school.latitude, this.school.longitude);
   }
 
@@ -142,8 +139,8 @@ export class ServicesCreateComponent implements OnInit {
         heading: 'services_create_heading',
         subheading: null,
         em: null,
-        children: [],
-      },
+        children: []
+      }
     });
   }
 
@@ -160,10 +157,7 @@ export class ServicesCreateComponent implements OnInit {
 
     const { service_attendance } = data;
 
-    if (
-      service_attendance === ATTENDANCE_DISABLED ||
-      service_attendance == null
-    ) {
+    if (service_attendance === ATTENDANCE_DISABLED || service_attendance == null) {
       data.enable_feedback = null;
     }
 
@@ -190,7 +184,7 @@ export class ServicesCreateComponent implements OnInit {
         enable_feedback: data.enable_feedback,
         service_attendance: data.service_attendance,
         rating_scale_maximum: data.rating_scale_maximum,
-        default_basic_feedback_label: data.default_basic_feedback_label,
+        default_basic_feedback_label: data.default_basic_feedback_label
       })
       .catch((err) => Observable.throw(err))
       .subscribe((service) => {
@@ -207,24 +201,24 @@ export class ServicesCreateComponent implements OnInit {
   onToggleAttendance(event) {
     if (event) {
       this.form.controls['default_basic_feedback_label'].setValue(
-        this.cpI18n.translate('services_default_feedback_question'),
+        this.cpI18n.translate('services_default_feedback_question')
       );
     } else {
       this.form.controls['default_basic_feedback_label'].setValue(null);
     }
 
     this.form.controls['service_attendance'].setValue(
-      event ? ATTENDANCE_ENABLED : ATTENDANCE_DISABLED,
+      event ? ATTENDANCE_ENABLED : ATTENDANCE_DISABLED
     );
   }
 
   ngOnInit() {
     this.feedback = Object.assign({}, this.feedback, {
-      content: this.cpI18n.translate('manage_create_service_feedback_tooltip'),
+      content: this.cpI18n.translate('manage_create_service_feedback_tooltip')
     });
 
     this.category = Object.assign({}, this.category, {
-      content: this.cpI18n.translate('manage_create_service_category_tooltip'),
+      content: this.cpI18n.translate('manage_create_service_category_tooltip')
     });
 
     this.school = this.session.g.get('school');
@@ -232,13 +226,13 @@ export class ServicesCreateComponent implements OnInit {
     this.buttonData = {
       disabled: true,
       class: 'primary',
-      text: this.cpI18n.translate('services_create_button_create'),
+      text: this.cpI18n.translate('services_create_button_create')
     };
 
     this.storeId = this.school.main_union_store_id;
     this.mapCenter = new BehaviorSubject({
       lat: this.school.latitude,
-      lng: this.school.longitude,
+      lng: this.school.longitude
     });
 
     this.form = this.fb.group({
@@ -262,12 +256,12 @@ export class ServicesCreateComponent implements OnInit {
       service_attendance: [null],
       rating_scale_maximum: [null],
       default_basic_feedback_label: [null],
-      enable_feedback: [FEEDBACK_ENABLED],
+      enable_feedback: [FEEDBACK_ENABLED]
     });
 
     this.form.valueChanges.subscribe((_) => {
       this.buttonData = Object.assign({}, this.buttonData, {
-        disabled: !this.form.valid,
+        disabled: !this.form.valid
       });
     });
   }

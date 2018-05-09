@@ -1054,8 +1054,7 @@
     "message": "Erreur"
   },
   "error_allow_local_storage_to_continue": {
-    "message":
-      "Votre navigateur n'autorise pas les cookies. Activez les cookies dans votre navigateur pour continuer."
+    "message": "Votre navigateur n'autorise pas les cookies. Activez les cookies dans votre navigateur pour continuer."
   },
   "error_file_is_too_big": {
     "message": "Fichier trop volumineux"
@@ -1404,6 +1403,10 @@
     "message": "Chef",
     "description":
       "Manage > Orientation > Program > view program details \r\nAdd Member > Member Type dropdown"
+  },
+  "learn_more": {
+    "message": "En savoir plus",
+    "description": "Manage > Links > Create Link"
   },
   "learn_more": {
     "message": "En savoir plus",

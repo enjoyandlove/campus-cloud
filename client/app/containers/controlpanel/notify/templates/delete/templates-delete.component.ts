@@ -10,7 +10,7 @@ declare var $;
 @Component({
   selector: 'cp-templates-delete',
   templateUrl: './templates-delete.component.html',
-  styleUrls: ['./templates-delete.component.scss'],
+  styleUrls: ['./templates-delete.component.scss']
 })
 export class TemplatesDeleteComponent implements OnInit {
   @Input() item: any;
@@ -24,7 +24,7 @@ export class TemplatesDeleteComponent implements OnInit {
   constructor(
     private session: CPSession,
     private cpI18n: CPI18nService,
-    private service: TemplatesService,
+    private service: TemplatesService
   ) {}
 
   doReset() {
@@ -43,23 +43,23 @@ export class TemplatesDeleteComponent implements OnInit {
         this.deleted.emit(this.item.id);
         $('#deleteTemplateModal').modal('hide');
         this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: true,
+          disabled: true
         });
       },
       (_) => {
         this.isError = true;
         this.errorMessage = this.cpI18n.translate('something_went_wrong');
         this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: true,
+          disabled: true
         });
-      },
+      }
     );
   }
 
   ngOnInit() {
     this.buttonData = {
       class: 'danger',
-      text: this.cpI18n.translate('delete'),
+      text: this.cpI18n.translate('delete')
     };
   }
 }

@@ -12,7 +12,7 @@ import {
   AthleticsEventsExcelComponent,
   AthleticsEventsCreateComponent,
   AthleticsEventsFacebookComponent,
-  AthleticsEventsAtthendanceComponent,
+  AthleticsEventsAtthendanceComponent
 } from './components';
 
 const appRoutes: Routes = [
@@ -26,14 +26,14 @@ const appRoutes: Routes = [
 
   { path: ':eventId/edit', component: AthleticsEventsEditComponent },
 
-  { path: ':eventId/info', component: AthleticsEventsInfoComponent, },
+  { path: ':eventId/info', component: AthleticsEventsInfoComponent },
 
   { path: 'import/excel', component: AthleticsEventsExcelComponent },
 
-  { path: 'import/facebook', component: AthleticsEventsFacebookComponent },
+  { path: 'import/facebook', component: AthleticsEventsFacebookComponent }
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class AthleticsEventsRoutingModule {}

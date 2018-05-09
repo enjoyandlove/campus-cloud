@@ -10,11 +10,11 @@ const appRoutes: Routes = [
     path: 'assess',
     canActivate: [AuthGuard],
     data: { zendesk: 'assessment' },
-    component: RequestDemoAssessmentComponent,
-  },
+    component: RequestDemoAssessmentComponent
+  }
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class RequestDemoRoutingModule {}
