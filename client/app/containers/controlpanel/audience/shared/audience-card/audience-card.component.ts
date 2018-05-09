@@ -36,6 +36,13 @@ export class AudienceCardComponent implements OnInit, AfterViewInit {
   savedAudienceTitle;
   importedAudience$: BehaviorSubject<{ label: string; action: number }> = new BehaviorSubject(null);
 
+  // this will ensure ngOnDestroy is
+  // called on these components
+  state = {
+    savedAudienceActive: true,
+    newAudienceActive: false
+  };
+
   constructor(public cpI18n: CPI18nService, public store: Store<any>) {}
 
   onTabClick({ id }) {
@@ -45,6 +52,24 @@ export class AudienceCardComponent implements OnInit, AfterViewInit {
     if (id === 'new') {
       this.resetNewAudience.emit();
     }
+  }
+
+  onDestroyNewAudience() {
+    this.state = {
+      ...this.state,
+      savedAudienceActive: true,
+      newAudienceActive: false
+    };
+
+    this.message = this.cpI18n.translate('campus_wide');
+  }
+
+  onDestroySavedAudience() {
+    this.state = {
+      ...this.state,
+      savedAudienceActive: false,
+      newAudienceActive: true
+    };
   }
 
   ngAfterViewInit() {
