@@ -1,5 +1,6 @@
 <label>{{'audience_label_audience' | cpI18n}}</label>
 <cp-dropdown 
+  [reset]="reset"
   [items]="audiences$ | async" 
   [selectedItem]="selectedItem"
   (selected)="selected.emit($event)">

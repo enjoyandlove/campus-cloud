@@ -5,28 +5,33 @@
       <cp-tabs (tabClick)="onTabClick($event)">
         <cp-tab
           id="saved"
-          [title]="savedAudienceTitle">
+          [title]="savedAudienceTitle"
+          (destroy)="onDestroySavedAudience()">
           <div class="saved_audience">
             <div class="row">
-              <div class="col-xs-6">
-                <cp-audience-saved-body 
-                  (selected)="onSelectedAudience($event)"
-                  [importedAudience]="importedAudience$">
-                </cp-audience-saved-body>
-              </div>
-              <div class="col-xs-6 text-right saved_audience__counter">
-                <cp-audience-counter [message]="message"></cp-audience-counter>
-              </div>
+              <ng-container *ngIf="state.savedAudienceActive">
+                <div class="col-xs-6">
+                  <cp-audience-saved-body 
+                    (selected)="onSelectedAudience($event)"
+                    [importedAudience]="importedAudience$">
+                  </cp-audience-saved-body>
+                </div>
+                <div class="col-xs-6 text-right saved_audience__counter">
+                  <cp-audience-counter [message]="message"></cp-audience-counter>
+                </div>
+              </ng-container>
             </div>  
           </div>
         </cp-tab>
         <cp-tab 
           id="new"
-          [title]="newAudienceTitle">
+          [title]="newAudienceTitle"
+          (destroy)="onDestroyNewAudience()">
           <cp-audience-new-body 
             (users)="onUsers($event)"
             (filters)="onFilters($event)"
             (importClick)="importClick.emit()"
+            *ngIf="state.newAudienceActive"
             (audienceType)="onNewAudienceTypeChange($event)">
           </cp-audience-new-body>
         </cp-tab>
