@@ -211,7 +211,7 @@
     "message": "Outrepasse les réglages de notifications Push de l'utilisateur"
   },
   "announcement_and_more_text": {
-    "message": "and %s more..."
+    "message": "et %s plus"
   },
   "announcement_confirm_campus_wide": {
     "message": "Annonce à tout le campus"
@@ -1038,6 +1038,36 @@
   "emergency": {
     "message": "Urgence"
   },
+  "employer": {
+    "message": "Employeur"
+  },
+  "employers_create_employer": {
+    "message": "Créer employeur"
+  },
+  "employers_delete": {
+    "message": "Supprimer employeur"
+  },
+  "employers_delete_modal_body": {
+    "message": "Êtes-vous sûr de vouloir supprimer %s ?"
+  },
+  "employers_edit_employer": {
+    "message": "Éditer employeur"
+  },
+  "employers_manage_employer": {
+    "message": "Gérer les employeurs"
+  },
+  "employers_new_employer": {
+    "message": "Nouvel employeur"
+  },
+  "employers_no_results_found": {
+    "message": "Aucun employeur trouvé"
+  },
+  "employer_all_employers": {
+    "message": "Tous les employeurs"
+  },
+  "employer_name": {
+    "message": "Nom de l'employeur"
+  },
   "ended": {
     "message": "Date de fin:"
   },
@@ -1054,7 +1084,8 @@
     "message": "Erreur"
   },
   "error_allow_local_storage_to_continue": {
-    "message": "Votre navigateur n'autorise pas les cookies. Activez les cookies dans votre navigateur pour continuer."
+    "message":
+      "Votre navigateur n'autorise pas les cookies. Activez les cookies dans votre navigateur pour continuer."
   },
   "error_file_is_too_big": {
     "message": "Fichier trop volumineux"
@@ -1351,20 +1382,20 @@
   },
   "ga_onboarding_text_1": {
     "message":
-      "Campus Cloud is changing. We're making it a faster, powerful and smoother experience for you."
+      "Le Campus Cloud change. Il sera plus rapide, plus puissant et plus fluide pour vous."
   },
   "ga_onboarding_text_2": {
-    "message": "The new Campus Cloud will become the default experience on"
+    "message": "Le campus cloud deviendra l'expérience par défaut le"
   },
   "ga_onboarding_text_3": {
-    "message": "and the older version will no longer be accessible."
+    "message": "et l'ancienne version ne sera plus disponible"
   },
   "ga_onboarding_text_4": {
     "message":
-      "You can learn all about the new Campus Cloud with guides, how-tos and troubleshooting in our new"
+      "Vous pouvez tout savoir à propos du Campus Cloud avec des guides et aides dans notre nouveau"
   },
   "ga_onboarding_text_5": {
-    "message": "If you have any questions, comments or feedback, we'd love to hear from you:"
+    "message": "Si vous avez des questions, commentaires ou retours, nous aimerions le savoir:"
   },
   "hello": {
     "message": "Bonjour"
@@ -1396,6 +1427,111 @@
   "invite_team_members": {
     "message": "Créer un nouveau membre d'équipe"
   },
+  "jobs": {
+    "message": "Emplois"
+  },
+  "jobs_application_deadline": {
+    "message": "Date limite de candidature"
+  },
+  "jobs_create_job": {
+    "message": "Créer un emploi"
+  },
+  "jobs_delete": {
+    "message": "Supprimer emploi"
+  },
+  "jobs_delete_modal_body": {
+    "message": "Êtes-vous sûr de vouloir supprimer %s ?"
+  },
+  "jobs_desired_study_masters": {
+    "message": "Maîtrise"
+  },
+  "jobs_desired_study_phd": {
+    "message": "Thèse"
+  },
+  "jobs_desired_study_ug_y1": {
+    "message": "Premier cycle A1"
+  },
+  "jobs_desired_study_ug_y2": {
+    "message": "Premier cycle A2"
+  },
+  "jobs_desired_study_ug_y3": {
+    "message": "Premier cycle A3"
+  },
+  "jobs_desired_study_ug_y4": {
+    "message": "Premier cycle A4"
+  },
+  "jobs_desired_year_of_study": {
+    "message": "Année d'étude voulue"
+  },
+  "jobs_employer_details": {
+    "message": "Détails de l'employeur"
+  },
+  "jobs_error_end_date_after_now": {
+    "message": "La date de fin doit être dans le futur."
+  },
+  "jobs_error_end_date_before_start": {
+    "message": "La date de fin ne peut pas être avant la date de début."
+  },
+  "jobs_existing_employer": {
+    "message": "Employeur existant"
+  },
+  "jobs_how_to_apply": {
+    "message": "Comment postuler"
+  },
+  "jobs_job_details": {
+    "message": "Détails de l'emploi"
+  },
+  "jobs_job_edit": {
+    "message": "Éditer emploi"
+  },
+  "jobs_job_start_date": {
+    "message": "Date de début de l'emploi"
+  },
+  "jobs_job_title": {
+    "message": "Titre de l'emploi"
+  },
+  "jobs_job_type": {
+    "message": "Type d'emploi"
+  },
+  "jobs_job_type_for_credit": {
+    "message": "Pour des crédits"
+  },
+  "jobs_job_type_full_time": {
+    "message": "Plein temps"
+  },
+  "jobs_job_type_internship": {
+    "message": "Stage"
+  },
+  "jobs_job_type_on_campus": {
+    "message": "Sur le campus"
+  },
+  "jobs_job_type_part_time": {
+    "message": "Temps partiel"
+  },
+  "jobs_job_type_summer": {
+    "message": "Été"
+  },
+  "jobs_job_type_volunteer": {
+    "message": "Volontariat"
+  },
+  "jobs_manage_employer": {
+    "message": "Gérer les employeurs"
+  },
+  "jobs_new_employer": {
+    "message": "Nouvel employeur"
+  },
+  "jobs_no_results_found": {
+    "message": "Aucun emploi trouvé"
+  },
+  "jobs_posting_end_date": {
+    "message": "Date de fin de publication"
+  },
+  "jobs_posting_start_date": {
+    "message": "Date de début de publication"
+  },
+  "jobs_select_employer": {
+    "message": "Sélectionner employeur"
+  },
   "last_name": {
     "message": "Nom de famille"
   },
@@ -1403,10 +1539,6 @@
     "message": "Chef",
     "description":
       "Manage > Orientation > Program > view program details \r\nAdd Member > Member Type dropdown"
-  },
-  "learn_more": {
-    "message": "En savoir plus",
-    "description": "Manage > Links > Create Link"
   },
   "learn_more": {
     "message": "En savoir plus",
@@ -1765,10 +1897,10 @@
     "message": "Résultat"
   },
   "return_to_campus_cloud": {
-    "message": "Return to Campus Cloud"
+    "message": "Retourner au Campus Cloud"
   },
   "return_to_old_control_panel": {
-    "message": "Switch back to old version"
+    "message": "Retourner à l'ancienne version"
   },
   "reupload": {
     "message": "Re-téléverser"
@@ -2039,7 +2171,7 @@
     "description": "Orientation Calendar > To-do's > no results"
   },
   "tooltip_more_text": {
-    "message": "(%s) More"
+    "message": "(%s) Plus"
   },
   "total_ratings": {
     "message": "Total de notes"

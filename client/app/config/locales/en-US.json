@@ -1482,7 +1482,7 @@
     "message": "Edit Job"
   },
   "jobs_job_start_date": {
-    "message": "Posting End Date"
+    "message": "Job Start Date"
   },
   "jobs_job_title": {
     "message": "Job Title"
@@ -1511,6 +1511,9 @@
   "jobs_job_type_volunteer": {
     "message": "Volunteer"
   },
+  "jobs_manage_employer": {
+    "message": "Manage Employers"
+  },
   "jobs_new_employer": {
     "message": "New Employer"
   },
@@ -1533,10 +1536,6 @@
     "message": "Leader",
     "description":
       "Manage > Orientation > Program > view program details \r\nAdd Member > Member Type dropdown"
-  },
-  "learn_more": {
-    "message": "Learn more",
-    "description": "Manage > Links > Create Link"
   },
   "learn_more": {
     "message": "Learn more",
