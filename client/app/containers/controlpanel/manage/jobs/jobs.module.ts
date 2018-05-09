@@ -14,8 +14,14 @@ import { JobsInfoComponent } from './info';
 import { JobsEditComponent } from './edit';
 import { JobsDeleteComponent } from './delete';
 import { JobsCreateComponent } from './create';
-import { JobsFormComponent } from './components/jobs-form';
 import { JobsListActionBoxComponent } from './list/components/action-box';
+
+import {
+  JobsFormComponent,
+  JobsCardComponent,
+  EmployerCardComponent,
+  EmployerSelectorComponent
+} from './components';
 
 @NgModule({
   declarations: [
@@ -23,8 +29,11 @@ import { JobsListActionBoxComponent } from './list/components/action-box';
     JobsFormComponent,
     JobsInfoComponent,
     JobsEditComponent,
+    JobsCardComponent,
     JobsDeleteComponent,
     JobsCreateComponent,
+    EmployerCardComponent,
+    EmployerSelectorComponent,
     JobsListActionBoxComponent
   ],
   imports: [

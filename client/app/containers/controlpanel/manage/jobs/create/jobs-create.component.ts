@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import { JobsService } from '../jobs.service';
 import { CPSession } from '../../../../../session';
 import { JobsTypeDesireStudy } from '../jobs.status';
+import { CPDate } from '../../../../../shared/utils';
 import { CPI18nService } from '../../../../../shared/services';
 import { EmployerService } from '../employers/employer.service';
 import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
@@ -18,9 +19,13 @@ import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
   styleUrls: ['./jobs-create.component.scss']
 })
 export class JobsCreateComponent implements OnInit {
-  @ViewChild('createForm') createForm;
-
+  data;
+  formError;
+  buttonData;
+  isNewEmployer;
   form: FormGroup;
+  dateErrorMessage;
+  employerForm: FormGroup;
 
   constructor(
     public router: Router,
@@ -32,11 +37,27 @@ export class JobsCreateComponent implements OnInit {
     public employerService: EmployerService
   ) {}
 
-  onSave(data) {
-    if (data.isNewEmployer) {
-      this.createJobWithNewEmployer(data);
+  onSubmit() {
+    this.formError = false;
+
+    if (this.data.job.posting_end <= this.data.job.posting_start) {
+      this.formError = true;
+      this.dateErrorMessage = this.cpI18n.translate('jobs_error_end_date_before_start');
+
+      return;
+    }
+
+    if (this.data.job.posting_end <= Math.round(CPDate.now().unix())) {
+      this.formError = true;
+      this.dateErrorMessage = this.cpI18n.translate('jobs_error_end_date_after_now');
+
+      return;
+    }
+
+    if (this.isNewEmployer) {
+      this.createJobWithNewEmployer(this.data);
     } else {
-      this.createJob(data);
+      this.createJob(this.data);
     }
   }
 
@@ -77,11 +98,6 @@ export class JobsCreateComponent implements OnInit {
     });
   }
 
-  isStoreRequired(value) {
-    const store_id = this.form.controls['store_id'].value;
-    this.form.setControl('store_id', new FormControl(store_id, value ? Validators.required : null));
-  }
-
   buildHeader() {
     this.store.dispatch({
       type: HEADER_UPDATE,
@@ -92,6 +108,25 @@ export class JobsCreateComponent implements OnInit {
         children: []
       }
     });
+  }
+
+  buildEmployerForm() {
+    this.employerForm = this.fb.group({
+      name: [null],
+      description: [null],
+      email: [null],
+      logo_url: [null]
+    });
+  }
+
+  formData(data) {
+    this.data = data;
+    const isFormValid = data.jobFormValid && data.employerFormValid;
+    this.buttonData = Object.assign({}, this.buttonData, { disabled: !isFormValid });
+  }
+
+  onToggleEmployer(value) {
+    this.isNewEmployer = value;
   }
 
   buildForm() {
@@ -124,5 +159,12 @@ export class JobsCreateComponent implements OnInit {
   ngOnInit() {
     this.buildForm();
     this.buildHeader();
+    this.buildEmployerForm();
+
+    this.buttonData = {
+      disabled: true,
+      class: 'primary',
+      text: this.cpI18n.translate('save')
+    };
   }
 }

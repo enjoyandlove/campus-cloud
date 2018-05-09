@@ -1,1 +1,8 @@
 @import '~styles/components/form';
+@import '~styles/core/typography';
+
+.employer {
+  span {
+    @include font-normal()
+  }
+}

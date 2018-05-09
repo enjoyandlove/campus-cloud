@@ -1,6 +1,45 @@
-<cp-jobs-form
-  #createForm
-  [form]="form"
-  (submitted)="onSave($event)"
-  (isStoreRequired)="isStoreRequired($event)">
-</cp-jobs-form>
+<div class="row margin-bottom">
+  <form [formGroup]="form">
+    <div class="col-xs-6">
+      <cp-jobs-card
+        [form]="form"
+        [employerForm]="employerForm"
+        (formData)="formData($event)">
+      </cp-jobs-card>
+    </div>
+
+    <div class="col-xs-6">
+      <cp-employer-card
+        [form]="form"
+        [employerForm]="employerForm"
+        (formData)="formData($event)"
+        (isNewEmployer)="onToggleEmployer($event)">
+      </cp-employer-card>
+    </div>
+
+    <div class="footer">
+      <div class="cp-wrapper cp-wrapper--outer">
+        <div class="col-xs-12">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="text-right">
+                <label class="error" *ngIf="formError">
+                  <i class="material-icons">warning</i>
+                  {{ dateErrorMessage }}
+                </label>
+                <a [routerLink]="['/manage/jobs']"
+                   class="cpbtn cpbtn--cancel" i18n>
+                  {{ 'cancel' | cpI18n }}
+                </a>
+                <cp-button
+                  [props]="buttonData"
+                  (buttonClick)="onSubmit()">
+                </cp-button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

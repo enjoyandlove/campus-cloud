@@ -1,5 +1,5 @@
 <form [formGroup]="employerForm">
-  <div class="form-group">
+  <div class="form-group employer">
     <div class="form-group">
       <cp-image-upload
         (uploaded)="onUploadedImage($event)"
@@ -18,8 +18,7 @@
       <input
         type="text"
         class="form-control"
-        formControlName="name"
-        [class.error]="formError && employerForm.controls['name'].hasError('required')">
+        formControlName="name">
     </div>
 
     <div class="form-group">

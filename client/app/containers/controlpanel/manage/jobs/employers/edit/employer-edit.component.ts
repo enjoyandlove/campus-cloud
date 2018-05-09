@@ -77,7 +77,7 @@ export class EmployerEditComponent implements OnInit {
 
     this.buttonData = Object.assign({}, this.buttonData, {
       class: 'primary',
-      disabled: true,
+      disabled: false,
       text: this.cpI18n.translate('save')
     });
 

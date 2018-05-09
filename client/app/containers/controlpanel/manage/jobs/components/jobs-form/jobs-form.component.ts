@@ -1,11 +1,9 @@
 /*tslint:disable:max-line-length*/
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { JobsService } from '../../jobs.service';
 import { CPSession } from '../../../../../../session';
 import { CPDate } from '../../../../../../shared/utils';
-import { BaseComponent } from '../../../../../../base';
 import { JobsUtilsService } from '../../jobs.utils.service';
 import { CPI18nService } from '../../../../../../shared/services';
 
@@ -21,30 +19,25 @@ const COMMON_DATE_PICKER_OPTIONS = {
   templateUrl: './jobs-form.component.html',
   styleUrls: ['./jobs-form.component.scss']
 })
-export class JobsFormComponent extends BaseComponent implements OnInit {
-  @Input() form: FormGroup;
 
-  @Output() isStoreRequired: EventEmitter<boolean> = new EventEmitter();
-  @Output()
-  submitted: EventEmitter<{
+export class JobsFormComponent implements OnInit {
+  @Input() form: FormGroup;
+  @Input() newEmployer = false;
+  @Input() employerForm: FormGroup;
+
+  @Output() formData: EventEmitter<{
     job: any;
+    jobFormValid: boolean
     employer: any;
-    isNewEmployer: boolean;
+    employerFormValid: boolean
   }> = new EventEmitter();
 
   jobsType;
   buttonData;
-  employers$;
   isDateError;
   desiredStudy;
-  validationError;
-  selectedEmployer;
-  newEmployerTitle;
-  existingEmployerTitle;
   dateErrorMessage;
   formError = false;
-  newEmployer = false;
-  employerForm: FormGroup;
   postingStartDatePickerOptions;
   postingEndDatePickerOptions;
   contractStartDatePickerOptions;
@@ -55,118 +48,27 @@ export class JobsFormComponent extends BaseComponent implements OnInit {
     public session: CPSession,
     public cpI18n: CPI18nService,
     public utils: JobsUtilsService,
-    public jobsService: JobsService
-  ) {
-    super();
-  }
-
-  onSelectedEmployer(store_id) {
-    this.form.controls['store_id'].setValue(store_id);
-  }
+  ) {}
 
   onJobTypeDesiredStudyToggle(name, value) {
     this.form.controls[name].setValue(value);
   }
 
-  enableButton() {
-    this.buttonData = { ...this.buttonData, disabled: false };
-  }
-
-  onTabClick({ id }) {
-    if (id === 'existing') {
-      this.newEmployer = false;
-      this.setIsNameRequired(false);
-      this.isStoreRequired.emit(true);
-    }
-
-    if (id === 'new') {
-      this.newEmployer = true;
-      this.setIsNameRequired(true);
-      this.isStoreRequired.emit(false);
-    }
-  }
-
-  setIsNameRequired(value) {
-    this.employerForm.setControl('name', new FormControl(null, value ? Validators.required : null));
-
-    this.employerForm.setControl(
-      'logo_url',
-      new FormControl(null, value ? Validators.required : null)
-    );
-  }
-
-  buildEmployerForm() {
-    this.employerForm = this.fb.group({
-      name: [null],
-      description: [null],
-      email: [null],
-      logo_url: [null]
-    });
-  }
-
-  onSubmit() {
-    this.formError = false;
-
-    if (!this.form.valid || !this.employerForm.valid) {
-      this.formError = true;
-      this.enableButton();
-
-      return;
-    }
-
-    if (this.form.controls['posting_end'].value <= this.form.controls['posting_start'].value) {
-      this.enableButton();
-      this.isDateError = true;
-      this.formError = true;
-      this.form.controls['posting_end'].setErrors({ required: true });
-      this.dateErrorMessage = this.cpI18n.translate('jobs_error_end_date_before_start');
-
-      return;
-    }
-
-    if (this.form.controls['posting_end'].value <= Math.round(CPDate.now().unix())) {
-      this.enableButton();
-      this.isDateError = true;
-      this.formError = true;
-      this.form.controls['posting_end'].setErrors({ required: true });
-      this.dateErrorMessage = this.cpI18n.translate('jobs_error_end_date_after_now');
-
-      return;
-    }
-
-    this.submitted.emit({
-      job: this.form.value,
-      employer: this.employerForm.value,
-      isNewEmployer: this.newEmployer
-    });
-  }
-
-  _selectedEmployer() {
-    const store_id = this.form.controls['store_id'].value;
-    if (store_id) {
-      super.fetchData(this.employers$).then((employers) => {
-        this.selectedEmployer = employers.data.filter((employee) => employee.action === store_id)[0];
-      });
-    }
-  }
-
   ngOnInit() {
-    this.buildEmployerForm();
-    this.newEmployerTitle = this.cpI18n.translate('jobs_new_employer');
-    this.existingEmployerTitle = this.cpI18n.translate('jobs_existing_employer');
-    this.validationError = this.cpI18n.translate('error_fill_out_marked_fields');
-    this.buttonData = {
-      class: 'primary',
-      text: this.cpI18n.translate('save')
-    };
-
     this.jobsType = this.utils.getJobsType(true);
     this.desiredStudy = this.utils.getDesiredStudy(true);
-    this.employers$ = this.jobsService.getEmployers('new');
 
-    this._selectedEmployer();
+    this.form.valueChanges.subscribe(() => {
+      this.formData.emit({
+        job: this.form.value,
+        jobFormValid: this.form.valid,
+        employer: this.employerForm.value,
+        employerFormValid: this.employerForm.valid,
+      });
+    });
+
     const _self = this;
-    const posting_start = this.form.controls['posting_end'].value;
+    const posting_start = this.form.controls['posting_start'].value;
     const posting_end = this.form.controls['posting_end'].value;
     const contract_start = this.form.controls['contract_start'].value;
     const application_deadline = this.form.controls['application_deadline'].value;
@@ -174,7 +76,7 @@ export class JobsFormComponent extends BaseComponent implements OnInit {
     this.postingStartDatePickerOptions = {
       ...COMMON_DATE_PICKER_OPTIONS,
       defaultDate: posting_start
-        ? CPDate.fromEpoch(this.form.controls['posting_start'].value, _self.session.tz).format()
+        ? CPDate.fromEpoch(posting_start, _self.session.tz).format()
         : null,
       onClose: function(_, dataStr) {
         _self.form.controls['posting_start'].setValue(CPDate.toEpoch(dataStr, _self.session.tz));
@@ -184,7 +86,7 @@ export class JobsFormComponent extends BaseComponent implements OnInit {
     this.postingEndDatePickerOptions = {
       ...COMMON_DATE_PICKER_OPTIONS,
       defaultDate: posting_end
-        ? CPDate.fromEpoch(this.form.controls['posting_end'].value, _self.session.tz).format()
+        ? CPDate.fromEpoch(posting_end, _self.session.tz).format()
         : null,
       onClose: function(_, dataStr) {
         _self.form.controls['posting_end'].setValue(CPDate.toEpoch(dataStr, _self.session.tz));
@@ -194,7 +96,7 @@ export class JobsFormComponent extends BaseComponent implements OnInit {
     this.contractStartDatePickerOptions = {
       ...COMMON_DATE_PICKER_OPTIONS,
       defaultDate: contract_start
-        ? CPDate.fromEpoch(this.form.controls['contract_start'].value, _self.session.tz).format()
+        ? CPDate.fromEpoch(contract_start, _self.session.tz).format()
         : null,
       onClose: function(_, dataStr) {
         _self.form.controls['contract_start'].setValue(CPDate.toEpoch(dataStr, _self.session.tz));
@@ -204,10 +106,7 @@ export class JobsFormComponent extends BaseComponent implements OnInit {
     this.applicationDeadlineDatePickerOptions = {
       ...COMMON_DATE_PICKER_OPTIONS,
       defaultDate: application_deadline
-        ? CPDate.fromEpoch(
-            this.form.controls['application_deadline'].value,
-            _self.session.tz
-          ).format()
+        ? CPDate.fromEpoch(application_deadline, _self.session.tz).format()
         : null,
       onClose: function(_, dataStr) {
         _self.form.controls['application_deadline'].setValue(
