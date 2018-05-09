@@ -1,9 +1,24 @@
-import { AudienceType } from './../../audience.status';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AudienceNewBodyComponent } from './audience-new-body.component';
-import { CPI18nService } from '../../../../../shared/services';
+import { Observable } from 'rxjs/Observable';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { AudienceType } from './../../audience.status';
+import { CPSession } from './../../../../../session/index';
+import { CPI18nService } from '../../../../../shared/services';
+import { AudienceSharedModule } from './../audience.shared.module';
 import { SharedModule } from '../../../../../shared/shared.module';
+import { AudienceSharedService } from '../audience.shared.service';
+import { AudienceNewBodyComponent } from './audience-new-body.component';
+
+class MockAudienceSharedService {
+  dummy;
+
+  getUserCount(data, search) {
+    this.dummy = { data, search };
+
+    return Observable.of({ count: 130 });
+  }
+}
 
 describe('AudienceNewBodyComponent', () => {
   let comp: AudienceNewBodyComponent;
@@ -11,10 +26,17 @@ describe('AudienceNewBodyComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [SharedModule],
-      declarations: [AudienceNewBodyComponent],
-      providers: [CPI18nService],
+      imports: [SharedModule, AudienceSharedModule],
+      providers: [
+        CPI18nService,
+        CPSession,
+        { provide: AudienceSharedService, useClass: MockAudienceSharedService }
+      ],
       schemas: [NO_ERRORS_SCHEMA]
+    }).overrideComponent(AudienceNewBodyComponent, {
+      set: {
+        template: '<div>No Template</div>'
+      }
     });
 
     fixture = TestBed.createComponent(AudienceNewBodyComponent);
