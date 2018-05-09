@@ -12,6 +12,7 @@ import {
 interface IItems {
   label: string;
   action: string;
+  heading?: boolean;
   disabled?: boolean;
   tooltipText?: string;
 }

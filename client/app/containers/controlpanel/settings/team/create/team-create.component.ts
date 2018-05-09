@@ -18,9 +18,9 @@ import {
 } from './../../../../../shared/utils/privileges/privileges';
 
 import {
-  serviceMenu,
   clubMenu,
   eventMenu,
+  serviceMenu,
   athleticMenu,
   manageAdminMenu,
   TeamUtilsService

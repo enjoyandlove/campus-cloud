@@ -18,9 +18,9 @@ import { CP_PRIVILEGES, CP_PRIVILEGES_MAP } from '../../../../../shared/constant
 import { AdminService, ErrorService, CPI18nService } from '../../../../../shared/services';
 
 import {
-  serviceMenu,
   clubMenu,
   eventMenu,
+  serviceMenu,
   TeamUtilsService,
   manageAdminMenu,
   athleticMenu
