@@ -23,11 +23,13 @@ export class AudienceCardComponent implements OnInit, AfterViewInit {
   @ViewChildren(CPTabComponent) tabs: QueryList<CPTabComponent>;
 
   @Output() importClick: EventEmitter<null> = new EventEmitter();
-  @Output() resetNewAduience: EventEmitter<null> = new EventEmitter();
-  @Output() resetSavedAduience: EventEmitter<null> = new EventEmitter();
+  @Output() resetNewAudience: EventEmitter<null> = new EventEmitter();
+  @Output() resetSavedAudience: EventEmitter<null> = new EventEmitter();
   @Output() selectedAudience: EventEmitter<number> = new EventEmitter();
   @Output() selectedUsers: EventEmitter<Array<number>> = new EventEmitter();
   @Output() selectedFilters: EventEmitter<Array<number>> = new EventEmitter();
+  @Output()
+  newAudienceTypeChange: EventEmitter<{ custom: boolean; dynamic: boolean }> = new EventEmitter();
 
   message;
   newAudienceTitle;
@@ -38,10 +40,10 @@ export class AudienceCardComponent implements OnInit, AfterViewInit {
 
   onTabClick({ id }) {
     if (id === 'saved') {
-      this.resetNewAduience.emit();
+      this.resetSavedAudience.emit();
     }
     if (id === 'new') {
-      this.resetSavedAduience.emit();
+      this.resetNewAudience.emit();
     }
   }
 
@@ -60,6 +62,9 @@ export class AudienceCardComponent implements OnInit, AfterViewInit {
           this.tabs.toArray()[1].active = false;
         }
       });
+  }
+  onNewAudienceTypeChange(selection) {
+    this.newAudienceTypeChange.emit(selection);
   }
 
   onSelectedAudience(audience) {

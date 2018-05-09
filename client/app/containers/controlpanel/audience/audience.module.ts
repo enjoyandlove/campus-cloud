@@ -6,7 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AudienceListComponent } from './list';
 import { AuidenceEditComponent } from './edit';
 import { AudienceImportComponent } from './import';
-import { AduienceCreateComponent } from './create';
+import { AudienceCreateComponent } from './create';
 import { AudienceDeleteComponent } from './delete';
 import { AudienceComponent } from './audience.component';
 import { SharedModule } from '../../../shared/shared.module';
@@ -22,7 +22,7 @@ import { AudienceSharedModule } from './shared/audience.shared.module';
     AudienceListComponent,
     AudienceListActionBoxComponent,
     AudienceDeleteComponent,
-    AduienceCreateComponent,
+    AudienceCreateComponent,
     AuidenceEditComponent,
     AudienceImportComponent
   ],
