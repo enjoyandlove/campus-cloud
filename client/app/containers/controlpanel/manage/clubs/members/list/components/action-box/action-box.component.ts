@@ -13,7 +13,7 @@ import { CPSession } from '../../../../../../../../session';
 export class ClubsMembersActionBoxComponent implements OnInit {
   @Input() isAthletic = isClubAthletic.club;
   @Output() create: EventEmitter<null> = new EventEmitter();
-  @Output() query: EventEmitter<string> = new EventEmitter();
+  @Output() search: EventEmitter<string> = new EventEmitter();
 
   clubId;
   limitedAdmin;
@@ -23,6 +23,10 @@ export class ClubsMembersActionBoxComponent implements OnInit {
     public session: CPSession,
     public route: ActivatedRoute
   ) {}
+
+  onSearch(query) {
+    this.search.emit(query);
+  }
 
   ngOnInit() {
     this.clubId = this.route.snapshot.parent.parent.parent.params['clubId'];
