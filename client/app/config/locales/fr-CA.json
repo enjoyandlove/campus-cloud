@@ -43,8 +43,7 @@
     "message": "Gestionnaire de club sportif"
   },
   "admin_athletics_owner_help": {
-    "message":
-      "Créer de nouveaux clubs sportifs; gérer les coordonnées, les événements et les membres pour tous les clubs ou une sélection de clubs"
+    "message": "Créer de nouveaux clubs sportifs; gérer les coordonnées, les événements et les membres pour tous les clubs ou une sélection de clubs"
   },
   "admin_campus_announcements": {
     "message": "Annonces normales"
@@ -60,8 +59,7 @@
     "description": "Create Team Member > Select Clubs > Select a club > drop down menu"
   },
   "admin_can_read_help": {
-    "message":
-      "Voir le contenu et créer le contenu, mais pas éditer les informations de tous les clubs",
+    "message": "Voir le contenu et créer le contenu, mais pas éditer les informations de tous les clubs",
     "description": "Create Team Member > Select Clubs > Select a club > drop down menu"
   },
   "admin_club_owner": {
@@ -155,8 +153,7 @@
     "message": "Exécutif de service"
   },
   "admin_service_owner_help": {
-    "message":
-      "Créer de nouveaux services; gérer l'information, événements et évaluation pour tous les services ou sélectionner des services"
+    "message": "Créer de nouveaux services; gérer l'information, événements et évaluation pour tous les services ou sélectionner des services"
   },
   "all": {
     "message": "Toutes les catégories"
@@ -192,8 +189,7 @@
     "message": "Supprimer annonce"
   },
   "announcements_emergency_help": {
-    "message":
-      "Outrepassez les réglages de notifications Push de l'utilisateur et forcez-les à reconnaître le message"
+    "message": "Outrepassez les réglages de notifications Push de l'utilisateur et forcez-les à reconnaître le message"
   },
   "announcements_not_sent": {
     "message": "Message non envoyé, veuillez attendre %s minutes avant d'essayer de nouveau"
@@ -283,29 +279,25 @@
     "message": "Élément de présence"
   },
   "assess_demo_feature_four_description": {
-    "message":
-      "L'évaluation vous permet d'identifier facilement quels étudiants ne sont pas impliqués et de leur envoyer des communications ciblées via l'application mobile."
+    "message": "L'évaluation vous permet d'identifier facilement quels étudiants ne sont pas impliqués et de leur envoyer des communications ciblées via l'application mobile."
   },
   "assess_demo_feature_four_title": {
     "message": "Identifier et communiquer"
   },
   "assess_demo_feature_one_description": {
-    "message":
-      "Suivez la présence étudiante facilement aux événements du campus et aux services sans matériel ou logiciel supplémentaire."
+    "message": "Suivez la présence étudiante facilement aux événements du campus et aux services sans matériel ou logiciel supplémentaire."
   },
   "assess_demo_feature_one_title": {
     "message": "Communiquer avec les étudiants"
   },
   "assess_demo_feature_three_description": {
-    "message":
-      "L'implication positive des étudiants est la clé du succès. Obtenez des analyses détaillées sur comment les étudiants se sont impliqués et ont interagit avec les événements ou les services."
+    "message": "L'implication positive des étudiants est la clé du succès. Obtenez des analyses détaillées sur comment les étudiants se sont impliqués et ont interagit avec les événements ou les services."
   },
   "assess_demo_feature_three_title": {
     "message": "Analyses actionnables"
   },
   "assess_demo_feature_two_description": {
-    "message":
-      "Obtenez du retour en temps réel de vos étudiants sur les programmes, incluant des réponses à des questions personnalisées pour n'importe quel événement ou service."
+    "message": "Obtenez du retour en temps réel de vos étudiants sur les programmes, incluant des réponses à des questions personnalisées pour n'importe quel événement ou service."
   },
   "assess_demo_feature_two_title": {
     "message": "Suivi de présence"
@@ -326,8 +318,7 @@
     "message": "ou contactez-nous à cm@oohlalamobile.com"
   },
   "assess_demo_hero_description": {
-    "message":
-      "OOHLALA Assessment Tools vous permet de mesurer et évaluer l'activité étudiante en dehors de la salle de classe"
+    "message": "OOHLALA Assessment Tools vous permet de mesurer et évaluer l'activité étudiante en dehors de la salle de classe"
   },
   "assess_demo_hero_title": {
     "message": "Mesurer l'engagement étudiant n'importe où sur le campus"
@@ -658,20 +649,16 @@
   },
   "checkin_header_title": {
     "message": "Vérification de présence",
-    "description":
-      "Public Check-In Page (Title)\r\nhttps://ccstaging.oohlalamobile.com/#/cb/checkin/e/pNmRN94bVUbUI9qtz89i5A"
+    "description": "Public Check-In Page (Title)\r\nhttps://ccstaging.oohlalamobile.com/#/cb/checkin/e/pNmRN94bVUbUI9qtz89i5A"
   },
   "checkin_instructions_one": {
-    "message":
-      "Nous utilisons des codes QR pour aider les invités à enregistrer leur présence à un événement. Assurez-vous d'imprimer ou de partager le code QR avec votre organisateur de présence d'événement."
+    "message": "Nous utilisons des codes QR pour aider les invités à enregistrer leur présence à un événement. Assurez-vous d'imprimer ou de partager le code QR avec votre organisateur de présence d'événement."
   },
   "checkin_instructions_three": {
-    "message":
-      "Vous pouvez voir les statistiques de présence dans les informations de l'événement. Assurez-vous de revenir pour visualiser les retours et notes."
+    "message": "Vous pouvez voir les statistiques de présence dans les informations de l'événement. Assurez-vous de revenir pour visualiser les retours et notes."
   },
   "checkin_instructions_two": {
-    "message":
-      "Les invités peuvent vérifier leur présence en scannant le code QR avec l'application. Les codes QR peuvent être imprimés ou affichés directement sur un ordinateur portable, un téléphone ou une tablette."
+    "message": "Les invités peuvent vérifier leur présence en scannant le code QR avec l'application. Les codes QR peuvent être imprimés ou affichés directement sur un ordinateur portable, un téléphone ou une tablette."
   },
   "checkin_list": {
     "message": "Liste des présents"
@@ -702,8 +689,7 @@
   },
   "clubs_delete_error_unauthorized": {
     "message": "Vous n'avez pas la permission de supprimer ce club.",
-    "description":
-      "In Manage Clubs, try to delete a club for which you have only the Limited Edit permission"
+    "description": "In Manage Clubs, try to delete a club for which you have only the Limited Edit permission"
   },
   "clubs_delete_modal_body": {
     "message": "Êtes-vous sûr de vouloir supprimer %s ?"
@@ -764,8 +750,7 @@
     "message": "Type de membre"
   },
   "clubs_membership_disabled": {
-    "message":
-      "Les utilisateurs peuvent voir le club mais ne peuvent pas le rejoindre ou voir les autres membres"
+    "message": "Les utilisateurs peuvent voir le club mais ne peuvent pas le rejoindre ou voir les autres membres"
   },
   "clubs_membership_enabled": {
     "message": "Permet aux utilisateurs de rejoindre le club et de contacter les autres membres"
@@ -1057,7 +1042,7 @@
     "message": "Gérer les employeurs"
   },
   "employers_new_employer": {
-    "message": "Nouvel employeur"
+    "message": "---"
   },
   "employers_no_results_found": {
     "message": "Aucun employeur trouvé"
@@ -1084,8 +1069,7 @@
     "message": "Erreur"
   },
   "error_allow_local_storage_to_continue": {
-    "message":
-      "Votre navigateur n'autorise pas les cookies. Activez les cookies dans votre navigateur pour continuer."
+    "message": "Votre navigateur n'autorise pas les cookies. Activez les cookies dans votre navigateur pour continuer."
   },
   "error_file_is_too_big": {
     "message": "Fichier trop volumineux"
@@ -1097,8 +1081,7 @@
     "message": "Extension invalide"
   },
   "error_no_hosts_found_help": {
-    "message":
-      "Vous n'avez pas des privilèges suffisants pour associer cet événement avec un service ou un club."
+    "message": "Vous n'avez pas des privilèges suffisants pour associer cet événement avec un service ou un club."
   },
   "event": {
     "message": "Événement"
@@ -1116,8 +1099,7 @@
     "message": "Gestionnaire de présences"
   },
   "events_attendance_manager_tooltip": {
-    "message":
-      "N'importe quelle adresse courriel valide. Le gestionnaire de présence reçoit des instructions par courriel pour mettre en place les vérifications de présence pour l'événement."
+    "message": "N'importe quelle adresse courriel valide. Le gestionnaire de présence reçoit des instructions par courriel pour mettre en place les vérifications de présence pour l'événement."
   },
   "events_attendant": {
     "message": "Présent"
@@ -1177,15 +1159,13 @@
     "message": "Détails de l'événement"
   },
   "events_event_feedback_tooltip": {
-    "message":
-      "Les événements avec retour activé utilisent une notification push pour récupérer le retour des étudiants, incluant une note par étoile et une réponse à la question de retour."
+    "message": "Les événements avec retour activé utilisent une notification push pour récupérer le retour des étudiants, incluant une note par étoile et une réponse à la question de retour."
   },
   "events_event_manager": {
     "message": "Gestionnaire de l'événement"
   },
   "events_event_manager_tooltip": {
-    "message":
-      "Sélectionnez un hôte (un club ou service) avant de sélectionner un gestionnaire d'événement. Le gestionnaire d'événement reçoit des courriels liés à la vérification de présence des utilisateurs et aux rapports d'évaluation une fois que l'événement est terminé."
+    "message": "Sélectionnez un hôte (un club ou service) avant de sélectionner un gestionnaire d'événement. Le gestionnaire d'événement reçoit des courriels liés à la vérification de présence des utilisateurs et aux rapports d'évaluation une fois que l'événement est terminé."
   },
   "events_event_name": {
     "message": "Nom de l'événement"
@@ -1197,8 +1177,7 @@
     "message": "Importer des événements depuis Facebook"
   },
   "events_facebook_help": {
-    "message":
-      "Fournissez le lien vers la page de l'événement Facebook (e.g., https://www.facebook.com/oohlalamobileapp/events/)."
+    "message": "Fournissez le lien vers la page de l'événement Facebook (e.g., https://www.facebook.com/oohlalamobileapp/events/)."
   },
   "events_facebook_label_host": {
     "message": "Sélectionner l'hôte"
@@ -1265,8 +1244,7 @@
   },
   "feedback_label_event_feedback": {
     "message": "Retours sur l'événement",
-    "description":
-      "Single Event \r\nhttps://projects.invisionapp.com/d/main#/console/10688612/232187816/preview"
+    "description": "Single Event \r\nhttps://projects.invisionapp.com/d/main#/console/10688612/232187816/preview"
   },
   "feedback_label_rate_event": {
     "message": "Noter événement"
@@ -1381,8 +1359,7 @@
     "message": "12 fevrier, 2018"
   },
   "ga_onboarding_text_1": {
-    "message":
-      "Le Campus Cloud change. Il sera plus rapide, plus puissant et plus fluide pour vous."
+    "message": "Le Campus Cloud change. Il sera plus rapide, plus puissant et plus fluide pour vous."
   },
   "ga_onboarding_text_2": {
     "message": "Le campus cloud deviendra l'expérience par défaut le"
@@ -1391,8 +1368,7 @@
     "message": "et l'ancienne version ne sera plus disponible"
   },
   "ga_onboarding_text_4": {
-    "message":
-      "Vous pouvez tout savoir à propos du Campus Cloud avec des guides et aides dans notre nouveau"
+    "message": "Vous pouvez tout savoir à propos du Campus Cloud avec des guides et aides dans notre nouveau"
   },
   "ga_onboarding_text_5": {
     "message": "Si vous avez des questions, commentaires ou retours, nous aimerions le savoir:"
@@ -1470,7 +1446,7 @@
     "message": "La date de fin doit être dans le futur."
   },
   "jobs_error_end_date_before_start": {
-    "message": "La date de fin ne peut pas être avant la date de début."
+    "message": "La date de fin de la publication ne peut pas être avant la date de début."
   },
   "jobs_existing_employer": {
     "message": "Employeur existant"
@@ -1523,8 +1499,14 @@
   "jobs_no_results_found": {
     "message": "Aucun emploi trouvé"
   },
+  "jobs_posting_end": {
+    "message": "Fin de publication"
+  },
   "jobs_posting_end_date": {
     "message": "Date de fin de publication"
+  },
+  "jobs_posting_start": {
+    "message": "Début de publication"
   },
   "jobs_posting_start_date": {
     "message": "Date de début de publication"
@@ -1537,8 +1519,7 @@
   },
   "leader": {
     "message": "Chef",
-    "description":
-      "Manage > Orientation > Program > view program details \r\nAdd Member > Member Type dropdown"
+    "description": "Manage > Orientation > Program > view program details \r\nAdd Member > Member Type dropdown"
   },
   "learn_more": {
     "message": "En savoir plus",
@@ -1596,8 +1577,7 @@
     "message": "Éditer liste"
   },
   "lists_error_template_conflict": {
-    "message":
-      "Cette liste est utilisée dans un modèle de notification. Pour supprimer cette liste, vous devez d'abord supprimer tous les modèles adressés à cette liste, et essayer de nouveau."
+    "message": "Cette liste est utilisée dans un modèle de notification. Pour supprimer cette liste, vous devez d'abord supprimer tous les modèles adressés à cette liste, et essayer de nouveau."
   },
   "lists_label_list_description": {
     "message": "Description"
@@ -1649,19 +1629,16 @@
     "message": "Vous avez perdu votre mot de passe ?"
   },
   "lost_password_success": {
-    "message":
-      "Merci ! Veuillez vérifier %s pour un lien permettant de réinitialiser votre mot de passe."
+    "message": "Merci ! Veuillez vérifier %s pour un lien permettant de réinitialiser votre mot de passe."
   },
   "manage": {
     "message": "Gérer"
   },
   "manage_create_service_category_tooltip": {
-    "message":
-      "Sélectionnez une catégorie pour votre service. Les catégories aident à filtrer et grouper le contenu dans l'application du campus."
+    "message": "Sélectionnez une catégorie pour votre service. Les catégories aident à filtrer et grouper le contenu dans l'application du campus."
   },
   "manage_create_service_feedback_tooltip": {
-    "message":
-      "Les services avec retour activé utilisent une notification push pour récupérer le retour des étudiants, incluant une note par étoile et une réponse à la question de retour."
+    "message": "Les services avec retour activé utilisent une notification push pour récupérer le retour des étudiants, incluant une note par étoile et une réponse à la question de retour."
   },
   "manage_team_members": {
     "message": "Membres d'équipe"
@@ -1712,8 +1689,7 @@
     "message": "Destinataires"
   },
   "notify_announcement_template_to_tooltip": {
-    "message":
-      "Les notifications peuvent être envoyées aux utilisateurs de l'application que vous pouvez regrouper en listes. Pour plus d'info:"
+    "message": "Les notifications peuvent être envoyées aux utilisateurs de l'application que vous pouvez regrouper en listes. Pour plus d'info:"
   },
   "no_admins_found": {
     "message": "Aucun administrateur trouvé"
@@ -1746,8 +1722,7 @@
     "message": "Gérer votre contenu du campus"
   },
   "on_boarding_step_3_description": {
-    "message":
-      "Envoyez des annonces au campus ou ciblez vos messages pour des étudiants spécifiques."
+    "message": "Envoyez des annonces au campus ou ciblez vos messages pour des étudiants spécifiques."
   },
   "on_boarding_step_3_title": {
     "message": "Notifiez votre campus et envoyez des messages ciblés"
@@ -1806,8 +1781,7 @@
     "message": "Votre mot de passe doit contenir au moins 6 caractères."
   },
   "password_requirements_special_char": {
-    "message":
-      "Pour plus de sécurité, utilisez des nombres et des caractères spéciaux tels que @, #, $, &, etc"
+    "message": "Pour plus de sécurité, utilisez des nombres et des caractères spéciaux tels que @, #, $, &, etc"
   },
   "password_reset_success": {
     "message": "Mot de passe enregistré, redirection vers la page d'identification"
@@ -1851,8 +1825,7 @@
     "message": "Corrections de bogues et amélioration d'utilisabilité"
   },
   "release_notes_july_10_item_two": {
-    "message":
-      "Les administrateurs peuvent créer des listes d'utilisateurs à utiliser lors de l'envoi de notifications."
+    "message": "Les administrateurs peuvent créer des listes d'utilisateurs à utiliser lors de l'envoi de notifications."
   },
   "release_notes_july_10_title": {
     "message": "Nouveautés du 10 Juillet 2017 :"
@@ -2028,8 +2001,7 @@
     "message": "Aucun services trouvés"
   },
   "services_providers_no_results": {
-    "message":
-      "Il n'y a aucun fournisseur de service pour ce service. Utilisez \"Créer un fournisseur de service\" pour en créer un.\n\nLes fournisseurs de service sont utilisés pour suivre les vérifications de présence et rassembler le retour des étudiants."
+    "message": "Il n'y a aucun fournisseur de service pour ce service. Utilisez \"Créer un fournisseur de service\" pour en créer un.\n\nLes fournisseurs de service sont utilisés pour suivre les vérifications de présence et rassembler le retour des étudiants."
   },
   "services_provider_button_add_another": {
     "message": "Ajouter un autre fournisseur de service"
@@ -2069,8 +2041,7 @@
   },
   "service_or_service_provider_error_not_found": {
     "message": "Ce fournisseur de service n'existe pas.",
-    "description":
-      "Create a service with assessment,\r\nAdd a service provider to that service\r\nOpen the ckeckin view on a new tab\r\nDelete the Service provider\r\nRefresh the checkin view and check your console"
+    "description": "Create a service with assessment,\r\nAdd a service provider to that service\r\nOpen the ckeckin view on a new tab\r\nDelete the Service provider\r\nRefresh the checkin view and check your console"
   },
   "service_provider": {
     "message": "Fournisseur de service"
@@ -2101,8 +2072,7 @@
   },
   "student_engagements": {
     "message": "Implication des étudiants",
-    "description":
-      "Graph title\r\nhttps://ccstaging.oohlalamobile.com/#/assess/dashboard?engagement=all&for=all_students&range=last_week"
+    "description": "Graph title\r\nhttps://ccstaging.oohlalamobile.com/#/assess/dashboard?engagement=all&for=all_students&range=last_week"
   },
   "student_feedback": {
     "message": "Retour"
