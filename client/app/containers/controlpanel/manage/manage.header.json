@@ -55,7 +55,6 @@
     },
     {
       "privilege": 25,
-      "hiddenInProd": true,
       "label": "jobs",
       "url": "/manage/jobs"
     }
