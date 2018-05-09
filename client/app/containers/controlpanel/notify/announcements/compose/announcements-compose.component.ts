@@ -20,6 +20,7 @@ interface IState {
   isToFilters: boolean;
   isEmergency: boolean;
   isCampusWide: boolean;
+  validUserCount: boolean;
   triggerSaveModal: boolean;
 }
 
@@ -30,6 +31,7 @@ const state: IState = {
   isToFilters: false,
   isEmergency: false,
   isCampusWide: true,
+  validUserCount: false,
   triggerSaveModal: false
 };
 
@@ -112,8 +114,9 @@ export class AnnouncementsComposeComponent implements OnInit {
         ...this.state,
         isToUsers: true,
         isToLists: false,
-        isCampusWide: false,
         isToFilters: false,
+        isCampusWide: false,
+        validUserCount: false,
         triggerSaveModal: true
       };
       this.form.controls['list_ids'].setValue([]);
@@ -128,6 +131,7 @@ export class AnnouncementsComposeComponent implements OnInit {
         isToLists: false,
         isToFilters: true,
         isCampusWide: false,
+        validUserCount: false,
         triggerSaveModal: true
       };
       this.form.controls['filters'].setValue([]);
@@ -253,8 +257,9 @@ export class AnnouncementsComposeComponent implements OnInit {
       ...this.state,
       isToUsers: false,
       isToLists: false,
-      isCampusWide: false,
       isToFilters: true,
+      isCampusWide: false,
+      validUserCount: false,
       triggerSaveModal: true
     };
 
@@ -268,8 +273,10 @@ export class AnnouncementsComposeComponent implements OnInit {
       isToLists: false,
       isCampusWide: true,
       isToFilters: false,
+      validUserCount: true,
       triggerSaveModal: false
     };
+
     this.form.controls['is_school_wide'].setValue(true);
   }
 
@@ -293,6 +300,13 @@ export class AnnouncementsComposeComponent implements OnInit {
         1
       );
     }
+  }
+
+  onUsersCount(usersCount) {
+    this.state = {
+      ...this.state,
+      validUserCount: usersCount > 0 || usersCount === 'campus_wide'
+    };
   }
 
   doSubmit() {
@@ -487,7 +501,7 @@ export class AnnouncementsComposeComponent implements OnInit {
     this.form.valueChanges.subscribe((_) => {
       let isValid = true;
 
-      isValid = this.form.valid;
+      isValid = this.form.valid && this.state.validUserCount;
 
       if (this.state.isToLists) {
         if (this.form.controls['list_ids'].value) {

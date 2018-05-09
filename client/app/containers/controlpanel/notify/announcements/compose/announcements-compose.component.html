@@ -2,6 +2,7 @@
 <div class="row margin-bottom">
   <div class="col-xs-8 col-xs-offset-2">
     <cp-audience-card 
+      (count)="onUsersCount($event)"
       (importClick)="onImportClick()"
       (resetNewAudience)="onResetNewAudience()"
       (selectedUsers)="onSelectedUsers($event)"

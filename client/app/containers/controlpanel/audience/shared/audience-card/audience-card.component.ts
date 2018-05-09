@@ -22,6 +22,7 @@ import { CPI18nService } from './../../../../../shared/services/i18n.service';
 export class AudienceCardComponent implements OnInit, AfterViewInit {
   @ViewChildren(CPTabComponent) tabs: QueryList<CPTabComponent>;
 
+  @Output() count: EventEmitter<number> = new EventEmitter();
   @Output() importClick: EventEmitter<null> = new EventEmitter();
   @Output() resetNewAudience: EventEmitter<null> = new EventEmitter();
   @Output() resetSavedAudience: EventEmitter<null> = new EventEmitter();
@@ -93,6 +94,8 @@ export class AudienceCardComponent implements OnInit, AfterViewInit {
   }
 
   onSelectedAudience(audience) {
+    this.count.emit(audience.userCount || 'campus_wide');
+
     // Campus Wide will return action: null
     const fromAudience = !!audience.action;
 

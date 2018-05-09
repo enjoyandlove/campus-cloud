@@ -30,7 +30,9 @@
                 </div>
               </div>
             </div>
-            <div class="col-xs-1 delete-button hover" *ngIf="i > 0">
+            <div 
+              *ngIf="state.filterCount > 1"
+              class="col-xs-1 delete-button hover">
               <span (click)="removeFilterGroup(i)">&times;</span>
             </div>
           </div>

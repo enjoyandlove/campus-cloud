@@ -29,9 +29,10 @@
           (destroy)="onDestroyNewAudience()">
           <cp-audience-new-body 
             (users)="onUsers($event)"
+            (count)="count.emit($event)"
             (filters)="onFilters($event)"
-            (importClick)="importClick.emit()"
             *ngIf="state.newAudienceActive"
+            (importClick)="importClick.emit()"
             (audienceType)="onNewAudienceTypeChange($event)">
           </cp-audience-new-body>
         </cp-tab>

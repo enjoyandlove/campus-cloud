@@ -19,6 +19,7 @@ export class AudienceNewBodyComponent implements OnInit {
   @Input() defaultView = AudienceType.dynamic;
 
   @Output() filters: EventEmitter<any> = new EventEmitter();
+  @Output() count: EventEmitter<number> = new EventEmitter();
   @Output() importClick: EventEmitter<null> = new EventEmitter();
   @Output() users: EventEmitter<Array<number>> = new EventEmitter();
   @Output() audienceType: EventEmitter<{ custom: boolean; dynamic: boolean }> = new EventEmitter();
@@ -58,12 +59,14 @@ export class AudienceNewBodyComponent implements OnInit {
       filters: [...filters]
     };
 
-    this.service
-      .getUserCount(data, search)
-      .subscribe(
-        ({ count }) => (this.message = `${count} ${this.cpI18n.translate('users_found')}`),
-        () => (this.message = null)
-      );
+    this.service.getUserCount(data, search).subscribe(
+      ({ count }) => {
+        this.count.emit(count);
+        this.message = `${count} ${this.cpI18n.translate('users_found')}`;
+      },
+
+      () => (this.message = null)
+    );
   }
 
   onUsers(users) {
