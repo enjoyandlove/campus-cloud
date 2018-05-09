@@ -39,6 +39,10 @@ function getMenu(privileges = {}) {
       appCustomizaton: {
         active: false,
         deps: []
+      },
+      jobs: {
+        active: false,
+        deps: []
       }
     },
     notify: {
@@ -96,6 +100,9 @@ function getMenu(privileges = {}) {
     }
     if (+p === CP_PRIVILEGES_MAP.assessment) {
       form.assess.engagement.active = true;
+    }
+    if (+p === CP_PRIVILEGES_MAP.jobs) {
+      form.content.jobs.active = true;
     }
   });
 
