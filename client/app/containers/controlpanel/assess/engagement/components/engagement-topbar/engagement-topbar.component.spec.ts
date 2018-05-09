@@ -10,23 +10,23 @@ import { EngagementTopBarComponent } from './engagement-topbar.component';
 
 class MockActivatedRoute {
   data = {
-    subscribe: jasmine.createSpy('subscribe')
-    .and
-    .returnValue(Observable.of({
-      data: {
-        sopa: 1
-      }
-    }))
+    subscribe: jasmine.createSpy('subscribe').and.returnValue(
+      Observable.of({
+        data: {
+          sopa: 1
+        }
+      })
+    )
   };
 
   snapshot = {
     queryParams: {}
-  }
+  };
 }
 
 class MockSession {
   g = new Map();
-};
+}
 
 describe('EngagementTopBarComponent', () => {
   // let session: CPSession;
@@ -35,20 +35,19 @@ describe('EngagementTopBarComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ EngagementTopBarComponent ],
+      declarations: [EngagementTopBarComponent],
       providers: [
         CPI18nService,
         { provide: CPSession, useClass: MockSession },
         { provide: ActivatedRoute, useClass: MockActivatedRoute }
-      ],
-    })
-    .overrideComponent(EngagementTopBarComponent, {
+      ]
+    }).overrideComponent(EngagementTopBarComponent, {
       set: {
         template: '<div>No Template</div>'
       }
-    })
+    });
     fixture = TestBed.createComponent(EngagementTopBarComponent);
-    comp    = fixture.componentInstance;
+    comp = fixture.componentInstance;
 
     // session = TestBed.get('session');
 
@@ -65,6 +64,5 @@ describe('EngagementTopBarComponent', () => {
     expect(comp.hasRouteData).not.toBeDefined();
     expect(stateFromUrlSpy).not.toHaveBeenCalled();
     expect(initStateSpy).toHaveBeenCalledTimes(1);
-  })
-})
-
+  });
+});

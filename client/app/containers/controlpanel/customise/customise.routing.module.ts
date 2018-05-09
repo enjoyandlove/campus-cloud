@@ -15,14 +15,14 @@ const appRoutes: Routes = [
       {
         path: 'banner',
         data: { zendesk: 'customize' },
-        loadChildren: './banner/banner.module#BannerModule',
-      },
-    ],
-  },
+        loadChildren: './banner/banner.module#BannerModule'
+      }
+    ]
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class CustomiseRoutingModule {}

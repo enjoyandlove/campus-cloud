@@ -18,15 +18,14 @@
     border-top: 1px solid $border-color;
 
     &:last-child {
-      border-bottom: 1px solid #CCCCCC;
+      border-bottom: 1px solid #cccccc;
     }
 
     strong {
       display: block;
     }
 
-
-      span {
+    span {
       font-size: 2em;
     }
   }

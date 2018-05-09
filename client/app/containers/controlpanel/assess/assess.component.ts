@@ -12,7 +12,7 @@ import { HEADER_UPDATE } from './../../../reducers/header.reducer';
   <div class="cp-wrapper cp-wrapper--outer">
     <router-outlet></router-outlet>
   </div>
-  `,
+  `
 })
 export class AssessComponent {
   headerData$: Observable<IHeader>;

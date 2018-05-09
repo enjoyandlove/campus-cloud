@@ -11,7 +11,7 @@ import { StudentsProfileComponent } from './profile';
 
 import {
   StudentsProfileTopBarComponent,
-  StudentsProfileHeaderComponent,
+  StudentsProfileHeaderComponent
 } from './profile/components';
 
 import { StudentsComposeComponent } from './compose/students-compose.component';
@@ -27,16 +27,11 @@ import { StudentsRoutingModule } from './students.routing.module';
     StudentsComposeComponent,
     StudentsProfileComponent,
     StudentsProfileHeaderComponent,
-    StudentsProfileTopBarComponent,
+    StudentsProfileTopBarComponent
   ],
 
-  imports: [
-    ReactiveFormsModule,
-    CommonModule,
-    SharedModule,
-    StudentsRoutingModule,
-  ],
+  imports: [ReactiveFormsModule, CommonModule, SharedModule, StudentsRoutingModule],
 
-  providers: [StudentsService],
+  providers: [StudentsService]
 })
 export class EngagementStudentsModule {}

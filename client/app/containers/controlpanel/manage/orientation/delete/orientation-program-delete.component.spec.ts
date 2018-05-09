@@ -26,31 +26,35 @@ describe('OrientationProgramDeleteComponent', () => {
   let service: OrientationService;
   let fixture: ComponentFixture<OrientationProgramDeleteComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [OrientationModule],
-      providers: [
-        CPSession,
-        CPI18nService,
-        { provide: OrientationService, useClass: MockOrientationService },
-      ]
-    }).compileComponents().then(() => {
-      fixture = TestBed.createComponent(OrientationProgramDeleteComponent);
-      component = fixture.componentInstance;
-      service = TestBed.get(OrientationService);
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        imports: [OrientationModule],
+        providers: [
+          CPSession,
+          CPI18nService,
+          { provide: OrientationService, useClass: MockOrientationService }
+        ]
+      })
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(OrientationProgramDeleteComponent);
+          component = fixture.componentInstance;
+          service = TestBed.get(OrientationService);
 
-      search = new URLSearchParams();
-      component.orientationProgram = {
-        id: 84,
-        name: 'Hello World',
-        description: 'This is description'
-      };
+          search = new URLSearchParams();
+          component.orientationProgram = {
+            id: 84,
+            name: 'Hello World',
+            description: 'This is description'
+          };
 
-      component.session.g.set('school', mockSchool);
-      programId = component.orientationProgram.id;
-      search.append('school_id', component.session.g.get('school').id.toString());
-    });
-  }));
+          component.session.g.set('school', mockSchool);
+          programId = component.orientationProgram.id;
+          search.append('school_id', component.session.g.get('school').id.toString());
+        });
+    })
+  );
 
   it('buttonData should have "Delete" label & "Danger class"', () => {
     component.ngOnInit();
@@ -65,5 +69,4 @@ describe('OrientationProgramDeleteComponent', () => {
     expect(spy).toHaveBeenCalledWith(programId, search);
     expect(spy.calls.count()).toBe(1);
   });
-
 });

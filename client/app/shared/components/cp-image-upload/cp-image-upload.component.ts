@@ -9,7 +9,7 @@ import { CPI18nService } from '../../services';
 @Component({
   selector: 'cp-image-upload',
   templateUrl: './cp-image-upload.component.html',
-  styleUrls: ['./cp-image-upload.component.scss'],
+  styleUrls: ['./cp-image-upload.component.scss']
 })
 export class CPImageUploadComponent implements OnInit {
   @Input() small: boolean;
@@ -24,10 +24,7 @@ export class CPImageUploadComponent implements OnInit {
   isLoading;
   buttonText;
 
-  constructor(
-    public cpI18n: CPI18nService,
-    private fileUploadService: FileUploadService,
-  ) {}
+  constructor(public cpI18n: CPI18nService, private fileUploadService: FileUploadService) {}
 
   onFileUpload(file, asPromise?: boolean) {
     this.error = null;
@@ -54,9 +51,7 @@ export class CPImageUploadComponent implements OnInit {
 
     const headers = new Headers();
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
-    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(
-      appStorage.keys.SESSION,
-    )}`;
+    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
 
     headers.append('Authorization', auth);
 
@@ -73,7 +68,7 @@ export class CPImageUploadComponent implements OnInit {
       (_) => {
         this.isLoading = false;
         this.error = this.cpI18n.translate('something_went_wrong');
-      },
+      }
     );
   }
 

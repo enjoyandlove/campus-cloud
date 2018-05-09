@@ -10,7 +10,7 @@ import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
 import {
   canSchoolReadResource,
-  canStoreReadAndWriteResource,
+  canStoreReadAndWriteResource
 } from './../../../../../shared/utils/privileges';
 
 import { ServicesService } from '../services.service';
@@ -23,7 +23,7 @@ import { IResourceBanner } from '../../../../../shared/components/cp-resource-ba
 @Component({
   selector: 'cp-services-info',
   templateUrl: './services-info.component.html',
-  styleUrls: ['./services-info.component.scss'],
+  styleUrls: ['./services-info.component.scss']
 })
 export class ServicesInfoComponent extends BaseComponent implements OnInit {
   @Input() resourceBanner: IResourceBanner;
@@ -42,7 +42,7 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
     private store: Store<IHeader>,
     private route: ActivatedRoute,
     private adminService: AdminService,
-    private serviceService: ServicesService,
+    private serviceService: ServicesService
   ) {
     super();
     this.school = this.session.g.get('school');
@@ -60,18 +60,16 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
 
     const service$ = this.serviceService.getServiceById(this.serviceId);
 
-    const admins$ = this.adminService
-      .getAdminByStoreId(search)
-      .map((admins) => {
-        const _admins = [];
-        admins.forEach((admin) => {
-          if (!admin.is_school_level) {
-            _admins.push(admin);
-          }
-        });
-
-        return _admins;
+    const admins$ = this.adminService.getAdminByStoreId(search).map((admins) => {
+      const _admins = [];
+      admins.forEach((admin) => {
+        if (!admin.is_school_level) {
+          _admins.push(admin);
+        }
       });
+
+      return _admins;
+    });
 
     const stream$ = Observable.combineLatest(service$, admins$);
     super.fetchData(stream$).then((res) => {
@@ -83,12 +81,12 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
 
       this.mapCenter = new BehaviorSubject({
         lat: res.data[0].latitude,
-        lng: res.data[0].longitude,
+        lng: res.data[0].longitude
       });
 
       this.resourceBanner = {
         image: this.service.logo_url,
-        heading: this.service.name,
+        heading: this.service.name
       };
     });
   }
@@ -97,23 +95,20 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
     let children = [
       {
         label: 'info',
-        url: `/manage/services/${this.serviceId}/info`,
-      },
+        url: `/manage/services/${this.serviceId}/info`
+      }
     ];
-    const eventsSchoolLevel = canSchoolReadResource(
-      this.session.g,
-      CP_PRIVILEGES_MAP.events,
-    );
+    const eventsSchoolLevel = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.events);
     const eventsAccountLevel = canStoreReadAndWriteResource(
       this.session.g,
       this.storeId,
-      CP_PRIVILEGES_MAP.events,
+      CP_PRIVILEGES_MAP.events
     );
 
     if (eventsSchoolLevel || eventsAccountLevel) {
       const events = {
         label: 'events',
-        url: `/manage/services/${this.serviceId}/events`,
+        url: `/manage/services/${this.serviceId}/events`
       };
 
       children = [...children, events];
@@ -122,7 +117,7 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
     if (this.service.service_attendance) {
       const attendance = {
         label: 'assessment',
-        url: `/manage/services/${this.serviceId}`,
+        url: `/manage/services/${this.serviceId}`
       };
 
       children = [...children, attendance];
@@ -134,11 +129,11 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
         heading: `[NOTRANSLATE]${this.service.name}[NOTRANSLATE]`,
         crumbs: {
           url: 'services',
-          label: 'services',
+          label: 'services'
         },
         subheading: '',
-        children: [...children],
-      },
+        children: [...children]
+      }
     });
   }
 

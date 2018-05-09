@@ -12,6 +12,6 @@ import { ManageRoutingModule } from './manage.routing.module';
 
   imports: [CommonModule, SharedModule, ManageRoutingModule],
 
-  providers: [ManageHeaderService],
+  providers: [ManageHeaderService]
 })
 export class ManageModule {}

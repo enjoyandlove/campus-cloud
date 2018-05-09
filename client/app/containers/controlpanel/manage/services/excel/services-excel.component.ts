@@ -11,20 +11,16 @@ import { BaseComponent } from '../../../../../base/base.component';
 import { CPI18nPipe } from './../../../../../shared/pipes/i18n/i18n.pipe';
 import { SERVICES_MODAL_RESET } from '../../../../../reducers/services-modal.reducer';
 
-import {
-  HEADER_UPDATE,
-  HEADER_DEFAULT,
-} from '../../../../../reducers/header.reducer';
+import { HEADER_UPDATE, HEADER_DEFAULT } from '../../../../../reducers/header.reducer';
 
 const i18n = new CPI18nPipe();
 
 @Component({
   selector: 'cp-services-excel',
   templateUrl: './services-excel.component.html',
-  styleUrls: ['./services-excel.component.scss'],
+  styleUrls: ['./services-excel.component.scss']
 })
-export class ServicesExcelComponent extends BaseComponent
-  implements OnInit, OnDestroy {
+export class ServicesExcelComponent extends BaseComponent implements OnInit, OnDestroy {
   stores;
   services;
   buttonData;
@@ -41,7 +37,7 @@ export class ServicesExcelComponent extends BaseComponent
     private store: Store<any>,
     private session: CPSession,
     private cpI18n: CPI18nService,
-    private servicesService: ServicesService,
+    private servicesService: ServicesService
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -55,10 +51,7 @@ export class ServicesExcelComponent extends BaseComponent
   }
 
   buildHeader() {
-    const subheading = i18n.transform(
-      'services_import_items_to_import',
-      this.services.length,
-    );
+    const subheading = i18n.transform('services_import_items_to_import', this.services.length);
 
     this.store.dispatch({
       type: HEADER_UPDATE,
@@ -66,23 +59,23 @@ export class ServicesExcelComponent extends BaseComponent
         heading: 'services_imports_heading',
         crumbs: {
           url: 'services',
-          label: 'services',
+          label: 'services'
         },
         em: `[NOTRANSLATE]${subheading}[NOTRANSLATE]`,
-        children: [],
-      },
+        children: []
+      }
     });
   }
 
   buildForm() {
     this.form = this.fb.group({
-      services: this.fb.array([]),
+      services: this.fb.array([])
     });
     this.buildGroup();
 
     this.form.valueChanges.subscribe((_) => {
       this.buttonData = Object.assign({}, this.buttonData, {
-        disabled: !this.form.valid,
+        disabled: !this.form.valid
       });
     });
   }
@@ -95,13 +88,13 @@ export class ServicesExcelComponent extends BaseComponent
         const _categories = [
           {
             label: '---',
-            action: null,
-          },
+            action: null
+          }
         ];
         categories.map((category) => {
           _categories.push({
             action: category.id,
-            label: category.name,
+            label: category.name
           });
         });
 
@@ -138,7 +131,7 @@ export class ServicesExcelComponent extends BaseComponent
       contactphone: [service.phone_number],
       website: [service.website],
       category: [null, Validators.required],
-      logo_url: [null, Validators.required],
+      logo_url: [null, Validators.required]
     });
   }
 
@@ -217,16 +210,14 @@ export class ServicesExcelComponent extends BaseComponent
     const _data = Object.assign({}, this.form.value.services);
 
     Object.keys(_data).forEach((key) => {
-      parsedServices.push(
-        Object.assign({}, _data[key], { category: _data[key].category.action }),
-      );
+      parsedServices.push(Object.assign({}, _data[key], { category: _data[key].category.action }));
     });
 
     this.servicesService.createService(parsedServices).subscribe(
       (_) => this.router.navigate(['/manage/services']),
       (err) => {
         throw new Error(err);
-      },
+      }
     );
   }
 
@@ -239,7 +230,7 @@ export class ServicesExcelComponent extends BaseComponent
     this.buttonData = {
       disabled: true,
       class: 'primary',
-      text: this.cpI18n.translate('services_import_button'),
+      text: this.cpI18n.translate('services_import_button')
     };
   }
 }

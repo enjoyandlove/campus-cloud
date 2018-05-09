@@ -11,7 +11,7 @@ interface IState {
 
 const state = {
   search_text: null,
-  attendance_only: 0,
+  attendance_only: 0
 };
 
 declare var $: any;
@@ -28,9 +28,7 @@ export class ServicesListActionBoxComponent implements OnInit {
   canWriteSchoolWide;
   state: IState = state;
 
-  constructor(
-    private session: CPSession
-  ) { }
+  constructor(private session: CPSession) {}
 
   onSearch(search_text): void {
     this.state = Object.assign({}, this.state, { search_text });

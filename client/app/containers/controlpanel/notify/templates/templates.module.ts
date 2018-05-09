@@ -22,7 +22,7 @@ import { AnnouncementsModule } from '../announcements/announcements.module';
     TemplatesTopBarComponent,
     TemplatesDeleteComponent,
     TemplatesComposeComponent,
-    TemplatesCreateComponent,
+    TemplatesCreateComponent
   ],
 
   exports: [],
@@ -32,9 +32,9 @@ import { AnnouncementsModule } from '../announcements/announcements.module';
     SharedModule,
     ReactiveFormsModule,
     TemplatesRoutingModule,
-    AnnouncementsModule,
+    AnnouncementsModule
   ],
 
-  providers: [TemplatesService],
+  providers: [TemplatesService]
 })
 export class TemplatesModule {}

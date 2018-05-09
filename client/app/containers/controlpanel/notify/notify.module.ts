@@ -11,6 +11,6 @@ import { NotifyRoutingModule } from './notify.routing.module';
 
   imports: [CommonModule, SharedModule, NotifyRoutingModule],
 
-  providers: [],
+  providers: []
 })
 export class NotifyModule {}

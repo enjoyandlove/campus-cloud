@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'cpTeamSelectedPipe',
-  pure: false,
+  pure: false
 })
 export class TeamSelectedPipe implements PipeTransform {
   transform(services: any[]) {

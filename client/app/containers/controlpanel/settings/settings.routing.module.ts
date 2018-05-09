@@ -14,17 +14,13 @@ const appRoutes: Routes = [
       {
         path: 'team',
         loadChildren: './team/team.module#TeamModule'
-      },
+      }
     ]
-  },
+  }
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forChild(appRoutes)
-  ],
-  exports: [
-    RouterModule
-  ]
+  imports: [RouterModule.forChild(appRoutes)],
+  exports: [RouterModule]
 })
-export class SettingsRoutingModule { }
+export class SettingsRoutingModule {}
