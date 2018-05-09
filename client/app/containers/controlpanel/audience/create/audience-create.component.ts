@@ -23,7 +23,7 @@ import { CPI18nService } from './../../../../shared/services/i18n.service';
   templateUrl: './audience-create.component.html',
   styleUrls: ['./audience-create.component.scss']
 })
-export class AduienceCreateComponent implements OnInit, OnDestroy {
+export class AudienceCreateComponent implements OnInit, OnDestroy {
   @Input() users: Array<any> = [];
   @Output() reset: EventEmitter<null> = new EventEmitter();
   @Output() created: EventEmitter<any> = new EventEmitter();
