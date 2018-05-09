@@ -106,12 +106,44 @@ export class AnnouncementsComposeComponent implements OnInit {
     });
   }
 
+  onNewAudienceTypeChange(audienceState) {
+    if (audienceState.custom) {
+      this.state = {
+        ...this.state,
+        isToUsers: true,
+        isToLists: false,
+        isCampusWide: false,
+        isToFilters: false,
+        triggerSaveModal: true
+      };
+      this.form.controls['list_ids'].setValue([]);
+      this.form.controls['user_ids'].setValue([]);
+      this.form.controls['is_school_wide'].setValue(false);
+    }
+
+    if (audienceState.dynamic) {
+      this.state = {
+        ...this.state,
+        isToUsers: false,
+        isToLists: false,
+        isToFilters: true,
+        isCampusWide: false,
+        triggerSaveModal: true
+      };
+      this.form.controls['filters'].setValue([]);
+      this.form.controls['user_ids'].setValue([]);
+      this.form.controls['list_ids'].setValue([]);
+      this.form.controls['is_school_wide'].setValue(false);
+    }
+  }
+
   onAudienceChange(audienceId) {
     if (audienceId) {
       this.state = {
         ...this.state,
         isToUsers: false,
         isToLists: true,
+        isToFilters: false,
         isCampusWide: false,
         triggerSaveModal: false
       };
@@ -216,7 +248,7 @@ export class AnnouncementsComposeComponent implements OnInit {
       });
   }
 
-  onResetNewAduience() {
+  onResetNewAudience() {
     this.state = {
       ...this.state,
       isToUsers: false,
@@ -225,9 +257,11 @@ export class AnnouncementsComposeComponent implements OnInit {
       isToFilters: true,
       triggerSaveModal: true
     };
+
+    this.form.controls['is_school_wide'].setValue(false);
   }
 
-  onResetSavedAduience() {
+  onResetSavedAudience() {
     this.state = {
       ...this.state,
       isToUsers: false,
@@ -236,6 +270,7 @@ export class AnnouncementsComposeComponent implements OnInit {
       isToFilters: false,
       triggerSaveModal: false
     };
+    this.form.controls['is_school_wide'].setValue(true);
   }
 
   doValidate() {
@@ -279,14 +314,23 @@ export class AnnouncementsComposeComponent implements OnInit {
 
     if (this.state.isToUsers && !this.state.isCampusWide) {
       data = Object.assign({}, data, { user_ids: this.form.value.user_ids });
+
+      delete data['filters'];
+      delete data['list_ids'];
     }
 
     if (this.state.isToLists && !this.state.isCampusWide) {
       data = Object.assign({}, data, { list_ids: this.form.value.list_ids });
+
+      delete data['filters'];
+      delete data['user_ids'];
     }
 
     if (this.state.isToFilters && !this.state.isCampusWide) {
       data = Object.assign({}, data, { filters: this.form.value.filters });
+
+      delete data['list_ids'];
+      delete data['user_ids'];
     }
 
     this.service.postAnnouncements(search, data).subscribe(

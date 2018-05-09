@@ -26,7 +26,8 @@
           <cp-audience-new-body 
             (users)="onUsers($event)"
             (filters)="onFilters($event)"
-            (importClick)="importClick.emit()">
+            (importClick)="importClick.emit()"
+            (audienceType)="onNewAudienceTypeChange($event)">
           </cp-audience-new-body>
         </cp-tab>
       </cp-tabs>

@@ -3,11 +3,12 @@
   <div class="col-xs-8 col-xs-offset-2">
     <cp-audience-card 
       (importClick)="onImportClick()"
-      (resetNewAduience)="onResetNewAduience()"
+      (resetNewAudience)="onResetNewAudience()"
       (selectedUsers)="onSelectedUsers($event)"
-      (resetSavedAduience)="onResetSavedAduience()"
+      (resetSavedAudience)="onResetSavedAudience()"
       (selectedAudience)="onAudienceChange($event)"
-      (selectedFilters)="onSelectedFilters($event)">
+      (selectedFilters)="onSelectedFilters($event)"
+      (newAudienceTypeChange)="onNewAudienceTypeChange($event)">
     </cp-audience-card>
 
     <div class="cp-card">
@@ -104,6 +105,7 @@
                   class="cpbtn cpbtn--cancel" i18n>
                 {{ 'cancel' | cpI18n }}
               </a>
+              <button type="button" (click)="doSubmit()">fakeSubmit</button>
               <cp-button
                 [props]="buttonData"
                 (buttonClick)="doValidate()">
