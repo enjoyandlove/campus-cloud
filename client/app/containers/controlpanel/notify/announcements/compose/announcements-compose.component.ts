@@ -333,11 +333,6 @@ export class AnnouncementsComposeComponent implements OnInit {
       delete data['user_ids'];
     }
 
-    console.log('DATA', data);
-    this.buttonData = { ...this.buttonData, disabled: false };
-
-    return;
-
     this.service.postAnnouncements(search, data).subscribe(
       (res) => {
         if (res.status === THROTTLED_STATUS) {
