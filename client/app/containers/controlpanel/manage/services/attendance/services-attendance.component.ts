@@ -7,7 +7,7 @@ import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
 import {
   canSchoolReadResource,
-  canStoreReadAndWriteResource,
+  canStoreReadAndWriteResource
 } from './../../../../../shared/utils/privileges';
 
 import { ServicesService } from '../services.service';
@@ -22,10 +22,9 @@ const FEEDBACK_ENABLED = 1;
 @Component({
   selector: 'cp-services-attendance',
   templateUrl: './services-attendance.component.html',
-  styleUrls: ['./services-attendance.component.scss'],
+  styleUrls: ['./services-attendance.component.scss']
 })
-export class ServicesAttendanceComponent extends BaseComponent
-  implements OnInit {
+export class ServicesAttendanceComponent extends BaseComponent implements OnInit {
   loading;
   service;
   storeId;
@@ -45,7 +44,7 @@ export class ServicesAttendanceComponent extends BaseComponent
     public cpI18n: CPI18nService,
     private store: Store<IHeader>,
     private route: ActivatedRoute,
-    private serviceService: ServicesService,
+    private serviceService: ServicesService
   ) {
     super();
     this.serviceId = this.route.snapshot.params['serviceId'];
@@ -55,31 +54,27 @@ export class ServicesAttendanceComponent extends BaseComponent
   }
 
   private fetch() {
-    super
-      .fetchData(this.serviceService.getServiceById(this.serviceId))
-      .then((res) => {
-        this.service = res.data;
-        this.storeId = this.service.store_id;
+    super.fetchData(this.serviceService.getServiceById(this.serviceId)).then((res) => {
+      this.service = res.data;
+      this.storeId = this.service.store_id;
 
-        if ('enable_feedback' in this.service) {
-          this.enableFeedback$.next(
-            this.service.enable_feedback === FEEDBACK_ENABLED,
-          );
-        } else {
-          this.enableFeedback$.next(true);
-        }
+      if ('enable_feedback' in this.service) {
+        this.enableFeedback$.next(this.service.enable_feedback === FEEDBACK_ENABLED);
+      } else {
+        this.enableFeedback$.next(true);
+      }
 
-        if (!('enable_feedback' in this.service)) {
-          this.setDefaultFeedback();
-        }
+      if (!('enable_feedback' in this.service)) {
+        this.setDefaultFeedback();
+      }
 
-        if (!this.service.service_attendance) {
-          this.redirectOnDisabledAttendance();
+      if (!this.service.service_attendance) {
+        this.redirectOnDisabledAttendance();
 
-          return;
-        }
-        this.buildHeader();
-      });
+        return;
+      }
+      this.buildHeader();
+    });
   }
 
   setDefaultFeedback() {
@@ -107,24 +102,21 @@ export class ServicesAttendanceComponent extends BaseComponent
     let children = [
       {
         label: 'info',
-        url: `/manage/services/${this.serviceId}/info`,
-      },
+        url: `/manage/services/${this.serviceId}/info`
+      }
     ];
 
-    const eventsSchoolLevel = canSchoolReadResource(
-      this.session.g,
-      CP_PRIVILEGES_MAP.events,
-    );
+    const eventsSchoolLevel = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.events);
     const eventsAccountLevel = canStoreReadAndWriteResource(
       this.session.g,
       this.storeId,
-      CP_PRIVILEGES_MAP.events,
+      CP_PRIVILEGES_MAP.events
     );
 
     if (eventsSchoolLevel || eventsAccountLevel) {
       const events = {
         label: 'events',
-        url: `/manage/services/${this.serviceId}/events`,
+        url: `/manage/services/${this.serviceId}/events`
       };
 
       children = [...children, events];
@@ -133,7 +125,7 @@ export class ServicesAttendanceComponent extends BaseComponent
     if (this.service.service_attendance) {
       const attendance = {
         label: 'assessment',
-        url: `/manage/services/${this.serviceId}`,
+        url: `/manage/services/${this.serviceId}`
       };
 
       children = [...children, attendance];
@@ -146,10 +138,10 @@ export class ServicesAttendanceComponent extends BaseComponent
         subheading: '',
         crumbs: {
           url: 'services',
-          label: 'services',
+          label: 'services'
         },
-        children: [...children],
-      },
+        children: [...children]
+      }
     });
   }
 

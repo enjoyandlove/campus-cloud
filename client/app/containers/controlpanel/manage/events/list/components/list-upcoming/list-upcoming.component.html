@@ -45,7 +45,7 @@
     <div class="row">
       <span [class]="[isOrientation ? 'text-truncate events__thumbnail col-xs-6 ' : 'text-truncate events__thumbnail col-xs-4']">
         <img
-          class="img-rounded"
+          class="img-rounded img-fit-cover"
           [src]="event.poster_thumb_url ?
                 event.poster_thumb_url :
                 event.store_logo_url">

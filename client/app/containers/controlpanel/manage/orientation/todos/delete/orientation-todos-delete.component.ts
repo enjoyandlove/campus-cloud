@@ -9,7 +9,7 @@ import { CPI18nService } from './../../../../../../shared/services/i18n.service'
 @Component({
   selector: 'cp-orientation-todos-delete',
   templateUrl: './orientation-todos-delete.component.html',
-  styleUrls: ['./orientation-todos-delete.component.scss'],
+  styleUrls: ['./orientation-todos-delete.component.scss']
 })
 export class OrientationTodosDeleteComponent implements OnInit {
   @Input() todo: ITodo;
@@ -21,30 +21,28 @@ export class OrientationTodosDeleteComponent implements OnInit {
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public service: TodosService,
+    public service: TodosService
   ) {}
 
   onDelete() {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    this.service
-      .deleteTodo(this.todo.id, search)
-      .subscribe(() => {
-        this.deleted.emit(this.todo.id);
-        this.resetDeleteModal.emit();
-        $('#todoDelete').modal('hide');
+    this.service.deleteTodo(this.todo.id, search).subscribe(() => {
+      this.deleted.emit(this.todo.id);
+      this.resetDeleteModal.emit();
+      $('#todoDelete').modal('hide');
 
-        this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: false,
-        });
+      this.buttonData = Object.assign({}, this.buttonData, {
+        disabled: false
       });
+    });
   }
 
   ngOnInit() {
     this.buttonData = {
       text: this.cpI18n.translate('delete'),
-      class: 'danger',
+      class: 'danger'
     };
   }
 }

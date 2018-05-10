@@ -13,7 +13,7 @@ const buildTokenHeaders = () => {
 
   return new Headers({
     'Content-Type': 'application/json',
-    Authorization: auth,
+    Authorization: auth
   });
 };
 
@@ -30,7 +30,7 @@ export class CallbackService extends BaseService {
       .get(url, { headers, ...opts })
       .delay(200)
       .retry(1)
-      .catch((err) => silent ? Observable.throw(err) : super.catchError(err));
+      .catch((err) => (silent ? Observable.throw(err) : super.catchError(err)));
   }
 
   post(url: string, data: any, opts?: RequestOptionsArgs) {

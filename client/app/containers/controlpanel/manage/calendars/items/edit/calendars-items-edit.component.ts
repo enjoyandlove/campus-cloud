@@ -4,10 +4,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import {
-  IHeader,
-  HEADER_UPDATE,
-} from './../../../../../../reducers/header.reducer';
+import { IHeader, HEADER_UPDATE } from './../../../../../../reducers/header.reducer';
 import { BaseComponent } from '../../../../../../base';
 import { CPSession } from './../../../../../../session';
 import { ICalendar } from '../../calendars.interface';
@@ -16,10 +13,9 @@ import { CalendarsService } from '../../calendars.services';
 @Component({
   selector: 'cp-calendars-items-edit',
   templateUrl: './calendars-items-edit.component.html',
-  styleUrls: ['./calendars-items-edit.component.scss'],
+  styleUrls: ['./calendars-items-edit.component.scss']
 })
-export class CalendarsItemsEditComponent extends BaseComponent
-  implements OnInit {
+export class CalendarsItemsEditComponent extends BaseComponent implements OnInit {
   @ViewChild('editForm') editForm;
 
   item: any;
@@ -35,7 +31,7 @@ export class CalendarsItemsEditComponent extends BaseComponent
     public session: CPSession,
     public route: ActivatedRoute,
     public store: Store<IHeader>,
-    public service: CalendarsService,
+    public service: CalendarsService
   ) {
     super();
     super.isLoading().subscribe((loading) => (this.loading = loading));
@@ -53,10 +49,10 @@ export class CalendarsItemsEditComponent extends BaseComponent
         em: null,
         crumbs: {
           url: null,
-          label: null,
+          label: null
         },
-        children: [],
-      },
+        children: []
+      }
     });
   }
 
@@ -67,9 +63,7 @@ export class CalendarsItemsEditComponent extends BaseComponent
 
     this.service
       .editItem(this.itemId, editedItem, search)
-      .subscribe((_) =>
-        this.router.navigate(['/manage/calendars/' + this.calendarId]),
-      );
+      .subscribe((_) => this.router.navigate(['/manage/calendars/' + this.calendarId]));
   }
 
   buildForm() {
@@ -89,7 +83,7 @@ export class CalendarsItemsEditComponent extends BaseComponent
       street_number: [this.item.street_number],
       province: [this.item.province],
       latitude: [this.item.latitude, Validators.required],
-      longitude: [this.item.longitude, Validators.required],
+      longitude: [this.item.longitude, Validators.required]
     });
   }
 

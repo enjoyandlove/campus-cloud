@@ -18,7 +18,7 @@ import {
   DashboardDownloadsChartComponent,
   DashboardSocialActivyChartComponent,
   DashboardGeneralInformationComponent,
-  DashboardDownloadsRegistrationComponent,
+  DashboardDownloadsRegistrationComponent
 } from './components';
 
 import { DashboardComponent } from './dashboard.component';
@@ -40,16 +40,11 @@ import { EngagementModule } from './../assess/engagement/engagement.module';
     DashboardTopClubsComponent,
     DashboardDownloadsRegistrationComponent,
     DashboardSocialActivyComponent,
-    DashboardSocialActivyChartComponent,
+    DashboardSocialActivyChartComponent
   ],
 
-  imports: [
-    CommonModule,
-    SharedModule,
-    DashboardRoutingModule,
-    EngagementModule,
-  ],
+  imports: [CommonModule, SharedModule, DashboardRoutingModule, EngagementModule],
 
-  providers: [DashboardService, DashboardUtilsService],
+  providers: [DashboardService, DashboardUtilsService]
 })
 export class DashboardModule {}

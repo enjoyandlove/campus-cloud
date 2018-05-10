@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 @Component({
   selector: 'cp-pagination',
   templateUrl: './cp-pagination.component.html',
-  styleUrls: ['./cp-pagination.component.scss'],
+  styleUrls: ['./cp-pagination.component.scss']
 })
 export class CPPaginationComponent implements OnInit {
   @Input() pageNext: boolean;

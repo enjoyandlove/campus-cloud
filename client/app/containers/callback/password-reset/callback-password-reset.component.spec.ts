@@ -2,12 +2,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { StoreModule } from '@ngrx/store';
 
-import {
-  TestBed,
-  async,
-  fakeAsync,
-  ComponentFixture
-} from '@angular/core/testing';
+import { TestBed, async, fakeAsync, ComponentFixture } from '@angular/core/testing';
 
 import { AuthService } from './../../auth/auth.service';
 import { CPI18nService } from '../../../shared/services';
@@ -17,9 +12,9 @@ import { ErrorService } from './../../../shared/services/error.service';
 import { CallbackPasswordResetComponent } from './callback-password-reset.component';
 
 class RouterMock {
-    navigate() {
-      // console.log('navigating');
-    }
+  navigate() {
+    // console.log('navigating');
+  }
 }
 
 class MockAuthService {
@@ -31,9 +26,9 @@ class MockAuthService {
 class MockActivatedRoute {
   snapshot = {
     params: {
-      'key': 123
+      key: 123
     }
-  }
+  };
 }
 
 describe('Password Reset', () => {
@@ -44,31 +39,30 @@ describe('Password Reset', () => {
   let comp: CallbackPasswordResetComponent;
   let fixture: ComponentFixture<CallbackPasswordResetComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-     imports: [
-       FormsModule,
-       StoreModule.forRoot({ 'ALERT': ALERT_DEFAULT }),
-     ],
-     declarations: [ CallbackPasswordResetComponent ],
-     providers: [
-      FormBuilder,
-      CPI18nService,
-      ErrorService,
-      { provide: ActivatedRoute, useClass: MockActivatedRoute },
-      { provide: AuthService, useClass: MockAuthService },
-      { provide: Router, useClass: RouterMock},
-     ]
-   })
-   .overrideComponent(CallbackPasswordResetComponent, {
-     set: {
-       template: '<div>No Template</div>'
-     }
-   })
-   .compileComponents()
- }));
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        imports: [FormsModule, StoreModule.forRoot({ ALERT: ALERT_DEFAULT })],
+        declarations: [CallbackPasswordResetComponent],
+        providers: [
+          FormBuilder,
+          CPI18nService,
+          ErrorService,
+          { provide: ActivatedRoute, useClass: MockActivatedRoute },
+          { provide: AuthService, useClass: MockAuthService },
+          { provide: Router, useClass: RouterMock }
+        ]
+      })
+        .overrideComponent(CallbackPasswordResetComponent, {
+          set: {
+            template: '<div>No Template</div>'
+          }
+        })
+        .compileComponents();
+    })
+  );
 
- beforeEach(() => {
+  beforeEach(() => {
     fixture = TestBed.createComponent(CallbackPasswordResetComponent);
     comp = fixture.componentInstance;
     errorService = TestBed.get(ErrorService);
@@ -76,13 +70,15 @@ describe('Password Reset', () => {
 
     spyError = spyOn(errorService, 'handleError');
     spySubmit = spyOn(authService, 'submitPasswordReset').and.returnValue(Observable.of(true));
- })
+  });
 
-
-  it('Should read Key from url', fakeAsync(() => {
-    expect(comp.isSubmitted).toBeFalsy();
-    expect(comp.key.toString()).toBe('123');
-  }));
+  it(
+    'Should read Key from url',
+    fakeAsync(() => {
+      expect(comp.isSubmitted).toBeFalsy();
+      expect(comp.key.toString()).toBe('123');
+    })
+  );
 
   it('should call error handler on missing password', () => {
     const new_password = 123456;
@@ -91,11 +87,11 @@ describe('Password Reset', () => {
     comp.form.controls['new_password'].setValue(new_password);
     comp.form.controls['confirmPassword'].setValue(confirm_password);
 
-    comp.onSubmit({new_password, confirm_password})
+    comp.onSubmit({ new_password, confirm_password });
 
     expect(spyError).toHaveBeenCalled();
     expect(spySubmit).not.toHaveBeenCalled();
-  })
+  });
 
   it('should handle success', () => {
     const new_password = 123456;
@@ -104,9 +100,9 @@ describe('Password Reset', () => {
     comp.form.controls['new_password'].setValue(new_password);
     comp.form.controls['confirmPassword'].setValue(confirm_password);
 
-    comp.onSubmit({new_password, confirm_password})
+    comp.onSubmit({ new_password, confirm_password });
     expect(comp.isSubmitted).toBeDefined();
     expect(spyError).not.toHaveBeenCalled();
     expect(spySubmit).toHaveBeenCalled();
-  })
+  });
 });

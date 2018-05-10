@@ -53,7 +53,7 @@
 /* Disabled state */
 .control input:disabled ~ .control__indicator {
   pointer-events: none;
-  opacity: .6;
+  opacity: 0.6;
   // background: $color-white;
 }
 

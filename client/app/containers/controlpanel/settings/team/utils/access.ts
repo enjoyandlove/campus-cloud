@@ -4,63 +4,64 @@ function getMenu(privileges = {}) {
   const form = {
     services: {
       active: false,
-      deps: [],
+      deps: []
     },
     clubs: {
       active: false,
-      deps: [],
+      deps: []
     },
     events: {
       active: false,
-      deps: [],
+      deps: []
     },
     content: {
       orientation: {
         active: false,
-        deps: [],
+        deps: []
       },
       calendars: {
         active: false,
-        deps: [],
+        deps: []
       },
       maps: {
         active: false,
-        deps: [],
+        deps: []
       },
       feeds: {
         active: false,
         deps: [CP_PRIVILEGES_MAP.membership],
-        disables: [CP_PRIVILEGES_MAP.membership],
+        disables: [CP_PRIVILEGES_MAP.membership]
       },
       links: {
         active: false,
-        deps: [],
+        deps: []
       },
       appCustomizaton: {
         active: false,
-        deps: [],
+        deps: []
       },
+      jobs: {
+        active: false,
+        deps: []
+      }
     },
     notify: {
       campus: {
         active: false,
         deps: [],
-        disables: [
-          CP_PRIVILEGES_MAP.assessment,
-          CP_PRIVILEGES_MAP.emergency_announcement,
-        ],
+        disables: [CP_PRIVILEGES_MAP.assessment, CP_PRIVILEGES_MAP.emergency_announcement]
       },
       emergency: {
         active: false,
-        deps: [CP_PRIVILEGES_MAP.campus_announcements],
-      },
+        deps: [CP_PRIVILEGES_MAP.campus_announcements]
+      }
     },
     assess: {
       engagement: {
         active: false,
-        deps: [CP_PRIVILEGES_MAP.campus_announcements],
-      },
-    },
+        deps: [CP_PRIVILEGES_MAP.campus_announcements]
+      }
+    }
   };
 
   Object.keys(privileges).forEach((p) => {
@@ -100,11 +101,14 @@ function getMenu(privileges = {}) {
     if (+p === CP_PRIVILEGES_MAP.assessment) {
       form.assess.engagement.active = true;
     }
+    if (+p === CP_PRIVILEGES_MAP.jobs) {
+      form.content.jobs.active = true;
+    }
   });
 
   return form;
 }
 
 export const TEAM_ACCESS = {
-  getMenu,
+  getMenu
 };

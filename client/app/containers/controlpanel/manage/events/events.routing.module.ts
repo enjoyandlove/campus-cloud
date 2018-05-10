@@ -28,48 +28,48 @@ const appRoutes: Routes = [
     path: '',
     data: { zendesk: 'events' },
     canActivate: [PrivilegesGuard],
-    component: EventsListComponent,
+    component: EventsListComponent
   },
   {
     path: 'create',
     data: { zendesk: 'events' },
     canActivate: [PrivilegesGuard],
-    component: EventsCreateComponent,
+    component: EventsCreateComponent
   },
   {
     path: ':eventId',
     data: { zendesk: 'events' },
     canActivate: [PrivilegesGuard],
-    component: EventsAttendanceComponent,
+    component: EventsAttendanceComponent
   },
   {
     path: ':eventId/edit',
     data: { zendesk: 'events' },
     canActivate: [PrivilegesGuard],
-    component: EventsEditComponent,
+    component: EventsEditComponent
   },
   {
     path: ':eventId/info',
     data: { zendesk: 'events' },
     canActivate: [PrivilegesGuard],
-    component: EventsInfoComponent,
+    component: EventsInfoComponent
   },
 
   {
     path: 'import/excel',
     data: { zendesk: 'events' },
     canActivate: [PrivilegesGuard],
-    component: EventsExcelComponent,
+    component: EventsExcelComponent
   },
   {
     path: 'import/facebook',
     data: { zendesk: 'events' },
     canActivate: [PrivilegesGuard],
-    component: EventsFacebookComponent,
-  },
+    component: EventsFacebookComponent
+  }
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class EventsRoutingModule {}

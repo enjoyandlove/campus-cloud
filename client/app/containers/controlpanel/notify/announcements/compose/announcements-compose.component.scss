@@ -32,13 +32,6 @@
   @include font-24px();
 }
 
-// @import '~styles/components/modal';
-// @import '~styles/components/button';
-
-// .cpmodal__body {
-//   margin-top: 15px;
-// }
-
 .subject-input {
   width: 100%;
 
@@ -69,44 +62,6 @@
   }
 }
 
-// label {
-//   span {
-//     @include font-normal();
-
-//     color: $color-secondary-text;
-//   }
-// }
-
-// .cpmodal__footer {
-//   .from-label {
-//     margin-top: 7px;
-//   }
-// }
-
 .form-group {
   margin-bottom: 15px;
 }
-
-// .campus-switch {
-//   padding: 12px 20px;
-//   border-radius: 4px;
-//   margin-bottom: 15px;
-//   background: $color-text-alt;
-//   border: 1px solid $border-color;
-//   transition: all 200ms ease-in-out;
-
-//   &__toggle {
-//     top: 5px;
-//     position: relative;
-//   }
-
-//   .title {
-//     @include font-16px();
-//     @include font-semi-bold();
-//   }
-
-//   &.isActive {
-//     border: 1px solid $color-success;
-//     background-color: rgba(40,202,66,0.06);
-//   }
-// }

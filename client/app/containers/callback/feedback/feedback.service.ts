@@ -13,33 +13,25 @@ export class FeedbackService extends CallbackService {
   }
 
   getServiceData(search: URLSearchParams, silent) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.EXTERNAL_SERVICE_FEEDBACK
-    }/`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EXTERNAL_SERVICE_FEEDBACK}/`;
 
     return super.get(url, { search }, silent).map((res) => res.json());
   }
 
   getEventData(search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.EXTERNAL_EVENT_FEEDBACK
-    }/`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EXTERNAL_EVENT_FEEDBACK}/`;
 
     return super.get(url, { search }).map((res) => res.json());
   }
 
   doEventFeedback(data: any, search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.EXTERNAL_EVENT_FEEDBACK
-    }/`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EXTERNAL_EVENT_FEEDBACK}/`;
 
     return super.update(url, data, { search }).map((res) => res.json());
   }
 
   doServiceFeedback(data: any, search: URLSearchParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.EXTERNAL_SERVICE_FEEDBACK
-    }/`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EXTERNAL_SERVICE_FEEDBACK}/`;
 
     return super.update(url, data, { search }).map((res) => res.json());
   }

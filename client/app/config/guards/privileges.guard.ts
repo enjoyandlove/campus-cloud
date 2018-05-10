@@ -49,6 +49,7 @@ export class PrivilegesGuard implements CanActivate, CanActivateChild {
 
   hasPrivileges(route) {
     const protectedRoutes = [
+      'jobs',
       'events',
       'feeds',
       'clubs',
@@ -95,7 +96,9 @@ export class PrivilegesGuard implements CanActivate, CanActivateChild {
 
       students: CP_PRIVILEGES_MAP.assessment,
 
-      orientation: CP_PRIVILEGES_MAP.orientation
+      orientation: CP_PRIVILEGES_MAP.orientation,
+
+      jobs: CP_PRIVILEGES_MAP.jobs
     };
 
     if (route) {

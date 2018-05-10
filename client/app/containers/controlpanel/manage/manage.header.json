@@ -47,6 +47,11 @@
       "privilege": 17,
       "label": "orientation",
       "url": "/manage/orientation"
+    },
+    {
+      "privilege": 25,
+      "label": "jobs",
+      "url": "/manage/jobs"
     }
   ]
 }

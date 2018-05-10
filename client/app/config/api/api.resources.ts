@@ -1,4 +1,6 @@
 export const API_ENDPOINTS = {
+  JOB: 'job',
+
   USER: 'user',
 
   CLUBS: 'club',
@@ -22,6 +24,8 @@ export const API_ENDPOINTS = {
   SERVICES: 'service',
 
   LINKS: 'campus_link',
+
+  EMPLOYER: 'employer',
 
   SOCIAL_GROUP: 'group',
 

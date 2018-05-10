@@ -6,7 +6,7 @@ import { appStorage } from '../../../shared/utils';
 
 @Component({
   selector: 'cp-logout',
-  template: '',
+  template: ''
 })
 export class LogoutComponent implements OnInit {
   constructor(private router: Router, private session: CPSession) {}

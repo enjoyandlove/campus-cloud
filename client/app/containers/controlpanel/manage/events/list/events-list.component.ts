@@ -12,7 +12,7 @@ import { CPI18nService } from '../../../../../shared/services/index';
 @Component({
   selector: 'cp-events-list',
   templateUrl: './base/events.component.html',
-  styleUrls: ['./base/events.component.scss'],
+  styleUrls: ['./base/events.component.scss']
 })
 export class EventsListComponent extends EventsComponent implements OnInit {
   events;
@@ -28,7 +28,7 @@ export class EventsListComponent extends EventsComponent implements OnInit {
     private store: Store<IHeader>,
     public service: EventsService,
     public cpI18n: CPI18nService,
-    private headerService: ManageHeaderService,
+    private headerService: ManageHeaderService
   ) {
     super(session, cpI18n, service);
   }
@@ -36,7 +36,7 @@ export class EventsListComponent extends EventsComponent implements OnInit {
   private buildHeader() {
     this.store.dispatch({
       type: HEADER_UPDATE,
-      payload: this.headerService.filterByPrivileges(),
+      payload: this.headerService.filterByPrivileges()
     });
   }
 

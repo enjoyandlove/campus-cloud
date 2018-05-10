@@ -45,7 +45,7 @@ describe('AudienceSavedBodyComponent', () => {
     comp = fixture.componentInstance;
     session.g.set('school', { id: 1 });
 
-    comp.importedAudience = Observable.of(null);
+    comp.importedAudience$ = Observable.of(null);
 
     fixture.detectChanges();
   });

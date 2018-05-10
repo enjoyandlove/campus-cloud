@@ -1,0 +1,6 @@
+<label>{{ 'jobs_select_employer' | cpI18n }}</label>
+<cp-dropdown
+  [items]="employers$ | async"
+  [selectedItem]="selectedEmployer"
+  (selected)="onSelectedEmployer($event.action)">
+</cp-dropdown>

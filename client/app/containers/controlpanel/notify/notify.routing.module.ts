@@ -16,19 +16,18 @@ const appRoutes: Routes = [
     children: [
       {
         path: 'announcements',
-        loadChildren:
-          './announcements/announcements.module#AnnouncementsModule',
+        loadChildren: './announcements/announcements.module#AnnouncementsModule'
       },
 
       {
         path: 'templates',
-        loadChildren: './templates/templates.module#TemplatesModule',
-      },
-    ],
-  },
+        loadChildren: './templates/templates.module#TemplatesModule'
+      }
+    ]
+  }
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class NotifyRoutingModule {}

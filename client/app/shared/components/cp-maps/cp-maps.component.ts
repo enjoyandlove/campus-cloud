@@ -6,7 +6,7 @@ import {
   Input,
   OnInit,
   Output,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
@@ -17,7 +17,7 @@ import { CPLocationsService } from '../../services/locations.service';
 @Component({
   selector: 'cp-maps',
   templateUrl: './cp-maps.component.html',
-  styleUrls: ['./cp-maps.component.scss'],
+  styleUrls: ['./cp-maps.component.scss']
 })
 export class CPMapsComponent implements OnInit, AfterViewInit {
   @Input() doubleClick = true;
@@ -29,10 +29,7 @@ export class CPMapsComponent implements OnInit, AfterViewInit {
   map: google.maps.Map;
   marker: google.maps.Marker;
 
-  constructor(
-    public locationService: CPLocationsService,
-    public cpMapsService: CPMapsService,
-  ) {}
+  constructor(public locationService: CPLocationsService, public cpMapsService: CPMapsService) {}
 
   drawMap() {
     this.center.subscribe((center) => {
@@ -42,14 +39,15 @@ export class CPMapsComponent implements OnInit, AfterViewInit {
 
       if (this.doubleClick) {
         this.map.addListener('dblclick', (event) => {
-          this.locationService
-            .geoCode(event.latLng.toJSON())
-            .then((response) => this.mapSelection.emit(response));
+          this.locationService.geoCode(event.latLng.toJSON()).then((response) => {
+            const location = event.latLng;
 
-          this.cpMapsService.setMarkerPosition(
-            this.marker,
-            event.latLng.toJSON(),
-          );
+            response = { ...response, geometry: { location } };
+
+            this.mapSelection.emit(response);
+          });
+
+          this.cpMapsService.setMarkerPosition(this.marker, event.latLng.toJSON());
         });
       }
     });
@@ -66,7 +64,7 @@ export class CPMapsComponent implements OnInit, AfterViewInit {
         this.drawMap();
       },
 
-      10,
+      10
     );
   }
 

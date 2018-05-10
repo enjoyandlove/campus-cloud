@@ -9,11 +9,9 @@ export class ClubsWallComponent implements OnInit {
   clubId: number;
   isClubsView = true;
 
-  constructor(
-    private route: ActivatedRoute
-  ) {
+  constructor(private route: ActivatedRoute) {
     this.clubId = this.route.parent.snapshot.params['clubId'];
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 }

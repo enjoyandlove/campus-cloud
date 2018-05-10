@@ -10,7 +10,7 @@ interface IItem {
 @Component({
   selector: 'cp-check-dropdown',
   templateUrl: './cp-check-dropdown.component.html',
-  styleUrls: ['./cp-check-dropdown.component.scss'],
+  styleUrls: ['./cp-check-dropdown.component.scss']
 })
 export class CPCheckDropdownComponent implements OnInit {
   @Input() items: Array<IItem>;
