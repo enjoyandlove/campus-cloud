@@ -1029,6 +1029,9 @@
   "employers_create_employer": {
     "message": "Create Employer"
   },
+  "employers_create_modal_title": {
+    "message": "New Employer"
+  },
   "employers_delete": {
     "message": "Delete Employer"
   },
