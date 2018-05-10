@@ -11,7 +11,6 @@ import {
 
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
-import { get as _get } from 'lodash';
 
 import { CPSession } from '../../../../session';
 import { AudienceService } from '../audience.service';
@@ -31,6 +30,7 @@ export class AudienceCreateComponent implements OnInit, OnDestroy {
   isError;
   buttonData;
   errorMessage;
+  userCount = 0;
   form: FormGroup;
 
   constructor(
@@ -47,6 +47,11 @@ export class AudienceCreateComponent implements OnInit, OnDestroy {
     if (event.target.contains(this.el.nativeElement)) {
       this.resetModal();
     }
+  }
+
+  onUserCount(userCount) {
+    this.userCount = userCount;
+    this.buttonData = { ...this.buttonData, disabled: !this.validate() };
   }
 
   doSubmit() {
@@ -75,12 +80,16 @@ export class AudienceCreateComponent implements OnInit, OnDestroy {
   resetModal() {
     this.form.reset();
     this.reset.emit();
+    this.userCount = 0;
     this.isError = false;
     $('#audienceCreate').modal('hide');
   }
 
-  onAudienceSelected(userIds) {
+  onAudienceSelected(userIds: Array<number>) {
+    this.userCount = userIds.length;
     this.form.controls['user_ids'].setValue(userIds);
+
+    this.buttonData = { ...this.buttonData, disabled: !this.validate() };
   }
 
   onFiltersSelected(filters) {
@@ -88,6 +97,8 @@ export class AudienceCreateComponent implements OnInit, OnDestroy {
   }
 
   onAudienceTypeChange({ custom, dynamic }) {
+    this.userCount = 0;
+
     if (custom) {
       this.form.addControl('user_ids', new FormControl(null, Validators.required));
       this.form.removeControl('filters');
@@ -96,35 +107,12 @@ export class AudienceCreateComponent implements OnInit, OnDestroy {
       this.form.addControl('filters', new FormControl(null, Validators.required));
       this.form.removeControl('user_ids');
     }
+
+    this.buttonData = { ...this.buttonData, disabled: !this.validate() };
   }
 
   validate() {
-    let validaName = false;
-    let validaUsersIds = true;
-    let validaFilters = true;
-
-    const filters = _get(this.form.controls.filters, 'value', false);
-    const user_ids = _get(this.form.controls.user_ids, 'value', false);
-
-    validaName = !!this.form.controls['name'].value;
-
-    if (user_ids) {
-      validaUsersIds = this.form.controls['user_ids'].value;
-    }
-
-    if (filters) {
-      const control = this.form.controls['filters'];
-
-      if (control.value) {
-        control.value.forEach((filter) => {
-          if (!filter['attr_id'] || !filter['choices'].length) {
-            validaFilters = false;
-          }
-        });
-      }
-    }
-
-    return validaName && validaUsersIds && validaFilters && (filters || user_ids);
+    return this.form.valid && this.userCount > 0;
   }
 
   ngOnDestroy() {

@@ -34,6 +34,7 @@
         <cp-audience-new-body 
           [audience]="audience"
           [importButton]="false"
+          (count)="onUserCount($event)"
           [withChips]="audience.users"
           [disableTypeSelection]="true"
           [defaultView]="defaultAudienceView"

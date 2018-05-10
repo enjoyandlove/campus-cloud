@@ -29,6 +29,7 @@
       </div>
       <cp-audience-new-body 
         [importButton]="false"
+        (count)="onUserCount($event)"
         (users)="onAudienceSelected($event)"
         (audienceType)="onAudienceTypeChange($event)"
         (filters)="onFiltersSelected($event)">

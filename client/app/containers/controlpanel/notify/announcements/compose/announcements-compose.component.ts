@@ -499,15 +499,7 @@ export class AnnouncementsComposeComponent implements OnInit {
     });
 
     this.form.valueChanges.subscribe((_) => {
-      let isValid = true;
-
-      isValid = this.form.valid && this.state.validUserCount;
-
-      if (this.state.isToLists) {
-        if (this.form.controls['list_ids'].value) {
-          isValid = this.form.controls['list_ids'].value.length >= 1 && this.form.valid;
-        }
-      }
+      const isValid = this.form.valid && this.state.validUserCount;
 
       this.buttonData = { ...this.buttonData, disabled: !isValid };
     });

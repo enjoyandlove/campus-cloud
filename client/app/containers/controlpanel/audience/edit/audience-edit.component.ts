@@ -34,6 +34,7 @@ export class AuidenceEditComponent extends BaseComponent implements OnInit {
   loading;
   audience;
   buttonData;
+  userCount = 0;
   form: FormGroup;
   defaultAudienceView;
 
@@ -85,12 +86,19 @@ export class AuidenceEditComponent extends BaseComponent implements OnInit {
     this.reset.emit();
   }
 
-  onAudienceSelected(userIds) {
+  onAudienceSelected(userIds: Array<number>) {
+    this.userCount = userIds.length;
     this.form.controls['user_ids'].setValue(userIds);
+
+    this.buttonData = { ...this.buttonData, disabled: !this.validate() };
   }
 
   onFiltersSelected(filters) {
     this.form.controls['filters'].setValue(filters);
+  }
+
+  validate() {
+    return this.form.valid && this.userCount > 0;
   }
 
   buildChips() {
@@ -120,6 +128,11 @@ export class AuidenceEditComponent extends BaseComponent implements OnInit {
     this.form.addControl('filters', new FormControl(filters, Validators.required));
   }
 
+  onUserCount(userCount) {
+    this.userCount = userCount;
+    this.buttonData = { ...this.buttonData, disabled: !this.validate() };
+  }
+
   fetch() {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id);
@@ -129,12 +142,14 @@ export class AuidenceEditComponent extends BaseComponent implements OnInit {
     super.fetchData(stream$).then((audience) => {
       this.audience = audience.data;
 
+      this.userCount = this.audience.count;
+
       this.form = this.fb.group({
         name: [this.audience.name, Validators.required]
       });
 
       this.form.valueChanges.subscribe(() => {
-        this.buttonData = { ...this.buttonData, disabled: !this.form.valid };
+        this.buttonData = { ...this.buttonData, disabled: !this.validate() };
       });
 
       this.defaultAudienceView = this.audience.type;
