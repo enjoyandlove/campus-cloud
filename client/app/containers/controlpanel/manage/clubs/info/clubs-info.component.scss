@@ -3,11 +3,10 @@
 @import '~styles/core/typography';
 @import '~styles/components/button';
 
-.map,
-.club,
-.meta {
+.cp-card {
   @include card-margin();
-  margin-top: 0;
+
+  margin-bottom: 0;
 }
 
 .map__container {
