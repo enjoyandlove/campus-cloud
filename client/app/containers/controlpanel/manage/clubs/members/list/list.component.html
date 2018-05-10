@@ -57,11 +57,11 @@
           <div class="row" *ngIf="!member.noResults">
             <span class="col-xs-3 text-truncate members__thumbnail">
               <img
-                class="img-rounded"
+                class="img-rounded img-fit-cover"
                 [src]="member.avatar_url"
                 *ngIf="member.avatar_url !== ''">
               <img
-                class="img-rounded"
+                class="img-rounded img-fit-cover"
                 [src]="defaultImage"
                 *ngIf="member.avatar_url === ''">
               <strong>
