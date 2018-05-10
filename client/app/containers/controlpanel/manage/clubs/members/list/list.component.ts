@@ -18,11 +18,13 @@ declare var $: any;
 interface IState {
   members: Array<any>;
   sort_field: string;
+  search_str: string;
   sort_direction: string;
 }
 
 const state: IState = {
   members: [],
+  search_str: null,
   sort_field: 'member_type',
   sort_direction: 'desc'
 };
@@ -91,6 +93,7 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
 
     memberSearch.append('school_id', schoolId);
     memberSearch.append('sort_field', this.state.sort_field);
+    memberSearch.append('search_str', this.state.search_str);
     memberSearch.append('sort_direction', this.state.sort_direction);
     memberSearch.append('category_id', this.isAthletic.toString());
 
@@ -116,8 +119,12 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
     this.fetch();
   }
 
-  onFilter(query) {
-    this.query = query;
+  onSearch(search_str) {
+    this.state = Object.assign({}, this.state, { search_str });
+
+    this.resetPagination();
+
+    this.fetch();
   }
 
   onLaunchCreateModal() {
