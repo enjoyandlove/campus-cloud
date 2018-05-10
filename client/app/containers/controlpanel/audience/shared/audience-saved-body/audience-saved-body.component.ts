@@ -17,7 +17,7 @@ import { CPI18nService } from './../../../../../shared/services';
 export class AudienceSavedBodyComponent implements OnInit {
   @Input() reset: Observable<boolean>;
 
-  @Input() importedAudience: Observable<{ label: string; action: number }>;
+  @Input() importedAudience$: Observable<{ label: string; action: number }>;
 
   @Output() selected: EventEmitter<{ action: number; heading: string }> = new EventEmitter();
 
@@ -60,7 +60,7 @@ export class AudienceSavedBodyComponent implements OnInit {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    this.audiences$ = this.service
+    const audiences$ = this.service
       .getAudiences(search, 1, 1000)
       .startWith([
         {
@@ -77,17 +77,26 @@ export class AudienceSavedBodyComponent implements OnInit {
           ...this.parsedAudience(audiences)
         ];
       });
+
+    this.audiences$ = Observable.combineLatest(audiences$, this.importedAudience$).map(
+      ([audiences, importedAudienceId]) => {
+        if (importedAudienceId) {
+          this.selectedItem = audiences.filter(
+            (audience) => audience.action === importedAudienceId
+          )[0];
+
+          // the first run is undefined
+          if (this.selectedItem) {
+            this.selected.emit(this.selectedItem);
+          }
+        }
+
+        return audiences;
+      }
+    );
   }
 
   ngOnInit(): void {
     this.fetch();
-
-    this.importedAudience.subscribe((audienceId) => {
-      if (audienceId) {
-        this.selectedItem = this.audiences.filter((audience) => audience.action === audienceId)[0];
-
-        this.selected.emit(this.selectedItem);
-      }
-    });
   }
 }

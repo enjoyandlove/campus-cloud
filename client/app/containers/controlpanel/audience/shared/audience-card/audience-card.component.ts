@@ -82,13 +82,26 @@ export class AudienceCardComponent implements OnInit, AfterViewInit {
         if (new_audience_active) {
           this.tabs.toArray()[1].active = true;
           this.tabs.toArray()[0].active = false;
+
+          this.state = {
+            ...this.state,
+            savedAudienceActive: true,
+            newAudienceActive: false
+          };
         }
         if (saved_audience_active) {
           this.tabs.toArray()[0].active = true;
           this.tabs.toArray()[1].active = false;
+
+          this.state = {
+            ...this.state,
+            savedAudienceActive: true,
+            newAudienceActive: false
+          };
         }
       });
   }
+
   onNewAudienceTypeChange(selection) {
     this.newAudienceTypeChange.emit(selection);
   }

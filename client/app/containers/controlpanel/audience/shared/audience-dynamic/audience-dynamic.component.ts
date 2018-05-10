@@ -57,6 +57,8 @@ export class AudienceDynamicComponent extends BaseComponent implements OnInit {
   }
 
   onFilterSelected({ id, choices }, index) {
+    const controls = <FormArray>this.form.controls['filters'];
+    const formGroup = <FormGroup>controls.at(index);
     /**
      * top option in the dropdown
      * id is set to null we reset all fields
@@ -73,10 +75,8 @@ export class AudienceDynamicComponent extends BaseComponent implements OnInit {
 
     this.selectedFilterOptions[index] = choices.map((choice) => this.parseChoice(choice));
 
-    const controls = <FormArray>this.form.controls['filters'];
-    const formGroup = <FormGroup>controls.at(index);
-
     formGroup.controls['attr_id'].setValue(id);
+    formGroup.controls['choices'].setValue([]);
 
     this.filters.emit(this.form.value.filters);
   }
@@ -149,16 +149,17 @@ export class AudienceDynamicComponent extends BaseComponent implements OnInit {
       .getFilters(search)
       .startWith([
         {
-          label: this.cpI18n.translate('select'),
-          id: null
+          id: null,
+          heading: true,
+          label: this.cpI18n.translate('select')
         }
       ])
       .map((response) => {
         return [
           {
-            label: this.cpI18n.translate('select'),
             id: null,
-            choices: []
+            heading: true,
+            label: this.cpI18n.translate('select')
           },
           ...response.map((item) => {
             return {
