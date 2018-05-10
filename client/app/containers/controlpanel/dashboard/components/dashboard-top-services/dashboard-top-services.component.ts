@@ -8,10 +8,9 @@ import { DashboardService } from './../../dashboard.service';
 @Component({
   selector: 'cp-dashboard-top-services',
   templateUrl: './dashboard-top-services.component.html',
-  styleUrls: ['./dashboard-top-services.component.scss'],
+  styleUrls: ['./dashboard-top-services.component.scss']
 })
-export class DashboardTopServicesComponent extends BaseComponent
-  implements OnInit {
+export class DashboardTopServicesComponent extends BaseComponent implements OnInit {
   @Output() ready: EventEmitter<boolean> = new EventEmitter();
 
   _dates;
@@ -42,9 +41,9 @@ export class DashboardTopServicesComponent extends BaseComponent
             image: item.service_logo_url,
             attendees: item.num_of_attendees,
             feedback: item.num_of_feedbacks,
-            rating: item.average_of_feedbacks,
+            rating: item.average_of_feedbacks
           };
-        }),
+        })
       );
     });
   }

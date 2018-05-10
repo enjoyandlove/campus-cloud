@@ -44,7 +44,7 @@
             <span class="col-xs-3 text-truncate students__thumbnail">
               <div class="row">
                 <div class="col-xs-3 no-right-padding">
-                  <img [src]="student.avatar <= avatarCustomCodeThreshold ? defaultImage : student.avatar_url" class="img-rounded">
+                  <img [src]="student.avatar <= avatarCustomCodeThreshold ? defaultImage : student.avatar_url" class="img-rounded img-fit-cover">
                 </div>
                 <div class="col-xs-9 no-left-padding">
                   <a [routerLink]="[student.id]">

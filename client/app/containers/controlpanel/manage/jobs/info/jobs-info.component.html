@@ -1,0 +1,117 @@
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div *ngSwitchCase="false">
+    <div class="row">
+      <div class="col-xs-8 col-xs-offset-2 job meta">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="cp-card">
+              <div class="row">
+                <div class="col-xs-12">
+                  <a
+                    [routerLink]="['../edit']"
+                    class="cpbtn cpbtn--primary pull-right">
+                    {{ 'jobs_job_edit' | cpI18n }}
+                  </a>
+                </div>
+                <div class="col-xs-12">
+                  <p class="job__title">{{ job.title }}</p>
+                  <p class="job__description render_line_breaks">{{ job.description }}</p>
+                  <hr *ngIf="job.description">
+                </div>
+              </div>
+              <div class="row" *ngIf="job.how_to_apply">
+                <div class="col-xs-12 meta__item">
+                  <p class="meta__type">{{ 'jobs_how_to_apply' | cpI18n }}</p>
+                  <p class="job__description render_line_breaks">{{ job.how_to_apply }}</p>
+                  <hr>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="row meta__item">
+                    <div class="col-xs-4">
+                      <p class="meta__type">{{ 'jobs_posting_start_date' | cpI18n }}</p>
+                    </div>
+                    <div class="col-xs-8">
+                      <p>{{ job.posting_start |  cpDatePipe:dateFormat}}</p>
+                    </div>
+                  </div>
+
+                  <div class="row meta__item">
+                    <div class="col-xs-4">
+                      <p class="meta__type">{{ 'jobs_posting_end_date' | cpI18n }}</p>
+                    </div>
+                    <div class="col-xs-8">
+                      <p>{{ job.posting_end |  cpDatePipe:dateFormat}}</p>
+                    </div>
+                  </div>
+
+                  <div class="row meta__item" *ngIf="job.contract_start">
+                    <div class="col-xs-4">
+                      <p class="meta__type">{{ 'jobs_job_start_date' | cpI18n }}</p>
+                    </div>
+                    <div class="col-xs-8">
+                      <p>{{ job.contract_start |  cpDatePipe:dateFormat}}</p>
+                    </div>
+                  </div>
+
+                  <div class="row meta__item" *ngIf="job.application_deadline">
+                    <div class="col-xs-4">
+                      <p class="meta__type">{{ 'jobs_application_deadline' | cpI18n }}</p>
+                    </div>
+                    <div class="col-xs-8">
+                      <p>{{ job.application_deadline |  cpDatePipe:dateFormat}}</p>
+                    </div>
+                  </div>
+
+                  <div class="row meta__item" *ngIf="job.location">
+                    <div class="col-xs-4">
+                      <p class="meta__type">{{ 'location' | cpI18n }}</p>
+                    </div>
+                    <div class="col-xs-8">
+                      <p>{{ job.location }}</p>
+                    </div>
+                  </div>
+
+                  <div class="row meta__item" *ngIf="desiredYear.length">
+                    <div class="col-xs-4">
+                      <p class="meta__type">{{ 'jobs_desired_year_of_study' | cpI18n }}</p>
+                    </div>
+                    <div class="col-xs-8">
+                      <p>{{ desiredYear.join(', ')}}</p>
+                    </div>
+                  </div>
+
+                  <div class="row meta__item" *ngIf="jobType.length">
+                    <div class="col-xs-4">
+                      <p class="meta__type">{{ 'jobs_job_type' | cpI18n }}</p>
+                    </div>
+                    <div class="col-xs-8">
+                      <p>{{ jobType.join(', ')}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="cp-card">
+              <p
+                class="job__image"
+                *ngIf="job.employer_logo_url"
+                [ngStyle]="{'background-image': 'url(' + job.employer_logo_url + ')' }">
+              </p>
+              <p class="job__title">{{ job.employer_name }}</p>
+              <p class="job__description">{{ job.employer_description }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import {
-  ALERT_CLASS,
-  ALERT_DEFAULT,
-  ALERT_PUSH,
-} from '../../reducers/alert.reducer';
+import { ALERT_CLASS, ALERT_DEFAULT, ALERT_PUSH } from '../../reducers/alert.reducer';
 
 @Injectable()
 export class ErrorService {
@@ -14,7 +10,7 @@ export class ErrorService {
   trackException(err) {
     ga('send', 'exception', {
       exDescription: err.message,
-      exFatal: false,
+      exFatal: false
     });
   }
 
@@ -31,8 +27,8 @@ export class ErrorService {
       type: ALERT_PUSH,
       payload: {
         body: res.reason,
-        class: ALERT_CLASS.WARNING,
-      },
+        class: ALERT_CLASS.WARNING
+      }
     });
   }
 
@@ -41,8 +37,8 @@ export class ErrorService {
       type: ALERT_PUSH,
       payload: {
         body: res.reason,
-        class: ALERT_CLASS.INFO,
-      },
+        class: ALERT_CLASS.INFO
+      }
     });
   }
 
@@ -51,8 +47,8 @@ export class ErrorService {
       type: ALERT_PUSH,
       payload: {
         class: ALERT_CLASS.SUCCESS,
-        body: res.body || 'All good! Your request was processed successfully.',
-      },
+        body: res.body || 'All good! Your request was processed successfully.'
+      }
     });
   }
 
@@ -61,8 +57,8 @@ export class ErrorService {
       type: ALERT_PUSH,
       payload: {
         body: err.reason,
-        class: ALERT_CLASS.DANGER,
-      },
+        class: ALERT_CLASS.DANGER
+      }
     });
   }
 

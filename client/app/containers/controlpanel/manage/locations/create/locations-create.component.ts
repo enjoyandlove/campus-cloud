@@ -5,7 +5,7 @@ import {
   Output,
   ChangeDetectorRef,
   HostListener,
-  ElementRef,
+  ElementRef
 } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -21,7 +21,7 @@ declare var $: any;
 @Component({
   selector: 'cp-locations-create',
   templateUrl: './locations-create.component.html',
-  styleUrls: ['./locations-create.component.scss'],
+  styleUrls: ['./locations-create.component.scss']
 })
 export class LocationsCreateComponent implements OnInit {
   @Output() teardown: EventEmitter<null> = new EventEmitter();
@@ -39,7 +39,7 @@ export class LocationsCreateComponent implements OnInit {
     private session: CPSession,
     public cpI18n: CPI18nService,
     public cdRef: ChangeDetectorRef,
-    public service: LocationsService,
+    public service: LocationsService
   ) {}
 
   @HostListener('document:click', ['$event'])
@@ -51,10 +51,7 @@ export class LocationsCreateComponent implements OnInit {
   }
 
   onResetMap() {
-    CPMap.setFormLocationData(
-      this.form,
-      CPMap.resetLocationFields(this.school),
-    );
+    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields(this.school));
     this.centerMap(this.school.latitude, this.school.longitude);
   }
 
@@ -106,14 +103,12 @@ export class LocationsCreateComponent implements OnInit {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id);
 
-    this.service
-      .createLocation(this.form.value, search)
-      .subscribe((newLocation) => {
-        $('#locationsUpdate').modal('hide');
-        this.locationCreated.emit(newLocation);
-        $('#locationsCreate').modal('hide');
-        this.resetModal();
-      });
+    this.service.createLocation(this.form.value, search).subscribe((newLocation) => {
+      $('#locationsUpdate').modal('hide');
+      this.locationCreated.emit(newLocation);
+      $('#locationsCreate').modal('hide');
+      this.resetModal();
+    });
   }
 
   resetModal() {
@@ -124,7 +119,7 @@ export class LocationsCreateComponent implements OnInit {
     this.school = this.session.g.get('school');
     this.mapCenter = new BehaviorSubject({
       lat: this.school.latitude,
-      lng: this.school.longitude,
+      lng: this.school.longitude
     });
 
     this.form = this.fb.group({
@@ -136,13 +131,13 @@ export class LocationsCreateComponent implements OnInit {
       country: [null],
       postal_code: [null],
       latitude: [this.school.latitude, Validators.required],
-      longitude: [this.school.longitude, Validators.required],
+      longitude: [this.school.longitude, Validators.required]
     });
 
     this.buttonData = {
       disabled: true,
       class: 'primary',
-      text: this.cpI18n.translate('save'),
+      text: this.cpI18n.translate('save')
     };
 
     this.form.valueChanges.subscribe((_) => {

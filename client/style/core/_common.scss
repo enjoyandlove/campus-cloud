@@ -8,7 +8,7 @@ hr {
 }
 
 body {
-  background: #F9F9F9;
+  background: #f9f9f9;
 }
 
 .placeholder {
@@ -50,7 +50,7 @@ body {
   -ms-overflow-style: none;
 
   &::-webkit-scrollbar {
-      width: 0 !important;
+    width: 0 !important;
   }
 }
 
@@ -64,4 +64,8 @@ body {
       margin: 0 auto;
     }
   }
+}
+
+.img-fit-cover {
+  object-fit: cover;
 }

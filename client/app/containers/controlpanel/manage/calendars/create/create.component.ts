@@ -6,7 +6,7 @@ import {
   Output,
   HostListener,
   ElementRef,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
@@ -16,7 +16,7 @@ import { CalendarsService } from '../calendars.services';
 @Component({
   selector: 'cp-calendars-create',
   templateUrl: './create.component.html',
-  styleUrls: ['./create.component.scss'],
+  styleUrls: ['./create.component.scss']
 })
 export class CalendarsCreateComponent implements OnInit {
   @ViewChild('createForm') createForm;
@@ -33,7 +33,7 @@ export class CalendarsCreateComponent implements OnInit {
     public el: ElementRef,
     public fb: FormBuilder,
     public session: CPSession,
-    public service: CalendarsService,
+    public service: CalendarsService
   ) {}
 
   @HostListener('document:click', ['$event'])
@@ -53,18 +53,16 @@ export class CalendarsCreateComponent implements OnInit {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id);
 
-    this.service
-      .createCalendar(this.form.value, search)
-      .subscribe((createdCalendar) => {
-        this.created.emit(createdCalendar);
-        this.resetModal();
-      });
+    this.service.createCalendar(this.form.value, search).subscribe((createdCalendar) => {
+      this.created.emit(createdCalendar);
+      this.resetModal();
+    });
   }
 
   ngOnInit() {
     this.form = this.fb.group({
       name: [null, [Validators.required, Validators.maxLength(225)]],
-      description: [null, Validators.maxLength(512)],
+      description: [null, Validators.maxLength(512)]
     });
   }
 }

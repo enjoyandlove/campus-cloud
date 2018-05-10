@@ -11,7 +11,7 @@ import { OrientationUtilsService } from '../orientation.utils.service';
 
 @Component({
   selector: 'cp-orientation-details',
-  template: '<router-outlet></router-outlet>',
+  template: '<router-outlet></router-outlet>'
 })
 export class OrientationDetailsComponent extends BaseComponent implements OnInit {
   loading;
@@ -22,7 +22,8 @@ export class OrientationDetailsComponent extends BaseComponent implements OnInit
     private session: CPSession,
     private route: ActivatedRoute,
     private service: OrientationService,
-    private utils: OrientationUtilsService) {
+    private utils: OrientationUtilsService
+  ) {
     super();
 
     this.orientationId = this.route.parent.snapshot.params['orientationId'];
@@ -34,17 +35,15 @@ export class OrientationDetailsComponent extends BaseComponent implements OnInit
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    super
-      .fetchData(this.service.getProgramById(this.orientationId, search))
-      .then((program) => {
-        this.store.dispatch({
-          type: HEADER_UPDATE,
-          payload: this.utils.buildHeader(program.data),
-        });
+    super.fetchData(this.service.getProgramById(this.orientationId, search)).then((program) => {
+      this.store.dispatch({
+        type: HEADER_UPDATE,
+        payload: this.utils.buildHeader(program.data)
       });
+    });
   }
 
   ngOnInit() {
-      this.fetch();
+    this.fetch();
   }
 }

@@ -13,13 +13,13 @@ interface IState {
 
 const state: IState = {
   query: null,
-  type: null,
+  type: null
 };
 
 @Component({
   selector: 'cp-clubs-list-action-box',
   templateUrl: './clubs-list-action-box.component.html',
-  styleUrls: ['./clubs-list-action-box.component.scss'],
+  styleUrls: ['./clubs-list-action-box.component.scss']
 })
 export class ClubsListActionBoxComponent implements OnInit {
   @Input() isAthletic = isClubAthletic.club;
@@ -39,33 +39,31 @@ export class ClubsListActionBoxComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isClubAthleticPrivilege = this.isAthletic === isClubAthletic.club
-      ? CP_PRIVILEGES_MAP.clubs
-      : CP_PRIVILEGES_MAP.athletics;
-    this.canCreate = canSchoolWriteResource(
-      this.session.g,
-      this.isClubAthleticPrivilege,
-    );
+    this.isClubAthleticPrivilege =
+      this.isAthletic === isClubAthletic.club
+        ? CP_PRIVILEGES_MAP.clubs
+        : CP_PRIVILEGES_MAP.athletics;
+    this.canCreate = canSchoolWriteResource(this.session.g, this.isClubAthleticPrivilege);
 
     this.labels = clubAthleticLabels(this.isAthletic);
 
     this.clubFilter = [
       {
         label: this.cpI18n.translate(this.labels.all),
-        action: null,
+        action: null
       },
       {
         label: this.cpI18n.translate('active'),
-        action: ClubStatus.active,
+        action: ClubStatus.active
       },
       {
         label: this.cpI18n.translate('clubs_inactive'),
-        action: ClubStatus.inactive,
+        action: ClubStatus.inactive
       },
       {
         label: this.cpI18n.translate('pending'),
-        action: ClubStatus.pending,
-      },
+        action: ClubStatus.pending
+      }
     ];
   }
 }

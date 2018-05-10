@@ -27,13 +27,13 @@ const state = {
   sort_field: 'start',
   sort_direction: 'asc',
   exclude_current: null,
-  events: [],
+  events: []
 };
 
 @Component({
   selector: 'cp-events',
   templateUrl: './events.component.html',
-  styleUrls: ['./events.component.scss'],
+  styleUrls: ['./events.component.scss']
 })
 export class EventsComponent extends BaseComponent {
   @Input() storeId: number;
@@ -62,7 +62,7 @@ export class EventsComponent extends BaseComponent {
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public service: EventsService,
+    public service: EventsService
   ) {
     super();
     this.school = this.session.g.get('school');
@@ -78,7 +78,7 @@ export class EventsComponent extends BaseComponent {
   onSortList(sort) {
     this.state = Object.assign({}, this.state, {
       sort_field: sort.sort_field,
-      sort_direction: sort.sort_direction,
+      sort_direction: sort.sort_direction
     });
 
     this.buildHeaders();
@@ -108,14 +108,14 @@ export class EventsComponent extends BaseComponent {
       sort_direction: 'asc',
       store_id: storeId ? storeId : filter.store_id,
       search_str: filter.search_str,
-      attendance_only: filter.attendance_only,
+      attendance_only: filter.attendance_only
     });
 
     if (!isUpcoming) {
       this.state = Object.assign({}, this.state, {
         sort_field: 'end',
         exclude_current: 1,
-        sort_direction: 'desc',
+        sort_direction: 'desc'
       });
     }
 
@@ -153,7 +153,6 @@ export class EventsComponent extends BaseComponent {
     search.append('sort_direction', this.state.sort_direction);
 
     this.fetch(this.service.getEvents(start, end, search));
-
   }
 
   onDeleteEvent(event) {
@@ -163,7 +162,7 @@ export class EventsComponent extends BaseComponent {
 
   onDeletedEvent(eventId) {
     this.state = Object.assign({}, this.state, {
-      events: this.state.events.filter((event) => event.id !== eventId),
+      events: this.state.events.filter((event) => event.id !== eventId)
     });
 
     if (this.state.events.length === 0 && this.pageNumber > 1) {

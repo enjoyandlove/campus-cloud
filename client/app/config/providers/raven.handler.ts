@@ -16,8 +16,8 @@ if (isProd) {
      * ignoreErrors that match the following strings
      */
     ignoreErrors: [
-      /^Uncaught (in promise): Error: TypeError: You provided 'undefined' where a stream was expected. You can provide an Observable, Promise, Array, or Iterable$/,
-    ],
+      /^Uncaught (in promise): Error: TypeError: You provided 'undefined' where a stream was expected. You can provide an Observable, Promise, Array, or Iterable$/
+    ]
   }).install();
 }
 

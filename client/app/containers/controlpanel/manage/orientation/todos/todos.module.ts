@@ -21,20 +21,11 @@ import { TodosRoutingModule } from './todos.routing.module';
     OrientationTodosEditComponent,
     OrientationTodosListComponent,
     OrientationTodosDeleteComponent,
-    OrientationTodosCreateComponent,
+    OrientationTodosCreateComponent
   ],
 
-  imports: [
-    CommonModule,
-    SharedModule,
-    RouterModule,
-    TodosRoutingModule,
-    ReactiveFormsModule,
-  ],
+  imports: [CommonModule, SharedModule, RouterModule, TodosRoutingModule, ReactiveFormsModule],
 
-  providers: [
-    TodosService,
-  ]
+  providers: [TodosService]
 })
-
 export class TodosModule {}

@@ -14,9 +14,7 @@ export class AccountService extends BaseService {
   }
 
   resetPassword(body: any, userid: number) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.ADMIN
-    }/${userid}`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/${userid}`;
 
     return super.update(url, body).map((res) => res.json());
   }

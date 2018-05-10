@@ -34,7 +34,7 @@ import { ClubsListActionBoxComponent } from './list/components';
     ClubsListActionBoxComponent,
     ClubsExcelModalComponent,
     ClubsExcelComponent,
-    ClubsEditComponent,
+    ClubsEditComponent
   ],
 
   imports: [
@@ -44,7 +44,7 @@ import { ClubsListActionBoxComponent } from './list/components';
     ReactiveFormsModule,
     ClubsRoutingModule,
     FeedsModule,
-    EventsModule,
+    EventsModule
   ],
 
   exports: [
@@ -54,9 +54,9 @@ import { ClubsListActionBoxComponent } from './list/components';
     ClubsListActionBoxComponent,
     ClubsExcelModalComponent,
     ClubsExcelComponent,
-    ClubsEditComponent,
+    ClubsEditComponent
   ],
 
-  providers: [ClubsService, ClubsUtilsService],
+  providers: [ClubsService, ClubsUtilsService]
 })
 export class ClubsModule {}

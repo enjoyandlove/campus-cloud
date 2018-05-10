@@ -1,7 +1,7 @@
 //** Tooltip arrow width
-$tooltip-arrow-width:         5px !default;
+$tooltip-arrow-width: 5px !default;
 //** Tooltip arrow color
-$tooltip-arrow-color:         $color-text !default;
+$tooltip-arrow-color: $color-text !default;
 
 .tooltip {
   @include font-14px();
@@ -12,11 +12,25 @@ $tooltip-arrow-color:         $color-text !default;
   display: block;
   position: absolute;
 
-  &.in     { opacity: 1; }
-  &.top    { margin-top:  -3px; padding: $tooltip-arrow-width 0; }
-  &.right  { margin-left:  3px; padding: 0 $tooltip-arrow-width; }
-  &.bottom { margin-top:   3px; padding: $tooltip-arrow-width 0; }
-  &.left   { margin-left: -3px; padding: 0 $tooltip-arrow-width; }
+  &.in {
+    opacity: 1;
+  }
+  &.top {
+    margin-top: -3px;
+    padding: $tooltip-arrow-width 0;
+  }
+  &.right {
+    margin-left: 3px;
+    padding: 0 $tooltip-arrow-width;
+  }
+  &.bottom {
+    margin-top: 3px;
+    padding: $tooltip-arrow-width 0;
+  }
+  &.left {
+    margin-left: -3px;
+    padding: 0 $tooltip-arrow-width;
+  }
 }
 
 // Wrapper for the tooltip content

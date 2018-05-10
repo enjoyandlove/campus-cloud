@@ -14,7 +14,7 @@ interface IProps {
 @Component({
   selector: 'cp-chip',
   templateUrl: './cp-chip.component.html',
-  styleUrls: ['./cp-chip.component.scss'],
+  styleUrls: ['./cp-chip.component.scss']
 })
 export class CPChipComponent implements OnInit {
   @Input() chip: IChip;

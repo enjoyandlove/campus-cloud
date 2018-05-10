@@ -8,10 +8,9 @@ import { DashboardService } from './../../dashboard.service';
 @Component({
   selector: 'cp-dashboard-campus-tile',
   templateUrl: './dashboard-campus-tile.component.html',
-  styleUrls: ['./dashboard-campus-tile.component.scss'],
+  styleUrls: ['./dashboard-campus-tile.component.scss']
 })
-export class DashboardCampuTileComponent extends BaseComponent
-  implements OnInit {
+export class DashboardCampuTileComponent extends BaseComponent implements OnInit {
   @Output() ready: EventEmitter<boolean> = new EventEmitter();
 
   _dates;

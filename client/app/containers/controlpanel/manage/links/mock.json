@@ -1,5 +1,5 @@
 [
-    {
+  {
     "id": 1,
     "managing_store_id": 2756,
     "school_id": 157,
@@ -7,7 +7,8 @@
     "description": "describe this test link here",
     "link_url": "http://google.com",
     "link_params": "",
-    "img_url": "https://d6yq2p320n2pl.cloudfront.net/g6l24bcqb6rhsepxaolp1o2mzeptmn3fjutzc3vz6672geg8i23vt2ij1x3u3e1l.png",
+    "img_url":
+      "https://d6yq2p320n2pl.cloudfront.net/g6l24bcqb6rhsepxaolp1o2mzeptmn3fjutzc3vz6672geg8i23vt2ij1x3u3e1l.png",
     "link_type": 0,
     "open_in_browser": 1,
     "is_active": 1,
@@ -23,7 +24,8 @@
     "description": "Android bots should have the right to click links!",
     "link_url": "http://gotoohlala.com",
     "link_params": "",
-    "img_url": "https://d3tlp0m01b6d9o.cloudfront.net/y6eia3yip8j6lkcvjmhth5itg8kkuyzlik6kahdam7vw99y9elhl9ps0yenaabst_thumb.png",
+    "img_url":
+      "https://d3tlp0m01b6d9o.cloudfront.net/y6eia3yip8j6lkcvjmhth5itg8kkuyzlik6kahdam7vw99y9elhl9ps0yenaabst_thumb.png",
     "link_type": 0,
     "open_in_browser": 0,
     "is_active": 1,

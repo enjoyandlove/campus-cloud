@@ -18,7 +18,6 @@ class MockTodosService {
 
     return Observable.of({});
   }
-
 }
 
 describe('OrientationTodosEditComponent', () => {
@@ -28,35 +27,37 @@ describe('OrientationTodosEditComponent', () => {
   let component: OrientationTodosEditComponent;
   let fixture: ComponentFixture<OrientationTodosEditComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [TodosModule],
-      providers: [
-        CPSession,
-        FormBuilder,
-        CPI18nService,
-        { provide: TodosService, useClass: MockTodosService }
-      ]
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        imports: [TodosModule],
+        providers: [
+          CPSession,
+          FormBuilder,
+          CPI18nService,
+          { provide: TodosService, useClass: MockTodosService }
+        ]
+      })
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(OrientationTodosEditComponent);
+          component = fixture.componentInstance;
+          service = TestBed.get(TodosService);
+
+          search = new URLSearchParams();
+          component.session.g.set('school', mockSchool);
+          search.append('school_id', component.session.g.get('school').id.toString());
+
+          component.todo = {
+            id: 55,
+            title: 'Hello World!',
+            end: 1515625016,
+            description: 'test description'
+          };
+          component.ngOnInit();
+        });
     })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(OrientationTodosEditComponent);
-        component = fixture.componentInstance;
-        service = TestBed.get(TodosService);
-
-        search = new URLSearchParams();
-        component.session.g.set('school', mockSchool);
-        search.append('school_id', component.session.g.get('school').id.toString());
-
-        component.todo = {
-          id: 55,
-          title: 'Hello World!',
-          end: 1515625016,
-          description: 'test description'
-        };
-        component.ngOnInit();
-      });
-  }));
+  );
 
   it('form validation - should pass', () => {
     expect(component.form.valid).toBeTruthy();
@@ -94,5 +95,4 @@ describe('OrientationTodosEditComponent', () => {
     expect(spy).toHaveBeenCalled();
     expect(spy.calls.count()).toBe(1);
   });
-
 });

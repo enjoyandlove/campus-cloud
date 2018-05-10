@@ -7,10 +7,10 @@ import { CustomiseComponent } from './customise.component';
 import { CustomiseRoutingModule } from './customise.routing.module';
 
 @NgModule({
-  declarations: [ CustomiseComponent ],
+  declarations: [CustomiseComponent],
 
-  imports: [ CommonModule, SharedModule, CustomiseRoutingModule ],
+  imports: [CommonModule, SharedModule, CustomiseRoutingModule],
 
-  providers: [ ],
+  providers: []
 })
 export class CustomiseModule {}

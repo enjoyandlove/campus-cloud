@@ -6,7 +6,7 @@ import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
 import {
   canSchoolReadResource,
-  canStoreReadAndWriteResource,
+  canStoreReadAndWriteResource
 } from './../../../../../shared/utils/privileges';
 
 import { CPSession } from '../../../../../session';
@@ -20,7 +20,7 @@ import { OrientationEventsService } from '../../orientation/events/orientation.e
 @Component({
   selector: 'cp-services-events',
   templateUrl: './services-events.component.html',
-  styleUrls: ['./services-events.component.scss'],
+  styleUrls: ['./services-events.component.scss']
 })
 export class ServicesEventsComponent extends EventsComponent {
   service;
@@ -36,7 +36,7 @@ export class ServicesEventsComponent extends EventsComponent {
     private store: Store<IHeader>,
     public eventsService: EventsService,
     private serviceService: ServicesService,
-    public orientationEventService: OrientationEventsService,
+    public orientationEventService: OrientationEventsService
   ) {
     super(session, cpI18n, eventsService);
     this.serviceId = this.route.snapshot.params['serviceId'];
@@ -57,24 +57,21 @@ export class ServicesEventsComponent extends EventsComponent {
     let children = [
       {
         label: 'info',
-        url: `/manage/services/${this.serviceId}/info`,
-      },
+        url: `/manage/services/${this.serviceId}/info`
+      }
     ];
 
-    const eventsSchoolLevel = canSchoolReadResource(
-      this.session.g,
-      CP_PRIVILEGES_MAP.events,
-    );
+    const eventsSchoolLevel = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.events);
     const eventsAccountLevel = canStoreReadAndWriteResource(
       this.session.g,
       this.serviceStoreId,
-      CP_PRIVILEGES_MAP.events,
+      CP_PRIVILEGES_MAP.events
     );
 
     if (eventsSchoolLevel || eventsAccountLevel) {
       const events = {
         label: 'events',
-        url: `/manage/services/${this.serviceId}/events`,
+        url: `/manage/services/${this.serviceId}/events`
       };
 
       children = [...children, events];
@@ -83,7 +80,7 @@ export class ServicesEventsComponent extends EventsComponent {
     if (this.service.service_attendance) {
       const attendance = {
         label: 'assessment',
-        url: `/manage/services/${this.serviceId}`,
+        url: `/manage/services/${this.serviceId}`
       };
 
       children = [...children, attendance];
@@ -96,10 +93,10 @@ export class ServicesEventsComponent extends EventsComponent {
         subheading: '',
         crumbs: {
           url: 'services',
-          label: 'services',
+          label: 'services'
         },
-        children: [...children],
-      },
+        children: [...children]
+      }
     });
   }
 }
