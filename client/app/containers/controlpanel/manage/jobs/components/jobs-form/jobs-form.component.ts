@@ -78,7 +78,7 @@ export class JobsFormComponent implements OnInit {
       defaultDate: posting_start
         ? CPDate.fromEpoch(posting_start, _self.session.tz).format()
         : null,
-      onClose: function(_, dataStr) {
+      onChange: function(_, dataStr) {
         _self.form.controls['posting_start'].setValue(CPDate.toEpoch(dataStr, _self.session.tz));
       }
     };
@@ -88,7 +88,7 @@ export class JobsFormComponent implements OnInit {
       defaultDate: posting_end
         ? CPDate.fromEpoch(posting_end, _self.session.tz).format()
         : null,
-      onClose: function(_, dataStr) {
+      onChange: function(_, dataStr) {
         _self.form.controls['posting_end'].setValue(CPDate.toEpoch(dataStr, _self.session.tz));
       }
     };
@@ -98,7 +98,7 @@ export class JobsFormComponent implements OnInit {
       defaultDate: contract_start
         ? CPDate.fromEpoch(contract_start, _self.session.tz).format()
         : null,
-      onClose: function(_, dataStr) {
+      onChange: function(_, dataStr) {
         _self.form.controls['contract_start'].setValue(CPDate.toEpoch(dataStr, _self.session.tz));
       }
     };
@@ -108,7 +108,7 @@ export class JobsFormComponent implements OnInit {
       defaultDate: application_deadline
         ? CPDate.fromEpoch(application_deadline, _self.session.tz).format()
         : null,
-      onClose: function(_, dataStr) {
+      onChange: function(_, dataStr) {
         _self.form.controls['application_deadline'].setValue(
           CPDate.toEpoch(dataStr, _self.session.tz)
         );
