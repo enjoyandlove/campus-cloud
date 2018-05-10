@@ -109,6 +109,8 @@ export class AnnouncementsComposeComponent implements OnInit {
   }
 
   onNewAudienceTypeChange(audienceState) {
+    this.state = { ...this.state, validUserCount: false };
+
     if (audienceState.custom) {
       this.state = {
         ...this.state,
@@ -174,11 +176,15 @@ export class AnnouncementsComposeComponent implements OnInit {
       isToLists: false,
       isCampusWide: false,
       isToFilters: false,
-      triggerSaveModal: true
+      triggerSaveModal: true,
+      validUserCount: users.length > 0
     };
+
     this.form.controls['list_ids'].setValue([]);
     this.form.controls['user_ids'].setValue(users);
     this.form.controls['is_school_wide'].setValue(false);
+
+    this.validButton();
   }
 
   getSubjectLength(): number {
@@ -307,6 +313,8 @@ export class AnnouncementsComposeComponent implements OnInit {
       ...this.state,
       validUserCount: usersCount > 0 || usersCount === 'campus_wide'
     };
+
+    this.validButton();
   }
 
   doSubmit() {
@@ -447,6 +455,12 @@ export class AnnouncementsComposeComponent implements OnInit {
     );
   }
 
+  validButton() {
+    const isValid = this.form.valid && this.state.validUserCount;
+
+    this.buttonData = { ...this.buttonData, disabled: !isValid };
+  }
+
   ngOnInit() {
     this.buildHeader();
 
@@ -499,9 +513,10 @@ export class AnnouncementsComposeComponent implements OnInit {
     });
 
     this.form.valueChanges.subscribe((_) => {
-      const isValid = this.form.valid && this.state.validUserCount;
+      this.validButton();
+      // const isValid = this.form.valid && this.state.validUserCount;
 
-      this.buttonData = { ...this.buttonData, disabled: !isValid };
+      // this.buttonData = { ...this.buttonData, disabled: !isValid };
     });
   }
 }
