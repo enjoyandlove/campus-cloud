@@ -104,8 +104,8 @@ export class TeamCreateComponent implements OnInit {
 
   onAudienceSelected(audience) {
     if (audience.action === audienceMenuStatus.noAccess) {
-      if (CP_PRIVILEGES_MAP.campus_announcements in this.schoolPrivileges) {
-        delete this.schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements];
+      if (CP_PRIVILEGES_MAP.audience in this.schoolPrivileges) {
+        delete this.schoolPrivileges[CP_PRIVILEGES_MAP.audience];
       }
 
       return;
@@ -113,7 +113,7 @@ export class TeamCreateComponent implements OnInit {
 
     if (audience.action === audienceMenuStatus.allAccess) {
       this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
-        [CP_PRIVILEGES_MAP.campus_announcements]: {
+        [CP_PRIVILEGES_MAP.audience]: {
           r: true,
           w: true
         }
@@ -528,7 +528,7 @@ export class TeamCreateComponent implements OnInit {
       canSchoolReadResource(session, CP_PRIVILEGES_MAP.clubs) ||
       canAccountLevelReadResource(session, CP_PRIVILEGES_MAP.clubs);
 
-    this.canReadAudience = canSchoolReadResource(session, CP_PRIVILEGES_MAP.campus_announcements);
+    this.canReadAudience = canSchoolReadResource(session, CP_PRIVILEGES_MAP.audience);
 
     this.canReadAthletics =
       canSchoolReadResource(session, CP_PRIVILEGES_MAP.athletics) ||
@@ -579,9 +579,7 @@ export class TeamCreateComponent implements OnInit {
       servicesPrivilegeSchool,
       servicesPrivilegeAccount
     );
-    this.audienceMenu = this.utils.audienceDropdown(
-      schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements]
-    );
+    this.audienceMenu = this.utils.audienceDropdown(schoolPrivileges[CP_PRIVILEGES_MAP.audience]);
     this.manageAdmins = this.utils.manageAdminDropdown(manageAdminPrivilege);
   }
 }

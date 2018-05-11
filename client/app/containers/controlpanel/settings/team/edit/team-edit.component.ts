@@ -386,8 +386,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
   onAudienceSelected(audience) {
     if (audience.action === audienceMenuStatus.noAccess) {
-      if (CP_PRIVILEGES_MAP.campus_announcements in this.schoolPrivileges) {
-        delete this.schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements];
+      if (CP_PRIVILEGES_MAP.audience in this.schoolPrivileges) {
+        delete this.schoolPrivileges[CP_PRIVILEGES_MAP.audience];
       }
 
       return;
@@ -395,7 +395,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
     if (audience.action === audienceMenuStatus.allAccess) {
       this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
-        [CP_PRIVILEGES_MAP.campus_announcements]: {
+        [CP_PRIVILEGES_MAP.audience]: {
           r: true,
           w: true
         }
@@ -749,7 +749,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
     this.canReadEvents = schoolPrivileges[CP_PRIVILEGES_MAP.events] || false;
 
-    this.canReadAudience = schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements] || false;
+    this.canReadAudience = schoolPrivileges[CP_PRIVILEGES_MAP.audience] || false;
 
     this.canReadServices = schoolPrivileges[CP_PRIVILEGES_MAP.services] || false;
     this.formData = TEAM_ACCESS.getMenu(this.user.school_level_privileges[this.schoolId]);
@@ -777,9 +777,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     const manageAdminPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin];
     const eventsAssessmentPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.event_attendance];
 
-    this.audienceMenu = this.utils.audienceDropdown(
-      schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements]
-    );
+    this.audienceMenu = this.utils.audienceDropdown(schoolPrivileges[CP_PRIVILEGES_MAP.audience]);
 
     this.manageAdmins = this.utils.manageAdminDropdown(manageAdminPrivilege);
     this.clubsMenu = this.utils.clubsDropdown(clubsPrivilegeSchool, clubsPrivilegeAccount);
