@@ -1,0 +1,88 @@
+<div class="row">
+  <div class="col-xs-12">
+    <cp-store-action-box
+      (search)="onSearch($event)"
+      (launchCreateModal)="onLaunchCreateModal()">
+    </cp-store-action-box>
+  </div>
+</div>
+
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div *ngSwitchCase="false">
+    <cp-no-content
+      class="no-content"
+      *ngIf="!state.stores.length"
+      [noContentText]="cpI18n.translate('stores_no_results_found')">
+    </cp-no-content>
+
+    <div *ngIf="state.stores.length">
+      <ul class="cp-form">
+        <li class="cp-form__header col-xs-12">
+          <div class="row">
+            <span
+              class="col-xs-11 hover"
+              (click)="doSort('name')">
+              {{ 'name' | cpI18n }}
+              <span *ngIf="state.sort_field === 'name'">
+                <i class="material-icons">
+                  {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+                </i>
+              </span>
+            </span>
+            <span class="col-xs-1 hover"></span>
+          </div>
+        </li>
+
+        <li class="cp-form__item col-xs-12" *ngFor="let store of state.stores;">
+          <div class="row">
+            <span
+              data-toggle="modal"
+              data-target="#editModal"
+              (click)="launchEditModal = true; selectedStore = store"
+              class="col-xs-11 text-truncate cp-form__thumbnail">
+              <img
+                [src]="store.logo_url"
+                class="img-rounded img-fit-cover">
+                <strong class="hover">
+                  {{ store.name }}
+                </strong>
+              <br>
+              {{ store.description }}
+            </span>
+            <span
+              (click)="deleteStore = store; launchDeleteModal = true"
+              data-toggle="modal" data-target="#deleteModal"
+              class="col-xs-1 hover text-truncate delete-store text-center">
+              &times;
+            </span>
+          </div>
+        </li>
+      </ul>
+
+      <cp-pagination
+        [pageNext]="pageNext"
+        [pagePrev]="pagePrev"
+        [pageNumber]="pageNumber"
+        (next)="onPaginationNext()"
+        (previous)="onPaginationPrevious()">
+      </cp-pagination>
+    </div>
+  </div>
+</div>
+
+<cp-modal modalId="createModal" *ngIf="launchCreateModal">
+  <cp-store-create
+    (created)="onCreated($event)"
+    (resetCreateModal)="launchCreateModal = false">
+  </cp-store-create>
+</cp-modal>
+
+<cp-modal modalId="deleteModal" *ngIf="launchDeleteModal">
+  <cp-store-delete
+    [store]="deleteStore"
+    (deleted)="onDeleted($event)"
+    (resetDeleteModal)="launchDeleteModal = false">
+  </cp-store-delete>
+</cp-modal>

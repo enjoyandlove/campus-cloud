@@ -1,0 +1,6 @@
+@import '~styles/components/form';
+@import '~styles/components/card';
+
+.no-content {
+  @include card-margin();
+}
