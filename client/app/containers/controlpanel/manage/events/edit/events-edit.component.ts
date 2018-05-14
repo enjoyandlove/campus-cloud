@@ -149,7 +149,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    if (this.form.controls['end'].value <= CPDate.now().unix()) {
+    if (this.form.controls['end'].value <= CPDate.now(this.session.tz).unix()) {
       this.isDateError = true;
       this.formMissingFields = true;
       this.form.controls['end'].setErrors({ required: true });

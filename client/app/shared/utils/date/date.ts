@@ -1,7 +1,7 @@
 import * as moment from 'moment-timezone';
 
-function now(): moment.Moment {
-  return moment();
+function now(tz): moment.Moment {
+  return moment.tz(moment(), tz);
 }
 
 function toEpoch(date, tz): number {
