@@ -10,11 +10,11 @@ import { CP_PRIVILEGES_MAP } from '../../../../shared/constants';
 export class EventUtilService {
   constructor(public session: CPSession) {}
   isPastEvent(event: IEvent): boolean {
-    return event.end < CPDate.toEpoch(CPDate.now(), this.session.tz);
+    return event.end < CPDate.now(this.session.tz).unix();
   }
 
   isUpcomingEvent(event: IEvent) {
-    return event.start > CPDate.toEpoch(CPDate.now(), this.session.tz);
+    return event.start > CPDate.now(this.session.tz).unix();
   }
 
   buildUrlPrefix(
@@ -44,16 +44,16 @@ export class EventUtilService {
     eventId: number = null
   ) {
     if (athleticId) {
-      return `/manage/athletics/${clubId}/events/${eventId}`;
+      return `/manage/athletics/${clubId}/events/${eventId}/info`;
     } else if (clubId) {
-      return `/manage/clubs/${clubId}/events/${eventId}`;
+      return `/manage/clubs/${clubId}/events/${eventId}/info`;
     } else if (serviceId) {
-      return `/manage/services/${serviceId}/events/${eventId}`;
+      return `/manage/services/${serviceId}/events/${eventId}/info`;
     } else if (orientationId) {
-      return `/manage/orientation/${orientationId}/events/${eventId}`;
+      return `/manage/orientation/${orientationId}/events/${eventId}/info`;
     }
 
-    return `/manage/events/${eventId}`;
+    return `/manage/events/${eventId}/info`;
   }
 
   buildUrlPrefixExcel(

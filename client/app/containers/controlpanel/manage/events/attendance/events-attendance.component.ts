@@ -54,7 +54,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
 
       this.buildHeader(event.data);
 
-      this.isUpcoming = this.event.end > CPDate.toEpoch(CPDate.now(), this.session.tz);
+      this.isUpcoming = this.event.end > CPDate.now(this.session.tz).unix();
     });
   }
 

@@ -32,8 +32,6 @@ interface IState {
   attendance_only: number;
 }
 
-const threeYearsFromNow = CPDate.now().add(3, 'years');
-
 @Component({
   selector: 'cp-list-action-box',
   templateUrl: './list-action-box.component.html',
@@ -49,14 +47,17 @@ export class ListActionBoxComponent implements OnInit {
   eventFilter;
   dateFilterOpts;
   canCreateEvent;
+  threeYearsFromNow = CPDate.now(this.session.tz)
+    .add(3, 'years')
+    .unix();
   isFilteredByDate;
   state: IState = {
     upcoming: true,
     search_str: null,
     store_id: null, // all stores
     attendance_only: EventAttendance.disabled,
-    start: CPDate.toEpoch(CPDate.now(), this.session.tz),
-    end: CPDate.toEpoch(threeYearsFromNow, this.session.tz)
+    start: CPDate.now(this.session.tz).unix(),
+    end: this.threeYearsFromNow
   };
   stores$: Observable<any>;
 
@@ -97,17 +98,17 @@ export class ListActionBoxComponent implements OnInit {
   }
 
   private resetDateRange() {
-    const now = CPDate.now().format();
+    const now = CPDate.now(this.session.tz).unix();
     this.isFilteredByDate = false;
 
     if (this.state.upcoming) {
       this.state = Object.assign({}, this.state, {
-        start: CPDate.toEpoch(now, this.session.tz),
-        end: CPDate.toEpoch(threeYearsFromNow, this.session.tz)
+        start: now,
+        end: this.threeYearsFromNow
       });
 
       this.dateFilterOpts = Object.assign({}, this.dateFilterOpts, {
-        minDate: now,
+        minDate: CPDate.now(this.session.tz).format(),
         maxDate: null
       });
 
@@ -116,12 +117,12 @@ export class ListActionBoxComponent implements OnInit {
 
     this.state = Object.assign({}, this.state, {
       start: 0,
-      end: CPDate.toEpoch(now, this.session.tz)
+      end: now
     });
 
     this.dateFilterOpts = Object.assign({}, this.dateFilterOpts, {
       minDate: null,
-      maxDate: now
+      maxDate: CPDate.now(this.session.tz).format()
     });
   }
 
@@ -183,7 +184,7 @@ export class ListActionBoxComponent implements OnInit {
       utc: true,
       inline: true,
       mode: 'range',
-      minDate: CPDate.now().format(),
+      minDate: CPDate.now(this.session.tz).format(),
       maxDate: null
     };
 
