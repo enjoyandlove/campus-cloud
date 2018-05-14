@@ -69,7 +69,7 @@ export class EmployerEditComponent implements OnInit {
   ngOnInit() {
     this.employerForm = this.fb.group({
       id: [this.employer.id],
-      name: [this.employer.name, [Validators.required, Validators.maxLength(110)]],
+      name: [this.employer.name, [Validators.required, Validators.maxLength(120)]],
       description: [this.employer.description],
       logo_url: [this.employer.logo_url, Validators.required],
       email: [this.employer.email]

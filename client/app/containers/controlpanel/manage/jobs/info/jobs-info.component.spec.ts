@@ -126,7 +126,8 @@ describe('JobsInfoComponent', () => {
     expect(jobDesiredYear.textContent).toContain(desiredStudy.join(', '));
     expect(jobType.textContent).toContain(jobTypes.join(', '));
 
-    expect(employerImage.getAttribute('src')).toEqual(job.employer_logo_url);
+    const img = employerImage['style'].backgroundImage.slice(4, -1).replace(/"/g, "");
+    expect(img).toEqual(job.employer_logo_url);
     expect(employerName.textContent).toEqual(job.employer_name);
     expect(employerDescription.textContent).toContain(job.employer_description);
   }));

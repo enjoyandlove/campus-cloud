@@ -51,12 +51,12 @@
               <div class="row">
                 <div class="col-xs-4">
                   <img
-                    class="img-rounded pull-left avatar"
+                    class="img-rounded img-fit-cover pull-left avatar"
                     [src]="assessment.avatar_thumb_url"
                     *ngIf="assessment.avatar_thumb_url !== ''">
                   <img
                     [src]="defaultImage"
-                    class="img-rounded pull-left avatar"
+                    class="img-rounded img-fit-cover pull-left avatar"
                     *ngIf="assessment.avatar_thumb_url === ''">
                   <div class="meta">
                     <strong>

@@ -1023,6 +1023,39 @@
   "emergency": {
     "message": "Emergency"
   },
+  "employer": {
+    "message": "Employer"
+  },
+  "employers_create_employer": {
+    "message": "Create Employer"
+  },
+  "employers_create_modal_title": {
+    "message": "New Employer"
+  },
+  "employers_delete": {
+    "message": "Delete Employer"
+  },
+  "employers_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "employers_edit_employer": {
+    "message": "Edit Employer"
+  },
+  "employers_manage_employer": {
+    "message": "Manage Employers"
+  },
+  "employers_new_employer": {
+    "message": "---"
+  },
+  "employers_no_results_found": {
+    "message": "No employers found"
+  },
+  "employer_all_employers": {
+    "message": "All employers"
+  },
+  "employer_name": {
+    "message": "Employer Name"
+  },
   "ended": {
     "message": "End Date:"
   },
@@ -1372,6 +1405,117 @@
   },
   "invite_team_members": {
     "message": "Create New Team Member"
+  },
+  "jobs": {
+    "message": "Jobs"
+  },
+  "jobs_application_deadline": {
+    "message": "Application Deadline"
+  },
+  "jobs_create_job": {
+    "message": "Create Job"
+  },
+  "jobs_delete": {
+    "message": "Delete Job"
+  },
+  "jobs_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "jobs_desired_study_masters": {
+    "message": "Masters"
+  },
+  "jobs_desired_study_phd": {
+    "message": "PhD"
+  },
+  "jobs_desired_study_ug_y1": {
+    "message": "Undergrad Y1"
+  },
+  "jobs_desired_study_ug_y2": {
+    "message": "Undergrad Y2"
+  },
+  "jobs_desired_study_ug_y3": {
+    "message": "Undergrad Y3"
+  },
+  "jobs_desired_study_ug_y4": {
+    "message": "Undergrad Y4"
+  },
+  "jobs_desired_year_of_study": {
+    "message": "Desired Year of Study"
+  },
+  "jobs_employer_details": {
+    "message": "Employer Details"
+  },
+  "jobs_error_end_date_after_now": {
+    "message": "The end date must be in the future."
+  },
+  "jobs_error_end_date_before_start": {
+    "message": "The posting end date cannot be before the start date."
+  },
+  "jobs_existing_employer": {
+    "message": "Existing Employer"
+  },
+  "jobs_how_to_apply": {
+    "message": "How to Apply"
+  },
+  "jobs_job_details": {
+    "message": "Job Details"
+  },
+  "jobs_job_edit": {
+    "message": "Edit Job"
+  },
+  "jobs_job_start_date": {
+    "message": "Job Start Date"
+  },
+  "jobs_job_title": {
+    "message": "Job Title"
+  },
+  "jobs_job_type": {
+    "message": "Job type"
+  },
+  "jobs_job_type_for_credit": {
+    "message": "For Credit"
+  },
+  "jobs_job_type_full_time": {
+    "message": "Full-time"
+  },
+  "jobs_job_type_internship": {
+    "message": "Internship"
+  },
+  "jobs_job_type_on_campus": {
+    "message": "On-campus"
+  },
+  "jobs_job_type_part_time": {
+    "message": "Part-time"
+  },
+  "jobs_job_type_summer": {
+    "message": "Summer"
+  },
+  "jobs_job_type_volunteer": {
+    "message": "Volunteer"
+  },
+  "jobs_manage_employer": {
+    "message": "Manage Employers"
+  },
+  "jobs_new_employer": {
+    "message": "New Employer"
+  },
+  "jobs_no_results_found": {
+    "message": "No jobs found"
+  },
+  "jobs_posting_end": {
+    "message": "Posting End"
+  },
+  "jobs_posting_end_date": {
+    "message": "Posting End"
+  },
+  "jobs_posting_start": {
+    "message": "Posting Start"
+  },
+  "jobs_posting_start_date": {
+    "message": "Posting Start"
+  },
+  "jobs_select_employer": {
+    "message": "Select Employer"
   },
   "last_name": {
     "message": "Last Name"

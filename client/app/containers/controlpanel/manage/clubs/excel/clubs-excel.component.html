@@ -43,7 +43,7 @@
                         *ngIf="!club.controls['logo_url'].value">
                       </cp-upload-button>
                       <img
-                        class="img-rounded"
+                        class="img-rounded img-fit-cover"
                         *ngIf="club.controls['logo_url'].value"
                         [src]="club.controls['logo_url'].value" >
                     </div>

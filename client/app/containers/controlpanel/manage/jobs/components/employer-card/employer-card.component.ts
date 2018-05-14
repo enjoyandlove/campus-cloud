@@ -50,7 +50,9 @@ export class EmployerCardComponent implements OnInit {
   setRequiredField(value) {
     const name = this.employerForm.controls['name'].value;
     const logo = this.employerForm.controls['logo_url'].value;
-    this.employerForm.setControl('name', new FormControl(name, value ? Validators.required : null));
+    this.employerForm.setControl('name', new FormControl(name, value
+      ? [Validators.required, Validators.maxLength(120)]
+      : null));
 
     this.employerForm.setControl(
       'logo_url',
