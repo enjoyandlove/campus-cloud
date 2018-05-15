@@ -22,7 +22,7 @@ export class DealsService extends BaseService {
   }
 
   getStores() {
-    const key = 'deals_all_stores';
+    const key = 'deals_list_dropdown_label_all_stores';
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 

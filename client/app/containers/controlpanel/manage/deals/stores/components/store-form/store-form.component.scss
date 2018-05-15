@@ -1,11 +1,6 @@
 @import '~styles/components/form';
-@import '~styles/core/typography';
 
 .store {
-  span {
-    @include font-normal()
-  }
-
   .maps {
     height: 200px;
   }

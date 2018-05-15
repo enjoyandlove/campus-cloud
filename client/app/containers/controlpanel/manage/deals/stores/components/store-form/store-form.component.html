@@ -10,9 +10,11 @@
     <div class="form-group">
       <label>
         {{ 'store_name' | cpI18n }}
-        <span class="pull-right">
-          {{ storeForm.controls.name.value ? storeForm.controls.name.value.length : 0 }}/120
-        </span>
+        <cp-char-counter
+          class="pull-right"
+          [limit]="120"
+          [charCount]="storeForm.controls.name.value">
+        </cp-char-counter>
       </label>
       <input
         type="text"
@@ -27,7 +29,10 @@
 
     <div class="form-group">
       <label>{{ 'website' | cpI18n }}</label>
-      <input type="text" class="form-control" formControlName="website">
+      <input
+        type="text"
+        class="form-control"
+        formControlName="website">
     </div>
 
     <div class="form-group">
