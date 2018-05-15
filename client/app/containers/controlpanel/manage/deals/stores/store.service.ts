@@ -27,6 +27,12 @@ export class StoreService extends BaseService {
     return super.post(url, body, { search }).map((res) => res.json());
   }
 
+  editStore(id: number, body: any, search: URLSearchParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.DEALS_STORE}/${id}`;
+
+    return super.update(url, body, { search }).map((res) => res.json());
+  }
+
   deleteStore(id: number, search: URLSearchParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.DEALS_STORE}/${id}`;
 

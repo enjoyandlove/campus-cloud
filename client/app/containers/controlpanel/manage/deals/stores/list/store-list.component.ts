@@ -94,6 +94,17 @@ export class StoreListComponent extends BaseComponent implements OnInit {
     this.state.stores = [newStore, ...this.state.stores];
   }
 
+  onEdited(editStore: IStore) {
+    this.launchEditModal = false;
+    this.selectedStore = null;
+
+    this.state = Object.assign({}, this.state, {
+      stores: this.state.stores.map(
+        (store) => (store.id === editStore.id ? editStore : store)
+      )
+    });
+  }
+
   onDeleted(id: number) {
     this.deleteStore = null;
     this.state = Object.assign({}, this.state, {

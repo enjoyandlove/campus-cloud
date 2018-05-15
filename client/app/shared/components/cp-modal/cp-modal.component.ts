@@ -13,10 +13,15 @@ export const MODAL_TYPE = {
 export class CPModalComponent implements OnInit {
   @Input() modalId: string;
   @Input() type: string;
+  @Input() position: string;
+
+  class;
 
   constructor() {}
 
   ngOnInit() {
     this.type = this.type ? this.type : '';
+    this.position = this.position ? this.position : '';
+    this.class = this.type + ' ' + this.position;
   }
 }

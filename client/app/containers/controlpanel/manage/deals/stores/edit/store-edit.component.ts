@@ -1,20 +1,31 @@
-import { Component, ElementRef, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnInit,
+  Output
+} from '@angular/core';
+import { URLSearchParams } from '@angular/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { IStore } from '../store.interface';
 import { StoreService } from '../store.service';
 import { CPSession } from '../../../../../../session';
 import { CPI18nService } from '../../../../../../shared/services/i18n.service';
-import { URLSearchParams } from '@angular/http';
 
 @Component({
-  selector: 'cp-store-create',
-  templateUrl: './store-create.component.html',
-  styleUrls: ['./store-create.component.scss']
+  selector: 'cp-store-edit',
+  templateUrl: './store-edit.component.html',
+  styleUrls: ['./store-edit.component.scss']
 })
-export class StoreCreateComponent implements OnInit {
-  @Output() created: EventEmitter<IStore> = new EventEmitter();
-  @Output() resetCreateModal: EventEmitter<null> = new EventEmitter();
+
+export class StoreEditComponent implements OnInit {
+  @Input() store: IStore;
+
+  @Output() edited: EventEmitter<IStore> = new EventEmitter();
+  @Output() resetEditModal: EventEmitter<null> = new EventEmitter();
 
   buttonData;
   storeForm: FormGroup;
@@ -36,39 +47,38 @@ export class StoreCreateComponent implements OnInit {
   }
 
   resetModal() {
-    this.resetCreateModal.emit();
-    // this.createForm.employerForm.reset();
-    $('#createModal').modal('hide');
+    this.resetEditModal.emit();
+    $('#editModal').modal('hide');
   }
 
   onSubmit() {
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id);
 
-    this.service.createStore(this.storeForm.value, search).subscribe((store) => {
-      this.created.emit(store);
+    this.service.editStore(this.store.id, this.storeForm.value, search).subscribe((store) => {
+      this.edited.emit(store);
       this.resetModal();
     });
   }
 
   ngOnInit() {
     this.storeForm = this.fb.group({
-      name: [null, [Validators.required, Validators.maxLength(120)]],
-      logo_url: [null, Validators.required],
-      description: [null],
-      website: [null],
-      address: [null],
-      latitude: [null],
-      longitude: [null],
-      city: [null],
-      province: [null],
-      country: [null],
-      postal_code: [null],
+      name: [this.store.name, [Validators.required, Validators.maxLength(120)]],
+      description: [this.store.description],
+      logo_url: [this.store.logo_url, Validators.required],
+      city: [this.store.city],
+      address: [this.store.address],
+      province: [this.store.province],
+      country: [this.store.country],
+      postal_code: [this.store.postal_code],
+      website: [this.store.website],
+      latitude: [this.store.latitude],
+      longitude: [this.store.longitude],
     });
 
     this.buttonData = Object.assign({}, this.buttonData, {
       class: 'primary',
-      disabled: true,
+      disabled: false,
       text: this.cpI18n.translate('save')
     });
 

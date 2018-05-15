@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { StoreListComponent } from './list';
+import { StoreEditComponent } from './edit';
 import { StoreDeleteComponent } from './delete';
 import { StoreCreateComponent } from './create';
 import { StoreFormComponent } from './components/store-form';
@@ -16,6 +17,7 @@ import { SharedModule } from '../../../../../shared/shared.module';
   declarations: [
     StoreFormComponent,
     StoreListComponent,
+    StoreEditComponent,
     StoreDeleteComponent,
     StoreCreateComponent,
     StoreActionBoxComponent

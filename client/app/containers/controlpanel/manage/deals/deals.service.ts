@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Http, URLSearchParams } from '@angular/http';
 
-import { CPSession } from '../../../../session';
 import { BaseService } from '../../../../base';
+import { CPSession } from '../../../../session';
 import { StoreService } from './stores/store.service';
 import { CPI18nService } from '../../../../shared/services';
 
@@ -22,16 +22,17 @@ export class DealsService extends BaseService {
   }
 
   getStores() {
+    const key = 'deals_all_stores';
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
     return this.storeService
       .getStores(1, 10000, search)
-      .startWith([{ label: this.cpI18n.translate('all') }])
+      .startWith([{ label: this.cpI18n.translate(key) }])
       .map((stores) => {
         const _stores = [
           {
-            label: this.cpI18n.translate('all'),
+            label: this.cpI18n.translate(key),
             action: null
           }
         ];

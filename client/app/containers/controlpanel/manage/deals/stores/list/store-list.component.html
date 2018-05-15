@@ -72,11 +72,25 @@
   </div>
 </div>
 
-<cp-modal modalId="createModal" *ngIf="launchCreateModal">
+<cp-modal
+  position="center"
+  modalId="createModal"
+  *ngIf="launchCreateModal">
   <cp-store-create
     (created)="onCreated($event)"
     (resetCreateModal)="launchCreateModal = false">
   </cp-store-create>
+</cp-modal>
+
+<cp-modal
+  position="center"
+  modalId="editModal"
+  *ngIf="launchEditModal">
+  <cp-store-edit
+    [store]="selectedStore"
+    (edited)="onEdited($event)"
+    (resetEditModal)="launchEditModal = false">
+  </cp-store-edit>
 </cp-modal>
 
 <cp-modal modalId="deleteModal" *ngIf="launchDeleteModal">

@@ -73,9 +73,12 @@ export class StoreFormComponent implements OnInit {
 
   ngOnInit() {
     this.school = this.session.g.get('school');
+    const latitude = this.storeForm.controls.latitude.value;
+    const longitude = this.storeForm.controls.longitude.value;
+
     this.mapCenter = new BehaviorSubject({
-      lat: this.school.latitude,
-      lng: this.school.longitude
+      lat: latitude ? latitude : this.school.latitude,
+      lng: longitude ? longitude : this.school.longitude
     });
   }
 }
