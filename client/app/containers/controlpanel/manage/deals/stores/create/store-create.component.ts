@@ -37,7 +37,6 @@ export class StoreCreateComponent implements OnInit {
 
   resetModal() {
     this.resetCreateModal.emit();
-    // this.createForm.employerForm.reset();
     $('#createModal').modal('hide');
   }
 
