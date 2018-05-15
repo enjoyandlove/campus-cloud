@@ -623,9 +623,6 @@
   "campus_wide": {
     "message": "Campus-Wide"
   },
-  "cancel": {
-    "message": "Cancel"
-  },
   "category": {
     "message": "Category"
   },
@@ -1292,6 +1289,15 @@
   "feeds_can_post": {
     "message": "Who can post?"
   },
+  "feeds_card_header_deleted_user": {
+    "message": "Deleted user"
+  },
+  "feeds_cc_admins": {
+    "message": "Campus Cloud Admins"
+  },
+  "feeds_club_members": {
+    "message": "Club Members"
+  },
   "feeds_delete_comment": {
     "message": "Delete Comment"
   },
@@ -1327,6 +1333,9 @@
   },
   "feeds_move_post_from": {
     "message": "Move post from"
+  },
+  "feeds_no_one": {
+    "message": "No One"
   },
   "feeds_posted_in": {
     "message": "posted in"
@@ -1699,9 +1708,6 @@
   },
   "no_hosts_available": {
     "message": "No Hosts Available"
-  },
-  "no_one": {
-    "message": "No One"
   },
   "no_results": {
     "message": "No Results"

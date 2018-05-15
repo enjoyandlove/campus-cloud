@@ -623,9 +623,6 @@
   "campus_wide": {
     "message": "Tout le campus"
   },
-  "cancel": {
-    "message": "Annuler"
-  },
   "category": {
     "message": "Categorie"
   },
@@ -1292,6 +1289,15 @@
   "feeds_can_post": {
     "message": "Qui peut publier ?"
   },
+  "feeds_card_header_deleted_user": {
+    "message": "Utilisateur supprimé"
+  },
+  "feeds_cc_admins": {
+    "message": "Administrateurs Campus Cloud"
+  },
+  "feeds_club_members": {
+    "message": "Membres du club"
+  },
   "feeds_delete_comment": {
     "message": "Supprimer commentaire"
   },
@@ -1327,6 +1333,9 @@
   },
   "feeds_move_post_from": {
     "message": "Déplacer la publication depuis"
+  },
+  "feeds_no_one": {
+    "message": "Personne"
   },
   "feeds_posted_in": {
     "message": "a publié dans"
@@ -1699,9 +1708,6 @@
   },
   "no_hosts_available": {
     "message": "Aucun hôte disponible"
-  },
-  "no_one": {
-    "message": "Personne"
   },
   "no_results": {
     "message": "Aucun résultat"
