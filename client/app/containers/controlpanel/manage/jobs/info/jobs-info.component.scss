@@ -16,16 +16,17 @@ p.no-margin-bottom {
   margin-bottom: 0;
 }
 
-.job {
+.job, .employer {
   &__title {
     @include font-bold();
-    @include font-24px;
+    @include font-24px();
 
     margin-top: 15px;
     margin-bottom: 0;
   }
 
-  &__description {
+  &__description,
+  &__how-to-apply {
     margin-top: 20px;
   }
 
