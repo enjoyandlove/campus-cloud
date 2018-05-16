@@ -1,0 +1,61 @@
+<form [formGroup]="storeForm">
+  <div class="form-group store">
+    <div class="form-group">
+      <cp-image-upload
+        (uploaded)="onUploadedImage($event)"
+        [defaultImage]="storeForm.controls['logo_url'].value">
+      </cp-image-upload>
+    </div>
+
+    <div class="form-group">
+      <label>
+        {{ 'store_name' | cpI18n }}
+        <cp-char-counter
+          class="pull-right"
+          [limit]="120"
+          [charCount]="storeForm.controls.name.value">
+        </cp-char-counter>
+      </label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="name">
+    </div>
+
+    <div class="form-group">
+      <label>{{ 'description' | cpI18n }}</label>
+      <textarea formControlName="description"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>{{ 'website' | cpI18n }}</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="website">
+    </div>
+
+    <div class="form-group">
+      <label>{{ 'location' | cpI18n }}</label>
+      <div class="row form-group">
+        <div class="col-xs-12">
+          <cp-place-autocomplete
+            [newAddress]="newAddress"
+            (backToDefault)="onResetMap()"
+            (placeChange)="onPlaceChange($event)"
+            [defaultValue]="storeForm.controls['address'].value">
+          </cp-place-autocomplete>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="maps">
+        <cp-maps
+          [center]="mapCenter"
+          (mapSelection)="onMapSelection($event)">
+        </cp-maps>
+      </div>
+    </div>
+  </div>
+</form>
