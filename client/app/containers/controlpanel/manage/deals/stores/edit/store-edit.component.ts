@@ -27,7 +27,9 @@ export class StoreEditComponent implements OnInit {
   @Output() edited: EventEmitter<IStore> = new EventEmitter();
   @Output() resetEditModal: EventEmitter<null> = new EventEmitter();
 
+  error;
   buttonData;
+  errorMessage;
   storeForm: FormGroup;
 
   constructor(
@@ -52,13 +54,20 @@ export class StoreEditComponent implements OnInit {
   }
 
   onSubmit() {
+    this.error = false;
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id);
 
-    this.service.editStore(this.store.id, this.storeForm.value, search).subscribe((store) => {
-      this.edited.emit(store);
-      this.resetModal();
-    });
+    this.service.editStore(this.store.id, this.storeForm.value, search).subscribe(
+      (store) => {
+        this.edited.emit(store);
+        this.resetModal();
+      },
+      () => {
+        this.error = true;
+        this.errorMessage = this.cpI18n.translate('something_went_wrong');
+      }
+    );
   }
 
   ngOnInit() {

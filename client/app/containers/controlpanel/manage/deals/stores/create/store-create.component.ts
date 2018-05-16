@@ -1,11 +1,11 @@
 import { Component, ElementRef, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { URLSearchParams } from '@angular/http';
 
 import { IStore } from '../store.interface';
 import { StoreService } from '../store.service';
 import { CPSession } from '../../../../../../session';
 import { CPI18nService } from '../../../../../../shared/services/i18n.service';
-import { URLSearchParams } from '@angular/http';
 
 @Component({
   selector: 'cp-store-create',
@@ -17,6 +17,8 @@ export class StoreCreateComponent implements OnInit {
   @Output() resetCreateModal: EventEmitter<null> = new EventEmitter();
 
   buttonData;
+  errorMessage;
+  error = false;
   storeForm: FormGroup;
 
   constructor(
@@ -41,13 +43,20 @@ export class StoreCreateComponent implements OnInit {
   }
 
   onSubmit() {
+    this.error = false;
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id);
 
-    this.service.createStore(this.storeForm.value, search).subscribe((store) => {
-      this.created.emit(store);
-      this.resetModal();
-    });
+    this.service.createStore(this.storeForm.value, search).subscribe(
+      (store) => {
+        this.created.emit(store);
+        this.resetModal();
+      },
+      () => {
+        this.error = true;
+        this.errorMessage = this.cpI18n.translate('something_went_wrong');
+      }
+    );
   }
 
   ngOnInit() {

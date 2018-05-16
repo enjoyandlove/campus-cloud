@@ -5,6 +5,8 @@ export const MODAL_TYPE = {
   WIDE: 'wide'
 };
 
+type Position = 'center';
+
 @Component({
   selector: 'cp-modal',
   templateUrl: './cp-modal.component.html',
@@ -13,15 +15,15 @@ export const MODAL_TYPE = {
 export class CPModalComponent implements OnInit {
   @Input() modalId: string;
   @Input() type: string;
-  @Input() position: string;
+  @Input() position: Position;
 
   class;
 
   constructor() {}
 
   ngOnInit() {
-    this.type = this.type ? this.type : '';
-    this.position = this.position ? this.position : '';
-    this.class = this.type + ' ' + this.position;
+    const type = this.type ? this.type : '';
+    const position = this.position ? this.position : '';
+    this.class = type + ' ' + position;
   }
 }

@@ -1,5 +1,12 @@
+@import '~styles/components/form';
 @import '~styles/components/modal';
 @import '~styles/components/button';
+
+.error {
+  i {
+    @include font-16px()
+  }
+}
 
 .cpmodal__body {
   margin-top: 15px;
