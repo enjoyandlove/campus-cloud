@@ -43,6 +43,10 @@ function getMenu(privileges = {}) {
       jobs: {
         active: false,
         deps: []
+      },
+      deals: {
+        active: false,
+        deps: []
       }
     },
     notify: {
@@ -103,6 +107,9 @@ function getMenu(privileges = {}) {
     }
     if (+p === CP_PRIVILEGES_MAP.jobs) {
       form.content.jobs.active = true;
+    }
+    if (+p === CP_PRIVILEGES_MAP.deals) {
+      form.content.deals.active = true;
     }
   });
 
