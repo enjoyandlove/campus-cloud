@@ -6,7 +6,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./cp-char-counter.component.scss']
 })
 
-export class CpCharCounterComponent {
+export class CPCharCounterComponent {
   @Input() limit: number;
   @Input() charCount: string;
 }
