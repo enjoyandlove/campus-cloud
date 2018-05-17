@@ -33,6 +33,8 @@ export const API_ENDPOINTS = {
 
   LOCATIONS: 'location',
 
+  DEALS_STORE: 'deals_store',
+
   COVER_PHOTO: 'cover_photo',
 
   ORIENTATION: 'orientation',

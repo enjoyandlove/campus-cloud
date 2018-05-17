@@ -269,6 +269,30 @@
               <span>{{ 'orientation' | cpI18n }}</span>
             </div>
           </div>
+
+          <div class="row options-row">
+            <div
+              class="col-xs-4"
+              [class.isDisabled]="!formData.content.jobs.active">
+              <cp-checkbox
+                class="cpcheckbox"
+                (toggle)="checkControl($event, CP_PRIVILEGES_MAP.jobs, formData.content.jobs)"
+                [isDisabled]="!formData.content.jobs.active">
+              </cp-checkbox>
+              <span>{{ 'jobs' | cpI18n }}</span>
+            </div>
+
+            <div
+              class="col-xs-4"
+              [class.isDisabled]="!formData.content.deals.active">
+              <cp-checkbox
+                class="cpcheckbox"
+                (toggle)="checkControl($event, CP_PRIVILEGES_MAP.deals, formData.content.deals)"
+                [isDisabled]="!formData.content.deals.active">
+              </cp-checkbox>
+              <span>{{ 'deals' | cpI18n }}</span>
+            </div>
+          </div>
         </div>
         <!-- END App Content -->
 

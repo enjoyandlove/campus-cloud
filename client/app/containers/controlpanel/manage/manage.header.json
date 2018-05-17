@@ -52,6 +52,11 @@
       "privilege": 25,
       "label": "jobs",
       "url": "/manage/jobs"
+    },
+    {
+      "privilege": 26,
+      "label": "deals",
+      "url": "/manage/deals"
     }
   ]
 }

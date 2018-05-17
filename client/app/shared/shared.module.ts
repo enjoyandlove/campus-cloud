@@ -51,6 +51,7 @@ import {
   CPUploadModalFooterComponent,
   CPUploadModalHeaderComponent,
   CPDropdownMultiSelectComponent
+  CPCharCounterComponent
 } from './components';
 import { LocationsService } from '../containers/controlpanel/manage/locations/locations.service';
 import { CPMapsService } from './services/maps.service';
@@ -107,6 +108,7 @@ import { CPMapsService } from './services/maps.service';
     CPUploadModalHeaderComponent,
     CPUploadModalFooterComponent,
     CPDropdownMultiSelectComponent
+    CPCharCounterComponent
   ],
 
   imports: [CommonModule, RouterModule, ReactiveFormsModule],
@@ -171,6 +173,7 @@ import { CPMapsService } from './services/maps.service';
     CPUploadModalHeaderComponent,
     CPUploadModalFooterComponent,
     CPDropdownMultiSelectComponent
+    CPCharCounterComponent
   ]
 })
 export class SharedModule {}

@@ -235,7 +235,7 @@ export class EventsCreateComponent implements OnInit {
       return;
     }
 
-    if (this.form.controls['end'].value <= Math.round(CPDate.now().unix())) {
+    if (this.form.controls['end'].value <= Math.round(CPDate.now(this.session.tz).unix())) {
       this.isDateError = true;
       this.formError = true;
       this.form.controls['end'].setErrors({ required: true });
