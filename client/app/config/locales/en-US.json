@@ -982,6 +982,18 @@
   "dashboard_top_services": {
     "message": "Top Services"
   },
+  "deals_create_deal": {
+    "message": "Create Deal"
+  },
+  "deals_list_dropdown_label_all_stores": {
+    "message": "All Stores"
+  },
+  "deals_manage_stores": {
+    "message": "Manage Stores"
+  },
+  "deals_no_results_found": {
+    "message": "No deals found."
+  },
   "delete": {
     "message": "Delete"
   },
@@ -1292,6 +1304,15 @@
   "feeds_can_post": {
     "message": "Who can post?"
   },
+  "feeds_card_header_deleted_user": {
+    "message": "Deleted user"
+  },
+  "feeds_cc_admins": {
+    "message": "Campus Cloud Admins"
+  },
+  "feeds_club_members": {
+    "message": "Club Members"
+  },
   "feeds_delete_comment": {
     "message": "Delete Comment"
   },
@@ -1327,6 +1348,9 @@
   },
   "feeds_move_post_from": {
     "message": "Move post from"
+  },
+  "feeds_no_one": {
+    "message": "No One"
   },
   "feeds_posted_in": {
     "message": "posted in"
@@ -1700,9 +1724,6 @@
   "no_hosts_available": {
     "message": "No Hosts Available"
   },
-  "no_one": {
-    "message": "No One"
-  },
   "no_results": {
     "message": "No Results"
   },
@@ -2069,6 +2090,27 @@
   },
   "status": {
     "message": "Status"
+  },
+  "stores_create_modal_title": {
+    "message": "Create Store"
+  },
+  "stores_create_store": {
+    "message": "Create Store"
+  },
+  "stores_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "stores_edit_modal_title": {
+    "message": "Edit Store"
+  },
+  "stores_manage_store": {
+    "message": "Manage Stores"
+  },
+  "stores_no_results_found": {
+    "message": "No stores found"
+  },
+  "store_name": {
+    "message": "Store Name"
   },
   "students": {
     "message": "Students"
