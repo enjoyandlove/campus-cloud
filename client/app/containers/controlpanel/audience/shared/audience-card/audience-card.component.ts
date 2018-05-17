@@ -1,5 +1,6 @@
 /*tslint:disable:max-line-length*/
 import {
+  Input,
   Component,
   OnInit,
   Output,
@@ -21,6 +22,8 @@ import { CPI18nService } from './../../../../../shared/services/i18n.service';
 })
 export class AudienceCardComponent implements OnInit, AfterViewInit {
   @ViewChildren(CPTabComponent) tabs: QueryList<CPTabComponent>;
+
+  @Input() canReadAudience = false;
 
   @Output() count: EventEmitter<number> = new EventEmitter();
   @Output() importClick: EventEmitter<null> = new EventEmitter();

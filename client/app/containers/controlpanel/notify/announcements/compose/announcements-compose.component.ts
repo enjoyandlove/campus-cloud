@@ -11,6 +11,7 @@ import { CP_PRIVILEGES_MAP, STATUS } from '../../../../../shared/constants';
 import { StoreService, CPI18nService } from '../../../../../shared/services';
 import { AUDIENCE_IMPORTED } from './../../../../../reducers/audience.reducer';
 import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
+import { canSchoolReadResource } from './../../../../../shared/utils/privileges/privileges';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 
 interface IState {
@@ -52,6 +53,7 @@ export class AnnouncementsComposeComponent implements OnInit {
   errorMessage;
   selectedType;
   form: FormGroup;
+  canReadAudience;
   isAudienceImport = false;
 
   URGENT_TYPE = 1;
@@ -462,6 +464,8 @@ export class AnnouncementsComposeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.canReadAudience = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.audience);
+
     this.buildHeader();
 
     this.buttonData = {

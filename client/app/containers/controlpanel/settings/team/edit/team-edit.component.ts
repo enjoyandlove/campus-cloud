@@ -158,7 +158,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   }
 
   audienceDefaultPermission() {
-    const allAccess = _get(this.schoolPrivileges, CP_PRIVILEGES_MAP.campus_announcements, false);
+    const allAccess = _get(this.schoolPrivileges, CP_PRIVILEGES_MAP.audience, false);
 
     return allAccess
       ? this.audienceMenu.filter((item) => item.action === audienceMenuStatus.allAccess)[0]
