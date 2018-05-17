@@ -12,6 +12,7 @@
               <ng-container *ngIf="state.savedAudienceActive">
                 <div class="col-xs-6">
                   <cp-audience-saved-body 
+                    [canReadAudience]="canReadAudience"
                     (selected)="onSelectedAudience($event)"
                     [importedAudience$]="importedAudience$">
                   </cp-audience-saved-body>
@@ -23,19 +24,21 @@
             </div>  
           </div>
         </cp-tab>
-        <cp-tab 
-          id="new"
-          [title]="newAudienceTitle"
-          (destroy)="onDestroyNewAudience()">
-          <cp-audience-new-body 
-            (users)="onUsers($event)"
-            (count)="count.emit($event)"
-            (filters)="onFilters($event)"
-            *ngIf="state.newAudienceActive"
-            (importClick)="importClick.emit()"
-            (audienceType)="onNewAudienceTypeChange($event)">
-          </cp-audience-new-body>
-        </cp-tab>
+        <ng-container *ngIf="canReadAudience">
+          <cp-tab 
+            id="new"
+            [title]="newAudienceTitle"
+            (destroy)="onDestroyNewAudience()">
+            <cp-audience-new-body 
+              (users)="onUsers($event)"
+              (count)="count.emit($event)"
+              (filters)="onFilters($event)"
+              *ngIf="state.newAudienceActive"
+              (importClick)="importClick.emit()"
+              (audienceType)="onNewAudienceTypeChange($event)">
+            </cp-audience-new-body>
+          </cp-tab>
+        </ng-container>
       </cp-tabs>
     </div>
   </div>

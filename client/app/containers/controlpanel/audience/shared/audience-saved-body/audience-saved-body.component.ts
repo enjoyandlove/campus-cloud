@@ -16,7 +16,7 @@ import { CPI18nService } from './../../../../../shared/services';
 })
 export class AudienceSavedBodyComponent implements OnInit {
   @Input() reset: Observable<boolean>;
-
+  @Input() canReadAudience: boolean;
   @Input() importedAudience$: Observable<{ label: string; action: number }>;
 
   @Output() selected: EventEmitter<{ action: number; heading: string }> = new EventEmitter();
@@ -51,12 +51,22 @@ export class AudienceSavedBodyComponent implements OnInit {
     if (audiences.length) {
       audiences.unshift(heading);
     }
+
     this.audiences = audiences;
 
     return audiences;
   }
 
   fetch() {
+    if (!this.canReadAudience) {
+      this.audiences$ = Observable.of([
+        {
+          action: null,
+          label: this.cpI18n.translate('campus_wide')
+        }
+      ]);
+    }
+
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 

@@ -79,6 +79,19 @@ export class AudienceCardComponent implements OnInit, AfterViewInit {
       .subscribe(({ audience_id, new_audience_active, saved_audience_active }) => {
         this.importedAudience$.next(audience_id);
 
+        // admin with no access to audience
+        if (this.tabs.toArray().length === 1) {
+          this.tabs.toArray()[0].active = true;
+
+          this.state = {
+            ...this.state,
+            savedAudienceActive: true,
+            newAudienceActive: false
+          };
+
+          return;
+        }
+
         if (new_audience_active) {
           this.tabs.toArray()[1].active = true;
           this.tabs.toArray()[0].active = false;
