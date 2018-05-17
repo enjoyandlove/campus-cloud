@@ -979,6 +979,9 @@
   "dashboard_top_services": {
     "message": "Top Services"
   },
+  "deals": {
+    "message": "Deals"
+  },
   "deals_create_deal": {
     "message": "Create Deal"
   },
@@ -2096,6 +2099,9 @@
   },
   "stores_delete_modal_body": {
     "message": "Are you sure you want to delete %s?"
+  },
+  "stores_delete_modal_title": {
+    "message": "Delete Store"
   },
   "stores_edit_modal_title": {
     "message": "Edit Store"

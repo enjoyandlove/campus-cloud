@@ -979,6 +979,9 @@
   "dashboard_top_services": {
     "message": "Palmarès des services"
   },
+  "deals": {
+    "message": "Rabais"
+  },
   "deals_create_deal": {
     "message": "Créer rabais"
   },
@@ -2096,6 +2099,9 @@
   },
   "stores_delete_modal_body": {
     "message": "Êtes-vous sûr de vouloir supprimer %s ?"
+  },
+  "stores_delete_modal_title": {
+    "message": "Supprimer magasin"
   },
   "stores_edit_modal_title": {
     "message": "Éditer magasin"
