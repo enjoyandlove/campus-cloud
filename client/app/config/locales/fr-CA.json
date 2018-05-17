@@ -623,6 +623,9 @@
   "campus_wide": {
     "message": "Tout le campus"
   },
+  "cancel": {
+    "message": "Annuler"
+  },
   "category": {
     "message": "Categorie"
   },
