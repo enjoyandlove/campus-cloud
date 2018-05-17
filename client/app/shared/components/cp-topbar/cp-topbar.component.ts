@@ -19,6 +19,7 @@ export class CPTopBarComponent implements OnInit {
   canNotify = false;
   canManage = false;
   canAssess = false;
+  canAudience = false;
   canCustomise = false;
   manageHomePage: string;
 
@@ -89,6 +90,7 @@ export class CPTopBarComponent implements OnInit {
     this.manageHomePage = this.getManageHomePage();
 
     this.canNotify = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.campus_announcements);
+    this.canAudience = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.audience);
     this.canAssess = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.assessment);
     this.canCustomise = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.app_customization);
 

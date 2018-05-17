@@ -18,6 +18,11 @@ export class AnnouncementsConfirmComponent implements OnInit {
 
   constructor(private cpI18n: CPI18nService) {}
 
+  doTeardown() {
+    $('#announcementConfirmModal').modal('hide');
+    this.teardown.emit();
+  }
+
   onCofirm() {
     this.confirmed.emit();
   }

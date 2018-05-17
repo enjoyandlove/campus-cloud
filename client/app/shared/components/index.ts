@@ -35,3 +35,4 @@ export * from './cp-check-dropdown';
 export * from './cp-resource-banner';
 export * from './cp-small-datepicker';
 export * from './cp-place-autocomplete';
+export * from './cp-dropdown-multiselect';

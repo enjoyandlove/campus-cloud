@@ -23,6 +23,8 @@ const appRoutes: Routes = [
 
       { path: 'assess', loadChildren: './assess/assess.module#AssessModule' },
 
+      { path: 'audience', loadChildren: './audience/audience.module#AudienceModule' },
+
       {
         path: 'customise',
         loadChildren: './customise/customise.module#CustomiseModule'

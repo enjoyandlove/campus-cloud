@@ -21,7 +21,6 @@ const state: IState = {
 })
 export class AnnouncementsListActionBoxComponent implements OnInit {
   @Output() filter: EventEmitter<IState> = new EventEmitter();
-  @Output() launchModal: EventEmitter<null> = new EventEmitter();
 
   types;
   canCompose;

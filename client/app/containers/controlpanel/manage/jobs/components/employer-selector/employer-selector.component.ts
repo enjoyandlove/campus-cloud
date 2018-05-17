@@ -27,8 +27,9 @@ export class EmployerSelectorComponent extends BaseComponent implements OnInit {
     const store_id = this.form.controls['store_id'].value;
     if (store_id) {
       super.fetchData(this.employers$).then((employers) => {
-        this.selectedEmployer = employers.data.filter((employee) =>
-          employee.action === store_id)[0];
+        this.selectedEmployer = employers.data.filter(
+          (employee) => employee.action === store_id
+        )[0];
       });
     }
   }

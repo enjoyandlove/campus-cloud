@@ -1,0 +1,84 @@
+@import '~styles/core/colors';
+@import '~styles/core/typography';
+@import '~styles/components/modal';
+@import '~styles/components/button';
+
+p a {
+  display: inline-block;
+}
+
+button i {
+  font-size: 18px;
+  margin-top: 2px;
+  vertical-align: bottom;
+}
+
+label.error {
+  margin-right: 10px;
+  display: inline-block;
+}
+
+.dropzone {
+  width: 100%;
+  height: 90px;
+  margin-top: 15px;
+  text-align: center;
+  border-radius: 4px;
+  color: $color-white;
+  background: $color-brand;
+  transition: background 300ms ease-in-out;
+
+  .loading {
+    animation: spin 4s linear infinite;
+  }
+
+  &:hover {
+    background: #1771b5;
+  }
+
+  &.isError {
+    background: $color-danger;
+
+    &:hover {
+      background: $color-danger;
+    }
+  }
+
+  &__input {
+    opacity: 0;
+    z-index: -1;
+    width: 0.1px;
+    height: 0.1px;
+    overflow: hidden;
+    position: absolute;
+  }
+
+  &__label {
+    width: 100%;
+    height: 100%;
+    font-size: 1em;
+    padding: 10px 0;
+    cursor: pointer;
+    margin-bottom: 0;
+    user-select: none;
+    text-align: center;
+    display: inline-block;
+
+    i {
+      font-size: 3em;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    span {
+      @include font-normal();
+    }
+  }
+}
+
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}

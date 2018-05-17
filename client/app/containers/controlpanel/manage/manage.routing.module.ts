@@ -56,12 +56,6 @@ const appRoutes: Routes = [
       },
 
       {
-        path: 'lists',
-        data: { zendesk: 'lists' },
-        loadChildren: './lists/lists.module#ListsModule'
-      },
-
-      {
         path: 'calendars',
         data: { zendesk: 'calendars' },
         loadChildren: './calendars/calendars.module#CalendarsModule'
