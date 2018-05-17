@@ -40,7 +40,7 @@ export class TodosFormComponent implements OnInit {
       defaultDate: due_date
         ? CPDate.fromEpoch(this.form.controls['end'].value, _self.session.tz).format()
         : null,
-      onClose: function(_, dateStr) {
+      onChange: function(_, dateStr) {
         _self.form.controls['end'].setValue(CPDate.toEpoch(dateStr, _self.session.tz));
       }
     };
