@@ -982,6 +982,21 @@
   "dashboard_top_services": {
     "message": "Palmarès des services"
   },
+  "deals": {
+    "message": "Rabais"
+  },
+  "deals_create_deal": {
+    "message": "Créer rabais"
+  },
+  "deals_list_dropdown_label_all_stores": {
+    "message": "Tous les magasins"
+  },
+  "deals_manage_stores": {
+    "message": "Gérer magasins"
+  },
+  "deals_no_results_found": {
+    "message": "Aucun rabais trouvé."
+  },
   "delete": {
     "message": "Supprimer"
   },
@@ -1292,6 +1307,15 @@
   "feeds_can_post": {
     "message": "Qui peut publier ?"
   },
+  "feeds_card_header_deleted_user": {
+    "message": "Utilisateur supprimé"
+  },
+  "feeds_cc_admins": {
+    "message": "Administrateurs Campus Cloud"
+  },
+  "feeds_club_members": {
+    "message": "Membres du club"
+  },
   "feeds_delete_comment": {
     "message": "Supprimer commentaire"
   },
@@ -1327,6 +1351,9 @@
   },
   "feeds_move_post_from": {
     "message": "Déplacer la publication depuis"
+  },
+  "feeds_no_one": {
+    "message": "Personne"
   },
   "feeds_posted_in": {
     "message": "a publié dans"
@@ -1700,9 +1727,6 @@
   "no_hosts_available": {
     "message": "Aucun hôte disponible"
   },
-  "no_one": {
-    "message": "Personne"
-  },
   "no_results": {
     "message": "Aucun résultat"
   },
@@ -2069,6 +2093,30 @@
   },
   "status": {
     "message": "Statut"
+  },
+  "stores_create_modal_title": {
+    "message": "Créer magasin"
+  },
+  "stores_create_store": {
+    "message": "Créer magasin"
+  },
+  "stores_delete_modal_body": {
+    "message": "Êtes-vous sûr de vouloir supprimer %s ?"
+  },
+  "stores_delete_modal_title": {
+    "message": "Supprimer magasin"
+  },
+  "stores_edit_modal_title": {
+    "message": "Éditer magasin"
+  },
+  "stores_manage_store": {
+    "message": "Gérer magasins"
+  },
+  "stores_no_results_found": {
+    "message": "Aucun magasin trouvé"
+  },
+  "store_name": {
+    "message": "Nom du magasin"
   },
   "students": {
     "message": "Étudiants"

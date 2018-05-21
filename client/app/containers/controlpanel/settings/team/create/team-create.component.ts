@@ -192,7 +192,9 @@ export class TeamCreateComponent implements OnInit {
 
   onServicesModalSelected(services) {
     const servicesLength = Object.keys(services).length;
-    this.servicesCount = servicesLength ? { label: `${servicesLength} Service(s)` } : null;
+    this.servicesCount = servicesLength
+      ? { label: `${servicesLength} ${this.cpI18n.translate('admin_form_label_services')}` }
+      : null;
 
     this.accountPrivileges = Object.assign({}, this.accountPrivileges, ...services);
   }
@@ -240,7 +242,9 @@ export class TeamCreateComponent implements OnInit {
 
   onClubsModalSelected(clubs) {
     const clubsLength = Object.keys(clubs).length;
-    this.clubsCount = clubsLength ? { label: `${clubsLength} Club(s)` } : null;
+    this.clubsCount = clubsLength
+      ? { label: `${clubsLength} ${this.cpI18n.translate('admin_form_label_clubs')}` }
+      : null;
 
     this.accountPrivileges = Object.assign({}, this.accountPrivileges, ...clubs);
   }
@@ -248,7 +252,9 @@ export class TeamCreateComponent implements OnInit {
   onAthleticsModalSelected(athletics) {
     this.doAthleticsCleanUp();
     const athleticsLength = Object.keys(athletics).length;
-    this.athleticsCount = athleticsLength ? { label: `${athleticsLength} Athletic(s)` } : null;
+    this.athleticsCount = athleticsLength
+      ? { label: `${athleticsLength} ${this.cpI18n.translate('admin_form_label_athletics')}` }
+      : null;
 
     this.accountPrivileges = Object.assign({}, this.accountPrivileges, ...athletics);
   }
