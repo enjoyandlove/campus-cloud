@@ -9,6 +9,8 @@ export const API_ENDPOINTS = {
 
   ADMIN: 'admin',
 
+  DEALS: 'deals',
+
   STORE: 'store',
 
   EVENT: 'event',

@@ -1,0 +1,67 @@
+<div class="row">
+  <form [formGroup]="form">
+    <div class="cp-card">
+      <div class="row">
+        <div class="col-xs-12">
+          <p class="title">{{ 't_deals_form_deal_banner' | cpI18n }}</p>
+          <div class="row margin-top">
+            <cp-image-upload
+              (uploaded)="onUploadedImage($event)"
+              [defaultImage]="form.controls['image_url'].value">
+            </cp-image-upload>
+          </div>
+        </div>
+      </div>
+      <div class="row item-details">
+        <div class="col-xs-12">
+          <p
+            class="title"
+            phraseapp="t_deals_form_deal_details">
+            {{ 't_deals_form_deal_details' | cpI18n }}
+          </p>
+          <div class="form-group margin-top">
+            <label phraseapp="t_deals_form_deal_title">
+              {{ 't_deals_form_deal_title' | cpI18n }}
+            </label>
+            <cp-char-counter
+              class="pull-right"
+              [limit]="120"
+              [charCount]="form.controls.title.value">
+            </cp-char-counter>
+
+            <input
+              type="text"
+              class="form-control"
+              formControlName="title">
+          </div>
+
+          <div class="form-group">
+            <label phraseapp="description">
+              {{ 'description' | cpI18n }}
+            </label>
+            <textarea formControlName="description"></textarea>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-xs-6">
+              <label phraseapp="t_deals_form_posting_start_date">
+                {{ 't_deals_form_posting_start_date' | cpI18n }}
+              </label>
+              <cp-datepicker
+                [options]="postingStartDatePickerOptions">
+              </cp-datepicker>
+            </div>
+            <div class="col-xs-6">
+              <label phraseapp="t_deals_form_posting_end_date">
+                {{ 't_deals_form_posting_end_date' | cpI18n }}
+              </label>
+              <cp-datepicker
+                [options]="postingEndDatePickerOptions">
+              </cp-datepicker>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

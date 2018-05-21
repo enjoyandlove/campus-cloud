@@ -28,6 +28,7 @@ import { SharedModule } from '../../../../../shared/shared.module';
     ReactiveFormsModule,
     StoreRoutingModule
   ],
+  exports: [StoreFormComponent],
   providers: [StoreService]
 })
 export class StoreModule {}

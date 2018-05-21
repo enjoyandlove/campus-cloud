@@ -1,0 +1,8 @@
+<label phraseapp="t_deals_form_dropdown_label_select_store">
+  {{ 't_deals_form_dropdown_label_select_store' | cpI18n }}
+</label>
+<cp-dropdown
+  [items]="stores$ | async"
+  [selectedItem]="selectedStore"
+  (selected)="onSelectedStore($event.action)">
+</cp-dropdown>

@@ -1,0 +1,27 @@
+<div class="cp-card">
+  <p
+    class="title"
+    phraseapp="t_deals_form_store_details">
+    {{ 't_deals_form_store_details' | cpI18n }}
+  </p>
+  <div class="row margin-top">
+    <div class="col-xs-12">
+      <cp-tabs (tabClick)="onTabClick($event)">
+        <cp-tab id="existing" [title]="existingStoreTitle">
+          <div class="col-xs-5 no-left-padding">
+            <div class="form-group">
+              <cp-store-selector
+                [form]="form">
+              </cp-store-selector>
+            </div>
+          </div>
+        </cp-tab>
+        <cp-tab id="new" [title]="newStoreTitle">
+          <cp-store-form
+            [storeForm]="storeForm">
+          </cp-store-form>
+        </cp-tab>
+      </cp-tabs>
+    </div>
+  </div>
+</div>
