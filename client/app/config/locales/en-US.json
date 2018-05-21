@@ -98,6 +98,15 @@
   "admin_events_title": {
     "message": "Event Viewer"
   },
+  "admin_form_label_athletics": {
+    "message": "Athletic(s)"
+  },
+  "admin_form_label_clubs": {
+    "message": "Club(s)"
+  },
+  "admin_form_label_services": {
+    "message": "Service(s)"
+  },
   "admin_grant_permissions": {
     "message": "Invite new team members and assign permissions"
   },
