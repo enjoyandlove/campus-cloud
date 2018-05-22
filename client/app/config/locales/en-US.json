@@ -98,6 +98,15 @@
   "admin_events_title": {
     "message": "Event Viewer"
   },
+  "admin_form_label_athletics": {
+    "message": "Athletic(s)"
+  },
+  "admin_form_label_clubs": {
+    "message": "Club(s)"
+  },
+  "admin_form_label_services": {
+    "message": "Service(s)"
+  },
   "admin_grant_permissions": {
     "message": "Invite new team members and assign permissions"
   },
@@ -623,6 +632,9 @@
   "campus_wide": {
     "message": "Campus-Wide"
   },
+  "cancel": {
+    "message": "Cancel"
+  },
   "category": {
     "message": "Category"
   },
@@ -978,6 +990,21 @@
   },
   "dashboard_top_services": {
     "message": "Top Services"
+  },
+  "deals": {
+    "message": "Deals"
+  },
+  "deals_create_deal": {
+    "message": "Create Deal"
+  },
+  "deals_list_dropdown_label_all_stores": {
+    "message": "All Stores"
+  },
+  "deals_manage_stores": {
+    "message": "Manage Stores"
+  },
+  "deals_no_results_found": {
+    "message": "No deals found."
   },
   "delete": {
     "message": "Delete"
@@ -2075,6 +2102,30 @@
   },
   "status": {
     "message": "Status"
+  },
+  "stores_create_modal_title": {
+    "message": "Create Store"
+  },
+  "stores_create_store": {
+    "message": "Create Store"
+  },
+  "stores_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "stores_delete_modal_title": {
+    "message": "Delete Store"
+  },
+  "stores_edit_modal_title": {
+    "message": "Edit Store"
+  },
+  "stores_manage_store": {
+    "message": "Manage Stores"
+  },
+  "stores_no_results_found": {
+    "message": "No stores found"
+  },
+  "store_name": {
+    "message": "Store Name"
   },
   "students": {
     "message": "Students"

@@ -14,7 +14,7 @@ require('zone.js/dist/async-test');
 require('zone.js/dist/fake-async-test');
 
 import 'jquery';
-import 'rxjs/add/observable/of';
+import 'rxjs';
 require('node_modules/bootstrap-sass/assets/javascripts/bootstrap.min');
 
 /*

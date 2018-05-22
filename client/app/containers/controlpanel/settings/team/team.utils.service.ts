@@ -36,6 +36,11 @@ export enum eventMenu {
   manageEventsAndAssess = 3
 }
 
+export enum audienceMenuStatus {
+  noAccess = null,
+  allAccess = 1
+}
+
 export enum manageAdminMenu {
   disabled = null,
   enabled = 1
@@ -76,6 +81,27 @@ export class TeamUtilsService {
         {
           label: this.cpI18n.translate('admin_manage_and_assess_events'),
           action: eventMenu.manageEventsAndAssess
+        }
+      ];
+    }
+
+    return items;
+  }
+
+  audienceDropdown(schoolPrivilege = { r: false, w: false }) {
+    let items = [
+      {
+        label: this.cpI18n.translate('admin_no_access'),
+        action: audienceMenuStatus.noAccess
+      }
+    ];
+
+    if (schoolPrivilege.r) {
+      items = [
+        ...items,
+        {
+          label: this.cpI18n.translate('admin_audience_menu_all_access'),
+          action: audienceMenuStatus.allAccess
         }
       ];
     }

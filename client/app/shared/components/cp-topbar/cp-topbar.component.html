@@ -34,6 +34,12 @@
             routerLinkActive="active">
             <a [routerLink]="['/customise']">{{ 'customise' | cpI18n }}</a>
           </li>
+          <li
+            *ngIf="canAudience"
+            (click)="isOpen = false"
+            routerLinkActive="active">
+            <a [routerLink]="['/audience']">{{ 'audience' | cpI18n }}</a>
+          </li>
         </ul>
 
         <div

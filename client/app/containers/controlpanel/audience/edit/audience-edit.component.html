@@ -1,0 +1,67 @@
+<div class="cpmodal">
+  <div class="cpmodal__header">
+    <div class="row">
+      <div class="col-xs-12 text-center">
+        <span><strong>{{ 'lists_edit_modal_title' | cpI18n }}</strong></span>
+
+        <span
+          data-dismiss="modal"
+          (click)="resetModal()"
+          class="pull-right hover cpmodal__header__close">
+          &times;
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cpmodal__body">
+    <ng-container [ngSwitch]="loading">
+      <cp-spinner *ngSwitchCase="true"></cp-spinner>
+      <ng-container *ngSwitchCase="false">
+        <div class="row">
+          <div class="col-xs-6">
+            <form [formGroup]="form">
+              <div class="form-group">
+                <label>{{ 'lists_label_list_name' | cpI18n }}</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="name">
+              </div>
+              </form>
+          </div>
+        </div>
+        <cp-audience-new-body 
+          [audience]="audience"
+          [importButton]="false"
+          (count)="onUserCount($event)"
+          [withChips]="audience.users"
+          [disableTypeSelection]="true"
+          [defaultView]="defaultAudienceView"
+          (filters)="onFiltersSelected($event)"
+          (users)="onAudienceSelected($event)">
+        </cp-audience-new-body>
+      </ng-container>
+    </ng-container>
+  </div>
+
+  <div class="cpmodal__footer">
+    <div class="row">
+      <div class="col-xs-6 col-xs-offset-6 text-right">
+        <button
+          type="button"
+          data-dismiss="modal"
+          (click)="resetModal()"
+          class="cpbtn cpbtn--cancel">
+          {{ 'cancel' | cpI18n }}
+        </button>
+
+        <cp-button
+          [props]="buttonData"
+          (buttonClick)="doSubmit()">
+        </cp-button>
+      </div>
+    </div>
+  </div>
+</div>
+
