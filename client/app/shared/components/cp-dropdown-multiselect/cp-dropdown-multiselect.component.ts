@@ -14,6 +14,7 @@ import {
   styleUrls: ['./cp-dropdown-multiselect.component.scss']
 })
 export class CPDropdownMultiSelectComponent implements OnInit, OnChanges {
+  @Input() placeholder = '...';
   @Input() items: Array<{ action: number; label: string; selected: boolean }> = [];
 
   @Output() selection: EventEmitter<Array<number>> = new EventEmitter();

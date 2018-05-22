@@ -25,6 +25,7 @@ export class AudienceDynamicComponent extends BaseComponent implements OnInit {
   filtersData;
   selectedItem = [];
   maxFilterCount = 5;
+  filterDropdownPlaceholer;
 
   selectedFilterOptions = {};
 
@@ -151,7 +152,7 @@ export class AudienceDynamicComponent extends BaseComponent implements OnInit {
         {
           id: null,
           heading: true,
-          label: this.cpI18n.translate('select')
+          label: this.cpI18n.translate('select_filter')
         }
       ])
       .map((response) => {
@@ -159,7 +160,7 @@ export class AudienceDynamicComponent extends BaseComponent implements OnInit {
           {
             id: null,
             heading: true,
-            label: this.cpI18n.translate('select')
+            label: this.cpI18n.translate('select_filter')
           },
           ...response.map((item) => {
             return {
@@ -179,6 +180,7 @@ export class AudienceDynamicComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.filterDropdownPlaceholer = this.cpI18n.translate('select_filter_value');
     this.form = this.fb.group({
       filters: this.fb.array([])
     });
