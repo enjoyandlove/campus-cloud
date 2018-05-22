@@ -1814,7 +1814,7 @@
     "message": "Pour plus de sécurité, utilisez des nombres et des caractères spéciaux tels que @, #, $, &, etc"
   },
   "password_reset_success": {
-    "message": "Mot de passe enregistré, redirection vers la page d'identification"
+    "message": "Mot de passe enregistré. Redirection vers la page d'identification"
   },
   "pending": {
     "message": "En attente"
