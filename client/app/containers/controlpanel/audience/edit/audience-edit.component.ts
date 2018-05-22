@@ -1,4 +1,3 @@
-import { SNACKBAR_SHOW } from './../../../../reducers/snackbar.reducer';
 import {
   Component,
   ElementRef,
@@ -33,7 +32,9 @@ export class AuidenceEditComponent extends BaseComponent implements OnInit {
 
   loading;
   audience;
+  isError;
   buttonData;
+  errorMessage;
   userCount = 0;
   form: FormGroup;
   defaultAudienceView;
@@ -68,15 +69,15 @@ export class AuidenceEditComponent extends BaseComponent implements OnInit {
         this.edited.emit(this.form.value);
         this.resetModal();
       },
-      () => {
-        this.store.dispatch({
-          type: SNACKBAR_SHOW,
-          payload: {
-            sticky: true,
-            class: 'danger',
-            body: this.cpI18n.translate('something_went_wrong')
-          }
-        });
+      (err) => {
+        this.isError = true;
+        const error = JSON.parse(err._body).error;
+        if (error === 'Database Error') {
+          this.errorMessage = 'An audience with that name already exists';
+
+          return;
+        }
+        this.errorMessage = this.cpI18n.translate('something_went_wrong');
       }
     );
   }
