@@ -45,6 +45,12 @@
   "admin_athletics_owner_help": {
     "message": "Create new athletics clubs; manage information, events and membership for all clubs or select clubs"
   },
+  "admin_audience_help": {
+    "message": "Notify and assess specific segments (audiences) of users"
+  },
+  "admin_audience_title": {
+    "message": "Audiences"
+  },
   "admin_campus_announcements": {
     "message": "Regular Announcements"
   },
@@ -505,6 +511,42 @@
   },
   "attendees": {
     "message": "Attendees"
+  },
+  "audience": {
+    "message": "Audience"
+  },
+  "audience_add_filter_button": {
+    "message": "Add Filter"
+  },
+  "audience_counter_users": {
+    "message": "Users Found"
+  },
+  "audience_create_modal_label_name": {
+    "message": "Audience Name"
+  },
+  "audience_edit_modal_label_name": {
+    "message": "Audience Name"
+  },
+  "audience_label_filters": {
+    "message": "Filters"
+  },
+  "audience_label_type": {
+    "message": "Audience Type"
+  },
+  "audience_label_users": {
+    "message": "Users"
+  },
+  "audience_name": {
+    "message": "Audience Name"
+  },
+  "audience_type_all": {
+    "message": "All Audiences"
+  },
+  "audience_type_custom": {
+    "message": "Custom"
+  },
+  "audience_type_dynamic": {
+    "message": "Dynamic"
   },
   "auth_confirm_new_password": {
     "message": "Confirm New Password"
@@ -1616,7 +1658,7 @@
     "message": "Edit List"
   },
   "lists_error_template_conflict": {
-    "message": "This list is being used in a notification template. To delete this list, first delete all templates addressed to this list, and try again."
+    "message": "This audience is being used in a notification template. To delete this audience, first delete all templates addressed to it, then try again."
   },
   "lists_label_list_description": {
     "message": "Description"
@@ -1932,8 +1974,14 @@
   "select_category": {
     "message": "Select Category"
   },
+  "select_filter": {
+    "message": "Select Filter"
+  },
+  "select_filter_value": {
+    "message": "Select Value"
+  },
   "select_host": {
-    "message": "Select a Host"
+    "message": "Select Host"
   },
   "send": {
     "message": "Send"
@@ -2209,6 +2257,60 @@
   "type": {
     "message": "Type"
   },
+  "t_deals_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "t_deals_delete_modal_title": {
+    "message": "Delete Deal"
+  },
+  "t_deals_form_deal_banner": {
+    "message": "Create Deal"
+  },
+  "t_deals_form_deal_details": {
+    "message": "Deal Details"
+  },
+  "t_deals_form_deal_title": {
+    "message": "Title"
+  },
+  "t_deals_form_dropdown_label_select_store": {
+    "message": "Select Store"
+  },
+  "t_deals_form_error_end_date_after_now": {
+    "message": "The end date must be in the future."
+  },
+  "t_deals_form_error_end_date_before_start": {
+    "message": "The posting end date cannot be before the start date."
+  },
+  "t_deals_form_heading_create_deal": {
+    "message": "Create Deal"
+  },
+  "t_deals_form_posting_end_date": {
+    "message": "Posting End"
+  },
+  "t_deals_form_posting_start_date": {
+    "message": "Posting Start"
+  },
+  "t_deals_form_store_details": {
+    "message": "Store Details"
+  },
+  "t_deals_form_tab_existing_store": {
+    "message": "Existing Store"
+  },
+  "t_deals_form_tab_new_store": {
+    "message": "Create Store"
+  },
+  "t_deals_list_grid_column_store": {
+    "message": "Store"
+  },
+  "t_persona_list_button_customize": {
+    "message": "Customize"
+  },
+  "t_persona_list_button_edit": {
+    "message": "Edit"
+  },
+  "t_persona_list_button_notify": {
+    "message": "Notify"
+  },
   "update": {
     "message": "Update",
     "description": "Verb"
@@ -2225,6 +2327,9 @@
   },
   "users": {
     "message": "Users"
+  },
+  "users_found": {
+    "message": "Users Found"
   },
   "validate_password_min_length": {
     "message": "Make sure your password is at least 6 characters long"
