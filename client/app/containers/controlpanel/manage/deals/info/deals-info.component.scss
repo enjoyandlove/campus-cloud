@@ -19,50 +19,8 @@ strong {
 }
 
 .deals {
-  &__map,
-  &__banner {
-    height: 225px;
-  }
-
   &__map {
+    height: 225px;
     margin-top: 15px;
-  }
-
-  &__banner {
-    position: relative;
-    margin-bottom: 15px;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-  }
-
-  &__meta {
-    left: 20px;
-    bottom: 20px;
-    position: absolute;
-
-    p {
-      @include font-16px();
-
-      margin-bottom: 0;
-      color: $color-white;
-
-      &.event__title {
-        @include font-semi-bold();
-        @include font-24px();
-
-        margin-bottom: 0;
-      }
-    }
-  }
-
-  &__buttons {
-    a {
-      margin-right: 10px;
-
-      &:last-child {
-        margin-right: 0;
-      }
-    }
   }
 }

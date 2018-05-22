@@ -3,9 +3,14 @@
     <div class="cp-card">
       <div class="row">
         <div class="col-xs-12">
-          <p class="title">{{ 't_deals_form_deal_banner' | cpI18n }}</p>
+          <p
+            class="title"
+            phraseapp="t_deals_form_deal_banner">
+            {{ 't_deals_form_deal_banner' | cpI18n }}
+          </p>
           <div class="row margin-top">
             <cp-image-upload
+              id="1"
               (uploaded)="onUploadedImage($event)"
               [defaultImage]="form.controls['image_url'].value">
             </cp-image-upload>
@@ -24,7 +29,7 @@
               {{ 't_deals_form_deal_title' | cpI18n }}
             </label>
             <cp-char-counter
-              class="pull-right"
+              class="pull-right add-margin"
               [limit]="120"
               [charCount]="form.controls.title.value">
             </cp-char-counter>

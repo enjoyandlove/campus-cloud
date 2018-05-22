@@ -6,10 +6,6 @@
     margin-top: 24px;
   }
 
-  label.no-margin {
-    margin: 0;
-  }
-
   p.title {
     @include font-24px();
     @include font-bold();

@@ -21,6 +21,7 @@ import { IResourceBanner } from '../../../../../shared/components/cp-resource-ba
 export class DealsInfoComponent extends BaseComponent implements OnInit {
   deal;
   dealId;
+  viewMap;
   loading;
   dateFormat;
   draggable = false;
@@ -48,7 +49,7 @@ export class DealsInfoComponent extends BaseComponent implements OnInit {
       this.deal = deal.data;
 
       this.buildHeader(this.deal);
-
+      this.viewMap = this.deal.store_latitude && this.deal.store_longitude;
       this.mapCenter = new BehaviorSubject({
         lat: this.deal.store_latitude,
         lng: this.deal.store_longitude

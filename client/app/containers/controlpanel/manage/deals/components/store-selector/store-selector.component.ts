@@ -34,7 +34,7 @@ export class StoreSelectorComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.stores$ = this.service.getStores();
+    this.stores$ = this.service.getStores('new');
     this.getSelectedStore();
   }
 }

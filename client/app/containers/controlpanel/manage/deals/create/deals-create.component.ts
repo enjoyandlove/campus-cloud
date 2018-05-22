@@ -6,10 +6,8 @@ import { Store } from '@ngrx/store';
 
 import { DealsService } from '../deals.service';
 import { CPSession } from '../../../../../session';
-import { CPDate } from '../../../../../shared/utils';
-import { CPI18nService } from '../../../../../shared/services';
 import { StoreService } from '../stores/store.service';
-import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
+import { CPI18nService } from '../../../../../shared/services';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 
 @Component({
@@ -19,11 +17,11 @@ import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 })
 export class DealsCreateComponent implements OnInit {
   data;
-  formError;
+  error = false;
   buttonData;
   isNewStore;
+  errorMessage;
   form: FormGroup;
-  dateErrorMessage;
   storeForm: FormGroup;
 
   constructor(
@@ -37,21 +35,7 @@ export class DealsCreateComponent implements OnInit {
   ) {}
 
   onSubmit() {
-    this.formError = false;
-
-    if (this.data.deal.expiration <= this.data.deal.start) {
-      this.formError = true;
-      this.dateErrorMessage = this.cpI18n.translate('t_deals_form_error_end_date_before_start');
-
-      return;
-    }
-
-    if (this.data.deal.expiration <= Math.round(CPDate.now(this.session.tz).unix())) {
-      this.formError = true;
-      this.dateErrorMessage = this.cpI18n.translate('t_deals_form_error_end_date_after_now');
-
-      return;
-    }
+    this.error = false;
 
     if (this.isNewStore) {
       this.createDealWithNewStore(this.data);
@@ -82,19 +66,11 @@ export class DealsCreateComponent implements OnInit {
       })
       .subscribe(
         (deal) => this.router.navigate([`/manage/deals/${deal.id}/info`]),
-        (_) => this.flashMessageError()
+        (_) => {
+          this.error = true;
+          this.errorMessage = this.cpI18n.translate('something_went_wrong');
+        }
       );
-  }
-
-  flashMessageError() {
-    this.store.dispatch({
-      type: SNACKBAR_SHOW,
-      payload: {
-        class: 'danger',
-        autoClose: true,
-        body: this.cpI18n.translate('something_went_wrong')
-      }
-    });
   }
 
   buildHeader() {
@@ -142,8 +118,8 @@ export class DealsCreateComponent implements OnInit {
       image_url: [null, Validators.required],
       image_thumb_url: [null],
       description: [null],
-      start: [null, Validators.required],
-      expiration: [null, Validators.required],
+      start: [null],
+      expiration: [null],
     });
   }
 

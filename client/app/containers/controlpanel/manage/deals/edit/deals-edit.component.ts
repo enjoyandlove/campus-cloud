@@ -7,10 +7,8 @@ import { Store } from '@ngrx/store';
 import { DealsService } from '../deals.service';
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
-import { CPDate } from '../../../../../shared/utils';
 import { StoreService } from '../stores/store.service';
 import { CPI18nService } from '../../../../../shared/services';
-import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 
 @Component({
@@ -23,11 +21,11 @@ export class DealsEditComponent extends BaseComponent implements OnInit {
   deal;
   dealId;
   loading;
-  formError;
   buttonData;
   isNewStore;
+  errorMessage;
+  error = false;
   form: FormGroup;
-  dateErrorMessage;
   storeForm: FormGroup;
 
   constructor(
@@ -55,21 +53,7 @@ export class DealsEditComponent extends BaseComponent implements OnInit {
   }
 
   onSubmit() {
-    this.formError = false;
-
-    if (this.data.deal.expiration <= this.data.deal.start) {
-      this.formError = true;
-      this.dateErrorMessage = this.cpI18n.translate('t_deals_form_error_end_date_before_start');
-
-      return;
-    }
-
-    if (this.data.deal.expiration <= Math.round(CPDate.now(this.session.tz).unix())) {
-      this.formError = true;
-      this.dateErrorMessage = this.cpI18n.translate('t_deals_form_error_end_date_after_now');
-
-      return;
-    }
+    this.error = false;
 
     if (this.isNewStore) {
       this.editDealWithNewStore(this.data);
@@ -100,19 +84,11 @@ export class DealsEditComponent extends BaseComponent implements OnInit {
       })
       .subscribe(
         (deal) => this.router.navigate([`/manage/deals/${deal.id}/info`]),
-        (_) => this.flashMessageError()
+        (_) => {
+          this.error = true;
+          this.errorMessage = this.cpI18n.translate('something_went_wrong');
+        }
       );
-  }
-
-  flashMessageError() {
-    this.store.dispatch({
-      type: SNACKBAR_SHOW,
-      payload: {
-        class: 'danger',
-        autoClose: true,
-        body: this.cpI18n.translate('something_went_wrong')
-      }
-    });
   }
 
   buildHeader() {
@@ -160,8 +136,8 @@ export class DealsEditComponent extends BaseComponent implements OnInit {
       image_url: [data.image_url, Validators.required],
       image_thumb_url: [data.image_thumb_url],
       description: [data.description],
-      start: [data.start, Validators.required],
-      expiration: [data.expiration, Validators.required],
+      start: [data.start],
+      expiration: [data.expiration],
     });
   }
 
