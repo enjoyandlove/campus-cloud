@@ -61,12 +61,12 @@ export class PersonasListComponent extends BaseComponent implements OnInit {
     this.fetch();
   }
 
-  movePersonaToIndex(persona, oldIndex, newIndex) {
+  movePersonaToIndex(persona, currentIndex, newIndex) {
     // avoid mutating the object
     const clonedPersonas = [...this.state.personas];
 
     // remove persona from current index
-    pullAt(clonedPersonas, oldIndex);
+    pullAt(clonedPersonas, currentIndex);
 
     // insert persona into new index
     clonedPersonas.splice(newIndex, 0, persona);
@@ -74,21 +74,23 @@ export class PersonasListComponent extends BaseComponent implements OnInit {
     return clonedPersonas;
   }
 
-  onRankUp(persona: IPersona, oldIndex: number) {
-    const newIndex = oldIndex - 1;
+  onRankUp(persona: IPersona, currentIndex: number) {
+    const firstItemInList = currentIndex === 0;
+    const newIndex = firstItemInList ? this.state.personas.length - 1 : currentIndex - 1;
 
     this.state = {
       ...this.state,
-      personas: this.movePersonaToIndex(persona, oldIndex, newIndex)
+      personas: this.movePersonaToIndex(persona, currentIndex, newIndex)
     };
   }
 
-  onRankDown(persona: IPersona, oldIndex: number) {
-    const newIndex = oldIndex + 1;
+  onRankDown(persona: IPersona, currentIndex: number) {
+    const lastItemInList = currentIndex === this.state.personas.length - 1;
+    const newIndex = lastItemInList ? 0 : currentIndex + 1;
 
     this.state = {
       ...this.state,
-      personas: this.movePersonaToIndex(persona, oldIndex, newIndex)
+      personas: this.movePersonaToIndex(persona, currentIndex, newIndex)
     };
   }
 
