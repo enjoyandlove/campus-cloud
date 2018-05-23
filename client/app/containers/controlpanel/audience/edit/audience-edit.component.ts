@@ -73,7 +73,7 @@ export class AuidenceEditComponent extends BaseComponent implements OnInit {
         this.isError = true;
         const error = JSON.parse(err._body).error;
         if (error === 'Database Error') {
-          this.errorMessage = 'An audience with that name already exists';
+          this.errorMessage = this.cpI18n.translate('audience_create_error_duplicate_audience');
 
           return;
         }

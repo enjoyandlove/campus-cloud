@@ -237,19 +237,25 @@ export class AnnouncementsComposeComponent implements OnInit {
     this.service
       .createAudience(data, search)
       .toPromise()
-      .then(() => {
+      .then(({ id }) => {
         $('#audienceSaveModal').modal('hide');
-        this.doSubmit();
+        this.doSubmit(id);
       })
-      .catch(() => {
+      .catch((err) => {
         $('#audienceSaveModal').modal('hide');
+
+        const error = JSON.parse(err._body).error;
+        const body =
+          error === 'Database Error'
+            ? this.cpI18n.translate('audience_create_error_duplicate_audience')
+            : this.cpI18n.translate('something_went_wrong');
 
         this.store.dispatch({
           type: SNACKBAR_SHOW,
           payload: {
             sticky: true,
             class: 'danger',
-            body: this.cpI18n.translate('something_went_wrong')
+            body
           }
         });
 
@@ -319,7 +325,7 @@ export class AnnouncementsComposeComponent implements OnInit {
     this.validButton();
   }
 
-  doSubmit() {
+  doSubmit(savedListId = null) {
     this.isError = false;
     $('#announcementConfirmModal').modal('hide');
 
@@ -355,6 +361,12 @@ export class AnnouncementsComposeComponent implements OnInit {
 
       delete data['list_ids'];
       delete data['user_ids'];
+    }
+
+    if (savedListId) {
+      delete data['filters'];
+
+      data = Object.assign({}, data, { list_ids: [savedListId] });
     }
 
     this.service.postAnnouncements(search, data).subscribe(
@@ -469,7 +481,7 @@ export class AnnouncementsComposeComponent implements OnInit {
     this.buildHeader();
 
     this.buttonData = {
-      text: 'send',
+      text: this.cpI18n.translate('send'),
       class: 'primary',
       disabled: true
     };
