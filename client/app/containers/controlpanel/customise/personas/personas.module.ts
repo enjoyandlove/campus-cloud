@@ -7,6 +7,7 @@ import { SharedModule } from '../../../../shared/shared.module';
 
 import { PersonasListComponent } from './list';
 import { PersonasEditComponent } from './edit';
+import { PersonasDeleteComponent } from './delete';
 import { PersonasService } from './personas.service';
 import { PersonasUtilsService } from './personas.utils.service';
 import { PersonasRoutingModule } from './personas.routing.module';
@@ -20,7 +21,8 @@ import { PersonasFormComponent } from './components/personas-form/personas-form.
     PersonasListActionBoxComponent,
     PersonasCreateComponent,
     PersonasFormComponent,
-    PersonasEditComponent
+    PersonasEditComponent,
+    PersonasDeleteComponent
   ],
 
   imports: [CommonModule, SharedModule, RouterModule, ReactiveFormsModule, PersonasRoutingModule],

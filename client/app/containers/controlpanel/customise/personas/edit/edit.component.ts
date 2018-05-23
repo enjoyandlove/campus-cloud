@@ -13,6 +13,7 @@ import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
 import { SNACKBAR_HIDE } from './../../../../../reducers/snackbar.reducer';
 import { IHeader, HEADER_UPDATE } from './../../../../../reducers/header.reducer';
 import { PersonasFormComponent } from './../components/personas-form/personas-form.component';
+import { IPersona } from '../persona.interface';
 
 @Component({
   selector: 'cp-personas-edit',
@@ -22,11 +23,11 @@ import { PersonasFormComponent } from './../components/personas-form/personas-fo
 export class PersonasEditComponent extends BaseComponent implements OnInit, OnDestroy {
   @ViewChild('editForm') editForm: PersonasFormComponent;
 
-  loading: boolean;
-  personaId: number;
-  submitButtonData;
-  deleteButtonData;
   form: FormGroup;
+  submitButtonData;
+  loading: boolean;
+  persona: IPersona;
+  personaId: number;
 
   constructor(
     public router: Router,
@@ -116,35 +117,15 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
     const stream$ = this.service.getPersonaById(this.personaId, search);
 
     super.fetchData(stream$).then(({ data }) => {
+      this.persona = data;
+
       this.buildHeader();
       this.buildForm(data);
     });
   }
 
-  onDelete() {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
-
-    this.service.deletePersonaById(this.personaId, search).subscribe(
-      () => this.router.navigate(['/customize/personas']),
-      (err) => {
-        this.deleteButtonData = { ...this.deleteButtonData, disabled: false };
-
-        const body =
-          err._body === 'tiles associated'
-            ? this.cpI18n.translate('t_personas_delete_error_persona_has_tiles')
-            : this.cpI18n.translate('something_went_wrong');
-
-        this.store.dispatch({
-          type: SNACKBAR_SHOW,
-          payload: {
-            sticky: true,
-            class: 'danger',
-            body
-          }
-        });
-      }
-    );
+  onDeleted() {
+    this.router.navigate(['/customize/personas']);
   }
 
   ngOnDestroy() {
@@ -157,11 +138,6 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
     this.submitButtonData = {
       class: 'primary',
       text: this.cpI18n.translate('t_personas_edit_submit_button')
-    };
-
-    this.deleteButtonData = {
-      class: 'danger',
-      text: this.cpI18n.translate('t_personas_edit_delete_button')
     };
   }
 }
