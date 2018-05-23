@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
+import { pullAt } from 'lodash';
 
 import { IPersona } from './../persona.interface';
 import { CPSession } from '../../../../../session';
@@ -58,6 +59,37 @@ export class PersonasListComponent extends BaseComponent implements OnInit {
     this.resetPagination();
 
     this.fetch();
+  }
+
+  movePersonaToIndex(persona, oldIndex, newIndex) {
+    // avoid mutating the object
+    const clonedPersonas = [...this.state.personas];
+
+    // remove persona from current index
+    pullAt(clonedPersonas, oldIndex);
+
+    // insert persona into new index
+    clonedPersonas.splice(newIndex, 0, persona);
+
+    return clonedPersonas;
+  }
+
+  onRankUp(persona: IPersona, oldIndex: number) {
+    const newIndex = oldIndex - 1;
+
+    this.state = {
+      ...this.state,
+      personas: this.movePersonaToIndex(persona, oldIndex, newIndex)
+    };
+  }
+
+  onRankDown(persona: IPersona, oldIndex: number) {
+    const newIndex = oldIndex + 1;
+
+    this.state = {
+      ...this.state,
+      personas: this.movePersonaToIndex(persona, oldIndex, newIndex)
+    };
   }
 
   fetch() {

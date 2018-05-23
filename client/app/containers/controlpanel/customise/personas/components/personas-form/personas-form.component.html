@@ -56,22 +56,6 @@
           </div>
         </div>
       </div>
-    
-      <div class="row form-group">
-        <div class="col-xs-8">
-          <label>{{ 't_personas_form_personalized_page' | cpI18n }}</label>
-          <p>{{ 't_personas_form_personalized_page_help' | cpI18n }}</p>
-        </div>
-        <div class="col-xs-4">
-          <div class="pull-right">
-            <cp-switch 
-              [id]="['personas_homePage']" 
-              [isChecked]="form.controls['cre_enabled'].value"
-              (toggle)="togglePersonalizedHomePage($event)">
-            </cp-switch>
-          </div>
-        </div>
-      </div>
     </ng-container>
   </ng-container>
 </form>
