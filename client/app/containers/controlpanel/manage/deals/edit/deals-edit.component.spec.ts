@@ -39,7 +39,7 @@ class MockStoreService {
   }
 }
 
-fdescribe('DealsEditComponent', () => {
+describe('DealsEditComponent', () => {
   let spyDeal;
   let search;
   let spyStore;
