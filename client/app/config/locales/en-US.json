@@ -45,6 +45,12 @@
   "admin_athletics_owner_help": {
     "message": "Create new athletics clubs; manage information, events and membership for all clubs or select clubs"
   },
+  "admin_audience_help": {
+    "message": "Notify and assess specific segments (audiences) of users"
+  },
+  "admin_audience_title": {
+    "message": "Audiences"
+  },
   "admin_campus_announcements": {
     "message": "Regular Announcements"
   },
@@ -199,6 +205,9 @@
   },
   "announcements_emergency_help": {
     "message": "Overrides the user's push notifications settings and forces them to acknowledge the message"
+  },
+  "announcements_heading_create": {
+    "message": "New Message"
   },
   "announcements_not_sent": {
     "message": "Message not sent, please wait %s minutes before trying again"
@@ -505,6 +514,54 @@
   },
   "attendees": {
     "message": "Attendees"
+  },
+  "audience": {
+    "message": "Audience"
+  },
+  "audience_add_filter_button": {
+    "message": "Add Filter"
+  },
+  "audience_counter_users": {
+    "message": "Users Found"
+  },
+  "audience_create_error_duplicate_audience": {
+    "message": "There is already an audience with that name."
+  },
+  "audience_create_modal_label_name": {
+    "message": "Audience Name"
+  },
+  "audience_edit_modal_label_name": {
+    "message": "Audience Name"
+  },
+  "audience_import_success_message": {
+    "message": "Audience created successfully"
+  },
+  "audience_label_audience": {
+    "message": "Audience"
+  },
+  "audience_label_filters": {
+    "message": "Filters"
+  },
+  "audience_label_type": {
+    "message": "Type"
+  },
+  "audience_label_users": {
+    "message": "Users"
+  },
+  "audience_my_audiences": {
+    "message": "My Audiences"
+  },
+  "audience_name": {
+    "message": "Audience Name"
+  },
+  "audience_type_all": {
+    "message": "All Audiences"
+  },
+  "audience_type_custom": {
+    "message": "Custom"
+  },
+  "audience_type_dynamic": {
+    "message": "Dynamic"
   },
   "auth_confirm_new_password": {
     "message": "Confirm New Password"
@@ -1616,7 +1673,7 @@
     "message": "Edit List"
   },
   "lists_error_template_conflict": {
-    "message": "This list is being used in a notification template. To delete this list, first delete all templates addressed to this list, and try again."
+    "message": "This audience is being used in a notification template. To delete this audience, first delete all templates addressed to it, then try again."
   },
   "lists_label_list_description": {
     "message": "Description"
@@ -1691,6 +1748,9 @@
   "members": {
     "message": "Members"
   },
+  "message": {
+    "message": "Message"
+  },
   "message_action": {
     "message": "Message"
   },
@@ -1711,6 +1771,9 @@
   },
   "name": {
     "message": "Name"
+  },
+  "new_audience_tab_title": {
+    "message": "New Audience"
   },
   "new_password": {
     "message": "New Password"
@@ -1820,7 +1883,7 @@
     "message": "For added security, use numbers, letters and special characters such as @, #, $, &, etc"
   },
   "password_reset_success": {
-    "message": "Password saved, redirecting you to the login page"
+    "message": "Password saved. Redirecting you to the login page"
   },
   "pending": {
     "message": "Pending"
@@ -1923,6 +1986,9 @@
   "save": {
     "message": "Save"
   },
+  "saved_audience_tab_title": {
+    "message": "Saved Audience"
+  },
   "save_changes": {
     "message": "Save Changes"
   },
@@ -1932,8 +1998,14 @@
   "select_category": {
     "message": "Select Category"
   },
+  "select_filter": {
+    "message": "Select Filter"
+  },
+  "select_filter_value": {
+    "message": "Select Value"
+  },
   "select_host": {
-    "message": "Select a Host"
+    "message": "Select Host"
   },
   "send": {
     "message": "Send"
@@ -2209,6 +2281,126 @@
   "type": {
     "message": "Type"
   },
+  "t_customise_personas": {
+    "message": "App Experiences"
+  },
+  "t_deals_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "t_deals_delete_modal_title": {
+    "message": "Delete Deal"
+  },
+  "t_deals_form_deal_banner": {
+    "message": "Create Deal"
+  },
+  "t_deals_form_deal_details": {
+    "message": "Deal Details"
+  },
+  "t_deals_form_deal_title": {
+    "message": "Title"
+  },
+  "t_deals_form_dropdown_label_select_store": {
+    "message": "Select Store"
+  },
+  "t_deals_form_error_end_date_after_now": {
+    "message": "The end date must be in the future."
+  },
+  "t_deals_form_error_end_date_before_start": {
+    "message": "The posting end date cannot be before the start date."
+  },
+  "t_deals_form_heading_create_deal": {
+    "message": "Create Deal"
+  },
+  "t_deals_form_posting_end_date": {
+    "message": "Posting End"
+  },
+  "t_deals_form_posting_start_date": {
+    "message": "Posting Start"
+  },
+  "t_deals_form_store_details": {
+    "message": "Store Details"
+  },
+  "t_deals_form_tab_existing_store": {
+    "message": "Existing Store"
+  },
+  "t_deals_form_tab_new_store": {
+    "message": "Create Store"
+  },
+  "t_deals_list_grid_column_store": {
+    "message": "Store"
+  },
+  "t_personas_button_list_create": {
+    "message": "Create Persona"
+  },
+  "t_personas_create_form_title": {
+    "message": "Persona Details"
+  },
+  "t_personas_create_header_title": {
+    "message": "Create Persona"
+  },
+  "t_personas_create_submit_button": {
+    "message": "Save Changes"
+  },
+  "t_personas_form_delete_button": {
+    "message": "Delete Persona"
+  },
+  "t_personas_form_dropdown_login_forbidden": {
+    "message": "Forbidden"
+  },
+  "t_personas_form_dropdown_login_optional": {
+    "message": "Optional"
+  },
+  "t_personas_form_dropdown_login_required": {
+    "message": "Required"
+  },
+  "t_personas_form_dropdown_platform_mobile": {
+    "message": "Mobile"
+  },
+  "t_personas_form_dropdown_platform_web": {
+    "message": "Web"
+  },
+  "t_personas_form_label_persona_name": {
+    "message": "Persona Name"
+  },
+  "t_personas_form_label_platform": {
+    "message": "Platform"
+  },
+  "t_personas_form_label_requires_credentials": {
+    "message": "Requires Credentials"
+  },
+  "t_personas_form_personalized_page": {
+    "message": "Personalized Home Page"
+  },
+  "t_personas_form_personalized_page_help": {
+    "message": "This experience will provide a personalized home page for logged in users"
+  },
+  "t_personas_form_pretour": {
+    "message": "Pretour"
+  },
+  "t_personas_form_pretour_help": {
+    "message": "Provide an overview of the app before registration"
+  },
+  "t_personas_list_dropdown_all_experiences": {
+    "message": "All"
+  },
+  "t_personas_list_dropdown_mobile_experiences": {
+    "message": "Mobile"
+  },
+  "t_personas_list_dropdown_web_experiences": {
+    "message": "Web"
+  },
+  "t_persona_create_cancel_button": {
+    "message": "Cancel"
+  },
+  "t_persona_list_button_customize": {
+    "message": "Customize"
+  },
+  "t_persona_list_button_edit": {
+    "message": "Edit"
+  },
+  "t_persona_list_button_notify": {
+    "message": "Notify"
+  },
   "update": {
     "message": "Update",
     "description": "Verb"
@@ -2225,6 +2417,9 @@
   },
   "users": {
     "message": "Users"
+  },
+  "users_found": {
+    "message": "Users Found"
   },
   "validate_password_min_length": {
     "message": "Make sure your password is at least 6 characters long"

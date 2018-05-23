@@ -2,7 +2,7 @@
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-xs-12 text-center">
-        <span><strong>{{ 'lists_edit_modal_title' | cpI18n }}</strong></span>
+        <span><strong>{{ 'audience_edit_modal_label_name' | cpI18n }}</strong></span>
 
         <span
           data-dismiss="modal"
@@ -47,7 +47,10 @@
 
   <div class="cpmodal__footer">
     <div class="row">
-      <div class="col-xs-6 col-xs-offset-6 text-right">
+      <div class="col-xs-12 text-right">
+        <label class="error" *ngIf="isError">
+          {{ errorMessage }}
+        </label>
         <button
           type="button"
           data-dismiss="modal"
