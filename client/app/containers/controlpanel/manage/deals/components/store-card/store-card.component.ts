@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
+import { IDeal } from '../../deals.interface';
+import { IStore } from '../../stores/store.interface';
 import { CPI18nService } from '../../../../../../shared/services';
 
 @Component({
@@ -15,9 +17,9 @@ export class StoreCardComponent implements OnInit {
 
   @Output() isNewStore: EventEmitter<boolean> = new EventEmitter();
   @Output() formData: EventEmitter<{
-    deal: any;
+    deal: IDeal;
     dealFormValid: boolean
-    store: any;
+    store: IStore;
     storeFormValid: boolean
   }> = new EventEmitter();
 
