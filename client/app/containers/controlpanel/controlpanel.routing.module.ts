@@ -5,7 +5,6 @@ import { ControlPanelComponent } from './controlpanel.component';
 import { CPPreloadStrategy } from './../../config/strategies/preload.strategy';
 
 const appRoutes: Routes = [
-  // // HOME PAGE
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
 
   {
@@ -26,7 +25,7 @@ const appRoutes: Routes = [
       { path: 'audience', loadChildren: './audience/audience.module#AudienceModule' },
 
       {
-        path: 'customise',
+        path: 'customize',
         loadChildren: './customise/customise.module#CustomiseModule'
       },
 

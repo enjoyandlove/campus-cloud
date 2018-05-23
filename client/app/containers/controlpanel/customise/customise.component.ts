@@ -6,10 +6,10 @@ import { HEADER_UPDATE, IHeader } from '../../../reducers/header.reducer';
 @Component({
   selector: 'cp-customise',
   template: `
-        <cp-page-header [data]="headerData$ | async"></cp-page-header>
-        <div class="cp-wrapper cp-wrapper--outer">
-            <router-outlet></router-outlet>
-        </div>
+    <cp-page-header [data]="headerData$ | async"></cp-page-header>
+    <div class="cp-wrapper cp-wrapper--outer">
+        <router-outlet></router-outlet>
+    </div>
     `
 })
 export class CustomiseComponent implements OnInit {

@@ -4,7 +4,7 @@
       <div class="cp-card">
         <div class="row">
           <div class="col-xs-12">
-            <p class="title" i18n>{{ 'services_label_banner' | cpI18n }}</p>
+            <p class="title">{{ 'services_label_banner' | cpI18n }}</p>
             <div class="margin-top row">
               <cp-image-upload
                 [required]="formError && form.controls['logo_url'].hasError('required')"
@@ -16,9 +16,9 @@
 
         <div class="row margin-top">
           <div class="col-xs-12">
-            <p class="title" i18n>{{ 'services_label_details' | cpI18n }}</p>
+            <p class="title">{{ 'services_label_details' | cpI18n }}</p>
             <div class="form-group margin-top">
-              <label i18n>{{ 'services_label_name' | cpI18n }}</label>
+              <label>{{ 'services_label_name' | cpI18n }}</label>
               <input
                 type="text"
                 class="form-control"
@@ -28,7 +28,7 @@
 
             <div class="row form-group">
               <div class="col-xs-6">
-                <label i18n>{{ 'select_category' | cpI18n }}
+                <label>{{ 'select_category' | cpI18n }}
                   <cp-tooltip
                     [toolTipContent]="category">
                   </cp-tooltip>
@@ -43,7 +43,7 @@
 
             <div class="row form-group">
               <div class="col-xs-6">
-                <label i18n>{{ 'phone_number' | cpI18n }}</label>
+                <label>{{ 'phone_number' | cpI18n }}</label>
                 <input
                   type="text"
                   class="form-control"
@@ -53,7 +53,7 @@
 
             <div class="row form-group">
               <div class="col-xs-6">
-                <label i18n>{{ 'email' | cpI18n }}</label>
+                <label>{{ 'email' | cpI18n }}</label>
                 <input
                   type="email"
                   class="form-control"
@@ -63,7 +63,7 @@
 
             <div class="row form-group">
               <div class="col-xs-6">
-                <label i18n>{{ 'website' | cpI18n }}</label>
+                <label>{{ 'website' | cpI18n }}</label>
                 <input
                   type="text"
                   class="form-control"
@@ -72,13 +72,13 @@
             </div>
 
             <div class="form-group form-group">
-              <label i18n>{{ 'services_label_description' | cpI18n }}</label>
+              <label>{{ 'services_label_description' | cpI18n }}</label>
               <textarea formControlName="description"></textarea>
             </div>
 
             <div class="row">
               <div class="col-xs-12">
-                <label i18n>{{ 'location' | cpI18n }}</label>
+                <label>{{ 'location' | cpI18n }}</label>
                 <div class="row form-group">
                   <div class="col-xs-12">
                     <cp-place-autocomplete
@@ -91,7 +91,7 @@
                 </div>
                 <div class="row form-group">
                   <div class="col-xs-6">
-                    <label i18n>{{ 'building' | cpI18n }}</label>
+                    <label>{{ 'building' | cpI18n }}</label>
                     <input
                       type="text"
                       class="form-control"
@@ -100,7 +100,7 @@
 
                   <div class="col-xs-6">
                     <div class="form-group">
-                      <label i18n>{{ 'room' | cpI18n }}</label>
+                      <label>{{ 'room' | cpI18n }}</label>
                       <input
                         type="text"
                         class="form-control"
@@ -130,7 +130,7 @@
       <div class="cp-card">
         <div class="row">
           <div class="col-xs-8">
-            <p class="title" i18n>{{ 'services_label_service_assessment' | cpI18n }}</p>
+            <p class="title">{{ 'services_label_service_assessment' | cpI18n }}</p>
           </div>
           <div class="col-xs-4 pull-right">
             <span class="pull-right">
@@ -145,7 +145,7 @@
         <ng-container *ngIf="attendance">
           <div class="row">
             <div class="col-xs-6">
-              <label i18n>{{ 'services_label_enable_service_feedback' | cpI18n }}
+              <label>{{ 'services_label_enable_service_feedback' | cpI18n }}
                 <cp-tooltip
                   [toolTipContent]="feedback">
                 </cp-tooltip>
@@ -167,11 +167,11 @@
     <div class="row">
       <div class="col-xs-12">
         <div class="text-right">
-          <label class="error" *ngIf="formError" i18n>
+          <label class="error" *ngIf="formError">
               <span>&#x26A0;</span> {{ 'error_fill_out_marked_fields' | cpI18n }}
           </label>
           <a [routerLink]="['/manage/services']"
-            class="cpbtn cpbtn--cancel" i18n>
+            class="cpbtn cpbtn--cancel">
             {{ 'cancel' | cpI18n }}
           </a>
 
