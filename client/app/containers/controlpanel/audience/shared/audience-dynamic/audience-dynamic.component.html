@@ -25,7 +25,8 @@
                 <div class="col-xs-6">
                   <cp-dropdown-multiselect 
                     (selection)="onChoices($event, i)"
-                    [items]="selectedFilterOptions[i]">
+                    [items]="selectedFilterOptions[i]"
+                    [placeholder]="filterDropdownPlaceholer">
                   </cp-dropdown-multiselect>
                 </div>
               </div>

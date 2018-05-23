@@ -50,7 +50,13 @@ export class DealsCreateComponent implements OnInit {
 
     this.service
       .createDeal(data.deal, search)
-      .subscribe((deal) => this.router.navigate([`/manage/deals/${deal.id}/info`]));
+      .subscribe(
+        (deal) => this.router.navigate([`/manage/deals/${deal.id}/info`]),
+        (_) => {
+          this.error = true;
+          this.errorMessage = this.cpI18n.translate('something_went_wrong');
+        }
+      );
   }
 
   createDealWithNewStore(data) {
@@ -101,10 +107,10 @@ export class DealsCreateComponent implements OnInit {
     });
   }
 
-  formData(data) {
+  onFormData(data) {
     this.data = data;
     const isFormValid = data.dealFormValid && data.storeFormValid;
-    this.buttonData = Object.assign({}, this.buttonData, { disabled: !isFormValid });
+    this.buttonData = {...this.buttonData, disabled: !isFormValid};
   }
 
   onToggleStore(value) {

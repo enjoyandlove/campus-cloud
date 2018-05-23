@@ -7,7 +7,7 @@
           <cp-deals-card
             [form]="form"
             [storeForm]="storeForm"
-            (formData)="formData($event)">
+            (formData)="onFormData($event)">
           </cp-deals-card>
         </div>
 
@@ -15,7 +15,7 @@
           <cp-store-card
             [form]="form"
             [storeForm]="storeForm"
-            (formData)="formData($event)"
+            (formData)="onFormData($event)"
             (isNewStore)="onToggleStore($event)">
           </cp-store-card>
         </div>

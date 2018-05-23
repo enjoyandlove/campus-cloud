@@ -497,6 +497,12 @@
   "attendees": {
     "message": "Présents"
   },
+  "audience_label_filters": {
+    "message": "Filters"
+  },
+  "audience_label_users": {
+    "message": "Users"
+  },
   "auth_confirm_new_password": {
     "message": "Confirmez le nouveau mot de passe"
   },
@@ -1606,9 +1612,6 @@
   "lists_edit_modal_title": {
     "message": "Éditer liste"
   },
-  "lists_error_template_conflict": {
-    "message": "Cette liste est utilisée dans un modèle de notification. Pour supprimer cette liste, vous devez d'abord supprimer tous les modèles adressés à cette liste, et essayer de nouveau."
-  },
   "lists_label_list_description": {
     "message": "Description"
   },
@@ -1811,7 +1814,7 @@
     "message": "Pour plus de sécurité, utilisez des nombres et des caractères spéciaux tels que @, #, $, &, etc"
   },
   "password_reset_success": {
-    "message": "Mot de passe enregistré, redirection vers la page d'identification"
+    "message": "Mot de passe enregistré. Redirection vers la page d'identification"
   },
   "pending": {
     "message": "En attente"
