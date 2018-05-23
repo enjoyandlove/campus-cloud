@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
+import { IDeal } from '../../deals.interface';
+import { IStore } from '../../stores/store.interface';
 import { CPSession } from '../../../../../../session';
 import { CPDate } from '../../../../../../shared/utils';
 import { CPI18nService } from '../../../../../../shared/services';
@@ -23,9 +25,9 @@ export class DealsFormComponent implements OnInit {
   @Input() storeForm: FormGroup;
 
   @Output() formData: EventEmitter<{
-    deal: any;
+    deal: IDeal;
     dealFormValid: boolean
-    store: any;
+    store: IStore;
     storeFormValid: boolean
   }> = new EventEmitter();
 

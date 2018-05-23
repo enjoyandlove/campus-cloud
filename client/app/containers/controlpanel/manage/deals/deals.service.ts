@@ -24,8 +24,8 @@ export class DealsService extends BaseService {
 
   getStores(label = null) {
     const key = label === 'new'
-      ? 't_deals_form_label_inside_drodown_select_store'
-      : 'deals_list_dropdown_label_all_stores';
+      ? 't_deals_list_dropdown_label_new_store'
+      : 't_deals_list_dropdown_label_all_stores';
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 

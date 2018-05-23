@@ -1,6 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
+import { IDeal } from '../../deals.interface';
+import { IStore } from '../../stores/store.interface';
+
 @Component({
   selector: 'cp-deals-card',
   templateUrl: './deals-card.component.html',
@@ -12,9 +15,9 @@ export class DealsCardComponent {
   @Input() storeForm: FormGroup;
 
   @Output() formData: EventEmitter<{
-    deal: any;
+    deal: IDeal;
     dealFormValid: boolean
-    store: any;
+    store: IStore;
     storeFormValid: boolean
   }> = new EventEmitter();
 
