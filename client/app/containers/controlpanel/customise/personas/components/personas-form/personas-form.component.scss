@@ -1,0 +1,14 @@
+@import '~styles/components/form';
+
+form {
+  margin-top: 25px;
+
+  label {
+    margin-top: 10px;
+    display: inline-block;
+  }
+
+  .text-muted {
+    font-size: 0.8em;
+  }
+}

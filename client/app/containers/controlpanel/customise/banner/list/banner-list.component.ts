@@ -1,3 +1,4 @@
+import { HEADER_UPDATE } from './../../../../../reducers/header.reducer';
 import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
@@ -134,7 +135,16 @@ export class BannerListComponent extends BaseComponent implements OnInit {
       });
   }
 
+  updateHeader() {
+    this.store.dispatch({
+      type: HEADER_UPDATE,
+      payload: require('../../customise.header.json')
+    });
+  }
+
   ngOnInit() {
+    this.updateHeader();
+
     const zendesk = 'https://oohlalamobile.zendesk.com/hc/en-us/articles';
     this.loadImage();
     this.customizeBannerTooltip = {

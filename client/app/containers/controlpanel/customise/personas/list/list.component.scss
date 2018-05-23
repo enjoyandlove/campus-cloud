@@ -8,15 +8,6 @@
   @include card-margin();
 }
 
-.action-button {
-  font-size: 1.8em;
-  color: $color-secondary-text;
-
-  &:first-child {
-    margin-right: 10px;
-  }
-}
-
 .cp-form__header {
   span.hover {
     position: relative;
@@ -30,15 +21,30 @@
   }
 }
 
-.calendars {
+.personas {
   padding: 0;
   list-style: none;
 
-  @media all and (max-width: $screen-md) {
-    li {
-      > span:not(.calendars__thumbnail) {
-        text-align: center;
-        padding-bottom: 10px;
+  &__name {
+    top: 5px;
+    position: relative;
+  }
+
+  &__actions {
+    top: -6px;
+    position: relative;
+
+    a {
+      margin-right: 35px;
+
+      i {
+        top: 8px;
+        line-height: 1;
+        position: relative;
+      }
+
+      &:last-child {
+        margin-right: 0;
       }
     }
   }

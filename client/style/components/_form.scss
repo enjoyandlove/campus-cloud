@@ -43,11 +43,15 @@
 
   li,
   &__header {
-    padding: 17px 15px;
+    padding: 17px 24px;
     border-bottom: 1px solid $border-color;
 
     &:last-child {
       border-bottom: 0;
+    }
+
+    > .row {
+      line-height: 1;
     }
   }
 }

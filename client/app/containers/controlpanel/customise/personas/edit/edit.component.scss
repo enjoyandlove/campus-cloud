@@ -1,0 +1,30 @@
+@import '~styles/core/colors';
+@import '~styles/components/card';
+@import '~styles/core/typography';
+@import '~styles/components/button';
+
+.cp-card {
+  @include card-margin();
+
+  margin-top: 0;
+}
+
+.margin-bottom {
+  // to account for the fixed footer
+  padding-bottom: 90px;
+}
+
+.title {
+  @include font-bold();
+  @include font-24px;
+}
+
+.footer {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  position: fixed;
+  padding: 15px 0;
+  background: $color-white;
+  border-top: 1px solid $border-color;
+}
