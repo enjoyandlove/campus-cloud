@@ -2,6 +2,7 @@
   <div class="form-group store">
     <div class="form-group">
       <cp-image-upload
+        id="stores"
         (uploaded)="onUploadedImage($event)"
         [defaultImage]="storeForm.controls['logo_url'].value">
       </cp-image-upload>

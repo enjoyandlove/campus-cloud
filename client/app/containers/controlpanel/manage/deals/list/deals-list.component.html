@@ -13,7 +13,81 @@
   <div *ngSwitchCase="false">
     <cp-no-content
       class="no-content"
+      *ngIf="!state.deals.length"
       [noContentText]="cpI18n.translate('deals_no_results_found')">
     </cp-no-content>
+
+    <div *ngIf="state.deals.length">
+      <ul class="cp-form">
+        <li class="cp-form__header col-xs-12">
+          <div class="row">
+            <span
+              class="col-xs-8 hover"
+              (click)="doSort('title')">
+              {{ 'name' | cpI18n }}
+              <span *ngIf="state.sort_field === 'title'">
+                <i class="material-icons">
+                  {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+                </i>
+              </span>
+            </span>
+            <span
+              class="col-xs-3 hover"
+              (click)="doSort('store_name')">
+              {{ 't_deals_list_grid_column_store' | cpI18n }}
+                <span *ngIf="state.sort_field === 'store_name'">
+                  <i class="material-icons">
+                    {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+                  </i>
+                </span>
+            </span>
+            <span class="col-xs-1 hover"></span>
+          </div>
+        </li>
+
+        <li class="cp-form__item col-xs-12" *ngFor="let deal of state.deals;">
+          <div class="row">
+            <span class="col-xs-8 text-truncate cp-form__thumbnail">
+              <img
+                *ngIf="deal.image_url"
+                [src]="deal.image_url"
+                class="img-rounded img-fit-cover">
+              <a [routerLink]="[deal.id+'/info']">
+                <strong>
+                  {{ deal.title }}
+                </strong>
+              </a>
+              <br>
+              {{ deal.description }}
+            </span>
+            <span class="col-xs-3">
+              {{ deal.store_name }}
+            </span>
+            <span
+              (click)="deleteDeal = deal; launchDeleteModal = true"
+              data-toggle="modal" data-target="#deleteModal"
+              class="col-xs-1 hover text-truncate delete-deal text-center">
+              &times;
+            </span>
+          </div>
+        </li>
+      </ul>
+
+      <cp-pagination
+        [pageNext]="pageNext"
+        [pagePrev]="pagePrev"
+        [pageNumber]="pageNumber"
+        (next)="onPaginationNext()"
+        (previous)="onPaginationPrevious()">
+      </cp-pagination>
+    </div>
   </div>
 </div>
+
+<cp-modal modalId="deleteModal" *ngIf="launchDeleteModal">
+  <cp-deals-delete
+    [deal]="deleteDeal"
+    (deleted)="onDeleted($event)"
+    (resetDeleteModal)="launchDeleteModal = false">
+  </cp-deals-delete>
+</cp-modal>

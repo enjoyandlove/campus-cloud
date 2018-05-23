@@ -16,12 +16,12 @@
 <ng-container *ngIf="!theme">
   <div [class]="['input ' + buttonClass]">
     <input
-      id="file"
+      [attr.id]="id"
       type="file"
       name="file"
       class="inputfile"
       (change)="onChange($event)" />
-    <label for="file" i18n [class]="[props?.class]">{{ buttonText ? buttonText : 'Choose a file' }}</label>
+    <label [for]="id" [class]="[props?.class]">{{ buttonText ? buttonText : 'Choose a file' }}</label>
   </div>
 </ng-container>
 

@@ -1,0 +1,87 @@
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div *ngSwitchCase="false">
+    <div class="row">
+      <div class="col-xs-8 col-xs-offset-2 deals">
+        <div class="cp-card deals__header">
+          <div class="row">
+            <div class="col-xs-12">
+              <cp-resource-banner
+                [resourceBanner]="resourceBanner">
+              </cp-resource-banner>
+              <div class="row deals__buttons">
+                <div class="col-xs-12">
+                  <a
+                    [routerLink]="['../edit']"
+                    class="cpbtn cpbtn--primary" i18n>
+                    {{ 'edit' | cpI18n }}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="cp-card deals__details">
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="row" *ngIf="deal.start">
+                    <div class="col-xs-2">
+                      <p>
+                        <strong>{{ 'starts' | cpI18n }}</strong>
+                      </p>
+                    </div>
+                    <div class="col-xs-10">
+                      <p>{{ deal.start | cpDatePipe:dateFormat }}</p>
+                    </div>
+                  </div>
+
+                  <div class="row" *ngIf="deal.expiration">
+                    <div class="col-xs-2">
+                      <p>
+                        <strong>{{ 'ends' | cpI18n }}</strong>
+                      </p>
+                    </div>
+                    <div class="col-xs-10">
+                      {{ deal.expiration | cpDatePipe:dateFormat }}
+                    </div>
+                  </div>
+
+                  <div class="row" *ngIf="deal.store_address">
+                    <div class="col-xs-2">
+                      <p><strong>{{ 'location' | cpI18n }}</strong></p>
+                    </div>
+                    <div class="col-xs-10">
+                      <p>{{ deal.store_address }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-12 deals__map">
+                  <cp-maps
+                    [center]="mapCenter"
+                    [draggable]="draggable">
+                  </cp-maps>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" *ngIf="deal.description">
+          <div class="col-xs-12">
+            <div class="cp-card">
+              <p><strong>{{ 'description' | cpI18n }}</strong></p>
+              <p class="no-margin-bottom render_line_breaks">{{ deal.description }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
