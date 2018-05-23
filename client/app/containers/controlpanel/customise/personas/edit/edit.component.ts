@@ -1,5 +1,5 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
@@ -10,6 +10,7 @@ import { PersonasService } from './../personas.service';
 import { CPI18nService } from '../../../../../shared/services';
 import { PersonasUtilsService } from './../personas.utils.service';
 import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
+import { SNACKBAR_HIDE } from './../../../../../reducers/snackbar.reducer';
 import { IHeader, HEADER_UPDATE } from './../../../../../reducers/header.reducer';
 import { PersonasFormComponent } from './../components/personas-form/personas-form.component';
 
@@ -18,7 +19,7 @@ import { PersonasFormComponent } from './../components/personas-form/personas-fo
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.scss']
 })
-export class PersonasEditComponent extends BaseComponent implements OnInit {
+export class PersonasEditComponent extends BaseComponent implements OnInit, OnDestroy {
   @ViewChild('editForm') editForm: PersonasFormComponent;
 
   loading: boolean;
@@ -126,16 +127,28 @@ export class PersonasEditComponent extends BaseComponent implements OnInit {
 
     this.service.deletePersonaById(this.personaId, search).subscribe(
       () => this.router.navigate(['/customize/personas']),
-      () =>
+      (err) => {
+        this.deleteButtonData = { ...this.deleteButtonData, disabled: false };
+
+        const body =
+          err._body === 'tiles associated'
+            ? this.cpI18n.translate('t_personas_delete_error_persona_has_tiles')
+            : this.cpI18n.translate('something_went_wrong');
+
         this.store.dispatch({
           type: SNACKBAR_SHOW,
           payload: {
             sticky: true,
             class: 'danger',
-            body: this.cpI18n.translate('something_went_wrong')
+            body
           }
-        })
+        });
+      }
     );
+  }
+
+  ngOnDestroy() {
+    this.store.dispatch({ type: SNACKBAR_HIDE });
   }
 
   ngOnInit(): void {

@@ -38,7 +38,7 @@ export class PersonasService extends BaseService {
   deletePersonaById(personaId: number, search: URLSearchParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.PERSONAS}/${personaId}`;
 
-    return super.delete(url, { search }).map((res) => res.json());
+    return super.delete(url, { search }, true).map((res) => res.json());
   }
 
   updatePersona(personaId: number, search: URLSearchParams, body) {
