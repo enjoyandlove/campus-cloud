@@ -100,7 +100,7 @@ export class DealsEditComponent extends BaseComponent implements OnInit {
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        heading: `t_deals_form_heading_create_deal`,
+        heading: `t_deals_form_heading_edit_deal`,
         subheading: null,
         em: null,
         children: []
