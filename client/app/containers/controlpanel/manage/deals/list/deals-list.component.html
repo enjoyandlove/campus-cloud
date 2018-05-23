@@ -33,10 +33,9 @@
             </span>
             <span
               class="col-xs-3 hover"
-              (click)="doSort('store_id')"
-              phraseapp="t_deals_list_grid_column_store">
+              (click)="doSort('store_name')">
               {{ 't_deals_list_grid_column_store' | cpI18n }}
-                <span *ngIf="state.sort_field === 'store_id'">
+                <span *ngIf="state.sort_field === 'store_name'">
                   <i class="material-icons">
                     {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
                   </i>
