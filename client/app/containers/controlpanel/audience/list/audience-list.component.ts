@@ -88,6 +88,7 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
       type: SNACKBAR_SHOW,
       payload: {
         sticky: true,
+        autoClose: true,
         class: 'success',
         body: this.cpI18n.translate('audience_import_success_message')
       }
