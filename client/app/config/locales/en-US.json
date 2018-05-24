@@ -48,6 +48,9 @@
   "admin_audience_help": {
     "message": "Notify and assess specific segments (audiences) of users"
   },
+  "admin_audience_menu_all_access": {
+    "message": "All Audiences"
+  },
   "admin_audience_title": {
     "message": "Audiences"
   },
@@ -530,6 +533,9 @@
   "audience_create_modal_label_name": {
     "message": "Audience Name"
   },
+  "audience_do_not_save": {
+    "message": "Cancel"
+  },
   "audience_edit_modal_label_name": {
     "message": "Audience Name"
   },
@@ -547,6 +553,9 @@
   },
   "audience_label_users": {
     "message": "Users"
+  },
+  "audience_modal_label_audience_name": {
+    "message": "Audience Name"
   },
   "audience_my_audiences": {
     "message": "My Audiences"
@@ -1053,9 +1062,6 @@
   },
   "deals_create_deal": {
     "message": "Create Deal"
-  },
-  "deals_list_dropdown_label_all_stores": {
-    "message": "All Stores"
   },
   "deals_manage_stores": {
     "message": "Manage Stores"
@@ -1989,6 +1995,9 @@
   "saved_audience_tab_title": {
     "message": "Saved Audience"
   },
+  "save_audience_modal_title": {
+    "message": "Save Audience"
+  },
   "save_changes": {
     "message": "Save Changes"
   },
@@ -2291,7 +2300,7 @@
     "message": "Delete Deal"
   },
   "t_deals_form_deal_banner": {
-    "message": "Create Deal"
+    "message": "Upload your image"
   },
   "t_deals_form_deal_details": {
     "message": "Deal Details"
@@ -2325,6 +2334,9 @@
   },
   "t_deals_form_tab_new_store": {
     "message": "Create Store"
+  },
+  "t_deals_list_dropdown_label_all_stores": {
+    "message": "All Stores"
   },
   "t_deals_list_grid_column_store": {
     "message": "Store"
