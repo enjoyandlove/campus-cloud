@@ -118,6 +118,11 @@ a.cpbtn {
     background: transparent;
     vertical-align: baseline;
     border-color: transparent;
+
+    &:disabled {
+      color: $color-med-grey;
+      background: transparent;
+    }
   }
 
   &--link-dark {

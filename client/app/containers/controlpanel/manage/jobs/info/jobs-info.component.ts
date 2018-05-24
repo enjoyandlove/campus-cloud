@@ -43,26 +43,30 @@ export class JobsInfoComponent extends BaseComponent implements OnInit {
 
     super.fetchData(this.service.getJobById(this.jobId, search)).then((job) => {
       this.job = job.data;
-      this.desiredYear = this.utils.getDesiredStudy(
-        false,
-        this.job.is_ug_y1,
-        this.job.is_ug_y2,
-        this.job.is_ug_y3,
-        this.job.is_ug_y4,
-        this.job.is_masters,
-        this.job.is_phd
-      ).map((study) => study.label);
+      this.desiredYear = this.utils
+        .getDesiredStudy(
+          false,
+          this.job.is_ug_y1,
+          this.job.is_ug_y2,
+          this.job.is_ug_y3,
+          this.job.is_ug_y4,
+          this.job.is_masters,
+          this.job.is_phd
+        )
+        .map((study) => study.label);
 
-      this.jobType = this.utils.getJobsType(
-        false,
-        this.job.is_full_time,
-        this.job.is_part_time,
-        this.job.is_summer,
-        this.job.is_internship,
-        this.job.is_credited,
-        this.job.is_volunteer,
-        this.job.is_oncampus
-      ).map((type) => type.label);
+      this.jobType = this.utils
+        .getJobsType(
+          false,
+          this.job.is_full_time,
+          this.job.is_part_time,
+          this.job.is_summer,
+          this.job.is_internship,
+          this.job.is_credited,
+          this.job.is_volunteer,
+          this.job.is_oncampus
+        )
+        .map((type) => type.label);
     });
   }
 

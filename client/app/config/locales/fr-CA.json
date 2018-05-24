@@ -497,6 +497,12 @@
   "attendees": {
     "message": "Présents"
   },
+  "audience_label_filters": {
+    "message": "Filters"
+  },
+  "audience_label_users": {
+    "message": "Users"
+  },
   "auth_confirm_new_password": {
     "message": "Confirmez le nouveau mot de passe"
   },
@@ -622,6 +628,9 @@
   },
   "campus_wide": {
     "message": "Tout le campus"
+  },
+  "cancel": {
+    "message": "Annuler"
   },
   "category": {
     "message": "Categorie"
@@ -978,6 +987,21 @@
   },
   "dashboard_top_services": {
     "message": "Palmarès des services"
+  },
+  "deals": {
+    "message": "Rabais"
+  },
+  "deals_create_deal": {
+    "message": "Créer rabais"
+  },
+  "deals_list_dropdown_label_all_stores": {
+    "message": "Tous les magasins"
+  },
+  "deals_manage_stores": {
+    "message": "Gérer magasins"
+  },
+  "deals_no_results_found": {
+    "message": "Aucun rabais trouvé."
   },
   "delete": {
     "message": "Supprimer"
@@ -1588,9 +1612,6 @@
   "lists_edit_modal_title": {
     "message": "Éditer liste"
   },
-  "lists_error_template_conflict": {
-    "message": "Cette liste est utilisée dans un modèle de notification. Pour supprimer cette liste, vous devez d'abord supprimer tous les modèles adressés à cette liste, et essayer de nouveau."
-  },
   "lists_label_list_description": {
     "message": "Description"
   },
@@ -1793,7 +1814,7 @@
     "message": "Pour plus de sécurité, utilisez des nombres et des caractères spéciaux tels que @, #, $, &, etc"
   },
   "password_reset_success": {
-    "message": "Mot de passe enregistré, redirection vers la page d'identification"
+    "message": "Mot de passe enregistré. Redirection vers la page d'identification"
   },
   "pending": {
     "message": "En attente"
@@ -2075,6 +2096,30 @@
   },
   "status": {
     "message": "Statut"
+  },
+  "stores_create_modal_title": {
+    "message": "Créer magasin"
+  },
+  "stores_create_store": {
+    "message": "Créer magasin"
+  },
+  "stores_delete_modal_body": {
+    "message": "Êtes-vous sûr de vouloir supprimer %s ?"
+  },
+  "stores_delete_modal_title": {
+    "message": "Supprimer magasin"
+  },
+  "stores_edit_modal_title": {
+    "message": "Éditer magasin"
+  },
+  "stores_manage_store": {
+    "message": "Gérer magasins"
+  },
+  "stores_no_results_found": {
+    "message": "Aucun magasin trouvé"
+  },
+  "store_name": {
+    "message": "Nom du magasin"
   },
   "students": {
     "message": "Étudiants"

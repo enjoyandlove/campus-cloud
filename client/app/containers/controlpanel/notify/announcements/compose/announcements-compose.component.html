@@ -1,62 +1,38 @@
-<div [ngSwitch]="shouldConfirm">
-  <div class="cpmodal" *ngSwitchCase="false">
-    <div class="cpmodal__header">
-      <div class="row">
-        <div class="col-xs-12 text-center">
-          <span i18n><strong>{{ 'announcements_compose_modal_title' | cpI18n }}</strong></span>
 
-          <span
-            data-dismiss="modal"
-            (click)="resetModal()"
-            class="pull-right hover cpmodal__header__close">
-            &times;
-          </span>
-        </div>
-      </div>
-    </div>
+<div class="row margin-bottom">
+  <div class="col-xs-8 col-xs-offset-2">
+    <cp-audience-card 
+      (count)="onUsersCount($event)"
+      (importClick)="onImportClick()"
+      [canReadAudience]="canReadAudience"
+      (resetNewAudience)="onResetNewAudience()"
+      (selectedUsers)="onSelectedUsers($event)"
+      (resetSavedAudience)="onResetSavedAudience()"
+      (selectedAudience)="onAudienceChange($event)"
+      (selectedFilters)="onSelectedFilters($event)"
+      (newAudienceTypeChange)="onNewAudienceTypeChange($event)">
+    </cp-audience-card>
 
-    <div class="cpmodal__body">
+    <div class="cp-card">
+      <p class="section__name">{{'message' | cpI18n}}</p>
       <div class="row">
         <div class="col-xs-12">
           <form [formGroup]="form">
-            <div class="form-group campus-switch" [class.isActive]="state.isCampusWide">
-              <div class="row">
-                <div class="col-xs-8">
-                  <p class="title" i18n>{{ 'campus_wide' | cpI18n }}</p>
-                  <p class="text-muted" i18n>{{ 'announcements_compose_modal_help' | cpI18n}}</p>
-                </div>
-                <div class="col-xs-4">
-                  <div class="pull-right">
-                    <cp-switch
-                      class="campus-switch__toggle"
-                      (toggle)="onHandleToggle($event)"
-                      [isChecked]="state.isCampusWide">
-                    </cp-switch>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="form-group" *ngIf="!state.isCampusWide">
-              <label i18n>{{ 'recipient' | cpI18n }}
-                <cp-tooltip
-                  [toolTipContent]="toolTipContent">
-                </cp-tooltip>
-              </label>
-              <div class="row">
-                <div class="col-xs-12">
-                  <cp-typeahead
-                    [props]="typeAheadOpts"
-                    (query)="onSearch($event)"
-                    (selection)="onTypeAheadChange($event)"
-                    (typeChange)="onSwitchSearchType($event)">
-                  </cp-typeahead>
-                </div>
-              </div>
-            </div>
-
             <div class="form-group">
               <div class="row">
+                <div class="col-xs-6">
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <label i18n>{{ 'from' | cpI18n }}</label>
+                      <cp-dropdown
+                        [items]="stores$ | async"
+                        [reset]="resetCustomFields$"
+                        [selectedItem]="session.defaultHost"
+                        (selected)="onSelectedStore($event)">
+                      </cp-dropdown>
+                    </div>
+                  </div>
+                </div>
                 <div class="col-xs-6">
                   <label i18n>{{ 'announcements_type' | cpI18n }}</label>
                   <div class="row">
@@ -68,19 +44,6 @@
                         buttonClass="cpbtn cpbtn--cancel"
                         (selected)="onTypeChanged($event)">
                       </cp-check-dropdown>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-xs-6">
-                  <div class="row">
-                    <div class="col-xs-12">
-                      <label i18n>{{ 'from' | cpI18n }}</label>
-                      <cp-dropdown
-                        [items]="stores$ | async"
-                        [reset]="resetCustomFields$"
-                        [selectedItem]="session.defaultHost"
-                        (selected)="onSelectedStore($event)">
-                      </cp-dropdown>
                     </div>
                   </div>
                 </div>
@@ -96,7 +59,7 @@
               </label>
               <div class="cpInput subject-input">
                 <div class="row">
-                  <div class="col-xs-2" *ngIf="subject_prefix.label">
+                  <div class="col-xs-2 no-right-padding" *ngIf="subject_prefix.label">
                     <span [class]="'subject-input__label text-center ' + subject_prefix.type">
                       {{ subject_prefix.label }}
                     </span>
@@ -126,41 +89,59 @@
           </form>
         </div>
       </div>
-
-      <div class="row" *ngIf="isError">
-        <div class="col-xs-12 text-center">
-          <label class="error">{{ errorMessage }}</label>
-        </div>
-      </div>
-    </div>
-
-    <div class="cpmodal__footer">
-      <div class="row">
-        <div class="col-xs-6 pull-right text-right">
-          <button
-            type="button"
-            data-dismiss="modal"
-            (click)="resetModal()"
-            class="cpbtn cpbtn--cancel" i18n>
-            {{ 'cancel' | cpI18n }}
-          </button>
-
-          <button
-            type="button"
-            (click)="doValidate()"
-            [disabled]="!isFormValid"
-            class="cpbtn cpbtn--primary"i18n>
-            {{ 'send' | cpI18n }}
-          </button>
-        </div>
-      </div>
     </div>
   </div>
+</div>
+<div class="row">
+  <div class="footer">
+    <div class="cp-wrapper cp-wrapper--outer">
+      <div class="col-xs-12">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="text-right">
+              <label class="error" *ngIf="formError" i18n>
+                <span>&#x26A0;</span>
+                {{ isDateError ? dateErrorMessage : cpI18n.translate('error_fill_out_marked_fields') }}
+              </label>
+              <a [routerLink]="['../']"
+                  class="cpbtn cpbtn--cancel" i18n>
+                {{ 'cancel' | cpI18n }}
+              </a>
+              <cp-button
+                [props]="buttonData"
+                (buttonClick)="doValidate()">
+              </cp-button>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
 
+<cp-modal
+  modalId="audienceImport"
+  *ngIf="isAudienceImport">
+  <cp-audience-import
+    (error)="onImportError($event)"
+    (success)="onImportSuccess($event)"
+    (teardown)="isAudienceImport = !isAudienceImport"
+    (launchCreateModal)="onLaunchCreateModal($event)">
+  </cp-audience-import>
+</cp-modal>
+
+<cp-modal modalId="audienceSaveModal">
+  <cp-audience-save-modal 
+    (onSubmit)="onAudienceNamed($event)"
+    (teardown)="onTeardownAudienceSaveModal()">
+  </cp-audience-save-modal>
+</cp-modal>
+
+<cp-modal 
+  *ngIf="shouldConfirm"
+  modalId="announcementConfirmModal" >
   <cp-announcements-confirm
     [state]="state"
-    *ngSwitchCase="true"
     (confirmed)="onConfirmed()"
     (teardown)="shouldConfirm = false">
   </cp-announcements-confirm>
-</div>
+</cp-modal>

@@ -36,7 +36,6 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
   headerText;
   messageType;
   isDeleteModal;
-  isComposeModal;
   suggestions = [];
   viewMoreRecipients = [];
   state: IState = state;
@@ -102,17 +101,6 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
     setTimeout(
       () => {
         $('#viewMoreModal').modal();
-      },
-
-      1
-    );
-  }
-
-  onLaunchCreateModal() {
-    this.isComposeModal = true;
-    setTimeout(
-      () => {
-        $('#composeModal').modal();
       },
 
       1

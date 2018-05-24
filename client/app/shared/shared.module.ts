@@ -47,6 +47,10 @@ import {
   CPStepperComponent,
   CPListModalComponent,
   CPTabComponent,
+  CPUploadModalBodyComponent,
+  CPUploadModalFooterComponent,
+  CPUploadModalHeaderComponent,
+  CPDropdownMultiSelectComponent,
   CPCharCounterComponent
 } from './components';
 import { LocationsService } from '../containers/controlpanel/manage/locations/locations.service';
@@ -100,6 +104,10 @@ import { CPMapsService } from './services/maps.service';
     CPOnboardingComponent,
     CPStepperComponent,
     CPListModalComponent,
+    CPUploadModalBodyComponent,
+    CPUploadModalHeaderComponent,
+    CPUploadModalFooterComponent,
+    CPDropdownMultiSelectComponent,
     CPCharCounterComponent
   ],
 
@@ -161,6 +169,10 @@ import { CPMapsService } from './services/maps.service';
     CPOnboardingComponent,
     CPStepperComponent,
     CPListModalComponent,
+    CPUploadModalBodyComponent,
+    CPUploadModalHeaderComponent,
+    CPUploadModalFooterComponent,
+    CPDropdownMultiSelectComponent,
     CPCharCounterComponent
   ]
 })

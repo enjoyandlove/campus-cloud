@@ -37,19 +37,20 @@
 
         <li class="cp-form__item col-xs-12" *ngFor="let store of state.stores;">
           <div class="row">
-            <span
-              data-toggle="modal"
-              data-target="#editModal"
-              (click)="launchEditModal = true; selectedStore = store"
-              class="col-xs-11 text-truncate cp-form__thumbnail">
+            <span class="col-xs-11 text-truncate cp-form__thumbnail">
               <img
                 [src]="store.logo_url"
                 class="img-rounded img-fit-cover">
-                <strong class="hover">
-                  {{ store.name }}
-                </strong>
-              <br>
-              {{ store.description }}
+                <span
+                  data-toggle="modal"
+                  data-target="#editModal"
+                  (click)="launchEditModal = true; selectedStore = store">
+                    <strong class="hover">
+                      {{ store.name }}
+                    </strong>
+                  <br>
+                </span>
+                {{ store.description }}
             </span>
             <span
               (click)="deleteStore = store; launchDeleteModal = true"
