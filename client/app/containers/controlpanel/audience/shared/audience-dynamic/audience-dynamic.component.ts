@@ -113,19 +113,39 @@ export class AudienceDynamicComponent extends BaseComponent implements OnInit {
   }
 
   removeFilterGroup(index) {
+    // prevent emitting new filters while we are fetching the count
     if (this.counting) {
       return;
     }
 
-    this.state = { ...this.state, usedFilters: delete this.state.usedFilters[index] };
+    /**
+     * before deleting form control (this will change
+     * the index) udpate selectedFilterOptions for the
+     * current index with the values from the following filter
+     */
 
+    this.selectedFilterOptions = {
+      ...this.selectedFilterOptions,
+      [index]: this.selectedFilterOptions[index + 1]
+    };
+
+    // delete the selectedFilterOptions for the next filter
+    delete this.selectedFilterOptions[index + 1];
+
+    // show deleted filter in the list of available filters
+    this.state = {
+      ...this.state,
+      usedFilters: delete this.state.usedFilters[index],
+      filterCount: this.state.filterCount - 1
+    };
+
+    // keep form state
     const control = <FormArray>this.form.controls['filters'];
-
     control.removeAt(index);
 
-    this.state = { ...this.state, filterCount: this.state.filterCount - 1 };
-
     this.dispatchFilters();
+
+    console.log(2, index, this.selectedFilterOptions);
   }
 
   preloadFilters() {
