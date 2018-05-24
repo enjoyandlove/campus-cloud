@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "description": "sample description - Montréal - Deals",
+    "store_id": 160,
+    "title": "Deal 1",
+    "image_thumb_url": "sample.png",
+    "image_url": "sample.png",
+    "start": 1557917387,
+    "expiration": 1589539787,
+    "store_address": "Montréal",
+    "store_longitude": 0,
+    "store_latitude": 0,
+    "store_name": "Deal Store - 10 Montréal",
+    "store_description": "sample description Montréal"
+  },
+  {
+    "id": 2,
+    "description": "sample description - Montréal - Deals",
+    "store_id": 150,
+    "title": "Deal 2",
+    "image_thumb_url": "sample.png",
+    "image_url": "sample.png",
+    "start": 1557917387,
+    "expiration": 1589539787,
+    "store_address": "Montréal",
+    "store_longitude": 0,
+    "store_latitude": 0,
+    "store_name": "New Store for Deal",
+    "store_description": "sample description Montréal"
+  }
+]

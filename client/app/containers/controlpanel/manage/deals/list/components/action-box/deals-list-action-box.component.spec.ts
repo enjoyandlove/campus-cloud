@@ -7,7 +7,7 @@ import { CPSession } from '../../../../../../../session';
 import { CPI18nService } from '../../../../../../../shared/services';
 import { DealsListActionBoxComponent } from './deals-list-action-box.component';
 
-fdescribe('DealsListActionBoxComponent', () => {
+describe('DealsListActionBoxComponent', () => {
   let component: DealsListActionBoxComponent;
   let fixture: ComponentFixture<DealsListActionBoxComponent>;
 

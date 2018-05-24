@@ -47,7 +47,7 @@ export class DealsInfoComponent extends BaseComponent implements OnInit {
     super.fetchData(this.service.getDealById(this.dealId, search)).then((deal) => {
       this.deal = deal.data;
 
-      this.buildHeader(this.deal);
+     /* this.buildHeader(this.deal);
 
       this.mapCenter = new BehaviorSubject({
         lat: this.deal.store_latitude,
@@ -58,7 +58,7 @@ export class DealsInfoComponent extends BaseComponent implements OnInit {
         image: this.deal.image_url,
         heading: this.deal.title,
         subheading: this.deal.store_name
-      };
+      };*/
     });
   }
 

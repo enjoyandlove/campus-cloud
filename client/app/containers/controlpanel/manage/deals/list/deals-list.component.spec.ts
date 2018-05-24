@@ -29,6 +29,8 @@ describe('DealsListComponent', () => {
   let component: DealsListComponent;
   let fixture: ComponentFixture<DealsListComponent>;
 
+  const mockDeals = require('../mockDeals.json');
+
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
@@ -56,7 +58,6 @@ describe('DealsListComponent', () => {
           spyOn(component, 'buildHeader');
 
           search = new URLSearchParams();
-          search.append('store_id', 1);
           search.append('search_str', component.state.search_str);
           search.append('sort_field', component.state.sort_field);
           search.append('sort_direction', component.state.sort_direction);
@@ -76,7 +77,9 @@ describe('DealsListComponent', () => {
   });
 
   it('doFilter', () => {
-    component.doSort(50);
+    const store_id = 50;
+    component.state = {...component.state, store_id};
+    component.doSort(component.state);
     expect(component.state.store_id).toEqual(50);
   });
 
@@ -87,12 +90,12 @@ describe('DealsListComponent', () => {
   });
 
   it('should fetch list of deals', fakeAsync(() => {
-    spy = spyOn(component.service, 'getDeals').and.returnValue(Observable.of({}));
+    spy = spyOn(component.service, 'getDeals').and.returnValue(Observable.of(mockDeals));
     component.ngOnInit();
 
     tick();
     expect(spy).toHaveBeenCalledTimes(1);
-    expect(component.state.deals.length).toEqual(mockJobs.length);
+    expect(component.state.deals.length).toEqual(mockDeals.length);
     expect(spy).toHaveBeenCalledWith(component.startRange, component.endRange, search);
   }));
 

@@ -43,10 +43,12 @@ describe('DealsDeleteComponent', () => {
           search = new URLSearchParams();
           component.deal = {
             id: 1,
+            store_id: 10,
             title: 'Hello World!',
             start: 0,
             expiration: 0,
             image_url: 'dummy.jpeg',
+            image_thumb_url: 'dummy.jpeg',
             description: 'This is description'
           };
 
