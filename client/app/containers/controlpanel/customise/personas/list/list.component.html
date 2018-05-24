@@ -27,30 +27,34 @@
               {{ persona.localized_name_map.en }}
             </span>
             <span class="col-xs-7 pull-right personas__actions text-right">
-              <button 
-                type="button"
-                class="cpbtn cpbtn--link"
-                (click)="onRankUp(persona, i)">
-                <i class="material-icons">keyboard_arrow_up</i>
-              </button>
-              <button 
-                type="button"
-                class="cpbtn cpbtn--link"
-                (click)="onRankDown(persona, i)">
-                <i class="material-icons">keyboard_arrow_down</i>
-              </button>
-              <a 
-                routerLink="#"
-                class="cpbtn cpbtn--link">
-                <i class="material-icons">settings_applications</i>
-                {{'t_persona_list_button_customize' | cpI18n }}
-              </a>
-              <a 
-                [routerLink]="[persona.id + '/edit']"
-                class="cpbtn cpbtn--link">
-                <i class="material-icons">edit</i>
-                {{'t_persona_list_button_edit' | cpI18n }}
-              </a>
+              <fieldset [disabled]="state.updating">
+                <button 
+                  type="button"
+                  [disabled]="i === 0"
+                  class="cpbtn cpbtn--link"
+                  (click)="onRankUp(persona, i)">
+                  <i class="material-icons">keyboard_arrow_up</i>
+                </button>
+                <button 
+                  type="button"
+                  class="cpbtn cpbtn--link"
+                  (click)="onRankDown(persona, i)"
+                  [disabled]="i === state.personas.length - 1">
+                  <i class="material-icons">keyboard_arrow_down</i>
+                </button>
+                <a 
+                  routerLink="#"
+                  class="cpbtn cpbtn--link">
+                  <i class="material-icons">settings_applications</i>
+                  {{'t_persona_list_button_customize' | cpI18n }}
+                </a>
+                <a 
+                  [routerLink]="[persona.id + '/edit']"
+                  class="cpbtn cpbtn--link">
+                  <i class="material-icons">edit</i>
+                  {{'t_persona_list_button_edit' | cpI18n }}
+                </a>
+              </fieldset>
             </span>
           </div>
         </li>
