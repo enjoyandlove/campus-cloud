@@ -97,6 +97,8 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
   onFilterByListType(list_type) {
     this.state = { ...this.state, list_type };
 
+    this.resetPagination();
+
     this.fetch();
   }
 
