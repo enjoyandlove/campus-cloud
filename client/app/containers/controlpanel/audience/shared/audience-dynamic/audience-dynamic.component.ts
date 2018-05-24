@@ -121,6 +121,7 @@ export class AudienceDynamicComponent extends BaseComponent implements OnInit {
 
     /**
      * @selectedFilterOptions<{key: FormArray Index, value: Filter Choices}>
+     * Given the following:
      * Filter A Choices A (Index 0)
      * Filter B Choices B (Index 1)
      * Filter C Choices C (Index 2)
@@ -132,6 +133,9 @@ export class AudienceDynamicComponent extends BaseComponent implements OnInit {
      * Deleting Filter C has no effect on selectedFilterOptions keys,
      * but when deleting Filter B, selectedFilterOptions[1].choices needs
      * to be updated with the contents selectedFilterOptions[2].choices
+     * And deleteing Filter A requires updating selectedFilterOptions[0].choices
+     * with the contents of selectedFilterOptions[1] and selectedFilterOptions[1]
+     * with the contents of selectedFilterOptions[2]
      */
     if (control.length - 1 > index) {
       for (let idx = control.length - 1; idx > index; idx--) {
