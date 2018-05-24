@@ -9,8 +9,8 @@
     "start": 1557917387,
     "expiration": 1589539787,
     "store_address": "Montréal",
-    "store_longitude": 0,
-    "store_latitude": 0,
+    "store_longitude": -73.5746646,
+    "store_latitude": 45.5149733,
     "store_name": "Deal Store - 10 Montréal",
     "store_description": "sample description Montréal"
   },
@@ -24,8 +24,8 @@
     "start": 1557917387,
     "expiration": 1589539787,
     "store_address": "Montréal",
-    "store_longitude": 0,
-    "store_latitude": 0,
+    "store_longitude": -73.5746646,
+    "store_latitude": 45.5149733,
     "store_name": "New Store for Deal",
     "store_description": "sample description Montréal"
   }
