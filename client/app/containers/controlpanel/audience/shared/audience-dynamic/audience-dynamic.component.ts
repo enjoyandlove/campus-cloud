@@ -16,12 +16,14 @@ import { AudienceSharedService } from './../audience.shared.service';
 export class AudienceDynamicComponent extends BaseComponent implements OnInit {
   @Input() audience = null;
   @Input() message: string;
+  @Input() counting: boolean;
 
   @Output() filters: EventEmitter<any> = new EventEmitter();
 
   form: FormGroup;
 
   loading;
+  _message;
   filtersData;
   selectedItem = [];
   maxFilterCount = 5;
@@ -79,6 +81,10 @@ export class AudienceDynamicComponent extends BaseComponent implements OnInit {
     formGroup.controls['attr_id'].setValue(id);
     formGroup.controls['choices'].setValue([]);
 
+    this.dispatchFilters();
+  }
+
+  dispatchFilters() {
     this.filters.emit(this.form.value.filters);
   }
 
@@ -88,7 +94,7 @@ export class AudienceDynamicComponent extends BaseComponent implements OnInit {
 
     formGroup.controls['choices'].setValue(choices);
 
-    this.filters.emit(this.form.value.filters);
+    this.dispatchFilters();
   }
 
   addFilterGroup(filter = { attr_id: null, choices: [] }) {
@@ -107,6 +113,10 @@ export class AudienceDynamicComponent extends BaseComponent implements OnInit {
   }
 
   removeFilterGroup(index) {
+    if (this.counting) {
+      return;
+    }
+
     this.state = { ...this.state, usedFilters: delete this.state.usedFilters[index] };
 
     const control = <FormArray>this.form.controls['filters'];
@@ -115,7 +125,7 @@ export class AudienceDynamicComponent extends BaseComponent implements OnInit {
 
     this.state = { ...this.state, filterCount: this.state.filterCount - 1 };
 
-    this.filters.emit(this.form.value.filters);
+    this.dispatchFilters();
   }
 
   preloadFilters() {
