@@ -113,39 +113,45 @@ export class AudienceDynamicComponent extends BaseComponent implements OnInit {
   }
 
   removeFilterGroup(index) {
-    // prevent emitting new filters while we are fetching the count
+    const control = <FormArray>this.form.controls['filters'];
+    // do nothing until the server returns the count
     if (this.counting) {
       return;
     }
 
     /**
-     * before deleting form control (this will change
-     * the index) udpate selectedFilterOptions for the
-     * current index with the values from the following filter
+     * @selectedFilterOptions<{key: FormArray Index, value: Filter Choices}>
+     * Filter A Choices A (Index 0)
+     * Filter B Choices B (Index 1)
+     * Filter C Choices C (Index 2)
+     * selectedFilterOptions: {
+     *  0: {<Choices A>}
+     *  1: {<Choices B>}
+     *  2: {<Choices C>}
+     * }
+     * Deleting Filter C has no effect on selectedFilterOptions keys,
+     * but when deleting Filter B, selectedFilterOptions[1].choices needs
+     * to be updated with the contents selectedFilterOptions[2].choices
      */
+    if (control.length - 1 > index) {
+      for (let idx = control.length - 1; idx > index; idx--) {
+        this.selectedFilterOptions = {
+          ...this.selectedFilterOptions,
+          [idx - 1]: this.selectedFilterOptions[idx]
+        };
+      }
+    }
 
-    this.selectedFilterOptions = {
-      ...this.selectedFilterOptions,
-      [index]: this.selectedFilterOptions[index + 1]
-    };
-
-    // delete the selectedFilterOptions for the next filter
-    delete this.selectedFilterOptions[index + 1];
-
-    // show deleted filter in the list of available filters
     this.state = {
       ...this.state,
+      // let users use the deleted filter
       usedFilters: delete this.state.usedFilters[index],
       filterCount: this.state.filterCount - 1
     };
 
-    // keep form state
-    const control = <FormArray>this.form.controls['filters'];
     control.removeAt(index);
 
     this.dispatchFilters();
-
-    console.log(2, index, this.selectedFilterOptions);
   }
 
   preloadFilters() {
