@@ -12,6 +12,7 @@ import { DealsInfoComponent } from './deals-info.component';
 import { CPI18nService } from '../../../../../shared/services';
 import { mockSchool } from '../../../../../session/mock/school';
 import { headerReducer, snackBarReducer } from '../../../../../reducers';
+import { CPMapsComponent } from '../../../../../shared/components/cp-maps';
 
 const mockDeals = require('../mockDeals.json');
 
@@ -28,8 +29,10 @@ class MockDealsService {
 fdescribe('DealsInfoComponent', () => {
   let spy;
   let search;
+  let mapComponent: CPMapsComponent;
   let component: DealsInfoComponent;
   let fixture: ComponentFixture<DealsInfoComponent>;
+  let mapFixture: ComponentFixture<CPMapsComponent>;
 
   beforeEach(
     async(() => {
@@ -53,9 +56,11 @@ fdescribe('DealsInfoComponent', () => {
         .then(() => {
           fixture = TestBed.createComponent(DealsInfoComponent);
           component = fixture.componentInstance;
-          search = new URLSearchParams();
+          mapFixture = TestBed.createComponent(CPMapsComponent);
+          mapComponent = mapFixture.componentInstance;
 
           component.dealId = 1;
+          search = new URLSearchParams();
           component.session.g.set('school', mockSchool);
           component.isLoading().subscribe((_) => (component.loading = false));
           search.append('school_id', component.session.g.get('school').id);
@@ -65,6 +70,7 @@ fdescribe('DealsInfoComponent', () => {
   );
 
   it('should get deal info', fakeAsync (() => {
+    spyOn(mapComponent, 'drawMap');
     spy = spyOn(component.service, 'getDealById').and.returnValue(Observable.of(mockDeals[0]));
     const deal = mockDeals[0];
     const bannerDe: DebugElement = fixture.debugElement;
@@ -72,16 +78,17 @@ fdescribe('DealsInfoComponent', () => {
     component.ngOnInit();
     tick();
     fixture.detectChanges();
+    tick(10);
 
     const dealElement = bannerEl.querySelector('div.row div.deals');
 
-    // const dealTitle = dealElement.querySelector('div.row .resource-banner__title');
+    const dealTitle = dealElement.querySelector('div.row .resource-banner__title');
     const start = dealElement.querySelector('div.deals__details .start');
     const expiration = dealElement.querySelector('div.deals__details .expiration');
     const location = dealElement.querySelector('div.deals__details .location');
     const description = dealElement.querySelector('div.row .description');
 
-    // expect(dealTitle.textContent).toEqual(deal.title);
+    expect(dealTitle.textContent).toEqual(deal.title);
     expect(start.textContent).toEqual('May 15th 2019, 6:49 am');
     expect(expiration.textContent).toEqual('May 15th 2020, 6:49 am');
     expect(location.textContent).toEqual(deal.store_address);
