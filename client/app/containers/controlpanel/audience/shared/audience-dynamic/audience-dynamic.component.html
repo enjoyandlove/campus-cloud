@@ -14,22 +14,24 @@
         <div [formGroupName]="i">
           <div class="row">
             <div class="col-xs-11">
-              <div class="row">
-                <div class="col-xs-6">
-                  <cp-dropdown  
-                    [selectedItem]="selectedItem[i]"
-                    (selected)="onFilterSelected($event, i)"
-                    [items]="filtersData | cpAudienceFilterPipe:usedFiltersAsArray()">
-                  </cp-dropdown>
+              <fieldset [disabled]="counting">
+                <div class="row">
+                  <div class="col-xs-6">
+                    <cp-dropdown  
+                      [selectedItem]="selectedItem[i]"
+                      (selected)="onFilterSelected($event, i)"
+                      [items]="filtersData | cpAudienceFilterPipe:usedFiltersAsArray()">
+                    </cp-dropdown>
+                  </div>
+                  <div class="col-xs-6">
+                    <cp-dropdown-multiselect 
+                      (selection)="onChoices($event, i)"
+                      [items]="selectedFilterOptions[i]"
+                      [placeholder]="filterDropdownPlaceholer">
+                    </cp-dropdown-multiselect>
+                  </div>
                 </div>
-                <div class="col-xs-6">
-                  <cp-dropdown-multiselect 
-                    (selection)="onChoices($event, i)"
-                    [items]="selectedFilterOptions[i]"
-                    [placeholder]="filterDropdownPlaceholer">
-                  </cp-dropdown-multiselect>
-                </div>
-              </div>
+              </fieldset>
             </div>
             <div 
               *ngIf="state.filterCount > 1"
@@ -52,7 +54,10 @@
         </button>
       </div>
       <div class="col-xs-6">
-        <cp-audience-counter [message]="message"></cp-audience-counter>
+        <cp-audience-counter 
+          [message]="message"
+          [loading]="counting">
+        </cp-audience-counter>
       </div>
     </div>
   </ng-container>

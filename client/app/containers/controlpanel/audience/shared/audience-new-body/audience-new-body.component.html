@@ -26,6 +26,7 @@
         [message]="message"
         [audience]="audience"
         *ngIf="state.dynamic"
+        [counting]="state.couting"
         (filters)="onFilters($event)">
       </cp-audience-dynamic>
     </div>
