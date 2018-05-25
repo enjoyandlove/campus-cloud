@@ -29,7 +29,8 @@ export class AudienceNewBodyComponent implements OnInit {
   selectedType = null;
   state = {
     custom: true,
-    dynamic: false
+    dynamic: false,
+    couting: false
   };
 
   constructor(
@@ -51,6 +52,10 @@ export class AudienceNewBodyComponent implements OnInit {
   }
 
   getUserCount(filters) {
+    this.count.emit(0);
+
+    this.state = { ...this.state, couting: true };
+
     const search = new URLSearchParams();
     search.append('school_id', this.session.g.get('school').id);
     search.append('count_only', '1');
@@ -62,10 +67,14 @@ export class AudienceNewBodyComponent implements OnInit {
     this.service.getUserCount(data, search).subscribe(
       ({ count }) => {
         this.count.emit(count);
+        this.state = { ...this.state, couting: false };
         this.message = `${count} ${this.cpI18n.translate('users_found')}`;
       },
 
-      () => (this.message = null)
+      () => {
+        this.message = null;
+        this.state = { ...this.state, couting: false };
+      }
     );
   }
 
@@ -82,6 +91,7 @@ export class AudienceNewBodyComponent implements OnInit {
 
   ngOnInit(): void {
     this.state = {
+      ...this.state,
       custom: this.defaultView === AudienceType.custom,
       dynamic: this.defaultView === AudienceType.dynamic
     };

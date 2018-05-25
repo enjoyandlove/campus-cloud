@@ -226,14 +226,14 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.startdatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
       defaultDate: CPDate.fromEpoch(this.form.controls['start'].value, _self.session.tz).format(),
-      onClose: function(_, dateStr) {
+      onChange: function(_, dateStr) {
         _self.form.controls['start'].setValue(CPDate.toEpoch(dateStr, _self.session.tz));
       }
     };
     this.enddatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
       defaultDate: CPDate.fromEpoch(this.form.controls['end'].value, _self.session.tz).format(),
-      onClose: function(_, dateStr) {
+      onChange: function(_, dateStr) {
         _self.form.controls['end'].setValue(CPDate.toEpoch(dateStr, _self.session.tz));
       }
     };
