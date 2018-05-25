@@ -519,7 +519,7 @@
     "message": "Attendees"
   },
   "audience": {
-    "message": "Audience"
+    "message": "Audiences"
   },
   "audience_add_filter_button": {
     "message": "Add Filter"
@@ -543,7 +543,7 @@
     "message": "Audience created successfully"
   },
   "audience_label_audience": {
-    "message": "Audience"
+    "message": "Audiences"
   },
   "audience_label_filters": {
     "message": "Filters"
@@ -1993,7 +1993,7 @@
     "message": "Save"
   },
   "saved_audience_tab_title": {
-    "message": "Saved Audience"
+    "message": "Saved Audiences"
   },
   "save_audience_modal_title": {
     "message": "Save Audience"
@@ -2289,6 +2289,9 @@
   },
   "type": {
     "message": "Type"
+  },
+  "t_audience_dynamic_integration_disabled": {
+    "message": "To enable this feature please contact your sales partner"
   },
   "t_customise_personas": {
     "message": "App Experiences"

@@ -7,6 +7,7 @@ import { BaseComponent } from '../../../../../base';
 import { CPSession } from './../../../../../session';
 import { CPI18nService } from '../../../../../shared/services';
 import { AudienceSharedService } from './../audience.shared.service';
+import { ZendeskService } from './../../../../../shared/services/zendesk.service';
 
 @Component({
   selector: 'cp-audience-dynamic',
@@ -25,8 +26,10 @@ export class AudienceDynamicComponent extends BaseComponent implements OnInit {
   loading;
   _message;
   filtersData;
+  zdDynamicArticle;
   selectedItem = [];
   maxFilterCount = 5;
+  noFiltersFoundMessage;
   filterDropdownPlaceholer;
 
   selectedFilterOptions = {};
@@ -220,6 +223,8 @@ export class AudienceDynamicComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.noFiltersFoundMessage = this.cpI18n.translate('t_audience_dynamic_integration_disabled');
+    this.zdDynamicArticle = ZendeskService.zdRoot();
     this.filterDropdownPlaceholer = this.cpI18n.translate('select_filter_value');
     this.form = this.fb.group({
       filters: this.fb.array([])
