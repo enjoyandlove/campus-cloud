@@ -519,7 +519,7 @@
     "message": "Présents"
   },
   "audience": {
-    "message": "Audience"
+    "message": "Audiences"
   },
   "audience_add_filter_button": {
     "message": "Ajouter filtre"
@@ -543,7 +543,7 @@
     "message": "Audience créée avec succès"
   },
   "audience_label_audience": {
-    "message": "Audience"
+    "message": "Audiences"
   },
   "audience_label_filters": {
     "message": "Filtres"
@@ -2289,6 +2289,9 @@
   },
   "type": {
     "message": "Type"
+  },
+  "t_audience_dynamic_integration_disabled": {
+    "message": "To enable this feature please contact your sales partner"
   },
   "t_customise_personas": {
     "message": "Expériences d'application"
