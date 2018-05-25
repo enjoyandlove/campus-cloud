@@ -30,7 +30,7 @@ export class AudienceSaveModalComponent implements OnInit {
     this.buttonData = {
       class: 'primary',
       disabled: true,
-      text: this.cpI18n.translate('save')
+      text: this.cpI18n.translate('audience_save_audience_modal_submit')
     };
 
     this.form = this.fb.group({

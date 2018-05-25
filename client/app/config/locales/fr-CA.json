@@ -534,10 +534,13 @@
     "message": "Nom d'audience"
   },
   "audience_do_not_save": {
-    "message": "Annuler"
+    "message": "Envoyer sans enregistrer audience"
   },
   "audience_edit_modal_label_name": {
     "message": "Nom de l'audience"
+  },
+  "audience_import_csv": {
+    "message": "Importer depuis CSV"
   },
   "audience_import_success_message": {
     "message": "Audience créée avec succès"
@@ -562,6 +565,9 @@
   },
   "audience_name": {
     "message": "Nom d'audience"
+  },
+  "audience_save_audience_modal_submit": {
+    "message": "Enregistrer audience et envoyer"
   },
   "audience_type_all": {
     "message": "Toutes les audiences"
@@ -2291,7 +2297,7 @@
     "message": "Type"
   },
   "t_audience_dynamic_integration_disabled": {
-    "message": "To enable this feature please contact your sales partner"
+    "message": "Pour activer cette fonctionalité, veuillez contacter votre consultant en engagement mobile."
   },
   "t_customise_personas": {
     "message": "Expériences d'application"
@@ -2324,7 +2330,7 @@
     "message": "Créer rabais"
   },
   "t_deals_form_heading_edit_deal": {
-    "message": ""
+    "message": "Éditer rabais"
   },
   "t_deals_form_posting_end_date": {
     "message": "Date de fin de publication"
@@ -2345,7 +2351,7 @@
     "message": "Tous les magasins"
   },
   "t_deals_list_dropdown_label_select_store": {
-    "message": ""
+    "message": "Selectionner un magasin"
   },
   "t_deals_list_grid_column_store": {
     "message": "Magasin"
