@@ -73,11 +73,6 @@ export class PersonasListComponent extends BaseComponent implements OnInit {
     delete persona['id'];
     persona['school_id'] = schoolId;
 
-    // a rank of zero is not allowed
-    console.log(1, persona);
-    persona = { ...persona, rank: persona.rank + 1 };
-    console.log(2, persona);
-
     return this.service.updatePersona(personaId, search, persona).toPromise();
   }
 
@@ -108,20 +103,17 @@ export class PersonasListComponent extends BaseComponent implements OnInit {
   }
 
   onRankUp(persona: IPersona, currentIndex: number) {
-    const firstItemInList = currentIndex === 0;
-    const newIndex = firstItemInList ? this.state.personas.length - 1 : currentIndex - 1;
+    this.state = { ...this.state, updating: true };
 
     const movingPersona = {
-      ...this.state.personas[currentIndex],
-      rank: newIndex
+      ...persona,
+      rank: this.state.personas[currentIndex - 1].rank
     };
 
     const movedPersona = {
       ...this.state.personas[currentIndex - 1],
-      rank: newIndex - 1
+      rank: persona.rank
     };
-
-    this.state = { ...this.state, updating: true };
 
     const updatePersonas = Promise.all([
       this.updatePersona(movingPersona),
@@ -132,7 +124,7 @@ export class PersonasListComponent extends BaseComponent implements OnInit {
       .then(() => {
         this.state = { ...this.state, updating: false };
 
-        const personas = this.movePersonaToIndex(persona, currentIndex, newIndex);
+        const personas = this.movePersonaToIndex(persona, currentIndex, currentIndex - 1);
 
         this.state = {
           ...this.state,
@@ -143,20 +135,17 @@ export class PersonasListComponent extends BaseComponent implements OnInit {
   }
 
   onRankDown(persona: IPersona, currentIndex: number) {
-    const lastItemInList = currentIndex === this.state.personas.length - 1;
-    const newIndex = lastItemInList ? 0 : currentIndex + 1;
+    this.state = { ...this.state, updating: true };
 
     const movingPersona = {
-      ...this.state.personas[currentIndex],
-      rank: newIndex
+      ...persona,
+      rank: this.state.personas[currentIndex + 1].rank
     };
 
     const movedPersona = {
-      ...this.state.personas[lastItemInList ? 0 : currentIndex + 1],
-      rank: newIndex + 1
+      ...this.state.personas[currentIndex + 1],
+      rank: persona.rank
     };
-
-    this.state = { ...this.state, updating: true };
 
     const updatePersonas = Promise.all([
       this.updatePersona(movingPersona),
@@ -167,7 +156,7 @@ export class PersonasListComponent extends BaseComponent implements OnInit {
       .then(() => {
         this.state = { ...this.state, updating: false };
 
-        const personas = this.movePersonaToIndex(persona, currentIndex, newIndex);
+        const personas = this.movePersonaToIndex(persona, currentIndex, currentIndex + 1);
 
         this.state = {
           ...this.state,
