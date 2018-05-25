@@ -17,10 +17,7 @@ export class PersonasService extends BaseService {
     const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.PERSONAS}`;
     const url = `${common}/${startRange};${endRange}`;
 
-    return super
-      .get(url, { search })
-      .map((res) => res.json())
-      .map((personas) => personas.sort((a, b) => a.rank - b.rank));
+    return super.get(url, { search }).map((res) => res.json());
   }
 
   createPersona(body) {
