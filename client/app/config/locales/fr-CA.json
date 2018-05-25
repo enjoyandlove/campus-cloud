@@ -534,7 +534,7 @@
     "message": "Nom d'audience"
   },
   "audience_do_not_save": {
-    "message": "Envoyer sans enregistrer audience"
+    "message": "Envoyer"
   },
   "audience_edit_modal_label_name": {
     "message": "Nom de l'audience"
@@ -2002,7 +2002,7 @@
     "message": "Audience enregistrées"
   },
   "save_audience_modal_title": {
-    "message": "Enregistrer audience"
+    "message": "Enregistrer audience et envoyer"
   },
   "save_changes": {
     "message": "Enregistrer les changements"

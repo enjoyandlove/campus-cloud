@@ -1,5 +1,5 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -9,7 +9,10 @@ import { AnnouncementsService } from '../announcements.service';
 import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
 import { CP_PRIVILEGES_MAP, STATUS } from '../../../../../shared/constants';
 import { StoreService, CPI18nService } from '../../../../../shared/services';
-import { AUDIENCE_IMPORTED } from './../../../../../reducers/audience.reducer';
+import {
+  AUDIENCE_IMPORTED,
+  AUDIENCE_RESET_IMPORT_AUDIENCE
+} from './../../../../../reducers/audience.reducer';
 import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
 import { canSchoolReadResource } from './../../../../../shared/utils/privileges/privileges';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
@@ -43,7 +46,7 @@ const THROTTLED_STATUS = 1;
   templateUrl: './announcements-compose.component.html',
   styleUrls: ['./announcements-compose.component.scss']
 })
-export class AnnouncementsComposeComponent implements OnInit {
+export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   @Input() toolTipContent: IToolTipContent;
 
   stores$;
@@ -473,6 +476,10 @@ export class AnnouncementsComposeComponent implements OnInit {
     const isValid = this.form.valid && this.state.validUserCount;
 
     this.buttonData = { ...this.buttonData, disabled: !isValid };
+  }
+
+  ngOnDestroy() {
+    this.store.dispatch({ type: AUDIENCE_RESET_IMPORT_AUDIENCE });
   }
 
   ngOnInit() {

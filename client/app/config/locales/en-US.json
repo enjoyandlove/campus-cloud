@@ -534,7 +534,7 @@
     "message": "Audience Name"
   },
   "audience_do_not_save": {
-    "message": "Send without saving Audience"
+    "message": "Send"
   },
   "audience_edit_modal_label_name": {
     "message": "Audience Name"
@@ -2002,7 +2002,7 @@
     "message": "Saved Audiences"
   },
   "save_audience_modal_title": {
-    "message": "Save Audience"
+    "message": "Save Audience and Send "
   },
   "save_changes": {
     "message": "Save Changes"

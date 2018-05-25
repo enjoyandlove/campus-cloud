@@ -19,7 +19,7 @@ export class AudienceSavedBodyComponent implements OnInit {
   @Input() canReadAudience: boolean;
   @Input() importedAudience$: Observable<{ label: string; action: number }>;
 
-  @Output() selected: EventEmitter<{ action: number; heading: string }> = new EventEmitter();
+  @Output() selected: EventEmitter<{ action: number; label: string }> = new EventEmitter();
 
   audiences;
   audiences$;
@@ -99,6 +99,11 @@ export class AudienceSavedBodyComponent implements OnInit {
           if (this.selectedItem) {
             this.selected.emit(this.selectedItem);
           }
+        } else {
+          this.selected.emit({
+            action: null,
+            label: this.cpI18n.translate('campus_wide')
+          });
         }
 
         return audiences;
