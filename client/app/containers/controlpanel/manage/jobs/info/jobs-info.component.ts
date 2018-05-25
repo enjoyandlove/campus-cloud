@@ -60,8 +60,8 @@ export class JobsInfoComponent extends BaseComponent implements OnInit {
           false,
           this.job.is_full_time,
           this.job.is_part_time,
-          this.job.is_summer,
           this.job.is_internship,
+          this.job.is_summer,
           this.job.is_credited,
           this.job.is_volunteer,
           this.job.is_oncampus
