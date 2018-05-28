@@ -7,7 +7,7 @@
     {{ feed.display_name }}
   </span>
   <span class="email" *ngIf="feed.email && feed.email !== ''">
-    ({{ feed.email }})
+    {{ emailTextContent }}
   </span>
   <span *ngIf="!isComment && feed.channelName">
     <span class="text-muted" i18n>

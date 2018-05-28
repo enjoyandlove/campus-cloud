@@ -235,7 +235,7 @@ export class EventsCreateComponent implements OnInit {
       return;
     }
 
-    if (this.form.controls['end'].value <= Math.round(CPDate.now().unix())) {
+    if (this.form.controls['end'].value <= Math.round(CPDate.now(this.session.tz).unix())) {
       this.isDateError = true;
       this.formError = true;
       this.form.controls['end'].setErrors({ required: true });
@@ -408,14 +408,14 @@ export class EventsCreateComponent implements OnInit {
 
     this.startdatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      onClose: function(_, dataStr) {
+      onChange: function(_, dataStr) {
         _self.form.controls['start'].setValue(CPDate.toEpoch(dataStr, _self.session.tz));
       }
     };
 
     this.enddatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      onClose: function(_, dataStr) {
+      onChange: function(_, dataStr) {
         _self.form.controls['end'].setValue(CPDate.toEpoch(dataStr, _self.session.tz));
       }
     };

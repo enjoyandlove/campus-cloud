@@ -1,9 +1,9 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
+import { appStorage } from '../../../shared/utils/storage';
 import { CPSession, ISchool, IUser } from '../../../session';
 import { CP_PRIVILEGES_MAP } from '../../../shared/constants';
-import { appStorage } from '../../../shared/utils/storage';
-import { CPI18nService } from '../../services';
+import { ZendeskService } from './../../services/zendesk.service';
 
 @Component({
   selector: 'cp-school-switch',
@@ -40,10 +40,7 @@ export class SchoolSwitchComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.helpDeskUrl =
-      CPI18nService.getLocale() === 'fr-CA'
-        ? 'https://oohlalamobile.zendesk.com/hc/fr'
-        : 'https://oohlalamobile.zendesk.com/hc/en-us';
+    this.helpDeskUrl = ZendeskService.zdRoot();
 
     this.schools = this.session.g.get('schools');
     this.selectedSchool = this.session.g.get('school');

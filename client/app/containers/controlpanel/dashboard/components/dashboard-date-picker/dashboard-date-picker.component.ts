@@ -22,19 +22,6 @@ interface IDateChange {
   label: string;
 }
 
-let pickerOptions = {
-  utc: true,
-  inline: true,
-  mode: 'range',
-  altInput: true,
-  maxDate: CPDate.now()
-    .subtract(1, 'days')
-    .startOf('day')
-    .format(),
-  enableTime: false,
-  altFormat: 'F j, Y'
-};
-
 declare var $: any;
 import 'flatpickr';
 
@@ -46,6 +33,7 @@ import 'flatpickr';
 })
 export class DashboardDatePickerComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('calendarEl') calendarEl: ElementRef;
+
   @Output() dateChange: EventEmitter<IDateChange> = new EventEmitter();
 
   picker;
@@ -53,6 +41,7 @@ export class DashboardDatePickerComponent implements OnInit, AfterViewInit, OnDe
   selected = null;
   customDates = [];
   dateFormat = FORMAT.SHORT;
+  pickerOptions;
 
   @Input()
   set state(state) {
@@ -92,11 +81,11 @@ export class DashboardDatePickerComponent implements OnInit, AfterViewInit, OnDe
 
   ngAfterViewInit() {
     const host = this.calendarEl.nativeElement;
-    pickerOptions = Object.assign({}, pickerOptions, {
+    this.pickerOptions = Object.assign({}, this.pickerOptions, {
       onChange: this.onDateChanged.bind(this)
     });
 
-    this.picker = $(host).flatpickr(pickerOptions);
+    this.picker = $(host).flatpickr(this.pickerOptions);
   }
 
   handleCustomDate(date) {
@@ -120,5 +109,18 @@ export class DashboardDatePickerComponent implements OnInit, AfterViewInit, OnDe
   ngOnInit() {
     this.datePipe = new CPDatePipe(this.session);
     this.customDates = [this.helper.last30Days(), this.helper.last90Days(), this.helper.lastYear()];
+
+    this.pickerOptions = {
+      utc: true,
+      inline: true,
+      mode: 'range',
+      altInput: true,
+      maxDate: CPDate.now(this.session.tz)
+        .subtract(1, 'days')
+        .startOf('day')
+        .format(),
+      enableTime: false,
+      altFormat: 'F j, Y'
+    };
   }
 }

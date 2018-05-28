@@ -145,7 +145,7 @@ export class CalendarsItemFormComponent implements OnInit {
 
     this.startdatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      onClose: function(_, dateStr) {
+      onChange: function(_, dateStr) {
         _self.form.controls['start'].setValue(CPDate.toEpoch(dateStr, _self.session.tz));
       }
     };
@@ -159,7 +159,7 @@ export class CalendarsItemFormComponent implements OnInit {
 
     this.enddatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      onClose: function(_, dateStr) {
+      onChange: function(_, dateStr) {
         _self.form.controls['end'].setValue(CPDate.toEpoch(dateStr, _self.session.tz));
       }
     };

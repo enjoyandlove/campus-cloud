@@ -1,11 +1,35 @@
 @import '~styles/core/colors';
+@import '~styles/components/card';
 @import '~styles/core/typography';
 @import '~styles/components/form';
-@import '~styles/components/modal';
 @import '~styles/components/button';
 
-.cpmodal__body {
-  margin-top: 15px;
+.margin-bottom {
+  // to account for the fixed footer
+  padding-bottom: 90px;
+}
+
+.cp-card {
+  @include card-margin();
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.footer {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  position: fixed;
+  padding: 15px 0;
+  background: $color-white;
+  border-top: 1px solid $border-color;
+}
+
+.section__name {
+  @include font-bold();
+  @include font-24px();
 }
 
 .subject-input {
@@ -14,7 +38,7 @@
   &__label {
     @include font-semi-bold();
 
-    width: 83px;
+    width: 100%;
     height: 100%;
     padding: 0 8px;
     line-height: 3.1;
@@ -38,44 +62,6 @@
   }
 }
 
-label {
-  span {
-    @include font-normal();
-
-    color: $color-secondary-text;
-  }
-}
-
-.cpmodal__footer {
-  .from-label {
-    margin-top: 7px;
-  }
-}
-
 .form-group {
   margin-bottom: 15px;
-}
-
-.campus-switch {
-  padding: 12px 20px;
-  border-radius: 4px;
-  margin-bottom: 15px;
-  background: $color-text-alt;
-  border: 1px solid $border-color;
-  transition: all 200ms ease-in-out;
-
-  &__toggle {
-    top: 5px;
-    position: relative;
-  }
-
-  .title {
-    @include font-16px();
-    @include font-semi-bold();
-  }
-
-  &.isActive {
-    border: 1px solid $color-success;
-    background-color: rgba(40, 202, 66, 0.06);
-  }
 }

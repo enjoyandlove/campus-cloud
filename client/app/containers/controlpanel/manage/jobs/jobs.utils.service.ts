@@ -5,9 +5,7 @@ import { CPI18nService } from '../../../../shared/services';
 
 @Injectable()
 export class JobsUtilsService {
-  constructor(
-    public cpI18n: CPI18nService,
-  ) {
+  constructor(public cpI18n: CPI18nService) {
     Object.setPrototypeOf(this, JobsUtilsService.prototype);
   }
 

@@ -1,0 +1,49 @@
+<div class="cp-card">
+  <p class="section__name">{{'audience' | cpI18n}}</p>
+  <div class="row">
+    <div class="col-xs-12">
+      <cp-tabs (tabClick)="onTabClick($event)">
+        <cp-tab
+          id="saved"
+          [title]="savedAudienceTitle"
+          (destroy)="onDestroySavedAudience()">
+          <div class="saved_audience">
+            <div class="row">
+              <ng-container *ngIf="state.savedAudienceActive">
+                <div class="col-xs-6">
+                  <cp-audience-saved-body 
+                    [canReadAudience]="canReadAudience"
+                    (selected)="onSelectedAudience($event)"
+                    [importedAudience$]="importedAudience$">
+                  </cp-audience-saved-body>
+                </div>
+                <div class="col-xs-6 text-right saved_audience__counter">
+                  <cp-audience-counter [message]="message"></cp-audience-counter>
+                </div>
+              </ng-container>
+            </div>  
+          </div>
+        </cp-tab>
+        <ng-container *ngIf="canReadAudience">
+          <cp-tab 
+            id="new"
+            [title]="newAudienceTitle"
+            (destroy)="onDestroyNewAudience()">
+            <cp-audience-new-body 
+              (users)="onUsers($event)"
+              (count)="count.emit($event)"
+              (filters)="onFilters($event)"
+              *ngIf="state.newAudienceActive"
+              (importClick)="importClick.emit()"
+              (audienceType)="onNewAudienceTypeChange($event)">
+            </cp-audience-new-body>
+          </cp-tab>
+        </ng-container>
+      </cp-tabs>
+    </div>
+  </div>
+</div>
+
+<cp-modal modalId="audienceSave">
+  <cp-audience-save-modal></cp-audience-save-modal>
+</cp-modal>

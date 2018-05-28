@@ -56,12 +56,6 @@ const appRoutes: Routes = [
       },
 
       {
-        path: 'lists',
-        data: { zendesk: 'lists' },
-        loadChildren: './lists/lists.module#ListsModule'
-      },
-
-      {
         path: 'calendars',
         data: { zendesk: 'calendars' },
         loadChildren: './calendars/calendars.module#CalendarsModule'
@@ -83,6 +77,12 @@ const appRoutes: Routes = [
         path: 'jobs',
         data: { zendesk: 'jobs' },
         loadChildren: './jobs/jobs.module#JobsModule'
+      },
+
+      {
+        path: 'deals',
+        data: { zendesk: 'deals' },
+        loadChildren: './deals/deals.module#DealsModule'
       }
     ]
   }

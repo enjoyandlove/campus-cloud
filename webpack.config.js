@@ -1,14 +1,15 @@
 // Helper: root() is defined at the bottom
-var path = require('path');
-var webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
 
 // Webpack Plugins
-var CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
-var autoprefixer = require('autoprefixer');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
-var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
+const autoprefixer = require('autoprefixer');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 /**
  * Env
@@ -210,6 +211,7 @@ module.exports = (function makeWebpackConfig() {
    * List: http://webpack.github.io/docs/list-of-plugins.html
    */
   config.plugins = [
+    new HardSourceWebpackPlugin(),
     // new BundleAnalyzerPlugin(),
     // Define env variables to help with builds
     // Reference: https://webpack.github.io/docs/list-of-plugins.html#defineplugin
