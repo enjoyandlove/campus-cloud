@@ -19,10 +19,13 @@
           <br>
           <div class="row">
             <div class="col-xs-12">
-              <cp-button
-                [props]="deleteButtonData"
-                (buttonClick)="onDelete()">
-              </cp-button>
+              <button 
+                type="button" 
+                data-toggle="modal" 
+                class="cpbtn cpbtn--danger"
+                data-target="#personaDeleteModal">
+                {{'t_personas_edit_delete_button' | cpI18n}}
+              </button>
             </div>
           </div>
         </div>
@@ -49,5 +52,12 @@
         </div>
       </div>
     </div>
+
+    <cp-modal modalId="personaDeleteModal">
+      <cp-personas-delete
+        [persona]="persona"
+        (deleted)="onDeleted()">
+      </cp-personas-delete>
+    </cp-modal>
   </ng-container>
 </ng-container>

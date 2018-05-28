@@ -28,10 +28,6 @@ export class PersonasFormComponent implements OnInit {
     this.form.controls['pretour_enabled'].setValue(value);
   }
 
-  togglePersonalizedHomePage(value) {
-    this.form.controls['cre_enabled'].setValue(value);
-  }
-
   onPlatformChange({ id }) {
     this.form.controls['platform'].setValue(id);
   }

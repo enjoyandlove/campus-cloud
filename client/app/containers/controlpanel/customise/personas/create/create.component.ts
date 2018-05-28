@@ -52,7 +52,7 @@ export class PersonasCreateComponent implements OnInit {
   onSubmit() {
     const body = this.utils.parseLocalFormToApi(this.createForm.form.value);
     this.service.createPersona(body).subscribe(
-      () => this.router.navigate(['../']),
+      () => this.router.navigate(['/customize/personas']),
       () => {
         this.store.dispatch({
           type: SNACKBAR_SHOW,

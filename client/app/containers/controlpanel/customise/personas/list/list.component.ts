@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
+import { pullAt } from 'lodash';
 
 import { IPersona } from './../persona.interface';
 import { CPSession } from '../../../../../session';
@@ -8,6 +9,7 @@ import { BaseComponent } from '../../../../../base';
 import { PersonasService } from './../personas.service';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
+import { ISnackbar, SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
 
 @Component({
   selector: 'cp-personas-list',
@@ -17,6 +19,7 @@ import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer
 export class PersonasListComponent extends BaseComponent implements OnInit {
   loading;
   state = {
+    updating: false,
     platform: null,
     search_str: null,
     personas: <Array<IPersona>>[]
@@ -25,8 +28,8 @@ export class PersonasListComponent extends BaseComponent implements OnInit {
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public store: Store<IHeader>,
-    public service: PersonasService
+    public service: PersonasService,
+    public store: Store<IHeader | ISnackbar>
   ) {
     super();
     super.isLoading().subscribe((loading) => (this.loading = loading));
@@ -58,6 +61,109 @@ export class PersonasListComponent extends BaseComponent implements OnInit {
     this.resetPagination();
 
     this.fetch();
+  }
+
+  updatePersona(persona: IPersona): Promise<any> {
+    const personaId = persona.id;
+    const schoolId = this.session.g.get('school').id;
+
+    const search = new URLSearchParams();
+    search.append('school_id', schoolId);
+
+    delete persona['id'];
+    persona['school_id'] = schoolId;
+
+    return this.service.updatePersona(personaId, search, persona).toPromise();
+  }
+
+  handleUpdateError() {
+    this.state = { ...this.state, updating: false };
+
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        autoClose: true,
+        class: 'danger',
+        body: this.cpI18n.translate('something_went_wrong')
+      }
+    });
+  }
+
+  movePersonaToIndex(persona, currentIndex, newIndex) {
+    // avoid mutating the original personas
+    const clonedPersonas = [...this.state.personas];
+
+    // remove persona from current index
+    pullAt(clonedPersonas, currentIndex);
+
+    // insert persona into new index
+    clonedPersonas.splice(newIndex, 0, persona);
+
+    return clonedPersonas;
+  }
+
+  onRankUp(persona: IPersona, currentIndex: number) {
+    this.state = { ...this.state, updating: true };
+
+    const movingPersona = {
+      ...persona,
+      rank: this.state.personas[currentIndex - 1].rank
+    };
+
+    const movedPersona = {
+      ...this.state.personas[currentIndex - 1],
+      rank: persona.rank
+    };
+
+    const updatePersonas = Promise.all([
+      this.updatePersona(movingPersona),
+      this.updatePersona(movedPersona)
+    ]);
+
+    updatePersonas
+      .then(() => {
+        this.state = { ...this.state, updating: false };
+
+        const personas = this.movePersonaToIndex(persona, currentIndex, currentIndex - 1);
+
+        this.state = {
+          ...this.state,
+          personas
+        };
+      })
+      .catch(() => this.handleUpdateError());
+  }
+
+  onRankDown(persona: IPersona, currentIndex: number) {
+    this.state = { ...this.state, updating: true };
+
+    const movingPersona = {
+      ...persona,
+      rank: this.state.personas[currentIndex + 1].rank
+    };
+
+    const movedPersona = {
+      ...this.state.personas[currentIndex + 1],
+      rank: persona.rank
+    };
+
+    const updatePersonas = Promise.all([
+      this.updatePersona(movingPersona),
+      this.updatePersona(movedPersona)
+    ]);
+
+    updatePersonas
+      .then(() => {
+        this.state = { ...this.state, updating: false };
+
+        const personas = this.movePersonaToIndex(persona, currentIndex, currentIndex + 1);
+
+        this.state = {
+          ...this.state,
+          personas
+        };
+      })
+      .catch(() => this.handleUpdateError());
   }
 
   fetch() {

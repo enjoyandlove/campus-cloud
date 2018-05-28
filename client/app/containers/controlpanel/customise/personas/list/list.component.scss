@@ -34,17 +34,18 @@
     top: -6px;
     position: relative;
 
-    a {
+    a,
+    button {
       margin-right: 35px;
+
+      &:last-child {
+        margin-right: 0;
+      }
 
       i {
         top: 8px;
         line-height: 1;
         position: relative;
-      }
-
-      &:last-child {
-        margin-right: 0;
       }
     }
   }
