@@ -48,6 +48,9 @@
   "admin_audience_help": {
     "message": "Notify and assess specific segments (audiences) of users"
   },
+  "admin_audience_menu_all_access": {
+    "message": "All Audiences"
+  },
   "admin_audience_title": {
     "message": "Audiences"
   },
@@ -516,7 +519,7 @@
     "message": "Attendees"
   },
   "audience": {
-    "message": "Audience"
+    "message": "Audiences"
   },
   "audience_add_filter_button": {
     "message": "Add Filter"
@@ -530,14 +533,20 @@
   "audience_create_modal_label_name": {
     "message": "Audience Name"
   },
+  "audience_do_not_save": {
+    "message": "Send"
+  },
   "audience_edit_modal_label_name": {
     "message": "Audience Name"
+  },
+  "audience_import_csv": {
+    "message": "Import from CSV"
   },
   "audience_import_success_message": {
     "message": "Audience created successfully"
   },
   "audience_label_audience": {
-    "message": "Audience"
+    "message": "Audiences"
   },
   "audience_label_filters": {
     "message": "Filters"
@@ -548,11 +557,17 @@
   "audience_label_users": {
     "message": "Users"
   },
+  "audience_modal_label_audience_name": {
+    "message": "Audience Name"
+  },
   "audience_my_audiences": {
     "message": "My Audiences"
   },
   "audience_name": {
     "message": "Audience Name"
+  },
+  "audience_save_audience_modal_submit": {
+    "message": "Save Audience and Send"
   },
   "audience_type_all": {
     "message": "All Audiences"
@@ -1053,9 +1068,6 @@
   },
   "deals_create_deal": {
     "message": "Create Deal"
-  },
-  "deals_list_dropdown_label_all_stores": {
-    "message": "All Stores"
   },
   "deals_manage_stores": {
     "message": "Manage Stores"
@@ -1987,7 +1999,10 @@
     "message": "Save"
   },
   "saved_audience_tab_title": {
-    "message": "Saved Audience"
+    "message": "Saved Audiences"
+  },
+  "save_audience_modal_title": {
+    "message": "Save Audience and Send "
   },
   "save_changes": {
     "message": "Save Changes"
@@ -2281,6 +2296,9 @@
   "type": {
     "message": "Type"
   },
+  "t_audience_dynamic_integration_disabled": {
+    "message": "To enable this feature, please contact your Customer Success manager."
+  },
   "t_customise_personas": {
     "message": "App Experiences"
   },
@@ -2291,7 +2309,7 @@
     "message": "Delete Deal"
   },
   "t_deals_form_deal_banner": {
-    "message": "Create Deal"
+    "message": "Upload your image"
   },
   "t_deals_form_deal_details": {
     "message": "Deal Details"
@@ -2311,6 +2329,9 @@
   "t_deals_form_heading_create_deal": {
     "message": "Create Deal"
   },
+  "t_deals_form_heading_edit_deal": {
+    "message": "Edit Deal"
+  },
   "t_deals_form_posting_end_date": {
     "message": "Posting End"
   },
@@ -2326,6 +2347,12 @@
   "t_deals_form_tab_new_store": {
     "message": "Create Store"
   },
+  "t_deals_list_dropdown_label_all_stores": {
+    "message": "All Stores"
+  },
+  "t_deals_list_dropdown_label_select_store": {
+    "message": "Select Store"
+  },
   "t_deals_list_grid_column_store": {
     "message": "Store"
   },
@@ -2340,6 +2367,18 @@
   },
   "t_personas_create_submit_button": {
     "message": "Save Changes"
+  },
+  "t_personas_delete_error_last_persona": {
+    "message": "A school must have at least one persona enabled"
+  },
+  "t_personas_delete_error_users_associated": {
+    "message": "Cannot delete persona which has users associated"
+  },
+  "t_personas_edit_error_users_associated": {
+    "message": "Cannot update Login Requirements for persona which has users associated"
+  },
+  "t_personas_edit_message_on_save_ok": {
+    "message": "Changes saved successfully"
   },
   "t_personas_form_delete_button": {
     "message": "Delete Persona"

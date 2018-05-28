@@ -56,7 +56,8 @@
     <cp-modal modalId="personaDeleteModal">
       <cp-personas-delete
         [persona]="persona"
-        (deleted)="onDeleted()">
+        (deleted)="onDeleted()"
+        (errorEvent)="onDeleteError()">
       </cp-personas-delete>
     </cp-modal>
   </ng-container>
