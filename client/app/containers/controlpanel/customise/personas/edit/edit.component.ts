@@ -78,15 +78,21 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
           }
         });
       },
-      () => {
+      (err) => {
+        const error = JSON.parse(err._body).error;
+        let message = this.cpI18n.translate('something_went_wrong');
         this.submitButtonData = { ...this.submitButtonData, disabled: false };
+
+        if (error === 'users associated') {
+          message = this.cpI18n.translate('t_personas_edit_error_users_associated');
+        }
 
         this.store.dispatch({
           type: SNACKBAR_SHOW,
           payload: {
-            autoClose: true,
+            sticky: true,
             class: 'danger',
-            body: this.cpI18n.translate('t_personas_edit_message_on_save_error')
+            body: message
           }
         });
       }
@@ -121,6 +127,17 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
 
       this.buildHeader();
       this.buildForm(data);
+    });
+  }
+
+  onDeleteError(message) {
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        sticky: true,
+        class: 'danger',
+        body: message
+      }
     });
   }
 

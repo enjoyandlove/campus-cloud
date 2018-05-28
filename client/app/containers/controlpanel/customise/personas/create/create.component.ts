@@ -53,13 +53,24 @@ export class PersonasCreateComponent implements OnInit {
     const body = this.utils.parseLocalFormToApi(this.createForm.form.value);
     this.service.createPersona(body).subscribe(
       () => this.router.navigate(['/customize/personas']),
-      () => {
+      (err) => {
+        this.buttonData = { ...this.buttonData, disabled: false };
+
+        const error = JSON.parse(err._body).error;
+        let message = this.cpI18n.translate('something_went_wrong');
+
+        if (error === 'api_env') {
+          message = this.cpI18n.translate('t_personas_create_error_api_env');
+        } else if (error === 'customization off') {
+          message = this.cpI18n.translate('t_personas_create_error_customization off');
+        }
+
         this.store.dispatch({
           type: SNACKBAR_SHOW,
           payload: {
-            autoClose: true,
+            sticky: true,
             class: 'danger',
-            body: this.cpI18n.translate('something_went_wrong')
+            body: message
           }
         });
       }
