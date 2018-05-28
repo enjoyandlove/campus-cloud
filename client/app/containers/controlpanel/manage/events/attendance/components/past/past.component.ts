@@ -133,12 +133,13 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
 
           [this.cpI18n.translate('rsvp')]: rsvp[item.rsvp],
 
-          [this.cpI18n.translate('events_checked_in_time')]:
-            item.feedback_rating === -1 ? '' : (item.feedback_rating * 5 / 100).toFixed(2),
-          [this.cpI18n.translate('rating')]: CPDate.fromEpoch(
+          [this.cpI18n.translate('events_checked_in_time')]: CPDate.fromEpoch(
             item.check_in_time,
             this.session.tz
           ).format('MMMM Do YYYY - h:mm a'),
+
+          [this.cpI18n.translate('rating')]:
+            item.feedback_rating === -1 ? '' : (item.feedback_rating * 5 / 100).toFixed(2),
 
           [this.cpI18n.translate('events_user_feedback')]: item.feedback_text,
 

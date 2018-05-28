@@ -11,6 +11,7 @@ import { FileUploadService, StoreService, CPLocationsService } from './services'
 import { CPTabsComponent } from './components/cp-tabs/components/cp-tabs/cp-tabs.component';
 
 import {
+  CPWorkingComponent,
   CPAvatarComponent,
   CPMapsComponent,
   CPModalComponent,
@@ -46,7 +47,12 @@ import {
   CPOnboardingComponent,
   CPStepperComponent,
   CPListModalComponent,
-  CPTabComponent
+  CPTabComponent,
+  CPUploadModalBodyComponent,
+  CPUploadModalFooterComponent,
+  CPUploadModalHeaderComponent,
+  CPDropdownMultiSelectComponent,
+  CPCharCounterComponent
 } from './components';
 import { LocationsService } from '../containers/controlpanel/manage/locations/locations.service';
 import { CPMapsService } from './services/maps.service';
@@ -98,7 +104,13 @@ import { CPMapsService } from './services/maps.service';
     CPTopBanerComponent,
     CPOnboardingComponent,
     CPStepperComponent,
-    CPListModalComponent
+    CPListModalComponent,
+    CPUploadModalBodyComponent,
+    CPUploadModalHeaderComponent,
+    CPUploadModalFooterComponent,
+    CPDropdownMultiSelectComponent,
+    CPCharCounterComponent,
+    CPWorkingComponent
   ],
 
   imports: [CommonModule, RouterModule, ReactiveFormsModule],
@@ -158,7 +170,13 @@ import { CPMapsService } from './services/maps.service';
     CPTopBanerComponent,
     CPOnboardingComponent,
     CPStepperComponent,
-    CPListModalComponent
+    CPListModalComponent,
+    CPUploadModalBodyComponent,
+    CPUploadModalHeaderComponent,
+    CPUploadModalFooterComponent,
+    CPDropdownMultiSelectComponent,
+    CPCharCounterComponent,
+    CPWorkingComponent
   ]
 })
 export class SharedModule {}

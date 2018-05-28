@@ -12,6 +12,7 @@ import { CPI18nService } from '../../services';
   styleUrls: ['./cp-image-upload.component.scss']
 })
 export class CPImageUploadComponent implements OnInit {
+  @Input() id = 'upload_component';
   @Input() small: boolean;
   @Input() required: boolean;
   @Input() defaultImage: string;

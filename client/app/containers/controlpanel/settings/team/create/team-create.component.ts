@@ -23,7 +23,8 @@ import {
   serviceMenu,
   athleticMenu,
   manageAdminMenu,
-  TeamUtilsService
+  TeamUtilsService,
+  audienceMenuStatus
 } from '../team.utils.service';
 
 declare var $: any;
@@ -44,11 +45,13 @@ export class TeamCreateComponent implements OnInit {
   isFormError;
   canReadClubs;
   manageAdmins;
+  audienceMenu;
   servicesMenu;
   isClubsModal;
   canReadEvents;
   athleticsMenu;
   isServiceModal;
+  canReadAudience;
   canReadServices;
   form: FormGroup;
   isAthleticsModal;
@@ -97,6 +100,25 @@ export class TeamCreateComponent implements OnInit {
         disabled: !this.form.valid
       });
     });
+  }
+
+  onAudienceSelected(audience) {
+    if (audience.action === audienceMenuStatus.noAccess) {
+      if (CP_PRIVILEGES_MAP.audience in this.schoolPrivileges) {
+        delete this.schoolPrivileges[CP_PRIVILEGES_MAP.audience];
+      }
+
+      return;
+    }
+
+    if (audience.action === audienceMenuStatus.allAccess) {
+      this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
+        [CP_PRIVILEGES_MAP.audience]: {
+          r: true,
+          w: true
+        }
+      });
+    }
   }
 
   onSubmit(data) {
@@ -192,7 +214,9 @@ export class TeamCreateComponent implements OnInit {
 
   onServicesModalSelected(services) {
     const servicesLength = Object.keys(services).length;
-    this.servicesCount = servicesLength ? { label: `${servicesLength} Service(s)` } : null;
+    this.servicesCount = servicesLength
+      ? { label: `${servicesLength} ${this.cpI18n.translate('admin_form_label_services')}` }
+      : null;
 
     this.accountPrivileges = Object.assign({}, this.accountPrivileges, ...services);
   }
@@ -240,7 +264,9 @@ export class TeamCreateComponent implements OnInit {
 
   onClubsModalSelected(clubs) {
     const clubsLength = Object.keys(clubs).length;
-    this.clubsCount = clubsLength ? { label: `${clubsLength} Club(s)` } : null;
+    this.clubsCount = clubsLength
+      ? { label: `${clubsLength} ${this.cpI18n.translate('admin_form_label_clubs')}` }
+      : null;
 
     this.accountPrivileges = Object.assign({}, this.accountPrivileges, ...clubs);
   }
@@ -248,7 +274,9 @@ export class TeamCreateComponent implements OnInit {
   onAthleticsModalSelected(athletics) {
     this.doAthleticsCleanUp();
     const athleticsLength = Object.keys(athletics).length;
-    this.athleticsCount = athleticsLength ? { label: `${athleticsLength} Athletic(s)` } : null;
+    this.athleticsCount = athleticsLength
+      ? { label: `${athleticsLength} ${this.cpI18n.translate('admin_form_label_athletics')}` }
+      : null;
 
     this.accountPrivileges = Object.assign({}, this.accountPrivileges, ...athletics);
   }
@@ -506,6 +534,8 @@ export class TeamCreateComponent implements OnInit {
       canSchoolReadResource(session, CP_PRIVILEGES_MAP.clubs) ||
       canAccountLevelReadResource(session, CP_PRIVILEGES_MAP.clubs);
 
+    this.canReadAudience = canSchoolReadResource(session, CP_PRIVILEGES_MAP.audience);
+
     this.canReadAthletics =
       canSchoolReadResource(session, CP_PRIVILEGES_MAP.athletics) ||
       canAccountLevelReadResource(session, CP_PRIVILEGES_MAP.athletics);
@@ -555,6 +585,7 @@ export class TeamCreateComponent implements OnInit {
       servicesPrivilegeSchool,
       servicesPrivilegeAccount
     );
+    this.audienceMenu = this.utils.audienceDropdown(schoolPrivileges[CP_PRIVILEGES_MAP.audience]);
     this.manageAdmins = this.utils.manageAdminDropdown(manageAdminPrivilege);
   }
 }

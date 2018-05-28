@@ -19,7 +19,7 @@ const pickerOptions = {
   inline: true,
   mode: 'range',
   altInput: true,
-  maxDate: CPDate.now()
+  maxDate: CPDate.now('America/Toronto')
     .subtract(1, 'days')
     .startOf('day')
     .format(),

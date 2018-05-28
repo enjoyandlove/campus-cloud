@@ -8,25 +8,23 @@ import { CPI18nService } from '../../../../../../shared/services';
   templateUrl: './employer-card.component.html',
   styleUrls: ['./employer-card.component.scss']
 })
-
 export class EmployerCardComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() employerForm: FormGroup;
 
   @Output() isNewEmployer: EventEmitter<boolean> = new EventEmitter();
-  @Output() formData: EventEmitter<{
+  @Output()
+  formData: EventEmitter<{
     job: any;
-    jobFormValid: boolean
+    jobFormValid: boolean;
     employer: any;
-    employerFormValid: boolean
+    employerFormValid: boolean;
   }> = new EventEmitter();
 
   newEmployerTitle;
   existingEmployerTitle;
 
-  constructor(
-    public cpI18n: CPI18nService
-  ) {}
+  constructor(public cpI18n: CPI18nService) {}
 
   onTabClick({ id }) {
     if (id === 'existing') {
@@ -50,9 +48,10 @@ export class EmployerCardComponent implements OnInit {
   setRequiredField(value) {
     const name = this.employerForm.controls['name'].value;
     const logo = this.employerForm.controls['logo_url'].value;
-    this.employerForm.setControl('name', new FormControl(name, value
-      ? [Validators.required, Validators.maxLength(120)]
-      : null));
+    this.employerForm.setControl(
+      'name',
+      new FormControl(name, value ? [Validators.required, Validators.maxLength(120)] : null)
+    );
 
     this.employerForm.setControl(
       'logo_url',
@@ -69,7 +68,7 @@ export class EmployerCardComponent implements OnInit {
         job: this.form.value,
         jobFormValid: this.form.valid,
         employer: this.employerForm.value,
-        employerFormValid: this.employerForm.valid,
+        employerFormValid: this.employerForm.valid
       });
     });
   }

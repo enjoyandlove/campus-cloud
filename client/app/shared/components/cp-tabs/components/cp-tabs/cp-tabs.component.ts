@@ -29,6 +29,13 @@ export class CPTabsComponent implements OnInit, AfterContentInit {
     // activate the tab the user has clicked on.
     tab.active = true;
 
+    // emit destroy event
+    this.tabs
+      .toArray()
+      .filter((t) => !t.active)
+      .map((t) => t.destroy.emit());
+
+    // emit click event
     this.tabClick.emit(tab);
   }
 

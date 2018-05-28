@@ -1,0 +1,132 @@
+<div class="row">
+  <div class="col-xs-12">
+    <cp-audience-list-action-box
+      (search)="onSearch($event)"
+      (filterBy)="onFilterByListType($event)"
+      (launchCreateModal)="onLaunchCreateModal()"
+      (launchImportModal)="onLaunchImportModal()">
+    </cp-audience-list-action-box>
+  </div>
+</div>
+
+
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div *ngSwitchCase="false">
+    <cp-no-content
+      class="no-content"
+      *ngIf="!state.audiences.length"
+      [noContentText]="cpI18n.translate('lists_no_results_found')">
+    </cp-no-content>
+
+    <div *ngIf="state.audiences.length">
+      <ul class="audiences cp-form">
+        <li class="cp-form__header col-xs-12">
+          <div class="row">
+            <span
+              class="col-xs-5 hover"
+              (click)="doSort('name')">
+              {{ 'name' | cpI18n }}
+              <span *ngIf="state.sort_field === 'name'">
+                <i class="material-icons">
+                  {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+                </i>
+              </span>
+            </span>
+            <span 
+              class="col-xs-2">
+              {{ 'type' | cpI18n }}
+            </span>
+            <span class="col-xs-2">
+              {{ 'lists_number_of_users' | cpI18n }}
+            </span>
+            <span class="col-xs-1 col-xs-offset-2"></span>
+          </div>
+        </li>
+
+        <li
+          class="cp-form__item col-xs-12"
+          *ngFor="let audience of state.audiences">
+          <div class="row">
+            <span class="col-xs-5 text-truncate">
+              <button
+                class="cpbtn cpbtn--link-dark"
+                (click)="isAudienceEdit = true"
+                (click)="editAudience = audience"
+                data-toggle="modal" data-target="#audienceEdit">
+                <strong>{{ audience.name }}</strong>
+              </button>
+            </span>
+
+            <span class="col-xs-2">
+              <ng-container *ngIf="audience.type === custom">
+                {{'audience_type_custom' | cpI18n}}
+              </ng-container>
+              <ng-container *ngIf="audience.type !== custom">
+                {{'audience_type_dynamic' | cpI18n}}
+              </ng-container>
+            </span>
+
+            <span class="col-xs-2 hover" (click)="downloadAudience(audience)">
+              {{ audience.count }} {{ 'users' | cpI18n }}
+            </span>
+
+            <span
+              (click)="deleteAudience = audience;"
+              (click)="isAudienceDelete = true"
+              data-toggle="modal" data-target="#audienceDeleteModal"
+              class="col-xs-1 col-xs-offset-2 hover delete-list text-center">
+              &times;
+            </span>
+          </div>
+        </li>
+      </ul>
+
+      <cp-pagination
+        [pageNext]="pageNext"
+        [pagePrev]="pagePrev"
+        [pageNumber]="pageNumber"
+        (next)="onPaginationNext()"
+        (previous)="onPaginationPrevious()">
+      </cp-pagination>
+    </div>
+  </div>
+</div>
+
+<cp-modal modalId="audienceDeleteModal" *ngIf="isAudienceDelete">
+  <cp-audience-delete
+    [audience]="deleteAudience"
+    (deleteAudience)="onDeletedAudience($event)"
+    (resetDeleteModal)="isAudienceDelete = false">
+  </cp-audience-delete>
+</cp-modal>
+
+<cp-modal
+  *ngIf="isAudienceCreate"
+  modalId="audienceCreate">
+  <cp-audience-create
+    [users]="audienceUsers"
+    (created)="onCreatedAudience($event)"
+    (reset)="onResetCreateAudience()">
+  </cp-audience-create>
+</cp-modal>
+
+<cp-modal
+  modalId="audienceImport"
+  *ngIf="isAudienceImport">
+  <cp-audience-import
+    (error)="onImportError($event)"
+    (success)="onImportSuccess($event)"
+    (teardown)="isAudienceImport = !isAudienceImport"
+    (launchCreateModal)="onLaunchCreateModal($event)">
+  </cp-audience-import>
+</cp-modal>
+
+<cp-modal modalId="audienceEdit" *ngIf="isAudienceEdit">
+  <cp-audience-edit
+    [audienceId]="editAudience.id"
+    (reset)="isAudienceEdit = false"
+    (edited)="onEditedAudience($event)">
+  </cp-audience-edit>
+</cp-modal>

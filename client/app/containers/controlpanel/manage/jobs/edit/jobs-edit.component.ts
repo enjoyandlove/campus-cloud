@@ -63,7 +63,7 @@ export class JobsEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    if (this.data.job.posting_end <= Math.round(CPDate.now().unix())) {
+    if (this.data.job.posting_end <= Math.round(CPDate.now(this.session.tz).unix())) {
       this.formError = true;
       this.dateErrorMessage = this.cpI18n.translate('jobs_error_end_date_after_now');
 
