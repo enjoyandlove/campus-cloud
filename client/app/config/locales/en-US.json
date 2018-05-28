@@ -1670,10 +1670,10 @@
     "message": "Lists"
   },
   "lists_button_create": {
-    "message": "Create Announcement"
+    "message": "Create Audience"
   },
   "lists_create_modal_title": {
-    "message": "Create Announcement"
+    "message": "Create Audience"
   },
   "lists_delete_modal_body": {
     "message": "Are you sure you want to delete %s?"
