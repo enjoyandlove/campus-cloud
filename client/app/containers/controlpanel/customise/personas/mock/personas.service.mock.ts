@@ -45,4 +45,12 @@ export class MockPersonasService {
 
     return Observable.of(mockPersonas.filter((p) => p.id === personaId)[0]);
   }
+
+  deletePersonaById(personaId, search) {
+    this.dummy = { personaId, search };
+
+    console.log('MOCKKK');
+
+    return Observable.of(personaId);
+  }
 }

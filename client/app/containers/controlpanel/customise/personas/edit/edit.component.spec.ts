@@ -1,4 +1,3 @@
-import { Observable } from 'rxjs/Observable';
 import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
 import { PersonasUtilsService } from './../personas.utils.service';
 import { PersonasService } from './../personas.service';
@@ -14,7 +13,7 @@ import { PersonasEditComponent } from './edit.component';
 import { PersonasModule } from './../personas.module';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
-fdescribe('PersonasEditComponent', () => {
+describe('PersonasEditComponent', () => {
   let comp: PersonasEditComponent;
   let fixture: ComponentFixture<PersonasEditComponent>;
 
@@ -132,13 +131,6 @@ fdescribe('PersonasEditComponent', () => {
     });
 
     comp.editForm.form = expectedForm;
-
-    // const submitSpy = spyOn(comp.service, 'updatePersona');
-    // const storeSpy = spyOn(comp.store, 'dispatch');
-
-    // submitSpy.and.returnValue(
-    //   Observable.throw({ _body: { error: 'users associated' } })
-    // );
 
     comp.onSubmit();
   });
