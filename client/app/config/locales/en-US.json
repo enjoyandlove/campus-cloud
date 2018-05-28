@@ -210,7 +210,7 @@
     "message": "Overrides the user's push notifications settings and forces them to acknowledge the message"
   },
   "announcements_heading_create": {
-    "message": "New Message"
+    "message": "Create Announcement"
   },
   "announcements_not_sent": {
     "message": "Message not sent, please wait %s minutes before trying again"
@@ -537,7 +537,7 @@
     "message": "Send"
   },
   "audience_edit_modal_label_name": {
-    "message": "Audience Name"
+    "message": "Edit Audience"
   },
   "audience_import_csv": {
     "message": "Import from CSV"
@@ -1670,16 +1670,16 @@
     "message": "Lists"
   },
   "lists_button_create": {
-    "message": "Create List"
+    "message": "Create Announcement"
   },
   "lists_create_modal_title": {
-    "message": "Create List"
+    "message": "Create Announcement"
   },
   "lists_delete_modal_body": {
     "message": "Are you sure you want to delete %s?"
   },
   "lists_delete_modal_title": {
-    "message": "Delete List"
+    "message": "Delete Audience"
   },
   "lists_edit_modal_title": {
     "message": "Edit List"
@@ -1694,7 +1694,7 @@
     "message": "Name"
   },
   "lists_no_results_found": {
-    "message": "No lists found"
+    "message": "No audiences found"
   },
   "lists_number_of_users": {
     "message": "Number of Users"
@@ -2367,6 +2367,18 @@
   },
   "t_personas_create_submit_button": {
     "message": "Save Changes"
+  },
+  "t_personas_delete_error_last_persona": {
+    "message": "A school must have at least one persona enabled"
+  },
+  "t_personas_delete_error_users_associated": {
+    "message": "Cannot delete persona which has users associated"
+  },
+  "t_personas_edit_error_users_associated": {
+    "message": "Cannot update Login Requirements for persona which has users associated"
+  },
+  "t_personas_edit_message_on_save_ok": {
+    "message": "Changes saved successfully"
   },
   "t_personas_form_delete_button": {
     "message": "Delete Persona"

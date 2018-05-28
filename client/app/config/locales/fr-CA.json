@@ -210,7 +210,7 @@
     "message": "Outrepassez les réglages de notifications Push de l'utilisateur et forcez-les à reconnaître le message"
   },
   "announcements_heading_create": {
-    "message": "Nouveau message"
+    "message": "Créer annonce"
   },
   "announcements_not_sent": {
     "message": "Message non envoyé, veuillez attendre %s minutes avant d'essayer de nouveau"
@@ -537,7 +537,7 @@
     "message": "Envoyer"
   },
   "audience_edit_modal_label_name": {
-    "message": "Nom de l'audience"
+    "message": "Editer audience"
   },
   "audience_import_csv": {
     "message": "Importer depuis CSV"
@@ -1670,16 +1670,16 @@
     "message": "Listes"
   },
   "lists_button_create": {
-    "message": "Créer liste"
+    "message": "Créer annonce"
   },
   "lists_create_modal_title": {
-    "message": "Créer liste"
+    "message": "Créer annonce"
   },
   "lists_delete_modal_body": {
     "message": "Êtes-vous sûr de vouloir supprimer %s ?"
   },
   "lists_delete_modal_title": {
-    "message": "Supprimer liste"
+    "message": "Supprimer audience"
   },
   "lists_edit_modal_title": {
     "message": "Éditer liste"
@@ -1694,7 +1694,7 @@
     "message": "Nom"
   },
   "lists_no_results_found": {
-    "message": "Aucune liste trouvée"
+    "message": "Aucune audience trouvée"
   },
   "lists_number_of_users": {
     "message": "Nombre d'utilisateurs"
