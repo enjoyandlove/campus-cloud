@@ -8,7 +8,7 @@ import { PersonasModule } from './../personas.module';
 import { PersonasDeleteComponent } from './delete.component';
 import { MockPersonasService, mockPersonas } from '../mock/personas.service.mock';
 
-fdescribe('PersonasDeleteComponent', () => {
+describe('PersonasDeleteComponent', () => {
   let comp: PersonasDeleteComponent;
   let fixture: ComponentFixture<PersonasDeleteComponent>;
 

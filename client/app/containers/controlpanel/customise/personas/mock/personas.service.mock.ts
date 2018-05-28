@@ -49,8 +49,10 @@ export class MockPersonasService {
   deletePersonaById(personaId, search) {
     this.dummy = { personaId, search };
 
-    console.log('MOCKKK');
-
     return Observable.of(personaId);
+  }
+
+  createPersona(body) {
+    return Observable.of(body);
   }
 }
