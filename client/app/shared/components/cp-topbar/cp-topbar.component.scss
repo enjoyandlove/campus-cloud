@@ -101,10 +101,17 @@ nav {
   max-width: 200px;
   position: relative;
 
+  &.open {
+    .nav__school--menu {
+      display: block;
+    }
+  }
+
   &--menu {
     top: 115%;
     z-index: 4;
     right: 20px;
+    display: none;
     position: absolute;
   }
 
