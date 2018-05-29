@@ -527,14 +527,11 @@
   "audience_counter_users": {
     "message": "Utilisateurs trouvés"
   },
-  "audience_create_error_duplicate_audience": {
-    "message": "Il y a déjà une audience avec ce nom."
-  },
   "audience_create_modal_label_name": {
     "message": "Nom d'audience"
   },
-  "audience_do_not_save": {
-    "message": "Envoyer"
+  "audience_dynamic_button_save_audience": {
+    "message": "Save Audience"
   },
   "audience_edit_modal_label_name": {
     "message": "Editer audience"
@@ -565,9 +562,6 @@
   },
   "audience_name": {
     "message": "Nom d'audience"
-  },
-  "audience_save_audience_modal_submit": {
-    "message": "Enregistrer audience et envoyer"
   },
   "audience_type_all": {
     "message": "Toutes les audiences"
@@ -2427,6 +2421,9 @@
   },
   "t_persona_list_button_notify": {
     "message": "Notifier"
+  },
+  "t_shared_cancel": {
+    "message": "Cancel"
   },
   "update": {
     "message": "Mettre à jour",

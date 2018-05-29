@@ -14,6 +14,7 @@ import { AudienceSharedService } from '../audience.shared.service';
 export class AudienceNewBodyComponent implements OnInit {
   @Input() audience;
   @Input() importButton = true;
+  @Input() showSaveButton = false;
   @Input() withChips: Array<any> = [];
   @Input() disableTypeSelection = false;
   @Input() defaultView = AudienceType.dynamic;
@@ -21,6 +22,7 @@ export class AudienceNewBodyComponent implements OnInit {
   @Output() filters: EventEmitter<any> = new EventEmitter();
   @Output() count: EventEmitter<number> = new EventEmitter();
   @Output() importClick: EventEmitter<null> = new EventEmitter();
+  @Output() saveAudience: EventEmitter<null> = new EventEmitter();
   @Output() users: EventEmitter<Array<number>> = new EventEmitter();
   @Output() audienceType: EventEmitter<{ custom: boolean; dynamic: boolean }> = new EventEmitter();
 
@@ -30,7 +32,8 @@ export class AudienceNewBodyComponent implements OnInit {
   state = {
     custom: true,
     dynamic: false,
-    couting: false
+    couting: false,
+    canSave: false
   };
 
   constructor(
@@ -42,6 +45,7 @@ export class AudienceNewBodyComponent implements OnInit {
   onTypeSelected({ action }) {
     this.state = {
       ...this.state,
+      canSave: false,
       custom: action === AudienceType.custom,
       dynamic: action === AudienceType.dynamic
     };
@@ -67,7 +71,11 @@ export class AudienceNewBodyComponent implements OnInit {
     this.service.getUserCount(data, search).subscribe(
       ({ count }) => {
         this.count.emit(count);
-        this.state = { ...this.state, couting: false };
+        this.state = {
+          ...this.state,
+          couting: false,
+          canSave: count > 0
+        };
         this.message = `${count} ${this.cpI18n.translate('users_found')}`;
       },
 
@@ -79,6 +87,8 @@ export class AudienceNewBodyComponent implements OnInit {
   }
 
   onUsers(users) {
+    this.state = { ...this.state, canSave: users.length > 0 };
+
     this.users.emit(users);
     this.message = `${users.length} ${this.cpI18n.translate('audience_counter_users')}`;
   }

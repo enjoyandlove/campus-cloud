@@ -12,8 +12,9 @@ import {
 import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { CPTabComponent } from './../../../../../shared/components/cp-tabs/components/cp-tab/cp-tab.component';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { AUDIENCE_IMPORTED } from './../../../../../reducers/audience.reducer';
+import { CPTabComponent } from './../../../../../shared/components/cp-tabs/components/cp-tab/cp-tab.component';
 
 @Component({
   selector: 'cp-audience-card',
@@ -28,6 +29,7 @@ export class AudienceCardComponent implements OnInit, AfterViewInit {
   @Output() count: EventEmitter<number> = new EventEmitter();
   @Output() importClick: EventEmitter<null> = new EventEmitter();
   @Output() resetNewAudience: EventEmitter<null> = new EventEmitter();
+  @Output() saveAudienceClick: EventEmitter<null> = new EventEmitter();
   @Output() resetSavedAudience: EventEmitter<null> = new EventEmitter();
   @Output() selectedAudience: EventEmitter<number> = new EventEmitter();
   @Output() selectedUsers: EventEmitter<Array<number>> = new EventEmitter();
@@ -59,21 +61,26 @@ export class AudienceCardComponent implements OnInit, AfterViewInit {
   }
 
   onDestroyNewAudience() {
-    this.state = {
-      ...this.state,
-      savedAudienceActive: true,
-      newAudienceActive: false
-    };
-
+    this.store.dispatch({
+      type: AUDIENCE_IMPORTED,
+      payload: {
+        audience_id: null,
+        new_audience_active: false,
+        saved_audience_active: true
+      }
+    });
     this.message = this.cpI18n.translate('campus_wide');
   }
 
   onDestroySavedAudience() {
-    this.state = {
-      ...this.state,
-      savedAudienceActive: false,
-      newAudienceActive: true
-    };
+    this.store.dispatch({
+      type: AUDIENCE_IMPORTED,
+      payload: {
+        audience_id: null,
+        new_audience_active: true,
+        saved_audience_active: false
+      }
+    });
   }
 
   ngAfterViewInit() {
@@ -101,8 +108,8 @@ export class AudienceCardComponent implements OnInit, AfterViewInit {
 
           this.state = {
             ...this.state,
-            savedAudienceActive: true,
-            newAudienceActive: false
+            savedAudienceActive: false,
+            newAudienceActive: true
           };
         }
         if (saved_audience_active) {

@@ -27,8 +27,21 @@
         [audience]="audience"
         *ngIf="state.dynamic"
         [counting]="state.couting"
-        (filters)="onFilters($event)">
+        (filters)="onFilters($event)"
+        (saveAudience)="saveAudience.emit()">
       </cp-audience-dynamic>
+    </div>
+  </div>
+
+  <div class="row footer" *ngIf="showSaveButton">
+    <div class="col-xs-12">
+      <button 
+        type="button" 
+        class="cpbtn cpbtn--link"
+        [disabled]="!state.canSave"
+        (click)="saveAudience.emit()">
+        {{'audience_dynamic_button_save_audience' | cpI18n}}
+      </button>
     </div>
   </div>
 </div>
