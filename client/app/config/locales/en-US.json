@@ -239,6 +239,12 @@
   "announcement_confirm_campus_wide_and_emergency_body": {
     "message": "You are about to send a campus-wide emergency announcement."
   },
+  "announcement_confirm_campus_wide_and_urgent": {
+    "message": "Campus-Wide and Urgent Announcement"
+  },
+  "announcement_confirm_campus_wide_and_urgent_body": {
+    "message": "You are about to send a campus-wide urgent announcement."
+  },
   "announcement_confirm_campus_wide_body": {
     "message": "You are about to send a campus-wide announcement."
   },
@@ -246,6 +252,12 @@
     "message": "Emergency Announcement"
   },
   "announcement_confirm_emergency_body": {
+    "message": "You are about to send an emergency notification."
+  },
+  "announcement_confirm_urgent": {
+    "message": "Urgent Announcement"
+  },
+  "announcement_confirm_urgent_body": {
     "message": "You are about to send an emergency notification."
   },
   "announcement_success_sent": {
@@ -528,13 +540,13 @@
     "message": "Users Found"
   },
   "audience_create_error_duplicate_audience": {
-    "message": "There is already an audience with that name."
+    "message": "That audience name is already in use."
   },
   "audience_create_modal_label_name": {
     "message": "Audience Name"
   },
-  "audience_do_not_save": {
-    "message": "Send"
+  "audience_dynamic_button_save_audience": {
+    "message": "Save Audience"
   },
   "audience_edit_modal_label_name": {
     "message": "Edit Audience"
@@ -565,9 +577,6 @@
   },
   "audience_name": {
     "message": "Audience Name"
-  },
-  "audience_save_audience_modal_submit": {
-    "message": "Save Audience and Send"
   },
   "audience_type_all": {
     "message": "All Audiences"
@@ -2299,6 +2308,9 @@
   "t_audience_dynamic_integration_disabled": {
     "message": "To enable this feature, please contact your Customer Success manager."
   },
+  "t_audience_save_modal_button_submit": {
+    "message": "Save"
+  },
   "t_customise_personas": {
     "message": "App Experiences"
   },
@@ -2439,6 +2451,9 @@
   },
   "t_persona_list_button_notify": {
     "message": "Notify"
+  },
+  "t_shared_cancel": {
+    "message": "Cancel"
   },
   "update": {
     "message": "Update",

@@ -25,7 +25,6 @@ interface IState {
   isEmergency: boolean;
   isCampusWide: boolean;
   validUserCount: boolean;
-  triggerSaveModal: boolean;
 }
 
 const state: IState = {
@@ -35,8 +34,7 @@ const state: IState = {
   isToFilters: false,
   isEmergency: false,
   isCampusWide: true,
-  validUserCount: false,
-  triggerSaveModal: false
+  validUserCount: false
 };
 
 const THROTTLED_STATUS = 1;
@@ -102,7 +100,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     });
   }
 
-  onImportSuccess({ id }) {
+  redirectToSaveTab({ id }) {
     this.store.dispatch({
       type: AUDIENCE_IMPORTED,
       payload: {
@@ -123,8 +121,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
         isToLists: false,
         isToFilters: false,
         isCampusWide: false,
-        validUserCount: false,
-        triggerSaveModal: true
+        validUserCount: false
       };
       this.form.controls['list_ids'].setValue([]);
       this.form.controls['user_ids'].setValue([]);
@@ -138,8 +135,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
         isToLists: false,
         isToFilters: true,
         isCampusWide: false,
-        validUserCount: false,
-        triggerSaveModal: true
+        validUserCount: false
       };
       this.form.controls['filters'].setValue([]);
       this.form.controls['user_ids'].setValue([]);
@@ -155,8 +151,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
         isToUsers: false,
         isToLists: true,
         isToFilters: false,
-        isCampusWide: false,
-        triggerSaveModal: false
+        isCampusWide: false
       };
       this.form.controls['list_ids'].setValue([audienceId]);
       this.form.controls['is_school_wide'].setValue(false);
@@ -166,8 +161,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
         isToUsers: false,
         isToLists: false,
         isCampusWide: true,
-        isToFilters: false,
-        triggerSaveModal: false
+        isToFilters: false
       };
       this.form.controls['list_ids'].setValue([]);
       this.form.controls['is_school_wide'].setValue(true);
@@ -181,7 +175,6 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       isToLists: false,
       isCampusWide: false,
       isToFilters: false,
-      triggerSaveModal: true,
       validUserCount: users.length > 0
     };
 
@@ -213,16 +206,11 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
   onTeardownAudienceSaveModal() {
     $('#audienceSaveModal').modal('hide');
-
-    this.state = {
-      ...this.state,
-      triggerSaveModal: false
-    };
-
-    this.doSubmit();
   }
 
   onAudienceNamed({ name }) {
+    $('#audienceSaveModal').modal('hide');
+
     let data = {};
     data = { ...data, name };
 
@@ -240,13 +228,8 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     this.service
       .createAudience(data, search)
       .toPromise()
-      .then(({ id }) => {
-        $('#audienceSaveModal').modal('hide');
-        this.doSubmit(id);
-      })
+      .then(({ id }) => this.redirectToSaveTab({ id }))
       .catch((err) => {
-        $('#audienceSaveModal').modal('hide');
-
         const error = JSON.parse(err._body).error;
         const body =
           error === 'Database Error'
@@ -276,8 +259,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       isToLists: false,
       isToFilters: true,
       isCampusWide: false,
-      validUserCount: false,
-      triggerSaveModal: true
+      validUserCount: false
     };
 
     this.form.controls['is_school_wide'].setValue(false);
@@ -290,21 +272,14 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       isToLists: false,
       isCampusWide: true,
       isToFilters: false,
-      validUserCount: true,
-      triggerSaveModal: false
+      validUserCount: true
     };
 
     this.form.controls['is_school_wide'].setValue(true);
   }
 
   doValidate() {
-    this.shouldConfirm = this.state.isEmergency || this.state.isCampusWide;
-
-    if (this.state.triggerSaveModal) {
-      $('#audienceSaveModal').modal();
-
-      return;
-    }
+    this.shouldConfirm = this.state.isEmergency || this.state.isCampusWide || this.state.isUrgent;
 
     if (!this.shouldConfirm) {
       this.doSubmit();
@@ -328,7 +303,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     this.validButton();
   }
 
-  doSubmit(savedListId = null) {
+  doSubmit() {
     this.isError = false;
     $('#announcementConfirmModal').modal('hide');
 
@@ -364,12 +339,6 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
       delete data['list_ids'];
       delete data['user_ids'];
-    }
-
-    if (savedListId) {
-      delete data['filters'];
-
-      data = Object.assign({}, data, { list_ids: [savedListId] });
     }
 
     this.service.postAnnouncements(search, data).subscribe(
@@ -441,8 +410,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       isToUsers: false,
       isToLists: false,
       isCampusWide: false,
-      isToFilters: true,
-      triggerSaveModal: true
+      isToFilters: true
     };
 
     this.form.controls['filters'].setValue(filters);
@@ -470,6 +438,10 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
       1
     );
+  }
+
+  onSaveAudienceClick() {
+    $('#audienceSaveModal').modal();
   }
 
   validButton() {
@@ -537,9 +509,6 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
     this.form.valueChanges.subscribe((_) => {
       this.validButton();
-      // const isValid = this.form.valid && this.state.validUserCount;
-
-      // this.buttonData = { ...this.buttonData, disabled: !isValid };
     });
   }
 }

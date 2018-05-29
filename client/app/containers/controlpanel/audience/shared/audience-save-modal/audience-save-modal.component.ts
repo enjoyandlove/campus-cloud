@@ -24,13 +24,14 @@ export class AudienceSaveModalComponent implements OnInit {
 
   doSubmit() {
     this.onSubmit.emit(this.form.value);
+    this.form.reset();
   }
 
   ngOnInit(): void {
     this.buttonData = {
       class: 'primary',
       disabled: true,
-      text: this.cpI18n.translate('audience_save_audience_modal_submit')
+      text: this.cpI18n.translate('t_audience_save_modal_button_submit')
     };
 
     this.form = this.fb.group({

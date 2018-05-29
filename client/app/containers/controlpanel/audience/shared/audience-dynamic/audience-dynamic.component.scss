@@ -1,7 +1,9 @@
 @import '~styles/components/button';
 
 .footer {
-  margin-top: 15px;
+  > div {
+    margin-top: 15px;
+  }
 }
 
 .group-item {

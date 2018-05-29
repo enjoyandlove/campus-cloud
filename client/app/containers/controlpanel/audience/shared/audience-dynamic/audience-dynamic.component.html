@@ -57,21 +57,23 @@
         </div>
       </form>
       
-      <div class="row footer">
-        <div class="col-xs-6">
-          <button 
-            type="button" 
-            (click)="addFilterGroup()" 
-            class="cpbtn cpbtn--link"
-            [disabled]="state.filterCount === maxFilterCount">
-            {{'audience_add_filter_button' | cpI18n}}
-          </button>
-        </div>
-        <div class="col-xs-6">
-          <cp-audience-counter 
-            [message]="message"
-            [loading]="counting">
-          </cp-audience-counter>
+      <div class="footer">
+        <div class="row">
+          <div class="col-xs-6">
+            <button 
+              type="button" 
+              (click)="addFilterGroup()" 
+              class="cpbtn cpbtn--link"
+              [disabled]="state.filterCount === maxFilterCount">
+              {{'audience_add_filter_button' | cpI18n}}
+            </button>
+          </div>
+          <div class="col-xs-6">
+            <cp-audience-counter 
+              [message]="message"
+              [loading]="counting">
+            </cp-audience-counter>
+          </div>
         </div>
       </div>
     </ng-container>

@@ -7,6 +7,7 @@
       [canReadAudience]="canReadAudience"
       (resetNewAudience)="onResetNewAudience()"
       (selectedUsers)="onSelectedUsers($event)"
+      (saveAudienceClick)="onSaveAudienceClick()"
       (resetSavedAudience)="onResetSavedAudience()"
       (selectedAudience)="onAudienceChange($event)"
       (selectedFilters)="onSelectedFilters($event)"
@@ -123,7 +124,7 @@
   *ngIf="isAudienceImport">
   <cp-audience-import
     (error)="onImportError($event)"
-    (success)="onImportSuccess($event)"
+    (success)="redirectToSaveTab($event)"
     (teardown)="isAudienceImport = !isAudienceImport"
     (launchCreateModal)="onLaunchCreateModal($event)">
   </cp-audience-import>

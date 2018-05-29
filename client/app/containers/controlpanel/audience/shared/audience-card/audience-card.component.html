@@ -30,11 +30,13 @@
             [title]="newAudienceTitle"
             (destroy)="onDestroyNewAudience()">
             <cp-audience-new-body 
+              [showSaveButton]=[true]
               (users)="onUsers($event)"
               (count)="count.emit($event)"
               (filters)="onFilters($event)"
               *ngIf="state.newAudienceActive"
               (importClick)="importClick.emit()"
+              (saveAudience)="saveAudienceClick.emit()"
               (audienceType)="onNewAudienceTypeChange($event)">
             </cp-audience-new-body>
           </cp-tab>
@@ -43,7 +45,3 @@
     </div>
   </div>
 </div>
-
-<cp-modal modalId="audienceSave">
-  <cp-audience-save-modal></cp-audience-save-modal>
-</cp-modal>
