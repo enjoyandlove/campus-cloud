@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
 import { CPSession, ISchool, IUser } from '../../../session';
@@ -13,7 +13,6 @@ import { canAccountLevelReadResource, canSchoolReadResource } from './../../util
   styleUrls: ['./cp-topbar.component.scss']
 })
 export class CPTopBarComponent implements OnInit {
-  isOpen;
   user: IUser;
   school: ISchool;
   canNotify = false;
@@ -28,15 +27,6 @@ export class CPTopBarComponent implements OnInit {
   defaultImage = require('public/default/user.png');
 
   constructor(public el: ElementRef, public session: CPSession, public router: Router) {}
-
-  @HostListener('document:click', ['$event'])
-  onClick(event) {
-    if (!this.el.nativeElement.contains(event.target)) {
-      if (this.isOpen) {
-        this.isOpen = false;
-      }
-    }
-  }
 
   getManageHomePage() {
     if (canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.events)) {
