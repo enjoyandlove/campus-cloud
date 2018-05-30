@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col-xs-12">
+    <div class="tile">
+      <div class="tile__content text-center">
+        <button 
+          type="button"
+          (click)="addTileClick.emit()">
+          <i class="material-icons">remove_red_eye</i>
+          <span>{{'t_shared_show' | cpI18n}}</span>
+        </button>
+
+        <button 
+          type="button"
+          (click)="addTileClick.emit()">
+          <i class="material-icons">edit</i>
+          <span>{{'t_shared_edit' | cpI18n}}</span>
+        </button>
+
+        <button 
+          type="button"
+          (click)="addTileClick.emit()">
+          <i class="material-icons">delete</i>
+          <span>{{'t_shared_delete' | cpI18n}}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

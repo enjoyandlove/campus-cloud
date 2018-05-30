@@ -20,23 +20,25 @@ import {
   PersonasSectionTitleComponent,
   PersonasSectionControlsComponent,
   PersonasSectionAddButtonComponent,
+  PersonasSectionTileHoverComponent,
   PersonasSectionAddTileButtonComponent
 } from './details/components/section';
 
 @NgModule({
   declarations: [
-    PersonasListComponent,
-    PersonasListActionBoxComponent,
-    PersonasCreateComponent,
     PersonasFormComponent,
+    PersonasListComponent,
     PersonasEditComponent,
     PersonasDeleteComponent,
+    PersonasCreateComponent,
     PersonasDetailsComponent,
     PersonasSectionComponent,
-    PersonasSectionAddButtonComponent,
-    PersonasSectionTitleComponent,
-    PersonasSectionControlsComponent,
     PersonasSectionTileComponent,
+    PersonasSectionTitleComponent,
+    PersonasListActionBoxComponent,
+    PersonasSectionControlsComponent,
+    PersonasSectionTileHoverComponent,
+    PersonasSectionAddButtonComponent,
     PersonasSectionAddTileButtonComponent
   ],
 

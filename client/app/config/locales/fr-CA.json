@@ -2434,6 +2434,12 @@
   "t_shared_edit": {
     "message": "Éditer"
   },
+  "t_shared_hide": {
+    "message": "Cacher"
+  },
+  "t_shared_show": {
+    "message": "Montrer"
+  },
   "update": {
     "message": "Mettre à jour",
     "description": "Verb"

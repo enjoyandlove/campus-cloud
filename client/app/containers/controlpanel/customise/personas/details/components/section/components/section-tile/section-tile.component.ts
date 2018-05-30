@@ -10,6 +10,8 @@ import { ITile } from './../../../../../persona.interface';
 export class PersonasSectionTileComponent implements OnInit {
   @Input() tile: ITile;
 
+  hover = false;
+
   constructor() {}
 
   ngOnInit(): void {}

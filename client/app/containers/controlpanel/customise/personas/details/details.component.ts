@@ -1,5 +1,5 @@
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
@@ -24,6 +24,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
   personaId;
 
   constructor(
+    public router: Router,
     public session: CPSession,
     public route: ActivatedRoute,
     public CPI18n: CPI18nService,
@@ -70,7 +71,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
         this.guides = data;
         console.log(this.guides);
       })
-      .catch((err) => console.log(err));
+      .catch(() => this.router.navigate(['/customize/personas']));
   }
 
   updateHeader(personName) {

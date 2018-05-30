@@ -2467,6 +2467,12 @@
   "t_shared_edit": {
     "message": "Edit"
   },
+  "t_shared_hide": {
+    "message": "Hide"
+  },
+  "t_shared_show": {
+    "message": "Show"
+  },
   "update": {
     "message": "Update",
     "description": "Verb"
