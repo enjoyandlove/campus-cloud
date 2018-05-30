@@ -6,12 +6,12 @@ import { Store } from '@ngrx/store';
 
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
-import { ICampusGuide } from './../persona.interface';
 import { PersonasService } from './../personas.service';
 import { CPI18nService } from '../../../../../shared/services';
-import { IHeader } from './../../../../../reducers/header.reducer';
+import { ICampusGuide, IPersona } from './../persona.interface';
 import { PersonasUtilsService } from './../personas.utils.service';
 import { ISnackbar } from './../../../../../reducers/snackbar.reducer';
+import { IHeader, HEADER_UPDATE } from './../../../../../reducers/header.reducer';
 
 @Component({
   selector: 'cp-personas-details',
@@ -37,6 +37,9 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
   }
 
   fetch() {
+    const personaSearch = new URLSearchParams();
+    personaSearch.append('school_id', this.session.g.get('school').id);
+
     const tilesSearch = new URLSearchParams();
     tilesSearch.append('school_id', this.session.g.get('school').id);
     tilesSearch.append('school_persona_id', this.personaId);
@@ -46,7 +49,16 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
 
     const tiles$ = this.service.getTilesByPersona(tilesSearch);
     const tileCategories$ = this.service.getTilesCategories(tileCategoriesSearch);
-    const request$ = Observable.combineLatest([tiles$, tileCategories$]);
+
+    const persona$ = this.service.getPersonaById(this.personaId, personaSearch);
+
+    const request$ = persona$.switchMap((persona: IPersona) => {
+      const key = CPI18nService.getLocale().startsWith('fr') ? 'fr' : 'en';
+
+      this.updateHeader(persona.localized_name_map[key]);
+
+      return Observable.combineLatest([tiles$, tileCategories$]);
+    });
     const groupTiles = (categories, tiles) =>
       this.utils.groupTilesWithTileCategories(categories, tiles);
 
@@ -59,6 +71,22 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
         console.log(this.guides);
       })
       .catch((err) => console.log(err));
+  }
+
+  updateHeader(personName) {
+    this.store.dispatch({
+      type: HEADER_UPDATE,
+      payload: {
+        heading: `[NOTRANSLATE]${personName}[NOTRANSLATE]`,
+        subheading: null,
+        // crumbs: {
+        //   url: 'personas',
+        //   label: 'personas'
+        // },
+        em: null,
+        children: []
+      }
+    });
   }
 
   ngOnInit(): void {
