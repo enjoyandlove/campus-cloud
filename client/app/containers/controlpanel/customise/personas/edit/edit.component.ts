@@ -4,16 +4,17 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
+import { IPersona } from '../persona.interface';
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
 import { PersonasService } from './../personas.service';
+import { PersonaValidationErrors } from './../personas.status';
 import { CPI18nService } from '../../../../../shared/services';
 import { PersonasUtilsService } from './../personas.utils.service';
 import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
 import { SNACKBAR_HIDE } from './../../../../../reducers/snackbar.reducer';
 import { IHeader, HEADER_UPDATE } from './../../../../../reducers/header.reducer';
 import { PersonasFormComponent } from './../components/personas-form/personas-form.component';
-import { IPersona } from '../persona.interface';
 
 @Component({
   selector: 'cp-personas-edit',
@@ -83,7 +84,7 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
         let message = this.cpI18n.translate('something_went_wrong');
         this.submitButtonData = { ...this.submitButtonData, disabled: false };
 
-        if (error === 'users associated') {
+        if (error === PersonaValidationErrors.users_associated) {
           message = this.cpI18n.translate('t_personas_edit_error_users_associated');
         }
 

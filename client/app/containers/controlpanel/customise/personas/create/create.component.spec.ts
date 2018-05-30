@@ -1,18 +1,17 @@
-import { CPDate } from './../../../../../shared/utils/date/date';
-import { PersonasType, PersonasLoginRequired } from './../personas.status';
-import { PersonasUtilsService } from './../personas.utils.service';
-import { PersonasService } from './../personas.service';
-import { MockPersonasService, mockPersonas } from './../mock/personas.service.mock';
-import { StoreModule } from '@ngrx/store';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { CPSession } from './../../../../../session/index';
-import { RouterTestingModule } from '@angular/router/testing';
-import { async, TestBed, ComponentFixture } from '@angular/core/testing';
-
-import { PersonasCreateComponent } from './create.component';
-
-import { PersonasModule } from './../personas.module';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { async, TestBed, ComponentFixture } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { StoreModule } from '@ngrx/store';
+
+import { CPSession } from './../../../../../session';
+import { PersonasModule } from './../personas.module';
+import { PersonasService } from './../personas.service';
+import { PersonasCreateComponent } from './create.component';
+import { CPDate } from './../../../../../shared/utils/date/date';
+import { PersonasUtilsService } from './../personas.utils.service';
+import { PersonasType, PersonasLoginRequired } from './../personas.status';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { MockPersonasService, mockPersonas } from './../mock/personas.service.mock';
 
 describe('PersonasCreateComponent', () => {
   let comp: PersonasCreateComponent;
@@ -52,6 +51,22 @@ describe('PersonasCreateComponent', () => {
 
     expect(comp.buildForm).toHaveBeenCalled();
     expect(comp.buildHeader).toHaveBeenCalled();
+  });
+
+  it('form Validation', () => {
+    expect(comp.form.valid).toBeFalsy();
+
+    comp.form.controls['name'].setValue('a'.repeat(255));
+
+    expect(comp.form.valid).toBeTruthy();
+
+    comp.form.controls['name'].setValue('a'.repeat(256));
+
+    expect(comp.form.valid).toBeFalsy();
+
+    comp.form.controls['name'].setValue('');
+
+    expect(comp.form.valid).toBeFalsy();
   });
 
   it('buildForm', () => {

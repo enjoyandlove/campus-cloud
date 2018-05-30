@@ -1,11 +1,11 @@
-import { Observable } from 'rxjs/Observable';
-import { PersonasService } from './../personas.service';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { CPSession } from './../../../../../session/index';
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
+import { Observable } from 'rxjs/Observable';
 
+import { CPSession } from './../../../../../session';
 import { PersonasModule } from './../personas.module';
+import { PersonasService } from './../personas.service';
 import { PersonasDeleteComponent } from './delete.component';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { MockPersonasService, mockPersonas } from '../mock/personas.service.mock';
 
 describe('PersonasDeleteComponent', () => {
@@ -57,7 +57,12 @@ describe('PersonasDeleteComponent', () => {
     comp.onDelete();
 
     expect(comp.service.deletePersonaById).toHaveBeenCalled();
+    expect(comp.service.deletePersonaById).toHaveBeenCalledTimes(1);
+
     expect(comp.resetModal).toHaveBeenCalled();
+    expect(comp.resetModal).toHaveBeenCalledTimes(1);
+
     expect(comp.deleted.emit).toHaveBeenCalled();
+    expect(comp.deleted.emit).toHaveBeenCalledTimes(1);
   });
 });

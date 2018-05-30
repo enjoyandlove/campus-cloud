@@ -8,3 +8,10 @@ export enum PersonasLoginRequired {
   forbidden = -1,
   required = 1
 }
+
+export enum PersonaValidationErrors {
+  api_env = 'api_env',
+  last_persona = 'last persona',
+  users_associated = 'users associated',
+  customization_off = 'customization off'
+}

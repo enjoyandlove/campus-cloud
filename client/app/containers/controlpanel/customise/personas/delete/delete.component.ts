@@ -3,6 +3,7 @@ import { URLSearchParams } from '@angular/http';
 
 import { CPSession } from './../../../../../session';
 import { PersonasService } from './../personas.service';
+import { PersonaValidationErrors } from '../personas.status';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 @Component({
@@ -39,9 +40,9 @@ export class PersonasDeleteComponent implements OnInit {
         const error = JSON.parse(err._body).error;
         let message = this.cpI18n.translate('something_went_wrong');
 
-        if (error === 'last persona') {
+        if (error === PersonaValidationErrors.last_persona) {
           message = this.cpI18n.translate('t_personas_delete_error_last_persona');
-        } else if (error === 'users associated') {
+        } else if (error === PersonaValidationErrors.users_associated) {
           message = this.cpI18n.translate('t_personas_delete_error_users_associated');
         }
 

@@ -1,9 +1,9 @@
-import { RouterTestingModule } from '@angular/router/testing';
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { PersonasModule } from './../../../personas.module';
-import { PersonasListActionBoxComponent } from './list-action-box.component';
 import { CPI18nService } from '../../../../../../../shared/services';
+import { PersonasListActionBoxComponent } from './list-action-box.component';
 
 describe('PersonasListActionBoxComponent', () => {
   let comp: PersonasListActionBoxComponent;
