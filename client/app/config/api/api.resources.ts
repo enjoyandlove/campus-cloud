@@ -33,6 +33,8 @@ export const API_ENDPOINTS = {
 
   LOCATIONS: 'location',
 
+  GUIDE_TILES: 'guide_tile',
+
   PERSONAS: 'school_persona',
 
   DEALS_STORE: 'deals_store',
@@ -85,6 +87,8 @@ export const API_ENDPOINTS = {
   SERVICE_ASSESSMENT: 'service_assessment',
 
   DASHBOARD_TOP_CLUBS: 'analytics/club_data',
+
+  GUIDE_TILE_CATEGORY: 'guide_tile_category',
 
   SOCIAL_POST_CATEGORY: 'social_post_category',
 

@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-xs-12">
+    <div 
+      class="tile" 
+      [ngStyle]="{'border-bottom': '2px solid #' + tile.color }">
+      <div class="tile__image">
+        <img 
+          [alt]="tile.name"
+          class="img-responsive" 
+          [src]="tile.img_url">
+      </div>
+      <div class="tile__meta text-truncate">
+        {{tile.name}}
+      </div>
+    </div>
+  </div>
+</div>
