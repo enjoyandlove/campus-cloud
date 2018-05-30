@@ -224,7 +224,7 @@ export class AudienceDynamicComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.noFiltersFoundMessage = this.cpI18n.translate('t_audience_dynamic_integration_disabled');
-    this.zdDynamicArticle = ZendeskService.zdRoot();
+    this.zdDynamicArticle = `${ZendeskService.zdRoot()}/articles/360005163194`;
     this.filterDropdownPlaceholer = this.cpI18n.translate('select_filter_value');
     this.form = this.fb.group({
       filters: this.fb.array([])
