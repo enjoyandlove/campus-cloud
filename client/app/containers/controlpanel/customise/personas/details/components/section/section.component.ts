@@ -12,5 +12,17 @@ export class PersonasSectionComponent implements OnInit {
 
   constructor() {}
 
+  onEditClick() {
+    console.log('EDIT CLICK');
+  }
+
+  onHideClick() {
+    console.log('HIDE CLICK');
+  }
+
+  onDeleteClick() {
+    console.log('DELETE CLICK');
+  }
+
   ngOnInit(): void {}
 }
