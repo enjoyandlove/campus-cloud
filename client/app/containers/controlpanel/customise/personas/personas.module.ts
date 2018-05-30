@@ -3,12 +3,11 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { SharedModule } from '../../../../shared/shared.module';
-
 import { PersonasListComponent } from './list';
 import { PersonasEditComponent } from './edit';
 import { PersonasDeleteComponent } from './delete';
 import { PersonasService } from './personas.service';
+import { SharedModule } from '../../../../shared/shared.module';
 import { PersonasUtilsService } from './personas.utils.service';
 import { PersonasRoutingModule } from './personas.routing.module';
 import { PersonasListActionBoxComponent } from './list/components';

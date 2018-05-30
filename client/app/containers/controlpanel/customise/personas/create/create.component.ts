@@ -9,9 +9,8 @@ import { PersonasService } from './../personas.service';
 import { CPI18nService } from '../../../../../shared/services';
 import { PersonasUtilsService } from './../personas.utils.service';
 import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
-import { PersonasLoginRequired, PersonasType } from './../personas.status';
+import { PersonasLoginRequired, PersonasType, PersonaValidationErrors } from './../personas.status';
 import { IHeader, HEADER_UPDATE } from './../../../../../reducers/header.reducer';
-
 import { PersonasFormComponent } from './../components/personas-form/personas-form.component';
 
 @Component({
@@ -59,9 +58,9 @@ export class PersonasCreateComponent implements OnInit {
         const error = JSON.parse(err._body).error;
         let message = this.cpI18n.translate('something_went_wrong');
 
-        if (error === 'api_env') {
+        if (error === PersonaValidationErrors.api_env) {
           message = this.cpI18n.translate('t_personas_create_error_api_env');
-        } else if (error === 'customization off') {
+        } else if (error === PersonaValidationErrors.customization_off) {
           message = this.cpI18n.translate('t_personas_create_error_customization off');
         }
 

@@ -1,15 +1,15 @@
+import { TestBed, async, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
-import { MockPersonasService } from './../mock/personas.service.mock';
-import { CPSession } from './../../../../../session/index';
-import { PersonasService } from './../personas.service';
-import { TestBed, async, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
 
+import { BaseComponent } from '../../../../../base';
+import { CPSession } from './../../../../../session';
 import { PersonasModule } from './../personas.module';
+import { PersonasService } from './../personas.service';
 import { PersonasListComponent } from './list.component';
 import { CPI18nService } from '../../../../../shared/services';
+import { MockPersonasService } from './../mock/personas.service.mock';
 import { headerReducer, snackBarReducer } from '../../../../../reducers';
-import { BaseComponent } from '../../../../../base';
 
 describe('PersonasListComponent', () => {
   let storeSpy;
