@@ -75,6 +75,7 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
       type: SNACKBAR_SHOW,
       payload: {
         sticky: true,
+        autoClose: true,
         class: 'danger',
         body: message
       }

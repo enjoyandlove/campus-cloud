@@ -50,8 +50,6 @@ export class CPTopBarComponent implements OnInit {
       return 'services';
     } else if (canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.calendar)) {
       return 'calendars';
-    } else if (canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.campus_announcements)) {
-      return 'lists';
     } else if (canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.campus_maps)) {
       return 'locations';
     } else if (canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.links)) {
