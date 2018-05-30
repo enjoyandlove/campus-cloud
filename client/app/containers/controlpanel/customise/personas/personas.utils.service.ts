@@ -5,6 +5,8 @@ import { PersonasType, PersonasLoginRequired } from './personas.status';
 
 @Injectable()
 export class PersonasUtilsService {
+  defaultTileCategoryIds = [2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13];
+
   constructor(public cpI18n: CPI18nService) {}
 
   requiresCredentialsMenu() {
@@ -22,6 +24,19 @@ export class PersonasUtilsService {
         label: this.cpI18n.translate('t_personas_form_dropdown_login_forbidden')
       }
     ];
+  }
+
+  filterTileByCategory(tiles, categoryId) {
+    return tiles.filter((tile) => tile.tile_category_id === categoryId);
+  }
+
+  groupTilesWithTileCategories(tileCategories, tiles) {
+    return tileCategories.map((category) => {
+      return {
+        ...category,
+        tiles: this.filterTileByCategory(tiles, category.id)
+      };
+    });
   }
 
   plaftormMenu() {

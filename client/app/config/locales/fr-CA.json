@@ -210,7 +210,7 @@
     "message": "Outrepassez les réglages de notifications Push de l'utilisateur et forcez-les à reconnaître le message"
   },
   "announcements_heading_create": {
-    "message": "Nouveau message"
+    "message": "Créer annonce"
   },
   "announcements_not_sent": {
     "message": "Message non envoyé, veuillez attendre %s minutes avant d'essayer de nouveau"
@@ -527,23 +527,20 @@
   "audience_counter_users": {
     "message": "Utilisateurs trouvés"
   },
-  "audience_create_error_duplicate_audience": {
-    "message": "Il y a déjà une audience avec ce nom."
-  },
   "audience_create_modal_label_name": {
     "message": "Nom d'audience"
   },
-  "audience_do_not_save": {
-    "message": "Envoyer"
+  "audience_dynamic_button_save_audience": {
+    "message": "Save Audience"
   },
   "audience_edit_modal_label_name": {
-    "message": "Nom de l'audience"
+    "message": "Editer audience"
   },
   "audience_import_csv": {
     "message": "Importer depuis CSV"
   },
   "audience_import_success_message": {
-    "message": "Audience créée avec succès"
+    "message": "Fichier téléversé avec succès"
   },
   "audience_label_audience": {
     "message": "Audiences"
@@ -565,9 +562,6 @@
   },
   "audience_name": {
     "message": "Nom d'audience"
-  },
-  "audience_save_audience_modal_submit": {
-    "message": "Enregistrer audience et envoyer"
   },
   "audience_type_all": {
     "message": "Toutes les audiences"
@@ -1416,7 +1410,7 @@
     "message": "Pour autoriser les publications, changez les réglages pour ce mur."
   },
   "feeds_everyone": {
-    "message": "Tout le monde"
+    "message": "Membres du club"
   },
   "feeds_flagged_posts": {
     "message": "Publications signalées"
@@ -1446,7 +1440,7 @@
     "message": "Publications supprimées"
   },
   "feeds_team_members": {
-    "message": "Membres"
+    "message": "Administrateurs de Campus Cloud"
   },
   "feeds_wall_name": {
     "message": "Nom du club"
@@ -1670,16 +1664,16 @@
     "message": "Listes"
   },
   "lists_button_create": {
-    "message": "Créer liste"
+    "message": "Créer audience"
   },
   "lists_create_modal_title": {
-    "message": "Créer liste"
+    "message": "Créer audience"
   },
   "lists_delete_modal_body": {
     "message": "Êtes-vous sûr de vouloir supprimer %s ?"
   },
   "lists_delete_modal_title": {
-    "message": "Supprimer liste"
+    "message": "Supprimer audience"
   },
   "lists_edit_modal_title": {
     "message": "Éditer liste"
@@ -1694,7 +1688,7 @@
     "message": "Nom"
   },
   "lists_no_results_found": {
-    "message": "Aucune liste trouvée"
+    "message": "Aucune audience trouvée"
   },
   "lists_number_of_users": {
     "message": "Nombre d'utilisateurs"
@@ -1810,6 +1804,9 @@
   },
   "no_hosts_available": {
     "message": "Aucun hôte disponible"
+  },
+  "no_one": {
+    "message": "Personne"
   },
   "no_results": {
     "message": "Aucun résultat"
@@ -2002,7 +1999,7 @@
     "message": "Audience enregistrées"
   },
   "save_audience_modal_title": {
-    "message": "Enregistrer audience et envoyer"
+    "message": "Enregistrer audience"
   },
   "save_changes": {
     "message": "Enregistrer les changements"
@@ -2427,6 +2424,15 @@
   },
   "t_persona_list_button_notify": {
     "message": "Notifier"
+  },
+  "t_shared_cancel": {
+    "message": "Cancel"
+  },
+  "t_shared_delete": {
+    "message": "Supprimer"
+  },
+  "t_shared_edit": {
+    "message": "Éditer"
   },
   "update": {
     "message": "Mettre à jour",

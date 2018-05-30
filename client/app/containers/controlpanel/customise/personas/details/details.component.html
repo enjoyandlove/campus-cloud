@@ -1,0 +1,16 @@
+<ng-container [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+  <ng-container *ngSwitchCase="false">
+    <div class="cp-card">
+      <div 
+        class="row" 
+        *ngFor="let guide of guides">
+        <div class="col-xs-12">
+          <cp-personas-section 
+            [guide]="guide">
+          </cp-personas-section>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

@@ -1,3 +1,4 @@
+import { PersonasDetailsComponent } from './details/details.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -15,6 +16,11 @@ const appRoutes: Routes = [
     path: 'create',
     data: { zendesk: 'personas' },
     component: PersonasCreateComponent
+  },
+  {
+    path: ':personaId',
+    data: { zendesk: 'personas' },
+    component: PersonasDetailsComponent
   },
   {
     path: ':personaId/edit',

@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
+import { NgModule } from '@angular/core';
 
 import { PersonasListComponent } from './list';
 import { PersonasEditComponent } from './edit';
@@ -12,7 +12,16 @@ import { PersonasUtilsService } from './personas.utils.service';
 import { PersonasRoutingModule } from './personas.routing.module';
 import { PersonasListActionBoxComponent } from './list/components';
 import { PersonasCreateComponent } from './create/create.component';
+import { PersonasDetailsComponent } from './details/details.component';
 import { PersonasFormComponent } from './components/personas-form/personas-form.component';
+import { PersonasSectionComponent } from './details/components/section/section.component';
+import {
+  PersonasSectionTileComponent,
+  PersonasSectionTitleComponent,
+  PersonasSectionControlsComponent,
+  PersonasSectionAddButtonComponent,
+  PersonasSectionAddTileButtonComponent
+} from './details/components/section';
 
 @NgModule({
   declarations: [
@@ -21,7 +30,14 @@ import { PersonasFormComponent } from './components/personas-form/personas-form.
     PersonasCreateComponent,
     PersonasFormComponent,
     PersonasEditComponent,
-    PersonasDeleteComponent
+    PersonasDeleteComponent,
+    PersonasDetailsComponent,
+    PersonasSectionComponent,
+    PersonasSectionAddButtonComponent,
+    PersonasSectionTitleComponent,
+    PersonasSectionControlsComponent,
+    PersonasSectionTileComponent,
+    PersonasSectionAddTileButtonComponent
   ],
 
   imports: [CommonModule, SharedModule, RouterModule, ReactiveFormsModule, PersonasRoutingModule],

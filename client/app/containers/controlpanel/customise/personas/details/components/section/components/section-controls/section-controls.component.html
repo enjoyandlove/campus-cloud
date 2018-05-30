@@ -1,0 +1,33 @@
+<div class="row controls">
+  <div class="col-xs-12">
+    <button 
+      type="button"
+      (click)="moveUp.emit()"
+      class="cpbtn cpbtn--link">
+      <i class="material-icons">keyboard_arrow_up</i>
+    </button>
+
+    <button 
+      type="button"
+      class="cpbtn cpbtn--link"
+      (click)="moveDown.emit()">
+      <i class="material-icons">keyboard_arrow_down</i>
+    </button>
+
+    <button 
+      type="button"
+      class="cpbtn cpbtn--link"
+      (click)="editClick.emit()">
+      <i class="material-icons">edit</i>
+      <span>{{ 't_shared_edit' | cpI18n }}</span>
+    </button>
+
+    <button 
+      type="button"
+      class="cpbtn cpbtn--link"
+      (click)="deleteClick.emit()">
+      <i class="material-icons">close</i>
+      <span>{{ 't_shared_delete' | cpI18n }}</span>
+    </button>
+  </div>
+</div>

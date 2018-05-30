@@ -1,0 +1,8 @@
+@import '~styles/core/colors';
+@import '~styles/core/typography';
+
+.title {
+  @include font-24px();
+
+  text-transform: uppercase;
+}
