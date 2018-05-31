@@ -14,9 +14,10 @@ import { CPMap } from '../../../../../shared/utils';
 import { ProvidersService } from '../providers.service';
 import { ServicesService } from '../services.service';
 
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { IServiceDeleteModal } from './components/service-edit-delete-modal';
+import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
-import { CPI18nService } from '../../../../../shared/services';
 
 declare var $: any;
 
@@ -69,6 +70,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     private store: Store<IHeader>,
     private cpI18n: CPI18nService,
     private route: ActivatedRoute,
+    private cpTracking: CPTrackingService,
     private servicesService: ServicesService,
     private providersService: ProvidersService
   ) {
@@ -79,6 +81,20 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
 
     this.fetch();
     this.buildHeader();
+  }
+
+  onUploadedImage(image) {
+    this.form.controls.logo_url.setValue(image);
+
+    if (image) {
+      this.trackUploadImageEvent();
+    }
+  }
+
+  trackUploadImageEvent() {
+    const properties = this.cpTracking.getEventProperties();
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
 
   private fetch() {

@@ -9,7 +9,7 @@ import {
   ErrorService,
   StoreService,
   AdminService,
-  CPI18nService
+  CPI18nService, CPTrackingService
 } from '../../../../../shared/services';
 
 import { EventsService } from '../events.service';
@@ -19,6 +19,7 @@ import { CPMap, CPDate } from '../../../../../shared/utils';
 import { EventUtilService } from '../events.utils.service';
 import { EventAttendance, EventFeedback, isAllDay } from '../event.status';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
@@ -77,7 +78,8 @@ export class EventsCreateComponent implements OnInit {
     private utils: EventUtilService,
     public adminService: AdminService,
     public storeService: StoreService,
-    public errorService: ErrorService
+    public errorService: ErrorService,
+    public cpTracking: CPTrackingService
   ) {}
 
   buildHeader() {
@@ -138,6 +140,16 @@ export class EventsCreateComponent implements OnInit {
   onUploadedImage(image) {
     this.form.controls['poster_url'].setValue(image);
     this.form.controls['poster_thumb_url'].setValue(image);
+
+    if (image) {
+      this.trackUploadImageEvent();
+    }
+  }
+
+  trackUploadImageEvent() {
+    const properties = this.cpTracking.getEventProperties();
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
 
   toggleEventAttendance(value) {

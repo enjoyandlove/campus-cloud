@@ -12,27 +12,37 @@
         </div>
         <ul class="nav__links pull-left">
           <li
+            cpTracker
             *ngIf="manageHomePage"
+            [eventData]="trackMenu(amplitudeEvents.menu_manage)"
             [class.active]="isManageActiveRoute">
             <a [routerLink]="['/manage/' + manageHomePage]">{{ 'manage' | cpI18n }}</a>
           </li>
           <li
+            cpTracker
             *ngIf="canNotify"
-            routerLinkActive="active">
+            routerLinkActive="active"
+            [eventData]="trackMenu(amplitudeEvents.menu_notify)">
             <a [routerLink]="['/notify']">{{ 'notify' | cpI18n }}</a>
           </li>
           <li
-            routerLinkActive="active">
+            cpTracker
+            routerLinkActive="active"
+            [eventData]="trackMenu(amplitudeEvents.menu_assess)">
             <a [routerLink]="[canAssess ? '/assess' : '/demo/assess']">{{ 'assess' | cpI18n }}</a>
           </li>
           <li
+            cpTracker
             *ngIf="canCustomise"
-            routerLinkActive="active">
+            routerLinkActive="active"
+            [eventData]="trackMenu(amplitudeEvents.menu_customize)">
             <a [routerLink]="['/customise']">{{ 'customise' | cpI18n }}</a>
           </li>
           <li
+            cpTracker
             *ngIf="canAudience"
-            routerLinkActive="active">
+            routerLinkActive="active"
+            [eventData]="trackMenu(amplitudeEvents.menu_audience)">
             <a [routerLink]="['/audience']">{{ 'audience' | cpI18n }}</a>
           </li>
         </ul>
@@ -40,7 +50,7 @@
         <div
           class="nav__school pull-right noselect">
           <div class="row" data-toggle="dropdown">
-            <div 
+            <div
               class="col-xs-10 no-left-padding no-right-padding">
               <div
                 *ngIf="school.app_logo_url !== ''"

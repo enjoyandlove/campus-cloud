@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { isProd } from '../../../config/env';
 
 interface IData {
@@ -28,10 +29,6 @@ export class CPPageHeaderComponent implements OnChanges {
   extraChildren = [];
 
   constructor(public router: Router) {}
-
-  isExtraMenuRoute() {
-    return this.router.url === this.extraMenu.url;
-  }
 
   getProductionReadyFeatures() {
     return this.data.children.filter((child) => !child.hasOwnProperty('hiddenInProd'));

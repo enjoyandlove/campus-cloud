@@ -17,8 +17,10 @@
         {{ 'jobs_manage_employer' | cpI18n }}
       </a>
       <a
+        cpTracker
         [routerLink]="['create']"
-        class="cpbtn cpbtn--primary">
+        class="cpbtn cpbtn--primary"
+        [eventData]="trackEvent(amplitudeEvents.clicked_create)">
         {{ 'jobs_create_job' | cpI18n }}
       </a>
     </div>

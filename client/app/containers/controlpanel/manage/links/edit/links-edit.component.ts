@@ -2,13 +2,13 @@ import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angu
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Headers } from '@angular/http';
 
+import { ILink } from '../link.interface';
 import { API } from '../../../../../config/api';
 import { LinksService } from '../links.service';
 import { appStorage } from '../../../../../shared/utils';
-import { FileUploadService } from '../../../../../shared/services';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
-
-import { ILink } from '../link.interface';
+import { CPTrackingService, FileUploadService } from '../../../../../shared/services';
 
 declare var $: any;
 
@@ -30,6 +30,7 @@ export class LinksEditComponent implements OnInit, OnChanges {
     private fb: FormBuilder,
     public cpI18n: CPI18nService,
     private service: LinksService,
+    private cpTracking: CPTrackingService,
     private fileUploadService: FileUploadService
   ) {}
 
@@ -62,11 +63,18 @@ export class LinksEditComponent implements OnInit, OnChanges {
     this.fileUploadService.uploadFile(file, url, headers).subscribe(
       (res) => {
         this.form.controls['img_url'].setValue(res.image_url);
+        this.trackUploadImageEvent();
       },
       (err) => {
         throw new Error(err);
       }
     );
+  }
+
+  trackUploadImageEvent() {
+    const properties = this.cpTracking.getEventProperties();
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
 
   handleDeleteImage() {

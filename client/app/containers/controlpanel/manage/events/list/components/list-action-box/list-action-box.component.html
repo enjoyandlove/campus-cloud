@@ -63,7 +63,9 @@
 
     <div class="col-xs-3 text-right pull-right" *ngIf="canCreateEvent">
       <a
-        [routerLink]="['create']" i18n
+        cpTracker
+        [routerLink]="['create']"
+        [eventData]="trackEvent(amplitudeEvents.clicked_create)"
         class="cpbtn cpbtn--primary no-right-padding" [class.cpbtn--square-right]="!isOrientation">
         {{ 'events_button_new' | cpI18n }}
       </a>

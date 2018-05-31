@@ -15,6 +15,8 @@ import { membershipTypes, statusTypes } from '../create/permissions';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
+import { CPTrackingService } from '../../../../../shared/services';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 
 @Component({
   selector: 'cp-clubs-edit',
@@ -50,7 +52,8 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
     public cpI18n: CPI18nService,
     public route: ActivatedRoute,
     public helper: ClubsUtilsService,
-    public clubsService: ClubsService
+    public clubsService: ClubsService,
+    public cpTracking: CPTrackingService
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -156,6 +159,16 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
 
   onUploadedImage(image): void {
     this.form.controls['logo_url'].setValue(image);
+
+    if (image) {
+      this.trackUploadImageEvent();
+    }
+  }
+
+  trackUploadImageEvent() {
+    const properties = this.cpTracking.getEventProperties();
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
 
   onSelectedMembership(type) {

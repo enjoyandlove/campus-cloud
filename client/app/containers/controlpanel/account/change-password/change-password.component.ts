@@ -4,9 +4,10 @@ import { Store } from '@ngrx/store';
 
 import { CPSession } from '../../../../session';
 import { AccountService } from '../account.service';
-import { ErrorService } from '../../../../shared/services';
+import { CPTrackingService, ErrorService } from '../../../../shared/services';
 import { CPI18nService } from './../../../../shared/services/i18n.service';
 import { ALERT_DEFAULT, IAlert } from '../../../../reducers/alert.reducer';
+import { amplitudeEvents } from '../../../../shared/constants/analytics';
 
 @Component({
   selector: 'cp-change-password',
@@ -24,6 +25,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
     private store: Store<IAlert>,
     private cpI18n: CPI18nService,
     private errorService: ErrorService,
+    private cpTracking: CPTrackingService,
     private accountService: AccountService
   ) {
     this.form = this.fb.group({
@@ -112,6 +114,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
       .then((_) => {
         this.form.reset();
         this.isCompleted = true;
+        this.cpTracking.amplitudeEmitEvent(amplitudeEvents.CHANGE_PASSWORD);
       });
   }
 

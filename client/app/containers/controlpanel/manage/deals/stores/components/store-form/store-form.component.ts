@@ -3,6 +3,8 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { CPMap } from '../../../../../../../shared/utils';
 import { CPSession, ISchool } from '../../../../../../../session';
+import { CPTrackingService } from '../../../../../../../shared/services';
+import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
 
 @Component({
   selector: 'cp-store-form',
@@ -16,10 +18,22 @@ export class StoreFormComponent implements OnInit {
   mapCenter: BehaviorSubject<any>;
   newAddress = new BehaviorSubject(null);
 
-  constructor(public session: CPSession) {}
+  constructor(
+    public session: CPSession,
+    public cpTracking: CPTrackingService) {}
 
   onUploadedImage(image) {
     this.storeForm.controls['logo_url'].setValue(image);
+
+    if (image) {
+      this.trackUploadImageEvent();
+    }
+  }
+
+  trackUploadImageEvent() {
+    const properties = this.cpTracking.getEventProperties();
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
 
   centerMap(lat: number, lng: number) {

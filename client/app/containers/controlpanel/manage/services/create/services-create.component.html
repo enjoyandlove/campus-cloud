@@ -7,8 +7,8 @@
             <p class="title" i18n>{{ 'services_label_banner' | cpI18n }}</p>
             <div class="margin-top row">
               <cp-image-upload
-                [required]="formError && form.controls['logo_url'].hasError('required')"
-                (uploaded)="form.controls.logo_url.setValue($event)">
+                (uploaded)="onUploadedImage($event)"
+                [required]="formError && form.controls['logo_url'].hasError('required')">
               </cp-image-upload>
             </div>
           </div>

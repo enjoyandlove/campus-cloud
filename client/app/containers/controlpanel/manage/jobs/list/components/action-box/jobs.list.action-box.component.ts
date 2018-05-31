@@ -3,7 +3,10 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { IJob } from '../../../jobs.interface';
 import { JobsService } from '../../../jobs.service';
 import { CPSession } from '../../../../../../../session';
+import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
 import { CPI18nService } from '../../../../../../../shared/services/i18n.service';
+import { CPTrackingService } from '../../../../../../../shared/services';
+import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
 
 export interface IState {
   jobs: Array<IJob>;
@@ -32,12 +35,14 @@ export class JobsListActionBoxComponent implements OnInit {
   @Output() search: EventEmitter<string> = new EventEmitter();
   @Output() listAction: EventEmitter<any> = new EventEmitter();
 
+  amplitudeEvents;
   state: IState = state;
 
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public jobsService: JobsService
+    public jobsService: JobsService,
+    public cpTracking: CPTrackingService
   ) {}
 
   onSearch(query) {
@@ -50,7 +55,23 @@ export class JobsListActionBoxComponent implements OnInit {
     this.listAction.emit(this.state);
   }
 
+  trackEvent(eventName) {
+    const eventProperties = {
+      ...this.cpTracking.getEventProperties(), create_page_name: amplitudeEvents.CREATE_JOB
+    };
+
+    return {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName,
+      eventProperties
+    };
+  }
+
   ngOnInit() {
     this.employers$ = this.jobsService.getEmployers('all');
+
+    this.amplitudeEvents = {
+      clicked_create: amplitudeEvents.CLICKED_CREATE
+    };
   }
 }
