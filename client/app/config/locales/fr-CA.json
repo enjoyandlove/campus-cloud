@@ -540,7 +540,7 @@
     "message": "Importer depuis CSV"
   },
   "audience_import_success_message": {
-    "message": "Audience créée avec succès"
+    "message": "Fichier téléversé avec succès"
   },
   "audience_label_audience": {
     "message": "Audiences"
@@ -1410,7 +1410,7 @@
     "message": "Pour autoriser les publications, changez les réglages pour ce mur."
   },
   "feeds_everyone": {
-    "message": "Tout le monde"
+    "message": "Membres du club"
   },
   "feeds_flagged_posts": {
     "message": "Publications signalées"
@@ -1440,7 +1440,7 @@
     "message": "Publications supprimées"
   },
   "feeds_team_members": {
-    "message": "Membres"
+    "message": "Administrateurs de Campus Cloud"
   },
   "feeds_wall_name": {
     "message": "Nom du club"
@@ -1996,7 +1996,7 @@
     "message": "Audience enregistrées"
   },
   "save_audience_modal_title": {
-    "message": "Enregistrer audience et envoyer"
+    "message": "Enregistrer audience"
   },
   "save_changes": {
     "message": "Enregistrer les changements"
@@ -2424,6 +2424,18 @@
   },
   "t_shared_cancel": {
     "message": "Cancel"
+  },
+  "t_shared_delete": {
+    "message": "Supprimer"
+  },
+  "t_shared_edit": {
+    "message": "Éditer"
+  },
+  "t_shared_hide": {
+    "message": "Cacher"
+  },
+  "t_shared_show": {
+    "message": "Montrer"
   },
   "update": {
     "message": "Mettre à jour",

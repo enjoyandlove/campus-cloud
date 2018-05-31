@@ -555,7 +555,7 @@
     "message": "Import from CSV"
   },
   "audience_import_success_message": {
-    "message": "Audience created successfully"
+    "message": "File uploaded successfully"
   },
   "audience_label_audience": {
     "message": "Audiences"
@@ -1425,7 +1425,7 @@
     "message": "To enable posting, change the settings for this wall."
   },
   "feeds_everyone": {
-    "message": "Everyone"
+    "message": "Club Members"
   },
   "feeds_flagged_posts": {
     "message": "Flagged Posts"
@@ -1455,7 +1455,7 @@
     "message": "Removed Posts"
   },
   "feeds_team_members": {
-    "message": "Members"
+    "message": "Campus Cloud Admins"
   },
   "feeds_wall_name": {
     "message": "Club Name"
@@ -1820,6 +1820,9 @@
   "no_hosts_available": {
     "message": "No Hosts Available"
   },
+  "no_one": {
+    "message": "No one"
+  },
   "no_results": {
     "message": "No Results"
   },
@@ -2011,7 +2014,7 @@
     "message": "Saved Audiences"
   },
   "save_audience_modal_title": {
-    "message": "Save Audience and Send "
+    "message": "Save Audience"
   },
   "save_changes": {
     "message": "Save Changes"
@@ -2440,6 +2443,9 @@
   "t_personas_list_dropdown_web_experiences": {
     "message": "Web"
   },
+  "t_personas_section_button_add_section": {
+    "message": "Add Section"
+  },
   "t_persona_create_cancel_button": {
     "message": "Cancel"
   },
@@ -2454,6 +2460,18 @@
   },
   "t_shared_cancel": {
     "message": "Cancel"
+  },
+  "t_shared_delete": {
+    "message": "Delete"
+  },
+  "t_shared_edit": {
+    "message": "Edit"
+  },
+  "t_shared_hide": {
+    "message": "Hide"
+  },
+  "t_shared_show": {
+    "message": "Show"
   },
   "update": {
     "message": "Update",
