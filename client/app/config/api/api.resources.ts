@@ -9,6 +9,8 @@ export const API_ENDPOINTS = {
 
   ADMIN: 'admin',
 
+  DEALS: 'deals',
+
   STORE: 'store',
 
   EVENT: 'event',
@@ -32,6 +34,8 @@ export const API_ENDPOINTS = {
   USER_LIST: 'user_list',
 
   LOCATIONS: 'location',
+
+  DEALS_STORE: 'deals_store',
 
   COVER_PHOTO: 'cover_photo',
 

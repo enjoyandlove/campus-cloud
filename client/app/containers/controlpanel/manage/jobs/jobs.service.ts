@@ -15,8 +15,8 @@ export class JobsService extends BaseService {
     router: Router,
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public employerService: EmployerService,
-    ) {
+    public employerService: EmployerService
+  ) {
     super(http, router);
 
     Object.setPrototypeOf(this, JobsService.prototype);

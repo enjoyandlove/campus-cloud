@@ -1805,9 +1805,6 @@
   "no_hosts_available": {
     "message": "Aucun hôte disponible"
   },
-  "no_one": {
-    "message": "Personne"
-  },
   "no_results": {
     "message": "Aucun résultat"
   },

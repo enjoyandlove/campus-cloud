@@ -19,17 +19,17 @@ const COMMON_DATE_PICKER_OPTIONS = {
   templateUrl: './jobs-form.component.html',
   styleUrls: ['./jobs-form.component.scss']
 })
-
 export class JobsFormComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() newEmployer = false;
   @Input() employerForm: FormGroup;
 
-  @Output() formData: EventEmitter<{
+  @Output()
+  formData: EventEmitter<{
     job: any;
-    jobFormValid: boolean
+    jobFormValid: boolean;
     employer: any;
-    employerFormValid: boolean
+    employerFormValid: boolean;
   }> = new EventEmitter();
 
   jobsType;
@@ -47,7 +47,7 @@ export class JobsFormComponent implements OnInit {
     public fb: FormBuilder,
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public utils: JobsUtilsService,
+    public utils: JobsUtilsService
   ) {}
 
   onJobTypeDesiredStudyToggle(name, value) {
@@ -63,7 +63,7 @@ export class JobsFormComponent implements OnInit {
         job: this.form.value,
         jobFormValid: this.form.valid,
         employer: this.employerForm.value,
-        employerFormValid: this.employerForm.valid,
+        employerFormValid: this.employerForm.valid
       });
     });
 
@@ -85,9 +85,7 @@ export class JobsFormComponent implements OnInit {
 
     this.postingEndDatePickerOptions = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: posting_end
-        ? CPDate.fromEpoch(posting_end, _self.session.tz).format()
-        : null,
+      defaultDate: posting_end ? CPDate.fromEpoch(posting_end, _self.session.tz).format() : null,
       onChange: function(_, dataStr) {
         _self.form.controls['posting_end'].setValue(CPDate.toEpoch(dataStr, _self.session.tz));
       }

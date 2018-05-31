@@ -1,0 +1,29 @@
+<div class="component">
+  <button 
+    data-toggle="dropdown"
+    [disabled]="!items.length"
+    class="cpbtn cpbtn--cancel text-truncate component__button">
+    <div class="row">
+      <div class="col-xs-10 no-right-padding text-truncate">
+        {{state.label ? state.label : placeholder }}
+      </div>
+      <div class="col-xs-2 no-right-padding">
+        <i class="material-icons cp-dropdown--arrow">keyboard_arrow_down</i>
+      </div>
+    </div>
+  </button>
+  
+  <ul class="component__content">
+    <li 
+      class="hover"
+      (click)="onToggle($event, opt)"
+      *ngFor="let opt of items">
+      <p>
+        <cp-checkbox 
+          (toggle)="onToggle(null, opt)"
+          [isChecked]="opt.selected"></cp-checkbox>
+        {{opt.label}}
+      </p>
+    </li>
+  </ul>
+</div>

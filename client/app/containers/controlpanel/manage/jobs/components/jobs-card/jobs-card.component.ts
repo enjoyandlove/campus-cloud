@@ -7,16 +7,15 @@ import { FormGroup } from '@angular/forms';
   templateUrl: './jobs-card.component.html',
   styleUrls: ['./jobs-card.component.scss']
 })
-
 export class JobsCardComponent {
   @Input() form: FormGroup;
   @Input() employerForm: FormGroup;
 
-  @Output() formData: EventEmitter<{
+  @Output()
+  formData: EventEmitter<{
     job: any;
-    jobFormValid: boolean
+    jobFormValid: boolean;
     employer: any;
-    employerFormValid: boolean
+    employerFormValid: boolean;
   }> = new EventEmitter();
-
 }

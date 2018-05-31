@@ -13,35 +13,35 @@
         <ul class="nav__links pull-left">
           <li
             *ngIf="manageHomePage"
-            (click)="isOpen = false"
             [class.active]="isManageActiveRoute">
             <a [routerLink]="['/manage/' + manageHomePage]">{{ 'manage' | cpI18n }}</a>
           </li>
           <li
             *ngIf="canNotify"
-            (click)="isOpen = false"
             routerLinkActive="active">
             <a [routerLink]="['/notify']">{{ 'notify' | cpI18n }}</a>
           </li>
           <li
-            (click)="isOpen = false"
             routerLinkActive="active">
             <a [routerLink]="[canAssess ? '/assess' : '/demo/assess']">{{ 'assess' | cpI18n }}</a>
           </li>
           <li
             *ngIf="canCustomise"
-            (click)="isOpen = false"
             routerLinkActive="active">
             <a [routerLink]="['/customise']">{{ 'customise' | cpI18n }}</a>
+          </li>
+          <li
+            *ngIf="canAudience"
+            routerLinkActive="active">
+            <a [routerLink]="['/audience']">{{ 'audience' | cpI18n }}</a>
           </li>
         </ul>
 
         <div
-          (click)="isOpen = !isOpen"
-          [class.nav__school--active]="isOpen"
           class="nav__school pull-right noselect">
-          <div class="row">
-            <div class="col-xs-10 no-left-padding no-right-padding">
+          <div class="row" data-toggle="dropdown">
+            <div 
+              class="col-xs-10 no-left-padding no-right-padding">
               <div
                 *ngIf="school.app_logo_url !== ''"
                 class="nav__school__thumb pull-left img-rounded"
@@ -63,9 +63,9 @@
               <i class="material-icons pull-right">expand_more</i>
             </div>
           </div>
-        </div>
-        <div class="nav__school--menu" *ngIf="isOpen">
-          <cp-school-switch (close)="isOpen = !isOpen"></cp-school-switch>
+          <div class="nav__school--menu">
+            <cp-school-switch></cp-school-switch>
+          </div>
         </div>
       </div>
     </div>
