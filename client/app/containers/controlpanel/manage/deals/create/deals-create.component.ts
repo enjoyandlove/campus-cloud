@@ -100,10 +100,10 @@ export class DealsCreateComponent implements OnInit {
       postal_code: [null],
       website: [null],
       address: [null],
+      latitude: [null],
+      longitude: [null],
       logo_url: [null],
-      description: [null],
-      latitude: [this.session.g.get('school').latitude],
-      longitude: [this.session.g.get('school').longitude]
+      description: [null]
     });
   }
 
@@ -117,7 +117,7 @@ export class DealsCreateComponent implements OnInit {
     this.isNewStore = value;
   }
 
-  buildDealsForm() {
+  buildForm() {
     this.form = this.fb.group({
       title: [null, [Validators.required, Validators.maxLength(120)]],
       store_id: [null, Validators.required],
@@ -130,8 +130,8 @@ export class DealsCreateComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.buildForm();
     this.buildHeader();
-    this.buildDealsForm();
     this.buildStoreForm();
 
     this.buttonData = {
