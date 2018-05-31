@@ -1,5 +1,6 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { StoreModule } from '../../../store.module';
 import { StoreActionBoxComponent } from './store-action-box.component';
@@ -12,11 +13,12 @@ describe('DealsStoreActionBoxComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [StoreModule],
+      imports: [StoreModule, RouterTestingModule],
       providers: [CPI18nService]
     }).compileComponents().then(() => {
       fixture = TestBed.createComponent(StoreActionBoxComponent);
       component = fixture.componentInstance;
+      spyOn(component.cpTracking, 'getEventProperties');
       fixture.detectChanges();
     });
   }));

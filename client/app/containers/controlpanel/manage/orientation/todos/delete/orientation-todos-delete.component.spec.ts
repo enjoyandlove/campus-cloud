@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { Observable } from 'rxjs/Observable';
 import { URLSearchParams } from '@angular/http';
 
@@ -29,7 +30,7 @@ describe('OrientationTodosDeleteComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [TodosModule],
+        imports: [TodosModule, RouterTestingModule],
         providers: [CPSession, CPI18nService, { provide: TodosService, useClass: MockTodosService }]
       })
         .compileComponents()

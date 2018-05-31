@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { Observable } from 'rxjs/Observable';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -29,7 +30,7 @@ describe('OrientationTodosCreateComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [TodosModule],
+        imports: [TodosModule, RouterTestingModule],
         providers: [
           CPSession,
           FormBuilder,

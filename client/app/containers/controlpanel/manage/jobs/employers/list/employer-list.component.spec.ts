@@ -1,4 +1,5 @@
 import { async, fakeAsync, tick, TestBed, ComponentFixture } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { StoreModule } from '@ngrx/store';
@@ -43,6 +44,7 @@ describe('EmployersListComponent', () => {
       TestBed.configureTestingModule({
         imports: [
           EmployerModule,
+          RouterTestingModule,
           StoreModule.forRoot({
             HEADER: headerReducer,
             SNACKBAR: snackBarReducer

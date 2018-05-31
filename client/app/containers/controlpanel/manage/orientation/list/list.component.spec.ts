@@ -1,4 +1,5 @@
 import { async, fakeAsync, tick, TestBed, ComponentFixture } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { Observable } from 'rxjs/Observable';
 import { Store, StoreModule } from '@ngrx/store';
 import { URLSearchParams } from '@angular/http';
@@ -38,6 +39,7 @@ describe('OrientationListComponent', () => {
       TestBed.configureTestingModule({
         imports: [
           OrientationModule,
+          RouterTestingModule,
           StoreModule.forRoot({
             HEADER: headerReducer,
             SNACKBAR: snackBarReducer

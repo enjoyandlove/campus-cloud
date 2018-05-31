@@ -47,7 +47,7 @@ export class DealsEditComponent extends BaseComponent implements OnInit {
     search.append('school_id', this.session.g.get('school').id);
 
     super.fetchData(this.service.getDealById(this.dealId, search)).then((deal) => {
-      this.buildForm(deal.data);
+      this.buildDealsForm(deal.data);
     });
   }
 
@@ -117,10 +117,10 @@ export class DealsEditComponent extends BaseComponent implements OnInit {
       postal_code: [null],
       website: [null],
       address: [null],
-      latitude: [null],
-      longitude: [null],
       logo_url: [null],
-      description: [null]
+      description: [null],
+      latitude: [this.session.g.get('school').latitude],
+      longitude: [this.session.g.get('school').longitude]
     });
   }
 
@@ -134,7 +134,7 @@ export class DealsEditComponent extends BaseComponent implements OnInit {
     this.isNewStore = value;
   }
 
-  buildForm(data) {
+  buildDealsForm(data) {
     this.form = this.fb.group({
       title: [data.title, [Validators.required, Validators.maxLength(120)]],
       store_id: [data.store_id, Validators.required],
