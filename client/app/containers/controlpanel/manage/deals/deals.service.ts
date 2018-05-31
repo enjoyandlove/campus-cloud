@@ -8,10 +8,6 @@ import { CPSession } from '../../../../session';
 import { StoreService } from './stores/store.service';
 import { CPI18nService } from '../../../../shared/services';
 
-export enum DateStatus {
-  forever = -1
-}
-
 @Injectable()
 export class DealsService extends BaseService {
   constructor(
