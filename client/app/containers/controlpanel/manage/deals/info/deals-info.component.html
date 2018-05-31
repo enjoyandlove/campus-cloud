@@ -39,7 +39,7 @@
                     </div>
                   </div>
 
-                  <div class="row" *ngIf="deal.expiration">
+                  <div class="row" *ngIf="deal.expiration !== forever">
                     <div class="col-xs-2">
                       <p>
                         <strong>{{ 'ends' | cpI18n }}</strong>

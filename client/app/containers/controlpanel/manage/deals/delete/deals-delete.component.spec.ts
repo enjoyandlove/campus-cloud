@@ -1,6 +1,7 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { DealsModule } from '../deals.module';
 import { DealsService } from '../deals.service';
@@ -28,7 +29,7 @@ describe('DealsDeleteComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [DealsModule],
+        imports: [DealsModule, RouterTestingModule],
         providers: [
           CPSession,
           CPI18nService,

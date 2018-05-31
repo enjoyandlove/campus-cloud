@@ -1,4 +1,5 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
@@ -30,7 +31,7 @@ describe('JobsDeleteComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [JobsModule],
+        imports: [JobsModule, RouterTestingModule],
         providers: [
           CPSession,
           CPI18nService,

@@ -1,4 +1,5 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { URLSearchParams, HttpModule } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { FormBuilder } from '@angular/forms';
@@ -31,7 +32,8 @@ describe('EmployerEditComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpModule,
-        EmployerModule
+        EmployerModule,
+        RouterTestingModule
       ],
       providers: [
         CPSession,

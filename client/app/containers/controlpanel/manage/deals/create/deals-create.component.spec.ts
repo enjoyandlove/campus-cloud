@@ -65,11 +65,11 @@ describe('DealsCreateComponent', () => {
           component = fixture.componentInstance;
           search = new URLSearchParams();
 
-          component.buildForm();
-          component.buildStoreForm();
           component.session.g.set('school', mockSchool);
           search.append('school_id', component.session.g.get('school').id);
 
+          component.buildDealsForm();
+          component.buildStoreForm();
           spyOn(component.router, 'navigate');
 
           spyDeal = spyOn(component.service, 'createDeal')

@@ -1,4 +1,5 @@
 import { By } from '@angular/platform-browser';
+import { RouterTestingModule } from '@angular/router/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 
@@ -12,7 +13,7 @@ describe('AudienceSaveModalComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [SharedModule, ReactiveFormsModule],
+      imports: [SharedModule, ReactiveFormsModule, RouterTestingModule],
       declarations: [AudienceSaveModalComponent],
       providers: [CPI18nService, FormBuilder]
     });

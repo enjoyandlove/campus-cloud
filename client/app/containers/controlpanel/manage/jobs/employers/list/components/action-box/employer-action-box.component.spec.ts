@@ -1,4 +1,5 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 
 import { EmployerModule } from '../../../employer.module';
@@ -12,11 +13,12 @@ describe('EmployerActionBoxComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [EmployerModule],
+      imports: [EmployerModule, RouterTestingModule],
       providers: [CPI18nService]
     }).compileComponents().then(() => {
       fixture = TestBed.createComponent(EmployerActionBoxComponent);
       component = fixture.componentInstance;
+      spyOn(component.cpTracking, 'getEventProperties');
       fixture.detectChanges();
     });
   }));
