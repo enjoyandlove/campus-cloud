@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
-import { DealsService } from '../deals.service';
+import { DateStatus, DealsService } from '../deals.service';
 import { CPSession } from '../../../../../session';
 import { FORMAT } from '../../../../../shared/pipes/date';
 import { BaseComponent } from '../../../../../base/base.component';
@@ -22,6 +22,7 @@ export class DealsInfoComponent extends BaseComponent implements OnInit {
   deal;
   dealId;
   loading;
+  forever;
   dateFormat;
   draggable = false;
   mapCenter: BehaviorSubject<any>;
@@ -81,5 +82,6 @@ export class DealsInfoComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.fetch();
+    this.forever = DateStatus.forever;
   }
 }
