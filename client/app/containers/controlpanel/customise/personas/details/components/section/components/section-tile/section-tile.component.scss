@@ -17,7 +17,9 @@
       position: absolute;
       background-color: rgba(0, 0, 0, 0.6);
     }
+  }
 
+  &.hover {
     .tile__hover {
       visibility: visible;
     }

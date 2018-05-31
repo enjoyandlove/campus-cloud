@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { ICampusGuide } from './../../../persona.interface';
+import { PersonasUtilsService } from './../../../personas.utils.service';
 
 @Component({
   selector: 'cp-personas-section',
@@ -10,14 +11,14 @@ import { ICampusGuide } from './../../../persona.interface';
 export class PersonasSectionComponent implements OnInit {
   @Input() guide: ICampusGuide;
 
-  constructor() {}
+  constructor(public utils: PersonasUtilsService) {}
 
   onEditClick() {
     console.log('EDIT CLICK');
   }
 
-  onHideClick() {
-    console.log('HIDE CLICK');
+  onToggleTile() {
+    console.log('TOGGLE CLICK');
   }
 
   onDeleteClick() {

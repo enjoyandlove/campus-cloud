@@ -4,9 +4,9 @@
       <div class="tile__content text-center">
         <button 
           type="button"
-          (click)="hideClick.emit()">
-          <i class="material-icons">remove_red_eye</i>
-          <span>{{'t_shared_show' | cpI18n}}</span>
+          (click)="toggleVisibility.emit()">
+          <i class="material-icons">{{ visible ? 'visibility_off' : 'visibility' }}</i>
+          <span>{{visible ? ['t_shared_hide' | cpI18n] : 't_shared_show' | cpI18n}}</span>
         </button>
 
         <button 
@@ -18,9 +18,18 @@
 
         <button 
           type="button"
+          *ngIf="!defaultTile"
           (click)="deleteClick.emit()">
           <i class="material-icons">delete</i>
           <span>{{'t_shared_delete' | cpI18n}}</span>
+        </button>
+
+        <button 
+          disabled
+          type="button"
+          *ngIf="defaultTile">
+          <i class="material-icons">lock</i>
+          <span>{{'t_tile_button_default' | cpI18n}}</span>
         </button>
       </div>
     </div>

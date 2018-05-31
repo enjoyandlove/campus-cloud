@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 
+import { ITile } from './persona.interface';
 import { CPI18nService } from './../../../../shared/services/i18n.service';
-import { PersonasType, PersonasLoginRequired } from './personas.status';
+import { PersonasType, PersonasLoginRequired, TileVisibility } from './personas.status';
 
 @Injectable()
 export class PersonasUtilsService {
@@ -37,6 +38,14 @@ export class PersonasUtilsService {
         tiles: this.filterTileByCategory(tiles, category.id)
       };
     });
+  }
+
+  isTileVisible(tile: ITile) {
+    return tile.visibility_status === TileVisibility.visible;
+  }
+
+  isTileDefault(tile: ITile) {
+    return this.defaultTileCategoryIds.includes(tile.tile_category_id);
   }
 
   plaftormMenu() {

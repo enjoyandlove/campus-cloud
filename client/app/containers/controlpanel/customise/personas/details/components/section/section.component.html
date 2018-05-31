@@ -27,8 +27,10 @@
       <cp-personas-section-tile 
         [tile]="tile"
         (editClick)="onEditClick()"
-        (hideClick)="onHideClick()"
-        (deleteClick)="onDeleteClick()">
+        (deleteClick)="onDeleteClick()"
+        (toggleVisibility)="onHideClick()"
+        [visible]="utils.isTileVisible(tile)"
+        [defaultTile]="utils.isTileDefault(tile)">
       </cp-personas-section-tile>
     </div>
     <div class="col-xs-2">

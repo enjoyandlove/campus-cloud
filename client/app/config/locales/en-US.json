@@ -2473,6 +2473,9 @@
   "t_shared_show": {
     "message": "Show"
   },
+  "t_tile_button_default": {
+    "message": "Default"
+  },
   "update": {
     "message": "Update",
     "description": "Verb"

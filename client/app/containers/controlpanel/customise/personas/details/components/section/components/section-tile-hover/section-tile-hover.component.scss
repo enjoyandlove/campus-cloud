@@ -14,7 +14,7 @@
     button {
       @include font-14px();
 
-      width: 100px;
+      width: 105px;
       border: none;
       display: block;
       margin: 0 auto;
@@ -24,6 +24,10 @@
       margin-bottom: 4px;
       color: $color-light-grey;
       background: rgba(0, 0, 0, 0.7);
+
+      &:disabled {
+        cursor: not-allowed;
+      }
 
       &:last-child {
         margin-bottom: 0;

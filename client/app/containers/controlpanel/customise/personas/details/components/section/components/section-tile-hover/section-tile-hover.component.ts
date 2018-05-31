@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'cp-personas-section-tile-hover',
@@ -6,9 +6,12 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./section-tile-hover.component.scss']
 })
 export class PersonasSectionTileHoverComponent implements OnInit {
+  @Input() visible;
+  @Input() defaultTile: boolean;
+
   @Output() editClick: EventEmitter<null> = new EventEmitter();
-  @Output() hideClick: EventEmitter<null> = new EventEmitter();
   @Output() deleteClick: EventEmitter<null> = new EventEmitter();
+  @Output() toggleVisibility: EventEmitter<null> = new EventEmitter();
 
   constructor() {}
 

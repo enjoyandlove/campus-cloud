@@ -9,10 +9,12 @@ import { ITile } from './../../../../../persona.interface';
 })
 export class PersonasSectionTileComponent implements OnInit {
   @Input() tile: ITile;
+  @Input() visible: boolean;
+  @Input() defaultTile: boolean;
 
   @Output() editClick: EventEmitter<null> = new EventEmitter();
-  @Output() hideClick: EventEmitter<null> = new EventEmitter();
   @Output() deleteClick: EventEmitter<null> = new EventEmitter();
+  @Output() toggleVisibility: EventEmitter<null> = new EventEmitter();
 
   hover = false;
 

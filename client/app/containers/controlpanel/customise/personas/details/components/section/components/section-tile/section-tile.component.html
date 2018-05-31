@@ -2,14 +2,17 @@
   <div class="col-xs-12">
     <div 
       class="tile"
-      [class.backdrop]="hover"
+      [class.hover]="hover"
       (mouseenter)="hover = true"
-      (mouseleave)="hover = false">
+      (mouseleave)="hover = false"
+      [class.backdrop]="hover || !visible">
       <div class="tile__hover">
         <cp-personas-section-tile-hover
+          [visible]="visible"
+          [defaultTile]="defaultTile"
           (editClick)="editClick.emit()"
-          (hideClick)="hideClick.emit()"
-          (deleteClick)="deleteClick.emit()">
+          (deleteClick)="deleteClick.emit()"
+          (toggleVisibility)="toggleVisibility.emit(tile.visibility_status)">
         </cp-personas-section-tile-hover>
       </div>
       <div class="tile__original">
