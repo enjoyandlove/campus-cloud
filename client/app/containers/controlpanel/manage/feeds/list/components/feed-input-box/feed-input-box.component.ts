@@ -5,7 +5,11 @@ import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
-import { StoreService, FileUploadService } from '../../../../../../../shared/services';
+import {
+  StoreService,
+  FileUploadService,
+  CPTrackingService
+} from '../../../../../../../shared/services';
 
 import { API } from '../../../../../../../config/api';
 import { FeedsService } from '../../../feeds.service';
@@ -13,6 +17,7 @@ import { appStorage } from '../../../../../../../shared/utils';
 import { CPSession, ISchool } from '../../../../../../../session';
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 import { ISnackbar, SNACKBAR_SHOW } from './../../../../../../../reducers/snackbar.reducer';
+import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
 
 @Component({
   selector: 'cp-feed-input-box',
@@ -49,6 +54,7 @@ export class FeedInputBoxComponent implements OnInit {
     public store: Store<ISnackbar>,
     private feedsService: FeedsService,
     private storeService: StoreService,
+    public cpTracking: CPTrackingService,
     private fileUploadService: FileUploadService
   ) {
     const search = new URLSearchParams();
@@ -219,7 +225,14 @@ export class FeedInputBoxComponent implements OnInit {
     this.fileUploadService.uploadFile(file, url, headers).subscribe((res) => {
       this.image$.next(res.image_url);
       this.form.controls['message_image_url_list'].setValue([res.image_url]);
+      this.trackUploadImageEvent();
     });
+  }
+
+  trackUploadImageEvent() {
+    const properties = this.cpTracking.getEventProperties();
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
 
   ngOnInit() {

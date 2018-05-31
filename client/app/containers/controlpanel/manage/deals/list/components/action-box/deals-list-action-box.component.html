@@ -17,8 +17,10 @@
         {{ 'deals_manage_stores' | cpI18n }}
       </a>
       <a
+        cpTracker
         [routerLink]="['create']"
-        class="cpbtn cpbtn--primary">
+        class="cpbtn cpbtn--primary"
+        [eventData]="trackEvent(amplitudeEvents.clicked_create)">
         {{ 'deals_create_deal' | cpI18n }}
       </a>
     </div>

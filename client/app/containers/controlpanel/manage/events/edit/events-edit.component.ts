@@ -14,11 +14,17 @@ import { CPSession, ISchool } from '../../../../../session';
 import { CPMap, CPDate } from '../../../../../shared/utils';
 import { BaseComponent } from '../../../../../base/base.component';
 import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-import { ErrorService, StoreService, AdminService } from '../../../../../shared/services';
+import {
+  ErrorService,
+  StoreService,
+  AdminService,
+  CPTrackingService
+} from '../../../../../shared/services';
 
 import { EventAttendance, EventFeedback } from '../event.status';
 import { EventUtilService } from '../events.utils.service';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
 const FORMAT_WITHOUT_TIME = 'F j, Y';
@@ -85,7 +91,8 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     private adminService: AdminService,
     public storeService: StoreService,
     private errorService: ErrorService,
-    public service: EventsService
+    public service: EventsService,
+    public cpTracking: CPTrackingService
   ) {
     super();
     this.school = this.session.g.get('school');
@@ -97,6 +104,16 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   onUploadedImage(image) {
     this.form.controls['poster_url'].setValue(image);
     this.form.controls['poster_thumb_url'].setValue(image);
+
+    if (image) {
+      this.trackUploadImageEvent();
+    }
+  }
+
+  trackUploadImageEvent() {
+    const properties = this.cpTracking.getEventProperties();
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
 
   onSubmit(data) {

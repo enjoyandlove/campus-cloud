@@ -16,7 +16,12 @@ import { BaseComponent } from '../../../../../base/base.component';
 import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 import { CP_PRIVILEGES, CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
-import { AdminService, ErrorService, CPI18nService } from '../../../../../shared/services';
+import {
+  AdminService,
+  ErrorService,
+  CPI18nService,
+  CPTrackingService
+} from '../../../../../shared/services';
 
 import {
   clubMenu,
@@ -27,6 +32,7 @@ import {
   TeamUtilsService,
   audienceMenuStatus
 } from '../team.utils.service';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 
 declare var $: any;
 
@@ -85,7 +91,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     private cpI18n: CPI18nService,
     public utils: TeamUtilsService,
     private adminService: AdminService,
-    private errorService: ErrorService
+    private errorService: ErrorService,
+    private cpTracking: CPTrackingService
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -337,8 +344,14 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       _data = { firstname, lastname };
     }
 
+    const eventProperties = this.utils.getAmplitudeEventProperties(
+      this.schoolPrivileges, this.accountPrivileges);
+
     this.adminService.updateAdmin(this.adminId, _data).subscribe(
-      () => this.router.navigate([this.currentUserCanManage ? '/settings/team' : '/dashboard']),
+      () => {
+        this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPDATED_TEAM_MEMBER, eventProperties);
+        this.router.navigate([this.currentUserCanManage ? '/settings/team' : '/dashboard']);
+      },
       (err) => {
         if (err.status === 403) {
           $('#teamUnauthorziedModal').modal();

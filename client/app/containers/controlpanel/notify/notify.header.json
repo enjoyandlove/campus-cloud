@@ -5,11 +5,13 @@
   "children": [
     {
       "label": "announcements",
+      "amplitude": "Announcements",
       "url": "/notify/announcements"
     },
     {
       "label": "templates",
       "hasParams": true,
+      "amplitude": "Templates",
       "url": "/notify/templates"
     }
   ]

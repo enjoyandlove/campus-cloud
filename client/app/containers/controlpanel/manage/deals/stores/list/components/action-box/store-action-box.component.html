@@ -6,8 +6,10 @@
 
     <div class="col-xs-7 pull-right text-right">
       <button
+        cpTracker
         (click)="onLaunchCreateModal()"
-        class="cpbtn cpbtn--primary">
+        class="cpbtn cpbtn--primary"
+        [eventData]="trackEvent(amplitudeEvents.clicked_create)">
         {{ 'stores_create_store' | cpI18n }}
       </button>
     </div>

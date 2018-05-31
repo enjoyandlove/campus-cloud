@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-import { AdminService } from '../../../../../shared/services';
+import { AdminService, CPTrackingService } from '../../../../../shared/services';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 
 declare var $: any;
 
@@ -17,11 +18,19 @@ export class TeamDeleteComponent implements OnInit {
 
   buttonData;
 
-  constructor(public cpI18n: CPI18nService, public adminService: AdminService) {}
+  constructor(
+    public cpI18n: CPI18nService,
+    public adminService: AdminService,
+    public cpTracking: CPTrackingService) {}
 
   onDelete() {
+    const eventProperties = {
+      user_status: this.admin.account_activated ? amplitudeEvents.ACTIVE : amplitudeEvents.PENDING
+    };
+
     this.adminService.deleteAdminById(this.admin.id).subscribe(
       () => {
+        this.cpTracking.amplitudeEmitEvent(amplitudeEvents.DELETED_TEAM_MEMBER, eventProperties);
         this.deleted.emit(this.admin.id);
         $('#teamDeleteModal').modal('hide');
         this.buttonData = Object.assign({}, this.buttonData, {

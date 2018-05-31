@@ -8,8 +8,9 @@ import { Store } from '@ngrx/store';
 import { CPMap } from '../../../../../shared/utils';
 import { ServicesService } from '../services.service';
 import { CPSession, ISchool } from '../../../../../session';
-import { CPI18nService } from '../../../../../shared/services';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 
 const ATTENDANCE_ENABLED = 1;
@@ -55,6 +56,7 @@ export class ServicesCreateComponent implements OnInit {
     private session: CPSession,
     private store: Store<IHeader>,
     private cpI18n: CPI18nService,
+    private cpTracking: CPTrackingService,
     private servicesService: ServicesService
   ) {
     this.buildHeader();
@@ -77,6 +79,20 @@ export class ServicesCreateComponent implements OnInit {
 
         return _categories;
       });
+  }
+
+  onUploadedImage(image) {
+    this.form.controls.logo_url.setValue(image);
+
+    if (image) {
+      this.trackUploadImageEvent();
+    }
+  }
+
+  trackUploadImageEvent() {
+    const properties = this.cpTracking.getEventProperties();
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
 
   onResetMap() {

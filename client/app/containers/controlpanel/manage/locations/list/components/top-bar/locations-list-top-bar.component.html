@@ -5,8 +5,10 @@
     </div>
     <div class="col-xs-3 pull-right">
       <button
+        cpTracker
         (click)="launchModal.emit()"
-        class="cpbtn cpbtn--primary pull-right" i18n>
+        [eventData]="trackEvent(amplitudeEvents.clicked_create)"
+        class="cpbtn cpbtn--primary pull-right">
         {{ 'locations_btn_create' | cpI18n }}
       </button>
     </div>

@@ -5,8 +5,10 @@ import { Store } from '@ngrx/store';
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
 import { BannerService } from '../banner.service';
+import { CPTrackingService } from '../../../../../shared/services';
 import { ISnackbar, SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
 import { CPI18nService, CPCroppieService } from '../../../../../shared/services/index';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 
 @Component({
   selector: 'cp-banner-list',
@@ -25,7 +27,8 @@ export class BannerListComponent extends BaseComponent implements OnInit {
     public session: CPSession,
     public cpI18n: CPI18nService,
     public store: Store<ISnackbar>,
-    public service: BannerService
+    public service: BannerService,
+    public cpTracking: CPTrackingService
   ) {
     super();
     super.isLoading().subscribe((loading) => (this.loading = loading));
@@ -127,11 +130,18 @@ export class BannerListComponent extends BaseComponent implements OnInit {
         this.originalImage = res.cover_photo_url;
         this.onReset();
         this.onSuccess();
+        this.trackUploadImageEvent();
       })
       .catch((_) => {
         this.onError();
         this.uploading = false;
       });
+  }
+
+  trackUploadImageEvent() {
+    const properties = this.cpTracking.getEventProperties();
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
 
   ngOnInit() {

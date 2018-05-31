@@ -7,8 +7,10 @@
     <div class="col-xs-9">
       <div class="pull-right">
         <button
+          cpTracker
           (click)="onLaunchCreateModal()"
-          class="cpbtn cpbtn--primary pull-right">
+          class="cpbtn cpbtn--primary pull-right"
+          [eventData]="trackEvent(amplitudeEvents.clicked_create)">
           {{ 'employers_create_employer' | cpI18n }}
         </button>
       </div>

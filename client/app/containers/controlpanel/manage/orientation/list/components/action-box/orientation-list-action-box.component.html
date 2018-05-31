@@ -5,8 +5,10 @@
     </div>
     <div class="col-xs-5 pull-right">
       <button
+        cpTracker
         (click)="onLaunchCreateModal()"
-        class="cpbtn cpbtn--primary pull-right" i18n>
+        [eventData]="trackEvent(amplitudeEvents.clicked_create)"
+        class="cpbtn cpbtn--primary pull-right">
         {{ 'orientation_create_program' | cpI18n }}
       </button>
     </div>

@@ -2,7 +2,10 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { CPSession } from '../../../../../../../session';
 import { CP_PRIVILEGES_MAP } from '../../../../../../../shared/constants';
+import { CPTrackingService } from '../../../../../../../shared/services';
+import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
+import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
 
 interface IState {
   query: string;
@@ -24,9 +27,14 @@ export class AnnouncementsListActionBoxComponent implements OnInit {
 
   types;
   canCompose;
+  amplitudeEvents;
   state: IState = state;
 
-  constructor(private session: CPSession, private cpI18n: CPI18nService) {}
+  constructor(
+    private session: CPSession,
+    private cpI18n: CPI18nService,
+    private cpTracking: CPTrackingService
+  ) {}
 
   onSearch(query) {
     this.state = Object.assign({}, this.state, { query });
@@ -38,7 +46,23 @@ export class AnnouncementsListActionBoxComponent implements OnInit {
     this.filter.emit(this.state);
   }
 
+  trackEvent(eventName) {
+    const eventProperties = {
+      ...this.cpTracking.getEventProperties(), create_page_name: amplitudeEvents.CREATE_ANNOUNCEMENT
+    };
+
+    return {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName,
+      eventProperties
+    };
+  }
+
   ngOnInit() {
+    this.amplitudeEvents = {
+      clicked_create: amplitudeEvents.CLICKED_CREATE
+    };
+
     const schoolPrivilege = this.session.g.get('user').school_level_privileges[
       this.session.g.get('school').id
     ];

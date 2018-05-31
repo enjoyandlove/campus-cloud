@@ -4,7 +4,9 @@ import { NavigationEnd, Router } from '@angular/router';
 import { CPSession, ISchool, IUser } from '../../../session';
 
 import { CP_PRIVILEGES_MAP } from './../../constants';
-
+import { CPTrackingService } from '../../services';
+import { CP_TRACK_TO } from '../../directives/tracking';
+import { amplitudeEvents } from '../../constants/analytics';
 import { canAccountLevelReadResource, canSchoolReadResource } from './../../utils/privileges';
 
 @Component({
@@ -14,6 +16,7 @@ import { canAccountLevelReadResource, canSchoolReadResource } from './../../util
 })
 export class CPTopBarComponent implements OnInit {
   user: IUser;
+  amplitudeEvents;
   school: ISchool;
   canNotify = false;
   canManage = false;
@@ -26,7 +29,11 @@ export class CPTopBarComponent implements OnInit {
   logo = require('public/svg/logo.svg');
   defaultImage = require('public/default/user.png');
 
-  constructor(public el: ElementRef, public session: CPSession, public router: Router) {}
+  constructor(
+    public el: ElementRef,
+    public session: CPSession,
+    public router: Router,
+    public cpTracking: CPTrackingService) {}
 
   getManageHomePage() {
     if (canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.events)) {
@@ -71,6 +78,17 @@ export class CPTopBarComponent implements OnInit {
     return url.split('/').includes('manage');
   }
 
+  trackMenu(menu_name) {
+    const eventName = amplitudeEvents.CLICKED_MENU;
+    const eventProperties = { menu_name };
+
+    return {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: eventName,
+      eventProperties: eventProperties
+    };
+  }
+
   ngOnInit() {
     this.user = this.session.g.get('user');
     this.school = this.session.g.get('school');
@@ -89,5 +107,13 @@ export class CPTopBarComponent implements OnInit {
         this.isManageActiveRoute = this.isManage(event.url) ? true : false;
       }
     });
+
+    this.amplitudeEvents = {
+      menu_manage: amplitudeEvents.MENU_MANAGE,
+      menu_notify: amplitudeEvents.MENU_NOTIFY,
+      menu_assess: amplitudeEvents.MENU_ASSESS,
+      menu_customize: amplitudeEvents.MENU_CUSTOMIZE,
+      menu_audience: amplitudeEvents.MENU_AUDIENCE,
+    };
   }
 }

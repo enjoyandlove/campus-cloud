@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { CPI18nService } from '../../../../shared/services';
+import { amplitudeEvents } from '../../../../shared/constants/analytics';
 import { CP_PRIVILEGES_MAP } from './../../../../shared/constants/privileges';
 
 export enum clubAthleticStatus {
@@ -289,5 +290,108 @@ export class TeamUtilsService {
       !!(CP_PRIVILEGES_MAP.moderation in obj) &&
       !!(CP_PRIVILEGES_MAP.event_attendance in obj)
     );
+  }
+
+  getAmplitudeEventProperties(schoolPrivileges, accountPrivileges) {
+    const eventPermission = this.getEventPermissions(schoolPrivileges);
+
+    const notifyPermission = this.getNotifyPermissions(schoolPrivileges);
+
+    const invitePermission = this.getInviteAssessPermissions(
+      schoolPrivileges,
+      CP_PRIVILEGES_MAP.manage_admin
+    );
+
+    const assessPermission = this.getInviteAssessPermissions(
+      schoolPrivileges,
+      CP_PRIVILEGES_MAP.assessment
+    );
+
+    const clubPermission = this.getClubServiceAthleticPermissions(
+      schoolPrivileges,
+      accountPrivileges,
+      CP_PRIVILEGES_MAP.clubs);
+
+    const servicePermission = this.getClubServiceAthleticPermissions(
+      schoolPrivileges,
+      accountPrivileges,
+      CP_PRIVILEGES_MAP.services);
+
+    const athleticPermission = this.getClubServiceAthleticPermissions(
+      schoolPrivileges,
+      accountPrivileges,
+      CP_PRIVILEGES_MAP.athletics);
+
+    return {
+      service_permission: servicePermission,
+      club_permission: clubPermission,
+      athletic_permission: athleticPermission,
+      event_permission: eventPermission,
+      notify_permission: notifyPermission,
+      assess_permission: assessPermission,
+      invite_permission: invitePermission
+    };
+  }
+
+  getClubServiceAthleticPermissions(schoolPrivileges, accountPrivileges, type) {
+    let permissions;
+    const privileges = schoolPrivileges[type];
+
+    if (!privileges) {
+      permissions = amplitudeEvents.NO_ACCESS;
+      Object.keys(accountPrivileges).forEach((store) => {
+        if (accountPrivileges[store][type]) {
+          permissions = amplitudeEvents.SELECT_ACCESS;
+        }
+      });
+    } else if (privileges.r && privileges.w) {
+      permissions = amplitudeEvents.FULL_ACCESS;
+    } else {
+      permissions = amplitudeEvents.SELECT_ACCESS;
+    }
+
+    return permissions;
+  }
+
+  getEventPermissions(schoolPrivileges) {
+    let permissions = amplitudeEvents.NO_ACCESS;
+
+    const eventPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.events] || {
+      r: false,
+      w: false
+    };
+
+    const eventAssessmentPrivilege = schoolPrivileges[
+      CP_PRIVILEGES_MAP.event_attendance
+      ] || { r: false, w: false };
+
+    if (eventPrivilege.w && eventAssessmentPrivilege.w) {
+      permissions = amplitudeEvents.FULL_ACCESS;
+    } else if (eventPrivilege.w) {
+      permissions = amplitudeEvents.SELECT_ACCESS;
+    }
+
+    return permissions;
+  }
+
+  getInviteAssessPermissions(schoolPrivileges, type) {
+    return schoolPrivileges[type]
+      ? amplitudeEvents.ENABLED : amplitudeEvents.DISABLED;
+  }
+
+  getNotifyPermissions(schoolPrivileges) {
+    let permissions;
+    const regular = schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements];
+    const emergency = schoolPrivileges[CP_PRIVILEGES_MAP.emergency_announcement];
+
+    if (regular && emergency) {
+      permissions = amplitudeEvents.FULL_ACCESS;
+    } else if (regular) {
+      permissions = amplitudeEvents.SELECT_ACCESS;
+    } else {
+      permissions = amplitudeEvents.NO_ACCESS;
+    }
+
+    return permissions;
   }
 }

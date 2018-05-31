@@ -17,6 +17,11 @@ export const isStaging = ENV === 'staging';
 export const isCanada = ENV === 'production-canada';
 
 /**
+ * USA Prod Only
+ */
+export const isUsa = ENV === 'production-usa';
+
+/**
  * SEA prod only
  */
 export const isSea = ENV === 'production-sea';

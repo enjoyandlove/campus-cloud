@@ -17,6 +17,8 @@ import { ClubsService } from '../clubs.service';
 
 import { membershipTypes, statusTypes } from './permissions';
 import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
+import { CPTrackingService } from '../../../../../shared/services';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 
 @Component({
   selector: 'cp-clubs-create',
@@ -42,7 +44,8 @@ export class ClubsCreateComponent implements OnInit {
     private store: Store<any>,
     private session: CPSession,
     private cpI18n: CPI18nService,
-    private clubsService: ClubsService
+    private clubsService: ClubsService,
+    private cpTracking: CPTrackingService
   ) {}
 
   onSubmit() {
@@ -74,6 +77,16 @@ export class ClubsCreateComponent implements OnInit {
 
   onUploadedImage(image): void {
     this.form.controls['logo_url'].setValue(image);
+
+    if (image) {
+      this.trackUploadImageEvent();
+    }
+  }
+
+  trackUploadImageEvent() {
+    const properties = this.cpTracking.getEventProperties();
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
 
   onSelectedMembership(type): void {

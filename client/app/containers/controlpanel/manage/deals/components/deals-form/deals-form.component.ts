@@ -5,7 +5,8 @@ import { IDeal } from '../../deals.interface';
 import { IStore } from '../../stores/store.interface';
 import { CPSession } from '../../../../../../session';
 import { CPDate } from '../../../../../../shared/utils';
-import { CPI18nService } from '../../../../../../shared/services';
+import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
+import { CPI18nService, CPTrackingService } from '../../../../../../shared/services';
 
 const COMMON_DATE_PICKER_OPTIONS = {
   utc: true,
@@ -37,11 +38,22 @@ export class DealsFormComponent implements OnInit {
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
+    public cpTracking: CPTrackingService
   ) {}
 
   onUploadedImage(image) {
     this.form.controls['image_url'].setValue(image);
     this.form.controls['image_thumb_url'].setValue(image);
+
+    if (image) {
+      this.trackUploadImageEvent();
+    }
+  }
+
+  trackUploadImageEvent() {
+    const properties = this.cpTracking.getEventProperties();
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
 
   ngOnInit() {
