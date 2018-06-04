@@ -80,10 +80,6 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
       payload: {
         heading: `[NOTRANSLATE]${personName}[NOTRANSLATE]`,
         subheading: null,
-        // crumbs: {
-        //   url: 'personas',
-        //   label: 'personas'
-        // },
         em: null,
         children: []
       }
