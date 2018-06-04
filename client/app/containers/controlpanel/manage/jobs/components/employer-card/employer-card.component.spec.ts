@@ -1,13 +1,13 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
+import { FormBuilder } from '@angular/forms';
 
 import { JobsModule } from '../../jobs.module';
 import { CPSession } from '../../../../../../session';
-import { EmployerCardComponent } from './employer-card.component';
 import { JobsUtilsService } from '../../jobs.utils.service';
+import { EmployerCardComponent } from './employer-card.component';
 import { CPI18nService } from '../../../../../../shared/services';
-import { FormBuilder } from '@angular/forms';
 
 describe('EmployerCardComponent', () => {
   let component: EmployerCardComponent;
@@ -16,16 +16,8 @@ describe('EmployerCardComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [
-          HttpModule,
-          JobsModule,
-          RouterTestingModule
-        ],
-        providers: [
-          CPSession,
-          CPI18nService,
-          JobsUtilsService
-        ]
+        imports: [JobsModule, HttpClientModule, RouterTestingModule],
+        providers: [CPSession, CPI18nService, JobsUtilsService]
       })
         .compileComponents()
         .then(() => {
@@ -43,12 +35,13 @@ describe('EmployerCardComponent', () => {
             logo_url: [null]
           });
         });
-    }));
+    })
+  );
 
   it('onTabClick - existing employer', () => {
     const id = 'existing';
     spyOn(component.isNewEmployer, 'emit');
-    component.onTabClick({id});
+    component.onTabClick({ id });
 
     const store_id = component.form.controls['store_id'];
     const name = component.employerForm.controls['name'];
@@ -64,7 +57,7 @@ describe('EmployerCardComponent', () => {
   it('onTabClick - new employer', () => {
     const id = 'new';
     spyOn(component.isNewEmployer, 'emit');
-    component.onTabClick({id});
+    component.onTabClick({ id });
 
     const store_id = component.form.controls['store_id'];
     const name = component.employerForm.controls['name'];

@@ -8,12 +8,12 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(email: string, password: string) {
-    const headers = new HttpHeaders();
-
     const authorization = `${API.AUTH_HEADER.TOKEN} ${API.KEY}:${email}:${password}`;
 
-    headers.set('Authorization', authorization);
-    headers.set('Content-Type', 'application/x-www-form-urlencoded');
+    const headers = new HttpHeaders({
+      Authorization: authorization,
+      'Content-Type': 'application/x-www-form-urlencoded'
+    });
 
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SESSION}/`;
 
@@ -21,12 +21,12 @@ export class AuthService {
   }
 
   submitPasswordReset(body) {
-    const headers = new HttpHeaders();
-
     const authorization = `${API.AUTH_HEADER.TOKEN} ${API.KEY}`;
 
-    headers.set('Authorization', authorization);
-    headers.set('Content-Type', 'application/json');
+    const headers = new HttpHeaders({
+      Authorization: authorization,
+      'Content-Type': 'application/json'
+    });
 
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.P_RESET}/`;
 
@@ -34,12 +34,12 @@ export class AuthService {
   }
 
   createInvitePassword(body: any) {
-    const headers = new HttpHeaders();
-
     const authorization = `${API.AUTH_HEADER.TOKEN} ${API.KEY}`;
 
-    headers.set('Authorization', authorization);
-    headers.set('Content-Type', 'application/json');
+    const headers = new HttpHeaders({
+      Authorization: authorization,
+      'Content-Type': 'application/json'
+    });
 
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.P_RESET}/`;
 

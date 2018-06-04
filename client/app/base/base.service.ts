@@ -1,5 +1,4 @@
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { Response, ResponseOptions } from '@angular/http';
+import { HttpClient, HttpParams, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -22,9 +21,7 @@ const buildCommonHeaders = () => {
   });
 };
 
-const emptyResponse = Observable.of(
-  new Response(new ResponseOptions({ body: JSON.stringify([]) }))
-);
+const emptyResponse = Observable.of(new HttpResponse({ body: JSON.stringify([]) }));
 
 @Injectable()
 export abstract class BaseService {

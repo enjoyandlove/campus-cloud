@@ -1,9 +1,8 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { HttpParams, HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { FormBuilder } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 
 import { EmployerModule } from '../employer.module';
 import { EmployerService } from '../employer.service';
@@ -40,7 +39,7 @@ describe('EmployerCreateComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [HttpModule, EmployerModule, RouterTestingModule],
+        imports: [HttpClientModule, EmployerModule, RouterTestingModule],
         providers: [
           CPSession,
           FormBuilder,

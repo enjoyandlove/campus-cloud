@@ -1,9 +1,8 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { HttpParams, HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { FormBuilder } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 
 import { StoreModule } from '../store.module';
 import { StoreService } from '../store.service';
@@ -31,7 +30,7 @@ describe('DealsStoreEditComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [HttpModule, StoreModule, RouterTestingModule],
+        imports: [HttpClientModule, StoreModule, RouterTestingModule],
         providers: [
           CPSession,
           FormBuilder,

@@ -1,9 +1,8 @@
 import { async, fakeAsync, tick, TestBed, ComponentFixture } from '@angular/core/testing';
+import { HttpParams, HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { StoreModule } from '@ngrx/store';
-import { HttpModule } from '@angular/http';
 
 import { JobsModule } from '../jobs.module';
 import { JobsService } from '../jobs.service';
@@ -37,8 +36,8 @@ describe('JobsListComponent', () => {
     async(() => {
       TestBed.configureTestingModule({
         imports: [
-          HttpModule,
           JobsModule,
+          HttpClientModule,
           RouterTestingModule,
           StoreModule.forRoot({
             HEADER: headerReducer,

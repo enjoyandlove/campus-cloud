@@ -8,7 +8,6 @@ import { Store, StoreModule } from '@ngrx/store';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { Http } from '@angular/http';
 import 'rxjs';
 
 // import { By } from '@angular/platform-browser';
@@ -22,8 +21,6 @@ import { SharedModule } from './../../../../../shared/shared.module';
 import { StudentsProfileComponent } from './students-profile.component';
 import { snackBarReducer, headerReducer } from '../../../../../reducers';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
-
-class MockHttp {}
 
 const mockStudentsService = {
   getStudentById() {
@@ -78,7 +75,6 @@ describe('StudentsProfileComponent', () => {
       providers: [
         CPI18nService,
         { provide: CPSession, useClass: MockCPSession },
-        { provide: Http, useClass: MockHttp },
         { provide: StudentsService, useValue: mockStudentsService },
         {
           provide: ActivatedRoute,

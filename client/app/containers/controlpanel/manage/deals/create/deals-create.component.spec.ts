@@ -1,7 +1,6 @@
 import { async, TestBed, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
+import { HttpParams, HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpParams } from '@angular/common/http';
-import { HttpModule } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { StoreModule } from '@ngrx/store';
 
@@ -45,8 +44,8 @@ describe('DealsCreateComponent', () => {
     async(() => {
       TestBed.configureTestingModule({
         imports: [
-          HttpModule,
           DealsModule,
+          HttpClientModule,
           RouterTestingModule,
           StoreModule.forRoot({
             HEADER: headerReducer,

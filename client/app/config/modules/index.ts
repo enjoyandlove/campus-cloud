@@ -32,9 +32,9 @@ const APP_STATE_MODULE = StoreModule.forRoot({
 
 export const APP_MODULES = [
   APP_STATE_MODULE,
-  HttpClientModule,
   FormsModule,
   BrowserModule,
+  HttpClientModule,
   SharedModule,
   ReactiveFormsModule,
   ControlPanelModule,
