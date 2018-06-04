@@ -1,7 +1,7 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { URLSearchParams } from '@angular/http';
 
 import { EmployerModule } from '../employer.module';
 import { EmployerService } from '../employer.service';
@@ -26,30 +26,36 @@ describe('EmployerDeleteComponent', () => {
   let service: EmployerService;
   let fixture: ComponentFixture<EmployerDeleteComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [EmployerModule, RouterTestingModule],
-      providers: [
-        CPSession,
-        CPI18nService,
-        { provide: EmployerService, useClass: MockEmployerService },
-      ]
-    }).compileComponents().then(() => {
-      fixture = TestBed.createComponent(EmployerDeleteComponent);
-      component = fixture.componentInstance;
-      service = TestBed.get(EmployerService);
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        imports: [EmployerModule, RouterTestingModule],
+        providers: [
+          CPSession,
+          CPI18nService,
+          { provide: EmployerService, useClass: MockEmployerService }
+        ]
+      })
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(EmployerDeleteComponent);
+          component = fixture.componentInstance;
+          service = TestBed.get(EmployerService);
 
-      search = new URLSearchParams();
-      component.employer = {
-        id: 84,
-        name: 'Hello World',
-        description: 'This is description'
-      };
+          component.employer = {
+            id: 84,
+            name: 'Hello World',
+            description: 'This is description'
+          };
 
-      component.session.g.set('school', mockSchool);
-      search.append('school_id', component.session.g.get('school').id.toString());
-    });
-  }));
+          component.session.g.set('school', mockSchool);
+          search = new HttpParams().append(
+            'school_id',
+            component.session.g.get('school').id.toString()
+          );
+        });
+    })
+  );
 
   it('buttonData should have "Delete" label & "Danger class"', () => {
     component.ngOnInit();
@@ -72,5 +78,4 @@ describe('EmployerDeleteComponent', () => {
     expect(component.resetDeleteModal.emit).toHaveBeenCalled();
     expect(component.resetDeleteModal.emit).toHaveBeenCalledTimes(1);
   });
-
 });

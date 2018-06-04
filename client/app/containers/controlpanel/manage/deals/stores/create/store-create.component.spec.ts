@@ -1,8 +1,9 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
-import { URLSearchParams, HttpModule } from '@angular/http';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { FormBuilder } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 
 import { StoreModule } from '../store.module';
 import { StoreService } from '../store.service';
@@ -28,36 +29,38 @@ describe('DealsStoreCreateComponent', () => {
   let fixture: ComponentFixture<StoreCreateComponent>;
 
   const newStore = {
-    'id': 1,
-    'name': 'Hello World!',
-    'description': 'This is description',
-    'logo_url': 'image.jpeg'
+    id: 1,
+    name: 'Hello World!',
+    description: 'This is description',
+    logo_url: 'image.jpeg'
   };
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        HttpModule,
-        StoreModule,
-        RouterTestingModule
-      ],
-      providers: [
-        CPSession,
-        FormBuilder,
-        CPI18nService,
-        { provide: StoreService, useClass: MockStoreService },
-      ]
-    }).compileComponents().then(() => {
-      fixture = TestBed.createComponent(StoreCreateComponent);
-      component = fixture.componentInstance;
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        imports: [HttpModule, StoreModule, RouterTestingModule],
+        providers: [
+          CPSession,
+          FormBuilder,
+          CPI18nService,
+          { provide: StoreService, useClass: MockStoreService }
+        ]
+      })
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(StoreCreateComponent);
+          component = fixture.componentInstance;
 
-      search = new URLSearchParams();
-      component.session.g.set('school', mockSchool);
-      search.append('school_id', component.session.g.get('school').id.toString());
+          component.session.g.set('school', mockSchool);
+          search = new HttpParams().append(
+            'school_id',
+            component.session.g.get('school').id.toString()
+          );
 
-      component.ngOnInit();
-    });
-  }));
+          component.ngOnInit();
+        });
+    })
+  );
 
   it('form validation - missing required fields - should fail', () => {
     expect(component.storeForm.valid).toBeFalsy();
@@ -121,5 +124,4 @@ describe('DealsStoreCreateComponent', () => {
     expect(component.resetModal).toHaveBeenCalled();
     expect(component.resetModal).toHaveBeenCalledTimes(1);
   });
-
 });

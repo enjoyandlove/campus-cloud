@@ -1,6 +1,6 @@
 /*tslint:disable:max-line-length */
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { get as _get } from 'lodash';
 
@@ -67,8 +67,7 @@ export class AudienceSavedBodyComponent implements OnInit {
       ]);
     }
 
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     const audiences$ = this.service
       .getAudiences(search, 1, 1000)

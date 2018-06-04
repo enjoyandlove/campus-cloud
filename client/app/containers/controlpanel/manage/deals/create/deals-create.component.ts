@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { URLSearchParams } from '@angular/http';
+import { Component, OnInit } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
@@ -45,23 +45,19 @@ export class DealsCreateComponent implements OnInit {
   }
 
   createDeal(data) {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
-    this.service
-      .createDeal(data.deal, search)
-      .subscribe(
-        (deal) => this.router.navigate([`/manage/deals/${deal.id}/info`]),
-        (_) => {
-          this.error = true;
-          this.errorMessage = this.cpI18n.translate('something_went_wrong');
-        }
-      );
+    this.service.createDeal(data.deal, search).subscribe(
+      (deal) => this.router.navigate([`/manage/deals/${deal.id}/info`]),
+      (_) => {
+        this.error = true;
+        this.errorMessage = this.cpI18n.translate('something_went_wrong');
+      }
+    );
   }
 
   createDealWithNewStore(data) {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     this.storeService
       .createStore(data.store, search)
@@ -110,7 +106,7 @@ export class DealsCreateComponent implements OnInit {
   onFormData(data) {
     this.data = data;
     const isFormValid = data.dealFormValid && data.storeFormValid;
-    this.buttonData = {...this.buttonData, disabled: !isFormValid};
+    this.buttonData = { ...this.buttonData, disabled: !isFormValid };
   }
 
   onToggleStore(value) {
@@ -125,7 +121,7 @@ export class DealsCreateComponent implements OnInit {
       image_thumb_url: [null],
       description: [null],
       start: [null],
-      expiration: [null],
+      expiration: [null]
     });
   }
 

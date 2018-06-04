@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { URLSearchParams } from '@angular/http';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpParams } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { DealsService } from '../deals.service';
@@ -43,8 +43,7 @@ export class DealsEditComponent extends BaseComponent implements OnInit {
   }
 
   public fetch() {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     super.fetchData(this.service.getDealById(this.dealId, search)).then((deal) => {
       this.buildDealsForm(deal.data);
@@ -62,23 +61,19 @@ export class DealsEditComponent extends BaseComponent implements OnInit {
   }
 
   editDeal(data) {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
-    this.service
-      .editDeal(this.dealId, data.deal, search)
-      .subscribe(
-        (deal) => this.router.navigate([`/manage/deals/${deal.id}/info`]),
-        (_) => {
-          this.error = true;
-          this.errorMessage = this.cpI18n.translate('something_went_wrong');
-        }
-      );
+    this.service.editDeal(this.dealId, data.deal, search).subscribe(
+      (deal) => this.router.navigate([`/manage/deals/${deal.id}/info`]),
+      (_) => {
+        this.error = true;
+        this.errorMessage = this.cpI18n.translate('something_went_wrong');
+      }
+    );
   }
 
   editDealWithNewStore(data) {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     this.storeService
       .createStore(data.store, search)
@@ -127,7 +122,7 @@ export class DealsEditComponent extends BaseComponent implements OnInit {
   onFormData(data) {
     this.data = data;
     const isFormValid = data.dealFormValid && data.storeFormValid;
-    this.buttonData = {...this.buttonData, disabled: !isFormValid};
+    this.buttonData = { ...this.buttonData, disabled: !isFormValid };
   }
 
   onToggleStore(value) {
@@ -142,7 +137,7 @@ export class DealsEditComponent extends BaseComponent implements OnInit {
       image_thumb_url: [data.image_thumb_url],
       description: [data.description],
       start: [data.start],
-      expiration: [data.expiration],
+      expiration: [data.expiration]
     });
   }
 

@@ -7,8 +7,8 @@ import {
   Output,
   ViewChild
 } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpParams } from '@angular/common/http';
 
 import { IEmployer } from '../employer.interface';
 import { CPSession } from '../../../../../../session';
@@ -52,8 +52,7 @@ export class EmployerCreateComponent implements OnInit {
   }
 
   onSubmit() {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     this.service.createEmployer(this.employerForm.value, search).subscribe((employer) => {
       this.created.emit(employer);

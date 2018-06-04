@@ -7,8 +7,8 @@ import {
   OnInit,
   Output
 } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpParams } from '@angular/common/http';
 
 import { IStore } from '../store.interface';
 import { StoreService } from '../store.service';
@@ -20,7 +20,6 @@ import { CPI18nService } from '../../../../../../shared/services/i18n.service';
   templateUrl: './store-edit.component.html',
   styleUrls: ['./store-edit.component.scss']
 })
-
 export class StoreEditComponent implements OnInit {
   @Input() store: IStore;
 
@@ -55,8 +54,7 @@ export class StoreEditComponent implements OnInit {
 
   onSubmit() {
     this.error = false;
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     this.service.editStore(this.store.id, this.storeForm.value, search).subscribe(
       (store) => {
@@ -82,7 +80,7 @@ export class StoreEditComponent implements OnInit {
       postal_code: [this.store.postal_code],
       website: [this.store.website],
       latitude: [this.store.latitude],
-      longitude: [this.store.longitude],
+      longitude: [this.store.longitude]
     });
 
     this.buttonData = Object.assign({}, this.buttonData, {

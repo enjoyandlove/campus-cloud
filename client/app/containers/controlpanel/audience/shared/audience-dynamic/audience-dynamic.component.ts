@@ -1,6 +1,6 @@
 import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { find } from 'lodash';
 
 import { BaseComponent } from '../../../../../base';
@@ -186,8 +186,7 @@ export class AudienceDynamicComponent extends BaseComponent implements OnInit {
   }
 
   fetch() {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     const stream$ = this.service
       .getFilters(search)

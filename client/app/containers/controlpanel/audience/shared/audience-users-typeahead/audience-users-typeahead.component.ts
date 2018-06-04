@@ -1,7 +1,7 @@
 /*tslint:disable:max-line-length */
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { CPSession } from '../../../../../session';
 import { AudienceService } from './../../../../../containers/controlpanel/audience/audience.service';
@@ -37,9 +37,9 @@ export class AudienceUsersTypeaheadComponent implements OnInit {
   }
 
   onSearch(query) {
-    const search = new URLSearchParams();
-    search.append('search_str', query);
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams()
+      .append('search_str', query)
+      .append('school_id', this.session.g.get('school').id.toString());
 
     this.service
       .getUsers(search)

@@ -1,7 +1,8 @@
 import { async, TestBed, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpModule, URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import { HttpModule } from '@angular/http';
 import { StoreModule } from '@ngrx/store';
 
 import { DealsModule } from '../deals.module';
@@ -63,29 +64,29 @@ describe('DealsEditComponent', () => {
           CPSession,
           CPI18nService,
           { provide: StoreService, useClass: MockStoreService },
-          { provide: DealsService, useClass: MockDealsService },
+          { provide: DealsService, useClass: MockDealsService }
         ]
       })
         .compileComponents()
         .then(() => {
           fixture = TestBed.createComponent(DealsEditComponent);
           component = fixture.componentInstance;
-          search = new URLSearchParams();
 
           component.dealId = 1;
           component.session.g.set('school', mockSchool);
-          search.append('school_id', component.session.g.get('school').id);
+          search = new HttpParams().append('school_id', component.session.g.get('school').id);
 
           spyOn(component.router, 'navigate');
 
-          spyDeal = spyOn(component.service, 'editDeal')
-            .and.returnValue(Observable.of({}));
+          spyDeal = spyOn(component.service, 'editDeal').and.returnValue(Observable.of({}));
 
-          spyFetchDeals = spyOn(component.service, 'getDealById')
-            .and.returnValue(Observable.of({}));
+          spyFetchDeals = spyOn(component.service, 'getDealById').and.returnValue(
+            Observable.of({})
+          );
 
-          spyStore = spyOn(component.storeService, 'createStore')
-            .and.returnValue(Observable.of({}));
+          spyStore = spyOn(component.storeService, 'createStore').and.returnValue(
+            Observable.of({})
+          );
         });
     })
   );
@@ -96,45 +97,50 @@ describe('DealsEditComponent', () => {
     expect(spyFetchDeals).toHaveBeenCalledWith(component.dealId, search);
   });
 
-  it('editDeal', fakeAsync(() => {
-    component.ngOnInit();
-    tick();
+  it(
+    'editDeal',
+    fakeAsync(() => {
+      component.ngOnInit();
+      tick();
 
-    component.isNewStore = false;
-    component.data = {
-      deal: component.form.value,
-      store: null,
-    };
+      component.isNewStore = false;
+      component.data = {
+        deal: component.form.value,
+        store: null
+      };
 
-    component.onSubmit();
+      component.onSubmit();
 
-    expect(spyDeal).toHaveBeenCalled();
-    expect(spyDeal).toHaveBeenCalledTimes(1);
+      expect(spyDeal).toHaveBeenCalled();
+      expect(spyDeal).toHaveBeenCalledTimes(1);
 
-    expect(spyFetchDeals).toHaveBeenCalledTimes(1);
-    expect(spyFetchDeals).toHaveBeenCalledWith(component.dealId, search);
-  }));
+      expect(spyFetchDeals).toHaveBeenCalledTimes(1);
+      expect(spyFetchDeals).toHaveBeenCalledWith(component.dealId, search);
+    })
+  );
 
-  it('editDealWithNewStore', fakeAsync(() => {
-    component.ngOnInit();
-    tick();
+  it(
+    'editDealWithNewStore',
+    fakeAsync(() => {
+      component.ngOnInit();
+      tick();
 
-    component.isNewStore = true;
-    component.data = {
-      deal: component.form.value,
-      store: component.storeForm.value,
-    };
+      component.isNewStore = true;
+      component.data = {
+        deal: component.form.value,
+        store: component.storeForm.value
+      };
 
-    component.onSubmit();
+      component.onSubmit();
 
-    expect(spyDeal).toHaveBeenCalled();
-    expect(spyDeal).toHaveBeenCalledTimes(1);
+      expect(spyDeal).toHaveBeenCalled();
+      expect(spyDeal).toHaveBeenCalledTimes(1);
 
-    expect(spyStore).toHaveBeenCalled();
-    expect(spyStore).toHaveBeenCalledTimes(1);
+      expect(spyStore).toHaveBeenCalled();
+      expect(spyStore).toHaveBeenCalledTimes(1);
 
-    expect(spyFetchDeals).toHaveBeenCalledTimes(1);
-    expect(spyFetchDeals).toHaveBeenCalledWith(component.dealId, search);
-  }));
-
+      expect(spyFetchDeals).toHaveBeenCalledTimes(1);
+      expect(spyFetchDeals).toHaveBeenCalledWith(component.dealId, search);
+    })
+  );
 });

@@ -1,8 +1,9 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
-import { URLSearchParams, HttpModule } from '@angular/http';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { FormBuilder } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 
 import { StoreModule } from '../store.module';
 import { StoreService } from '../store.service';
@@ -27,45 +28,47 @@ describe('DealsStoreEditComponent', () => {
   let component: StoreEditComponent;
   let fixture: ComponentFixture<StoreEditComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        HttpModule,
-        StoreModule,
-        RouterTestingModule
-      ],
-      providers: [
-        CPSession,
-        FormBuilder,
-        CPI18nService,
-        { provide: StoreService, useClass: MockStoreService },
-      ]
-    }).compileComponents().then(() => {
-      fixture = TestBed.createComponent(StoreEditComponent);
-      component = fixture.componentInstance;
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        imports: [HttpModule, StoreModule, RouterTestingModule],
+        providers: [
+          CPSession,
+          FormBuilder,
+          CPI18nService,
+          { provide: StoreService, useClass: MockStoreService }
+        ]
+      })
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(StoreEditComponent);
+          component = fixture.componentInstance;
 
-      search = new URLSearchParams();
-      component.session.g.set('school', mockSchool);
-      search.append('school_id', component.session.g.get('school').id.toString());
+          component.session.g.set('school', mockSchool);
+          search = new HttpParams().append(
+            'school_id',
+            component.session.g.get('school').id.toString()
+          );
 
-      component.store = {
-        'id': 1,
-        'city': 'Karachi',
-        'province': 'Sindh',
-        'country': 'Pakistan',
-        'postal_code': '',
-        'address': 'Clifton',
-        'latitude': '',
-        'longitude': '',
-        'website': 'www.oohlalamobile.com',
-        'name': 'Hello World!',
-        'description': 'This is description',
-        'logo_url': 'dummy.jpeg'
-      };
+          component.store = {
+            id: 1,
+            city: 'Karachi',
+            province: 'Sindh',
+            country: 'Pakistan',
+            postal_code: '',
+            address: 'Clifton',
+            latitude: '',
+            longitude: '',
+            website: 'www.oohlalamobile.com',
+            name: 'Hello World!',
+            description: 'This is description',
+            logo_url: 'dummy.jpeg'
+          };
 
-      component.ngOnInit();
-    });
-  }));
+          component.ngOnInit();
+        });
+    })
+  );
 
   it('form validation - should fail', () => {
     component.storeForm.controls['name'].setValue(null);
@@ -95,8 +98,7 @@ describe('DealsStoreEditComponent', () => {
   it('should edit store', () => {
     spyOn(component.edited, 'emit');
     spyOn(component, 'resetModal');
-    spy = spyOn(component.service, 'editStore')
-      .and.returnValue(Observable.of(component.store));
+    spy = spyOn(component.service, 'editStore').and.returnValue(Observable.of(component.store));
 
     component.onSubmit();
 
@@ -109,5 +111,4 @@ describe('DealsStoreEditComponent', () => {
     expect(component.resetModal).toHaveBeenCalled();
     expect(component.resetModal).toHaveBeenCalledTimes(1);
   });
-
 });

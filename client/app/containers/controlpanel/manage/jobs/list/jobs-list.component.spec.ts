@@ -1,8 +1,9 @@
 import { async, fakeAsync, tick, TestBed, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpModule, URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { StoreModule } from '@ngrx/store';
+import { HttpModule } from '@angular/http';
 
 import { JobsModule } from '../jobs.module';
 import { JobsService } from '../jobs.service';
@@ -48,7 +49,7 @@ describe('JobsListComponent', () => {
           CPSession,
           CPI18nService,
           ManageHeaderService,
-          { provide: JobsService, useClass: MockJobsService },
+          { provide: JobsService, useClass: MockJobsService }
         ]
       })
         .compileComponents()
@@ -59,11 +60,11 @@ describe('JobsListComponent', () => {
           component.session.g.set('school', mockSchool);
           spyOn(component, 'buildHeader');
 
-          search = new URLSearchParams();
-          search.append('search_str', component.state.search_str);
-          search.append('sort_field', component.state.sort_field);
-          search.append('sort_direction', component.state.sort_direction);
-          search.append('school_id', component.session.g.get('school').id.toString());
+          search = new HttpParams()
+            .append('search_str', component.state.search_str)
+            .append('sort_field', component.state.sort_field)
+            .append('sort_direction', component.state.sort_direction)
+            .append('school_id', component.session.g.get('school').id.toString());
         });
     })
   );
@@ -79,14 +80,16 @@ describe('JobsListComponent', () => {
     expect(component.state.jobs).toEqual([]);
   });
 
-  it('should fetch list of jobs', fakeAsync(() => {
-    spy = spyOn(component.service, 'getJobs').and.returnValue(Observable.of(mockJobs));
-    component.ngOnInit();
+  it(
+    'should fetch list of jobs',
+    fakeAsync(() => {
+      spy = spyOn(component.service, 'getJobs').and.returnValue(Observable.of(mockJobs));
+      component.ngOnInit();
 
-    tick();
-    expect(spy).toHaveBeenCalledTimes(1);
-    expect(component.state.jobs.length).toEqual(mockJobs.length);
-    expect(spy).toHaveBeenCalledWith(component.startRange, component.endRange, search);
-  }));
-
+      tick();
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(component.state.jobs.length).toEqual(mockJobs.length);
+      expect(spy).toHaveBeenCalledWith(component.startRange, component.endRange, search);
+    })
+  );
 });

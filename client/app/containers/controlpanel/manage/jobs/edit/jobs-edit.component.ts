@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
 import { JobsService } from '../jobs.service';
@@ -45,8 +45,7 @@ export class JobsEditComponent extends BaseComponent implements OnInit {
   }
 
   public fetch() {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     super.fetchData(this.service.getJobById(this.jobId, search)).then((job) => {
       this.buildForm(job.data);
@@ -78,8 +77,7 @@ export class JobsEditComponent extends BaseComponent implements OnInit {
   }
 
   editJob(data) {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     this.service
       .editJob(this.jobId, data.job, search)
@@ -90,8 +88,7 @@ export class JobsEditComponent extends BaseComponent implements OnInit {
   }
 
   editJobWithNewEmployer(data) {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     this.employerService
       .createEmployer(data.employer, search)

@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { CP_PRIVILEGES_MAP, STATUS } from '../../../../../shared/constants';
 import { CPSession } from './../../../../../session/index';
@@ -92,8 +92,7 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
     public service: AnnouncementsService
   ) {
     const school = this.session.g.get('school');
-    const search: URLSearchParams = new URLSearchParams();
-    search.append('school_id', school.id.toString());
+    const search: HttpParams = new HttpParams().append('school_id', school.id.toString());
 
     this.stores$ = this.storeService.getStores(search);
   }
@@ -133,9 +132,9 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
   }
 
   doUserSearch(query) {
-    const search = new URLSearchParams();
-    search.append('search_str', query);
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams()
+      .append('search_str', query)
+      .append('school_id', this.session.g.get('school').id.toString());
 
     this.service
       .getUsers(search)
@@ -187,9 +186,9 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
   }
 
   doListsSearch(query) {
-    const search = new URLSearchParams();
-    search.append('search_str', query);
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams()
+      .append('search_str', query)
+      .append('school_id', this.session.g.get('school').id.toString());
 
     this.service
       .getLists(search, 1, 400)
@@ -291,8 +290,7 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
   doSubmit() {
     this.isError = false;
 
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     const prefix = this.subject_prefix.label ? this.subject_prefix.label.toUpperCase() : '';
 

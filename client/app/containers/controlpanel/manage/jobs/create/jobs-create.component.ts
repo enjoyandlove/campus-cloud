@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { URLSearchParams } from '@angular/http';
+import { Component, OnInit } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
@@ -62,8 +62,7 @@ export class JobsCreateComponent implements OnInit {
   }
 
   createJob(data) {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     this.service
       .createJob(data.job, search)
@@ -71,8 +70,7 @@ export class JobsCreateComponent implements OnInit {
   }
 
   createJobWithNewEmployer(data) {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     this.employerService
       .createEmployer(data.employer, search)

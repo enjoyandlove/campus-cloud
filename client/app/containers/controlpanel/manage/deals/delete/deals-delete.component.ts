@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { IDeal } from '../deals.interface';
 import { DealsService } from '../deals.service';
@@ -26,8 +26,7 @@ export class DealsDeleteComponent implements OnInit {
   ) {}
 
   onDelete() {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     this.service.deleteDeal(this.deal.id, search).subscribe(() => {
       this.deleted.emit(this.deal.id);

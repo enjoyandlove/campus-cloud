@@ -1,7 +1,7 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
-import { URLSearchParams } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
 
 import { DealsModule } from '../deals.module';
 import { DealsService } from '../deals.service';
@@ -30,18 +30,13 @@ describe('DealsDeleteComponent', () => {
     async(() => {
       TestBed.configureTestingModule({
         imports: [DealsModule, RouterTestingModule],
-        providers: [
-          CPSession,
-          CPI18nService,
-          { provide: DealsService, useClass: MockDealsService },
-        ]
+        providers: [CPSession, CPI18nService, { provide: DealsService, useClass: MockDealsService }]
       })
         .compileComponents()
         .then(() => {
           fixture = TestBed.createComponent(DealsDeleteComponent);
           component = fixture.componentInstance;
 
-          search = new URLSearchParams();
           component.deal = {
             id: 1,
             store_id: 10,
@@ -54,7 +49,10 @@ describe('DealsDeleteComponent', () => {
           };
 
           component.session.g.set('school', mockSchool);
-          search.append('school_id', component.session.g.get('school').id.toString());
+          search = new HttpParams().append(
+            'school_id',
+            component.session.g.get('school').id.toString()
+          );
         });
     })
   );
@@ -80,5 +78,4 @@ describe('DealsDeleteComponent', () => {
     expect(component.resetDeleteModal.emit).toHaveBeenCalled();
     expect(component.resetDeleteModal.emit).toHaveBeenCalledTimes(1);
   });
-
 });

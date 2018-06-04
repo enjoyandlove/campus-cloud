@@ -1,7 +1,7 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
-import { Observable } from 'rxjs/Observable';
-import { URLSearchParams } from '@angular/http';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
 
 import { StoreModule } from '../store.module';
 import { StoreService } from '../store.service';
@@ -25,30 +25,31 @@ describe('DealsStoreDeleteComponent', () => {
   let component: StoreDeleteComponent;
   let fixture: ComponentFixture<StoreDeleteComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [StoreModule, RouterTestingModule],
-      providers: [
-        CPSession,
-        CPI18nService,
-        { provide: StoreService, useClass: MockService },
-      ]
-    }).compileComponents().then(() => {
-      fixture = TestBed.createComponent(StoreDeleteComponent);
-      component = fixture.componentInstance;
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        imports: [StoreModule, RouterTestingModule],
+        providers: [CPSession, CPI18nService, { provide: StoreService, useClass: MockService }]
+      })
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(StoreDeleteComponent);
+          component = fixture.componentInstance;
 
-      search = new URLSearchParams();
-      component.store = {
-        id: 1,
-        name: 'Hello World',
-        logo_url: 'image.jpeg',
-        description: 'This is description'
-      };
-
-      component.session.g.set('school', mockSchool);
-      search.append('school_id', component.session.g.get('school').id.toString());
-    });
-  }));
+          component.store = {
+            id: 1,
+            name: 'Hello World',
+            logo_url: 'image.jpeg',
+            description: 'This is description'
+          };
+          component.session.g.set('school', mockSchool);
+          search = new HttpParams().append(
+            'school_id',
+            component.session.g.get('school').id.toString()
+          );
+        });
+    })
+  );
 
   it('buttonData should have "Delete" label & "Danger class"', () => {
     component.ngOnInit();
@@ -71,5 +72,4 @@ describe('DealsStoreDeleteComponent', () => {
     expect(component.resetDeleteModal.emit).toHaveBeenCalled();
     expect(component.resetDeleteModal.emit).toHaveBeenCalledTimes(1);
   });
-
 });

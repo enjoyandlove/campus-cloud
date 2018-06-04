@@ -9,7 +9,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { IEmployer } from '../employer.interface';
 import { EmployerService } from '../employer.service';
@@ -55,8 +55,7 @@ export class EmployerEditComponent implements OnInit {
   }
 
   onSubmit() {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     this.service
       .editEmployer(this.employer.id, this.employerForm.value, search)

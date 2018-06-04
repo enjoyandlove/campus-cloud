@@ -1,6 +1,6 @@
 import { Component, ElementRef, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { IStore } from '../store.interface';
 import { StoreService } from '../store.service';
@@ -44,8 +44,7 @@ export class StoreCreateComponent implements OnInit {
 
   onSubmit() {
     this.error = false;
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     this.service.createStore(this.storeForm.value, search).subscribe(
       (store) => {

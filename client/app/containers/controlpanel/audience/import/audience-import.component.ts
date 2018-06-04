@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { isDev } from '../../../../config/env';
 import { CPSession } from '../../../../session';
@@ -65,8 +65,7 @@ export class AudienceImportComponent implements OnInit {
   }
 
   doSubmit() {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     this.service.createAudience(this.form.value, search).subscribe(
       (res) => {

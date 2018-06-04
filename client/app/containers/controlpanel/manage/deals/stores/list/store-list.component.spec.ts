@@ -1,6 +1,6 @@
 import { async, fakeAsync, tick, TestBed, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { StoreModule } from '@ngrx/store';
 
@@ -41,11 +41,7 @@ describe('DealsStoreListComponent', () => {
             SNACKBAR: snackBarReducer
           })
         ],
-        providers: [
-          CPSession,
-          CPI18nService,
-          { provide: StoreService, useClass: MockStoreService },
-        ]
+        providers: [CPSession, CPI18nService, { provide: StoreService, useClass: MockStoreService }]
       })
         .compileComponents()
         .then(() => {
@@ -53,11 +49,11 @@ describe('DealsStoreListComponent', () => {
           component = fixture.componentInstance;
           component.session.g.set('school', mockSchool);
 
-          search = new URLSearchParams();
-          search.append('search_str', component.state.search_str);
-          search.append('sort_field', component.state.sort_field);
-          search.append('sort_direction', component.state.sort_direction);
-          search.append('school_id', component.session.g.get('school').id.toString());
+          search = new HttpParams()
+            .append('search_str', component.state.search_str)
+            .append('sort_field', component.state.sort_field)
+            .append('sort_direction', component.state.sort_direction)
+            .append('school_id', component.session.g.get('school').id.toString());
         });
     })
   );
@@ -99,7 +95,9 @@ describe('DealsStoreListComponent', () => {
     expect(component.launchCreateModal).toBeTruthy();
   });
 
-  it('should fetch list of stores', fakeAsync(() => {
+  it(
+    'should fetch list of stores',
+    fakeAsync(() => {
       spy = spyOn(component.service, 'getStores').and.returnValue(Observable.of(mockStores));
       component.ngOnInit();
 

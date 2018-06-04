@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { CPSession } from './../../../../../session';
 import { AudienceType } from './../../audience.status';
@@ -60,9 +60,12 @@ export class AudienceNewBodyComponent implements OnInit {
 
     this.state = { ...this.state, couting: true };
 
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
-    search.append('count_only', '1');
+    const search = new HttpParams({
+      fromObject: {
+        school_id: this.session.g.get('school').id,
+        count_only: '1'
+      }
+    });
 
     const data = {
       filters: [...filters]

@@ -64,6 +64,7 @@ export abstract class BaseService {
   }
 
   post(url: string, data: any, opts?: HttpParams, silent = false) {
+    console.log('BASE POST opts ', opts);
     const headers = buildCommonHeaders();
 
     data = CPObj.cleanNullValues(data);

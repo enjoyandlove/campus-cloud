@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
 import { CPSession } from '../../../../session';
@@ -60,8 +60,7 @@ export class AuidenceEditComponent extends BaseComponent implements OnInit {
   }
 
   doSubmit() {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     this.service.updateAudience(this.audienceId, this.form.value, search).subscribe(
       (_) => {
@@ -135,8 +134,7 @@ export class AuidenceEditComponent extends BaseComponent implements OnInit {
   }
 
   fetch() {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     const stream$ = this.service.getAudienceById(this.audienceId, search);
 

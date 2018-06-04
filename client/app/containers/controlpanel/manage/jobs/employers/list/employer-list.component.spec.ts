@@ -1,6 +1,6 @@
 import { async, fakeAsync, tick, TestBed, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { StoreModule } from '@ngrx/store';
 
@@ -53,7 +53,7 @@ describe('EmployersListComponent', () => {
         providers: [
           CPSession,
           CPI18nService,
-          { provide: EmployerService, useClass: MockEmployerService },
+          { provide: EmployerService, useClass: MockEmployerService }
         ]
       })
         .compileComponents()
@@ -63,11 +63,11 @@ describe('EmployersListComponent', () => {
           service = TestBed.get(EmployerService);
           component.session.g.set('school', mockSchool);
 
-          search = new URLSearchParams();
-          search.append('search_str', component.state.search_str);
-          search.append('sort_field', component.state.sort_field);
-          search.append('sort_direction', component.state.sort_direction);
-          search.append('school_id', component.session.g.get('school').id.toString());
+          search = new HttpParams()
+            .append('search_str', component.state.search_str)
+            .append('sort_field', component.state.sort_field)
+            .append('sort_direction', component.state.sort_direction)
+            .append('school_id', component.session.g.get('school').id.toString());
         });
     })
   );
@@ -104,7 +104,9 @@ describe('EmployersListComponent', () => {
     expect(component.launchCreateModal).toBeTruthy();
   });
 
-  it('should fetch list of employers', fakeAsync(() => {
+  it(
+    'should fetch list of employers',
+    fakeAsync(() => {
       spy = spyOn(component.service, 'getEmployers').and.returnValue(Observable.of(mockEmployers));
       component.ngOnInit();
 
