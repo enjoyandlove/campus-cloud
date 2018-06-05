@@ -37,7 +37,6 @@ class MockEmployerService {
 
 describe('JobsCreateComponent', () => {
   let jobSpy;
-  let search;
   let spyEmployer;
   let component: JobsCreateComponent;
   let fixture: ComponentFixture<JobsCreateComponent>;
@@ -69,7 +68,6 @@ describe('JobsCreateComponent', () => {
           component.buildForm();
           component.buildEmployerForm();
           component.session.g.set('school', mockSchool);
-          search = new HttpParams().append('school_id', component.session.g.get('school').id);
 
           spyOn(component.router, 'navigate');
 

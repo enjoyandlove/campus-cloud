@@ -1,4 +1,4 @@
-import { HttpClientModule, HttpParams } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -26,8 +26,6 @@ class MockJobsService {
 }
 
 describe('JobsInfoComponent', () => {
-  let spy;
-  let search;
   let jobTypes;
   let desiredStudy;
   let component: JobsInfoComponent;
@@ -60,7 +58,6 @@ describe('JobsInfoComponent', () => {
           component.jobId = 1;
           component.session.g.set('school', mockSchool);
           component.isLoading().subscribe((_) => (component.loading = false));
-          search = new HttpParams().append('school_id', component.session.g.get('school').id);
         });
     })
   );
@@ -68,7 +65,6 @@ describe('JobsInfoComponent', () => {
   it(
     'should get job info',
     fakeAsync(() => {
-      spy = spyOn(component.service, 'getJobById').and.returnValue(observableOf(mockJobs[0]));
       const job = mockJobs[0];
       const bannerDe: DebugElement = fixture.debugElement;
       const bannerEl: HTMLElement = bannerDe.nativeElement;

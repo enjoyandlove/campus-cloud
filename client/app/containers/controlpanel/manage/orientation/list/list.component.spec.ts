@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Store, StoreModule } from '@ngrx/store';
+import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
 import { OrientationListComponent } from './list.component';
 import { headerReducer, snackBarReducer } from '../../../../../reducers';
@@ -25,9 +25,6 @@ class MockOrientationService {
 describe('OrientationListComponent', () => {
   let spy;
   let search;
-  let storeSpy;
-  let store: Store<any>;
-  let service: OrientationService;
   let component: OrientationListComponent;
   let fixture: ComponentFixture<OrientationListComponent>;
 
@@ -53,10 +50,7 @@ describe('OrientationListComponent', () => {
       })
         .compileComponents()
         .then(() => {
-          store = TestBed.get(Store);
-          storeSpy = spyOn(store, 'dispatch').and.callThrough();
           fixture = TestBed.createComponent(OrientationListComponent);
-          service = TestBed.get(OrientationService);
 
           component = fixture.componentInstance;
           component.session.g.set('school', mockSchool);

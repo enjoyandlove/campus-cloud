@@ -25,7 +25,6 @@ class RouterMock {
 describe('EventsListComponent', () => {
   let spy;
   let search;
-  let service: EventsService;
   let component: EventsComponent;
   let fixture: ComponentFixture<EventsComponent>;
 
@@ -45,7 +44,6 @@ describe('EventsListComponent', () => {
         .compileComponents()
         .then(() => {
           fixture = TestBed.createComponent(EventsComponent);
-          service = TestBed.get(EventsService);
 
           component = fixture.componentInstance;
           component.session.g.set('school', mockSchool);

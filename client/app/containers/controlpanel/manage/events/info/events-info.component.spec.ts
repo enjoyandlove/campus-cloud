@@ -29,7 +29,6 @@ class RouterMock {
 describe('EventInfoComponent', () => {
   let spy;
   let search;
-  let service: EventsService;
   let component: EventsInfoComponent;
   let fixture: ComponentFixture<EventsInfoComponent>;
 
@@ -63,7 +62,6 @@ describe('EventInfoComponent', () => {
         .compileComponents()
         .then(() => {
           fixture = TestBed.createComponent(EventsInfoComponent);
-          service = TestBed.get(EventsService);
 
           component = fixture.componentInstance;
           component.eventId = 15845;

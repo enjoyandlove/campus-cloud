@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
-
+import { startWith } from 'rxjs/operators';
 import { CPI18nService } from '../../../../../../../shared/services/index';
 
 @Component({
@@ -26,7 +26,7 @@ export class FeedDropdownComponent implements OnInit {
 
   ngOnInit() {
     if (!this.requiresApproval) {
-      return this.requiresApproval.startWith(false);
+      return this.requiresApproval.pipe(startWith(false));
     }
 
     this.isCampusWallView.subscribe((res: any) => {

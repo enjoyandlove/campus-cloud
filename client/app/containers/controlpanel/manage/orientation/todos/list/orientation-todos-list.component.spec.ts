@@ -21,7 +21,6 @@ class MockTodosService {
 
 describe('OrientationTodosListComponent', () => {
   let spy;
-  let service: TodosService;
   let component: OrientationTodosListComponent;
   let fixture: ComponentFixture<OrientationTodosListComponent>;
 
@@ -53,7 +52,6 @@ describe('OrientationTodosListComponent', () => {
         .then(() => {
           fixture = TestBed.createComponent(OrientationTodosListComponent);
           component = fixture.componentInstance;
-          service = TestBed.get(TodosService);
 
           component.session.g.set('school', mockSchool);
           component.orientationId = 5452;

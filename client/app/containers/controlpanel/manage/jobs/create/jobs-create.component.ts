@@ -1,17 +1,17 @@
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-
-import { JobsService } from '../jobs.service';
-import { CPSession } from '../../../../../session';
-import { JobsTypeDesireStudy } from '../jobs.status';
-import { CPDate } from '../../../../../shared/utils';
-import { CPI18nService } from '../../../../../shared/services';
-import { EmployerService } from '../employers/employer.service';
-import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
+import { switchMap } from 'rxjs/operators';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
+import { CPSession } from '../../../../../session';
+import { CPI18nService } from '../../../../../shared/services';
+import { CPDate } from '../../../../../shared/utils';
+import { EmployerService } from '../employers/employer.service';
+import { JobsService } from '../jobs.service';
+import { JobsTypeDesireStudy } from '../jobs.status';
 
 @Component({
   selector: 'cp-jobs-create',
@@ -66,7 +66,7 @@ export class JobsCreateComponent implements OnInit {
 
     this.service
       .createJob(data.job, search)
-      .subscribe((job) => this.router.navigate([`/manage/jobs/${job.id}/info`]));
+      .subscribe((job: any) => this.router.navigate([`/manage/jobs/${job.id}/info`]));
   }
 
   createJobWithNewEmployer(data) {
@@ -74,13 +74,15 @@ export class JobsCreateComponent implements OnInit {
 
     this.employerService
       .createEmployer(data.employer, search)
-      .switchMap((employer) => {
-        data.job.store_id = employer.id;
+      .pipe(
+        switchMap((employer: any) => {
+          data.job.store_id = employer.id;
 
-        return this.service.createJob(data.job, search);
-      })
+          return this.service.createJob(data.job, search);
+        })
+      )
       .subscribe(
-        (job) => this.router.navigate([`/manage/jobs/${job.id}/info`]),
+        (job: any) => this.router.navigate([`/manage/jobs/${job.id}/info`]),
         (_) => this.flashMessageError()
       );
   }

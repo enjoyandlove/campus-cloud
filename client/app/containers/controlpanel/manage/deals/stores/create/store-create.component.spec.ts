@@ -1,4 +1,4 @@
-import { HttpClientModule, HttpParams } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';

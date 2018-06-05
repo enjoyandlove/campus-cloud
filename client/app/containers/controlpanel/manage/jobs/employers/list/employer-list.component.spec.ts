@@ -25,7 +25,6 @@ class MockEmployerService {
 describe('EmployersListComponent', () => {
   let spy;
   let search;
-  let service: EmployerService;
   let component: EmployerListComponent;
   let fixture: ComponentFixture<EmployerListComponent>;
 
@@ -59,7 +58,6 @@ describe('EmployersListComponent', () => {
         .then(() => {
           fixture = TestBed.createComponent(EmployerListComponent);
           component = fixture.componentInstance;
-          service = TestBed.get(EmployerService);
           component.session.g.set('school', mockSchool);
 
           search = new HttpParams()

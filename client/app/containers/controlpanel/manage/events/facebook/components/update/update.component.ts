@@ -1,12 +1,12 @@
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-import { Component, OnInit, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-
-import { EventsService } from '../../../events.service';
-import { CPSession } from '../../../../../../../session';
+import { map } from 'rxjs/operators';
 import { BaseComponent } from '../../../../../../../base/base.component';
+import { CPSession } from '../../../../../../../session';
 import { CPI18nService } from '../../../../../../../shared/services/index';
+import { EventsService } from '../../../events.service';
 
 @Component({
   selector: 'cp-facebook-update',
@@ -107,23 +107,25 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
       search = search.append('store_id', this.clubId.toString());
     }
 
-    const links$ = this.eventsService.getFacebookEvents(search).map((links: any) => {
-      const _links = [];
+    const links$ = this.eventsService.getFacebookEvents(search).pipe(
+      map((links: any) => {
+        const _links = [];
 
-      links.map((link) => {
-        _links.push({
-          id: link.id,
-          url: link.url,
-          store_id: link.store_id,
-          host: {
-            label: link.store_name,
-            action: link.store_id
-          }
+        links.map((link) => {
+          _links.push({
+            id: link.id,
+            url: link.url,
+            store_id: link.store_id,
+            host: {
+              label: link.store_name,
+              action: link.store_id
+            }
+          });
         });
-      });
 
-      return _links;
-    });
+        return _links;
+      })
+    );
 
     super
       .fetchData(links$)
