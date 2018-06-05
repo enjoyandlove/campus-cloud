@@ -59,7 +59,7 @@ export class CalendarsEditComponent implements OnInit {
 
     this.service
       .editCalendar(this.calendar.id, this.form.value, search)
-      .subscribe((editedCalendar) => {
+      .subscribe((editedCalendar: any) => {
         this.edited.emit(editedCalendar);
         this.resetModal();
       });

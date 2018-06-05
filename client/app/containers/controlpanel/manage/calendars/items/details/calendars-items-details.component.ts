@@ -1,7 +1,8 @@
-import { Observable, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, of as observableOf } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { combineLatest } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
 import { ICalendar } from './../../calendars.interface';
@@ -68,7 +69,7 @@ export class CalendarsItemsDetailsComponent extends BaseComponent implements OnI
 
     const item$ = this.service.getItemById(this.itemId, itemSearch);
     const calendar$ = this.service.getCalendarById(this.calendarId, calendarSearch);
-    const stream$ = Observable.combineLatest(item$, calendar$);
+    const stream$ = observableOf(combineLatest(item$, calendar$));
 
     super.fetchData(stream$).then((res) => {
       this.item = res.data[0];

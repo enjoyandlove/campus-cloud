@@ -1,17 +1,16 @@
-import { async, TestBed, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
-import { HttpParams, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpParams } from '@angular/common/http';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Observable } from 'rxjs';
 import { StoreModule } from '@ngrx/store';
-
-import { DealsModule } from '../deals.module';
-import { DealsService } from '../deals.service';
-import { CPSession } from '../../../../../session';
-import { StoreService } from '../stores/store.service';
-import { CPI18nService } from '../../../../../shared/services';
-import { mockSchool } from '../../../../../session/mock/school';
+import { of as observableOf } from 'rxjs';
 import { DealsCreateComponent } from './deals-create.component';
 import { headerReducer, snackBarReducer } from '../../../../../reducers';
+import { CPSession } from '../../../../../session';
+import { mockSchool } from '../../../../../session/mock/school';
+import { CPI18nService } from '../../../../../shared/services';
+import { DealsModule } from '../deals.module';
+import { DealsService } from '../deals.service';
+import { StoreService } from '../stores/store.service';
 
 class MockDealsService {
   dummy;
@@ -19,7 +18,7 @@ class MockDealsService {
   createDeal(body: any, search: any) {
     this.dummy = [body, search];
 
-    return Observable.of({});
+    return observableOf({});
   }
 }
 
@@ -29,7 +28,7 @@ class MockStoreService {
   createStore(body: any, search: any) {
     this.dummy = [body, search];
 
-    return Observable.of({});
+    return observableOf({});
   }
 }
 
@@ -72,11 +71,9 @@ describe('DealsCreateComponent', () => {
           component.buildStoreForm();
           spyOn(component.router, 'navigate');
 
-          spyDeal = spyOn(component.service, 'createDeal').and.returnValue(Observable.of({}));
+          spyDeal = spyOn(component.service, 'createDeal').and.returnValue(observableOf({}));
 
-          spyStore = spyOn(component.storeService, 'createStore').and.returnValue(
-            Observable.of({})
-          );
+          spyStore = spyOn(component.storeService, 'createStore').and.returnValue(observableOf({}));
         });
     })
   );

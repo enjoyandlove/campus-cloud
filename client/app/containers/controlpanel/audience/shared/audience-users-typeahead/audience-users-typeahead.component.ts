@@ -1,11 +1,12 @@
 /*tslint:disable:max-line-length */
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { CPSession } from '../../../../../session';
-import { AudienceService } from './../../../../../containers/controlpanel/audience/audience.service';
 import { CPI18nService } from '../../../../../shared/services';
+import { AudienceService } from './../../../../../containers/controlpanel/audience/audience.service';
 
 @Component({
   selector: 'cp-audience-users-typeahead',
@@ -43,22 +44,24 @@ export class AudienceUsersTypeaheadComponent implements OnInit {
 
     this.service
       .getUsers(search)
-      .map((users) => {
-        const _users = [];
+      .pipe(
+        map((users) => {
+          const _users = [];
 
-        users.forEach((user) => {
-          _users.push({
-            label: `${user.firstname} ${user.lastname}`,
-            id: user.id
+          users.forEach((user) => {
+            _users.push({
+              label: `${user.firstname} ${user.lastname}`,
+              id: user.id
+            });
           });
-        });
 
-        if (!_users.length) {
-          _users.push({ label: this.cpI18n.translate('no_results') });
-        }
+          if (!_users.length) {
+            _users.push({ label: this.cpI18n.translate('no_results') });
+          }
 
-        return _users;
-      })
+          return _users;
+        })
+      )
       .subscribe((suggestions) => {
         this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
           suggestions

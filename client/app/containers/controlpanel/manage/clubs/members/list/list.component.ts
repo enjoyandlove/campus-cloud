@@ -1,16 +1,13 @@
-import { ClubsUtilsService } from './../../clubs.utils.service';
-import { ActivatedRoute } from '@angular/router';
-
-import { Component, Input, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { flatMap } from 'rxjs/operators';
+import { ClubsUtilsService } from './../../clubs.utils.service';
+import { BaseComponent } from '../../../../../../base/base.component';
+import { CPSession } from '../../../../../../session';
+import { isClubAthletic } from '../../clubs.athletics.labels';
 import { MemberType } from '../member.status';
 import { MembersService } from '../members.service';
-
-import { CPSession } from '../../../../../../session';
-
-import { BaseComponent } from '../../../../../../base/base.component';
-import { isClubAthletic } from '../../clubs.athletics.labels';
 import { MembersUtilsService } from '../members.utils.service';
 
 declare var $: any;
@@ -103,13 +100,15 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
 
     const socialGroupDetails$ = this.membersService.getSocialGroupDetails(groupSearch);
 
-    const stream$ = socialGroupDetails$.flatMap((groups: any) => {
-      memberSearch.append('group_id', groups[0].id.toString());
+    const stream$ = socialGroupDetails$.pipe(
+      flatMap((groups: any) => {
+        memberSearch.append('group_id', groups[0].id.toString());
 
-      this.groupId = groups[0].id;
+        this.groupId = groups[0].id;
 
-      return this.membersService.getMembers(memberSearch, this.startRange, this.endRange);
-    });
+        return this.membersService.getMembers(memberSearch, this.startRange, this.endRange);
+      })
+    );
 
     super.fetchData(stream$).then((res) => (this.state.members = res.data));
   }

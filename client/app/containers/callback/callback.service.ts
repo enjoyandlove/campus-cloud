@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { throwError as observableThrowError } from 'rxjs';
+import { throwError as observableThrowError, Observable } from 'rxjs';
 import { catchError, retry, delay } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -36,7 +36,7 @@ export class CallbackService extends BaseService {
       );
   }
 
-  post(url: string, data: any, params?: HttpParams) {
+  post(url: string, data: any, params?: HttpParams): Observable<any> {
     const headers = buildTokenHeaders();
 
     data = CPObj.cleanNullValues(data);

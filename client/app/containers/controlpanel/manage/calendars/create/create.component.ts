@@ -52,7 +52,7 @@ export class CalendarsCreateComponent implements OnInit {
   onSubmit() {
     const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
-    this.service.createCalendar(this.form.value, search).subscribe((createdCalendar) => {
+    this.service.createCalendar(this.form.value, search).subscribe((createdCalendar: any) => {
       this.created.emit(createdCalendar);
       this.resetModal();
     });

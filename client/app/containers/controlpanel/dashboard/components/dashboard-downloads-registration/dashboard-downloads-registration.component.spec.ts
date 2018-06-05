@@ -1,5 +1,5 @@
-import { Observable } from 'rxjs';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { of as observableOf } from 'rxjs';
 
 import { CPSession } from '../../../../../session';
 import { DashboardModule } from './../../dashboard.module';
@@ -16,7 +16,7 @@ import {
 
 class MockDashboardService {
   getDownloads() {
-    return Observable.of([1, 2]);
+    return observableOf([1, 2]);
   }
 }
 
@@ -50,10 +50,6 @@ describe('DashboardDownloadsRegistrationComponent', () => {
     comp = fixture.componentInstance;
 
     fixture.detectChanges(); // trigger initial data binding
-  });
-
-  xit('should fail', () => {
-    console.log(comp);
   });
 
   it('addGroup', () => {

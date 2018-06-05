@@ -1,22 +1,21 @@
+import { HttpParams } from '@angular/common/http';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, Input, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
-
-import { ClubsService } from '../clubs.service';
-import { CPSession } from '../../../../../session';
-import { CPMap } from '../../../../../shared/utils';
-import { ClubsUtilsService } from './../clubs.utils.service';
-import { BaseComponent } from '../../../../../base/base.component';
-import { advisorDataRequired } from './custom-validators.directive';
-import { membershipTypes, statusTypes } from '../create/permissions';
-import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { BehaviorSubject } from 'rxjs';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
-import { CPTrackingService } from '../../../../../shared/services';
+import { ClubsUtilsService } from './../clubs.utils.service';
+import { advisorDataRequired } from './custom-validators.directive';
+import { BaseComponent } from '../../../../../base/base.component';
+import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { CPSession } from '../../../../../session';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { CPTrackingService } from '../../../../../shared/services';
+import { CPMap } from '../../../../../shared/utils';
+import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
+import { ClubsService } from '../clubs.service';
+import { membershipTypes, statusTypes } from '../create/permissions';
 
 @Component({
   selector: 'cp-clubs-edit',
@@ -144,7 +143,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
       .append('category_id', this.isAthletic.toString());
 
     this.clubsService.updateClub(this.form.value, this.clubId, search).subscribe(
-      (res) => {
+      (res: any) => {
         this.router.navigate(['/manage/' + this.labels.club_athletic + '/' + res.id + '/info']);
       },
       (err) => {

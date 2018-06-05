@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { ControlPanelComponent } from './controlpanel.component';
-import { CPPreloadStrategy } from './../../config/strategies/preload.strategy';
 
 const appRoutes: Routes = [
   // // HOME PAGE
@@ -49,7 +48,6 @@ const appRoutes: Routes = [
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
-  providers: [CPPreloadStrategy],
   exports: [RouterModule]
 })
 export class ControlPanelRoutingModule {}

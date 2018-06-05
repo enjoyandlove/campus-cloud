@@ -1,15 +1,16 @@
-import { HttpParams } from '@angular/common/http';
 import { ICalendar } from './../calendars.interface';
+import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
+import { of as observableOf } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { FORMAT } from './../../../../../shared/pipes/date/date.pipe';
-import { CalendarsService } from './../calendars.services';
-import { BaseComponent } from '../../../../../base';
 import { CPSession } from '../../../../../session';
+import { BaseComponent } from '../../../../../base';
+import { CalendarsService } from './../calendars.services';
 import { CPI18nService } from '../../../../../shared/services';
-
+import { FORMAT } from './../../../../../shared/pipes/date/date.pipe';
 import { IHeader, HEADER_UPDATE } from './../../../../../reducers/header.reducer';
 
 @Component({
@@ -126,13 +127,15 @@ export class CalendarsDetailComponent extends BaseComponent implements OnInit {
     const calendar$ = this.service.getCalendarById(this.calendarId, calendarSearch);
     const items$ = this.service.getItemsByCalendarId(this.startRange, this.endRange, itemSearch);
 
-    const stream$ = calendar$.switchMap((calendarData) => {
-      this.calendar = calendarData;
+    const stream$ = calendar$.pipe(
+      switchMap((calendarData: any) => {
+        this.calendar = calendarData;
 
-      return items$;
-    });
+        return items$;
+      })
+    );
 
-    super.fetchData(stream$).then((res) => {
+    super.fetchData(observableOf(stream$)).then((res) => {
       this.state = { ...this.state, items: res.data };
       this.buildHeader();
     });
