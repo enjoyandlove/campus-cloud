@@ -34,7 +34,7 @@ export class TemplatesService extends BaseService {
   deleteTemplate(search: HttpParams, templateId: number) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.TEMPLATE}/${templateId}`;
 
-    return super.delete(url, search).map((res) => res);
+    return super.delete(url, search);
   }
 
   getTemplates(startRange: number, endRange: number, search: HttpParams) {
