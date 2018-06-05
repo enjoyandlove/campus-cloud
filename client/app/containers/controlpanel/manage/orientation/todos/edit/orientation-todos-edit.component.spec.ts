@@ -22,8 +22,6 @@ class MockTodosService {
 
 describe('OrientationTodosEditComponent', () => {
   let spy;
-  let search;
-  let service: TodosService;
   let component: OrientationTodosEditComponent;
   let fixture: ComponentFixture<OrientationTodosEditComponent>;
 
@@ -42,14 +40,8 @@ describe('OrientationTodosEditComponent', () => {
         .then(() => {
           fixture = TestBed.createComponent(OrientationTodosEditComponent);
           component = fixture.componentInstance;
-          service = TestBed.get(TodosService);
 
           component.session.g.set('school', mockSchool);
-
-          search = new HttpParams().append(
-            'school_id',
-            component.session.g.get('school').id.toString()
-          );
 
           component.todo = {
             id: 55,

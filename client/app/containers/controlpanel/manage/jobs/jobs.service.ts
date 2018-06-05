@@ -1,12 +1,12 @@
-import { HttpParams, HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-
-import { API } from '../../../../config/api';
+import { map, startWith } from 'rxjs/operators';
+import { EmployerService } from './employers/employer.service';
 import { BaseService } from '../../../../base';
+import { API } from '../../../../config/api';
 import { CPSession } from '../../../../session';
 import { CPI18nService } from '../../../../shared/services';
-import { EmployerService } from './employers/employer.service';
 
 @Injectable()
 export class JobsService extends BaseService {
@@ -26,10 +26,9 @@ export class JobsService extends BaseService {
     const key = label === 'new' ? 'employers_new_employer' : 'employer_all_employers';
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
-    return this.employerService
-      .getEmployers(1, 10000, search)
-      .startWith([{ label: this.cpI18n.translate(key) }])
-      .map((employers) => {
+    return this.employerService.getEmployers(1, 10000, search).pipe(
+      startWith([{ label: this.cpI18n.translate(key) }]),
+      map((employers) => {
         const _employers = [
           {
             label: this.cpI18n.translate(key),
@@ -37,7 +36,7 @@ export class JobsService extends BaseService {
           }
         ];
 
-        employers.forEach((employer) => {
+        employers.forEach((employer: any) => {
           const _employer = {
             label: employer.name,
             action: employer.id
@@ -47,7 +46,8 @@ export class JobsService extends BaseService {
         });
 
         return _employers;
-      });
+      })
+    );
   }
 
   getJobs(startRage: number, endRage: number, search: HttpParams) {

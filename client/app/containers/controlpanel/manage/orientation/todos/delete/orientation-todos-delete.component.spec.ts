@@ -22,7 +22,6 @@ class MockTodosService {
 describe('OrientationTodosDeleteComponent', () => {
   let spy;
   let search;
-  let service: TodosService;
   let component: OrientationTodosDeleteComponent;
   let fixture: ComponentFixture<OrientationTodosDeleteComponent>;
 
@@ -36,7 +35,6 @@ describe('OrientationTodosDeleteComponent', () => {
         .then(() => {
           fixture = TestBed.createComponent(OrientationTodosDeleteComponent);
           component = fixture.componentInstance;
-          service = TestBed.get(TodosService);
 
           component.session.g.set('school', mockSchool);
 

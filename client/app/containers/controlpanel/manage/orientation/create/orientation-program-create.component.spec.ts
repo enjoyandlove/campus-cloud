@@ -1,4 +1,3 @@
-import { HttpParams } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -27,9 +26,7 @@ class RouterMock {
 
 describe('OrientationProgramCreateComponent', () => {
   let spy;
-  let search;
   let component: OrientationProgramCreateComponent;
-  let service: OrientationService;
   let fixture: ComponentFixture<OrientationProgramCreateComponent>;
 
   const createdProgram = {
@@ -59,13 +56,8 @@ describe('OrientationProgramCreateComponent', () => {
         .then(() => {
           fixture = TestBed.createComponent(OrientationProgramCreateComponent);
           component = fixture.componentInstance;
-          service = TestBed.get(OrientationService);
 
           component.session.g.set('school', mockSchool);
-          search = new HttpParams().append(
-            'school_id',
-            component.session.g.get('school').id.toString()
-          );
 
           component.ngOnInit();
         });

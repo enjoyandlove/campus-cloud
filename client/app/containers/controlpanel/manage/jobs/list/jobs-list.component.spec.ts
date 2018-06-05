@@ -27,7 +27,6 @@ class MockJobsService {
 describe('JobsListComponent', () => {
   let spy;
   let search;
-  let service: JobsService;
   let component: JobsListComponent;
   let fixture: ComponentFixture<JobsListComponent>;
 
@@ -54,7 +53,6 @@ describe('JobsListComponent', () => {
         .then(() => {
           fixture = TestBed.createComponent(JobsListComponent);
           component = fixture.componentInstance;
-          service = TestBed.get(JobsService);
           component.session.g.set('school', mockSchool);
           spyOn(component, 'buildHeader');
 

@@ -1,15 +1,14 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpHeaders } from '@angular/common/http';
-
-import { ILink } from '../link.interface';
-import { API } from '../../../../../config/api';
-import { LinksService } from '../links.service';
-import { CPSession } from '../../../../../session';
-import { appStorage } from '../../../../../shared/utils';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { CPTrackingService, FileUploadService } from '../../../../../shared/services';
+import { API } from '../../../../../config/api';
+import { CPSession } from '../../../../../session';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { CPTrackingService, FileUploadService } from '../../../../../shared/services';
+import { appStorage } from '../../../../../shared/utils';
+import { ILink } from '../link.interface';
+import { LinksService } from '../links.service';
 
 declare var $: any;
 
@@ -81,7 +80,7 @@ export class LinksCreateComponent implements OnInit {
   }
 
   doSubmit() {
-    this.service.createLink(this.form.value).subscribe((res) => {
+    this.service.createLink(this.form.value).subscribe((res: any) => {
       $('#linksCreate').modal('hide');
       this.createLink.emit(res);
       this.resetModal();

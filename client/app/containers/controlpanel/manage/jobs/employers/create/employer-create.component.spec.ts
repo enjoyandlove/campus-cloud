@@ -22,9 +22,7 @@ class MockEmployerService {
 
 describe('EmployerCreateComponent', () => {
   let spy;
-  let search;
   let component: EmployerCreateComponent;
-  let service: EmployerService;
   let fixture: ComponentFixture<EmployerCreateComponent>;
 
   const newEmployer = {
@@ -50,13 +48,8 @@ describe('EmployerCreateComponent', () => {
         .then(() => {
           fixture = TestBed.createComponent(EmployerCreateComponent);
           component = fixture.componentInstance;
-          service = TestBed.get(EmployerService);
 
           component.session.g.set('school', mockSchool);
-          search = new HttpParams().append(
-            'school_id',
-            component.session.g.get('school').id.toString()
-          );
 
           component.ngOnInit();
         });

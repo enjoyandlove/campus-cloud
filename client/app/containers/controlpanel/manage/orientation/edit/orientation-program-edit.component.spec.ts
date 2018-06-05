@@ -1,8 +1,7 @@
-import { HttpParams } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Store, StoreModule } from '@ngrx/store';
+import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
 import { CPSession } from './../../../../../session';
 import { OrientationProgramEditComponent } from './orientation-program-edit.component';
@@ -25,11 +24,7 @@ class MockOrientationService {
 
 describe('OrientationProgramEditComponent', () => {
   let spy;
-  let search;
-  let storeSpy;
-  let store: Store<any>;
   let component: OrientationProgramEditComponent;
-  let service: OrientationService;
   let fixture: ComponentFixture<OrientationProgramEditComponent>;
 
   const editProgram = {
@@ -64,18 +59,10 @@ describe('OrientationProgramEditComponent', () => {
       })
         .compileComponents()
         .then(() => {
-          store = TestBed.get(Store);
-          storeSpy = spyOn(store, 'dispatch').and.callThrough();
           fixture = TestBed.createComponent(OrientationProgramEditComponent);
           component = fixture.componentInstance;
-          service = TestBed.get(OrientationService);
 
           component.session.g.set('school', mockSchool);
-
-          search = new HttpParams().append(
-            'school_id',
-            component.session.g.get('school').id.toString()
-          );
 
           component.orientationProgram = {
             id: 84,

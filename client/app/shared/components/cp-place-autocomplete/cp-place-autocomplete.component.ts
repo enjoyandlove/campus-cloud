@@ -9,13 +9,10 @@ import {
   Output,
   ViewChild
 } from '@angular/core';
-
-import { Observable, BehaviorSubject } from 'rxjs';
-
-import { CPLocationsService } from '../../services/locations.service';
-
+import { BehaviorSubject, Observable } from 'rxjs';
 import { CPSession } from './../../../session';
 import { CPI18nService } from '../../services';
+import { CPLocationsService } from '../../services/locations.service';
 
 interface IState {
   input: string;

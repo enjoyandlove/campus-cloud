@@ -22,7 +22,6 @@ describe('OrientationInfoComponent', () => {
   let spy;
   let search;
   let component: OrientationInfoComponent;
-  let service: OrientationService;
   let fixture: ComponentFixture<OrientationInfoComponent>;
 
   const mockProgram = observableOf([
@@ -61,8 +60,6 @@ describe('OrientationInfoComponent', () => {
         .then(() => {
           fixture = TestBed.createComponent(OrientationInfoComponent);
           component = fixture.componentInstance;
-          service = TestBed.get(OrientationService);
-
           component.loading = false;
           component.orientationId = 84;
           component.session.g.set('school', mockSchool);

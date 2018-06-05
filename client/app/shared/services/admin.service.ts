@@ -1,9 +1,7 @@
-import { throwError as observableThrowError, Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
-
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { Observable, throwError as observableThrowError } from 'rxjs';
 import { BaseService } from '../../base/base.service';
 import { API } from '../../config/api';
 

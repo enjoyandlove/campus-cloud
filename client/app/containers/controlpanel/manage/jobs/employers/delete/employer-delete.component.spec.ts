@@ -22,7 +22,6 @@ describe('EmployerDeleteComponent', () => {
   let spy;
   let search;
   let component: EmployerDeleteComponent;
-  let service: EmployerService;
   let fixture: ComponentFixture<EmployerDeleteComponent>;
 
   beforeEach(
@@ -39,7 +38,6 @@ describe('EmployerDeleteComponent', () => {
         .then(() => {
           fixture = TestBed.createComponent(EmployerDeleteComponent);
           component = fixture.componentInstance;
-          service = TestBed.get(EmployerService);
 
           component.employer = {
             id: 84,

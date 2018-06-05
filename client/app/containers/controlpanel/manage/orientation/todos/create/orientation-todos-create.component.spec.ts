@@ -22,7 +22,6 @@ class MockTodosService {
 
 describe('OrientationTodosCreateComponent', () => {
   let spy;
-  let service: TodosService;
   let component: OrientationTodosCreateComponent;
   let fixture: ComponentFixture<OrientationTodosCreateComponent>;
 
@@ -53,8 +52,6 @@ describe('OrientationTodosCreateComponent', () => {
         .then(() => {
           fixture = TestBed.createComponent(OrientationTodosCreateComponent);
           component = fixture.componentInstance;
-          service = TestBed.get(TodosService);
-
           component.session.g.set('school', mockSchool);
           component.ngOnInit();
         });

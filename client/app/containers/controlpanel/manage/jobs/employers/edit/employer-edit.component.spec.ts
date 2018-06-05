@@ -1,4 +1,4 @@
-import { HttpClientModule, HttpParams } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -22,9 +22,7 @@ class MockEmployerService {
 
 describe('EmployerEditComponent', () => {
   let spy;
-  let search;
   let component: EmployerEditComponent;
-  let service: EmployerService;
   let fixture: ComponentFixture<EmployerEditComponent>;
 
   beforeEach(
@@ -42,13 +40,8 @@ describe('EmployerEditComponent', () => {
         .then(() => {
           fixture = TestBed.createComponent(EmployerEditComponent);
           component = fixture.componentInstance;
-          service = TestBed.get(EmployerService);
 
           component.session.g.set('school', mockSchool);
-          search = new HttpParams().append(
-            'school_id',
-            component.session.g.get('school').id.toString()
-          );
 
           component.employer = {
             id: 84,

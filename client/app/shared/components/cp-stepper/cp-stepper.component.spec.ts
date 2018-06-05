@@ -1,15 +1,12 @@
-import { CPSession } from '../../../session';
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
-
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CPStepperComponent } from './cp-stepper.component';
+import { CPSession } from '../../../session';
 import { AdminService } from '../../services';
 
 class MockAdminService {
-  updateAdmin(userID: number, body: any) {
-    let id;
+  updateAdmin(_, body: any) {
     let is_onboarding;
 
-    id = userID;
     is_onboarding = body.flags.is_onboarding;
 
     return is_onboarding;
