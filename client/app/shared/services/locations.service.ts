@@ -1,7 +1,7 @@
+import { from as fromPromise, Subject } from 'rxjs';
+import { combineLatest, map } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
 
 import { CPSession } from '../../session';
 import { LocationsService } from '../../containers/controlpanel/manage/locations/locations.service';
@@ -30,20 +30,22 @@ export class CPLocationsService {
       }
     ];
 
-    return this.locationsService.getLocations(1, 1000, search).map((locations) => {
-      return results.concat(
-        locations.map((location) => {
-          return {
-            label_dark: location.name,
-            label_medium: location.address,
-            full_label: location.address,
-            heading: false,
-            value: location,
-            isGoogle: false
-          };
-        })
-      );
-    });
+    return this.locationsService.getLocations(1, 1000, search).pipe(
+      map((locations: Array<any>) => {
+        return results.concat(
+          locations.map((location) => {
+            return {
+              label_dark: location.name,
+              label_medium: location.address,
+              full_label: location.address,
+              heading: false,
+              value: location,
+              isGoogle: false
+            };
+          })
+        );
+      })
+    );
   }
 
   geoCode(location): Promise<any> {
@@ -107,14 +109,14 @@ export class CPLocationsService {
       });
     });
 
-    return Observable.fromPromise(promise);
+    return fromPromise(promise);
   }
 
   getAllSuggestions(input: string, lat: number, lng: number) {
     const google$ = this.getGoogleSuggestions(input, lat, lng);
     const locations$ = this.getLocations(input);
 
-    return Observable.combineLatest(locations$, google$);
+    return combineLatest(locations$, google$);
   }
 
   getLocationDetails(placeId: string, el: HTMLDivElement) {

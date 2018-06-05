@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { ClubsService } from './../clubs.service';
 import { ClubsUtilsService } from './../clubs.utils.service';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';

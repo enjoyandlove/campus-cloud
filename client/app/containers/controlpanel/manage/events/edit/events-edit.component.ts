@@ -2,9 +2,8 @@ import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, Input } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
 import { EventsService } from '../events.service';

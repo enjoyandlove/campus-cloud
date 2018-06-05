@@ -2,7 +2,7 @@ import { HttpParams, HttpHeaders } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 
 import { BaseComponent } from '../../../../../base/base.component';
 import { API } from '../../../../../config/api';

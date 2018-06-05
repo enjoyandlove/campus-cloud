@@ -8,7 +8,7 @@ import {
   HostListener
 } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { CPSession } from '../../../../../../session';
@@ -69,7 +69,7 @@ export class EngagementComposeComponent implements OnInit {
     });
 
     this.service.postAnnouncements(search, data).subscribe(
-      (res) => {
+      (res: any) => {
         if (res.status === THROTTLED_STATUS) {
           this.isError = true;
           this.errorMessage = `Message not sent, \n

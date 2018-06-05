@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { map } from 'rxjs/operators';
 
 import { BaseService } from '../../base/base.service';
 import { API } from '../../config/api';
@@ -18,6 +19,6 @@ export class SchoolService extends BaseService {
       API.ENDPOINTS.SCHOOL
     }/${startRange};${endRange}`;
 
-    return super.get(url).map((res) => res);
+    return super.get(url).pipe(map((res) => res));
   }
 }

@@ -1,6 +1,6 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -9,7 +9,8 @@ import {
   ErrorService,
   StoreService,
   AdminService,
-  CPI18nService, CPTrackingService
+  CPI18nService,
+  CPTrackingService
 } from '../../../../../shared/services';
 
 import { EventsService } from '../events.service';

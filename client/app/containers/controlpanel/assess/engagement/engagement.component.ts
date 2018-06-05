@@ -1,4 +1,4 @@
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -125,7 +125,7 @@ export class EngagementComponent extends BaseComponent implements OnInit {
     this.service
       .getChartData(search)
       .toPromise()
-      .then((data) => {
+      .then((data: any) => {
         const columns = [
           this.cpI18n.translate('assess_student_name'),
           this.cpI18n.translate('assess_number_of_checkins'),

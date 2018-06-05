@@ -1,10 +1,9 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 // import { By } from '@angular/platform-browser';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 // import { DebugElement } from '@angular/core';
 
 import { CPCheckDropdownComponent } from './cp-check-dropdown.component';
-import 'rxjs/add/observable/of';
 
 describe('CPCheckDropdownComponent (inline template)', () => {
   let expected;

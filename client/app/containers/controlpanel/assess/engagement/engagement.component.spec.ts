@@ -1,10 +1,10 @@
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Store, StoreModule } from '@ngrx/store';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { of as observableOf } from 'rxjs';
+import { Router } from '@angular/router';
 
-import { CPSession } from './../../../../session/index';
+import { CPSession } from './../../../../session';
 import { EngagementService } from './engagement.service';
 import { mockUser } from './../../../../session/mock/user';
 import { CPI18nService } from '../../../../shared/services';
@@ -45,7 +45,7 @@ const mockFilterState = {
 
 class MockEngagementService {
   getChartData() {
-    return Observable.of('hello');
+    return observableOf('hello');
   }
 }
 

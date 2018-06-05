@@ -10,12 +10,11 @@ import {
   ViewChild
 } from '@angular/core';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 import { CPLocationsService } from '../../services/locations.service';
 
 import { CPSession } from './../../../session';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { CPI18nService } from '../../services';
 
 interface IState {

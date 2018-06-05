@@ -12,8 +12,7 @@ import {
 } from '@angular/core';
 import 'node_modules/quill/dist/quill.core.css';
 import 'node_modules/quill/dist/quill.snow.css';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Observable, Subject } from 'rxjs';
 
 import { CPI18nService } from '../../services';
 import { QuillService } from './../../services/quill.service';

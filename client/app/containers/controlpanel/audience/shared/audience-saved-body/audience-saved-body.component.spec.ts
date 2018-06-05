@@ -1,6 +1,6 @@
 /*tslint:disable:max-line-length */
 import { AudienceService } from './../../../../../containers/controlpanel/audience/audience.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { CPSession } from './../../../../../session/index';
 import { TestBed, ComponentFixture } from '@angular/core/testing';

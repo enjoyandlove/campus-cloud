@@ -1,6 +1,6 @@
 /*tslint:disable:max-line-length */
 import { Component, OnInit, Input } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 
 import { EventAttendance } from '../../../event.status';
 import { FORMAT } from '../../../../../../../shared/pipes/date';

@@ -1,10 +1,9 @@
+import { throwError as observableThrowError, BehaviorSubject, Observable } from 'rxjs';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
 
 import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
@@ -387,7 +386,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
 
         return this.providersService.updateProvider(providers, search);
       })
-      .catch((err) => Observable.throw(err))
+      .catch((err) => observableThrowError(err))
       .subscribe((_) => {
         if (this.withAttendance) {
           this.router.navigate(['/manage/services/' + this.serviceId]);

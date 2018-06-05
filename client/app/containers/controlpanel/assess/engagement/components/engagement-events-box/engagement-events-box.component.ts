@@ -1,6 +1,6 @@
 import { Input, OnInit, Component } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { EngagementService } from '../../engagement.service';
 import { CPSession } from './../../../../../../session/index';

@@ -2,7 +2,7 @@ import { FileUploadService } from './../../../../../shared/services/file-upload.
 import { ClubsDetailsModule } from './../details/details.module';
 import { ClubsInfoComponent } from './clubs-info.component';
 import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants/privileges';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { CPSession } from './../../../../../session/index';
 import { ClubsService } from './../clubs.service';
 import { ClubsUtilsService } from './../clubs.utils.service';

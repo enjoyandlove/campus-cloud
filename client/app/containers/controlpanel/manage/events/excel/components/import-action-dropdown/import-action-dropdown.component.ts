@@ -1,7 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
 
 import { EventAttendance } from '../../../event.status';
 import { EventUtilService } from '../../../events.utils.service';

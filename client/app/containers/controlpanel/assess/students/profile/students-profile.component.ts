@@ -186,7 +186,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
       service: this.cpI18n.translate('service')
     };
 
-    stream$.toPromise().then((data) => {
+    stream$.toPromise().then((data: any) => {
       data = data.map((item) => {
         return {
           [this.cpI18n.translate('assess_check_in_time')]: item.name,

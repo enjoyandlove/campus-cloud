@@ -1,7 +1,6 @@
+import { throwError as observableThrowError, BehaviorSubject, Observable } from 'rxjs';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
@@ -202,7 +201,7 @@ export class ServicesCreateComponent implements OnInit {
         rating_scale_maximum: data.rating_scale_maximum,
         default_basic_feedback_label: data.default_basic_feedback_label
       })
-      .catch((err) => Observable.throw(err))
+      .catch((err) => observableThrowError(err))
       .subscribe((service) => {
         if (service.service_attendance) {
           this.router.navigate(['/manage/services/' + service.id]);

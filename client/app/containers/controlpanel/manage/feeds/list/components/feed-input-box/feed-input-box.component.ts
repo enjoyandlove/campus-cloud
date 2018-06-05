@@ -1,7 +1,6 @@
 import { Input, OnInit, Output, Component, EventEmitter } from '@angular/core';
 import { HttpParams, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 

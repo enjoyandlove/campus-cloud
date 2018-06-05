@@ -1,6 +1,6 @@
 import { async, TestBed, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
 import { HttpClientModule, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { DebugElement } from '@angular/core';
 
 import { EventsModule } from '../../../events.module';

@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 
 import { CPSession, IUser } from '../../../session';
@@ -7,8 +7,6 @@ import { CPI18nService } from '../../../shared/services';
 import { CP_PRIVILEGES_MAP } from '../../../shared/constants';
 import { DashboardUtilsService } from './dashboard.utils.service';
 import { canSchoolReadResource } from '../../../shared/utils/privileges';
-
-import { Observable } from 'rxjs/Observable';
 
 const isTileReady = (val) => !!val;
 

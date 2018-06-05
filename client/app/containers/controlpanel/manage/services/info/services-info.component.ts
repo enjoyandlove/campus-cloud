@@ -1,9 +1,8 @@
 /*tslint:disable:max-line-length */
 import { Component, Input, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
 import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';

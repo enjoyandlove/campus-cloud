@@ -1,11 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable, Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { API } from '../../../config/api';
 import { BaseService } from '../../../base/index';
-import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class DashboardService extends BaseService {

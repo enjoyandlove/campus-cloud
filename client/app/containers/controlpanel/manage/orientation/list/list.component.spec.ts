@@ -1,6 +1,6 @@
 import { async, fakeAsync, tick, TestBed, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Store, StoreModule } from '@ngrx/store';
 import { HttpParams } from '@angular/common/http';
 

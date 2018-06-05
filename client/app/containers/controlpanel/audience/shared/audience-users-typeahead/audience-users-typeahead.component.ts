@@ -1,6 +1,6 @@
 /*tslint:disable:max-line-length */
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 
 import { CPSession } from '../../../../../session';

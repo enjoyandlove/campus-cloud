@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { CPI18nService } from '../../services';
 import { CPSearchBoxComponent } from './cp-searchbox.component';

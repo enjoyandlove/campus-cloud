@@ -1,8 +1,8 @@
+import { throwError as observableThrowError, Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
 
 import { BaseService } from '../../base/base.service';
 import { API } from '../../config/api';
@@ -39,7 +39,7 @@ export class AdminService extends BaseService {
     return super
       .delete(url, null, true)
 
-      .catch((err) => Observable.throw(err));
+      .catch((err) => observableThrowError(err));
   }
 
   createAdmin(data: any) {

@@ -1,6 +1,7 @@
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
 import * as Raven from 'raven-js';
 
 import { CPSession } from '../../session';
@@ -26,41 +27,45 @@ export class AuthGuard implements CanActivate {
 
     return this.adminService
       .getAdmins(1, 1, search)
-      .map((users) => {
-        this.session.g.set('user', users[0]);
-        this.setUserContext();
+      .pipe(
+        map((users) => {
+          this.session.g.set('user', users[0]);
+          this.setUserContext();
 
-        return users;
-      })
+          return users;
+        })
+      )
       .toPromise();
   }
 
   preLoadSchool(route: ActivatedRouteSnapshot): Promise<any> {
     return this.schoolService
       .getSchools()
-      .map((schools) => {
-        let schoolIdInUrl;
-        let schoolObjFromUrl;
-        const storedSchool = JSON.parse(appStorage.get(appStorage.keys.DEFAULT_SCHOOL));
+      .pipe(
+        map((schools) => {
+          let schoolIdInUrl;
+          let schoolObjFromUrl;
+          const storedSchool = JSON.parse(appStorage.get(appStorage.keys.DEFAULT_SCHOOL));
 
-        try {
-          schoolIdInUrl = base64.decode(route.queryParams.school);
-        } catch (error) {
-          schoolIdInUrl = null;
-        }
+          try {
+            schoolIdInUrl = base64.decode(route.queryParams.school);
+          } catch (error) {
+            schoolIdInUrl = null;
+          }
 
-        if (schoolIdInUrl) {
-          Object.keys(schools).map((key: any) => {
-            if (schools[key].id === +schoolIdInUrl) {
-              schoolObjFromUrl = schools[key];
-            }
-          });
-        }
+          if (schoolIdInUrl) {
+            Object.keys(schools).map((key: any) => {
+              if (schools[key].id === +schoolIdInUrl) {
+                schoolObjFromUrl = schools[key];
+              }
+            });
+          }
 
-        this.session.g.set('schools', schools);
+          this.session.g.set('schools', schools);
 
-        this.session.g.set('school', storedSchool || schoolObjFromUrl || schools[0]);
-      })
+          this.session.g.set('school', storedSchool || schoolObjFromUrl || schools[0]);
+        })
+      )
       .toPromise();
   }
 

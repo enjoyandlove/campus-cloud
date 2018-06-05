@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 
 import { CPSession } from '../../../../../session';

@@ -1,7 +1,7 @@
 /*tslint:disable:max-line-length */
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { get as _get } from 'lodash';
 
 import { CPSession } from '../../../../../session';
