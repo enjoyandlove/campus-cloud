@@ -1,13 +1,12 @@
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { HttpParams } from '@angular/common/http';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-
+import { of as observableOf } from 'rxjs';
 import { CPSession } from './../../../../../session';
-import { OrientationService } from '../orientation.services';
-import { mockSchool } from '../../../../../session/mock/school';
 import { OrientationInfoComponent } from './orientation-info.component';
+import { mockSchool } from '../../../../../session/mock/school';
 import { OrientationDetailsModule } from '../details/orientation-details.module';
+import { OrientationService } from '../orientation.services';
 
 class MockOrientationService {
   dummy;
@@ -15,7 +14,7 @@ class MockOrientationService {
   getProgramById(programId: number, search: any) {
     this.dummy = [programId, search];
 
-    return Observable.of({});
+    return observableOf({});
   }
 }
 
@@ -26,7 +25,7 @@ describe('OrientationInfoComponent', () => {
   let service: OrientationService;
   let fixture: ComponentFixture<OrientationInfoComponent>;
 
-  const mockProgram = Observable.of([
+  const mockProgram = observableOf([
     {
       id: 84,
       name: 'Hello World!',
@@ -51,7 +50,7 @@ describe('OrientationInfoComponent', () => {
             useValue: {
               parent: {
                 snapshot: {
-                  params: Observable.of({ orientationId: 1 })
+                  params: observableOf({ orientationId: 1 })
                 }
               }
             }

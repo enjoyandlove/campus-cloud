@@ -1,11 +1,11 @@
-import { HttpParams, HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-
-import { API } from '../../../../config/api';
-import { BaseService } from '../../../../base';
-import { CPSession } from '../../../../session';
+import { map, startWith } from 'rxjs/operators';
 import { StoreService } from './stores/store.service';
+import { BaseService } from '../../../../base';
+import { API } from '../../../../config/api';
+import { CPSession } from '../../../../session';
 import { CPI18nService } from '../../../../shared/services';
 
 export enum DateStatus {
@@ -34,10 +34,9 @@ export class DealsService extends BaseService {
     const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    return this.storeService
-      .getStores(1, 10000, search)
-      .startWith([{ label: this.cpI18n.translate(key) }])
-      .map((stores) => {
+    return this.storeService.getStores(1, 10000, search).pipe(
+      startWith([{ label: this.cpI18n.translate(key) }]),
+      map((stores) => {
         const _stores = [
           {
             label: this.cpI18n.translate(key),
@@ -45,7 +44,7 @@ export class DealsService extends BaseService {
           }
         ];
 
-        stores.forEach((store) => {
+        stores.forEach((store: any) => {
           const _store = {
             label: store.name,
             action: store.id
@@ -55,7 +54,8 @@ export class DealsService extends BaseService {
         });
 
         return _stores;
-      });
+      })
+    );
   }
 
   getDeals(startRage: number, endRage: number, search: HttpParams) {

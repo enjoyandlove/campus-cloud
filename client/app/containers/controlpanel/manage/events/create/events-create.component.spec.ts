@@ -1,24 +1,23 @@
-import { async, TestBed, ComponentFixture } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
-
-import { EventsModule } from '../events.module';
-import { EventsService } from '../events.service';
-import { CPSession } from '../../../../../session';
-import { EventUtilService } from '../events.utils.service';
-import { mockSchool } from '../../../../../session/mock/school';
+import { of as observableOf } from 'rxjs';
 import { EventsCreateComponent } from './events-create.component';
 import { headerReducer, snackBarReducer } from '../../../../../reducers';
-import { EventAttendance, EventFeedback, isAllDay } from '../event.status';
+import { CPSession } from '../../../../../session';
+import { mockSchool } from '../../../../../session/mock/school';
 import {
   AdminService,
   CPI18nService,
   ErrorService,
   StoreService
 } from '../../../../../shared/services';
+import { EventAttendance, EventFeedback, isAllDay } from '../event.status';
+import { EventsModule } from '../events.module';
+import { EventsService } from '../events.service';
+import { EventUtilService } from '../events.utils.service';
 
 class MockService {
   dummy;
@@ -26,14 +25,12 @@ class MockService {
   createEvent(body: any, search: any) {
     this.dummy = [search];
 
-    return Observable.of({ body });
+    return observableOf({ body });
   }
 }
 
 describe('EventCreateComponent', () => {
   let spy;
-  let storeService;
-  let service: EventsService;
   let component: EventsCreateComponent;
   let fixture: ComponentFixture<EventsCreateComponent>;
 
@@ -63,8 +60,6 @@ describe('EventCreateComponent', () => {
         .compileComponents()
         .then(() => {
           fixture = TestBed.createComponent(EventsCreateComponent);
-          service = TestBed.get(EventsService);
-          storeService = TestBed.get(StoreService);
 
           component = fixture.componentInstance;
           component.session.g.set('school', mockSchool);
@@ -97,7 +92,7 @@ describe('EventCreateComponent', () => {
 
           spyOn(component, 'router');
           spyOn(component, 'buildHeader');
-          spy = spyOn(component.service, 'createEvent').and.returnValue(Observable.of({}));
+          spy = spyOn(component.service, 'createEvent').and.returnValue(observableOf({}));
         });
     })
   );

@@ -1,18 +1,17 @@
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Observable } from 'rxjs';
-import { FormBuilder } from '@angular/forms';
-import { Store, StoreModule } from '@ngrx/store';
 import { HttpParams } from '@angular/common/http';
-
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormBuilder } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Store, StoreModule } from '@ngrx/store';
+import { of as observableOf } from 'rxjs';
 import { CPSession } from './../../../../../session';
-import { OrientationService } from '../orientation.services';
-import { mockSchool } from '../../../../../session/mock/school';
-import { OrientationUtilsService } from '../orientation.utils.service';
+import { OrientationProgramEditComponent } from './orientation-program-edit.component';
 import { headerReducer, snackBarReducer } from '../../../../../reducers';
+import { mockSchool } from '../../../../../session/mock/school';
 import { CPI18nService } from '../../../../../shared/services/i18n.service';
 import { OrientationDetailsModule } from '../details/orientation-details.module';
-import { OrientationProgramEditComponent } from './orientation-program-edit.component';
+import { OrientationService } from '../orientation.services';
+import { OrientationUtilsService } from '../orientation.utils.service';
 
 class MockOrientationService {
   dummy;
@@ -20,7 +19,7 @@ class MockOrientationService {
   editProgram(programId: number, body: any, search: any) {
     this.dummy = [programId, body, search];
 
-    return Observable.of({});
+    return observableOf({});
   }
 }
 
@@ -120,7 +119,7 @@ describe('OrientationProgramEditComponent', () => {
 
   it('should update orientation program', () => {
     spyOn(component, 'resetModal');
-    spy = spyOn(component.service, 'editProgram').and.returnValue(Observable.of(editProgram));
+    spy = spyOn(component.service, 'editProgram').and.returnValue(observableOf(editProgram));
 
     component.onSubmit();
     expect(spy).toHaveBeenCalled();

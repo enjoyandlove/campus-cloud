@@ -1,21 +1,20 @@
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { of as observableOf } from 'rxjs';
 import { CPSession } from './../../../../../session';
-import { OrientationModule } from '../orientation.module';
-import { OrientationService } from '../orientation.services';
-import { mockSchool } from '../../../../../session/mock/school';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { OrientationProgramDeleteComponent } from './orientation-program-delete.component';
+import { mockSchool } from '../../../../../session/mock/school';
+import { OrientationModule } from '../orientation.module';
+import { OrientationService } from '../orientation.services';
 
 class MockOrientationService {
   dummy;
   deleteProgram(programId: number, search: any) {
     this.dummy = [programId, search];
 
-    return Observable.of({});
+    return observableOf({});
   }
 }
 
@@ -66,7 +65,7 @@ describe('OrientationProgramDeleteComponent', () => {
   });
 
   it('should delete orientation program', () => {
-    spy = spyOn(component.service, 'deleteProgram').and.returnValue(Observable.of({}));
+    spy = spyOn(component.service, 'deleteProgram').and.returnValue(observableOf({}));
 
     component.onDelete();
     expect(spy).toHaveBeenCalledWith(programId, search);

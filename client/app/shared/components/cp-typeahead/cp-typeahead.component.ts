@@ -10,7 +10,9 @@ import {
   Output,
   ViewChild
 } from '@angular/core';
-import { Observable } from 'rxjs';
+import { get as _get } from 'lodash';
+import { fromEvent, Observable, of as observableOf } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { CPI18nService } from '../../services';
 
 interface IState {
@@ -75,14 +77,16 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
   listenForKeyChanges() {
     this.el = this.input.nativeElement;
 
-    const keyup$ = Observable.fromEvent(this.el, 'keyup');
+    const keyup$ = fromEvent(this.el, 'keyup');
 
     keyup$
-      .map((res: any) => {
-        return res.target.value;
-      })
-      .debounceTime(400)
-      .distinctUntilChanged()
+      .pipe(
+        map((res: any) => {
+          return res.target.value;
+        }),
+        debounceTime(400),
+        distinctUntilChanged()
+      )
       .subscribe(
         (res) => {
           const query = res.split(',')[res.split(',').length - 1].trim();
@@ -185,7 +189,9 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    if (!('isUsers' in this.props)) {
+    const isUsers = _get(this.props, 'isUsers', null);
+
+    if (!isUsers) {
       this.props.isUsers = true;
     }
 
@@ -202,7 +208,7 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     if (!this.props.reset) {
-      this.props.reset = Observable.of(false);
+      this.props.reset = observableOf(false);
     }
 
     this.switcherMenu = [

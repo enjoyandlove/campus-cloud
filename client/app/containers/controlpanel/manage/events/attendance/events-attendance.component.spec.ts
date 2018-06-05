@@ -1,17 +1,16 @@
-import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { HttpParams } from '@angular/common/http';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
 import { StoreModule } from '@ngrx/store';
-
+import { of as observableOf } from 'rxjs';
+import { EventsAttendanceComponent } from './events-attendance.component';
+import { headerReducer, snackBarReducer } from '../../../../../reducers';
+import { CPSession } from '../../../../../session';
+import { mockSchool } from '../../../../../session/mock/school';
+import { CPI18nService } from '../../../../../shared/services';
 import { EventsModule } from '../events.module';
 import { EventsService } from '../events.service';
-import { CPSession } from '../../../../../session';
 import { EventUtilService } from '../events.utils.service';
-import { CPI18nService } from '../../../../../shared/services';
-import { mockSchool } from '../../../../../session/mock/school';
-import { headerReducer, snackBarReducer } from '../../../../../reducers';
-import { EventsAttendanceComponent } from './events-attendance.component';
 
 class MockService {
   dummy;
@@ -19,13 +18,12 @@ class MockService {
   getEventById(id: number, search: any) {
     this.dummy = [id, search];
 
-    return Observable.of({});
+    return observableOf({});
   }
 }
 
 describe('EventAttendanceComponent', () => {
   let spy;
-  let service: EventsService;
   let component: EventsAttendanceComponent;
   let fixture: ComponentFixture<EventsAttendanceComponent>;
 
@@ -48,7 +46,7 @@ describe('EventAttendanceComponent', () => {
             provide: ActivatedRoute,
             useValue: {
               snapshot: {
-                params: Observable.of({ eventId: 1001 })
+                params: observableOf({ eventId: 1001 })
               }
             }
           }
@@ -57,7 +55,6 @@ describe('EventAttendanceComponent', () => {
         .compileComponents()
         .then(() => {
           fixture = TestBed.createComponent(EventsAttendanceComponent);
-          service = TestBed.get(EventsService);
 
           component = fixture.componentInstance;
           component.eventId = 1001;
@@ -68,7 +65,7 @@ describe('EventAttendanceComponent', () => {
 
   it('HttpParams does not include calendar_id or school_id', () => {
     spyOn(component, 'buildHeader');
-    spy = spyOn(component.service, 'getEventById').and.returnValue(Observable.of({}));
+    spy = spyOn(component.service, 'getEventById').and.returnValue(observableOf({}));
 
     component.fetch();
     const search = new HttpParams();
@@ -79,7 +76,7 @@ describe('EventAttendanceComponent', () => {
   it('HttpParams includes calendar_id and school_id', () => {
     component.orientationId = 5425;
     spyOn(component, 'buildHeader');
-    spy = spyOn(component.service, 'getEventById').and.returnValue(Observable.of({}));
+    spy = spyOn(component.service, 'getEventById').and.returnValue(observableOf({}));
 
     component.fetch();
     const search = new HttpParams()

@@ -1,18 +1,17 @@
-import { tick, async, fakeAsync, TestBed, ComponentFixture } from '@angular/core/testing';
-import { HttpParams, HttpClientModule } from '@angular/common/http';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Observable } from 'rxjs';
+import { HttpClientModule, HttpParams } from '@angular/common/http';
 import { DebugElement } from '@angular/core';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
-
+import { of as observableOf } from 'rxjs';
+import { JobsInfoComponent } from './jobs-info.component';
+import { headerReducer, snackBarReducer } from '../../../../../reducers';
+import { CPSession } from '../../../../../session';
+import { mockSchool } from '../../../../../session/mock/school';
+import { CPI18nService } from '../../../../../shared/services';
 import { JobsModule } from '../jobs.module';
 import { JobsService } from '../jobs.service';
-import { CPSession } from '../../../../../session';
 import { JobsUtilsService } from '../jobs.utils.service';
-import { JobsInfoComponent } from './jobs-info.component';
-import { CPI18nService } from '../../../../../shared/services';
-import { mockSchool } from '../../../../../session/mock/school';
-import { headerReducer, snackBarReducer } from '../../../../../reducers';
 
 const mockJobs = require('../mockJobs.json');
 
@@ -22,7 +21,7 @@ class MockJobsService {
   getJobById(id: number, search: any) {
     this.dummy = [id, search];
 
-    return Observable.of(mockJobs[0]);
+    return observableOf(mockJobs[0]);
   }
 }
 
@@ -69,7 +68,7 @@ describe('JobsInfoComponent', () => {
   it(
     'should get job info',
     fakeAsync(() => {
-      spy = spyOn(component.service, 'getJobById').and.returnValue(Observable.of(mockJobs[0]));
+      spy = spyOn(component.service, 'getJobById').and.returnValue(observableOf(mockJobs[0]));
       const job = mockJobs[0];
       const bannerDe: DebugElement = fixture.debugElement;
       const bannerEl: HTMLElement = bannerDe.nativeElement;

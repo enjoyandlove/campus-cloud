@@ -1,15 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Observable } from 'rxjs';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-
-import { TodosModule } from '../todos.module';
-import { TodosService } from '../todos.service';
-import { CPSession } from '../../../../../../session';
-import { mockSchool } from '../../../../../../session/mock/school';
+import { RouterTestingModule } from '@angular/router/testing';
+import { of as observableOf } from 'rxjs';
 import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 import { OrientationTodosCreateComponent } from './orientation-todos-create.component';
+import { CPSession } from '../../../../../../session';
+import { mockSchool } from '../../../../../../session/mock/school';
+import { TodosModule } from '../todos.module';
+import { TodosService } from '../todos.service';
 
 class MockTodosService {
   dummy;
@@ -17,7 +16,7 @@ class MockTodosService {
   createTodo(body: any, search: any) {
     this.dummy = [search];
 
-    return Observable.of(body);
+    return observableOf(body);
   }
 }
 
@@ -42,7 +41,7 @@ describe('OrientationTodosCreateComponent', () => {
               snapshot: {
                 parent: {
                   parent: {
-                    params: Observable.of({ orientationId: 1 })
+                    params: observableOf({ orientationId: 1 })
                   }
                 }
               }
@@ -93,7 +92,7 @@ describe('OrientationTodosCreateComponent', () => {
   it('should insert todo', () => {
     component.orientationId = 4525;
     spyOn(component, 'resetModal');
-    spy = spyOn(component.service, 'createTodo').and.returnValue(Observable.of([]));
+    spy = spyOn(component.service, 'createTodo').and.returnValue(observableOf([]));
 
     component.form = component.fb.group({
       title: ['Hello World!'],

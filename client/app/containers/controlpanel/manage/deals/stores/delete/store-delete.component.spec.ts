@@ -1,21 +1,20 @@
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { of as observableOf } from 'rxjs';
+import { CPI18nService } from './../../../../../../shared/services/i18n.service';
+import { StoreDeleteComponent } from './store-delete.component';
+import { CPSession } from '../../../../../../session';
+import { mockSchool } from '../../../../../../session/mock/school';
 import { StoreModule } from '../store.module';
 import { StoreService } from '../store.service';
-import { CPSession } from '../../../../../../session';
-import { StoreDeleteComponent } from './store-delete.component';
-import { mockSchool } from '../../../../../../session/mock/school';
-import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 
 class MockService {
   dummy;
   deleteStore(id: number, search: any) {
     this.dummy = [id, search];
 
-    return Observable.of({});
+    return observableOf({});
   }
 }
 
@@ -60,7 +59,7 @@ describe('DealsStoreDeleteComponent', () => {
   it('should delete store', () => {
     spyOn(component.deleted, 'emit');
     spyOn(component.resetDeleteModal, 'emit');
-    spy = spyOn(component.service, 'deleteStore').and.returnValue(Observable.of({}));
+    spy = spyOn(component.service, 'deleteStore').and.returnValue(observableOf({}));
 
     component.onDelete();
     expect(spy).toHaveBeenCalledTimes(1);

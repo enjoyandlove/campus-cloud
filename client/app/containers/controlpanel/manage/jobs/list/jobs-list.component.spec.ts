@@ -1,17 +1,16 @@
-import { async, fakeAsync, tick, TestBed, ComponentFixture } from '@angular/core/testing';
-import { HttpParams, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpParams } from '@angular/common/http';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Observable } from 'rxjs';
 import { StoreModule } from '@ngrx/store';
-
+import { of as observableOf } from 'rxjs';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { JobsListComponent } from './jobs-list.component';
+import { headerReducer, snackBarReducer } from '../../../../../reducers';
+import { CPSession } from '../../../../../session';
+import { mockSchool } from '../../../../../session/mock/school';
+import { ManageHeaderService } from '../../utils';
 import { JobsModule } from '../jobs.module';
 import { JobsService } from '../jobs.service';
-import { ManageHeaderService } from '../../utils';
-import { CPSession } from '../../../../../session';
-import { JobsListComponent } from './jobs-list.component';
-import { mockSchool } from '../../../../../session/mock/school';
-import { headerReducer, snackBarReducer } from '../../../../../reducers';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 const mockJobs = require('../mockJobs.json');
 
@@ -21,7 +20,7 @@ class MockJobsService {
   getJobs(startRage: number, endRage: number, search: any) {
     this.dummy = [startRage, endRage, search];
 
-    return Observable.of(mockJobs);
+    return observableOf(mockJobs);
   }
 }
 
@@ -83,7 +82,7 @@ describe('JobsListComponent', () => {
   it(
     'should fetch list of jobs',
     fakeAsync(() => {
-      spy = spyOn(component.service, 'getJobs').and.returnValue(Observable.of(mockJobs));
+      spy = spyOn(component.service, 'getJobs').and.returnValue(observableOf(mockJobs));
       component.ngOnInit();
 
       tick();

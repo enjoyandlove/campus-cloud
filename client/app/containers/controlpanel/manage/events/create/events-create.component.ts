@@ -1,27 +1,26 @@
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, OnInit, Input } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-
+import { BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { isProd } from './../../../../../config/env';
+import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { CPSession, ISchool } from '../../../../../session';
+import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import {
-  ErrorService,
-  StoreService,
   AdminService,
   CPI18nService,
-  CPTrackingService
+  CPTrackingService,
+  ErrorService,
+  StoreService
 } from '../../../../../shared/services';
-
-import { EventsService } from '../events.service';
-import { isProd } from './../../../../../config/env';
-import { CPSession, ISchool } from '../../../../../session';
-import { CPMap, CPDate } from '../../../../../shared/utils';
-import { EventUtilService } from '../events.utils.service';
+import { CPDate, CPMap } from '../../../../../shared/utils';
 import { EventAttendance, EventFeedback, isAllDay } from '../event.status';
-import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
+import { EventsService } from '../events.service';
+import { EventUtilService } from '../events.utils.service';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
 const FORMAT_WITHOUT_TIME = 'F j, Y';
@@ -115,20 +114,22 @@ export class EventsCreateComponent implements OnInit {
 
     this.adminService
       .getAdminByStoreId(search)
-      .map((admins) => {
-        return [
-          {
-            label: '---',
-            value: null
-          },
-          ...admins.map((admin) => {
-            return {
-              label: `${admin.firstname} ${admin.lastname}`,
-              value: admin.id
-            };
-          })
-        ];
-      })
+      .pipe(
+        map((admins: any) => {
+          return [
+            {
+              label: '---',
+              value: null
+            },
+            ...admins.map((admin) => {
+              return {
+                label: `${admin.firstname} ${admin.lastname}`,
+                value: admin.id
+              };
+            })
+          ];
+        })
+      )
       .subscribe(
         (managers) => (this.managers = managers),
         (err) => {
@@ -265,7 +266,7 @@ export class EventsCreateComponent implements OnInit {
     }
 
     this.service.createEvent(this.form.value, search).subscribe(
-      (res) => {
+      (res: any) => {
         this.urlPrefix = this.getUrlPrefix(res.id);
         this.router.navigate([this.urlPrefix]);
       },

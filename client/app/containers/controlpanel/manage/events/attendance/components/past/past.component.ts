@@ -1,13 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-
-import { EventsService } from '../../../events.service';
+import { Component, Input, OnInit } from '@angular/core';
 import { CPSession } from './../../../../../../../session';
+import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
+import { createSpreadSheet } from './../../../../../../../shared/utils/csv/parser';
 import { CPDate } from './../../../../../../../shared/utils/date/date';
 import { BaseComponent } from '../../../../../../../base/base.component';
 import { STAR_SIZE } from '../../../../../../../shared/components/cp-stars';
-import { createSpreadSheet } from './../../../../../../../shared/utils/csv/parser';
-import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
+import { EventsService } from '../../../events.service';
 
 interface IState {
   sort_field: string;
@@ -103,7 +102,7 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
       search
     );
 
-    stream$.toPromise().then((attendees) => {
+    stream$.toPromise().then((attendees: Array<any>) => {
       const columns = [
         this.cpI18n.translate('events_attendant'),
         this.cpI18n.translate('events_attendee_email'),

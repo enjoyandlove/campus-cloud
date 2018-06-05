@@ -63,7 +63,6 @@ class MockClubsService {
 }
 
 describe('ClubsInfoComponent', () => {
-  let el;
   let comp: ClubsInfoComponent;
   let fixture: ComponentFixture<ClubsInfoComponent>;
 
@@ -93,7 +92,6 @@ describe('ClubsInfoComponent', () => {
 
     fixture = TestBed.createComponent(ClubsInfoComponent);
     comp = fixture.componentInstance;
-    el = fixture.debugElement.nativeElement;
 
     comp.clubId = 1;
     comp.isAthletic = isClubAthletic.club;

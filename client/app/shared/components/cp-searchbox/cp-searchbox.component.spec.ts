@@ -1,8 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs';
-
-import { CPI18nService } from '../../services';
 import { CPSearchBoxComponent } from './cp-searchbox.component';
+import { CPI18nService } from '../../services';
 
 describe('CPSearchBoxComponent', () => {
   let component: CPSearchBoxComponent;

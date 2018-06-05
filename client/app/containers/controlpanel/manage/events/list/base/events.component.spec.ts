@@ -1,14 +1,13 @@
-import { async, fakeAsync, tick, TestBed, ComponentFixture } from '@angular/core/testing';
 import { HttpClientModule, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Router } from '@angular/router';
-
-import { EventsModule } from '../../events.module';
+import { of as observableOf } from 'rxjs';
 import { EventsComponent } from './events.component';
-import { EventsService } from '../../events.service';
 import { CPSession } from '../../../../../../session';
-import { CPI18nService } from '../../../../../../shared/services';
 import { mockSchool } from '../../../../../../session/mock/school';
+import { CPI18nService } from '../../../../../../shared/services';
+import { EventsModule } from '../../events.module';
+import { EventsService } from '../../events.service';
 
 class MockService {
   dummy;
@@ -16,7 +15,7 @@ class MockService {
   getEvents(startRage: number, endRage: number, search: any) {
     this.dummy = [startRage, endRage, search];
 
-    return Observable.of(Observable.of({}));
+    return observableOf({});
   }
 }
 class RouterMock {
@@ -80,7 +79,7 @@ describe('EventsListComponent', () => {
   it(
     'should fetch list of orientation events',
     fakeAsync(() => {
-      spy = spyOn(component.service, 'getEvents').and.returnValue(Observable.of(mockEvents));
+      spy = spyOn(component.service, 'getEvents').and.returnValue(observableOf(mockEvents));
       component.buildHeaders();
 
       tick();

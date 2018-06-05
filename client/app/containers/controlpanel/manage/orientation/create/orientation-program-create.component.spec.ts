@@ -1,16 +1,15 @@
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-
+import { of as observableOf } from 'rxjs';
 import { CPSession } from './../../../../../session';
-import { OrientationModule } from '../orientation.module';
-import { ProgramMembership } from '../orientation.status';
-import { OrientationService } from '../orientation.services';
+import { OrientationProgramCreateComponent } from './orientation-program-create.component';
 import { mockSchool } from '../../../../../session/mock/school';
 import { CPI18nService } from '../../../../../shared/services/i18n.service';
-import { OrientationProgramCreateComponent } from './orientation-program-create.component';
+import { OrientationModule } from '../orientation.module';
+import { OrientationService } from '../orientation.services';
+import { ProgramMembership } from '../orientation.status';
 
 class MockOrientationService {
   dummy;
@@ -18,7 +17,7 @@ class MockOrientationService {
   createProgram(body: any, search: any) {
     this.dummy = [search];
 
-    return Observable.of(body);
+    return observableOf(body);
   }
 }
 
@@ -100,7 +99,7 @@ describe('OrientationProgramCreateComponent', () => {
 
   it('should insert orientation program', () => {
     spyOn(component, 'resetModal');
-    spy = spyOn(component.service, 'createProgram').and.returnValue(Observable.of(createdProgram));
+    spy = spyOn(component.service, 'createProgram').and.returnValue(observableOf(createdProgram));
 
     component.form = component.fb.group({
       name: ['Hello World!'],

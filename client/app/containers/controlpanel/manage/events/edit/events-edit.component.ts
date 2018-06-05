@@ -1,29 +1,28 @@
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit, Input } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-
-import { EventsService } from '../events.service';
+import { BehaviorSubject, of as observableOf } from 'rxjs';
+import { combineLatest, map } from 'rxjs/operators';
 import { isProd } from './../../../../../config/env';
-import { FORMAT } from '../../../../../shared/pipes/date';
-import { CPSession, ISchool } from '../../../../../session';
-import { CPMap, CPDate } from '../../../../../shared/utils';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { BaseComponent } from '../../../../../base/base.component';
-import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-import {
-  ErrorService,
-  StoreService,
-  AdminService,
-  CPTrackingService
-} from '../../../../../shared/services';
-
-import { EventAttendance, EventFeedback } from '../event.status';
-import { EventUtilService } from '../events.utils.service';
+import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+import { CPSession, ISchool } from '../../../../../session';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { FORMAT } from '../../../../../shared/pipes/date';
+import {
+  AdminService,
+  CPTrackingService,
+  ErrorService,
+  StoreService
+} from '../../../../../shared/services';
+import { CPDate, CPMap } from '../../../../../shared/utils';
+import { EventAttendance, EventFeedback } from '../event.status';
+import { EventsService } from '../events.service';
+import { EventUtilService } from '../events.utils.service';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
 const FORMAT_WITHOUT_TIME = 'F j, Y';
@@ -311,20 +310,22 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
     this.adminService
       .getAdminByStoreId(search)
-      .map((admins) => {
-        return [
-          {
-            label: '---',
-            value: null
-          },
-          ...admins.map((admin) => {
-            return {
-              label: `${admin.firstname} ${admin.lastname}`,
-              value: admin.id
-            };
-          })
-        ];
-      })
+      .pipe(
+        map((admins: Array<any>) => {
+          return [
+            {
+              label: '---',
+              value: null
+            },
+            ...admins.map((admin) => {
+              return {
+                label: `${admin.firstname} ${admin.lastname}`,
+                value: admin.id
+              };
+            })
+          ];
+        })
+      )
       .subscribe((res) => {
         this.managers = res;
         this.selectedManager = this.managers.filter(
@@ -334,7 +335,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   public fetch() {
-    let stores$ = Observable.of([]);
+    let stores$ = observableOf([]);
     const school = this.session.g.get('school');
     const orientationId = this.orientationId ? this.orientationId.toString() : null;
     const search: HttpParams = new HttpParams()
@@ -346,10 +347,10 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     }
 
     const event$ = this.service.getEventById(this.eventId, search);
-    const stream$ = Observable.combineLatest(event$, stores$);
+    const stream$ = combineLatest(event$, stores$);
 
     super
-      .fetchData(stream$)
+      .fetchData(observableOf(stream$))
       .then((res) => {
         this.stores = res.data[1];
         this.event = res.data[0];

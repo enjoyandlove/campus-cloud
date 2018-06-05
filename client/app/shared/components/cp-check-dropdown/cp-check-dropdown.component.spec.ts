@@ -1,9 +1,8 @@
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
-// import { By } from '@angular/platform-browser';
-import { Observable } from 'rxjs';
-// import { DebugElement } from '@angular/core';
-
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { of as observableOf } from 'rxjs';
 import { CPCheckDropdownComponent } from './cp-check-dropdown.component';
+// import { By } from '@angular/platform-browser';
+// import { DebugElement } from '@angular/core';
 
 describe('CPCheckDropdownComponent (inline template)', () => {
   let expected;
@@ -36,7 +35,7 @@ describe('CPCheckDropdownComponent (inline template)', () => {
       }
     ];
 
-    comp.reset = Observable.of(false);
+    comp.reset = observableOf(false);
 
     expected = {
       label: 'expected label',

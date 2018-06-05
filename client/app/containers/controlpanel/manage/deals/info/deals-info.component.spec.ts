@@ -1,19 +1,18 @@
-import { async, TestBed, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
-import { HttpParams, HttpClientModule } from '@angular/common/http';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Observable } from 'rxjs';
+import { HttpClientModule } from '@angular/common/http';
 import { DebugElement } from '@angular/core';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
-
+import { of as observableOf } from 'rxjs';
+import { DealsInfoComponent } from './deals-info.component';
+import { headerReducer, snackBarReducer } from '../../../../../reducers';
+import { CPSession } from '../../../../../session';
+import { mockSchool } from '../../../../../session/mock/school';
+import { CPMapsComponent } from '../../../../../shared/components/cp-maps';
+import { CPI18nService } from '../../../../../shared/services';
+import { CPMapsService } from '../../../../../shared/services/maps.service';
 import { DealsModule } from '../deals.module';
 import { DealsService } from '../deals.service';
-import { CPSession } from '../../../../../session';
-import { DealsInfoComponent } from './deals-info.component';
-import { CPI18nService } from '../../../../../shared/services';
-import { mockSchool } from '../../../../../session/mock/school';
-import { headerReducer, snackBarReducer } from '../../../../../reducers';
-import { CPMapsService } from '../../../../../shared/services/maps.service';
-import { CPMapsComponent } from '../../../../../shared/components/cp-maps';
 
 const mockDeals = require('../mockDeals.json');
 
@@ -23,7 +22,7 @@ class MockDealsService {
   getDealById(id: number, search: any) {
     this.dummy = [id, search];
 
-    return Observable.of(mockDeals[0]);
+    return observableOf(mockDeals[0]);
   }
 }
 
@@ -34,7 +33,6 @@ class MockMapService {
 }
 
 describe('DealsInfoComponent', () => {
-  let search;
   let mapComponent: CPMapsComponent;
   let component: DealsInfoComponent;
   let fixture: ComponentFixture<DealsInfoComponent>;
@@ -71,7 +69,6 @@ describe('DealsInfoComponent', () => {
 
           component.session.g.set('school', mockSchool);
           component.isLoading().subscribe((_) => (component.loading = false));
-          search = new HttpParams().append('school_id', component.session.g.get('school').id);
         });
     })
   );
@@ -81,7 +78,7 @@ describe('DealsInfoComponent', () => {
     fakeAsync(() => {
       spyOn(component, 'buildHeader');
       spyOn(mapComponent, 'drawMap');
-      spyOn(component.service, 'getDealById').and.returnValue(Observable.of(mockDeals[0]));
+      spyOn(component.service, 'getDealById').and.returnValue(observableOf(mockDeals[0]));
 
       const deal = mockDeals[0];
       const bannerDe: DebugElement = fixture.debugElement;

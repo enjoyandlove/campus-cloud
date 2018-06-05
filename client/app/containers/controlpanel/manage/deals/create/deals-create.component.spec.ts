@@ -34,7 +34,6 @@ class MockStoreService {
 
 describe('DealsCreateComponent', () => {
   let spyDeal;
-  let search;
   let spyStore;
   let component: DealsCreateComponent;
   let fixture: ComponentFixture<DealsCreateComponent>;
@@ -64,8 +63,6 @@ describe('DealsCreateComponent', () => {
           component = fixture.componentInstance;
 
           component.session.g.set('school', mockSchool);
-
-          search = new HttpParams().append('school_id', component.session.g.get('school').id);
 
           component.buildDealsForm();
           component.buildStoreForm();

@@ -1,15 +1,14 @@
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
-import { HttpParams, HttpClientModule } from '@angular/common/http';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Observable } from 'rxjs';
+import { HttpClientModule, HttpParams } from '@angular/common/http';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
-
-import { EmployerModule } from '../employer.module';
-import { EmployerService } from '../employer.service';
+import { RouterTestingModule } from '@angular/router/testing';
+import { of as observableOf } from 'rxjs';
 import { CPSession } from './../../../../../../session';
 import { EmployerEditComponent } from './employer-edit.component';
 import { mockSchool } from '../../../../../../session/mock/school';
 import { CPI18nService } from '../../../../../../shared/services/i18n.service';
+import { EmployerModule } from '../employer.module';
+import { EmployerService } from '../employer.service';
 
 class MockEmployerService {
   dummy;
@@ -17,7 +16,7 @@ class MockEmployerService {
   editEmployer(body: any, search: any) {
     this.dummy = [search];
 
-    return Observable.of(body);
+    return observableOf(body);
   }
 }
 
@@ -93,7 +92,7 @@ describe('EmployerEditComponent', () => {
     spyOn(component.edited, 'emit');
     spyOn(component, 'resetModal');
     spy = spyOn(component.service, 'editEmployer').and.returnValue(
-      Observable.of(component.employer)
+      observableOf(component.employer)
     );
 
     component.onSubmit();

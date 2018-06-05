@@ -1,28 +1,28 @@
-/*tslint:disable:max-line-length*/
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { Component, OnInit, Input } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-
-import { EventsService } from '../events.service';
-import { isDev } from '../../../../../config/env';
-import { CPDate } from '../../../../../shared/utils';
-import { CPSession, ISchool } from '../../../../../session';
-import { BaseComponent } from '../../../../../base/base.component';
-import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import { CPI18nPipe } from './../../../../../shared/pipes/i18n/i18n.pipe';
-import { STATUS } from '../../../../../shared/constants';
+import { BaseComponent } from '../../../../../base/base.component';
+import { isDev } from '../../../../../config/env';
+import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { CPSession, ISchool } from '../../../../../session';
 import { CPImageUploadComponent } from '../../../../../shared/components';
-import { EventUtilService } from '../events.utils.service';
-import { EventAttendance, EventFeedback, isAllDay } from '../event.status';
+import { STATUS } from '../../../../../shared/constants';
 import {
-  FileUploadService,
+  AdminService,
   CPI18nService,
-  StoreService,
-  AdminService
+  FileUploadService,
+  StoreService
 } from '../../../../../shared/services';
+import { CPDate } from '../../../../../shared/utils';
+import { EventAttendance, EventFeedback, isAllDay } from '../event.status';
+import { EventsService } from '../events.service';
+import { EventUtilService } from '../events.utils.service';
+/*tslint:disable:max-line-length*/
 
 const i18n = new CPI18nPipe();
 
@@ -258,17 +258,16 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       .append('store_id', storeOrClubId)
       .append('privilege_type', this.utils.getPrivilegeType(this.isOrientation));
 
-    return this.adminService
-      .getAdminByStoreId(search)
-      .startWith([{ label: '---' }])
-      .map((admins) => {
+    return this.adminService.getAdminByStoreId(search).pipe(
+      startWith([{ label: '---' }]),
+      map((admins) => {
         const _admins = [
           {
             label: '---',
             value: null
           }
         ];
-        admins.forEach((admin) => {
+        admins.forEach((admin: any) => {
           _admins.push({
             label: `${admin.firstname} ${admin.lastname}`,
             value: admin.id
@@ -276,7 +275,8 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
         });
 
         return _admins;
-      });
+      })
+    );
   }
 
   onSingleCheck(checked, index) {

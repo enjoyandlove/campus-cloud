@@ -1,14 +1,13 @@
-import { async, TestBed, ComponentFixture } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { of as observableOf } from 'rxjs';
+import { JobsDeleteComponent } from './jobs-delete.component';
+import { CPSession } from '../../../../../session';
+import { mockSchool } from '../../../../../session/mock/school';
+import { CPI18nService } from '../../../../../shared/services';
 import { JobsModule } from '../jobs.module';
 import { JobsService } from '../jobs.service';
-import { CPSession } from '../../../../../session';
-import { JobsDeleteComponent } from './jobs-delete.component';
-import { CPI18nService } from '../../../../../shared/services';
-import { mockSchool } from '../../../../../session/mock/school';
 
 const mockJobs = require('../mockJobs.json');
 
@@ -18,7 +17,7 @@ class MockJobsService {
   deleteJob(id: number, search: any) {
     this.dummy = [id, search];
 
-    return Observable.of({});
+    return observableOf({});
   }
 }
 
@@ -59,7 +58,7 @@ describe('JobsDeleteComponent', () => {
   it('should delete job', () => {
     spyOn(component.deleted, 'emit');
     spyOn(component.resetDeleteModal, 'emit');
-    spy = spyOn(component.service, 'deleteJob').and.returnValue(Observable.of({}));
+    spy = spyOn(component.service, 'deleteJob').and.returnValue(observableOf({}));
 
     component.onDelete();
     expect(spy).toHaveBeenCalledTimes(1);

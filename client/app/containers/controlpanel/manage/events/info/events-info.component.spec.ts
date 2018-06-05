@@ -1,17 +1,16 @@
-import { async, fakeAsync, tick, TestBed, ComponentFixture } from '@angular/core/testing';
 import { HttpClientModule, HttpParams } from '@angular/common/http';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { StoreModule } from '@ngrx/store';
-
+import { of as observableOf } from 'rxjs';
+import { EventsInfoComponent } from './events-info.component';
+import { headerReducer, snackBarReducer } from '../../../../../reducers';
+import { CPSession } from '../../../../../session';
+import { mockSchool } from '../../../../../session/mock/school';
+import { CPI18nService } from '../../../../../shared/services';
 import { EventsModule } from '../events.module';
 import { EventsService } from '../events.service';
-import { CPSession } from '../../../../../session';
 import { EventUtilService } from '../events.utils.service';
-import { EventsInfoComponent } from './events-info.component';
-import { CPI18nService } from '../../../../../shared/services';
-import { mockSchool } from '../../../../../session/mock/school';
-import { headerReducer, snackBarReducer } from '../../../../../reducers';
 
 class MockService {
   dummy;
@@ -19,7 +18,7 @@ class MockService {
   getEventById(eventId: number, search: any) {
     this.dummy = [eventId, search];
 
-    return Observable.of({});
+    return observableOf({});
   }
 }
 
@@ -55,7 +54,7 @@ describe('EventInfoComponent', () => {
             provide: ActivatedRoute,
             useValue: {
               snapshot: {
-                params: Observable.of({ eventId: 15845 })
+                params: observableOf({ eventId: 15845 })
               }
             }
           }
@@ -82,7 +81,7 @@ describe('EventInfoComponent', () => {
         .append('calendar_id', component.orientationId.toString());
 
       spyOn(component, 'buildHeader');
-      spy = spyOn(component.service, 'getEventById').and.returnValue(Observable.of({}));
+      spy = spyOn(component.service, 'getEventById').and.returnValue(observableOf({}));
       component.fetch();
 
       tick();

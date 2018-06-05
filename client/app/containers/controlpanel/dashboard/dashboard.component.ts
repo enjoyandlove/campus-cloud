@@ -1,12 +1,11 @@
-import { BehaviorSubject, of as observableOf } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BehaviorSubject, of as observableOf } from 'rxjs';
 import { combineLatest } from 'rxjs/operators';
-
-import { CPSession, IUser } from '../../../session';
-import { CPI18nService } from '../../../shared/services';
-import { CP_PRIVILEGES_MAP } from '../../../shared/constants';
 import { DashboardUtilsService } from './dashboard.utils.service';
+import { CPSession, IUser } from '../../../session';
+import { CP_PRIVILEGES_MAP } from '../../../shared/constants';
+import { CPI18nService } from '../../../shared/services';
 import { canSchoolReadResource } from '../../../shared/utils/privileges';
 
 const isTileReady = (val) => !!val;
@@ -107,7 +106,7 @@ export class DashboardComponent implements OnInit {
         this.topClubsTile$,
         this.integrationsTile$
       ])
-    ).subscribe((tiles) => {
+    ).subscribe((tiles: any) => {
       setTimeout(
         () => {
           this.areAllTilesReady = tiles.every(isTileReady);

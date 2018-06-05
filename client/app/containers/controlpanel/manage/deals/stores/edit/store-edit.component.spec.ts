@@ -1,15 +1,14 @@
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
-import { HttpParams, HttpClientModule } from '@angular/common/http';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Observable } from 'rxjs';
+import { HttpClientModule, HttpParams } from '@angular/common/http';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
-
+import { RouterTestingModule } from '@angular/router/testing';
+import { of as observableOf } from 'rxjs';
+import { CPSession } from './../../../../../../session';
+import { StoreEditComponent } from './store-edit.component';
+import { mockSchool } from '../../../../../../session/mock/school';
+import { CPI18nService } from '../../../../../../shared/services/i18n.service';
 import { StoreModule } from '../store.module';
 import { StoreService } from '../store.service';
-import { CPSession } from './../../../../../../session';
-import { mockSchool } from '../../../../../../session/mock/school';
-import { StoreEditComponent } from './store-edit.component';
-import { CPI18nService } from '../../../../../../shared/services/i18n.service';
 
 class MockStoreService {
   dummy;
@@ -17,13 +16,12 @@ class MockStoreService {
   editStore(body: any, search: any) {
     this.dummy = [search];
 
-    return Observable.of(body);
+    return observableOf(body);
   }
 }
 
 describe('DealsStoreEditComponent', () => {
   let spy;
-  let search;
   let component: StoreEditComponent;
   let fixture: ComponentFixture<StoreEditComponent>;
 
@@ -44,10 +42,6 @@ describe('DealsStoreEditComponent', () => {
           component = fixture.componentInstance;
 
           component.session.g.set('school', mockSchool);
-          search = new HttpParams().append(
-            'school_id',
-            component.session.g.get('school').id.toString()
-          );
 
           component.store = {
             id: 1,
@@ -97,7 +91,7 @@ describe('DealsStoreEditComponent', () => {
   it('should edit store', () => {
     spyOn(component.edited, 'emit');
     spyOn(component, 'resetModal');
-    spy = spyOn(component.service, 'editStore').and.returnValue(Observable.of(component.store));
+    spy = spyOn(component.service, 'editStore').and.returnValue(observableOf(component.store));
 
     component.onSubmit();
 

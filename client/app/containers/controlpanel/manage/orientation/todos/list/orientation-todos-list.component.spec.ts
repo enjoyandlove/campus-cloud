@@ -1,13 +1,12 @@
-import { async, fakeAsync, tick, TestBed, ComponentFixture } from '@angular/core/testing';
-import { Observable } from 'rxjs';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-
-import { TodosModule } from '../todos.module';
-import { TodosService } from '../todos.service';
-import { CPSession } from '../../../../../../session';
-import { mockSchool } from '../../../../../../session/mock/school';
+import { of as observableOf } from 'rxjs';
 import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 import { OrientationTodosListComponent } from './orientation-todos-list.component';
+import { CPSession } from '../../../../../../session';
+import { mockSchool } from '../../../../../../session/mock/school';
+import { TodosModule } from '../todos.module';
+import { TodosService } from '../todos.service';
 
 class MockTodosService {
   dummy;
@@ -16,7 +15,7 @@ class MockTodosService {
   getTodos(startRage: number, endRage: number, search: any) {
     this.dummy = [startRage, endRage, search];
 
-    return Observable.of(this.mockTodos);
+    return observableOf(this.mockTodos);
   }
 }
 
@@ -42,7 +41,7 @@ describe('OrientationTodosListComponent', () => {
               snapshot: {
                 parent: {
                   parent: {
-                    params: Observable.of({ orientationId: 1 })
+                    params: observableOf({ orientationId: 1 })
                   }
                 }
               }
@@ -58,7 +57,7 @@ describe('OrientationTodosListComponent', () => {
 
           component.session.g.set('school', mockSchool);
           component.orientationId = 5452;
-          spy = spyOn(component.service, 'getTodos').and.returnValue(Observable.of(mockTodos));
+          spy = spyOn(component.service, 'getTodos').and.returnValue(observableOf(mockTodos));
         });
     })
   );

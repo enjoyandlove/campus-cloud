@@ -1,17 +1,16 @@
-import { async, fakeAsync, tick, TestBed, ComponentFixture } from '@angular/core/testing';
-import { HttpParams, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpParams } from '@angular/common/http';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Observable } from 'rxjs';
 import { StoreModule } from '@ngrx/store';
-
+import { of as observableOf } from 'rxjs';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { DealsListComponent } from './deals-list.component';
+import { headerReducer, snackBarReducer } from '../../../../../reducers';
+import { CPSession } from '../../../../../session';
+import { mockSchool } from '../../../../../session/mock/school';
+import { ManageHeaderService } from '../../utils';
 import { DealsModule } from '../deals.module';
 import { DealsService } from '../deals.service';
-import { ManageHeaderService } from '../../utils';
-import { CPSession } from '../../../../../session';
-import { DealsListComponent } from './deals-list.component';
-import { mockSchool } from '../../../../../session/mock/school';
-import { headerReducer, snackBarReducer } from '../../../../../reducers';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 class MockDealsService {
   dummy;
@@ -19,7 +18,7 @@ class MockDealsService {
   getDeals(startRage: number, endRage: number, search: any) {
     this.dummy = [startRage, endRage, search];
 
-    return Observable.of({});
+    return observableOf({});
   }
 }
 
@@ -93,7 +92,7 @@ describe('DealsListComponent', () => {
   it(
     'should fetch list of deals',
     fakeAsync(() => {
-      spy = spyOn(component.service, 'getDeals').and.returnValue(Observable.of(mockDeals));
+      spy = spyOn(component.service, 'getDeals').and.returnValue(observableOf(mockDeals));
       component.ngOnInit();
 
       tick();
