@@ -215,11 +215,12 @@ export class FeedInputBoxComponent implements OnInit {
       return;
     }
 
-    const headers = new HttpHeaders();
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
     const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
 
-    headers.append('Authorization', auth);
+    const headers = new HttpHeaders({
+      Authorization: auth
+    });
 
     this.fileUploadService.uploadFile(file, url, headers).subscribe((res: any) => {
       this.image$.next(res.image_url);

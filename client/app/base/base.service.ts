@@ -41,7 +41,22 @@ export abstract class BaseService {
     });
   }
 
+  clearNullValues(params: HttpParams): HttpParams {
+    let cleanParams = new HttpParams();
+    params.keys().forEach((key) => {
+      if (params.get(key)) {
+        cleanParams = cleanParams.set(key, params.get(key));
+      }
+    });
+
+    return cleanParams;
+  }
+
   get(url: string, params?: HttpParams, silent = false) {
+    if (params) {
+      params = this.clearNullValues(params);
+    }
+
     const headers = buildCommonHeaders();
 
     return this.http
@@ -60,34 +75,45 @@ export abstract class BaseService {
       });
   }
 
-  post(url: string, data: any, opts?: HttpParams, silent = false) {
-    console.log('BASE POST opts ', opts);
+  post(url: string, data: any, params?: HttpParams, silent = false) {
+    if (params) {
+      params = this.clearNullValues(params);
+    }
+
     const headers = buildCommonHeaders();
 
     data = CPObj.cleanNullValues(data);
 
     return this.http
-      .post(url, data, { headers, ...opts })
+      .post(url, data, { headers, params })
       .retryWhen((err) => this.waitAndRetry(err))
       .catch((err) => (silent ? Observable.throw(err) : this.catchError(err)));
   }
 
-  update(url: string, data: any, opts?: HttpParams, silent = false) {
+  update(url: string, data: any, params?: HttpParams, silent = false) {
+    if (params) {
+      params = this.clearNullValues(params);
+    }
+
     const headers = buildCommonHeaders();
 
     data = CPObj.cleanNullValues(data);
 
     return this.http
-      .put(url, data, { headers, ...opts })
+      .put(url, data, { headers, params })
       .retryWhen((err) => this.waitAndRetry(err))
       .catch((err) => (silent ? Observable.throw(err) : this.catchError(err)));
   }
 
-  delete(url: string, opts?: HttpParams, silent = false) {
+  delete(url: string, params?: HttpParams, silent = false) {
+    if (params) {
+      params = this.clearNullValues(params);
+    }
+
     const headers = buildCommonHeaders();
 
     return this.http
-      .delete(url, { headers, ...opts })
+      .delete(url, { headers, params })
       .retryWhen((err) => this.waitAndRetry(err))
       .catch((err) => (silent ? Observable.throw(err) : this.catchError(err)));
   }

@@ -54,11 +54,12 @@ export class LinksEditComponent implements OnInit, OnChanges {
       return;
     }
 
-    const headers = new HttpHeaders();
     const url = this.service.getUploadImageUrl();
     const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
 
-    headers.append('Authorization', auth);
+    const headers = new HttpHeaders({
+      Authorization: auth
+    });
 
     this.fileUploadService.uploadFile(file, url, headers).subscribe(
       (res: any) => {

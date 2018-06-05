@@ -99,13 +99,14 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
   }
 
   onFileAdded(file) {
-    const headers = new HttpHeaders();
     const validate = this.fileService.validFile(file);
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.FILE_UPLOAD}/`;
 
     const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
-    headers.append('Authorization', auth);
+    const headers = new HttpHeaders({
+      Authorization: auth
+    });
 
     if (!validate.valid) {
       this.flashMessageError(validate.errors.join(', '));
