@@ -55,7 +55,9 @@ export class AudienceDeleteComponent implements OnInit {
     this.service.deleteAudience(this.audience.id, search).subscribe(
       (_) => {
         $('#audienceDeleteModal').modal('hide');
+
         this.deleteAudience.emit(this.audience.id);
+
         this.buttonData = Object.assign({}, this.buttonData, {
           disabled: false
         });

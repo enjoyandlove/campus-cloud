@@ -22,7 +22,7 @@ export class AnnouncementsService extends BaseService {
   createAudience(body: any, search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER_LIST}/`;
 
-    return super.post(url, body, search).map((res) => res.json());
+    return super.post(url, body, search);
   }
 
   getLists(search: HttpParams, startRange: number, endRange: number) {

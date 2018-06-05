@@ -31,13 +31,13 @@ export class AudienceService extends BaseService {
   getAudienceById(audienceId: number, search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER_LIST}/${audienceId}`;
 
-    return super.get(url, search).map((res) => res.json());
+    return super.get(url, search);
   }
 
   deleteAudience(audienceId: number, search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER_LIST}/${audienceId}`;
 
-    return super.delete(url, search).map((res) => res);
+    return super.delete(url, search);
   }
 
   createAudience(body: any, search: HttpParams) {

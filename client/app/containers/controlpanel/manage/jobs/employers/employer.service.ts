@@ -18,24 +18,24 @@ export class EmployerService extends BaseService {
       API.ENDPOINTS.EMPLOYER
     }/${startRage};${endRage}`;
 
-    return super.get(url, search).map((res) => res.json());
+    return super.get(url, search);
   }
 
   createEmployer(body: any, search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EMPLOYER}/`;
 
-    return super.post(url, body, search).map((res) => res.json());
+    return super.post(url, body, search);
   }
 
   editEmployer(id: number, body: any, search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EMPLOYER}/${id}`;
 
-    return super.update(url, body, search).map((res) => res.json());
+    return super.update(url, body, search);
   }
 
   deleteEmployer(id: number, search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EMPLOYER}/${id}`;
 
-    return super.delete(url, search).map((res) => res.json());
+    return super.delete(url, search);
   }
 }
