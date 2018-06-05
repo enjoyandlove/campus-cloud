@@ -105,7 +105,7 @@ export abstract class BaseService {
       .catch((err) => (silent ? Observable.throw(err) : this.catchError(err)));
   }
 
-  delete(url: string, params?: HttpParams, silent = false) {
+  delete(url: string, params?: HttpParams, silent = false, extraOptions = {}) {
     if (params) {
       params = this.clearNullValues(params);
     }
@@ -113,7 +113,7 @@ export abstract class BaseService {
     const headers = buildCommonHeaders();
 
     return this.http
-      .delete(url, { headers, params })
+      .delete(url, { headers, params, ...extraOptions })
       .retryWhen((err) => this.waitAndRetry(err))
       .catch((err) => (silent ? Observable.throw(err) : this.catchError(err)));
   }
