@@ -25,7 +25,6 @@ class MockService {
 
 describe('EventAttendanceComponent', () => {
   let spy;
-  let search;
   let service: EventsService;
   let component: EventsAttendanceComponent;
   let fixture: ComponentFixture<EventsAttendanceComponent>;
@@ -63,8 +62,6 @@ describe('EventAttendanceComponent', () => {
           component = fixture.componentInstance;
           component.eventId = 1001;
           component.session.g.set('school', mockSchool);
-
-          search = new HttpParams();
         });
     })
   );
@@ -74,6 +71,7 @@ describe('EventAttendanceComponent', () => {
     spy = spyOn(component.service, 'getEventById').and.returnValue(Observable.of({}));
 
     component.fetch();
+    const search = new HttpParams();
     expect(spy).toHaveBeenCalledWith(component.eventId, search);
     expect(spy.calls.count()).toBe(1);
   });
@@ -84,8 +82,9 @@ describe('EventAttendanceComponent', () => {
     spy = spyOn(component.service, 'getEventById').and.returnValue(Observable.of({}));
 
     component.fetch();
-    search.append('school_id', component.session.g.get('school').id);
-    search.append('calendar_id', component.orientationId.toString());
+    const search = new HttpParams()
+      .append('school_id', component.session.g.get('school').id)
+      .append('calendar_id', component.orientationId.toString());
     expect(spy).toHaveBeenCalledWith(component.eventId, search);
     expect(spy.calls.count()).toBe(1);
   });

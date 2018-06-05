@@ -63,9 +63,10 @@ describe('DealsCreateComponent', () => {
         .then(() => {
           fixture = TestBed.createComponent(DealsCreateComponent);
           component = fixture.componentInstance;
-          search = new HttpParams().append('school_id', component.session.g.get('school').id);
 
           component.session.g.set('school', mockSchool);
+
+          search = new HttpParams().append('school_id', component.session.g.get('school').id);
 
           component.buildDealsForm();
           component.buildStoreForm();

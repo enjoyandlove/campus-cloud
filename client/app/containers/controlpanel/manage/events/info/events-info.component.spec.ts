@@ -69,8 +69,6 @@ describe('EventInfoComponent', () => {
           component = fixture.componentInstance;
           component.eventId = 15845;
           component.session.g.set('school', mockSchool);
-
-          search = new HttpParams();
         });
     })
   );
@@ -79,8 +77,9 @@ describe('EventInfoComponent', () => {
     'should fetch orientation event by Id',
     fakeAsync(() => {
       component.orientationId = 1001;
-      search.append('school_id', component.session.g.get('school').id);
-      search.append('calendar_id', component.orientationId.toString());
+      search = new HttpParams()
+        .append('school_id', component.session.g.get('school').id)
+        .append('calendar_id', component.orientationId.toString());
 
       spyOn(component, 'buildHeader');
       spy = spyOn(component.service, 'getEventById').and.returnValue(Observable.of({}));

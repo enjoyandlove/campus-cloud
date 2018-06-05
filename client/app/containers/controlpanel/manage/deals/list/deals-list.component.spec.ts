@@ -58,6 +58,7 @@ describe('DealsListComponent', () => {
           spyOn(component, 'buildHeader');
 
           search = new HttpParams()
+            .append('store_id', null)
             .append('search_str', component.state.search_str)
             .append('sort_field', component.state.sort_field)
             .append('sort_direction', component.state.sort_direction)

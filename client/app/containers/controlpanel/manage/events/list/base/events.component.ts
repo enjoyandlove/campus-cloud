@@ -139,18 +139,25 @@ export class EventsComponent extends BaseComponent {
       store_id = this.storeId.toString();
     }
 
-    const search = new HttpParams()
+    let search = new HttpParams()
       .append('start', this.state.start.toString())
       .append('end', this.state.end.toString())
-      .append('store_id', store_id)
-      .append('calendar_id', calendar_id)
       .append('school_id', this.session.g.get('school').id.toString())
       .append('search_str', this.state.search_str)
-      .append('exclude_current', exclude_current)
       .append('attendance_only', this.state.attendance_only.toString())
 
       .append('sort_field', this.state.sort_field)
       .append('sort_direction', this.state.sort_direction);
+
+    if (store_id) {
+      search = search.append('store_id', store_id);
+    }
+    if (exclude_current) {
+      search = search.append('exclude_current', exclude_current);
+    }
+    if (calendar_id) {
+      search = search.append('calendar_id', calendar_id);
+    }
 
     this.fetch(this.service.getEvents(start, end, search));
   }

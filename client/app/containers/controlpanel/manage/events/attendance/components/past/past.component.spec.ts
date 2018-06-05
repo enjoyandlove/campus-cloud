@@ -77,8 +77,8 @@ describe('AttendancePastComponent', () => {
 
       component.isOrientation = true;
       component.orientationId = 1001;
-      search.append('school_id', component.session.g.get('school').id);
-      search.append('calendar_id', component.orientationId.toString());
+      search.set('school_id', component.session.g.get('school').id);
+      search.set('calendar_id', component.orientationId.toString());
       component.fetch();
       tick();
 
@@ -109,12 +109,13 @@ describe('AttendancePastComponent', () => {
 
     component.isOrientation = true;
     component.orientationId = 1001;
-    search.append('school_id', component.session.g.get('school').id);
-    search.append('calendar_id', component.orientationId.toString());
+    const _search = search
+      .append('school_id', component.session.g.get('school').id)
+      .append('calendar_id', component.orientationId.toString());
 
     component.fetch();
 
     expect(spy.calls.count()).toBe(1);
-    expect(spy).toHaveBeenCalledWith(component.startRange, component.endRange, search);
+    expect(spy).toHaveBeenCalledWith(component.startRange, component.endRange, _search);
   });
 });
