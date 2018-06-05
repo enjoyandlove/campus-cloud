@@ -25,11 +25,15 @@ export class CPTrackingService {
     let identify;
     const user = session.get('user');
     const school = session.get('school');
+    const api_key = isProd
+      ? '6c5441a7008b413b8d3d29f8130afae1'
+      : 'be78bb81dd7f98c7cf8d1a7994e07c85';
+
     require('node_modules/amplitude-js/src/amplitude-snippet.js');
 
     window.amplitude
       .getInstance()
-      .init('be78bb81dd7f98c7cf8d1a7994e07c85', this.getSchoolUserID(user.id));
+      .init(api_key, this.getSchoolUserID(user.id));
 
     identify = new window.amplitude.Identify()
       .set('school_name', school.name)
@@ -96,7 +100,8 @@ export class CPTrackingService {
   }
 
   amplitudeEmitEvent(eventName: string, eventProperties?: {}) {
-    if (!isStaging) {
+    if (!isProd && !isStaging) {
+
       return;
     }
 
