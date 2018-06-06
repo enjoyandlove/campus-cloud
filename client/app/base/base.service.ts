@@ -1,12 +1,11 @@
-import { throwError as observableThrowError, Observable, of as observableOf } from 'rxjs';
-import { HttpClient, HttpParams, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { retryWhen, catchError } from 'rxjs/operators';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { Observable, of as observableOf, throwError as observableThrowError } from 'rxjs';
+import { catchError, delay, flatMap, retryWhen } from 'rxjs/operators';
+import { API } from './../config/api/index';
 import { appStorage, CPObj } from '../shared/utils';
 
-import { API } from './../config/api/index';
 /**
  * Base Service
  * Takes care of setting common headers
@@ -28,18 +27,21 @@ const emptyResponse = observableOf(new HttpResponse({ body: JSON.stringify([]) }
 export abstract class BaseService {
   constructor(private http: HttpClient, private router: Router) {}
 
-  private waitAndRetry(err): Observable<any> {
+  private waitAndRetry(err: Observable<any>): Observable<any> {
     let retries = 1;
 
-    return err.delay(1200).flatMap((e) => {
-      if (retries > 0) {
-        retries -= 1;
+    return err.pipe(
+      delay(1200),
+      flatMap((e) => {
+        if (retries > 0) {
+          retries -= 1;
 
-        return observableOf(e);
-      }
+          return observableOf(e);
+        }
 
-      return observableThrowError(e);
-    });
+        return observableThrowError(e);
+      })
+    );
   }
 
   clearNullValues(params: HttpParams): HttpParams {
@@ -89,7 +91,7 @@ export abstract class BaseService {
       .post(url, data, { headers, params })
       .pipe(
         retryWhen((err) => this.waitAndRetry(err)),
-        (err) => (silent ? observableThrowError(err) : this.catchError(err))
+        catchError((err) => (silent ? observableThrowError(err) : this.catchError(err)))
       );
   }
 
