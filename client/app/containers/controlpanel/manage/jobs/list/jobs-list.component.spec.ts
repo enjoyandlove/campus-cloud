@@ -5,7 +5,7 @@ import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { JobsListComponent } from './jobs-list.component';
-import { headerReducer, snackBarReducer } from '../../../../../reducers';
+import { reducers } from '../../../../../reducers';
 import { CPSession } from '../../../../../session';
 import { mockSchool } from '../../../../../session/mock/school';
 import { ManageHeaderService } from '../../utils';
@@ -38,8 +38,8 @@ describe('JobsListComponent', () => {
           HttpClientModule,
           RouterTestingModule,
           StoreModule.forRoot({
-            HEADER: headerReducer,
-            SNACKBAR: snackBarReducer
+            HEADER: reducers.HEADER,
+            SNACKBAR: reducers.SNACKBAR
           })
         ],
         providers: [

@@ -5,7 +5,7 @@ import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
 import { CPSession } from './../../../../../session';
 import { OrientationProgramEditComponent } from './orientation-program-edit.component';
-import { headerReducer, snackBarReducer } from '../../../../../reducers';
+import { reducers } from '../../../../../reducers';
 import { mockSchool } from '../../../../../session/mock/school';
 import { CPI18nService } from '../../../../../shared/services/i18n.service';
 import { OrientationDetailsModule } from '../details/orientation-details.module';
@@ -45,8 +45,8 @@ describe('OrientationProgramEditComponent', () => {
           OrientationDetailsModule,
           RouterTestingModule,
           StoreModule.forRoot({
-            HEADER: headerReducer,
-            SNACKBAR: snackBarReducer
+            HEADER: reducers.HEADER,
+            SNACKBAR: reducers.SNACKBAR
           })
         ],
         providers: [

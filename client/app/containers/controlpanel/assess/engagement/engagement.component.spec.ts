@@ -11,7 +11,7 @@ import { CPI18nService } from '../../../../shared/services';
 import { EngagementComponent } from './engagement.component';
 import { mockSchool } from './../../../../session/mock/school';
 import { STATUS } from './../../../../shared/constants/status';
-import { snackBarReducer, headerReducer } from '../../../../reducers';
+import { reducers } from '../../../../reducers';
 import { HEADER_UPDATE } from './../../../../reducers/header.reducer';
 import { SNACKBAR_SHOW } from './../../../../reducers/snackbar.reducer';
 
@@ -75,8 +75,8 @@ describe('EngagementComponent', () => {
       imports: [
         // EngagementModule,
         StoreModule.forRoot({
-          HEADER: headerReducer,
-          SNACKBAR: snackBarReducer
+          HEADER: reducers.HEADER,
+          SNACKBAR: reducers.SNACKBAR
         })
       ],
       declarations: [EngagementComponent],

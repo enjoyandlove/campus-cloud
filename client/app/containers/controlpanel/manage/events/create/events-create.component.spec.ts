@@ -5,7 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
 import { EventsCreateComponent } from './events-create.component';
-import { headerReducer, snackBarReducer } from '../../../../../reducers';
+import { reducers } from '../../../../../reducers';
 import { CPSession } from '../../../../../session';
 import { mockSchool } from '../../../../../session/mock/school';
 import {
@@ -42,8 +42,8 @@ describe('EventCreateComponent', () => {
           EventsModule,
           RouterTestingModule,
           StoreModule.forRoot({
-            HEADER: headerReducer,
-            SNACKBAR: snackBarReducer
+            HEADER: reducers.HEADER,
+            SNACKBAR: reducers.SNACKBAR
           })
         ],
         providers: [

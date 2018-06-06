@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
 import { OrientationListComponent } from './list.component';
-import { headerReducer, snackBarReducer } from '../../../../../reducers';
+import { reducers } from '../../../../../reducers';
 import { CPSession } from '../../../../../session';
 import { mockSchool } from '../../../../../session/mock/school';
 import { CPI18nService } from '../../../../../shared/services';
@@ -37,8 +37,8 @@ describe('OrientationListComponent', () => {
           OrientationModule,
           RouterTestingModule,
           StoreModule.forRoot({
-            HEADER: headerReducer,
-            SNACKBAR: snackBarReducer
+            HEADER: reducers.HEADER,
+            SNACKBAR: reducers.SNACKBAR
           })
         ],
         providers: [

@@ -18,7 +18,7 @@ import { mockSchool } from './../../../../../session/mock/school';
 import { MockCPSession } from './../../../../../session/mock/session';
 import { SharedModule } from './../../../../../shared/shared.module';
 import { StudentsProfileComponent } from './students-profile.component';
-import { snackBarReducer, headerReducer } from '../../../../../reducers';
+import { reducers } from '../../../../../reducers';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 const mockStudentsService = {
@@ -67,8 +67,8 @@ describe('StudentsProfileComponent', () => {
       imports: [
         SharedModule,
         StoreModule.forRoot({
-          HEADER: headerReducer,
-          SNACKBAR: snackBarReducer
+          HEADER: reducers.HEADER,
+          SNACKBAR: reducers.SNACKBAR
         })
       ],
       providers: [

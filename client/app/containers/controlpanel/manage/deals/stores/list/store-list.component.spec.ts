@@ -5,7 +5,7 @@ import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
 import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 import { StoreListComponent } from './store-list.component';
-import { headerReducer, snackBarReducer } from '../../../../../../reducers';
+import { reducers } from '../../../../../../reducers';
 import { CPSession } from '../../../../../../session';
 import { mockSchool } from '../../../../../../session/mock/school';
 import { StoreModule as DealsStoreModule } from '../store.module';
@@ -36,8 +36,8 @@ describe('DealsStoreListComponent', () => {
           DealsStoreModule,
           RouterTestingModule,
           StoreModule.forRoot({
-            HEADER: headerReducer,
-            SNACKBAR: snackBarReducer
+            HEADER: reducers.HEADER,
+            SNACKBAR: reducers.SNACKBAR
           })
         ],
         providers: [CPSession, CPI18nService, { provide: StoreService, useClass: MockStoreService }]
