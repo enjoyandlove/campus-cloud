@@ -1,13 +1,12 @@
-import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import * as Raven from 'raven-js';
-
-import { CPSession } from '../../session';
-import { appStorage } from '../../shared/utils';
+import { map } from 'rxjs/operators';
 import { base64 } from './../../shared/utils/encrypt/encrypt';
+import { CPSession } from '../../session';
 import { AdminService, SchoolService, StoreService, ZendeskService } from '../../shared/services';
+import { appStorage } from '../../shared/utils';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -21,9 +20,7 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   preLoadUser(): Promise<any> {
-    const search = new HttpParams({
-      fromObject: { school_id: this.session.g.get('school').id.toString() }
-    });
+    const search = new HttpParams().set('school_id', this.session.g.get('school').id.toString());
 
     return this.adminService
       .getAdmins(1, 1, search)
@@ -70,9 +67,7 @@ export class AuthGuard implements CanActivate {
   }
 
   fetchStores(): Promise<any> {
-    const search = new HttpParams({
-      fromObject: { school_id: this.session.g.get('school').id.toString() }
-    });
+    const search = new HttpParams().set('school_id', this.session.g.get('school').id.toString());
 
     return this.storeService.getStores(search).toPromise();
   }

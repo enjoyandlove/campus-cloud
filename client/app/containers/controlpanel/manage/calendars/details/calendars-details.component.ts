@@ -1,17 +1,16 @@
-import { ICalendar } from './../calendars.interface';
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
-import { of as observableOf } from 'rxjs';
 import { Store } from '@ngrx/store';
-
-import { CPSession } from '../../../../../session';
-import { BaseComponent } from '../../../../../base';
-import { CalendarsService } from './../calendars.services';
-import { CPI18nService } from '../../../../../shared/services';
+import { of as observableOf } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
 import { FORMAT } from './../../../../../shared/pipes/date/date.pipe';
-import { IHeader, HEADER_UPDATE } from './../../../../../reducers/header.reducer';
+import { ICalendar } from './../calendars.interface';
+import { CalendarsService } from './../calendars.services';
+import { BaseComponent } from '../../../../../base';
+import { CPSession } from '../../../../../session';
+import { CPI18nService } from '../../../../../shared/services';
 
 @Component({
   selector: 'cp-calendars-details',
@@ -110,16 +109,14 @@ export class CalendarsDetailComponent extends BaseComponent implements OnInit {
   ngOnInit() {}
 
   private fetch() {
-    const itemSearch = new HttpParams({
-      fromObject: {
-        search_str: this.state.search_str,
-        sort_field: this.state.sort_field,
-        sort_direction: this.state.sort_direction,
-        academic_calendar_id: this.calendarId.toString(),
-        school_id: this.session.g.get('school').id.toString()
-      }
-    });
-    const calendarSearch = new HttpParams().append(
+    const itemSearch = new HttpParams()
+      .set('search_str', this.state.search_str)
+      .set('sort_field', this.state.sort_field)
+      .set('sort_direction', this.state.sort_direction)
+      .set('academic_calendar_id', this.calendarId.toString())
+      .set('school_id', this.session.g.get('school').id.toString());
+
+    const calendarSearch = new HttpParams().set(
       'school_id',
       this.session.g.get('school').id.toString()
     );
