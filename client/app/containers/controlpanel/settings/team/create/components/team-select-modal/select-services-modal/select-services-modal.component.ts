@@ -1,13 +1,10 @@
+import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { HttpParams } from '@angular/common/http';
-
+import { CPSession } from './../../../../../../../../session';
+import { CP_PRIVILEGES_MAP } from '../../../../../../../../shared/constants';
 import { ServicesService } from '../../../../../../manage/services/services.service';
 import { BaseTeamSelectModalComponent } from '../base/team-select-modal.component';
-
-import { CP_PRIVILEGES_MAP } from '../../../../../../../../shared/constants';
-
-import { CPSession } from './../../../../../../../../session';
 
 @Component({
   selector: 'cp-select-services-modal',
@@ -32,7 +29,7 @@ export class SelectTeamServicesModalComponent extends BaseTeamSelectModalCompone
   ngOnInit() {
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
-    this.service.getServices(1, 1000, search).subscribe((services) => {
+    this.service.getServices(1, 1000, search).subscribe((services: Array<any>) => {
       let res = {};
       const selected = {};
       if (this.selectedServices) {

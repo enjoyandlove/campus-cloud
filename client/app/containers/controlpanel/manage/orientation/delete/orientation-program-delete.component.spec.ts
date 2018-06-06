@@ -23,7 +23,6 @@ describe('OrientationProgramDeleteComponent', () => {
   let search;
   let programId;
   let component: OrientationProgramDeleteComponent;
-  let service: OrientationService;
   let fixture: ComponentFixture<OrientationProgramDeleteComponent>;
 
   beforeEach(
@@ -40,7 +39,6 @@ describe('OrientationProgramDeleteComponent', () => {
         .then(() => {
           fixture = TestBed.createComponent(OrientationProgramDeleteComponent);
           component = fixture.componentInstance;
-          service = TestBed.get(OrientationService);
 
           component.orientationProgram = {
             id: 84,

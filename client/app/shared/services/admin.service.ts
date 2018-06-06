@@ -1,7 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, throwError as observableThrowError } from 'rxjs';
+import { throwError as observableThrowError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { BaseService } from '../../base/base.service';
 import { API } from '../../config/api';
 
@@ -34,10 +35,7 @@ export class AdminService extends BaseService {
   deleteAdminById(adminId: number) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/${adminId}`;
 
-    return super
-      .delete(url, null, true)
-
-      .catch((err) => observableThrowError(err));
+    return super.delete(url, null, true).pipe(catchError((err) => observableThrowError(err)));
   }
 
   createAdmin(data: any) {

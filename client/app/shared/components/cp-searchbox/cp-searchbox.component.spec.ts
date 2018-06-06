@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Observable } from 'rxjs';
+import { of as observableOf } from 'rxjs';
+import { combineLatest, switchMap } from 'rxjs/operators';
 import { CPSearchBoxComponent } from './cp-searchbox.component';
 import { CPI18nService } from '../../services';
 
@@ -25,20 +26,22 @@ describe('CPSearchBoxComponent', () => {
   it('Should emit the query value if any', () => {
     component.ngAfterViewInit();
 
-    component.stream$ = Observable.of('hello world');
+    component.stream$ = observableOf('hello world');
 
     component.stream$
-      .switchMap((query) => {
-        const queryEmit$ = component.query;
-        const isSearch$ = component.isSearch$;
-        const searchingEmit$ = component.searching;
+      .pipe(
+        switchMap((query) => {
+          const queryEmit$ = component.query;
+          const isSearch$ = component.isSearch$;
+          const searchingEmit$ = component.searching;
 
-        component.query.emit(query);
-        component.isSearch$.next(true);
-        component.searching.emit(false);
+          component.query.emit(query);
+          component.isSearch$.next(true);
+          component.searching.emit(false);
 
-        return Observable.combineLatest(queryEmit$, isSearch$, searchingEmit$);
-      })
+          return observableOf(combineLatest(queryEmit$, isSearch$, searchingEmit$));
+        })
+      )
       .subscribe((res) => {
         fixture.detectChanges();
 
@@ -52,7 +55,7 @@ describe('CPSearchBoxComponent', () => {
     const query$ = component.query;
     const isSearch$ = component.isSearch$;
 
-    const stream$ = Observable.combineLatest(query$, isSearch$);
+    const stream$ = observableOf(combineLatest(query$, isSearch$));
 
     stream$.subscribe((res) => {
       fixture.detectChanges();
@@ -67,20 +70,22 @@ describe('CPSearchBoxComponent', () => {
   it('Should emit an empty value', () => {
     component.ngAfterViewInit();
 
-    component.stream$ = Observable.of('');
+    component.stream$ = observableOf('');
 
     component.stream$
-      .switchMap((_) => {
-        const queryEmit$ = component.query;
-        const isSearch$ = component.isSearch$;
-        const searchingEmit$ = component.searching;
+      .pipe(
+        switchMap((_) => {
+          const queryEmit$ = component.query;
+          const isSearch$ = component.isSearch$;
+          const searchingEmit$ = component.searching;
 
-        component.query.emit(null);
-        component.isSearch$.next(false);
-        component.searching.emit(false);
+          component.query.emit(null);
+          component.isSearch$.next(false);
+          component.searching.emit(false);
 
-        return Observable.combineLatest(queryEmit$, isSearch$, searchingEmit$);
-      })
+          return observableOf(combineLatest(queryEmit$, isSearch$, searchingEmit$));
+        })
+      )
       .subscribe((res) => {
         fixture.detectChanges();
 

@@ -1,21 +1,21 @@
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+/*tslint:disable:max-line-length*/
 import { HttpParams } from '@angular/common/http';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-
-import { CPSession } from '../../../../../session';
-import { AnnouncementsService } from '../announcements.service';
-import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
-import { CP_PRIVILEGES_MAP, STATUS } from '../../../../../shared/constants';
-import { StoreService, CPI18nService } from '../../../../../shared/services';
 import {
   AUDIENCE_IMPORTED,
   AUDIENCE_RESET_IMPORT_AUDIENCE
 } from './../../../../../reducers/audience.reducer';
 import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
+import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
 import { canSchoolReadResource } from './../../../../../shared/utils/privileges/privileges';
+import { CPSession } from '../../../../../session';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
+import { CP_PRIVILEGES_MAP, STATUS } from '../../../../../shared/constants';
+import { CPI18nService, StoreService } from '../../../../../shared/services';
+import { AnnouncementsService } from '../announcements.service';
 
 interface IState {
   isUrgent: boolean;
@@ -227,7 +227,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     this.service
       .createAudience(data, search)
       .toPromise()
-      .then(({ id }) => this.redirectToSaveTab({ id }))
+      .then(({ id }: any) => this.redirectToSaveTab({ id }))
       .catch((err) => {
         const error = JSON.parse(err._body).error;
         const body =
@@ -340,7 +340,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     }
 
     this.service.postAnnouncements(search, data).subscribe(
-      (res) => {
+      (res: any) => {
         if (res.status === THROTTLED_STATUS) {
           this.shouldConfirm = false;
 
