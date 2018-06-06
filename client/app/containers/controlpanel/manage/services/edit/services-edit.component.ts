@@ -3,8 +3,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, of as observableOf, throwError as observableThrowError } from 'rxjs';
-import { catchError, combineLatest, map, switchMap } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, throwError as observableThrowError } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { IServiceDeleteModal } from './components/service-edit-delete-modal';
 import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
@@ -110,7 +110,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       })
     );
 
-    const stream$ = observableOf(combineLatest(service$, providers$, categories$));
+    const stream$ = combineLatest(service$, providers$, categories$);
     super.fetchData(stream$).then((res) => {
       const providers = res.data[1];
 

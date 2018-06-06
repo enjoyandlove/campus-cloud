@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, of as observableOf } from 'rxjs';
-import { combineLatest } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest } from 'rxjs';
 import { DashboardUtilsService } from './dashboard.utils.service';
 import { CPSession, IUser } from '../../../session';
 import { CP_PRIVILEGES_MAP } from '../../../shared/constants';
@@ -94,19 +93,17 @@ export class DashboardComponent implements OnInit {
   }
 
   subscribeToTilesReadyEvent() {
-    observableOf(
-      combineLatest([
-        this.downloadsTile$,
-        this.generalInfoTile$,
-        this.topEventsTile$,
-        this.topServicesTile$,
-        this.assessmentTile$,
-        this.socialActivityTile$,
-        this.campusTileTile$,
-        this.topClubsTile$,
-        this.integrationsTile$
-      ])
-    ).subscribe((tiles: any) => {
+    combineLatest([
+      this.downloadsTile$,
+      this.generalInfoTile$,
+      this.topEventsTile$,
+      this.topServicesTile$,
+      this.assessmentTile$,
+      this.socialActivityTile$,
+      this.campusTileTile$,
+      this.topClubsTile$,
+      this.integrationsTile$
+    ]).subscribe((tiles: any) => {
       setTimeout(
         () => {
           this.areAllTilesReady = tiles.every(isTileReady);

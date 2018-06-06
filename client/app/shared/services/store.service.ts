@@ -1,16 +1,15 @@
-import { startWith, map, combineLatest } from 'rxjs/operators';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { of as observableOf } from 'rxjs';
 import { Router } from '@angular/router';
-
-import { API } from '../../config/api';
+import { combineLatest, of as observableOf } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import { CPSession } from './../../session';
 import { CPI18nService } from './i18n.service';
-import { CP_PRIVILEGES_MAP } from '../constants';
 import { BaseService } from '../../base/base.service';
-import { canSchoolReadResource, canAccountLevelReadResource } from '../utils/privileges';
+import { API } from '../../config/api';
 import { isClubAthletic } from '../../containers/controlpanel/manage/clubs/clubs.athletics.labels';
+import { CP_PRIVILEGES_MAP } from '../constants';
+import { canAccountLevelReadResource, canSchoolReadResource } from '../utils/privileges';
 
 const cpI18n = new CPI18nService();
 
@@ -175,7 +174,7 @@ export class StoreService extends BaseService {
 
     const stream$ = combineLatest(services$, clubs$, athletics$);
 
-    return observableOf(stream$).pipe(
+    return stream$.pipe(
       map((res) => {
         if (!res[0].length && !res[1].length && !res[2].length) {
           return [

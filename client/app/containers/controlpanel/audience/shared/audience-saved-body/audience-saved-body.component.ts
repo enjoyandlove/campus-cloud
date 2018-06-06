@@ -2,8 +2,8 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { get as _get } from 'lodash';
-import { Observable, of as observableOf } from 'rxjs';
-import { combineLatest, map, startWith } from 'rxjs/operators';
+import { Observable, of as observableOf, combineLatest } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import { AudienceService } from './../../../../../containers/controlpanel/audience/audience.service';
 import { CPI18nService } from './../../../../../shared/services';
 import { CPSession } from '../../../../../session';
@@ -86,7 +86,7 @@ export class AudienceSavedBodyComponent implements OnInit {
       })
     );
 
-    this.audiences$ = observableOf(combineLatest(audiences$, this.importedAudience$)).pipe(
+    this.audiences$ = combineLatest(audiences$, this.importedAudience$).pipe(
       map(([audiences, importedAudienceId]: any) => {
         if (importedAudienceId) {
           this.selectedItem = audiences.filter(

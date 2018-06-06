@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { BehaviorSubject, of as observableOf } from 'rxjs';
-import { combineLatest, map } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { BaseComponent } from '../../../../../../base/base.component';
 import { CPSession } from '../../../../../../session';
 import { FeedsService } from '../../feeds.service';
@@ -162,8 +162,8 @@ export class FeedsComponent extends BaseComponent implements OnInit {
 
       const channels$ = this.service.getChannelsBySchoolId(1, 1000, _search);
 
-      stream$ = observableOf(combineLatest(campusThread$, channels$)).pipe(
-        map((res) => {
+      stream$ = combineLatest(campusThread$, channels$).pipe(
+        map((res: any) => {
           const result = [];
           const threads = res[0];
           this.channels = res[1];

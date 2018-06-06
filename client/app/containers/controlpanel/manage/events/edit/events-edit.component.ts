@@ -3,8 +3,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, of as observableOf } from 'rxjs';
-import { combineLatest, map } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, of as observableOf } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { isProd } from './../../../../../config/env';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { BaseComponent } from '../../../../../base/base.component';
@@ -350,7 +350,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     const stream$ = combineLatest(event$, stores$);
 
     super
-      .fetchData(observableOf(stream$))
+      .fetchData(stream$)
       .then((res) => {
         this.stores = res.data[1];
         this.event = res.data[0];

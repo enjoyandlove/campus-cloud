@@ -3,8 +3,8 @@ import { HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, of as observableOf } from 'rxjs';
-import { combineLatest, map } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
 import {
   canSchoolReadResource,
   canStoreReadAndWriteResource
@@ -70,7 +70,7 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
       })
     );
 
-    const stream$ = observableOf(combineLatest(service$, admins$));
+    const stream$ = combineLatest(service$, admins$);
     super.fetchData(stream$).then((res) => {
       this.admins = res.data[1];
       this.service = res.data[0];

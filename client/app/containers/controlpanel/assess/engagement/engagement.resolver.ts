@@ -1,6 +1,6 @@
-import { Observable, of as observableOf } from 'rxjs';
+import { Observable, of as observableOf, combineLatest } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
-import { catchError, combineLatest } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 
@@ -30,6 +30,6 @@ export class EngagementResolver implements Resolve<any> {
 
     const stream$ = combineLatest(servicesList$, listsList$);
 
-    return observableOf(stream$);
+    return stream$;
   }
 }

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { of as observableOf } from 'rxjs';
-import { combineLatest, switchMap } from 'rxjs/operators';
+import { combineLatest, of as observableOf } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { CPSearchBoxComponent } from './cp-searchbox.component';
 import { CPI18nService } from '../../services';
 
@@ -39,7 +39,7 @@ describe('CPSearchBoxComponent', () => {
           component.isSearch$.next(true);
           component.searching.emit(false);
 
-          return observableOf(combineLatest(queryEmit$, isSearch$, searchingEmit$));
+          return combineLatest(queryEmit$, isSearch$, searchingEmit$);
         })
       )
       .subscribe((res) => {
@@ -55,7 +55,7 @@ describe('CPSearchBoxComponent', () => {
     const query$ = component.query;
     const isSearch$ = component.isSearch$;
 
-    const stream$ = observableOf(combineLatest(query$, isSearch$));
+    const stream$ = combineLatest(query$, isSearch$);
 
     stream$.subscribe((res) => {
       fixture.detectChanges();
@@ -83,7 +83,7 @@ describe('CPSearchBoxComponent', () => {
           component.isSearch$.next(false);
           component.searching.emit(false);
 
-          return observableOf(combineLatest(queryEmit$, isSearch$, searchingEmit$));
+          return combineLatest(queryEmit$, isSearch$, searchingEmit$);
         })
       )
       .subscribe((res) => {

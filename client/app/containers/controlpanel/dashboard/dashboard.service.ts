@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { map, combineLatest } from 'rxjs/operators';
-import { of as observableOf, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Subject, combineLatest } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -64,7 +64,7 @@ export class DashboardService extends BaseService {
     const eventAssessment$ = this.eventAssessment.asObservable();
     const serviceAssessment$ = this.serviceAssessment.asObservable();
 
-    return observableOf(combineLatest(eventAssessment$, serviceAssessment$));
+    return combineLatest(eventAssessment$, serviceAssessment$);
   }
 
   getIntegrations(search: HttpParams) {
