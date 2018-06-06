@@ -1,11 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { map } from 'rxjs/operators';
+import { Subject, combineLatest } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { API } from '../../../config/api';
 import { BaseService } from '../../../base/index';
-import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class DashboardService extends BaseService {
@@ -21,33 +21,37 @@ export class DashboardService extends BaseService {
   getDownloads(search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.DASHBORD_USER_ACQUISITION}/`;
 
-    return super.get(url, search).map((data) => {
-      return {
-        series: [data.downloads.series, data.registrations.series],
-        labels: data.downloads.labels
-      };
-    });
+    return super.get(url, search).pipe(
+      map((data: any) => {
+        return {
+          series: [data.downloads.series, data.registrations.series],
+          labels: data.downloads.labels
+        };
+      })
+    );
   }
 
   getSocialActivity(search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.DASHBOARD_SOCIAL_ACTIVITY}/`;
 
-    return super.get(url, search).map((data) => {
-      const res = {
-        series: [],
-        labels: []
-      };
+    return super.get(url, search).pipe(
+      map((data: any) => {
+        const res = {
+          series: [],
+          labels: []
+        };
 
-      res.series.push([data.wall_post_likes]);
-      res.series.push([data.campus_posts]);
-      res.series.push([data.connections]);
-      res.series.push([data.wall_comments]);
-      res.series.push([data.messages]);
+        res.series.push([data.wall_post_likes]);
+        res.series.push([data.campus_posts]);
+        res.series.push([data.connections]);
+        res.series.push([data.wall_comments]);
+        res.series.push([data.messages]);
 
-      res.labels.push('Messages', 'Comments', 'Connections', 'Wall Posts', 'Likes');
+        res.labels.push('Messages', 'Comments', 'Connections', 'Wall Posts', 'Likes');
 
-      return res;
-    });
+        return res;
+      })
+    );
   }
 
   getCampusTile(search: HttpParams) {
@@ -60,7 +64,7 @@ export class DashboardService extends BaseService {
     const eventAssessment$ = this.eventAssessment.asObservable();
     const serviceAssessment$ = this.serviceAssessment.asObservable();
 
-    return Observable.combineLatest(eventAssessment$, serviceAssessment$);
+    return combineLatest(eventAssessment$, serviceAssessment$);
   }
 
   getIntegrations(search: HttpParams) {
@@ -84,32 +88,36 @@ export class DashboardService extends BaseService {
   getTopEvents(search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_EVENT}/`;
 
-    return super.get(url, search).map((res) => {
-      const eventAssessment = {
-        event_checkins: res.total_attendees,
-        event_feedback_rate: res.avg_feedbacks,
-        event_total_feedback: res.total_feedbacks
-      };
+    return super.get(url, search).pipe(
+      map((res: any) => {
+        const eventAssessment = {
+          event_checkins: res.total_attendees,
+          event_feedback_rate: res.avg_feedbacks,
+          event_total_feedback: res.total_feedbacks
+        };
 
-      this.eventAssessment.next(eventAssessment);
+        this.eventAssessment.next(eventAssessment);
 
-      return res;
-    });
+        return res;
+      })
+    );
   }
 
   getTopServices(search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_SERVICE}/`;
 
-    return super.get(url, search).map((res) => {
-      const serviceAssessment = {
-        service_checkins: res.total_attendees,
-        service_feedback_rate: res.avg_feedbacks,
-        service_total_feedback: res.total_feedbacks
-      };
+    return super.get(url, search).pipe(
+      map((res: any) => {
+        const serviceAssessment = {
+          service_checkins: res.total_attendees,
+          service_feedback_rate: res.avg_feedbacks,
+          service_total_feedback: res.total_feedbacks
+        };
 
-      this.serviceAssessment.next(serviceAssessment);
+        this.serviceAssessment.next(serviceAssessment);
 
-      return res;
-    });
+        return res;
+      })
+    );
   }
 }

@@ -1,10 +1,10 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
-
-import { FeedsService } from '../../../feeds.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { map, startWith } from 'rxjs/operators';
 import { CPSession } from '../../../../../../../session';
 import { CPI18nService } from '../../../../../../../shared/services/index';
+import { FeedsService } from '../../../feeds.service';
 
 declare var $: any;
 
@@ -50,10 +50,9 @@ export class FeedMoveComponent implements OnInit {
   ngOnInit() {
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
-    this.channels$ = this.feedsService
-      .getChannelsBySchoolId(1, 1000, search)
-      .startWith([{ label: '---' }])
-      .map((channels) => {
+    this.channels$ = this.feedsService.getChannelsBySchoolId(1, 1000, search).pipe(
+      startWith([{ label: '---' }]),
+      map((channels) => {
         const _channels = [
           {
             label: '---',
@@ -61,7 +60,7 @@ export class FeedMoveComponent implements OnInit {
           }
         ];
 
-        channels.forEach((channel) => {
+        channels.forEach((channel: any) => {
           if (this.feed.post_type === channel.id) {
             this.currentChannel = channel.name;
           }
@@ -74,7 +73,8 @@ export class FeedMoveComponent implements OnInit {
         });
 
         return _channels;
-      });
+      })
+    );
 
     this.buttonData = {
       class: 'primary',

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 
 import { BaseComponent } from '../../../../base/base.component';
 import { FeedbackService } from '../feedback.service';

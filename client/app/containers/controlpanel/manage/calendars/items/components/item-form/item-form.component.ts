@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { CPSession } from './../../../../../../../session';
 import { CPI18nService } from '../../../../../../../shared/services';
 import { CPDate, CPMap } from '../../../../../../../shared/utils';

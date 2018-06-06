@@ -1,17 +1,17 @@
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Store, StoreModule } from '@ngrx/store';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { of as observableOf } from 'rxjs';
+import { Router } from '@angular/router';
 
-import { CPSession } from './../../../../session/index';
+import { CPSession } from './../../../../session';
 import { EngagementService } from './engagement.service';
 import { mockUser } from './../../../../session/mock/user';
 import { CPI18nService } from '../../../../shared/services';
 import { EngagementComponent } from './engagement.component';
 import { mockSchool } from './../../../../session/mock/school';
 import { STATUS } from './../../../../shared/constants/status';
-import { snackBarReducer, headerReducer } from '../../../../reducers';
+import { reducers } from '../../../../reducers';
 import { HEADER_UPDATE } from './../../../../reducers/header.reducer';
 import { SNACKBAR_SHOW } from './../../../../reducers/snackbar.reducer';
 
@@ -45,7 +45,7 @@ const mockFilterState = {
 
 class MockEngagementService {
   getChartData() {
-    return Observable.of('hello');
+    return observableOf('hello');
   }
 }
 
@@ -75,8 +75,8 @@ describe('EngagementComponent', () => {
       imports: [
         // EngagementModule,
         StoreModule.forRoot({
-          HEADER: headerReducer,
-          SNACKBAR: snackBarReducer
+          HEADER: reducers.HEADER,
+          SNACKBAR: reducers.SNACKBAR
         })
       ],
       declarations: [EngagementComponent],

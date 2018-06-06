@@ -1,9 +1,11 @@
-import { CPSession } from './../../../../session/index';
-import { EngagementService } from './engagement.service';
+import { Observable, of as observableOf, combineLatest } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
+
+import { CPSession } from './../../../../session';
+import { EngagementService } from './engagement.service';
 
 const SERVICE_WITH_ATTENDANCE = '1';
 
@@ -20,13 +22,13 @@ export class EngagementResolver implements Resolve<any> {
 
     const servicesList$ = this.service
       .getServices(undefined, undefined, serviceSearch)
-      .catch((_) => Observable.of([]));
+      .pipe(catchError((_) => observableOf([])));
 
     const listsList$ = this.service
       .getLists(undefined, undefined, search)
-      .catch((_) => Observable.of([]));
+      .pipe(catchError((_) => observableOf([])));
 
-    const stream$ = Observable.combineLatest(servicesList$, listsList$);
+    const stream$ = combineLatest(servicesList$, listsList$);
 
     return stream$;
   }

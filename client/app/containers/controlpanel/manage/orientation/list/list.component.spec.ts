@@ -1,17 +1,16 @@
-import { async, fakeAsync, tick, TestBed, ComponentFixture } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Observable } from 'rxjs/Observable';
-import { Store, StoreModule } from '@ngrx/store';
 import { HttpParams } from '@angular/common/http';
-
-import { ManageHeaderService } from '../../utils';
-import { CPSession } from '../../../../../session';
-import { OrientationModule } from '../orientation.module';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { StoreModule } from '@ngrx/store';
+import { of as observableOf } from 'rxjs';
 import { OrientationListComponent } from './list.component';
-import { OrientationService } from '../orientation.services';
-import { CPI18nService } from '../../../../../shared/services';
+import { reducers } from '../../../../../reducers';
+import { CPSession } from '../../../../../session';
 import { mockSchool } from '../../../../../session/mock/school';
-import { headerReducer, snackBarReducer } from '../../../../../reducers';
+import { CPI18nService } from '../../../../../shared/services';
+import { ManageHeaderService } from '../../utils';
+import { OrientationModule } from '../orientation.module';
+import { OrientationService } from '../orientation.services';
 
 class MockOrientationService {
   dummy;
@@ -19,16 +18,13 @@ class MockOrientationService {
   getPrograms(startRage: number, endRage: number, search: any) {
     this.dummy = [startRage, endRage, search];
 
-    return Observable.of(Observable.of({}));
+    return observableOf({});
   }
 }
 
 describe('OrientationListComponent', () => {
   let spy;
   let search;
-  let storeSpy;
-  let store: Store<any>;
-  let service: OrientationService;
   let component: OrientationListComponent;
   let fixture: ComponentFixture<OrientationListComponent>;
 
@@ -41,8 +37,8 @@ describe('OrientationListComponent', () => {
           OrientationModule,
           RouterTestingModule,
           StoreModule.forRoot({
-            HEADER: headerReducer,
-            SNACKBAR: snackBarReducer
+            HEADER: reducers.HEADER,
+            SNACKBAR: reducers.SNACKBAR
           })
         ],
         providers: [
@@ -54,10 +50,7 @@ describe('OrientationListComponent', () => {
       })
         .compileComponents()
         .then(() => {
-          store = TestBed.get(Store);
-          storeSpy = spyOn(store, 'dispatch').and.callThrough();
           fixture = TestBed.createComponent(OrientationListComponent);
-          service = TestBed.get(OrientationService);
 
           component = fixture.componentInstance;
           component.session.g.set('school', mockSchool);
@@ -79,7 +72,7 @@ describe('OrientationListComponent', () => {
   it(
     'should fetch list of orientation programs',
     fakeAsync(() => {
-      spy = spyOn(component.service, 'getPrograms').and.returnValue(Observable.of(mockPrograms));
+      spy = spyOn(component.service, 'getPrograms').and.returnValue(observableOf(mockPrograms));
       component.ngOnInit();
 
       tick();

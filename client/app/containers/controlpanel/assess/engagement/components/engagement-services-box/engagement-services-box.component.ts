@@ -1,11 +1,10 @@
-import { Input, OnInit, Component } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-
-import { EngagementService } from '../../engagement.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { CPSession } from './../../../../../../session/index';
-import { BaseComponent } from '../../../../../../base/base.component';
 import { CPI18nService } from './../../../../../../shared/services/i18n.service';
+import { BaseComponent } from '../../../../../../base/base.component';
+import { EngagementService } from '../../engagement.service';
 
 const sortTypes = {
   0: 'engagements',
@@ -73,15 +72,12 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
 
     const list_id = this.state.list_id ? this.state.list_id.toString() : null;
 
-    let search = new HttpParams({
-      fromObject: {
-        sort_by: this.state.sortBy,
-        end: this.state.end.toString(),
-        start: this.state.start.toString(),
-        user_list_id: list_id,
-        school_id: this.session.g.get('school').id.toString()
-      }
-    });
+    let search = new HttpParams()
+      .set('sort_by', this.state.sortBy)
+      .set('end', this.state.end.toString())
+      .set('start', this.state.start.toString())
+      .set('user_list_id', list_id)
+      .set('school_id', this.session.g.get('school').id.toString());
 
     search =
       this.state.scope.queryParam === 'scope'

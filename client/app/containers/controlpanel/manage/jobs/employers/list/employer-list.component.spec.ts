@@ -1,16 +1,15 @@
-import { async, fakeAsync, tick, TestBed, ComponentFixture } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
-
+import { of as observableOf } from 'rxjs';
+import { CPI18nService } from './../../../../../../shared/services/i18n.service';
+import { EmployerListComponent } from './employer-list.component';
+import { reducers } from '../../../../../../reducers';
+import { CPSession } from '../../../../../../session';
+import { mockSchool } from '../../../../../../session/mock/school';
 import { EmployerModule } from '../employer.module';
 import { EmployerService } from '../employer.service';
-import { CPSession } from '../../../../../../session';
-import { EmployerListComponent } from './employer-list.component';
-import { mockSchool } from '../../../../../../session/mock/school';
-import { headerReducer, snackBarReducer } from '../../../../../../reducers';
-import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 
 class MockEmployerService {
   dummy;
@@ -19,14 +18,13 @@ class MockEmployerService {
   getEmployers(startRage: number, endRage: number, search: any) {
     this.dummy = [startRage, endRage, search];
 
-    return Observable.of(this.mockEmployers);
+    return observableOf(this.mockEmployers);
   }
 }
 
 describe('EmployersListComponent', () => {
   let spy;
   let search;
-  let service: EmployerService;
   let component: EmployerListComponent;
   let fixture: ComponentFixture<EmployerListComponent>;
 
@@ -46,8 +44,8 @@ describe('EmployersListComponent', () => {
           EmployerModule,
           RouterTestingModule,
           StoreModule.forRoot({
-            HEADER: headerReducer,
-            SNACKBAR: snackBarReducer
+            HEADER: reducers.HEADER,
+            SNACKBAR: reducers.SNACKBAR
           })
         ],
         providers: [
@@ -60,7 +58,6 @@ describe('EmployersListComponent', () => {
         .then(() => {
           fixture = TestBed.createComponent(EmployerListComponent);
           component = fixture.componentInstance;
-          service = TestBed.get(EmployerService);
           component.session.g.set('school', mockSchool);
 
           search = new HttpParams()
@@ -107,7 +104,7 @@ describe('EmployersListComponent', () => {
   it(
     'should fetch list of employers',
     fakeAsync(() => {
-      spy = spyOn(component.service, 'getEmployers').and.returnValue(Observable.of(mockEmployers));
+      spy = spyOn(component.service, 'getEmployers').and.returnValue(observableOf(mockEmployers));
       component.ngOnInit();
 
       tick();

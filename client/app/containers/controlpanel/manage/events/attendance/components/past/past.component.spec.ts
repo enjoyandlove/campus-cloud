@@ -1,14 +1,13 @@
-import { async, TestBed, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
 import { HttpClientModule, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
 import { DebugElement } from '@angular/core';
-
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { of as observableOf } from 'rxjs';
+import { AttendancePastComponent } from './past.component';
+import { CPSession } from '../../../../../../../session';
+import { mockSchool } from '../../../../../../../session/mock/school';
+import { CPI18nService } from '../../../../../../../shared/services';
 import { EventsModule } from '../../../events.module';
 import { EventsService } from '../../../events.service';
-import { CPSession } from '../../../../../../../session';
-import { AttendancePastComponent } from './past.component';
-import { CPI18nService } from '../../../../../../../shared/services';
-import { mockSchool } from '../../../../../../../session/mock/school';
 
 class MockService {
   dummy;
@@ -16,14 +15,13 @@ class MockService {
   getEventAttendanceByEventId(start: number, end: number, search: any) {
     this.dummy = [start, end, search];
 
-    return Observable.of({});
+    return observableOf({});
   }
 }
 
 describe('AttendancePastComponent', () => {
   let spy;
   let search;
-  let service: EventsService;
   let component: AttendancePastComponent;
   let fixture: ComponentFixture<AttendancePastComponent>;
 
@@ -50,7 +48,6 @@ describe('AttendancePastComponent', () => {
         .compileComponents()
         .then(() => {
           fixture = TestBed.createComponent(AttendancePastComponent);
-          service = TestBed.get(EventsService);
 
           component = fixture.componentInstance;
           component.isLoading().subscribe((_) => (component.loading = false));
@@ -72,7 +69,7 @@ describe('AttendancePastComponent', () => {
     'should not have RSVP column for orientation events',
     fakeAsync(() => {
       spy = spyOn(component.service, 'getEventAttendanceByEventId').and.returnValue(
-        Observable.of(pastEvents)
+        observableOf(pastEvents)
       );
 
       component.isOrientation = true;
@@ -92,9 +89,7 @@ describe('AttendancePastComponent', () => {
   );
 
   it('should fetch event attendees by event Id', () => {
-    spy = spyOn(component.service, 'getEventAttendanceByEventId').and.returnValue(
-      Observable.of({})
-    );
+    spy = spyOn(component.service, 'getEventAttendanceByEventId').and.returnValue(observableOf({}));
 
     component.fetch();
 
@@ -103,9 +98,7 @@ describe('AttendancePastComponent', () => {
   });
 
   it('should fetch orientation event attendees by event Id', () => {
-    spy = spyOn(component.service, 'getEventAttendanceByEventId').and.returnValue(
-      Observable.of({})
-    );
+    spy = spyOn(component.service, 'getEventAttendanceByEventId').and.returnValue(observableOf({}));
 
     component.isOrientation = true;
     component.orientationId = 1001;

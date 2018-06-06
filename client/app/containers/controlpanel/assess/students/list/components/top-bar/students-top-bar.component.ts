@@ -1,6 +1,7 @@
+import { map, startWith } from 'rxjs/operators';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { CPSession } from './../../../../../../../session';
 import { StudentsService } from './../../../students.service';
@@ -48,15 +49,14 @@ export class StudentsTopBarComponent implements OnInit {
   ngOnInit() {
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
-    this.lists$ = this.service
-      .getLists(search, 1, 1000)
-      .startWith([
+    this.lists$ = this.service.getLists(search, 1, 1000).pipe(
+      startWith([
         {
           label: this.cpI18n.translate('assess_all_students'),
           id: null
         }
-      ])
-      .map((lists) => {
+      ]),
+      map((lists) => {
         const items = [
           {
             label: this.cpI18n.translate('assess_all_students'),
@@ -64,7 +64,7 @@ export class StudentsTopBarComponent implements OnInit {
           }
         ];
 
-        lists.map((list) => {
+        lists.map((list: any) => {
           list = {
             label: list.name,
             id: list.id
@@ -78,7 +78,8 @@ export class StudentsTopBarComponent implements OnInit {
         });
 
         return items;
-      });
+      })
+    );
 
     this.lists$.subscribe();
   }

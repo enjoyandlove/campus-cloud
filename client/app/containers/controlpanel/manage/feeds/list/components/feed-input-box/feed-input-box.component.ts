@@ -1,23 +1,22 @@
-import { Input, OnInit, Output, Component, EventEmitter } from '@angular/core';
-import { HttpParams, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
+/*tslint:disable:max-line-length */
+import { HttpHeaders, HttpParams } from '@angular/common/http';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-
-import {
-  StoreService,
-  FileUploadService,
-  CPTrackingService
-} from '../../../../../../../shared/services';
-
-import { API } from '../../../../../../../config/api';
-import { FeedsService } from '../../../feeds.service';
-import { appStorage } from '../../../../../../../shared/utils';
-import { CPSession, ISchool } from '../../../../../../../session';
-import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import { ISnackbar, SNACKBAR_SHOW } from './../../../../../../../reducers/snackbar.reducer';
+import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
+import { API } from '../../../../../../../config/api';
+import { CPSession, ISchool } from '../../../../../../../session';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
+import {
+  CPTrackingService,
+  FileUploadService,
+  StoreService
+} from '../../../../../../../shared/services';
+import { appStorage } from '../../../../../../../shared/utils';
+import { FeedsService } from '../../../feeds.service';
 
 @Component({
   selector: 'cp-feed-input-box',
@@ -61,10 +60,9 @@ export class FeedInputBoxComponent implements OnInit {
 
     this.stores$ = this.storeService.getStores(search);
 
-    this.channels$ = this.feedsService
-      .getChannelsBySchoolId(1, 100, search)
-      .startWith([{ label: '---' }])
-      .map((channels) => {
+    this.channels$ = this.feedsService.getChannelsBySchoolId(1, 100, search).pipe(
+      startWith([{ label: '---' }]),
+      map((channels) => {
         const _channels = [
           {
             label: '---',
@@ -72,7 +70,7 @@ export class FeedInputBoxComponent implements OnInit {
           }
         ];
 
-        channels.forEach((channel) => {
+        channels.forEach((channel: any) => {
           const _channel = {
             label: channel.name,
             action: channel.id
@@ -82,7 +80,8 @@ export class FeedInputBoxComponent implements OnInit {
         });
 
         return _channels;
-      });
+      })
+    );
   }
 
   replyToThread({ message, message_image_url_list, school_id, store_id }): Promise<any> {

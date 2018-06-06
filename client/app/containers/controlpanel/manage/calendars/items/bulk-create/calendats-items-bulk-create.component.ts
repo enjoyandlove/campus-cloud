@@ -1,20 +1,20 @@
-import { IItem } from './../item.interface';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { of as observableOf } from 'rxjs';
 import { Store } from '@ngrx/store';
 
+import { IItem } from './../item.interface';
 import { FormArray } from '@angular/forms/src/model';
 import { BaseComponent } from '../../../../../../base';
 import { isDev } from './../../../../../../config/env';
 import { CPSession } from './../../../../../../session';
 import { CPDate } from '../../../../../../shared/utils';
-import { CPI18nPipe } from '../../../../../../shared/pipes';
-import { IHeader, HEADER_UPDATE } from './../../../../../../reducers/header.reducer';
 import { CalendarsService } from '../../calendars.services';
+import { CPI18nPipe } from '../../../../../../shared/pipes';
 import { CPObj } from './../../../../../../shared/utils/object/object';
+import { IHeader, HEADER_UPDATE } from './../../../../../../reducers/header.reducer';
 
 const i18n = new CPI18nPipe();
 
@@ -47,7 +47,7 @@ export class CalendarsItemsBulkCreateComponent extends BaseComponent implements 
   }
 
   getItems() {
-    return isDev ? Observable.of(require('./mock.json')) : this.service.getItems();
+    return isDev ? observableOf(require('./mock.json')) : this.service.getItems();
   }
 
   onSubmit(items: { items: IItem[] }) {

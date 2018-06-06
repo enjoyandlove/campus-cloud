@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { of as observableOf, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -24,7 +24,7 @@ export class CalendarsService extends BaseService {
   getItems(): Observable<IItem[]> {
     const res = this.modalItems.length ? this.modalItems : [];
 
-    return Observable.of(res);
+    return observableOf(res);
   }
 
   getCalendars(startRage: number, endRage: number, search: HttpParams) {

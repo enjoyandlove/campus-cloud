@@ -1,15 +1,14 @@
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
-import { HttpParams, HttpClientModule } from '@angular/common/http';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Observable } from 'rxjs/Observable';
+import { HttpClientModule } from '@angular/common/http';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
-
+import { RouterTestingModule } from '@angular/router/testing';
+import { of as observableOf } from 'rxjs';
+import { CPSession } from './../../../../../../session';
+import { StoreCreateComponent } from './store-create.component';
+import { mockSchool } from '../../../../../../session/mock/school';
+import { CPI18nService } from '../../../../../../shared/services/i18n.service';
 import { StoreModule } from '../store.module';
 import { StoreService } from '../store.service';
-import { CPSession } from './../../../../../../session';
-import { mockSchool } from '../../../../../../session/mock/school';
-import { StoreCreateComponent } from './store-create.component';
-import { CPI18nService } from '../../../../../../shared/services/i18n.service';
 
 class MockStoreService {
   dummy;
@@ -17,13 +16,12 @@ class MockStoreService {
   createStore(body: any, search: any) {
     this.dummy = [search];
 
-    return Observable.of(body);
+    return observableOf(body);
   }
 }
 
 describe('DealsStoreCreateComponent', () => {
   let spy;
-  let search;
   let component: StoreCreateComponent;
   let fixture: ComponentFixture<StoreCreateComponent>;
 
@@ -51,10 +49,6 @@ describe('DealsStoreCreateComponent', () => {
           component = fixture.componentInstance;
 
           component.session.g.set('school', mockSchool);
-          search = new HttpParams().append(
-            'school_id',
-            component.session.g.get('school').id.toString()
-          );
 
           component.ngOnInit();
         });
@@ -104,7 +98,7 @@ describe('DealsStoreCreateComponent', () => {
   it('should create store', () => {
     spyOn(component.created, 'emit');
     spyOn(component, 'resetModal');
-    spy = spyOn(component.service, 'createStore').and.returnValue(Observable.of(newStore));
+    spy = spyOn(component.service, 'createStore').and.returnValue(observableOf(newStore));
 
     component.storeForm = component.fb.group({
       name: ['Hello World!'],

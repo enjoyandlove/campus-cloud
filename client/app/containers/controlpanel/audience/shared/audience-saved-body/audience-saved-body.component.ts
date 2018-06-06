@@ -1,13 +1,12 @@
 /*tslint:disable:max-line-length */
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { get as _get } from 'lodash';
-
-import { CPSession } from '../../../../../session';
-
+import { Observable, of as observableOf, combineLatest } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import { AudienceService } from './../../../../../containers/controlpanel/audience/audience.service';
 import { CPI18nService } from './../../../../../shared/services';
+import { CPSession } from '../../../../../session';
 
 @Component({
   selector: 'cp-audience-saved-body',
@@ -59,7 +58,7 @@ export class AudienceSavedBodyComponent implements OnInit {
 
   fetch() {
     if (!this.canReadAudience) {
-      this.audiences$ = Observable.of([
+      this.audiences$ = observableOf([
         {
           action: null,
           label: this.cpI18n.translate('campus_wide')
@@ -69,15 +68,14 @@ export class AudienceSavedBodyComponent implements OnInit {
 
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
-    const audiences$ = this.service
-      .getAudiences(search, 1, 1000)
-      .startWith([
+    const audiences$ = this.service.getAudiences(search, 1, 1000).pipe(
+      startWith([
         {
           action: null,
           label: this.cpI18n.translate('campus_wide')
         }
-      ])
-      .map((audiences) => {
+      ]),
+      map((audiences) => {
         return [
           {
             action: null,
@@ -85,10 +83,11 @@ export class AudienceSavedBodyComponent implements OnInit {
           },
           ...this.parsedAudience(audiences)
         ];
-      });
+      })
+    );
 
-    this.audiences$ = Observable.combineLatest(audiences$, this.importedAudience$).map(
-      ([audiences, importedAudienceId]) => {
+    this.audiences$ = combineLatest(audiences$, this.importedAudience$).pipe(
+      map(([audiences, importedAudienceId]: any) => {
         if (importedAudienceId) {
           this.selectedItem = audiences.filter(
             (audience) => audience.action === importedAudienceId
@@ -106,7 +105,7 @@ export class AudienceSavedBodyComponent implements OnInit {
         }
 
         return audiences;
-      }
+      })
     );
   }
 

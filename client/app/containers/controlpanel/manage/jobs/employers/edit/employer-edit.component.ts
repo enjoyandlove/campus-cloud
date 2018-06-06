@@ -1,3 +1,4 @@
+import { HttpParams } from '@angular/common/http';
 import {
   Component,
   ElementRef,
@@ -9,12 +10,10 @@ import {
   ViewChild
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpParams } from '@angular/common/http';
-
-import { IEmployer } from '../employer.interface';
-import { EmployerService } from '../employer.service';
 import { CPSession } from '../../../../../../session';
 import { CPI18nService } from '../../../../../../shared/services/i18n.service';
+import { IEmployer } from '../employer.interface';
+import { EmployerService } from '../employer.service';
 
 @Component({
   selector: 'cp-employer-edit',
@@ -59,7 +58,7 @@ export class EmployerEditComponent implements OnInit {
 
     this.service
       .editEmployer(this.employer.id, this.employerForm.value, search)
-      .subscribe((employer) => {
+      .subscribe((employer: any) => {
         this.edited.emit(employer);
         this.resetModal();
       });

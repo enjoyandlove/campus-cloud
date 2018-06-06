@@ -1,15 +1,14 @@
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
-import { HttpParams, HttpClientModule } from '@angular/common/http';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Observable } from 'rxjs/Observable';
+import { HttpClientModule } from '@angular/common/http';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
-
+import { RouterTestingModule } from '@angular/router/testing';
+import { of as observableOf } from 'rxjs';
+import { CPSession } from './../../../../../../session';
+import { EmployerCreateComponent } from './employer-create.component';
+import { mockSchool } from '../../../../../../session/mock/school';
+import { CPI18nService } from '../../../../../../shared/services/i18n.service';
 import { EmployerModule } from '../employer.module';
 import { EmployerService } from '../employer.service';
-import { CPSession } from './../../../../../../session';
-import { mockSchool } from '../../../../../../session/mock/school';
-import { EmployerCreateComponent } from './employer-create.component';
-import { CPI18nService } from '../../../../../../shared/services/i18n.service';
 
 class MockEmployerService {
   dummy;
@@ -17,15 +16,13 @@ class MockEmployerService {
   createEmployer(body: any, search: any) {
     this.dummy = [search];
 
-    return Observable.of(body);
+    return observableOf(body);
   }
 }
 
 describe('EmployerCreateComponent', () => {
   let spy;
-  let search;
   let component: EmployerCreateComponent;
-  let service: EmployerService;
   let fixture: ComponentFixture<EmployerCreateComponent>;
 
   const newEmployer = {
@@ -51,13 +48,8 @@ describe('EmployerCreateComponent', () => {
         .then(() => {
           fixture = TestBed.createComponent(EmployerCreateComponent);
           component = fixture.componentInstance;
-          service = TestBed.get(EmployerService);
 
           component.session.g.set('school', mockSchool);
-          search = new HttpParams().append(
-            'school_id',
-            component.session.g.get('school').id.toString()
-          );
 
           component.ngOnInit();
         });
@@ -97,7 +89,7 @@ describe('EmployerCreateComponent', () => {
   it('should create employer', () => {
     spyOn(component.created, 'emit');
     spyOn(component, 'resetModal');
-    spy = spyOn(component.service, 'createEmployer').and.returnValue(Observable.of(newEmployer));
+    spy = spyOn(component.service, 'createEmployer').and.returnValue(observableOf(newEmployer));
 
     component.employerForm = component.fb.group({
       name: ['Hello World!'],

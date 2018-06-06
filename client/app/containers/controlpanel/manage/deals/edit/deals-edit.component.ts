@@ -1,15 +1,15 @@
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-
-import { DealsService } from '../deals.service';
-import { CPSession } from '../../../../../session';
+import { switchMap } from 'rxjs/operators';
 import { BaseComponent } from '../../../../../base';
-import { StoreService } from '../stores/store.service';
-import { CPI18nService } from '../../../../../shared/services';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+import { CPSession } from '../../../../../session';
+import { CPI18nService } from '../../../../../shared/services';
+import { DealsService } from '../deals.service';
+import { StoreService } from '../stores/store.service';
 
 @Component({
   selector: 'cp-deals-edit',
@@ -64,7 +64,7 @@ export class DealsEditComponent extends BaseComponent implements OnInit {
     const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     this.service.editDeal(this.dealId, data.deal, search).subscribe(
-      (deal) => this.router.navigate([`/manage/deals/${deal.id}/info`]),
+      (deal: any) => this.router.navigate([`/manage/deals/${deal.id}/info`]),
       (_) => {
         this.error = true;
         this.errorMessage = this.cpI18n.translate('something_went_wrong');
@@ -77,13 +77,15 @@ export class DealsEditComponent extends BaseComponent implements OnInit {
 
     this.storeService
       .createStore(data.store, search)
-      .switchMap((store) => {
-        data.deal.store_id = store.id;
+      .pipe(
+        switchMap((store: any) => {
+          data.deal.store_id = store.id;
 
-        return this.service.editDeal(this.dealId, data.deal, search);
-      })
+          return this.service.editDeal(this.dealId, data.deal, search);
+        })
+      )
       .subscribe(
-        (deal) => this.router.navigate([`/manage/deals/${deal.id}/info`]),
+        (deal: any) => this.router.navigate([`/manage/deals/${deal.id}/info`]),
         (_) => {
           this.error = true;
           this.errorMessage = this.cpI18n.translate('something_went_wrong');

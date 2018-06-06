@@ -8,7 +8,7 @@ import {
   ElementRef
 } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 
 import { CPMap } from '../../../../../shared/utils';
