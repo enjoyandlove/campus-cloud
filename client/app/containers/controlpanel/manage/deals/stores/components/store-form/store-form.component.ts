@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 
 import { CPMap } from '../../../../../../../shared/utils';
 import { CPSession, ISchool } from '../../../../../../../session';
@@ -18,9 +18,7 @@ export class StoreFormComponent implements OnInit {
   mapCenter: BehaviorSubject<any>;
   newAddress = new BehaviorSubject(null);
 
-  constructor(
-    public session: CPSession,
-    public cpTracking: CPTrackingService) {}
+  constructor(public session: CPSession, public cpTracking: CPTrackingService) {}
 
   onUploadedImage(image) {
     this.storeForm.controls['logo_url'].setValue(image);

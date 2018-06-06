@@ -1,13 +1,12 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { BehaviorSubject, of as observableOf } from 'rxjs';
+import { flatMap, map, startWith } from 'rxjs/operators';
+import { BaseComponent } from '../../../../../../../base/base.component';
+import { CPSession, ISchool } from '../../../../../../../session';
+import { AdminService, CPI18nService, StoreService } from '../../../../../../../shared/services';
 import { EventAttendance } from '../../../event.status';
 import { EventUtilService } from '../../../events.utils.service';
-import { CPSession, ISchool } from '../../../../../../../session';
-import { BaseComponent } from '../../../../../../../base/base.component';
-import { StoreService, AdminService, CPI18nService } from '../../../../../../../shared/services';
 
 interface IState {
   store_id: any;
@@ -83,17 +82,16 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
       .append('store_id', storeId)
       .append('privilege_type', this.utils.getPrivilegeType(this.isOrientation));
 
-    return this.adminService
-      .getAdminByStoreId(search)
-      .startWith([{ label: '---' }])
-      .map((admins) => {
+    return this.adminService.getAdminByStoreId(search).pipe(
+      startWith([{ label: '---' }]),
+      map((admins) => {
         const _admins = [
           {
             label: '---',
             value: null
           }
         ];
-        admins.forEach((admin) => {
+        admins.forEach((admin: any) => {
           _admins.push({
             label: `${admin.firstname} ${admin.lastname}`,
             value: admin.id
@@ -101,7 +99,8 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
         });
 
         return _admins;
-      });
+      })
+    );
   }
 
   toggleEventAttendance() {
@@ -154,13 +153,15 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
      * dropdown, upon change we call the managers endpoint
      * and update the available managers
      */
-    this.managers$ = this.selectedHost$.asObservable().flatMap((host) => {
-      if (host) {
-        return this.getManagersByHostId(host);
-      }
+    this.managers$ = this.selectedHost$.asObservable().pipe(
+      flatMap((host) => {
+        if (host) {
+          return this.getManagersByHostId(host);
+        }
 
-      return Observable.of([{ label: '---' }]);
-    });
+        return observableOf([{ label: '---' }]);
+      })
+    );
   }
 
   doSubmit() {

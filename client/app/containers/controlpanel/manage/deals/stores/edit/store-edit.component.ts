@@ -1,3 +1,4 @@
+import { HttpParams } from '@angular/common/http';
 import {
   Component,
   ElementRef,
@@ -8,12 +9,10 @@ import {
   Output
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpParams } from '@angular/common/http';
-
-import { IStore } from '../store.interface';
-import { StoreService } from '../store.service';
 import { CPSession } from '../../../../../../session';
 import { CPI18nService } from '../../../../../../shared/services/i18n.service';
+import { IStore } from '../store.interface';
+import { StoreService } from '../store.service';
 
 @Component({
   selector: 'cp-store-edit',
@@ -57,7 +56,7 @@ export class StoreEditComponent implements OnInit {
     const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     this.service.editStore(this.store.id, this.storeForm.value, search).subscribe(
-      (store) => {
+      (store: IStore) => {
         this.edited.emit(store);
         this.resetModal();
       },

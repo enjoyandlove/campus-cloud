@@ -1,11 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-
-import { FeedsService } from '../../feeds.service';
-import { CPSession } from '../../../../../../session';
+import { Component, Input, OnInit } from '@angular/core';
+import { BehaviorSubject, combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { BaseComponent } from '../../../../../../base/base.component';
+import { CPSession } from '../../../../../../session';
+import { FeedsService } from '../../feeds.service';
 
 interface ICurrentView {
   label: string;
@@ -163,20 +162,22 @@ export class FeedsComponent extends BaseComponent implements OnInit {
 
       const channels$ = this.service.getChannelsBySchoolId(1, 1000, _search);
 
-      stream$ = Observable.combineLatest(campusThread$, channels$).map((res) => {
-        const result = [];
-        const threads = res[0];
-        this.channels = res[1];
+      stream$ = combineLatest(campusThread$, channels$).pipe(
+        map((res: any) => {
+          const result = [];
+          const threads = res[0];
+          this.channels = res[1];
 
-        threads.forEach((thread) => {
-          result.push({
-            ...thread,
-            channelName: this.getChannelNameFromArray(this.channels, thread)
+          threads.forEach((thread) => {
+            result.push({
+              ...thread,
+              channelName: this.getChannelNameFromArray(this.channels, thread)
+            });
           });
-        });
 
-        return result;
-      });
+          return result;
+        })
+      );
     } else {
       return groupThread$;
     }

@@ -1,4 +1,3 @@
-import { mockSchool } from './../../../../../session/mock/school';
 /*
  * Testing a simple Angular 2 component
  * More info: https://angular.io/docs/ts/latest/guide/testing.html#!#simple-component-test
@@ -7,28 +6,28 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Store, StoreModule } from '@ngrx/store';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs';
+import { of as observableOf } from 'rxjs';
 
 // import { By } from '@angular/platform-browser';
 // import { DebugElement } from '@angular/core';
 
+import { CPSession } from './../../../../../session';
 import { StudentsService } from './../students.service';
-import { CPSession } from './../../../../../session/index';
 import { mockUser } from './../../../../../session/mock/user';
+import { mockSchool } from './../../../../../session/mock/school';
 import { MockCPSession } from './../../../../../session/mock/session';
 import { SharedModule } from './../../../../../shared/shared.module';
 import { StudentsProfileComponent } from './students-profile.component';
-import { snackBarReducer, headerReducer } from '../../../../../reducers';
+import { reducers } from '../../../../../reducers';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 const mockStudentsService = {
   getStudentById() {
-    return Observable.of(mockUser);
+    return observableOf(mockUser);
   },
 
   getEngagements() {
-    return Observable.of([
+    return observableOf([
       {
         related_id: 168428,
         user_feedback_text: 'safety',
@@ -68,8 +67,8 @@ describe('StudentsProfileComponent', () => {
       imports: [
         SharedModule,
         StoreModule.forRoot({
-          HEADER: headerReducer,
-          SNACKBAR: snackBarReducer
+          HEADER: reducers.HEADER,
+          SNACKBAR: reducers.SNACKBAR
         })
       ],
       providers: [
@@ -80,7 +79,7 @@ describe('StudentsProfileComponent', () => {
           provide: ActivatedRoute,
           useValue: {
             snapshot: {
-              params: Observable.of({ studentId: 1 })
+              params: observableOf({ studentId: 1 })
             }
           }
         }
@@ -166,7 +165,7 @@ describe('StudentsProfileComponent', () => {
   });
 
   it('Spy on real service test', (done) => {
-    const spy = spyOn(service, 'getStudentById').and.returnValue(Observable.of('Sopa'));
+    const spy = spyOn(service, 'getStudentById').and.returnValue(observableOf('Sopa'));
 
     fixture.detectChanges();
     spy.calls.mostRecent().returnValue.subscribe(() => {

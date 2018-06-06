@@ -1,12 +1,12 @@
-import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import * as Raven from 'raven-js';
-
-import { CPSession } from '../../session';
-import { appStorage } from '../../shared/utils';
+import { map } from 'rxjs/operators';
 import { base64 } from './../../shared/utils/encrypt/encrypt';
+import { CPSession } from '../../session';
 import { AdminService, SchoolService, StoreService, ZendeskService } from '../../shared/services';
+import { appStorage } from '../../shared/utils';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -20,54 +20,54 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   preLoadUser(): Promise<any> {
-    const search = new HttpParams({
-      fromObject: { school_id: this.session.g.get('school').id.toString() }
-    });
+    const search = new HttpParams().set('school_id', this.session.g.get('school').id.toString());
 
     return this.adminService
       .getAdmins(1, 1, search)
-      .map((users) => {
-        this.session.g.set('user', users[0]);
-        this.setUserContext();
+      .pipe(
+        map((users) => {
+          this.session.g.set('user', users[0]);
+          this.setUserContext();
 
-        return users;
-      })
+          return users;
+        })
+      )
       .toPromise();
   }
 
   preLoadSchool(route: ActivatedRouteSnapshot): Promise<any> {
     return this.schoolService
       .getSchools()
-      .map((schools) => {
-        let schoolIdInUrl;
-        let schoolObjFromUrl;
-        const storedSchool = JSON.parse(appStorage.get(appStorage.keys.DEFAULT_SCHOOL));
+      .pipe(
+        map((schools) => {
+          let schoolIdInUrl;
+          let schoolObjFromUrl;
+          const storedSchool = JSON.parse(appStorage.get(appStorage.keys.DEFAULT_SCHOOL));
 
-        try {
-          schoolIdInUrl = base64.decode(route.queryParams.school);
-        } catch (error) {
-          schoolIdInUrl = null;
-        }
+          try {
+            schoolIdInUrl = base64.decode(route.queryParams.school);
+          } catch (error) {
+            schoolIdInUrl = null;
+          }
 
-        if (schoolIdInUrl) {
-          Object.keys(schools).map((key: any) => {
-            if (schools[key].id === +schoolIdInUrl) {
-              schoolObjFromUrl = schools[key];
-            }
-          });
-        }
+          if (schoolIdInUrl) {
+            Object.keys(schools).map((key: any) => {
+              if (schools[key].id === +schoolIdInUrl) {
+                schoolObjFromUrl = schools[key];
+              }
+            });
+          }
 
-        this.session.g.set('schools', schools);
+          this.session.g.set('schools', schools);
 
-        this.session.g.set('school', storedSchool || schoolObjFromUrl || schools[0]);
-      })
+          this.session.g.set('school', storedSchool || schoolObjFromUrl || schools[0]);
+        })
+      )
       .toPromise();
   }
 
   fetchStores(): Promise<any> {
-    const search = new HttpParams({
-      fromObject: { school_id: this.session.g.get('school').id.toString() }
-    });
+    const search = new HttpParams().set('school_id', this.session.g.get('school').id.toString());
 
     return this.storeService.getStores(search).toPromise();
   }

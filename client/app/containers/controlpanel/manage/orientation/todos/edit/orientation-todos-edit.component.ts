@@ -1,3 +1,4 @@
+import { HttpParams } from '@angular/common/http';
 import {
   Component,
   ElementRef,
@@ -8,13 +9,11 @@ import {
   Output,
   ViewChild
 } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-
-import { ITodo } from '../todos.interface';
-import { TodosService } from '../todos.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CPSession } from './../../../../../../session';
 import { CPI18nService } from '../../../../../../shared/services/i18n.service';
+import { ITodo } from '../todos.interface';
+import { TodosService } from '../todos.service';
 
 @Component({
   selector: 'cp-orientation-todos-edit',
@@ -57,7 +56,7 @@ export class OrientationTodosEditComponent implements OnInit {
   onSubmit() {
     const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
-    this.service.editTodo(this.todo.id, this.form.value, search).subscribe((editedTodo) => {
+    this.service.editTodo(this.todo.id, this.form.value, search).subscribe((editedTodo: any) => {
       this.edited.emit(editedTodo);
       this.resetModal();
     });

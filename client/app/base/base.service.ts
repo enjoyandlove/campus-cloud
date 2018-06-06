@@ -1,11 +1,11 @@
-import { HttpClient, HttpParams, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { Observable, of as observableOf, throwError as observableThrowError } from 'rxjs';
+import { catchError, delay, flatMap, retryWhen } from 'rxjs/operators';
+import { API } from './../config/api/index';
 import { appStorage, CPObj } from '../shared/utils';
 
-import { API } from './../config/api/index';
 /**
  * Base Service
  * Takes care of setting common headers
@@ -21,24 +21,27 @@ const buildCommonHeaders = () => {
   });
 };
 
-const emptyResponse = Observable.of(new HttpResponse({ body: JSON.stringify([]) }));
+const emptyResponse = observableOf(new HttpResponse({ body: JSON.stringify([]) }));
 
 @Injectable()
 export abstract class BaseService {
   constructor(private http: HttpClient, private router: Router) {}
 
-  private waitAndRetry(err): Observable<any> {
+  private waitAndRetry(err: Observable<any>): Observable<any> {
     let retries = 1;
 
-    return err.delay(1200).flatMap((e) => {
-      if (retries > 0) {
-        retries -= 1;
+    return err.pipe(
+      delay(1200),
+      flatMap((e) => {
+        if (retries > 0) {
+          retries -= 1;
 
-        return Observable.of(e);
-      }
+          return observableOf(e);
+        }
 
-      return Observable.throw(e);
-    });
+        return observableThrowError(e);
+      })
+    );
   }
 
   clearNullValues(params: HttpParams): HttpParams {
@@ -59,12 +62,11 @@ export abstract class BaseService {
 
     const headers = buildCommonHeaders();
 
-    return this.http
-      .get(url, { headers, params })
-      .retryWhen((err) => this.waitAndRetry(err))
-      .catch((err) => {
+    return this.http.get(url, { headers, params }).pipe(
+      retryWhen((err) => this.waitAndRetry(err)),
+      catchError((err) => {
         if (silent) {
-          return Observable.throw(err);
+          return observableThrowError(err);
         }
 
         if (err.status === 403) {
@@ -72,7 +74,8 @@ export abstract class BaseService {
         }
 
         return this.catchError(err);
-      });
+      })
+    );
   }
 
   post(url: string, data: any, params?: HttpParams, silent = false) {
@@ -86,8 +89,10 @@ export abstract class BaseService {
 
     return this.http
       .post(url, data, { headers, params })
-      .retryWhen((err) => this.waitAndRetry(err))
-      .catch((err) => (silent ? Observable.throw(err) : this.catchError(err)));
+      .pipe(
+        retryWhen((err) => this.waitAndRetry(err)),
+        catchError((err) => (silent ? observableThrowError(err) : this.catchError(err)))
+      );
   }
 
   update(url: string, data: any, params?: HttpParams, silent = false) {
@@ -101,8 +106,10 @@ export abstract class BaseService {
 
     return this.http
       .put(url, data, { headers, params })
-      .retryWhen((err) => this.waitAndRetry(err))
-      .catch((err) => (silent ? Observable.throw(err) : this.catchError(err)));
+      .pipe(
+        retryWhen((err) => this.waitAndRetry(err)),
+        catchError((err) => (silent ? observableThrowError(err) : this.catchError(err)))
+      );
   }
 
   delete(url: string, params?: HttpParams, silent = false, extraOptions = {}) {
@@ -114,8 +121,10 @@ export abstract class BaseService {
 
     return this.http
       .delete(url, { headers, params, ...extraOptions })
-      .retryWhen((err) => this.waitAndRetry(err))
-      .catch((err) => (silent ? Observable.throw(err) : this.catchError(err)));
+      .pipe(
+        retryWhen((err) => this.waitAndRetry(err)),
+        catchError((err) => (silent ? observableThrowError(err) : this.catchError(err)))
+      );
   }
 
   catchError(err) {
@@ -141,7 +150,7 @@ export abstract class BaseService {
         return emptyResponse;
 
       default:
-        return Observable.throw(err);
+        return observableThrowError(err);
     }
   }
 }

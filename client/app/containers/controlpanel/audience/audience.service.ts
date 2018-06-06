@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -15,20 +16,20 @@ export class AudienceService extends BaseService {
     Object.setPrototypeOf(this, AudienceService.prototype);
   }
 
-  getUsers(search: HttpParams) {
+  getUsers(search: HttpParams): Observable<any> {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER}/`;
 
     return super.get(url, search);
   }
 
-  getAudiences(search: HttpParams, startRange: number, endRange: number) {
+  getAudiences(search: HttpParams, startRange: number, endRange: number): Observable<any> {
     const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER_LIST}`;
     const url = `${common}/${startRange};${endRange}`;
 
     return super.get(url, search);
   }
 
-  getAudienceById(audienceId: number, search: HttpParams) {
+  getAudienceById(audienceId: number, search: HttpParams): Observable<any> {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER_LIST}/${audienceId}`;
 
     return super.get(url, search);
@@ -40,7 +41,7 @@ export class AudienceService extends BaseService {
     return super.delete(url, search);
   }
 
-  createAudience(body: any, search: HttpParams) {
+  createAudience(body: any, search: HttpParams): Observable<any> {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER_LIST}/`;
 
     return super.post(url, body, search);

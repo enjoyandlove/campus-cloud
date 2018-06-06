@@ -1,6 +1,6 @@
 import { EventUtilService } from './../events.utils.service';
 import { Component, OnInit, Input } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 

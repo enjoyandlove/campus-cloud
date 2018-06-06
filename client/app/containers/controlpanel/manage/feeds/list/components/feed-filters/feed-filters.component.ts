@@ -1,12 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-
-import { FeedsService } from '../../../feeds.service';
-
-import { CPSession } from '../../../../../../../session';
-
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
+import { CPSession } from '../../../../../../../session';
+import { FeedsService } from '../../../feeds.service';
 
 const campusWall = {
   label: 'Campus Wall',
@@ -73,15 +71,14 @@ export class FeedFiltersComponent implements OnInit {
   private fetch() {
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
-    this.walls$ = this.feedsService
-      .getSocialGroups(search)
-      .startWith([
+    this.walls$ = this.feedsService.getSocialGroups(search).pipe(
+      startWith([
         {
           label: this.cpI18n.translate('campus_wall'),
           action: 1
         }
-      ])
-      .map((groupWalls) => {
+      ]),
+      map((groupWalls) => {
         const _walls = [
           {
             label: this.cpI18n.translate('campus_wall'),
@@ -89,7 +86,7 @@ export class FeedFiltersComponent implements OnInit {
           }
         ];
 
-        groupWalls.forEach((wall) => {
+        groupWalls.forEach((wall: any) => {
           const _wall = {
             label: wall.name,
             action: wall.id,
@@ -102,12 +99,12 @@ export class FeedFiltersComponent implements OnInit {
         });
 
         return _walls;
-      });
+      })
+    );
 
-    this.channels$ = this.feedsService
-      .getChannelsBySchoolId(1, 1000, search)
-      .startWith([{ label: this.cpI18n.translate('all') }])
-      .map((channels) => {
+    this.channels$ = this.feedsService.getChannelsBySchoolId(1, 1000, search).pipe(
+      startWith([{ label: this.cpI18n.translate('all') }]),
+      map((channels) => {
         const _channels = [
           {
             label: this.cpI18n.translate('all'),
@@ -115,7 +112,7 @@ export class FeedFiltersComponent implements OnInit {
           }
         ];
 
-        channels.forEach((channel) => {
+        channels.forEach((channel: any) => {
           const _channel = {
             label: channel.name,
             action: channel.id
@@ -125,7 +122,8 @@ export class FeedFiltersComponent implements OnInit {
         });
 
         return _channels;
-      });
+      })
+    );
   }
 
   onFlaggedOrRemoved(action) {

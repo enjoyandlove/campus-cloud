@@ -1,10 +1,9 @@
-import { HttpParams, HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-
-import { API } from '../../../../config/api';
+import { Observable } from 'rxjs';
 import { BaseService } from '../../../../base/base.service';
+import { API } from '../../../../config/api';
 
 @Injectable()
 export class AudienceSharedService extends BaseService {

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of as observableOf } from 'rxjs';
 
 interface IItem {
   label: string;
@@ -34,7 +34,7 @@ export class CPCheckDropdownComponent implements OnInit {
     this.selectedItem = this.selectedItem ? this.selectedItem : this.items[0];
 
     if (!this.reset) {
-      this.reset = Observable.of(false);
+      this.reset = observableOf(false);
     }
 
     this.reset.subscribe((reset) => {

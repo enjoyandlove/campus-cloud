@@ -1,24 +1,23 @@
-import { async, TestBed, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
-
-import { EventsModule } from '../events.module';
-import { EventsService } from '../events.service';
-import { CPSession } from '../../../../../session';
-import { EventUtilService } from '../events.utils.service';
-import { mockSchool } from '../../../../../session/mock/school';
+import { of as observableOf } from 'rxjs';
 import { EventsEditComponent } from './events-edit.component';
-import { headerReducer, snackBarReducer } from '../../../../../reducers';
-import { EventAttendance } from '../event.status';
+import { reducers } from '../../../../../reducers';
+import { CPSession } from '../../../../../session';
+import { mockSchool } from '../../../../../session/mock/school';
 import {
   AdminService,
   CPI18nService,
   ErrorService,
   StoreService
 } from '../../../../../shared/services';
+import { EventAttendance } from '../event.status';
+import { EventsModule } from '../events.module';
+import { EventsService } from '../events.service';
+import { EventUtilService } from '../events.utils.service';
 
 class MockService {
   dummy;
@@ -26,20 +25,18 @@ class MockService {
   updateEvent(body: any, eventId: number, search: any) {
     this.dummy = [eventId, search];
 
-    return Observable.of({ body });
+    return observableOf({ body });
   }
 
   getEventById(eventId: number, search: any) {
     this.dummy = [eventId, search];
 
-    return Observable.of([]);
+    return observableOf([]);
   }
 }
 
 describe('EventEditComponent', () => {
   let spy;
-  let storeService;
-  let service: EventsService;
   let component: EventsEditComponent;
   let fixture: ComponentFixture<EventsEditComponent>;
 
@@ -71,8 +68,8 @@ describe('EventEditComponent', () => {
           EventsModule,
           RouterTestingModule,
           StoreModule.forRoot({
-            HEADER: headerReducer,
-            SNACKBAR: snackBarReducer
+            HEADER: reducers.HEADER,
+            SNACKBAR: reducers.SNACKBAR
           })
         ],
         providers: [
@@ -89,8 +86,6 @@ describe('EventEditComponent', () => {
         .compileComponents()
         .then(() => {
           fixture = TestBed.createComponent(EventsEditComponent);
-          service = TestBed.get(EventsService);
-          storeService = TestBed.get(StoreService);
 
           component = fixture.componentInstance;
           component.eventId = 1002;
@@ -100,9 +95,9 @@ describe('EventEditComponent', () => {
 
           spyOn(component, 'router');
           spyOn(component, 'buildHeader');
-          spyOn(component.service, 'getEventById').and.returnValue(Observable.of(mockEvent));
-          spyOn(component.storeService, 'getStores').and.returnValue(Observable.of({}));
-          spy = spyOn(component.service, 'updateEvent').and.returnValue(Observable.of({}));
+          spyOn(component.service, 'getEventById').and.returnValue(observableOf(mockEvent));
+          spyOn(component.storeService, 'getStores').and.returnValue(observableOf({}));
+          spy = spyOn(component.service, 'updateEvent').and.returnValue(observableOf({}));
         });
     })
   );
@@ -135,7 +130,7 @@ describe('EventEditComponent', () => {
     component.form.controls['end'].setValue(null);
     component.form.controls['start'].setValue(null);
     component.form.controls['poster_url'].setValue(null);
-    component.onSubmit(Observable.of({}));
+    component.onSubmit(observableOf({}));
 
     expect(component.form.valid).toBeFalsy();
     expect(component.formMissingFields).toBeTruthy();
@@ -144,7 +139,7 @@ describe('EventEditComponent', () => {
 
   it('form validation should fail - event manager is required', () => {
     component.form.controls['event_attendance'].setValue(EventAttendance.enabled);
-    component.onSubmit(Observable.of({}));
+    component.onSubmit(observableOf({}));
 
     expect(component.formMissingFields).toBeTruthy();
     expect(component.buttonData.disabled).toBeFalsy();
@@ -160,7 +155,7 @@ describe('EventEditComponent', () => {
       tick();
 
       component.form.controls['end'].setValue(1492342527);
-      component.onSubmit(Observable.of({}));
+      component.onSubmit(observableOf({}));
 
       expect(component.formMissingFields).toBeTruthy();
       expect(component.isDateError).toBeTruthy();
@@ -180,7 +175,7 @@ describe('EventEditComponent', () => {
 
       component.form.controls['start'].setValue(1460806527);
       component.form.controls['end'].setValue(1492342527);
-      component.onSubmit(Observable.of({}));
+      component.onSubmit(observableOf({}));
 
       expect(component.formMissingFields).toBeTruthy();
       expect(component.isDateError).toBeTruthy();
@@ -197,7 +192,7 @@ describe('EventEditComponent', () => {
       component.fetch();
       tick();
 
-      component.onSubmit(Observable.of({}));
+      component.onSubmit(observableOf({}));
       expect(spy).toHaveBeenCalled();
       expect(component.form.valid).toBeTruthy();
       expect(component.formMissingFields).toBeFalsy();

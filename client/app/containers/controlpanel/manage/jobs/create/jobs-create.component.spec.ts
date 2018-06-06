@@ -1,17 +1,16 @@
-import { async, TestBed, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
-import { HttpParams, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Observable } from 'rxjs/Observable';
 import { StoreModule } from '@ngrx/store';
-
+import { of as observableOf } from 'rxjs';
+import { JobsCreateComponent } from './jobs-create.component';
+import { reducers } from '../../../../../reducers';
+import { CPSession } from '../../../../../session';
+import { mockSchool } from '../../../../../session/mock/school';
+import { CPI18nService } from '../../../../../shared/services';
+import { EmployerService } from '../employers/employer.service';
 import { JobsModule } from '../jobs.module';
 import { JobsService } from '../jobs.service';
-import { CPSession } from '../../../../../session';
-import { JobsCreateComponent } from './jobs-create.component';
-import { CPI18nService } from '../../../../../shared/services';
-import { mockSchool } from '../../../../../session/mock/school';
-import { EmployerService } from '../employers/employer.service';
-import { headerReducer, snackBarReducer } from '../../../../../reducers';
 
 const mockJobs = require('../mockJobs.json');
 const mockEmployers = require('../employers/mockEmployer.json');
@@ -22,7 +21,7 @@ class MockJobsService {
   createJob(body: any, search: any) {
     this.dummy = [body, search];
 
-    return Observable.of(mockJobs[0]);
+    return observableOf(mockJobs[0]);
   }
 }
 
@@ -32,13 +31,12 @@ class MockEmployerService {
   createEmployer(body: any, search: any) {
     this.dummy = [body, search];
 
-    return Observable.of({});
+    return observableOf({});
   }
 }
 
 describe('JobsCreateComponent', () => {
   let jobSpy;
-  let search;
   let spyEmployer;
   let component: JobsCreateComponent;
   let fixture: ComponentFixture<JobsCreateComponent>;
@@ -51,8 +49,8 @@ describe('JobsCreateComponent', () => {
           HttpClientModule,
           RouterTestingModule,
           StoreModule.forRoot({
-            HEADER: headerReducer,
-            SNACKBAR: snackBarReducer
+            HEADER: reducers.HEADER,
+            SNACKBAR: reducers.SNACKBAR
           })
         ],
         providers: [
@@ -70,16 +68,13 @@ describe('JobsCreateComponent', () => {
           component.buildForm();
           component.buildEmployerForm();
           component.session.g.set('school', mockSchool);
-          search = new HttpParams().append('school_id', component.session.g.get('school').id);
 
           spyOn(component.router, 'navigate');
 
-          jobSpy = spyOn(component.service, 'createJob').and.returnValue(
-            Observable.of(mockJobs[0])
-          );
+          jobSpy = spyOn(component.service, 'createJob').and.returnValue(observableOf(mockJobs[0]));
 
           spyEmployer = spyOn(component.employerService, 'createEmployer').and.returnValue(
-            Observable.of(mockEmployers[0])
+            observableOf(mockEmployers[0])
           );
         });
     })

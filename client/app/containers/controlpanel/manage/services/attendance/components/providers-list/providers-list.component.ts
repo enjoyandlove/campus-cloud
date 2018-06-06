@@ -1,12 +1,10 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-
-import { ProvidersService } from '../../../providers.service';
-import { BaseComponent } from '../../../../../../../base/base.component';
-import { createSpreadSheet } from './../../../../../../../shared/utils/csv/parser';
+import { Component, Input, OnInit, Output } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
+import { createSpreadSheet } from './../../../../../../../shared/utils/csv/parser';
+import { BaseComponent } from '../../../../../../../base/base.component';
+import { ProvidersService } from '../../../providers.service';
 
 interface IState {
   search_text: string;
@@ -108,7 +106,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
 
         const stream$ = this.providersService.getProviders(this.startRange, this.endRange, search);
 
-        stream$.toPromise().then((providers) => {
+        stream$.toPromise().then((providers: any) => {
           const columns = [
             this.cpI18n.translate('service_provider'),
             this.cpI18n.translate('email'),

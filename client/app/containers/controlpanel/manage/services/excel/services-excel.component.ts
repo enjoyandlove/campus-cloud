@@ -1,17 +1,16 @@
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-
-import { isDev } from '../../../../../config/env';
-import { CPSession } from '../../../../../session';
-import { ServicesService } from '../services.service';
-import { CPI18nService } from '../../../../../shared/services';
-import { BaseComponent } from '../../../../../base/base.component';
+import { map, startWith } from 'rxjs/operators';
 import { CPI18nPipe } from './../../../../../shared/pipes/i18n/i18n.pipe';
+import { BaseComponent } from '../../../../../base/base.component';
+import { isDev } from '../../../../../config/env';
+import { HEADER_DEFAULT, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { SERVICES_MODAL_RESET } from '../../../../../reducers/services-modal.reducer';
-
-import { HEADER_UPDATE, HEADER_DEFAULT } from '../../../../../reducers/header.reducer';
+import { CPSession } from '../../../../../session';
+import { CPI18nService } from '../../../../../shared/services';
+import { ServicesService } from '../services.service';
 
 const i18n = new CPI18nPipe();
 
@@ -83,23 +82,25 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
   loadCategories(): Promise<any> {
     return this.servicesService
       .getCategories()
-      .startWith([{ label: '---', action: null }])
-      .map((categories) => {
-        const _categories = [
-          {
-            label: '---',
-            action: null
-          }
-        ];
-        categories.map((category) => {
-          _categories.push({
-            action: category.id,
-            label: category.name
+      .pipe(
+        startWith([{ label: '---', action: null }]),
+        map((categories: Array<any>) => {
+          const _categories = [
+            {
+              label: '---',
+              action: null
+            }
+          ];
+          categories.map((category) => {
+            _categories.push({
+              action: category.id,
+              label: category.name
+            });
           });
-        });
 
-        return _categories;
-      })
+          return _categories;
+        })
+      )
       .toPromise();
   }
 

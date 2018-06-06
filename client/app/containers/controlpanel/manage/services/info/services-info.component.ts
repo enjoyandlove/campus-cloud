@@ -1,24 +1,21 @@
 /*tslint:disable:max-line-length */
-import { Component, Input, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { HttpParams } from '@angular/common/http';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
-
-import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-
+import { BehaviorSubject, combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
 import {
   canSchoolReadResource,
   canStoreReadAndWriteResource
 } from './../../../../../shared/utils/privileges';
-
-import { ServicesService } from '../services.service';
-import { CPSession, ISchool } from '../../../../../session';
-import { AdminService } from '../../../../../shared/services';
 import { BaseComponent } from '../../../../../base/base.component';
-import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
+import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+import { CPSession, ISchool } from '../../../../../session';
 import { IResourceBanner } from '../../../../../shared/components/cp-resource-banner/cp-resource.interface';
+import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
+import { AdminService } from '../../../../../shared/services';
+import { ServicesService } from '../services.service';
 
 @Component({
   selector: 'cp-services-info',
@@ -60,18 +57,20 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
 
     const service$ = this.serviceService.getServiceById(this.serviceId);
 
-    const admins$ = this.adminService.getAdminByStoreId(search).map((admins) => {
-      const _admins = [];
-      admins.forEach((admin) => {
-        if (!admin.is_school_level) {
-          _admins.push(admin);
-        }
-      });
+    const admins$ = this.adminService.getAdminByStoreId(search).pipe(
+      map((admins: Array<any>) => {
+        const _admins = [];
+        admins.forEach((admin) => {
+          if (!admin.is_school_level) {
+            _admins.push(admin);
+          }
+        });
 
-      return _admins;
-    });
+        return _admins;
+      })
+    );
 
-    const stream$ = Observable.combineLatest(service$, admins$);
+    const stream$ = combineLatest(service$, admins$);
     super.fetchData(stream$).then((res) => {
       this.admins = res.data[1];
       this.service = res.data[0];

@@ -1,3 +1,4 @@
+import { HttpParams } from '@angular/common/http';
 import {
   AfterViewInit,
   Component,
@@ -9,10 +10,8 @@ import {
   ViewChild
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-
+import { BehaviorSubject, fromEvent, of as observableOf } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
 import { CPSession } from '../../../../../../session';
 import { CPI18nService } from '../../../../../../shared/services/index';
 import { MemberType } from '../member.status';
@@ -50,44 +49,48 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngAfterViewInit() {
-    const keyup$ = Observable.fromEvent(this.input.nativeElement, 'keyup');
-    const blur$ = Observable.fromEvent(this.input.nativeElement, 'blur');
+    const keyup$ = fromEvent(this.input.nativeElement, 'keyup');
+    const blur$ = fromEvent(this.input.nativeElement, 'blur');
 
-    blur$.debounceTime(200).subscribe((_) => {
+    blur$.pipe(debounceTime(200)).subscribe((_) => {
       if (this.members.length) {
         this.members = [];
       }
     });
 
     keyup$
-      .debounceTime(400)
-      .distinctUntilChanged()
-      .switchMap((event: KeyboardEvent) => {
-        const target = <HTMLInputElement>event.target;
-        const query = target.value;
+      .pipe(
+        debounceTime(400),
+        distinctUntilChanged(),
+        switchMap((event: KeyboardEvent) => {
+          const target = <HTMLInputElement>event.target;
+          const query = target.value;
 
-        if (!query) {
-          return Observable.of([]);
-        }
-
-        const search = new HttpParams()
-          .append('search_str', query)
-          .append('school_id', this.session.g.get('school').id.toString());
-
-        return this.service.getMembers(search, 1, 1000).map((members) => {
-          if (!members.length) {
-            return [{ label: this.cpI18n.translate('no_results') }];
+          if (!query) {
+            return observableOf([]);
           }
 
-          return members.map((member) => {
-            return {
-              label: `${member.firstname} ${member.lastname}`,
-              id: member.id
-            };
-          });
-        });
-      })
-      .subscribe((members) => (this.members = members));
+          const search = new HttpParams()
+            .append('search_str', query)
+            .append('school_id', this.session.g.get('school').id.toString());
+
+          return this.service.getMembers(search, 1, 1000).pipe(
+            map((members: Array<any>) => {
+              if (!members.length) {
+                return [{ label: this.cpI18n.translate('no_results') }];
+              }
+
+              return members.map((member) => {
+                return {
+                  label: `${member.firstname} ${member.lastname}`,
+                  id: member.id
+                };
+              });
+            })
+          );
+        })
+      )
+      .subscribe((members: any) => (this.members = members));
   }
 
   onMemberSelected(member) {

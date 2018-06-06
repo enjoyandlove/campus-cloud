@@ -1,21 +1,18 @@
-import { HttpParams, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-
+import { BehaviorSubject } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { ISnackbar, SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
+import { appStorage } from './../../../../../shared/utils/storage/storage';
 import { BaseComponent } from '../../../../../base/base.component';
 import { API } from '../../../../../config/api';
 import { CPSession } from '../../../../../session';
-import { ClubStatus } from '../club.status';
-import { ClubsService } from '../clubs.service';
-
 import { CPI18nService, FileUploadService } from '../../../../../shared/services';
-
-import { ISnackbar, SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
-
-import { appStorage } from './../../../../../shared/utils/storage/storage';
+import { ClubStatus } from '../club.status';
 import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
+import { ClubsService } from '../clubs.service';
 import { ClubsUtilsService } from '../clubs.utils.service';
 
 @Component({
@@ -118,13 +115,15 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
 
     this.fileService
       .uploadFile(file, url, headers)
-      .switchMap((data: any) => {
-        this.club = Object.assign({}, this.club, {
-          constitution_url: data.file_uri
-        });
+      .pipe(
+        switchMap((data: any) => {
+          this.club = Object.assign({}, this.club, {
+            constitution_url: data.file_uri
+          });
 
-        return this.clubsService.updateClub(this.club, this.clubId, search);
-      })
+          return this.clubsService.updateClub(this.club, this.clubId, search);
+        })
+      )
       .subscribe(
         (_) => {
           this.uploading = false;

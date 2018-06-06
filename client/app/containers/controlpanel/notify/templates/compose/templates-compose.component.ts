@@ -1,25 +1,23 @@
-/* tslint:disable:max-line-length */
-import {
-  Input,
-  OnInit,
-  Output,
-  Component,
-  OnDestroy,
-  ElementRef,
-  HostListener,
-  EventEmitter
-} from '@angular/core';
-
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
-
-import { CP_PRIVILEGES_MAP, STATUS } from '../../../../../shared/constants';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output
+} from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { CPSession } from './../../../../../session/index';
-import { StoreService, CPI18nService } from './../../../../../shared/services';
+import { CPI18nService, StoreService } from './../../../../../shared/services';
 import { AnnouncementsService } from './../../announcements/announcements.service';
-
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { CP_PRIVILEGES_MAP, STATUS } from '../../../../../shared/constants';
+/* tslint:disable:max-line-length */
 
 interface IState {
   isUrgent: boolean;
@@ -138,22 +136,24 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
 
     this.service
       .getUsers(search)
-      .map((users) => {
-        const _users = [];
+      .pipe(
+        map((users: Array<any>) => {
+          const _users = [];
 
-        users.forEach((user) => {
-          _users.push({
-            label: `${user.firstname} ${user.lastname}`,
-            id: user.id
+          users.forEach((user) => {
+            _users.push({
+              label: `${user.firstname} ${user.lastname}`,
+              id: user.id
+            });
           });
-        });
 
-        if (!_users.length) {
-          _users.push({ label: this.cpI18n.translate('no_results') });
-        }
+          if (!_users.length) {
+            _users.push({ label: this.cpI18n.translate('no_results') });
+          }
 
-        return _users;
-      })
+          return _users;
+        })
+      )
       .subscribe((suggestions) => {
         this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
           suggestions
@@ -192,22 +192,24 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
 
     this.service
       .getLists(search, 1, 400)
-      .map((lists) => {
-        const _lists = [];
+      .pipe(
+        map((lists: Array<any>) => {
+          const _lists = [];
 
-        lists.forEach((list) => {
-          _lists.push({
-            label: `${list.name}`,
-            id: list.id
+          lists.forEach((list) => {
+            _lists.push({
+              label: `${list.name}`,
+              id: list.id
+            });
           });
-        });
 
-        if (!_lists.length) {
-          _lists.push({ label: this.cpI18n.translate('no_results') });
-        }
+          if (!_lists.length) {
+            _lists.push({ label: this.cpI18n.translate('no_results') });
+          }
 
-        return _lists;
-      })
+          return _lists;
+        })
+      )
       .subscribe((suggestions) => {
         this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
           suggestions
@@ -311,7 +313,7 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
     }
 
     this.service.postAnnouncements(search, data).subscribe(
-      (res) => {
+      (res: any) => {
         if (res.status === THROTTLED_STATUS) {
           this.shouldConfirm = false;
 

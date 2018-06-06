@@ -1,6 +1,5 @@
 <div class="cp-card actions col-xs-12">
   <div class="row">
-
     <cp-searchbox
       (query)="onSearch($event)"
       class="col-xs-2 no-right-padding">
@@ -49,7 +48,7 @@
         </div>
         <div class="col-xs-6">
           <div class="col-xs-9 text-truncate text-right">
-              <label i18n>{{ 'assessment' | cpI18n }}</label>
+              <label>{{ 'assessment' | cpI18n }}</label>
             </div>
             <div class="col-xs-3 no-left-padding">
               <cp-checkbox
@@ -73,12 +72,12 @@
         class="cpbtn cpbtn--square-left cpbtn--no-padding cpbtn--primary no-left-padding hover action-dropdown">
         <i class="material-icons" data-toggle="dropdown" *ngIf="!isOrientation">expand_more</i>
         <ul class="dropdown-menu dropdown-menu-right text-left action-dropdown-list" *ngIf="!isOrientation">
-          <li i18n *ngIf="!isOrientation">
+          <li *ngIf="!isOrientation">
             <a [routerLink]="['import/facebook']">
               {{ 'events_import_from_facebook' | cpI18n }}
             </a>
           </li>
-          <li i18n (click)="launchModal()" class="list-as-anchor">{{ 'import_from_csv' | cpI18n }}</li>
+          <li (click)="launchModal()" class="list-as-anchor">{{ 'import_from_csv' | cpI18n }}</li>
         </ul>
       </div>
     </div>

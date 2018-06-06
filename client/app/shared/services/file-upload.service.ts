@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
+import { map } from 'rxjs/operators';
 import { CPI18nService } from './index';
 
 @Injectable()
@@ -88,6 +88,6 @@ export class FileUploadService {
 
     formData.append('file', media, media.name);
 
-    return this.http.post(url, formData, { headers }).map((res) => res);
+    return this.http.post(url, formData, { headers }).pipe(map((res) => res));
   }
 }

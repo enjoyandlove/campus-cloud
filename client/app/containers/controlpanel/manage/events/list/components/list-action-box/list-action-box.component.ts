@@ -15,7 +15,7 @@ import {
   canAccountLevelWriteResource
 } from './../../../../../../../shared/utils/privileges/privileges';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { DATE_FILTER } from './events-filters';
 import { EventAttendance } from '../../../event.status';
 import { CPSession } from '../../../../../../../session';

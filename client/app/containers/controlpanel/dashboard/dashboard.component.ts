@@ -1,14 +1,11 @@
-import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
-
-import { CPSession, IUser } from '../../../session';
-import { CPI18nService } from '../../../shared/services';
-import { CP_PRIVILEGES_MAP } from '../../../shared/constants';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BehaviorSubject, combineLatest } from 'rxjs';
 import { DashboardUtilsService } from './dashboard.utils.service';
+import { CPSession, IUser } from '../../../session';
+import { CP_PRIVILEGES_MAP } from '../../../shared/constants';
+import { CPI18nService } from '../../../shared/services';
 import { canSchoolReadResource } from '../../../shared/utils/privileges';
-
-import { Observable } from 'rxjs/Observable';
 
 const isTileReady = (val) => !!val;
 
@@ -96,7 +93,7 @@ export class DashboardComponent implements OnInit {
   }
 
   subscribeToTilesReadyEvent() {
-    Observable.combineLatest([
+    combineLatest([
       this.downloadsTile$,
       this.generalInfoTile$,
       this.topEventsTile$,
@@ -106,7 +103,7 @@ export class DashboardComponent implements OnInit {
       this.campusTileTile$,
       this.topClubsTile$,
       this.integrationsTile$
-    ]).subscribe((tiles) => {
+    ]).subscribe((tiles: any) => {
       setTimeout(
         () => {
           this.areAllTilesReady = tiles.every(isTileReady);

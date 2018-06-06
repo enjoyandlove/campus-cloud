@@ -118,13 +118,13 @@ export class BannerListComponent extends BaseComponent implements OnInit {
     this.uploading = true;
     this.imageToBase64()
       .then((base64ImageData) => this.uploadBase64Image(base64ImageData))
-      .then((savedBase64Image) => {
+      .then((savedBase64Image: any) => {
         this.uploading = false;
         const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
         return this.service.updateSchoolImage(savedBase64Image.image_url, search).toPromise();
       })
-      .then((res) => {
+      .then((res: any) => {
         this.originalImage = res.cover_photo_url;
         this.onReset();
         this.onSuccess();
