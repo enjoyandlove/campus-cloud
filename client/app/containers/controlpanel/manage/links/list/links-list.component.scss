@@ -1,5 +1,4 @@
 @import '~styles/core/colors';
-@import '~bootstrap/variables';
 @import '~styles/components/form';
 @import '~styles/components/card';
 @import '~styles/components/button';
@@ -36,15 +35,6 @@
       height: 30px;
       margin-top: 5px;
       margin-right: 10px;
-    }
-  }
-
-  @media all and (max-width: $screen-md) {
-    li {
-      > span:not(.links__thumbnail) {
-        text-align: center;
-        padding-bottom: 10px;
-      }
     }
   }
 }

@@ -1,5 +1,4 @@
 @import '~styles/core/colors';
-@import '~bootstrap/variables';
 @import '~styles/components/form';
 @import '~styles/components/card';
 @import '~styles/components/button';
@@ -36,13 +35,4 @@
 .calendars {
   padding: 0;
   list-style: none;
-
-  @media all and (max-width: $screen-md) {
-    li {
-      > span:not(.calendars__thumbnail) {
-        text-align: center;
-        padding-bottom: 10px;
-      }
-    }
-  }
 }

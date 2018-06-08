@@ -1,7 +1,6 @@
 @import '~styles/core/colors';
 @import '~styles/components/form';
 @import '~styles/components/button';
-@import '~bootstrap/variables';
 
 .avatar {
   margin-right: 8px;
@@ -38,15 +37,6 @@
       width: auto;
       height: 35px;
       width: 35px;
-    }
-  }
-
-  @media all and (max-width: $screen-md) {
-    li {
-      > span:not(.clubs__thumbnail) {
-        text-align: center;
-        padding-bottom: 10px;
-      }
     }
   }
 }
