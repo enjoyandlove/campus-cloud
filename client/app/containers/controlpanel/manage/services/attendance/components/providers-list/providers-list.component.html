@@ -39,7 +39,7 @@
                   </span>
                 </span>
               </div>
-              <div [class]="[displayRatingColumn ? 'col-1' : 'col-1 col-offset-5']">
+              <div [class]="[displayRatingColumn ? 'col-1' : 'col-1 offset-5']">
                 <span>
                   {{ 'services_visits' | cpI18n }}
                 </span>
@@ -64,7 +64,7 @@
               <div class="col-1" *ngIf="displayRatingColumn">
                 <span>{{ provider.num_ratings }}</span>
               </div>
-              <div [class]="[displayRatingColumn ? 'col-1' : 'col-1 col-offset-5']">
+              <div [class]="[displayRatingColumn ? 'col-1' : 'col-1 offset-5']">
                 <span>{{ provider.total_visits }}</span>
               </div>
               <div class="col-2">

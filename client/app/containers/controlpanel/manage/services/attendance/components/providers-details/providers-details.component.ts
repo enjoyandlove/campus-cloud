@@ -2,7 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, of as observableOf } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { ServicesService } from './../../../services.service';
 import { BaseComponent } from '../../../../../../../base/base.component';
@@ -53,7 +53,7 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
       })
     );
 
-    super.fetchData(observableOf(stream$)).then((res) => {
+    super.fetchData(stream$).then((res) => {
       this.provider = res.data;
       this.eventRating = (this.provider.avg_rating_percent * this.MAX_RATE / 100).toFixed(1);
 

@@ -3,31 +3,29 @@
 
   <div *ngSwitchCase="false">
     <div class="row">
-      <div class="header">
-        <div class="col-4 text-center">
-          <div class="cp-card cp-card--half-padding">
-            <p class="header__digit">{{ provider.num_ratings }}</p>
-            <p i18n>{{ 'total_ratings' | cpI18n }}</p>
-          </div>
+      <div class="col-4 text-center">
+        <div class="cp-card cp-card--half-padding">
+          <p class="header__digit">{{ provider.num_ratings }}</p>
+          <p i18n>{{ 'total_ratings' | cpI18n }}</p>
         </div>
-        <div class="col-4 text-center">
-          <div class="cp-card cp-card--half-padding">
-            <p class="header__digit">{{ provider.total_visits }}</p>
-            <p i18n>{{ 'services_total_visits' | cpI18n }}</p>
-          </div>
+      </div>
+      <div class="col-4 text-center">
+        <div class="cp-card cp-card--half-padding">
+          <p class="header__digit">{{ provider.total_visits }}</p>
+          <p i18n>{{ 'services_total_visits' | cpI18n }}</p>
         </div>
-        <div class="col-4 text-center">
-          <div class="cp-card cp-card--half-padding rating-box">
-            <cp-stars
-              [size]="starSize"
-              class="rating-box__star"
-              [avgRate]="provider.avg_rating_percent"
-              [maxRate]="MAX_RATE">
-            </cp-stars>
-            <p i18n>{{ 'average_rating' | cpI18n }}
-              {{ provider.avg_rating_percent !== -1 ? eventRating : '0.0' }}
-            </p>
-          </div>
+      </div>
+      <div class="col-4 text-center">
+        <div class="cp-card cp-card--half-padding rating-box">
+          <cp-stars
+            [size]="starSize"
+            class="rating-box__star"
+            [avgRate]="provider.avg_rating_percent"
+            [maxRate]="MAX_RATE">
+          </cp-stars>
+          <p i18n>{{ 'average_rating' | cpI18n }}
+            {{ provider.avg_rating_percent !== -1 ? eventRating : '0.0' }}
+          </p>
         </div>
       </div>
     </div>
@@ -35,7 +33,7 @@
     <div class="row">
       <div class="col-12">
         <div class="cp-card actions">
-          <div class="row">
+          <div class="row justify-content-between">
             <div class="col-4">
               <cp-searchbox (query)=query$.next($event)></cp-searchbox>
             </div>
