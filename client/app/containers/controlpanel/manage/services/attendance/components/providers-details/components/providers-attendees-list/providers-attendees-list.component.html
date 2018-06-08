@@ -8,19 +8,19 @@
       </cp-no-content>
 
       <div class="row" *ngIf="assessments.length">
-        <div class="col-xs-12">
+        <div class="col-12">
           <div class="cp-table">
             <div class="cp-table__header">
               <div class="row">
-                <div class="col-xs-4">
+                <div class="col-4">
                   <span>
                     {{ 'services_label_attendee_name' | cpI18n }}
                   </span>
                 </div>
-                <div class="col-xs-3">
+                <div class="col-3">
                   <span i18n>{{ 'rating' | cpI18n }}</span>
                 </div>
-                <div class="col-xs-2">
+                <div class="col-2">
                   <span
                     class="hover"
                     (click)="doSort('check_in_method')">
@@ -32,7 +32,7 @@
                     </span>
                   </span>
                 </div>
-                <div class="col-xs-3">
+                <div class="col-3">
                   <span
                     class="hover"
                     (click)="doSort('check_in_time')">
@@ -49,14 +49,14 @@
 
             <div class="cp-table__item" *ngFor="let assessment of assessments">
               <div class="row">
-                <div class="col-xs-4">
+                <div class="col-4">
                   <img
-                    class="img-rounded img-fit-cover pull-left avatar"
+                    class="img-rounded img-fit-cover float-left avatar"
                     [src]="assessment.avatar_thumb_url"
                     *ngIf="assessment.avatar_thumb_url !== ''">
                   <img
                     [src]="defaultImage"
-                    class="img-rounded img-fit-cover pull-left avatar"
+                    class="img-rounded img-fit-cover float-left avatar"
                     *ngIf="assessment.avatar_thumb_url === ''">
                   <div class="meta">
                     <strong>
@@ -68,16 +68,16 @@
                     <span class="text-muted">{{ assessment.feedback_text }}</span>
                   </div>
                 </div>
-                <div class="col-xs-3">
+                <div class="col-3">
                   <cp-stars
                     [maxRate]="5"
                     [avgRate]="assessment.feedback_rating">
                   </cp-stars>
                 </div>
-                <div class="col-xs-2">
+                <div class="col-2">
                   <span>{{ checkinMethods[assessment.check_in_method].label }}</span>
                 </div>
-                <div class="col-xs-3">
+                <div class="col-3">
                   <span>{{ assessment.check_in_time | cpDatePipe:dateFormat }}</span>
                 </div>
               </div>
@@ -86,7 +86,7 @@
         </div>
 
         <div class="row">
-          <div class="col-xs-12">
+          <div class="col-12">
             <cp-pagination
               [pageNext]="pageNext"
               [pagePrev]="pagePrev"

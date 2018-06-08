@@ -4,19 +4,19 @@
   <div *ngSwitchCase="false">
     <div class="row">
       <div class="header">
-        <div class="col-xs-4 text-center">
+        <div class="col-4 text-center">
           <div class="cp-card cp-card--half-padding">
             <p class="header__digit">{{ provider.num_ratings }}</p>
             <p i18n>{{ 'total_ratings' | cpI18n }}</p>
           </div>
         </div>
-        <div class="col-xs-4 text-center">
+        <div class="col-4 text-center">
           <div class="cp-card cp-card--half-padding">
             <p class="header__digit">{{ provider.total_visits }}</p>
             <p i18n>{{ 'services_total_visits' | cpI18n }}</p>
           </div>
         </div>
-        <div class="col-xs-4 text-center">
+        <div class="col-4 text-center">
           <div class="cp-card cp-card--half-padding rating-box">
             <cp-stars
               [size]="starSize"
@@ -33,13 +33,13 @@
     </div>
 
     <div class="row">
-      <div class="col-xs-12">
+      <div class="col-12">
         <div class="cp-card actions">
           <div class="row">
-            <div class="col-xs-4">
+            <div class="col-4">
               <cp-searchbox (query)=query$.next($event)></cp-searchbox>
             </div>
-            <div class="col-xs-6 col-xs-offset-2 text-right">
+            <div class="col-6 col-offset-2 text-right">
               <button
                 (click)="download$.next(true)"
                 class="cpbtn cpbtn--secondary" i18n>
@@ -58,7 +58,7 @@
     </div>
 
     <div class="row">
-      <div class="col-xs-12">
+      <div class="col-12">
         <cp-providers-attendees-list
         [serviceId]="serviceId"
         [query]="query$"

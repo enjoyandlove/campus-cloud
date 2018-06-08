@@ -4,36 +4,36 @@
   <div *ngSwitchCase="false">
     <div class="row">
       <div class="header">
-        <div class="col-xs-4 text-center">
+        <div class="col-4 text-center">
           <div class="cp-card cp-card--half-padding visits">
             <div class="row">
-              <div class="col-xs-8 col-xs-offset-2 no-left-padding no-right-padding">
+              <div class="col-8 col-offset-2 no-left-padding no-right-padding">
                 <span i18n>
                   <div class="row">
-                    <div class="col-xs-9 text-truncate">
+                    <div class="col-9 text-truncate">
                       {{ 'services_total_visits' | cpI18n }}
                     </div>
-                    <div class="col-xs-3">
+                    <div class="col-3">
                       <strong>{{ service.total_visits }}</strong>
                     </div>
                   </div>
                 </span>
                 <span i18n>
                   <div class="row">
-                    <div class="col-xs-9 text-truncate">
+                    <div class="col-9 text-truncate">
                       {{ 'services_unique_visits' | cpI18n }}
                     </div>
-                    <div class="col-xs-3">
+                    <div class="col-3">
                       <strong>{{ service.unique_visits }}</strong>
                     </div>
                   </div>
                 </span>
                 <span i18n>
                   <div class="row">
-                    <div class="col-xs-9 text-truncate">
+                    <div class="col-9 text-truncate">
                       {{ 'services_repeat_visits' | cpI18n }}
                     </div>
-                    <div class="col-xs-3">
+                    <div class="col-3">
                       <strong>{{ service.total_visits - service.unique_visits }}</strong>
                     </div>
                   </div>
@@ -42,13 +42,13 @@
             </div>
           </div>
         </div>
-        <div class="col-xs-4 text-center">
+        <div class="col-4 text-center">
           <div class="cp-card cp-card--half-padding">
             <p class="header__digit">{{ service.num_ratings || 'N/A' }}</p>
             <p i18n>{{ 'services_total_responses' | cpI18n }}</p>
           </div>
         </div>
-        <div class="col-xs-4 text-center">
+        <div class="col-4 text-center">
           <div class="cp-card cp-card--half-padding">
             <p class="header__digit" *ngIf="service.enable_feedback === 0">
               N/A
@@ -66,14 +66,14 @@
     </div>
 
     <div class="row">
-      <div class="col-xs-12">
+      <div class="col-12">
         <div class="cp-card actions">
           <div class="row">
-            <div class="col-xs-4">
+            <div class="col-4">
               <cp-searchbox (query)=onSearch($event) [placeholder]="cpI18n.translate('services_provider_search_tootlip')">
               </cp-searchbox>
             </div>
-            <div class="col-xs-8 text-right pull-right">
+            <div class="col-8 text-right float-right">
               <button (click)="download$.next(true)" [disabled]="noProviders" class="cpbtn cpbtn--secondary" i18n>
                 {{ 'services_button_download_assessment_data' | cpI18n }}
               </button>
@@ -88,7 +88,7 @@
     </div>
 
     <div class="row">
-      <div class="col-xs-12">
+      <div class="col-12">
         <cp-providers-list [reload]="reload$" [download]="download$" [query]="search_text$" [serviceId]="serviceId" [serviceWithFeedback]="enableFeedback$"
           (providersLength$)="onProvidersResult($event)">
         </cp-providers-list>

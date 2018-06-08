@@ -1,34 +1,34 @@
 <div class="row table">
-  <div class="col-xs-12">
+  <div class="col-12">
     <ng-container *ngIf="!items.length">
       <p class="table--no-results text-center">{{ 'dashboard_no_data_found' | cpI18n }}</p>
     </ng-container>
     <ng-container *ngIf="items.length">
       <div class="row table--header">
-        <div class="col-xs-1">
+        <div class="col-1">
           <p>#</p>
         </div>
-        <div class="col-xs-5 no-left-padding">
+        <div class="col-5 no-left-padding">
           <p>{{ 'title' | cpI18n }}</p>
         </div>
-        <div class="col-xs-2 no-left-padding">
+        <div class="col-2 no-left-padding">
           <p>{{ 'attendees' | cpI18n }}</p>
         </div>
-        <div class="col-xs-2 no-right-padding">
+        <div class="col-2 no-right-padding">
           <p>{{ 'feedback' | cpI18n }}</p>
         </div>
-        <div class="col-xs-2 text-right no-left-padding">
+        <div class="col-2 text-right no-left-padding">
           <p>{{ 'rating' | cpI18n }}</p>
         </div>
       </div>
       <div class="row" *ngFor="let item of items; index as index last as last">
-        <div class="col-xs-12">
+        <div class="col-12">
           <div class="table--item" [class.isLast]="last">
             <div class="row">
-              <div class="col-xs-1 no-right-padding">
+              <div class="col-1 no-right-padding">
                 <p class="ranking">{{ index + 1 }}</p>
               </div>
-              <div class="col-xs-5 no-left-padding text-truncate">
+              <div class="col-5 no-left-padding text-truncate">
                 <img
                   class="avatar img-rounded"
                   [src]="item.image === '' ? defaultImage : item.image">
@@ -39,13 +39,13 @@
                   <p class="title text-truncate hover" (click)="router.navigate(['/manage/' + resource + '/' + item.id])">{{ item.name }}</p>
                 </ng-container>
               </div>
-              <div class="col-xs-2 no-left-padding">
+              <div class="col-2 no-left-padding">
                 <p class="semi-bold">{{ item.attendees }}</p>
               </div>
-              <div class="col-xs-2 no-right-padding">
+              <div class="col-2 no-right-padding">
                 <p class="semi-bold">{{ item.feedback }}</p>
               </div>
-              <div class="col-xs-2 text-right no-left-padding">
+              <div class="col-2 text-right no-left-padding">
                 <p class="semi-bold">{{ ((item.rating / 100) * 5).toFixed(1) }}</p>
               </div>
             </div>

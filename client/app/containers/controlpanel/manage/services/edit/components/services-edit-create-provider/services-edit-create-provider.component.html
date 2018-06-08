@@ -1,14 +1,14 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
   <div class="cp-card cp-card--alt cp-card--half-padding cp-card--no-shadow">
     <div class="row form-group">
-      <div class="col-xs-6">
+      <div class="col-6">
         <label i18n>{{ 'name' | cpI18n }}</label>
         <input
           type="text"
           formControlName="provider_name"
           [class.error]="formError && !admin.pristine && admin.controls['provider_name'].hasError('required')">
       </div>
-      <div class="col-xs-6">
+      <div class="col-6">
         <label i18n>{{ 'email' | cpI18n }}</label>
         <input
           type="email"
@@ -18,7 +18,7 @@
     </div>
 
     <div class="row form-group">
-      <div class="col-xs-12">
+      <div class="col-12">
         <label i18n>{{ 'services_provider_label_default_question' | cpI18n }}</label>
         <input
           type="text"
@@ -29,7 +29,7 @@
   </div>
 
   <div class="row">
-    <div class="col-xs-4">
+    <div class="col-4">
       <button
         type="submit"
         [disabled]="!form.valid"
