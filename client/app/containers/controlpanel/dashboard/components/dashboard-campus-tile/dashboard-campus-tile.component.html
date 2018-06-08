@@ -34,14 +34,14 @@
                     </div>
                     <div class="col-8 no-left-padding text-truncate">
                       <ng-container *ngIf="item.img_url !== '' && item.color === ''">
-                        <img class="avatar img-rounded" [src]="item.img_url">
+                        <img class="avatar rounded" [src]="item.img_url">
                       </ng-container>
                       <ng-container *ngIf="item.img_url !== '' && item.color !== ''">
-                          <img class="avatar img-rounded" [src]="item.img_url">
+                          <img class="avatar rounded" [src]="item.img_url">
                         <!-- <div class="avatar" [ngStyle]="{'background' : '#' + item.color }"></div> -->
                       </ng-container>
                       <ng-container *ngIf="item.img_url === ''">
-                          <img class="avatar img-rounded" [src]="defaultImage">
+                          <img class="avatar rounded" [src]="defaultImage">
                       </ng-container>
                       <p class="title text-truncate">{{ item.name }}</p>
                     </div>

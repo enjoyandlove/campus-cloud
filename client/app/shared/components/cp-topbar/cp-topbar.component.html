@@ -7,7 +7,7 @@
             <img
               [src]="logo"
               alt="Control Panel"
-              class="img-rounded img-fit-cover">
+              class="rounded img-fit-cover">
           </a>
         </div>
         <ul class="nav__links float-left">
@@ -54,12 +54,12 @@
               class="col-10 no-left-padding no-right-padding">
               <div
                 *ngIf="school.app_logo_url !== ''"
-                class="nav__school__thumb float-left img-rounded"
+                class="nav__school__thumb float-left rounded"
                 [ngStyle]="{'background-image': 'url(' + school.app_logo_url + ')'}">
               </div>
               <div
                 *ngIf="school.app_logo_url === ''"
-                class="nav__school__thumb float-left img-rounded"
+                class="nav__school__thumb float-left rounded"
                 [ngStyle]="{'background-image': 'url( ' + defaultImage + ')'}">
               </div>
               <div class="nav__school__user text-truncate">

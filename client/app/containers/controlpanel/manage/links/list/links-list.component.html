@@ -39,8 +39,8 @@
         <li class="cp-form__item col-12" *ngFor="let link of state.links">
           <div class="row">
             <span class="col-5 text-truncate links__thumbnail">
-              <img *ngIf="link.img_url !== ''" class="img-rounded img-fit-cover" [src]="link.img_url">
-              <img *ngIf="link.img_url === ''" class="img-rounded img-fit-cover" [src]="defaultImage">
+              <img *ngIf="link.img_url !== ''" class="rounded img-fit-cover" [src]="link.img_url">
+              <img *ngIf="link.img_url === ''" class="rounded img-fit-cover" [src]="defaultImage">
 
               <strong>
                 <button
