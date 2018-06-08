@@ -83,8 +83,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     public service: AnnouncementsService
   ) {
     const school = this.session.g.get('school');
-    const search: HttpParams = new HttpParams();
-    search.append('school_id', school.id.toString());
+    const search: HttpParams = new HttpParams().append('school_id', school.id.toString());
 
     this.stores$ = this.storeService.getStores(search);
   }
