@@ -100,7 +100,7 @@ nav {
   max-width: 200px;
   position: relative;
 
-  &.open {
+  &.show {
     .nav__school--menu {
       display: block;
     }
@@ -156,4 +156,9 @@ nav {
   &__name {
     font-size: 0.9em;
   }
+}
+
+.dropdown-menu {
+  border: none;
+  background: transparent;
 }

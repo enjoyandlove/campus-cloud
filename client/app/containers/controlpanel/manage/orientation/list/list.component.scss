@@ -28,7 +28,7 @@
 }
 
 .action {
-  &.open {
+  &.show {
     .orientation__dropdown {
       display: block;
     }
@@ -65,4 +65,9 @@
       }
     }
   }
+}
+
+.dropdown-menu {
+  border: none;
+  background: transparent;
 }
