@@ -35,10 +35,7 @@ export class DealsListActionBoxComponent implements OnInit {
   @Output() search: EventEmitter<string> = new EventEmitter();
   @Output() listAction: EventEmitter<any> = new EventEmitter();
 
-  constructor(
-    public dealsService: DealsService,
-    public cpTracking: CPTrackingService
-  ) {}
+  constructor(public dealsService: DealsService, public cpTracking: CPTrackingService) {}
 
   onFilterByStore(store_id) {
     this.state = Object.assign({}, this.state, { store_id });
@@ -52,7 +49,8 @@ export class DealsListActionBoxComponent implements OnInit {
 
   trackEvent(eventName) {
     const eventProperties = {
-      ...this.cpTracking.getEventProperties(), create_page_name: amplitudeEvents.CREATE_DEAL
+      ...this.cpTracking.getEventProperties(),
+      create_page_name: amplitudeEvents.CREATE_DEAL
     };
 
     return {
@@ -63,7 +61,7 @@ export class DealsListActionBoxComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.stores$ = this.dealsService.getStores();
+    this.stores$ = this.dealsService.getDealStores();
 
     this.amplitudeEvents = {
       clicked_create: amplitudeEvents.CLICKED_CREATE

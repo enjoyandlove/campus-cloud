@@ -1,23 +1,25 @@
 <div [ngSwitch]="loading">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
   <div *ngSwitchCase="false">
-    <div class="row margin-bottom">
+    <div class="margin-bottom">
       <form [formGroup]="form">
-        <div class="col-6">
-          <cp-deals-card
-            [form]="form"
-            [storeForm]="storeForm"
-            (formData)="onFormData($event)">
-          </cp-deals-card>
-        </div>
-
-        <div class="col-6">
-          <cp-store-card
-            [form]="form"
-            [storeForm]="storeForm"
-            (formData)="onFormData($event)"
-            (isNewStore)="onToggleStore($event)">
-          </cp-store-card>
+        <div class="row">
+          <div class="col">
+            <cp-deals-card
+              [form]="form"
+              [storeForm]="storeForm"
+              (formData)="onFormData($event)">
+            </cp-deals-card>
+          </div>
+  
+          <div class="col">
+            <cp-store-card
+              [form]="form"
+              [storeForm]="storeForm"
+              (formData)="onFormData($event)"
+              (isNewStore)="onToggleStore($event)">
+            </cp-store-card>
+          </div>
         </div>
 
         <div class="footer">

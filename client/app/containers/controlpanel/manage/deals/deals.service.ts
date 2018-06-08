@@ -26,13 +26,12 @@ export class DealsService extends BaseService {
     Object.setPrototypeOf(this, DealsService.prototype);
   }
 
-  getStores(label = null) {
+  getDealStores(label = null) {
     const key =
       label === 'select'
         ? 't_deals_list_dropdown_label_select_store'
         : 't_deals_list_dropdown_label_all_stores';
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     return this.storeService.getStores(1, 10000, search).pipe(
       startWith([{ label: this.cpI18n.translate(key) }]),
