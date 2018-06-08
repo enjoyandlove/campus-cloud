@@ -5,13 +5,13 @@
         <div class="col-xs-3">
           <cp-searchbox (query)="query.emit($event)"></cp-searchbox>
         </div>
-        <div class="col-xs-3 pull-right">
+        <div class="col-xs-3 float-right">
           <button
             cpTracker
             type="button"
             (click)="create.emit()"
             [eventData]="trackEvent(amplitudeEvents.clicked_create)"
-            class="cpbtn cpbtn--primary pull-right">
+            class="cpbtn cpbtn--primary float-right">
             {{ 'templates_button_new' | cpI18n }}
           </button>
         </div>

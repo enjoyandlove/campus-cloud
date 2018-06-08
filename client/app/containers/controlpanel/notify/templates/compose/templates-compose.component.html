@@ -8,7 +8,7 @@
             <span
               data-dismiss="modal"
               (click)="resetModal()"
-              class="pull-right hover cpmodal__header__close">
+              class="float-right hover cpmodal__header__close">
               &times;
             </span>
           </div>
@@ -26,7 +26,7 @@
                     <p class="text-muted" i18n>{{ 'templates_create_label_all_students' | cpI18n }}</p>
                   </div>
                   <div class="col-xs-4">
-                    <div class="pull-right">
+                    <div class="float-right">
                       <cp-switch
                         class="campus-switch__toggle"
                         (toggle)="onHandleToggle($event)"
@@ -90,7 +90,7 @@
               <div class="form-group">
                 <label i18n>
                   {{ 'subject' | cpI18n }}
-                  <span class="pull-right">
+                  <span class="float-right">
                     {{ getSubjectLength() }}/128
                   </span>
                 </label>
@@ -114,7 +114,7 @@
               <div class="form-group">
                 <label i18n>
                   {{ 'message_noun' | cpI18n }}
-                  <span class="pull-right">
+                  <span class="float-right">
                     {{ form.controls.message.value ? form.controls.message.value.length : 0 }}/400
                   </span>
                 </label>
@@ -136,7 +136,7 @@
 
       <div class="cpmodal__footer">
         <div class="row">
-          <div class="col-xs-6 pull-right text-right">
+          <div class="col-xs-6 float-right text-right">
             <button
               type="button"
               data-dismiss="modal"

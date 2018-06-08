@@ -4,7 +4,7 @@
     <div class="col-xs-12">
       <div class="col-xs-3">
         <button
-          class="cpbtn cpbtn--cancel pull-left"
+          class="cpbtn cpbtn--cancel float-left"
           (click)="backStep(currentStep)"
           *ngIf="currentStep > start">
           {{ 'back' | cpI18n }}
@@ -21,7 +21,7 @@
       <div class="col-xs-3">
         <button
           [disabled]="disabled"
-          class="cpbtn cpbtn--primary pull-right"
+          class="cpbtn cpbtn--primary float-right"
           (click)="nextStep(currentStep)">
           {{ currentStep >= totalSteps.length ? ('done' | cpI18n) : ('next' | cpI18n) }}
         </button>

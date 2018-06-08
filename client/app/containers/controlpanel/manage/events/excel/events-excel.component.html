@@ -37,7 +37,7 @@
                     <div class="row margin-top">
                       <div [class]="[storeId || clubId || isOrientation ? 'col-xs-3 no-left-padding' : 'col-xs-4 no-left-padding']">
                         <cp-checkbox
-                          class="checkbox pull-left"
+                          class="checkbox float-left"
                           [isChecked]="isSingleChecked[i].checked"
                           (toggle)="onSingleCheck($event, i)">
                         </cp-checkbox>
@@ -135,7 +135,7 @@
       <div class="cp-wrapper cp-wrapper--outer">
         <div class="row">
           <div class="col-xs-12">
-            <div class="pull-right">
+            <div class="float-right">
               <a [routerLink]="[urlPrefix]"
                 class="cpbtn cpbtn--cancel" i18n>
                 {{ 'cancel' | cpI18n }}

@@ -1,6 +1,6 @@
 <div class="cp-card">
   <div class="row">
-    <div class="col-xs-6 pull-left">
+    <div class="col-xs-6 float-left">
       <div class="row">
         <div class="col-xs-8">
           <cp-searchbox (query)="search.emit($event)"></cp-searchbox>
@@ -13,7 +13,7 @@
         </div>
       </div>
     </div>
-    <div class="col-xs-3 pull-right text-right">
+    <div class="col-xs-3 float-right text-right">
       <button
         cpTracker
         (click)="launchCreateModal.emit()"

@@ -1,15 +1,15 @@
 <div class="cp-card">
   <div class="row">
-    <div class="col-xs-3 pull-left">
+    <div class="col-xs-3 float-left">
       <cp-searchbox (query)="onSearch($event)"></cp-searchbox>
     </div>
-    <div class="col-xs-2 pull-left">
+    <div class="col-xs-2 float-left">
       <cp-dropdown
         [items]="types"
         (selected)="onSelectedType($event)">
       </cp-dropdown>
     </div>
-    <div class="col-xs-3 pull-right text-right" *ngIf="canCompose">
+    <div class="col-xs-3 float-right text-right" *ngIf="canCompose">
       <a
         cpTracker
         [routerLink]="['compose']"

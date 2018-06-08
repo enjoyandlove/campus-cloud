@@ -33,7 +33,7 @@
                     <div class="row margin-top">
                       <div class="col-xs-3 no-left-padding">
                         <cp-checkbox
-                          class="checkbox pull-left"
+                          class="checkbox float-left"
                           [isChecked]="isChecked[i].checked"
                           (toggle)="onSingleCheck($event, i)">
                         </cp-checkbox>
@@ -82,7 +82,7 @@
       <div class="cp-wrapper cp-wrapper--outer">
         <div class="row">
           <div class="col-xs-12">
-            <div class="pull-right">
+            <div class="float-right">
               <a [routerLink]="['/manage/services']"
                 class="cpbtn cpbtn--cancel" i18n>
                 {{ 'cancel' | cpI18n }}

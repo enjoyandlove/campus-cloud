@@ -5,12 +5,12 @@
         <div class="col-xs-3">
           <cp-searchbox (query)="onSearch($event)"></cp-searchbox>
         </div>
-        <div class="col-xs-3 pull-right">
+        <div class="col-xs-3 float-right">
           <button
             type="button"
             *ngIf="!limitedAdmin"
             (click)="create.emit()"
-            class="cpbtn cpbtn--primary pull-right" i18n>
+            class="cpbtn cpbtn--primary float-right" i18n>
             {{ 'clubs_member_button_create' | cpI18n }}
           </button>
         </div>

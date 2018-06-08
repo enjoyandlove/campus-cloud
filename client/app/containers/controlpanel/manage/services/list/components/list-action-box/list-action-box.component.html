@@ -6,14 +6,14 @@
     </cp-searchbox>
 
     <div class="col-xs-3">
-      <label class="pull-left" i18n>{{ 'assessment' | cpI18n }}</label>
+      <label class="float-left" i18n>{{ 'assessment' | cpI18n }}</label>
       <cp-checkbox
         (toggle)="onAttendanceToggle($event)"
         class="checkbox">
       </cp-checkbox>
     </div>
 
-    <div class="col-xs-3 pull-right text-right" *ngIf="canWriteSchoolWide">
+    <div class="col-xs-3 float-right text-right" *ngIf="canWriteSchoolWide">
       <a
         cpTracker
         [routerLink]="['create']"

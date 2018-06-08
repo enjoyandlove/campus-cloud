@@ -7,7 +7,7 @@
         <span
           data-dismiss="modal"
           (click)="resetModal()"
-          class="pull-right hover cpmodal__header__close">
+          class="float-right hover cpmodal__header__close">
           &times;
         </span>
       </div>
@@ -45,7 +45,7 @@
           <div class="form-group">
             <label for="subject" i18n>
                 {{ 'subject' | cpI18n }}
-              <span class="pull-right">
+              <span class="float-right">
                 {{ form.controls.subject.value ? form.controls.subject.value.length : 0 }}/128
               </span>
             </label>
@@ -63,7 +63,7 @@
           <div class="form-group">
             <label for="message" i18n>
                 {{ 'message_noun' | cpI18n }}
-              <span class="pull-right">
+              <span class="float-right">
                 {{ form.controls.message.value ? form.controls.message.value.length : 0 }}/400
               </span>
             </label>

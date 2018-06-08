@@ -1,14 +1,14 @@
 <div class="cp-card">
   <div class="row">
-    <div class="col-xs-3 pull-left">
+    <div class="col-xs-3 float-left">
       <cp-searchbox (query)="onSearch($event)"></cp-searchbox>
     </div>
-    <div class="col-xs-5 pull-right">
+    <div class="col-xs-5 float-right">
       <button
         cpTracker
         (click)="onLaunchCreateModal()"
         [eventData]="trackEvent(amplitudeEvents.clicked_create)"
-        class="cpbtn cpbtn--primary pull-right">
+        class="cpbtn cpbtn--primary float-right">
         {{ 'calendars_button_new' | cpI18n }}
       </button>
     </div>
