@@ -27,24 +27,22 @@
             <div
               class="feed-form__item row"
               *ngFor="let wall of form.controls.walls.controls; let i=index">
-              <div class="_">
-                <div class="col-4 title">
-                  <span>{{ wall.controls.name.value }}</span>
-                </div>
-                <div class="col-4">
-                  <cp-dropdown
-                    [items]="privileges"
-                    (selected)="onCanPostChanged($event, i)"
-                    [selectedItem]="getPrivilegeObj(wall.controls.min_posting_member_type.value)">
-                  </cp-dropdown>
-                </div>
-                <div class="col-4">
-                  <cp-dropdown
-                    [items]="privileges"
-                    (selected)="onCanCommentChanged($event, i)"
-                    [selectedItem]="getPrivilegeObj(wall.controls.min_commenting_member_type.value)">
-                  </cp-dropdown>
-                </div>
+              <div class="col-4 title">
+                <span>{{ wall.controls.name.value }}</span>
+              </div>
+              <div class="col-4">
+                <cp-dropdown
+                  [items]="privileges"
+                  (selected)="onCanPostChanged($event, i)"
+                  [selectedItem]="getPrivilegeObj(wall.controls.min_posting_member_type.value)">
+                </cp-dropdown>
+              </div>
+              <div class="col-4">
+                <cp-dropdown
+                  [items]="privileges"
+                  (selected)="onCanCommentChanged($event, i)"
+                  [selectedItem]="getPrivilegeObj(wall.controls.min_commenting_member_type.value)">
+                </cp-dropdown>
               </div>
             </div>
           </div>
@@ -54,8 +52,8 @@
   </div>
 
   <div class="cpmodal__footer">
-    <div class="row">
-      <div class="col-6 col-offset-6 text-right">
+    <div class="row justify-content-end">
+      <div class="col-6 text-right">
         <button
           type="button"
           data-dismiss="modal"

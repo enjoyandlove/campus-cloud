@@ -1,34 +1,32 @@
 <div class="row">
-  <div class="header">
-    <div class="col-4 text-center">
-      <div class="cp-card">
-        <p class="header__digit">{{ event.verified_checkins }}</p>
-        <p i18n>{{ 'events_check_in' | cpI18n }}</p>
-      </div>
+  <div class="col-4 text-center">
+    <div class="cp-card">
+      <p class="header__digit">{{ event.verified_checkins }}</p>
+      <p i18n>{{ 'events_check_in' | cpI18n }}</p>
     </div>
-    <div class="col-4 text-center">
-      <div class="cp-card">
-        <p class="header__digit">{{ event.num_ratings }}</p>
-        <p i18n>{{ 'responses' | cpI18n }}</p>
-      </div>
+  </div>
+  <div class="col-4 text-center">
+    <div class="cp-card">
+      <p class="header__digit">{{ event.num_ratings }}</p>
+      <p i18n>{{ 'responses' | cpI18n }}</p>
     </div>
-    <div class="col-4 text-center">
-      <div class="cp-card">
-        <p class="header__digit">
-          <cp-stars
-            [size]="detailStarSize"
-            [avgRate]="event.avg_rating_percent"
-            [maxRate]="event.rating_scale_maximum">
-          </cp-stars>
-        </p>
-        <p i18n>
-          {{ 'average_rating' | cpI18n }}:
-          <strong *ngIf="event.rating_scale_maximum > -1">
-            {{ ((event.rating_scale_maximum * event.avg_rating_percent) / 100).toFixed(1) }}
-          </strong>
-          <strong *ngIf="event.rating_scale_maximum === -1">---</strong>
-        </p>
-      </div>
+  </div>
+  <div class="col-4 text-center">
+    <div class="cp-card">
+      <p class="header__digit">
+        <cp-stars
+          [size]="detailStarSize"
+          [avgRate]="event.avg_rating_percent"
+          [maxRate]="event.rating_scale_maximum">
+        </cp-stars>
+      </p>
+      <p i18n>
+        {{ 'average_rating' | cpI18n }}:
+        <strong *ngIf="event.rating_scale_maximum > -1">
+          {{ ((event.rating_scale_maximum * event.avg_rating_percent) / 100).toFixed(1) }}
+        </strong>
+        <strong *ngIf="event.rating_scale_maximum === -1">---</strong>
+      </p>
     </div>
   </div>
 </div>
@@ -53,7 +51,7 @@
       [noContentText]="cpI18n.translate('events_no_attendees')">
     </cp-no-content>
 
-    <div class="row add-card-margin" *ngIf="attendees.length">
+    <div class="add-card-margin" *ngIf="attendees.length">
       <div class="cp-table">
         <div class="cp-table__header">
           <div class="row">
