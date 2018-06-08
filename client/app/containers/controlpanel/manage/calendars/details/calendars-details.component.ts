@@ -2,7 +2,6 @@ import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { of as observableOf } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
 import { FORMAT } from './../../../../../shared/pipes/date/date.pipe';
@@ -132,7 +131,7 @@ export class CalendarsDetailComponent extends BaseComponent implements OnInit {
       })
     );
 
-    super.fetchData(observableOf(stream$)).then((res) => {
+    super.fetchData(stream$).then((res) => {
       this.state = { ...this.state, items: res.data };
       this.buildHeader();
     });
