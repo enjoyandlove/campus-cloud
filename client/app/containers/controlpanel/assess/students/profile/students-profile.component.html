@@ -4,7 +4,7 @@
   <div class="page" *ngSwitchCase="false">
     <div class="cp-wrapper cp-wrapper--outer">
       <div class="row">
-        <div class="col-8 col-offset-2">
+        <div class="col-8 offset-2">
           <cp-profile-header
             [student]="student"
             (message)="launchMessageModal()">
@@ -15,7 +15,7 @@
 
     <div class="cp-wrapper cp-wrapper--outer">
       <div class="row">
-        <div class="col-8 col-offset-2">
+        <div class="col-8 offset-2">
           <cp-profile-top-bar
             (download)="onDownload()"
             (filter)="onFilter($event)">
@@ -32,7 +32,7 @@
         <ng-container *ngIf="!engagementsByDay.length">
           <div class="cp-wrapper cp-wrapper--outer">
             <div class="row">
-              <div class="col-8 col-offset-2">
+              <div class="col-8 offset-2">
                 <cp-no-content
                   class="no-content"
                   noContentText="No Engagements Found...">
@@ -45,7 +45,7 @@
         <ng-container *ngIf="engagementsByDay.length" class="feed">
           <div class="cp-wrapper cp-wrapper--outer">
             <div class="row">
-              <div class="col-8 col-offset-2">
+              <div class="col-8 offset-2">
                 <div class="feed__wrapper">
                   <ng-container
                     class="feed__item"

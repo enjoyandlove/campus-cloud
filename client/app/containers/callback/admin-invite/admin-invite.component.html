@@ -1,6 +1,6 @@
 <div class="cp-wrapper cp-wrapper--outer">
   <div class="row justify-content-center">
-    <div class="col-8 col-offset-2">
+    <div class="col-8 offset-2">
       <div class="row">
         <div class="col-12">
           <div class="header">
@@ -21,7 +21,7 @@
             [Service Name] for the [School Name] Campus App
           </p>-->
           <div class="row">
-            <div class="col-6 col-offset-3">
+            <div class="col-6 offset-3">
               <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
                 <!--<div class="form-group">
                   <label i18n>First Name</label>
@@ -59,7 +59,7 @@
           </div>
 
           <div class="row text-center footer">
-            <div class="col-4 col-offset-4">
+            <div class="col-4 offset-4">
               <div class="row">
                 <div class="col-12">
                   <a [routerLink]="['/login']" i18n>{{ 'login' | cpI18n }}</a>
