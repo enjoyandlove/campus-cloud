@@ -1,18 +1,18 @@
 <div class="row">
   <div class="header">
-    <div class="col-xs-4 text-center">
+    <div class="col-4 text-center">
       <div class="cp-card">
         <p class="header__digit">{{ event.verified_checkins }}</p>
         <p i18n>{{ 'events_check_in' | cpI18n }}</p>
       </div>
     </div>
-    <div class="col-xs-4 text-center">
+    <div class="col-4 text-center">
       <div class="cp-card">
         <p class="header__digit">{{ event.num_ratings }}</p>
         <p i18n>{{ 'responses' | cpI18n }}</p>
       </div>
     </div>
-    <div class="col-xs-4 text-center">
+    <div class="col-4 text-center">
       <div class="cp-card">
         <p class="header__digit">
           <cp-stars
@@ -34,7 +34,7 @@
 </div>
 
 <div class="row">
-  <div class="col-xs-12">
+  <div class="col-12">
     <cp-past-events-action-box
       (querySearch)="doSearch($event)"
       (createExcel)="onCreateExcel()">
@@ -57,7 +57,7 @@
       <div class="cp-table">
         <div class="cp-table__header">
           <div class="row">
-            <div [class]="isOrientation ? 'col-xs-4' : 'col-xs-3'">
+            <div [class]="isOrientation ? 'col-4' : 'col-3'">
               <span
                 class="hover"
                 (click)="doSort('firstname')" i18n>
@@ -69,7 +69,7 @@
                 </span>
               </span>
             </div>
-            <div class="col-xs-1 rsvp_column" *ngIf="!isOrientation">
+            <div class="col-1 rsvp_column" *ngIf="!isOrientation">
               <span
                 class="hover"
                 (click)="doSort('rsvp')" i18n>
@@ -81,7 +81,7 @@
                 </span>
               </span>
             </div>
-            <div class="col-xs-2">
+            <div class="col-2">
               <span
                 class="hover"
                 (click)="doSort('check_in_method')" i18n>
@@ -93,10 +93,10 @@
                 </span>
               </span>
             </div>
-            <div class="col-xs-3">
+            <div class="col-3">
               <span i18n>{{ 'student_feedback' | cpI18n }}</span>
             </div>
-            <div class="col-xs-3">
+            <div class="col-3">
               <span
                 class="hover"
                 (click)="doSort('feedback_rating')" i18n>
@@ -114,7 +114,7 @@
         <div class="cp-table__item"
           *ngFor="let attendee of attendees">
           <div class="row">
-            <div [class]="isOrientation ? 'col-xs-4 text-truncate' : 'col-xs-3 text-truncate'">
+            <div [class]="isOrientation ? 'col-4 text-truncate' : 'col-3 text-truncate'">
               <strong>
                   {{ attendee.firstname }}
                   {{ attendee.lastname }}
@@ -122,7 +122,7 @@
               <br>
               <small class="text-muted">{{ attendee.email }}</small>
             </div>
-            <div class="col-xs-1" *ngIf="!isOrientation">
+            <div class="col-1" *ngIf="!isOrientation">
               <i
                 class="material-icons"
                 *ngIf="attendee.rsvp === 1">
@@ -134,7 +134,7 @@
                 close
               </i>
             </div>
-            <div class="col-xs-2">
+            <div class="col-2">
               <i
                 class="material-icons"
                 *ngIf="attendee.check_in_method === 3">
@@ -146,7 +146,7 @@
                 computer
               </i>
             </div>
-            <div class="col-xs-3 text-truncate">
+            <div class="col-3 text-truncate">
               <span
                 class="link hover"
                 data-toggle="modal"
@@ -155,7 +155,7 @@
                 {{ attendee.feedback_text !== -1 ? attendee.feedback_text : '' }}
               </span>
             </div>
-            <div class="col-xs-3">
+            <div class="col-3">
               <cp-stars
                 [size]="listStarSize"
                 [avgRate]="attendee.feedback_rating"
@@ -168,7 +168,7 @@
     </div>
 
     <div class="row">
-      <div class="col-xs-12">
+      <div class="col-12">
         <cp-pagination
           [pageNext]="pageNext"
           [pagePrev]="pagePrev"

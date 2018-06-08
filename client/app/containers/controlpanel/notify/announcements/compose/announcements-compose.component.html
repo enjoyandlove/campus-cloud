@@ -1,6 +1,6 @@
 
 <div class="row margin-bottom">
-  <div class="col-xs-8 col-xs-offset-2">
+  <div class="col-8 col-offset-2">
     <cp-audience-card 
       (count)="onUsersCount($event)"
       (importClick)="onImportClick()"
@@ -17,13 +17,13 @@
     <div class="cp-card">
       <p class="section__name">{{'message' | cpI18n}}</p>
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-12">
           <form [formGroup]="form">
             <div class="form-group">
               <div class="row">
-                <div class="col-xs-6">
+                <div class="col-6">
                   <div class="row">
-                    <div class="col-xs-12">
+                    <div class="col-12">
                       <label i18n>{{ 'from' | cpI18n }}</label>
                       <cp-dropdown
                         [items]="stores$ | async"
@@ -34,10 +34,10 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-xs-6">
+                <div class="col-6">
                   <label i18n>{{ 'announcements_type' | cpI18n }}</label>
                   <div class="row">
-                    <div class="col-xs-12">
+                    <div class="col-12">
                       <cp-check-dropdown
                         [items]="types"
                         [reset]="resetCustomFields$"
@@ -60,12 +60,12 @@
               </label>
               <div class="cpInput subject-input">
                 <div class="row">
-                  <div class="col-xs-2 no-right-padding" *ngIf="subject_prefix.label">
+                  <div class="col-2 no-right-padding" *ngIf="subject_prefix.label">
                     <span [class]="'subject-input__label text-center ' + subject_prefix.type">
                       {{ subject_prefix.label }}
                     </span>
                   </div>
-                  <div [class]="subject_prefix.label ? 'col-xs-10 no-left-padding' : 'col-xs-12' ">
+                  <div [class]="subject_prefix.label ? 'col-10 no-left-padding' : 'col-12' ">
                     <input
                     type="text"
                     formControlName="subject"
@@ -96,9 +96,9 @@
 <div class="row">
   <div class="footer">
     <div class="cp-wrapper cp-wrapper--outer">
-      <div class="col-xs-12">
+      <div class="col-12">
         <div class="row">
-          <div class="col-xs-12">
+          <div class="col-12">
             <div class="text-right">
               <label class="error" *ngIf="formError" i18n>
                 <span>&#x26A0;</span>

@@ -2,7 +2,7 @@
     <div class="cpmodal" *ngSwitchCase="false">
       <div class="cpmodal__header">
         <div class="row">
-          <div class="col-xs-12 text-center">
+          <div class="col-12 text-center">
             <span i18n><strong>{{ data.name }}</strong></span>
 
             <span
@@ -17,15 +17,15 @@
 
       <div class="cpmodal__body">
         <div class="row">
-          <div class="col-xs-12">
+          <div class="col-12">
             <form [formGroup]="form">
               <div class="form-group campus-switch" [class.isActive]="state.isCampusWide">
                 <div class="row">
-                  <div class="col-xs-8">
+                  <div class="col-8">
                     <p class="title" i18n>{{ 'campus_wide' | cpI18n }}</p>
                     <p class="text-muted" i18n>{{ 'templates_create_label_all_students' | cpI18n }}</p>
                   </div>
-                  <div class="col-xs-4">
+                  <div class="col-4">
                     <div class="float-right">
                       <cp-switch
                         class="campus-switch__toggle"
@@ -44,7 +44,7 @@
                   </cp-tooltip>
                 </label>
                 <div class="row">
-                  <div class="col-xs-12">
+                  <div class="col-12">
                     <cp-typeahead
                       [props]="typeAheadOpts"
                       (query)="onSearch($event)"
@@ -57,10 +57,10 @@
 
               <div class="form-group">
                 <div class="row">
-                  <div class="col-xs-6">
+                  <div class="col-6">
                     <label i18n>{{ 'announcements_type' | cpI18n }}</label>
                     <div class="row">
-                      <div class="col-xs-12">
+                      <div class="col-12">
                         <cp-check-dropdown
                           [items]="types"
                           [reset]="resetCustomFields$"
@@ -71,9 +71,9 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-xs-6">
+                  <div class="col-6">
                     <div class="row">
-                      <div class="col-xs-12">
+                      <div class="col-12">
                         <label i18n>{{ 'from' | cpI18n }}</label>
                         <cp-dropdown
                           [items]="stores$ | async"
@@ -96,12 +96,12 @@
                 </label>
                 <div class="cpInput subject-input">
                   <div class="row">
-                    <div class="col-xs-2" *ngIf="subject_prefix.label">
+                    <div class="col-2" *ngIf="subject_prefix.label">
                       <span [class]="'subject-input__label text-center ' + subject_prefix.type">
                         {{ subject_prefix.label }}
                       </span>
                     </div>
-                    <div [class]="subject_prefix.label ? 'col-xs-10 no-left-padding' : 'col-xs-12' ">
+                    <div [class]="subject_prefix.label ? 'col-10 no-left-padding' : 'col-12' ">
                       <input
                       type="text"
                       formControlName="subject"
@@ -128,7 +128,7 @@
         </div>
 
         <div class="row" *ngIf="isError">
-          <div class="col-xs-12 text-center">
+          <div class="col-12 text-center">
             <label class="error">{{ errorMessage }}</label>
           </div>
         </div>
@@ -136,7 +136,7 @@
 
       <div class="cpmodal__footer">
         <div class="row">
-          <div class="col-xs-6 float-right text-right">
+          <div class="col-6 float-right text-right">
             <button
               type="button"
               data-dismiss="modal"

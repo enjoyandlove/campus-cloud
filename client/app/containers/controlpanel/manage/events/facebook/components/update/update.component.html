@@ -5,17 +5,17 @@
     <form [formGroup]="form">
       <div class="form-group" formArrayName="links">
         <div class="row"  *ngFor="let link of form.controls.links.controls; let i=index">
-          <div class="col-xs-12">
+          <div class="col-12">
             <div class="link-group">
               <div [formGroupName]="i">
-                <div class="col-xs-5 no-left-padding">
+                <div class="col-5 no-left-padding">
                   <label i18n>{{ 'events_facebook_label_link' | cpI18n }}</label>
                   <input
                     type="text"
                     class="form-control"
                     formControlName="url">
                 </div>
-                <div class="col-xs-3" *ngIf="!storeId && !clubId">
+                <div class="col-3" *ngIf="!storeId && !clubId">
                   <label i18n>{{ 'events_facebook_label_host' | cpI18n }}</label>
                   <cp-dropdown
                     [items]="stores"
@@ -23,7 +23,7 @@
                     (selected)="onSelectedStore($event, i)">
                   </cp-dropdown>
                 </div>
-                <div class="col-xs-2 float-right text-right">
+                <div class="col-2 float-right text-right">
                   <button
                     type="button"
                     (click)="deleteLink = link"
@@ -40,7 +40,7 @@
       <div class="footer">
         <div class="cp-wrapper cp-wrapper--outer">
           <div class="row">
-            <div class="col-xs-12">
+            <div class="col-12">
               <div class="float-right">
                 <a
                   [routerLink]="['../../']"

@@ -2,22 +2,22 @@
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
   <ng-container *ngSwitchCase="false">
     <div class="row">
-      <div class="col-xs-8 col-xs-offset-2">
+      <div class="col-8 col-offset-2">
         <div class="cp-card club">
           <div class="row">
-            <div class="col-xs-3">
+            <div class="col-3">
               <div
                 class="club__avatar"
                 [ngStyle]="{ 'background-image': 'url(' + club.logo_url + ')' }">
               </div>
             </div>
-            <div class="col-xs-9">
+            <div class="col-9">
               <div class="row">
-                <div class="col-xs-8">
+                <div class="col-8">
                   <p class="club__title text-truncate">{{ club.name }}</p>
                   <p class="club__status">{{ clubStatus[club.status] }}</p>
                 </div>
-                <div class="col-xs-4 text-right">
+                <div class="col-4 text-right">
                   <a routerLink="../edit"
                     class="cpbtn cpbtn--primary" i18n>
                     {{ labels.edit_button | cpI18n }}
@@ -25,7 +25,7 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-xs-12 club__description render_line_breaks">
+                <div class="col-12 club__description render_line_breaks">
                   <p>{{ club.description }}</p>
                 </div>
               </div>
@@ -36,16 +36,16 @@
     </div>
 
     <div class="row" *ngIf="hasMetaData">
-      <div class="col-xs-8 col-xs-offset-2">
+      <div class="col-8 col-offset-2">
         <div class="cp-card meta">
           <ng-container [ngSwitch]="uploading">
             <cp-spinner *ngSwitchCase="true"></cp-spinner>
             <ng-container *ngSwitchCase="false">
               <div class="row meta__item" *ngIf="club.constitution_url">
-                <div class="col-xs-3 meta__type" i18n>
+                <div class="col-3 meta__type" i18n>
                   {{ 'clubs_label_constitution' | cpI18n }}
                 </div>
-                <div class="col-xs-9">
+                <div class="col-9">
                   <span>
                     <a [attr.href]="club.constitution_url" download class="cpbtn cpbtn--link" i18n>
                       {{ 'download' | cpI18n }}
@@ -65,10 +65,10 @@
               </div>
 
               <div class="row meta__item" *ngIf="club.advisor_firstname">
-                <div class="col-xs-3 meta__type" i18n>
+                <div class="col-3 meta__type" i18n>
                     {{ 'clubs_label_advisor' | cpI18n }}
                 </div>
-                <div class="col-xs-9">
+                <div class="col-9">
                   <span>
                     {{ club.advisor_firstname }}
                     {{ club.advisor_lastname }}
@@ -80,50 +80,50 @@
               </div>
 
               <div class="row meta__item" *ngIf="club.phone">
-                <div class="col-xs-3 meta__type" i18n>
+                <div class="col-3 meta__type" i18n>
                     {{ 'phone_number' | cpI18n }}
                 </div>
-                <div class="col-xs-9">
+                <div class="col-9">
                   <span>{{ club.phone }}</span>
                 </div>
               </div>
               <div class="row meta__item" *ngIf="club.email">
-                <div class="col-xs-3 meta__type" i18n>
+                <div class="col-3 meta__type" i18n>
                     {{ 'email' | cpI18n }}
                 </div>
-                <div class="col-xs-9">
+                <div class="col-9">
                   <span>{{ club.email }}</span>
                 </div>
               </div>
               <div class="row meta__item" *ngIf="club.website">
-                <div class="col-xs-3 meta__type" i18n>
+                <div class="col-3 meta__type" i18n>
                     {{ 'website' | cpI18n }}
                 </div>
-                <div class="col-xs-9">
+                <div class="col-9">
                   <span>{{ club.website }}</span>
                 </div>
               </div>
               <div class="row meta__item" *ngIf="club.address">
-                <div class="col-xs-3 meta__type" i18n>
+                <div class="col-3 meta__type" i18n>
                     {{ 'location' | cpI18n }}
                 </div>
-                <div class="col-xs-9">
+                <div class="col-9">
                   <span>{{ club.address }}</span>
                 </div>
               </div>
               <div class="row meta__item" *ngIf="club.location">
-                <div class="col-xs-3 meta__type" i18n>
+                <div class="col-3 meta__type" i18n>
                     {{ 'building' | cpI18n }}
                 </div>
-                <div class="col-xs-9">
+                <div class="col-9">
                   <span>{{ club.location }}</span>
                 </div>
               </div>
               <div class="row meta__item" *ngIf="club.room_info">
-                <div class="col-xs-3 meta__type" i18n>
+                <div class="col-3 meta__type" i18n>
                     {{ 'room' | cpI18n }}
                 </div>
-                <div class="col-xs-9">
+                <div class="col-9">
                   <span>{{ club.room_info }}</span>
                 </div>
               </div>
@@ -134,7 +134,7 @@
     </div>
 
     <div class="row">
-      <div class="col-xs-8 col-xs-offset-2">
+      <div class="col-8 col-offset-2">
         <div class="cp-card map">
           <cp-maps
             [center]="mapCenter"
@@ -146,7 +146,7 @@
     </div>
     
     <div class="row club-notes" *ngIf="club.notes?.length && !limitedAdmin">
-      <div class="col-xs-8 col-xs-offset-2">
+      <div class="col-8 col-offset-2">
         <div class="cp-card">
           <p class="club-notes__title">{{ 'club_info_notes' | cpI18n }}</p>
           <div 

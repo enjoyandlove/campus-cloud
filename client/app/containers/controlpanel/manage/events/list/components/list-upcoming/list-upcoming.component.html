@@ -1,9 +1,9 @@
 <ul class="events cp-form">
-  <li class="cp-form__header col-xs-12">
+  <li class="cp-form__header col-12">
     <div class="row">
       <span
         (click)="doSort('title')"
-        [class]="[isOrientation ? 'col-xs-6 hover' : 'col-xs-4 hover']">
+        [class]="[isOrientation ? 'col-6 hover' : 'col-4 hover']">
         {{ 'name' | cpI18n }}
         <span *ngIf="state.sort_field === 'title'">
           <i
@@ -18,10 +18,10 @@
           </i>
         </span>
       </span>
-      <span class="col-xs-2" *ngIf="!isOrientation">{{ 'host' | cpI18n }}</span>
+      <span class="col-2" *ngIf="!isOrientation">{{ 'host' | cpI18n }}</span>
       <span
         (click)="doSort('start')"
-        class="col-xs-2 hover" i18n>
+        class="col-2 hover" i18n>
         {{ 'start_date' | cpI18n }}
         <span *ngIf="state.sort_field === 'start'">
           <i
@@ -36,14 +36,14 @@
           </i>
         </span>
       </span>
-      <span class="col-xs-3" i18n>{{ 'assessment' | cpI18n }}</span>
-      <span class="col-xs-1"></span>
+      <span class="col-3" i18n>{{ 'assessment' | cpI18n }}</span>
+      <span class="col-1"></span>
     </div>
   </li>
 
-  <li class="cp-form__item col-xs-12" *ngFor="let event of events">
+  <li class="cp-form__item col-12" *ngFor="let event of events">
     <div class="row">
-      <span [class]="[isOrientation ? 'text-truncate events__thumbnail col-xs-6 ' : 'text-truncate events__thumbnail col-xs-4']">
+      <span [class]="[isOrientation ? 'text-truncate events__thumbnail col-6 ' : 'text-truncate events__thumbnail col-4']">
         <img
           class="img-rounded img-fit-cover"
           [src]="event.poster_thumb_url ?
@@ -60,14 +60,14 @@
         <br>
         {{ event.description }}
       </span>
-      <span class="col-xs-2 text-truncate" *ngIf="!isOrientation">
+      <span class="col-2 text-truncate" *ngIf="!isOrientation">
         {{ event.store_name }}
       </span>
-      <span class="col-xs-2 text-truncate">
+      <span class="col-2 text-truncate">
         {{ event.start | cpDatePipe:dateFormat }}
       </span>
 
-      <span class="col-xs-3 text-truncate">
+      <span class="col-3 text-truncate">
         <a
           [routerLink]="[eventCheckinRoute + event.encrypted_id]"
           *ngIf="event.event_attendance === attendanceEnabled"
@@ -80,7 +80,7 @@
         *ngIf="canDelete"
         (click)="onDelete(event)"
         data-toggle="modal" data-target="#deleteEventsModal"
-        class="col-xs-1 hover text-truncate delete-event text-center">
+        class="col-1 hover text-truncate delete-event text-center">
         &times;
       </span>
     </div>

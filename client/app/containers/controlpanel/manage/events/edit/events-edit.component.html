@@ -4,10 +4,10 @@
   <form
     [formGroup]="form"
     *ngSwitchCase="true">
-    <div class="col-xs-6">
+    <div class="col-6">
       <div class="cp-card">
         <div class="row">
-          <div class="col-xs-12">
+          <div class="col-12">
             <p class="title" i18n>{{ 'events_event_banner' | cpI18n }}</p>
             <div class="row margin-top">
               <cp-image-upload
@@ -20,7 +20,7 @@
         </div>
 
         <div class="row event-details">
-          <div class="col-xs-12">
+          <div class="col-12">
             <p class="title" i18n>{{ 'events_event_details' | cpI18n }}</p>
             <div class="form-group margin-top">
               <label i18n>{{ 'events_event_name' | cpI18n }}</label>
@@ -32,7 +32,7 @@
             </div>
 
             <div class="row form-group" *ngIf="!isClub && !isService && !isOrientation">
-              <div class="col-xs-12">
+              <div class="col-12">
                 <label i18n>{{ 'select_host' | cpI18n }}</label>
                 <cp-dropdown
                   [items]="stores"
@@ -44,14 +44,14 @@
             </div>
 
             <div class="row form-group">
-              <div class="col-xs-6">
+              <div class="col-6">
                 <label i18n>{{ 'start_date' | cpI18n }}</label>
                 <cp-datepicker
                   [options]="startdatePickerOpts"
                   [error]="formMissingFields && form.controls['start'].hasError('required')">
                 </cp-datepicker>
               </div>
-              <div class="col-xs-6">
+              <div class="col-6">
                 <label i18n>{{ 'end_date' | cpI18n }}</label>
                 <cp-datepicker
                   [options]="enddatePickerOpts"
@@ -61,7 +61,7 @@
             </div>
 
             <div class="row form-group" *ngIf="isOrientation">
-              <div class="col-xs-12">
+              <div class="col-12">
                 <cp-checkbox
                   class="checkbox"
                   (toggle)="onAllDayToggle($event)"
@@ -77,10 +77,10 @@
             </div>
 
             <div class="row">
-              <div class="col-xs-12">
+              <div class="col-12">
                 <label i18n>{{ 'location' | cpI18n }}</label>
                 <div class="row form-group">
-                  <div class="col-xs-12">
+                  <div class="col-12">
                     <cp-place-autocomplete
                       [newAddress]="newAddress"
                       (backToDefault)="onResetMap()"
@@ -90,7 +90,7 @@
                   </div>
                 </div>
                 <div class="row form-group">
-                  <div class="col-xs-6">
+                  <div class="col-6">
                     <label i18n>{{ 'building' | cpI18n }}</label>
                     <input
                       type="text"
@@ -98,7 +98,7 @@
                       formControlName="location">
                   </div>
 
-                  <div class="col-xs-6">
+                  <div class="col-6">
                     <label i18n>{{ 'room' | cpI18n }}</label>
                      <input
                       type="text"
@@ -110,7 +110,7 @@
             </div>
 
             <div class="row">
-              <div class="col-xs-12">
+              <div class="col-12">
                 <div class="maps">
                   <cp-maps
                     [center]="mapCenter"
@@ -124,11 +124,11 @@
       </div>
     </div>
 
-    <div class="col-xs-6">
+    <div class="col-6">
       <fieldset [disabled]="isOrientation && production">
         <div class="cp-card" [class.isDisabled]="isOrientation && production">
           <div class="row">
-            <div class="col-xs-12">
+            <div class="col-12">
               <p class="title" i18n>{{ 'assessment' | cpI18n }}</p>
               <span class="float-right">
               <cp-switch
@@ -136,16 +136,16 @@
                 [isChecked]="form.controls.event_attendance.value === attendanceEnabled">
               </cp-switch>
             </span>
-              <div class="col-xs-12 temporarily_disabled" *ngIf="isOrientation">
-                <div class="col-xs-1 temp-icon"><i class="material-icons">info_outline</i></div>
-                <div class="col-xs-11 temp-text">{{ 'temporarily_disabled' | cpI18n }}</div>
+              <div class="col-12 temporarily_disabled" *ngIf="isOrientation">
+                <div class="col-1 temp-icon"><i class="material-icons">info_outline</i></div>
+                <div class="col-11 temp-text">{{ 'temporarily_disabled' | cpI18n }}</div>
               </div>
             </div>
           </div>
 
           <div *ngIf="form.controls.event_attendance.value === attendanceEnabled">
             <div class="row margin-top">
-              <div class="col-xs-6">
+              <div class="col-6">
                 <div class="form-group">
                   <label i18n>{{ 'events_event_manager' | cpI18n }}
                     <cp-tooltip
@@ -160,7 +160,7 @@
                   </cp-dropdown>
                 </div>
               </div>
-              <div class="col-xs-6">
+              <div class="col-6">
                 <div class="form-group">
                   <label i18n>{{ 'events_attendance_manager_full' | cpI18n }}
                     <cp-tooltip
@@ -176,7 +176,7 @@
             </div>
 
             <div class="row form-group">
-              <div class="col-xs-6">
+              <div class="col-6">
                 <label i18n>{{ 'student_feedback' | cpI18n }}
                   <cp-tooltip
                     [toolTipContent]="studentFeedbackToolTip">
@@ -192,7 +192,7 @@
             </div>
 
             <div class="row form-group" *ngIf="form.controls['event_feedback'].value === eventFeedbackEnabled">
-              <div class="col-xs-12">
+              <div class="col-12">
                 <label i18n>{{ 'events_default_question' | cpI18n }}</label>
                 <input
                   type="text"
@@ -207,9 +207,9 @@
 
     <div class="footer">
       <div class="cp-wrapper cp-wrapper--outer">
-        <div class="col-xs-12">
+        <div class="col-12">
           <div class="row">
-            <div class="col-xs-12">
+            <div class="col-12">
               <div class="text-right">
                 <label class="error" *ngIf="formMissingFields" i18n>
                     <span>&#x26A0;</span>

@@ -1,7 +1,7 @@
 <div class="cpmodal" *ngIf="attendee">
   <div class="cpmodal__header">
     <div class="row">
-      <div class="col-xs-12 text-center">
+      <div class="col-12 text-center">
         <span i18n><strong>{{ 'student_feedback' | cpI18n }}</strong></span>
 
         <span
@@ -15,7 +15,7 @@
 
   <div class="cpmodal__body">
     <div class="row">
-      <div class="col-xs-12 text-center">
+      <div class="col-12 text-center">
         <cp-stars
           [size]="listStarSize"
           [avgRate]="attendee.feedback_rating"
@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-xs-8 col-xs-offset-2">
+      <div class="col-8 col-offset-2">
         <p class="text-center name">
           {{ attendee.firstname }} {{ attendee.lastname }}
         </p>
@@ -37,7 +37,7 @@
 
   <div class="cpmodal__footer">
     <div class="row">
-      <div class="col-xs-6 col-xs-offset-6 text-right">
+      <div class="col-6 col-offset-6 text-right">
 
         <button
           type="button"

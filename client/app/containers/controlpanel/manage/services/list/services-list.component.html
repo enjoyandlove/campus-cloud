@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-xs-12">
+  <div class="col-12">
     <cp-services-list-action-box
       (listAction)="doFilter($event)">
     </cp-services-list-action-box>
@@ -17,10 +17,10 @@
     </cp-no-content>
 
     <ul class="services cp-form" *ngIf="state.services.length">
-      <li class="cp-form__header col-xs-12">
+      <li class="cp-form__header col-12">
         <div class="row">
           <span
-            class="col-xs-4 hover"
+            class="col-4 hover"
             (click)="doSort('name')">
             {{ 'name' | cpI18n }}
             <span *ngIf="state.sort_field === 'name'">
@@ -29,28 +29,28 @@
               </i>
             </span>
           </span>
-          <span class="col-xs-2">
+          <span class="col-2">
             {{ 'services_visits' | cpI18n }}
           </span>
-          <span class="col-xs-2">{{ 'ratings' | cpI18n }}</span>
-          <span class="col-xs-3">{{ 'average_rating' | cpI18n }}</span>
-          <span class="col-xs-1 hover"></span>
+          <span class="col-2">{{ 'ratings' | cpI18n }}</span>
+          <span class="col-3">{{ 'average_rating' | cpI18n }}</span>
+          <span class="col-1 hover"></span>
         </div>
       </li>
 
-      <li class="cp-form__item col-xs-12" *ngFor="let service of state.services">
+      <li class="cp-form__item col-12" *ngFor="let service of state.services">
         <div class="row">
-          <span class="col-xs-4 text-truncate" i18n>
+          <span class="col-4 text-truncate" i18n>
             <div class="row">
-              <div class="col-xs-2 services__thumbnail">
+              <div class="col-2 services__thumbnail">
                 <img class="img-rounded img-fit-cover" [src]="service.logo_url">
               </div>
-              <div class="col-xs-9 text-truncate no-left-padding"><strong><a [routerLink]="[service.service_attendance ? service.id : service.id + '/info']">{{ service.name }}</a></strong><br>{{ service.description }}</div>
+              <div class="col-9 text-truncate no-left-padding"><strong><a [routerLink]="[service.service_attendance ? service.id : service.id + '/info']">{{ service.name }}</a></strong><br>{{ service.description }}</div>
             </div>
           </span>
-          <span class="col-xs-2" i18n>{{ service.total_visits }}</span>
-          <span class="col-xs-2" i18n>{{ service.num_ratings }}</span>
-          <span class="col-xs-3" i18n>
+          <span class="col-2" i18n>{{ service.total_visits }}</span>
+          <span class="col-2" i18n>{{ service.num_ratings }}</span>
+          <span class="col-3" i18n>
             <cp-stars
               *ngIf="service.enable_feedback === 1"
               [maxRate]="service.rating_scale_maximum"
@@ -60,7 +60,7 @@
           <span
             (click)="onDelete(service)"
             data-toggle="modal" data-target="#deleteServicesModal"
-            class="col-xs-1 hover text-center text-truncate delete-service">
+            class="col-1 hover text-center text-truncate delete-service">
             &times;
           </span>
         </div>
@@ -68,7 +68,7 @@
     </ul>
 
     <div class="row" *ngIf="state.services.length">
-      <div class="col-xs-12">
+      <div class="col-12">
         <cp-pagination
           [pageNext]="pageNext"
           [pagePrev]="pagePrev"

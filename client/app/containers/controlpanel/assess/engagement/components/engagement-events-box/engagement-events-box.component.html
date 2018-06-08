@@ -1,7 +1,7 @@
 <ng-container [ngSwitch]="loading">
   <div class="cp-card events events--no-data" *ngSwitchCase="true">
     <div class="row">
-      <div class="col-xs-12">
+      <div class="col-12">
         <p class="events--heading" i18n>{{ 'events' | cpI18n }}</p>
 
         <div class="events--no-data-wrapper text-center">
@@ -15,7 +15,7 @@
     <ng-container [ngSwitch]="isDisable">
       <div class="cp-card events events--no-data" *ngSwitchCase="true">
         <div class="row">
-          <div class="col-xs-12">
+          <div class="col-12">
             <p class="events--heading" i18n>{{ 'events' | cpI18n }}</p>
 
             <div class="events--no-data-wrapper text-center">
@@ -28,17 +28,17 @@
 
       <div class="cp-card events" *ngSwitchCase="false">
         <div class="row">
-          <div class="col-xs-12">
+          <div class="col-12">
             <p class="events--heading" i18n>{{ 'events' | cpI18n }}</p>
 
             <div class="events--stats">
               <div class="row">
-                <div class="col-xs-4 events--stats--stat" *ngFor="let stat of stats">
+                <div class="col-4 events--stats--stat" *ngFor="let stat of stats">
                   <div class="row">
-                    <div class="col-xs-4 events--stats--graph no-right-padding">
+                    <div class="col-4 events--stats--graph no-right-padding">
                       <img [src]="[stat.icon]" alt="total events">
                     </div>
-                    <div class="col-xs-8 events--stats--data no-right-padding no-left-padding">
+                    <div class="col-8 events--stats--data no-right-padding no-left-padding">
                       <p class="stat">{{ stat.value }}</p>
                       <p class="text-muted text-truncate" i18n>{{ stat.label }}</p>
                     </div>
@@ -49,15 +49,15 @@
 
             <div class="events--ranking">
               <div class="row">
-                <div class="col-xs-4">
+                <div class="col-4">
                   <p class="events--heading" i18n>{{ 'assess_top_events' | cpI18n }}</p>
                 </div>
-                <div class="events--ranking--sorting col-xs-8">
+                <div class="events--ranking--sorting col-8">
                   <div class="row">
-                    <div class="col-xs-4 text-right no-right-padding">
+                    <div class="col-4 text-right no-right-padding">
                       <p i18n>{{ 'assess_sort_by' | cpI18n }}</p>
                     </div>
-                    <div class="col-xs-8">
+                    <div class="col-8">
                       <cp-dropdown
                         [items]="sortyBy"
                         [selectedItem]="sortingBy"
@@ -71,47 +71,47 @@
                 <cp-spinner *ngSwitchCase="true"></cp-spinner>
                 <div class="row events--table" *ngSwitchCase="false">
                   <ng-container *ngIf="!eventsRanking.length">
-                    <div class="col-xs-12 text-center events--not_found">
+                    <div class="col-12 text-center events--not_found">
                         <p class="events--not_found--title" i18n>{{ 'zero_quantity' | cpI18n }} {{ sortingBy.label }}</p>
                     </div>
                   </ng-container>
                   <ng-container *ngIf="eventsRanking.length">
-                    <div class="col-xs-12">
+                    <div class="col-12">
                         <div class="row events--table--header">
-                          <div class="col-xs-1">
+                          <div class="col-1">
                             <p>#</p>
                           </div>
-                          <div class="col-xs-5 no-left-padding">
+                          <div class="col-5 no-left-padding">
                             <p i18n>{{ 'title' | cpI18n }}</p>
                           </div>
-                          <div class="col-xs-2 no-left-padding">
+                          <div class="col-2 no-left-padding">
                             <p i18n>{{ 'attendees' | cpI18n }}</p>
                           </div>
-                          <div class="col-xs-2 no-right-padding">
+                          <div class="col-2 no-right-padding">
                             <p i18n>{{ 'feedback' | cpI18n }}</p>
                           </div>
-                          <div class="col-xs-2 text-right no-left-padding">
+                          <div class="col-2 text-right no-left-padding">
                             <p i18n>{{ 'rating' | cpI18n }}</p>
                           </div>
                         </div>
                         <div class="row" *ngFor="let event of eventsRanking; index as index; last as last">
-                          <div class="col-xs-12">
+                          <div class="col-12">
                             <div class="events--table--item" [class.isLast]="last">
                               <div class="row">
-                                <div class="col-xs-1">
+                                <div class="col-1">
                                   <p class="ranking">{{ index + 1 }}</p>
                                 </div>
-                                <div class="col-xs-5 no-left-padding text-truncate">
+                                <div class="col-5 no-left-padding text-truncate">
                                   <img [src]="event.event_poster_thumb_url === '' ? defaultImage : event.event_poster_thumb_url" alt="" class="event-avatar img-rounded">
                                   <p class="event-title text-truncate">{{ event.event_title }}</p>
                                 </div>
-                                <div class="col-xs-2 no-left-padding">
+                                <div class="col-2 no-left-padding">
                                   <p>{{ event.num_of_attendees }}</p>
                                 </div>
-                                <div class="col-xs-2 no-right-padding">
+                                <div class="col-2 no-right-padding">
                                   <p>{{ event.num_of_feedbacks }}</p>
                                 </div>
-                                <div class="col-xs-2 text-right no-left-padding">
+                                <div class="col-2 text-right no-left-padding">
                                   <p>{{ ((event.average_of_feedbacks / 100) * 5).toFixed(1) }}</p>
                                 </div>
                               </div>

@@ -1,7 +1,7 @@
 <div class="cpmodal">
     <div class="cpmodal__header">
       <div class="row">
-        <div class="col-xs-12 text-center">
+        <div class="col-12 text-center">
           <span i18n><strong>{{ 'calendars_items_import_confirmation_modal_title' | cpI18n }}</strong></span>
 
           <span
@@ -16,7 +16,7 @@
 
     <div class="cpmodal__body">
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-12">
           <ng-container [ngSwitch]="parsing">
             <cp-spinner *ngSwitchCase="true"></cp-spinner>
             <ng-container *ngSwitchCase="false">
@@ -34,7 +34,7 @@
 
     <div class="cpmodal__footer">
       <div class="row">
-        <div class="col-xs-6 col-xs-offset-6 text-right">
+        <div class="col-6 col-offset-6 text-right">
           <cp-button
             [props]="buttonData"
             (buttonClick)="onOK()">

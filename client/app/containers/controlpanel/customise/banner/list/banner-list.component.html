@@ -3,10 +3,10 @@
 
   <ng-container *ngSwitchCase="false">
     <div class="row">
-      <div class="col-xs-8 col-xs-offset-2">
+      <div class="col-8 col-offset-2">
         <div class="cp-card card">
           <div class="row">
-            <div class="col-xs-12">
+            <div class="col-12">
               <p class="card__title">{{ 'customization_title' | cpI18n }}</p>
               <p class="text-muted">
                 {{ 'customization_description' | cpI18n }}
@@ -18,7 +18,7 @@
           </div>
 
           <div class="row canvas">
-            <div class="col-xs-12">
+            <div class="col-12">
               <div
                 id="canvas_wrapper"
                 *ngIf="!isEdit"

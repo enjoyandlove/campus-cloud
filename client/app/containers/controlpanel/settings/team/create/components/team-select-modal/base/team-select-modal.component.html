@@ -1,7 +1,7 @@
 <div class="cpmodal">
   <div class="cpmodal__header">
     <div class="row">
-      <div class="col-xs-12 text-center">
+      <div class="col-12 text-center">
         <span i18n><strong>{{ 'admin_club_service_modal_title' | cpI18n: title }}</strong></span>
 
         <span
@@ -19,24 +19,24 @@
       <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
       <ng-container *ngSwitchCase="false">
-        <div class="col-xs-4 items-list">
+        <div class="col-4 items-list">
           <div class="row items-list__search-box">
-            <div class="col-xs-12">
+            <div class="col-12">
               <cp-searchbox (query)="query = $event"></cp-searchbox>
             </div>
           </div>
 
           <div class="row">
-            <ul class="col-xs-12 items-list__results">
+            <ul class="col-12 items-list__results">
               <li class="cp-form__item"
                 *ngFor="let item of state.selected | cpTeamFilterPipe:{query: query, filterBy: 'name'}">
                 <div class="row">
-                  <span class="col-xs-10" i18n>
+                  <span class="col-10" i18n>
                     <div class="row">
-                      <div class="col-xs-3 items-list__thumbnail">
+                      <div class="col-3 items-list__thumbnail">
                         <img class="img-rounded img-fit-cover img-fluid" [src]="item.data.logo_url">
                       </div>
-                      <div class="col-xs-9 text-truncate no-left-padding">
+                      <div class="col-9 text-truncate no-left-padding">
                         <strong>
                           {{ item.data.name }}
                         </strong>
@@ -46,7 +46,7 @@
                     </div>
                   </span>
                   <span
-                    class="col-xs-2">
+                    class="col-2">
                     <cp-checkbox
                       class="checkbox"
                       [isChecked]="item.checked"
@@ -58,19 +58,19 @@
             </ul>
           </div>
         </div>
-        <div class="col-xs-8 items-list">
+        <div class="col-8 items-list">
           <div class="row">
-            <div class="col-xs-12">
+            <div class="col-12">
               <div class="row">
-                <ul class="col-xs-12 items-list__results items-list__results--full-height">
-                  <li class="cp-form__item col-xs-12" *ngFor="let item of state.selected | cpTeamSelectedPipe">
+                <ul class="col-12 items-list__results items-list__results--full-height">
+                  <li class="cp-form__item col-12" *ngFor="let item of state.selected | cpTeamSelectedPipe">
                     <div class="row" *ngIf="item.checked">
-                      <span class="col-xs-9" i18n>
+                      <span class="col-9" i18n>
                         <div class="row">
-                          <div class="col-xs-2 items-list__thumbnail">
+                          <div class="col-2 items-list__thumbnail">
                             <img class="img-rounded img-fit-cover img-fluid" [src]="item.data.logo_url">
                           </div>
-                          <div class="col-xs-9 text-truncate no-left-padding">
+                          <div class="col-9 text-truncate no-left-padding">
                             <strong>
                               {{ item.data.name }}
                             </strong>
@@ -79,7 +79,7 @@
                           </div>
                         </div>
                       </span>
-                      <span class="col-xs-2 no-right-padding text-right hover privileges-menu">
+                      <span class="col-2 no-right-padding text-right hover privileges-menu">
                         <button class="cpbtn cpbtn--cancel hover" data-toggle="dropdown">
                           <span>
                             <i class="material-icons">{{ item.icon }}</i>
@@ -93,14 +93,14 @@
                             *ngFor="let privilege of privileges | cpFilterByStorePrivileges: privilegeType:item.id"
                             (click)="updateItem(item.id, 'type', privilege.type, privilege.icon)">
                             <div class="row">
-                              <div class="col-xs-2 text-center no-left-padding no-right-padding">
+                              <div class="col-2 text-center no-left-padding no-right-padding">
                                 <i 
                                   class="material-icons" 
                                   *ngIf="item.type === privilege.type">
                                   check
                                 </i>
                               </div>
-                              <div class="col-xs-10 no-left-padding">
+                              <div class="col-10 no-left-padding">
                                 <p class="privileges-menu__item--title" i18n>
                                   {{ privilege.title }}
                                 </p>
@@ -114,7 +114,7 @@
                         </ul>
                       </span>
                       <span
-                        class="col-xs-1 hover text-right delete-button"
+                        class="col-1 hover text-right delete-button"
                         (click)="removeSelectedItem(item)">
                         &times;
                       </span>
@@ -131,7 +131,7 @@
 
   <div class="cpmodal__footer">
     <div class="row">
-      <div class="col-xs-6 col-xs-offset-6 text-right">
+      <div class="col-6 col-offset-6 text-right">
         <button
           type="button"
           (click)="emitAndClose()"

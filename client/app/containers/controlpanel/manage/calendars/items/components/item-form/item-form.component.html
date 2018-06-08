@@ -1,9 +1,9 @@
 <div class="row margin-bottom">
   <form [formGroup]="form">
-    <div class="col-xs-12">
+    <div class="col-12">
       <div class="cp-card">
         <div class="row item-details">
-          <div class="col-xs-12">
+          <div class="col-12">
             <p class="title" i18n>{{ 'calendars_item_details' | cpI18n }}</p>
             <div class="form-group margin-top">
               <label i18n>{{ 'calendars_item_name_label' | cpI18n }}</label>
@@ -15,14 +15,14 @@
             </div>
 
             <div class="row form-group">
-              <div class="col-xs-6">
+              <div class="col-6">
                 <label i18n>{{ 'start_date' | cpI18n }}</label>
                 <cp-datepicker
                   [options]="startdatePickerOpts"
                   [error]="formError && form.controls['start'].hasError('required')">
                 </cp-datepicker>
               </div>
-              <div class="col-xs-6">
+              <div class="col-6">
                 <label i18n>{{ 'end_date' | cpI18n }}</label>
                 <cp-datepicker
                   [options]="enddatePickerOpts"
@@ -32,7 +32,7 @@
             </div>
 
             <div class="row form-group">
-              <div class="col-xs-12">
+              <div class="col-12">
                 <cp-checkbox
                   class="checkbox"
                   (toggle)="onAllDayToggle($event)"
@@ -50,10 +50,10 @@
             </div>
 
             <div class="row">
-              <div class="col-xs-12">
+              <div class="col-12">
                 <label i18n>{{ 'location' | cpI18n }}</label>
                 <div class="row form-group">
-                  <div class="col-xs-12">
+                  <div class="col-12">
                     <cp-place-autocomplete
                       [newAddress]="newAddress"
                       (backToDefault)="onResetMap()"
@@ -66,7 +66,7 @@
             </div>
 
             <div class="row">
-              <div class="col-xs-12">
+              <div class="col-12">
                 <div class="maps">
                   <cp-maps
                     [center]="mapCenter"
@@ -82,9 +82,9 @@
 
     <div class="footer">
       <div class="cp-wrapper cp-wrapper--outer">
-        <div class="col-xs-12">
+        <div class="col-12">
           <div class="row">
-            <div class="col-xs-12">
+            <div class="col-12">
               <div class="text-right">
                 <label class="error" *ngIf="formError" i18n>
                     <span>&#x26A0;</span>

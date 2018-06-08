@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-xs-12">
+  <div class="col-12">
     <cp-audience-list-action-box
       (search)="onSearch($event)"
       (filterBy)="onFilterByListType($event)"
@@ -22,10 +22,10 @@
 
     <div *ngIf="state.audiences.length">
       <ul class="audiences cp-form">
-        <li class="cp-form__header col-xs-12">
+        <li class="cp-form__header col-12">
           <div class="row">
             <span
-              class="col-xs-5 hover"
+              class="col-5 hover"
               (click)="doSort('name')">
               {{ 'name' | cpI18n }}
               <span *ngIf="state.sort_field === 'name'">
@@ -35,21 +35,21 @@
               </span>
             </span>
             <span 
-              class="col-xs-2">
+              class="col-2">
               {{ 'type' | cpI18n }}
             </span>
-            <span class="col-xs-2">
+            <span class="col-2">
               {{ 'lists_number_of_users' | cpI18n }}
             </span>
-            <span class="col-xs-1 col-xs-offset-2"></span>
+            <span class="col-1 col-offset-2"></span>
           </div>
         </li>
 
         <li
-          class="cp-form__item col-xs-12"
+          class="cp-form__item col-12"
           *ngFor="let audience of state.audiences">
           <div class="row">
-            <span class="col-xs-5 text-truncate">
+            <span class="col-5 text-truncate">
               <button
                 class="cpbtn cpbtn--link-dark"
                 (click)="isAudienceEdit = true"
@@ -59,7 +59,7 @@
               </button>
             </span>
 
-            <span class="col-xs-2">
+            <span class="col-2">
               <ng-container *ngIf="audience.type === custom">
                 {{'audience_type_custom' | cpI18n}}
               </ng-container>
@@ -68,7 +68,7 @@
               </ng-container>
             </span>
 
-            <span class="col-xs-2 hover" (click)="downloadAudience(audience)">
+            <span class="col-2 hover" (click)="downloadAudience(audience)">
               {{ audience.count }} {{ 'users' | cpI18n }}
             </span>
 
@@ -76,7 +76,7 @@
               (click)="deleteAudience = audience;"
               (click)="isAudienceDelete = true"
               data-toggle="modal" data-target="#audienceDeleteModal"
-              class="col-xs-1 col-xs-offset-2 hover delete-list text-center">
+              class="col-1 col-offset-2 hover delete-list text-center">
               &times;
             </span>
           </div>

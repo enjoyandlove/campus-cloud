@@ -14,11 +14,11 @@
 
     <div *ngIf="state.members.length">
       <ul class="members cp-form">
-        <li class="cp-form__header col-xs-12">
+        <li class="cp-form__header col-12">
           <div class="row">
             <span
               (click)="doSort('username')"
-              class="col-xs-3 hover">
+              class="col-3 hover">
                 {{ 'name' | cpI18n }}
                 <span *ngIf="state.sort_field === 'username'">
                   <i class="material-icons">
@@ -27,7 +27,7 @@
                 </span>
               </span>
             <span
-              class="col-xs-2 hover"
+              class="col-2 hover"
               (click)="doSort('member_type')">
               {{ 'clubs_label_member_type' | cpI18n }}
               <span *ngIf="state.sort_field === 'member_type'">
@@ -36,16 +36,16 @@
                 </i>
               </span>
             </span>
-            <span class="col-xs-4" i18n>{{ 'email' | cpI18n }}</span>
-            <span class="col-xs-2" *ngIf="hasSSO">{{ 'student_id' | cpI18n }}</span>
+            <span class="col-4" i18n>{{ 'email' | cpI18n }}</span>
+            <span class="col-2" *ngIf="hasSSO">{{ 'student_id' | cpI18n }}</span>
             <span
-              [class]="hasSSO ? 'col-xs-1' : 'col-xs-1 col-xs-offset-2'">
+              [class]="hasSSO ? 'col-1' : 'col-1 col-offset-2'">
             </span>
           </div>
         </li>
 
         <li
-          class="cp-form__item col-xs-12"
+          class="cp-form__item col-12"
           *ngFor="let member of state.members | cpFilterPipe: { query: query, filterBy: ['firstname', 'lastname'] }">
 
           <div class="row" *ngIf="member.noResults">
@@ -55,7 +55,7 @@
           </div>
 
           <div class="row" *ngIf="!member.noResults">
-            <span class="col-xs-3 text-truncate members__thumbnail">
+            <span class="col-3 text-truncate members__thumbnail">
               <img
                 class="img-rounded img-fit-cover"
                 [src]="member.avatar_url"
@@ -84,15 +84,15 @@
                 {{ member.member_position }}
               </span>
             </span>
-            <span class="col-xs-2 text-truncate">
+            <span class="col-2 text-truncate">
               {{ member.member_type === executiveLeaderType ? executiveLeader : 'member' | cpI18n }}
             </span>
 
-            <span class="col-xs-4 text-truncate">
+            <span class="col-4 text-truncate">
               {{ member.email }}
             </span>
 
-            <span class="col-xs-2 text-truncate" *ngIf="hasSSO">
+            <span class="col-2 text-truncate" *ngIf="hasSSO">
               {{ member.student_identifier }}
             </span>
 
@@ -100,7 +100,7 @@
               *ngIf="!limitedAdmin"
               (click)="deleteMember = member"
               data-toggle="modal" data-target="#membersDelete"
-              [class]="hasSSO ? 'col-xs-1 float-right text-center delete-member hover' : 'col-xs-1 col-xs-offset-2 float-right text-center delete-member hover'">
+              [class]="hasSSO ? 'col-1 float-right text-center delete-member hover' : 'col-1 col-offset-2 float-right text-center delete-member hover'">
               &times;
             </span>
           </div>
@@ -108,7 +108,7 @@
       </ul>
 
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-12">
           <cp-pagination
             [pageNext]="pageNext"
             [pagePrev]="pagePrev"

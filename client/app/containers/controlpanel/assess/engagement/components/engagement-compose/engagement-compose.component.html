@@ -1,7 +1,7 @@
 <div class="cpmodal">
   <div class="cpmodal__header">
     <div class="row">
-      <div class="col-xs-12 text-center">
+      <div class="col-12 text-center">
         <span i18n><strong>{{ 'assess_new_message' | cpI18n }}</strong></span>
 
         <span
@@ -17,7 +17,7 @@
   <div class="cpmodal__body">
     <form [formGroup]="form">
       <div class="row">
-        <div class="col-xs-6">
+        <div class="col-6">
           <div class="form-group">
             <label for="to" i18n>{{ 'recipient' | cpI18n }}</label>
             <input
@@ -27,7 +27,7 @@
               [placeholder]="props.name">
           </div>
         </div>
-        <div class="col-xs-6">
+        <div class="col-6">
           <div class="form-group">
             <label for="from" i18n>{{ 'from' | cpI18n }}</label>
             <cp-dropdown
@@ -41,7 +41,7 @@
       </div>
 
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-12">
           <div class="form-group">
             <label for="subject" i18n>
                 {{ 'subject' | cpI18n }}
@@ -59,7 +59,7 @@
       </div>
 
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-12">
           <div class="form-group">
             <label for="message" i18n>
                 {{ 'message_noun' | cpI18n }}
@@ -76,7 +76,7 @@
       </div>
 
       <div class="row" *ngIf="isError">
-        <div class="col-xs-12 text-center">
+        <div class="col-12 text-center">
           <label class="error">{{ errorMessage }}</label>
         </div>
       </div>
@@ -85,7 +85,7 @@
 
   <div class="cpmodal__footer">
     <div class="row">
-      <div class="col-xs-6 col-xs-offset-6 text-right">
+      <div class="col-6 col-offset-6 text-right">
         <button
           type="button"
           data-dismiss="modal"

@@ -3,13 +3,13 @@
 
   <div *ngSwitchCase="false">
     <div class="row">
-      <div class="col-xs-8 col-xs-offset-2 event">
+      <div class="col-8 col-offset-2 event">
         <div class="cp-card resources__header">
           <div class="row">
-            <div class="col-xs-12">
+            <div class="col-12">
               <cp-resource-banner [resourceBanner]="resourceBanner"></cp-resource-banner>
               <div class="row event__buttons">
-                <div class="col-xs-12">
+                <div class="col-12">
                   <a
                     [routerLink]="['../edit']"
                     class="cpbtn cpbtn--primary" i18n>
@@ -22,39 +22,39 @@
         </div>
 
         <div class="row">
-          <div class="col-xs-12">
+          <div class="col-12">
             <div class="cp-card services__details">
               <div class="row">
-                <div class="col-xs-12">
+                <div class="col-12">
                   <div class="row" *ngIf="service.contactphone">
-                    <div class="col-xs-2">
+                    <div class="col-2">
                       <p><strong i18n>{{ 'phone' | cpI18n }}</strong></p>
                     </div>
-                    <div class="col-xs-10">
+                    <div class="col-10">
                       <p>{{ service.contactphone }}</p>
                     </div>
                   </div>
                   <div class="row" *ngIf="service.email">
-                    <div class="col-xs-2">
+                    <div class="col-2">
                       <p><strong i18n>{{ 'email' | cpI18n }}</strong></p>
                     </div>
-                    <div class="col-xs-10">
+                    <div class="col-10">
                       <p>{{ service.email }}</p>
                     </div>
                   </div>
                   <div class="row" *ngIf="service.website">
-                    <div class="col-xs-2">
+                    <div class="col-2">
                       <p><strong i18n>{{ 'website' | cpI18n }}</strong></p>
                     </div>
-                    <div class="col-xs-10">
+                    <div class="col-10">
                       <p>{{ service.website }}</p>
                     </div>
                   </div>
                   <div class="row" *ngIf="service.address">
-                    <div class="col-xs-2">
+                    <div class="col-2">
                       <p><strong i18n>{{ 'location' | cpI18n }}</strong></p>
                     </div>
-                    <div class="col-xs-10">
+                    <div class="col-10">
                       <p>{{ service.address }}</p>
                     </div>
                   </div>
@@ -62,7 +62,7 @@
               </div>
 
               <div class="row">
-                <div class="col-xs-12 services__map">
+                <div class="col-12 services__map">
                   <cp-maps
                     [center]="mapCenter"
                     [draggable]="draggable">
@@ -74,7 +74,7 @@
         </div>
 
         <div class="row" *ngIf="service.description">
-          <div class="col-xs-12">
+          <div class="col-12">
             <div class="cp-card">
               <p><strong>{{ 'description' | cpI18n }}</strong></p>
               <p class="no-margin-bottom render_line_breaks">{{ service.description }}</p>
@@ -83,7 +83,7 @@
         </div>
 
         <div class="row">
-          <div class="col-xs-12">
+          <div class="col-12">
             <div class="cp-card">
               <p><strong>{{ 'services_admin' | cpI18n }}</strong></p>
               <p *ngIf="!admins.length" i18n>{{ 'no_admins_found' | cpI18n }}...</p>

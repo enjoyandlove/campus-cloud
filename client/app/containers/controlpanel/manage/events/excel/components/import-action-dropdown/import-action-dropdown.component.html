@@ -12,9 +12,9 @@
 
     <div class="menu__content" [class.open]="isOpen">
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-12">
           <div class="row" *ngIf="!storeId && !isClub && !isService && !isOrientation">
-            <div class="col-xs-12">
+            <div class="col-12">
               <div class="menu__item">
                 <cp-dropdown
                   [items]="stores"
@@ -24,7 +24,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-xs-12">
+            <div class="col-12">
               <div class="menu__item">
                 <label i18n>{{ 'events_event_attendance' | cpI18n }}</label>
                 <cp-switch
@@ -37,7 +37,7 @@
           <div *ngIf="state.event_attendance === 1">
             <div class="menu__item">
               <div class="row">
-                <div class="col-xs-6">
+                <div class="col-6">
                   <label i18n>{{ 'events_attendance_feedback' | cpI18n }}</label>
                   <cp-dropdown
                     [items]="eventAttendanceFeedback"
@@ -50,7 +50,7 @@
 
             <div class="menu__item">
               <div class="row">
-                <div class="col-xs-6">
+                <div class="col-6">
                   <label i18n>{{ 'events_event_manager' | cpI18n }}</label>
                   <cp-dropdown
                     [items]="managers$ | async"
@@ -70,7 +70,7 @@
         </div>
       </div>
       <div class="row menu__content--footer">
-        <div class="col-xs-12">
+        <div class="col-12">
           <div class="float-right">
             <button
               type="button"

@@ -63,7 +63,7 @@
         (click)="onSwitchSchool($event, school)"
         [eventData]="trackEvent(amplitudeEvents.changed_school, false)">
       <div class="row">
-        <div class="col-xs-10">
+        <div class="col-10">
           <div
             *ngIf="school.app_logo_url !== ''"
             class="switch__school__thumb"
@@ -78,7 +78,7 @@
             {{ school.name }}
           </div>
         </div>
-        <div class="col-xs-2">
+        <div class="col-2">
           <div class="switch__school__default">
             <span class="float-right" *ngIf="selectedSchool.id === school.id">
               <i class="material-icons">check</i>

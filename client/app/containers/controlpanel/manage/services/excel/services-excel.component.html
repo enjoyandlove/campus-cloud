@@ -13,11 +13,11 @@
     </div>
 
     <div class="row margin-bottom">
-      <div class="col-xs-12">
+      <div class="col-12">
         <form [formGroup]="form" class="form">
           <div formArrayName="services">
             <div class="row">
-              <div class="col-xs-12">
+              <div class="col-12">
                 <cp-no-content
                   noContentText="No Services to Add..."
                   *ngIf="!form.controls.services.controls.length">
@@ -27,11 +27,11 @@
             <div
               class="row form__wrapper"
               *ngFor="let service of form.controls.services.controls; let i=index">
-              <div [formGroupName]="i" class="col-xs-12">
+              <div [formGroupName]="i" class="col-12">
                 <div class="row form__item">
-                  <div class="col-xs-4 text-truncate">
+                  <div class="col-4 text-truncate">
                     <div class="row margin-top">
-                      <div class="col-xs-3 no-left-padding">
+                      <div class="col-3 no-left-padding">
                         <cp-checkbox
                           class="checkbox float-left"
                           [isChecked]="isChecked[i].checked"
@@ -51,7 +51,7 @@
                         </div>
                       </div>
 
-                      <div class="col-xs-8 no-left-padding text-truncate">
+                      <div class="col-8 no-left-padding text-truncate">
                         <span class="service__title">
                           <strong>{{ service.controls.name.value }}</strong>
                         </span>
@@ -62,7 +62,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-xs-3">
+                  <div class="col-3">
                     <label i18n>{{ 'category' | cpI18n }}</label>
                     <cp-dropdown
                       [items]="categories"
@@ -81,7 +81,7 @@
     <div class="footer">
       <div class="cp-wrapper cp-wrapper--outer">
         <div class="row">
-          <div class="col-xs-12">
+          <div class="col-12">
             <div class="float-right">
               <a [routerLink]="['/manage/services']"
                 class="cpbtn cpbtn--cancel" i18n>

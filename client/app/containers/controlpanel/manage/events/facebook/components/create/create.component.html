@@ -1,21 +1,21 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
   <div class="form-group">
     <div class="row">
-      <div class="col-xs-5">
+      <div class="col-5">
         <label i18n>{{ 'events_facebook_label_link' | cpI18n }}</label>
         <input
           type="text"
           class="form-control"
           formControlName="url">
       </div>
-      <div class="col-xs-3" *ngIf="!storeId && !clubId">
+      <div class="col-3" *ngIf="!storeId && !clubId">
         <label i18n>{{ 'events_facebook_label_host' | cpI18n }}</label>
         <cp-dropdown
           [items]="stores"
           (selected)="onSelectedStore($event)">
         </cp-dropdown>
       </div>
-      <div class="col-xs-3">
+      <div class="col-3">
         <label i18n>&nbsp;</label>
         <button
           type="submit"
@@ -24,7 +24,7 @@
           {{ 'events_facebook_add_button' | cpI18n }}
         </button>
       </div>
-      <div class="col-xs-3 float-right">
+      <div class="col-3 float-right">
         <label i18n>&nbsp;</label>
         <label class="error text-center" *ngFor="let error of errors">{{ error }}</label>
       </div>

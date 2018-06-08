@@ -1,8 +1,8 @@
 <ul class="events cp-form">
-  <li class="cp-form__header col-xs-12">
+  <li class="cp-form__header col-12">
     <span
       (click)="doSort('title')"
-      class="col-xs-4 hover" i18n>
+      class="col-4 hover" i18n>
       {{ 'name' | cpI18n }}
       <span *ngIf="state.sort_field === 'title'">
         <i class="material-icons">
@@ -12,7 +12,7 @@
     </span>
     <span
       (click)="doSort('end')"
-      class="col-xs-2 hover" i18n>
+      class="col-2 hover" i18n>
       {{ 'end_date' | cpI18n }}
       <span *ngIf="state.sort_field === 'end'">
         <i class="material-icons">
@@ -20,14 +20,14 @@
         </i>
       </span>
     </span>
-    <span class="col-xs-2" i18n>{{ 'checkins' | cpI18n }}</span>
-    <span class="col-xs-3" i18n>{{ 'average_rating' | cpI18n }}</span>
-    <span class="col-xs-1"></span>
+    <span class="col-2" i18n>{{ 'checkins' | cpI18n }}</span>
+    <span class="col-3" i18n>{{ 'average_rating' | cpI18n }}</span>
+    <span class="col-1"></span>
   </li>
 
-  <li class="cp-form__item col-xs-12" *ngFor="let event of events">
+  <li class="cp-form__item col-12" *ngFor="let event of events">
 
-    <span class="col-xs-4 text-truncate events__thumbnail">
+    <span class="col-4 text-truncate events__thumbnail">
       <img
         class="img-rounded img-fit-cover"
         [src]="event.poster_thumb_url ?
@@ -50,14 +50,14 @@
       <br>
       {{ event.store_name }}
     </span>
-    <span class="col-xs-2 text-truncate">
+    <span class="col-2 text-truncate">
       {{ event.end | cpDatePipe:dateFormat }}
     </span>
-    <span class="col-xs-2 text-truncate">
+    <span class="col-2 text-truncate">
       {{ event.verified_checkins }}
     </span>
 
-    <span class="col-xs-3 text-truncate">
+    <span class="col-3 text-truncate">
       <span *ngIf="event.rating_scale_maximum > -1">
         <cp-stars
           [maxRate]="event.rating_scale_maximum"
@@ -70,7 +70,7 @@
       *ngIf="canDelete"
       (click)="onDelete(event)"
       data-toggle="modal" data-target="#deleteEventsModal"
-      class="col-xs-1 hover text-truncate delete-event text-center">
+      class="col-1 hover text-truncate delete-event text-center">
       &times;
     </span>
   </li>
