@@ -85,14 +85,7 @@ module.exports = (function makeWebpackConfig() {
       public: path.resolve(__dirname, 'client/public/'),
       styles: path.join(__dirname, 'client', 'style'),
       node_modules: path.join(__dirname, 'node_modules'),
-      bootstrap: path.join(
-        __dirname,
-        'node_modules',
-        'bootstrap-sass',
-        'assets',
-        'stylesheets',
-        'bootstrap'
-      )
+      bootstrap: path.join(__dirname, 'node_modules', 'bootstrap', 'sass')
     }
   };
 

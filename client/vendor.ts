@@ -13,4 +13,4 @@ import 'rxjs';
 // Other vendors for example jQuery, Lodash or Bootstrap
 // You can import js, ts, css, sass, ...
 import 'jquery';
-require('../node_modules/bootstrap-sass/assets/javascripts/bootstrap.min');
+require('../node_modules/bootstrap/dist/js/bootstrap.bundle.min');
