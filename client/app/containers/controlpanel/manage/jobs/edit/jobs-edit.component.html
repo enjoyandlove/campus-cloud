@@ -1,23 +1,25 @@
 <div [ngSwitch]="loading">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
   <div *ngSwitchCase="false">
-    <div class="row margin-bottom">
+    <div class="margin-bottom">
       <form [formGroup]="form">
-        <div class="col-6">
-          <cp-jobs-card
-            [form]="form"
-            [employerForm]="employerForm"
-            (formData)="formData($event)">
-          </cp-jobs-card>
-        </div>
-
-        <div class="col-6">
-          <cp-employer-card
-            [form]="form"
-            [employerForm]="employerForm"
-            (formData)="formData($event)"
-            (isNewEmployer)="onToggleEmployer($event)">
-          </cp-employer-card>
+        <div class="row">
+          <div class="col">
+            <cp-jobs-card
+              [form]="form"
+              [employerForm]="employerForm"
+              (formData)="formData($event)">
+            </cp-jobs-card>
+          </div>
+  
+          <div class="col">
+            <cp-employer-card
+              [form]="form"
+              [employerForm]="employerForm"
+              (formData)="formData($event)"
+              (isNewEmployer)="onToggleEmployer($event)">
+            </cp-employer-card>
+          </div>
         </div>
 
         <div class="footer">
