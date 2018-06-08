@@ -1,8 +1,8 @@
 <ng-container [ngSwitch]="loading">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
   <ng-container *ngSwitchCase="false">
-    <div class="row">
-      <div class="col-8 col-offset-2">
+    <div class="row justify-content-center">
+      <div class="col-8">
         <div class="cp-card club">
           <div class="row">
             <div class="col-3">
@@ -35,8 +35,8 @@
       </div>
     </div>
 
-    <div class="row" *ngIf="hasMetaData">
-      <div class="col-8 col-offset-2">
+    <div class="row justify-content-center" *ngIf="hasMetaData">
+      <div class="col-8">
         <div class="cp-card meta">
           <ng-container [ngSwitch]="uploading">
             <cp-spinner *ngSwitchCase="true"></cp-spinner>
@@ -133,8 +133,8 @@
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-8 col-offset-2">
+    <div class="row justify-content-center">
+      <div class="col-8">
         <div class="cp-card map">
           <cp-maps
             [center]="mapCenter"

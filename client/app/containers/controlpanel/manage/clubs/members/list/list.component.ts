@@ -86,7 +86,7 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
     const schoolId = this.session.g.get('school').id.toString();
     const calendar_id = this.orientationId ? this.orientationId.toString() : null;
 
-    const memberSearch = new HttpParams()
+    let memberSearch = new HttpParams()
       .append('school_id', schoolId)
       .append('sort_field', this.state.sort_field)
       .append('sort_direction', this.state.sort_direction)
@@ -102,7 +102,7 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
 
     const stream$ = socialGroupDetails$.pipe(
       flatMap((groups: any) => {
-        memberSearch.append('group_id', groups[0].id.toString());
+        memberSearch = memberSearch.append('group_id', groups[0].id.toString());
 
         this.groupId = groups[0].id;
 
