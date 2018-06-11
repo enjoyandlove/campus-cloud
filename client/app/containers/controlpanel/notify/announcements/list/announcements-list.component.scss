@@ -7,6 +7,10 @@
   @include card-margin();
 }
 
+.cp-form {
+  overflow: visible;
+}
+
 .delete-message {
   font-size: 2em;
 }

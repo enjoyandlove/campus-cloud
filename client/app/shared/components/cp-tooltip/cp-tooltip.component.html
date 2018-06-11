@@ -1,10 +1,11 @@
-<span
-  data-container="body"
-  data-toggle="popover"
-  data-placement="bottom"
-  class="text-muted with-tooltip pop"
-  data-html="true"
-  [attr.data-content]="content">
+<ng-template #tooltipTemplate><div [innerHtml]="content"></div></ng-template>
+<button 
+  type="button" 
+  [outsideClick]="true"
+  [triggers]="triggers"  
+  [placement]="placement"
+  [popover]="tooltipTemplate"
+  class="cpbtn cpbtn--link">
+  <ng-container *ngIf="toolTipContent.text">{{toolTipContent.text}}</ng-container>
   <i class="material-icons" *ngIf="!toolTipContent.text">info_outline</i>
-  <span *ngIf="toolTipContent.text" class="cpbtn cpbtn--link">{{ toolTipContent.text }}</span>
-</span>
+</button>

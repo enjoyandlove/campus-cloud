@@ -14,8 +14,8 @@
       class="recipients__more col-6"
       *ngIf="recipients_more.length">
         <cp-tooltip
-          (click)="viewMoreModal.emit(totalRecipients)"
-           [toolTipContent]="toolTipContent">
+          [toolTipContent]="tooltipData"
+          (click)="viewMoreModal.emit(totalRecipients)">
         </cp-tooltip>
     </div>
   </div>

@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { CPI18nPipe } from '../../../../../../../shared/pipes/i18n/i18n.pipe';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { maxAllowed } from './list-recipients.constant';
+import { CPI18nPipe } from '../../../../../../../shared/pipes/i18n/i18n.pipe';
 
 const i18n = new CPI18nPipe();
 
@@ -10,13 +10,13 @@ const i18n = new CPI18nPipe();
   styleUrls: ['./list-recipients.component.scss']
 })
 export class AnnouncementsListRecipientsComponent implements OnInit {
-  @Input() toolTipContent;
   @Input() lists: Array<{ id: number; name: string }>;
   @Input() users: Array<{ id: number; firstname: string; lastname: string }>;
 
   @Output() viewMoreModal: EventEmitter<null> = new EventEmitter();
 
   moreText;
+  tooltipData;
   tooltipContent;
   maxAllowed = maxAllowed.inList;
   maxToolTipAllowed = maxAllowed.inTooltip;
@@ -80,9 +80,10 @@ export class AnnouncementsListRecipientsComponent implements OnInit {
       this.tooltipContent = this.tooltipRecipients.join('</br>');
     }
 
-    this.toolTipContent = Object.assign({}, this.toolTipContent, {
+    this.tooltipData = {
+      trigger: 'hover',
       content: this.tooltipContent,
       text: i18n.transform('tooltip_more_text', this.recipients_more.length)
-    });
+    };
   }
 }

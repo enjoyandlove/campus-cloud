@@ -1,0 +1,23 @@
+@import '~styles/core/colors';
+
+$content_bg: rgba(0, 0, 0, 0.8);
+
+.popover-content {
+  color: $color-white;
+}
+
+.popover {
+  background-color: $content_bg;
+}
+
+.popover-arrow.arrow::before,
+.bs-popover-bottom .arrow::before {
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+}
+.popover.top > .arrow {
+  border-top-color: $content_bg;
+  &:after {
+    border-top-color: $content_bg;
+  }
+}
