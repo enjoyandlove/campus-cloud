@@ -8,48 +8,39 @@
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-12 tile--item">
-        <div class="row">
-          <div class="col-9 tile--stat">
-            <p>{{ 'dashboard_integrations_sso' | cpI18n }}</p>
-          </div>
-          <div
-            class="col-2 text-right tile--badge float-right"
-            [class.active]="data.has_sso"
-            [class.disable]="!data.has_sso">
-            {{ data.has_sso ? 'Yes' : 'No' }}
-        </div>
-        </div>
+    <div class="row tile--item justify-content-between">
+      <div class="col-9 tile--stat">
+        <p>{{ 'dashboard_integrations_sso' | cpI18n }}</p>
       </div>
-      <div class="col-12 tile--item">
-        <div class="row">
-          <div class="col-9 tile--stat">
-            <p>{{ 'dashboard_integrations_courses' | cpI18n }}</p>
-          </div>
-          <div
-            class="col-2 text-right tile--badge float-right"
-            [class.active]="data.has_courses"
-            [class.disable]="!data.has_courses">
-            {{ data.has_courses ? 'Yes' : 'No' }}
-          </div>
-        </div>
+      <div
+        [class.active]="data.has_sso"
+        [class.disable]="!data.has_sso"
+        class="col-2 text-center tile--badge float-right">
+        {{ data.has_sso ? 'Yes' : 'No' }}
+      </div>
+    </div>
+    
+    <div class="row tile--item justify-content-between">
+      <div class="col-9 tile--stat">
+        <p>{{ 'dashboard_integrations_courses' | cpI18n }}</p>
+      </div>
+      <div
+        [class.active]="data.has_courses"
+        [class.disable]="!data.has_courses"
+        class="col-2 text-center tile--badge float-right">
+        {{ data.has_courses ? 'Yes' : 'No' }}
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-12 tile--item">
-        <div class="row">
-          <div class="col-9 tile--stat">
-            <p>{{ 'dashboard_assessment_lms' | cpI18n }}</p>
-          </div>
-          <div
-            class="col-2 text-right tile--badge float-right"
-            [class.active]="data.has_lms"
-            [class.disable]="!data.has_lms">
-            {{ data.has_lms ? 'Yes' : 'No' }}
-          </div>
-        </div>
+    <div class="row tile--item justify-content-between">
+      <div class="col-9 tile--stat">
+        <p>{{ 'dashboard_assessment_lms' | cpI18n }}</p>
+      </div>
+      <div
+        [class.active]="data.has_lms"
+        [class.disable]="!data.has_lms"
+        class="col-2 text-center tile--badge float-right">
+        {{ data.has_lms ? 'Yes' : 'No' }}
       </div>
     </div>
   </div>
