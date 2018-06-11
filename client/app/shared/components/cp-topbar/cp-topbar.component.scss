@@ -159,6 +159,8 @@ nav {
 }
 
 .dropdown-menu {
+  @include font-14px();
+
   border: none;
   background: transparent;
 }
