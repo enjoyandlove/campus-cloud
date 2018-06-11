@@ -66,11 +66,10 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.search = new HttpParams().append('event_id', this.eventId);
-    console.log(this.eventId);
 
-    // if (!this.eventId) {
-    //   this.router.navigate(['/login']);
-    // }
+    if (!this.eventId) {
+      this.router.navigate(['/login']);
+    }
     this.fetch();
   }
 }
