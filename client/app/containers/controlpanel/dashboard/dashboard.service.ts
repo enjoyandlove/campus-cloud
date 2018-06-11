@@ -5,10 +5,10 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { API } from '../../../config/api';
-import { BaseService } from '../../../base/index';
+import { HTTPService } from '../../../base/index';
 
 @Injectable()
-export class DashboardService extends BaseService {
+export class DashboardService extends HTTPService {
   eventAssessment = new Subject();
   serviceAssessment = new Subject();
 

@@ -24,8 +24,12 @@ const buildCommonHeaders = () => {
 const emptyResponse = observableOf(new HttpResponse({ body: JSON.stringify([]) }));
 
 @Injectable()
-export abstract class BaseService {
-  constructor(private http: HttpClient, private router: Router) {}
+export abstract class HTTPService {
+  constructor(
+    public http: HttpClient,
+    public router: Router,
+    public headers = buildCommonHeaders()
+  ) {}
 
   private waitAndRetry(err: Observable<any>): Observable<any> {
     let retries = 1;
@@ -44,7 +48,7 @@ export abstract class BaseService {
     );
   }
 
-  clearNullValues(params: HttpParams): HttpParams {
+  private clearNullValues(params: HttpParams): HttpParams {
     let cleanParams = new HttpParams();
     params.keys().forEach((key) => {
       if (params.get(key)) {
@@ -60,9 +64,7 @@ export abstract class BaseService {
       params = this.clearNullValues(params);
     }
 
-    const headers = buildCommonHeaders();
-
-    return this.http.get(url, { headers, params }).pipe(
+    return this.http.get(url, { headers: this.headers, params }).pipe(
       retryWhen((err) => this.waitAndRetry(err)),
       catchError((err) => {
         if (silent) {
@@ -83,12 +85,10 @@ export abstract class BaseService {
       params = this.clearNullValues(params);
     }
 
-    const headers = buildCommonHeaders();
-
     data = CPObj.cleanNullValues(data);
 
     return this.http
-      .post(url, data, { headers, params })
+      .post(url, data, { headers: this.headers, params })
       .pipe(
         retryWhen((err) => this.waitAndRetry(err)),
         catchError((err) => (silent ? observableThrowError(err) : this.catchError(err)))
@@ -100,12 +100,10 @@ export abstract class BaseService {
       params = this.clearNullValues(params);
     }
 
-    const headers = buildCommonHeaders();
-
     data = CPObj.cleanNullValues(data);
 
     return this.http
-      .put(url, data, { headers, params })
+      .put(url, data, { headers: this.headers, params })
       .pipe(
         retryWhen((err) => this.waitAndRetry(err)),
         catchError((err) => (silent ? observableThrowError(err) : this.catchError(err)))
@@ -117,10 +115,8 @@ export abstract class BaseService {
       params = this.clearNullValues(params);
     }
 
-    const headers = buildCommonHeaders();
-
     return this.http
-      .delete(url, { headers, params, ...extraOptions })
+      .delete(url, { headers: this.headers, params, ...extraOptions })
       .pipe(
         retryWhen((err) => this.waitAndRetry(err)),
         catchError((err) => (silent ? observableThrowError(err) : this.catchError(err)))

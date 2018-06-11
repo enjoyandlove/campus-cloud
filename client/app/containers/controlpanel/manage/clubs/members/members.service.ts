@@ -4,10 +4,10 @@ import { Router } from '@angular/router';
 
 import { API } from '../../../../../config/api';
 
-import { BaseService } from '../../../../../base/base.service';
+import { HTTPService } from '../../../../../base/http.service';
 
 @Injectable()
-export class MembersService extends BaseService {
+export class MembersService extends HTTPService {
   constructor(http: HttpClient, router: Router) {
     super(http, router);
 

@@ -4,11 +4,11 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { API } from '../../../../config/api';
-import { BaseService } from '../../../../base/base.service';
+import { HTTPService } from '../../../../base/http.service';
 import { SERVICES_MODAL_SET } from '../../../../reducers/services-modal.reducer';
 
 @Injectable()
-export class ServicesService extends BaseService {
+export class ServicesService extends HTTPService {
   constructor(http: HttpClient, router: Router, private store: Store<any>) {
     super(http, router);
 

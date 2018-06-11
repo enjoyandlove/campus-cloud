@@ -3,11 +3,11 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { throwError as observableThrowError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { BaseService } from '../../base/base.service';
+import { HTTPService } from '../../base/http.service';
 import { API } from '../../config/api';
 
 @Injectable()
-export class AdminService extends BaseService {
+export class AdminService extends HTTPService {
   constructor(http: HttpClient, router: Router) {
     super(http, router);
 

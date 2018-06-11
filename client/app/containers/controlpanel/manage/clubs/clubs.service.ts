@@ -5,12 +5,12 @@ import { Store } from '@ngrx/store';
 
 import { API } from '../../../../config/api';
 
-import { BaseService } from '../../../../base/base.service';
+import { HTTPService } from '../../../../base/http.service';
 
 import { CLUBS_MODAL_SET } from '../../../../reducers/clubs.reducer';
 
 @Injectable()
-export class ClubsService extends BaseService {
+export class ClubsService extends HTTPService {
   constructor(http: HttpClient, router: Router, private store: Store<any>) {
     super(http, router);
 

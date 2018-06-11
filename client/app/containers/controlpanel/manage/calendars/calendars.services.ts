@@ -4,11 +4,11 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { API } from '../../../../config/api';
-import { BaseService } from '../../../../base';
+import { HTTPService } from '../../../../base';
 import { IItem } from './items/item.interface';
 
 @Injectable()
-export class CalendarsService extends BaseService {
+export class CalendarsService extends HTTPService {
   modalItems: IItem[] = [];
 
   constructor(http: HttpClient, router: Router) {

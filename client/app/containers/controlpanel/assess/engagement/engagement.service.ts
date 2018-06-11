@@ -1,12 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { HTTPService } from '../../../../base/http.service';
 import { API } from '../../../../config/api';
-import { BaseService } from '../../../../base/base.service';
 
 @Injectable()
-export class EngagementService extends BaseService {
+export class EngagementService extends HTTPService {
   constructor(http: HttpClient, router: Router) {
     super(http, router);
 

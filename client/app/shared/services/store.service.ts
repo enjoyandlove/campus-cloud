@@ -5,7 +5,7 @@ import { combineLatest, of as observableOf } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { CPSession } from './../../session';
 import { CPI18nService } from './i18n.service';
-import { BaseService } from '../../base/base.service';
+import { HTTPService } from '../../base/http.service';
 import { API } from '../../config/api';
 import { isClubAthletic } from '../../containers/controlpanel/manage/clubs/clubs.athletics.labels';
 import { CP_PRIVILEGES_MAP } from '../constants';
@@ -14,7 +14,7 @@ import { canAccountLevelReadResource, canSchoolReadResource } from '../utils/pri
 const cpI18n = new CPI18nService();
 
 @Injectable()
-export class StoreService extends BaseService {
+export class StoreService extends HTTPService {
   constructor(http: HttpClient, router: Router, public session: CPSession) {
     super(http, router);
 

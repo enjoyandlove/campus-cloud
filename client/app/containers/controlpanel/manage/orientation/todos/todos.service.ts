@@ -3,10 +3,10 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { API } from '../../../../../config/api';
-import { BaseService } from '../../../../../base';
+import { HTTPService } from '../../../../../base';
 
 @Injectable()
-export class TodosService extends BaseService {
+export class TodosService extends HTTPService {
   constructor(http: HttpClient, router: Router) {
     super(http, router);
 

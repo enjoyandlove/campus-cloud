@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { map, startWith } from 'rxjs/operators';
 import { EmployerService } from './employers/employer.service';
-import { BaseService } from '../../../../base';
+import { HTTPService } from '../../../../base';
 import { API } from '../../../../config/api';
 import { CPSession } from '../../../../session';
 import { CPI18nService } from '../../../../shared/services';
 
 @Injectable()
-export class JobsService extends BaseService {
+export class JobsService extends HTTPService {
   constructor(
     router: Router,
     http: HttpClient,

@@ -1,15 +1,14 @@
-import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-
+import { Observable } from 'rxjs';
+import { HTTPService } from '../../../base/http.service';
 import { API } from '../../../config/api';
-import { BaseService } from '../../../base/base.service';
 import { SERVICES_MODAL_SET } from '../../../reducers/services-modal.reducer';
 
 @Injectable()
-export class AudienceService extends BaseService {
+export class AudienceService extends HTTPService {
   constructor(http: HttpClient, router: Router, private store: Store<any>) {
     super(http, router);
 

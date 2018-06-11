@@ -4,11 +4,11 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { API } from '../../../../config/api';
-import { BaseService } from '../../../../base/base.service';
+import { HTTPService } from '../../../../base/http.service';
 import { EVENTS_MODAL_SET } from '../../../../reducers/events-modal.reducer';
 
 @Injectable()
-export class EventsService extends BaseService {
+export class EventsService extends HTTPService {
   constructor(http: HttpClient, router: Router, private store: Store<any>) {
     super(http, router);
 
