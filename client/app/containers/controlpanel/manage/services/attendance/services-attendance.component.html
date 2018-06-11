@@ -68,15 +68,24 @@
         <div class="cp-card actions">
           <div class="row">
             <div class="col-4">
-              <cp-searchbox (query)=onSearch($event) [placeholder]="cpI18n.translate('services_provider_search_tootlip')">
+              <cp-searchbox 
+                (query)=onSearch($event) 
+                [placeholder]="cpI18n.translate('services_provider_search_tootlip')">
               </cp-searchbox>
             </div>
             <div class="col-8 text-right float-right">
-              <button (click)="download$.next(true)" [disabled]="noProviders" class="cpbtn cpbtn--secondary">
+              <button 
+                [disabled]="noProviders" 
+                (click)="download$.next(true)" 
+                class="cpbtn cpbtn--secondary">
                 {{ 'services_button_download_assessment_data' | cpI18n }}
               </button>
-              <button type="button" class="cpbtn cpbtn--primary" (click)="onLaunchProviderAdd()" data-toggle="modal" data-target="#createProvider"
-               >
+              <button 
+                type="button" 
+                data-toggle="modal"
+                class="cpbtn cpbtn--primary" 
+                data-target="#createProvider"
+                (click)="onLaunchProviderAdd()">
                 {{ 'services_button_add_service_provider' | cpI18n }}
               </button>
             </div>

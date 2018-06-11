@@ -29,6 +29,14 @@
   @include card-margin();
 }
 
+.actions {
+  button {
+    &:first-child {
+      margin-right: 8px;
+    }
+  }
+}
+
 .header {
   margin-top: 0;
 

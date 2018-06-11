@@ -6,15 +6,21 @@ $content_bg: rgba(0, 0, 0, 0.8);
   color: $color-white;
 }
 
+.popover-content a {
+  color: $color-brand;
+}
+
 .popover {
   background-color: $content_bg;
 }
 
 .popover-arrow.arrow::before,
+.bs-popover-bottom .arrow::after,
 .bs-popover-bottom .arrow::before {
-  border-top-color: transparent;
-  border-bottom-color: transparent;
+  border-top-color: $content_bg;
+  border-bottom-color: $content_bg;
 }
+
 .popover.top > .arrow {
   border-top-color: $content_bg;
   &:after {

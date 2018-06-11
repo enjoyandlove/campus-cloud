@@ -53,7 +53,16 @@
 
           <div class="cp-table__item" *ngFor="let provider of state.providers">
             <div class="row">
-              <div class="col-3 text-truncate"><a [routerLink]="['provider/' +  provider.id]"><span><strong>{{ provider.provider_name }}</strong><br>{{ provider.email }}</span></a></div>
+              <div 
+                class="col-3 text-truncate">
+                <a [routerLink]="['provider/' + provider.id]">
+                  <span>
+                    <strong>{{ provider.provider_name }}</strong>
+                    <br>
+                    {{ provider.email }}
+                  </span>
+                </a>
+              </div>
               <div class="col-4" *ngIf="displayRatingColumn">
                 <cp-stars
                   [size]="listStarSize"
