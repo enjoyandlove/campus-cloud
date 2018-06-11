@@ -1,12 +1,10 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { throwError as observableThrowError, Observable } from 'rxjs';
-import { catchError, retry, delay } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-
-import { API } from '../../config/api';
-
+import { Observable, throwError as observableThrowError } from 'rxjs';
+import { catchError, delay, retry } from 'rxjs/operators';
 import { BaseService } from '../../base/base.service';
+import { API } from '../../config/api';
 import { CPObj } from '../../shared/utils';
 
 const buildTokenHeaders = () => {
@@ -24,11 +22,11 @@ export class CallbackService extends BaseService {
     super(_http, _router);
   }
 
-  get(url: string, opts?: HttpParams, silent = false) {
+  get(url: string, params?: HttpParams, silent = false) {
     const headers = buildTokenHeaders();
 
     return this._http
-      .get(url, { headers, ...opts })
+      .get(url, { headers, params })
       .pipe(
         delay(200),
         retry(1),
@@ -42,25 +40,25 @@ export class CallbackService extends BaseService {
     data = CPObj.cleanNullValues(data);
 
     return this._http
-      .post(url, data, { headers, ...params })
+      .post(url, data, { headers, params })
       .pipe(delay(200), catchError((err) => this.catchError(err)));
   }
 
-  update(url: string, data: any, opts?: HttpParams) {
+  update(url: string, data: any, params?: HttpParams) {
     const headers = buildTokenHeaders();
 
     data = CPObj.cleanNullValues(data);
 
     return this._http
-      .put(url, data, { headers, ...opts })
+      .put(url, data, { headers, params })
       .pipe(delay(200), retry(1), catchError((err) => this.catchError(err)));
   }
 
-  delete(url: string, opts?: HttpParams) {
+  delete(url: string, params?: HttpParams) {
     const headers = buildTokenHeaders();
 
     return this._http
-      .delete(url, { headers, ...opts })
+      .delete(url, { headers, params })
       .pipe(delay(200), retry(1), catchError((err) => this.catchError(err)));
   }
 }

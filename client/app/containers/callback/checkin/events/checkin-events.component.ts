@@ -1,10 +1,9 @@
-import { ActivatedRoute, Router } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-
-import { CheckinService } from '../checkin.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CPI18nService, ErrorService } from './../../../../shared/services';
 import { BaseComponent } from '../../../../base/base.component';
-import { ErrorService, CPI18nService } from './../../../../shared/services';
+import { CheckinService } from '../checkin.service';
 
 interface IState {
   events: Array<any>;
@@ -67,10 +66,11 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.search = new HttpParams().append('event_id', this.eventId);
+    console.log(this.eventId);
 
-    if (!this.eventId) {
-      this.router.navigate(['/login']);
-    }
+    // if (!this.eventId) {
+    //   this.router.navigate(['/login']);
+    // }
     this.fetch();
   }
 }
