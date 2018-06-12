@@ -4,7 +4,7 @@ const cpI18n = new CPI18nService();
 
 export const types = [
   {
-    action: null,
+    action: 2,
     disabled: false,
     label: cpI18n.translate('regular'),
     description: cpI18n.translate('announcements_regular_help')

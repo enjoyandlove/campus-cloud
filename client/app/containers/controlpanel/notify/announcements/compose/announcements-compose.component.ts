@@ -155,13 +155,6 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       };
       this.form.controls['list_ids'].setValue([audienceId]);
       this.form.controls['is_school_wide'].setValue(false);
-      this.types = this.types.map((type) => {
-        if (type.action === this.EMERGENCY_TYPE) {
-          type.disabled = true;
-        }
-
-        return type;
-      });
     } else {
       this.state = {
         ...this.state,
@@ -172,14 +165,19 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       };
       this.form.controls['list_ids'].setValue([]);
       this.form.controls['is_school_wide'].setValue(true);
-      this.types = this.types.map((type) => {
-        if (type.action === this.EMERGENCY_TYPE) {
-          type.disabled = false;
-        }
-
-        return type;
-      });
     }
+
+    this.toggleEmergencyType();
+  }
+
+  toggleEmergencyType() {
+    this.types = this.types.map((type) => {
+      if (type.action === this.EMERGENCY_TYPE) {
+        type = { ...type, disabled: !type.disabled };
+      }
+
+      return type;
+    });
   }
 
   onSelectedUsers(users) {
