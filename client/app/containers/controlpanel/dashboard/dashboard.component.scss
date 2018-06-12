@@ -1,3 +1,13 @@
 .tile {
   padding-bottom: 15px;
 }
+
+.card-columns {
+  column-count: 2;
+  column-gap: 2.1em;
+
+  .cp-card {
+    display: inline-block;
+    width:100%;
+  }
+}
