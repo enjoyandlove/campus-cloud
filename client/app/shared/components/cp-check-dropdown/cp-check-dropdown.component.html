@@ -16,6 +16,7 @@
     <li
       *ngFor="let item of items"
       class="dropdown__item hover"
+      [class.disabled]=item.disabled
       (click)="onClick(item)">
       <div class="row">
         <div class="col-xs-2 text-center no-right-padding">

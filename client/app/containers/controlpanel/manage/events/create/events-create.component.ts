@@ -1,26 +1,25 @@
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, OnInit, Input } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-
-import {
-  ErrorService,
-  StoreService,
-  AdminService,
-  CPI18nService, CPTrackingService
-} from '../../../../../shared/services';
-
-import { EventsService } from '../events.service';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { isProd } from './../../../../../config/env';
-import { CPSession, ISchool } from '../../../../../session';
-import { CPMap, CPDate } from '../../../../../shared/utils';
-import { EventUtilService } from '../events.utils.service';
-import { EventAttendance, EventFeedback, isAllDay } from '../event.status';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { CPSession, ISchool } from '../../../../../session';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import {
+  AdminService,
+  CPI18nService,
+  CPTrackingService,
+  ErrorService,
+  StoreService
+} from '../../../../../shared/services';
+import { CPDate, CPMap } from '../../../../../shared/utils';
+import { EventAttendance, EventFeedback, isAllDay } from '../event.status';
+import { EventsService } from '../events.service';
+import { EventUtilService } from '../events.utils.service';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
 const FORMAT_WITHOUT_TIME = 'F j, Y';
