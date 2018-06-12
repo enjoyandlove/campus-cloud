@@ -5,6 +5,7 @@ interface IItem {
   label: string;
   action: number;
   decsritpion: string;
+  disabled?: boolean;
 }
 
 @Component({
@@ -21,7 +22,11 @@ export class CPCheckDropdownComponent implements OnInit {
 
   constructor() {}
 
-  onClick(item) {
+  onClick(item: IItem) {
+    if (item.disabled) {
+      return;
+    }
+
     this.selectedItem = item;
     this.selected.emit(item);
   }
