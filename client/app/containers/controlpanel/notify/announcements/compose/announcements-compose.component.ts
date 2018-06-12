@@ -1,21 +1,21 @@
+/*tslint:disable:max-line-length*/
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-
-import { CPSession } from '../../../../../session';
-import { AnnouncementsService } from '../announcements.service';
-import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
-import { CP_PRIVILEGES_MAP, STATUS } from '../../../../../shared/constants';
-import { StoreService, CPI18nService } from '../../../../../shared/services';
 import {
   AUDIENCE_IMPORTED,
   AUDIENCE_RESET_IMPORT_AUDIENCE
 } from './../../../../../reducers/audience.reducer';
 import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
+import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
 import { canSchoolReadResource } from './../../../../../shared/utils/privileges/privileges';
+import { CPSession } from '../../../../../session';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
+import { CP_PRIVILEGES_MAP, STATUS } from '../../../../../shared/constants';
+import { CPI18nService, StoreService } from '../../../../../shared/services';
+import { AnnouncementsService } from '../announcements.service';
 
 interface IState {
   isUrgent: boolean;
@@ -155,6 +155,13 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       };
       this.form.controls['list_ids'].setValue([audienceId]);
       this.form.controls['is_school_wide'].setValue(false);
+      this.types = this.types.map((type) => {
+        if (type.action === this.EMERGENCY_TYPE) {
+          type.disabled = true;
+        }
+
+        return type;
+      });
     } else {
       this.state = {
         ...this.state,
@@ -165,6 +172,13 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       };
       this.form.controls['list_ids'].setValue([]);
       this.form.controls['is_school_wide'].setValue(true);
+      this.types = this.types.map((type) => {
+        if (type.action === this.EMERGENCY_TYPE) {
+          type.disabled = false;
+        }
+
+        return type;
+      });
     }
   }
 
