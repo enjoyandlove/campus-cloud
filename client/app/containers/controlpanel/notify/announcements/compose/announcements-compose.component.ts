@@ -14,7 +14,7 @@ import { canSchoolReadResource } from './../../../../../shared/utils/privileges/
 import { CPSession } from '../../../../../session';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 import { CP_PRIVILEGES_MAP, STATUS } from '../../../../../shared/constants';
-import { CPI18nService, StoreService } from '../../../../../shared/services';
+import { CPI18nService, StoreService, ZendeskService } from '../../../../../shared/services';
 import { AnnouncementsService } from '../announcements.service';
 
 interface IState {
@@ -469,9 +469,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       content: this.cpI18n.translate('notify_announcement_template_to_tooltip'),
       link: {
         text: this.cpI18n.translate('lists_button_create'),
-        url:
-          'https://oohlalamobile.zendesk.com/hc/en-us/articles/' +
-          '115004330554-Create-a-List-of-Students'
+        url: `${ZendeskService.zdRoot()}/articles/115004330554-Create-a-List-of-Students`
       }
     });
 

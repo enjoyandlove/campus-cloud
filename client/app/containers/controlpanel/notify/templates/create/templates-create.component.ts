@@ -6,7 +6,7 @@ import { HttpParams } from '@angular/common/http';
 
 import { TemplatesService } from './../templates.service';
 import { CPSession } from './../../../../../session/index';
-import { CPI18nService, StoreService } from './../../../../../shared/services';
+import { CPI18nService, StoreService, ZendeskService } from './../../../../../shared/services';
 import { AnnouncementsService } from './../../announcements/announcements.service';
 
 import { TemplatesComposeComponent } from '../compose/templates-compose.component';
@@ -164,9 +164,7 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
       content: this.cpI18n.translate('notify_announcement_template_to_tooltip'),
       link: {
         text: this.cpI18n.translate('lists_button_create'),
-        url:
-          'https://oohlalamobile.zendesk.com/hc/en-us/articles/' +
-          '115004330554-Create-a-List-of-Students'
+        url: `${ZendeskService.zdRoot()}/articles/115004330554-Create-a-List-of-Students`
       }
     });
 

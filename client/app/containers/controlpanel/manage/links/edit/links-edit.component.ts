@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { API } from '../../../../../config/api';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { CPTrackingService, FileUploadService } from '../../../../../shared/services';
+import { CPTrackingService, FileUploadService, ZendeskService } from '../../../../../shared/services';
 import { appStorage } from '../../../../../shared/utils';
 import { ILink } from '../link.interface';
 import { LinksService } from '../links.service';
@@ -106,11 +106,11 @@ export class LinksEditComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    const zendesk = 'https://oohlalamobile.zendesk.com/hc/en-us/articles';
+    const zendesk = ZendeskService.zdRoot();
     this.tooltipContent = {
       content: '',
       link: {
-        url: `${zendesk}/360001101794-What-size-images-should-I-use-in-Campus-Cloud-`,
+        url: `${zendesk}/articles/360001101794-What-size-images-should-I-use-in-Campus-Cloud`,
         text: this.cpI18n.translate('learn_more')
       }
     };
