@@ -258,8 +258,11 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
 
       if (!status && this.form.controls['priority'].value === this.EMERGENCY_TYPE) {
         this.form.controls['priority'].setValue(this.REGULAR_TYPE);
+
         this.selectedType = this.types.filter((type) => type.action === this.REGULAR_TYPE)[0];
+
         this.state = { ...this.state, isEmergency: false };
+
         this.subject_prefix = {
           label: null,
           type: null
