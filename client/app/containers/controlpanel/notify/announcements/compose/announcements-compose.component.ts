@@ -15,7 +15,6 @@ import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-
 import { CP_PRIVILEGES_MAP, STATUS } from '../../../../../shared/constants';
 import { CPI18nService, StoreService } from '../../../../../shared/services';
 import { AnnouncementsService } from '../announcements.service';
-/*tslint:disable:max-line-length*/
 
 interface IState {
   isUrgent: boolean;
