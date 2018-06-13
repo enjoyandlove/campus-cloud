@@ -6,57 +6,68 @@
     {
       "privilege": 18,
       "label": "events",
+      "amplitude": "Events",
       "url": "/manage/events"
     },
     {
       "privilege": 15,
       "label": "feeds",
+      "amplitude": "Walls",
       "url": "/manage/feeds"
     },
     {
       "privilege": 22,
       "label": "clubs_and_groups",
+      "amplitude": "Clubs & Groups",
       "url": "/manage/clubs"
     },
     {
       "privilege": 28,
       "label": "athletics",
+      "amplitude": "Athletics",
       "url": "/manage/athletics"
     },
     {
       "privilege": 24,
       "label": "services",
+      "amplitude": "Services",
       "url": "/manage/services"
     },
     {
       "privilege": 21,
       "label": "locations",
+      "amplitude": "Locations",
       "url": "/manage/locations"
-    },
-    {
-      "privilege": 12,
-      "label": "lists",
-      "url": "/manage/lists"
     },
     {
       "privilege": 23,
       "label": "links",
+      "amplitude": "Links",
       "url": "/manage/links"
     },
     {
       "privilege": 16,
       "label": "calendars",
+      "amplitude": "Calendars",
       "url": "/manage/calendars"
     },
     {
       "privilege": 17,
       "label": "orientation",
+      "amplitude": "Orientation",
       "url": "/manage/orientation"
     },
     {
       "privilege": 25,
       "label": "jobs",
+      "amplitude": "Jobs",
       "url": "/manage/jobs"
+    },
+    {
+      "privilege": 26,
+      "label": "deals",
+      "amplitude": "Deals",
+      "url": "/manage/deals"
     }
   ]
 }

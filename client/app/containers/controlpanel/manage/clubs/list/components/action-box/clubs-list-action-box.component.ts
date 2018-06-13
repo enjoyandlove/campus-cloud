@@ -6,6 +6,10 @@ import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 import { canSchoolWriteResource } from '../../../../../../../shared/utils/privileges/index';
 import { isClubAthletic, clubAthleticLabels } from '../../../clubs.athletics.labels';
+import { CPTrackingService } from '../../../../../../../shared/services';
+import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
+import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
+
 interface IState {
   query: string;
   type: string;
@@ -28,14 +32,34 @@ export class ClubsListActionBoxComponent implements OnInit {
   labels;
   clubFilter;
   canCreate;
+  amplitudeEvents;
   state: IState = state;
   isClubAthleticPrivilege;
 
-  constructor(private session: CPSession, private cpI18n: CPI18nService) {}
+  constructor(
+    private session: CPSession,
+    private cpI18n: CPI18nService,
+    private cpTracking: CPTrackingService
+  ) {}
 
   onUpdateState(data, key: string): void {
     this.state = Object.assign({}, this.state, { [key]: data });
     this.filter.emit(this.state);
+  }
+
+  trackEvent(eventName) {
+    const createClubAthletic = this.isAthletic === isClubAthletic.athletic
+      ? amplitudeEvents.CREATE_ATHLETIC : amplitudeEvents.CREATE_CLUB;
+
+    const eventProperties = {
+      ... this.cpTracking.getEventProperties(), create_page_name: createClubAthletic
+    };
+
+    return {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName,
+      eventProperties
+    };
   }
 
   ngOnInit() {
@@ -46,6 +70,10 @@ export class ClubsListActionBoxComponent implements OnInit {
     this.canCreate = canSchoolWriteResource(this.session.g, this.isClubAthleticPrivilege);
 
     this.labels = clubAthleticLabels(this.isAthletic);
+
+    this.amplitudeEvents = {
+      clicked_create: amplitudeEvents.CLICKED_CREATE
+    };
 
     this.clubFilter = [
       {

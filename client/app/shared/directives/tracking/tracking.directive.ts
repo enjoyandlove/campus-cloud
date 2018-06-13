@@ -10,9 +10,11 @@ export const CP_TRACK_TO = {
 
 export interface IEventData {
   type: string;
-  eventAction: string;
-  eventCategory: string;
+  eventAction?: string;
+  eventCategory?: string;
   eventLabel?: string;
+  eventName?: string;
+  eventProperties?: {};
 }
 
 @Directive({
@@ -46,6 +48,6 @@ export class CPTrackerDirective {
   }
 
   emitAmplitude() {
-    // console.log('emitting amplitude');
+    this.cpTracker.amplitudeEmitEvent(this.eventData.eventName, this.eventData.eventProperties);
   }
 }

@@ -2,6 +2,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, OnInit } from '@angular/core';
+import { get as _get } from 'lodash';
 import { Store } from '@ngrx/store';
 
 import {
@@ -15,16 +16,23 @@ import { BaseComponent } from '../../../../../base/base.component';
 import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 import { CP_PRIVILEGES, CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
-import { AdminService, ErrorService, CPI18nService } from '../../../../../shared/services';
+import {
+  AdminService,
+  ErrorService,
+  CPI18nService,
+  CPTrackingService
+} from '../../../../../shared/services';
 
 import {
   clubMenu,
   eventMenu,
   serviceMenu,
-  TeamUtilsService,
+  athleticMenu,
   manageAdminMenu,
-  athleticMenu
+  TeamUtilsService,
+  audienceMenuStatus
 } from '../team.utils.service';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 
 declare var $: any;
 
@@ -46,6 +54,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   privileges;
   editingUser;
   isFormError;
+  audienceMenu;
   manageAdmins;
   servicesMenu;
   isClubsModal;
@@ -54,6 +63,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   canReadEvents;
   athleticsMenu;
   isServiceModal;
+  canReadAudience;
   canReadServices;
   form: FormGroup;
   isAthleticsModal;
@@ -81,7 +91,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     private cpI18n: CPI18nService,
     public utils: TeamUtilsService,
     private adminService: AdminService,
-    private errorService: ErrorService
+    private errorService: ErrorService,
+    private cpTracking: CPTrackingService
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -151,6 +162,14 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
         isEqual(this.schoolPrivileges, this.user.school_level_privileges[this.schoolId]) &&
         isEqual(this.accountPrivileges, this.user.account_level_privileges);
     });
+  }
+
+  audienceDefaultPermission() {
+    const allAccess = _get(this.schoolPrivileges, CP_PRIVILEGES_MAP.audience, false);
+
+    return allAccess
+      ? this.audienceMenu.filter((item) => item.action === audienceMenuStatus.allAccess)[0]
+      : this.audienceMenu.filter((item) => item.action === audienceMenuStatus.noAccess)[0];
   }
 
   servicesDefaultPermission() {
@@ -325,8 +344,14 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       _data = { firstname, lastname };
     }
 
+    const eventProperties = this.utils.getAmplitudeEventProperties(
+      this.schoolPrivileges, this.accountPrivileges);
+
     this.adminService.updateAdmin(this.adminId, _data).subscribe(
-      () => this.router.navigate([this.currentUserCanManage ? '/settings/team' : '/dashboard']),
+      () => {
+        this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPDATED_TEAM_MEMBER, eventProperties);
+        this.router.navigate([this.currentUserCanManage ? '/settings/team' : '/dashboard']);
+      },
       (err) => {
         if (err.status === 403) {
           $('#teamUnauthorziedModal').modal();
@@ -372,6 +397,25 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     }
   }
 
+  onAudienceSelected(audience) {
+    if (audience.action === audienceMenuStatus.noAccess) {
+      if (CP_PRIVILEGES_MAP.audience in this.schoolPrivileges) {
+        delete this.schoolPrivileges[CP_PRIVILEGES_MAP.audience];
+      }
+
+      return;
+    }
+
+    if (audience.action === audienceMenuStatus.allAccess) {
+      this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
+        [CP_PRIVILEGES_MAP.audience]: {
+          r: true,
+          w: true
+        }
+      });
+    }
+  }
+
   toggleAllAccess(checked) {
     if (checked) {
       this.accountPrivileges = Object.assign(
@@ -395,7 +439,9 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     this.doServicesCleanUp();
 
     const servicesLength = Object.keys(services).length;
-    this.servicesCount = servicesLength ? { label: `${servicesLength} Service(s)` } : null;
+    this.servicesCount = servicesLength
+      ? { label: `${servicesLength} ${this.cpI18n.translate('admin_form_label_services')}` }
+      : null;
 
     this.accountPrivileges = Object.assign({}, this.accountPrivileges, ...services);
   }
@@ -490,7 +536,9 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   onClubsModalSelected(clubs) {
     this.doClubsCleanUp();
     const clubsLength = Object.keys(clubs).length;
-    this.clubsCount = clubsLength ? { label: `${clubsLength} Club(s)` } : null;
+    this.clubsCount = clubsLength
+      ? { label: `${clubsLength} ${this.cpI18n.translate('admin_form_label_clubs')}` }
+      : null;
 
     this.accountPrivileges = Object.assign({}, this.accountPrivileges, ...clubs);
   }
@@ -498,7 +546,9 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   onAthleticsModalSelected(athletics) {
     this.doAthleticsCleanUp();
     const athleticsLength = Object.keys(athletics).length;
-    this.athleticsCount = athleticsLength ? { label: `${athleticsLength} Athletic(s)` } : null;
+    this.athleticsCount = athleticsLength
+      ? { label: `${athleticsLength} ${this.cpI18n.translate('admin_form_label_athletics')}` }
+      : null;
 
     this.accountPrivileges = Object.assign({}, this.accountPrivileges, ...athletics);
   }
@@ -717,6 +767,9 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
         : false;
 
     this.canReadEvents = schoolPrivileges[CP_PRIVILEGES_MAP.events] || false;
+
+    this.canReadAudience = schoolPrivileges[CP_PRIVILEGES_MAP.audience] || false;
+
     this.canReadServices = schoolPrivileges[CP_PRIVILEGES_MAP.services] || false;
     this.formData = TEAM_ACCESS.getMenu(this.user.school_level_privileges[this.schoolId]);
 
@@ -742,6 +795,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
     const manageAdminPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin];
     const eventsAssessmentPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.event_attendance];
+
+    this.audienceMenu = this.utils.audienceDropdown(schoolPrivileges[CP_PRIVILEGES_MAP.audience]);
 
     this.manageAdmins = this.utils.manageAdminDropdown(manageAdminPrivilege);
     this.clubsMenu = this.utils.clubsDropdown(clubsPrivilegeSchool, clubsPrivilegeAccount);

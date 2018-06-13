@@ -24,7 +24,7 @@
               <div class="row" *ngIf="job.how_to_apply">
                 <div class="col-xs-12 meta__item">
                   <p class="meta__type">{{ 'jobs_how_to_apply' | cpI18n }}</p>
-                  <p class="job__description render_line_breaks">{{ job.how_to_apply }}</p>
+                  <p class="job__how-to-apply render_line_breaks">{{ job.how_to_apply }}</p>
                   <hr>
                 </div>
               </div>
@@ -34,7 +34,7 @@
                     <div class="col-xs-4">
                       <p class="meta__type">{{ 'jobs_posting_start_date' | cpI18n }}</p>
                     </div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-8 posting-start">
                       <p>{{ job.posting_start |  cpDatePipe:dateFormat}}</p>
                     </div>
                   </div>
@@ -43,7 +43,7 @@
                     <div class="col-xs-4">
                       <p class="meta__type">{{ 'jobs_posting_end_date' | cpI18n }}</p>
                     </div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-8 posting-end">
                       <p>{{ job.posting_end |  cpDatePipe:dateFormat}}</p>
                     </div>
                   </div>
@@ -52,7 +52,7 @@
                     <div class="col-xs-4">
                       <p class="meta__type">{{ 'jobs_job_start_date' | cpI18n }}</p>
                     </div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-8 job-start">
                       <p>{{ job.contract_start |  cpDatePipe:dateFormat}}</p>
                     </div>
                   </div>
@@ -61,7 +61,7 @@
                     <div class="col-xs-4">
                       <p class="meta__type">{{ 'jobs_application_deadline' | cpI18n }}</p>
                     </div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-8 job-end">
                       <p>{{ job.application_deadline |  cpDatePipe:dateFormat}}</p>
                     </div>
                   </div>
@@ -70,7 +70,7 @@
                     <div class="col-xs-4">
                       <p class="meta__type">{{ 'location' | cpI18n }}</p>
                     </div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-8 location">
                       <p>{{ job.location }}</p>
                     </div>
                   </div>
@@ -79,7 +79,7 @@
                     <div class="col-xs-4">
                       <p class="meta__type">{{ 'jobs_desired_year_of_study' | cpI18n }}</p>
                     </div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-8 desired-year">
                       <p>{{ desiredYear.join(', ')}}</p>
                     </div>
                   </div>
@@ -88,7 +88,7 @@
                     <div class="col-xs-4">
                       <p class="meta__type">{{ 'jobs_job_type' | cpI18n }}</p>
                     </div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-8 job-type">
                       <p>{{ jobType.join(', ')}}</p>
                     </div>
                   </div>
@@ -100,14 +100,14 @@
 
         <div class="row">
           <div class="col-xs-12">
-            <div class="cp-card">
+            <div class="cp-card employer">
               <p
-                class="job__image"
+                class="employer__image"
                 *ngIf="job.employer_logo_url"
                 [ngStyle]="{'background-image': 'url(' + job.employer_logo_url + ')' }">
               </p>
-              <p class="job__title">{{ job.employer_name }}</p>
-              <p class="job__description">{{ job.employer_description }}</p>
+              <p class="employer__title">{{ job.employer_name }}</p>
+              <p class="employer__description">{{ job.employer_description }}</p>
             </div>
           </div>
         </div>

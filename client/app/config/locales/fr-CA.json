@@ -45,6 +45,15 @@
   "admin_athletics_owner_help": {
     "message": "Créer de nouveaux clubs sportifs; gérer les coordonnées, les événements et les membres pour tous les clubs ou une sélection de clubs"
   },
+  "admin_audience_help": {
+    "message": "Notifier et évaluer des segments spécifiques (audiences) d'utilisateurs"
+  },
+  "admin_audience_menu_all_access": {
+    "message": "Tous les audiences"
+  },
+  "admin_audience_title": {
+    "message": "Audiences"
+  },
   "admin_campus_announcements": {
     "message": "Annonces normales"
   },
@@ -97,6 +106,15 @@
   },
   "admin_events_title": {
     "message": "Vue d'événement"
+  },
+  "admin_form_label_athletics": {
+    "message": "Équipe(s) sportive(s)"
+  },
+  "admin_form_label_clubs": {
+    "message": "Club(s)"
+  },
+  "admin_form_label_services": {
+    "message": "Service(s)"
   },
   "admin_grant_permissions": {
     "message": "Inviter de nouveaux membres d'équipe et assigner des permissions"
@@ -190,6 +208,9 @@
   },
   "announcements_emergency_help": {
     "message": "Outrepassez les réglages de notifications Push de l'utilisateur et forcez-les à reconnaître le message"
+  },
+  "announcements_heading_create": {
+    "message": "Créer annonce"
   },
   "announcements_not_sent": {
     "message": "Message non envoyé, veuillez attendre %s minutes avant d'essayer de nouveau"
@@ -496,6 +517,60 @@
   },
   "attendees": {
     "message": "Présents"
+  },
+  "audience": {
+    "message": "Audiences"
+  },
+  "audience_add_filter_button": {
+    "message": "Ajouter filtre"
+  },
+  "audience_counter_users": {
+    "message": "Utilisateurs trouvés"
+  },
+  "audience_create_modal_label_name": {
+    "message": "Nom d'audience"
+  },
+  "audience_dynamic_button_save_audience": {
+    "message": "Save Audience"
+  },
+  "audience_edit_modal_label_name": {
+    "message": "Editer audience"
+  },
+  "audience_import_csv": {
+    "message": "Importer depuis CSV"
+  },
+  "audience_import_success_message": {
+    "message": "Fichier téléversé avec succès"
+  },
+  "audience_label_audience": {
+    "message": "Audiences"
+  },
+  "audience_label_filters": {
+    "message": "Filtres"
+  },
+  "audience_label_type": {
+    "message": "Type"
+  },
+  "audience_label_users": {
+    "message": "Utilisateurs"
+  },
+  "audience_modal_label_audience_name": {
+    "message": "Nom de l'audience"
+  },
+  "audience_my_audiences": {
+    "message": "Mes audiences"
+  },
+  "audience_name": {
+    "message": "Nom d'audience"
+  },
+  "audience_type_all": {
+    "message": "Toutes les audiences"
+  },
+  "audience_type_custom": {
+    "message": "Personnalisée"
+  },
+  "audience_type_dynamic": {
+    "message": "Dynamique"
   },
   "auth_confirm_new_password": {
     "message": "Confirmez le nouveau mot de passe"
@@ -982,6 +1057,18 @@
   "dashboard_top_services": {
     "message": "Palmarès des services"
   },
+  "deals": {
+    "message": "Rabais"
+  },
+  "deals_create_deal": {
+    "message": "Créer rabais"
+  },
+  "deals_manage_stores": {
+    "message": "Gérer magasins"
+  },
+  "deals_no_results_found": {
+    "message": "Aucun rabais trouvé."
+  },
   "delete": {
     "message": "Supprimer"
   },
@@ -1292,6 +1379,15 @@
   "feeds_can_post": {
     "message": "Qui peut publier ?"
   },
+  "feeds_card_header_deleted_user": {
+    "message": "Utilisateur supprimé"
+  },
+  "feeds_cc_admins": {
+    "message": "Administrateurs Campus Cloud"
+  },
+  "feeds_club_members": {
+    "message": "Membres du club"
+  },
   "feeds_delete_comment": {
     "message": "Supprimer commentaire"
   },
@@ -1314,7 +1410,7 @@
     "message": "Pour autoriser les publications, changez les réglages pour ce mur."
   },
   "feeds_everyone": {
-    "message": "Tout le monde"
+    "message": "Membres du club"
   },
   "feeds_flagged_posts": {
     "message": "Publications signalées"
@@ -1327,6 +1423,9 @@
   },
   "feeds_move_post_from": {
     "message": "Déplacer la publication depuis"
+  },
+  "feeds_no_one": {
+    "message": "Personne"
   },
   "feeds_posted_in": {
     "message": "a publié dans"
@@ -1341,7 +1440,7 @@
     "message": "Publications supprimées"
   },
   "feeds_team_members": {
-    "message": "Membres"
+    "message": "Administrateurs de Campus Cloud"
   },
   "feeds_wall_name": {
     "message": "Nom du club"
@@ -1565,22 +1664,22 @@
     "message": "Listes"
   },
   "lists_button_create": {
-    "message": "Créer liste"
+    "message": "Créer audience"
   },
   "lists_create_modal_title": {
-    "message": "Créer liste"
+    "message": "Créer audience"
   },
   "lists_delete_modal_body": {
     "message": "Êtes-vous sûr de vouloir supprimer %s ?"
   },
   "lists_delete_modal_title": {
-    "message": "Supprimer liste"
+    "message": "Supprimer audience"
   },
   "lists_edit_modal_title": {
     "message": "Éditer liste"
   },
   "lists_error_template_conflict": {
-    "message": "Cette liste est utilisée dans un modèle de notification. Pour supprimer cette liste, vous devez d'abord supprimer tous les modèles adressés à cette liste, et essayer de nouveau."
+    "message": "Cette audience est utilisée dans un modèle de notification. Pour supprimer cette audience, vous devez d'abord supprimer tous les modèles adressés à cette audience, et essayer de nouveau."
   },
   "lists_label_list_description": {
     "message": "Description"
@@ -1589,7 +1688,7 @@
     "message": "Nom"
   },
   "lists_no_results_found": {
-    "message": "Aucune liste trouvée"
+    "message": "Aucune audience trouvée"
   },
   "lists_number_of_users": {
     "message": "Nombre d'utilisateurs"
@@ -1655,6 +1754,9 @@
   "members": {
     "message": "Membres"
   },
+  "message": {
+    "message": "Message"
+  },
   "message_action": {
     "message": "Contacter"
   },
@@ -1675,6 +1777,9 @@
   },
   "name": {
     "message": "Nom"
+  },
+  "new_audience_tab_title": {
+    "message": "Nouvelle audience"
   },
   "new_password": {
     "message": "Nouveau mot de passe"
@@ -1699,9 +1804,6 @@
   },
   "no_hosts_available": {
     "message": "Aucun hôte disponible"
-  },
-  "no_one": {
-    "message": "Personne"
   },
   "no_results": {
     "message": "Aucun résultat"
@@ -1787,7 +1889,7 @@
     "message": "Pour plus de sécurité, utilisez des nombres et des caractères spéciaux tels que @, #, $, &, etc"
   },
   "password_reset_success": {
-    "message": "Mot de passe enregistré, redirection vers la page d'identification"
+    "message": "Mot de passe enregistré. Redirection vers la page d'identification"
   },
   "pending": {
     "message": "En attente"
@@ -1890,6 +1992,12 @@
   "save": {
     "message": "Enregistrer"
   },
+  "saved_audience_tab_title": {
+    "message": "Audience enregistrées"
+  },
+  "save_audience_modal_title": {
+    "message": "Enregistrer audience"
+  },
   "save_changes": {
     "message": "Enregistrer les changements"
   },
@@ -1898,6 +2006,12 @@
   },
   "select_category": {
     "message": "Sélectionner une catégorie"
+  },
+  "select_filter": {
+    "message": "Sélectionner filtre"
+  },
+  "select_filter_value": {
+    "message": "Sélectionner valeur"
   },
   "select_host": {
     "message": "Sélectionner un hôte"
@@ -2070,6 +2184,30 @@
   "status": {
     "message": "Statut"
   },
+  "stores_create_modal_title": {
+    "message": "Créer magasin"
+  },
+  "stores_create_store": {
+    "message": "Créer magasin"
+  },
+  "stores_delete_modal_body": {
+    "message": "Êtes-vous sûr de vouloir supprimer %s ?"
+  },
+  "stores_delete_modal_title": {
+    "message": "Supprimer magasin"
+  },
+  "stores_edit_modal_title": {
+    "message": "Éditer magasin"
+  },
+  "stores_manage_store": {
+    "message": "Gérer magasins"
+  },
+  "stores_no_results_found": {
+    "message": "Aucun magasin trouvé"
+  },
+  "store_name": {
+    "message": "Nom du magasin"
+  },
   "students": {
     "message": "Étudiants"
   },
@@ -2152,6 +2290,153 @@
   "type": {
     "message": "Type"
   },
+  "t_audience_dynamic_integration_disabled": {
+    "message": "Pour activer cette fonctionalité, veuillez contacter votre consultant en engagement mobile."
+  },
+  "t_customise_personas": {
+    "message": "Expériences d'application"
+  },
+  "t_deals_delete_modal_body": {
+    "message": "Êtes-vous sûr de vouloir supprimer %s?"
+  },
+  "t_deals_delete_modal_title": {
+    "message": "Supprimer rabais"
+  },
+  "t_deals_form_deal_banner": {
+    "message": "Téléverser votre image"
+  },
+  "t_deals_form_deal_details": {
+    "message": "Détails du rabais"
+  },
+  "t_deals_form_deal_title": {
+    "message": "Titre"
+  },
+  "t_deals_form_dropdown_label_select_store": {
+    "message": "Sélectionner magasin"
+  },
+  "t_deals_form_error_end_date_after_now": {
+    "message": "La date de fin doit être dans le futur."
+  },
+  "t_deals_form_error_end_date_before_start": {
+    "message": "La date de fin de publication ne peut pas être avant la date de début."
+  },
+  "t_deals_form_heading_create_deal": {
+    "message": "Créer rabais"
+  },
+  "t_deals_form_heading_edit_deal": {
+    "message": "Éditer rabais"
+  },
+  "t_deals_form_posting_end_date": {
+    "message": "Date de fin de publication"
+  },
+  "t_deals_form_posting_start_date": {
+    "message": "Début de publication"
+  },
+  "t_deals_form_store_details": {
+    "message": "Détails du magasin"
+  },
+  "t_deals_form_tab_existing_store": {
+    "message": "Magasin existant"
+  },
+  "t_deals_form_tab_new_store": {
+    "message": "Créer magasin"
+  },
+  "t_deals_list_dropdown_label_all_stores": {
+    "message": "Tous les magasins"
+  },
+  "t_deals_list_dropdown_label_select_store": {
+    "message": "Selectionner un magasin"
+  },
+  "t_deals_list_grid_column_store": {
+    "message": "Magasin"
+  },
+  "t_personas_button_list_create": {
+    "message": "Créer expérience"
+  },
+  "t_personas_create_form_title": {
+    "message": "Détails de l'expérience"
+  },
+  "t_personas_create_header_title": {
+    "message": "Créer expérience"
+  },
+  "t_personas_create_submit_button": {
+    "message": "Enregistrer les changements"
+  },
+  "t_personas_form_delete_button": {
+    "message": "Supprimer expérience"
+  },
+  "t_personas_form_dropdown_login_forbidden": {
+    "message": "Interdit"
+  },
+  "t_personas_form_dropdown_login_optional": {
+    "message": "Optionnel"
+  },
+  "t_personas_form_dropdown_login_required": {
+    "message": "Requis"
+  },
+  "t_personas_form_dropdown_platform_mobile": {
+    "message": "Mobile"
+  },
+  "t_personas_form_dropdown_platform_web": {
+    "message": "Web"
+  },
+  "t_personas_form_label_persona_name": {
+    "message": "Nom de l'expérience"
+  },
+  "t_personas_form_label_platform": {
+    "message": "Plateforme"
+  },
+  "t_personas_form_label_requires_credentials": {
+    "message": "Nécessite des identifiants"
+  },
+  "t_personas_form_personalized_page": {
+    "message": "Page d'accueil personnalisée"
+  },
+  "t_personas_form_personalized_page_help": {
+    "message": "Cette expérience fournira une page d'accueil personnalisée pour les utilisateurs connectés"
+  },
+  "t_personas_form_pretour": {
+    "message": "Aperçu"
+  },
+  "t_personas_form_pretour_help": {
+    "message": "Fournit un aperçu de l'application avant l'enregistrement"
+  },
+  "t_personas_list_dropdown_all_experiences": {
+    "message": "Tout"
+  },
+  "t_personas_list_dropdown_mobile_experiences": {
+    "message": "Mobile"
+  },
+  "t_personas_list_dropdown_web_experiences": {
+    "message": "Web"
+  },
+  "t_persona_create_cancel_button": {
+    "message": "Annuler"
+  },
+  "t_persona_list_button_customize": {
+    "message": "Personnaliser"
+  },
+  "t_persona_list_button_edit": {
+    "message": "Éditer"
+  },
+  "t_persona_list_button_notify": {
+    "message": "Notifier"
+  },
+  "t_shared_cancel": {
+    "message": "Cancel"
+  },
+  "t_shared_delete": {
+    "message": "Supprimer"
+  },
+  "t_shared_edit": {
+    "message": "Éditer"
+  },
+  "t_shared_hide": {
+    "message": "Cacher"
+  },
+  "t_shared_show": {
+    "message": "Montrer"
+  },
   "update": {
     "message": "Mettre à jour",
     "description": "Verb"
@@ -2168,6 +2453,9 @@
   },
   "users": {
     "message": "Utilisateurs"
+  },
+  "users_found": {
+    "message": "Utilisateurs trouvés"
   },
   "validate_password_min_length": {
     "message": "Assurez-vous que votre mot de passe fait au moins 6 caractères"

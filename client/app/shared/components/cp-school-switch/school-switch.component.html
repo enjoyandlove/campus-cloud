@@ -27,7 +27,11 @@
     <li
       class="switch__item"
       (click)="close.emit()">
-      <a [href]="helpDeskUrl" target="_blank" i18n>{{ 'help_desk' | cpI18n }}</a>
+      <a
+        cpTracker
+        [href]="helpDeskUrl"
+        target="_blank"
+        [eventData]="trackEvent(amplitudeEvents.visited_help_desk, true)">{{ 'help_desk' | cpI18n }}</a>
     </li>
 
     <li
@@ -42,7 +46,10 @@
       <a [routerLink]="['/account/change-password']" i18n>{{ 'change_password' | cpI18n }}</a>
     </li>
     <li class="switch__item" (click)="close.emit()">
-      <a [routerLink]="['/logout']" i18n>{{ 'logout' | cpI18n }}</a>
+      <a
+        cpTracker
+        [routerLink]="['/logout']"
+        [eventData]="trackEvent(amplitudeEvents.logged_out, true)">{{ 'logout' | cpI18n }}</a>
     </li>
   </div>
 
@@ -50,7 +57,11 @@
     <li
       *ngFor="let school of schools"
       class="switch__item switch__school switch__school--current">
-      <a href="#" (click)="onSwitchSchool($event, school)">
+      <a
+        href="#"
+        cpTracker
+        (click)="onSwitchSchool($event, school)"
+        [eventData]="trackEvent(amplitudeEvents.changed_school, false)">
       <div class="row">
         <div class="col-xs-10">
           <div

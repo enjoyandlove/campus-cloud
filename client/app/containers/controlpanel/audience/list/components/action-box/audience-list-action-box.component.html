@@ -1,0 +1,33 @@
+<div class="cp-card">
+  <div class="row">
+    <div class="col-xs-6 pull-left">
+      <div class="row">
+        <div class="col-xs-8">
+          <cp-searchbox (query)="search.emit($event)"></cp-searchbox>
+        </div>
+        <div class="col-xs-4">
+          <cp-dropdown 
+            [items]="listTypes" 
+            (selected)="onListSelected($event)">
+          </cp-dropdown>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-3 pull-right text-right">
+      <button
+        cpTracker
+        (click)="launchCreateModal.emit()"
+        [eventData]="trackEvent(amplitudeEvents.clicked_create)"
+        class="cpbtn cpbtn--primary cpbtn--square-right no-right-padding">
+        {{ 'lists_button_create' | cpI18n }}
+      </button>
+      <div
+        class="cpbtn cpbtn--square-left cpbtn--no-padding cpbtn--primary no-left-padding hover action-dropdown">
+        <i class="material-icons" data-toggle="dropdown">expand_more</i>
+        <ul class="dropdown-menu dropdown-menu-right text-left">
+          <li i18n (click)="launchImportModal.emit()">{{ 'import_from_csv' | cpI18n }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

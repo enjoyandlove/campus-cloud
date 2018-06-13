@@ -1,15 +1,13 @@
-/* tslint:disable:max-line-length */
-import { Component, OnInit, OnDestroy, HostListener, ElementRef, Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
-
-import { TemplatesService } from './../templates.service';
 import { CPSession } from './../../../../../session/index';
+import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants/privileges';
 import { CPI18nService, StoreService } from './../../../../../shared/services';
 import { AnnouncementsService } from './../../announcements/announcements.service';
-
-import { AnnouncementsComposeComponent } from './../../announcements/compose/announcements-compose.component';
+import { TemplatesService } from './../templates.service';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
+import { TemplatesComposeComponent } from '../compose/templates-compose.component';
 
 declare var $;
 
@@ -18,14 +16,13 @@ declare var $;
   templateUrl: './templates-create.component.html',
   styleUrls: ['./templates-create.component.scss']
 })
-export class TemplatesCreateComponent extends AnnouncementsComposeComponent
+export class TemplatesCreateComponent extends TemplatesComposeComponent
   implements OnInit, OnDestroy {
-  @Input() toolTipContent: IToolTipContent;
-
   form: FormGroup;
+  toolTipContent: IToolTipContent;
 
   constructor(
-    private el: ElementRef,
+    public el: ElementRef,
     public fb: FormBuilder,
     public session: CPSession,
     public cpI18n: CPI18nService,
@@ -33,7 +30,7 @@ export class TemplatesCreateComponent extends AnnouncementsComposeComponent
     public service: AnnouncementsService,
     private childService: TemplatesService
   ) {
-    super(fb, session, cpI18n, storeService, service);
+    super(el, fb, session, cpI18n, storeService, service);
   }
 
   @HostListener('document:click', ['$event'])
@@ -156,6 +153,10 @@ export class TemplatesCreateComponent extends AnnouncementsComposeComponent
   }
 
   ngOnInit() {
+    const defaultHost = this.session.defaultHost ? this.session.defaultHost.value : null;
+
+    this.sendAsName = this.session.defaultHost ? this.session.defaultHost.label : undefined;
+
     this.toolTipContent = Object.assign({}, this.toolTipContent, {
       content: this.cpI18n.translate('notify_announcement_template_to_tooltip'),
       link: {
@@ -166,7 +167,59 @@ export class TemplatesCreateComponent extends AnnouncementsComposeComponent
       }
     });
 
-    super.ngOnInit();
+    let canDoEmergency;
+
+    this.typeAheadOpts = {
+      withSwitcher: true,
+      suggestions: this.suggestions,
+      reset: this.resetChips$,
+      unsetOverflow: true
+    };
+    const schoolPrivileges = this.session.g.get('user').school_level_privileges[
+      this.session.g.get('school').id
+    ];
+
+    try {
+      canDoEmergency = schoolPrivileges[CP_PRIVILEGES_MAP.emergency_announcement].w;
+    } catch (error) {
+      canDoEmergency = false;
+    }
+
+    this.types = require('../compose/announcement-types').types;
+
+    if (!canDoEmergency) {
+      this.types = this.types.filter((type) => type.action !== this.EMERGENCY_TYPE);
+    }
+
+    this.form = this.fb.group({
+      store_id: [defaultHost, Validators.required],
+      user_ids: [[]],
+      list_ids: [[]],
+      is_school_wide: false,
+      subject: [null, [Validators.required, Validators.maxLength(128)]],
+      message: [null, [Validators.required, Validators.maxLength(400)]],
+      priority: [this.types[0].action, Validators.required]
+    });
+
+    this.form.valueChanges.subscribe((_) => {
+      let isValid = true;
+
+      isValid = this.form.valid;
+
+      if (this.state.isToLists) {
+        if (this.form.controls['list_ids'].value) {
+          isValid = this.form.controls['list_ids'].value.length >= 1 && this.form.valid;
+        }
+      }
+
+      if (this.state.isToUsers) {
+        if (this.form.controls['user_ids'].value) {
+          isValid = this.form.controls['user_ids'].value.length >= 1 && this.form.valid;
+        }
+      }
+
+      this.isFormValid = isValid;
+    });
     const control = new FormControl(null, Validators.required);
 
     this.form.addControl('name', control);

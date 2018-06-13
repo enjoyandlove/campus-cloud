@@ -1,25 +1,25 @@
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, OnInit, Input } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-
-import {
-  ErrorService,
-  StoreService,
-  AdminService,
-  CPI18nService
-} from '../../../../../shared/services';
-
-import { EventsService } from '../events.service';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { isProd } from './../../../../../config/env';
-import { CPSession, ISchool } from '../../../../../session';
-import { CPMap, CPDate } from '../../../../../shared/utils';
-import { EventUtilService } from '../events.utils.service';
-import { EventAttendance, EventFeedback, isAllDay } from '../event.status';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { CPSession, ISchool } from '../../../../../session';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import {
+  AdminService,
+  CPI18nService,
+  CPTrackingService,
+  ErrorService,
+  StoreService
+} from '../../../../../shared/services';
+import { CPDate, CPMap } from '../../../../../shared/utils';
+import { EventAttendance, EventFeedback, isAllDay } from '../event.status';
+import { EventsService } from '../events.service';
+import { EventUtilService } from '../events.utils.service';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
 const FORMAT_WITHOUT_TIME = 'F j, Y';
@@ -77,7 +77,8 @@ export class EventsCreateComponent implements OnInit {
     private utils: EventUtilService,
     public adminService: AdminService,
     public storeService: StoreService,
-    public errorService: ErrorService
+    public errorService: ErrorService,
+    public cpTracking: CPTrackingService
   ) {}
 
   buildHeader() {
@@ -138,6 +139,16 @@ export class EventsCreateComponent implements OnInit {
   onUploadedImage(image) {
     this.form.controls['poster_url'].setValue(image);
     this.form.controls['poster_thumb_url'].setValue(image);
+
+    if (image) {
+      this.trackUploadImageEvent();
+    }
+  }
+
+  trackUploadImageEvent() {
+    const properties = this.cpTracking.getEventProperties();
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
 
   toggleEventAttendance(value) {
@@ -235,7 +246,7 @@ export class EventsCreateComponent implements OnInit {
       return;
     }
 
-    if (this.form.controls['end'].value <= Math.round(CPDate.now().unix())) {
+    if (this.form.controls['end'].value <= Math.round(CPDate.now(this.session.tz).unix())) {
       this.isDateError = true;
       this.formError = true;
       this.form.controls['end'].setErrors({ required: true });
@@ -408,14 +419,14 @@ export class EventsCreateComponent implements OnInit {
 
     this.startdatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      onClose: function(_, dataStr) {
+      onChange: function(_, dataStr) {
         _self.form.controls['start'].setValue(CPDate.toEpoch(dataStr, _self.session.tz));
       }
     };
 
     this.enddatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      onClose: function(_, dataStr) {
+      onChange: function(_, dataStr) {
         _self.form.controls['end'].setValue(CPDate.toEpoch(dataStr, _self.session.tz));
       }
     };

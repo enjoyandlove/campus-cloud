@@ -1,4 +1,5 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { Observable } from 'rxjs/Observable';
 import { FormBuilder } from '@angular/forms';
 import { Store, StoreModule } from '@ngrx/store';
@@ -48,6 +49,7 @@ describe('OrientationProgramEditComponent', () => {
       TestBed.configureTestingModule({
         imports: [
           OrientationDetailsModule,
+          RouterTestingModule,
           StoreModule.forRoot({
             HEADER: headerReducer,
             SNACKBAR: snackBarReducer

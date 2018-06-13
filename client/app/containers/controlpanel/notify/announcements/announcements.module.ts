@@ -8,6 +8,10 @@ import { AnnouncementDeleteComponent } from './delete';
 import { AnnouncementsConfirmComponent } from './confirm';
 import { AnnouncementsComposeComponent } from './compose';
 
+import { AudienceModule } from './../../audience/audience.module';
+
+import { AudienceSharedModule } from './../../audience/shared/audience.shared.module';
+
 import {
   AnnouncementsListActionBoxComponent,
   AnnouncementsListRecipientsComponent
@@ -33,7 +37,14 @@ import { AnnouncementsService } from './announcements.service';
     AnnouncementsListRecipientsComponent
   ],
 
-  imports: [CommonModule, SharedModule, AnnouncementsRoutingModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    SharedModule,
+    AudienceSharedModule,
+    AnnouncementsRoutingModule,
+    AudienceModule,
+    ReactiveFormsModule
+  ],
 
   providers: [AnnouncementsService]
 })

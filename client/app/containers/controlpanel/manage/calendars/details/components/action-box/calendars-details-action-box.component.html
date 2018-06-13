@@ -5,7 +5,9 @@
     </div>
     <div class="col-xs-5 text-right col-xs-offset-4">
       <a
-        [routerLink]="['items/create']" i18n
+        cpTracker
+        [routerLink]="['items/create']"
+        [eventData]="trackEvent(amplitudeEvents.clicked_create)"
         class="cpbtn cpbtn--primary cpbtn--square-right no-right-padding">
         {{ 'calendars_items_button_new' | cpI18n }}
       </a>

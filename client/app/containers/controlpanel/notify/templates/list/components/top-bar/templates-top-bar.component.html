@@ -7,9 +7,11 @@
         </div>
         <div class="col-xs-3 pull-right">
           <button
+            cpTracker
             type="button"
             (click)="create.emit()"
-            class="cpbtn cpbtn--primary pull-right" i18n>
+            [eventData]="trackEvent(amplitudeEvents.clicked_create)"
+            class="cpbtn cpbtn--primary pull-right">
             {{ 'templates_button_new' | cpI18n }}
           </button>
         </div>

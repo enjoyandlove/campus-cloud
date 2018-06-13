@@ -67,30 +67,26 @@
             <span class="col-xs-1">
               {{ program.events_count }}
             </span>
-            <span class="col-xs-1">
+            <span class="col-xs-1 action">
              <button
+               data-toggle="dropdown"
                class="cpbtn cpbtn--link-dark"
-               (click)="isOpen = !isOpen;
-               selectedProgram = program">
+               (click)="selectedProgram = program">
                <i class="material-icons">more_horiz</i>
              </button>
-              <div
-                *ngIf="isOpen && selectedProgram.id === program.id"
-                class="orientation__dropdown">
+              <div class="orientation__dropdown">
                 <ul>
                   <li
-                    (click)="isOpen = false;
-                    launchDuplicateModal = true;"
-                    class="orientation__dropdown__item col-xs-12"
+                    (click)="launchDuplicateModal = true;"
+                    class="col-xs-12"
                     data-toggle="modal"
                     data-target="#programDuplicate">
                       <i class="material-icons col-xs-2">control_point_duplicate</i>
                       <span class="col-xs-10">{{ 'orientation_duplicate_program' | cpI18n }}</span>
                   </li>
                   <li
-                    (click)="isOpen = false;
-                    launchDeleteModal = true;"
-                    class="orientation__dropdown__item col-xs-12"
+                    (click)="launchDeleteModal = true;"
+                    class="col-xs-12"
                     data-toggle="modal"
                     data-target="#programDelete">
                       <i class="material-icons col-xs-2">close</i>

@@ -15,7 +15,9 @@
 
     <div class="col-xs-3 pull-right text-right" *ngIf="canWriteSchoolWide">
       <a
-        [routerLink]="['create']" i18n
+        cpTracker
+        [routerLink]="['create']"
+        [eventData]="trackEvent(amplitudeEvents.clicked_create)"
         class="cpbtn cpbtn--primary cpbtn--square-right no-right-padding">
         {{ 'services_button_create' | cpI18n }}
       </a>

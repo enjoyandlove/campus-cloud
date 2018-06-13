@@ -10,11 +10,13 @@
       </cp-dropdown>
     </div>
     <div class="col-xs-3 pull-right text-right" *ngIf="canCompose">
-      <button
-        (click)="launchModal.emit()"
-        class="cpbtn cpbtn--primary" i18n>
+      <a
+        cpTracker
+        [routerLink]="['compose']"
+        class="cpbtn cpbtn--primary"
+        [eventData]="trackEvent(amplitudeEvents.clicked_create)">
         {{ 'compose' | cpI18n }}
-      </button>
+      </a>
     </div>
   </div>
 </div>

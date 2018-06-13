@@ -54,5 +54,9 @@
       margin-bottom: 0;
       color: $color-secondary-text;
     }
+    &.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
   }
 }

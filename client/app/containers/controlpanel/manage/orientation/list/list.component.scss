@@ -28,6 +28,18 @@
   }
 }
 
+.action {
+  &.open {
+    .orientation__dropdown {
+      display: block;
+    }
+  }
+
+  .orientation__dropdown {
+    display: none;
+  }
+}
+
 .orientation {
   padding: 0;
   list-style: none;

@@ -1,0 +1,28 @@
+<div class="cp-card col-xs-12">
+  <div class="row">
+    <div class="col-xs-3">
+      <cp-searchbox (query)="onSearch($event)"></cp-searchbox>
+    </div>
+    <div class="col-xs-2">
+      <cp-dropdown
+        [items]="stores$ | async"
+        (selected)="onFilterByStore($event.action)">
+      </cp-dropdown>
+    </div>
+
+    <div class="col-xs-7 pull-right text-right">
+      <a
+        [routerLink]="['stores']"
+        class="cpbtn cpbtn--cancel margin-right">
+        {{ 'deals_manage_stores' | cpI18n }}
+      </a>
+      <a
+        cpTracker
+        [routerLink]="['create']"
+        class="cpbtn cpbtn--primary"
+        [eventData]="trackEvent(amplitudeEvents.clicked_create)">
+        {{ 'deals_create_deal' | cpI18n }}
+      </a>
+    </div>
+  </div>
+</div>

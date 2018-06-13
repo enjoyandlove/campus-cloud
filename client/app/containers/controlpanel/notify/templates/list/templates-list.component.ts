@@ -1,14 +1,13 @@
-import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-
-import { TemplatesService } from './../templates.service';
-import { CPSession } from './../../../../../session/index';
-import { base64 } from './../../../../../shared/utils/encrypt';
 import { BaseComponent } from './../../../../../base/base.component';
 import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
+import { CPSession } from './../../../../../session/index';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { base64 } from './../../../../../shared/utils/encrypt';
+import { TemplatesService } from './../templates.service';
 
 interface IState {
   search_str: string;

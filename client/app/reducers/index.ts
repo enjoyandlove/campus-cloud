@@ -3,6 +3,7 @@ export { reducer as alertReducer } from './alert.reducer';
 export { reducer as headerReducer } from './header.reducer';
 export { reducer as mobileReducer } from './mobile.reducer';
 export { reducer as snackBarReducer } from './snackbar.reducer';
+export { reducer as audienceReducer } from './audience.reducer';
 export { reducer as eventsModalReducer } from './events-modal.reducer';
 export { reducer as servicesModalReducer } from './services-modal.reducer';
 

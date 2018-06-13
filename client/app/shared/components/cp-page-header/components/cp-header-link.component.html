@@ -1,0 +1,52 @@
+<ul class="header">
+  <li
+    routerLinkActive="active"
+    *ngFor="let page of readyFeatures | cpFilterByLength : maxChildren"
+    [routerLinkActiveOptions]="{exact: page.hasParams ? false : true}">
+    <span class="promote-badge" *ngIf="page.new">new</span>
+    <a
+      cpTracker
+      *ngIf="page.amplitude"
+      [routerLink]="[page.url]"
+      [eventData]="trackSubMenu(page.amplitude)">
+      {{ page.label | cpI18n }}
+    </a>
+    <a
+      *ngIf="!page.amplitude"
+      [routerLink]="[page.url]">
+      {{ page.label | cpI18n }}
+    </a>
+  </li>
+  <li *ngIf="extraMenu" [class.active]="isExtraMenuRoute()">
+    <a
+      [routerLink]="[extraMenu.url]">{{ extraMenu.label | cpI18n }}
+    </a>
+  </li>
+  <li class="header__more hover" *ngIf="extraChildren.length">
+    <a
+      href="#"
+      data-toggle="dropdown">
+      {{ 'more' | cpI18n }}
+      <i class="material-icons">expand_more</i>
+    </a>
+
+    <ul class="dropdown-menu dropdown-menu-right header__more-children">
+      <li *ngFor="let page of extraChildren">
+        <a
+          cpTracker
+          *ngIf="page.amplitude"
+          (click)="extraMenu = page"
+          [routerLink]="[page.url]"
+          [eventData]="trackSubMenu(page.amplitude)">
+          {{ page.label | cpI18n }}
+        </a>
+        <a
+          *ngIf="!page.amplitude"
+          (click)="extraMenu = page"
+          [routerLink]="[page.url]">
+          {{ page.label | cpI18n }}
+        </a>
+      </li>
+    </ul>
+  </li>
+</ul>

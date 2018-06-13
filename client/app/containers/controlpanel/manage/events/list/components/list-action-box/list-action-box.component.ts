@@ -7,7 +7,6 @@ import {
   EventEmitter,
   HostListener
 } from '@angular/core';
-
 import { URLSearchParams } from '@angular/http';
 
 import {
@@ -20,8 +19,10 @@ import { DATE_FILTER } from './events-filters';
 import { EventAttendance } from '../../../event.status';
 import { CPSession } from '../../../../../../../session';
 import { CPDate } from '../../../../../../../shared/utils/date';
-import { StoreService } from '../../../../../../../shared/services';
 import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
+import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
+import { CPTrackingService, StoreService } from '../../../../../../../shared/services';
+import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
 
 interface IState {
   end: number;
@@ -31,8 +32,6 @@ interface IState {
   search_str: string;
   attendance_only: number;
 }
-
-const threeYearsFromNow = CPDate.now().add(3, 'years');
 
 @Component({
   selector: 'cp-list-action-box',
@@ -49,21 +48,26 @@ export class ListActionBoxComponent implements OnInit {
   eventFilter;
   dateFilterOpts;
   canCreateEvent;
+  amplitudeEvents;
+  threeYearsFromNow = CPDate.now(this.session.tz)
+    .add(3, 'years')
+    .unix();
   isFilteredByDate;
   state: IState = {
     upcoming: true,
     search_str: null,
     store_id: null, // all stores
     attendance_only: EventAttendance.disabled,
-    start: CPDate.toEpoch(CPDate.now(), this.session.tz),
-    end: CPDate.toEpoch(threeYearsFromNow, this.session.tz)
+    start: CPDate.now(this.session.tz).unix(),
+    end: this.threeYearsFromNow
   };
   stores$: Observable<any>;
 
   constructor(
     private el: ElementRef,
     private session: CPSession,
-    private storeService: StoreService
+    private storeService: StoreService,
+    private cpTracking: CPTrackingService
   ) {}
 
   getStores() {
@@ -97,17 +101,17 @@ export class ListActionBoxComponent implements OnInit {
   }
 
   private resetDateRange() {
-    const now = CPDate.now().format();
+    const now = CPDate.now(this.session.tz).unix();
     this.isFilteredByDate = false;
 
     if (this.state.upcoming) {
       this.state = Object.assign({}, this.state, {
-        start: CPDate.toEpoch(now, this.session.tz),
-        end: CPDate.toEpoch(threeYearsFromNow, this.session.tz)
+        start: now,
+        end: this.threeYearsFromNow
       });
 
       this.dateFilterOpts = Object.assign({}, this.dateFilterOpts, {
-        minDate: now,
+        minDate: CPDate.now(this.session.tz).format(),
         maxDate: null
       });
 
@@ -116,12 +120,12 @@ export class ListActionBoxComponent implements OnInit {
 
     this.state = Object.assign({}, this.state, {
       start: 0,
-      end: CPDate.toEpoch(now, this.session.tz)
+      end: now
     });
 
     this.dateFilterOpts = Object.assign({}, this.dateFilterOpts, {
       minDate: null,
-      maxDate: now
+      maxDate: CPDate.now(this.session.tz).format()
     });
   }
 
@@ -170,6 +174,18 @@ export class ListActionBoxComponent implements OnInit {
     $('#excelEventsModal').modal();
   }
 
+  trackEvent(eventName) {
+    const eventProperties = {
+      ...this.cpTracking.getEventProperties(), create_page_name: amplitudeEvents.CREATE_EVENT
+    };
+
+    return {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName,
+      eventProperties
+    };
+  }
+
   ngOnInit() {
     this.getStores();
     const canSchoolWrite = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.events);
@@ -183,8 +199,12 @@ export class ListActionBoxComponent implements OnInit {
       utc: true,
       inline: true,
       mode: 'range',
-      minDate: CPDate.now().format(),
+      minDate: CPDate.now(this.session.tz).format(),
       maxDate: null
+    };
+
+    this.amplitudeEvents = {
+      clicked_create: amplitudeEvents.CLICKED_CREATE
     };
 
     this.listAction.emit(this.state);

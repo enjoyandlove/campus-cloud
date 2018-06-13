@@ -7,8 +7,9 @@ import { API } from '../../../../../config/api';
 import { LinksService } from '../links.service';
 import { CPSession } from '../../../../../session';
 import { appStorage } from '../../../../../shared/utils';
-import { FileUploadService } from '../../../../../shared/services';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { CPTrackingService, FileUploadService } from '../../../../../shared/services';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 
 declare var $: any;
 
@@ -31,6 +32,7 @@ export class LinksCreateComponent implements OnInit {
     private session: CPSession,
     public cpI18n: CPI18nService,
     private service: LinksService,
+    private cpTracking: CPTrackingService,
     private fileUploadService: FileUploadService
   ) {}
 
@@ -63,11 +65,18 @@ export class LinksCreateComponent implements OnInit {
     this.fileUploadService.uploadFile(file, url, headers).subscribe(
       (res) => {
         this.form.controls['img_url'].setValue(res.image_url);
+        this.trackUploadImageEvent();
       },
       (err) => {
         throw new Error(err);
       }
     );
+  }
+
+  trackUploadImageEvent() {
+    const properties = this.cpTracking.getEventProperties();
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
 
   doSubmit() {

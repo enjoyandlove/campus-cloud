@@ -1,3 +1,5 @@
+import { Store } from '@ngrx/store';
+import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
 import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
@@ -36,7 +38,6 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
   headerText;
   messageType;
   isDeleteModal;
-  isComposeModal;
   suggestions = [];
   viewMoreRecipients = [];
   state: IState = state;
@@ -45,6 +46,7 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
 
   constructor(
     private session: CPSession,
+    public store: Store<IHeader>,
     private cpI18n: CPI18nService,
     private service: AnnouncementsService
   ) {
@@ -108,17 +110,6 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
     );
   }
 
-  onLaunchCreateModal() {
-    this.isComposeModal = true;
-    setTimeout(
-      () => {
-        $('#composeModal').modal();
-      },
-
-      1
-    );
-  }
-
   onDeleted(id) {
     this.state = Object.assign({}, this.state, {
       messages: this.state.messages.filter((message) => message.id !== id)
@@ -159,7 +150,16 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
     this.fetch();
   }
 
+  updateHeader() {
+    this.store.dispatch({
+      type: HEADER_UPDATE,
+      payload: require('../../notify.header.json')
+    });
+  }
+
   ngOnInit() {
+    this.updateHeader();
+
     this.messageType = {
       0: this.cpI18n.translate('emergency'),
       1: this.cpI18n.translate('urgent'),

@@ -1,0 +1,61 @@
+<div class="cpmodal">
+  <div class="cpmodal__header">
+    <div class="row">
+      <div class="col-xs-12 text-center">
+        <span><strong>{{ 'lists_create_modal_title' | cpI18n }}</strong></span>
+
+        <span
+          data-dismiss="modal"
+          (click)="resetModal()"
+          class="pull-right hover cpmodal__header__close">
+          &times;
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cpmodal__body">
+    <form [formGroup]="form">
+      <div class="row">
+        <div class="col-xs-6">
+          <div class="form-group">
+            <label>{{ 'audience_create_modal_label_name' | cpI18n }}</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="name">
+          </div>
+        </div>
+      </div>
+      <cp-audience-new-body 
+        [importButton]="false"
+        (count)="onUserCount($event)"
+        (users)="onAudienceSelected($event)"
+        (audienceType)="onAudienceTypeChange($event)"
+        (filters)="onFiltersSelected($event)">
+      </cp-audience-new-body>
+    </form>
+  </div>
+
+  <div class="cpmodal__footer">
+    <div class="row">
+      <div class="col-xs-12 text-right">
+        <label class="error" *ngIf="isError">
+          {{ errorMessage }}
+        </label>
+        <button
+          type="button"
+          data-dismiss="modal"
+          (click)="resetModal()"
+          class="cpbtn cpbtn--cancel">
+          {{ 'cancel' | cpI18n }}
+        </button>
+
+        <cp-button
+          [props]="buttonData"
+          (buttonClick)="doSubmit()">
+        </cp-button>
+      </div>
+    </div>
+  </div>
+</div>
