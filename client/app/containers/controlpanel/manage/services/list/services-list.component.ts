@@ -98,6 +98,7 @@ export class ServicesListComponent extends BaseComponent implements OnInit {
       attendance_only: data.attendance_only
     });
 
+    this.resetPagination();
     this.fetch();
   }
 
