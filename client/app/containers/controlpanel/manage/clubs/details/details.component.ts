@@ -1,6 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, Input, OnInit } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
 import { IClub } from '../club.interface';
@@ -39,9 +39,9 @@ export class ClubsDetailsComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
-    search.append('category_id', this.isAthletic.toString());
+    const search = new HttpParams()
+      .append('school_id', this.session.g.get('school').id.toString())
+      .append('category_id', this.isAthletic.toString());
 
     super.fetchData(this.clubsService.getClubById(this.clubId, search)).then((club) => {
       this.club = club.data;

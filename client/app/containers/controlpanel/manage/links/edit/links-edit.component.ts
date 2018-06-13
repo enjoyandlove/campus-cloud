@@ -1,14 +1,13 @@
-import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
+import { HttpHeaders } from '@angular/common/http';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Headers } from '@angular/http';
-
-import { ILink } from '../link.interface';
-import { API } from '../../../../../config/api';
-import { LinksService } from '../links.service';
-import { appStorage } from '../../../../../shared/utils';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { API } from '../../../../../config/api';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPTrackingService, FileUploadService } from '../../../../../shared/services';
+import { appStorage } from '../../../../../shared/utils';
+import { ILink } from '../link.interface';
+import { LinksService } from '../links.service';
 
 declare var $: any;
 
@@ -54,14 +53,15 @@ export class LinksEditComponent implements OnInit, OnChanges {
       return;
     }
 
-    const headers = new Headers();
     const url = this.service.getUploadImageUrl();
     const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
 
-    headers.append('Authorization', auth);
+    const headers = new HttpHeaders({
+      Authorization: auth
+    });
 
     this.fileUploadService.uploadFile(file, url, headers).subscribe(
-      (res) => {
+      (res: any) => {
         this.form.controls['img_url'].setValue(res.image_url);
         this.trackUploadImageEvent();
       },
@@ -84,7 +84,7 @@ export class LinksEditComponent implements OnInit, OnChanges {
 
   doSubmit() {
     this.service.updateLink(this.form.value, this.link.id).subscribe(
-      (res) => {
+      (res: any) => {
         this.editLink.emit(res);
         $('#linksEdit').modal('hide');
         this.resetModal();

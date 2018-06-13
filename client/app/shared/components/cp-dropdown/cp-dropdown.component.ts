@@ -1,5 +1,3 @@
-import { Observable } from 'rxjs/Observable';
-
 import {
   ChangeDetectionStrategy,
   Component,
@@ -8,6 +6,7 @@ import {
   OnInit,
   Output
 } from '@angular/core';
+import { Observable, of as observableOf } from 'rxjs';
 
 interface IItems {
   label: string;
@@ -63,7 +62,7 @@ export class CPDropdownComponent implements OnInit {
     }
 
     if (!this.reset) {
-      this.reset = Observable.of(false);
+      this.reset = observableOf(false);
     }
 
     this.reset.subscribe((reset) => {

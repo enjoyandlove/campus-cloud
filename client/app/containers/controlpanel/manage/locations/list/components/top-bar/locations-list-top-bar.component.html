@@ -1,14 +1,14 @@
 <div class="cp-card">
-  <div class="row">
-    <div class="col-xs-3 pull-left">
+  <div class="row justify-content-between">
+    <div class="col-3 float-left">
       <cp-searchbox (query)="onSearch($event)"></cp-searchbox>
     </div>
-    <div class="col-xs-3 pull-right">
+    <div class="col-3 float-right">
       <button
         cpTracker
         (click)="launchModal.emit()"
         [eventData]="trackEvent(amplitudeEvents.clicked_create)"
-        class="cpbtn cpbtn--primary pull-right">
+        class="cpbtn cpbtn--primary float-right">
         {{ 'locations_btn_create' | cpI18n }}
       </button>
     </div>

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { URLSearchParams } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 import { ProvidersService } from '../../../providers.service';
 import { CPI18nService } from '../../../../../../../shared/services';
@@ -29,8 +29,7 @@ export class ServicesProviderAddComponent implements OnInit {
   ) {}
 
   onSubmit() {
-    const search = new URLSearchParams();
-    search.append('service_id', this.serviceId.toString());
+    const search = new HttpParams().append('service_id', this.serviceId.toString());
 
     this.providersService.createProvider(this.form.value, search).subscribe((res) => {
       this.form.reset();

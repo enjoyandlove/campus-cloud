@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-xs-12">
+  <div class="col-12">
     <cp-clubs-list-action-box
       [isAthletic]="isAthletic"
       (filter)="doFilter($event)">
@@ -13,11 +13,11 @@
   <div *ngSwitchCase="false">
     <div *ngIf="state.clubs.length">
       <ul class="cp-form clubs">
-        <li class="cp-form__header col-xs-12">
+        <li class="cp-form__header col-12">
           <div class="row">
             <span
               (click)="doSort('name')"
-              class="col-xs-5 hover">
+              class="col-5 hover">
               {{ 'name' | cpI18n }}
               <span *ngIf="state.sort_field === 'name'">
                 <i class="material-icons">
@@ -25,29 +25,29 @@
                 </i>
               </span>
             </span>
-            <span class="col-xs-2" >
+            <span class="col-2" >
               {{ 'status' | cpI18n }}
             </span>
-            <span class="col-xs-2">
+            <span class="col-2">
               {{ 'members' | cpI18n }}
             </span>
-            <span class="col-xs-2" i18n>{{ 'events' | cpI18n }}</span>
-            <span class="col-xs-1"></span>
+            <span class="col-2" i18n>{{ 'events' | cpI18n }}</span>
+            <span class="col-1"></span>
           </div>
         </li>
 
-        <li class="cp-form__item col-xs-12" *ngFor="let club of state.clubs">
+        <li class="cp-form__item col-12" *ngFor="let club of state.clubs">
           <div class="row">
-            <span class="col-xs-5 text-truncate clubs__thumbnail">
-              <img class="img-rounded img-fit-cover" [src]="club.logo_url" *ngIf="club.logo_url !== ''">
+            <span class="col-5 text-truncate clubs__thumbnail">
+              <img class="rounded img-fit-cover" [src]="club.logo_url" *ngIf="club.logo_url !== ''">
 
-              <img class="img-rounded img-fit-cover" src="defaultImage" *ngIf="club.logo_url === ''">
+              <img class="rounded img-fit-cover" src="defaultImage" *ngIf="club.logo_url === ''">
 
               <strong><a [routerLink]="[club.id + '/info']">{{ club.name }}</a></strong>
               <br>
               {{ club.description }}
             </span>
-            <span class="col-xs-2 text-truncate">
+            <span class="col-2 text-truncate">
               {{ clubStatus[club.status] }}
               <ng-container *ngIf="club.status === PENDING_STATUS">
                 <button
@@ -58,17 +58,17 @@
                 </button>
               </ng-container>
             </span>
-            <span class="col-xs-2 text-truncate">
+            <span class="col-2 text-truncate">
               {{ club.member_count === disabledWall ? cpI18n.translate('clubs_disabled') : club.member_count }}
             </span>
-            <span class="col-xs-2 text-truncate">
+            <span class="col-2 text-truncate">
               {{ club.total_item_count }}
             </span>
 
             <span
               (click)="deleteClub = club"
               data-toggle="modal" data-target="#deleteClubsModal"
-              class="col-xs-1 hover text-center text-truncate delete-club pull-right">
+              class="col-1 hover text-center text-truncate delete-club float-right">
               &times;
             </span>
           </div>
@@ -76,7 +76,7 @@
       </ul>
 
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-12">
           <cp-pagination
             [pageNext]="pageNext"
             [pagePrev]="pagePrev"

@@ -1,14 +1,13 @@
-import { async, TestBed, ComponentFixture } from '@angular/core/testing';
-import { URLSearchParams } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { HttpParams } from '@angular/common/http';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-
+import { of as observableOf } from 'rxjs';
+import { DealsDeleteComponent } from './deals-delete.component';
+import { CPSession } from '../../../../../session';
+import { mockSchool } from '../../../../../session/mock/school';
+import { CPI18nService } from '../../../../../shared/services';
 import { DealsModule } from '../deals.module';
 import { DealsService } from '../deals.service';
-import { CPSession } from '../../../../../session';
-import { DealsDeleteComponent } from './deals-delete.component';
-import { CPI18nService } from '../../../../../shared/services';
-import { mockSchool } from '../../../../../session/mock/school';
 
 class MockDealsService {
   dummy;
@@ -16,7 +15,7 @@ class MockDealsService {
   deleteDeal(id: number, search: any) {
     this.dummy = [id, search];
 
-    return Observable.of({});
+    return observableOf({});
   }
 }
 
@@ -30,18 +29,13 @@ describe('DealsDeleteComponent', () => {
     async(() => {
       TestBed.configureTestingModule({
         imports: [DealsModule, RouterTestingModule],
-        providers: [
-          CPSession,
-          CPI18nService,
-          { provide: DealsService, useClass: MockDealsService },
-        ]
+        providers: [CPSession, CPI18nService, { provide: DealsService, useClass: MockDealsService }]
       })
         .compileComponents()
         .then(() => {
           fixture = TestBed.createComponent(DealsDeleteComponent);
           component = fixture.componentInstance;
 
-          search = new URLSearchParams();
           component.deal = {
             id: 1,
             store_id: 10,
@@ -54,7 +48,10 @@ describe('DealsDeleteComponent', () => {
           };
 
           component.session.g.set('school', mockSchool);
-          search.append('school_id', component.session.g.get('school').id.toString());
+          search = new HttpParams().append(
+            'school_id',
+            component.session.g.get('school').id.toString()
+          );
         });
     })
   );
@@ -68,7 +65,7 @@ describe('DealsDeleteComponent', () => {
   it('should delete deal', () => {
     spyOn(component.deleted, 'emit');
     spyOn(component.resetDeleteModal, 'emit');
-    spy = spyOn(component.service, 'deleteDeal').and.returnValue(Observable.of({}));
+    spy = spyOn(component.service, 'deleteDeal').and.returnValue(observableOf({}));
 
     component.onDelete();
     expect(spy).toHaveBeenCalledTimes(1);
@@ -80,5 +77,4 @@ describe('DealsDeleteComponent', () => {
     expect(component.resetDeleteModal.emit).toHaveBeenCalled();
     expect(component.resetDeleteModal.emit).toHaveBeenCalledTimes(1);
   });
-
 });

@@ -1,9 +1,9 @@
 <form [formGroup]="form">
   <div class="row form-group">
-    <div class="col-xs-12">
+    <div class="col-12">
       <label>
         {{ 'name' | cpI18n }}
-        <span class="pull-right">
+        <span class="float-right">
           {{ form.controls.title.value ? form.controls.title.value.length : 0 }}/225
         </span>
       </label>
@@ -14,7 +14,7 @@
     </div>
   </div>
   <div class="row item-details">
-    <div class="col-xs-6">
+    <div class="col-6">
       <label>
         {{ 'due_date' | cpI18n }}
       </label>
@@ -26,10 +26,10 @@
   </div>
   <br>
   <div class="row">
-    <div class="col-xs-12">
+    <div class="col-12">
       <label>
         {{ 'description' | cpI18n }}
-        <span class="pull-right">
+        <span class="float-right">
           {{ form.controls.description.value ? form.controls.description.value.length : 0 }}/512
         </span>
       </label>

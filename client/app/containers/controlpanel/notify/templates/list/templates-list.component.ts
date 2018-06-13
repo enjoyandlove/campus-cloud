@@ -1,6 +1,6 @@
+import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
-import { ActivatedRoute, Router } from '@angular/router';
+import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { BaseComponent } from './../../../../../base/base.component';
 import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
@@ -78,11 +78,11 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
   }
 
   fetch() {
-    const search = new URLSearchParams();
-    search.append('search_str', this.state.search_str);
-    search.append('sort_field', this.state.sort_field);
-    search.append('sort_direction', this.state.sort_direction);
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams()
+      .append('search_str', this.state.search_str)
+      .append('sort_field', this.state.sort_field)
+      .append('sort_direction', this.state.sort_direction)
+      .append('school_id', this.session.g.get('school').id.toString());
 
     const stream$ = this.service.getTemplates(this.startRange, this.endRange, search);
 
@@ -181,8 +181,7 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
   }
 
   loadTemplateFromId() {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     this.service
       .getTemplateById(search, +base64.decode(this.templateId))

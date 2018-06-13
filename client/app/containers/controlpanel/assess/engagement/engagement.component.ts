@@ -1,16 +1,15 @@
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-
-import { CPSession } from './../../../../session/index';
-import { EngagementService } from './engagement.service';
-import { BaseComponent } from '../../../../base/base.component';
+import { BehaviorSubject } from 'rxjs';
 import { HEADER_UPDATE } from './../../../../reducers/header.reducer';
 import { SNACKBAR_SHOW } from './../../../../reducers/snackbar.reducer';
-import { createSpreadSheet } from './../../../../shared/utils/csv/parser';
+import { CPSession } from './../../../../session/index';
 import { CPI18nService } from './../../../../shared/services/i18n.service';
+import { createSpreadSheet } from './../../../../shared/utils/csv/parser';
+import { EngagementService } from './engagement.service';
+import { BaseComponent } from '../../../../base/base.component';
 
 declare var $;
 
@@ -63,20 +62,13 @@ export class EngagementComponent extends BaseComponent implements OnInit {
     this.filters$.next(this.filterState);
   }
 
-  buildSearchHeaders(): URLSearchParams {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
-
-    search.append(
-      this.filterState.engagement.data.queryParam,
-      this.filterState.engagement.data.value
-    );
-
-    search.append('user_list_id', this.filterState.for.listId);
-    search.append('start', `${this.filterState.range.payload.range.start}`);
-    search.append('end', `${this.filterState.range.payload.range.end}`);
-
-    return search;
+  buildSearchHeaders(): HttpParams {
+    return new HttpParams()
+      .append('school_id', this.session.g.get('school').id.toString())
+      .append('user_list_id', this.filterState.for.listId)
+      .append('start', `${this.filterState.range.payload.range.start}`)
+      .append('end', `${this.filterState.range.payload.range.end}`)
+      .append(this.filterState.engagement.data.queryParam, this.filterState.engagement.data.value);
   }
 
   fetchChartData() {
@@ -105,11 +97,11 @@ export class EngagementComponent extends BaseComponent implements OnInit {
 
   onDownload(cohort) {
     let fileName = 'all_download_data';
-    const search = this.buildSearchHeaders();
-    search.append('download', '1');
+    let search = this.buildSearchHeaders();
+    search = search.append('download', '1');
 
     if (cohort) {
-      search.append('cohort', cohort);
+      search = search.append('cohort', cohort);
 
       switch (cohort) {
         case REPEAT_ENGAGEMENT:
@@ -127,7 +119,7 @@ export class EngagementComponent extends BaseComponent implements OnInit {
     this.service
       .getChartData(search)
       .toPromise()
-      .then((data) => {
+      .then((data: any) => {
         const columns = [
           this.cpI18n.translate('assess_student_name'),
           this.cpI18n.translate('assess_number_of_checkins'),

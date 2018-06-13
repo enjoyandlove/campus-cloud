@@ -1,7 +1,7 @@
   <div class="header">
-    <div class="col-xs-2 no-left-padding">
+    <div class="col-2 no-left-padding">
       <cp-checkbox
-        class="checkbox pull-left"
+        class="checkbox float-left"
         [isChecked]="isChecked"
         (toggle)="this.checkAll.emit($event)">
       </cp-checkbox>
@@ -13,7 +13,7 @@
       </cp-upload-button>
     </div>
     
-    <div class="col-xs-2 no-left-padding">
+    <div class="col-2 no-left-padding">
       <cp-import-action-dropdown
         [props]="props"
         [storeId]="storeId"

@@ -1,13 +1,12 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { URLSearchParams } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
-
+import { HttpParams } from '@angular/common/http';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { CPSession } from '../../../../../../../../session';
-import { ClubsService } from '../../../../../../manage/clubs/clubs.service';
 import { CP_PRIVILEGES_MAP } from '../../../../../../../../shared/constants';
-import { BaseTeamSelectModalComponent } from '../base/team-select-modal.component';
+import { ClubsService } from '../../../../../../manage/clubs/clubs.service';
 import { clubAthleticStatus, isClubAthletic } from '../../../../team.utils.service';
+import { BaseTeamSelectModalComponent } from '../base/team-select-modal.component';
 
 @Component({
   selector: 'cp-select-athletics-modal',
@@ -34,14 +33,16 @@ export class SelectTeamAthleticsModalComponent extends BaseTeamSelectModalCompon
   }
 
   ngOnInit() {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
-    search.append('category_id', isClubAthletic.athletic.toString());
+    const search = new HttpParams()
+      .append('school_id', this.session.g.get('school').id.toString())
+      .append('category_id', isClubAthletic.athletic.toString());
 
     this.service
       .getClubs(search, 1, 1000)
-      .map((athletics) =>
-        athletics.filter((athletic) => athletic.status === clubAthleticStatus.active)
+      .pipe(
+        map((athletics: Array<any>) =>
+          athletics.filter((athletic) => athletic.status === clubAthleticStatus.active)
+        )
       )
       .subscribe((athletics) => {
         let res = {};

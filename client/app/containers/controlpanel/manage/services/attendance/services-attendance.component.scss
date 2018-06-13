@@ -29,6 +29,14 @@
   @include card-margin();
 }
 
+.actions {
+  button {
+    &:first-child {
+      margin-right: 8px;
+    }
+  }
+}
+
 .header {
   margin-top: 0;
 
@@ -36,5 +44,6 @@
     @include font-semi-bold();
 
     font-size: 2.4em;
+    margin-bottom: 4px;
   }
 }

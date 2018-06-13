@@ -1,6 +1,6 @@
 <div class="feed">
   <div class="row">
-    <div class="col-xs-3" *ngIf="feed.image_thumb_url !== ''">
+    <div class="col-3" *ngIf="feed.image_thumb_url !== ''">
       <div
         class="avatar"
         [ngStyle]="{'background-image': 'url(' + feed.image_thumb_url + ')'}">
@@ -8,10 +8,10 @@
     </div>
 
     <div
-      [class]="[feed.image_thumb_url === '' ? 'col-xs-12' : 'col-xs-9 no-left-padding']">
+      [class]="[feed.image_thumb_url === '' ? 'col-12' : 'col-9 no-left-padding']">
       <div
         [class]="[feed.image_thumb_url !== '' ? 'row feed__message--tall' : 'row feed__message']">
-        <div class="col-xs-12">
+        <div class="col-12">
           <p>{{ feed.message }}</p>
         </div>
       </div>
@@ -19,7 +19,7 @@
       <div
         [class]="[feed.image_thumb_url !== '' ? 'feed__footer feed__footer--absolute' : 'feed__footer']">
         <div class="row">
-          <div class="col-xs-6">
+          <div class="col-6">
             <span>
               <i class="material-icons">thumb_up</i>
               {{ feed.likes }}
@@ -39,7 +39,7 @@
           </div>
           <div
             *ngIf="feed.comment_count > 0 && !isRemovedPosts"
-            class="col-xs-6 pull-right text-right">
+            class="col-6 float-right text-right">
             <button
               class="cpbtn cpbtn--link-dark"
               (click)="isCommentsOpen = !isCommentsOpen"

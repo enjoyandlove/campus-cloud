@@ -1,53 +1,51 @@
 <div [ngSwitch]="loading">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
-  <div *ngSwitchCase="false">
+  <ng-container *ngSwitchCase="false">
     <div class="row">
-      <div class="header">
-        <div class="col-xs-4 text-center">
-          <div class="cp-card cp-card--half-padding">
-            <p class="header__digit">{{ provider.num_ratings }}</p>
-            <p i18n>{{ 'total_ratings' | cpI18n }}</p>
-          </div>
+      <div class="col-4 text-center">
+        <div class="cp-card cp-card--half-padding">
+          <p class="header__digit">{{ provider.num_ratings }}</p>
+          <p>{{ 'total_ratings' | cpI18n }}</p>
         </div>
-        <div class="col-xs-4 text-center">
-          <div class="cp-card cp-card--half-padding">
-            <p class="header__digit">{{ provider.total_visits }}</p>
-            <p i18n>{{ 'services_total_visits' | cpI18n }}</p>
-          </div>
+      </div>
+      <div class="col-4 text-center">
+        <div class="cp-card cp-card--half-padding">
+          <p class="header__digit">{{ provider.total_visits }}</p>
+          <p>{{ 'services_total_visits' | cpI18n }}</p>
         </div>
-        <div class="col-xs-4 text-center">
-          <div class="cp-card cp-card--half-padding rating-box">
-            <cp-stars
-              [size]="starSize"
-              class="rating-box__star"
-              [avgRate]="provider.avg_rating_percent"
-              [maxRate]="MAX_RATE">
-            </cp-stars>
-            <p i18n>{{ 'average_rating' | cpI18n }}
-              {{ provider.avg_rating_percent !== -1 ? eventRating : '0.0' }}
-            </p>
-          </div>
+      </div>
+      <div class="col-4 text-center">
+        <div class="cp-card cp-card--half-padding rating-box">
+          <cp-stars
+            [size]="starSize"
+            class="rating-box__star"
+            [avgRate]="provider.avg_rating_percent"
+            [maxRate]="MAX_RATE">
+          </cp-stars>
+          <p>{{ 'average_rating' | cpI18n }}
+            {{ provider.avg_rating_percent !== -1 ? eventRating : '0.0' }}
+          </p>
         </div>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-xs-12">
+      <div class="col-12">
         <div class="cp-card actions">
           <div class="row">
-            <div class="col-xs-4">
+            <div class="col-4">
               <cp-searchbox (query)=query$.next($event)></cp-searchbox>
             </div>
-            <div class="col-xs-6 col-xs-offset-2 text-right">
+            <div class="col-6 offset-2 text-right">
               <button
                 (click)="download$.next(true)"
-                class="cpbtn cpbtn--secondary" i18n>
+                class="cpbtn cpbtn--secondary">
                 {{ 'services_button_download_attendance_data' | cpI18n }}
               </button>
               <a
                 target="_blank"
-                class="cpbtn cpbtn--no-border cpbtn--primary" i18n
+                class="cpbtn cpbtn--no-border cpbtn--primary"
                 [routerLink]="['/cb/checkin/s/' + provider.encrypted_campus_service_id + '/' + provider.encrypted_id]">
                 {{ 'services_label_check_in_details' | cpI18n }}
               </a>
@@ -56,9 +54,9 @@
         </div>
       </div>
     </div>
-
+    
     <div class="row">
-      <div class="col-xs-12">
+      <div class="col-12">
         <cp-providers-attendees-list
         [serviceId]="serviceId"
         [query]="query$"
@@ -67,5 +65,5 @@
         </cp-providers-attendees-list>
       </div>
     </div>
-  </div>
+  </ng-container>
 </div>

@@ -1,4 +1,4 @@
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -166,7 +166,9 @@ export class TeamCreateComponent implements OnInit {
     }
 
     const eventProperties = this.utils.getAmplitudeEventProperties(
-      this.schoolPrivileges, this.accountPrivileges);
+      this.schoolPrivileges,
+      this.accountPrivileges
+    );
 
     this.teamService.createAdmin(_data).subscribe(
       () => {

@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-xs-12">
+  <div class="col-12">
     <label>{{'audience_label_filters' | cpI18n}}</label>
   </div>
 </div>
@@ -27,17 +27,17 @@
           *ngFor="let item of form.get('filters').controls; let i = index;">
           <div [formGroupName]="i">
             <div class="row">
-              <div class="col-xs-11">
+              <div class="col-11">
                 <fieldset [disabled]="counting">
                   <div class="row">
-                    <div class="col-xs-6">
+                    <div class="col-6">
                       <cp-dropdown  
                         [selectedItem]="selectedItem[i]"
                         (selected)="onFilterSelected($event, i)"
                         [items]="filtersData | cpAudienceFilterPipe:usedFiltersAsArray()">
                       </cp-dropdown>
                     </div>
-                    <div class="col-xs-6">
+                    <div class="col-6">
                       <cp-dropdown-multiselect 
                         (selection)="onChoices($event, i)"
                         [items]="selectedFilterOptions[i]"
@@ -49,7 +49,7 @@
               </div>
               <div 
                 *ngIf="state.filterCount > 1"
-                class="col-xs-1 delete-button hover">
+                class="col-1 delete-button hover">
                 <span (click)="removeFilterGroup(i)">&times;</span>
               </div>
             </div>
@@ -59,7 +59,7 @@
       
       <div class="footer">
         <div class="row">
-          <div class="col-xs-6">
+          <div class="col-6">
             <button 
               type="button" 
               (click)="addFilterGroup()" 
@@ -68,7 +68,7 @@
               {{'audience_add_filter_button' | cpI18n}}
             </button>
           </div>
-          <div class="col-xs-6">
+          <div class="col-6">
             <cp-audience-counter 
               [message]="message"
               [loading]="counting">

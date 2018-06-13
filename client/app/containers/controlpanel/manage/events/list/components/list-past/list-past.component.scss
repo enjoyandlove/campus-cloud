@@ -1,7 +1,6 @@
 @import '~styles/core/colors';
 @import '~styles/components/form';
 @import '~styles/components/button';
-@import '~bootstrap/variables';
 
 .delete-event {
   font-size: 2em;
@@ -41,13 +40,4 @@
       margin-right: 10px;
     }
   }
-
-  // @media all and (max-width: $screen-md) {
-  //   li {
-  //     > span:not(.events__thumbnail) {
-  //       text-align: center;
-  //       padding-bottom: 10px;
-  //     }
-  //   }
-  // }
 }

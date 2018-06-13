@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 import { BaseComponent } from '../../../../../../../base/base.component';
 import { CPSession } from '../../../../../../../session';
@@ -57,14 +57,11 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    const search = new URLSearchParams();
-    search.append('thread_id', this.feed.id.toString());
+    let search = new HttpParams().append('thread_id', this.feed.id.toString());
 
-    if (this._isCampusWallView) {
-      search.append('school_id', this.session.g.get('school').id.toString());
-    } else {
-      search.append('group_id', this.groupId.toString());
-    }
+    search = this._isCampusWallView
+      ? search.append('school_id', this.session.g.get('school').id.toString())
+      : search.append('group_id', this.groupId.toString());
 
     const campusWallComments$ = this.feedsService.getCampusWallCommentsByThreadId(
       search,

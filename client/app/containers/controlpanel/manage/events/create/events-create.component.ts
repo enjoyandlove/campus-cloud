@@ -1,9 +1,10 @@
+import { HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { isProd } from './../../../../../config/env';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { CPSession, ISchool } from '../../../../../session';
@@ -106,28 +107,29 @@ export class EventsCreateComponent implements OnInit {
   }
 
   fetchManagersBySelectedStore(storeId) {
-    const search: URLSearchParams = new URLSearchParams();
-
-    search.append('store_id', storeId);
-    search.append('school_id', this.school.id.toString());
-    search.append('privilege_type', this.utils.getPrivilegeType(this.isOrientation));
+    const search: HttpParams = new HttpParams()
+      .append('store_id', storeId)
+      .append('school_id', this.school.id.toString())
+      .append('privilege_type', this.utils.getPrivilegeType(this.isOrientation));
 
     this.adminService
       .getAdminByStoreId(search)
-      .map((admins) => {
-        return [
-          {
-            label: '---',
-            value: null
-          },
-          ...admins.map((admin) => {
-            return {
-              label: `${admin.firstname} ${admin.lastname}`,
-              value: admin.id
-            };
-          })
-        ];
-      })
+      .pipe(
+        map((admins: any) => {
+          return [
+            {
+              label: '---',
+              value: null
+            },
+            ...admins.map((admin) => {
+              return {
+                label: `${admin.firstname} ${admin.lastname}`,
+                value: admin.id
+              };
+            })
+          ];
+        })
+      )
       .subscribe(
         (managers) => (this.managers = managers),
         (err) => {
@@ -256,14 +258,15 @@ export class EventsCreateComponent implements OnInit {
       return;
     }
 
-    const search = new URLSearchParams();
+    let search = new HttpParams();
     if (this.orientationId) {
-      search.append('school_id', this.session.g.get('school').id);
-      search.append('calendar_id', this.orientationId.toString());
+      search = search
+        .append('school_id', this.session.g.get('school').id)
+        .append('calendar_id', this.orientationId.toString());
     }
 
     this.service.createEvent(this.form.value, search).subscribe(
-      (res) => {
+      (res: any) => {
         this.urlPrefix = this.getUrlPrefix(res.id);
         this.router.navigate([this.urlPrefix]);
       },
@@ -330,10 +333,8 @@ export class EventsCreateComponent implements OnInit {
     this.eventFeedbackEnabled = EventFeedback.enabled;
 
     this.school = this.session.g.get('school');
-    const search: URLSearchParams = new URLSearchParams();
-
+    const search: HttpParams = new HttpParams().append('school_id', this.school.id.toString());
     this.buildHeader();
-    search.append('school_id', this.school.id.toString());
 
     this.stores$ = this.storeService.getStores(search);
 

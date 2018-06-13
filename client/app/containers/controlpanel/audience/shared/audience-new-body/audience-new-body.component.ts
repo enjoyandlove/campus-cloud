@@ -1,9 +1,8 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
-
+import { HttpParams } from '@angular/common/http';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CPSession } from './../../../../../session';
-import { AudienceType } from './../../audience.status';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { AudienceType } from './../../audience.status';
 import { AudienceSharedService } from '../audience.shared.service';
 
 @Component({
@@ -60,9 +59,9 @@ export class AudienceNewBodyComponent implements OnInit {
 
     this.state = { ...this.state, couting: true };
 
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
-    search.append('count_only', '1');
+    const search = new HttpParams()
+      .set('school_id', this.session.g.get('school').id)
+      .set('count_only', '1');
 
     const data = {
       filters: [...filters]

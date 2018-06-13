@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-xs-12">
+  <div class="col-12">
     <cp-engagement-topbar
       (download)="onDownload()"
       (doFilter)="onDoFilter($event)">
@@ -12,7 +12,7 @@
     <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
     <div class="row" *ngSwitchCase="false">
-      <div class="col-xs-5">
+      <div class="col-5">
         <p class="chart--title" i18n>
           {{ 'students' | cpI18n }}
         </p>
@@ -22,7 +22,7 @@
           (doCompose)="onDoCompose($event)">
         </cp-engagement-stats>
       </div>
-      <div class="col-xs-7">
+      <div class="col-7">
         <p class="chart--title" i18n>
           {{ 'student_engagements' | cpI18n }}
         </p>
@@ -36,13 +36,13 @@
 
 <div class="boxes">
   <div class="row">
-    <div class="col-xs-6">
+    <div class="col-6">
       <cp-engagement-events-box
         [props]="filters$">
       </cp-engagement-events-box>
     </div>
 
-    <div class="col-xs-6">
+    <div class="col-6">
       <cp-engagement-services-box
         [props]="filters$">
       </cp-engagement-services-box>

@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     this.service.login(data.username, data.password).subscribe(
-      (res) => {
+      (res: any) => {
         if (appStorage.storageAvailable()) {
           this.form.reset();
 

@@ -1,6 +1,7 @@
+/*tslint:disable:max-line-length*/
+import { HttpParams } from '@angular/common/http';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import {
@@ -83,8 +84,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     public service: AnnouncementsService
   ) {
     const school = this.session.g.get('school');
-    const search: URLSearchParams = new URLSearchParams();
-    search.append('school_id', school.id.toString());
+    const search: HttpParams = new HttpParams().append('school_id', school.id.toString());
 
     this.stores$ = this.storeService.getStores(search);
   }
@@ -248,13 +248,12 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       data = { ...data, filters: this.form.value.filters };
     }
 
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     this.service
       .createAudience(data, search)
       .toPromise()
-      .then(({ id }) => this.redirectToSaveTab({ id }))
+      .then(({ id }: any) => this.redirectToSaveTab({ id }))
       .catch((err) => {
         const error = JSON.parse(err._body).error;
         const body =
@@ -338,8 +337,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     this.isError = false;
     $('#announcementConfirmModal').modal('hide');
 
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     const prefix = this.subject_prefix.label ? this.subject_prefix.label.toUpperCase() : '';
 
@@ -373,7 +371,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     }
 
     this.service.postAnnouncements(search, data).subscribe(
-      (res) => {
+      (res: any) => {
         if (res.status === THROTTLED_STATUS) {
           this.shouldConfirm = false;
 

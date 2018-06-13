@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Headers } from '@angular/http';
+import { HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 import { API } from '../../../../../../../config/api';
 import { appStorage } from '../../../../../../../shared/utils';
@@ -35,14 +35,15 @@ export class ServicesImportTopBarComponent implements OnInit {
       return;
     }
 
-    const headers = new Headers();
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
     const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
 
-    headers.append('Authorization', auth);
+    const headers = new HttpHeaders({
+      Authorization: auth
+    });
 
     this.fileUploadService.uploadFile(file, url, headers).subscribe(
-      (res) => this.imageChange.emit(res.image_url),
+      (res: any) => this.imageChange.emit(res.image_url),
       (err) => {
         throw new Error(err);
       }

@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-xs-12">
+  <div class="col-12">
     <cp-students-top-bar
       (filter)="onFilter($event)"
       [listIdFromUrl]="listIdFromUrl">
@@ -19,10 +19,10 @@
 
     <div *ngIf="students.length">
       <ul class="students cp-form">
-        <li class="cp-form__header col-xs-12">
+        <li class="cp-form__header col-12">
           <div class="row">
             <span
-              class="col-xs-3 hover"
+              class="col-3 hover"
               (click)="doSort('firstname')">
               {{ 'name' | cpI18n }}
               <span *ngIf="state.sort_field === 'firstname'">
@@ -31,22 +31,22 @@
                 </i>
               </span>
             </span>
-            <span class="col-xs-3">{{ 'assess_engagements_last_seven_days' | cpI18n }}</span>
-            <span class="col-xs-3">{{ 'assess_last_engagement' | cpI18n }}</span>
-            <span class="col-xs-3"></span>
+            <span class="col-3">{{ 'assess_engagements_last_seven_days' | cpI18n }}</span>
+            <span class="col-3">{{ 'assess_last_engagement' | cpI18n }}</span>
+            <span class="col-3"></span>
           </div>
         </li>
 
         <li
-          class="cp-form__item col-xs-12"
+          class="cp-form__item col-12"
           *ngFor="let student of students">
           <div class="row">
-            <span class="col-xs-3 text-truncate students__thumbnail">
+            <span class="col-3 text-truncate students__thumbnail">
               <div class="row">
-                <div class="col-xs-3 no-right-padding">
-                  <img [src]="student.avatar <= avatarCustomCodeThreshold ? defaultImage : student.avatar_url" class="img-rounded img-fit-cover">
+                <div class="col-3 no-right-padding">
+                  <img [src]="student.avatar <= avatarCustomCodeThreshold ? defaultImage : student.avatar_url" class="rounded img-fit-cover">
                 </div>
-                <div class="col-xs-9 no-left-padding">
+                <div class="col-9 no-left-padding">
                   <a [routerLink]="[student.id]">
                     <strong>{{ student.firstname }} {{ student.lastname }}</strong>
                   </a>
@@ -54,11 +54,11 @@
               </div>
             </span>
 
-            <span class="col-xs-3">
+            <span class="col-3">
               {{ student.events }} {{ 'events' | cpI18n }} {{ 'and' | cpI18n }} {{ student.services }} {{ 'services' | cpI18n }}
             </span>
 
-            <span class="col-xs-3">
+            <span class="col-3">
               <ng-container *ngIf="student.last_event === 0 && student.last_service === 0">{{ cpI18n.translate('announcements_no_engagement_data') }}</ng-container>
               <ng-container *ngIf="student.last_event !== 0 || student.last_service !== 0">
                 <ng-container *ngIf="student.last_service >= student.last_event">
@@ -70,7 +70,7 @@
               </ng-container>
             </span>
 
-            <span class="col-xs-2 text-center col-xs-offset-1">
+            <span class="col-2 text-center offset-1">
               <button
                 type="button"
                 class="cpbtn cpbtn--link" i18n

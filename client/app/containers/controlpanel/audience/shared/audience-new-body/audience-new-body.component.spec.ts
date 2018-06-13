@@ -1,6 +1,6 @@
-import { Observable } from 'rxjs/Observable';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { of as observableOf } from 'rxjs';
 
 import { AudienceType } from './../../audience.status';
 import { CPSession } from './../../../../../session/index';
@@ -16,7 +16,7 @@ class MockAudienceSharedService {
   getUserCount(data, search) {
     this.dummy = { data, search };
 
-    return Observable.of({ count: 130 });
+    return observableOf({ count: 130 });
   }
 }
 

@@ -5,11 +5,12 @@
 body {
   font-family: 'Open Sans', sans-serif;
   color: $color-text;
+  font-size: 14px;
 }
 
 * {
   word-wrap: break-word;
-  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .text-muted {
@@ -113,4 +114,10 @@ a {
 
 @mixin font-36px() {
   font-size: 2.58em;
+}
+
+form input,
+.dropdown-menu,
+input.flatpickr-input[readonly] {
+  @include font-14px();
 }

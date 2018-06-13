@@ -1,8 +1,8 @@
 <div class="row">
-  <div class="col-xs-12">
+  <div class="col-12">
     <div class="cp-card">
       <div class="row">
-        <div class="col-xs-4">
+        <div class="col-4">
           <cp-searchbox
             (query)="onSearch($event)"
             [placeholder]="cpI18n.translate('admin_search_by_email_or_email')">
@@ -18,10 +18,10 @@
 
   <div *ngSwitchCase="false">
     <ul class="cp-form">
-      <li class="cp-form__header col-xs-12">
+      <li class="cp-form__header col-12">
         <div class="row">
           <span
-            class="col-xs-5 hover"
+            class="col-5 hover"
             (click)="doSort('firstname')">
             {{ 'name' | cpI18n }}
             <span *ngIf="state.sort_field === 'firstname'">
@@ -31,7 +31,7 @@
             </span>
           </span>
           <span
-            class="col-xs-5 hover"
+            class="col-5 hover"
             (click)="doSort('status')">
             {{ 'status' | cpI18n }}
             <span *ngIf="state.sort_field === 'status'">
@@ -40,13 +40,13 @@
               </i>
             </span>
           </span>
-          <span class="col-xs-2"></span>
+          <span class="col-2"></span>
         </div>
       </li>
 
-      <li class="cp-form__item col-xs-12" *ngFor="let admin of state.admins">
+      <li class="cp-form__item col-12" *ngFor="let admin of state.admins">
         <div class="row">
-          <span class="col-xs-5 text-truncate">
+          <span class="col-5 text-truncate">
             <strong>
               <a [routerLink]="[admin.id + '/edit']">
                 {{ admin.firstname }} {{ admin.lastname }}
@@ -57,11 +57,11 @@
             <small class="text-muted">{{ admin.email }}</small>
           </span>
 
-          <span class="col-xs-5 text-truncate">
+          <span class="col-5 text-truncate">
             {{ admin.account_activated ? cpI18n.translate('active') : cpI18n.translate('pending') }}
           </span>
 
-          <span class="col-xs-1 col-xs-offset-1 text-center">
+          <span class="col-1 offset-1 text-center">
             <button
               type="button"
               (click)="deleteAdmin = admin"
@@ -76,7 +76,7 @@
     </ul>
 
     <div class="row">
-      <div class="col-xs-12">
+      <div class="col-12">
         <cp-pagination
           [pageNext]="pageNext"
           [pagePrev]="pagePrev"

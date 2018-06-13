@@ -1,9 +1,11 @@
-import { CPSession } from './../../../../session/index';
-import { EngagementService } from './engagement.service';
-import { URLSearchParams } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of as observableOf, combineLatest } from 'rxjs';
+import { HttpParams } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
+
+import { CPSession } from './../../../../session';
+import { EngagementService } from './engagement.service';
 
 const SERVICE_WITH_ATTENDANCE = '1';
 
@@ -12,22 +14,21 @@ export class EngagementResolver implements Resolve<any> {
   constructor(private session: CPSession, private service: EngagementService) {}
 
   resolve(): Observable<any> {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
-    const serviceSearch = new URLSearchParams();
-    serviceSearch.append('attendance_only', SERVICE_WITH_ATTENDANCE);
-    serviceSearch.append('school_id', this.session.g.get('school').id.toString());
+    const serviceSearch = new HttpParams()
+      .append('attendance_only', SERVICE_WITH_ATTENDANCE)
+      .append('school_id', this.session.g.get('school').id.toString());
 
     const servicesList$ = this.service
       .getServices(undefined, undefined, serviceSearch)
-      .catch((_) => Observable.of([]));
+      .pipe(catchError((_) => observableOf([])));
 
     const listsList$ = this.service
       .getLists(undefined, undefined, search)
-      .catch((_) => Observable.of([]));
+      .pipe(catchError((_) => observableOf([])));
 
-    const stream$ = Observable.combineLatest(servicesList$, listsList$);
+    const stream$ = combineLatest(servicesList$, listsList$);
 
     return stream$;
   }

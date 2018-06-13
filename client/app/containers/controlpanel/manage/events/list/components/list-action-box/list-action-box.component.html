@@ -1,21 +1,20 @@
-<div class="cp-card actions col-xs-12">
+<div class="cp-card actions col-12">
   <div class="row">
-
     <cp-searchbox
       (query)="onSearch($event)"
-      class="col-xs-2 no-right-padding">
+      class="col-2 no-right-padding">
     </cp-searchbox>
 
-    <div class="col-xs-3">
+    <div class="col-3">
       <div class="row">
-        <div class="col-xs-9">
+        <div class="col-9">
           <cp-dropdown
             [items]="eventFilter"
             (selected)="onEventDate($event.action)">
           </cp-dropdown>
         </div>
         <div
-          class="col-xs-3 text-center no-left-padding">
+          class="col-3 text-center no-left-padding">
           <button
             type="button"
             [class.isOpen]="isCalendar"
@@ -35,11 +34,11 @@
       </div>
     </div>
 
-    <div class="col-xs-4">
+    <div class="col-4">
       <div class="row">
-        <div class="col-xs-6" *ngIf="!isSimple">
+        <div class="col-6" *ngIf="!isSimple">
           <div class="row">
-            <div class="col-xs-12 no-left-padding">
+            <div class="col-12 no-left-padding">
               <cp-dropdown
                 [items]="stores$ | async"
                 (selected)="onFilterByHost($event.value)">
@@ -47,21 +46,23 @@
             </div>
           </div>
         </div>
-        <div class="col-xs-6">
-          <div class="col-xs-9 text-truncate text-right">
-              <label i18n>{{ 'assessment' | cpI18n }}</label>
+        <div class="col-6">
+          <div class="row">
+            <div class="col-9 text-truncate text-right">
+                <label>{{ 'assessment' | cpI18n }}</label>
             </div>
-            <div class="col-xs-3 no-left-padding">
+            <div class="col-3 no-left-padding">
               <cp-checkbox
                 (toggle)="onAttendanceToggle($event)"
                 class="checkbox">
               </cp-checkbox>
             </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="col-xs-3 text-right pull-right" *ngIf="canCreateEvent">
+    <div class="col-3 text-right float-right" *ngIf="canCreateEvent">
       <a
         cpTracker
         [routerLink]="['create']"
@@ -73,12 +74,12 @@
         class="cpbtn cpbtn--square-left cpbtn--no-padding cpbtn--primary no-left-padding hover action-dropdown">
         <i class="material-icons" data-toggle="dropdown" *ngIf="!isOrientation">expand_more</i>
         <ul class="dropdown-menu dropdown-menu-right text-left action-dropdown-list" *ngIf="!isOrientation">
-          <li i18n *ngIf="!isOrientation">
+          <li *ngIf="!isOrientation">
             <a [routerLink]="['import/facebook']">
               {{ 'events_import_from_facebook' | cpI18n }}
             </a>
           </li>
-          <li i18n (click)="launchModal()" class="list-as-anchor">{{ 'import_from_csv' | cpI18n }}</li>
+          <li (click)="launchModal()" class="list-as-anchor">{{ 'import_from_csv' | cpI18n }}</li>
         </ul>
       </div>
     </div>

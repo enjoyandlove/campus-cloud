@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { TemplatesService } from './../templates.service';
 import { CPSession } from './../../../../../session/index';
@@ -34,8 +34,7 @@ export class TemplatesDeleteComponent implements OnInit {
 
   onDelete() {
     this.isError = false;
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     this.service.deleteTemplate(search, this.item.id).subscribe(
       (_) => {

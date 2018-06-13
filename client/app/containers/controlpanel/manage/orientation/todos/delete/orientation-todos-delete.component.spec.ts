@@ -1,14 +1,13 @@
+import { HttpParams } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Observable } from 'rxjs/Observable';
-import { URLSearchParams } from '@angular/http';
-
-import { TodosModule } from '../todos.module';
-import { TodosService } from '../todos.service';
-import { CPSession } from '../../../../../../session';
-import { mockSchool } from '../../../../../../session/mock/school';
+import { of as observableOf } from 'rxjs';
 import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 import { OrientationTodosDeleteComponent } from './orientation-todos-delete.component';
+import { CPSession } from '../../../../../../session';
+import { mockSchool } from '../../../../../../session/mock/school';
+import { TodosModule } from '../todos.module';
+import { TodosService } from '../todos.service';
 
 class MockTodosService {
   dummy;
@@ -16,14 +15,13 @@ class MockTodosService {
   deleteTodo(todoId: number, search: any) {
     this.dummy = [todoId, search];
 
-    return Observable.of(Observable.of({}));
+    return observableOf({});
   }
 }
 
 describe('OrientationTodosDeleteComponent', () => {
   let spy;
   let search;
-  let service: TodosService;
   let component: OrientationTodosDeleteComponent;
   let fixture: ComponentFixture<OrientationTodosDeleteComponent>;
 
@@ -37,11 +35,13 @@ describe('OrientationTodosDeleteComponent', () => {
         .then(() => {
           fixture = TestBed.createComponent(OrientationTodosDeleteComponent);
           component = fixture.componentInstance;
-          service = TestBed.get(TodosService);
 
-          search = new URLSearchParams();
           component.session.g.set('school', mockSchool);
-          search.append('school_id', component.session.g.get('school').id.toString());
+
+          search = new HttpParams().append(
+            'school_id',
+            component.session.g.get('school').id.toString()
+          );
 
           component.todo = {
             id: 54856,
@@ -60,7 +60,7 @@ describe('OrientationTodosDeleteComponent', () => {
   });
 
   it('should delete todo', () => {
-    spy = spyOn(component.service, 'deleteTodo').and.returnValue(Observable.of({}));
+    spy = spyOn(component.service, 'deleteTodo').and.returnValue(observableOf({}));
 
     component.onDelete();
     expect(spy.calls.count()).toBe(1);

@@ -1,10 +1,9 @@
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
-import { CheckinService } from '../checkin.service';
+import { CPI18nService, ErrorService } from './../../../../shared/services';
 import { BaseComponent } from '../../../../base/base.component';
-import { ErrorService, CPI18nService } from './../../../../shared/services';
+import { CheckinService } from '../checkin.service';
 
 interface IState {
   events: Array<any>;
@@ -24,7 +23,7 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
   isEvent = true;
   eventId: string;
   state: IState = state;
-  search: URLSearchParams = new URLSearchParams();
+  search: HttpParams;
 
   constructor(
     public router: Router,
@@ -66,7 +65,7 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.search.append('event_id', this.eventId);
+    this.search = new HttpParams().append('event_id', this.eventId);
 
     if (!this.eventId) {
       this.router.navigate(['/login']);

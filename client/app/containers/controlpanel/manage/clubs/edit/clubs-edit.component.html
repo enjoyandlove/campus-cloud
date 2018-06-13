@@ -4,10 +4,10 @@
   <ng-container *ngSwitchCase="true">
     <div class="row margin-bottom">
       <form [formGroup]="form">
-        <div class="col-xs-6">
+        <div class="col-6">
           <div class="cp-card">
             <div class="row">
-              <div class="col-xs-12">
+              <div class="col-12">
                 <p class="title" i18n>{{ labels.create_edit_name | cpI18n }}</p>
                 <div class="row">
                   <cp-image-upload
@@ -21,13 +21,13 @@
 
             <div class="form-group club-details">
               <div class="row">
-                <div class="col-xs-12">
+                <div class="col-12">
                   <p class="title" i18n>{{ labels.create_edit_details | cpI18n }}</p>
                 </div>
               </div>
 
               <div class="row">
-                <div class="col-xs-12">
+                <div class="col-12">
                   <label i18n>{{ labels.create_edit_name | cpI18n }}</label>
                   <input
                     type="text"
@@ -39,7 +39,7 @@
             </div>
 
             <div class="row form-group">
-              <div class="col-xs-12">
+              <div class="col-12">
                 <label i18n>{{ labels.create_edit_description | cpI18n }}</label>
                 <textarea
                   class="form-control"
@@ -49,10 +49,10 @@
             </div>
 
             <div class="row form-group">
-              <div class="col-xs-6">
+              <div class="col-6">
                 <label i18n>{{ labels.create_edit_status | cpI18n }}</label>
                 <div class="row">
-                  <div class="col-xs-12">
+                  <div class="col-12">
                     <fieldset [disabled]="limitedAdmin">
                       <cp-check-dropdown
                         [items]="statusTypes"
@@ -64,10 +64,10 @@
                   </div>
                 </div>
               </div>
-              <div class="col-xs-6">
+              <div class="col-6">
                 <label i18n>{{ labels.create_edit_membership | cpI18n }}</label>
                 <div class="row">
-                  <div class="col-xs-12">
+                  <div class="col-12">
                     <cp-check-dropdown
                       [items]="membershipTypes"
                       buttonClass="cpbtn cpbtn--cancel"
@@ -80,10 +80,10 @@
             </div>
 
             <div class="row form-group">
-              <div class="col-xs-12">
+              <div class="col-12">
                 <label i18n>{{ 'location' | cpI18n }}</label>
                 <div class="row form-group">
-                  <div class="col-xs-12">
+                  <div class="col-12">
                     <cp-place-autocomplete
                       [newAddress]="newAddress"
                       (backToDefault)="onResetMap()"
@@ -93,14 +93,14 @@
                   </div>
                 </div>
                 <div class="row form-group">
-                  <div class="col-xs-6">
+                  <div class="col-6">
                     <label i18n>{{ 'building' | cpI18n }}</label>
                     <input
                       type="text"
                       class="form-control"
                       formControlName="location">
                   </div>
-                  <div class="col-xs-6">
+                  <div class="col-6">
                     <label i18n>{{ 'room' | cpI18n }}</label>
                     <input
                       type="text"
@@ -112,7 +112,7 @@
             </div>
 
             <div class="row form-group">
-              <div class="col-xs-12 maps">
+              <div class="col-12 maps">
                 <cp-maps
                   [center]="mapCenter"
                   (mapSelection)="onMapSelection($event)">
@@ -122,14 +122,14 @@
           </div>
         </div>
 
-        <div class="col-xs-6">
+        <div class="col-6">
           <div class="cp-card contact">
             <div class="row form-group">
-              <div class="col-xs-12">
+              <div class="col-12">
                 <p class="title" i18n>{{ 'contact_details' | cpI18n }}</p>
 
                 <div class="row form--group">
-                  <div class="col-xs-6">
+                  <div class="col-6">
                     <label i18n>{{ 'website' | cpI18n }}</label>
                     <input
                       type="text"
@@ -137,7 +137,7 @@
                       formControlName="website">
                   </div>
 
-                  <div class="col-xs-6">
+                  <div class="col-6">
                     <label i18n>{{ 'phone_number' | cpI18n  }}</label>
                     <input
                       type="text"
@@ -147,7 +147,7 @@
                 </div>
 
                 <div class="row">
-                  <div class="col-xs-12">
+                  <div class="col-12">
                     <label i18n>{{ 'email' | cpI18n  }}</label>
                     <input
                       type="text"
@@ -161,11 +161,11 @@
 
           <div class="cp-card" *ngIf="isSJSU">
             <div class="row form-group">
-              <div class="col-xs-12">
+              <div class="col-12">
                 <p class="title" i18n>{{ 'clubs_label_advisor' | cpI18n }}</p>
 
                 <div class="row form--group">
-                  <div class="col-xs-6">
+                  <div class="col-6">
                     <label i18n>{{ 'first_name' | cpI18n }}</label>
                     <input
                       type="text"
@@ -174,7 +174,7 @@
                       [class.error]="formError && form.controls['advisor_firstname'].hasError('required')">
                   </div>
 
-                  <div class="col-xs-6">
+                  <div class="col-6">
                     <label i18n>{{ 'last_name' | cpI18n  }}</label>
                     <input
                       type="text"
@@ -185,7 +185,7 @@
                 </div>
 
                 <div class="row">
-                  <div class="col-xs-12">
+                  <div class="col-12">
                     <label i18n>{{ 'email' | cpI18n  }}</label>
                     <input
                       type="text"
@@ -201,9 +201,9 @@
 
         <div class="footer">
           <div class="cp-wrapper cp-wrapper--outer">
-            <div class="col-xs-12">
+            <div class="col-12">
               <div class="row">
-                <div class="col-xs-12">
+                <div class="col-12">
                   <div class="text-right">
                     <label class="error" *ngIf="formError" i18n>
                         <span>&#x26A0;</span> {{ 'error_fill_out_marked_fields' | cpI18n }}

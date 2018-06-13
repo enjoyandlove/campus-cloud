@@ -1,27 +1,27 @@
 <div class="cp-wrapper cp-wrapper--outer">
-  <div class="row">
-    <div class="col-xs-8 col-xs-offset-2">
+  <div class="row justify-content-center">
+    <div class="col-8">
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-12">
           <div class="header">
             <p class="title" i18n>{{ 'admin_invite_heading' | cpI18n }}</p>
           </div>
         </div>
       </div>
       <div class="row" *ngIf="isSubmitted">
-        <div class="col-xs-12">
+        <div class="col-12">
           <p i18n>{{ 'admin_password_sucess_redirect' | cpI18n }}</p>
         </div>
       </div>
 
       <div class="row" *ngIf="!isSubmitted">
-        <div class="col-xs-12">
+        <div class="col-12">
           <!--<p i18n>Hi [Name]</p>
           <p i18n>[Inviter Name] has invited you to manage
             [Service Name] for the [School Name] Campus App
           </p>-->
           <div class="row">
-            <div class="col-xs-6 col-xs-offset-3">
+            <div class="col-6 offset-3">
               <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
                 <!--<div class="form-group">
                   <label i18n>First Name</label>
@@ -39,7 +39,7 @@
                 </div>
 
                 <div class="row">
-                  <div class="col-xs-12">
+                  <div class="col-12">
                     <button
                       type="submit"
                       [disabled]="!form.valid"
@@ -50,7 +50,7 @@
                 </div>
 
                 <div class="row">
-                  <div class="col-xs-12">
+                  <div class="col-12">
                     <cp-alert></cp-alert>
                   </div>
                 </div>
@@ -59,9 +59,9 @@
           </div>
 
           <div class="row text-center footer">
-            <div class="col-xs-4 col-xs-offset-4">
+            <div class="col-4 offset-4">
               <div class="row">
-                <div class="col-xs-12">
+                <div class="col-12">
                   <a [routerLink]="['/login']" i18n>{{ 'login' | cpI18n }}</a>
                 </div>
               </div>

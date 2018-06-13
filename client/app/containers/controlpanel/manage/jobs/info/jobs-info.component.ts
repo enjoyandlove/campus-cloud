@@ -1,6 +1,6 @@
+import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
 import { IJob } from '../jobs.interface';
@@ -38,8 +38,7 @@ export class JobsInfoComponent extends BaseComponent implements OnInit {
   }
 
   public fetch() {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     super.fetchData(this.service.getJobById(this.jobId, search)).then((job) => {
       this.job = job.data;
