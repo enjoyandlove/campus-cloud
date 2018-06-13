@@ -162,14 +162,14 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
   }
 
   getSubjectLength() {
-    let length = 0;
+    let length = '';
 
     if (this.subject_prefix.label) {
-      length += this.subject_prefix.label.length;
+      length += this.subject_prefix.label;
     }
 
     if (this.form.controls['subject'].value) {
-      length += this.form.controls['subject'].value.length;
+      length += this.form.controls['subject'].value;
     }
 
     return length;

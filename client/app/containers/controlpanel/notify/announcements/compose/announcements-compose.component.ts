@@ -184,15 +184,15 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     this.validButton();
   }
 
-  getSubjectLength(): number {
-    let length = 0;
+  getSubjectLength(): string {
+    let length = '';
 
     if (this.subject_prefix.label) {
-      length += this.subject_prefix.label.length;
+      length += this.subject_prefix.label;
     }
 
     if (this.form.controls['subject'].value) {
-      length += this.form.controls['subject'].value.length;
+      length += this.form.controls['subject'].value;
     }
 
     return length;
