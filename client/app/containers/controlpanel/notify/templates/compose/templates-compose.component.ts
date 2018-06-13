@@ -1,3 +1,4 @@
+import { canSchoolWriteResource } from './../../../../../shared/utils/privileges/privileges';
 import { HttpParams } from '@angular/common/http';
 import {
   Component,
@@ -17,7 +18,6 @@ import { CPI18nService, StoreService } from './../../../../../shared/services';
 import { AnnouncementsService } from './../../announcements/announcements.service';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 import { CP_PRIVILEGES_MAP, STATUS } from '../../../../../shared/constants';
-/* tslint:disable:max-line-length */
 
 interface IState {
   isUrgent: boolean;
@@ -44,27 +44,27 @@ const THROTTLED_STATUS = 1;
 })
 export class TemplatesComposeComponent implements OnInit, OnDestroy {
   @Input() data: any;
-  @Input() toolTipContent: IToolTipContent;
 
   @Output() created: EventEmitter<any> = new EventEmitter();
   @Output() teardown: EventEmitter<null> = new EventEmitter();
 
-  selectedHost;
   stores$;
-
   isError;
+  chips = [];
   sendAsName;
+  selectedHost;
   errorMessage;
   selectedType;
   typeAheadOpts;
-  chips = [];
   form: FormGroup;
   isFormValid = false;
+  toolTipContent: IToolTipContent;
   resetChips$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   resetCustomFields$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   URGENT_TYPE = 1;
   EMERGENCY_TYPE = 0;
+  REGULAR_TYPE = 2;
 
   USERS_TYPE = 1;
   LISTS_TYPE = 2;
@@ -255,6 +255,33 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
     this.form.controls['user_ids'].setValue([]);
     this.form.controls['list_ids'].setValue([]);
     this.form.controls['is_school_wide'].setValue(status);
+
+    if (canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.emergency_announcement)) {
+      this.toggleEmergencyType();
+
+      if (!status && this.form.controls['priority'].value === this.EMERGENCY_TYPE) {
+        this.form.controls['priority'].setValue(this.REGULAR_TYPE);
+
+        this.selectedType = this.types.filter((type) => type.action === this.REGULAR_TYPE)[0];
+
+        this.state = { ...this.state, isEmergency: false };
+
+        this.subject_prefix = {
+          label: null,
+          type: null
+        };
+      }
+    }
+  }
+
+  toggleEmergencyType() {
+    this.types = this.types.map((type) => {
+      if (type.action === this.EMERGENCY_TYPE) {
+        type = { ...type, disabled: !type.disabled };
+      }
+
+      return type;
+    });
   }
 
   onSelectedStore(store) {
@@ -340,15 +367,7 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
   }
 
   getObjectFromTypesArray(id) {
-    let result;
-
-    this.types.forEach((type) => {
-      if (type.action === id) {
-        result = type;
-      }
-    });
-
-    return result;
+    return this.types.filter((type) => type.action === id)[0];
   }
 
   onSwitchSearchType(type) {
@@ -504,6 +523,8 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
     if (!canDoEmergency) {
       this.types = this.types.filter((type) => type.action !== this.EMERGENCY_TYPE);
     }
+
+    this.toggleEmergencyType();
 
     this.form = this.fb.group({
       store_id: [null, Validators.required],

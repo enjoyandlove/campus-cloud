@@ -1,16 +1,15 @@
-import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants/privileges';
 /* tslint:disable:max-line-length */
-import { Component, OnInit, OnDestroy, HostListener, ElementRef, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 
-import { TemplatesService } from './../templates.service';
 import { CPSession } from './../../../../../session/index';
+import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants/privileges';
 import { CPI18nService, StoreService } from './../../../../../shared/services';
 import { AnnouncementsService } from './../../announcements/announcements.service';
-
-import { TemplatesComposeComponent } from '../compose/templates-compose.component';
+import { TemplatesService } from './../templates.service';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
+import { TemplatesComposeComponent } from '../compose/templates-compose.component';
 
 declare var $;
 
@@ -21,9 +20,8 @@ declare var $;
 })
 export class TemplatesCreateComponent extends TemplatesComposeComponent
   implements OnInit, OnDestroy {
-  @Input() toolTipContent: IToolTipContent;
-
   form: FormGroup;
+  toolTipContent: IToolTipContent;
 
   constructor(
     public el: ElementRef,
