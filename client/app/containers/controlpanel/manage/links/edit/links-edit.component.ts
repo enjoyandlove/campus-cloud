@@ -4,10 +4,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { API } from '../../../../../config/api';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { CPTrackingService, FileUploadService, ZendeskService } from '../../../../../shared/services';
 import { appStorage } from '../../../../../shared/utils';
 import { ILink } from '../link.interface';
 import { LinksService } from '../links.service';
+import {
+  CPTrackingService,
+  FileUploadService,
+  ZendeskService
+} from '../../../../../shared/services';
 
 declare var $: any;
 

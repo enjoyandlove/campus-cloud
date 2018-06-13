@@ -21,16 +21,14 @@
       <ul class="cp-form employer">
         <li class="employer__header col-12">
           <div class="row">
-            <span
-              class="col-11 hover"
-              (click)="doSort('name')">
-              {{ 'name' | cpI18n }}
-              <span *ngIf="state.sort_field === 'employer_name'">
-                <i class="material-icons">
-                  {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
-                </i>
-              </span>
-            </span>
+            <cp-sorting-header
+              class="col-11"
+              label="name"
+              (click)="doSort('name')"
+              [sortField]="state.sort_field"
+              [sortDirection]="state.sort_direction">
+            </cp-sorting-header>
+
             <span class="col-1 hover"></span>
           </div>
         </li>

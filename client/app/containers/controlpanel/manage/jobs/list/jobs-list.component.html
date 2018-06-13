@@ -21,36 +21,31 @@
       <ul class="cp-form">
         <li class="cp-form__header col-12">
           <div class="row">
-            <span
-              class="col-5 hover"
-              (click)="doSort('title')">
-              {{ 'name' | cpI18n }}
-              <span *ngIf="state.sort_field === 'title'">
-                <i class="material-icons">
-                  {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
-                </i>
-              </span>
-            </span>
-            <span
-              class="col-2 hover"
-              (click)="doSort('employer_name')">
-              {{ 'employer' | cpI18n }}
-              <span *ngIf="state.sort_field === 'employer_name'">
-                <i class="material-icons">
-                  {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
-                </i>
-              </span>
-            </span>
-            <span
-              class="col-2 hover"
-              (click)="doSort('posting_start')">
-              {{ 'jobs_posting_start' | cpI18n }}
-              <span *ngIf="state.sort_field === 'posting_start'">
-                <i class="material-icons">
-                  {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
-                </i>
-              </span>
-            </span>
+            <cp-sorting-header
+              class="col-5"
+              label="name"
+              sortLabel="title"
+              (click)="doSort('title')"
+              [sortField]="state.sort_field"
+              [sortDirection]="state.sort_direction">
+            </cp-sorting-header>
+
+            <cp-sorting-header
+              class="col-2"
+              label="employer_name"
+              (click)="doSort('employer_name')"
+              [sortField]="state.sort_field"
+              [sortDirection]="state.sort_direction">
+            </cp-sorting-header>
+
+            <cp-sorting-header
+              class="col-2"
+              label="jobs_posting_start"
+              sortLabel="posting_start"
+              (click)="doSort('posting_start')"
+              [sortField]="state.sort_field"
+              [sortDirection]="state.sort_direction">
+            </cp-sorting-header>
             <span
               class="col-2">
               {{ 'jobs_posting_end' | cpI18n }}
