@@ -1,4 +1,3 @@
-/*tslint:disable:max-line-length*/
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
@@ -16,6 +15,7 @@ import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-
 import { CP_PRIVILEGES_MAP, STATUS } from '../../../../../shared/constants';
 import { CPI18nService, StoreService } from '../../../../../shared/services';
 import { AnnouncementsService } from '../announcements.service';
+/*tslint:disable:max-line-length*/
 
 interface IState {
   isUrgent: boolean;
@@ -58,6 +58,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   isAudienceImport = false;
 
   URGENT_TYPE = 1;
+  REGULAR_TYPE = 2;
   EMERGENCY_TYPE = 0;
 
   USERS_TYPE = 1;
@@ -155,6 +156,9 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       };
       this.form.controls['list_ids'].setValue([audienceId]);
       this.form.controls['is_school_wide'].setValue(false);
+
+      this.hideEmergencyType(true);
+      this.updatePriority();
     } else {
       this.state = {
         ...this.state,
@@ -165,15 +169,26 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       };
       this.form.controls['list_ids'].setValue([]);
       this.form.controls['is_school_wide'].setValue(true);
+      this.hideEmergencyType(false);
+      this.updatePriority();
     }
-
-    this.toggleEmergencyType();
   }
 
-  toggleEmergencyType() {
+  updatePriority() {
+    if (this.form.controls['priority'].value === this.EMERGENCY_TYPE) {
+      this.form.controls['priority'].setValue(this.REGULAR_TYPE);
+      this.selectedType = this.types.filter((type) => type.action === this.REGULAR_TYPE)[0];
+      this.subject_prefix = {
+        label: null,
+        type: null
+      };
+    }
+  }
+
+  hideEmergencyType(setValue) {
     this.types = this.types.map((type) => {
       if (type.action === this.EMERGENCY_TYPE) {
-        type = { ...type, disabled: !type.disabled };
+        type = { ...type, disabled: setValue };
       }
 
       return type;
@@ -275,6 +290,9 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     };
 
     this.form.controls['is_school_wide'].setValue(false);
+
+    this.hideEmergencyType(true);
+    this.updatePriority();
   }
 
   onResetSavedAudience() {
@@ -288,6 +306,8 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     };
 
     this.form.controls['is_school_wide'].setValue(true);
+
+    this.hideEmergencyType(false);
   }
 
   doValidate() {
