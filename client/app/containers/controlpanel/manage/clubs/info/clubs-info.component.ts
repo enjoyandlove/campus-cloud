@@ -27,6 +27,7 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
   labels;
   loading;
   clubStatus;
+  buttonText;
   clubId: number;
   draggable = false;
   uploading = false;
@@ -137,6 +138,7 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.buttonText = this.cpI18n.translate('reupload');
     this.limitedAdmin =
       this.isAthletic === isClubAthletic.club
         ? this.helper.limitedAdmin(this.session.g, this.clubId)
