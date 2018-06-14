@@ -31,9 +31,7 @@ export class CPTrackingService {
 
     require('node_modules/amplitude-js/src/amplitude-snippet.js');
 
-    window.amplitude
-      .getInstance()
-      .init(api_key, this.getSchoolUserID(user.id));
+    window.amplitude.getInstance().init(api_key, this.getSchoolUserID(user.id));
 
     identify = new window.amplitude.Identify()
       .set('school_name', school.name)
@@ -63,7 +61,7 @@ export class CPTrackingService {
   getEventProperties() {
     return {
       menu_name: this.activatedRoute(this.router, RouteLevel.first),
-      sub_menu_name: this.activatedRoute(this.router, RouteLevel.second),
+      sub_menu_name: this.activatedRoute(this.router, RouteLevel.second)
     };
   }
 
@@ -101,7 +99,6 @@ export class CPTrackingService {
 
   amplitudeEmitEvent(eventName: string, eventProperties?: {}) {
     if (!isProd && !isStaging) {
-
       return;
     }
 

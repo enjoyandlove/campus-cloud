@@ -9,7 +9,7 @@
         <div class="cp-card">
           <div class="row">
             <div class="col-12">
-              <p class="title" i18n>{{ 'events_event_banner' | cpI18n }}</p>
+              <p class="title">{{ 'events_event_banner' | cpI18n }}</p>
               <div class="margin-top">
                 <cp-image-upload
                   (uploaded)="onUploadedImage($event)"
@@ -22,9 +22,9 @@
   
           <div class="row event-details">
             <div class="col-12">
-              <p class="title" i18n>{{ 'events_event_details' | cpI18n }}</p>
+              <p class="title">{{ 'events_event_details' | cpI18n }}</p>
               <div class="form-group margin-top">
-                <label i18n>{{ 'events_event_name' | cpI18n }}</label>
+                <label>{{ 'events_event_name' | cpI18n }}</label>
                 <input
                   type="text"
                   class="form-control"
@@ -34,7 +34,7 @@
   
               <div class="row form-group" *ngIf="!isClub && !isService && !isOrientation">
                 <div class="col-12">
-                  <label i18n>{{ 'select_host' | cpI18n }}</label>
+                  <label>{{ 'select_host' | cpI18n }}</label>
                   <cp-dropdown
                     [items]="stores"
                     [selectedItem]="originalHost"
@@ -46,14 +46,14 @@
   
               <div class="row form-group">
                 <div class="col-6">
-                  <label i18n>{{ 'start_date' | cpI18n }}</label>
+                  <label>{{ 'start_date' | cpI18n }}</label>
                   <cp-datepicker
                     [options]="startdatePickerOpts"
                     [error]="formMissingFields && form.controls['start'].hasError('required')">
                   </cp-datepicker>
                 </div>
                 <div class="col-6">
-                  <label i18n>{{ 'end_date' | cpI18n }}</label>
+                  <label>{{ 'end_date' | cpI18n }}</label>
                   <cp-datepicker
                     [options]="enddatePickerOpts"
                     [error]="formMissingFields && form.controls['end'].hasError('required')">
@@ -68,18 +68,18 @@
                     (toggle)="onAllDayToggle($event)"
                     [isChecked]="form.controls['is_all_day'].value">
                   </cp-checkbox>
-                  <label i18n>{{ 'all_day' | cpI18n }}</label>
+                  <label>{{ 'all_day' | cpI18n }}</label>
                 </div>
               </div>
   
               <div class="form-group">
-                <label i18n>{{ 'events_event_description' | cpI18n }}</label>
+                <label>{{ 'events_event_description' | cpI18n }}</label>
                 <textarea formControlName="description"></textarea>
               </div>
   
               <div class="row">
                 <div class="col-12">
-                  <label i18n>{{ 'location' | cpI18n }}</label>
+                  <label>{{ 'location' | cpI18n }}</label>
                   <div class="row form-group">
                     <div class="col-12">
                       <cp-place-autocomplete
@@ -92,7 +92,7 @@
                   </div>
                   <div class="row form-group">
                     <div class="col-6">
-                      <label i18n>{{ 'building' | cpI18n }}</label>
+                      <label>{{ 'building' | cpI18n }}</label>
                       <input
                         type="text"
                         class="form-control"
@@ -100,7 +100,7 @@
                     </div>
   
                     <div class="col-6">
-                      <label i18n>{{ 'room' | cpI18n }}</label>
+                      <label>{{ 'room' | cpI18n }}</label>
                         <input
                         type="text"
                         class="form-control"
@@ -126,84 +126,78 @@
       </div>
   
       <div class="col">
-        <fieldset [disabled]="isOrientation && production">
-          <div class="cp-card" [class.isDisabled]="isOrientation && production">
-            <div class="row">
-              <div class="col-12">
-                <p class="title" i18n>{{ 'assessment' | cpI18n }}</p>
-                <span class="float-right">
-                <cp-switch
-                  (toggle)="toggleEventAttendance($event)"
-                  [isChecked]="form.controls.event_attendance.value === attendanceEnabled">
-                </cp-switch>
-              </span>
-                <div class="col-12 temporarily_disabled" *ngIf="isOrientation">
-                  <div class="col-1 temp-icon"><i class="material-icons">info_outline</i></div>
-                  <div class="col-11 temp-text">{{ 'temporarily_disabled' | cpI18n }}</div>
-                </div>
-              </div>
+        <div class="cp-card">
+          <div class="row">
+            <div class="col-12">
+              <p class="title">{{ 'assessment' | cpI18n }}</p>
+              <span class="float-right">
+              <cp-switch
+                (toggle)="toggleEventAttendance($event)"
+                [isChecked]="form.controls.event_attendance.value === attendanceEnabled">
+              </cp-switch>
+            </span>
             </div>
-  
-            <div *ngIf="form.controls.event_attendance.value === attendanceEnabled">
-              <div class="row margin-top">
-                <div class="col-6">
-                  <div class="form-group">
-                    <label i18n>{{ 'events_event_manager' | cpI18n }}
-                      <cp-tooltip
-                        [toolTipContent]="eventManagerToolTip">
-                      </cp-tooltip>
-                    </label>
-                    <cp-dropdown
-                      [items]="managers"
-                      [selectedItem]="selectedManager"
-                      (selected)="onSelectedManager($event)"
-                      [isRequiredError]="formMissingFields && form.controls['event_manager_id'].hasError('required')">
-                    </cp-dropdown>
-                  </div>
-                </div>
-                <div class="col-6">
-                  <div class="form-group">
-                    <label i18n>{{ 'events_attendance_manager_full' | cpI18n }}
-                      <cp-tooltip
-                        [toolTipContent]="attendanceManagerToolTip">
-                      </cp-tooltip>
-                    </label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      formControlName="attendance_manager_email">
-                  </div>
-                </div>
-              </div>
-  
-              <div class="row form-group">
-                <div class="col-6">
-                  <label i18n>{{ 'student_feedback' | cpI18n }}
+          </div>
+
+          <div *ngIf="form.controls.event_attendance.value === attendanceEnabled">
+            <div class="row margin-top">
+              <div class="col-6">
+                <div class="form-group">
+                  <label>{{ 'events_event_manager' | cpI18n }}
                     <cp-tooltip
-                      [toolTipContent]="studentFeedbackToolTip">
+                      [toolTipContent]="eventManagerToolTip">
                     </cp-tooltip>
                   </label>
                   <cp-dropdown
-                    [items]="booleanOptions"
-                    [selectedItem]="originalAttnFeedback"
-                    (selected)="onEventFeedbackChange($event)"
-                    [isRequiredError]="formMissingFields && form.controls['event_feedback'].hasError('required')">
+                    [items]="managers"
+                    [selectedItem]="selectedManager"
+                    (selected)="onSelectedManager($event)"
+                    [isRequiredError]="formMissingFields && form.controls['event_manager_id'].hasError('required')">
                   </cp-dropdown>
                 </div>
               </div>
-  
-              <div class="row form-group" *ngIf="form.controls['event_feedback'].value === eventFeedbackEnabled">
-                <div class="col-12">
-                  <label i18n>{{ 'events_default_question' | cpI18n }}</label>
+              <div class="col-6">
+                <div class="form-group">
+                  <label>{{ 'events_attendance_manager_full' | cpI18n }}
+                    <cp-tooltip
+                      [toolTipContent]="attendanceManagerToolTip">
+                    </cp-tooltip>
+                  </label>
                   <input
                     type="text"
                     class="form-control"
-                    formControlName="custom_basic_feedback_label">
+                    formControlName="attendance_manager_email">
                 </div>
               </div>
             </div>
+
+            <div class="row form-group">
+              <div class="col-6">
+                <label>{{ 'student_feedback' | cpI18n }}
+                  <cp-tooltip
+                    [toolTipContent]="studentFeedbackToolTip">
+                  </cp-tooltip>
+                </label>
+                <cp-dropdown
+                  [items]="booleanOptions"
+                  [selectedItem]="originalAttnFeedback"
+                  (selected)="onEventFeedbackChange($event)"
+                  [isRequiredError]="formMissingFields && form.controls['event_feedback'].hasError('required')">
+                </cp-dropdown>
+              </div>
+            </div>
+
+            <div class="row form-group" *ngIf="form.controls['event_feedback'].value === eventFeedbackEnabled">
+              <div class="col-12">
+                <label>{{ 'events_default_question' | cpI18n }}</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="custom_basic_feedback_label">
+              </div>
+            </div>
           </div>
-        </fieldset>
+        </div>
       </div>
   
       <div class="footer">
@@ -212,15 +206,15 @@
             <div class="row">
               <div class="col-12">
                 <div class="text-right">
-                  <label class="error" *ngIf="formMissingFields" i18n>
+                  <label class="error" *ngIf="formMissingFields">
                       <span>&#x26A0;</span>
                       {{ isDateError ? dateErrorMessage : cpI18n.translate('error_fill_out_marked_fields') }}
                   </label>
-                  <label class="error" *ngIf="serverError;" i18n>
+                  <label class="error" *ngIf="serverError;">
                       <span>&#x26A0;</span> {{ cpI18n.translate('something_went_wrong') }}
                   </label>
                   <a [routerLink]="['../']"
-                    class="cpbtn cpbtn--cancel" i18n>
+                    class="cpbtn cpbtn--cancel">
                     {{ 'cancel' | cpI18n }}
                   </a>
                   <cp-button

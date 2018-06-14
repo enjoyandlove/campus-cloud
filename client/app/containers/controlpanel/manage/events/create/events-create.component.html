@@ -120,87 +120,79 @@
       </div>
   
       <div class="col">
-        <fieldset [disabled]="isOrientation && production">
-          <div class="cp-card" [class.isDisabled]="isOrientation && production">
-            <div class="row">
-              <div class="col-12">
-                <p class="title">{{ 'assessment' | cpI18n }}</p>
-                <span class="float-right">
-                  <cp-switch
-                    [id]="attendance"
-                    (toggle)="attendance = !attendance"
-                    (toggle)="toggleEventAttendance($event)">
-                  </cp-switch>
-                </span>
-                <div 
-                  class="col-12 temporarily_disabled" 
-                  *ngIf="isOrientation && production">
-                  <div class="col-1 temp-icon"><i class="material-icons">info_outline</i></div>
-                  <div class="col-11 temp-text">{{ 'temporarily_disabled' | cpI18n }}</div>
-                </div>
-              </div>
+        <div class="cp-card">
+          <div class="row">
+            <div class="col-12">
+              <p class="title">{{ 'assessment' | cpI18n }}</p>
+              <span class="float-right">
+                <cp-switch
+                  [id]="attendance"
+                  (toggle)="attendance = !attendance"
+                  (toggle)="toggleEventAttendance($event)">
+                </cp-switch>
+              </span>
             </div>
-  
-            <div *ngIf="attendance">
-              <div class="row margin-top">
-                <div class="col-6">
-                  <div class="form-group">
-                    <label>{{ 'events_event_manager' | cpI18n }}
-                      <cp-tooltip
-                        [toolTipContent]="eventManagerToolTip">
-                      </cp-tooltip>
-                    </label>
-                    <cp-dropdown
-                      [items]="managers"
-                      (selected)="onSelectedManager($event)"
-                      [isRequiredError]="formError && form.controls['event_manager_id'].hasError('required')">
-                    </cp-dropdown>
-                  </div>
-                </div>
-                <div class="col-6">
-                  <div class="form-group">
-                    <label>{{ 'events_attendance_manager_full' | cpI18n }}
-                      <cp-tooltip
-                        [toolTipContent]="attendanceManagerToolTip">
-                      </cp-tooltip>
-                    </label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      formControlName="attendance_manager_email">
-                  </div>
-                </div>
-              </div>
-  
-              <div class="row form-group">
-                <div class="col-6">
-                  <label>{{ 'student_feedback' | cpI18n }}
+          </div>
+
+          <div *ngIf="attendance">
+            <div class="row margin-top">
+              <div class="col-6">
+                <div class="form-group">
+                  <label>{{ 'events_event_manager' | cpI18n }}
                     <cp-tooltip
-                      [toolTipContent]="studentFeedbackToolTip">
+                      [toolTipContent]="eventManagerToolTip">
                     </cp-tooltip>
                   </label>
                   <cp-dropdown
-                    [items]="booleanOptions"
-                    (selected)="onEventFeedbackChange($event)"
-                    [isRequiredError]="formError && form.controls['event_feedback'].hasError('required')">
+                    [items]="managers"
+                    (selected)="onSelectedManager($event)"
+                    [isRequiredError]="formError && form.controls['event_manager_id'].hasError('required')">
                   </cp-dropdown>
                 </div>
               </div>
-  
-              <div 
-                class="row form-group" 
-                *ngIf="form.controls['event_feedback'].value === eventFeedbackEnabled">
-                <div class="col-12">
-                  <label>{{ 'events_default_question' | cpI18n }}</label>
+              <div class="col-6">
+                <div class="form-group">
+                  <label>{{ 'events_attendance_manager_full' | cpI18n }}
+                    <cp-tooltip
+                      [toolTipContent]="attendanceManagerToolTip">
+                    </cp-tooltip>
+                  </label>
                   <input
                     type="text"
                     class="form-control"
-                    formControlName="custom_basic_feedback_label">
+                    formControlName="attendance_manager_email">
                 </div>
               </div>
             </div>
+
+            <div class="row form-group">
+              <div class="col-6">
+                <label>{{ 'student_feedback' | cpI18n }}
+                  <cp-tooltip
+                    [toolTipContent]="studentFeedbackToolTip">
+                  </cp-tooltip>
+                </label>
+                <cp-dropdown
+                  [items]="booleanOptions"
+                  (selected)="onEventFeedbackChange($event)"
+                  [isRequiredError]="formError && form.controls['event_feedback'].hasError('required')">
+                </cp-dropdown>
+              </div>
+            </div>
+
+            <div 
+              class="row form-group" 
+              *ngIf="form.controls['event_feedback'].value === eventFeedbackEnabled">
+              <div class="col-12">
+                <label>{{ 'events_default_question' | cpI18n }}</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="custom_basic_feedback_label">
+              </div>
+            </div>
           </div>
-        </fieldset>
+        </div>
       </div>
   
       <div class="footer">
