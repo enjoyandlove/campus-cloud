@@ -1,3 +1,4 @@
+/*tslint:disable:max-line-length */
 import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { get as _get } from 'lodash';
@@ -6,7 +7,6 @@ import { map, startWith } from 'rxjs/operators';
 import { AudienceService } from './../../../../../containers/controlpanel/audience/audience.service';
 import { CPI18nService } from './../../../../../shared/services';
 import { CPSession } from '../../../../../session';
-/*tslint:disable:max-line-length */
 
 @Component({
   selector: 'cp-audience-saved-body',
