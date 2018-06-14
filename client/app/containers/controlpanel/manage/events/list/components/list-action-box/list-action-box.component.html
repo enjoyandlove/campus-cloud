@@ -49,7 +49,7 @@
         </div>
         <div class="col-xs-6">
           <div class="col-xs-9 text-truncate text-right">
-              <label i18n>{{ 'assessment' | cpI18n }}</label>
+              <label>{{ 'assessment' | cpI18n }}</label>
             </div>
             <div class="col-xs-3 no-left-padding">
               <cp-checkbox
@@ -66,19 +66,19 @@
         cpTracker
         [routerLink]="['create']"
         [eventData]="trackEvent(amplitudeEvents.clicked_create)"
-        class="cpbtn cpbtn--primary no-right-padding" [class.cpbtn--square-right]="!isOrientation">
+        class="cpbtn cpbtn--primary no-right-padding cpbtn--square-right">
         {{ 'events_button_new' | cpI18n }}
       </a>
       <div
         class="cpbtn cpbtn--square-left cpbtn--no-padding cpbtn--primary no-left-padding hover action-dropdown">
-        <i class="material-icons" data-toggle="dropdown" *ngIf="!isOrientation">expand_more</i>
-        <ul class="dropdown-menu dropdown-menu-right text-left action-dropdown-list" *ngIf="!isOrientation">
-          <li i18n *ngIf="!isOrientation">
+        <i class="material-icons" data-toggle="dropdown">expand_more</i>
+        <ul class="dropdown-menu dropdown-menu-right text-left action-dropdown-list">
+          <li>
             <a [routerLink]="['import/facebook']">
               {{ 'events_import_from_facebook' | cpI18n }}
             </a>
           </li>
-          <li i18n (click)="launchModal()" class="list-as-anchor">{{ 'import_from_csv' | cpI18n }}</li>
+          <li (click)="launchModal()" class="list-as-anchor">{{ 'import_from_csv' | cpI18n }}</li>
         </ul>
       </div>
     </div>
