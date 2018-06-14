@@ -5,11 +5,11 @@
       class="switch__item"
       *ngIf="isSchoolPanel"
       (click)="onGoToSchools($event)">
-      <i class="material-icons pull-left">chevron_left</i><span i18n>Back</span>
+      <i class="material-icons float-left">chevron_left</i><span i18n>Back</span>
     </a>
     <a href="#" *ngIf="!isSchoolPanel" (click)="onGoToSchools($event)">
       <span i18n>{{ 'change_school' | cpI18n }}</span>
-      <i class="material-icons pull-right">chevron_right</i>
+      <i class="material-icons float-right">chevron_right</i>
     </a>
   </li>
 
@@ -63,7 +63,7 @@
         (click)="onSwitchSchool($event, school)"
         [eventData]="trackEvent(amplitudeEvents.changed_school, false)">
       <div class="row">
-        <div class="col-xs-10">
+        <div class="col-10">
           <div
             *ngIf="school.app_logo_url !== ''"
             class="switch__school__thumb"
@@ -78,9 +78,9 @@
             {{ school.name }}
           </div>
         </div>
-        <div class="col-xs-2">
+        <div class="col-2">
           <div class="switch__school__default">
-            <span class="pull-right" *ngIf="selectedSchool.id === school.id">
+            <span class="float-right" *ngIf="selectedSchool.id === school.id">
               <i class="material-icons">check</i>
             </span>
           </div>

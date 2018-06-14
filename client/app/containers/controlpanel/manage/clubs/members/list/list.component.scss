@@ -1,7 +1,6 @@
 @import '~styles/core/colors';
 @import '~styles/components/form';
 @import '~styles/components/button';
-@import '~bootstrap/variables';
 
 .delete-member {
   font-size: 2em;
@@ -39,15 +38,6 @@
       height: 30px;
       margin-top: 5px;
       margin-right: 10px;
-    }
-  }
-
-  @media all and (max-width: $screen-md) {
-    li {
-      > span:not(.members__thumbnail) {
-        text-align: center;
-        padding-bottom: 10px;
-      }
     }
   }
 }

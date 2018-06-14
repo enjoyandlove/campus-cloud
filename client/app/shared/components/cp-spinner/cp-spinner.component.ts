@@ -6,7 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./cp-spinner.component.scss']
 })
 export class CPSpinnerComponent implements OnInit {
-  @Input() theme: string;
+  @Input() theme = '';
 
   constructor() {}
 

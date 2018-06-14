@@ -1,16 +1,11 @@
-/* tslint:disable:ordered-imports */
-// Angular 2
-import '@angular/platform-browser';
-import '@angular/platform-browser-dynamic';
-import '@angular/core';
-import '@angular/common';
-import '@angular/http';
-import '@angular/router';
-
-import 'rxjs';
-// import '@angularclass/hmr';
+import 'jquery';
+// import '@angular/common';
+// import '@angular/common/http';
+// import '@angular/core';
+// import '@angular/platform-browser';
+// import '@angular/platform-browser-dynamic';
+// import '@angular/router';
 
 // Other vendors for example jQuery, Lodash or Bootstrap
 // You can import js, ts, css, sass, ...
-import 'jquery';
-require('../node_modules/bootstrap-sass/assets/javascripts/bootstrap.min');
+require('../node_modules/bootstrap/dist/js/bootstrap.bundle.min');

@@ -1,10 +1,10 @@
 <div class="topbar cp-card">
   <div class="row">
-    <div class="col-xs-9">
+    <div class="col-9">
       <div class="row">
-        <div class="topbar--filter col-xs-4">
+        <div class="topbar--filter col-4">
           <div class="row">
-            <div class="col-xs-9 no-right-padding">
+            <div class="col-9 no-right-padding">
               <cp-dropdown
                 [items]="engageMentFilter"
                 class="topbar--dropdown"
@@ -12,15 +12,15 @@
                 [selectedItem]="state.engagement">
               </cp-dropdown>
             </div>
-            <div class="col-xs-3 text-center">
+            <div class="col-3 text-center">
               <span class="topbar--copy" i18n>{{ 'for' | cpI18n }}</span>
             </div>
           </div>
         </div>
 
-        <div class="topbar--filter col-xs-4 no-left-padding">
+        <div class="topbar--filter col-4 no-left-padding">
           <div class="row">
-            <div class="col-xs-9 no-right-padding">
+            <div class="col-9 no-right-padding">
               <cp-dropdown
                 [items]="studentFilter"
                 class="topbar--dropdown"
@@ -28,14 +28,14 @@
                 (selected)="onStudentChange($event)">
               </cp-dropdown>
             </div>
-            <div class="col-xs-3 text-center">
+            <div class="col-3 text-center">
               <span class="topbar--copy" i18n>{{ 'in' | cpI18n }}</span>
             </div>
           </div>
         </div>
-        <div class="topbar--filter col-xs-4 no-left-padding">
+        <div class="topbar--filter col-4 no-left-padding">
           <div class="row">
-            <div class="col-xs-9">
+            <div class="col-9">
               <cp-dropdown
                 [items]="dateFilter"
                 class="topbar--dropdown"
@@ -48,10 +48,10 @@
       </div>
     </div>
 
-    <div class="col-xs-3">
+    <div class="col-3">
       <button
         (click)="download.emit()"
-        class="cpbtn cpbtn--primary pull-right" i18n>
+        class="cpbtn cpbtn--primary float-right" i18n>
         {{ 'assess_button_download_engagement_data' | cpI18n }}
       </button>
     </div>

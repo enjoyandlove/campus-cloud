@@ -1,53 +1,53 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Http, URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
 
-import { BaseService } from '../../../../base/base.service';
+import { HTTPService } from '../../../../base/http.service';
 import { API } from '../../../../config/api';
 
 @Injectable()
-export class AnnouncementsService extends BaseService {
-  constructor(http: Http, router: Router) {
+export class AnnouncementsService extends HTTPService {
+  constructor(http: HttpClient, router: Router) {
     super(http, router);
 
     Object.setPrototypeOf(this, AnnouncementsService.prototype);
   }
 
-  getUsers(search: URLSearchParams) {
+  getUsers(search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER}/`;
 
-    return super.get(url, { search }).map((res) => res.json());
+    return super.get(url, search);
   }
 
-  createAudience(body: any, search: URLSearchParams) {
+  createAudience(body: any, search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER_LIST}/`;
 
-    return super.post(url, body, { search }).map((res) => res.json());
+    return super.post(url, body, search);
   }
 
-  getLists(search: URLSearchParams, startRange: number, endRange: number) {
+  getLists(search: HttpParams, startRange: number, endRange: number) {
     const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER_LIST}`;
     const url = `${common}/${startRange};${endRange}`;
 
-    return super.get(url, { search }).map((res) => res.json());
+    return super.get(url, search);
   }
 
-  getAnnouncements(search: URLSearchParams, startRange: number, endRange: number) {
+  getAnnouncements(search: HttpParams, startRange: number, endRange: number) {
     const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ANNOUNCEMENT}`;
     const url = `${common}/${startRange};${endRange}`;
 
-    return super.get(url, { search }).map((res) => res.json());
+    return super.get(url, search);
   }
 
-  postAnnouncements(search: URLSearchParams, body: any) {
+  postAnnouncements(search: HttpParams, body: any) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ANNOUNCEMENT}/`;
 
-    return super.post(url, body, { search }).map((res) => res.json());
+    return super.post(url, body, search);
   }
 
-  deleteAnnouncement(id: number, search: URLSearchParams) {
+  deleteAnnouncement(id: number, search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ANNOUNCEMENT}/${id}`;
 
-    return super.delete(url, { search }).map((res) => res);
+    return super.delete(url, search);
   }
 }

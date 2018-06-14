@@ -1,7 +1,6 @@
 /*tslint:disable:max-line-length */
 import { ErrorHandler } from '@angular/core';
 import * as Raven from 'raven-js';
-
 import { isProd } from './../env';
 
 if (isProd) {

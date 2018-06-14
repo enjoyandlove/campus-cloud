@@ -1,13 +1,12 @@
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { HttpParams } from '@angular/common/http';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import { URLSearchParams } from '@angular/http';
-
+import { of as observableOf } from 'rxjs';
 import { CPSession } from './../../../../../session';
-import { OrientationService } from '../orientation.services';
-import { mockSchool } from '../../../../../session/mock/school';
 import { OrientationInfoComponent } from './orientation-info.component';
+import { mockSchool } from '../../../../../session/mock/school';
 import { OrientationDetailsModule } from '../details/orientation-details.module';
+import { OrientationService } from '../orientation.services';
 
 class MockOrientationService {
   dummy;
@@ -15,7 +14,7 @@ class MockOrientationService {
   getProgramById(programId: number, search: any) {
     this.dummy = [programId, search];
 
-    return Observable.of({});
+    return observableOf({});
   }
 }
 
@@ -23,10 +22,9 @@ describe('OrientationInfoComponent', () => {
   let spy;
   let search;
   let component: OrientationInfoComponent;
-  let service: OrientationService;
   let fixture: ComponentFixture<OrientationInfoComponent>;
 
-  const mockProgram = Observable.of([
+  const mockProgram = observableOf([
     {
       id: 84,
       name: 'Hello World!',
@@ -51,7 +49,7 @@ describe('OrientationInfoComponent', () => {
             useValue: {
               parent: {
                 snapshot: {
-                  params: Observable.of({ orientationId: 1 })
+                  params: observableOf({ orientationId: 1 })
                 }
               }
             }
@@ -62,13 +60,14 @@ describe('OrientationInfoComponent', () => {
         .then(() => {
           fixture = TestBed.createComponent(OrientationInfoComponent);
           component = fixture.componentInstance;
-          service = TestBed.get(OrientationService);
-          search = new URLSearchParams();
-
           component.loading = false;
           component.orientationId = 84;
           component.session.g.set('school', mockSchool);
-          search.append('school_id', component.session.g.get('school').id.toString());
+
+          search = new HttpParams().append(
+            'school_id',
+            component.session.g.get('school').id.toString()
+          );
         });
     })
   );

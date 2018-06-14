@@ -1,41 +1,41 @@
+import { HttpParams, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Http } from '@angular/http';
 
 import { API } from '../../../../../config/api';
-import { BaseService } from '../../../../../base';
+import { HTTPService } from '../../../../../base';
 
 @Injectable()
-export class StoreService extends BaseService {
-  constructor(http: Http, router: Router) {
+export class StoreService extends HTTPService {
+  constructor(http: HttpClient, router: Router) {
     super(http, router);
 
     Object.setPrototypeOf(this, StoreService.prototype);
   }
 
-  getStores(startRage: number, endRage: number, search: URLSearchParams) {
+  getStores(startRage: number, endRage: number, search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${
       API.ENDPOINTS.DEALS_STORE
-      }/${startRage};${endRage}`;
+    }/${startRage};${endRage}`;
 
-    return super.get(url, { search }).map((res) => res.json());
+    return super.get(url, search);
   }
 
-  createStore(body: any, search: URLSearchParams) {
+  createStore(body: any, search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.DEALS_STORE}/`;
 
-    return super.post(url, body, { search }).map((res) => res.json());
+    return super.post(url, body, search);
   }
 
-  editStore(id: number, body: any, search: URLSearchParams) {
+  editStore(id: number, body: any, search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.DEALS_STORE}/${id}`;
 
-    return super.update(url, body, { search }).map((res) => res.json());
+    return super.update(url, body, search);
   }
 
-  deleteStore(id: number, search: URLSearchParams) {
+  deleteStore(id: number, search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.DEALS_STORE}/${id}`;
 
-    return super.delete(url, { search }).map((res) => res.json());
+    return super.delete(url, search);
   }
 }

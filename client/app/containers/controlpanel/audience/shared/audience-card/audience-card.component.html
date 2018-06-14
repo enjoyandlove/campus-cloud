@@ -1,7 +1,7 @@
 <div class="cp-card">
   <p class="section__name">{{'audience' | cpI18n}}</p>
   <div class="row">
-    <div class="col-xs-12">
+    <div class="col-12">
       <cp-tabs (tabClick)="onTabClick($event)">
         <cp-tab
           id="saved"
@@ -10,14 +10,14 @@
           <div class="saved_audience">
             <div class="row">
               <ng-container *ngIf="state.savedAudienceActive">
-                <div class="col-xs-6">
+                <div class="col-6">
                   <cp-audience-saved-body 
                     [canReadAudience]="canReadAudience"
                     (selected)="onSelectedAudience($event)"
                     [importedAudience$]="importedAudience$">
                   </cp-audience-saved-body>
                 </div>
-                <div class="col-xs-6 text-right saved_audience__counter">
+                <div class="col-6 text-right saved_audience__counter">
                   <cp-audience-counter [message]="message"></cp-audience-counter>
                 </div>
               </ng-container>

@@ -1,5 +1,4 @@
 @import '~styles/core/colors';
-@import '~bootstrap/variables';
 @import '~styles/components/form';
 @import '~styles/components/card';
 @import '~styles/components/button';
@@ -8,11 +7,12 @@
   @include card-margin();
 }
 
+.delete-button {
+  font-size: 2em;
+}
+
 .action-button {
-  top: 8px;
-  right: 8px;
-  font-size: 1.8em;
-  position: relative;
+  line-height: 1;
   color: $color-secondary-text;
 
   &:first-child {
@@ -36,13 +36,4 @@
 .todos {
   padding: 0;
   list-style: none;
-
-  @media all and (max-width: $screen-md) {
-    li {
-      > span:not(.calendars__thumbnail) {
-        text-align: center;
-        padding-bottom: 10px;
-      }
-    }
-  }
 }

@@ -1,23 +1,20 @@
+import { HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { URLSearchParams } from '@angular/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
-
+import { BehaviorSubject, combineLatest, throwError as observableThrowError } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
+import { IServiceDeleteModal } from './components/service-edit-delete-modal';
 import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 import { CPSession, ISchool } from '../../../../../session';
-import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
+import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
 import { CPMap } from '../../../../../shared/utils';
 import { ProvidersService } from '../providers.service';
 import { ServicesService } from '../services.service';
-
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { IServiceDeleteModal } from './components/service-edit-delete-modal';
-import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
-import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 
 declare var $: any;
 
@@ -98,27 +95,22 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    const searchProviders = new URLSearchParams();
-    const searchAdmin = new URLSearchParams();
-
-    searchProviders.append('service_id', this.serviceId.toString());
-
-    searchAdmin.append('school_id', this.school.id.toString());
-    searchAdmin.append('store_id', this.serviceId.toString());
-    searchAdmin.append('privilege_type', CP_PRIVILEGES_MAP.events.toString());
+    const searchProviders = new HttpParams().append('service_id', this.serviceId.toString());
 
     const service$ = this.servicesService.getServiceById(this.serviceId);
     const providers$ = this.providersService.getProviders(1, 1000, searchProviders);
-    const categories$ = this.servicesService.getCategories().map((categories) => {
-      return categories.map((category) => {
-        return {
-          action: category.id,
-          label: category.name
-        };
-      });
-    });
+    const categories$ = this.servicesService.getCategories().pipe(
+      map((categories: Array<any>) => {
+        return categories.map((category) => {
+          return {
+            action: category.id,
+            label: category.name
+          };
+        });
+      })
+    );
 
-    const stream$ = Observable.combineLatest(service$, providers$, categories$);
+    const stream$ = combineLatest(service$, providers$, categories$);
     super.fetchData(stream$).then((res) => {
       const providers = res.data[1];
 
@@ -241,8 +233,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   deleteProvider(data: IServiceDeleteModal) {
     const controls = <FormArray>this.form.controls['providers'];
 
-    const search = new URLSearchParams();
-    search.append('service_id', this.serviceId.toString());
+    const search = new HttpParams().append('service_id', this.serviceId.toString());
 
     this.providersService.deleteProvider(data.id, search).subscribe(
       (_) => controls.removeAt(data.index),
@@ -377,27 +368,28 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
         },
         this.serviceId
       )
-      .switchMap((service) => {
-        this.withAttendance = service.service_attendance;
-        const providers = [];
-        const search = new URLSearchParams();
-        const controls = <FormArray>this.form.controls['providers'];
-        const providersControls = controls.controls;
+      .pipe(
+        switchMap((service: any) => {
+          this.withAttendance = service.service_attendance;
+          const providers = [];
+          const controls = <FormArray>this.form.controls['providers'];
+          const providersControls = controls.controls;
 
-        providersControls.forEach((provider: FormGroup) => {
-          providers.push({
-            id: provider.controls['id'].value,
-            provider_name: provider.controls['provider_name'].value,
-            email: provider.controls['email'].value,
-            custom_basic_feedback_label: provider.controls['custom_basic_feedback_label'].value
+          providersControls.forEach((provider: FormGroup) => {
+            providers.push({
+              id: provider.controls['id'].value,
+              provider_name: provider.controls['provider_name'].value,
+              email: provider.controls['email'].value,
+              custom_basic_feedback_label: provider.controls['custom_basic_feedback_label'].value
+            });
           });
-        });
 
-        search.append('service_id', this.serviceId.toString());
+          const search = new HttpParams().append('service_id', this.serviceId.toString());
 
-        return this.providersService.updateProvider(providers, search);
-      })
-      .catch((err) => Observable.throw(err))
+          return this.providersService.updateProvider(providers, search);
+        }),
+        catchError((err) => observableThrowError(err))
+      )
       .subscribe((_) => {
         if (this.withAttendance) {
           this.router.navigate(['/manage/services/' + this.serviceId]);

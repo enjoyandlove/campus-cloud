@@ -1,17 +1,16 @@
-import { async, fakeAsync, tick, TestBed, ComponentFixture } from '@angular/core/testing';
+import { HttpClientModule, HttpParams } from '@angular/common/http';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpModule, URLSearchParams } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
 import { StoreModule } from '@ngrx/store';
-
+import { of as observableOf } from 'rxjs';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { DealsListComponent } from './deals-list.component';
+import { reducers } from '../../../../../reducers';
+import { CPSession } from '../../../../../session';
+import { mockSchool } from '../../../../../session/mock/school';
+import { ManageHeaderService } from '../../utils';
 import { DealsModule } from '../deals.module';
 import { DealsService } from '../deals.service';
-import { ManageHeaderService } from '../../utils';
-import { CPSession } from '../../../../../session';
-import { DealsListComponent } from './deals-list.component';
-import { mockSchool } from '../../../../../session/mock/school';
-import { headerReducer, snackBarReducer } from '../../../../../reducers';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 class MockDealsService {
   dummy;
@@ -19,7 +18,7 @@ class MockDealsService {
   getDeals(startRage: number, endRage: number, search: any) {
     this.dummy = [startRage, endRage, search];
 
-    return Observable.of({});
+    return observableOf({});
   }
 }
 
@@ -35,19 +34,19 @@ describe('DealsListComponent', () => {
     async(() => {
       TestBed.configureTestingModule({
         imports: [
-          HttpModule,
           DealsModule,
+          HttpClientModule,
           RouterTestingModule,
           StoreModule.forRoot({
-            HEADER: headerReducer,
-            SNACKBAR: snackBarReducer
+            HEADER: reducers.HEADER,
+            SNACKBAR: reducers.SNACKBAR
           })
         ],
         providers: [
           CPSession,
           CPI18nService,
           ManageHeaderService,
-          { provide: DealsService, useClass: MockDealsService },
+          { provide: DealsService, useClass: MockDealsService }
         ]
       })
         .compileComponents()
@@ -57,11 +56,12 @@ describe('DealsListComponent', () => {
           component.session.g.set('school', mockSchool);
           spyOn(component, 'buildHeader');
 
-          search = new URLSearchParams();
-          search.append('search_str', component.state.search_str);
-          search.append('sort_field', component.state.sort_field);
-          search.append('sort_direction', component.state.sort_direction);
-          search.append('school_id', component.session.g.get('school').id.toString());
+          search = new HttpParams()
+            .append('store_id', null)
+            .append('search_str', component.state.search_str)
+            .append('sort_field', component.state.sort_field)
+            .append('sort_direction', component.state.sort_direction)
+            .append('school_id', component.session.g.get('school').id.toString());
         });
     })
   );
@@ -78,7 +78,7 @@ describe('DealsListComponent', () => {
 
   it('doFilter', () => {
     const store_id = 50;
-    component.state = {...component.state, store_id};
+    component.state = { ...component.state, store_id };
     component.doSort(component.state);
     expect(component.state.store_id).toEqual(50);
   });
@@ -89,14 +89,16 @@ describe('DealsListComponent', () => {
     expect(component.state.deals).toEqual([]);
   });
 
-  it('should fetch list of deals', fakeAsync(() => {
-    spy = spyOn(component.service, 'getDeals').and.returnValue(Observable.of(mockDeals));
-    component.ngOnInit();
+  it(
+    'should fetch list of deals',
+    fakeAsync(() => {
+      spy = spyOn(component.service, 'getDeals').and.returnValue(observableOf(mockDeals));
+      component.ngOnInit();
 
-    tick();
-    expect(spy).toHaveBeenCalledTimes(1);
-    expect(component.state.deals.length).toEqual(mockDeals.length);
-    expect(spy).toHaveBeenCalledWith(component.startRange, component.endRange, search);
-  }));
-
+      tick();
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(component.state.deals.length).toEqual(mockDeals.length);
+      expect(spy).toHaveBeenCalledWith(component.startRange, component.endRange, search);
+    })
+  );
 });

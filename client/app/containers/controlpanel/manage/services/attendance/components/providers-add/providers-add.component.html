@@ -1,13 +1,13 @@
 <div class="cpmodal">
   <div class="cpmodal__header">
     <div class="row">
-      <div class="col-xs-12 text-center">
+      <div class="col-12 text-center">
         <span i18n><strong>{{ 'services_provider_label_add_service_provider' | cpI18n }}</strong></span>
 
         <span
           (click)="doReset()"
           data-dismiss="modal"
-          class="pull-right hover cpmodal__header__close">
+          class="float-right hover cpmodal__header__close">
           &times;
         </span>
       </div>
@@ -16,10 +16,10 @@
 
   <div class="cpmodal__body">
     <div class="row">
-      <div class="col-xs-12">
+      <div class="col-12">
         <form [formGroup]="form">
           <div class="row form-group">
-            <div class="col-xs-6">
+            <div class="col-6">
               <label i18n>{{ 'name' | cpI18n }}</label>
               <input
                 type="text"
@@ -27,7 +27,7 @@
                 formControlName="provider_name"
                 [class.error]="formErrors && form.controls.name.hasError('required')">
             </div>
-            <div class="col-xs-6">
+            <div class="col-6">
               <label i18n>{{ 'email' | cpI18n }}</label>
               <input
                 type="text"
@@ -38,7 +38,7 @@
           </div>
 
           <div class="row form-group" *ngIf="serviceAcceptsFeedback">
-            <div class="col-xs-12">
+            <div class="col-12">
               <label i18n>{{ 'services_provider_label_default_question' | cpI18n }}</label>
               <input
                 type="text"
@@ -52,8 +52,8 @@
   </div>
 
   <div class="cpmodal__footer">
-    <div class="row">
-      <div class="col-xs-6 col-xs-offset-6 text-right">
+    <div class="row justify-content-end">
+      <div class="col-6 text-right">
         <button
           type="button"
           (click)="doReset()"

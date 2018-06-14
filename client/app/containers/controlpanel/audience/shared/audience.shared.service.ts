@@ -1,42 +1,41 @@
-import { Http, URLSearchParams } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { Observable } from 'rxjs';
+import { HTTPService } from '../../../../base/http.service';
 import { API } from '../../../../config/api';
-import { BaseService } from '../../../../base/base.service';
 
 @Injectable()
-export class AudienceSharedService extends BaseService {
-  constructor(http: Http, router: Router) {
+export class AudienceSharedService extends HTTPService {
+  constructor(http: HttpClient, router: Router) {
     super(http, router);
 
     Object.setPrototypeOf(this, AudienceSharedService.prototype);
   }
 
-  getFilters(search: URLSearchParams): Observable<any> {
+  getFilters(search: HttpParams): Observable<any> {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.AUDIENCE_FILTERS}/`;
 
-    return super.get(url, { search }).map((res) => res.json());
+    return super.get(url, search);
   }
 
-  getUserCount(body, search: URLSearchParams): Observable<any> {
+  getUserCount(body, search: HttpParams): Observable<any> {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER_LIST}/`;
 
-    return super.post(url, body, { search }).map((res) => res.json());
+    return super.post(url, body, search);
   }
 
-  getAudience(startRange: number, endRange: number, search: URLSearchParams) {
+  getAudience(startRange: number, endRange: number, search: HttpParams) {
     const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER_LIST}`;
 
     const url = `${common}/${startRange};${endRange}`;
 
-    return super.get(url, { search }).map((res) => res.json());
+    return super.get(url, search);
   }
 
-  getUsers(search: URLSearchParams) {
+  getUsers(search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER}/`;
 
-    return super.get(url, { search }).map((res) => res.json());
+    return super.get(url, search);
   }
 }

@@ -1,13 +1,13 @@
 <div class="cpmodal">
   <div class="cpmodal__header">
     <div class="row">
-      <div class="col-xs-12 text-center">
+      <div class="col-12 text-center">
         <span i18n><strong>{{ 'clubs_member_edit_modal_title' | cpI18n }}</strong></span>
 
         <span
           data-dismiss="modal"
           (click)="doTearDown()"
-          class="pull-right hover cpmodal__header__close">
+          class="float-right hover cpmodal__header__close">
           &times;
         </span>
       </div>
@@ -16,7 +16,7 @@
 
   <div class="cpmodal__body">
     <div class="row">
-      <div class="col-xs-12">
+      <div class="col-12">
         <form [formGroup]="form">
           <div class="form-group dropdown">
             <label i18n>{{ 'clubs_member_label_name' | cpI18n }}</label>
@@ -36,7 +36,7 @@
 
           </div>
           <div class="row form-group">
-            <div class="col-xs-6">
+            <div class="col-6">
               <label i18n>{{ 'clubs_label_member_type' | cpI18n }}</label>
               <cp-dropdown
                 [items]="memberTypes"
@@ -44,7 +44,7 @@
                 (selected)="onTypeChange($event.action)">
               </cp-dropdown>
             </div>
-            <div class="col-xs-6"
+            <div class="col-6"
               *ngIf="form.controls['member_type'].value === isExecutiveLeader">
               <label i18n>{{ 'clubs_label_executive_position' | cpI18n }}</label>
               <input
@@ -59,8 +59,8 @@
   </div>
 
   <div class="cpmodal__footer">
-    <div class="row">
-      <div class="col-xs-6 col-xs-offset-6 text-right">
+    <div class="row justify-content-end">
+      <div class="col-6 text-right">
         <button
           type="button"
           (click)="doTearDown()"

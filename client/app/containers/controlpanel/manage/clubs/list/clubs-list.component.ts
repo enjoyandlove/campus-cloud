@@ -1,17 +1,17 @@
+import { HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
-
-import { IClub } from '../club.interface';
-import { ClubsService } from '../clubs.service';
-import { CPSession } from '../../../../../session';
-import { isClubAthletic } from '../clubs.athletics.labels';
 import { ManageHeaderService } from './../../utils/header';
-import { ClubStatus, ClubSocialGroup } from '../club.status';
-import { CPI18nService } from '../../../../../shared/services';
 import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
+import { CPSession } from '../../../../../session';
+import { CPI18nService } from '../../../../../shared/services';
+import { IClub } from '../club.interface';
+import { ClubSocialGroup, ClubStatus } from '../club.status';
+import { isClubAthletic } from '../clubs.athletics.labels';
+import { ClubsService } from '../clubs.service';
+
 interface IState {
   clubs: IClub[];
   query: string;
@@ -66,13 +66,13 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
-    search.append('status', this.state.type);
-    search.append('search_str', this.state.query);
-    search.append('sort_field', this.state.sort_field);
-    search.append('sort_direction', this.state.sort_direction);
-    search.append('category_id', this.isAthletic.toString());
+    const search = new HttpParams()
+      .append('school_id', this.session.g.get('school').id.toString())
+      .append('status', this.state.type)
+      .append('search_str', this.state.query)
+      .append('sort_field', this.state.sort_field)
+      .append('sort_direction', this.state.sort_direction)
+      .append('category_id', this.isAthletic.toString());
 
     super
       .fetchData(this.clubsService.getClubs(search, this.startRange, this.endRange))
@@ -81,15 +81,14 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
   }
 
   onApproveClub(clubId: number) {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     if (this.isAthletic === isClubAthletic.athletic) {
       search.append('category_id', isClubAthletic.athletic.toString());
     }
 
     this.clubsService.updateClub({ status: this.ACTIVE_STATUS }, clubId, search).subscribe(
-      (updatedClub) => {
+      (updatedClub: any) => {
         this.state = {
           ...this.state,
           clubs: this.state.clubs.map(

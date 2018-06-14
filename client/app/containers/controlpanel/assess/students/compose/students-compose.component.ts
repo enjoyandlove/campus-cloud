@@ -7,8 +7,8 @@ import {
   EventEmitter,
   HostListener
 } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { HttpParams } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { CPSession } from '../../../../../session';
@@ -46,8 +46,7 @@ export class StudentsComposeComponent implements OnInit {
     private storeService: StoreService
   ) {
     const school = this.session.g.get('school');
-    const search: URLSearchParams = new URLSearchParams();
-    search.append('school_id', school.id.toString());
+    const search: HttpParams = new HttpParams().append('school_id', school.id.toString());
 
     this.stores$ = this.storeService.getStores(search);
   }
@@ -63,15 +62,14 @@ export class StudentsComposeComponent implements OnInit {
   doSubmit() {
     let data = this.form.value;
     this.isError = false;
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     data = Object.assign({}, data, {
       message: `${data.message} ${this.sendAsName}`
     });
 
     this.service.postAnnouncements(search, data).subscribe(
-      (res) => {
+      (res: any) => {
         if (res.status === THROTTLED_STATUS) {
           this.isError = true;
           this.errorMessage = `Message not sent, \n

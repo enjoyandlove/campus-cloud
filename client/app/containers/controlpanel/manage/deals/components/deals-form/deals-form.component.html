@@ -2,11 +2,11 @@
   <form [formGroup]="form">
     <div class="cp-card">
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-12">
           <p class="title">
             {{ 't_deals_form_deal_banner' | cpI18n }}
           </p>
-          <div class="row margin-top">
+          <div class="margin-top">
             <cp-image-upload
               id="deals"
               (uploaded)="onUploadedImage($event)"
@@ -16,14 +16,14 @@
         </div>
       </div>
       <div class="row item-details">
-        <div class="col-xs-12">
+        <div class="col-12">
           <p class="title">
             {{ 't_deals_form_deal_details' | cpI18n }}
           </p>
           <div class="form-group margin-top">
             <label>{{ 't_deals_form_deal_title' | cpI18n }}</label>
             <cp-char-counter
-              class="pull-right add-margin"
+              class="float-right add-margin"
               [limit]="120"
               [charCount]="form.controls.title.value">
             </cp-char-counter>
@@ -40,13 +40,13 @@
           </div>
 
           <div class="row form-group">
-            <div class="col-xs-6">
+            <div class="col-6">
               <label>{{ 't_deals_form_posting_start_date' | cpI18n }}</label>
               <cp-datepicker
                 [options]="postingStartDatePickerOptions">
               </cp-datepicker>
             </div>
-            <div class="col-xs-6">
+            <div class="col-6">
               <label>{{ 't_deals_form_posting_end_date' | cpI18n }}</label>
               <cp-datepicker
                 [options]="postingEndDatePickerOptions">

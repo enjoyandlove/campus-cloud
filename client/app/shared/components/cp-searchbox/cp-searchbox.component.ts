@@ -1,6 +1,3 @@
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
-
 import {
   AfterViewInit,
   Component,
@@ -11,7 +8,8 @@ import {
   Output,
   ViewChild
 } from '@angular/core';
-
+import { BehaviorSubject, fromEvent, Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { CPI18nService } from './../../services/i18n.service';
 
 @Component({
@@ -39,17 +37,19 @@ export class CPSearchBoxComponent implements AfterViewInit, OnInit {
 
   ngAfterViewInit() {
     const input = this.q.nativeElement;
-    this.stream$ = Observable.fromEvent(input, 'keyup');
+    this.stream$ = fromEvent(input, 'keyup');
 
     this.stream$
-      .map((res) => {
-        this.searching.emit(true);
+      .pipe(
+        map((res) => {
+          this.searching.emit(true);
 
-        return res;
-      })
-      .debounceTime(501)
-      .map((res: any) => res.target.value)
-      .distinctUntilChanged()
+          return res;
+        }),
+        debounceTime(501),
+        map((res: any) => res.target.value),
+        distinctUntilChanged()
+      )
       .subscribe((query) => {
         if (!query) {
           this.query.emit(null);

@@ -10,7 +10,7 @@ import {
   QueryList
 } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { AUDIENCE_IMPORTED } from './../../../../../reducers/audience.reducer';

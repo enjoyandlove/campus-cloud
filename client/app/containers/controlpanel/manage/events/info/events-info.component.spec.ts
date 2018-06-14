@@ -1,17 +1,16 @@
-import { async, fakeAsync, tick, TestBed, ComponentFixture } from '@angular/core/testing';
-import { HttpModule, URLSearchParams } from '@angular/http';
+import { HttpClientModule, HttpParams } from '@angular/common/http';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
 import { StoreModule } from '@ngrx/store';
-
+import { of as observableOf } from 'rxjs';
+import { EventsInfoComponent } from './events-info.component';
+import { reducers } from '../../../../../reducers';
+import { CPSession } from '../../../../../session';
+import { mockSchool } from '../../../../../session/mock/school';
+import { CPI18nService } from '../../../../../shared/services';
 import { EventsModule } from '../events.module';
 import { EventsService } from '../events.service';
-import { CPSession } from '../../../../../session';
 import { EventUtilService } from '../events.utils.service';
-import { EventsInfoComponent } from './events-info.component';
-import { CPI18nService } from '../../../../../shared/services';
-import { mockSchool } from '../../../../../session/mock/school';
-import { headerReducer, snackBarReducer } from '../../../../../reducers';
 
 class MockService {
   dummy;
@@ -19,7 +18,7 @@ class MockService {
   getEventById(eventId: number, search: any) {
     this.dummy = [eventId, search];
 
-    return Observable.of({});
+    return observableOf({});
   }
 }
 
@@ -30,7 +29,6 @@ class RouterMock {
 describe('EventInfoComponent', () => {
   let spy;
   let search;
-  let service: EventsService;
   let component: EventsInfoComponent;
   let fixture: ComponentFixture<EventsInfoComponent>;
 
@@ -38,11 +36,11 @@ describe('EventInfoComponent', () => {
     async(() => {
       TestBed.configureTestingModule({
         imports: [
-          HttpModule,
+          HttpClientModule,
           EventsModule,
           StoreModule.forRoot({
-            HEADER: headerReducer,
-            SNACKBAR: snackBarReducer
+            HEADER: reducers.HEADER,
+            SNACKBAR: reducers.SNACKBAR
           })
         ],
         providers: [
@@ -55,7 +53,7 @@ describe('EventInfoComponent', () => {
             provide: ActivatedRoute,
             useValue: {
               snapshot: {
-                params: Observable.of({ eventId: 15845 })
+                params: observableOf({ eventId: 15845 })
               }
             }
           }
@@ -64,13 +62,10 @@ describe('EventInfoComponent', () => {
         .compileComponents()
         .then(() => {
           fixture = TestBed.createComponent(EventsInfoComponent);
-          service = TestBed.get(EventsService);
 
           component = fixture.componentInstance;
           component.eventId = 15845;
           component.session.g.set('school', mockSchool);
-
-          search = new URLSearchParams();
         });
     })
   );
@@ -79,11 +74,12 @@ describe('EventInfoComponent', () => {
     'should fetch orientation event by Id',
     fakeAsync(() => {
       component.orientationId = 1001;
-      search.append('school_id', component.session.g.get('school').id);
-      search.append('calendar_id', component.orientationId.toString());
+      search = new HttpParams()
+        .append('school_id', component.session.g.get('school').id)
+        .append('calendar_id', component.orientationId.toString());
 
       spyOn(component, 'buildHeader');
-      spy = spyOn(component.service, 'getEventById').and.returnValue(Observable.of({}));
+      spy = spyOn(component.service, 'getEventById').and.returnValue(observableOf({}));
       component.fetch();
 
       tick();

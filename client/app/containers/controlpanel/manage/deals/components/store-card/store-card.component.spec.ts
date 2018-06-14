@@ -1,6 +1,6 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 
 import { DealsModule } from '../../deals.module';
@@ -15,15 +15,8 @@ describe('StoreCardComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [
-          HttpModule,
-          DealsModule,
-          RouterTestingModule
-        ],
-        providers: [
-          CPSession,
-          CPI18nService
-        ]
+        imports: [DealsModule, HttpClientModule, RouterTestingModule],
+        providers: [CPSession, CPI18nService]
       })
         .compileComponents()
         .then(() => {
@@ -41,12 +34,13 @@ describe('StoreCardComponent', () => {
             logo_url: [null]
           });
         });
-    }));
+    })
+  );
 
   it('onTabClick - existing store', () => {
     const id = 'existing';
     spyOn(component.isNewStore, 'emit');
-    component.onTabClick({id});
+    component.onTabClick({ id });
 
     const store_id = component.form.controls['store_id'];
     const name = component.storeForm.controls['name'];
@@ -62,7 +56,7 @@ describe('StoreCardComponent', () => {
   it('onTabClick - new store', () => {
     const id = 'new';
     spyOn(component.isNewStore, 'emit');
-    component.onTabClick({id});
+    component.onTabClick({ id });
 
     const store_id = component.form.controls['store_id'];
     const name = component.storeForm.controls['name'];

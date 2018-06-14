@@ -1,17 +1,16 @@
-import { async, fakeAsync, tick, TestBed, ComponentFixture } from '@angular/core/testing';
+import { HttpClientModule, HttpParams } from '@angular/common/http';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpModule, URLSearchParams } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
 import { StoreModule } from '@ngrx/store';
-
+import { of as observableOf } from 'rxjs';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { JobsListComponent } from './jobs-list.component';
+import { reducers } from '../../../../../reducers';
+import { CPSession } from '../../../../../session';
+import { mockSchool } from '../../../../../session/mock/school';
+import { ManageHeaderService } from '../../utils';
 import { JobsModule } from '../jobs.module';
 import { JobsService } from '../jobs.service';
-import { ManageHeaderService } from '../../utils';
-import { CPSession } from '../../../../../session';
-import { JobsListComponent } from './jobs-list.component';
-import { mockSchool } from '../../../../../session/mock/school';
-import { headerReducer, snackBarReducer } from '../../../../../reducers';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 const mockJobs = require('../mockJobs.json');
 
@@ -21,14 +20,13 @@ class MockJobsService {
   getJobs(startRage: number, endRage: number, search: any) {
     this.dummy = [startRage, endRage, search];
 
-    return Observable.of(mockJobs);
+    return observableOf(mockJobs);
   }
 }
 
 describe('JobsListComponent', () => {
   let spy;
   let search;
-  let service: JobsService;
   let component: JobsListComponent;
   let fixture: ComponentFixture<JobsListComponent>;
 
@@ -36,34 +34,34 @@ describe('JobsListComponent', () => {
     async(() => {
       TestBed.configureTestingModule({
         imports: [
-          HttpModule,
           JobsModule,
+          HttpClientModule,
           RouterTestingModule,
           StoreModule.forRoot({
-            HEADER: headerReducer,
-            SNACKBAR: snackBarReducer
+            HEADER: reducers.HEADER,
+            SNACKBAR: reducers.SNACKBAR
           })
         ],
         providers: [
           CPSession,
           CPI18nService,
           ManageHeaderService,
-          { provide: JobsService, useClass: MockJobsService },
+          { provide: JobsService, useClass: MockJobsService }
         ]
       })
         .compileComponents()
         .then(() => {
           fixture = TestBed.createComponent(JobsListComponent);
           component = fixture.componentInstance;
-          service = TestBed.get(JobsService);
           component.session.g.set('school', mockSchool);
           spyOn(component, 'buildHeader');
 
-          search = new URLSearchParams();
-          search.append('search_str', component.state.search_str);
-          search.append('sort_field', component.state.sort_field);
-          search.append('sort_direction', component.state.sort_direction);
-          search.append('school_id', component.session.g.get('school').id.toString());
+          search = new HttpParams()
+            .append('store_id', null)
+            .append('search_str', component.state.search_str)
+            .append('sort_field', component.state.sort_field)
+            .append('sort_direction', component.state.sort_direction)
+            .append('school_id', component.session.g.get('school').id.toString());
         });
     })
   );
@@ -79,14 +77,17 @@ describe('JobsListComponent', () => {
     expect(component.state.jobs).toEqual([]);
   });
 
-  it('should fetch list of jobs', fakeAsync(() => {
-    spy = spyOn(component.service, 'getJobs').and.returnValue(Observable.of(mockJobs));
-    component.ngOnInit();
+  it(
+    'should fetch list of jobs',
+    fakeAsync(() => {
+      spy = spyOn(component.service, 'getJobs').and.returnValue(observableOf(mockJobs));
+      component.ngOnInit();
 
-    tick();
-    expect(spy).toHaveBeenCalledTimes(1);
-    expect(component.state.jobs.length).toEqual(mockJobs.length);
-    expect(spy).toHaveBeenCalledWith(component.startRange, component.endRange, search);
-  }));
+      tick();
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(component.state.jobs.length).toEqual(mockJobs.length);
 
+      expect(spy).toHaveBeenCalledWith(component.startRange, component.endRange, search);
+    })
+  );
 });

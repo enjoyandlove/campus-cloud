@@ -1,11 +1,10 @@
-import { Input, OnInit, Component } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
-
-import { EngagementService } from '../../engagement.service';
+import { HttpParams } from '@angular/common/http';
+import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { CPSession } from './../../../../../../session/index';
-import { BaseComponent } from '../../../../../../base/base.component';
 import { CPI18nService } from './../../../../../../shared/services/i18n.service';
+import { BaseComponent } from '../../../../../../base/base.component';
+import { EngagementService } from '../../engagement.service';
 
 const sortTypes = {
   0: 'engagements',
@@ -74,18 +73,17 @@ export class EngagementEventsBoxComponent extends BaseComponent implements OnIni
 
     const list_id = this.state.list_id ? this.state.list_id.toString() : null;
 
-    const search = new URLSearchParams();
-    search.append('sort_by', this.state.sortBy);
-    search.append('end', this.state.end.toString());
-    search.append('start', this.state.start.toString());
-    search.append('user_list_id', list_id);
-    search.append('school_id', this.session.g.get('school').id.toString());
+    let search = new HttpParams()
+      .set('sort_by', this.state.sortBy)
+      .set('end', this.state.end.toString())
+      .set('start', this.state.start.toString())
+      .set('user_list_id', list_id)
+      .set('school_id', this.session.g.get('school').id.toString());
 
-    if (this.state.scope.queryParam === 'scope') {
-      search.append('scope', this.state.scope.value.toString());
-    } else {
-      search.append('service_id', this.state.scope.value.toString());
-    }
+    search =
+      this.state.scope.queryParam === 'scope'
+        ? search.append('scope', this.state.scope.value.toString())
+        : search.append('service_id', this.state.scope.value.toString());
 
     this.updateSortingLabel();
 

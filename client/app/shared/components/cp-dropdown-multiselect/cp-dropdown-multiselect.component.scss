@@ -9,7 +9,7 @@
 .component {
   position: relative;
 
-  &.open {
+  &.show {
     .component__content {
       display: block;
     }
@@ -63,4 +63,8 @@ cp-checkbox {
   margin-right: 0px;
   position: relative;
   display: inline-block;
+}
+
+.dropdown-menu {
+  padding: 0;
 }

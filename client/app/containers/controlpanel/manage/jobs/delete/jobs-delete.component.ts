@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { JobsService } from '../jobs.service';
 import { CPSession } from './../../../../../session';
@@ -25,8 +25,7 @@ export class JobsDeleteComponent implements OnInit {
   ) {}
 
   onDelete() {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     this.service.deleteJob(this.job.id, search).subscribe(() => {
       this.deleted.emit(this.job.id);

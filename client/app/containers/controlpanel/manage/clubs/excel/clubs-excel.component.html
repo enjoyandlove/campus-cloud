@@ -3,7 +3,7 @@
 
   <div *ngSwitchCase="true">
     <div class="row margin-bottom">
-      <div class="col-xs-12">
+      <div class="col-12">
 
         <cp-no-content
           noContentText="No Clubs to Add..."
@@ -14,22 +14,22 @@
           class="form"
           [formGroup]="form"
           *ngIf="form.controls.clubs.controls.length">
-          <ul class="col-xs-12 cp-form" formArrayName="clubs">
+          <ul class="col-12 cp-form" formArrayName="clubs">
             <div class="clubs">
               <li class="cp-form__header row">
-                <span class="col-xs-4" i18n>{{ labels.create_edit_name | cpI18n }}</span>
-                <span class="col-xs-3" i18n>{{ 'email' | cpI18n }}</span>
-                <span class="col-xs-2" i18n>{{ 'phone_number' | cpI18n }}</span>
-                <span class="col-xs-2" i18n>{{ 'website' | cpI18n }}</span>
-                <span class="col-xs-1"></span>
+                <span class="col-4" i18n>{{ labels.create_edit_name | cpI18n }}</span>
+                <span class="col-3" i18n>{{ 'email' | cpI18n }}</span>
+                <span class="col-2" i18n>{{ 'phone_number' | cpI18n }}</span>
+                <span class="col-2" i18n>{{ 'website' | cpI18n }}</span>
+                <span class="col-1"></span>
               </li>
 
               <li
                 class="cp-form__item row"
                 *ngFor="let club of form.controls.clubs.controls; let i=index">
                 <div [formGroupName]="i">
-                  <span class="col-xs-4 text-truncate clubs__thumbnail">
-                    <div class="avatar pull-left">
+                  <span class="col-4 text-truncate clubs__thumbnail">
+                    <div class="avatar float-left">
                       <span
                         class="deleteButton hover"
                         (click)="onRemoveImage(i)"
@@ -43,7 +43,7 @@
                         *ngIf="!club.controls['logo_url'].value">
                       </cp-upload-button>
                       <img
-                        class="img-rounded img-fit-cover"
+                        class="rounded img-fit-cover"
                         *ngIf="club.controls['logo_url'].value"
                         [src]="club.controls['logo_url'].value" >
                     </div>
@@ -52,13 +52,13 @@
                     <span class="text-muted">{{ club.controls.description.value }}</span>
                   </span>
 
-                  <span class="col-xs-3 text-truncate">
+                  <span class="col-3 text-truncate">
                     {{ club.controls.email.value }}
                   </span>
-                  <span class="col-xs-2 text-truncate">
+                  <span class="col-2 text-truncate">
                     {{ club.controls.phone.value }}
                   </span>
-                  <span class="col-xs-3 text-truncate">
+                  <span class="col-3 text-truncate">
                     {{ club.controls.website.value }}
                   </span>
                 </div>
@@ -72,8 +72,8 @@
     <div class="footer">
       <div class="cp-wrapper cp-wrapper--outer">
         <div class="row">
-          <div class="col-xs-12">
-            <div class="pull-right">
+          <div class="col-12">
+            <div class="float-right">
               <a [routerLink]="['/manage/' + labels.club_athletic]"
                 class="cpbtn cpbtn--cancel" i18n>
                 {{ 'cancel' | cpI18n }}
@@ -82,13 +82,6 @@
                 [props]="buttonData"
                 (buttonClick)="onSubmit()">
               </cp-button>
-              <!-- <button
-                type="button"
-                (click)="onSubmit()"
-                class="cpbtn cpbtn--tall cpbtn--primary" i18n
-                [disabled]="!form.controls.clubs.controls.length || !form.valid">
-                Import {{form.controls.clubs.controls.length}} Clubs
-              </button> -->
             </div>
           </div>
         </div>

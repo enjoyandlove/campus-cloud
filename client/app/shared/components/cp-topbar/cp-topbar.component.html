@@ -1,16 +1,16 @@
 <nav>
   <div class="cp-wrapper cp-wrapper--outer">
     <div class="row">
-      <div class="col-xs-12">
-        <div class="avatar pull-left">
+      <div class="col-12">
+        <div class="avatar float-left">
           <a [routerLink]="['/dashboard']">
             <img
               [src]="logo"
               alt="Control Panel"
-              class="img-rounded img-fit-cover">
+              class="rounded img-fit-cover">
           </a>
         </div>
-        <ul class="nav__links pull-left">
+        <ul class="nav__links float-left">
           <li
             cpTracker
             *ngIf="manageHomePage"
@@ -46,20 +46,19 @@
             <a [routerLink]="['/audience']">{{ 'audience' | cpI18n }}</a>
           </li>
         </ul>
-
         <div
-          class="nav__school pull-right noselect">
+          class="nav__school float-right noselect">
           <div class="row" data-toggle="dropdown">
             <div
-              class="col-xs-10 no-left-padding no-right-padding">
+              class="col-10 no-left-padding no-right-padding">
               <div
                 *ngIf="school.app_logo_url !== ''"
-                class="nav__school__thumb pull-left img-rounded"
+                class="nav__school__thumb float-left rounded"
                 [ngStyle]="{'background-image': 'url(' + school.app_logo_url + ')'}">
               </div>
               <div
                 *ngIf="school.app_logo_url === ''"
-                class="nav__school__thumb pull-left img-rounded"
+                class="nav__school__thumb float-left rounded"
                 [ngStyle]="{'background-image': 'url( ' + defaultImage + ')'}">
               </div>
               <div class="nav__school__user text-truncate">
@@ -69,11 +68,11 @@
                 {{ school.name }}
               </div>
             </div>
-            <div class="col-xs-2 no-left-padding text-right nav__school__arrow">
-              <i class="material-icons pull-right">expand_more</i>
+            <div class="col-2 no-left-padding text-right nav__school__arrow">
+              <i class="material-icons float-right">expand_more</i>
             </div>
           </div>
-          <div class="nav__school--menu">
+          <div class="nav__school--menu dropdown-menu">
             <cp-school-switch></cp-school-switch>
           </div>
         </div>

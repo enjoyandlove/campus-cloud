@@ -3,49 +3,49 @@
 
     <div class="tile" *ngSwitchCase="false">
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-12">
           <p class="tile--title">{{ 'dashboard_campus_tile_title' | cpI18n }}</p>
         </div>
       </div>
 
       <div class="row table">
-        <div class="col-xs-12">
+        <div class="col-12">
           <ng-container *ngIf="!items.length">
             <p class="table--no-results text-center">{{ 'dashboard_no_data_found' | cpI18n }}</p>
           </ng-container>
           <ng-container *ngIf="items.length">
             <div class="row table--header">
-              <div class="col-xs-1">
+              <div class="col-1">
                 <p>#</p>
               </div>
-              <div class="col-xs-8 no-left-padding">
+              <div class="col-8 no-left-padding">
                 <p i18n>{{ 'title' | cpI18n }}</p>
               </div>
-              <div class="col-xs-3 no-left-padding text-right">
+              <div class="col-3 no-left-padding text-right">
                 <p i18n>{{ 'clicks' | cpI18n }}</p>
               </div>
             </div>
             <div class="row" *ngFor="let item of items; index as index last as last">
-              <div class="col-xs-12">
+              <div class="col-12">
                 <div class="table--item" [class.isLast]="last">
                   <div class="row">
-                    <div class="col-xs-1 no-right-padding">
+                    <div class="col-1 no-right-padding">
                       <p class="ranking">{{ index + 1 }}</p>
                     </div>
-                    <div class="col-xs-8 no-left-padding text-truncate">
+                    <div class="col-8 no-left-padding text-truncate">
                       <ng-container *ngIf="item.img_url !== '' && item.color === ''">
-                        <img class="avatar img-rounded" [src]="item.img_url">
+                        <img class="avatar rounded" [src]="item.img_url">
                       </ng-container>
                       <ng-container *ngIf="item.img_url !== '' && item.color !== ''">
-                          <img class="avatar img-rounded" [src]="item.img_url">
+                          <img class="avatar rounded" [src]="item.img_url">
                         <!-- <div class="avatar" [ngStyle]="{'background' : '#' + item.color }"></div> -->
                       </ng-container>
                       <ng-container *ngIf="item.img_url === ''">
-                          <img class="avatar img-rounded" [src]="defaultImage">
+                          <img class="avatar rounded" [src]="defaultImage">
                       </ng-container>
                       <p class="title text-truncate">{{ item.name }}</p>
                     </div>
-                    <div class="col-xs-3 no-left-padding text-right">
+                    <div class="col-3 no-left-padding text-right">
                       <p class="semi-bold">{{ item.clicks | cpStatsFormatter }} ({{ item.clicks_average }}%)</p>
                     </div>
                   </div>

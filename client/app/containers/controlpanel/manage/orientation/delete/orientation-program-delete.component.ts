@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { OrientationService } from './../orientation.services';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { CPSession } from './../../../../../session';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
@@ -24,8 +24,7 @@ export class OrientationProgramDeleteComponent implements OnInit {
   ) {}
 
   onDelete() {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     this.service.deleteProgram(this.orientationProgram.id, search).subscribe(() => {
       this.deleted.emit(this.orientationProgram.id);
