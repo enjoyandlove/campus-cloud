@@ -1,6 +1,6 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Headers, Http } from '@angular/http';
-
+import { map } from 'rxjs/operators';
 import { CPI18nService } from './index';
 
 @Injectable()
@@ -16,7 +16,7 @@ export class FileUploadService {
 
   validImageTypes = ['image/jpeg', 'image/jpg', 'image/png'];
 
-  constructor(private http: Http, private cpI18n: CPI18nService) {}
+  constructor(private http: HttpClient, private cpI18n: CPI18nService) {}
 
   validImage(file: File): { valid: boolean; errors: Array<string> } {
     const validType = {
@@ -83,11 +83,11 @@ export class FileUploadService {
     return validTypes.includes(media.type);
   }
 
-  uploadFile(media: File, url: string, headers?: Headers) {
+  uploadFile(media: File, url: string, headers?: HttpHeaders) {
     const formData: FormData = new FormData();
 
     formData.append('file', media, media.name);
 
-    return this.http.post(url, formData, { headers }).map((res) => res.json());
+    return this.http.post(url, formData, { headers }).pipe(map((res) => res));
   }
 }

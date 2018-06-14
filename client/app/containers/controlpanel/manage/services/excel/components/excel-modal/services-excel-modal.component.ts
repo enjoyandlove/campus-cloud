@@ -27,7 +27,7 @@ export class ServicesExcelModalComponent implements OnInit {
     return this.fileService
       .uploadFile(file, url)
       .toPromise()
-      .then((res) => {
+      .then((res: any) => {
         this.service.setModalServices(JSON.parse(res));
 
         return Promise.resolve();

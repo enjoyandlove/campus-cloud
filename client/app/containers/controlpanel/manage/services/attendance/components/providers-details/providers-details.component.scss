@@ -3,7 +3,7 @@
 @import '~styles/components/button';
 
 .rating-box {
-  height: 112px;
+  height: 129px;
 
   &__star {
     display: block;
@@ -37,6 +37,12 @@
 .header,
 .actions {
   @include card-margin();
+}
+
+.actions {
+  button {
+    margin-right: 10px;
+  }
 }
 
 .header {

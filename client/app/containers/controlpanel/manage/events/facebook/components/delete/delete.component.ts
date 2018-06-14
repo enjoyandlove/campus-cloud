@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { EventsService } from '../../../events.service';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { CPSession } from '../../../../../../../session';
 import { CPI18nService } from '../../../../../../../shared/services/index';
@@ -25,10 +25,9 @@ export class FacebookEventsDeleteComponent implements OnInit {
   ) {}
 
   onDelete() {
-    const search = new URLSearchParams();
     const linkId = this.link.controls['id'].value;
 
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     this.eventsService.deleteFacebookEventByLinkId(linkId, search).subscribe((_) => {
       this.deleted.emit();

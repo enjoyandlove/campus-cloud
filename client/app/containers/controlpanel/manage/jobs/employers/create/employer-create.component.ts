@@ -1,3 +1,4 @@
+import { HttpParams } from '@angular/common/http';
 import {
   Component,
   ElementRef,
@@ -7,13 +8,11 @@ import {
   Output,
   ViewChild
 } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-import { IEmployer } from '../employer.interface';
 import { CPSession } from '../../../../../../session';
-import { EmployerService } from '../employer.service';
 import { CPI18nService } from '../../../../../../shared/services/i18n.service';
+import { IEmployer } from '../employer.interface';
+import { EmployerService } from '../employer.service';
 
 @Component({
   selector: 'cp-employer-create',
@@ -52,10 +51,9 @@ export class EmployerCreateComponent implements OnInit {
   }
 
   onSubmit() {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
-    this.service.createEmployer(this.employerForm.value, search).subscribe((employer) => {
+    this.service.createEmployer(this.employerForm.value, search).subscribe((employer: any) => {
       this.created.emit(employer);
       this.resetModal();
     });

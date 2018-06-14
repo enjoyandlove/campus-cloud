@@ -1,22 +1,22 @@
 <div class="registration">
   <div class="registration__header">
     <div class="row">
-      <div class="col-xs-12">
+      <div class="col-12">
         <div class="row">
-          <div class="col-xs-6"><span i18n>{{ 'checkin_scannable_qr_code' | cpI18n }}</span></div>
-          <div class="col-xs-6"><span i18n>{{ 'checkin_manual_checkin' | cpI18n }}</span></div>
+          <div class="col-6"><span i18n>{{ 'checkin_scannable_qr_code' | cpI18n }}</span></div>
+          <div class="col-6"><span i18n>{{ 'checkin_manual_checkin' | cpI18n }}</span></div>
         </div>
       </div>
     </div>
   </div>
   <div class="registration__form">
     <div class="row">
-      <div class="col-xs-6">
+      <div class="col-6">
         <div
           class="registration__qrcode"
           [ngStyle]="{'background-image': 'url(' + data.qr_img_url + ')'}"></div>
       </div>
-      <div class="col-xs-6">
+      <div class="col-6">
         <form [formGroup]="registrationForm" (ngSubmit)="onSubmit(registrationForm.value)">
           <div class="form-group">
             <label i18n>{{ 'first_name' | cpI18n }}</label>
@@ -35,7 +35,7 @@
 
           <div class="form-group">
             <div class="row">
-              <div class="col-xs-12">
+              <div class="col-12">
                 <button
                   type="submit"
                   [disabled]="!registrationForm.valid"

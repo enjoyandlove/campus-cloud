@@ -1,4 +1,4 @@
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { CPDropdownComponent } from './cp-dropdown.component';
 
 const fakeItems = [

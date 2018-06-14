@@ -1,4 +1,5 @@
-import { Observable } from 'rxjs/Observable';
+import { of as observableOf } from 'rxjs';
+
 import { BaseComponent } from './base.component';
 
 class BaseComponentMock extends BaseComponent {}
@@ -56,7 +57,7 @@ describe('BaseComponent', () => {
       arr.push(i);
     }
 
-    const fakeRequest = Observable.of(arr);
+    const fakeRequest = observableOf(arr);
 
     comp.fetchData(fakeRequest).then((res) => {
       expect(comp.pageNext).toBeTruthy();

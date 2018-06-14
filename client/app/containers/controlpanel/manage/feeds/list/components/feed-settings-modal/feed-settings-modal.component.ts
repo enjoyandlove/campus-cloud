@@ -1,10 +1,10 @@
+import { HttpParams } from '@angular/common/http';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { map } from 'rxjs/operators';
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
-import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
-
-import { FeedsService } from '../../../feeds.service';
 import { CPSession } from '../../../../../../../session';
+import { FeedsService } from '../../../feeds.service';
 
 @Component({
   selector: 'cp-feed-settings-modal',
@@ -33,38 +33,39 @@ export class FeedSettingsComponent implements OnInit {
   }
 
   private fetch() {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    let search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     if (this.orientationId) {
-      search.append('calendar_id', this.orientationId.toString());
+      search = search.append('calendar_id', this.orientationId.toString());
     }
 
     this.feedsService
       .getSocialGroups(search)
-      .map((groups) => {
-        let _groups = [];
+      .pipe(
+        map((groups: Array<any>) => {
+          let _groups = [];
 
-        groups.forEach((group) => {
-          _groups.push({
-            id: group.id,
-            name: group.name,
-            related_obj_id: group.related_obj_id,
-            min_posting_member_type: group.min_posting_member_type,
-            min_commenting_member_type: group.min_commenting_member_type
+          groups.forEach((group) => {
+            _groups.push({
+              id: group.id,
+              name: group.name,
+              related_obj_id: group.related_obj_id,
+              min_posting_member_type: group.min_posting_member_type,
+              min_commenting_member_type: group.min_commenting_member_type
+            });
           });
-        });
 
-        if (this.clubId) {
-          _groups = _groups.filter((group) => group.related_obj_id === +this.clubId);
-        }
+          if (this.clubId) {
+            _groups = _groups.filter((group) => group.related_obj_id === +this.clubId);
+          }
 
-        if (this.orientationId) {
-          _groups = _groups.filter((group) => group.related_obj_id === +this.orientationId);
-        }
+          if (this.orientationId) {
+            _groups = _groups.filter((group) => group.related_obj_id === +this.orientationId);
+          }
 
-        return _groups;
-      })
+          return _groups;
+        })
+      )
       .subscribe((walls) => {
         walls.forEach((wall) => this.addFeedControl(wall));
       });
@@ -103,12 +104,11 @@ export class FeedSettingsComponent implements OnInit {
   }
 
   updateGroup(control) {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     this.feedsService
       .upodateSocialGroup(control.value.wall_id, control.value, search)
-      .subscribe((res) => this.updateWallSettings.emit(res));
+      .subscribe((res: any) => this.updateWallSettings.emit(res));
   }
 
   getPrivilegeObj(privilege) {

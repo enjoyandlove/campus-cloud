@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs/Observable';
+import { of as observableOf } from 'rxjs';
 import { ClubsService } from './../clubs.service';
 import { ClubsUtilsService } from './../clubs.utils.service';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
@@ -52,7 +52,7 @@ const mockSchool = {
 
 class MockClubsService {
   getClubById() {
-    return Observable.of(mockClub);
+    return observableOf(mockClub);
   }
 }
 

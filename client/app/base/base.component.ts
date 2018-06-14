@@ -2,8 +2,7 @@
  * Base Component
  * Loading State, Pagination....
  */
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Observable, Subject } from 'rxjs';
 
 export abstract class BaseComponent {
   public pageNext;

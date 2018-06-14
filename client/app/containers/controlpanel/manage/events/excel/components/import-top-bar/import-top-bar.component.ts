@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { Headers } from '@angular/http';
+import { HttpHeaders } from '@angular/common/http';
 
 import { API } from '../../../../../../../config/api';
 import { EventsService } from '../../../events.service';
@@ -40,14 +40,15 @@ export class EventsImportTopBarComponent implements OnInit {
       return;
     }
 
-    const headers = new Headers();
     const url = this.eventService.getUploadImageUrl();
     const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
 
-    headers.append('Authorization', auth);
+    const headers = new HttpHeaders({
+      Authorization: auth
+    });
 
     this.fileUploadService.uploadFile(file, url, headers).subscribe(
-      (res) => this.imageChange.emit(res.image_url),
+      (res: any) => this.imageChange.emit(res.image_url),
       (err) => {
         throw new Error(err);
       }

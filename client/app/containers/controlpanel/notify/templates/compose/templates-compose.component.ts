@@ -1,3 +1,5 @@
+import { canSchoolWriteResource } from './../../../../../shared/utils/privileges/privileges';
+import { HttpParams } from '@angular/common/http';
 import {
   Component,
   ElementRef,
@@ -9,15 +11,13 @@ import {
   Output
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { URLSearchParams } from '@angular/http';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { CPSession } from './../../../../../session/index';
 import { CPI18nService, StoreService } from './../../../../../shared/services';
-import { canSchoolWriteResource } from './../../../../../shared/utils/privileges/privileges';
 import { AnnouncementsService } from './../../announcements/announcements.service';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 import { CP_PRIVILEGES_MAP, STATUS } from '../../../../../shared/constants';
-/* tslint:disable:max-line-length */
 
 interface IState {
   isUrgent: boolean;
@@ -90,8 +90,7 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
     public service: AnnouncementsService
   ) {
     const school = this.session.g.get('school');
-    const search: URLSearchParams = new URLSearchParams();
-    search.append('school_id', school.id.toString());
+    const search: HttpParams = new HttpParams().append('school_id', school.id.toString());
 
     this.stores$ = this.storeService.getStores(search);
   }
@@ -131,28 +130,30 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
   }
 
   doUserSearch(query) {
-    const search = new URLSearchParams();
-    search.append('search_str', query);
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams()
+      .append('search_str', query)
+      .append('school_id', this.session.g.get('school').id.toString());
 
     this.service
       .getUsers(search)
-      .map((users) => {
-        const _users = [];
+      .pipe(
+        map((users: Array<any>) => {
+          const _users = [];
 
-        users.forEach((user) => {
-          _users.push({
-            label: `${user.firstname} ${user.lastname}`,
-            id: user.id
+          users.forEach((user) => {
+            _users.push({
+              label: `${user.firstname} ${user.lastname}`,
+              id: user.id
+            });
           });
-        });
 
-        if (!_users.length) {
-          _users.push({ label: this.cpI18n.translate('no_results') });
-        }
+          if (!_users.length) {
+            _users.push({ label: this.cpI18n.translate('no_results') });
+          }
 
-        return _users;
-      })
+          return _users;
+        })
+      )
       .subscribe((suggestions) => {
         this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
           suggestions
@@ -185,28 +186,30 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
   }
 
   doListsSearch(query) {
-    const search = new URLSearchParams();
-    search.append('search_str', query);
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams()
+      .append('search_str', query)
+      .append('school_id', this.session.g.get('school').id.toString());
 
     this.service
       .getLists(search, 1, 400)
-      .map((lists) => {
-        const _lists = [];
+      .pipe(
+        map((lists: Array<any>) => {
+          const _lists = [];
 
-        lists.forEach((list) => {
-          _lists.push({
-            label: `${list.name}`,
-            id: list.id
+          lists.forEach((list) => {
+            _lists.push({
+              label: `${list.name}`,
+              id: list.id
+            });
           });
-        });
 
-        if (!_lists.length) {
-          _lists.push({ label: this.cpI18n.translate('no_results') });
-        }
+          if (!_lists.length) {
+            _lists.push({ label: this.cpI18n.translate('no_results') });
+          }
 
-        return _lists;
-      })
+          return _lists;
+        })
+      )
       .subscribe((suggestions) => {
         this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
           suggestions
@@ -316,8 +319,7 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
   doSubmit() {
     this.isError = false;
 
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     const prefix = this.subject_prefix.label ? this.subject_prefix.label.toUpperCase() : '';
 
@@ -338,7 +340,7 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
     }
 
     this.service.postAnnouncements(search, data).subscribe(
-      (res) => {
+      (res: any) => {
         if (res.status === THROTTLED_STATUS) {
           this.shouldConfirm = false;
 

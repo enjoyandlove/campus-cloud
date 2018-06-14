@@ -1,6 +1,6 @@
 <ng-container [ngSwitch]="loading">
-  <div class="row">
-    <div class="col-xs-8 col-xs-offset-2">
+  <div class="row justify-content-around">
+    <div class="col-8">
       <cp-feed-filters
         [clubId]="clubId"
         [orientationId]="orientationId"
@@ -38,7 +38,7 @@
         </cp-no-content>
 
         <div class="row">
-          <div class="col-xs-12">
+          <div class="col-12">
             <cp-pagination
               [pageNext]="pageNext"
               [pagePrev]="pagePrev"

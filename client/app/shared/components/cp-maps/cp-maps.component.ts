@@ -9,7 +9,7 @@ import {
   ViewChild
 } from '@angular/core';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { CPMapsService } from './../../services/maps.service';
 import { CPLocationsService } from '../../services/locations.service';

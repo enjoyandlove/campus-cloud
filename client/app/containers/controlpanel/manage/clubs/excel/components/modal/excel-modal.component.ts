@@ -32,7 +32,7 @@ export class ClubsExcelModalComponent implements OnInit {
     return this.fileService
       .uploadFile(file, url)
       .toPromise()
-      .then((res) => {
+      .then((res: any) => {
         this.service.setModalClubs(JSON.parse(res));
 
         return Promise.resolve();

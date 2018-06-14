@@ -1,16 +1,16 @@
 <div class="row">
-  <div class="col-xs-12">
+  <div class="col-12">
     <div class="cp-card">
-      <div class="row">
-        <div class="col-xs-3">
+      <div class="row justify-content-between">
+        <div class="col-3">
           <cp-searchbox (query)="onSearch($event)"></cp-searchbox>
         </div>
-        <div class="col-xs-3 pull-right">
+        <div class="col-3 float-right">
           <button
             type="button"
             *ngIf="!limitedAdmin"
             (click)="create.emit()"
-            class="cpbtn cpbtn--primary pull-right" i18n>
+            class="cpbtn cpbtn--primary float-right" i18n>
             {{ 'clubs_member_button_create' | cpI18n }}
           </button>
         </div>

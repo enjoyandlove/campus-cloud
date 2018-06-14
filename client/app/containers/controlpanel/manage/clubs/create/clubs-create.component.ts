@@ -1,24 +1,20 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-
-import { CPSession } from '../../../../../session';
-
-import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-import { CPMap } from '../../../../../shared/utils';
-
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { BehaviorSubject } from 'rxjs';
 
 import { ClubStatus } from '../club.status';
 import { ClubsService } from '../clubs.service';
-
+import { CPSession } from '../../../../../session';
+import { CPMap } from '../../../../../shared/utils';
 import { membershipTypes, statusTypes } from './permissions';
-import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
 import { CPTrackingService } from '../../../../../shared/services';
+import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
 
 @Component({
   selector: 'cp-clubs-create',
@@ -58,12 +54,12 @@ export class ClubsCreateComponent implements OnInit {
       return;
     }
 
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
-    search.append('category_id', this.isAthletic.toString());
+    const search = new HttpParams()
+      .append('school_id', this.session.g.get('school').id.toString())
+      .append('category_id', this.isAthletic.toString());
 
     this.clubsService.createClub(this.form.value, search).subscribe(
-      (res) => {
+      (res: any) => {
         this.router.navigate(['/manage/' + this.labels.club_athletic + '/' + res.id + '/info']);
       },
       (err) => {

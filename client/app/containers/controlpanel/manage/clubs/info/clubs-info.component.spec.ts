@@ -1,18 +1,17 @@
-import { FileUploadService } from './../../../../../shared/services/file-upload.service';
-import { ClubsDetailsModule } from './../details/details.module';
-import { ClubsInfoComponent } from './clubs-info.component';
-import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants/privileges';
-import { Observable } from 'rxjs/Observable';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ActivatedRoute } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { StoreModule } from '@ngrx/store';
+import { of as observableOf } from 'rxjs';
 import { CPSession } from './../../../../../session/index';
+import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants/privileges';
+import { FileUploadService } from './../../../../../shared/services/file-upload.service';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { ClubsService } from './../clubs.service';
 import { ClubsUtilsService } from './../clubs.utils.service';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { StoreModule } from '@ngrx/store';
-import { RouterTestingModule } from '@angular/router/testing';
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-
+import { ClubsDetailsModule } from './../details/details.module';
+import { ClubsInfoComponent } from './clubs-info.component';
 import { isClubAthletic } from '../clubs.athletics.labels';
-import { ActivatedRoute } from '@angular/router';
 
 const mockClub = {
   name: 'mock name',
@@ -49,22 +48,21 @@ class MockFileUploadService {
   }
 
   uploadFile() {
-    return Observable.of('mock_image');
+    return observableOf('mock_image');
   }
 }
 
 class MockClubsService {
   getClubById() {
-    return Observable.of(mockClub);
+    return observableOf(mockClub);
   }
 
   updateClub(clubData, clubId) {
-    return Observable.of({ clubData, clubId });
+    return observableOf({ clubData, clubId });
   }
 }
 
 describe('ClubsInfoComponent', () => {
-  let el;
   let comp: ClubsInfoComponent;
   let fixture: ComponentFixture<ClubsInfoComponent>;
 
@@ -94,7 +92,6 @@ describe('ClubsInfoComponent', () => {
 
     fixture = TestBed.createComponent(ClubsInfoComponent);
     comp = fixture.componentInstance;
-    el = fixture.debugElement.nativeElement;
 
     comp.clubId = 1;
     comp.isAthletic = isClubAthletic.club;

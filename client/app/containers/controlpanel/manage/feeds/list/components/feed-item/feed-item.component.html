@@ -1,12 +1,12 @@
 <div class="cp-card feed">
   <div class="row">
-    <div class="col-xs-12">
+    <div class="col-12">
       <div class="feed__header">
         <cp-feed-header
           [feed]="feed"
           (filterByCategory)="filterByCategory.emit($event)">
         </cp-feed-header>
-        <div class="feed__more pull-right">
+        <div class="feed__more float-right">
           <cp-feed-dropdown
             *ngIf="!isRemovedPosts"
             (selected)="onSelected($event)"
@@ -19,7 +19,7 @@
   </div>
 
   <div class="row feed__body">
-    <div class="col-xs-12">
+    <div class="col-12">
       <cp-feed-body
         [feed]="feed"
         [isRemovedPosts]="isRemovedPosts"
@@ -33,7 +33,7 @@
     class="feed__comments"
     *ngIf="isCommentsOpen">
     <div class="row">
-      <div class="col-xs-12">
+      <div class="col-12">
         <cp-feed-comments
           [feed]="feed"
           [clubId]="clubId"

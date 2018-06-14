@@ -1,6 +1,6 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { get as _get } from 'lodash';
 import { Store } from '@ngrx/store';
@@ -345,7 +345,9 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     }
 
     const eventProperties = this.utils.getAmplitudeEventProperties(
-      this.schoolPrivileges, this.accountPrivileges);
+      this.schoolPrivileges,
+      this.accountPrivileges
+    );
 
     this.adminService.updateAdmin(this.adminId, _data).subscribe(
       () => {

@@ -7,14 +7,15 @@ import {
   EventEmitter,
   HostListener
 } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+
+import { HttpParams } from '@angular/common/http';
 
 import {
   canSchoolWriteResource,
   canAccountLevelWriteResource
 } from './../../../../../../../shared/utils/privileges/privileges';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { DATE_FILTER } from './events-filters';
 import { EventAttendance } from '../../../event.status';
 import { CPSession } from '../../../../../../../session';
@@ -72,8 +73,7 @@ export class ListActionBoxComponent implements OnInit {
 
   getStores() {
     const school = this.session.g.get('school');
-    const search: URLSearchParams = new URLSearchParams();
-    search.append('school_id', school.id.toString());
+    const search: HttpParams = new HttpParams().append('school_id', school.id.toString());
 
     this.stores$ = this.storeService.getStores(search);
   }
@@ -176,7 +176,8 @@ export class ListActionBoxComponent implements OnInit {
 
   trackEvent(eventName) {
     const eventProperties = {
-      ...this.cpTracking.getEventProperties(), create_page_name: amplitudeEvents.CREATE_EVENT
+      ...this.cpTracking.getEventProperties(),
+      create_page_name: amplitudeEvents.CREATE_EVENT
     };
 
     return {

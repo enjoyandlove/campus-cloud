@@ -2,9 +2,8 @@
 @import './core/colors';
 @import './core/common';
 @import './core/maps';
-@import 'core/popover';
+@import './components/popover';
 @import './core/typography';
-@import './components/tooltip';
 @import './components/scrollbar';
 
 @import '~node_modules/croppie/croppie.css';

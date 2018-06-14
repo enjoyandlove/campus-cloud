@@ -1,8 +1,8 @@
 <div class="recipients">
   <div class="row">
     <div [class]="recipients_more.length ?
-                 'recipients__names col-xs-6 no-right-padding text-truncate' :
-                 'recipients__names col-xs-12 text-truncate'">
+                 'recipients__names col-6 no-right-padding text-truncate' :
+                 'recipients__names col-12 text-truncate'">
       <span
         *ngFor="let name of recipients; let last = last">
         {{ name }}
@@ -11,11 +11,11 @@
       </span>
     </div>
     <div
-      class="recipients__more col-xs-6"
+      class="recipients__more col-6"
       *ngIf="recipients_more.length">
         <cp-tooltip
-          (click)="viewMoreModal.emit(totalRecipients)"
-           [toolTipContent]="toolTipContent">
+          [toolTipContent]="tooltipData"
+          (click)="viewMoreModal.emit(totalRecipients)">
         </cp-tooltip>
     </div>
   </div>

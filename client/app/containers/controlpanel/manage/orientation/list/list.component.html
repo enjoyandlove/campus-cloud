@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-xs-12">
+  <div class="col-12">
     <cp-orientation-list-action-box
       (search)="onSearch($event)"
       (launchCreateModal)="onLaunchCreateModal()">
@@ -18,94 +18,102 @@
     </cp-no-content>
 
     <div *ngIf="state.orientationPrograms.length">
-      <ul class="orientation cp-form">
-        <li class="cp-form__header col-xs-12">
-          <div class="row">
-            <span
-              class="col-xs-5 hover"
-              (click)="doSort('name')">
-              {{ 'name' | cpI18n }}
-              <span *ngIf="state.sort_field === 'name'">
-                <i class="material-icons">
-                  {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
-                </i>
-              </span>
-            </span>
-            <span
-              class="col-xs-3">
-              {{ 'duration' | cpI18n }}
-            </span>
-            <span class="col-xs-2">
-              {{ 'members' | cpI18n }}
-            </span>
-            <span class="col-xs-2">
-              {{ 'events' | cpI18n }}
-            </span>
-            <span class="col-xs-1 hover"></span>
-          </div>
-        </li>
-
-        <li class="cp-form__item col-xs-12" *ngFor="let program of state.orientationPrograms;">
-          <div class="row">
-            <span class="col-xs-5 text-truncate hover">
-              <a [routerLink]="[program.id+'/events']">
-                <strong>
-                  {{ program.name }}
-                </strong>
-              </a>
-              <br>
-              {{ program.description }}
-            </span>
-            <span class="col-xs-3 text-truncate">
-              <div *ngIf="program.active_from !== noDuration && program.active_until !== noDuration">
-                {{ program.active_from | cpDatePipe:dateFormat }} - {{ program.active_until | cpDatePipe:dateFormat }}
+      <div class="row">
+        <div class="col-12">
+          <ul class="orientation cp-form">
+            <li class="cp-form__header">
+              <div class="row">
+                <span
+                  class="col-5 hover"
+                  (click)="doSort('name')">
+                  {{ 'name' | cpI18n }}
+                  <span *ngIf="state.sort_field === 'name'">
+                    <i class="material-icons">
+                      {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+                    </i>
+                  </span>
+                </span>
+                <span
+                  class="col-3">
+                  {{ 'duration' | cpI18n }}
+                </span>
+                <span class="col-2">
+                  {{ 'members' | cpI18n }}
+                </span>
+                <span class="col-2">
+                  {{ 'events' | cpI18n }}
+                </span>
+                <span class="col-1 hover"></span>
               </div>
-            </span>
-            <span class="col-xs-2">
-              {{ program.members_count }}
-            </span>
-            <span class="col-xs-1">
-              {{ program.events_count }}
-            </span>
-            <span class="col-xs-1 action">
-             <button
-               data-toggle="dropdown"
-               class="cpbtn cpbtn--link-dark"
-               (click)="selectedProgram = program">
-               <i class="material-icons">more_horiz</i>
-             </button>
-              <div class="orientation__dropdown">
-                <ul>
-                  <li
-                    (click)="launchDuplicateModal = true;"
-                    class="col-xs-12"
-                    data-toggle="modal"
-                    data-target="#programDuplicate">
-                      <i class="material-icons col-xs-2">control_point_duplicate</i>
-                      <span class="col-xs-10">{{ 'orientation_duplicate_program' | cpI18n }}</span>
-                  </li>
-                  <li
-                    (click)="launchDeleteModal = true;"
-                    class="col-xs-12"
-                    data-toggle="modal"
-                    data-target="#programDelete">
-                      <i class="material-icons col-xs-2">close</i>
-                      <span class="col-xs-10">{{ 'orientation_delete_program' | cpI18n }}</span>
-                  </li>
-                </ul>
+            </li>
+    
+            <li class="cp-form__item col-12" *ngFor="let program of state.orientationPrograms;">
+              <div class="row">
+                <span class="col-5 text-truncate hover">
+                  <a [routerLink]="[program.id+'/events']">
+                    <strong>
+                      {{ program.name }}
+                    </strong>
+                  </a>
+                  <br>
+                  {{ program.description }}
+                </span>
+                <span class="col-3 text-truncate">
+                  <div *ngIf="program.active_from !== noDuration && program.active_until !== noDuration">
+                    {{ program.active_from | cpDatePipe:dateFormat }} - {{ program.active_until | cpDatePipe:dateFormat }}
+                  </div>
+                </span>
+                <span class="col-2">
+                  {{ program.members_count }}
+                </span>
+                <span class="col-1">
+                  {{ program.events_count }}
+                </span>
+                <span class="col-1 action">
+                  <button
+                    data-toggle="dropdown"
+                    class="cpbtn cpbtn--link-dark"
+                    (click)="selectedProgram = program">
+                    <i class="material-icons">more_horiz</i>
+                  </button>
+                  <div class="orientation__dropdown dropdown-menu dropdown-menu-right">
+                    <ul>
+                      <li
+                        (click)="launchDuplicateModal = true;"
+                        class="col-12"
+                        data-toggle="modal"
+                        data-target="#programDuplicate">
+                          <i class="material-icons col-2">control_point_duplicate</i>
+                          <span class="col-10">{{ 'orientation_duplicate_program' | cpI18n }}</span>
+                      </li>
+                      <li
+                        (click)="launchDeleteModal = true;"
+                        class="col-12"
+                        data-toggle="modal"
+                        data-target="#programDelete">
+                          <i class="material-icons col-2">close</i>
+                          <span class="col-10">{{ 'orientation_delete_program' | cpI18n }}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </span>
               </div>
-            </span>
-          </div>
-        </li>
-      </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
 
-      <cp-pagination
-        [pageNext]="pageNext"
-        [pagePrev]="pagePrev"
-        [pageNumber]="pageNumber"
-        (next)="onPaginationNext()"
-        (previous)="onPaginationPrevious()">
-      </cp-pagination>
+      <div class="row">
+        <div class="col-12">
+          <cp-pagination
+            [pageNext]="pageNext"
+            [pagePrev]="pagePrev"
+            [pageNumber]="pageNumber"
+            (next)="onPaginationNext()"
+            (previous)="onPaginationPrevious()">
+          </cp-pagination>
+        </div>
+      </div>
     </div>
   </div>
 </div>

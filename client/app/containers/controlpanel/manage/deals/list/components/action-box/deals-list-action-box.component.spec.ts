@@ -1,6 +1,6 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { DealsModule } from '../../../deals.module';
 import { CPSession } from '../../../../../../../session';
@@ -14,15 +14,8 @@ describe('DealsListActionBoxComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [
-          HttpModule,
-          DealsModule,
-          RouterTestingModule
-        ],
-        providers: [
-          CPSession,
-          CPI18nService
-        ]
+        imports: [DealsModule, HttpClientModule, RouterTestingModule],
+        providers: [CPSession, CPI18nService]
       })
         .compileComponents()
         .then(() => {
@@ -44,11 +37,10 @@ describe('DealsListActionBoxComponent', () => {
     const store_id = 452;
     spyOn(component.listAction, 'emit');
 
-    component.state = Object.assign({}, component.state, {store_id});
+    component.state = Object.assign({}, component.state, { store_id });
     component.onFilterByStore(store_id);
 
     expect(component.listAction.emit).toHaveBeenCalledTimes(1);
     expect(component.listAction.emit).toHaveBeenCalledWith(component.state);
   });
-
 });

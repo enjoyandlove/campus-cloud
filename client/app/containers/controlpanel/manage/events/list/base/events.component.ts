@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { EventsService } from '../../events.service';
 import { CPSession } from '../../../../../../session';
@@ -127,7 +127,6 @@ export class EventsComponent extends BaseComponent {
   buildHeaders() {
     const end = this.endRange;
     const start = this.startRange;
-    const search = new URLSearchParams();
 
     const exclude_current = this.state.exclude_current
       ? this.state.exclude_current.toString()
@@ -140,17 +139,25 @@ export class EventsComponent extends BaseComponent {
       store_id = this.storeId.toString();
     }
 
-    search.append('start', this.state.start.toString());
-    search.append('end', this.state.end.toString());
-    search.append('store_id', store_id);
-    search.append('calendar_id', calendar_id);
-    search.append('school_id', this.session.g.get('school').id.toString());
-    search.append('search_str', this.state.search_str);
-    search.append('exclude_current', exclude_current);
-    search.append('attendance_only', this.state.attendance_only.toString());
+    let search = new HttpParams()
+      .append('start', this.state.start.toString())
+      .append('end', this.state.end.toString())
+      .append('school_id', this.session.g.get('school').id.toString())
+      .append('search_str', this.state.search_str)
+      .append('attendance_only', this.state.attendance_only.toString())
 
-    search.append('sort_field', this.state.sort_field);
-    search.append('sort_direction', this.state.sort_direction);
+      .append('sort_field', this.state.sort_field)
+      .append('sort_direction', this.state.sort_direction);
+
+    if (store_id) {
+      search = search.append('store_id', store_id);
+    }
+    if (exclude_current) {
+      search = search.append('exclude_current', exclude_current);
+    }
+    if (calendar_id) {
+      search = search.append('calendar_id', calendar_id);
+    }
 
     this.fetch(this.service.getEvents(start, end, search));
   }
