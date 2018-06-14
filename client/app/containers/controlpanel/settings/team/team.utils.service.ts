@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-
-import { CPI18nService } from '../../../../shared/services';
-import { amplitudeEvents } from '../../../../shared/constants/analytics';
 import { CP_PRIVILEGES_MAP } from './../../../../shared/constants/privileges';
+import { amplitudeEvents } from '../../../../shared/constants/analytics';
+import { CPI18nService } from '../../../../shared/services';
 
 export enum clubAthleticStatus {
   active = 1
@@ -310,17 +309,20 @@ export class TeamUtilsService {
     const clubPermission = this.getClubServiceAthleticPermissions(
       schoolPrivileges,
       accountPrivileges,
-      CP_PRIVILEGES_MAP.clubs);
+      CP_PRIVILEGES_MAP.clubs
+    );
 
     const servicePermission = this.getClubServiceAthleticPermissions(
       schoolPrivileges,
       accountPrivileges,
-      CP_PRIVILEGES_MAP.services);
+      CP_PRIVILEGES_MAP.services
+    );
 
     const athleticPermission = this.getClubServiceAthleticPermissions(
       schoolPrivileges,
       accountPrivileges,
-      CP_PRIVILEGES_MAP.athletics);
+      CP_PRIVILEGES_MAP.athletics
+    );
 
     return {
       service_permission: servicePermission,
@@ -333,7 +335,7 @@ export class TeamUtilsService {
     };
   }
 
-  getClubServiceAthleticPermissions(schoolPrivileges, accountPrivileges, type) {
+  getClubServiceAthleticPermissions(schoolPrivileges, accountPrivileges = {}, type) {
     let permissions;
     const privileges = schoolPrivileges[type];
 
@@ -361,9 +363,10 @@ export class TeamUtilsService {
       w: false
     };
 
-    const eventAssessmentPrivilege = schoolPrivileges[
-      CP_PRIVILEGES_MAP.event_attendance
-      ] || { r: false, w: false };
+    const eventAssessmentPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.event_attendance] || {
+      r: false,
+      w: false
+    };
 
     if (eventPrivilege.w && eventAssessmentPrivilege.w) {
       permissions = amplitudeEvents.FULL_ACCESS;
@@ -375,8 +378,7 @@ export class TeamUtilsService {
   }
 
   getInviteAssessPermissions(schoolPrivileges, type) {
-    return schoolPrivileges[type]
-      ? amplitudeEvents.ENABLED : amplitudeEvents.DISABLED;
+    return schoolPrivileges[type] ? amplitudeEvents.ENABLED : amplitudeEvents.DISABLED;
   }
 
   getNotifyPermissions(schoolPrivileges) {
