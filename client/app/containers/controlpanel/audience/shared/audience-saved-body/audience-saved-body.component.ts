@@ -1,12 +1,12 @@
-/*tslint:disable:max-line-length */
 import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { get as _get } from 'lodash';
-import { Observable, of as observableOf, combineLatest } from 'rxjs';
+import { combineLatest, Observable, of as observableOf } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { AudienceService } from './../../../../../containers/controlpanel/audience/audience.service';
 import { CPI18nService } from './../../../../../shared/services';
 import { CPSession } from '../../../../../session';
+/*tslint:disable:max-line-length */
 
 @Component({
   selector: 'cp-audience-saved-body',
@@ -64,6 +64,8 @@ export class AudienceSavedBodyComponent implements OnInit {
           label: this.cpI18n.translate('campus_wide')
         }
       ]);
+
+      return;
     }
 
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
