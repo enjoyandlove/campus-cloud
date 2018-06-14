@@ -7,31 +7,18 @@ import { API } from './../config/api/index';
 import { appStorage, CPObj } from '../shared/utils';
 
 /**
- * Base Service
- * Takes care of setting common headers
- * and catching errors
+ * Base HTTP Service
+ * extends this class and override
+ * getHeaders() if you need a new header
  */
-
-const buildCommonHeaders = () => {
-  const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
-
-  return new HttpHeaders({
-    'Content-Type': 'application/json',
-    Authorization: auth
-  });
-};
 
 const emptyResponse = observableOf(new HttpResponse({ body: JSON.stringify([]) }));
 
 @Injectable()
 export abstract class HTTPService {
-  constructor(
-    public http: HttpClient,
-    public router: Router,
-    public headers = buildCommonHeaders()
-  ) {}
+  constructor(public http: HttpClient, public router: Router) {}
 
-  private waitAndRetry(err: Observable<any>): Observable<any> {
+  waitAndRetry(err: Observable<any>): Observable<any> {
     let retries = 1;
 
     return err.pipe(
@@ -48,7 +35,16 @@ export abstract class HTTPService {
     );
   }
 
-  private clearNullValues(params: HttpParams): HttpParams {
+  getHeaders() {
+    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
+
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: auth
+    });
+  }
+
+  clearNullValues(params: HttpParams): HttpParams {
     let cleanParams = new HttpParams();
     params.keys().forEach((key) => {
       if (params.get(key)) {
@@ -64,7 +60,9 @@ export abstract class HTTPService {
       params = this.clearNullValues(params);
     }
 
-    return this.http.get(url, { headers: this.headers, params }).pipe(
+    const headers = this.getHeaders();
+
+    return this.http.get(url, { headers, params }).pipe(
       retryWhen((err) => this.waitAndRetry(err)),
       catchError((err) => {
         if (silent) {
@@ -86,9 +84,10 @@ export abstract class HTTPService {
     }
 
     data = CPObj.cleanNullValues(data);
+    const headers = this.getHeaders();
 
     return this.http
-      .post(url, data, { headers: this.headers, params })
+      .post(url, data, { headers, params })
       .pipe(
         retryWhen((err) => this.waitAndRetry(err)),
         catchError((err) => (silent ? observableThrowError(err) : this.catchError(err)))
@@ -101,9 +100,10 @@ export abstract class HTTPService {
     }
 
     data = CPObj.cleanNullValues(data);
+    const headers = this.getHeaders();
 
     return this.http
-      .put(url, data, { headers: this.headers, params })
+      .put(url, data, { headers, params })
       .pipe(
         retryWhen((err) => this.waitAndRetry(err)),
         catchError((err) => (silent ? observableThrowError(err) : this.catchError(err)))
@@ -115,8 +115,10 @@ export abstract class HTTPService {
       params = this.clearNullValues(params);
     }
 
+    const headers = this.getHeaders();
+
     return this.http
-      .delete(url, { headers: this.headers, params, ...extraOptions })
+      .delete(url, { headers, params, ...extraOptions })
       .pipe(
         retryWhen((err) => this.waitAndRetry(err)),
         catchError((err) => (silent ? observableThrowError(err) : this.catchError(err)))
