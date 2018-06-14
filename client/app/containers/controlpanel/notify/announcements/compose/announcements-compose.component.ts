@@ -234,6 +234,11 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     $('#audienceSaveModal').modal('hide');
   }
 
+  onTeardownConfirm() {
+    this.shouldConfirm = false;
+    this.buttonData = { ...this.buttonData, disabled: false };
+  }
+
   onAudienceNamed({ name }) {
     $('#audienceSaveModal').modal('hide');
 

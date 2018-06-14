@@ -148,6 +148,6 @@
   <cp-announcements-confirm
     [state]="state"
     (confirmed)="onConfirmed()"
-    (teardown)="shouldConfirm = false">
+    (teardown)="onTeardownConfirm()">
   </cp-announcements-confirm>
 </cp-modal>
