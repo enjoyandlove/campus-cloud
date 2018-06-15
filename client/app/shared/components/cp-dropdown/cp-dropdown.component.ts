@@ -6,6 +6,7 @@ import {
   OnInit,
   Output
 } from '@angular/core';
+import { get as _get } from 'lodash';
 import { Observable, of as observableOf } from 'rxjs';
 
 interface IItems {
@@ -58,8 +59,12 @@ export class CPDropdownComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.items[0].disabled) {
-      this.tooltipText = this.items[0].tooltipText;
+    if (this.items && this.items.length) {
+      const disabled = _get(this.items[0], 'disabled', false);
+
+      if (disabled) {
+        this.tooltipText = this.items[0].tooltipText;
+      }
     }
 
     if (!this.reset) {
