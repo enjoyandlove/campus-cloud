@@ -25,7 +25,8 @@
                 [items]="studentFilter"
                 class="topbar--dropdown"
                 [selectedItem]="state.for"
-                (selected)="onStudentChange($event)">
+                (selected)="onStudentChange($event)"
+                [disabled]="studentFilter.length === 1">
               </cp-dropdown>
             </div>
             <div class="col-3 text-center">
