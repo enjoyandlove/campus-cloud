@@ -24,6 +24,7 @@ interface IItems {
 })
 export class CPDropdownComponent implements OnInit {
   @Input() items: IItems[];
+  @Input() disabled = false;
   @Input() selectedItem: any;
   @Input() isRequiredError: boolean;
   @Input() reset: Observable<boolean>;

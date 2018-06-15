@@ -16,7 +16,7 @@ export class EngagementService extends HTTPService {
     const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}`;
     const url = `${common}/${startRange};${endRange}`;
 
-    return super.get(url, search);
+    return super.get(url, search, true);
   }
 
   postAnnouncements(search: HttpParams, body: any) {
@@ -29,7 +29,7 @@ export class EngagementService extends HTTPService {
     const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER_LIST}`;
     const url = `${common}/${startRange};${endRange}`;
 
-    return super.get(url, search);
+    return super.get(url, search, true);
   }
 
   getChartData(search: HttpParams) {
