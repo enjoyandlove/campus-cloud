@@ -3,8 +3,8 @@
 @import '~styles/core/typography';
 
 .checkbox {
-  margin: 0 auto;
-  margin-top: 6px;
+  top: 6px;
+  position: relative;
 }
 
 .full-width {
