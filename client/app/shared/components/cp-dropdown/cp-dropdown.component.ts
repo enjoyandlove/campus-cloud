@@ -13,8 +13,6 @@ interface IItems {
   label: string;
   action: string;
   heading?: boolean;
-  disabled?: boolean;
-  tooltipText?: string;
 }
 
 @Component({
@@ -32,7 +30,6 @@ export class CPDropdownComponent implements OnInit {
   @Output() selected: EventEmitter<{ label: string; event: string }> = new EventEmitter();
 
   query = null;
-  tooltipText = null;
   searchFixed = true;
   isSearching = false;
   MIN_RESULTS_FOR_SEARCH = 40;
@@ -59,14 +56,6 @@ export class CPDropdownComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.items && this.items.length) {
-      const disabled = _get(this.items[0], 'disabled', false);
-
-      if (disabled) {
-        this.tooltipText = this.items[0].tooltipText;
-      }
-    }
-
     if (!this.reset) {
       this.reset = observableOf(false);
     }

@@ -35,6 +35,19 @@ export abstract class HTTPService {
     );
   }
 
+  sanitizeEntries(formData) {
+    for (const key in formData) {
+      if (typeof formData[key] === 'string' || formData[key] instanceof String) {
+        formData = {
+          ...formData,
+          [key]: formData[key].trim()
+        };
+      }
+    }
+
+    return formData;
+  }
+
   getHeaders() {
     const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
 
@@ -84,10 +97,11 @@ export abstract class HTTPService {
     }
 
     data = CPObj.cleanNullValues(data);
+
     const headers = this.getHeaders();
 
     return this.http
-      .post(url, data, { headers, params })
+      .post(url, this.sanitizeEntries(data), { headers, params })
       .pipe(
         retryWhen((err) => this.waitAndRetry(err)),
         catchError((err) => (silent ? observableThrowError(err) : this.catchError(err)))
@@ -103,7 +117,7 @@ export abstract class HTTPService {
     const headers = this.getHeaders();
 
     return this.http
-      .put(url, data, { headers, params })
+      .put(url, this.sanitizeEntries(data), { headers, params })
       .pipe(
         retryWhen((err) => this.waitAndRetry(err)),
         catchError((err) => (silent ? observableThrowError(err) : this.catchError(err)))

@@ -95,7 +95,5 @@ export class StudentsTopBarComponent implements OnInit {
         return items;
       })
     );
-
-    // this.lists$.subscribe();
   }
 }
