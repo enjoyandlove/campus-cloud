@@ -3,7 +3,8 @@
   <button
     type="button"
     data-toggle="dropdown"
-    [disabled]="disabled ||items.length === 1"
+    [disabled]="items[0].disabled || disabled"
+    [attr.title]="[items[0].disabled ? items[0].tooltipText : null]"
     [class.cpbtn--cancel--error]="isRequiredError"
     class="cpbtn cpbtn--cancel cp-dropdown__button text-truncate">
     <div class="row">

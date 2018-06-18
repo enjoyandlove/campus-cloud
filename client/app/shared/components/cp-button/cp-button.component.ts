@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, HostListener } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { isProd } from './../../../config/env';
 import { CPTrackingService } from './../../services/tracking.service';
@@ -23,13 +23,6 @@ export class CPButtonComponent implements OnInit {
   @Output() buttonClick: EventEmitter<Event> = new EventEmitter();
 
   constructor(private track: CPTrackingService) {}
-
-  @HostListener('document:keydown', ['$event'])
-  onEnter(event) {
-    if (event.keyCode === 13 && !this.props.disabled) {
-      this.onClick(event);
-    }
-  }
 
   trackGa() {
     const { eventCategory, eventAction } = this.props.trackingData;

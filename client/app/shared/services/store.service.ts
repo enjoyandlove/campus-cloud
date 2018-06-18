@@ -180,7 +180,10 @@ export class StoreService extends HTTPService {
           return [
             {
               value: null,
-              label: cpI18n.translate('select_host')
+              heading: true,
+              disabled: true,
+              label: cpI18n.translate('select_host'),
+              tooltipText: cpI18n.translate('error_no_hosts_found_help')
             }
           ];
         }

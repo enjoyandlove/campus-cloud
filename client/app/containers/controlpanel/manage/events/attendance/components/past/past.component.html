@@ -2,13 +2,13 @@
   <div class="col-4 text-center">
     <div class="cp-card">
       <p class="header__digit">{{ event.verified_checkins }}</p>
-      <p>{{ 'events_check_in' | cpI18n }}</p>
+      <p i18n>{{ 'events_check_in' | cpI18n }}</p>
     </div>
   </div>
   <div class="col-4 text-center">
     <div class="cp-card">
       <p class="header__digit">{{ event.num_ratings }}</p>
-      <p>{{ 'responses' | cpI18n }}</p>
+      <p i18n>{{ 'responses' | cpI18n }}</p>
     </div>
   </div>
   <div class="col-4 text-center">
@@ -20,7 +20,7 @@
           [maxRate]="event.rating_scale_maximum">
         </cp-stars>
       </p>
-      <p>
+      <p i18n>
         {{ 'average_rating' | cpI18n }}:
         <strong *ngIf="event.rating_scale_maximum > -1">
           {{ ((event.rating_scale_maximum * event.avg_rating_percent) / 100).toFixed(1) }}
@@ -58,7 +58,7 @@
             <div [class]="isOrientation ? 'col-4' : 'col-3'">
               <span
                 class="hover"
-                (click)="doSort('firstname')">
+                (click)="doSort('firstname')" i18n>
                 {{ 'attendee' | cpI18n }}
                 <span *ngIf="state.sort_field === 'name'">
                   <i class="material-icons">
@@ -70,7 +70,7 @@
             <div class="col-1 rsvp_column" *ngIf="!isOrientation">
               <span
                 class="hover"
-                (click)="doSort('rsvp')">
+                (click)="doSort('rsvp')" i18n>
                 {{ 'rsvp' | cpI18n }}
                 <span *ngIf="state.sort_field === 'rsvp'">
                   <i class="material-icons">
@@ -82,7 +82,7 @@
             <div class="col-2">
               <span
                 class="hover"
-                (click)="doSort('check_in_method')">
+                (click)="doSort('check_in_method')" i18n>
                 {{ 'events_checked_in_method' | cpI18n }}
                 <span *ngIf="state.sort_field === 'check_in_method'">
                   <i class="material-icons">
@@ -92,12 +92,12 @@
               </span>
             </div>
             <div class="col-3">
-              <span>{{ 'student_feedback' | cpI18n }}</span>
+              <span i18n>{{ 'student_feedback' | cpI18n }}</span>
             </div>
             <div class="col-3">
               <span
                 class="hover"
-                (click)="doSort('feedback_rating')">
+                (click)="doSort('feedback_rating')" i18n>
                 {{ 'rating' | cpI18n }}
                 <span *ngIf="state.sort_field === 'feedback_rating'">
                   <i class="material-icons">

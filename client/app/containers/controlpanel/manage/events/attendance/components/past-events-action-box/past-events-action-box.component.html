@@ -4,11 +4,10 @@
       <cp-searchbox (query)="onSearch($event)"></cp-searchbox>
     </div>
     <div
-      *ngIf="canDownload"
       class="col text-right">
       <button
         (click)="downloadExcel()"
-        class="cpbtn cpbtn--primary">
+        class="cpbtn cpbtn--primary" i18n>
         {{ 'download_csv' | cpI18n }}
       </button>
     </div>

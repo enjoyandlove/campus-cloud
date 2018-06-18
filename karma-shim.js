@@ -15,7 +15,7 @@ require('zone.js/dist/fake-async-test');
 
 import 'jquery';
 import 'rxjs';
-require('node_modules/bootstrap/dist/js/bootstrap.bundle.min');
+require('node_modules/bootstrap-sass/assets/javascripts/bootstrap.min');
 
 /*
  Ok, this is kinda crazy. We can use the the context method on
