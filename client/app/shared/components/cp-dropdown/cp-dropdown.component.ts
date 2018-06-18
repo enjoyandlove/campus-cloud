@@ -6,6 +6,7 @@ import {
   OnInit,
   Output
 } from '@angular/core';
+import { get as _get } from 'lodash';
 import { Observable, of as observableOf } from 'rxjs';
 
 interface IItems {
