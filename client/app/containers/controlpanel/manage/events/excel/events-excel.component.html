@@ -3,20 +3,22 @@
 
   <div *ngSwitchCase="true">
     <div class="row">
-      <cp-import-top-bar
-        [storeId]="storeId"
-        [clubId]="clubId"
-        [isClub]="isClub"
-        [serviceId]="serviceId"
-        [isService]="isService"
-        [isChecked]="isChecked"
-        [isOrientation]="isOrientation"
-        (bulkChange)="onBulkChange($event)"
-        (checkAll)="onCheckAll($event)"
-        (hostChange)="onHostBulkChange($event)"
-        (imageChange)="onImageBulkChange($event)"
-        [props]="uploadButtonData" >
-      </cp-import-top-bar>
+      <div class="col-12">
+        <cp-import-top-bar
+          [storeId]="storeId"
+          [clubId]="clubId"
+          [isClub]="isClub"
+          [serviceId]="serviceId"
+          [isService]="isService"
+          [isChecked]="isChecked"
+          [isOrientation]="isOrientation"
+          (bulkChange)="onBulkChange($event)"
+          (checkAll)="onCheckAll($event)"
+          (hostChange)="onHostBulkChange($event)"
+          (imageChange)="onImageBulkChange($event)"
+          [props]="uploadButtonData" >
+        </cp-import-top-bar>
+      </div>
     </div>
 
     <div class="row margin-bottom">
