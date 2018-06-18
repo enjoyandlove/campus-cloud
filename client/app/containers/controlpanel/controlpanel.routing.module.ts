@@ -42,7 +42,9 @@ const appRoutes: Routes = [
       {
         path: 'settings',
         loadChildren: './settings/settings.module#SettingsModule'
-      }
+      },
+
+      { path: '**', redirectTo: 'dashboard' }
     ]
   }
 ];
