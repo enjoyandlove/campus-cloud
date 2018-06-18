@@ -71,7 +71,7 @@ export class DashboardDatePickerComponent implements OnInit, AfterViewInit, OnDe
 
       this.triggerChange();
 
-      // $(this.calendarEl.nativeElement).dropdown('toggle');
+      $(this.calendarEl.nativeElement).dropdown('toggle');
     }
   }
 

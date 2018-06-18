@@ -44,9 +44,15 @@ describe('CPDropdownComponent', () => {
   });
 
   it('ngOnInit', () => {
+    const expectedToolTip = 'toolt tip';
+    comp.items[0] = Object.assign({}, comp.items[0], {
+      disabled: true,
+      tooltipText: expectedToolTip
+    });
     comp.ngOnInit();
+    expect(comp.tooltipText).toBe(expectedToolTip);
 
-    const spy = spyOn(comp, 'resetDropdown');
+    let spy = spyOn(comp, 'resetDropdown');
 
     comp.reset.subscribe((reset) => {
       if (reset) {
