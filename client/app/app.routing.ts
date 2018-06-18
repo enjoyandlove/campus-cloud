@@ -26,7 +26,9 @@ const routes: Routes = [
     loadChildren: './containers/callback/callback.module#CallbackModule'
   },
 
-  { path: 'logout', component: LogoutComponent }
+  { path: 'logout', component: LogoutComponent },
+
+  { path: '**', redirectTo: 'login' }
 ];
 
 @NgModule({
