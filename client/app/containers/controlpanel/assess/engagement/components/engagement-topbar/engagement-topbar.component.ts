@@ -243,7 +243,7 @@ export class EngagementTopBarComponent implements OnInit {
       }
     ];
 
-    this.route.data.subscribe((res: any) => {
+    this.route.data.subscribe((res: { zendesk: string; data: Array<any> }) => {
       // @data [services, lists]
       const _lists = [...this.commonStudentFilter];
       const _engagements = [...this.commonEngageMentFilter];

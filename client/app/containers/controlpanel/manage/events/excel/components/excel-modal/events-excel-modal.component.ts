@@ -46,7 +46,7 @@ export class EventsExcelModalComponent implements OnInit {
         return Promise.resolve();
       })
       .catch((err) => {
-        const serverError = err.json().error;
+        const serverError = err.error.error;
 
         return Promise.reject(
           serverError ? serverError : this.cpI18n.translate('something_went_wrong')

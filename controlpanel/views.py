@@ -66,14 +66,15 @@ def import_events(request):
 
 
         if parser.date_not_in_past(item['start_date']) is False:
-            return JsonResponse({"error": 'Start date can not be in the past'},
-                                safe=False, status=400)
+            error = '{} Start date can not be in the past'.format(item['title'])
+
+            return JsonResponse({"error": error}, safe=False, status=400)
 
 
         if parser.future_dates_is_greater_than_past(item['end_date'],
                                                     item['start_date']) is False:
-            return JsonResponse({"error": 'Start date can not be greater than end date'},
-                                safe=False, status=400)
+            error = '{} Start date can not be greater than end date'.format(item['title'])
+            return JsonResponse({"error": error}, safe=False, status=400)
 
     return JsonResponse(json.dumps(parsed_data), safe=False)
 
