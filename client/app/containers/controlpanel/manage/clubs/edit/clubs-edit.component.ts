@@ -1,3 +1,4 @@
+import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
 import { HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -146,11 +147,19 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
       (res: any) => {
         this.router.navigate(['/manage/' + this.labels.club_athletic + '/' + res.id + '/info']);
       },
-      (err) => {
+      (_) => {
         this.buttonData = Object.assign({}, this.buttonData, {
           disabled: false
         });
-        throw new Error(err);
+        this.store.dispatch({
+          type: SNACKBAR_SHOW,
+          payload: {
+            body: this.cpI18n.translate('something_went_wrong'),
+            sticky: true,
+            class: 'danger',
+            autoClose: false
+          }
+        });
       }
     );
   }

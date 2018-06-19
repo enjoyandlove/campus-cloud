@@ -62,12 +62,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
 
     const stores$ = this.storeService.getStores(search);
 
-    super
-      .fetchData(stores$)
-      .then((res) => (this.stores = res.data))
-      .catch((err) => {
-        throw new Error(err);
-      });
+    super.fetchData(stores$).then((res) => (this.stores = res.data));
   }
 
   onHostSelected(store_id) {
