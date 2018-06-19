@@ -128,6 +128,12 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
   }
 
   setSuggestions(suggestions): void {
+    if (!suggestions) {
+      this.state = Object.assign({}, this.state, { suggestions: [] });
+
+      return;
+    }
+
     const showAll = this.disableLocations === undefined;
     const newSuggestions = showAll
       ? [...this.noResultsIfEmpty(suggestions[0]), ...this.noResultsIfEmpty(suggestions[1])]
