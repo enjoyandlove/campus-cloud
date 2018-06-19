@@ -1,3 +1,4 @@
+import { canSchoolWriteResource } from './../../../../../shared/utils/privileges/privileges';
 /* tslint:disable:max-line-length */
 import { Component, OnInit, OnDestroy, HostListener, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -171,7 +172,7 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
     let canDoEmergency;
 
     this.typeAheadOpts = {
-      withSwitcher: true,
+      withSwitcher: canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.audience),
       suggestions: this.suggestions,
       reset: this.resetChips$,
       unsetOverflow: true
