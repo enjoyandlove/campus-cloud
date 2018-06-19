@@ -1,13 +1,11 @@
-import { Router, ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import { StoreModule } from '@ngrx/store';
-
 import { TestBed, async, fakeAsync, ComponentFixture } from '@angular/core/testing';
+import { Router, ActivatedRoute } from '@angular/router';
+import { StoreModule } from '@ngrx/store';
+import { of as observableOf } from 'rxjs';
 
 import { AuthService } from './../../auth/auth.service';
 import { CPI18nService } from '../../../shared/services';
 import { FormsModule, FormBuilder } from '@angular/forms';
-import { ALERT_DEFAULT } from '../../../reducers/alert.reducer';
 import { ErrorService } from './../../../shared/services/error.service';
 import { CallbackPasswordResetComponent } from './callback-password-reset.component';
 
@@ -19,7 +17,7 @@ class RouterMock {
 
 class MockAuthService {
   submitPasswordReset(_) {
-    return Observable.of(true);
+    return observableOf(true);
   }
 }
 
@@ -42,7 +40,7 @@ describe('Password Reset', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [FormsModule, StoreModule.forRoot({ ALERT: ALERT_DEFAULT })],
+        imports: [FormsModule, StoreModule.forRoot({})],
         declarations: [CallbackPasswordResetComponent],
         providers: [
           FormBuilder,
@@ -69,7 +67,7 @@ describe('Password Reset', () => {
     authService = TestBed.get(AuthService);
 
     spyError = spyOn(errorService, 'handleError');
-    spySubmit = spyOn(authService, 'submitPasswordReset').and.returnValue(Observable.of(true));
+    spySubmit = spyOn(authService, 'submitPasswordReset').and.returnValue(observableOf(true));
   });
 
   it(

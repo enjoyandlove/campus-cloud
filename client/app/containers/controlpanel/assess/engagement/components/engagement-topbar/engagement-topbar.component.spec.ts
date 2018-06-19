@@ -1,6 +1,6 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { of as observableOf } from 'rxjs';
 
 import { CPSession } from './../../../../../../session';
 import { mockUser } from './../../../../../../session/mock/user';
@@ -11,7 +11,7 @@ import { EngagementTopBarComponent } from './engagement-topbar.component';
 class MockActivatedRoute {
   data = {
     subscribe: jasmine.createSpy('subscribe').and.returnValue(
-      Observable.of({
+      observableOf({
         data: {
           sopa: 1
         }

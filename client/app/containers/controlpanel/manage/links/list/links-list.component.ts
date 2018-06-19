@@ -1,11 +1,10 @@
+import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
-
-import { ILink } from '../link.interface';
-import { LinksService } from '../links.service';
 import { CPSession } from './../../../../../session/index';
 import { BaseComponent } from '../../../../../base/base.component';
 import { CPI18nService } from '../../../../../shared/services/index';
+import { ILink } from '../link.interface';
+import { LinksService } from '../links.service';
 
 interface IState {
   links: Array<ILink>;
@@ -82,11 +81,11 @@ export class LinksListComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    const search = new URLSearchParams();
-    search.append('search_str', this.state.search_str);
-    search.append('sort_field', this.state.sort_field);
-    search.append('sort_direction', this.state.sort_direction);
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams()
+      .set('search_str', this.state.search_str)
+      .set('sort_field', this.state.sort_field)
+      .set('sort_direction', this.state.sort_direction)
+      .set('school_id', this.session.g.get('school').id.toString());
 
     const end = this.endRange;
     const start = this.startRange;

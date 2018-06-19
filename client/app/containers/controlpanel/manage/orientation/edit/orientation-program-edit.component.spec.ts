@@ -1,18 +1,16 @@
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Observable } from 'rxjs/Observable';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
-import { Store, StoreModule } from '@ngrx/store';
-import { URLSearchParams } from '@angular/http';
-
+import { RouterTestingModule } from '@angular/router/testing';
+import { StoreModule } from '@ngrx/store';
+import { of as observableOf } from 'rxjs';
 import { CPSession } from './../../../../../session';
-import { OrientationService } from '../orientation.services';
+import { OrientationProgramEditComponent } from './orientation-program-edit.component';
+import { reducers } from '../../../../../reducers';
 import { mockSchool } from '../../../../../session/mock/school';
-import { OrientationUtilsService } from '../orientation.utils.service';
-import { headerReducer, snackBarReducer } from '../../../../../reducers';
 import { CPI18nService } from '../../../../../shared/services/i18n.service';
 import { OrientationDetailsModule } from '../details/orientation-details.module';
-import { OrientationProgramEditComponent } from './orientation-program-edit.component';
+import { OrientationService } from '../orientation.services';
+import { OrientationUtilsService } from '../orientation.utils.service';
 
 class MockOrientationService {
   dummy;
@@ -20,17 +18,13 @@ class MockOrientationService {
   editProgram(programId: number, body: any, search: any) {
     this.dummy = [programId, body, search];
 
-    return Observable.of({});
+    return observableOf({});
   }
 }
 
 describe('OrientationProgramEditComponent', () => {
   let spy;
-  let search;
-  let storeSpy;
-  let store: Store<any>;
   let component: OrientationProgramEditComponent;
-  let service: OrientationService;
   let fixture: ComponentFixture<OrientationProgramEditComponent>;
 
   const editProgram = {
@@ -51,8 +45,8 @@ describe('OrientationProgramEditComponent', () => {
           OrientationDetailsModule,
           RouterTestingModule,
           StoreModule.forRoot({
-            HEADER: headerReducer,
-            SNACKBAR: snackBarReducer
+            HEADER: reducers.HEADER,
+            SNACKBAR: reducers.SNACKBAR
           })
         ],
         providers: [
@@ -65,15 +59,10 @@ describe('OrientationProgramEditComponent', () => {
       })
         .compileComponents()
         .then(() => {
-          store = TestBed.get(Store);
-          storeSpy = spyOn(store, 'dispatch').and.callThrough();
           fixture = TestBed.createComponent(OrientationProgramEditComponent);
           component = fixture.componentInstance;
-          service = TestBed.get(OrientationService);
 
-          search = new URLSearchParams();
           component.session.g.set('school', mockSchool);
-          search.append('school_id', component.session.g.get('school').id.toString());
 
           component.orientationProgram = {
             id: 84,
@@ -117,7 +106,7 @@ describe('OrientationProgramEditComponent', () => {
 
   it('should update orientation program', () => {
     spyOn(component, 'resetModal');
-    spy = spyOn(component.service, 'editProgram').and.returnValue(Observable.of(editProgram));
+    spy = spyOn(component.service, 'editProgram').and.returnValue(observableOf(editProgram));
 
     component.onSubmit();
     expect(spy).toHaveBeenCalled();

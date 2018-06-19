@@ -1,11 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { URLSearchParams } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
-
-import { FeedsService } from '../../feeds.service';
-import { CPSession } from '../../../../../../session';
+import { HttpParams } from '@angular/common/http';
+import { Component, Input, OnInit } from '@angular/core';
+import { BehaviorSubject, combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { BaseComponent } from '../../../../../../base/base.component';
+import { CPSession } from '../../../../../../session';
+import { FeedsService } from '../../feeds.service';
 
 interface ICurrentView {
   label: string;
@@ -120,8 +119,6 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    const search = new URLSearchParams();
-
     const flagged = this.state.flagged_by_users_only
       ? this.state.flagged_by_users_only.toString()
       : null;
@@ -132,15 +129,14 @@ export class FeedsComponent extends BaseComponent implements OnInit {
 
     const type = this.state.post_types ? this.state.post_types.toString() : null;
 
-    search.append('post_types', type);
-    search.append('flagged_by_users_only', flagged);
-    search.append('removed_by_moderators_only', removed);
+    let search = new HttpParams()
+      .append('post_types', type)
+      .append('flagged_by_users_only', flagged)
+      .append('removed_by_moderators_only', removed);
 
-    if (this.state.isCampusThread) {
-      search.append('school_id', this.session.g.get('school').id.toString());
-    } else {
-      search.append('group_id', this.state.wall_type.toString());
-    }
+    search = this.state.isCampusThread
+      ? search.append('school_id', this.session.g.get('school').id.toString())
+      : search.append('group_id', this.state.wall_type.toString());
 
     const stream$ = this.doAdvancedSearch(search);
 
@@ -159,25 +155,29 @@ export class FeedsComponent extends BaseComponent implements OnInit {
     const campusThread$ = this.service.getCampusWallFeeds(this.startRange, this.endRange, search);
 
     if (this.state.isCampusThread) {
-      const _search = new URLSearchParams();
-      _search.append('school_id', this.session.g.get('school').id.toString());
+      const _search = new HttpParams().append(
+        'school_id',
+        this.session.g.get('school').id.toString()
+      );
 
       const channels$ = this.service.getChannelsBySchoolId(1, 1000, _search);
 
-      stream$ = Observable.combineLatest(campusThread$, channels$).map((res) => {
-        const result = [];
-        const threads = res[0];
-        this.channels = res[1];
+      stream$ = combineLatest(campusThread$, channels$).pipe(
+        map((res: any) => {
+          const result = [];
+          const threads = res[0];
+          this.channels = res[1];
 
-        threads.forEach((thread) => {
-          result.push({
-            ...thread,
-            channelName: this.getChannelNameFromArray(this.channels, thread)
+          threads.forEach((thread) => {
+            result.push({
+              ...thread,
+              channelName: this.getChannelNameFromArray(this.channels, thread)
+            });
           });
-        });
 
-        return result;
-      });
+          return result;
+        })
+      );
     } else {
       return groupThread$;
     }

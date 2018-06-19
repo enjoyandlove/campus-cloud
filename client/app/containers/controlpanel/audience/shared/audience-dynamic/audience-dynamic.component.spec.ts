@@ -1,12 +1,13 @@
-import { Observable } from 'rxjs/Observable';
+import { TestBed, ComponentFixture, tick, fakeAsync } from '@angular/core/testing';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { of as observableOf } from 'rxjs';
+
+import { CPSession } from './../../../../../session';
+import { CPI18nService } from '../../../../../shared/services';
+import { SharedModule } from '../../../../../shared/shared.module';
 import { AudienceSharedModule } from './../audience.shared.module';
 import { AudienceSharedService } from './../audience.shared.service';
-import { CPSession } from './../../../../../session/index';
-import { TestBed, ComponentFixture, tick, fakeAsync } from '@angular/core/testing';
-import { SharedModule } from '../../../../../shared/shared.module';
 import { AudienceDynamicComponent } from './audience-dynamic.component';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { CPI18nService } from '../../../../../shared/services';
 
 class MockService {
   dummy;
@@ -14,7 +15,7 @@ class MockService {
   getFilters(search) {
     this.dummy = search;
 
-    return Observable.of([
+    return observableOf([
       {
         count: 0,
         type: 1,

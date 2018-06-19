@@ -1,26 +1,26 @@
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, OnInit, Input } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-
-import {
-  ErrorService,
-  StoreService,
-  AdminService,
-  CPI18nService, CPTrackingService
-} from '../../../../../shared/services';
-
-import { EventsService } from '../events.service';
+import { BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { isProd } from './../../../../../config/env';
-import { CPSession, ISchool } from '../../../../../session';
-import { CPMap, CPDate } from '../../../../../shared/utils';
-import { EventUtilService } from '../events.utils.service';
-import { EventAttendance, EventFeedback, isAllDay } from '../event.status';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { CPSession, ISchool } from '../../../../../session';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import {
+  AdminService,
+  CPI18nService,
+  CPTrackingService,
+  ErrorService,
+  StoreService
+} from '../../../../../shared/services';
+import { CPDate, CPMap } from '../../../../../shared/utils';
+import { EventAttendance, EventFeedback, isAllDay } from '../event.status';
+import { EventsService } from '../events.service';
+import { EventUtilService } from '../events.utils.service';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
 const FORMAT_WITHOUT_TIME = 'F j, Y';
@@ -107,28 +107,29 @@ export class EventsCreateComponent implements OnInit {
   }
 
   fetchManagersBySelectedStore(storeId) {
-    const search: URLSearchParams = new URLSearchParams();
-
-    search.append('store_id', storeId);
-    search.append('school_id', this.school.id.toString());
-    search.append('privilege_type', this.utils.getPrivilegeType(this.isOrientation));
+    const search: HttpParams = new HttpParams()
+      .append('store_id', storeId)
+      .append('school_id', this.school.id.toString())
+      .append('privilege_type', this.utils.getPrivilegeType(this.isOrientation));
 
     this.adminService
       .getAdminByStoreId(search)
-      .map((admins) => {
-        return [
-          {
-            label: '---',
-            value: null
-          },
-          ...admins.map((admin) => {
-            return {
-              label: `${admin.firstname} ${admin.lastname}`,
-              value: admin.id
-            };
-          })
-        ];
-      })
+      .pipe(
+        map((admins: any) => {
+          return [
+            {
+              label: '---',
+              value: null
+            },
+            ...admins.map((admin) => {
+              return {
+                label: `${admin.firstname} ${admin.lastname}`,
+                value: admin.id
+              };
+            })
+          ];
+        })
+      )
       .subscribe(
         (managers) => (this.managers = managers),
         (err) => {
@@ -257,14 +258,15 @@ export class EventsCreateComponent implements OnInit {
       return;
     }
 
-    const search = new URLSearchParams();
+    let search = new HttpParams();
     if (this.orientationId) {
-      search.append('school_id', this.session.g.get('school').id);
-      search.append('calendar_id', this.orientationId.toString());
+      search = search
+        .append('school_id', this.session.g.get('school').id)
+        .append('calendar_id', this.orientationId.toString());
     }
 
     this.service.createEvent(this.form.value, search).subscribe(
-      (res) => {
+      (res: any) => {
         this.urlPrefix = this.getUrlPrefix(res.id);
         this.router.navigate([this.urlPrefix]);
       },
@@ -331,10 +333,8 @@ export class EventsCreateComponent implements OnInit {
     this.eventFeedbackEnabled = EventFeedback.enabled;
 
     this.school = this.session.g.get('school');
-    const search: URLSearchParams = new URLSearchParams();
-
+    const search: HttpParams = new HttpParams().append('school_id', this.school.id.toString());
     this.buildHeader();
-    search.append('school_id', this.school.id.toString());
 
     this.stores$ = this.storeService.getStores(search);
 

@@ -1,7 +1,7 @@
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 
 import { StudentsService } from './../students.service';
@@ -71,8 +71,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
   }
 
   fetchStudentData() {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     this.service.getStudentById(search, this.studentId).subscribe((student) => {
       this.student = student;
@@ -89,9 +88,9 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
   }
 
   fetch() {
-    const search = new URLSearchParams();
-    search.append('scope', this.state.scope.toString());
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams()
+      .append('scope', this.state.scope.toString())
+      .append('school_id', this.session.g.get('school').id.toString());
 
     const stream$ = this.service.getEngagements(
       search,
@@ -161,10 +160,10 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
   }
 
   onDownload() {
-    const search = new URLSearchParams();
-    search.append('scope', this.state.scope.toString());
-    search.append('all', DOWNLOAD_ALL_RECORDS.toString());
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams()
+      .append('scope', this.state.scope.toString())
+      .append('all', DOWNLOAD_ALL_RECORDS.toString())
+      .append('school_id', this.session.g.get('school').id.toString());
 
     const stream$ = this.service.getEngagements(
       search,
@@ -187,7 +186,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
       service: this.cpI18n.translate('service')
     };
 
-    stream$.toPromise().then((data) => {
+    stream$.toPromise().then((data: any) => {
       data = data.map((item) => {
         return {
           [this.cpI18n.translate('assess_check_in_time')]: item.name,

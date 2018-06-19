@@ -1,16 +1,14 @@
-import { Observable } from 'rxjs/Observable';
-import { URLSearchParams } from '@angular/http';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-
+import { BehaviorSubject, combineLatest } from 'rxjs';
+import { CPSession } from './../../../../../../session';
 import { ICalendar } from './../../calendars.interface';
 import { BaseComponent } from '../../../../../../base';
-import { FORMAT } from '../../../../../../shared/pipes';
-import { CPSession } from './../../../../../../session';
-import { CalendarsService } from '../../calendars.services';
 import { HEADER_UPDATE, IHeader } from '../../../../../../reducers/header.reducer';
+import { FORMAT } from '../../../../../../shared/pipes';
+import { CalendarsService } from '../../calendars.services';
 
 @Component({
   selector: 'cp-calendars-items-details',
@@ -59,16 +57,17 @@ export class CalendarsItemsDetailsComponent extends BaseComponent implements OnI
   }
 
   fetch() {
-    const calendarSearch = new URLSearchParams();
-    const itemSearch = new URLSearchParams();
-    itemSearch.append('school_id', this.session.g.get('school').id.toString());
-    itemSearch.append('academic_calendar_id', this.calendarId.toString());
-
-    calendarSearch.append('school_id', this.session.g.get('school').id.toString());
+    const calendarSearch = new HttpParams().append(
+      'school_id',
+      this.session.g.get('school').id.toString()
+    );
+    const itemSearch = new HttpParams()
+      .append('school_id', this.session.g.get('school').id.toString())
+      .append('academic_calendar_id', this.calendarId.toString());
 
     const item$ = this.service.getItemById(this.itemId, itemSearch);
     const calendar$ = this.service.getCalendarById(this.calendarId, calendarSearch);
-    const stream$ = Observable.combineLatest(item$, calendar$);
+    const stream$ = combineLatest(item$, calendar$);
 
     super.fetchData(stream$).then((res) => {
       this.item = res.data[0];

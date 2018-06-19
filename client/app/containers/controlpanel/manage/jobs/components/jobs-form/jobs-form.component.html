@@ -2,13 +2,13 @@
   <form [formGroup]="form">
     <div class="cp-card">
       <div class="row item-details">
-        <div class="col-xs-12">
+        <div class="col-12">
           <p class="title">{{ 'jobs_job_details' | cpI18n }}</p>
           <div class="form-group margin-top">
             <label>
               {{ 'jobs_job_title' | cpI18n }}
             </label>
-            <span class="pull-right">
+            <span class="float-right">
                 {{ form.controls.title.value ? form.controls.title.value.length : 0 }}/120
             </span>
             <input
@@ -29,14 +29,14 @@
           </div>
 
           <div class="row form-group">
-            <div class="col-xs-6">
+            <div class="col-6">
               <label>{{ 'jobs_posting_start_date' | cpI18n }}</label>
               <cp-datepicker
                 [options]="postingStartDatePickerOptions"
                 [error]="formError && form.controls['posting_start'].hasError('required')">
               </cp-datepicker>
             </div>
-            <div class="col-xs-6">
+            <div class="col-6">
               <label>{{ 'jobs_posting_end_date' | cpI18n }}</label>
               <cp-datepicker
                 [options]="postingEndDatePickerOptions"
@@ -46,13 +46,13 @@
           </div>
 
           <div class="row form-group">
-            <div class="col-xs-6">
+            <div class="col-6">
               <label>{{ 'jobs_job_start_date' | cpI18n }}</label>
               <cp-datepicker
                 [options]="contractStartDatePickerOptions">
               </cp-datepicker>
             </div>
-            <div class="col-xs-6">
+            <div class="col-6">
               <label>{{ 'jobs_application_deadline' | cpI18n }}</label>
               <cp-datepicker
                 [options]="applicationDeadlineDatePickerOptions">
@@ -61,10 +61,10 @@
           </div>
 
           <div class="row">
-            <div class="col-xs-12">
+            <div class="col-12">
               <label>{{ 'location' | cpI18n }}</label>
               <div class="row form-group">
-                <div class="col-xs-12">
+                <div class="col-12">
                   <input
                     type="text"
                     class="form-control"
@@ -75,10 +75,10 @@
           </div>
 
           <div class="row form-group">
-            <div class="col-xs-12">
+            <div class="col-12">
               <label>{{ 'jobs_desired_year_of_study' | cpI18n }}</label>
               <div class="row form-group">
-                <div class="col-xs-4 jobs-study" *ngFor="let item of desiredStudy;">
+                <div class="col-4 jobs-study" *ngFor="let item of desiredStudy;">
                   <cp-checkbox
                     class="checkbox"
                     (toggle)="onJobTypeDesiredStudyToggle(item.name, $event)"
@@ -89,10 +89,10 @@
               </div>
             </div>
 
-            <div class="col-xs-12">
+            <div class="col-12">
               <label>{{ 'jobs_job_type' | cpI18n }}</label>
               <div class="row form-group">
-                <div class="col-xs-4 jobs-study" *ngFor="let job of jobsType;">
+                <div class="col-4 jobs-study" *ngFor="let job of jobsType;">
                   <cp-checkbox
                     class="checkbox"
                     (toggle)="onJobTypeDesiredStudyToggle(job.name, $event)"

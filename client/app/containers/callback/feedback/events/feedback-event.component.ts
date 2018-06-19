@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 
 import { BaseComponent } from '../../../../base/base.component';
 import { FeedbackService } from '../feedback.service';
@@ -16,7 +16,7 @@ export class FeedbackEventComponent extends BaseComponent implements OnInit {
   loading;
   isEvent = true;
   eventId: number;
-  search: URLSearchParams = new URLSearchParams();
+  search: HttpParams;
   isSubmitted$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(private route: ActivatedRoute, private feedbackService: FeedbackService) {
@@ -43,7 +43,7 @@ export class FeedbackEventComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.search.append('id', this.eventId.toString());
+    this.search = new HttpParams().append('id', this.eventId.toString());
 
     this.fetch();
   }

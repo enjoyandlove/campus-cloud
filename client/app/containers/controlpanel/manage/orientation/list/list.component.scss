@@ -1,5 +1,4 @@
 @import '~styles/core/colors';
-@import '~bootstrap/variables';
 @import '~styles/components/form';
 @import '~styles/components/card';
 @import '~styles/components/button';
@@ -29,7 +28,7 @@
 }
 
 .action {
-  &.open {
+  &.show {
     .orientation__dropdown {
       display: block;
     }
@@ -66,4 +65,9 @@
       }
     }
   }
+}
+
+.dropdown-menu {
+  border: none;
+  background: transparent;
 }

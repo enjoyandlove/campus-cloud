@@ -1,6 +1,7 @@
 import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
+import { map, startWith } from 'rxjs/operators';
 import { find } from 'lodash';
 
 import { BaseComponent } from '../../../../../base';
@@ -186,19 +187,17 @@ export class AudienceDynamicComponent extends BaseComponent implements OnInit {
   }
 
   fetch() {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
-    const stream$ = this.service
-      .getFilters(search)
-      .startWith([
+    const stream$ = this.service.getFilters(search).pipe(
+      startWith([
         {
           id: null,
           heading: true,
           label: this.cpI18n.translate('select_filter')
         }
-      ])
-      .map((response) => {
+      ]),
+      map((response: any) => {
         return [
           {
             id: null,
@@ -213,7 +212,8 @@ export class AudienceDynamicComponent extends BaseComponent implements OnInit {
             };
           })
         ];
-      });
+      })
+    );
 
     super.fetchData(stream$).then(({ data }) => {
       this.filtersData = data;

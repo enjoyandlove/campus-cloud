@@ -258,7 +258,7 @@
     "message": "Urgent Announcement"
   },
   "announcement_confirm_urgent_body": {
-    "message": "You are about to send an emergency notification."
+    "message": "You are about to send an urgent notification."
   },
   "announcement_success_sent": {
     "message": "Success! Your message has been sent"
@@ -958,7 +958,7 @@
     "message": "Banner"
   },
   "customization_description": {
-    "message": "(High resolution images work best.  JPEG or PNG format, 5 MB or smaller.)"
+    "message": "(High resolution images work best.  JPEG or PNG format, 5 MB or smaller. You can scroll with your mouse to zoom in or out.)"
   },
   "customization_image_upload_error": {
     "message": "Something went wrong while uploading your image"
@@ -2472,6 +2472,9 @@
   },
   "t_shared_show": {
     "message": "Show"
+  },
+  "t_tile_button_default": {
+    "message": "Default"
   },
   "update": {
     "message": "Update",

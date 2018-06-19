@@ -1,53 +1,53 @@
-import { URLSearchParams, Http } from '@angular/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { API } from '../../../../config/api';
-import { BaseService } from '../../../../base';
+import { HTTPService } from '../../../../base';
 
 @Injectable()
-export class OrientationService extends BaseService {
-  constructor(http: Http, router: Router) {
+export class OrientationService extends HTTPService {
+  constructor(http: HttpClient, router: Router) {
     super(http, router);
 
     Object.setPrototypeOf(this, OrientationService.prototype);
   }
 
-  getPrograms(startRage: number, endRage: number, search: URLSearchParams) {
+  getPrograms(startRage: number, endRage: number, search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${
       API.ENDPOINTS.ORIENTATION
     }/${startRage};${endRage}`;
 
-    return super.get(url, { search }).map((res) => res.json());
+    return super.get(url, search);
   }
 
-  getProgramById(programId: number, search: URLSearchParams) {
+  getProgramById(programId: number, search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ORIENTATION}/${programId}`;
 
-    return super.get(url, { search }).map((res) => res.json());
+    return super.get(url, search);
   }
 
-  createProgram(body: any, search: URLSearchParams) {
+  createProgram(body: any, search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ORIENTATION}/`;
 
-    return super.post(url, body, { search }).map((res) => res.json());
+    return super.post(url, body, search);
   }
 
-  editProgram(programId: number, body: any, search: URLSearchParams) {
+  editProgram(programId: number, body: any, search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ORIENTATION}/${programId}`;
 
-    return super.update(url, body, { search }).map((res) => res.json());
+    return super.update(url, body, search);
   }
 
-  deleteProgram(programId: number, search: URLSearchParams) {
+  deleteProgram(programId: number, search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ORIENTATION}/${programId}`;
 
-    return super.delete(url, { search }).map((res) => res.json());
+    return super.delete(url, search);
   }
 
-  duplicateProgram(body: any, search: URLSearchParams) {
+  duplicateProgram(body: any, search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ORIENTATION}/`;
 
-    return super.post(url, body, { search }).map((res) => res.json());
+    return super.post(url, body, search);
   }
 }

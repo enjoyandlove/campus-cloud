@@ -1,7 +1,7 @@
 import { Store } from '@ngrx/store';
 import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
 import { Component, OnInit } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { CPSession } from '../../../../../session';
 import { FORMAT } from '../../../../../shared/pipes/date';
@@ -122,14 +122,14 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
   }
 
   private fetch() {
-    const search = new URLSearchParams();
     const type = this.state.type !== null ? this.state.type.toString() : null;
 
-    search.append('priority', type);
-    search.append('search_str', this.state.query);
-    search.append('sort_field', this.state.sort_field);
-    search.append('sort_direction', this.state.sort_direction);
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams()
+      .append('priority', type)
+      .append('search_str', this.state.query)
+      .append('sort_field', this.state.sort_field)
+      .append('sort_direction', this.state.sort_direction)
+      .append('school_id', this.session.g.get('school').id.toString());
 
     super
       .fetchData(this.service.getAnnouncements(search, this.startRange, this.endRange))

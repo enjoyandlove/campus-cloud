@@ -1,21 +1,21 @@
+/*tslint:disable:max-line-length*/
+import { HttpParams } from '@angular/common/http';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-
-import { CPSession } from '../../../../../session';
-import { AnnouncementsService } from '../announcements.service';
-import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
-import { CP_PRIVILEGES_MAP, STATUS } from '../../../../../shared/constants';
-import { StoreService, CPI18nService } from '../../../../../shared/services';
 import {
   AUDIENCE_IMPORTED,
   AUDIENCE_RESET_IMPORT_AUDIENCE
 } from './../../../../../reducers/audience.reducer';
 import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
+import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
 import { canSchoolReadResource } from './../../../../../shared/utils/privileges/privileges';
+import { CPSession } from '../../../../../session';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
+import { CP_PRIVILEGES_MAP, STATUS } from '../../../../../shared/constants';
+import { CPI18nService, StoreService } from '../../../../../shared/services';
+import { AnnouncementsService } from '../announcements.service';
 
 interface IState {
   isUrgent: boolean;
@@ -58,6 +58,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   isAudienceImport = false;
 
   URGENT_TYPE = 1;
+  REGULAR_TYPE = 2;
   EMERGENCY_TYPE = 0;
 
   USERS_TYPE = 1;
@@ -83,8 +84,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     public service: AnnouncementsService
   ) {
     const school = this.session.g.get('school');
-    const search: URLSearchParams = new URLSearchParams();
-    search.append('school_id', school.id.toString());
+    const search: HttpParams = new HttpParams().append('school_id', school.id.toString());
 
     this.stores$ = this.storeService.getStores(search);
   }
@@ -155,6 +155,9 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       };
       this.form.controls['list_ids'].setValue([audienceId]);
       this.form.controls['is_school_wide'].setValue(false);
+
+      this.hideEmergencyType(true);
+      this.updatePriority();
     } else {
       this.state = {
         ...this.state,
@@ -165,7 +168,30 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       };
       this.form.controls['list_ids'].setValue([]);
       this.form.controls['is_school_wide'].setValue(true);
+      this.hideEmergencyType(false);
+      this.updatePriority();
     }
+  }
+
+  updatePriority() {
+    if (this.form.controls['priority'].value === this.EMERGENCY_TYPE) {
+      this.form.controls['priority'].setValue(this.REGULAR_TYPE);
+      this.selectedType = this.types.filter((type) => type.action === this.REGULAR_TYPE)[0];
+      this.subject_prefix = {
+        label: null,
+        type: null
+      };
+    }
+  }
+
+  hideEmergencyType(setValue) {
+    this.types = this.types.map((type) => {
+      if (type.action === this.EMERGENCY_TYPE) {
+        type = { ...type, disabled: setValue };
+      }
+
+      return type;
+    });
   }
 
   onSelectedUsers(users) {
@@ -208,6 +234,11 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     $('#audienceSaveModal').modal('hide');
   }
 
+  onTeardownConfirm() {
+    this.shouldConfirm = false;
+    this.buttonData = { ...this.buttonData, disabled: false };
+  }
+
   onAudienceNamed({ name }) {
     $('#audienceSaveModal').modal('hide');
 
@@ -222,13 +253,12 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       data = { ...data, filters: this.form.value.filters };
     }
 
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     this.service
       .createAudience(data, search)
       .toPromise()
-      .then(({ id }) => this.redirectToSaveTab({ id }))
+      .then(({ id }: any) => this.redirectToSaveTab({ id }))
       .catch((err) => {
         const error = JSON.parse(err._body).error;
         const body =
@@ -263,6 +293,9 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     };
 
     this.form.controls['is_school_wide'].setValue(false);
+
+    this.hideEmergencyType(true);
+    this.updatePriority();
   }
 
   onResetSavedAudience() {
@@ -276,6 +309,8 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     };
 
     this.form.controls['is_school_wide'].setValue(true);
+
+    this.hideEmergencyType(false);
   }
 
   doValidate() {
@@ -307,8 +342,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     this.isError = false;
     $('#announcementConfirmModal').modal('hide');
 
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     const prefix = this.subject_prefix.label ? this.subject_prefix.label.toUpperCase() : '';
 
@@ -342,7 +376,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     }
 
     this.service.postAnnouncements(search, data).subscribe(
-      (res) => {
+      (res: any) => {
         if (res.status === THROTTLED_STATUS) {
           this.shouldConfirm = false;
 

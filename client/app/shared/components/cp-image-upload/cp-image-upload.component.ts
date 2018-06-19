@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Headers } from '@angular/http';
+import { HttpHeaders } from '@angular/common/http';
 
 import { API } from '../../../config/api';
-import { FileUploadService } from '../../../shared/services/file-upload.service';
-import { appStorage } from '../../../shared/utils';
 import { CPI18nService } from '../../services';
+import { appStorage } from '../../../shared/utils';
+import { FileUploadService } from '../../../shared/services/file-upload.service';
 
 @Component({
   selector: 'cp-image-upload',
@@ -50,18 +50,19 @@ export class CPImageUploadComponent implements OnInit {
 
     this.isLoading = true;
 
-    const headers = new Headers();
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
     const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
 
-    headers.append('Authorization', auth);
+    const headers = new HttpHeaders({
+      Authorization: auth
+    });
 
     if (asPromise) {
       return this.fileUploadService.uploadFile(file, url, headers).toPromise();
     }
 
     this.fileUploadService.uploadFile(file, url, headers).subscribe(
-      (res) => {
+      (res: any) => {
         this.isLoading = false;
         this.image = res.image_url;
         this.uploaded.emit(res.image_url);

@@ -1,10 +1,9 @@
+import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
 import { ActivatedRoute, Router } from '@angular/router';
-
-import { CheckinService } from '../checkin.service';
 import { BaseComponent } from '../../../../base/base.component';
 import { CPI18nService, ErrorService } from '../../../../shared/services';
+import { CheckinService } from '../checkin.service';
 
 interface IState {
   services: Array<any>;
@@ -26,7 +25,7 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
   serviceId: string;
   state: IState = state;
   serviceProviderId: string;
-  search: URLSearchParams = new URLSearchParams();
+  search: HttpParams;
 
   constructor(
     public router: Router,
@@ -67,8 +66,9 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.search.append('service_id', this.serviceId);
-    this.search.append('provider_id', this.serviceProviderId);
+    this.search = new HttpParams()
+      .set('service_id', this.serviceId)
+      .set('provider_id', this.serviceProviderId);
 
     if (!this.serviceId || !this.serviceProviderId) {
       this.router.navigate(['/login']);

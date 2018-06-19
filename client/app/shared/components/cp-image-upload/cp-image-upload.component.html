@@ -1,49 +1,45 @@
-<div class="row">
-  <div class="col-xs-12">
-    <div class="wrapper">
-      <div class="col-xs-3 wrapper__left-side">
-        <div
-          *ngIf="image"
-          class="wrapper__image"
-          [ngStyle]="{'background-image': 'url(' + image + ')' }">
-          <button
-            type="button"
-            (click)="removeImage()"
-            class="cpbtn cpbtn--link-dark wrapper__delete material-icons">
-            close
-          </button>
-        </div>
+<div class="row wrapper">
+  <div class="col-4 wrapper__left-side">
+    <div
+      *ngIf="image"
+      class="wrapper__image"
+      [ngStyle]="{'background-image': 'url(' + image + ')' }">
+      <button
+        type="button"
+        (click)="removeImage()"
+        class="cpbtn cpbtn--link-dark wrapper__delete material-icons">
+        close
+      </button>
+    </div>
 
-        <div
-          *ngIf="!image"
-          [class.required]="required"
-          class="wrapper__image wrapper__image--no-image">
-          <cp-spinner theme="small" *ngIf="isLoading"></cp-spinner>
-        </div>
-      </div>
-      <div class="col-xs-9 wrapper__right-side">
-        <label class="no-margin dark" i18n>{{ description }}</label>
-        <a 
-        target="_blank"
-        href="https://oohlalamobile.zendesk.com/hc/en-us/articles/360001101794-What-size-images-should-I-use-in-Campus-Cloud-">
-          <span class="text-muted" i18n>{{ 'component_cpimage_help' | cpI18n }}</span>
-        </a>
-        <div class="row" *ngIf="error">
-          <div class="col-xs-12">
-            <label class="error">
-              {{ error }}
-            </label>
-          </div>
-        </div>
-
-        <cp-upload-button
-          [id]="['upload_component ' + id]"
-          [buttonText]="buttonText"
-          class="wrapper__button"
-          buttonClass="cpbtn cpbtn--secondary"
-          (fileUpload)="onFileUpload($event)">
-        </cp-upload-button>
+    <div
+      *ngIf="!image"
+      [class.required]="required"
+      class="wrapper__image wrapper__image--no-image">
+      <cp-spinner theme="small" *ngIf="isLoading"></cp-spinner>
+    </div>
+  </div>
+  <div class="col-8 wrapper__right-side">
+    <label class="no-margin dark" i18n>{{ description }}</label>
+    <a 
+    target="_blank"
+    href="https://oohlalamobile.zendesk.com/hc/en-us/articles/360001101794-What-size-images-should-I-use-in-Campus-Cloud-">
+      <span class="text-muted" i18n>{{ 'component_cpimage_help' | cpI18n }}</span>
+    </a>
+    <div class="row" *ngIf="error">
+      <div class="col-12">
+        <label class="error">
+          {{ error }}
+        </label>
       </div>
     </div>
+
+    <cp-upload-button
+      [id]="['upload_component ' + id]"
+      [buttonText]="buttonText"
+      class="wrapper__button"
+      buttonClass="cpbtn cpbtn--secondary"
+      (fileUpload)="onFileUpload($event)">
+    </cp-upload-button>
   </div>
 </div>

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 import { CPSession } from './../../../../../../../../../session';
 import { ProvidersService } from '../../../../../providers.service';
@@ -50,12 +50,12 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
   }
 
   fetch() {
-    const search = new URLSearchParams();
-    search.append('search_text', this.state.search_text);
-    search.append('service_id', this.serviceId.toString());
-    search.append('service_provider_id', this.providerId.toString());
-    search.append('sort_field', this.state.sort_field);
-    search.append('sort_direction', this.state.sort_direction);
+    const search = new HttpParams()
+      .append('search_text', this.state.search_text)
+      .append('service_id', this.serviceId.toString())
+      .append('service_provider_id', this.providerId.toString())
+      .append('sort_field', this.state.sort_field)
+      .append('sort_direction', this.state.sort_direction);
 
     const stream$ = this.providersService.getProviderAssessments(
       this.startRange,
@@ -79,10 +79,10 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
   }
 
   fetchAllRecords(): Promise<any> {
-    const search = new URLSearchParams();
-    search.append('all', '1');
-    search.append('service_id', this.serviceId.toString());
-    search.append('service_provider_id', this.providerId.toString());
+    const search = new HttpParams()
+      .append('all', '1')
+      .append('service_id', this.serviceId.toString())
+      .append('service_provider_id', this.providerId.toString());
 
     const stream$ = this.providersService.getProviderAssessments(
       this.startRange,

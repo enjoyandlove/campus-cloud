@@ -1,9 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
-
-import { CPSession } from '../../../../../session';
-import { BaseComponent } from '../../../../../base';
+import { HttpParams } from '@angular/common/http';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DashboardService } from './../../dashboard.service';
+import { BaseComponent } from '../../../../../base';
+import { CPSession } from '../../../../../session';
 
 @Component({
   selector: 'cp-dashboard-campus-tile',
@@ -33,10 +32,10 @@ export class DashboardCampuTileComponent extends BaseComponent implements OnInit
   }
 
   fetch() {
-    const search = new URLSearchParams();
-    search.append('end', this._dates.end);
-    search.append('start', this._dates.start);
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams()
+      .set('end', this._dates.end)
+      .set('start', this._dates.start)
+      .set('school_id', this.session.g.get('school').id);
 
     const stream$ = this.service.getCampusTile(search);
 

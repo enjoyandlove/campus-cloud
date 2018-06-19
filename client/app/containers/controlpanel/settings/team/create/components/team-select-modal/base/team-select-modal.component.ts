@@ -1,6 +1,6 @@
 /*tslint:disable:max-line-length */
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { get as _get } from 'lodash';
 
 import {

@@ -1,12 +1,12 @@
 <div class="cpmodal">
     <div class="cpmodal__header">
         <div class="row">
-            <div class="col-xs-12 text-center">
+            <div class="col-12 text-center">
                 <span i18n><strong>{{ headerText }}</strong></span>
 
                 <span
                   data-dismiss="modal"
-                  class="pull-right hover cpmodal__header__close">&times;
+                  class="float-right hover cpmodal__header__close">&times;
                 </span>
             </div>
         </div>
@@ -14,7 +14,7 @@
 
     <div class="cpmodal__body">
         <div class="row">
-            <div class="col-xs-12">
+            <div class="col-12">
                <p *ngFor="let name of list">
                  {{ name }}
                </p>
@@ -24,10 +24,10 @@
 
     <div class="cpmodal__footer">
         <div class="row">
-            <div class="col-xs-12 text-right">
+            <div class="col-12 text-right">
                 <button
                   type="button"
-                  class="cpbtn cpbtn--primary pull-right"
+                  class="cpbtn cpbtn--primary float-right"
                   data-dismiss="modal">
                     {{ buttonText | cpI18n}}
                 </button>

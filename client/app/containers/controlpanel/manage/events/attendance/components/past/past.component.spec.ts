@@ -1,14 +1,13 @@
-import { async, TestBed, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
-import { HttpModule, URLSearchParams } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { HttpClientModule, HttpParams } from '@angular/common/http';
 import { DebugElement } from '@angular/core';
-
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { of as observableOf } from 'rxjs';
+import { AttendancePastComponent } from './past.component';
+import { CPSession } from '../../../../../../../session';
+import { mockSchool } from '../../../../../../../session/mock/school';
+import { CPI18nService } from '../../../../../../../shared/services';
 import { EventsModule } from '../../../events.module';
 import { EventsService } from '../../../events.service';
-import { CPSession } from '../../../../../../../session';
-import { AttendancePastComponent } from './past.component';
-import { CPI18nService } from '../../../../../../../shared/services';
-import { mockSchool } from '../../../../../../../session/mock/school';
 
 class MockService {
   dummy;
@@ -16,14 +15,13 @@ class MockService {
   getEventAttendanceByEventId(start: number, end: number, search: any) {
     this.dummy = [start, end, search];
 
-    return Observable.of({});
+    return observableOf({});
   }
 }
 
 describe('AttendancePastComponent', () => {
   let spy;
   let search;
-  let service: EventsService;
   let component: AttendancePastComponent;
   let fixture: ComponentFixture<AttendancePastComponent>;
 
@@ -44,13 +42,12 @@ describe('AttendancePastComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [HttpModule, EventsModule],
+        imports: [HttpClientModule, EventsModule],
         providers: [CPSession, CPI18nService, { provide: EventsService, useClass: MockService }]
       })
         .compileComponents()
         .then(() => {
           fixture = TestBed.createComponent(AttendancePastComponent);
-          service = TestBed.get(EventsService);
 
           component = fixture.componentInstance;
           component.isLoading().subscribe((_) => (component.loading = false));
@@ -59,11 +56,11 @@ describe('AttendancePastComponent', () => {
             id: 5125
           };
 
-          search = new URLSearchParams();
-          search.append('event_id', component.event.id);
-          search.append('sort_field', component.state.sort_field);
-          search.append('sort_direction', component.state.sort_direction);
-          search.append('search_text', component.state.search_text);
+          search = new HttpParams()
+            .append('event_id', component.event.id)
+            .append('sort_field', component.state.sort_field)
+            .append('sort_direction', component.state.sort_direction)
+            .append('search_text', component.state.search_text);
         });
     })
   );
@@ -72,13 +69,13 @@ describe('AttendancePastComponent', () => {
     'should not have RSVP column for orientation events',
     fakeAsync(() => {
       spy = spyOn(component.service, 'getEventAttendanceByEventId').and.returnValue(
-        Observable.of(pastEvents)
+        observableOf(pastEvents)
       );
 
       component.isOrientation = true;
       component.orientationId = 1001;
-      search.append('school_id', component.session.g.get('school').id);
-      search.append('calendar_id', component.orientationId.toString());
+      search.set('school_id', component.session.g.get('school').id);
+      search.set('calendar_id', component.orientationId.toString());
       component.fetch();
       tick();
 
@@ -92,9 +89,7 @@ describe('AttendancePastComponent', () => {
   );
 
   it('should fetch event attendees by event Id', () => {
-    spy = spyOn(component.service, 'getEventAttendanceByEventId').and.returnValue(
-      Observable.of({})
-    );
+    spy = spyOn(component.service, 'getEventAttendanceByEventId').and.returnValue(observableOf({}));
 
     component.fetch();
 
@@ -103,18 +98,17 @@ describe('AttendancePastComponent', () => {
   });
 
   it('should fetch orientation event attendees by event Id', () => {
-    spy = spyOn(component.service, 'getEventAttendanceByEventId').and.returnValue(
-      Observable.of({})
-    );
+    spy = spyOn(component.service, 'getEventAttendanceByEventId').and.returnValue(observableOf({}));
 
     component.isOrientation = true;
     component.orientationId = 1001;
-    search.append('school_id', component.session.g.get('school').id);
-    search.append('calendar_id', component.orientationId.toString());
+    const _search = search
+      .append('school_id', component.session.g.get('school').id)
+      .append('calendar_id', component.orientationId.toString());
 
     component.fetch();
 
     expect(spy.calls.count()).toBe(1);
-    expect(spy).toHaveBeenCalledWith(component.startRange, component.endRange, search);
+    expect(spy).toHaveBeenCalledWith(component.startRange, component.endRange, _search);
   });
 });

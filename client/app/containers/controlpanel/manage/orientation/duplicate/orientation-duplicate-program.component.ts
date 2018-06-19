@@ -1,20 +1,19 @@
-import { CPSession } from './../../../../../session/index';
+import { HttpParams } from '@angular/common/http';
 import {
   Component,
-  OnInit,
-  EventEmitter,
-  Output,
-  HostListener,
   ElementRef,
-  ViewChild,
-  Input
+  EventEmitter,
+  HostListener,
+  Input,
+  OnInit,
+  Output,
+  ViewChild
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
-
-import { OrientationService } from '../orientation.services';
+import { CPSession } from './../../../../../session/index';
 import { CPI18nService } from '../../../../../shared/services/i18n.service';
+import { OrientationService } from '../orientation.services';
 
 @Component({
   selector: 'cp-orientation-duplicate-program',
@@ -56,10 +55,9 @@ export class OrientationDuplicateProgramComponent implements OnInit {
   }
 
   onSubmit() {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
-    this.service.duplicateProgram(this.form.value, search).subscribe((duplicateProgram) => {
+    this.service.duplicateProgram(this.form.value, search).subscribe((duplicateProgram: any) => {
       this.resetModal();
       this.router.navigate([`/manage/orientation/${duplicateProgram.id}/events`]);
     });

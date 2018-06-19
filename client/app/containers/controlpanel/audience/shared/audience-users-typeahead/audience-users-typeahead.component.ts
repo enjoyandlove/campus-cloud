@@ -1,11 +1,12 @@
 /*tslint:disable:max-line-length */
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { CPSession } from '../../../../../session';
-import { AudienceService } from './../../../../../containers/controlpanel/audience/audience.service';
 import { CPI18nService } from '../../../../../shared/services';
+import { AudienceService } from './../../../../../containers/controlpanel/audience/audience.service';
 
 @Component({
   selector: 'cp-audience-users-typeahead',
@@ -37,28 +38,30 @@ export class AudienceUsersTypeaheadComponent implements OnInit {
   }
 
   onSearch(query) {
-    const search = new URLSearchParams();
-    search.append('search_str', query);
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams()
+      .append('search_str', query)
+      .append('school_id', this.session.g.get('school').id.toString());
 
     this.service
       .getUsers(search)
-      .map((users) => {
-        const _users = [];
+      .pipe(
+        map((users) => {
+          const _users = [];
 
-        users.forEach((user) => {
-          _users.push({
-            label: `${user.firstname} ${user.lastname}`,
-            id: user.id
+          users.forEach((user) => {
+            _users.push({
+              label: `${user.firstname} ${user.lastname}`,
+              id: user.id
+            });
           });
-        });
 
-        if (!_users.length) {
-          _users.push({ label: this.cpI18n.translate('no_results') });
-        }
+          if (!_users.length) {
+            _users.push({ label: this.cpI18n.translate('no_results') });
+          }
 
-        return _users;
-      })
+          return _users;
+        })
+      )
       .subscribe((suggestions) => {
         this.typeAheadOpts = Object.assign({}, this.typeAheadOpts, {
           suggestions

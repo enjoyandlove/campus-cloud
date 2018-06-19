@@ -1,15 +1,14 @@
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { URLSearchParams, HttpModule } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { HttpClientModule } from '@angular/common/http';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
-
-import { EmployerModule } from '../employer.module';
-import { EmployerService } from '../employer.service';
+import { RouterTestingModule } from '@angular/router/testing';
+import { of as observableOf } from 'rxjs';
 import { CPSession } from './../../../../../../session';
 import { EmployerEditComponent } from './employer-edit.component';
 import { mockSchool } from '../../../../../../session/mock/school';
 import { CPI18nService } from '../../../../../../shared/services/i18n.service';
+import { EmployerModule } from '../employer.module';
+import { EmployerService } from '../employer.service';
 
 class MockEmployerService {
   dummy;
@@ -17,50 +16,45 @@ class MockEmployerService {
   editEmployer(body: any, search: any) {
     this.dummy = [search];
 
-    return Observable.of(body);
+    return observableOf(body);
   }
 }
 
 describe('EmployerEditComponent', () => {
   let spy;
-  let search;
   let component: EmployerEditComponent;
-  let service: EmployerService;
   let fixture: ComponentFixture<EmployerEditComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        HttpModule,
-        EmployerModule,
-        RouterTestingModule
-      ],
-      providers: [
-        CPSession,
-        FormBuilder,
-        CPI18nService,
-        { provide: EmployerService, useClass: MockEmployerService },
-      ]
-    }).compileComponents().then(() => {
-      fixture = TestBed.createComponent(EmployerEditComponent);
-      component = fixture.componentInstance;
-      service = TestBed.get(EmployerService);
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        imports: [HttpClientModule, EmployerModule, RouterTestingModule],
+        providers: [
+          CPSession,
+          FormBuilder,
+          CPI18nService,
+          { provide: EmployerService, useClass: MockEmployerService }
+        ]
+      })
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(EmployerEditComponent);
+          component = fixture.componentInstance;
 
-      search = new URLSearchParams();
-      component.session.g.set('school', mockSchool);
-      search.append('school_id', component.session.g.get('school').id.toString());
+          component.session.g.set('school', mockSchool);
 
-      component.employer = {
-        'id': 84,
-        'name': 'Hello World!',
-        'description': 'This is description',
-        'email': 'test@test.com',
-        'logo_url': 'dummy.jpeg'
-      };
+          component.employer = {
+            id: 84,
+            name: 'Hello World!',
+            description: 'This is description',
+            email: 'test@test.com',
+            logo_url: 'dummy.jpeg'
+          };
 
-      component.ngOnInit();
-    });
-  }));
+          component.ngOnInit();
+        });
+    })
+  );
 
   it('form validation - should fail', () => {
     component.employerForm.controls['name'].setValue(null);
@@ -90,8 +84,9 @@ describe('EmployerEditComponent', () => {
   it('should edit employer', () => {
     spyOn(component.edited, 'emit');
     spyOn(component, 'resetModal');
-    spy = spyOn(component.service, 'editEmployer')
-      .and.returnValue(Observable.of(component.employer));
+    spy = spyOn(component.service, 'editEmployer').and.returnValue(
+      observableOf(component.employer)
+    );
 
     component.onSubmit();
 
@@ -104,5 +99,4 @@ describe('EmployerEditComponent', () => {
     expect(component.resetModal).toHaveBeenCalled();
     expect(component.resetModal).toHaveBeenCalledTimes(1);
   });
-
 });

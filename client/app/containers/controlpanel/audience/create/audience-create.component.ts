@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { CPSession } from '../../../../session';
 import { AudienceService } from '../audience.service';
@@ -56,8 +56,7 @@ export class AudienceCreateComponent implements OnInit, OnDestroy {
 
   doSubmit() {
     this.isError = false;
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     this.service.createAudience(this.form.value, search).subscribe(
       (_) => {

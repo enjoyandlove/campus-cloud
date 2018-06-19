@@ -1,15 +1,14 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { HttpHeaders } from '@angular/common/http';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Headers } from '@angular/http';
-
-import { ILink } from '../link.interface';
-import { API } from '../../../../../config/api';
-import { LinksService } from '../links.service';
-import { CPSession } from '../../../../../session';
-import { appStorage } from '../../../../../shared/utils';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { CPTrackingService, FileUploadService } from '../../../../../shared/services';
+import { API } from '../../../../../config/api';
+import { CPSession } from '../../../../../session';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { CPTrackingService, FileUploadService } from '../../../../../shared/services';
+import { appStorage } from '../../../../../shared/utils';
+import { ILink } from '../link.interface';
+import { LinksService } from '../links.service';
 
 declare var $: any;
 
@@ -56,14 +55,15 @@ export class LinksCreateComponent implements OnInit {
       return;
     }
 
-    const headers = new Headers();
     const url = this.service.getUploadImageUrl();
     const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
 
-    headers.append('Authorization', auth);
+    const headers = new HttpHeaders({
+      Authorization: auth
+    });
 
     this.fileUploadService.uploadFile(file, url, headers).subscribe(
-      (res) => {
+      (res: any) => {
         this.form.controls['img_url'].setValue(res.image_url);
         this.trackUploadImageEvent();
       },
@@ -80,7 +80,7 @@ export class LinksCreateComponent implements OnInit {
   }
 
   doSubmit() {
-    this.service.createLink(this.form.value).subscribe((res) => {
+    this.service.createLink(this.form.value).subscribe((res: any) => {
       $('#linksCreate').modal('hide');
       this.createLink.emit(res);
       this.resetModal();
