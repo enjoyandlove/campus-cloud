@@ -31,6 +31,7 @@
           <div class="col-12">
             <cp-button
               [props]="buttonData"
+              [listenForEnterKeyEvent]="[true]"
               (buttonClick)="onSubmit(form.value)">
             </cp-button>
           </div>
