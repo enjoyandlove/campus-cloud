@@ -2,12 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-
 import { ALERT_DEFAULT } from '../../../reducers/alert.reducer';
+import { CPI18nService, ErrorService, ZendeskService } from '../../../shared/services';
 import { appStorage } from '../../../shared/utils';
 import { AuthService } from '../auth.service';
-
-import { CPI18nService, ErrorService, ZendeskService } from '../../../shared/services';
 
 @Component({
   selector: 'cp-login',
@@ -15,6 +13,7 @@ import { CPI18nService, ErrorService, ZendeskService } from '../../../shared/ser
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, OnDestroy {
+  buttonData;
   goTo: string;
   form: FormGroup;
   logo = require('public/svg/full-logo.svg');
@@ -68,6 +67,8 @@ export class LoginComponent implements OnInit, OnDestroy {
             reason: this.cpI18n.translate('account_not_found')
           });
 
+          this.buttonData = { ...this.buttonData, disabled: false };
+
           return;
         }
       }
@@ -79,9 +80,19 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.buttonData = {
+      disabled: true,
+      class: 'primary w-100',
+      text: this.cpI18n.translate('login')
+    };
+
     this.form = this.fb.group({
       username: [null, [Validators.required]],
       password: [null, [Validators.required]]
+    });
+
+    this.form.valueChanges.subscribe(() => {
+      this.buttonData = { ...this.buttonData, disabled: !this.form.valid };
     });
 
     this.zendeskService.setHelpCenterSuggestions({ search: 'login' });

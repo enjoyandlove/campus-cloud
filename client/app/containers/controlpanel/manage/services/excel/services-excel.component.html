@@ -3,13 +3,15 @@
 
   <ng-container *ngSwitchCase="true">
     <div class="row">
-      <cp-services-import-top-bar
-        (checkAll)="onCheckAll($event)"
-        (deleteServices)="onBulkDelete()"
-        [categories]="categories"
-        (imageChange)="onImageBulkChange($event)"
-        (categoryChange)="onCategoryBulkChange($event)">
-      </cp-services-import-top-bar>
+      <div class="col-12">
+        <cp-services-import-top-bar
+          (checkAll)="onCheckAll($event)"
+          (deleteServices)="onBulkDelete()"
+          [categories]="categories"
+          (imageChange)="onImageBulkChange($event)"
+          (categoryChange)="onCategoryBulkChange($event)">
+        </cp-services-import-top-bar>
+      </div>
     </div>
 
     <div class="row margin-bottom">

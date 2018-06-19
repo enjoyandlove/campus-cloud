@@ -63,9 +63,15 @@ class CSVParser:
         return date_value > datetime.datetime.now()
 
 
-    def future_dates_is_greater_than_past(self, past_date, future_date):
-        past_date = parse(past_date)
-        future_date = parse(future_date)
-        return past_date > future_date
+    def future_dates_is_greater_than_past(self, future_date, past_date):
+        future_date = parse(future_date).timestamp()
+        past_date = parse(past_date).timestamp()
+        
+        if not future_date > past_date:
+            print(future_date, past_date)
+        
+        return future_date > past_date
+
+        
 
 
