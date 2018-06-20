@@ -7,10 +7,15 @@
         *ngFor="let guide of guides">
         <div class="col-12">
           <cp-personas-section 
-            [guide]="guide">
+            [guide]="guide"
+            (addTileClick)="onAddTileToGuideClick(guide)">
           </cp-personas-section>
         </div>
       </div>
     </div>
+
+    <cp-modal modalId="tilesCreate">
+      <cp-personas-tile-create></cp-personas-tile-create>
+    </cp-modal>
   </ng-container>
 </ng-container>

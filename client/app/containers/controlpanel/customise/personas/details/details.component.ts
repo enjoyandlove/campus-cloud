@@ -37,6 +37,10 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
     this.personaId = this.route.snapshot.params['personaId'];
   }
 
+  onAddTileToGuideClick() {
+    $('#tilesCreate').modal();
+  }
+
   fetch() {
     const personaSearch = new HttpParams().append('school_id', this.session.g.get('school').id);
 

@@ -1,3 +1,4 @@
+import { TilesModule } from './tiles/tiles.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -42,7 +43,14 @@ import {
     PersonasSectionAddTileButtonComponent
   ],
 
-  imports: [CommonModule, SharedModule, RouterModule, ReactiveFormsModule, PersonasRoutingModule],
+  imports: [
+    CommonModule,
+    SharedModule,
+    RouterModule,
+    ReactiveFormsModule,
+    PersonasRoutingModule,
+    TilesModule
+  ],
 
   providers: [PersonasService, PersonasUtilsService]
 })

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 import { ICampusGuide } from './../../../persona.interface';
 import { PersonasUtilsService } from './../../../personas.utils.service';
@@ -10,6 +10,8 @@ import { PersonasUtilsService } from './../../../personas.utils.service';
 })
 export class PersonasSectionComponent implements OnInit {
   @Input() guide: ICampusGuide;
+
+  @Output() addTileClick: EventEmitter<null> = new EventEmitter();
 
   constructor(public utils: PersonasUtilsService) {}
 

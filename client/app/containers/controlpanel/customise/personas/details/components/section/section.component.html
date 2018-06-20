@@ -34,7 +34,9 @@
       </cp-personas-section-tile>
     </div>
     <div class="col-2">
-      <cp-personas-section-add-tile-button></cp-personas-section-add-tile-button>
+      <cp-personas-section-add-tile-button 
+        (addTileClick)="addTileClick.emit()">
+      </cp-personas-section-add-tile-button>
     </div>
   </div>
 </section>
