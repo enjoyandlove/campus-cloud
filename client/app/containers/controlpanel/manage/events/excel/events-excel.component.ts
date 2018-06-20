@@ -480,7 +480,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     };
 
     this.buttonData = {
-      text: 'Import Events',
+      text: this.cpI18n.translate('t_events_import_import_events'),
       class: 'primary',
       disabled: true
     };

@@ -1,41 +1,26 @@
 <ul class="events cp-form">
   <li class="cp-form__header col-12">
     <div class="row">
-      <span
+      <cp-sorting-header
+        [class]="[isOrientation ? 'col-6' : 'col-4']"
+        sortLabel="title"
         (click)="doSort('title')"
-        [class]="[isOrientation ? 'col-6 hover' : 'col-4 hover']">
-        {{ 'name' | cpI18n }}
-        <span *ngIf="state.sort_field === 'title'">
-          <i
-            class="material-icons"
-            *ngIf="state.sort_direction === 'asc'">
-            arrow_upward
-          </i>
-          <i
-            class="material-icons"
-            *ngIf="state.sort_direction === 'desc'">
-            arrow_downward
-          </i>
-        </span>
-      </span>
+        [label]="sortingLabels.name"
+        [sortField]="state.sort_field"
+        [sortDirection]="state.sort_direction">
+      </cp-sorting-header>
+
       <span class="col-2" *ngIf="!isOrientation">{{ 'host' | cpI18n }}</span>
-      <span
+
+      <cp-sorting-header
+        class="col-2"
+        sortLabel="start"
         (click)="doSort('start')"
-        class="col-2 hover" i18n>
-        {{ 'start_date' | cpI18n }}
-        <span *ngIf="state.sort_field === 'start'">
-          <i
-            class="material-icons"
-            *ngIf="state.sort_direction === 'asc'">
-            arrow_upward
-          </i>
-          <i
-            class="material-icons"
-            *ngIf="state.sort_direction === 'desc'">
-            arrow_downward
-          </i>
-        </span>
-      </span>
+        [sortField]="state.sort_field"
+        [label]="sortingLabels.start_date"
+        [sortDirection]="state.sort_direction">
+      </cp-sorting-header>
+
       <span class="col-3" i18n>{{ 'assessment' | cpI18n }}</span>
       <span class="col-1"></span>
     </div>

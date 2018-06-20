@@ -90,9 +90,11 @@
               <div class="form-group">
                 <label i18n>
                   {{ 'subject' | cpI18n }}
-                  <span class="float-right">
-                    {{ getSubjectLength() }}/128
-                  </span>
+                  <cp-char-counter
+                    class="float-right"
+                    [limit]="128"
+                    [charCount]="getSubjectLength()">
+                  </cp-char-counter>
                 </label>
                 <div class="cpInput subject-input">
                   <div class="row">
@@ -114,9 +116,11 @@
               <div class="form-group">
                 <label i18n>
                   {{ 'message_noun' | cpI18n }}
-                  <span class="float-right">
-                    {{ form.controls.message.value ? form.controls.message.value.length : 0 }}/400
-                  </span>
+                  <cp-char-counter
+                    class="float-right"
+                    [limit]="400"
+                    [charCount]="form.controls.message.value">
+                  </cp-char-counter>
                 </label>
                 <textarea
                   class="form-control"

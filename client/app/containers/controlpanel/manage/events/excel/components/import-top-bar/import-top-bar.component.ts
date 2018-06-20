@@ -4,7 +4,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { API } from '../../../../../../../config/api';
 import { EventsService } from '../../../events.service';
 import { appStorage } from '../../../../../../../shared/utils';
-import { FileUploadService } from '../../../../../../../shared/services';
+import { CPI18nService, FileUploadService } from '../../../../../../../shared/services';
 
 @Component({
   selector: 'cp-import-top-bar',
@@ -26,9 +26,14 @@ export class EventsImportTopBarComponent implements OnInit {
   @Output() hostChange: EventEmitter<number> = new EventEmitter();
   @Output() imageChange: EventEmitter<string> = new EventEmitter();
 
+  buttonText;
   imageError;
 
-  constructor(private eventService: EventsService, private fileUploadService: FileUploadService) {}
+  constructor(
+    private cpI18n: CPI18nService,
+    private eventService: EventsService,
+    private fileUploadService: FileUploadService
+  ) {}
 
   onFileUpload(file) {
     this.imageError = null;
@@ -55,5 +60,7 @@ export class EventsImportTopBarComponent implements OnInit {
     );
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.buttonText = this.cpI18n.translate('t_events_import_upload_picture');
+  }
 }

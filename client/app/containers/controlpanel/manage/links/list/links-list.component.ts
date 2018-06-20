@@ -30,6 +30,7 @@ export class LinksListComponent extends BaseComponent implements OnInit {
   pagePrev;
   pageNumber;
   isLinksEdit;
+  sortingLabels;
   editLink = '';
   isLinksDelete;
   isLinksCreate;
@@ -133,5 +134,9 @@ export class LinksListComponent extends BaseComponent implements OnInit {
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.sortingLabels = {
+      name: this.cpI18n.translate('name')
+    };
+  }
 }
