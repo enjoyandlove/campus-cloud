@@ -1,12 +1,12 @@
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-import { Component, OnInit, Input } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
-
-import { EventsService } from '../../../events.service';
-import { CPSession } from '../../../../../../../session';
+import { HttpParams } from '@angular/common/http';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { BaseComponent } from '../../../../../../../base/base.component';
+import { CPSession } from '../../../../../../../session';
 import { CPI18nService } from '../../../../../../../shared/services/index';
+import { EventsService } from '../../../events.service';
 
 @Component({
   selector: 'cp-facebook-update',
@@ -59,8 +59,7 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
   }
 
   onBulkUpdate(data) {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     const _links = [];
 
@@ -98,34 +97,35 @@ export class FacebookEventsUpdateComponent extends BaseComponent implements OnIn
   private fetch() {
     this.loading = true;
     this.isEdited = false;
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    let search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     if (this.storeId) {
-      search.append('store_id', this.storeId.toString());
+      search = search.append('store_id', this.storeId.toString());
     }
 
     if (this.clubId) {
-      search.append('store_id', this.clubId.toString());
+      search = search.append('store_id', this.clubId.toString());
     }
 
-    const links$ = this.eventsService.getFacebookEvents(search).map((links: any) => {
-      const _links = [];
+    const links$ = this.eventsService.getFacebookEvents(search).pipe(
+      map((links: any) => {
+        const _links = [];
 
-      links.map((link) => {
-        _links.push({
-          id: link.id,
-          url: link.url,
-          store_id: link.store_id,
-          host: {
-            label: link.store_name,
-            action: link.store_id
-          }
+        links.map((link) => {
+          _links.push({
+            id: link.id,
+            url: link.url,
+            store_id: link.store_id,
+            host: {
+              label: link.store_name,
+              action: link.store_id
+            }
+          });
         });
-      });
 
-      return _links;
-    });
+        return _links;
+      })
+    );
 
     super
       .fetchData(links$)

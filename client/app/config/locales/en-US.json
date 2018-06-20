@@ -258,7 +258,7 @@
     "message": "Urgent Announcement"
   },
   "announcement_confirm_urgent_body": {
-    "message": "You are about to send an emergency notification."
+    "message": "You are about to send an urgent notification."
   },
   "announcement_success_sent": {
     "message": "Success! Your message has been sent"
@@ -958,7 +958,7 @@
     "message": "Banner"
   },
   "customization_description": {
-    "message": "(High resolution images work best.  JPEG or PNG format, 5 MB or smaller.)"
+    "message": "(High resolution images work best.  JPEG or PNG format, 5 MB or smaller. You can scroll with your mouse to zoom in or out.)"
   },
   "customization_image_upload_error": {
     "message": "Something went wrong while uploading your image"
@@ -1676,7 +1676,7 @@
     "message": "Image"
   },
   "lists": {
-    "message": "Lists"
+    "message": "Audiences"
   },
   "lists_button_create": {
     "message": "Create Audience"
@@ -1812,7 +1812,7 @@
     "message": "Recipients"
   },
   "notify_announcement_template_to_tooltip": {
-    "message": "Notifications can be sent to app users, which you can group together into Lists.  For more info:"
+    "message": "Notifications can be sent to app users, which you can group together into Audiences.  For more info:"
   },
   "no_admins_found": {
     "message": "No Admins found"
@@ -2370,6 +2370,12 @@
   },
   "t_deals_list_grid_column_store": {
     "message": "Store"
+  },
+  "t_events_import_import_events": {
+    "message": "Import Events"
+  },
+  "t_events_import_upload_picture": {
+    "message": "Upload Picture"
   },
   "t_personas_button_list_create": {
     "message": "Create Persona"

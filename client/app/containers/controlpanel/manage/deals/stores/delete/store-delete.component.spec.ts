@@ -1,20 +1,20 @@
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
-import { Observable } from 'rxjs/Observable';
-import { URLSearchParams } from '@angular/http';
-
+import { HttpParams } from '@angular/common/http';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { of as observableOf } from 'rxjs';
+import { CPI18nService } from './../../../../../../shared/services/i18n.service';
+import { StoreDeleteComponent } from './store-delete.component';
+import { CPSession } from '../../../../../../session';
+import { mockSchool } from '../../../../../../session/mock/school';
 import { StoreModule } from '../store.module';
 import { StoreService } from '../store.service';
-import { CPSession } from '../../../../../../session';
-import { StoreDeleteComponent } from './store-delete.component';
-import { mockSchool } from '../../../../../../session/mock/school';
-import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 
 class MockService {
   dummy;
   deleteStore(id: number, search: any) {
     this.dummy = [id, search];
 
-    return Observable.of({});
+    return observableOf({});
   }
 }
 
@@ -24,30 +24,31 @@ describe('DealsStoreDeleteComponent', () => {
   let component: StoreDeleteComponent;
   let fixture: ComponentFixture<StoreDeleteComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [StoreModule],
-      providers: [
-        CPSession,
-        CPI18nService,
-        { provide: StoreService, useClass: MockService },
-      ]
-    }).compileComponents().then(() => {
-      fixture = TestBed.createComponent(StoreDeleteComponent);
-      component = fixture.componentInstance;
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        imports: [StoreModule, RouterTestingModule],
+        providers: [CPSession, CPI18nService, { provide: StoreService, useClass: MockService }]
+      })
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(StoreDeleteComponent);
+          component = fixture.componentInstance;
 
-      search = new URLSearchParams();
-      component.store = {
-        id: 1,
-        name: 'Hello World',
-        logo_url: 'image.jpeg',
-        description: 'This is description'
-      };
-
-      component.session.g.set('school', mockSchool);
-      search.append('school_id', component.session.g.get('school').id.toString());
-    });
-  }));
+          component.store = {
+            id: 1,
+            name: 'Hello World',
+            logo_url: 'image.jpeg',
+            description: 'This is description'
+          };
+          component.session.g.set('school', mockSchool);
+          search = new HttpParams().append(
+            'school_id',
+            component.session.g.get('school').id.toString()
+          );
+        });
+    })
+  );
 
   it('buttonData should have "Delete" label & "Danger class"', () => {
     component.ngOnInit();
@@ -58,7 +59,7 @@ describe('DealsStoreDeleteComponent', () => {
   it('should delete store', () => {
     spyOn(component.deleted, 'emit');
     spyOn(component.resetDeleteModal, 'emit');
-    spy = spyOn(component.service, 'deleteStore').and.returnValue(Observable.of({}));
+    spy = spyOn(component.service, 'deleteStore').and.returnValue(observableOf({}));
 
     component.onDelete();
     expect(spy).toHaveBeenCalledTimes(1);
@@ -70,5 +71,4 @@ describe('DealsStoreDeleteComponent', () => {
     expect(component.resetDeleteModal.emit).toHaveBeenCalled();
     expect(component.resetDeleteModal.emit).toHaveBeenCalledTimes(1);
   });
-
 });

@@ -1,0 +1,47 @@
+<div class="margin-bottom">
+  <form [formGroup]="form">
+    <div class="row">
+      <div class="col">
+        <cp-deals-card
+          [form]="form"
+          [storeForm]="storeForm"
+          (formData)="onFormData($event)">
+        </cp-deals-card>
+      </div>
+  
+      <div class="col">
+        <cp-store-card
+          [form]="form"
+          [storeForm]="storeForm"
+          (formData)="onFormData($event)"
+          (isNewStore)="onToggleStore($event)">
+        </cp-store-card>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="cp-wrapper cp-wrapper--outer">
+        <div class="col-12">
+          <div class="row">
+            <div class="col-12">
+              <div class="text-right">
+                <label class="error" *ngIf="error">
+                  <i class="material-icons">warning</i>
+                  {{ errorMessage }}
+                </label>
+                <a [routerLink]="['/manage/deals']"
+                   class="cpbtn cpbtn--cancel" i18n>
+                  {{ 'cancel' | cpI18n }}
+                </a>
+                <cp-button
+                  [props]="buttonData"
+                  (buttonClick)="onSubmit()">
+                </cp-button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

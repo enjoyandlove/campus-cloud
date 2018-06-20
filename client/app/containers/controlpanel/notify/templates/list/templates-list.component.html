@@ -16,11 +16,11 @@
 
     <div *ngIf="state.templates.length">
       <ul class="templates cp-form">
-        <li class="cp-form__header col-xs-12">
+        <li class="cp-form__header col-12">
           <div class="row">
             <span
               (click)="doSort('name')"
-              class="col-xs-2 hover">
+              class="col-2 hover">
               {{ 'name' | cpI18n }}
               <span *ngIf="state.sort_field === 'name'">
                 <i class="material-icons">
@@ -28,19 +28,19 @@
                 </i>
               </span>
             </span>
-            <span class="col-xs-2">{{ 'recipient' | cpI18n }}</span>
-            <span class="col-xs-3">{{ 'subject' | cpI18n }}</span>
-            <span class="col-xs-4">{{ 'body' | cpI18n }}</span>
-            <span class="col-xs-1"></span>
+            <span class="col-2">{{ 'recipient' | cpI18n }}</span>
+            <span class="col-3">{{ 'subject' | cpI18n }}</span>
+            <span class="col-4">{{ 'body' | cpI18n }}</span>
+            <span class="col-1"></span>
           </div>
         </li>
 
         <li
-          class="cp-form__item col-xs-12"
+          class="cp-form__item col-12"
           *ngFor="let template of state.templates">
 
           <div class="row">
-            <span class="col-xs-2">
+            <span class="col-2">
               <strong
                 class="hover"
                 (click)="onLaunchComposeModal(template)">
@@ -48,22 +48,22 @@
               </strong>
             </span>
 
-            <span class="col-xs-2" *ngIf="template.is_school_wide" i18n>
+            <span class="col-2" *ngIf="template.is_school_wide" i18n>
               {{ 'campus_wide' | cpI18n }}
             </span>
 
-            <span class="col-xs-2" *ngIf="!template.is_school_wide">
+            <span class="col-2" *ngIf="!template.is_school_wide">
               <cp-list-recipients
                 [lists]="template.list_details"
                 [users]="template.user_details">
               </cp-list-recipients>
             </span>
 
-            <span class="col-xs-3">
+            <span class="col-3">
               {{ template.subject }}
             </span>
 
-            <span class="col-xs-4 text-muted">
+            <span class="col-4 text-muted">
               {{ template.message }}
             </span>
 
@@ -71,7 +71,7 @@
               data-toggle="modal"
               data-target="#templatesDelete"
               (click)="onLauncDeleteModal(template)"
-              class="col-xs-1 text-right delete-template hover">
+              class="col-1 text-center delete-template hover">
               &times;
             </span>
           </div>
@@ -79,7 +79,7 @@
       </ul>
 
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-12">
           <cp-pagination
             [pageNext]="pageNext"
             [pagePrev]="pagePrev"

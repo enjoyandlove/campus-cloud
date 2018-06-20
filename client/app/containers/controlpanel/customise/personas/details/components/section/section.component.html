@@ -1,6 +1,6 @@
 <section class="new-section">
   <div class="row">
-    <div class="col-xs-12">
+    <div class="col-12">
       <cp-personas-section-add-button></cp-personas-section-add-button>
     </div>
   </div>
@@ -8,12 +8,12 @@
 
 <section class="section-details">
   <div class="row">
-    <div class="col-xs-6">
+    <div class="col-6">
       <cp-personas-section-title 
         [name]="guide.name">
       </cp-personas-section-title>
     </div>
-    <div class="col-xs-6 text-right">
+    <div class="col-6 text-right">
       <cp-personas-section-controls></cp-personas-section-controls>
     </div>
   </div>
@@ -22,7 +22,7 @@
 <section class="section-tiles">
   <div class="row">
     <div 
-      class="col-xs-2" 
+      class="col-2" 
       *ngFor="let tile of guide.tiles">
       <cp-personas-section-tile 
         [tile]="tile"
@@ -33,7 +33,7 @@
         [defaultTile]="utils.isTileDefault(tile)">
       </cp-personas-section-tile>
     </div>
-    <div class="col-xs-2">
+    <div class="col-2">
       <cp-personas-section-add-tile-button></cp-personas-section-add-tile-button>
     </div>
   </div>

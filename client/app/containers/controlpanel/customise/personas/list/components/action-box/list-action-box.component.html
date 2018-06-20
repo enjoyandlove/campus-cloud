@@ -1,11 +1,11 @@
 <div class="cp-card">
-  <div class="row">
-    <div class="col-xs-5 pull-left">
+  <div class="row justify-content-between">
+    <div class="col-5 float-left">
       <div class="row">
-        <div class="col-xs-6">
+        <div class="col-6">
           <cp-searchbox (query)="onSearch($event)"></cp-searchbox>
         </div>
-        <div class="col-xs-6">
+        <div class="col-6">
           <cp-dropdown 
             [items]="dropdownItems"
             (selected)="onSelectedFilter($event)">
@@ -13,10 +13,10 @@
         </div>
       </div>
     </div>
-    <div class="col-xs-3 pull-right">
+    <div class="col-3 float-right">
       <a 
         routerLink="create"
-        class="cpbtn cpbtn--primary pull-right">
+        class="cpbtn cpbtn--primary float-right">
         {{ 't_personas_button_list_create' | cpI18n }}
     </a>
     </div>

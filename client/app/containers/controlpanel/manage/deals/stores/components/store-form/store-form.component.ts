@@ -1,8 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 
 import { CPMap } from '../../../../../../../shared/utils';
 import { CPSession, ISchool } from '../../../../../../../session';
+import { CPTrackingService } from '../../../../../../../shared/services';
+import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
 
 @Component({
   selector: 'cp-store-form',
@@ -16,10 +18,20 @@ export class StoreFormComponent implements OnInit {
   mapCenter: BehaviorSubject<any>;
   newAddress = new BehaviorSubject(null);
 
-  constructor(public session: CPSession) {}
+  constructor(public session: CPSession, public cpTracking: CPTrackingService) {}
 
   onUploadedImage(image) {
     this.storeForm.controls['logo_url'].setValue(image);
+
+    if (image) {
+      this.trackUploadImageEvent();
+    }
+  }
+
+  trackUploadImageEvent() {
+    const properties = this.cpTracking.getEventProperties();
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
 
   centerMap(lat: number, lng: number) {
@@ -72,13 +84,9 @@ export class StoreFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.school = this.session.g.get('school');
-    const latitude = this.storeForm.controls.latitude.value;
-    const longitude = this.storeForm.controls.longitude.value;
-
     this.mapCenter = new BehaviorSubject({
-      lat: latitude ? latitude : this.school.latitude,
-      lng: longitude ? longitude : this.school.longitude
+      lat: this.storeForm.controls.latitude.value,
+      lng: this.storeForm.controls.longitude.value
     });
   }
 }

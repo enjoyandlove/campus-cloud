@@ -1,13 +1,12 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { URLSearchParams } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
-
+import { HttpParams } from '@angular/common/http';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { BehaviorSubject, of as observableOf } from 'rxjs';
+import { flatMap, map, startWith } from 'rxjs/operators';
+import { BaseComponent } from '../../../../../../../base/base.component';
+import { CPSession, ISchool } from '../../../../../../../session';
+import { AdminService, CPI18nService, StoreService } from '../../../../../../../shared/services';
 import { EventAttendance } from '../../../event.status';
 import { EventUtilService } from '../../../events.utils.service';
-import { CPSession, ISchool } from '../../../../../../../session';
-import { BaseComponent } from '../../../../../../../base/base.component';
-import { StoreService, AdminService, CPI18nService } from '../../../../../../../shared/services';
 
 interface IState {
   store_id: any;
@@ -59,17 +58,11 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
 
   private fetch() {
     const school = this.session.g.get('school');
-    const search: URLSearchParams = new URLSearchParams();
-    search.append('school_id', school.id.toString());
+    const search: HttpParams = new HttpParams().append('school_id', school.id.toString());
 
     const stores$ = this.storeService.getStores(search);
 
-    super
-      .fetchData(stores$)
-      .then((res) => (this.stores = res.data))
-      .catch((err) => {
-        throw new Error(err);
-      });
+    super.fetchData(stores$).then((res) => (this.stores = res.data));
   }
 
   onHostSelected(store_id) {
@@ -79,23 +72,21 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
   }
 
   getManagersByHostId(storeId) {
-    const search: URLSearchParams = new URLSearchParams();
+    const search: HttpParams = new HttpParams()
+      .append('school_id', this.school.id.toString())
+      .append('store_id', storeId)
+      .append('privilege_type', this.utils.getPrivilegeType(this.isOrientation));
 
-    search.append('school_id', this.school.id.toString());
-    search.append('store_id', storeId);
-    search.append('privilege_type', this.utils.getPrivilegeType(this.isOrientation));
-
-    return this.adminService
-      .getAdminByStoreId(search)
-      .startWith([{ label: '---' }])
-      .map((admins) => {
+    return this.adminService.getAdminByStoreId(search).pipe(
+      startWith([{ label: '---' }]),
+      map((admins) => {
         const _admins = [
           {
             label: '---',
             value: null
           }
         ];
-        admins.forEach((admin) => {
+        admins.forEach((admin: any) => {
           _admins.push({
             label: `${admin.firstname} ${admin.lastname}`,
             value: admin.id
@@ -103,7 +94,8 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
         });
 
         return _admins;
-      });
+      })
+    );
   }
 
   toggleEventAttendance() {
@@ -156,13 +148,15 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
      * dropdown, upon change we call the managers endpoint
      * and update the available managers
      */
-    this.managers$ = this.selectedHost$.asObservable().flatMap((host) => {
-      if (host) {
-        return this.getManagersByHostId(host);
-      }
+    this.managers$ = this.selectedHost$.asObservable().pipe(
+      flatMap((host) => {
+        if (host) {
+          return this.getManagersByHostId(host);
+        }
 
-      return Observable.of([{ label: '---' }]);
-    });
+        return observableOf([{ label: '---' }]);
+      })
+    );
   }
 
   doSubmit() {

@@ -38,7 +38,7 @@ export class ControlPanelComponent implements AfterViewInit {
      * this gets initilized only once
      * so we track the first page load here
      */
-    CPTrackingService.loadAmplitude(this.session.g.get('user').email);
+    this.cpTrackingService.loadAmplitude(this.session.g);
     this.cpTrackingService.gaTrackPage(this.router.url);
   }
 }

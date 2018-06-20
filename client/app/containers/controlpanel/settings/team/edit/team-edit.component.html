@@ -5,11 +5,11 @@
     <div class="row">
       <form
         [formGroup]="form"
-        class="col-xs-8 col-xs-offset-2 margin-bottom">
+        class="col-8 offset-2 margin-bottom">
         <div class="section cp-card form-group">
           <p class="section__title">{{ 'admin_edit_profile' | cpI18n }}</p>
           <div class="row">
-            <div class="col-xs-4">
+            <div class="col-4">
               <label>{{ 'first_name' | cpI18n }}</label>
               <input
                 type="text"
@@ -18,7 +18,7 @@
                 [attr.disabled]="!isCurrentUser ? '' : null">
             </div>
 
-            <div class="col-xs-4">
+            <div class="col-4">
               <label>{{ 'last_name' | cpI18n }}</label>
               <input
                 type="text"
@@ -27,7 +27,7 @@
                 [attr.disabled]="!isCurrentUser ? '' : null">
             </div>
 
-            <div class="col-xs-4">
+            <div class="col-4">
               <label>{{ 'email' | cpI18n }}</label>
               <input
                 type="email"
@@ -38,19 +38,19 @@
           </div>
 
           <div class="row" *ngIf="!isCurrentUser">
-            <div class="col-xs-12">
+            <div class="col-12">
               <div
                 class="all-access"
                 [class.isEnabled]="isAllAccessEnabled">
                 <div class="row">
-                  <div class="col-xs-8">
+                  <div class="col-8">
                     <p class="section-sub-title">{{ 'admin_all_access' | cpI18n }}</p>
                     <p class="section-description">
                       {{ 'admin_all_acceess_help' | cpI18n }}
                     </p>
                   </div>
-                  <div class="col-xs-4">
-                    <div class="pull-right">
+                  <div class="col-4">
+                    <div class="float-right">
                       <cp-switch
                         [isChecked]="isAllAccessEnabled"
                         (toggle)="toggleAllAccess($event)"
@@ -73,13 +73,13 @@
           <div class="section__item">
             <p class="section__title">{{ 'admin_permissions' | cpI18n }}</p>
             <div class="row">
-              <div class="col-xs-8">
+              <div class="col-8">
                 <p class="section-sub-title">{{ 'manage_team_members' | cpI18n }}</p>
                 <p class="section-description">
                   {{ 'admin_grant_permissions' | cpI18n }}
                 </p>
               </div>
-              <div class="col-xs-4">
+              <div class="col-4">
                 <cp-dropdown
                   [items]="manageAdmins"
                   (selected)="onManageAdminSelected($event)"
@@ -93,13 +93,13 @@
           <!-- Service Owner -->
           <div class="section__item">
             <div class="row">
-              <div class="col-xs-8">
+              <div class="col-8">
                 <p class="section-sub-title">{{ 'admin_service_owner' | cpI18n }}</p>
                 <p class="section-description">
                   {{ 'admin_service_owner_help' | cpI18n }}
                 </p>
               </div>
-              <div class="col-xs-4">
+              <div class="col-4">
                 <cp-dropdown
                   [items]="servicesMenu"
                   (selected)="onServicesSelected($event)"
@@ -113,13 +113,13 @@
           <!-- Club Owner -->
           <div class="section__item">
             <div class="row">
-              <div class="col-xs-8">
+              <div class="col-8">
                 <p class="section-sub-title">{{ 'admin_club_owner' | cpI18n }}</p>
                 <p class="section-description">
                   {{ 'admin_club_owner_help' | cpI18n }}
                 </p>
               </div>
-              <div class="col-xs-4">
+              <div class="col-4">
                 <cp-dropdown
                   [items]="clubsMenu"
                   (selected)="onClubsSelected($event)"
@@ -133,13 +133,13 @@
           <!-- Athletics Owner -->
           <div class="section__item">
             <div class="row">
-              <div class="col-xs-8">
+              <div class="col-8">
                 <p class="section-sub-title">{{ 'admin_athletics_owner' | cpI18n }}</p>
                 <p class="section-description">
                   {{ 'admin_athletics_owner_help' | cpI18n }}
                 </p>
               </div>
-              <div class="col-xs-4">
+              <div class="col-4">
                 <cp-dropdown
                   [items]="athleticsMenu"
                   (selected)="onAthleticsSelected($event)"
@@ -153,13 +153,13 @@
         <!-- Audience -->
         <div class="section__item">
           <div class="row">
-            <div class="col-xs-8">
+            <div class="col-8">
               <p class="section-sub-title">{{ 'admin_audience_title' | cpI18n }}</p>
               <p class="section-description">
                 {{ 'admin_audience_help' | cpI18n }}
               </p>
             </div>
-            <div class="col-xs-4">
+            <div class="col-4">
               <cp-dropdown
                 [items]="audienceMenu"
                 (selected)="onAudienceSelected($event)"
@@ -173,13 +173,13 @@
           <!-- Events -->
           <div class="section__item">
             <div class="row">
-              <div class="col-xs-8">
+              <div class="col-8">
                 <p class="section-sub-title">{{ 'admin_events_title' | cpI18n }}</p>
                 <p class="section-description">
                   {{ 'admin_events_help' | cpI18n }}
                 </p>
               </div>
-              <div class="col-xs-4">
+              <div class="col-4">
                 <cp-dropdown
                   [items]="eventsMenu"
                   (selected)="onEventsSelected($event)"
@@ -193,7 +193,7 @@
           <!-- App Content -->
           <div class="section__item section--content">
             <div class="row">
-              <div class="col-xs-12">
+              <div class="col-12">
                 <p class="section-sub-title">{{ 'admin_app_content' | cpI18n }}</p>
                 <p class="section-description">
                   {{ 'admin_app_content_help' | cpI18n }}
@@ -202,7 +202,7 @@
             </div>
             <div class="row options-row">
               <div
-                class="col-xs-4"
+                class="col-4"
                 [class.isDisabled]="!formData.content.feeds.active">
                 <cp-checkbox
                   class="cpcheckbox"
@@ -214,7 +214,7 @@
               </div>
 
               <div
-                class="col-xs-4"
+                class="col-4"
                 [class.isDisabled]="!formData.content.calendars.active">
                 <cp-checkbox
                   class="cpcheckbox"
@@ -226,7 +226,7 @@
               </div>
 
               <div
-                class="col-xs-4"
+                class="col-4"
                 [class.isDisabled]="!formData.content.links.active">
                 <cp-checkbox
                   class="cpcheckbox"
@@ -240,7 +240,7 @@
 
             <div class="row options-row">
               <div
-                class="col-xs-4"
+                class="col-4"
                 [class.isDisabled]="!formData.content.maps.active">
                 <cp-checkbox
                   class="cpcheckbox"
@@ -252,7 +252,7 @@
               </div>
 
               <div
-                class="col-xs-4"
+                class="col-4"
                 [class.isDisabled]="!formData.content.appCustomizaton.active">
                 <cp-checkbox
                   class="cpcheckbox"
@@ -264,7 +264,7 @@
               </div>
 
                <div
-                class="col-xs-4"
+                class="col-4"
                 [class.isDisabled]="!formData.content.orientation.active">
                 <cp-checkbox
                   class="cpcheckbox"
@@ -278,7 +278,7 @@
 
             <div class="row options-row">
               <div
-                class="col-xs-4"
+                class="col-4"
                 [class.isDisabled]="!formData.content.jobs.active">
                 <cp-checkbox
                   class="cpcheckbox"
@@ -290,7 +290,7 @@
               </div>
 
               <div
-                class="col-xs-4"
+                class="col-4"
                 [class.isDisabled]="!formData.content.deals.active">
                 <cp-checkbox
                   class="cpcheckbox"
@@ -307,7 +307,7 @@
           <!-- Notify -->
           <div class="section__item">
             <div class="row">
-              <div class="col-xs-12">
+              <div class="col-12">
                 <p class="section-sub-title">{{ 'notify' | cpI18n }}</p>
                 <p class="section-description">
                   {{ 'admin_notify_help' | cpI18n }}
@@ -315,10 +315,10 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-xs-12">
+              <div class="col-12">
                 <div class="row options-row">
                   <div
-                    class="col-xs-5"
+                    class="col-5"
                     [class.isDisabled]="!formData.notify.campus.active">
                     <cp-checkbox
                       class="cpcheckbox"
@@ -329,7 +329,7 @@
                     <span>{{ 'admin_campus_announcements' | cpI18n }}</span>
                   </div>
                   <div
-                    class="col-xs-5"
+                    class="col-5"
                     [class.isDisabled]="!formData.notify.emergency.active">
                     <cp-checkbox
                       class="cpcheckbox"
@@ -348,7 +348,7 @@
           <!-- Assess -->
           <div class="section__item">
             <div class="row">
-              <div class="col-xs-12">
+              <div class="col-12">
                 <p class="section-sub-title">{{ 'assess' | cpI18n }}</p>
                 <p class="section-description">
                   {{ 'admin_assess_help' | cpI18n }}
@@ -357,7 +357,7 @@
             </div>
             <div class="row">
               <div
-                class="col-xs-5 options-row"
+                class="col-5 options-row"
                 [class.isDisabled]="!formData.assess.engagement.active">
                 <cp-checkbox
                   class="cpcheckbox"
@@ -377,8 +377,8 @@
         <div class="footer">
           <div class="cp-wrapper cp-wrapper--outer">
             <div class="row">
-              <div class="col-xs-12">
-                <div class="pull-right">
+              <div class="col-12">
+                <div class="float-right">
                   <label *ngIf="isFormError"class="error">{{ formError }}</label>
                   <a [routerLink]="[currentUserCanManage ? '/settings/team' : '/dashboard']"
                     class="cpbtn cpbtn--cancel">

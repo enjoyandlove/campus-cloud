@@ -1,10 +1,10 @@
 <div class="cp-card">
   <p class="title">{{ 'jobs_employer_details' | cpI18n }}</p>
   <div class="row margin-top">
-    <div class="col-xs-12">
+    <div class="col-12">
       <cp-tabs (tabClick)="onTabClick($event)">
         <cp-tab id="existing" [title]="existingEmployerTitle">
-          <div class="col-xs-5 no-left-padding">
+          <div class="col-5 no-left-padding">
             <div class="form-group">
               <cp-employer-selector
                 [form]="form">

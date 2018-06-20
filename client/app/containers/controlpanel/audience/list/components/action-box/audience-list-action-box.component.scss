@@ -1,5 +1,4 @@
 @import '~styles/core/colors';
-@import '~bootstrap/variables';
 @import '~styles/core/typography';
 @import '~styles/components/card';
 @import '~styles/components/form';
@@ -20,12 +19,6 @@
 
   .checkbox {
     margin-top: 5px;
-  }
-
-  & > div > * {
-    @media all and (max-width: $screen-md) {
-      margin-bottom: 10px;
-    }
   }
 }
 

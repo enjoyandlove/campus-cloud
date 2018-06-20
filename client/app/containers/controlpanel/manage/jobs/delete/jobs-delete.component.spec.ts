@@ -1,13 +1,13 @@
-import { async, TestBed, ComponentFixture } from '@angular/core/testing';
-import { URLSearchParams } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
-
+import { HttpParams } from '@angular/common/http';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { of as observableOf } from 'rxjs';
+import { JobsDeleteComponent } from './jobs-delete.component';
+import { CPSession } from '../../../../../session';
+import { mockSchool } from '../../../../../session/mock/school';
+import { CPI18nService } from '../../../../../shared/services';
 import { JobsModule } from '../jobs.module';
 import { JobsService } from '../jobs.service';
-import { CPSession } from '../../../../../session';
-import { JobsDeleteComponent } from './jobs-delete.component';
-import { CPI18nService } from '../../../../../shared/services';
-import { mockSchool } from '../../../../../session/mock/school';
 
 const mockJobs = require('../mockJobs.json');
 
@@ -17,7 +17,7 @@ class MockJobsService {
   deleteJob(id: number, search: any) {
     this.dummy = [id, search];
 
-    return Observable.of({});
+    return observableOf({});
   }
 }
 
@@ -30,23 +30,21 @@ describe('JobsDeleteComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [JobsModule],
-        providers: [
-          CPSession,
-          CPI18nService,
-          { provide: JobsService, useClass: MockJobsService },
-        ]
+        imports: [JobsModule, RouterTestingModule],
+        providers: [CPSession, CPI18nService, { provide: JobsService, useClass: MockJobsService }]
       })
         .compileComponents()
         .then(() => {
           fixture = TestBed.createComponent(JobsDeleteComponent);
           component = fixture.componentInstance;
 
-          search = new URLSearchParams();
           component.job = mockJobs[0];
 
           component.session.g.set('school', mockSchool);
-          search.append('school_id', component.session.g.get('school').id.toString());
+          search = new HttpParams().append(
+            'school_id',
+            component.session.g.get('school').id.toString()
+          );
         });
     })
   );
@@ -60,7 +58,7 @@ describe('JobsDeleteComponent', () => {
   it('should delete job', () => {
     spyOn(component.deleted, 'emit');
     spyOn(component.resetDeleteModal, 'emit');
-    spy = spyOn(component.service, 'deleteJob').and.returnValue(Observable.of({}));
+    spy = spyOn(component.service, 'deleteJob').and.returnValue(observableOf({}));
 
     component.onDelete();
     expect(spy).toHaveBeenCalledTimes(1);
@@ -72,5 +70,4 @@ describe('JobsDeleteComponent', () => {
     expect(component.resetDeleteModal.emit).toHaveBeenCalled();
     expect(component.resetDeleteModal.emit).toHaveBeenCalledTimes(1);
   });
-
 });

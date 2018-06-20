@@ -7,80 +7,91 @@
       [noContentText]="cpI18n.translate('services_providers_no_results')">
     </cp-no-content>
 
-    <div class="row" *ngIf="state.providers.length">
-      <div class="col-xs-12">
-        <div class="cp-table">
-          <div class="cp-table__header">
-            <div class="row">
-              <div class="col-xs-3">
-                <span
-                  class="hover"
-                  (click)="doSort('provider_name')">
-                  {{ 'service_provider' | cpI18n }}
-                  <span *ngIf="state.sort_field === 'provider_name'">
-                    <i class="material-icons">
-                      {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
-                    </i>
+    <ng-container *ngIf="state.providers.length">
+      <div class="row">
+        <div class="col-12">
+          <div class="cp-table">
+            <div class="cp-table__header">
+              <div class="row">
+                <div class="col-3">
+                  <span
+                    class="hover"
+                    (click)="doSort('provider_name')">
+                    {{ 'service_provider' | cpI18n }}
+                    <span *ngIf="state.sort_field === 'provider_name'">
+                      <i class="material-icons">
+                        {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+                      </i>
+                    </span>
                   </span>
-                </span>
-              </div>
-              <div class="col-xs-4" *ngIf="displayRatingColumn">
-                <span>{{ 'average_rating' | cpI18n }}</span>
-              </div>
-              <div class="col-xs-1" *ngIf="displayRatingColumn">
-                <span
-                  class="hover"
-                  (click)="doSort('num_ratings')">
-                  {{ 'rating' | cpI18n }}
-                  <span *ngIf="state.sort_field === 'num_ratings'">
-                    <i class="material-icons">
-                      {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
-                    </i>
+                </div>
+                <div class="col-4" *ngIf="displayRatingColumn">
+                  <span>{{ 'average_rating' | cpI18n }}</span>
+                </div>
+                <div class="col-1" *ngIf="displayRatingColumn">
+                  <span
+                    class="hover"
+                    (click)="doSort('num_ratings')">
+                    {{ 'rating' | cpI18n }}
+                    <span *ngIf="state.sort_field === 'num_ratings'">
+                      <i class="material-icons">
+                        {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+                      </i>
+                    </span>
                   </span>
-                </span>
+                </div>
+                <div [class]="[displayRatingColumn ? 'col-1' : 'col-1 offset-5']">
+                  <span>
+                    {{ 'services_visits' | cpI18n }}
+                  </span>
+                </div>
+                <div class="col-2">
+                  <span i18n>{{ 'assessment' | cpI18n }}</span>
+                </div>
+                <div class="col-1"></div>
               </div>
-              <div [class]="[displayRatingColumn ? 'col-xs-1' : 'col-xs-1 col-xs-offset-5']">
-                <span>
-                  {{ 'services_visits' | cpI18n }}
-                </span>
-              </div>
-              <div class="col-xs-2">
-                <span i18n>{{ 'assessment' | cpI18n }}</span>
-              </div>
-              <div class="col-xs-1"></div>
             </div>
-          </div>
 
-          <div class="cp-table__item" *ngFor="let provider of state.providers">
-            <div class="row">
-              <div class="col-xs-3 text-truncate"><a [routerLink]="['provider/' +  provider.id]"><span><strong>{{ provider.provider_name }}</strong><br>{{ provider.email }}</span></a></div>
-              <div class="col-xs-4" *ngIf="displayRatingColumn">
-                <cp-stars
-                  [size]="listStarSize"
-                  [avgRate]="provider.avg_rating_percent"
-                  [maxRate]="5">
-                </cp-stars>
-              </div>
-              <div class="col-xs-1" *ngIf="displayRatingColumn">
-                <span>{{ provider.num_ratings }}</span>
-              </div>
-              <div [class]="[displayRatingColumn ? 'col-xs-1' : 'col-xs-1 col-xs-offset-5']">
-                <span>{{ provider.total_visits }}</span>
-              </div>
-              <div class="col-xs-2">
-                <a
-                  [routerLink]="['/cb/checkin/s/' + provider.encrypted_campus_service_id + '/' + provider.encrypted_id]"
-                  class="startcheckin cpbtn cpbtn--no-border cpbtn--secondary" i18n>
-                  {{ 'services_label_check_in_details' | cpI18n }}
-                </a>
-              </div>
-              <div class="col-xs-1">
-                <span
-                  (click)="deleteProvider = provider"
-                  data-toggle="modal" data-target="#deleteProvider"
-                  class="col-xs-1 text-center hover text-truncate delete-provider">
-                  &times;
-                </span>
+            <div class="cp-table__item" *ngFor="let provider of state.providers">
+              <div class="row">
+                <div 
+                  class="col-3 text-truncate">
+                  <a [routerLink]="['provider/' + provider.id]">
+                    <span>
+                      <strong>{{ provider.provider_name }}</strong>
+                      <br>
+                      {{ provider.email }}
+                    </span>
+                  </a>
+                </div>
+                <div class="col-4" *ngIf="displayRatingColumn">
+                  <cp-stars
+                    [size]="listStarSize"
+                    [avgRate]="provider.avg_rating_percent"
+                    [maxRate]="5">
+                  </cp-stars>
+                </div>
+                <div class="col-1" *ngIf="displayRatingColumn">
+                  <span>{{ provider.num_ratings }}</span>
+                </div>
+                <div [class]="[displayRatingColumn ? 'col-1' : 'col-1 offset-5']">
+                  <span>{{ provider.total_visits }}</span>
+                </div>
+                <div class="col-2">
+                  <a
+                    [routerLink]="['/cb/checkin/s/' + provider.encrypted_campus_service_id + '/' + provider.encrypted_id]"
+                    class="startcheckin cpbtn cpbtn--no-border cpbtn--secondary" i18n>
+                    {{ 'services_label_check_in_details' | cpI18n }}
+                  </a>
+                </div>
+                <div class="col-1">
+                  <span
+                    (click)="deleteProvider = provider"
+                    data-toggle="modal" data-target="#deleteProvider"
+                    class="col-1 text-center hover text-truncate delete-provider">
+                    &times;
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -88,7 +99,7 @@
       </div>
 
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-12">
           <cp-pagination
             [pageNext]="pageNext"
             [pagePrev]="pagePrev"
@@ -98,7 +109,7 @@
           </cp-pagination>
         </div>
       </div>
-    </div>
+    </ng-container>
 
     <cp-modal modalId="deleteProvider">
       <cp-providers-delete

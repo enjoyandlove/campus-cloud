@@ -1,13 +1,14 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import { Router } from '@angular/router';
+import { map } from 'rxjs/operators';
 
-import { BaseService } from '../../base/base.service';
+import { HTTPService } from '../../base/http.service';
 import { API } from '../../config/api';
 
 @Injectable()
-export class SchoolService extends BaseService {
-  constructor(http: Http, router: Router) {
+export class SchoolService extends HTTPService {
+  constructor(http: HttpClient, router: Router) {
     super(http, router);
 
     Object.setPrototypeOf(this, SchoolService.prototype);
@@ -18,6 +19,6 @@ export class SchoolService extends BaseService {
       API.ENDPOINTS.SCHOOL
     }/${startRange};${endRange}`;
 
-    return super.get(url).map((res) => res.json());
+    return super.get(url).pipe(map((res) => res));
   }
 }

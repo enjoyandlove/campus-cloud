@@ -1,13 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
-
-import { EventsService } from '../../../events.service';
+import { HttpParams } from '@angular/common/http';
+import { Component, Input, OnInit } from '@angular/core';
 import { CPSession } from './../../../../../../../session';
+import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
+import { createSpreadSheet } from './../../../../../../../shared/utils/csv/parser';
 import { CPDate } from './../../../../../../../shared/utils/date/date';
 import { BaseComponent } from '../../../../../../../base/base.component';
 import { STAR_SIZE } from '../../../../../../../shared/components/cp-stars';
-import { createSpreadSheet } from './../../../../../../../shared/utils/csv/parser';
-import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
+import { EventsService } from '../../../events.service';
 
 interface IState {
   sort_field: string;
@@ -48,15 +47,16 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
   }
 
   public fetch() {
-    const search = new URLSearchParams();
-    search.append('event_id', this.event.id);
-    search.append('sort_field', this.state.sort_field);
-    search.append('sort_direction', this.state.sort_direction);
-    search.append('search_text', this.state.search_text);
+    let search = new HttpParams()
+      .append('event_id', this.event.id)
+      .append('sort_field', this.state.sort_field)
+      .append('sort_direction', this.state.sort_direction)
+      .append('search_text', this.state.search_text);
 
     if (this.isOrientation) {
-      search.append('school_id', this.session.g.get('school').id);
-      search.append('calendar_id', this.orientationId.toString());
+      search = search
+        .append('school_id', this.session.g.get('school').id)
+        .append('calendar_id', this.orientationId.toString());
     }
     const stream$ = this.service.getEventAttendanceByEventId(
       this.startRange,
@@ -89,13 +89,12 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
   }
 
   onCreateExcel() {
-    const search = new URLSearchParams();
-    search.append('event_id', this.event.id);
-    search.append('all', '1');
+    let search = new HttpParams().append('event_id', this.event.id).append('all', '1');
 
     if (this.isOrientation) {
-      search.append('school_id', this.session.g.get('school').id);
-      search.append('calendar_id', this.orientationId.toString());
+      search = search
+        .append('school_id', this.session.g.get('school').id)
+        .append('calendar_id', this.orientationId.toString());
     }
     const stream$ = this.service.getEventAttendanceByEventId(
       this.startRange,
@@ -103,7 +102,7 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
       search
     );
 
-    stream$.toPromise().then((attendees) => {
+    stream$.toPromise().then((attendees: Array<any>) => {
       const columns = [
         this.cpI18n.translate('events_attendant'),
         this.cpI18n.translate('events_attendee_email'),

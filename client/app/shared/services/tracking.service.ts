@@ -1,15 +1,80 @@
 import { Injectable } from '@angular/core';
+import { PRIMARY_OUTLET, Router } from '@angular/router';
 
-import { isProd } from './../../config/env/index';
+import { isCanada, isProd, isSea, isUsa, isStaging } from './../../config/env/index';
+
+/**
+ * i.e url = /manage/events/123/info
+ * Route Level first = parent(manage), second = child(events),
+ * third = sub-child and so on
+ * @type {{first: number; second: number}}
+ */
+export enum RouteLevel {
+  'first' = 0,
+  'second' = 1,
+  'third' = 2
+}
 
 declare var window: any;
 
 @Injectable()
 export class CPTrackingService {
-  static loadAmplitude(userId) {
+  constructor(public router: Router) {}
+
+  loadAmplitude(session) {
+    let identify;
+    const user = session.get('user');
+    const school = session.get('school');
+    const api_key = isProd
+      ? '6c5441a7008b413b8d3d29f8130afae1'
+      : 'be78bb81dd7f98c7cf8d1a7994e07c85';
+
     require('node_modules/amplitude-js/src/amplitude-snippet.js');
 
-    window.amplitude.getInstance().init('6c5441a7008b413b8d3d29f8130afae1', userId);
+    window.amplitude.getInstance().init(api_key, this.getSchoolUserID(user.id));
+
+    identify = new window.amplitude.Identify()
+      .set('school_name', school.name)
+      .set('is_oohlala', this.isOohlala(user.email))
+      .set('school_id', this.getSchoolUserID(school.id));
+
+    window.amplitude.getInstance().identify(identify);
+  }
+
+  isOohlala(email) {
+    return email.split('@').includes('oohlalamobile.com');
+  }
+
+  getSchoolUserID(id) {
+    if (isCanada) {
+      return `CAN${id}`;
+    } else if (isSea) {
+      return `SEA${id}`;
+    } else if (isUsa) {
+      return `US${id}`;
+    } else {
+      // default for dev
+      return `US${id}`;
+    }
+  }
+
+  getEventProperties() {
+    return {
+      menu_name: this.activatedRoute(this.router, RouteLevel.first),
+      sub_menu_name: this.activatedRoute(this.router, RouteLevel.second)
+    };
+  }
+
+  activatedRoute(router, level) {
+    const tree = router.parseUrl(router.url);
+    const children = tree.root.children[PRIMARY_OUTLET];
+    const segments = children.segments;
+
+    return segments[level] ? this.capitalizeFirstLetter(segments[level].path) : null;
+  }
+
+  capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
   hotJarRecordPage() {
@@ -32,12 +97,12 @@ export class CPTrackingService {
     })(window, document, '//static.hotjar.com/c/hotjar-', '.js?sv=');
   }
 
-  amplitudeEmitEvent(eventType: string, extraData?: {}) {
-    if (!isProd) {
+  amplitudeEmitEvent(eventName: string, eventProperties?: {}) {
+    if (!isProd && !isStaging) {
       return;
     }
 
-    window.amplitude.getInstance().logEvent(eventType, extraData);
+    window.amplitude.getInstance().logEvent(eventName, eventProperties);
   }
 
   gaTrackPage(pageName) {

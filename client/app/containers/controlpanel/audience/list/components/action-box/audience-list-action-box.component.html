@@ -1,11 +1,11 @@
 <div class="cp-card">
-  <div class="row">
-    <div class="col-xs-6 pull-left">
+  <div class="row justify-content-between">
+    <div class="col">
       <div class="row">
-        <div class="col-xs-8">
+        <div class="col-7">
           <cp-searchbox (query)="search.emit($event)"></cp-searchbox>
         </div>
-        <div class="col-xs-4">
+        <div class="col-5">
           <cp-dropdown 
             [items]="listTypes" 
             (selected)="onListSelected($event)">
@@ -13,18 +13,24 @@
         </div>
       </div>
     </div>
-    <div class="col-xs-3 pull-right text-right">
-      <button
-        (click)="launchCreateModal.emit()"
-        class="cpbtn cpbtn--primary cpbtn--square-right no-right-padding" i18n>
-        {{ 'lists_button_create' | cpI18n }}
-      </button>
-      <div
-        class="cpbtn cpbtn--square-left cpbtn--no-padding cpbtn--primary no-left-padding hover action-dropdown">
-        <i class="material-icons" data-toggle="dropdown">expand_more</i>
-        <ul class="dropdown-menu dropdown-menu-right text-left">
-          <li i18n (click)="launchImportModal.emit()">{{ 'import_from_csv' | cpI18n }}</li>
-        </ul>
+    <div class="col">
+      <div class="row">
+        <div class="col-12 float-right text-right">
+          <button
+            cpTracker
+            (click)="launchCreateModal.emit()"
+            [eventData]="trackEvent(amplitudeEvents.clicked_create)"
+            class="cpbtn cpbtn--primary cpbtn--square-right no-right-padding">
+            {{ 'lists_button_create' | cpI18n }}
+          </button>
+          <div
+            class="cpbtn cpbtn--square-left cpbtn--no-padding cpbtn--primary no-left-padding hover action-dropdown">
+            <i class="material-icons" data-toggle="dropdown">expand_more</i>
+            <ul class="dropdown-menu dropdown-menu-right text-left">
+              <li i18n (click)="launchImportModal.emit()">{{ 'import_from_csv' | cpI18n }}</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   </div>

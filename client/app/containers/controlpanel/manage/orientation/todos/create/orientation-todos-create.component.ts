@@ -1,21 +1,19 @@
+import { HttpParams } from '@angular/common/http';
 import {
   Component,
-  OnInit,
-  EventEmitter,
-  Output,
-  HostListener,
   ElementRef,
+  EventEmitter,
+  HostListener,
+  OnInit,
+  Output,
   ViewChild
 } from '@angular/core';
-
-import { URLSearchParams } from '@angular/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { ActivatedRoute } from '@angular/router';
 import { CPSession } from './../../../../../../session';
-import { TodosService } from '../todos.service';
 import { CPI18nService } from '../../../../../../shared/services/i18n.service';
 import { ITodo } from '../todos.interface';
-import { ActivatedRoute } from '@angular/router';
+import { TodosService } from '../todos.service';
 
 @Component({
   selector: 'cp-orientation-todo-create',
@@ -56,11 +54,11 @@ export class OrientationTodosCreateComponent implements OnInit {
   }
 
   onSubmit() {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
-    search.append('calendar_id', this.orientationId.toString());
+    const search = new HttpParams()
+      .append('school_id', this.session.g.get('school').id)
+      .append('calendar_id', this.orientationId.toString());
 
-    this.service.createTodo(this.form.value, search).subscribe((createdTodo) => {
+    this.service.createTodo(this.form.value, search).subscribe((createdTodo: any) => {
       this.created.emit(createdTodo);
       this.resetModal();
     });

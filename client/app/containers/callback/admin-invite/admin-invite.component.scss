@@ -2,7 +2,6 @@
 @import '~styles/core/typography';
 @import '~styles/components/form';
 @import '~styles/components/button';
-@import '~bootstrap/variables';
 
 :host {
   height: 100%;
@@ -19,10 +18,6 @@ p {
 
 .header {
   margin-top: 115px;
-
-  @media all and (max-width: $screen-sm) {
-    margin-top: 80px;
-  }
 }
 
 .title {

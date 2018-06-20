@@ -3,8 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { LoginComponent, LogoutComponent, LostPasswordComponent } from './containers/auth';
 
-import { CPPreloadStrategy } from './config/strategies/preload.strategy';
-
 const routes: Routes = [
   {
     path: '',
@@ -28,14 +26,15 @@ const routes: Routes = [
     loadChildren: './containers/callback/callback.module#CallbackModule'
   },
 
-  { path: 'logout', component: LogoutComponent }
+  { path: 'logout', component: LogoutComponent },
+
+  { path: '**', redirectTo: 'login' }
 ];
 
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, {
-      useHash: true,
-      preloadingStrategy: CPPreloadStrategy
+      useHash: true
     })
   ],
   exports: [RouterModule]

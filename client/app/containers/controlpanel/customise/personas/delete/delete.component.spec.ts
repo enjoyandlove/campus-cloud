@@ -1,5 +1,4 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
-import { Observable } from 'rxjs/Observable';
 
 import { CPSession } from './../../../../../session';
 import { PersonasModule } from './../personas.module';
@@ -7,6 +6,7 @@ import { PersonasService } from './../personas.service';
 import { PersonasDeleteComponent } from './delete.component';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { MockPersonasService, mockPersonas } from '../mock/personas.service.mock';
+import { of } from 'rxjs';
 
 describe('PersonasDeleteComponent', () => {
   let comp: PersonasDeleteComponent;
@@ -52,7 +52,7 @@ describe('PersonasDeleteComponent', () => {
   it('onDelete', () => {
     spyOn(comp, 'resetModal');
     spyOn(comp.deleted, 'emit');
-    spyOn(comp.service, 'deletePersonaById').and.returnValue(Observable.of(comp.persona.id));
+    spyOn(comp.service, 'deletePersonaById').and.returnValue(of(comp.persona.id));
 
     comp.onDelete();
 

@@ -8,20 +8,22 @@ import {
   HostListener
 } from '@angular/core';
 
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import {
   canSchoolWriteResource,
   canAccountLevelWriteResource
 } from './../../../../../../../shared/utils/privileges/privileges';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { DATE_FILTER } from './events-filters';
 import { EventAttendance } from '../../../event.status';
 import { CPSession } from '../../../../../../../session';
 import { CPDate } from '../../../../../../../shared/utils/date';
-import { StoreService } from '../../../../../../../shared/services';
 import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
+import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
+import { CPTrackingService, StoreService } from '../../../../../../../shared/services';
+import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
 
 interface IState {
   end: number;
@@ -47,6 +49,7 @@ export class ListActionBoxComponent implements OnInit {
   eventFilter;
   dateFilterOpts;
   canCreateEvent;
+  amplitudeEvents;
   threeYearsFromNow = CPDate.now(this.session.tz)
     .add(3, 'years')
     .unix();
@@ -64,13 +67,13 @@ export class ListActionBoxComponent implements OnInit {
   constructor(
     private el: ElementRef,
     private session: CPSession,
-    private storeService: StoreService
+    private storeService: StoreService,
+    private cpTracking: CPTrackingService
   ) {}
 
   getStores() {
     const school = this.session.g.get('school');
-    const search: URLSearchParams = new URLSearchParams();
-    search.append('school_id', school.id.toString());
+    const search: HttpParams = new HttpParams().append('school_id', school.id.toString());
 
     this.stores$ = this.storeService.getStores(search);
   }
@@ -171,6 +174,19 @@ export class ListActionBoxComponent implements OnInit {
     $('#excelEventsModal').modal();
   }
 
+  trackEvent(eventName) {
+    const eventProperties = {
+      ...this.cpTracking.getEventProperties(),
+      create_page_name: amplitudeEvents.CREATE_EVENT
+    };
+
+    return {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName,
+      eventProperties
+    };
+  }
+
   ngOnInit() {
     this.getStores();
     const canSchoolWrite = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.events);
@@ -186,6 +202,10 @@ export class ListActionBoxComponent implements OnInit {
       mode: 'range',
       minDate: CPDate.now(this.session.tz).format(),
       maxDate: null
+    };
+
+    this.amplitudeEvents = {
+      clicked_create: amplitudeEvents.CLICKED_CREATE
     };
 
     this.listAction.emit(this.state);

@@ -1,3 +1,4 @@
+import { HttpParams } from '@angular/common/http';
 import {
   Component,
   ElementRef,
@@ -8,15 +9,13 @@ import {
   Output,
   ViewChild
 } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { URLSearchParams } from '@angular/http';
-
-import { CPSession } from './../../../../../session';
-import { OrientationService } from '../orientation.services';
-import { CPI18nService } from '../../../../../shared/services/i18n.service';
-import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-import { OrientationUtilsService } from '../orientation.utils.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { CPSession } from './../../../../../session';
+import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { CPI18nService } from '../../../../../shared/services/i18n.service';
+import { OrientationService } from '../orientation.services';
+import { OrientationUtilsService } from '../orientation.utils.service';
 
 @Component({
   selector: 'cp-orientation-program-edit',
@@ -65,12 +64,11 @@ export class OrientationProgramEditComponent implements OnInit {
   }
 
   onSubmit() {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     this.service
       .editProgram(this.orientationProgram.id, this.form.value, search)
-      .subscribe((editedProgram) => {
+      .subscribe((editedProgram: any) => {
         this.store.dispatch({
           type: HEADER_UPDATE,
           payload: this.utils.buildHeader(editedProgram)

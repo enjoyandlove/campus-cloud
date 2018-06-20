@@ -1,16 +1,30 @@
 <div class="cp-card">
-  <div class="row">
-    <div class="col-xs-3 pull-left">
-      <cp-searchbox (query)="onSearch($event)"></cp-searchbox>
+  <div class="row justify-content-between">
+    <div class="col">
+      <div class="row">
+        <div class="col-7">
+          <cp-searchbox (query)="onSearch($event)"></cp-searchbox>
+        </div>
+        <div class="col-5">
+          <cp-dropdown
+            [items]="types"
+            (selected)="onSelectedType($event)">
+          </cp-dropdown>
+        </div>
+      </div>
     </div>
-    <div class="col-xs-2 pull-left">
-      <cp-dropdown
-        [items]="types"
-        (selected)="onSelectedType($event)">
-      </cp-dropdown>
-    </div>
-    <div class="col-xs-3 pull-right text-right" *ngIf="canCompose">
-      <a [routerLink]="['compose']" class="cpbtn cpbtn--primary">{{ 'compose' | cpI18n }}</a>
+    <div class="col" *ngIf="canCompose">
+      <div class="row">
+        <div class="col-12 text-right">
+          <a
+            cpTracker
+            [routerLink]="['compose']"
+            class="cpbtn cpbtn--primary"
+            [eventData]="trackEvent(amplitudeEvents.clicked_create)">
+            {{ 'compose' | cpI18n }}
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </div>

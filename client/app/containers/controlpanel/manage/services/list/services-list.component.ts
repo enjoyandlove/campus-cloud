@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
 import { ServicesService } from '../services.service';
@@ -57,16 +57,16 @@ export class ServicesListComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    const search = new URLSearchParams();
     const attendance_only = this.state.attendance_only
       ? this.state.attendance_only.toString()
       : null;
 
-    search.append('attendance_only', attendance_only);
-    search.append('sort_field', this.state.sort_field);
-    search.append('sort_direction', this.state.sort_direction);
-    search.append('search_text', this.state.search_text);
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams()
+      .append('attendance_only', attendance_only)
+      .append('sort_field', this.state.sort_field)
+      .append('sort_direction', this.state.sort_direction)
+      .append('search_text', this.state.search_text)
+      .append('school_id', this.session.g.get('school').id.toString());
 
     const stream$ = this.service.getServices(this.startRange, this.endRange, search);
 

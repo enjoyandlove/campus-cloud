@@ -1,15 +1,15 @@
-import { async, fakeAsync, tick, TestBed, ComponentFixture } from '@angular/core/testing';
-import { URLSearchParams } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { HttpParams } from '@angular/common/http';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
-
-import { StoreService } from '../store.service';
-import { CPSession } from '../../../../../../session';
-import { StoreListComponent } from './store-list.component';
-import { StoreModule as DealsStoreModule } from '../store.module';
-import { mockSchool } from '../../../../../../session/mock/school';
-import { headerReducer, snackBarReducer } from '../../../../../../reducers';
+import { of as observableOf } from 'rxjs';
 import { CPI18nService } from './../../../../../../shared/services/i18n.service';
+import { StoreListComponent } from './store-list.component';
+import { reducers } from '../../../../../../reducers';
+import { CPSession } from '../../../../../../session';
+import { mockSchool } from '../../../../../../session/mock/school';
+import { StoreModule as DealsStoreModule } from '../store.module';
+import { StoreService } from '../store.service';
 
 class MockStoreService {
   dummy;
@@ -17,7 +17,7 @@ class MockStoreService {
   getStores(startRage: number, endRage: number, search: any) {
     this.dummy = [startRage, endRage, search];
 
-    return Observable.of({});
+    return observableOf({});
   }
 }
 
@@ -34,16 +34,13 @@ describe('DealsStoreListComponent', () => {
       TestBed.configureTestingModule({
         imports: [
           DealsStoreModule,
+          RouterTestingModule,
           StoreModule.forRoot({
-            HEADER: headerReducer,
-            SNACKBAR: snackBarReducer
+            HEADER: reducers.HEADER,
+            SNACKBAR: reducers.SNACKBAR
           })
         ],
-        providers: [
-          CPSession,
-          CPI18nService,
-          { provide: StoreService, useClass: MockStoreService },
-        ]
+        providers: [CPSession, CPI18nService, { provide: StoreService, useClass: MockStoreService }]
       })
         .compileComponents()
         .then(() => {
@@ -51,11 +48,11 @@ describe('DealsStoreListComponent', () => {
           component = fixture.componentInstance;
           component.session.g.set('school', mockSchool);
 
-          search = new URLSearchParams();
-          search.append('search_str', component.state.search_str);
-          search.append('sort_field', component.state.sort_field);
-          search.append('sort_direction', component.state.sort_direction);
-          search.append('school_id', component.session.g.get('school').id.toString());
+          search = new HttpParams()
+            .append('search_str', component.state.search_str)
+            .append('sort_field', component.state.sort_field)
+            .append('sort_direction', component.state.sort_direction)
+            .append('school_id', component.session.g.get('school').id.toString());
         });
     })
   );
@@ -97,8 +94,10 @@ describe('DealsStoreListComponent', () => {
     expect(component.launchCreateModal).toBeTruthy();
   });
 
-  it('should fetch list of stores', fakeAsync(() => {
-      spy = spyOn(component.service, 'getStores').and.returnValue(Observable.of(mockStores));
+  it(
+    'should fetch list of stores',
+    fakeAsync(() => {
+      spy = spyOn(component.service, 'getStores').and.returnValue(observableOf(mockStores));
       component.ngOnInit();
 
       tick();

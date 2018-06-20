@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-xs-12">
+  <div class="col-12">
     <cp-personas-list-action-box
       (search)="onSearch($event)"
       (filterBy)="onFilterByPersonaType($event)">
@@ -20,13 +20,13 @@
     <div *ngIf="state.personas.length">
       <ul class="personas cp-form">
         <li 
-          class="cp-form__item col-xs-12" 
+          class="cp-form__item col-12" 
           *ngFor="let persona of state.personas; let i = index">
           <div class="row">
-            <span class="col-xs-5 text-truncate personas__name">
+            <span class="col-5 text-truncate personas__name">
               {{ persona.localized_name_map.en }}
             </span>
-            <span class="col-xs-7 pull-right personas__actions text-right">
+            <span class="col-7 float-right personas__actions text-right">
               <fieldset [disabled]="state.updating">
                 <button 
                   type="button"

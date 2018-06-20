@@ -1,13 +1,15 @@
 import { HEADER_UPDATE } from './../../../../../reducers/header.reducer';
 import { Component, OnInit } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
 import { BannerService } from '../banner.service';
+import { CPTrackingService } from '../../../../../shared/services';
 import { ISnackbar, SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
 import { CPI18nService, CPCroppieService } from '../../../../../shared/services/index';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 
 @Component({
   selector: 'cp-banner-list',
@@ -26,7 +28,8 @@ export class BannerListComponent extends BaseComponent implements OnInit {
     public session: CPSession,
     public cpI18n: CPI18nService,
     public store: Store<ISnackbar>,
-    public service: BannerService
+    public service: BannerService,
+    public cpTracking: CPTrackingService
   ) {
     super();
     super.isLoading().subscribe((loading) => (this.loading = loading));
@@ -74,8 +77,7 @@ export class BannerListComponent extends BaseComponent implements OnInit {
   }
 
   loadImage() {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     const stream$ = this.service.getCoverImage(search);
     super.fetchData(stream$).then((res) => {
@@ -117,17 +119,17 @@ export class BannerListComponent extends BaseComponent implements OnInit {
     this.uploading = true;
     this.imageToBase64()
       .then((base64ImageData) => this.uploadBase64Image(base64ImageData))
-      .then((savedBase64Image) => {
+      .then((savedBase64Image: any) => {
         this.uploading = false;
-        const search = new URLSearchParams();
-        search.append('school_id', this.session.g.get('school').id);
+        const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
         return this.service.updateSchoolImage(savedBase64Image.image_url, search).toPromise();
       })
-      .then((res) => {
+      .then((res: any) => {
         this.originalImage = res.cover_photo_url;
         this.onReset();
         this.onSuccess();
+        this.trackUploadImageEvent();
       })
       .catch((_) => {
         this.onError();
@@ -140,6 +142,12 @@ export class BannerListComponent extends BaseComponent implements OnInit {
       type: HEADER_UPDATE,
       payload: require('../../customise.header.json')
     });
+  }
+
+  trackUploadImageEvent() {
+    const properties = this.cpTracking.getEventProperties();
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
 
   ngOnInit() {

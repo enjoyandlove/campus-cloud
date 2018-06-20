@@ -1,12 +1,12 @@
 <div class="cpmodal">
   <div class="cpmodal__header">
     <div class="row">
-      <div class="col-xs-12 text-center">
+      <div class="col-12 text-center">
         <span i18n><strong>{{ 'services_provider_delete_modal_title' | cpI18n }}</strong></span>
 
         <span
           data-dismiss="modal"
-          class="pull-right hover cpmodal__header__close">
+          class="float-right hover cpmodal__header__close">
           &times;
         </span>
       </div>
@@ -15,7 +15,7 @@
 
   <div class="cpmodal__body">
     <div class="row">
-      <div class="col-xs-12">
+      <div class="col-12">
         <p class="text-center" i18n>
           {{ 'services_provider_delete_modal_body' | cpI18n: item.name  }}
         </p>
@@ -25,7 +25,7 @@
 
   <div class="cpmodal__footer">
     <div class="row">
-      <div class="col-xs-6 col-xs-offset-6 text-right">
+      <div class="col-6 offset-6 text-right">
         <button
           type="button"
           class="cpbtn cpbtn--cancel"

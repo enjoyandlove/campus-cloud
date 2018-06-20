@@ -1,4 +1,4 @@
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -9,7 +9,13 @@ import { CPSession } from '../../../../../session';
 import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 import { CP_PRIVILEGES, CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
-import { ErrorService, AdminService, CPI18nService } from '../../../../../shared/services';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import {
+  ErrorService,
+  AdminService,
+  CPI18nService,
+  CPTrackingService
+} from '../../../../../shared/services';
 
 import {
   accountsToStoreMap,
@@ -78,7 +84,8 @@ export class TeamCreateComponent implements OnInit {
     private cpI18n: CPI18nService,
     public utils: TeamUtilsService,
     private teamService: AdminService,
-    private errorService: ErrorService
+    private errorService: ErrorService,
+    private cpTracking: CPTrackingService
   ) {}
 
   private buildHeader() {
@@ -158,8 +165,16 @@ export class TeamCreateComponent implements OnInit {
       return;
     }
 
+    const eventProperties = this.utils.getAmplitudeEventProperties(
+      this.schoolPrivileges,
+      this.accountPrivileges
+    );
+
     this.teamService.createAdmin(_data).subscribe(
-      () => this.router.navigate(['/settings/team']),
+      () => {
+        this.cpTracking.amplitudeEmitEvent(amplitudeEvents.INVITED_TEAM_MEMBER, eventProperties);
+        this.router.navigate(['/settings/team']);
+      },
       (err) => {
         this.isFormError = true;
 

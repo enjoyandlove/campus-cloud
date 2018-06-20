@@ -7,6 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class AudienceCounterComponent implements OnInit {
   @Input() message: string;
+  @Input() loading = false;
 
   constructor() {}
 

@@ -1,16 +1,15 @@
-import { URLSearchParams } from '@angular/http';
-import { ICalendar } from './../calendars.interface';
+import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-
+import { switchMap } from 'rxjs/operators';
+import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
 import { FORMAT } from './../../../../../shared/pipes/date/date.pipe';
+import { ICalendar } from './../calendars.interface';
 import { CalendarsService } from './../calendars.services';
 import { BaseComponent } from '../../../../../base';
 import { CPSession } from '../../../../../session';
 import { CPI18nService } from '../../../../../shared/services';
-
-import { IHeader, HEADER_UPDATE } from './../../../../../reducers/header.reducer';
 
 @Component({
   selector: 'cp-calendars-details',
@@ -109,24 +108,28 @@ export class CalendarsDetailComponent extends BaseComponent implements OnInit {
   ngOnInit() {}
 
   private fetch() {
-    const itemSearch = new URLSearchParams();
-    const calendarSearch = new URLSearchParams();
+    const itemSearch = new HttpParams()
+      .set('search_str', this.state.search_str)
+      .set('sort_field', this.state.sort_field)
+      .set('sort_direction', this.state.sort_direction)
+      .set('academic_calendar_id', this.calendarId.toString())
+      .set('school_id', this.session.g.get('school').id.toString());
 
-    itemSearch.append('search_str', this.state.search_str);
-    itemSearch.append('sort_field', this.state.sort_field);
-    itemSearch.append('sort_direction', this.state.sort_direction);
-    itemSearch.append('academic_calendar_id', this.calendarId.toString());
-    itemSearch.append('school_id', this.session.g.get('school').id.toString());
-    calendarSearch.append('school_id', this.session.g.get('school').id.toString());
+    const calendarSearch = new HttpParams().set(
+      'school_id',
+      this.session.g.get('school').id.toString()
+    );
 
     const calendar$ = this.service.getCalendarById(this.calendarId, calendarSearch);
     const items$ = this.service.getItemsByCalendarId(this.startRange, this.endRange, itemSearch);
 
-    const stream$ = calendar$.switchMap((calendarData) => {
-      this.calendar = calendarData;
+    const stream$ = calendar$.pipe(
+      switchMap((calendarData: any) => {
+        this.calendar = calendarData;
 
-      return items$;
-    });
+        return items$;
+      })
+    );
 
     super.fetchData(stream$).then((res) => {
       this.state = { ...this.state, items: res.data };

@@ -2,59 +2,60 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-
-import { CPTrackerDirective } from './directives';
-import { CPDatePipe, CPFilterPipe, CPI18nPipe } from './pipes';
-import { CPTrackingService } from './services/tracking.service';
-import { CPFIlterByLength } from './pipes/array/filter-by-length.pipe';
-import { FileUploadService, StoreService, CPLocationsService } from './services';
-import { CPTabsComponent } from './components/cp-tabs/components/cp-tabs/cp-tabs.component';
-
+import { PopoverModule } from 'ngx-bootstrap/popover';
 import {
+  CPAlertComponent,
   CPAvatarComponent,
+  CPButtonComponent,
+  CPCharCounterComponent,
+  CPCheckboxComponent,
+  CPCheckDropdownComponent,
+  CPChipComponent,
+  CPDatePickerComponent,
+  CPDropdownComponent,
+  CPDropdownMultiSelectComponent,
+  CPHeaderLinkComponent,
+  CPImageUploadComponent,
+  CPListModalComponent,
   CPMapsComponent,
   CPModalComponent,
-  CPTopBarComponent,
-  CPSpinnerComponent,
-  CPDropdownComponent,
-  CPCheckboxComponent,
-  CPPlaceAutoCompleteComponent,
-  CPPageHeaderComponent,
-  CPSearchBoxComponent,
-  CPStarsComponent,
-  CPAlertComponent,
-  CPDatePickerComponent,
-  CPSwitchComponent,
-  CPSmallDatePickerComponent,
-  CPUploadButtonComponent,
-  CPPaginationComponent,
   CPNoContentComponent,
-  CPCheckDropdownComponent,
-  CPImageUploadComponent,
-  SchoolSwitchComponent,
-  CPTrackersComponent,
-  CPChipComponent,
-  CPTypeAheadComponent,
-  CPUploadModalComponent,
+  CPOnboardingComponent,
+  CPPageHeaderComponent,
+  CPPaginationComponent,
+  CPPlaceAutoCompleteComponent,
+  CPResourceBannerComponent,
+  CPSearchBoxComponent,
+  CPSmallDatePickerComponent,
   CPSnackBarComponent,
-  CPButtonComponent,
+  CPSpinnerComponent,
+  CPStarsComponent,
+  CPStepperComponent,
+  CPSwitchComponent,
+  CPTabComponent,
   CPTextEditorComponent,
   CPTooltipComponent,
-  CPResourceBannerComponent,
-  CPTopGaModalComponent,
   CPTopBanerComponent,
-  CPOnboardingComponent,
-  CPStepperComponent,
-  CPListModalComponent,
-  CPTabComponent,
+  CPTopBarComponent,
+  CPTopGaModalComponent,
+  CPTrackersComponent,
+  CPTypeAheadComponent,
+  CPUploadButtonComponent,
   CPUploadModalBodyComponent,
+  CPUploadModalComponent,
   CPUploadModalFooterComponent,
   CPUploadModalHeaderComponent,
-  CPDropdownMultiSelectComponent,
-  CPCharCounterComponent
+  CPWorkingComponent,
+  SchoolSwitchComponent
 } from './components';
-import { LocationsService } from '../containers/controlpanel/manage/locations/locations.service';
+import { CPTabsComponent } from './components/cp-tabs/components/cp-tabs/cp-tabs.component';
+import { CPTrackerDirective } from './directives';
+import { CPDatePipe, CPFilterPipe, CPI18nPipe } from './pipes';
+import { CPFIlterByLength } from './pipes/array/filter-by-length.pipe';
+import { CPLocationsService, FileUploadService, StoreService } from './services';
 import { CPMapsService } from './services/maps.service';
+import { CPTrackingService } from './services/tracking.service';
+import { LocationsService } from '../containers/controlpanel/manage/locations/locations.service';
 
 @NgModule({
   declarations: [
@@ -108,10 +109,12 @@ import { CPMapsService } from './services/maps.service';
     CPUploadModalHeaderComponent,
     CPUploadModalFooterComponent,
     CPDropdownMultiSelectComponent,
-    CPCharCounterComponent
+    CPCharCounterComponent,
+    CPWorkingComponent,
+    CPHeaderLinkComponent
   ],
 
-  imports: [CommonModule, RouterModule, ReactiveFormsModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, PopoverModule.forRoot()],
 
   providers: [
     StoreService,
@@ -173,7 +176,9 @@ import { CPMapsService } from './services/maps.service';
     CPUploadModalHeaderComponent,
     CPUploadModalFooterComponent,
     CPDropdownMultiSelectComponent,
-    CPCharCounterComponent
+    CPCharCounterComponent,
+    CPWorkingComponent,
+    CPHeaderLinkComponent
   ]
 })
 export class SharedModule {}

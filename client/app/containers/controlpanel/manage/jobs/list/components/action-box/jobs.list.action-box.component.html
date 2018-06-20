@@ -1,24 +1,26 @@
-<div class="cp-card col-xs-12">
+<div class="cp-card col-12">
   <div class="row">
-    <div class="col-xs-3">
+    <div class="col-3">
       <cp-searchbox (query)="onSearch($event)"></cp-searchbox>
     </div>
-    <div class="col-xs-2">
+    <div class="col-2">
       <cp-dropdown
         [items]="employers$ | async"
         (selected)="onFilterByEmployer($event.action)">
       </cp-dropdown>
     </div>
 
-    <div class="col-xs-7 pull-right text-right">
+    <div class="col-7 float-right text-right">
       <a
         [routerLink]="['employers']"
         class="cpbtn cpbtn--cancel margin-right">
         {{ 'jobs_manage_employer' | cpI18n }}
       </a>
       <a
+        cpTracker
         [routerLink]="['create']"
-        class="cpbtn cpbtn--primary">
+        class="cpbtn cpbtn--primary"
+        [eventData]="trackEvent(amplitudeEvents.clicked_create)">
         {{ 'jobs_create_job' | cpI18n }}
       </a>
     </div>

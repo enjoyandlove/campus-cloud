@@ -1,20 +1,19 @@
+import { HttpParams } from '@angular/common/http';
 import {
   Component,
-  OnInit,
-  EventEmitter,
-  Output,
-  HostListener,
   ElementRef,
+  EventEmitter,
+  HostListener,
+  OnInit,
+  Output,
   ViewChild
 } from '@angular/core';
-import { Router } from '@angular/router';
-import { URLSearchParams } from '@angular/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { Router } from '@angular/router';
 import { CPSession } from './../../../../../session';
-import { ProgramMembership } from '../orientation.status';
-import { OrientationService } from '../orientation.services';
 import { CPI18nService } from '../../../../../shared/services/i18n.service';
+import { OrientationService } from '../orientation.services';
+import { ProgramMembership } from '../orientation.status';
 
 @Component({
   selector: 'cp-orientation-program-create',
@@ -54,13 +53,14 @@ export class OrientationProgramCreateComponent implements OnInit {
   }
 
   onSubmit() {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
-    this.service.createProgram(this.form.value, search).subscribe((createdOrientationProgram) => {
-      this.resetModal();
-      this.router.navigate([`/manage/orientation/${createdOrientationProgram.id}/events`]);
-    });
+    this.service
+      .createProgram(this.form.value, search)
+      .subscribe((createdOrientationProgram: any) => {
+        this.resetModal();
+        this.router.navigate([`/manage/orientation/${createdOrientationProgram.id}/events`]);
+      });
   }
 
   ngOnInit() {

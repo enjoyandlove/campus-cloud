@@ -1,20 +1,22 @@
+import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
+import { HttpParams } from '@angular/common/http';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, Input, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
-
-import { ClubsService } from '../clubs.service';
-import { CPSession } from '../../../../../session';
-import { CPMap } from '../../../../../shared/utils';
-import { ClubsUtilsService } from './../clubs.utils.service';
-import { BaseComponent } from '../../../../../base/base.component';
-import { advisorDataRequired } from './custom-validators.directive';
-import { membershipTypes, statusTypes } from '../create/permissions';
-import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { BehaviorSubject } from 'rxjs';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { ClubsUtilsService } from './../clubs.utils.service';
+import { advisorDataRequired } from './custom-validators.directive';
+import { BaseComponent } from '../../../../../base/base.component';
+import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { CPSession } from '../../../../../session';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { CPTrackingService } from '../../../../../shared/services';
+import { CPMap } from '../../../../../shared/utils';
 import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
+import { ClubsService } from '../clubs.service';
+import { membershipTypes, statusTypes } from '../create/permissions';
 
 @Component({
   selector: 'cp-clubs-edit',
@@ -50,7 +52,8 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
     public cpI18n: CPI18nService,
     public route: ActivatedRoute,
     public helper: ClubsUtilsService,
-    public clubsService: ClubsService
+    public clubsService: ClubsService,
+    public cpTracking: CPTrackingService
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -66,9 +69,9 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
   }
 
   fetch() {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
-    search.append('category_id', this.isAthletic.toString());
+    const search = new HttpParams()
+      .append('school_id', this.session.g.get('school').id.toString())
+      .append('category_id', this.isAthletic.toString());
 
     const stream$ = this.clubsService.getClubById(this.clubId, search);
 
@@ -136,26 +139,43 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    const search = new URLSearchParams();
-
-    search.append('school_id', this.session.g.get('school').id.toString());
-    search.append('category_id', this.isAthletic.toString());
+    const search = new HttpParams()
+      .append('school_id', this.session.g.get('school').id.toString())
+      .append('category_id', this.isAthletic.toString());
 
     this.clubsService.updateClub(this.form.value, this.clubId, search).subscribe(
-      (res) => {
+      (res: any) => {
         this.router.navigate(['/manage/' + this.labels.club_athletic + '/' + res.id + '/info']);
       },
-      (err) => {
+      (_) => {
         this.buttonData = Object.assign({}, this.buttonData, {
           disabled: false
         });
-        throw new Error(err);
+        this.store.dispatch({
+          type: SNACKBAR_SHOW,
+          payload: {
+            body: this.cpI18n.translate('something_went_wrong'),
+            sticky: true,
+            class: 'danger',
+            autoClose: false
+          }
+        });
       }
     );
   }
 
   onUploadedImage(image): void {
     this.form.controls['logo_url'].setValue(image);
+
+    if (image) {
+      this.trackUploadImageEvent();
+    }
+  }
+
+  trackUploadImageEvent() {
+    const properties = this.cpTracking.getEventProperties();
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
 
   onSelectedMembership(type) {

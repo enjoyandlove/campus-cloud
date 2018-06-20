@@ -1,6 +1,6 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { JobsModule } from '../../../jobs.module';
 import { CPSession } from '../../../../../../../session';
@@ -15,16 +15,8 @@ describe('JobsListActionBoxComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [
-          HttpModule,
-          JobsModule,
-          RouterTestingModule
-        ],
-        providers: [
-          CPSession,
-          CPI18nService,
-          JobsUtilsService
-        ]
+        imports: [JobsModule, HttpClientModule, RouterTestingModule],
+        providers: [CPSession, CPI18nService, JobsUtilsService]
       })
         .compileComponents()
         .then(() => {
@@ -46,11 +38,10 @@ describe('JobsListActionBoxComponent', () => {
     const employer_id = 452;
     spyOn(component.listAction, 'emit');
 
-    component.state = Object.assign({}, component.state, {employer_id});
+    component.state = Object.assign({}, component.state, { employer_id });
     component.onFilterByEmployer(employer_id);
 
     expect(component.listAction.emit).toHaveBeenCalledTimes(1);
     expect(component.listAction.emit).toHaveBeenCalledWith(component.state);
   });
-
 });

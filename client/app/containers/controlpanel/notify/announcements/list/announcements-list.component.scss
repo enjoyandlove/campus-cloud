@@ -1,11 +1,14 @@
 @import '~styles/core/colors';
-@import '~bootstrap/variables';
 @import '~styles/components/card';
 @import '~styles/components/form';
 @import '~styles/components/button';
 
 .no-content {
   @include card-margin();
+}
+
+.cp-form {
+  overflow: visible;
 }
 
 .delete-message {

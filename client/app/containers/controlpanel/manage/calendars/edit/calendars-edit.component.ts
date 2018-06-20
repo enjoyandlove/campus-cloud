@@ -9,7 +9,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { CPSession } from './../../../../../session';
 import { CalendarsService } from '../calendars.services';
@@ -55,12 +55,11 @@ export class CalendarsEditComponent implements OnInit {
   }
 
   onSubmit() {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     this.service
       .editCalendar(this.calendar.id, this.form.value, search)
-      .subscribe((editedCalendar) => {
+      .subscribe((editedCalendar: any) => {
         this.edited.emit(editedCalendar);
         this.resetModal();
       });

@@ -1,6 +1,6 @@
-import { Observable } from 'rxjs/Observable';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { of as observableOf } from 'rxjs';
 
 import { AudienceType } from './../../audience.status';
 import { CPSession } from './../../../../../session/index';
@@ -16,7 +16,7 @@ class MockAudienceSharedService {
   getUserCount(data, search) {
     this.dummy = { data, search };
 
-    return Observable.of({ count: 130 });
+    return observableOf({ count: 130 });
   }
 }
 
@@ -49,11 +49,13 @@ describe('AudienceNewBodyComponent', () => {
 
   it('ngOnInit', () => {
     spyOn(comp.audienceType, 'emit');
-    expect(comp.state).toEqual({ custom: true, dynamic: false });
+    expect(comp.state.custom).toBeTruthy();
+    expect(comp.state.dynamic).toBeFalsy();
 
     fixture.detectChanges();
 
-    expect(comp.state).toEqual({ custom: false, dynamic: true });
+    expect(comp.state.custom).toBeFalsy();
+    expect(comp.state.dynamic).toBeTruthy();
     expect(comp.audienceTypes.length).toBe(2);
     expect(comp.selectedType).toBe(comp.audienceTypes[1]);
 
@@ -101,7 +103,8 @@ describe('AudienceNewBodyComponent', () => {
     comp.onTypeSelected({ action: AudienceType.custom });
 
     expect(comp.message).toBeNull();
+    expect(comp.state.custom).toBeTruthy();
+    expect(comp.state.dynamic).toBeFalsy();
     expect(comp.audienceType.emit).toHaveBeenCalledTimes(1);
-    expect(comp.state).toEqual({ custom: true, dynamic: false });
   });
 });

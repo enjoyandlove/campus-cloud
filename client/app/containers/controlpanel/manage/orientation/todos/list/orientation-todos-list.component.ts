@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { ITodo } from '../todos.interface';
 import { TodosService } from '../todos.service';
@@ -62,12 +62,12 @@ export class OrientationTodosListComponent extends BaseComponent implements OnIn
   }
 
   public fetch() {
-    const search = new URLSearchParams();
-    search.append('search_str', this.state.search_str);
-    search.append('sort_field', this.state.sort_field);
-    search.append('sort_direction', this.state.sort_direction);
-    search.append('calendar_id', this.orientationId.toString());
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams()
+      .append('search_str', this.state.search_str)
+      .append('sort_field', this.state.sort_field)
+      .append('sort_direction', this.state.sort_direction)
+      .append('calendar_id', this.orientationId.toString())
+      .append('school_id', this.session.g.get('school').id.toString());
 
     super
       .fetchData(this.service.getTodos(this.startRange, this.endRange, search))

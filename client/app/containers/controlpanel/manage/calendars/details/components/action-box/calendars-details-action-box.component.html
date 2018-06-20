@@ -1,11 +1,13 @@
 <div class="cp-card">
-  <div class="row">
-    <div class="col-xs-3 pull-left">
+  <div class="row justify-content-between">
+    <div class="col-3">
       <cp-searchbox (query)="onSearch($event)"></cp-searchbox>
     </div>
-    <div class="col-xs-5 text-right col-xs-offset-4">
+    <div class="col-5 text-right">
       <a
-        [routerLink]="['items/create']" i18n
+        cpTracker
+        [routerLink]="['items/create']"
+        [eventData]="trackEvent(amplitudeEvents.clicked_create)"
         class="cpbtn cpbtn--primary cpbtn--square-right no-right-padding">
         {{ 'calendars_items_button_new' | cpI18n }}
       </a>

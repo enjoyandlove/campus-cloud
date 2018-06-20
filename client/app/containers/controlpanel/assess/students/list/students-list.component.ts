@@ -1,15 +1,14 @@
-import { Router, ActivatedRoute } from '@angular/router';
+import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-
-import { StudentsService } from './../students.service';
-import { CPSession } from './../../../../../session/index';
-import { FORMAT } from './../../../../../shared/pipes/date';
 import { BaseComponent } from './../../../../../base/base.component';
 import { HEADER_UPDATE } from './../../../../../reducers/header.reducer';
 import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
+import { CPSession } from './../../../../../session/index';
+import { FORMAT } from './../../../../../shared/pipes/date';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { StudentsService } from './../students.service';
 
 interface IState {
   search_str: string;
@@ -65,14 +64,14 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
   }
 
   fetch() {
-    const search = new URLSearchParams();
     const user_list_id = this.state.user_list_id ? this.state.user_list_id.toString() : null;
 
-    search.append('school_id', this.session.g.get('school').id.toString());
-    search.append('search_str', this.state.search_str);
-    search.append('sort_field', this.state.sort_field);
-    search.append('sort_direction', this.state.sort_direction);
-    search.append('user_list_id', user_list_id);
+    const search = new HttpParams()
+      .set('school_id', this.session.g.get('school').id.toString())
+      .set('search_str', this.state.search_str)
+      .set('sort_field', this.state.sort_field)
+      .set('sort_direction', this.state.sort_direction)
+      .set('user_list_id', user_list_id);
 
     const stream$ = this.service.getStudentsByList(search, this.startRange, this.endRange);
 

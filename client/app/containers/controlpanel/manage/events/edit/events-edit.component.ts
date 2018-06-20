@@ -1,24 +1,28 @@
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { HttpParams } from '@angular/common/http';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit, Input } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { URLSearchParams } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
-
-import { EventsService } from '../events.service';
+import { BehaviorSubject, combineLatest, of as observableOf } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { isProd } from './../../../../../config/env';
-import { FORMAT } from '../../../../../shared/pipes/date';
-import { CPSession, ISchool } from '../../../../../session';
-import { CPMap, CPDate } from '../../../../../shared/utils';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { BaseComponent } from '../../../../../base/base.component';
-import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-import { ErrorService, StoreService, AdminService } from '../../../../../shared/services';
-
-import { EventAttendance, EventFeedback } from '../event.status';
-import { EventUtilService } from '../events.utils.service';
+import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+import { CPSession, ISchool } from '../../../../../session';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { FORMAT } from '../../../../../shared/pipes/date';
+import {
+  AdminService,
+  CPTrackingService,
+  ErrorService,
+  StoreService
+} from '../../../../../shared/services';
+import { CPDate, CPMap } from '../../../../../shared/utils';
+import { EventAttendance, EventFeedback } from '../event.status';
+import { EventsService } from '../events.service';
+import { EventUtilService } from '../events.utils.service';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
 const FORMAT_WITHOUT_TIME = 'F j, Y';
@@ -85,7 +89,8 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     private adminService: AdminService,
     public storeService: StoreService,
     private errorService: ErrorService,
-    public service: EventsService
+    public service: EventsService,
+    public cpTracking: CPTrackingService
   ) {
     super();
     this.school = this.session.g.get('school');
@@ -97,6 +102,16 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   onUploadedImage(image) {
     this.form.controls['poster_url'].setValue(image);
     this.form.controls['poster_thumb_url'].setValue(image);
+
+    if (image) {
+      this.trackUploadImageEvent();
+    }
+  }
+
+  trackUploadImageEvent() {
+    const properties = this.cpTracking.getEventProperties();
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
 
   onSubmit(data) {
@@ -160,10 +175,11 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    const search = new URLSearchParams();
+    let search = new HttpParams();
     if (this.orientationId) {
-      search.append('school_id', this.session.g.get('school').id);
-      search.append('calendar_id', this.orientationId.toString());
+      search = search
+        .append('school_id', this.session.g.get('school').id)
+        .append('calendar_id', this.orientationId.toString());
     }
 
     this.service.updateEvent(data, this.eventId, search).subscribe(
@@ -226,14 +242,14 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.startdatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
       defaultDate: CPDate.fromEpoch(this.form.controls['start'].value, _self.session.tz).format(),
-      onClose: function(_, dateStr) {
+      onChange: function(_, dateStr) {
         _self.form.controls['start'].setValue(CPDate.toEpoch(dateStr, _self.session.tz));
       }
     };
     this.enddatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
       defaultDate: CPDate.fromEpoch(this.form.controls['end'].value, _self.session.tz).format(),
-      onClose: function(_, dateStr) {
+      onChange: function(_, dateStr) {
         _self.form.controls['end'].setValue(CPDate.toEpoch(dateStr, _self.session.tz));
       }
     };
@@ -286,28 +302,30 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   fetchManagersBySelectedStore(storeId) {
-    const search: URLSearchParams = new URLSearchParams();
     storeId = null;
-    search.append('school_id', this.school.id.toString());
-    search.append('store_id', storeId);
-    search.append('privilege_type', this.utils.getPrivilegeType(this.isOrientation));
+    const search: HttpParams = new HttpParams()
+      .append('school_id', this.school.id.toString())
+      .append('store_id', storeId)
+      .append('privilege_type', this.utils.getPrivilegeType(this.isOrientation));
 
     this.adminService
       .getAdminByStoreId(search)
-      .map((admins) => {
-        return [
-          {
-            label: '---',
-            value: null
-          },
-          ...admins.map((admin) => {
-            return {
-              label: `${admin.firstname} ${admin.lastname}`,
-              value: admin.id
-            };
-          })
-        ];
-      })
+      .pipe(
+        map((admins: Array<any>) => {
+          return [
+            {
+              label: '---',
+              value: null
+            },
+            ...admins.map((admin) => {
+              return {
+                label: `${admin.firstname} ${admin.lastname}`,
+                value: admin.id
+              };
+            })
+          ];
+        })
+      )
       .subscribe((res) => {
         this.managers = res;
         this.selectedManager = this.managers.filter(
@@ -317,19 +335,19 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   public fetch() {
-    let stores$ = Observable.of([]);
+    let stores$ = observableOf([]);
     const school = this.session.g.get('school');
     const orientationId = this.orientationId ? this.orientationId.toString() : null;
-    const search: URLSearchParams = new URLSearchParams();
-    search.append('school_id', school.id.toString());
-    search.append('calendar_id', orientationId);
+    const search: HttpParams = new HttpParams()
+      .append('school_id', school.id.toString())
+      .append('calendar_id', orientationId);
 
     if (!this.isClub && !this.isService && !this.isOrientation) {
       stores$ = this.storeService.getStores(search);
     }
 
     const event$ = this.service.getEventById(this.eventId, search);
-    const stream$ = Observable.combineLatest(event$, stores$);
+    const stream$ = combineLatest(event$, stores$);
 
     super
       .fetchData(stream$)

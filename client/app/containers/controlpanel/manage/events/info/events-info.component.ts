@@ -1,8 +1,8 @@
 /*tslint:disable:max-line-length */
 import { Component, OnInit, Input } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
 import { EventsService } from '../events.service';
@@ -57,10 +57,11 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   public fetch() {
     super.isLoading().subscribe((res) => (this.loading = res));
 
-    const search = new URLSearchParams();
+    let search = new HttpParams();
     if (this.orientationId) {
-      search.append('school_id', this.session.g.get('school').id);
-      search.append('calendar_id', this.orientationId.toString());
+      search = search
+        .append('school_id', this.session.g.get('school').id)
+        .append('calendar_id', this.orientationId.toString());
     }
 
     super.fetchData(this.service.getEventById(this.eventId, search)).then((event) => {

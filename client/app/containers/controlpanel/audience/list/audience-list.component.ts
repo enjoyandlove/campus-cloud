@@ -1,14 +1,13 @@
+import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
-
-import { CPSession } from '../../../../session';
-import { AudienceType } from './../audience.status';
-import { AudienceService } from '../audience.service';
-import { BaseComponent } from '../../../../base/base.component';
-import { CPI18nService } from '../../../../shared/services/index';
 import { createSpreadSheet } from './../../../../shared/utils/csv/parser';
+import { AudienceType } from './../audience.status';
+import { BaseComponent } from '../../../../base/base.component';
 import { ISnackbar, SNACKBAR_SHOW } from '../../../../reducers/snackbar.reducer';
+import { CPSession } from '../../../../session';
+import { CPI18nService } from '../../../../shared/services/index';
+import { AudienceService } from '../audience.service';
 
 interface IState {
   audiences: Array<any>;
@@ -75,6 +74,7 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
       type: SNACKBAR_SHOW,
       payload: {
         sticky: true,
+        autoClose: true,
         class: 'danger',
         body: message
       }
@@ -88,6 +88,7 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
       type: SNACKBAR_SHOW,
       payload: {
         sticky: true,
+        autoClose: true,
         class: 'success',
         body: this.cpI18n.translate('audience_import_success_message')
       }
@@ -96,6 +97,8 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
 
   onFilterByListType(list_type) {
     this.state = { ...this.state, list_type };
+
+    this.resetPagination();
 
     this.fetch();
   }
@@ -106,8 +109,7 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
       this.cpI18n.translate('last_name'),
       this.cpI18n.translate('email')
     ];
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     this.service
       .getAudienceById(id, search)
@@ -135,14 +137,15 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
   }
 
   private fetch() {
-    const search = new URLSearchParams();
-    search.append('search_str', this.state.search_str);
-    search.append('sort_field', this.state.sort_field);
-    search.append('sort_direction', this.state.sort_direction);
+    let search = new HttpParams()
+      .set('search_str', this.state.search_str)
+      .set('sort_field', this.state.sort_field)
+      .set('sort_direction', this.state.sort_direction)
+      .set('school_id', this.session.g.get('school').id.toString());
+
     if (this.state.list_type !== null) {
-      search.append('list_type', this.state.list_type.toString());
+      search = search.append('list_type', this.state.list_type.toString());
     }
-    search.append('school_id', this.session.g.get('school').id.toString());
 
     const stream$ = this.service.getAudiences(search, this.startRange, this.endRange);
 

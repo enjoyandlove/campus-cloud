@@ -1,5 +1,4 @@
 @import '~styles/core/colors';
-@import '~bootstrap/variables';
 @import '~styles/components/form';
 @import '~styles/components/card';
 @import '~styles/components/button';
@@ -25,6 +24,18 @@
         padding-left: 6px;
       }
     }
+  }
+}
+
+.action {
+  &.show {
+    .orientation__dropdown {
+      display: block;
+    }
+  }
+
+  .orientation__dropdown {
+    display: none;
   }
 }
 
@@ -54,4 +65,9 @@
       }
     }
   }
+}
+
+.dropdown-menu {
+  border: none;
+  background: transparent;
 }

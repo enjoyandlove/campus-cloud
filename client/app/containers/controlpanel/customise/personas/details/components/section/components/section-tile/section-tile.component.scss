@@ -35,10 +35,10 @@
 
   &__image {
     height: 120px;
+    text-align: center;
 
     img {
       height: 100%;
-      margin: 0 auto;
       object-fit: cover;
     }
   }

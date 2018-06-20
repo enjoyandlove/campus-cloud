@@ -1,14 +1,14 @@
-import { ServicesService } from './../../../services.service';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
-
-import { ProvidersService } from '../../../providers.service';
+import { BehaviorSubject } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { ServicesService } from './../../../services.service';
 import { BaseComponent } from '../../../../../../../base/base.component';
-import { STAR_SIZE } from '../../../../../../../shared/components/cp-stars';
 import { HEADER_UPDATE, IHeader } from '../../../../../../../reducers/header.reducer';
+import { STAR_SIZE } from '../../../../../../../shared/components/cp-stars';
+import { ProvidersService } from '../../../providers.service';
 
 @Component({
   selector: 'cp-providers-details',
@@ -40,17 +40,18 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
   }
 
   private fetch() {
-    const search = new URLSearchParams();
-    search.append('service_id', this.serviceId);
+    const search = new HttpParams().append('service_id', this.serviceId);
 
     const service$ = this.serviceService.getServiceById(this.serviceId);
     const providers$ = this.providersService.getProviderByProviderId(this.providerId, search);
 
-    const stream$ = service$.switchMap((service) => {
-      this.serviceName = service.name;
+    const stream$ = service$.pipe(
+      switchMap((service: any) => {
+        this.serviceName = service.name;
 
-      return providers$;
-    });
+        return providers$;
+      })
+    );
 
     super.fetchData(stream$).then((res) => {
       this.provider = res.data;

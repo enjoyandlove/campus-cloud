@@ -1,13 +1,13 @@
 <div class="cpmodal">
   <div class="cpmodal__header">
     <div class="row">
-      <div class="col-xs-12 text-center"></div>
+      <div class="col-12 text-center"></div>
     </div>
   </div>
 
   <div class="cpmodal__body">
     <div class="row">
-      <div class="col-xs-12 text-center">
+      <div class="col-12 text-center">
         <div *ngFor="let step of onBoardingSteps">
           <div *ngIf="step.id === currentStep">
             <img [src]="[step.img]">

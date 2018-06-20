@@ -1,21 +1,9 @@
 @import '~styles/core/colors';
 @import '~styles/components/button';
 
-span.pop {
-  padding-left: 0;
-  list-style: none;
-
-  margin-bottom: 0;
-  transition: color 300ms ease-in-out;
-
-  &:hover {
-    cursor: pointer;
-    color: $color-text;
-  }
-
-  i {
-    top: 4px;
-    font-size: 16px;
-    position: relative;
-  }
+button i {
+  top: 4px;
+  font-size: 16px;
+  position: relative;
+  color: $color-secondary-text;
 }

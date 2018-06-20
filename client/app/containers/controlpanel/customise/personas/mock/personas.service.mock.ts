@@ -1,5 +1,4 @@
-import { Observable } from 'rxjs/Observable';
-
+import { of } from 'rxjs';
 export const mockPersonas = [
   {
     login_requirement: 1,
@@ -31,28 +30,28 @@ export class MockPersonasService {
   dummy;
 
   getPersonas() {
-    return Observable.of(mockPersonas);
+    return of(mockPersonas);
   }
 
   updatePersona(personaId, search, persona) {
     this.dummy = { personaId, search };
 
-    return Observable.of(persona);
+    return of(persona);
   }
 
   getPersonaById(personaId, search) {
     this.dummy = { personaId, search };
 
-    return Observable.of(mockPersonas.filter((p) => p.id === personaId)[0]);
+    return of(mockPersonas.filter((p) => p.id === personaId)[0]);
   }
 
   deletePersonaById(personaId, search) {
     this.dummy = { personaId, search };
 
-    return Observable.of(personaId);
+    return of(personaId);
   }
 
   createPersona(body) {
-    return Observable.of(body);
+    return of(body);
   }
 }

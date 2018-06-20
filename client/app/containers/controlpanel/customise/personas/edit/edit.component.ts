@@ -1,7 +1,7 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
 import { IPersona } from '../persona.interface';
@@ -60,8 +60,7 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
   }
 
   onSubmit() {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     const body = this.utils.parseLocalFormToApi(this.editForm.form.value);
 
@@ -118,8 +117,7 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
   }
 
   fetch() {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     const stream$ = this.service.getPersonaById(this.personaId, search);
 

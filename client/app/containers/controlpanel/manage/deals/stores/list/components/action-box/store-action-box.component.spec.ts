@@ -1,5 +1,6 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { StoreModule } from '../../../store.module';
 import { StoreActionBoxComponent } from './store-action-box.component';
@@ -10,16 +11,21 @@ describe('DealsStoreActionBoxComponent', () => {
   let component: StoreActionBoxComponent;
   let fixture: ComponentFixture<StoreActionBoxComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [StoreModule],
-      providers: [CPI18nService]
-    }).compileComponents().then(() => {
-      fixture = TestBed.createComponent(StoreActionBoxComponent);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
-    });
-  }));
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        imports: [StoreModule, RouterTestingModule],
+        providers: [CPI18nService]
+      })
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(StoreActionBoxComponent);
+          component = fixture.componentInstance;
+          spyOn(component.cpTracking, 'getEventProperties');
+          fixture.detectChanges();
+        });
+    })
+  );
 
   it('onSearch', () => {
     spyOn(component.search, 'emit');
@@ -39,5 +45,4 @@ describe('DealsStoreActionBoxComponent', () => {
     expect(spy).toHaveBeenCalled();
     expect(spy).toHaveBeenCalledTimes(1);
   });
-
 });

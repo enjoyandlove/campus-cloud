@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { CPSession } from './../../../../../../../session';
 import { CPI18nService } from '../../../../../../../shared/services';
 import { CPDate, CPMap } from '../../../../../../../shared/utils';
@@ -145,7 +145,7 @@ export class CalendarsItemFormComponent implements OnInit {
 
     this.startdatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      onClose: function(_, dateStr) {
+      onChange: function(_, dateStr) {
         _self.form.controls['start'].setValue(CPDate.toEpoch(dateStr, _self.session.tz));
       }
     };
@@ -159,7 +159,7 @@ export class CalendarsItemFormComponent implements OnInit {
 
     this.enddatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      onClose: function(_, dateStr) {
+      onChange: function(_, dateStr) {
         _self.form.controls['end'].setValue(CPDate.toEpoch(dateStr, _self.session.tz));
       }
     };

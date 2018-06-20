@@ -4,19 +4,17 @@ import {
   ElementRef,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
-  OnDestroy,
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
 import 'node_modules/quill/dist/quill.core.css';
 import 'node_modules/quill/dist/quill.snow.css';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
-
-import { CPI18nService } from '../../services';
+import { of as observableOf, Subject } from 'rxjs';
 import { QuillService } from './../../services/quill.service';
+import { CPI18nService } from '../../services';
 
 interface IState {
   body: string;
@@ -92,7 +90,7 @@ export class CPTextEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subscriptions.push(this.reset$);
 
     if (!this.image$) {
-      return Observable.of(null);
+      return observableOf(null);
     }
 
     this.reset$.subscribe((reset) => {

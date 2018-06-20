@@ -1,5 +1,3 @@
-import { Observable } from 'rxjs/Observable';
-
 import {
   ChangeDetectionStrategy,
   Component,
@@ -9,12 +7,12 @@ import {
   Output
 } from '@angular/core';
 
+import { Observable, of as observableOf } from 'rxjs';
+
 interface IItems {
   label: string;
   action: string;
   heading?: boolean;
-  disabled?: boolean;
-  tooltipText?: string;
 }
 
 @Component({
@@ -25,6 +23,7 @@ interface IItems {
 })
 export class CPDropdownComponent implements OnInit {
   @Input() items: IItems[];
+  @Input() disabled = false;
   @Input() selectedItem: any;
   @Input() isRequiredError: boolean;
   @Input() reset: Observable<boolean>;
@@ -32,7 +31,6 @@ export class CPDropdownComponent implements OnInit {
   @Output() selected: EventEmitter<{ label: string; event: string }> = new EventEmitter();
 
   query = null;
-  tooltipText = null;
   searchFixed = true;
   isSearching = false;
   MIN_RESULTS_FOR_SEARCH = 40;
@@ -59,12 +57,8 @@ export class CPDropdownComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.items[0].disabled) {
-      this.tooltipText = this.items[0].tooltipText;
-    }
-
     if (!this.reset) {
-      this.reset = Observable.of(false);
+      this.reset = observableOf(false);
     }
 
     this.reset.subscribe((reset) => {

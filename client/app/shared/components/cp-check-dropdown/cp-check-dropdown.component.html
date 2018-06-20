@@ -4,10 +4,10 @@
     data-toggle="dropdown"
     [class]="buttonClass" i18n>
     <div class="row">
-      <div class="col-xs-10 no-right-padding text-truncate">
+      <div class="col-10 no-right-padding text-truncate">
         {{ selectedItem.label }}
       </div>
-      <div class="col-xs-2 no-right-padding">
+      <div class="col-2 no-right-padding">
         <i class="material-icons">keyboard_arrow_down</i>
       </div>
     </div>
@@ -16,12 +16,13 @@
     <li
       *ngFor="let item of items"
       class="dropdown__item hover"
+      [class.disabled]=item.disabled
       (click)="onClick(item)">
       <div class="row">
-        <div class="col-xs-2 text-center no-right-padding">
+        <div class="col-2 text-center no-right-padding">
           <i class="material-icons" *ngIf="selectedItem === item">check</i>
         </div>
-        <div class="col-xs-10 no-left-padding">
+        <div class="col-10 no-left-padding">
           <p class="dropdown__item--title" i18n>
             {{ item.label }}
           </p>

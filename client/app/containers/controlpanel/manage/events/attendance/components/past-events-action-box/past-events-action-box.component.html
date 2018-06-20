@@ -1,13 +1,14 @@
 <div class="cp-card actions">
   <div class="row">
-    <div class="col-xs-3">
+    <div class="col-3">
       <cp-searchbox (query)="onSearch($event)"></cp-searchbox>
     </div>
     <div
-      class="col-xs-4 col-xs-offset-5 text-right">
+      *ngIf="canDownload"
+      class="col text-right">
       <button
         (click)="downloadExcel()"
-        class="cpbtn cpbtn--primary" i18n>
+        class="cpbtn cpbtn--primary">
         {{ 'download_csv' | cpI18n }}
       </button>
     </div>

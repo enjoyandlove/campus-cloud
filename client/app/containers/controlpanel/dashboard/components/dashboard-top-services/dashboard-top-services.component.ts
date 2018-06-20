@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
@@ -49,11 +49,11 @@ export class DashboardTopServicesComponent extends BaseComponent implements OnIn
   }
 
   fetch() {
-    const search = new URLSearchParams();
-    search.append('sort_by', 'engagements');
-    search.append('end', this._dates.end.toString());
-    search.append('start', this._dates.start.toString());
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams()
+      .append('sort_by', 'engagements')
+      .append('end', this._dates.end.toString())
+      .append('start', this._dates.start.toString())
+      .append('school_id', this.session.g.get('school').id.toString());
 
     const stream$ = this.service.getTopServices(search);
 
