@@ -13,7 +13,5 @@ export class CPSortingHeaderComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {
-    console.log(this.label);
-  }
+  ngOnInit() {}
 }
