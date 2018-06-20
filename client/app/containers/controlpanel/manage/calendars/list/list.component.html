@@ -23,16 +23,17 @@
           <div class="row">
             <cp-sorting-header
               class="col-5"
-              label="name"
+              sortLabel="name"
               (click)="doSort('name')"
+              [label]="sortingLabels.name"
               [sortField]="state.sort_field"
               [sortDirection]="state.sort_direction">
             </cp-sorting-header>
 
             <cp-sorting-header
               class="col-5"
-              label="created"
               sortLabel="created_time"
+              [label]="sortingLabels.created"
               (click)="doSort('created_time')"
               [sortField]="state.sort_field"
               [sortDirection]="state.sort_direction">

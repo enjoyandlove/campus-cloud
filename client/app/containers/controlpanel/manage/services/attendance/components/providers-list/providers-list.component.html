@@ -14,10 +14,10 @@
             <div class="row">
               <div class="col-3">
                 <cp-sorting-header
-                  label="service_provider"
                   sortLabel="provider_name"
                   (click)="doSort('provider_name')"
                   [sortField]="state.sort_field"
+                  [label]="sortingLabels.provider_name"
                   [sortDirection]="state.sort_direction">
                 </cp-sorting-header>
               </div>
@@ -26,10 +26,10 @@
               </div>
               <div class="col-1" *ngIf="displayRatingColumn">
                 <cp-sorting-header
-                  label="rating"
                   sortLabel="num_ratings"
                   (click)="doSort('num_ratings')"
                   [sortField]="state.sort_field"
+                  [label]="sortingLabels.rating"
                   [sortDirection]="state.sort_direction">
                 </cp-sorting-header>
               </div>

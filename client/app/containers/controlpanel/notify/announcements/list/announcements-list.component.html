@@ -26,8 +26,8 @@
             <span class="col-3" i18n>{{ 'announcements_type' | cpI18n }}</span>
             <cp-sorting-header
               class="col-3"
-              label="sent"
               sortLabel="sent_time"
+              [label]="sortingLabels.sent"
               (click)="doSort('sent_time')"
               [sortField]="state.sort_field"
               [sortDirection]="state.sort_direction">

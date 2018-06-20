@@ -23,7 +23,7 @@
     <label class="no-margin dark" i18n>{{ description }}</label>
     <a 
     target="_blank"
-    [href]="zdArticle">
+    [attr.href]="zdArticle">
       <span class="text-muted" i18n>{{ 'component_cpimage_help' | cpI18n }}</span>
     </a>
     <div class="row" *ngIf="error">

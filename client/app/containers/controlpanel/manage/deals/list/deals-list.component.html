@@ -23,19 +23,19 @@
           <div class="row">
             <cp-sorting-header
               class="col-8"
-              label="name"
               sortLabel="title"
               (click)="doSort('title')"
+              [label]="sortingLabels.name"
               [sortField]="state.sort_field"
               [sortDirection]="state.sort_direction">
             </cp-sorting-header>
 
             <cp-sorting-header
               class="col-3"
-              label="t_deals_list_grid_column_store"
               sortLabel="store_name"
               (click)="doSort('store_name')"
               [sortField]="state.sort_field"
+              [label]="sortingLabels.store_name"
               [sortDirection]="state.sort_direction">
             </cp-sorting-header>
             <span class="col-1 hover"></span>

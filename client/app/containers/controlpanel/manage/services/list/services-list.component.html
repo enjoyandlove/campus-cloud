@@ -21,8 +21,9 @@
         <div class="row">
           <cp-sorting-header
             class="col-4"
-            label="name"
+            sortLabel="name"
             (click)="doSort('name')"
+            [label]="sortingLabels.name"
             [sortField]="state.sort_field"
             [sortDirection]="state.sort_direction">
           </cp-sorting-header>

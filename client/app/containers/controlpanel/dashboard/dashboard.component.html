@@ -21,56 +21,56 @@
   </div>
 
   <div class="card-columns">
-    <div class="cp-card mb-3">
+    <div class="cp-card">
       <cp-dashboard-general-information
         [dates]="currentDate"
         (ready)="generalInfoTile$.next($event)">
       </cp-dashboard-general-information>
     </div>
 
-    <div class="cp-card mb-3" *ngIf="canAssess">
+    <div class="cp-card" *ngIf="canAssess">
       <cp-dashboard-top-events
         [dates]="currentDate"
         (ready)="topEventsTile$.next($event)">
       </cp-dashboard-top-events>
     </div>
 
-    <div class="cp-card mb-3" *ngIf="canAssess">
+    <div class="cp-card" *ngIf="canAssess">
       <cp-dashboard-assessment
         [dates]="currentDate"
         (ready)="assessmentTile$.next($event)">
       </cp-dashboard-assessment>
     </div>
 
-    <div class="cp-card mb-3">
+    <div class="cp-card">
       <cp-dashboard-campus-tile
         [dates]="currentDate"
         (ready)="campusTileTile$.next($event)">
       </cp-dashboard-campus-tile>
     </div>
 
-    <div class="cp-card mb-3" *ngIf="canAssess">
+    <div class="cp-card" *ngIf="canAssess">
       <cp-dashboard-top-services
         [dates]="currentDate"
         (ready)="topServicesTile$.next($event)">
       </cp-dashboard-top-services>
     </div>
 
-    <div class="cp-card mb-3">
+    <div class="cp-card">
       <cp-dashboard-social-activity
         [dates]="currentDate"
         (ready)="socialActivityTile$.next($event)">
       </cp-dashboard-social-activity>
     </div>
 
-    <div class="cp-card mb-3" *ngIf="canViewClub">
+    <div class="cp-card" *ngIf="canViewClub">
       <cp-dashboard-top-clubs
         [dates]="currentDate"
         (ready)="topClubsTile$.next($event)">
       </cp-dashboard-top-clubs>
     </div>
 
-    <div class="cp-card mb-3">
+    <div class="cp-card">
       <cp-dashboard-integrations
         (ready)="integrationsTile$.next($event)">
       </cp-dashboard-integrations>

@@ -5,10 +5,12 @@ import {
   canAccountLevelReadResource
 } from './../../../../../../../shared/utils/privileges/privileges';
 
+import { EventAttendance } from '../../../event.status';
 import { FORMAT } from '../../../../../../../shared/pipes';
 import { CPSession } from './../../../../../../../session/index';
-import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
 import { EventUtilService } from '../../../events.utils.service';
+import { CPI18nService } from '../../../../../../../shared/services';
+import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
 
 interface ISort {
   sort_field: string;
@@ -19,8 +21,6 @@ const sort = {
   sort_field: 'title', // title, start, end
   sort_direction: 'asc' // asc, desc
 };
-
-import { EventAttendance } from '../../../event.status';
 
 @Component({
   selector: 'cp-list-upcoming',
@@ -37,11 +37,15 @@ export class ListUpcomingComponent implements OnInit {
 
   sort: ISort = sort;
   canDelete;
+  sortingLabels;
   eventCheckinRoute;
   dateFormat = FORMAT.SHORT;
   attendanceEnabled = EventAttendance.enabled;
 
-  constructor(private session: CPSession, private utils: EventUtilService) {}
+  constructor(
+    private session: CPSession,
+    private cpI18n: CPI18nService,
+    private utils: EventUtilService) {}
 
   onDelete(event) {
     this.deleteEvent.emit(event);
@@ -60,5 +64,10 @@ export class ListUpcomingComponent implements OnInit {
     const scholAccess = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.events);
     const accountAccess = canAccountLevelReadResource(this.session.g, CP_PRIVILEGES_MAP.events);
     this.canDelete = scholAccess || accountAccess || this.isOrientation;
+
+    this.sortingLabels = {
+      name: this.cpI18n.translate('name'),
+      start_date: this.cpI18n.translate('start_date')
+    };
   }
 }

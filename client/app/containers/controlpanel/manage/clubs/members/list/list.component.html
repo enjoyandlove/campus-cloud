@@ -18,8 +18,8 @@
           <div class="row">
             <cp-sorting-header
               class="col-3"
-              label="name"
               sortLabel="username"
+              [label]="sortingLabels.name"
               (click)="doSort('username')"
               [sortField]="state.sort_field"
               [sortDirection]="state.sort_direction">
@@ -27,10 +27,10 @@
 
             <cp-sorting-header
               class="col-2"
-              label="clubs_label_member_type"
               sortLabel="member_type"
               (click)="doSort('member_type')"
               [sortField]="state.sort_field"
+              [label]="sortingLabels.member_type"
               [sortDirection]="state.sort_direction">
             </cp-sorting-header>
 

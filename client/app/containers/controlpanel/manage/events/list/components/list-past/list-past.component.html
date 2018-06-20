@@ -3,7 +3,7 @@
     <div class="row">
       <cp-sorting-header
         class="col-4"
-        label="name"
+        [label]="sortingLabels.name"
         sortLabel="title"
         (click)="doSort('title')"
         [sortField]="state.sort_field"
@@ -12,7 +12,7 @@
 
       <cp-sorting-header
         class="col-2"
-        label="end_date"
+        [label]="sortingLabels.end_date"
         sortLabel="end"
         (click)="doSort('end')"
         [sortField]="state.sort_field"

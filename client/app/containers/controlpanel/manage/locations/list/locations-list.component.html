@@ -23,10 +23,10 @@
           <div class="row">
             <cp-sorting-header
               class="col-5"
-              label="locations"
               sortLabel="name"
               (click)="doSort('name')"
               [sortField]="state.sort_field"
+              [label]="sortingLabels.locations"
               [sortDirection]="state.sort_direction">
             </cp-sorting-header>
 

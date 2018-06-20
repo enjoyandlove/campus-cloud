@@ -23,27 +23,28 @@
           <div class="row">
             <cp-sorting-header
               class="col-5"
-              label="name"
               sortLabel="title"
               (click)="doSort('title')"
+              [label]="sortingLabels.name"
               [sortField]="state.sort_field"
               [sortDirection]="state.sort_direction">
             </cp-sorting-header>
 
             <cp-sorting-header
               class="col-2"
-              label="employer_name"
+              sortLabel="employer_name"
               (click)="doSort('employer_name')"
               [sortField]="state.sort_field"
+              [label]="sortingLabels.employer_name"
               [sortDirection]="state.sort_direction">
             </cp-sorting-header>
 
             <cp-sorting-header
               class="col-2"
-              label="jobs_posting_start"
               sortLabel="posting_start"
               (click)="doSort('posting_start')"
               [sortField]="state.sort_field"
+              [label]="sortingLabels.posting_start"
               [sortDirection]="state.sort_direction">
             </cp-sorting-header>
             <span

@@ -3,9 +3,9 @@
     <div class="row">
       <cp-sorting-header
         [class]="[isOrientation ? 'col-6' : 'col-4']"
-        label="name"
         sortLabel="title"
         (click)="doSort('title')"
+        [label]="sortingLabels.name"
         [sortField]="state.sort_field"
         [sortDirection]="state.sort_direction">
       </cp-sorting-header>
@@ -14,10 +14,10 @@
 
       <cp-sorting-header
         class="col-2"
-        label="start_date"
         sortLabel="start"
         (click)="doSort('start')"
         [sortField]="state.sort_field"
+        [label]="sortingLabels.start_date"
         [sortDirection]="state.sort_direction">
       </cp-sorting-header>
 
