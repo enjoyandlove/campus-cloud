@@ -9,7 +9,17 @@ export const cpTrackAmplitude = {
 };
 
 export const amplitudeEvents = {
+  CLUB: 'Club',
+
+  USER: 'User',
+
+  LIST: 'List',
+
   ACTIVE: 'Active',
+
+  REGULAR: 'Regular',
+
+  SERVICE: 'Service',
 
   PENDING: 'Pending',
 
@@ -23,6 +33,8 @@ export const amplitudeEvents = {
 
   MENU_NOTIFY: 'Notify',
 
+  ATHLETICS: 'Athletics',
+
   NO_ACCESS: 'No Access',
 
   CREATE_JOB: 'Create Job',
@@ -30,6 +42,8 @@ export const amplitudeEvents = {
   LOGGED_OUT: 'Logged Out',
 
   MENU_AUDIENCE: 'Audience',
+
+  CAMPUS_WIDE: 'Campus Wide',
 
   CREATE_CLUB: 'Create Club',
 
@@ -85,5 +99,9 @@ export const amplitudeEvents = {
 
   DELETED_TEAM_MEMBER: 'Deleted Team Member',
 
-  CREATE_CALENDAR_ITEM: 'Create Calendar Item'
+  CREATE_CALENDAR_ITEM: 'Create Calendar Item',
+
+  NOTIFY_SAVED_TEMPLATE: 'Notify - Saved Template',
+
+  NOTIFY_SEND_ANNOUNCEMENT: 'Notify - Send Announcement'
 };

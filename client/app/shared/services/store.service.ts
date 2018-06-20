@@ -3,13 +3,15 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { combineLatest, of as observableOf } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+
+import { API } from '../../config/api';
 import { CPSession } from './../../session';
 import { CPI18nService } from './i18n.service';
 import { HTTPService } from '../../base/http.service';
-import { API } from '../../config/api';
-import { isClubAthletic } from '../../containers/controlpanel/manage/clubs/clubs.athletics.labels';
 import { CP_PRIVILEGES_MAP } from '../constants';
+import { amplitudeEvents } from '../constants/analytics';
 import { canAccountLevelReadResource, canSchoolReadResource } from '../utils/privileges';
+import { isClubAthletic } from '../../containers/controlpanel/manage/clubs/clubs.athletics.labels';
 
 const cpI18n = new CPI18nService();
 
@@ -45,7 +47,8 @@ export class StoreService extends HTTPService {
           return {
             label: store.name,
             value: store.store_id,
-            heading: false
+            heading: false,
+            hostType: amplitudeEvents.SERVICE
           };
         });
 
@@ -84,7 +87,8 @@ export class StoreService extends HTTPService {
           return {
             label: store.name,
             value: store.id,
-            heading: false
+            heading: false,
+            hostType: amplitudeEvents.ATHLETICS
           };
         });
 
@@ -126,7 +130,8 @@ export class StoreService extends HTTPService {
           return {
             label: store.name,
             value: store.id,
-            heading: false
+            heading: false,
+            hostType: amplitudeEvents.CLUB
           };
         });
 

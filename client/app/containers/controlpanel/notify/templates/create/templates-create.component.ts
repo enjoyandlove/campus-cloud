@@ -11,6 +11,8 @@ import { AnnouncementsService } from './../../announcements/announcements.servic
 import { TemplatesService } from './../templates.service';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 import { TemplatesComposeComponent } from '../compose/templates-compose.component';
+import { CPTrackingService } from '../../../../../shared/services';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 
 declare var $;
 
@@ -31,9 +33,10 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
     public cpI18n: CPI18nService,
     public storeService: StoreService,
     public service: AnnouncementsService,
+    public cpTracking: CPTrackingService,
     private childService: TemplatesService
   ) {
-    super(el, fb, session, cpI18n, storeService, service);
+    super(el, fb, session, cpI18n, storeService, cpTracking, service);
   }
 
   @HostListener('document:click', ['$event'])
@@ -46,6 +49,7 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
 
   onTypeChanged(type) {
     super.onTypeChanged(type);
+    this.amplitudeEventProperties.announcement_type = type.label;
   }
 
   doUserSearch(query) {
@@ -98,6 +102,7 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
   doSubmit() {
     this.isError = false;
 
+    this.amplitudeEventProperties.audience_type = amplitudeEvents.CAMPUS_WIDE;
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     let data = {
@@ -110,15 +115,20 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
     };
 
     if (this.state.isToUsers && !this.state.isCampusWide) {
+      this.amplitudeEventProperties.audience_type = amplitudeEvents.USER;
       data = Object.assign({}, data, { user_ids: this.form.value.user_ids });
     }
 
     if (this.state.isToLists && !this.state.isCampusWide) {
+      this.amplitudeEventProperties.audience_type = amplitudeEvents.LIST;
       data = Object.assign({}, data, { list_ids: this.form.value.list_ids });
     }
 
     this.childService.createTemplate(search, data).subscribe(
       () => {
+        this.cpTracking.amplitudeEmitEvent(
+          amplitudeEvents.NOTIFY_SAVED_TEMPLATE,
+          this.amplitudeEventProperties);
         this.form.reset();
         this.created.emit(this.form.value);
         this.resetModal();
