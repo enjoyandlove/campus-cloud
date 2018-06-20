@@ -501,7 +501,7 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
     let canDoEmergency;
 
     this.typeAheadOpts = {
-      withSwitcher: true,
+      withSwitcher: canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.audience),
       suggestions: this.suggestions,
       reset: this.resetChips$,
       unsetOverflow: true

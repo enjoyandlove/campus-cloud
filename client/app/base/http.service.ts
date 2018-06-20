@@ -27,7 +27,7 @@ export abstract class HTTPService {
         if (retries > 0) {
           retries -= 1;
 
-          return observableOf(e);
+          return observableOf(e).pipe(delay(1200));
         }
 
         return observableThrowError(e);
@@ -147,16 +147,9 @@ export abstract class HTTPService {
         return emptyResponse;
 
       case 404:
-        this.router.navigate(['/dashboard']);
-
-        return emptyResponse;
-
       case 403:
-        this.router.navigate(['/dashboard']);
-
-        return emptyResponse;
-
       case 500:
+      case 503:
         this.router.navigate(['/dashboard']);
 
         return emptyResponse;
