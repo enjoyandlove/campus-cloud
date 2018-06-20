@@ -2,7 +2,7 @@
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-12 text-center">
-        <span i18n><strong>{{ 'admin_club_service_modal_title' | cpI18n: title }}</strong></span>
+        <span><strong>{{ 'admin_club_service_modal_title' | cpI18n: title }}</strong></span>
 
         <span
           data-dismiss="modal"
@@ -32,7 +32,7 @@
                 <li class="cp-form__item"
                   *ngFor="let item of state.selected | cpTeamFilterPipe:{query: query, filterBy: 'name'}">
                   <div class="row">
-                    <span class="col-10" i18n>
+                    <span class="col-10">
                       <div class="row">
                         <div class="col-3 items-list__thumbnail">
                           <img class="rounded img-fit-cover img-fluid" [src]="item.data.logo_url">
@@ -66,7 +66,7 @@
                   <ul class="col-12 items-list__results items-list__results--full-height">
                     <li class="cp-form__item col-12" *ngFor="let item of state.selected | cpTeamSelectedPipe">
                       <div class="row" *ngIf="item.checked">
-                        <span class="col-9" i18n>
+                        <span class="col-9">
                           <div class="row">
                             <div class="col-2 items-list__thumbnail">
                               <img class="rounded img-fit-cover img-fluid" [src]="item.data.logo_url">
@@ -102,12 +102,12 @@
                                   </i>
                                 </div>
                                 <div class="col-10 no-left-padding">
-                                  <p class="privileges-menu__item--title" i18n>
+                                  <p class="privileges-menu__item--title">
                                     {{ privilege.title }}
                                   </p>
                                   <p
                                     [innerHTML]="privilege.description"
-                                    class="privileges-menu__item--description" i18n>
+                                    class="privileges-menu__item--description">
                                   </p>
                                 </div>
                               </div>
@@ -138,7 +138,7 @@
           type="button"
           (click)="emitAndClose()"
           class="cpbtn cpbtn--cancel"
-          data-dismiss="modal" i18n>
+          data-dismiss="modal">
           Cancel
         </button>
 
