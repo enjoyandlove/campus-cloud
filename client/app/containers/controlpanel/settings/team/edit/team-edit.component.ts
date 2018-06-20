@@ -586,20 +586,6 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
           w: this.session.g.get('user').school_level_privileges[this.schoolId][
             CP_PRIVILEGES_MAP.clubs
           ].w
-        },
-
-        [CP_PRIVILEGES_MAP.moderation]: {
-          r: true,
-          w: this.session.g.get('user').school_level_privileges[this.schoolId][
-            CP_PRIVILEGES_MAP.clubs
-          ].w
-        },
-
-        [CP_PRIVILEGES_MAP.membership]: {
-          r: true,
-          w: this.session.g.get('user').school_level_privileges[this.schoolId][
-            CP_PRIVILEGES_MAP.clubs
-          ].w
         }
       });
     }
@@ -632,20 +618,6 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
       this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
         [CP_PRIVILEGES_MAP.athletics]: {
-          r: true,
-          w: this.session.g.get('user').school_level_privileges[this.schoolId][
-            CP_PRIVILEGES_MAP.athletics
-          ].w
-        },
-
-        [CP_PRIVILEGES_MAP.moderation]: {
-          r: true,
-          w: this.session.g.get('user').school_level_privileges[this.schoolId][
-            CP_PRIVILEGES_MAP.athletics
-          ].w
-        },
-
-        [CP_PRIVILEGES_MAP.membership]: {
           r: true,
           w: this.session.g.get('user').school_level_privileges[this.schoolId][
             CP_PRIVILEGES_MAP.athletics

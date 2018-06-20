@@ -381,16 +381,6 @@ export class TeamCreateComponent implements OnInit {
         [CP_PRIVILEGES_MAP.clubs]: {
           r: true,
           w: clubPrivilege.w
-        },
-
-        [CP_PRIVILEGES_MAP.moderation]: {
-          r: true,
-          w: clubPrivilege.w
-        },
-
-        [CP_PRIVILEGES_MAP.membership]: {
-          r: true,
-          w: clubPrivilege.w
         }
       });
     }
@@ -427,16 +417,6 @@ export class TeamCreateComponent implements OnInit {
 
       this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
         [CP_PRIVILEGES_MAP.athletics]: {
-          r: true,
-          w: athleticPrivilege.w
-        },
-
-        [CP_PRIVILEGES_MAP.moderation]: {
-          r: true,
-          w: athleticPrivilege.w
-        },
-
-        [CP_PRIVILEGES_MAP.membership]: {
           r: true,
           w: athleticPrivilege.w
         }
