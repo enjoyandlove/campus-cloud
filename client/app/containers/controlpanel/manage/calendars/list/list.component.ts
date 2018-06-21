@@ -18,6 +18,7 @@ import { ManageHeaderService } from '../../utils';
 })
 export class CalendarsListComponent extends BaseComponent implements OnInit {
   loading;
+  sortingLabels;
   selectedCalendar = null;
   launchEditModal = false;
   launchDeleteModal = false;
@@ -140,5 +141,10 @@ export class CalendarsListComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.buildHeader();
+
+    this.sortingLabels = {
+      name: this.cpI18n.translate('name'),
+      created: this.cpI18n.translate('created')
+    };
   }
 }

@@ -11,9 +11,11 @@
     <div class="form-group">
       <label>
         {{ 'employer_name' | cpI18n }}
-        <span class="float-right">
-          {{ employerForm.controls.name.value ? employerForm.controls.name.value.length : 0 }}/120
-        </span>
+        <cp-char-counter
+          class="float-right"
+          [limit]="120"
+          [charCount]="employerForm.controls.name.value">
+        </cp-char-counter>
       </label>
       <input
         type="text"

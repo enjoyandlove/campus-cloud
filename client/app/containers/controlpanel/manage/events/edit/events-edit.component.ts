@@ -196,6 +196,9 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   public buildForm(res) {
+    const poster_url = res.poster_url ? res.poster_url : res.store_logo_url;
+    const thumb_url =  res.poster_thumb_url ? res.poster_thumb_url : res.store_logo_url;
+
     this.form = this.fb.group({
       title: [res.title, Validators.required],
       store_id: [res.store_id, !this.isOrientation ? Validators.required : null],
@@ -212,8 +215,8 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       event_attendance: [res.event_attendance],
       start: [res.start, Validators.required],
       end: [res.end, Validators.required],
-      poster_url: [res.poster_url, Validators.required],
-      poster_thumb_url: [res.poster_thumb_url, Validators.required],
+      poster_url: [poster_url, Validators.required],
+      poster_thumb_url: [thumb_url, Validators.required],
       description: [res.description],
       event_feedback: [res.event_feedback],
       event_manager_id: [res.event_manager_id],

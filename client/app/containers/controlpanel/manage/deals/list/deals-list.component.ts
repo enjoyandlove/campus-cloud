@@ -34,6 +34,7 @@ const state = {
 export class DealsListComponent extends BaseComponent implements OnInit {
   loading;
   deleteDeal;
+  sortingLabels;
   state: IState = state;
   launchDeleteModal = false;
 
@@ -123,5 +124,10 @@ export class DealsListComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     this.fetch();
     this.buildHeader();
+
+    this.sortingLabels = {
+      name: this.cpI18n.translate('name'),
+      store_name: this.cpI18n.translate('t_deals_list_grid_column_store')
+    };
   }
 }

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { CPSession } from './../../../../../session';
 import { LocationsService } from '../locations.service';
+import { CPI18nService } from '../../../../../shared/services';
 import { BaseComponent } from '../../../../../base/base.component';
 
 declare var $: any;
@@ -28,12 +29,17 @@ const state: IState = {
 })
 export class LocationsListComponent extends BaseComponent implements OnInit {
   loading;
+  sortingLabels;
   isLocationsCreate;
   deleteLocation = '';
   updateLocation = '';
   state: IState = state;
 
-  constructor(private locationsService: LocationsService, public session: CPSession) {
+  constructor(
+    public session: CPSession,
+    public cpI18n: CPI18nService,
+    private locationsService: LocationsService,
+    ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
 
@@ -127,5 +133,9 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
     this.state = Object.assign({}, this.state, { locations: _state.locations });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.sortingLabels = {
+      locations: this.cpI18n.translate('locations')
+    };
+  }
 }
