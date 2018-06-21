@@ -50,6 +50,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
   stores$;
   isError;
+  hostType;
   sendAsName;
   buttonData;
   errorMessage;
@@ -178,9 +179,12 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       };
       this.form.controls['list_ids'].setValue([]);
       this.form.controls['is_school_wide'].setValue(true);
-      this.amplitudeEventProperties.audience_type = amplitudeEvents.CAMPUS_WIDE;
       this.hideEmergencyType(false);
       this.updatePriority();
+      this.amplitudeEventProperties = {
+        ...this.amplitudeEventProperties,
+        audience_type: amplitudeEvents.CAMPUS_WIDE
+      };
     }
   }
 
@@ -245,7 +249,10 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   onSelectedStore(store) {
     this.sendAsName = store.label;
     this.form.controls['store_id'].setValue(store.value);
-    this.amplitudeEventProperties.host_type = store.hostType;
+    this.amplitudeEventProperties = {
+      ...this.amplitudeEventProperties,
+      host_type: store.hostType
+    };
   }
 
   onTeardownAudienceSaveModal() {
@@ -314,7 +321,10 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
     this.hideEmergencyType(true);
     this.updatePriority();
-    this.amplitudeEventProperties.audience_status = amplitudeEvents.NEW_AUDIENCE;
+    this.amplitudeEventProperties = {
+      ...this.amplitudeEventProperties,
+      audience_status: amplitudeEvents.NEW_AUDIENCE
+    };
   }
 
   onResetSavedAudience() {
@@ -330,7 +340,10 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     this.form.controls['is_school_wide'].setValue(true);
 
     this.hideEmergencyType(false);
-    this.amplitudeEventProperties.audience_status = amplitudeEvents.SAVED_AUDIENCE;
+    this.amplitudeEventProperties = {
+      ...this.amplitudeEventProperties,
+      audience_status: amplitudeEvents.SAVED_AUDIENCE
+    };
   }
 
   doValidate() {
@@ -375,7 +388,10 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     };
 
     if (this.state.isToUsers && !this.state.isCampusWide) {
-      this.amplitudeEventProperties.audience_type = amplitudeEvents.CUSTOM_LIST;
+      this.amplitudeEventProperties = {
+        ...this.amplitudeEventProperties,
+        audience_type: amplitudeEvents.CUSTOM_LIST
+      };
       data = Object.assign({}, data, { user_ids: this.form.value.user_ids });
 
       delete data['filters'];
@@ -390,7 +406,10 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     }
 
     if (this.state.isToFilters && !this.state.isCampusWide) {
-      this.amplitudeEventProperties.audience_type = amplitudeEvents.DYNAMIC_LIST;
+      this.amplitudeEventProperties = {
+        ...this.amplitudeEventProperties,
+        audience_type: amplitudeEvents.DYNAMIC_LIST
+      };
       data = Object.assign({}, data, { filters: this.form.value.filters });
 
       delete data['list_ids'];
@@ -450,7 +469,10 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
     this.form.controls['priority'].setValue(type.action);
     this.selectedType = this.getObjectFromTypesArray(type.action);
-    this.amplitudeEventProperties.announcement_type = type.label;
+    this.amplitudeEventProperties = {
+      ...this.amplitudeEventProperties,
+      announcement_type: type.label
+    };
   }
 
   getObjectFromTypesArray(id) {
@@ -524,6 +546,10 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       text: this.cpI18n.translate('send'),
       class: 'primary',
       disabled: true
+    };
+    const host_type = this.session.defaultHost ? this.session.defaultHost.hostType : null;
+    this.amplitudeEventProperties = {
+      ...this.amplitudeEventProperties, host_type
     };
     const defaultHost = this.session.defaultHost ? this.session.defaultHost.value : null;
 

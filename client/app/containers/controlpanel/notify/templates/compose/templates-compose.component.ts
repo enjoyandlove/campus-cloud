@@ -295,7 +295,10 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
   onSelectedStore(store) {
     this.sendAsName = store.label;
     this.form.controls['store_id'].setValue(store.value);
-    this.amplitudeEventProperties.host_type = store.hostType;
+    this.amplitudeEventProperties = {
+      ...this.amplitudeEventProperties,
+      host_type: store.hostType
+    };
   }
 
   doChipsSelected() {
@@ -328,8 +331,14 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
   doSubmit() {
     this.isError = false;
 
-    this.amplitudeEventProperties.announcement_type = this.selectedType.label;
-    this.amplitudeEventProperties.audience_type = amplitudeEvents.CAMPUS_WIDE;
+    this.amplitudeEventProperties = {
+      ...this.amplitudeEventProperties,
+      announcement_type: this.selectedType.label
+    };
+    this.amplitudeEventProperties = {
+      ...this.amplitudeEventProperties,
+      audience_type: amplitudeEvents.CAMPUS_WIDE
+    };
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     const prefix = this.subject_prefix.label ? this.subject_prefix.label.toUpperCase() : '';
@@ -343,12 +352,18 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
     };
 
     if (this.state.isToUsers && !this.state.isCampusWide) {
-      this.amplitudeEventProperties.audience_type = amplitudeEvents.USER;
+      this.amplitudeEventProperties = {
+        ...this.amplitudeEventProperties,
+        audience_type: amplitudeEvents.USER
+      };
       data = Object.assign({}, data, { user_ids: this.form.value.user_ids });
     }
 
     if (this.state.isToLists && !this.state.isCampusWide) {
-      this.amplitudeEventProperties.audience_type = amplitudeEvents.LIST;
+      this.amplitudeEventProperties = {
+        ...this.amplitudeEventProperties,
+        audience_type: amplitudeEvents.LIST
+      };
       data = Object.assign({}, data, { list_ids: this.form.value.list_ids });
     }
 

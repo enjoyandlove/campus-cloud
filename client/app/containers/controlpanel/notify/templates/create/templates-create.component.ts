@@ -49,7 +49,10 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
 
   onTypeChanged(type) {
     super.onTypeChanged(type);
-    this.amplitudeEventProperties.announcement_type = type.label;
+    this.amplitudeEventProperties = {
+      ...this.amplitudeEventProperties,
+      announcement_type: type.label
+    };
   }
 
   doUserSearch(query) {
@@ -102,7 +105,10 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
   doSubmit() {
     this.isError = false;
 
-    this.amplitudeEventProperties.audience_type = amplitudeEvents.CAMPUS_WIDE;
+    this.amplitudeEventProperties = {
+      ...this.amplitudeEventProperties,
+      audience_type: amplitudeEvents.CAMPUS_WIDE
+    };
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     let data = {
@@ -115,12 +121,18 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
     };
 
     if (this.state.isToUsers && !this.state.isCampusWide) {
-      this.amplitudeEventProperties.audience_type = amplitudeEvents.USER;
+      this.amplitudeEventProperties = {
+        ...this.amplitudeEventProperties,
+        audience_type: amplitudeEvents.USER
+      };
       data = Object.assign({}, data, { user_ids: this.form.value.user_ids });
     }
 
     if (this.state.isToLists && !this.state.isCampusWide) {
-      this.amplitudeEventProperties.audience_type = amplitudeEvents.LIST;
+      this.amplitudeEventProperties = {
+        ...this.amplitudeEventProperties,
+        audience_type: amplitudeEvents.LIST
+      };
       data = Object.assign({}, data, { list_ids: this.form.value.list_ids });
     }
 
@@ -165,6 +177,10 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
   }
 
   ngOnInit() {
+    const host_type =  this.session.defaultHost ? this.session.defaultHost.hostType : null;
+    this.amplitudeEventProperties = {
+      ...this.amplitudeEventProperties, host_type
+    };
     const defaultHost = this.session.defaultHost ? this.session.defaultHost.value : null;
 
     this.sendAsName = this.session.defaultHost ? this.session.defaultHost.label : undefined;
