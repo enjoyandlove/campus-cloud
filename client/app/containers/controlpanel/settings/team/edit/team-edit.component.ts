@@ -505,14 +505,6 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     if (CP_PRIVILEGES_MAP.clubs in this.schoolPrivileges) {
       delete this.schoolPrivileges[CP_PRIVILEGES_MAP.clubs];
     }
-
-    if (CP_PRIVILEGES_MAP.membership in this.schoolPrivileges) {
-      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.membership];
-    }
-
-    if (CP_PRIVILEGES_MAP.moderation in this.schoolPrivileges) {
-      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.moderation];
-    }
   }
 
   doAthleticsCleanUp() {
@@ -524,14 +516,6 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
     if (CP_PRIVILEGES_MAP.athletics in this.schoolPrivileges) {
       delete this.schoolPrivileges[CP_PRIVILEGES_MAP.athletics];
-    }
-
-    if (CP_PRIVILEGES_MAP.membership in this.schoolPrivileges) {
-      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.membership];
-    }
-
-    if (CP_PRIVILEGES_MAP.moderation in this.schoolPrivileges) {
-      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.moderation];
     }
   }
 
@@ -583,9 +567,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
         [CP_PRIVILEGES_MAP.clubs]: {
           r: true,
-          w: this.session.g.get('user').school_level_privileges[this.schoolId][
-            CP_PRIVILEGES_MAP.clubs
-          ].w
+          w: true
         }
       });
     }
@@ -619,9 +601,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
         [CP_PRIVILEGES_MAP.athletics]: {
           r: true,
-          w: this.session.g.get('user').school_level_privileges[this.schoolId][
-            CP_PRIVILEGES_MAP.athletics
-          ].w
+          w: true
         }
       });
     }
