@@ -8,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PersonasTileCreateComponent implements OnInit {
   buttonData;
+  contentTypes = require('./content-types.json');
+  resources = require('./resources.json');
 
   constructor(public cpI18n: CPI18nService) {}
 
@@ -15,7 +17,12 @@ export class PersonasTileCreateComponent implements OnInit {
     console.log('YOOO');
   }
 
+  onContentTypeChange({ id }) {
+    console.log('selected ', id);
+  }
+
   ngOnInit(): void {
+    console.log(this.contentTypes);
     this.buttonData = {
       class: 'primary',
       disabled: true,

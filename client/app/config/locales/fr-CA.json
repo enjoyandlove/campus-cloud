@@ -2431,6 +2431,12 @@
   "t_personas_list_dropdown_web_experiences": {
     "message": "Web"
   },
+  "t_personas_tile_modal_create_appearance": {
+    "message": "Appearance"
+  },
+  "t_personas_tile_modal_create_label_type": {
+    "message": "Type"
+  },
   "t_persona_create_cancel_button": {
     "message": "Annuler"
   },

@@ -16,9 +16,37 @@
   <div class="cpmodal__body">
     <div class="row">
       <div class="col-12">
-        <p class="text-center">
-          <!-- {{ 'events_delete_modal_body' | cpI18n:event.title }} -->
-        </p>
+        <p class="title">{{ 't_personas_tile_modal_create_appearance' | cpI18n }}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-4">
+        image here
+      </div>
+      <div class="col-8">
+        name, color
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        <p class="title">{{ 't_personas_tile_modal_create_content' | cpI18n }}</p>
+
+        <div class="row">
+          <div class="col-12">
+            <label>{{ 't_personas_tile_modal_create_label_type' | cpI18n }}</label>
+            <cp-dropdown 
+              [items]="contentTypes"
+              (selected)="onContentTypeChange($event)">
+            </cp-dropdown>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <label>{{ 't_personas_tile_modal_create_label_resources' | cpI18n }}</label>
+          </div>
+        </div>
       </div>
     </div>
   </div>

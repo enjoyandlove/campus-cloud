@@ -2452,6 +2452,15 @@
   "t_personas_section_button_add_section": {
     "message": "Add Section"
   },
+  "t_personas_tile_modal_create_appearance": {
+    "message": "Appearance"
+  },
+  "t_personas_tile_modal_create_content": {
+    "message": "Content"
+  },
+  "t_personas_tile_modal_create_label_type": {
+    "message": "Type"
+  },
   "t_persona_create_cancel_button": {
     "message": "Cancel"
   },

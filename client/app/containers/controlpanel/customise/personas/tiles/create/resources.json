@@ -1,0 +1,14 @@
+[
+  {
+    "id": "user_attended_events",
+    "label": "t_personas_tile_create_resource_type_user_attended_events"
+  },
+  {
+    "id": "scan_qr",
+    "label": "t_personas_tile_create_resource_type_scan_qr"
+  },
+  {
+    "id": "advisor_list",
+    "label": "t_personas_tile_create_resource_type_advisor_list"
+  }
+]

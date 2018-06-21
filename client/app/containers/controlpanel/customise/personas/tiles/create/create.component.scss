@@ -1,2 +1,8 @@
 @import '~styles/components/modal';
 @import '~styles/components/button';
+@import '~styles/core/typography';
+
+p.title {
+  @include font-24px();
+  @include font-bold();
+}
