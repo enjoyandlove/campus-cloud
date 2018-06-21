@@ -8,7 +8,10 @@
         <div class="col-12">
           <cp-personas-section 
             [guide]="guide"
-            (addTileClick)="onAddTileToGuideClick(guide)">
+            (deleteTile)="onDeleteTile($event)"
+            (editTileClick)="onEditTile($event)"
+            (addTileClick)="onAddTileToGuideClick(guide)"
+            (toggleTileVisibility)="onToggleTileVisibility($event)">
           </cp-personas-section>
         </div>
       </div>

@@ -26,11 +26,11 @@
       *ngFor="let tile of guide.tiles">
       <cp-personas-section-tile 
         [tile]="tile"
-        (editClick)="onEditClick()"
-        (deleteClick)="onDeleteClick()"
-        (toggleVisibility)="onHideClick()"
         [visible]="utils.isTileVisible(tile)"
-        [defaultTile]="utils.isTileDefault(tile)">
+        (deleteClick)="deleteTile.emit($event)"
+        (editClick)="editTileClick.emit($event)"
+        [defaultTile]="utils.isTileDefault(tile)"
+        (toggleVisibility)="toggleTileVisibility.emit($event)">
       </cp-personas-section-tile>
     </div>
     <div class="col-2">

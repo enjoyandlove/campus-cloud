@@ -15,6 +15,18 @@ export class PersonasService extends HTTPService {
     Object.setPrototypeOf(this, PersonasService.prototype);
   }
 
+  updateTile(linkId, body) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GUIDE_TILES}/${linkId}`;
+
+    return super.update(url, body);
+  }
+
+  deleteTile(linkId, search) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GUIDE_TILES}/${linkId}`;
+
+    return super.delete(url, search);
+  }
+
   getPersonas(startRange: number, endRange: number, search: HttpParams) {
     const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.PERSONAS}`;
     const url = `${common}/${startRange};${endRange}`;

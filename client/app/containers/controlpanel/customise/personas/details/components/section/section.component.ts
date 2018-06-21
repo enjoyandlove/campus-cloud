@@ -12,20 +12,11 @@ export class PersonasSectionComponent implements OnInit {
   @Input() guide: ICampusGuide;
 
   @Output() addTileClick: EventEmitter<null> = new EventEmitter();
+  @Output() deleteTile: EventEmitter<number> = new EventEmitter();
+  @Output() editTileClick: EventEmitter<number> = new EventEmitter();
+  @Output() toggleTileVisibility: EventEmitter<number> = new EventEmitter();
 
   constructor(public utils: PersonasUtilsService) {}
-
-  onEditClick() {
-    console.log('EDIT CLICK');
-  }
-
-  onToggleTile() {
-    console.log('TOGGLE CLICK');
-  }
-
-  onDeleteClick() {
-    console.log('DELETE CLICK');
-  }
 
   ngOnInit(): void {}
 }
