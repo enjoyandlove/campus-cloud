@@ -8,7 +8,7 @@ import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 import { reducer } from '../../../../../reducers/audience.reducer';
 
-describe('AudienceCardComponent', () => {
+fdescribe('AudienceCardComponent', () => {
   let comp: AudienceCardComponent;
   let fixture: ComponentFixture<AudienceCardComponent>;
 
@@ -53,7 +53,7 @@ describe('AudienceCardComponent', () => {
     comp.onSelectedAudience(mockAudience);
 
     expect(comp.selectedAudience.emit).toHaveBeenCalledTimes(1);
-    expect(comp.selectedAudience.emit).toHaveBeenCalledWith(mockAudience.action);
+    expect(comp.selectedAudience.emit).toHaveBeenCalledWith(mockAudience);
 
     expect(comp.message).toBe(comp.cpI18n.translate('campus_wide'));
 

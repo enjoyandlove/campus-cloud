@@ -25,6 +25,8 @@ export const amplitudeEvents = {
 
   ENABLED: 'Enabled',
 
+  NEW_AUDIENCE: 'New',
+
   DISABLED: 'Disabled',
 
   MENU_MANAGE: 'Manage',
@@ -36,6 +38,8 @@ export const amplitudeEvents = {
   ATHLETICS: 'Athletics',
 
   NO_ACCESS: 'No Access',
+
+  SAVED_AUDIENCE: 'Saved',
 
   CREATE_JOB: 'Create Job',
 
@@ -55,9 +59,13 @@ export const amplitudeEvents = {
 
   CREATE_LINK: 'Create link',
 
+  CUSTOM_LIST: 'Custom List',
+
   CREATE_EVENT: 'Create Event',
 
   MENU_CUSTOMIZE: 'Customize',
+
+  DYNAMIC_LIST: 'Dynamic List',
 
   CREATE_STORE: 'Create Store',
 

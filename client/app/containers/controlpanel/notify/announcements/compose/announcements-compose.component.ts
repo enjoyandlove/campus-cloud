@@ -14,8 +14,9 @@ import { canSchoolReadResource } from './../../../../../shared/utils/privileges/
 import { CPSession } from '../../../../../session';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 import { CP_PRIVILEGES_MAP, STATUS } from '../../../../../shared/constants';
-import { CPI18nService, StoreService } from '../../../../../shared/services';
+import { CPI18nService, CPTrackingService, StoreService } from '../../../../../shared/services';
 import { AnnouncementsService } from '../announcements.service';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 
 interface IState {
   isUrgent: boolean;
@@ -72,6 +73,13 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     type: null
   };
 
+  amplitudeEventProperties = {
+    audience_status: null,
+    host_type: null,
+    audience_type: null,
+    announcement_type: amplitudeEvents.REGULAR,
+  };
+
   types;
 
   constructor(
@@ -81,7 +89,8 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     public cpI18n: CPI18nService,
     public store: Store<IHeader>,
     public storeService: StoreService,
-    public service: AnnouncementsService
+    public service: AnnouncementsService,
+    public cpTracking: CPTrackingService
   ) {
     const school = this.session.g.get('school');
     const search: HttpParams = new HttpParams().append('school_id', school.id.toString());
@@ -144,8 +153,8 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     }
   }
 
-  onAudienceChange(audienceId) {
-    if (audienceId) {
+  onAudienceChange(audience) {
+    if (audience.action) {
       this.state = {
         ...this.state,
         isToUsers: false,
@@ -153,11 +162,12 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
         isToFilters: false,
         isCampusWide: false
       };
-      this.form.controls['list_ids'].setValue([audienceId]);
+      this.form.controls['list_ids'].setValue([audience.action]);
       this.form.controls['is_school_wide'].setValue(false);
 
       this.hideEmergencyType(true);
       this.updatePriority();
+      this.getAudienceType(audience.type);
     } else {
       this.state = {
         ...this.state,
@@ -168,9 +178,16 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       };
       this.form.controls['list_ids'].setValue([]);
       this.form.controls['is_school_wide'].setValue(true);
+      this.amplitudeEventProperties.audience_type = amplitudeEvents.CAMPUS_WIDE;
       this.hideEmergencyType(false);
       this.updatePriority();
     }
+  }
+
+  getAudienceType(type) {
+    this.amplitudeEventProperties.audience_type = type === 1
+      ? amplitudeEvents.DYNAMIC_LIST
+      : amplitudeEvents.CUSTOM_LIST;
   }
 
   updatePriority() {
@@ -228,6 +245,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   onSelectedStore(store) {
     this.sendAsName = store.label;
     this.form.controls['store_id'].setValue(store.value);
+    this.amplitudeEventProperties.host_type = store.hostType;
   }
 
   onTeardownAudienceSaveModal() {
@@ -296,6 +314,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
     this.hideEmergencyType(true);
     this.updatePriority();
+    this.amplitudeEventProperties.audience_status = amplitudeEvents.NEW_AUDIENCE;
   }
 
   onResetSavedAudience() {
@@ -311,6 +330,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     this.form.controls['is_school_wide'].setValue(true);
 
     this.hideEmergencyType(false);
+    this.amplitudeEventProperties.audience_status = amplitudeEvents.SAVED_AUDIENCE;
   }
 
   doValidate() {
@@ -355,6 +375,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     };
 
     if (this.state.isToUsers && !this.state.isCampusWide) {
+      this.amplitudeEventProperties.audience_type = amplitudeEvents.CUSTOM_LIST;
       data = Object.assign({}, data, { user_ids: this.form.value.user_ids });
 
       delete data['filters'];
@@ -369,6 +390,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     }
 
     if (this.state.isToFilters && !this.state.isCampusWide) {
+      this.amplitudeEventProperties.audience_type = amplitudeEvents.DYNAMIC_LIST;
       data = Object.assign({}, data, { filters: this.form.value.filters });
 
       delete data['list_ids'];
@@ -386,6 +408,10 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
           return;
         }
+
+        this.cpTracking.amplitudeEmitEvent(
+          amplitudeEvents.NOTIFY_SEND_ANNOUNCEMENT,
+          this.amplitudeEventProperties);
         this.router.navigate(['/notify/announcements']);
       },
       (_) => {
@@ -424,6 +450,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
     this.form.controls['priority'].setValue(type.action);
     this.selectedType = this.getObjectFromTypesArray(type.action);
+    this.amplitudeEventProperties.announcement_type = type.label;
   }
 
   getObjectFromTypesArray(id) {
