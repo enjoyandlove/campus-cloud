@@ -1,3 +1,4 @@
+import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
 import { HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -354,7 +355,15 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
         control.controls['poster_url'].setValue(res.image_url);
       })
       .catch((err) => {
-        throw new Error(err);
+        this.store.dispatch({
+          type: SNACKBAR_SHOW,
+          payload: {
+            class: 'danger',
+            autoClose: true,
+            sticky: true,
+            body: err ? err : this.cpI18n.translate('something_went_wrong')
+          }
+        });
       });
   }
 
