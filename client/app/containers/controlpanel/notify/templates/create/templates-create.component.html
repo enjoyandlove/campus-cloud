@@ -100,7 +100,11 @@
                 <label>
                   {{ 'subject' | cpI18n }}
                   <span class="float-right">
-                    {{ getSubjectLength() }}/128
+                    <cp-char-counter
+                      class="float-right"
+                      [limit]="128"
+                      [charCount]="getSubjectLength()">
+                    </cp-char-counter>
                   </span>
                 </label>
                 <div class="cpInput subject-input">

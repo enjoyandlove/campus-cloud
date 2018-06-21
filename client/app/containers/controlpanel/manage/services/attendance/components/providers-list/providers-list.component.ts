@@ -34,6 +34,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
   @Output() providersLength$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   loading;
+  sortingLabels;
   deleteProvider = '';
   state: IState = state;
   displayRatingColumn = true;
@@ -139,5 +140,10 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
     });
 
     this.fetch();
+
+    this.sortingLabels = {
+      rating: this.cpI18n.translate('rating'),
+      provider_name: this.cpI18n.translate('service_provider')
+    };
   }
 }

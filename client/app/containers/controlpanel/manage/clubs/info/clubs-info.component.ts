@@ -1,19 +1,21 @@
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs';
+import { Store } from '@ngrx/store';
+
 import { switchMap } from 'rxjs/operators';
-import { ISnackbar, SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
-import { appStorage } from './../../../../../shared/utils/storage/storage';
-import { BaseComponent } from '../../../../../base/base.component';
-import { API } from '../../../../../config/api';
-import { CPSession } from '../../../../../session';
-import { CPI18nService, FileUploadService } from '../../../../../shared/services';
 import { ClubStatus } from '../club.status';
-import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
+import { API } from '../../../../../config/api';
 import { ClubsService } from '../clubs.service';
+import { CPSession } from '../../../../../session';
 import { ClubsUtilsService } from '../clubs.utils.service';
+import { BaseComponent } from '../../../../../base/base.component';
+import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { appStorage } from './../../../../../shared/utils/storage/storage';
+import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
+import { CPI18nService, FileUploadService } from '../../../../../shared/services';
+import { ISnackbar, SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
 
 @Component({
   selector: 'cp-clubs-info',
@@ -27,6 +29,7 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
   labels;
   loading;
   clubStatus;
+  buttonText;
   clubId: number;
   draggable = false;
   uploading = false;
@@ -71,6 +74,11 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
         !!this.club.advisor_firstname ||
         !!this.club.advisor_lastname ||
         !!this.club.advisor_email;
+
+      this.store.dispatch({
+        type: HEADER_UPDATE,
+        payload: this.buildHeader(res.data.name)
+      });
     });
   }
 
@@ -136,7 +144,32 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
       );
   }
 
+  buildHeader(name) {
+    const menu = {
+      heading: `[NOTRANSLATE]${name}[NOTRANSLATE]`,
+      crumbs: {
+        url: this.labels.club_athletic,
+        label: this.labels.club_athletic
+      },
+      subheading: null,
+      em: null,
+      children: []
+    };
+
+    const links = this.helper.getSubNavChildren(this.club, this.session);
+
+    links.forEach((link) => {
+      menu.children.push({
+        label: link.toLocaleLowerCase(),
+        url: `/manage/` + this.labels.club_athletic + `/${this.clubId}/${link.toLocaleLowerCase()}`
+      });
+    });
+
+    return menu;
+  }
+
   ngOnInit() {
+    this.buttonText = this.cpI18n.translate('reupload');
     this.limitedAdmin =
       this.isAthletic === isClubAthletic.club
         ? this.helper.limitedAdmin(this.session.g, this.clubId)

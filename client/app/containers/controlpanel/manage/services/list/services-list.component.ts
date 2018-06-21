@@ -32,6 +32,7 @@ const state: IState = {
 })
 export class ServicesListComponent extends BaseComponent implements OnInit {
   loading;
+  sortingLabels;
   deleteService = '';
   state: IState = state;
 
@@ -98,6 +99,7 @@ export class ServicesListComponent extends BaseComponent implements OnInit {
       attendance_only: data.attendance_only
     });
 
+    this.resetPagination();
     this.fetch();
   }
 
@@ -116,5 +118,8 @@ export class ServicesListComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.fetch();
+    this.sortingLabels = {
+      name: this.cpI18n.translate('name')
+    };
   }
 }

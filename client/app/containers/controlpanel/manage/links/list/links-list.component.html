@@ -21,16 +21,15 @@
       <ul class="links cp-form">
         <li class="cp-form__header col-12">
           <div class="row">
-            <span
+            <cp-sorting-header
+              class="col-5"
+              sortLabel="name"
               (click)="doSort('name')"
-              class="col-5 hover">
-              {{ 'name' | cpI18n }}
-              <span *ngIf="state.sort_field === 'name'">
-                <i class="material-icons">
-                  {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
-                </i>
-              </span>
-            </span>
+              [label]="sortingLabels.name"
+              [sortField]="state.sort_field"
+              [sortDirection]="state.sort_direction">
+            </cp-sorting-header>
+
             <span class="col-6">{{ 'description' | cpI18n }}</span>
             <span class="col-1"></span>
           </div>

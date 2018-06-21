@@ -32,6 +32,7 @@ const state: IState = {
 })
 export class AudienceListComponent extends BaseComponent implements OnInit {
   loading;
+  sortingLabels;
   audienceUsers;
   isAudienceEdit;
   isAudienceDelete;
@@ -227,5 +228,9 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.sortingLabels = {
+      name: this.cpI18n.translate('name')
+    };
+  }
 }

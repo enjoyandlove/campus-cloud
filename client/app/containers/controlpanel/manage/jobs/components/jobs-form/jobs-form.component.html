@@ -8,9 +8,11 @@
             <label>
               {{ 'jobs_job_title' | cpI18n }}
             </label>
-            <span class="float-right">
-                {{ form.controls.title.value ? form.controls.title.value.length : 0 }}/120
-            </span>
+            <cp-char-counter
+              class="float-right"
+              [limit]="120"
+              [charCount]="form.controls.title.value">
+            </cp-char-counter>
             <input
               type="text"
               class="form-control"

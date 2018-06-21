@@ -30,6 +30,7 @@ const state: IState = {
 export class TeamListComponent extends BaseComponent implements OnInit {
   admins;
   loading;
+  sortingLabels;
   deleteAdmin = '';
   state: IState = state;
 
@@ -112,5 +113,10 @@ export class TeamListComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.buildHeader();
+
+    this.sortingLabels = {
+      name: this.cpI18n.translate('name'),
+      status: this.cpI18n.translate('status')
+    };
   }
 }

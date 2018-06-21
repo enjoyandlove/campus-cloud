@@ -18,6 +18,7 @@ import { CPI18nService } from '../../../../../shared/services';
 })
 export class CalendarsDetailComponent extends BaseComponent implements OnInit {
   loading;
+  sortingLabels;
   calendarId: number;
   calendar: ICalendar;
   selectedItem = null;
@@ -105,8 +106,6 @@ export class CalendarsDetailComponent extends BaseComponent implements OnInit {
     }
   }
 
-  ngOnInit() {}
-
   private fetch() {
     const itemSearch = new HttpParams()
       .set('search_str', this.state.search_str)
@@ -135,5 +134,12 @@ export class CalendarsDetailComponent extends BaseComponent implements OnInit {
       this.state = { ...this.state, items: res.data };
       this.buildHeader();
     });
+  }
+
+  ngOnInit() {
+    this.sortingLabels = {
+      name: this.cpI18n.translate('name'),
+      start_date: this.cpI18n.translate('start_date')
+    };
   }
 }

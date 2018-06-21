@@ -27,6 +27,7 @@ export class EventsImportTopBarComponent implements OnInit {
   @Output() hostChange: EventEmitter<number> = new EventEmitter();
   @Output() imageChange: EventEmitter<string> = new EventEmitter();
 
+  buttonText;
   imageError;
 
   constructor(
@@ -52,5 +53,7 @@ export class EventsImportTopBarComponent implements OnInit {
     );
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.buttonText = this.cpI18n.translate('t_events_import_upload_picture');
+  }
 }

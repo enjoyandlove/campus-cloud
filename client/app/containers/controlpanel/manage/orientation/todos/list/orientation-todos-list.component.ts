@@ -16,6 +16,7 @@ import { CPI18nService } from '../../../../../../shared/services';
 })
 export class OrientationTodosListComponent extends BaseComponent implements OnInit {
   loading;
+  sortingLabels;
   selectedTodo = null;
   orientationId: number;
   launchEditModal = false;
@@ -126,5 +127,10 @@ export class OrientationTodosListComponent extends BaseComponent implements OnIn
 
   ngOnInit() {
     this.fetch();
+
+    this.sortingLabels = {
+      name: this.cpI18n.translate('name'),
+      due_date: this.cpI18n.translate('due_date')
+    };
   }
 }

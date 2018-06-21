@@ -14,7 +14,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CPSession } from './../../../../../session/index';
-import { CPI18nService, StoreService } from './../../../../../shared/services';
+import { CPI18nService, StoreService, ZendeskService } from './../../../../../shared/services';
 import { AnnouncementsService } from './../../announcements/announcements.service';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 import { CP_PRIVILEGES_MAP, STATUS } from '../../../../../shared/constants';
@@ -162,14 +162,14 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
   }
 
   getSubjectLength() {
-    let length = 0;
+    let length = '';
 
     if (this.subject_prefix.label) {
-      length += this.subject_prefix.label.length;
+      length += this.subject_prefix.label;
     }
 
     if (this.form.controls['subject'].value) {
-      length += this.form.controls['subject'].value.length;
+      length += this.form.controls['subject'].value;
     }
 
     return length;
@@ -494,9 +494,7 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
       content: this.cpI18n.translate('notify_announcement_template_to_tooltip'),
       link: {
         text: this.cpI18n.translate('lists_button_create'),
-        url:
-          'https://oohlalamobile.zendesk.com/hc/en-us/articles/' +
-          '115004330554-Create-a-List-of-Students'
+        url: `${ZendeskService.zdRoot()}/articles/115004330554-Create-a-List-of-Students`
       }
     });
 
