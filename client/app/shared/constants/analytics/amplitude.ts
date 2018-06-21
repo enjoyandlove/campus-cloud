@@ -9,11 +9,23 @@ export const cpTrackAmplitude = {
 };
 
 export const amplitudeEvents = {
+  CLUB: 'Club',
+
+  USER: 'User',
+
+  LIST: 'List',
+
   ACTIVE: 'Active',
+
+  REGULAR: 'Regular',
+
+  SERVICE: 'Service',
 
   PENDING: 'Pending',
 
   ENABLED: 'Enabled',
+
+  NEW_AUDIENCE: 'New',
 
   DISABLED: 'Disabled',
 
@@ -23,13 +35,21 @@ export const amplitudeEvents = {
 
   MENU_NOTIFY: 'Notify',
 
+  ATHLETICS: 'Athletics',
+
   NO_ACCESS: 'No Access',
+
+  SAVED_AUDIENCE: 'Saved',
 
   CREATE_JOB: 'Create Job',
 
   LOGGED_OUT: 'Logged Out',
 
   MENU_AUDIENCE: 'Audience',
+
+  CAMPUS_WIDE: 'Campus Wide',
+
+  ONE_SERVICE: 'One Service',
 
   CREATE_CLUB: 'Create Club',
 
@@ -41,9 +61,13 @@ export const amplitudeEvents = {
 
   CREATE_LINK: 'Create link',
 
+  CUSTOM_LIST: 'Custom List',
+
   CREATE_EVENT: 'Create Event',
 
   MENU_CUSTOMIZE: 'Customize',
+
+  DYNAMIC_LIST: 'Dynamic List',
 
   CREATE_STORE: 'Create Store',
 
@@ -56,6 +80,10 @@ export const amplitudeEvents = {
   CREATE_SERVICE: 'Create Service',
 
   CREATE_PROGRAM: 'Create Program',
+
+  SINGLE_STUDENT: 'Single Student',
+
+  ALL_ENGAGEMENT: 'All Engagement',
 
   CHANGED_SCHOOL: 'Changed School',
 
@@ -85,5 +113,11 @@ export const amplitudeEvents = {
 
   DELETED_TEAM_MEMBER: 'Deleted Team Member',
 
-  CREATE_CALENDAR_ITEM: 'Create Calendar Item'
+  ASSESS_SENT_MESSAGE: 'Assess - Sent Message',
+
+  CREATE_CALENDAR_ITEM: 'Create Calendar Item',
+
+  NOTIFY_SAVED_TEMPLATE: 'Notify - Saved Template',
+
+  NOTIFY_SEND_ANNOUNCEMENT: 'Notify - Send Announcement'
 };

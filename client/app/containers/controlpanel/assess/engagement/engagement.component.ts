@@ -3,13 +3,16 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs';
+
+import { CPSession } from './../../../../session/index';
+import { EngagementService } from './engagement.service';
+import { CPTrackingService } from '../../../../shared/services';
+import { BaseComponent } from '../../../../base/base.component';
 import { HEADER_UPDATE } from './../../../../reducers/header.reducer';
 import { SNACKBAR_SHOW } from './../../../../reducers/snackbar.reducer';
-import { CPSession } from './../../../../session/index';
-import { CPI18nService } from './../../../../shared/services/i18n.service';
+import { amplitudeEvents } from '../../../../shared/constants/analytics';
 import { createSpreadSheet } from './../../../../shared/utils/csv/parser';
-import { EngagementService } from './engagement.service';
-import { BaseComponent } from '../../../../base/base.component';
+import { CPI18nService } from './../../../../shared/services/i18n.service';
 
 declare var $;
 
@@ -28,6 +31,7 @@ export class EngagementComponent extends BaseComponent implements OnInit {
   messageData;
   filterState;
   isComposeModal;
+  eventProperties;
 
   filters$: BehaviorSubject<any> = new BehaviorSubject(null);
 
@@ -36,7 +40,8 @@ export class EngagementComponent extends BaseComponent implements OnInit {
     public store: Store<any>,
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public service: EngagementService
+    public service: EngagementService,
+    public cpTracking: CPTrackingService
   ) {
     super();
     super.isLoading().subscribe((loading) => (this.loading = loading));
@@ -185,7 +190,8 @@ export class EngagementComponent extends BaseComponent implements OnInit {
     this.messageData = null;
   }
 
-  onFlashMessage() {
+  onFlashMessage(data) {
+    this.trackAmplitudeEvents(data);
     this.store.dispatch({
       type: SNACKBAR_SHOW,
       payload: {
@@ -193,6 +199,28 @@ export class EngagementComponent extends BaseComponent implements OnInit {
         autoClose: true
       }
     });
+  }
+
+  trackAmplitudeEvents(data) {
+    this.eventProperties = {
+      interval: this.filterState.range.label,
+      host_type: data.hostType,
+      cohort_type: this.getCohortType(this.filterState.for),
+      engagement_type: data.props.label,
+      engagement_source: this.getEngagementType(this.filterState.engagement),
+    };
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.ASSESS_SENT_MESSAGE, this.eventProperties);
+  }
+
+  getEngagementType(engagement) {
+    return engagement.data.queryParam === 'service_id'
+      ? amplitudeEvents.ONE_SERVICE
+      : engagement.label;
+  }
+
+  getCohortType(cohort) {
+    return cohort.listId ? amplitudeEvents.LIST : cohort.label;
   }
 
   ngOnInit() {
