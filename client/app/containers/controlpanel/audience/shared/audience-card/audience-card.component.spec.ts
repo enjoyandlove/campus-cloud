@@ -8,7 +8,7 @@ import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 import { reducer } from '../../../../../reducers/audience.reducer';
 
-fdescribe('AudienceCardComponent', () => {
+describe('AudienceCardComponent', () => {
   let comp: AudienceCardComponent;
   let fixture: ComponentFixture<AudienceCardComponent>;
 
