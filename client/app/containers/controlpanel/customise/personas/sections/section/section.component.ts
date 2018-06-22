@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
-import { ICampusGuide } from './../../../persona.interface';
-import { PersonasUtilsService } from './../../../personas.utils.service';
+import { ICampusGuide } from './../../persona.interface';
 
 @Component({
   selector: 'cp-personas-section',
@@ -16,7 +15,7 @@ export class PersonasSectionComponent implements OnInit {
   @Output() editTileClick: EventEmitter<number> = new EventEmitter();
   @Output() toggleTileVisibility: EventEmitter<number> = new EventEmitter();
 
-  constructor(public utils: PersonasUtilsService) {}
+  constructor() {}
 
   ngOnInit(): void {}
 }

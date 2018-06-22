@@ -1,3 +1,4 @@
+import { TilesService } from './tiles.service';
 import { TilesUtilsService } from './tiles.utils.service';
 import { PersonasTileContentComponent } from './components/tile-content/tile-content.component';
 import { PseronasTileBaseComponent } from './components/tile-base/tile-base.component';
@@ -34,6 +35,6 @@ import {
     PersonasTileHoverComponent,
     PersonasTileAddButtonComponent
   ],
-  providers: [TilesUtilsService]
+  providers: [TilesUtilsService, TilesService]
 })
 export class PersonasTilesModule {}

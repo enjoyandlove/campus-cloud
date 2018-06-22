@@ -6,10 +6,9 @@ import { combineLatest } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
 import { ISnackbar } from './../../../../../reducers/snackbar.reducer';
-import { ICampusGuide, IPersona, ITile } from './../persona.interface';
+import { ICampusGuide, IPersona } from './../persona.interface';
 import { PersonasService } from './../personas.service';
 import { PersonasUtilsService } from './../personas.utils.service';
-import { TileVisibility } from './../tiles/tiles.status';
 import { BaseComponent } from '../../../../../base';
 import { CPSession } from '../../../../../session';
 import { CPI18nService } from '../../../../../shared/services';
@@ -40,37 +39,6 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
 
   onAddTileToGuideClick() {
     $('#tilesCreate').modal();
-  }
-
-  onDeleteTile(tile: ITile) {
-    const search = new HttpParams().set('school_id', this.session.g.get('school').id);
-
-    this.service.deleteTile(tile.id, search).subscribe(() => this.fetch());
-  }
-
-  updateCampusGuideTile(guide: ICampusGuide, updateTile: ITile) {
-    return {
-      ...guide,
-      tiles: guide.tiles.map((tile: ITile) => (tile.id === updateTile.id ? updateTile : tile))
-    };
-  }
-
-  onToggleTileVisibility(tile: ITile) {
-    const visibility_status =
-      tile.visibility_status === TileVisibility.invisible
-        ? TileVisibility.visible
-        : TileVisibility.invisible;
-
-    const body = {
-      visibility_status,
-      school_id: this.session.g.get('school').id
-    };
-
-    this.service.updateTile(tile.id, body).subscribe(() => this.fetch());
-  }
-
-  onEditTile(tile: ITile) {
-    console.log('editing', tile);
   }
 
   fetch() {

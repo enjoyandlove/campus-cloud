@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 import { PersonasFormComponent } from './components/personas-form/personas-form.component';
 import { PersonasCreateComponent } from './create/create.component';
 import { PersonasDeleteComponent } from './delete';
-import { PersonasSectionComponent } from './details/components/section/section.component';
 import { PersonasDetailsComponent } from './details/details.component';
 import { PersonasEditComponent } from './edit';
 import { PersonasListComponent } from './list';
@@ -25,7 +24,6 @@ import { SharedModule } from '../../../../shared/shared.module';
     PersonasDeleteComponent,
     PersonasCreateComponent,
     PersonasDetailsComponent,
-    PersonasSectionComponent,
     PersonasListActionBoxComponent
   ],
 
