@@ -1,5 +1,4 @@
 @import '~styles/core/colors';
-@import '~bootstrap/variables';
 @import '~styles/core/typography';
 @import '~styles/components/dropdown';
 
@@ -101,10 +100,17 @@ nav {
   max-width: 200px;
   position: relative;
 
+  &.show {
+    .nav__school--menu {
+      display: block;
+    }
+  }
+
   &--menu {
     top: 115%;
-    z-index: 4;
+    z-index: 991;
     right: 20px;
+    display: none;
     position: absolute;
   }
 
@@ -150,4 +156,11 @@ nav {
   &__name {
     font-size: 0.9em;
   }
+}
+
+.dropdown-menu {
+  @include font-14px();
+
+  border: none;
+  background: transparent;
 }

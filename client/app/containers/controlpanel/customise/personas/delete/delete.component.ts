@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { CPSession } from './../../../../../session';
 import { PersonasService } from './../personas.service';
@@ -27,9 +27,9 @@ export class PersonasDeleteComponent implements OnInit {
   ) {}
 
   onDelete() {
-    const search = new URLSearchParams();
-    search.append('force', 'true');
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams()
+      .append('force', 'true')
+      .append('school_id', this.session.g.get('school').id);
 
     this.service.deletePersonaById(this.persona.id, search).subscribe(
       () => {

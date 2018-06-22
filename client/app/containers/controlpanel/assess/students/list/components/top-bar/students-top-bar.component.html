@@ -1,11 +1,12 @@
 <div class="cp-card">
   <div class="row">
-    <div class="col-xs-3">
+    <div class="col-3">
       <cp-searchbox (query)="onSearch($event)"></cp-searchbox>
     </div>
-    <div class="col-xs-2 no-left-padding">
+    <div class="col-2 no-left-padding">
       <cp-dropdown
         [items]="lists$ | async"
+        [disabled]="!canAudience"
         [selectedItem]="selectedList"
         (selected)="onListSelected($event.id)">
       </cp-dropdown>

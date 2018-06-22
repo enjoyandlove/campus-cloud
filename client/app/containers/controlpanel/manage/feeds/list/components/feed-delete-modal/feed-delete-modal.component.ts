@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { FeedsService } from '../../../feeds.service';
 import { CPI18nService } from '../../../../../../../shared/services/index';

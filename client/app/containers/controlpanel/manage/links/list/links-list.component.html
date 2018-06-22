@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-xs-12">
+  <div class="col-12">
     <cp-links-list-action-box
       (search)="onSearch($event)"
       (launchCreateModal)="onLaunchCreateModal()">
@@ -19,11 +19,11 @@
 
     <div *ngIf="state.links.length">
       <ul class="links cp-form">
-        <li class="cp-form__header col-xs-12">
+        <li class="cp-form__header col-12">
           <div class="row">
             <span
               (click)="doSort('name')"
-              class="col-xs-5 hover">
+              class="col-5 hover">
               {{ 'name' | cpI18n }}
               <span *ngIf="state.sort_field === 'name'">
                 <i class="material-icons">
@@ -31,16 +31,16 @@
                 </i>
               </span>
             </span>
-            <span class="col-xs-6">{{ 'description' | cpI18n }}</span>
-            <span class="col-xs-1"></span>
+            <span class="col-6">{{ 'description' | cpI18n }}</span>
+            <span class="col-1"></span>
           </div>
         </li>
 
-        <li class="cp-form__item col-xs-12" *ngFor="let link of state.links">
+        <li class="cp-form__item col-12" *ngFor="let link of state.links">
           <div class="row">
-            <span class="col-xs-5 text-truncate links__thumbnail">
-              <img *ngIf="link.img_url !== ''" class="img-rounded img-fit-cover" [src]="link.img_url">
-              <img *ngIf="link.img_url === ''" class="img-rounded img-fit-cover" [src]="defaultImage">
+            <span class="col-5 text-truncate links__thumbnail">
+              <img *ngIf="link.img_url !== ''" class="rounded img-fit-cover" [src]="link.img_url">
+              <img *ngIf="link.img_url === ''" class="rounded img-fit-cover" [src]="defaultImage">
 
               <strong>
                 <button
@@ -54,7 +54,7 @@
               <br>
               {{ link.link_url }}
             </span>
-              <span class="col-xs-6 text-truncate">
+              <span class="col-6 text-truncate">
               {{ link.description }}
             </span>
 
@@ -62,7 +62,7 @@
               (click)="deleteLink = link;"
               (click)="isLinksDelete = true"
               data-toggle="modal" data-target="#linksDelete"
-              class="col-xs-1 hover delete-link text-right">
+              class="col-1 hover delete-link text-center">
               &times;
             </span>
           </div>

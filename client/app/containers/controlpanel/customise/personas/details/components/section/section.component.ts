@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 import { ICampusGuide } from './../../../persona.interface';
+import { PersonasUtilsService } from './../../../personas.utils.service';
 
 @Component({
   selector: 'cp-personas-section',
@@ -10,7 +11,12 @@ import { ICampusGuide } from './../../../persona.interface';
 export class PersonasSectionComponent implements OnInit {
   @Input() guide: ICampusGuide;
 
-  constructor() {}
+  @Output() addTileClick: EventEmitter<null> = new EventEmitter();
+  @Output() deleteTile: EventEmitter<number> = new EventEmitter();
+  @Output() editTileClick: EventEmitter<number> = new EventEmitter();
+  @Output() toggleTileVisibility: EventEmitter<number> = new EventEmitter();
+
+  constructor(public utils: PersonasUtilsService) {}
 
   ngOnInit(): void {}
 }

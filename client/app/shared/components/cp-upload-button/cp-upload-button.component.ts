@@ -6,6 +6,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./cp-upload-button.component.scss']
 })
 export class CPUploadButtonComponent implements OnInit {
+  @Input() id = 'upload_button';
   @Input() theme: string;
   @Input() isRequired: boolean;
   @Input() buttonText: string;

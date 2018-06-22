@@ -1,5 +1,5 @@
+import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 import { pullAt } from 'lodash';
 
@@ -67,8 +67,7 @@ export class PersonasListComponent extends BaseComponent implements OnInit {
     const personaId = persona.id;
     const schoolId = this.session.g.get('school').id;
 
-    const search = new URLSearchParams();
-    search.append('school_id', schoolId);
+    const search = new HttpParams().append('school_id', schoolId);
 
     delete persona['id'];
     persona['school_id'] = schoolId;
@@ -167,10 +166,10 @@ export class PersonasListComponent extends BaseComponent implements OnInit {
   }
 
   fetch() {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
-    search.append('search_str', this.state.search_str);
-    search.append('platform', this.state.platform);
+    const search = new HttpParams()
+      .append('school_id', this.session.g.get('school').id)
+      .append('search_str', this.state.search_str)
+      .append('platform', this.state.platform);
 
     const stream$ = this.service.getPersonas(this.startRange, this.endRange, search);
 

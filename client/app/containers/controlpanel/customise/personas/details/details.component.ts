@@ -1,17 +1,18 @@
+import { TileVisibility } from './../personas.status';
+import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { URLSearchParams } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-
-import { CPSession } from '../../../../../session';
-import { BaseComponent } from '../../../../../base';
-import { ICampusGuide } from './../persona.interface';
-import { PersonasService } from './../personas.service';
-import { CPI18nService } from '../../../../../shared/services';
-import { IHeader } from './../../../../../reducers/header.reducer';
-import { PersonasUtilsService } from './../personas.utils.service';
+import { combineLatest } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
+import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
 import { ISnackbar } from './../../../../../reducers/snackbar.reducer';
+import { ICampusGuide, IPersona, ITile } from './../persona.interface';
+import { PersonasService } from './../personas.service';
+import { PersonasUtilsService } from './../personas.utils.service';
+import { BaseComponent } from '../../../../../base';
+import { CPSession } from '../../../../../session';
+import { CPI18nService } from '../../../../../shared/services';
 
 @Component({
   selector: 'cp-personas-details',
@@ -24,6 +25,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
   personaId;
 
   constructor(
+    public router: Router,
     public session: CPSession,
     public route: ActivatedRoute,
     public CPI18n: CPI18nService,
@@ -36,21 +38,71 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
     this.personaId = this.route.snapshot.params['personaId'];
   }
 
-  fetch() {
-    const tilesSearch = new URLSearchParams();
-    tilesSearch.append('school_id', this.session.g.get('school').id);
-    tilesSearch.append('school_persona_id', this.personaId);
+  onAddTileToGuideClick() {
+    $('#tilesCreate').modal();
+  }
 
-    const tileCategoriesSearch = new URLSearchParams();
-    tileCategoriesSearch.append('school_id', this.session.g.get('school').id);
+  onDeleteTile(tile: ITile) {
+    const search = new HttpParams().set('school_id', this.session.g.get('school').id);
+
+    this.service.deleteTile(tile.id, search).subscribe(() => this.fetch());
+  }
+
+  updateCampusGuideTile(guide: ICampusGuide, updateTile: ITile) {
+    return {
+      ...guide,
+      tiles: guide.tiles.map((tile: ITile) => (tile.id === updateTile.id ? updateTile : tile))
+    };
+  }
+
+  onToggleTileVisibility(tile: ITile) {
+    const visibility_status =
+      tile.visibility_status === TileVisibility.invisible
+        ? TileVisibility.visible
+        : TileVisibility.invisible;
+
+    const body = {
+      visibility_status,
+      school_id: this.session.g.get('school').id
+    };
+
+    this.service.updateTile(tile.id, body).subscribe(() => this.fetch());
+  }
+
+  onEditTile(tile: ITile) {
+    console.log('editing', tile);
+  }
+
+  fetch() {
+    const personaSearch = new HttpParams().append('school_id', this.session.g.get('school').id);
+
+    const tilesSearch = new HttpParams()
+      .append('school_id', this.session.g.get('school').id)
+      .append('school_persona_id', this.personaId);
+
+    const tileCategoriesSearch = new HttpParams().append(
+      'school_id',
+      this.session.g.get('school').id
+    );
 
     const tiles$ = this.service.getTilesByPersona(tilesSearch);
     const tileCategories$ = this.service.getTilesCategories(tileCategoriesSearch);
-    const request$ = Observable.combineLatest([tiles$, tileCategories$]);
+
+    const persona$ = this.service.getPersonaById(this.personaId, personaSearch);
+
+    const request$ = persona$.pipe(
+      switchMap((persona: IPersona) => {
+        const key = CPI18nService.getLocale().startsWith('fr') ? 'fr' : 'en';
+
+        this.updateHeader(persona.localized_name_map[key]);
+
+        return combineLatest([tiles$, tileCategories$]);
+      })
+    );
     const groupTiles = (categories, tiles) =>
       this.utils.groupTilesWithTileCategories(categories, tiles);
 
-    const stream$ = request$.map(([tiles, categories]) => groupTiles(categories, tiles));
+    const stream$ = request$.pipe(map(([tiles, categories]) => groupTiles(categories, tiles)));
 
     super
       .fetchData(stream$)
@@ -58,7 +110,19 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
         this.guides = data;
         console.log(this.guides);
       })
-      .catch((err) => console.log(err));
+      .catch(() => this.router.navigate(['/customize/personas']));
+  }
+
+  updateHeader(personName) {
+    this.store.dispatch({
+      type: HEADER_UPDATE,
+      payload: {
+        heading: `[NOTRANSLATE]${personName}[NOTRANSLATE]`,
+        subheading: null,
+        em: null,
+        children: []
+      }
+    });
   }
 
   ngOnInit(): void {

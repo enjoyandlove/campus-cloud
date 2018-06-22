@@ -1,60 +1,73 @@
-import { Http, URLSearchParams } from '@angular/http';
+import { map } from 'rxjs/operators';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { sortBy } from 'lodash';
 
 import { API } from '../../../../config/api';
-import { BaseService } from '../../../../base/base.service';
+import { HTTPService } from '../../../../base/http.service';
 
 @Injectable()
-export class PersonasService extends BaseService {
-  constructor(http: Http, router: Router) {
+export class PersonasService extends HTTPService {
+  constructor(http: HttpClient, router: Router) {
     super(http, router);
 
     Object.setPrototypeOf(this, PersonasService.prototype);
   }
 
-  getPersonas(startRange: number, endRange: number, search: URLSearchParams) {
+  updateTile(linkId, body) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GUIDE_TILES}/${linkId}`;
+
+    return super.update(url, body);
+  }
+
+  deleteTile(linkId, search) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GUIDE_TILES}/${linkId}`;
+
+    return super.delete(url, search);
+  }
+
+  getPersonas(startRange: number, endRange: number, search: HttpParams) {
     const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.PERSONAS}`;
     const url = `${common}/${startRange};${endRange}`;
 
-    return super.get(url, { search }).map((res) => res.json());
+    return super.get(url, search);
   }
 
   createPersona(body) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.PERSONAS}/`;
 
-    return super.post(url, body).map((res) => res.json());
+    return super.post(url, body);
   }
 
-  getPersonaById(personaId: number, search: URLSearchParams) {
+  getPersonaById(personaId: number, search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.PERSONAS}/${personaId}`;
 
-    return super.get(url, { search }).map((res) => res.json());
+    return super.get(url, search);
   }
 
-  deletePersonaById(personaId: number, search: URLSearchParams) {
+  deletePersonaById(personaId: number, search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.PERSONAS}/${personaId}`;
 
-    return super.delete(url, { search }, true).map((res) => res.json());
+    return super.delete(url, search, true);
   }
 
-  updatePersona(personaId: number, search: URLSearchParams, body) {
+  updatePersona(personaId: number, search: HttpParams, body) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.PERSONAS}/${personaId}`;
 
-    return super.update(url, body, { search }).map((res) => res.json());
+    return super.update(url, body, search);
   }
 
-  getTilesByPersona(search: URLSearchParams) {
+  getTilesByPersona(search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GUIDE_TILES}/`;
 
-    return super.get(url, { search }).map((res) => sortBy(res.json(), (t: any) => t.rank));
+    return super.get(url, search).pipe(map((res) => sortBy(res, (t: any) => t.rank)));
   }
 
-  getTilesCategories(search: URLSearchParams) {
+  getTilesCategories(search: HttpParams) {
     const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GUIDE_TILE_CATEGORY}`;
     const url = `${common}/1;90000`;
 
-    return super.get(url, { search }).map((res) => sortBy(res.json(), (t: any) => t.rank));
+    return super.get(url, search).pipe(map((res) => sortBy(res, (t: any) => t.rank)));
   }
 }

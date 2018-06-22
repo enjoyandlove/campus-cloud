@@ -1,21 +1,18 @@
+import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { Headers, URLSearchParams } from '@angular/http';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-
+import { BehaviorSubject } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { ISnackbar, SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
+import { appStorage } from './../../../../../shared/utils/storage/storage';
 import { BaseComponent } from '../../../../../base/base.component';
 import { API } from '../../../../../config/api';
 import { CPSession } from '../../../../../session';
-import { ClubStatus } from '../club.status';
-import { ClubsService } from '../clubs.service';
-
 import { CPI18nService, FileUploadService } from '../../../../../shared/services';
-
-import { ISnackbar, SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
-
-import { appStorage } from './../../../../../shared/utils/storage/storage';
+import { ClubStatus } from '../club.status';
 import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
+import { ClubsService } from '../clubs.service';
 import { ClubsUtilsService } from '../clubs.utils.service';
 
 @Component({
@@ -53,9 +50,9 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
   }
 
   fetch() {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
-    search.append('category_id', this.isAthletic.toString());
+    const search = new HttpParams()
+      .append('school_id', this.session.g.get('school').id.toString())
+      .append('category_id', this.isAthletic.toString());
 
     super.fetchData(this.clubsService.getClubById(this.clubId, search)).then((res) => {
       this.club = res.data;
@@ -99,15 +96,14 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
   }
 
   onFileAdded(file) {
-    const headers = new Headers();
-    const search = new URLSearchParams();
     const validate = this.fileService.validFile(file);
-
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.FILE_UPLOAD}/`;
 
     const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
-    headers.append('Authorization', auth);
+    const headers = new HttpHeaders({
+      Authorization: auth
+    });
 
     if (!validate.valid) {
       this.flashMessageError(validate.errors.join(', '));
@@ -119,13 +115,15 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
 
     this.fileService
       .uploadFile(file, url, headers)
-      .switchMap((data) => {
-        this.club = Object.assign({}, this.club, {
-          constitution_url: data.file_uri
-        });
+      .pipe(
+        switchMap((data: any) => {
+          this.club = Object.assign({}, this.club, {
+            constitution_url: data.file_uri
+          });
 
-        return this.clubsService.updateClub(this.club, this.clubId, search);
-      })
+          return this.clubsService.updateClub(this.club, this.clubId, search);
+        })
+      )
       .subscribe(
         (_) => {
           this.uploading = false;

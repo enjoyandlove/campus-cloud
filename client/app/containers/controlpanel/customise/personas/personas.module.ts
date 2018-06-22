@@ -1,3 +1,4 @@
+import { TilesModule } from './tiles/tiles.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -20,27 +21,36 @@ import {
   PersonasSectionTitleComponent,
   PersonasSectionControlsComponent,
   PersonasSectionAddButtonComponent,
+  PersonasSectionTileHoverComponent,
   PersonasSectionAddTileButtonComponent
 } from './details/components/section';
 
 @NgModule({
   declarations: [
-    PersonasListComponent,
-    PersonasListActionBoxComponent,
-    PersonasCreateComponent,
     PersonasFormComponent,
+    PersonasListComponent,
     PersonasEditComponent,
     PersonasDeleteComponent,
+    PersonasCreateComponent,
     PersonasDetailsComponent,
     PersonasSectionComponent,
-    PersonasSectionAddButtonComponent,
-    PersonasSectionTitleComponent,
-    PersonasSectionControlsComponent,
     PersonasSectionTileComponent,
+    PersonasSectionTitleComponent,
+    PersonasListActionBoxComponent,
+    PersonasSectionControlsComponent,
+    PersonasSectionTileHoverComponent,
+    PersonasSectionAddButtonComponent,
     PersonasSectionAddTileButtonComponent
   ],
 
-  imports: [CommonModule, SharedModule, RouterModule, ReactiveFormsModule, PersonasRoutingModule],
+  imports: [
+    CommonModule,
+    SharedModule,
+    RouterModule,
+    ReactiveFormsModule,
+    PersonasRoutingModule,
+    TilesModule
+  ],
 
   providers: [PersonasService, PersonasUtilsService]
 })

@@ -2,7 +2,6 @@
 @import '~styles/components/form';
 @import '~styles/components/card';
 @import '~styles/components/button';
-@import '~bootstrap/variables';
 
 .cp-form__header {
   span.hover {
@@ -36,15 +35,6 @@
       height: 30px;
       margin-top: 5px;
       margin-right: 10px;
-    }
-  }
-
-  @media all and (max-width: $screen-md) {
-    li {
-      > span:not(.clubs__thumbnail) {
-        text-align: center;
-        padding-bottom: 10px;
-      }
     }
   }
 }

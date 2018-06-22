@@ -8,7 +8,7 @@ import {
   HostListener
 } from '@angular/core';
 
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { AudienceService } from '../audience.service';
 import { CPSession } from '../../../../session';
@@ -50,13 +50,14 @@ export class AudienceDeleteComponent implements OnInit {
   }
 
   onDelete() {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     this.service.deleteAudience(this.audience.id, search).subscribe(
       (_) => {
         $('#audienceDeleteModal').modal('hide');
+
         this.deleteAudience.emit(this.audience.id);
+
         this.buttonData = Object.assign({}, this.buttonData, {
           disabled: false
         });

@@ -1,14 +1,14 @@
 <div class="row">
-  <div class="col-xs-12">
+  <div class="col-12">
     <div [class]="[replyView ? '' : 'cp-card']">
       <form [formGroup]="form">
         <div class="row form-group">
-          <div class="col-xs-6 text-left">
+          <div class="col-6 text-left">
             <p class="text-muted maxLength">
               {{ form.controls.message.value ? form.controls.message.value.length : 0 }}/500
             </p>
           </div>
-          <div class="col-xs-6 text-right" *ngIf="!replyView">
+          <div class="col-6 text-right" *ngIf="!replyView">
             <label class="error" *ngIf="imageError">{{ imageError }}</label>
             <cp-upload-button
               [buttonText]="cpI18n.translate('button_add_photo')"
@@ -18,7 +18,7 @@
           </div>
         </div>
         <div class="row form-group">
-          <div class="col-xs-12">
+          <div class="col-12">
             <cp-text-editor
               [image$]="image$"
               [reset$]="resetTextEditor$"
@@ -26,17 +26,17 @@
             </cp-text-editor>
           </div>
         </div>
-        <div class="row">
+        <div class="row justify-content-end">
           <div
             *ngIf="!clubId && !_isCampusWallView;"
-            class="col-xs-10 channel-dropdown no-right-padding">
+            class="col-10 channel-dropdown no-right-padding">
             <div class="row">
-              <div class="col-xs-6">
+              <div class="col-6">
                 <div class="row">
-                  <div class="col-xs-5 no-right-padding">
+                  <div class="col-5 no-right-padding">
                     <span i18n>{{ 'feeds_post_as' | cpI18n }}</span>
                   </div>
-                  <div class="col-xs-7 no-left-padding">
+                  <div class="col-7 no-left-padding">
                     <cp-dropdown
                       class="dropdown"
                       [items]="stores$ | async"
@@ -47,13 +47,13 @@
                 </div>
               </div>
               <div
-                class="col-xs-6"
+                class="col-6"
                 *ngIf="!replyView">
                 <div class="row">
-                  <div class="col-xs-4 no-right-padding">
+                  <div class="col-4 no-right-padding">
                     <span i18n>{{ 'feeds_post_to' | cpI18n }}</span>
                   </div>
-                  <div class="col-xs-8 no-left-padding">
+                  <div class="col-8 no-left-padding">
                     <cp-dropdown
                       [reset]="reset$"
                       class="dropdown"
@@ -65,7 +65,7 @@
               </div>
             </div>
           </div>
-          <div class="col-xs-2 pull-right text-right">
+          <div class="col-2 float-right text-right">
             <cp-button
               [props]="buttonData"
               (buttonClick)="onSubmit(form.value)">

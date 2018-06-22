@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 export const MODAL_TYPE = {
-  DEFAULT: 'default',
-  WIDE: 'wide'
+  DEFAULT: 'modal-sm',
+  WIDE: 'modal-lg'
 };
 
 type Position = 'center';

@@ -1,22 +1,20 @@
-import { Observable } from 'rxjs/Observable';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-
-import { CPSession } from '../../../../../session';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { of as observableOf } from 'rxjs';
 import { DashboardModule } from './../../dashboard.module';
 import { DashboardService } from './../../dashboard.service';
-
 import {
   addGroup,
   aggregate,
-  groupByWeek,
+  DashboardDownloadsRegistrationComponent,
   groupByMonth,
   groupByQuarter,
-  DashboardDownloadsRegistrationComponent
+  groupByWeek
 } from './dashboard-downloads-registration.component';
+import { CPSession } from '../../../../../session';
 
 class MockDashboardService {
   getDownloads() {
-    return Observable.of([1, 2]);
+    return observableOf([1, 2]);
   }
 }
 
@@ -32,7 +30,6 @@ const mockDates = [
 ];
 
 describe('DashboardDownloadsRegistrationComponent', () => {
-  let comp: DashboardDownloadsRegistrationComponent;
   let fixture: ComponentFixture<DashboardDownloadsRegistrationComponent>;
 
   beforeEach(
@@ -47,13 +44,8 @@ describe('DashboardDownloadsRegistrationComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DashboardDownloadsRegistrationComponent);
-    comp = fixture.componentInstance;
 
     fixture.detectChanges(); // trigger initial data binding
-  });
-
-  xit('should fail', () => {
-    console.log(comp);
   });
 
   it('addGroup', () => {

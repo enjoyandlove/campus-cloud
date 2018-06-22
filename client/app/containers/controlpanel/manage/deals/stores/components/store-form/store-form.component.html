@@ -2,6 +2,7 @@
   <div class="form-group store">
     <div class="form-group">
       <cp-image-upload
+        id="stores"
         (uploaded)="onUploadedImage($event)"
         [defaultImage]="storeForm.controls['logo_url'].value">
       </cp-image-upload>
@@ -11,7 +12,7 @@
       <label>
         {{ 'store_name' | cpI18n }}
         <cp-char-counter
-          class="pull-right"
+          class="float-right"
           [limit]="120"
           [charCount]="storeForm.controls.name.value">
         </cp-char-counter>
@@ -38,7 +39,7 @@
     <div class="form-group">
       <label>{{ 'location' | cpI18n }}</label>
       <div class="row form-group">
-        <div class="col-xs-12">
+        <div class="col-12">
           <cp-place-autocomplete
             [newAddress]="newAddress"
             (backToDefault)="onResetMap()"

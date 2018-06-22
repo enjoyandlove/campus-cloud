@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { IToolTipContent } from './cp-tooltip.interface';
 
 @Component({
@@ -8,8 +8,10 @@ import { IToolTipContent } from './cp-tooltip.interface';
 })
 export class CPTooltipComponent implements OnInit {
   @Input() toolTipContent: IToolTipContent;
+  @Input() placement: 'top' | 'bottom' | 'left' | 'right' | 'auto' = 'bottom';
 
   content: string;
+  triggers = '';
 
   constructor() {}
 
@@ -24,51 +26,6 @@ export class CPTooltipComponent implements OnInit {
         '</a>';
     }
 
-    if (this.toolTipContent.trigger === 'hover') {
-      this.hover();
-    } else if (this.toolTipContent.trigger === 'click') {
-      this.click();
-    } else {
-      this.manual();
-    }
-  }
-
-  hover() {
-    $('.pop').popover({
-      trigger: 'hover'
-    });
-  }
-
-  click() {
-    $('.pop').popover({
-      trigger: 'click'
-    });
-  }
-
-  manual() {
-    $('.pop')
-      .popover({
-        trigger: 'manual',
-        animation: false
-      })
-      .on('mouseenter', function() {
-        const _this = this;
-        $(this).popover('show');
-        $('.popover').on('mouseleave', function() {
-          $(_this).popover('hide');
-        });
-      })
-      .on('mouseleave', function() {
-        const _this = this;
-        setTimeout(
-          () => {
-            if (!$('.popover:hover').length) {
-              $(_this).popover('hide');
-            }
-          },
-
-          100
-        );
-      });
+    this.triggers = this.toolTipContent.trigger === 'hover' ? 'mouseenter mouseleave' : 'click';
   }
 }

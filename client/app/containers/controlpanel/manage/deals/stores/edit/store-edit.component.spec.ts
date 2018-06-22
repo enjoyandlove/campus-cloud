@@ -1,15 +1,14 @@
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
-import { URLSearchParams, HttpModule } from '@angular/http';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Observable } from 'rxjs/Observable';
+import { HttpClientModule } from '@angular/common/http';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
-
+import { RouterTestingModule } from '@angular/router/testing';
+import { of as observableOf } from 'rxjs';
+import { CPSession } from './../../../../../../session';
+import { StoreEditComponent } from './store-edit.component';
+import { mockSchool } from '../../../../../../session/mock/school';
+import { CPI18nService } from '../../../../../../shared/services/i18n.service';
 import { StoreModule } from '../store.module';
 import { StoreService } from '../store.service';
-import { CPSession } from './../../../../../../session';
-import { mockSchool } from '../../../../../../session/mock/school';
-import { StoreEditComponent } from './store-edit.component';
-import { CPI18nService } from '../../../../../../shared/services/i18n.service';
 
 class MockStoreService {
   dummy;
@@ -17,55 +16,52 @@ class MockStoreService {
   editStore(body: any, search: any) {
     this.dummy = [search];
 
-    return Observable.of(body);
+    return observableOf(body);
   }
 }
 
 describe('DealsStoreEditComponent', () => {
   let spy;
-  let search;
   let component: StoreEditComponent;
   let fixture: ComponentFixture<StoreEditComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        HttpModule,
-        StoreModule,
-        RouterTestingModule
-      ],
-      providers: [
-        CPSession,
-        FormBuilder,
-        CPI18nService,
-        { provide: StoreService, useClass: MockStoreService },
-      ]
-    }).compileComponents().then(() => {
-      fixture = TestBed.createComponent(StoreEditComponent);
-      component = fixture.componentInstance;
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        imports: [HttpClientModule, StoreModule, RouterTestingModule],
+        providers: [
+          CPSession,
+          FormBuilder,
+          CPI18nService,
+          { provide: StoreService, useClass: MockStoreService }
+        ]
+      })
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(StoreEditComponent);
+          component = fixture.componentInstance;
 
-      search = new URLSearchParams();
-      component.session.g.set('school', mockSchool);
-      search.append('school_id', component.session.g.get('school').id.toString());
+          component.session.g.set('school', mockSchool);
 
-      component.store = {
-        'id': 1,
-        'city': 'Karachi',
-        'province': 'Sindh',
-        'country': 'Pakistan',
-        'postal_code': '',
-        'address': 'Clifton',
-        'latitude': '',
-        'longitude': '',
-        'website': 'www.oohlalamobile.com',
-        'name': 'Hello World!',
-        'description': 'This is description',
-        'logo_url': 'dummy.jpeg'
-      };
+          component.store = {
+            id: 1,
+            city: 'Karachi',
+            province: 'Sindh',
+            country: 'Pakistan',
+            postal_code: '',
+            address: 'Clifton',
+            latitude: '',
+            longitude: '',
+            website: 'www.oohlalamobile.com',
+            name: 'Hello World!',
+            description: 'This is description',
+            logo_url: 'dummy.jpeg'
+          };
 
-      component.ngOnInit();
-    });
-  }));
+          component.ngOnInit();
+        });
+    })
+  );
 
   it('form validation - should fail', () => {
     component.storeForm.controls['name'].setValue(null);
@@ -95,8 +91,7 @@ describe('DealsStoreEditComponent', () => {
   it('should edit store', () => {
     spyOn(component.edited, 'emit');
     spyOn(component, 'resetModal');
-    spy = spyOn(component.service, 'editStore')
-      .and.returnValue(Observable.of(component.store));
+    spy = spyOn(component.service, 'editStore').and.returnValue(observableOf(component.store));
 
     component.onSubmit();
 
@@ -109,5 +104,4 @@ describe('DealsStoreEditComponent', () => {
     expect(component.resetModal).toHaveBeenCalled();
     expect(component.resetModal).toHaveBeenCalledTimes(1);
   });
-
 });

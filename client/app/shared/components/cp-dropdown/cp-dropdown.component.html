@@ -3,15 +3,14 @@
   <button
     type="button"
     data-toggle="dropdown"
-    [disabled]="items[0].disabled"
-    [attr.title]="[items[0].disabled ? items[0].tooltipText : null]"
+    [disabled]="disabled ||items.length === 1"
     [class.cpbtn--cancel--error]="isRequiredError"
     class="cpbtn cpbtn--cancel cp-dropdown__button text-truncate">
     <div class="row">
-      <div class="col-xs-10 no-right-padding text-truncate">
+      <div class="col-10 no-right-padding text-truncate">
         {{ selectedItem ? selectedItem.label : items[0].label }}
       </div>
-      <div class="col-xs-2 no-right-padding cp-dropdown__icon-wrapper">
+      <div class="col-2 no-right-padding cp-dropdown__icon-wrapper">
         <i class="material-icons cp-dropdown--arrow">keyboard_arrow_down</i>
       </div>
     </div>

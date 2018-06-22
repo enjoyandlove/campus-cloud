@@ -1,40 +1,38 @@
 <div class="row">
-  <div class="header">
-    <div class="col-xs-4 text-center">
-      <div class="cp-card">
-        <p class="header__digit">{{ event.verified_checkins }}</p>
-        <p i18n>{{ 'events_check_in' | cpI18n }}</p>
-      </div>
+  <div class="col-4 text-center">
+    <div class="cp-card">
+      <p class="header__digit">{{ event.verified_checkins }}</p>
+      <p>{{ 'events_check_in' | cpI18n }}</p>
     </div>
-    <div class="col-xs-4 text-center">
-      <div class="cp-card">
-        <p class="header__digit">{{ event.num_ratings }}</p>
-        <p i18n>{{ 'responses' | cpI18n }}</p>
-      </div>
+  </div>
+  <div class="col-4 text-center">
+    <div class="cp-card">
+      <p class="header__digit">{{ event.num_ratings }}</p>
+      <p>{{ 'responses' | cpI18n }}</p>
     </div>
-    <div class="col-xs-4 text-center">
-      <div class="cp-card">
-        <p class="header__digit">
-          <cp-stars
-            [size]="detailStarSize"
-            [avgRate]="event.avg_rating_percent"
-            [maxRate]="event.rating_scale_maximum">
-          </cp-stars>
-        </p>
-        <p i18n>
-          {{ 'average_rating' | cpI18n }}:
-          <strong *ngIf="event.rating_scale_maximum > -1">
-            {{ ((event.rating_scale_maximum * event.avg_rating_percent) / 100).toFixed(1) }}
-          </strong>
-          <strong *ngIf="event.rating_scale_maximum === -1">---</strong>
-        </p>
-      </div>
+  </div>
+  <div class="col-4 text-center">
+    <div class="cp-card">
+      <p class="header__digit">
+        <cp-stars
+          [size]="detailStarSize"
+          [avgRate]="event.avg_rating_percent"
+          [maxRate]="event.rating_scale_maximum">
+        </cp-stars>
+      </p>
+      <p>
+        {{ 'average_rating' | cpI18n }}:
+        <strong *ngIf="event.rating_scale_maximum > -1">
+          {{ ((event.rating_scale_maximum * event.avg_rating_percent) / 100).toFixed(1) }}
+        </strong>
+        <strong *ngIf="event.rating_scale_maximum === -1">---</strong>
+      </p>
     </div>
   </div>
 </div>
 
 <div class="row">
-  <div class="col-xs-12">
+  <div class="col-12">
     <cp-past-events-action-box
       (querySearch)="doSearch($event)"
       (createExcel)="onCreateExcel()">
@@ -53,14 +51,14 @@
       [noContentText]="cpI18n.translate('events_no_attendees')">
     </cp-no-content>
 
-    <div class="row add-card-margin" *ngIf="attendees.length">
+    <div class="add-card-margin" *ngIf="attendees.length">
       <div class="cp-table">
         <div class="cp-table__header">
           <div class="row">
-            <div [class]="isOrientation ? 'col-xs-4' : 'col-xs-3'">
+            <div [class]="isOrientation ? 'col-4' : 'col-3'">
               <span
                 class="hover"
-                (click)="doSort('firstname')" i18n>
+                (click)="doSort('firstname')">
                 {{ 'attendee' | cpI18n }}
                 <span *ngIf="state.sort_field === 'name'">
                   <i class="material-icons">
@@ -69,10 +67,10 @@
                 </span>
               </span>
             </div>
-            <div class="col-xs-1 rsvp_column" *ngIf="!isOrientation">
+            <div class="col-1 rsvp_column" *ngIf="!isOrientation">
               <span
                 class="hover"
-                (click)="doSort('rsvp')" i18n>
+                (click)="doSort('rsvp')">
                 {{ 'rsvp' | cpI18n }}
                 <span *ngIf="state.sort_field === 'rsvp'">
                   <i class="material-icons">
@@ -81,10 +79,10 @@
                 </span>
               </span>
             </div>
-            <div class="col-xs-2">
+            <div class="col-2">
               <span
                 class="hover"
-                (click)="doSort('check_in_method')" i18n>
+                (click)="doSort('check_in_method')">
                 {{ 'events_checked_in_method' | cpI18n }}
                 <span *ngIf="state.sort_field === 'check_in_method'">
                   <i class="material-icons">
@@ -93,13 +91,13 @@
                 </span>
               </span>
             </div>
-            <div class="col-xs-3">
-              <span i18n>{{ 'student_feedback' | cpI18n }}</span>
+            <div class="col-3">
+              <span>{{ 'student_feedback' | cpI18n }}</span>
             </div>
-            <div class="col-xs-3">
+            <div class="col-3">
               <span
                 class="hover"
-                (click)="doSort('feedback_rating')" i18n>
+                (click)="doSort('feedback_rating')">
                 {{ 'rating' | cpI18n }}
                 <span *ngIf="state.sort_field === 'feedback_rating'">
                   <i class="material-icons">
@@ -114,7 +112,7 @@
         <div class="cp-table__item"
           *ngFor="let attendee of attendees">
           <div class="row">
-            <div [class]="isOrientation ? 'col-xs-4 text-truncate' : 'col-xs-3 text-truncate'">
+            <div [class]="isOrientation ? 'col-4 text-truncate' : 'col-3 text-truncate'">
               <strong>
                   {{ attendee.firstname }}
                   {{ attendee.lastname }}
@@ -122,7 +120,7 @@
               <br>
               <small class="text-muted">{{ attendee.email }}</small>
             </div>
-            <div class="col-xs-1" *ngIf="!isOrientation">
+            <div class="col-1" *ngIf="!isOrientation">
               <i
                 class="material-icons"
                 *ngIf="attendee.rsvp === 1">
@@ -134,7 +132,7 @@
                 close
               </i>
             </div>
-            <div class="col-xs-2">
+            <div class="col-2">
               <i
                 class="material-icons"
                 *ngIf="attendee.check_in_method === 3">
@@ -146,7 +144,7 @@
                 computer
               </i>
             </div>
-            <div class="col-xs-3 text-truncate">
+            <div class="col-3 text-truncate">
               <span
                 class="link hover"
                 data-toggle="modal"
@@ -155,7 +153,7 @@
                 {{ attendee.feedback_text !== -1 ? attendee.feedback_text : '' }}
               </span>
             </div>
-            <div class="col-xs-3">
+            <div class="col-3">
               <cp-stars
                 [size]="listStarSize"
                 [avgRate]="attendee.feedback_rating"
@@ -168,7 +166,7 @@
     </div>
 
     <div class="row">
-      <div class="col-xs-12">
+      <div class="col-12">
         <cp-pagination
           [pageNext]="pageNext"
           [pagePrev]="pagePrev"

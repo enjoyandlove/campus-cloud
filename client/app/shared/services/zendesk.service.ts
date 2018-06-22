@@ -1,3 +1,4 @@
+import { CPI18nService } from './i18n.service';
 import { Injectable } from '@angular/core';
 
 import { isProd } from './../../config/env';
@@ -28,6 +29,15 @@ export class ZendeskService {
   private visibilityDelay: number;
   private visibilityQueue: IVisibilityQueueItem[];
   private visibilityTimer: any;
+
+  static zdRoot() {
+    const french = 'fr';
+    const english = 'en-us';
+    const locale = CPI18nService.getLocale();
+    const root = 'https://oohlalamobile.zendesk.com/hc';
+
+    return locale === 'fr-CA' ? `${root}/${french}` : `${root}/${english}`;
+  }
 
   constructor() {
     this.isLoaded = false;

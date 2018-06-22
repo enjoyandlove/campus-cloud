@@ -4,16 +4,16 @@
     [disabled]="!items.length"
     class="cpbtn cpbtn--cancel text-truncate component__button">
     <div class="row">
-      <div class="col-xs-10 no-right-padding text-truncate">
+      <div class="col-10 no-right-padding text-truncate">
         {{state.label ? state.label : placeholder }}
       </div>
-      <div class="col-xs-2 no-right-padding">
+      <div class="col-2 no-right-padding">
         <i class="material-icons cp-dropdown--arrow">keyboard_arrow_down</i>
       </div>
     </div>
   </button>
   
-  <ul class="component__content">
+  <ul class="component__content dropdown-menu">
     <li 
       class="hover"
       (click)="onToggle($event, opt)"

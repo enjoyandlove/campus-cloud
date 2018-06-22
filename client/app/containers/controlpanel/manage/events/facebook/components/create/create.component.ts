@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { EventsService } from '../../../events.service';
 import { CPSession } from '../../../../../../../session';
@@ -29,8 +29,7 @@ export class FacebookEventsCreateComponent implements OnInit {
 
   onSubmit(data) {
     this.errors = [];
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     this.eventsService.createFacebookEvent(data, search).subscribe(
       (_) => {

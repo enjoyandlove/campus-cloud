@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
 import { IStore } from '../store.interface';
@@ -99,9 +99,7 @@ export class StoreListComponent extends BaseComponent implements OnInit {
     this.selectedStore = null;
 
     this.state = Object.assign({}, this.state, {
-      stores: this.state.stores.map(
-        (store) => (store.id === editStore.id ? editStore : store)
-      )
+      stores: this.state.stores.map((store) => (store.id === editStore.id ? editStore : store))
     });
   }
 
@@ -118,12 +116,11 @@ export class StoreListComponent extends BaseComponent implements OnInit {
   }
 
   public fetch() {
-    const search = new URLSearchParams();
-
-    search.append('search_str', this.state.search_str);
-    search.append('sort_field', this.state.sort_field);
-    search.append('sort_direction', this.state.sort_direction);
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams()
+      .append('search_str', this.state.search_str)
+      .append('sort_field', this.state.sort_field)
+      .append('sort_direction', this.state.sort_direction)
+      .append('school_id', this.session.g.get('school').id.toString());
 
     super
       .fetchData(this.service.getStores(this.startRange, this.endRange, search))

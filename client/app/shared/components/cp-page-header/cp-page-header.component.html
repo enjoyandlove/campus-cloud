@@ -1,7 +1,7 @@
 <div class="header">
   <div class="cp-wrapper cp-wrapper--outer">
     <div class="row">
-      <div class="col-xs-12">
+      <div class="col-12">
         <div class="header__breadcrumb" *ngIf="data.crumbs.url">
           <a
             [routerLink]="data.crumbs.url"
@@ -24,40 +24,13 @@
     </div>
 
     <div class="row" *ngIf="readyFeatures.length">
-      <div class="col-xs-12">
-        <ul class="header__nav">
-          <li
-            routerLinkActive="active"
-            *ngFor="let page of readyFeatures | cpFilterByLength : maxChildren"
-            [routerLinkActiveOptions]="{exact: page.hasParams ? false : true}">
-            <span class="promote-badge" *ngIf="page.new">new</span>
-            <a
-              [routerLink]="[page.url]">{{ page.label | cpI18n }}
-            </a>
-          </li>
-          <li *ngIf="extraMenu" [class.active]="isExtraMenuRoute()">
-            <a
-              [routerLink]="[extraMenu.url]">{{ extraMenu.label | cpI18n }}
-            </a>
-          </li>
-          <li class="header__more hover" *ngIf="extraChildren.length">
-            <a
-              href="#"
-              data-toggle="dropdown">
-              {{ 'more' | cpI18n }}
-              <i class="material-icons">expand_more</i>
-            </a>
-
-            <ul class="dropdown-menu dropdown-menu-right header__more-children">
-              <li *ngFor="let page of extraChildren">
-                <a
-                  (click)="extraMenu = page"
-                  [routerLink]="[page.url]">{{ page.label | cpI18n }}
-                </a>
-              </li>
-            </ul>
-          </li>
-        </ul>
+      <div class="col-12">
+        <cp-header-link
+          [extraMenu]="extraMenu"
+          [maxChildren]="maxChildren"
+          [extraChildren]="extraChildren"
+          [readyFeatures]="readyFeatures">
+        </cp-header-link>
       </div>
     </div>
   </div>

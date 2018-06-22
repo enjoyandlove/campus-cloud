@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TodosService } from './../todos.service';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import { ITodo } from '../todos.interface';
 import { CPSession } from './../../../../../../session';
@@ -25,8 +25,7 @@ export class OrientationTodosDeleteComponent implements OnInit {
   ) {}
 
   onDelete() {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     this.service.deleteTodo(this.todo.id, search).subscribe(() => {
       this.deleted.emit(this.todo.id);

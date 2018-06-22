@@ -1,5 +1,9 @@
 import { OnInit, Output, Component, EventEmitter } from '@angular/core';
 
+import { CPTrackingService } from '../../../../../../../shared/services';
+import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
+import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
+
 @Component({
   selector: 'cp-calendars-details-action-box',
   templateUrl: './calendars-details-action-box.component.html',
@@ -8,7 +12,9 @@ import { OnInit, Output, Component, EventEmitter } from '@angular/core';
 export class CalendarsDetailsActionBoxComponent implements OnInit {
   @Output() search: EventEmitter<string> = new EventEmitter();
 
-  constructor() {}
+  amplitudeEvents;
+
+  constructor(public cpTracking: CPTrackingService) {}
 
   onSearch(query) {
     this.search.emit(query);
@@ -18,5 +24,22 @@ export class CalendarsDetailsActionBoxComponent implements OnInit {
     $('#calendarsItemsImport').modal();
   }
 
-  ngOnInit() {}
+  trackEvent(eventName) {
+    const eventProperties = {
+      ...this.cpTracking.getEventProperties(),
+      create_page_name: amplitudeEvents.CREATE_CALENDAR_ITEM
+    };
+
+    return {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName,
+      eventProperties
+    };
+  }
+
+  ngOnInit() {
+    this.amplitudeEvents = {
+      clicked_create: amplitudeEvents.CLICKED_CREATE
+    };
+  }
 }

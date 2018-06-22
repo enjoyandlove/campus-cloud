@@ -1,10 +1,10 @@
 <form [formGroup]="form">
   <div class="row">
-    <div class="col-xs-12 form-group">
+    <div class="col-12 form-group">
       <label class="w-100">
         {{ 't_personas_form_label_persona_name' | cpI18n }}
         <cp-char-counter
-          class="pull-right"
+          class="float-right"
           [limit]="255"
           [charCount]="form.controls.name.value">
         </cp-char-counter>
@@ -18,7 +18,7 @@
   </div>
 
   <div class="row">
-    <div class="col-xs-6 form-group">
+    <div class="col-6 form-group">
       <label>{{ 't_personas_form_label_platform' | cpI18n }}</label>
       <cp-dropdown 
         [items]="platformMenu"
@@ -30,7 +30,7 @@
 
   <ng-container *ngIf="form.controls['platform'].value === mobileType">
     <div class="row">
-      <div class="col-xs-6 form-group">
+      <div class="col-6 form-group">
         <label>{{ 't_personas_form_label_requires_credentials' | cpI18n }}</label>
         <cp-dropdown 
           [items]="requiresCredentialsMenu"
@@ -42,12 +42,12 @@
   
     <ng-container *ngIf="form.controls['login_requirement'].value === loginRequired">
       <div class="row form-group">
-        <div class="col-xs-8">
+        <div class="col-8">
           <label>{{ 't_personas_form_pretour' | cpI18n }}</label>
           <p>{{ 't_personas_form_pretour_help' | cpI18n }}</p>
         </div>
-        <div class="col-xs-4">
-          <div class="pull-right">
+        <div class="col-4">
+          <div class="float-right">
             <cp-switch 
               [id]="['personas_pretour']" 
               (toggle)="togglePretour($event)"

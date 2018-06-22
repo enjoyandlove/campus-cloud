@@ -11,6 +11,11 @@
 
   &--stat {
     color: $color-secondary-text;
+
+    p {
+      line-height: 1;
+      margin-bottom: 0;
+    }
   }
 
   &--item {

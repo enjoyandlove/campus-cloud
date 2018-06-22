@@ -1,6 +1,6 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { DebugElement } from '@angular/core';
 
 import { EventsModule } from '../../../events.module';
@@ -14,7 +14,7 @@ describe('AttendanceUpcomingComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [HttpModule, EventsModule, RouterTestingModule],
+        imports: [HttpClientModule, EventsModule, RouterTestingModule],
         providers: [CPSession]
       })
         .compileComponents()

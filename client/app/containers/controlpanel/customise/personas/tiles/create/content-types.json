@@ -1,0 +1,18 @@
+[
+  {
+    "id": "resource",
+    "label": "t_personas_tile_create_type_resource"
+  },
+  {
+    "id": "resource_list",
+    "label": "t_personas_tile_create_type_resource_list"
+  },
+  {
+    "id": "web_link",
+    "label": "t_personas_tile_create_type_resource_web_link"
+  },
+  {
+    "id": "external_link",
+    "label": "t_personas_tile_create_type_resource_external_link"
+  }
+]

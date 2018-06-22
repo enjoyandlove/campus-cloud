@@ -1,16 +1,16 @@
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-
+import { BehaviorSubject, Observable, throwError as observableThrowError } from 'rxjs';
+import { catchError, map, startWith } from 'rxjs/operators';
+import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+import { CPSession, ISchool } from '../../../../../session';
+import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
 import { CPMap } from '../../../../../shared/utils';
 import { ServicesService } from '../services.service';
-import { CPSession, ISchool } from '../../../../../session';
-import { CPI18nService } from '../../../../../shared/services';
-import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 
 const ATTENDANCE_ENABLED = 1;
 const ATTENDANCE_DISABLED = 0;
@@ -55,20 +55,20 @@ export class ServicesCreateComponent implements OnInit {
     private session: CPSession,
     private store: Store<IHeader>,
     private cpI18n: CPI18nService,
+    private cpTracking: CPTrackingService,
     private servicesService: ServicesService
   ) {
     this.buildHeader();
-    this.categories$ = this.servicesService
-      .getCategories()
-      .startWith([{ label: '---', action: null }])
-      .map((categories) => {
+    this.categories$ = this.servicesService.getCategories().pipe(
+      startWith([{ label: '---', action: null }]),
+      map((categories) => {
         const _categories = [
           {
             label: '---',
             action: null
           }
         ];
-        categories.map((category) => {
+        categories.map((category: any) => {
           _categories.push({
             action: category.id,
             label: category.name
@@ -76,7 +76,22 @@ export class ServicesCreateComponent implements OnInit {
         });
 
         return _categories;
-      });
+      })
+    );
+  }
+
+  onUploadedImage(image) {
+    this.form.controls.logo_url.setValue(image);
+
+    if (image) {
+      this.trackUploadImageEvent();
+    }
+  }
+
+  trackUploadImageEvent() {
+    const properties = this.cpTracking.getEventProperties();
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
 
   onResetMap() {
@@ -186,8 +201,8 @@ export class ServicesCreateComponent implements OnInit {
         rating_scale_maximum: data.rating_scale_maximum,
         default_basic_feedback_label: data.default_basic_feedback_label
       })
-      .catch((err) => Observable.throw(err))
-      .subscribe((service) => {
+      .pipe(catchError((err) => observableThrowError(err)))
+      .subscribe((service: any) => {
         if (service.service_attendance) {
           this.router.navigate(['/manage/services/' + service.id]);
 

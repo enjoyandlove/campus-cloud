@@ -36,12 +36,16 @@ export class AnnouncementsConfirmComponent implements OnInit {
       return this.cpI18n.translate('announcement_confirm_campus_wide_and_emergency');
     }
 
-    if (this.state.isCampusWide && !this.state.isEmergency) {
-      return this.cpI18n.translate('announcement_confirm_campus_wide');
+    if (this.state.isCampusWide && this.state.isUrgent) {
+      return this.cpI18n.translate('announcement_confirm_campus_wide_and_urgent');
     }
 
     if (!this.state.isCampusWide && this.state.isEmergency) {
       return this.cpI18n.translate('announcement_confirm_emergency');
+    }
+
+    if (!this.state.isCampusWide && this.state.isUrgent) {
+      return this.cpI18n.translate('announcement_confirm_urgent');
     }
 
     return this.cpI18n.translate('announcement_confirm_campus_wide');
@@ -55,12 +59,16 @@ export class AnnouncementsConfirmComponent implements OnInit {
       return this.cpI18n.translate('announcement_confirm_campus_wide_and_emergency_body');
     }
 
-    if (this.state.isCampusWide && !this.state.isEmergency) {
-      return this.cpI18n.translate('announcement_confirm_campus_wide_body');
+    if (this.state.isCampusWide && this.state.isUrgent) {
+      return this.cpI18n.translate('announcement_confirm_campus_wide_and_urgent_body');
     }
 
     if (!this.state.isCampusWide && this.state.isEmergency) {
       return this.cpI18n.translate('announcement_confirm_emergency_body');
+    }
+
+    if (!this.state.isCampusWide && this.state.isUrgent) {
+      return this.cpI18n.translate('announcement_confirm_urgent_body');
     }
 
     return this.cpI18n.translate('announcement_confirm_campus_wide_body');

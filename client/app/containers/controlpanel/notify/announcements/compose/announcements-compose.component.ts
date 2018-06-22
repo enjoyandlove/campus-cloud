@@ -1,18 +1,21 @@
+/*tslint:disable:max-line-length*/
+import { HttpParams } from '@angular/common/http';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, OnInit, Input } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-
-import { CPSession } from '../../../../../session';
-import { AnnouncementsService } from '../announcements.service';
-import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
-import { CP_PRIVILEGES_MAP, STATUS } from '../../../../../shared/constants';
-import { StoreService, CPI18nService } from '../../../../../shared/services';
-import { AUDIENCE_IMPORTED } from './../../../../../reducers/audience.reducer';
+import {
+  AUDIENCE_IMPORTED,
+  AUDIENCE_RESET_IMPORT_AUDIENCE
+} from './../../../../../reducers/audience.reducer';
 import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
+import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
 import { canSchoolReadResource } from './../../../../../shared/utils/privileges/privileges';
+import { CPSession } from '../../../../../session';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
+import { CP_PRIVILEGES_MAP, STATUS } from '../../../../../shared/constants';
+import { CPI18nService, StoreService } from '../../../../../shared/services';
+import { AnnouncementsService } from '../announcements.service';
 
 interface IState {
   isUrgent: boolean;
@@ -22,7 +25,6 @@ interface IState {
   isEmergency: boolean;
   isCampusWide: boolean;
   validUserCount: boolean;
-  triggerSaveModal: boolean;
 }
 
 const state: IState = {
@@ -32,8 +34,7 @@ const state: IState = {
   isToFilters: false,
   isEmergency: false,
   isCampusWide: true,
-  validUserCount: false,
-  triggerSaveModal: false
+  validUserCount: false
 };
 
 const THROTTLED_STATUS = 1;
@@ -43,7 +44,7 @@ const THROTTLED_STATUS = 1;
   templateUrl: './announcements-compose.component.html',
   styleUrls: ['./announcements-compose.component.scss']
 })
-export class AnnouncementsComposeComponent implements OnInit {
+export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   @Input() toolTipContent: IToolTipContent;
 
   stores$;
@@ -57,6 +58,7 @@ export class AnnouncementsComposeComponent implements OnInit {
   isAudienceImport = false;
 
   URGENT_TYPE = 1;
+  REGULAR_TYPE = 2;
   EMERGENCY_TYPE = 0;
 
   USERS_TYPE = 1;
@@ -82,8 +84,7 @@ export class AnnouncementsComposeComponent implements OnInit {
     public service: AnnouncementsService
   ) {
     const school = this.session.g.get('school');
-    const search: URLSearchParams = new URLSearchParams();
-    search.append('school_id', school.id.toString());
+    const search: HttpParams = new HttpParams().append('school_id', school.id.toString());
 
     this.stores$ = this.storeService.getStores(search);
   }
@@ -99,7 +100,7 @@ export class AnnouncementsComposeComponent implements OnInit {
     });
   }
 
-  onImportSuccess({ id }) {
+  redirectToSaveTab({ id }) {
     this.store.dispatch({
       type: AUDIENCE_IMPORTED,
       payload: {
@@ -120,8 +121,7 @@ export class AnnouncementsComposeComponent implements OnInit {
         isToLists: false,
         isToFilters: false,
         isCampusWide: false,
-        validUserCount: false,
-        triggerSaveModal: true
+        validUserCount: false
       };
       this.form.controls['list_ids'].setValue([]);
       this.form.controls['user_ids'].setValue([]);
@@ -135,8 +135,7 @@ export class AnnouncementsComposeComponent implements OnInit {
         isToLists: false,
         isToFilters: true,
         isCampusWide: false,
-        validUserCount: false,
-        triggerSaveModal: true
+        validUserCount: false
       };
       this.form.controls['filters'].setValue([]);
       this.form.controls['user_ids'].setValue([]);
@@ -152,23 +151,47 @@ export class AnnouncementsComposeComponent implements OnInit {
         isToUsers: false,
         isToLists: true,
         isToFilters: false,
-        isCampusWide: false,
-        triggerSaveModal: false
+        isCampusWide: false
       };
       this.form.controls['list_ids'].setValue([audienceId]);
       this.form.controls['is_school_wide'].setValue(false);
+
+      this.hideEmergencyType(true);
+      this.updatePriority();
     } else {
       this.state = {
         ...this.state,
         isToUsers: false,
         isToLists: false,
         isCampusWide: true,
-        isToFilters: false,
-        triggerSaveModal: false
+        isToFilters: false
       };
       this.form.controls['list_ids'].setValue([]);
       this.form.controls['is_school_wide'].setValue(true);
+      this.hideEmergencyType(false);
+      this.updatePriority();
     }
+  }
+
+  updatePriority() {
+    if (this.form.controls['priority'].value === this.EMERGENCY_TYPE) {
+      this.form.controls['priority'].setValue(this.REGULAR_TYPE);
+      this.selectedType = this.types.filter((type) => type.action === this.REGULAR_TYPE)[0];
+      this.subject_prefix = {
+        label: null,
+        type: null
+      };
+    }
+  }
+
+  hideEmergencyType(setValue) {
+    this.types = this.types.map((type) => {
+      if (type.action === this.EMERGENCY_TYPE) {
+        type = { ...type, disabled: setValue };
+      }
+
+      return type;
+    });
   }
 
   onSelectedUsers(users) {
@@ -178,7 +201,6 @@ export class AnnouncementsComposeComponent implements OnInit {
       isToLists: false,
       isCampusWide: false,
       isToFilters: false,
-      triggerSaveModal: true,
       validUserCount: users.length > 0
     };
 
@@ -210,16 +232,16 @@ export class AnnouncementsComposeComponent implements OnInit {
 
   onTeardownAudienceSaveModal() {
     $('#audienceSaveModal').modal('hide');
+  }
 
-    this.state = {
-      ...this.state,
-      triggerSaveModal: false
-    };
-
-    this.doSubmit();
+  onTeardownConfirm() {
+    this.shouldConfirm = false;
+    this.buttonData = { ...this.buttonData, disabled: false };
   }
 
   onAudienceNamed({ name }) {
+    $('#audienceSaveModal').modal('hide');
+
     let data = {};
     data = { ...data, name };
 
@@ -231,19 +253,13 @@ export class AnnouncementsComposeComponent implements OnInit {
       data = { ...data, filters: this.form.value.filters };
     }
 
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     this.service
       .createAudience(data, search)
       .toPromise()
-      .then(({ id }) => {
-        $('#audienceSaveModal').modal('hide');
-        this.doSubmit(id);
-      })
+      .then(({ id }: any) => this.redirectToSaveTab({ id }))
       .catch((err) => {
-        $('#audienceSaveModal').modal('hide');
-
         const error = JSON.parse(err._body).error;
         const body =
           error === 'Database Error'
@@ -273,11 +289,13 @@ export class AnnouncementsComposeComponent implements OnInit {
       isToLists: false,
       isToFilters: true,
       isCampusWide: false,
-      validUserCount: false,
-      triggerSaveModal: true
+      validUserCount: false
     };
 
     this.form.controls['is_school_wide'].setValue(false);
+
+    this.hideEmergencyType(true);
+    this.updatePriority();
   }
 
   onResetSavedAudience() {
@@ -287,21 +305,16 @@ export class AnnouncementsComposeComponent implements OnInit {
       isToLists: false,
       isCampusWide: true,
       isToFilters: false,
-      validUserCount: true,
-      triggerSaveModal: false
+      validUserCount: true
     };
 
     this.form.controls['is_school_wide'].setValue(true);
+
+    this.hideEmergencyType(false);
   }
 
   doValidate() {
-    this.shouldConfirm = this.state.isEmergency || this.state.isCampusWide;
-
-    if (this.state.triggerSaveModal) {
-      $('#audienceSaveModal').modal();
-
-      return;
-    }
+    this.shouldConfirm = this.state.isEmergency || this.state.isCampusWide || this.state.isUrgent;
 
     if (!this.shouldConfirm) {
       this.doSubmit();
@@ -325,12 +338,11 @@ export class AnnouncementsComposeComponent implements OnInit {
     this.validButton();
   }
 
-  doSubmit(savedListId = null) {
+  doSubmit() {
     this.isError = false;
     $('#announcementConfirmModal').modal('hide');
 
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     const prefix = this.subject_prefix.label ? this.subject_prefix.label.toUpperCase() : '';
 
@@ -363,14 +375,8 @@ export class AnnouncementsComposeComponent implements OnInit {
       delete data['user_ids'];
     }
 
-    if (savedListId) {
-      delete data['filters'];
-
-      data = Object.assign({}, data, { list_ids: [savedListId] });
-    }
-
     this.service.postAnnouncements(search, data).subscribe(
-      (res) => {
+      (res: any) => {
         if (res.status === THROTTLED_STATUS) {
           this.shouldConfirm = false;
 
@@ -438,8 +444,7 @@ export class AnnouncementsComposeComponent implements OnInit {
       isToUsers: false,
       isToLists: false,
       isCampusWide: false,
-      isToFilters: true,
-      triggerSaveModal: true
+      isToFilters: true
     };
 
     this.form.controls['filters'].setValue(filters);
@@ -469,10 +474,18 @@ export class AnnouncementsComposeComponent implements OnInit {
     );
   }
 
+  onSaveAudienceClick() {
+    $('#audienceSaveModal').modal();
+  }
+
   validButton() {
     const isValid = this.form.valid && this.state.validUserCount;
 
     this.buttonData = { ...this.buttonData, disabled: !isValid };
+  }
+
+  ngOnDestroy() {
+    this.store.dispatch({ type: AUDIENCE_RESET_IMPORT_AUDIENCE });
   }
 
   ngOnInit() {
@@ -530,9 +543,6 @@ export class AnnouncementsComposeComponent implements OnInit {
 
     this.form.valueChanges.subscribe((_) => {
       this.validButton();
-      // const isValid = this.form.valid && this.state.validUserCount;
-
-      // this.buttonData = { ...this.buttonData, disabled: !isValid };
     });
   }
 }

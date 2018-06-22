@@ -1,4 +1,4 @@
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { CPDropdownComponent } from './cp-dropdown.component';
 
 const fakeItems = [
@@ -44,15 +44,9 @@ describe('CPDropdownComponent', () => {
   });
 
   it('ngOnInit', () => {
-    const expectedToolTip = 'toolt tip';
-    comp.items[0] = Object.assign({}, comp.items[0], {
-      disabled: true,
-      tooltipText: expectedToolTip
-    });
     comp.ngOnInit();
-    expect(comp.tooltipText).toBe(expectedToolTip);
 
-    let spy = spyOn(comp, 'resetDropdown');
+    const spy = spyOn(comp, 'resetDropdown');
 
     comp.reset.subscribe((reset) => {
       if (reset) {

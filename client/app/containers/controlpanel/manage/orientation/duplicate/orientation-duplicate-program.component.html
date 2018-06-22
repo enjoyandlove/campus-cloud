@@ -1,13 +1,13 @@
 <div class="cpmodal">
   <div class="cpmodal__header">
     <div class="row">
-      <div class="col-xs-12 text-center">
+      <div class="col-12 text-center">
         <span i18n><strong>{{ 'orientation_duplicate_program' | cpI18n }}</strong></span>
 
         <span
           data-dismiss="modal"
           (click)="resetModal()"
-          class="pull-right hover cpmodal__header__close">
+          class="float-right hover cpmodal__header__close">
             &times;
           </span>
       </div>
@@ -24,8 +24,8 @@
   </div>
 
   <div class="cpmodal__footer">
-    <div class="row">
-      <div class="col-xs-6 col-xs-offset-6 text-right">
+    <div class="row justify-content-end">
+      <div class="col-6 text-right">
         <button
           type="button"
           data-dismiss="modal"

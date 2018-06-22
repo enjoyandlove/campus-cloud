@@ -1,4 +1,5 @@
 export const AUDIENCE_IMPORTED = 'AUDIENCE_IMPORTED';
+export const AUDIENCE_RESET_IMPORT_AUDIENCE = 'AUDIENCE_RESET_IMPORT_AUDIENCE';
 
 export interface IAudience {
   audience_id: number;
@@ -15,7 +16,9 @@ const initialState: IAudience = {
 export function reducer(state = initialState, action): IAudience {
   switch (action.type) {
     case AUDIENCE_IMPORTED:
-      return Object.assign({}, state, { ...action.payload });
+      return { ...state, ...action.payload };
+    case AUDIENCE_RESET_IMPORT_AUDIENCE:
+      return { ...state, audience_id: null };
     default:
       return state;
   }

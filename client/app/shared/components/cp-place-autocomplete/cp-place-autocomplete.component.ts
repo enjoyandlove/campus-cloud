@@ -9,14 +9,11 @@ import {
   Output,
   ViewChild
 } from '@angular/core';
-
-import { Observable } from 'rxjs/Observable';
-
-import { CPLocationsService } from '../../services/locations.service';
-
+import { BehaviorSubject, fromEvent, Observable, of as observableOf } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { CPSession } from './../../../session';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { CPI18nService } from '../../services';
+import { CPLocationsService } from '../../services/locations.service';
 
 interface IState {
   input: string;
@@ -53,26 +50,28 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     const input = this.hostEl.nativeElement;
-    const stream$ = Observable.fromEvent(input, 'keyup');
+    const stream$ = fromEvent(input, 'keyup');
     const lat = this.cpSession.g.get('school').latitude;
     const lng = this.cpSession.g.get('school').longitude;
 
     stream$
-      .debounceTime(300)
-      .distinctUntilChanged()
-      .switchMap((event: any) => {
-        const query = event.target.value;
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        switchMap((event: any) => {
+          const query = event.target.value;
 
-        if (!query) {
-          this.placeChange.emit(null);
+          if (!query) {
+            this.placeChange.emit(null);
 
-          return Observable.empty();
-        }
+            return observableOf(null);
+          }
 
-        this.setInput(query);
+          this.setInput(query);
 
-        return this.service.getAllSuggestions(query, lat, lng);
-      })
+          return this.service.getAllSuggestions(query, lat, lng);
+        })
+      )
       .subscribe((res) => this.setSuggestions(res));
   }
 
@@ -129,6 +128,12 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
   }
 
   setSuggestions(suggestions): void {
+    if (!suggestions) {
+      this.state = Object.assign({}, this.state, { suggestions: [] });
+
+      return;
+    }
+
     const showAll = this.disableLocations === undefined;
     const newSuggestions = showAll
       ? [...this.noResultsIfEmpty(suggestions[0]), ...this.noResultsIfEmpty(suggestions[1])]

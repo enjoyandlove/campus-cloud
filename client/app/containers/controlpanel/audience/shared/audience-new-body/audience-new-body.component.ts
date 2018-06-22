@@ -1,9 +1,8 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
-
+import { HttpParams } from '@angular/common/http';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CPSession } from './../../../../../session';
-import { AudienceType } from './../../audience.status';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { AudienceType } from './../../audience.status';
 import { AudienceSharedService } from '../audience.shared.service';
 
 @Component({
@@ -14,6 +13,7 @@ import { AudienceSharedService } from '../audience.shared.service';
 export class AudienceNewBodyComponent implements OnInit {
   @Input() audience;
   @Input() importButton = true;
+  @Input() showSaveButton = false;
   @Input() withChips: Array<any> = [];
   @Input() disableTypeSelection = false;
   @Input() defaultView = AudienceType.dynamic;
@@ -21,6 +21,7 @@ export class AudienceNewBodyComponent implements OnInit {
   @Output() filters: EventEmitter<any> = new EventEmitter();
   @Output() count: EventEmitter<number> = new EventEmitter();
   @Output() importClick: EventEmitter<null> = new EventEmitter();
+  @Output() saveAudience: EventEmitter<null> = new EventEmitter();
   @Output() users: EventEmitter<Array<number>> = new EventEmitter();
   @Output() audienceType: EventEmitter<{ custom: boolean; dynamic: boolean }> = new EventEmitter();
 
@@ -29,7 +30,9 @@ export class AudienceNewBodyComponent implements OnInit {
   selectedType = null;
   state = {
     custom: true,
-    dynamic: false
+    dynamic: false,
+    couting: false,
+    canSave: false
   };
 
   constructor(
@@ -41,6 +44,7 @@ export class AudienceNewBodyComponent implements OnInit {
   onTypeSelected({ action }) {
     this.state = {
       ...this.state,
+      canSave: false,
       custom: action === AudienceType.custom,
       dynamic: action === AudienceType.dynamic
     };
@@ -51,9 +55,13 @@ export class AudienceNewBodyComponent implements OnInit {
   }
 
   getUserCount(filters) {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
-    search.append('count_only', '1');
+    this.count.emit(0);
+
+    this.state = { ...this.state, couting: true };
+
+    const search = new HttpParams()
+      .set('school_id', this.session.g.get('school').id)
+      .set('count_only', '1');
 
     const data = {
       filters: [...filters]
@@ -62,14 +70,24 @@ export class AudienceNewBodyComponent implements OnInit {
     this.service.getUserCount(data, search).subscribe(
       ({ count }) => {
         this.count.emit(count);
+        this.state = {
+          ...this.state,
+          couting: false,
+          canSave: count > 0
+        };
         this.message = `${count} ${this.cpI18n.translate('users_found')}`;
       },
 
-      () => (this.message = null)
+      () => {
+        this.message = null;
+        this.state = { ...this.state, couting: false };
+      }
     );
   }
 
   onUsers(users) {
+    this.state = { ...this.state, canSave: users.length > 0 };
+
     this.users.emit(users);
     this.message = `${users.length} ${this.cpI18n.translate('audience_counter_users')}`;
   }
@@ -82,6 +100,7 @@ export class AudienceNewBodyComponent implements OnInit {
 
   ngOnInit(): void {
     this.state = {
+      ...this.state,
       custom: this.defaultView === AudienceType.custom,
       dynamic: this.defaultView === AudienceType.dynamic
     };

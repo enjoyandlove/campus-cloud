@@ -239,6 +239,12 @@
   "announcement_confirm_campus_wide_and_emergency_body": {
     "message": "Vous êtes sur le point d'envoyer une annonce d'urgence à tout le campus."
   },
+  "announcement_confirm_campus_wide_and_urgent": {
+    "message": "Annonce importante à tout le campus"
+  },
+  "announcement_confirm_campus_wide_and_urgent_body": {
+    "message": "Vous êtes sur le point d'envoyer une annonce importante à tout le campus."
+  },
   "announcement_confirm_campus_wide_body": {
     "message": "Vous êtes sur le point d'envoyer une annonce à tout le campus."
   },
@@ -247,6 +253,12 @@
   },
   "announcement_confirm_emergency_body": {
     "message": "Vous êtes sur le point d'envoyer une notification d'urgence."
+  },
+  "announcement_confirm_urgent": {
+    "message": "Annonce importante"
+  },
+  "announcement_confirm_urgent_body": {
+    "message": "Vous êtes sur le point d'envoyer une notification importante."
   },
   "announcement_success_sent": {
     "message": "Succès ! Votre message a été envoyé"
@@ -526,6 +538,9 @@
   },
   "audience_counter_users": {
     "message": "Utilisateurs trouvés"
+  },
+  "audience_create_error_duplicate_audience": {
+    "message": "Il y a déjà une audience avec ce nom."
   },
   "audience_create_modal_label_name": {
     "message": "Nom d'audience"
@@ -943,7 +958,7 @@
     "message": "Bannière"
   },
   "customization_description": {
-    "message": "(Apparaît en haut du guide du campus dans l'application mobile.)"
+    "message": "(Les images haute résolution fonctionnent le mieux. Format JPEG ou PNG, 5 Mo ou moins. Vous pouvez faire défiler avec votre souris pour zoomer ou dézoomer l'image.)"
   },
   "customization_image_upload_error": {
     "message": "Quelque chose a échoué durant le téléversement de votre image"
@@ -1661,7 +1676,7 @@
     "message": "Image"
   },
   "lists": {
-    "message": "Listes"
+    "message": "Audiences"
   },
   "lists_button_create": {
     "message": "Créer audience"
@@ -1797,7 +1812,7 @@
     "message": "Destinataires"
   },
   "notify_announcement_template_to_tooltip": {
-    "message": "Les notifications peuvent être envoyées aux utilisateurs de l'application que vous pouvez regrouper en listes. Pour plus d'info:"
+    "message": "Les notifications peuvent être envoyées aux utilisateurs de l'application que vous pouvez regrouper en audiences. Pour plus d'info:"
   },
   "no_admins_found": {
     "message": "Aucun administrateur trouvé"
@@ -2296,6 +2311,9 @@
   "t_audience_dynamic_integration_disabled": {
     "message": "Pour activer cette fonctionalité, veuillez contacter votre consultant en engagement mobile."
   },
+  "t_audience_save_modal_button_submit": {
+    "message": "Enregistrer"
+  },
   "t_customise_personas": {
     "message": "Expériences d'application"
   },
@@ -2413,6 +2431,12 @@
   "t_personas_list_dropdown_web_experiences": {
     "message": "Web"
   },
+  "t_personas_tile_modal_create_appearance": {
+    "message": "Appearance"
+  },
+  "t_personas_tile_modal_create_label_type": {
+    "message": "Type"
+  },
   "t_persona_create_cancel_button": {
     "message": "Annuler"
   },
@@ -2433,6 +2457,15 @@
   },
   "t_shared_edit": {
     "message": "Éditer"
+  },
+  "t_shared_hide": {
+    "message": "Cacher"
+  },
+  "t_shared_show": {
+    "message": "Montrer"
+  },
+  "t_tile_button_default": {
+    "message": "Défaut"
   },
   "update": {
     "message": "Mettre à jour",

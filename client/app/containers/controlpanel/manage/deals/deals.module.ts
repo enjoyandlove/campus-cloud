@@ -9,11 +9,30 @@ import { StoreModule } from './stores/store.module';
 import { SharedModule } from '../../../../shared/shared.module';
 
 import { DealsListComponent } from './list';
+import { DealsEditComponent } from './edit';
+import { DealsInfoComponent } from './info';
+import { DealsDeleteComponent } from './delete';
+import { DealsCreateComponent } from './create';
 import { DealsListActionBoxComponent } from './list/components/action-box';
+
+import {
+  DealsCardComponent,
+  DealsFormComponent,
+  StoreCardComponent,
+  StoreSelectorComponent
+} from './components';
 
 @NgModule({
   declarations: [
+    DealsCardComponent,
+    DealsFormComponent,
+    StoreCardComponent,
     DealsListComponent,
+    DealsEditComponent,
+    DealsInfoComponent,
+    DealsDeleteComponent,
+    DealsCreateComponent,
+    StoreSelectorComponent,
     DealsListActionBoxComponent
   ],
   imports: [

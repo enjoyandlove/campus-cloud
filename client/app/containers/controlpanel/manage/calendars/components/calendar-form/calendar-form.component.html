@@ -1,9 +1,9 @@
 <form [formGroup]="form">
   <div class="row form-group">
-    <div class="col-xs-12">
+    <div class="col-12">
       <label>
         {{ 'calendars_label_name' | cpI18n }}
-        <span class="pull-right">
+        <span class="float-right">
           {{ form.controls.name.value ? form.controls.name.value.length : 0 }}/225
         </span>
       </label>
@@ -15,10 +15,10 @@
   </div>
   <br>
   <div class="row">
-    <div class="col-xs-12">
+    <div class="col-12">
       <label>
         {{ 'calendars_label_description' | cpI18n }}
-        <span class="pull-right">
+        <span class="float-right">
           {{ form.controls.description.value ? form.controls.description.value.length : 0 }}/512
         </span>
       </label>
@@ -30,12 +30,12 @@
   </div>
   <br>
   <div class="row" *ngIf="isOrientation">
-    <div class="col-xs-10">
+    <div class="col-10">
       <label>{{ 'orientation_enable_membership' | cpI18n }}</label>
       <p>{{ 'orientation_enable_membership_description' | cpI18n }}</p>
     </div>
-    <div class="col-xs-2">
-      <span class="pull-right">
+    <div class="col-2">
+      <span class="float-right">
         <cp-switch
           [id]="orientationProgram?.id"
           [isChecked]="isChecked"

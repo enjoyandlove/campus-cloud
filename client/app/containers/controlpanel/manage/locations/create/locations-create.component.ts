@@ -8,8 +8,8 @@ import {
   ElementRef
 } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { URLSearchParams } from '@angular/http';
+import { BehaviorSubject } from 'rxjs';
+import { HttpParams } from '@angular/common/http';
 
 import { CPMap } from '../../../../../shared/utils';
 import { LocationsService } from '../locations.service';
@@ -100,8 +100,7 @@ export class LocationsCreateComponent implements OnInit {
   }
 
   doSubmit() {
-    const search = new URLSearchParams();
-    search.append('school_id', this.session.g.get('school').id);
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     this.service.createLocation(this.form.value, search).subscribe((newLocation) => {
       $('#locationsUpdate').modal('hide');
