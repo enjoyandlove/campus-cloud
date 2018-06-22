@@ -1,11 +1,11 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
-  selector: 'cp-personas-section-tile-hover',
-  templateUrl: './section-tile-hover.component.html',
-  styleUrls: ['./section-tile-hover.component.scss']
+  selector: 'cp-personas-tile-hover',
+  templateUrl: './tile-hover.component.html',
+  styleUrls: ['./tile-hover.component.scss']
 })
-export class PersonasSectionTileHoverComponent implements OnInit {
+export class PersonasTileHoverComponent implements OnInit {
   @Input() visible;
   @Input() defaultTile: boolean;
 

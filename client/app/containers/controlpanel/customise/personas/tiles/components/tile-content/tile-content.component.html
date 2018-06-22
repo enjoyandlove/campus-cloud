@@ -1,0 +1,18 @@
+<div 
+  class="row tile">
+  <div class="col-12">
+    <div 
+      [class.backdrop]="!visible"
+      [ngStyle]="{'border-bottom': '2px solid #' + tile.color }">
+      <div class="tile__image">
+        <img 
+          [alt]="tile.name"
+          class="img-fluid" 
+          [src]="tile.img_url">
+      </div>
+      <div class="tile__meta text-truncate">
+        {{tile.name}}
+      </div>
+    </div>
+  </div>
+</div>

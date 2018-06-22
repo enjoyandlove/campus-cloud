@@ -14,15 +14,14 @@ export class PersonasTileCreateComponent implements OnInit {
   constructor(public cpI18n: CPI18nService) {}
 
   onSubmit() {
-    console.log('YOOO');
+    // console.log('YOOO');
   }
 
-  onContentTypeChange({ id }) {
-    console.log('selected ', id);
+  onContentTypeChange() {
+    // console.log('selected ', {id});
   }
 
   ngOnInit(): void {
-    console.log(this.contentTypes);
     this.buttonData = {
       class: 'primary',
       disabled: true,
