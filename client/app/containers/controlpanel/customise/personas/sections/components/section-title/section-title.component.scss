@@ -1,8 +1,20 @@
 @import '~styles/core/colors';
 @import '~styles/core/typography';
 
-.title {
+input {
   @include font-24px();
 
+  width: 100%;
   text-transform: uppercase;
+  border: 1px solid transparent;
+
+  &:disabled {
+    background: transparent;
+    border: 1px solid transparent;
+    border-bottom: 1px dotted #ccc;
+  }
+
+  &.error {
+    border-bottom: 1px solid $color-danger;
+  }
 }

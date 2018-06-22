@@ -8,12 +8,13 @@
 
 <section class="section-details">
   <div class="row">
-    <div class="col-6">
+    <div class="col-8">
       <cp-personas-section-title 
-        [name]="guide.name">
+        [name]="guide.name"
+        (nameChanged)="onNameChange($event)">
       </cp-personas-section-title>
     </div>
-    <div class="col-6 text-right">
+    <div class="col-4 text-right">
       <cp-personas-section-controls></cp-personas-section-controls>
     </div>
   </div>
