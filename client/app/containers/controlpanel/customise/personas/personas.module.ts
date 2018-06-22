@@ -6,7 +6,6 @@ import { PersonasFormComponent } from './components/personas-form/personas-form.
 import { PersonasCreateComponent } from './create/create.component';
 import { PersonasDeleteComponent } from './delete';
 import {
-  PersonasSectionAddTileButtonComponent,
   PersonasSectionTileComponent,
   PersonasSectionTileHoverComponent
 } from './details/components/section';
@@ -33,8 +32,7 @@ import { SharedModule } from '../../../../shared/shared.module';
     PersonasSectionComponent,
     PersonasSectionTileComponent,
     PersonasListActionBoxComponent,
-    PersonasSectionTileHoverComponent,
-    PersonasSectionAddTileButtonComponent
+    PersonasSectionTileHoverComponent
   ],
 
   imports: [
