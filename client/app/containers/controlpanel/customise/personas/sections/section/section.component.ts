@@ -18,9 +18,10 @@ export class PersonasSectionComponent implements OnInit {
 
   @Output() addTileClick: EventEmitter<null> = new EventEmitter();
   @Output() deletedSection: EventEmitter<number> = new EventEmitter();
-  // @Output() deleteTile: EventEmitter<number> = new EventEmitter();
-  // @Output() editTileClick: EventEmitter<number> = new EventEmitter();
-  // @Output() toggleTileVisibility: EventEmitter<number> = new EventEmitter();
+
+  state = {
+    working: false
+  };
 
   constructor(
     public session: CPSession,
@@ -36,7 +37,16 @@ export class PersonasSectionComponent implements OnInit {
     };
   }
 
+  setWorkingState(working) {
+    this.state = {
+      ...this.state,
+      working
+    };
+  }
+
   errorHandler() {
+    this.setWorkingState(false);
+
     this.store.dispatch({
       type: SNACKBAR_SHOW,
       payload: {
@@ -54,23 +64,32 @@ export class PersonasSectionComponent implements OnInit {
       school_id: this.session.g.get('school').id
     };
 
+    this.setWorkingState(true);
+
     this.service.updateSectionTileCategory(this.guide.id, body).subscribe(
       (guide: ICampusGuide) => {
         this.guide = {
           ...this.guide,
           name: guide.name
         };
+
+        this.setWorkingState(false);
       },
       () => this.errorHandler()
     );
   }
 
   onDeleteSection() {
+    this.setWorkingState(true);
     const search = new HttpParams().set('school_id', this.session.g.get('school').id);
 
-    this.service
-      .deleteSectionTileCategory(this.guide.id, search)
-      .subscribe(() => this.deletedSection.emit(this.guide.id), () => this.errorHandler());
+    this.service.deleteSectionTileCategory(this.guide.id, search).subscribe(
+      () => {
+        this.deletedSection.emit(this.guide.id);
+        this.setWorkingState(false);
+      },
+      () => this.errorHandler()
+    );
   }
 
   onDeletedTile(tileId: number) {
