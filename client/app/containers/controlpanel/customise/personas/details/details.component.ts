@@ -108,7 +108,6 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
       .fetchData(stream$)
       .then(({ data }) => {
         this.guides = data;
-        console.log(this.guides);
       })
       .catch(() => this.router.navigate(['/customize/personas']));
   }
