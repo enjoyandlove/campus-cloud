@@ -1,9 +1,12 @@
-import { TileVisibility } from './../tiles.status';
-import { CPSession } from './../../../../../../session/index';
-import { TilesService } from './../tiles.service';
 import { HttpParams } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { CPSession } from './../../../../../../session/index';
 import { ITile } from './../../persona.interface';
+import { TilesService } from './../tiles.service';
+import { TileVisibility } from './../tiles.status';
+import { ISnackbar, SNACKBAR_SHOW } from '../../../../../../reducers/snackbar.reducer';
+import { CPI18nService } from '../../../../../../shared/services';
 import { TilesUtilsService } from '../tiles.utils.service';
 
 @Component({
@@ -14,25 +17,68 @@ import { TilesUtilsService } from '../tiles.utils.service';
 export class PersonasTileComponent implements OnInit {
   @Input() tile: ITile;
 
+  @Output() edited: EventEmitter<ITile> = new EventEmitter();
+  @Output() deleted: EventEmitter<number> = new EventEmitter();
+
   hover = false;
 
+  state = {
+    working: false
+  };
+
   constructor(
-    public utils: TilesUtilsService,
+    public session: CPSession,
     public service: TilesService,
-    public session: CPSession
+    public cpI18n: CPI18nService,
+    public store: Store<ISnackbar>,
+    public utils: TilesUtilsService
   ) {}
+
+  errorHandler() {
+    this.state = {
+      ...this.state,
+      working: false
+    };
+
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        body: this.cpI18n.translate('something_went_wrong'),
+        class: 'danger',
+        sticky: true,
+        autoClose: true
+      }
+    });
+  }
 
   onEditTile() {}
 
   onDeleteTile() {
-    console.log('deleting');
+    this.state = {
+      ...this.state,
+      working: true
+    };
+
     const search = new HttpParams().set('school_id', this.session.g.get('school').id);
 
-    this.service.deleteTile(this.tile.id, search);
+    this.service.deleteTile(this.tile.id, search).subscribe(
+      () => {
+        this.state = {
+          ...this.state,
+          working: false
+        };
+        this.deleted.emit(this.tile.id);
+      },
+      () => this.errorHandler()
+    );
   }
 
   onToggleTile() {
-    console.log('toggling');
+    this.state = {
+      ...this.state,
+      working: true
+    };
+
     const visibility_status =
       this.tile.visibility_status === TileVisibility.invisible
         ? TileVisibility.visible
@@ -43,7 +89,17 @@ export class PersonasTileComponent implements OnInit {
       school_id: this.session.g.get('school').id
     };
 
-    this.service.updateTile(this.tile.id, body);
+    this.service.updateTile(this.tile.id, body).subscribe(
+      (editedTile: ITile) => {
+        this.state = {
+          ...this.state,
+          working: false
+        };
+
+        this.edited.emit(editedTile);
+      },
+      () => this.errorHandler()
+    );
   }
 
   ngOnInit(): void {}

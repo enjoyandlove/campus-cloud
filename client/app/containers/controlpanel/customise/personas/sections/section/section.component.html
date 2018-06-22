@@ -24,15 +24,11 @@
     <div 
       class="col-2" 
       *ngFor="let tile of guide.tiles">
-        <cp-personas-tile [tile]="tile"></cp-personas-tile>
-      <!-- <cp-personas-section-tile 
-        [tile]="tile"
-        [visible]="utils.isTileVisible(tile)"
-        (deleteClick)="deleteTile.emit($event)"
-        (editClick)="editTileClick.emit($event)"
-        [defaultTile]="utils.isTileDefault(tile)"
-        (toggleVisibility)="toggleTileVisibility.emit($event)">
-      </cp-personas-section-tile> -->
+        <cp-personas-tile 
+          [tile]="tile"
+          (edited)="onEditedTile($event)"
+          (deleted)="onDeletedTile($event)">
+        </cp-personas-tile>
     </div>
     <div class="col-2">
       <cp-personas-tile-add-button
