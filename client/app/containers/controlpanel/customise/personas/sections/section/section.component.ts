@@ -1,3 +1,4 @@
+import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { SNACKBAR_SHOW } from './../../../../../../reducers/snackbar.reducer';
@@ -16,6 +17,7 @@ export class PersonasSectionComponent implements OnInit {
   @Input() guide: ICampusGuide;
 
   @Output() addTileClick: EventEmitter<null> = new EventEmitter();
+  @Output() deletedSection: EventEmitter<number> = new EventEmitter();
   // @Output() deleteTile: EventEmitter<number> = new EventEmitter();
   // @Output() editTileClick: EventEmitter<number> = new EventEmitter();
   // @Output() toggleTileVisibility: EventEmitter<number> = new EventEmitter();
@@ -61,6 +63,14 @@ export class PersonasSectionComponent implements OnInit {
       },
       () => this.errorHandler()
     );
+  }
+
+  onDeleteSection() {
+    const search = new HttpParams().set('school_id', this.session.g.get('school').id);
+
+    this.service
+      .deleteSectionTileCategory(this.guide.id, search)
+      .subscribe(() => this.deletedSection.emit(this.guide.id), () => this.errorHandler());
   }
 
   onDeletedTile(tileId: number) {

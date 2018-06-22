@@ -41,6 +41,10 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
     $('#tilesCreate').modal();
   }
 
+  onDeletedSection(sectionId: number) {
+    this.guides = this.guides.filter((guide: ICampusGuide) => guide.id !== sectionId);
+  }
+
   fetch() {
     const personaSearch = new HttpParams().append('school_id', this.session.g.get('school').id);
 
