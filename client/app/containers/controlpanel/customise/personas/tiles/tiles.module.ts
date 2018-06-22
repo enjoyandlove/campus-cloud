@@ -1,17 +1,22 @@
-import { PersonasTileAddButtonComponent } from './components/tile-add-button/tile-add-button.component';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from './../../../../../shared/shared.module';
-import { PersonasTileFormComponent } from './components';
 import { PersonasTileCreateComponent } from './create';
 import { PersonasTileComponent } from './tile/tile.component';
+
+import {
+  PersonasTileHoverComponent,
+  PersonasTileAddButtonComponent,
+  PersonasTileFormComponent
+} from './components';
 
 @NgModule({
   declarations: [
     PersonasTileCreateComponent,
     PersonasTileFormComponent,
     PersonasTileComponent,
+    PersonasTileHoverComponent,
     PersonasTileAddButtonComponent
   ],
   imports: [CommonModule, SharedModule, ReactiveFormsModule],
@@ -19,6 +24,7 @@ import { PersonasTileComponent } from './tile/tile.component';
     PersonasTileCreateComponent,
     PersonasTileFormComponent,
     PersonasTileComponent,
+    PersonasTileHoverComponent,
     PersonasTileAddButtonComponent
   ],
   providers: []
