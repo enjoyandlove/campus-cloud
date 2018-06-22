@@ -4,10 +4,12 @@
     <div class="cp-card">
       <div 
         class="row" 
-        *ngFor="let guide of guides">
+        *ngFor="let guide of guides; let first = first;  let last = last">
         <div class="col-12">
           <cp-personas-section 
+            [last]="last"
             [guide]="guide"
+            [first]="first"
             (deletedSection)="onDeletedSection($event)">
           </cp-personas-section>
         </div>

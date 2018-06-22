@@ -17,6 +17,10 @@
       </div>
       <div class="col-4 text-right">
         <cp-personas-section-controls
+          [disableUp]="first"
+          [disableDown]="last"
+          (moveUp)="onMove('up')"
+          (moveDown)="onMove('down')"
           (deleteClick)="onDeleteSection()">
         </cp-personas-section-controls>
       </div>

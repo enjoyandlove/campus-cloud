@@ -2,6 +2,7 @@
   <div class="col-12">
     <button 
       type="button"
+      [disabled]="disableUp"
       (click)="moveUp.emit()"
       class="cpbtn cpbtn--link">
       <i class="material-icons">keyboard_arrow_up</i>
@@ -9,6 +10,7 @@
 
     <button 
       type="button"
+      [disabled]="disableDown"
       class="cpbtn cpbtn--link"
       (click)="moveDown.emit()">
       <i class="material-icons">keyboard_arrow_down</i>

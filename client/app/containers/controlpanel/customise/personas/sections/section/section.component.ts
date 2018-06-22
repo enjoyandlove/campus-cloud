@@ -15,6 +15,8 @@ import { CPI18nService } from '../../../../../../shared/services';
 })
 export class PersonasSectionComponent implements OnInit {
   @Input() guide: ICampusGuide;
+  @Input() last: boolean;
+  @Input() first: boolean;
 
   @Output() addTileClick: EventEmitter<null> = new EventEmitter();
   @Output() deletedSection: EventEmitter<number> = new EventEmitter();
@@ -35,6 +37,10 @@ export class PersonasSectionComponent implements OnInit {
       ...this.guide,
       tiles: this.guide.tiles.map((tile: ITile) => (tile.id === editedTile.id ? editedTile : tile))
     };
+  }
+
+  onMove(direction) {
+    console.log(direction, this.guide);
   }
 
   setWorkingState(working) {
