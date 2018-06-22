@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ITile } from './../../persona.interface';
+import { TilesUtilsService } from '../tiles.utils.service';
 
 @Component({
   selector: 'cp-personas-tile',
@@ -6,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./tile.component.scss']
 })
 export class PersonasTileComponent implements OnInit {
-  constructor() {}
+  @Input() tile: ITile;
+
+  hover = false;
+
+  constructor(public utils: TilesUtilsService) {}
 
   ngOnInit(): void {}
 }

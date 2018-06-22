@@ -1,7 +1,19 @@
+@import '~styles/core/typography';
+
 .tile {
-  width: 100%;
-  height: 158px;
-  position: relative;
-  margin-bottom: 30px;
-  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
+  &__image {
+    height: 120px;
+    text-align: center;
+
+    img {
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__meta {
+    @include font-14px();
+
+    padding: 8px;
+  }
 }

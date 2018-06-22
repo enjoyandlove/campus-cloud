@@ -1,4 +1,3 @@
-import { TileVisibility } from './../personas.status';
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,6 +9,7 @@ import { ISnackbar } from './../../../../../reducers/snackbar.reducer';
 import { ICampusGuide, IPersona, ITile } from './../persona.interface';
 import { PersonasService } from './../personas.service';
 import { PersonasUtilsService } from './../personas.utils.service';
+import { TileVisibility } from './../tiles/tiles.status';
 import { BaseComponent } from '../../../../../base';
 import { CPSession } from '../../../../../session';
 import { CPI18nService } from '../../../../../shared/services';

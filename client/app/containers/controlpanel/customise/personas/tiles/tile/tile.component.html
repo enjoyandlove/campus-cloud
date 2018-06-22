@@ -1,3 +1,22 @@
-<div class="tile">
-  <ng-content></ng-content>
-</div>
+<cp-personas-tile-base>
+  <div 
+    class="wrapper"
+    (mouseenter)="hover = true"
+    (mouseleave)="hover = false">
+    <div class="row" *ngIf="!hover">
+      <div class="col-12">
+        <cp-personas-tile-content 
+          [tile]="tile"
+          [visible]="utils.isTileVisible(tile)">
+        </cp-personas-tile-content>
+      </div>
+    </div>
+    <div class="row" *ngIf="hover">
+      <div class="col-12">
+        <cp-personas-tile-hover
+          [visible]="utils.isTileVisible(tile)">
+        </cp-personas-tile-hover>
+      </div>
+    </div>
+  </div>
+</cp-personas-tile-base>
