@@ -17,6 +17,7 @@ import { CP_PRIVILEGES_MAP, STATUS } from '../../../../../shared/constants';
 import { CPI18nService, StoreService, CPTrackingService, ZendeskService } from '../../../../../shared/services';
 import { AnnouncementsService } from '../announcements.service';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { AudienceType } from '../../../audience/audience.status';
 
 interface IState {
   isUrgent: boolean;
@@ -189,9 +190,15 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   }
 
   getAudienceType(type) {
-    this.amplitudeEventProperties.audience_type = type === 1
-      ? amplitudeEvents.DYNAMIC_LIST
-      : amplitudeEvents.CUSTOM_LIST;
+    const audience_type =
+      type === AudienceType.dynamic
+        ? amplitudeEvents.DYNAMIC_LIST
+        : amplitudeEvents.CUSTOM_LIST;
+
+    this.amplitudeEventProperties = {
+      ...this.amplitudeEventProperties,
+      audience_type
+    };
   }
 
   updatePriority() {
