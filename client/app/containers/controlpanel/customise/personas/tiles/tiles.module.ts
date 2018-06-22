@@ -11,4 +11,4 @@ import { PersonasTileCreateComponent } from './create';
   exports: [PersonasTileCreateComponent, PersonasTileFormComponent],
   providers: []
 })
-export class TilesModule {}
+export class PersonasTilesModule {}
