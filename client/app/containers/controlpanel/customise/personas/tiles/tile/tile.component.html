@@ -27,7 +27,8 @@
               (editClick)="onEditTile()"
               (deleteClick)="onDeleteTile()"
               (toggleVisibility)="onToggleTile()"
-              [visible]="utils.isTileVisible(tile)">
+              [visible]="utils.isTileVisible(tile)"
+              [defaultTile]="utils.isTileDefault(tile)">
             </cp-personas-tile-hover>
           </div>
         </div>

@@ -41,6 +41,20 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
     $('#tilesCreate').modal();
   }
 
+  onAddSectionBefore(guideId: number) {
+    const newGuide = {
+      id: null,
+      rank: guideId - 1,
+      name: null,
+      tiles: []
+    };
+
+    const nextGuide = (guide: ICampusGuide) => guide.id === guideId;
+    const nextGuideIndex = this.guides.findIndex(nextGuide);
+
+    this.guides.splice(nextGuideIndex, 0, newGuide);
+  }
+
   onDeletedSection(sectionId: number) {
     this.guides = this.guides.filter((guide: ICampusGuide) => guide.id !== sectionId);
   }

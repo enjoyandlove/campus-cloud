@@ -18,6 +18,7 @@ export class PersonasSectionComponent implements OnInit {
   @Input() last: boolean;
   @Input() first: boolean;
 
+  @Output() addSection: EventEmitter<null> = new EventEmitter();
   @Output() addTileClick: EventEmitter<null> = new EventEmitter();
   @Output() deletedSection: EventEmitter<number> = new EventEmitter();
 
