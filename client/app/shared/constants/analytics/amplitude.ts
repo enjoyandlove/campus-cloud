@@ -15,6 +15,8 @@ export const amplitudeEvents = {
 
   LIST: 'List',
 
+  EVENT: 'Event',
+
   ACTIVE: 'Active',
 
   REGULAR: 'Regular',
@@ -41,9 +43,13 @@ export const amplitudeEvents = {
 
   SAVED_AUDIENCE: 'Saved',
 
+  ATTENDANCE: 'Attendance',
+
   CREATE_JOB: 'Create Job',
 
   LOGGED_OUT: 'Logged Out',
+
+  ASSESSMENT: 'Assessment',
 
   MENU_AUDIENCE: 'Audience',
 
@@ -73,11 +79,15 @@ export const amplitudeEvents = {
 
   SELECT_ACCESS: 'Select Access',
 
+  NO_ENGAGEMENT: 'No Engagement',
+
   CLICKED_CREATE: 'Clicked Create',
 
   UPLOADED_PHOTO: 'Uploaded Photo',
 
   CREATE_SERVICE: 'Create Service',
+
+  ONE_ENGAGEMENT: 'One Engagement',
 
   CREATE_PROGRAM: 'Create Program',
 
@@ -109,6 +119,8 @@ export const amplitudeEvents = {
 
   INVITED_TEAM_MEMBER: 'Invited Team Member',
 
+  MULTIPLE_ENGAGEMENT: 'Multiple Engagement',
+
   UPDATED_TEAM_MEMBER: 'Updated Team Member',
 
   DELETED_TEAM_MEMBER: 'Deleted Team Member',
@@ -117,7 +129,15 @@ export const amplitudeEvents = {
 
   CREATE_CALENDAR_ITEM: 'Create Calendar Item',
 
+  ASSESS_DOWNLOAD_DATA: 'Assess Downloaded Data',
+
   NOTIFY_SAVED_TEMPLATE: 'Notify - Saved Template',
 
-  NOTIFY_SEND_ANNOUNCEMENT: 'Notify - Send Announcement'
+  MANAGE_DOWNLOAD_DATA: 'Manage - Downloaded Data',
+
+  ASSESS_VIEWED_TOP_EVENTS: 'Assess - Viewed Top Events',
+
+  NOTIFY_SEND_ANNOUNCEMENT: 'Notify - Send Announcement',
+
+  ASSESS_VIEWED_TOP_SERVICES: 'Assess - Viewed Top Services'
 };

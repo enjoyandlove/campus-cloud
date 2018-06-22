@@ -1,10 +1,13 @@
-import { HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit, Output } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
+
+import { ProvidersService } from '../../../providers.service';
+import { BaseComponent } from '../../../../../../../base/base.component';
+import { CPTrackingService } from '../../../../../../../shared/services';
+import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 import { createSpreadSheet } from './../../../../../../../shared/utils/csv/parser';
-import { BaseComponent } from '../../../../../../../base/base.component';
-import { ProvidersService } from '../../../providers.service';
 
 interface IState {
   search_text: string;
@@ -35,11 +38,15 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
 
   loading;
   sortingLabels;
+  eventProperties;
   deleteProvider = '';
   state: IState = state;
   displayRatingColumn = true;
 
-  constructor(private cpI18n: CPI18nService, private providersService: ProvidersService) {
+  constructor(
+    private cpI18n: CPI18nService,
+    private cpTracking: CPTrackingService,
+    private providersService: ProvidersService) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
   }
@@ -85,6 +92,16 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
     });
   }
 
+  trackAmplitudeEvent() {
+    this.eventProperties = {
+      data_type: amplitudeEvents.ASSESSMENT
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_DOWNLOAD_DATA,
+      this.eventProperties);
+  }
+
   ngOnInit() {
     this.serviceWithFeedback.subscribe((withRating) => (this.displayRatingColumn = withRating));
 
@@ -101,6 +118,8 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
 
     this.download.subscribe((download) => {
       if (download) {
+        this.trackAmplitudeEvent();
+
         const search = new HttpParams()
           .append('service_id', this.serviceId.toString())
           .append('all', '1');

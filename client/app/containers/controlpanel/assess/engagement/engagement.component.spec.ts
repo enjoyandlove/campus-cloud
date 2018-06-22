@@ -14,6 +14,7 @@ import { STATUS } from './../../../../shared/constants/status';
 import { HEADER_UPDATE } from './../../../../reducers/header.reducer';
 import { SNACKBAR_SHOW } from './../../../../reducers/snackbar.reducer';
 import { CPI18nService, CPTrackingService } from '../../../../shared/services';
+import { AssessUtilsService } from '../assess.utils.service';
 
 const mockFilterState = {
   engagement: {
@@ -83,6 +84,7 @@ describe('EngagementComponent', () => {
       providers: [
         CPI18nService,
         CPTrackingService,
+        AssessUtilsService,
         { provide: Router, useClass: MockRouter },
         { provide: CPSession, useClass: MockSession },
         { provide: EngagementService, useClass: MockEngagementService }
@@ -118,7 +120,7 @@ describe('EngagementComponent', () => {
   });
 
   it('onFlashMessage', () => {
-    spyOn(component, 'trackAmplitudeEvents');
+    spyOn(component, 'trackMessageEvent');
     component.onFlashMessage(null);
 
     const expected = {

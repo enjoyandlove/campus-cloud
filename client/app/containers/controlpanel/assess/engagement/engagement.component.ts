@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 
 import { CPSession } from './../../../../session/index';
 import { EngagementService } from './engagement.service';
+import { AssessUtilsService } from '../assess.utils.service';
 import { CPTrackingService } from '../../../../shared/services';
 import { BaseComponent } from '../../../../base/base.component';
 import { HEADER_UPDATE } from './../../../../reducers/header.reducer';
@@ -40,6 +41,7 @@ export class EngagementComponent extends BaseComponent implements OnInit {
     public store: Store<any>,
     public session: CPSession,
     public cpI18n: CPI18nService,
+    public utils: AssessUtilsService,
     public service: EngagementService,
     public cpTracking: CPTrackingService
   ) {
@@ -101,6 +103,7 @@ export class EngagementComponent extends BaseComponent implements OnInit {
   }
 
   onDownload(cohort) {
+    let engagement_type = amplitudeEvents.ALL_ENGAGEMENT;
     let fileName = 'all_download_data';
     let search = this.buildSearchHeaders();
     search = search.append('download', '1');
@@ -111,12 +114,15 @@ export class EngagementComponent extends BaseComponent implements OnInit {
       switch (cohort) {
         case REPEAT_ENGAGEMENT:
           fileName = 'repeat_engagement';
+          engagement_type = amplitudeEvents.MULTIPLE_ENGAGEMENT;
           break;
         case ONE_ENGAGEMENT:
           fileName = 'one_engagement';
+          engagement_type = amplitudeEvents.ONE_ENGAGEMENT;
           break;
         case ZERO_ENGAGEMENT:
           fileName = 'zero_engagement';
+          engagement_type = amplitudeEvents.NO_ENGAGEMENT;
           break;
       }
     }
@@ -125,6 +131,8 @@ export class EngagementComponent extends BaseComponent implements OnInit {
       .getChartData(search)
       .toPromise()
       .then((data: any) => {
+        this.trackDownloadEvent(engagement_type);
+
         const columns = [
           this.cpI18n.translate('assess_student_name'),
           this.cpI18n.translate('assess_number_of_checkins'),
@@ -191,7 +199,7 @@ export class EngagementComponent extends BaseComponent implements OnInit {
   }
 
   onFlashMessage(data) {
-    this.trackAmplitudeEvents(data);
+    this.trackMessageEvent(data);
     this.store.dispatch({
       type: SNACKBAR_SHOW,
       payload: {
@@ -201,26 +209,25 @@ export class EngagementComponent extends BaseComponent implements OnInit {
     });
   }
 
-  trackAmplitudeEvents(data) {
+  trackMessageEvent(data) {
     this.eventProperties = {
-      interval: this.filterState.range.label,
+      ...this.utils.getEventProperties(this.filterState),
       host_type: data.hostType,
-      cohort_type: this.getCohortType(this.filterState.for),
       engagement_type: data.props.label,
-      engagement_source: this.getEngagementType(this.filterState.engagement),
     };
-
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.ASSESS_SENT_MESSAGE, this.eventProperties);
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.ASSESS_SENT_MESSAGE,
+      this.eventProperties);
   }
 
-  getEngagementType(engagement) {
-    return engagement.data.queryParam === 'service_id'
-      ? amplitudeEvents.ONE_SERVICE
-      : engagement.label;
-  }
-
-  getCohortType(cohort) {
-    return cohort.listId ? amplitudeEvents.LIST : cohort.label;
+  trackDownloadEvent(engagement_type) {
+    this.eventProperties = {
+      ...this.utils.getEventProperties(this.filterState),
+      engagement_type
+    };
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.ASSESS_DOWNLOAD_DATA,
+      this.eventProperties);
   }
 
   ngOnInit() {
