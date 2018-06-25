@@ -51,7 +51,6 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
   stores$;
   isError;
-  hostType;
   sendAsName;
   buttonData;
   errorMessage;
