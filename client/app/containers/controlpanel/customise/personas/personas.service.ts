@@ -22,6 +22,14 @@ export class PersonasService extends HTTPService {
     return super.get(url, search);
   }
 
+  updateSectionTileCategory(tileCategoryId: number, body) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.GUIDE_TILE_CATEGORY
+    }/${tileCategoryId}`;
+
+    return super.update(url, body, null, true);
+  }
+
   createPersona(body) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.PERSONAS}/`;
 

@@ -1,7 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { switchMap } from 'rxjs/operators';
 import { SNACKBAR_SHOW } from './../../../../../../reducers/snackbar.reducer';
 import { ICampusGuide, ITile } from './../../persona.interface';
 import { SectionsService } from './../sections.service';
@@ -19,12 +18,13 @@ export class PersonasSectionComponent implements OnInit {
   @Input() first: boolean;
   @Input() addSection: boolean;
   @Input() guide: ICampusGuide;
-  @Input() nextSection: ICampusGuide;
   @Input() previousSection: ICampusGuide;
+  // @Input() nextSection: ICampusGuide;
 
+  @Output() swap: EventEmitter<any> = new EventEmitter();
   @Output() addTile: EventEmitter<null> = new EventEmitter();
-  @Output() created: EventEmitter<ICampusGuide> = new EventEmitter();
   @Output() deleted: EventEmitter<number> = new EventEmitter();
+  @Output() created: EventEmitter<ICampusGuide> = new EventEmitter();
 
   state = {
     working: false
@@ -44,62 +44,13 @@ export class PersonasSectionComponent implements OnInit {
     };
   }
 
-  moveUp() {
-    const school_id = this.session.g.get('school').id;
-    const [newRank, currentRank] = [this.previousSection.rank, this.guide.rank];
-    const currentTileBody = {
-      school_id,
-      rank: newRank
-    };
-    const pushedTileBody = {
-      school_id,
-      rank: currentRank
-    };
-    const updateCurrentTile$ = this.service.updateSectionTileCategory(
-      this.guide.id,
-      currentTileBody
-    );
-    const updatePushedTile$ = this.service.updateSectionTileCategory(
-      this.previousSection.id,
-      pushedTileBody
-    );
-
-    const stream$ = updateCurrentTile$.pipe(switchMap(() => updatePushedTile$));
-
-    stream$.subscribe((res) => console.log(res), (err) => console.log(err));
-  }
-
-  moveDown() {
-    const school_id = this.session.g.get('school').id;
-    const [newRank, currentRank] = [this.nextSection.rank, this.guide.rank];
-    const currentTileBody = {
-      school_id,
-      rank: newRank
-    };
-    const pushedTileBody = {
-      school_id,
-      rank: currentRank
-    };
-    const updateCurrentTile$ = this.service.updateSectionTileCategory(
-      this.guide.id,
-      currentTileBody
-    );
-    const updatePushedTile$ = this.service.updateSectionTileCategory(
-      this.nextSection.id,
-      pushedTileBody
-    );
-
-    const stream$ = updateCurrentTile$.pipe(switchMap(() => updatePushedTile$));
-
-    stream$.subscribe((res) => console.log(res), (err) => console.log(err));
-  }
-
   onMove(direction) {
-    if (direction === 'up') {
-      this.moveUp();
-    } else {
-      this.moveDown();
-    }
+    this.swap.emit(direction);
+    // if (direction === 'up') {
+    //   this.swap.emit({direction, guide: this.guide});
+    // } else {
+    //   this.moveDown();
+    // }
   }
 
   setWorkingState(working) {
