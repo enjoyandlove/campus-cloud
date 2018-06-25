@@ -1,3 +1,4 @@
+import { SectionsService } from './sections.service';
 /*tslint:disable:max-line-length */
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -27,6 +28,6 @@ import { PersonasTilesModule } from '../tiles/tiles.module';
     PersonasSectionAddButtonComponent,
     PersonasSectionTitleComponent
   ],
-  providers: []
+  providers: [SectionsService]
 })
 export class PersonasSectionsModule {}

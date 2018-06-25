@@ -2371,6 +2371,12 @@
   "t_deals_list_grid_column_store": {
     "message": "Magasin"
   },
+  "t_events_import_import_events": {
+    "message": "Importer des événements"
+  },
+  "t_events_import_upload_picture": {
+    "message": "Téléverser image"
+  },
   "t_personas_button_list_create": {
     "message": "Créer expérience"
   },
@@ -2379,6 +2385,9 @@
   },
   "t_personas_create_header_title": {
     "message": "Créer expérience"
+  },
+  "t_personas_create_section_default_name": {
+    "message": "Untitled "
   },
   "t_personas_create_submit_button": {
     "message": "Enregistrer les changements"

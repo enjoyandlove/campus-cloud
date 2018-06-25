@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'cp-personas-section-controls',
@@ -6,6 +6,10 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./section-controls.component.scss']
 })
 export class PersonasSectionControlsComponent implements OnInit {
+  @Input() disabled: boolean;
+  @Input() disableUp: boolean;
+  @Input() disableDown: boolean;
+
   @Output() moveUp: EventEmitter<null> = new EventEmitter();
   @Output() moveDown: EventEmitter<null> = new EventEmitter();
   @Output() editClick: EventEmitter<null> = new EventEmitter();

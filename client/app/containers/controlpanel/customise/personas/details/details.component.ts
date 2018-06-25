@@ -23,11 +23,15 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
   loading;
   personaId;
 
+  state = {
+    working: false
+  };
+
   constructor(
     public router: Router,
     public session: CPSession,
     public route: ActivatedRoute,
-    public CPI18n: CPI18nService,
+    public cpI18n: CPI18nService,
     public service: PersonasService,
     public utils: PersonasUtilsService,
     public store: Store<IHeader | ISnackbar>
@@ -39,6 +43,102 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
 
   onAddTileToGuideClick() {
     $('#tilesCreate').modal();
+  }
+
+  createCampusGuide() {}
+
+  onAddSectionBefore(newGuide: ICampusGuide, guideId: number) {
+    const nextGuide = (guide: ICampusGuide) => guide.id === guideId;
+    const nextGuideIndex = this.guides.findIndex(nextGuide);
+
+    this.guides.splice(nextGuideIndex, 0, newGuide);
+  }
+
+  onDeletedSection(sectionId: number) {
+    this.guides = this.guides.filter((guide: ICampusGuide) => guide.id !== sectionId);
+  }
+
+  getSectionByIndex(index) {
+    return this.guides[index];
+  }
+
+  errorHanlder() {}
+
+  moveUp(guide) {
+    const previousSectionIndex = this.guides.findIndex((g) => g.id === guide.id);
+    const previousSection = this.guides[previousSectionIndex - 1];
+
+    const school_id = this.session.g.get('school').id;
+    const [newRank, currentRank] = [previousSection.rank, guide.rank];
+
+    const currentTileBody = {
+      school_id,
+      rank: newRank
+    };
+    const pushedTileBody = {
+      school_id,
+      rank: currentRank
+    };
+
+    const updateCurrentTile$ = this.service.updateSectionTileCategory(guide.id, currentTileBody);
+    const updatePushedTile$ = this.service.updateSectionTileCategory(
+      previousSection.id,
+      pushedTileBody
+    );
+
+    const stream$ = updateCurrentTile$.pipe(switchMap(() => updatePushedTile$));
+
+    stream$.subscribe(
+      () => {
+        this.state = { ...this.state, working: false };
+        this.fetch();
+      },
+      () => this.errorHanlder()
+    );
+  }
+
+  moveDown(guide) {
+    const nextSectionIndex = this.guides.findIndex((g) => g.id === guide.id);
+    const nextSection = this.guides[nextSectionIndex + 1];
+
+    const school_id = this.session.g.get('school').id;
+    const [newRank, currentRank] = [nextSection.rank, guide.rank];
+    const currentTileBody = {
+      school_id,
+      rank: newRank
+    };
+    const pushedTileBody = {
+      school_id,
+      rank: currentRank
+    };
+
+    const updateCurrentTile$ = this.service.updateSectionTileCategory(guide.id, currentTileBody);
+    const updatePushedTile$ = this.service.updateSectionTileCategory(
+      nextSection.id,
+      pushedTileBody
+    );
+
+    const stream$ = updateCurrentTile$.pipe(switchMap(() => updatePushedTile$));
+
+    stream$.subscribe(
+      () => {
+        this.state = { ...this.state, working: false };
+        this.fetch();
+      },
+      () => this.errorHanlder()
+    );
+  }
+
+  onSwapSection(direction: string, guide: ICampusGuide) {
+    this.state = {
+      ...this.state,
+      working: true
+    };
+    if (direction === 'up') {
+      this.moveUp(guide);
+    } else {
+      this.moveDown(guide);
+    }
   }
 
   fetch() {
