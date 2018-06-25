@@ -6,7 +6,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
   styleUrls: ['./section-add-button.component.scss']
 })
 export class PersonasSectionAddButtonComponent implements OnInit {
-  @Input() temporary: boolean;
+  @Input() disabled: boolean;
 
   @Output() addSection: EventEmitter<null> = new EventEmitter();
 

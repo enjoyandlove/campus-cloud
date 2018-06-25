@@ -27,7 +27,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
     public router: Router,
     public session: CPSession,
     public route: ActivatedRoute,
-    public CPI18n: CPI18nService,
+    public cpI18n: CPI18nService,
     public service: PersonasService,
     public utils: PersonasUtilsService,
     public store: Store<IHeader | ISnackbar>
@@ -41,14 +41,9 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
     $('#tilesCreate').modal();
   }
 
-  onAddSectionBefore(guideId: number) {
-    const newGuide = {
-      id: null,
-      rank: guideId - 1,
-      name: null,
-      tiles: []
-    };
+  createCampusGuide() {}
 
+  onAddSectionBefore(newGuide: ICampusGuide, guideId: number) {
     const nextGuide = (guide: ICampusGuide) => guide.id === guideId;
     const nextGuideIndex = this.guides.findIndex(nextGuide);
 
@@ -57,6 +52,10 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
 
   onDeletedSection(sectionId: number) {
     this.guides = this.guides.filter((guide: ICampusGuide) => guide.id !== sectionId);
+  }
+
+  getSectionByIndex(index) {
+    return this.guides[index];
   }
 
   fetch() {

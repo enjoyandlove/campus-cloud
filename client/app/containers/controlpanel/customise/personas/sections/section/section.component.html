@@ -1,9 +1,11 @@
-<section class="new-section">
+<section 
+  *ngIf="addSection"
+  class="new-section">
   <div class="row">
     <div class="col-12">
       <cp-personas-section-add-button
-        [temporary]="temporary"
-        (addSection)="addSection.emit(guide.id)">
+        [disabled]="state.working"
+        (addSection)="onAddSection()">
       </cp-personas-section-add-button>
     </div>
   </div>
@@ -14,7 +16,7 @@
     <div class="row">
       <div class="col-8">
         <cp-personas-section-title 
-          [name]="[guide.name + ' ' + guide.id]"
+          [name]="guide.name"
           (nameChanged)="onNameChange($event)">
         </cp-personas-section-title>
       </div>
@@ -22,8 +24,7 @@
         <cp-personas-section-controls
           [disableUp]="first"
           [disableDown]="last"
-          [disabled]="temporary"
-          (moveUp)="onMove('up')"          
+          (moveUp)="onMove('up')"
           (moveDown)="onMove('down')"
           (deleteClick)="onDeleteSection()">
         </cp-personas-section-controls>
@@ -44,7 +45,7 @@
       </div>
       <div class="col-2">
         <cp-personas-tile-add-button
-          (buttonClick)="addTileClick.emit()">
+          (buttonClick)="addTile.emit()">
         </cp-personas-tile-add-button>
       </div>
     </div>

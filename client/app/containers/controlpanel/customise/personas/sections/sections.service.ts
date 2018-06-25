@@ -28,4 +28,10 @@ export class SectionsService extends HTTPService {
 
     return super.delete(url, search, true);
   }
+
+  createSectionTileCategory(body) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GUIDE_TILE_CATEGORY}/`;
+
+    return super.post(url, body, null, true);
+  }
 }

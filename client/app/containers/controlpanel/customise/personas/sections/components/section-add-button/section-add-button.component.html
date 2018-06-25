@@ -6,19 +6,11 @@
     <div class="col-2 text-center">
       <button 
         type="button"
-        *ngIf="!temporary"
+        [disabled]="disabled"
         class="cptbtn cpbtn--link"
         (click)="addSection.emit()">
         <i class="material-icons">add</i>
         <span>{{ 't_personas_section_button_add_section' | cpI18n }}</span>
-      </button>
-      <button 
-        type="button"
-        *ngIf="temporary"
-        class="cptbtn cpbtn--link"
-        (click)="addSection.emit()">
-        <i class="material-icons">add</i>
-        <span>Save</span>
       </button>
     </div>
     <div class="col-5">

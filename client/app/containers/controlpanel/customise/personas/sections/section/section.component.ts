@@ -16,15 +16,18 @@ import { CPI18nService } from '../../../../../../shared/services';
 export class PersonasSectionComponent implements OnInit {
   @Input() last: boolean;
   @Input() first: boolean;
-  @Input() temporary: boolean;
+  @Input() addSection: boolean;
   @Input() guide: ICampusGuide;
+  @Input() previousSection: ICampusGuide;
 
-  @Output() addSection: EventEmitter<null> = new EventEmitter();
-  @Output() addTileClick: EventEmitter<null> = new EventEmitter();
-  @Output() deletedSection: EventEmitter<number> = new EventEmitter();
+  // @Output() addSection: EventEmitter<null> = new EventEmitter();
+
+  @Output() addTile: EventEmitter<null> = new EventEmitter();
+  @Output() created: EventEmitter<ICampusGuide> = new EventEmitter();
+  @Output() deleted: EventEmitter<number> = new EventEmitter();
 
   state = {
-    working: false
+    working: true
   };
 
   constructor(
@@ -66,6 +69,24 @@ export class PersonasSectionComponent implements OnInit {
     });
   }
 
+  onAddSection() {
+    this.setWorkingState(true);
+
+    const body = {
+      rank: this.previousSection.rank + 1,
+      school_id: this.session.g.get('school').id,
+      name: this.cpI18n.translate('t_personas_create_section_default_name')
+    };
+
+    this.service.createSectionTileCategory(body).subscribe(
+      (createdSection: ICampusGuide) => {
+        this.setWorkingState(false);
+        this.created.emit(createdSection);
+      },
+      () => this.errorHandler()
+    );
+  }
+
   onNameChange({ name }) {
     const body = {
       name,
@@ -93,7 +114,7 @@ export class PersonasSectionComponent implements OnInit {
 
     this.service.deleteSectionTileCategory(this.guide.id, search).subscribe(
       () => {
-        this.deletedSection.emit(this.guide.id);
+        this.deleted.emit(this.guide.id);
         this.setWorkingState(false);
       },
       () => this.errorHandler()
