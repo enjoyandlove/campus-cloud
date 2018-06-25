@@ -53,7 +53,7 @@ describe('AudienceCardComponent', () => {
     comp.onSelectedAudience(mockAudience);
 
     expect(comp.selectedAudience.emit).toHaveBeenCalledTimes(1);
-    expect(comp.selectedAudience.emit).toHaveBeenCalledWith(mockAudience.action);
+    expect(comp.selectedAudience.emit).toHaveBeenCalledWith(mockAudience);
 
     expect(comp.message).toBe(comp.cpI18n.translate('campus_wide'));
 

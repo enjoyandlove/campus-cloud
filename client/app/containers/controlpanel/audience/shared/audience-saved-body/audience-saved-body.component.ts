@@ -43,6 +43,7 @@ export class AudienceSavedBodyComponent implements OnInit {
       return {
         action: audience.id,
         label: audience.name,
+        type: audience.type,
         userCount: users
       };
     });
