@@ -92,7 +92,7 @@ export class PersonasSectionComponent implements OnInit {
     );
   }
 
-  onNameChange({ name }) {
+  onNameChange(name) {
     const body = {
       name,
       school_id: this.session.g.get('school').id
