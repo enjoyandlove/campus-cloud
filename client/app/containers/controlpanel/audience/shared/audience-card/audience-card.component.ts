@@ -139,7 +139,7 @@ export class AudienceCardComponent implements OnInit, AfterViewInit {
       ? `${audience.userCount} ${this.cpI18n.translate('users_found')}`
       : this.cpI18n.translate('campus_wide');
 
-    this.selectedAudience.emit(audience.action);
+    this.selectedAudience.emit(audience);
   }
 
   onUsers(users) {

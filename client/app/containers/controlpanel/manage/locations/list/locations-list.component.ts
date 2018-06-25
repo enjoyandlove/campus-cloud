@@ -107,30 +107,20 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
     });
   }
 
-  onLocationUpdated(location) {
-    const _state = Object.assign({}, this.state, {
-      locations: this.state.locations.map((_location) => {
-        if (_location.id === location.id) {
-          return (_location = location.data);
-        }
-
-        return _location;
-      })
-    });
-
-    this.state = Object.assign({}, this.state, _state);
+  onLocationUpdated(editedLocation) {
+    this.state = {
+      ...this.state,
+      locations: this.state.locations.map(
+        (location) => (location.id === editedLocation.id ? editedLocation : location)
+      )
+    };
   }
 
   onLocationDeleted(locationId) {
-    const _state = Object.assign({}, this.state);
-
-    _state.locations = _state.locations.filter((locations) => {
-      if (locations.id !== locationId) {
-        return locations;
-      }
-    });
-
-    this.state = Object.assign({}, this.state, { locations: _state.locations });
+    this.state = {
+      ...this.state,
+      locations: this.state.locations.filter((location) => location.id !== locationId)
+    };
   }
 
   ngOnInit() {

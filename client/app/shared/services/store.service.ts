@@ -64,7 +64,7 @@ export class StoreService extends HTTPService {
   private getAthletics(search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CLUBS}/1;1000`;
 
-    search.append('category_id', isClubAthletic.athletic.toString());
+    search = search.append('category_id', isClubAthletic.athletic.toString());
 
     return super.get(url, search).pipe(
       startWith([

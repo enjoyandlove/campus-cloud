@@ -1,9 +1,10 @@
+import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
 import { HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { CPI18nPipe } from './../../../../../shared/pipes/i18n/i18n.pipe';
 import { BaseComponent } from '../../../../../base/base.component';
@@ -197,6 +198,8 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
 
   onBulkChange(actions) {
     const control = <FormArray>this.form.controls['events'];
+    // load all managers for all controls
+    this.updateManagersByStoreOrClubId(actions.store_id.value);
 
     this.isSingleChecked.map((item) => {
       if (item.checked) {
@@ -205,7 +208,6 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
           if (key === 'store_id' && actions[key] !== null) {
             this.selectedHost[item.index] = actions[key];
             ctrl.controls[key].setValue(actions[key].value);
-            this.updateManagersByStoreOrClubId(actions[key].value);
           } else if (key === 'event_manager_id') {
             this.eventManager[item.index] = actions[key];
             if (actions[key] !== null) {
@@ -253,6 +255,9 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   }
 
   getManagersByHostId(storeOrClubId): Observable<any> {
+    if (!storeOrClubId) {
+      return of([{ label: '---' }]);
+    }
     const search: HttpParams = new HttpParams()
       .append('school_id', this.school.id.toString())
       .append('store_id', storeOrClubId)
@@ -354,7 +359,15 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
         control.controls['poster_url'].setValue(res.image_url);
       })
       .catch((err) => {
-        throw new Error(err);
+        this.store.dispatch({
+          type: SNACKBAR_SHOW,
+          payload: {
+            class: 'danger',
+            autoClose: true,
+            sticky: true,
+            body: err ? err : this.cpI18n.translate('something_went_wrong')
+          }
+        });
       });
   }
 
