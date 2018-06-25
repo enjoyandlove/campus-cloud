@@ -10,6 +10,7 @@
             [last]="last"
             [guide]="guide"
             [first]="first"
+            [temporary]="!guide.id"
             (addSection)="onAddSectionBefore($event)"
             (deletedSection)="onDeletedSection($event)">
           </cp-personas-section>

@@ -6,6 +6,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
   styleUrls: ['./section-controls.component.scss']
 })
 export class PersonasSectionControlsComponent implements OnInit {
+  @Input() disabled: boolean;
   @Input() disableUp: boolean;
   @Input() disableDown: boolean;
 

@@ -2,6 +2,7 @@
   <div class="row">
     <div class="col-12">
       <cp-personas-section-add-button
+        [temporary]="temporary"
         (addSection)="addSection.emit(guide.id)">
       </cp-personas-section-add-button>
     </div>
@@ -21,7 +22,8 @@
         <cp-personas-section-controls
           [disableUp]="first"
           [disableDown]="last"
-          (moveUp)="onMove('up')"
+          [disabled]="temporary"
+          (moveUp)="onMove('up')"          
           (moveDown)="onMove('down')"
           (deleteClick)="onDeleteSection()">
         </cp-personas-section-controls>

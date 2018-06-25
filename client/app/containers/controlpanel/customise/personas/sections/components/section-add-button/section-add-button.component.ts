@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'cp-personas-section-add-button',
@@ -6,6 +6,8 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./section-add-button.component.scss']
 })
 export class PersonasSectionAddButtonComponent implements OnInit {
+  @Input() temporary: boolean;
+
   @Output() addSection: EventEmitter<null> = new EventEmitter();
 
   constructor() {}

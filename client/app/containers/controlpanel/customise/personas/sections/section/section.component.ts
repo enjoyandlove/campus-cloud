@@ -14,9 +14,10 @@ import { CPI18nService } from '../../../../../../shared/services';
   styleUrls: ['./section.component.scss']
 })
 export class PersonasSectionComponent implements OnInit {
-  @Input() guide: ICampusGuide;
   @Input() last: boolean;
   @Input() first: boolean;
+  @Input() temporary: boolean;
+  @Input() guide: ICampusGuide;
 
   @Output() addSection: EventEmitter<null> = new EventEmitter();
   @Output() addTileClick: EventEmitter<null> = new EventEmitter();
