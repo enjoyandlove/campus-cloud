@@ -34,15 +34,14 @@
 
   <section class="section-tiles">
     <div class="row">
-      <div 
+      <cp-personas-tile 
+        [tile]="tile"
         class="col-2" 
-        *ngFor="let tile of guide.tiles">
-          <cp-personas-tile 
-            [tile]="tile"
-            (edited)="onEditedTile($event)"
-            (deleted)="onDeletedTile($event)">
-          </cp-personas-tile>
-      </div>
+        (edited)="onEditedTile($event)"
+        (deleted)="onDeletedTile($event)"
+        [class.mb-4]="i % 5 === 0"
+        *ngFor="let tile of guide.tiles; let i = index">
+      </cp-personas-tile>
       <div class="col-2">
         <cp-personas-tile-add-button
           (buttonClick)="addTile.emit()">

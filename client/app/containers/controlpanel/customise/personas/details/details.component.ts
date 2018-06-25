@@ -6,12 +6,19 @@ import { combineLatest } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
 import { ISnackbar } from './../../../../../reducers/snackbar.reducer';
-import { ICampusGuide, IPersona } from './../persona.interface';
+import { ICampusGuide, IPersona, ITile } from './../persona.interface';
 import { PersonasService } from './../personas.service';
 import { PersonasUtilsService } from './../personas.utils.service';
 import { BaseComponent } from '../../../../../base';
 import { CPSession } from '../../../../../session';
 import { CPI18nService } from '../../../../../shared/services';
+
+interface IState {
+  working: boolean;
+  featureTiles: Array<ITile>;
+  categoryZero: Array<ITile>;
+  guides: Array<ICampusGuide>;
+}
 
 @Component({
   selector: 'cp-personas-details',
@@ -19,12 +26,14 @@ import { CPI18nService } from '../../../../../shared/services';
   styleUrls: ['./details.component.scss']
 })
 export class PersonasDetailsComponent extends BaseComponent implements OnInit {
-  guides: Array<ICampusGuide>;
   loading;
   personaId;
 
-  state = {
-    working: false
+  state: IState = {
+    working: false,
+    guides: [],
+    featureTiles: [],
+    categoryZero: []
   };
 
   constructor(
@@ -49,24 +58,24 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
 
   onAddSectionBefore(newGuide: ICampusGuide, guideId: number) {
     const nextGuide = (guide: ICampusGuide) => guide.id === guideId;
-    const nextGuideIndex = this.guides.findIndex(nextGuide);
+    const nextGuideIndex = this.state.guides.findIndex(nextGuide);
 
-    this.guides.splice(nextGuideIndex, 0, newGuide);
+    this.state.guides.splice(nextGuideIndex, 0, newGuide);
   }
 
   onDeletedSection(sectionId: number) {
-    this.guides = this.guides.filter((guide: ICampusGuide) => guide.id !== sectionId);
+    this.state.guides = this.state.guides.filter((guide: ICampusGuide) => guide.id !== sectionId);
   }
 
   getSectionByIndex(index) {
-    return this.guides[index];
+    return this.state.guides[index];
   }
 
   errorHanlder() {}
 
   moveUp(guide) {
-    const previousSectionIndex = this.guides.findIndex((g) => g.id === guide.id);
-    const previousSection = this.guides[previousSectionIndex - 1];
+    const previousSectionIndex = this.state.guides.findIndex((g) => g.id === guide.id);
+    const previousSection = this.state.guides[previousSectionIndex - 1];
 
     const school_id = this.session.g.get('school').id;
     const [newRank, currentRank] = [previousSection.rank, guide.rank];
@@ -98,8 +107,8 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
   }
 
   moveDown(guide) {
-    const nextSectionIndex = this.guides.findIndex((g) => g.id === guide.id);
-    const nextSection = this.guides[nextSectionIndex + 1];
+    const nextSectionIndex = this.state.guides.findIndex((g) => g.id === guide.id);
+    const nextSection = this.state.guides[nextSectionIndex + 1];
 
     const school_id = this.session.g.get('school').id;
     const [newRank, currentRank] = [nextSection.rank, guide.rank];
@@ -175,7 +184,14 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
     super
       .fetchData(stream$)
       .then(({ data }) => {
-        this.guides = data;
+        this.state = {
+          ...this.state,
+          guides: this.utils.filterTiles(data),
+          featureTiles: this.utils.getFeaturedTiles(data),
+          categoryZero: this.utils.getCategoryZeroTiles(data)
+        };
+
+        console.log(this.state);
       })
       .catch(() => this.router.navigate(['/customize/personas']));
   }
