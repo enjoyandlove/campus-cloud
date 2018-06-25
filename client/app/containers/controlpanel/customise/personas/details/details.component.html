@@ -13,6 +13,7 @@
             [addSection]="!first"
             (addTile)="onAddTileToGuideClick()"
             (deleted)="onDeletedSection($event)"
+            [nextSection]="getSectionByIndex(i + 1)"
             [previousSection]="getSectionByIndex(i - 1)"
             (created)="onAddSectionBefore($event, guide.id)">
           </cp-personas-section>
