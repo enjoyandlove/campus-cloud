@@ -55,6 +55,8 @@ export const amplitudeEvents = {
 
   CAMPUS_WIDE: 'Campus Wide',
 
+  ORIENTATION: 'Orientation',
+
   ONE_SERVICE: 'One Service',
 
   CREATE_CLUB: 'Create Club',
@@ -135,9 +137,17 @@ export const amplitudeEvents = {
 
   MANAGE_DOWNLOAD_DATA: 'Manage - Downloaded Data',
 
+  MANAGE_LOADED_CHECKIN: 'Manage - Loaded Check-In',
+
+  MANAGE_CLICKED_CHECKIN: 'Manage - Clicked Check-In',
+
   ASSESS_VIEWED_TOP_EVENTS: 'Assess - Viewed Top Events',
 
   NOTIFY_SEND_ANNOUNCEMENT: 'Notify - Send Announcement',
+
+  MANAGE_DOWNLOADED_QR_CODE: 'Manage - Downloaded QR Code',
+
+  MANAGE_CHECKEDIN_MANUALLY: 'Manage - Checked In Manually',
 
   ASSESS_VIEWED_TOP_SERVICES: 'Assess - Viewed Top Services'
 };

@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { ProvidersService } from '../../../providers.service';
 import { BaseComponent } from '../../../../../../../base/base.component';
 import { CPTrackingService } from '../../../../../../../shared/services';
+import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 import { createSpreadSheet } from './../../../../../../../shared/utils/csv/parser';
@@ -92,7 +93,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
     });
   }
 
-  trackAmplitudeEvent() {
+  trackDownloadEvent() {
     this.eventProperties = {
       data_type: amplitudeEvents.ASSESSMENT
     };
@@ -100,6 +101,19 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.MANAGE_DOWNLOAD_DATA,
       this.eventProperties);
+  }
+
+  trackCheckinEvent(service_id) {
+    const eventProperties = {
+      service_id,
+      source_page: amplitudeEvents.SERVICE
+    };
+
+    return {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.MANAGE_CLICKED_CHECKIN,
+      eventProperties
+    };
   }
 
   ngOnInit() {
@@ -118,7 +132,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
 
     this.download.subscribe((download) => {
       if (download) {
-        this.trackAmplitudeEvent();
+        this.trackDownloadEvent();
 
         const search = new HttpParams()
           .append('service_id', this.serviceId.toString())

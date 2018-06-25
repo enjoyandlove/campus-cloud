@@ -37,6 +37,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
 
   loading;
   assessments;
+  sortingLabels;
   checkinMethods;
   eventProperties;
   state: IState = state;
@@ -183,6 +184,11 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
       '3': {
         label: 'App check-in'
       }
+    };
+
+    this.sortingLabels = {
+      checkin_time: this.cpI18n.translate('services_label_checkin_time'),
+      checkin_method: this.cpI18n.translate('services_label_all_checkin_methods')
     };
   }
 }

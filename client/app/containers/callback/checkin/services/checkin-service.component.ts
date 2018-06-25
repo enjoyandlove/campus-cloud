@@ -1,9 +1,11 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BaseComponent } from '../../../../base/base.component';
-import { CPI18nService, ErrorService } from '../../../../shared/services';
+
 import { CheckinService } from '../checkin.service';
+import { BaseComponent } from '../../../../base/base.component';
+import { amplitudeEvents } from '../../../../shared/constants/analytics';
+import { CPI18nService, CPTrackingService, ErrorService } from '../../../../shared/services';
 
 interface IState {
   services: Array<any>;
@@ -32,6 +34,7 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
     public route: ActivatedRoute,
     public cpI18n: CPI18nService,
     public errorService: ErrorService,
+    public cpTracking: CPTrackingService,
     public checkinService: CheckinService
   ) {
     super();
@@ -43,7 +46,10 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
 
   onSubmit(data) {
     this.checkinService.doServiceCheckin(data, this.search).subscribe(
-      (_) => this.updateAttendeesList(data),
+      (_) => {
+        this.updateAttendeesList(data);
+        this.trackAmplitudeEvent(true);
+      },
       (_) => {
         this.errorService.handleError(this.cpI18n.translate('something_went_wrong'));
       }
@@ -65,7 +71,21 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
       .catch((_) => this.router.navigate(['/login']));
   }
 
+  trackAmplitudeEvent(checkedin = false) {
+    const eventName = checkedin
+      ? amplitudeEvents.MANAGE_CHECKEDIN_MANUALLY
+      : amplitudeEvents.MANAGE_LOADED_CHECKIN;
+
+    const eventProperties = {
+      service_id: this.serviceId,
+      check_in_type: amplitudeEvents.SERVICE
+    };
+
+    this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
+  }
+
   ngOnInit() {
+    this.trackAmplitudeEvent();
     this.search = new HttpParams()
       .set('service_id', this.serviceId)
       .set('provider_id', this.serviceProviderId);
