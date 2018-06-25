@@ -55,7 +55,7 @@ export class PersonasService extends HTTPService {
   }
 
   getTilesByPersona(search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GUIDE_TILES}/`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GUIDE_TILES}/1;90000`;
 
     return super.get(url, search).pipe(map((res) => sortBy(res, (t: any) => t.rank)));
   }

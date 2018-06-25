@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-
+import { flatten, sortBy } from 'lodash';
 import { CPI18nService } from './../../../../shared/services/i18n.service';
-import { PersonasType, PersonasLoginRequired } from './personas.status';
+import { ICampusGuide, ITile } from './persona.interface';
+import { PersonasLoginRequired, PersonasType } from './personas.status';
 
 @Injectable()
 export class PersonasUtilsService {
@@ -25,7 +26,42 @@ export class PersonasUtilsService {
   }
 
   filterTileByCategory(tiles, categoryId) {
-    return tiles.filter((tile) => tile.tile_category_id === categoryId);
+    return tiles
+      .filter((tile: ITile) => tile.tile_category_id === categoryId)
+      .filter((tile: ITile) => tile.rank !== -1);
+  }
+
+  getCategoryZeroTiles(guides: Array<ICampusGuide>) {
+    return sortBy(
+      flatten(
+        guides.map((guide: ICampusGuide) =>
+          guide.tiles.filter((tile: ITile) => tile.tile_category_id === 0)
+        )
+      ),
+      (i) => i.rank
+    );
+  }
+
+  getFeaturedTiles(guides: Array<ICampusGuide>) {
+    return sortBy(
+      flatten(
+        guides.map((guide: ICampusGuide) =>
+          guide.tiles.filter((tile: ITile) => tile.featured_rank > -1)
+        )
+      ),
+      (i) => i.rank
+    );
+  }
+
+  filterTiles(guides: Array<ICampusGuide>) {
+    return guides.map((guide: ICampusGuide) => {
+      return {
+        ...guide,
+        tiles: guide.tiles
+          .filter((tile: ITile) => tile.tile_category_id !== 0)
+          .filter((tile: ITile) => tile.rank > -1)
+      };
+    });
   }
 
   groupTilesWithTileCategories(tileCategories, tiles) {
