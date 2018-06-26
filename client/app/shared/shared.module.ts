@@ -1,3 +1,4 @@
+import { CPColorPickerDirective } from './directives/color-picker/color-picker.directive';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -59,6 +60,7 @@ import { LocationsService } from '../containers/controlpanel/manage/locations/lo
 
 @NgModule({
   declarations: [
+    CPColorPickerDirective,
     CPTabComponent,
     CPTabsComponent,
     CPFIlterByLength,
@@ -178,7 +180,8 @@ import { LocationsService } from '../containers/controlpanel/manage/locations/lo
     CPDropdownMultiSelectComponent,
     CPCharCounterComponent,
     CPWorkingComponent,
-    CPHeaderLinkComponent
+    CPHeaderLinkComponent,
+    CPColorPickerDirective
   ]
 })
 export class SharedModule {}
