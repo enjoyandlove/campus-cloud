@@ -2458,6 +2458,12 @@
   "t_personas_tile_create_type_resource_external_link": {
     "message": "External Link"
   },
+  "t_personas_tile_create_type_resource_resource": {
+    "message": "Resource"
+  },
+  "t_personas_tile_create_type_resource_resource_list": {
+    "message": "Resource List"
+  },
   "t_personas_tile_create_type_resource_web_link": {
     "message": "Web Link"
   },

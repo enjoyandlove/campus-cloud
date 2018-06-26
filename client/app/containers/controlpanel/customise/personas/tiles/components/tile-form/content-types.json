@@ -13,5 +13,15 @@
     "id": "external_link",
     "etxra_field_type": 1,
     "label": "t_personas_tile_create_type_resource_external_link"
+  },
+  {
+    "id": "resource",
+    "etxra_field_type": 1,
+    "label": "t_personas_tile_create_type_resource_resource"
+  },
+  {
+    "id": "resource_list",
+    "etxra_field_type": 1,
+    "label": "t_personas_tile_create_type_resource_resource_list"
   }
 ]
