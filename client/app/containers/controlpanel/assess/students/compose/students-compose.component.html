@@ -19,7 +19,7 @@
       <div class="row">
         <div class="col-6">
           <div class="form-group">
-            <label for="to" i18n>{{ 'recipient' | cpI18n }}</label>
+            <label>{{ 'recipient' | cpI18n }}</label>
             <input
               disabled
               type="text"
@@ -29,7 +29,7 @@
         </div>
         <div class="col-6">
           <div class="form-group">
-            <label for="from" i18n>{{ 'from' | cpI18n }}</label>
+            <label>{{ 'from' | cpI18n }}</label>
             <cp-dropdown
               [reset]="resetStores$"
               [items]="stores$ | async"
@@ -43,11 +43,13 @@
       <div class="row">
         <div class="col-12">
           <div class="form-group">
-            <label for="subject" i18n>
+            <label>
               {{ 'subject' | cpI18n }}
-              <span class="float-right">
-                {{ form.controls.subject.value ? form.controls.subject.value.length : 0 }}/128
-              </span>
+              <cp-char-counter
+                class="float-right"
+                [limit]="128"
+                [charCount]="form.controls.subject.value">
+              </cp-char-counter>
             </label>
             <input
               type="text"
@@ -61,11 +63,13 @@
       <div class="row">
         <div class="col-12">
           <div class="form-group">
-            <label for="message" i18n>
+            <label>
               {{ 'message_noun' | cpI18n }}
-              <span class="float-right">
-                {{ form.controls.message.value ? form.controls.message.value.length : 0 }}/400
-              </span>
+              <cp-char-counter
+                class="float-right"
+                [limit]="400"
+                [charCount]="form.controls.message.value">
+              </cp-char-counter>
             </label>
             <textarea
               class="form-control"

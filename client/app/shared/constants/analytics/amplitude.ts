@@ -15,6 +15,8 @@ export const amplitudeEvents = {
 
   LIST: 'List',
 
+  EVENT: 'Event',
+
   ACTIVE: 'Active',
 
   REGULAR: 'Regular',
@@ -41,13 +43,21 @@ export const amplitudeEvents = {
 
   SAVED_AUDIENCE: 'Saved',
 
+  ATTENDANCE: 'Attendance',
+
   CREATE_JOB: 'Create Job',
 
   LOGGED_OUT: 'Logged Out',
 
+  ASSESSMENT: 'Assessment',
+
   MENU_AUDIENCE: 'Audience',
 
   CAMPUS_WIDE: 'Campus Wide',
+
+  ORIENTATION: 'Orientation',
+
+  ONE_SERVICE: 'One Service',
 
   CREATE_CLUB: 'Create Club',
 
@@ -71,13 +81,21 @@ export const amplitudeEvents = {
 
   SELECT_ACCESS: 'Select Access',
 
+  NO_ENGAGEMENT: 'No Engagement',
+
   CLICKED_CREATE: 'Clicked Create',
 
   UPLOADED_PHOTO: 'Uploaded Photo',
 
   CREATE_SERVICE: 'Create Service',
 
+  ONE_ENGAGEMENT: 'One Engagement',
+
   CREATE_PROGRAM: 'Create Program',
+
+  SINGLE_STUDENT: 'Single Student',
+
+  ALL_ENGAGEMENT: 'All Engagement',
 
   CHANGED_SCHOOL: 'Changed School',
 
@@ -103,13 +121,33 @@ export const amplitudeEvents = {
 
   INVITED_TEAM_MEMBER: 'Invited Team Member',
 
+  MULTIPLE_ENGAGEMENT: 'Multiple Engagement',
+
   UPDATED_TEAM_MEMBER: 'Updated Team Member',
 
   DELETED_TEAM_MEMBER: 'Deleted Team Member',
 
+  ASSESS_SENT_MESSAGE: 'Assess - Sent Message',
+
   CREATE_CALENDAR_ITEM: 'Create Calendar Item',
+
+  ASSESS_DOWNLOAD_DATA: 'Assess Downloaded Data',
 
   NOTIFY_SAVED_TEMPLATE: 'Notify - Saved Template',
 
-  NOTIFY_SEND_ANNOUNCEMENT: 'Notify - Send Announcement'
+  MANAGE_DOWNLOAD_DATA: 'Manage - Downloaded Data',
+
+  MANAGE_LOADED_CHECKIN: 'Manage - Loaded Check-In',
+
+  MANAGE_CLICKED_CHECKIN: 'Manage - Clicked Check-In',
+
+  ASSESS_VIEWED_TOP_EVENTS: 'Assess - Viewed Top Events',
+
+  NOTIFY_SEND_ANNOUNCEMENT: 'Notify - Send Announcement',
+
+  MANAGE_DOWNLOADED_QR_CODE: 'Manage - Downloaded QR Code',
+
+  MANAGE_CHECKEDIN_MANUALLY: 'Manage - Checked In Manually',
+
+  ASSESS_VIEWED_TOP_SERVICES: 'Assess - Viewed Top Services'
 };

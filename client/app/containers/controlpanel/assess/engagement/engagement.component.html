@@ -55,7 +55,7 @@
   modalId="composeModal">
   <cp-engagement-compose
     [props]="messageData"
-    (success)="onFlashMessage()"
+    (success)="onFlashMessage($event)"
     (teardown)="onComposeTeardown()">
   </cp-engagement-compose>
 </cp-modal>

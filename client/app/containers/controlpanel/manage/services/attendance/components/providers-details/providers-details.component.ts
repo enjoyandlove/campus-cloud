@@ -1,14 +1,17 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { BehaviorSubject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
+import { Store } from '@ngrx/store';
+
+import { ProvidersService } from '../../../providers.service';
 import { ServicesService } from './../../../services.service';
 import { BaseComponent } from '../../../../../../../base/base.component';
-import { HEADER_UPDATE, IHeader } from '../../../../../../../reducers/header.reducer';
 import { STAR_SIZE } from '../../../../../../../shared/components/cp-stars';
-import { ProvidersService } from '../../../providers.service';
+import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
+import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
+import { HEADER_UPDATE, IHeader } from '../../../../../../../reducers/header.reducer';
 
 @Component({
   selector: 'cp-providers-details',
@@ -75,6 +78,19 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
         children: []
       }
     });
+  }
+
+  trackCheckinEvent(service_id) {
+    const eventProperties = {
+      service_id,
+      source_page: amplitudeEvents.SERVICE
+    };
+
+    return {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.MANAGE_CLICKED_CHECKIN,
+      eventProperties
+    };
   }
 
   ngOnInit() {

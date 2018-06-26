@@ -21,28 +21,22 @@
                   <span i18n>{{ 'rating' | cpI18n }}</span>
                 </div>
                 <div class="col-2">
-                  <span
-                    class="hover"
-                    (click)="doSort('check_in_method')">
-                    {{ 'services_label_all_checkin_methods' | cpI18n }}
-                    <span *ngIf="state.sort_field === 'check_in_method'">
-                      <i class="material-icons">
-                        {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
-                      </i>
-                    </span>
-                  </span>
+                  <cp-sorting-header
+                    sortLabel="check_in_method"
+                    (click)="doSort('check_in_method')"
+                    [label]="sortingLabels.checkin_method"
+                    [sortField]="state.sort_field"
+                    [sortDirection]="state.sort_direction">
+                  </cp-sorting-header>
                 </div>
                 <div class="col-3">
-                  <span
-                    class="hover"
-                    (click)="doSort('check_in_time')">
-                    {{ 'services_label_checkin_time' | cpI18n }}
-                    <span *ngIf="state.sort_field === 'check_in_time'">
-                      <i class="material-icons">
-                        {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
-                      </i>
-                    </span>
-                  </span>
+                  <cp-sorting-header
+                    sortLabel="check_in_time"
+                    (click)="doSort('check_in_time')"
+                    [label]="sortingLabels.checkin_time"
+                    [sortField]="state.sort_field"
+                    [sortDirection]="state.sort_direction">
+                  </cp-sorting-header>
                 </div>
               </div>
             </div>

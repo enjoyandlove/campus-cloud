@@ -11,6 +11,8 @@ import { CPSession } from './../../../../../../../session/index';
 import { EventUtilService } from '../../../events.utils.service';
 import { CPI18nService } from '../../../../../../../shared/services';
 import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
+import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
+import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
 
 interface ISort {
   sort_field: string;
@@ -30,6 +32,9 @@ const sort = {
 export class ListUpcomingComponent implements OnInit {
   @Input() state: any;
   @Input() events: any;
+  @Input() isClub: boolean;
+  @Input() isService: boolean;
+  @Input() isAthletic: boolean;
   @Input() isOrientation: boolean;
 
   @Output() deleteEvent: EventEmitter<any> = new EventEmitter();
@@ -57,6 +62,25 @@ export class ListUpcomingComponent implements OnInit {
     this.sort = Object.assign({}, this.sort, { sort_field, sort_direction });
 
     this.sortList.emit(this.sort);
+  }
+
+  trackEvent(event_id) {
+    const source_page = this.utils.getCheckinSourcePage(
+      this.isAthletic,
+      this.isService,
+      this.isClub,
+      this.isOrientation);
+
+    const eventProperties = {
+      event_id,
+      source_page
+    };
+
+    return {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.MANAGE_CLICKED_CHECKIN,
+      eventProperties
+    };
   }
 
   ngOnInit() {
