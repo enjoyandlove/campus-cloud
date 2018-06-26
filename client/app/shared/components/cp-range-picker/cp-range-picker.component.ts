@@ -11,10 +11,9 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
-import { CPSession } from './../../../../../session';
-import { CPDate } from './../../../../../shared/utils/date/date';
-import { DashboardUtilsService } from './../../dashboard.utils.service';
-import { FORMAT, CPDatePipe } from './../../../../../shared/pipes/date/date.pipe';
+import { CPSession } from './../../../session';
+import { CPDate } from './../../utils/date/date';
+import { FORMAT, CPDatePipe } from './../../pipes/date/date.pipe';
 
 interface IDateChange {
   end: number;
@@ -22,24 +21,31 @@ interface IDateChange {
   label: string;
 }
 
+interface IProps {
+  class: string;
+  isDropdown: boolean;
+}
+
 declare var $: any;
 import 'flatpickr';
+import * as moment from 'moment';
 
 @Component({
-  selector: 'cp-dashboard-date-picker',
-  templateUrl: './dashboard-date-picker.component.html',
-  styleUrls: ['./dashboard-date-picker.component.scss'],
+  selector: 'cp-range-picker',
+  templateUrl: './cp-range-picker.component.html',
+  styleUrls: ['./cp-range-picker.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class DashboardDatePickerComponent implements OnInit, AfterViewInit, OnDestroy {
+export class CPRangePickerComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('calendarEl') calendarEl: ElementRef;
 
+  @Input() dateRanges;
+  @Input() props: IProps;
   @Output() dateChange: EventEmitter<IDateChange> = new EventEmitter();
 
   picker;
   datePipe;
   selected = null;
-  customDates = [];
   dateFormat = FORMAT.SHORT;
   pickerOptions;
 
@@ -48,7 +54,7 @@ export class DashboardDatePickerComponent implements OnInit, AfterViewInit, OnDe
     this.setLabel(state);
   }
 
-  constructor(private helper: DashboardUtilsService, public session: CPSession) {}
+  constructor(public session: CPSession) {}
 
   onDateChanged(selectedDates) {
     if (selectedDates.length === 2) {
@@ -62,17 +68,22 @@ export class DashboardDatePickerComponent implements OnInit, AfterViewInit, OnDe
       );
 
       const date = {
-        start: this.helper.dayStart(selectedDates[0]),
-        end: this.helper.dayEnd(selectedDates[1]),
+        start: this.dayStart(selectedDates[0]),
+        end: this.dayEnd(selectedDates[1]),
         label: `${formattedStart} - ${formattedEnd}`
       };
 
       this.setLabel(date);
-
       this.triggerChange();
-
-      // $(this.calendarEl.nativeElement).dropdown('toggle');
     }
+  }
+
+  dayStart(date) {
+    return CPDate.toEpoch(moment(date).startOf('day'), this.session.tz);
+  }
+
+  dayEnd(date) {
+    return CPDate.toEpoch(moment(date).endOf('day'), this.session.tz);
   }
 
   resetCalendar() {
@@ -108,7 +119,6 @@ export class DashboardDatePickerComponent implements OnInit, AfterViewInit, OnDe
 
   ngOnInit() {
     this.datePipe = new CPDatePipe(this.session);
-    this.customDates = [this.helper.last30Days(), this.helper.last90Days(), this.helper.lastYear()];
 
     this.pickerOptions = {
       utc: true,

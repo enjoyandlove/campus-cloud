@@ -47,7 +47,9 @@ export class EngagementComponent extends BaseComponent implements OnInit {
       queryParams: {
         engagement: this.filterState.engagement.route_id,
         for: this.filterState.for.route_id,
-        range: this.filterState.range.route_id
+        range: this.filterState.range.route_id,
+        start: this.filterState.range.payload.range.start,
+        end: this.filterState.range.payload.range.end
       }
     });
   }

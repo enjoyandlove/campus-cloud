@@ -1,7 +1,6 @@
 export * from './dashboard-top-clubs';
 export * from './dashboard-assessment';
 export * from './dashboard-top-events';
-export * from './dashboard-date-picker';
 export * from './dashboard-campus-tile';
 export * from './dashboard-top-resource';
 export * from './dashboard-integrations';

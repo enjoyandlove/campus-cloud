@@ -42,6 +42,8 @@ export class EngagementTopBarComponent implements OnInit {
   @Output() doFilter: EventEmitter<IState> = new EventEmitter();
   @Output() download: EventEmitter<boolean> = new EventEmitter();
 
+  props;
+
   engageMentFilter;
 
   hasRouteData;
@@ -63,7 +65,7 @@ export class EngagementTopBarComponent implements OnInit {
   ) {}
 
   onDateRangeChange(payload) {
-    this.updateState('range', payload);
+    this.updateState('range', this.setPayload(payload));
   }
 
   onScopeChange(payload) {
@@ -72,6 +74,18 @@ export class EngagementTopBarComponent implements OnInit {
 
   onStudentChange(payload) {
     this.updateState('for', payload);
+  }
+
+  setPayload(payload) {
+    if (!payload.hasOwnProperty('payload')) {
+       return {
+         ...this.setDateRange(payload),
+         label: payload.label,
+         route_id: payload.route_id
+       };
+    } else {
+      return payload;
+    }
   }
 
   updateState(key, payload) {
@@ -113,14 +127,43 @@ export class EngagementTopBarComponent implements OnInit {
       },
 
       range: {
-        ...this.getFromArray(this.dateFilter, 'route_id', routeParams.range)
+        ...this.getRange(routeParams)
       }
     });
 
     this.doFilter.emit(this.state);
   }
 
+  getRange(routeParams) {
+    const range = this.getFromArray(this.dateFilter, 'route_id', routeParams.range);
+    if (!range) {
+        return {
+          ...this.setDateRange(routeParams),
+          label: routeParams.range,
+          route_id: routeParams.range
+        };
+    } else {
+      return range;
+    }
+  }
+
+  setDateRange(filter) {
+    return {
+      payload: {
+        range: {
+          start: filter.start,
+          end: filter.end
+        }
+      }
+    };
+  }
+
   ngOnInit() {
+    this.props = {
+      class: 'cancel',
+      isDropdown: true
+    };
+
     const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 

@@ -9,7 +9,6 @@ import {
   DashboardTopClubsComponent,
   DashboardCampuTileComponent,
   DashboardTopEventsComponent,
-  DashboardDatePickerComponent,
   DashboardAssessmentComponent,
   DashboardTopResourceComponent,
   DashboardTopServicesComponent,
@@ -28,7 +27,6 @@ import { EngagementModule } from './../assess/engagement/engagement.module';
 @NgModule({
   declarations: [
     DashboardComponent,
-    DashboardDatePickerComponent,
     DashboardDownloadsChartComponent,
     DashboardGeneralInformationComponent,
     DashboardTopEventsComponent,

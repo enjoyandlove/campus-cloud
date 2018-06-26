@@ -2,10 +2,12 @@
 <div class="cp-wrapper cp-wrapper--outer">
   <div class="row tile">
     <div class="col-12">
-      <cp-dashboard-date-picker
+      <cp-range-picker
+        [props]="props"
         [state]="currentDate"
+        [dateRanges]="dateRanges"
         (dateChange)="onDateChange($event)">
-      </cp-dashboard-date-picker>
+      </cp-range-picker>
     </div>
   </div>
 

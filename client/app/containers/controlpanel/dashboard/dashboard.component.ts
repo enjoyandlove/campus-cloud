@@ -15,6 +15,8 @@ const isTileReady = (val) => !!val;
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  props;
+  dateRanges;
   headerData;
   user: IUser;
   canAssess = false;
@@ -117,6 +119,8 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.dateRanges = [this.helper.last30Days(), this.helper.last90Days(), this.helper.lastYear()];
+
     this.canAssess = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.assessment);
 
     this.canViewClub = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.clubs);
@@ -134,6 +138,9 @@ export class DashboardComponent implements OnInit {
     }
 
     this.updateHeader();
-    // this.subscribeToTilesReadyEvent();
+
+    this.props = {
+      class: 'primary dropdown-toggle'
+    };
   }
 }
