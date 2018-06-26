@@ -42,7 +42,9 @@ export class EngagementTopBarComponent implements OnInit {
   @Output() doFilter: EventEmitter<IState> = new EventEmitter();
   @Output() download: EventEmitter<boolean> = new EventEmitter();
 
-  props;
+  icon;
+
+  datePickerClass;
 
   engageMentFilter;
 
@@ -83,9 +85,9 @@ export class EngagementTopBarComponent implements OnInit {
          label: payload.label,
          route_id: payload.route_id
        };
-    } else {
-      return payload;
     }
+
+    return payload;
   }
 
   updateState(key, payload) {
@@ -142,9 +144,9 @@ export class EngagementTopBarComponent implements OnInit {
           label: routeParams.range,
           route_id: routeParams.range
         };
-    } else {
-      return range;
     }
+
+    return range;
   }
 
   setDateRange(filter) {
@@ -159,10 +161,8 @@ export class EngagementTopBarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.props = {
-      class: 'cancel',
-      isDropdown: true
-    };
+    this.icon = true;
+    this.datePickerClass = 'cancel';
 
     const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id.toString());

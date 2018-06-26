@@ -4,9 +4,9 @@
     aria-haspopup="true"
     aria-expanded="false"
     data-toggle="dropdown"
-    [class]="'picker--master-button cpbtn cpbtn--' + props.class">
+    [class]="'cpbtn cpbtn--' + class">
     {{ selected.label }}
-    <i class="material-icons" *ngIf="props.isDropdown">keyboard_arrow_down</i>
+    <i class="material-icons" *ngIf="icon">keyboard_arrow_down</i>
   </button>
   <div
     aria-labelledby="dropdownMenuButton"
@@ -21,7 +21,7 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row" *ngIf="dateRanges">
       <div class="col-12">
         <div class="picker--controls">
           <button

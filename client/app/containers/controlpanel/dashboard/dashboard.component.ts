@@ -15,10 +15,10 @@ const isTileReady = (val) => !!val;
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  props;
   dateRanges;
   headerData;
   user: IUser;
+  datePickerClass;
   canAssess = false;
   currentDate = null;
   canViewClub = false;
@@ -127,6 +127,8 @@ export class DashboardComponent implements OnInit {
 
     this.currentDate = this.helper.last30Days();
 
+    this.datePickerClass = 'primary dropdown-toggle';
+
     if (
       this.route.snapshot.queryParams['start'] &&
       this.route.snapshot.queryParams['end'] &&
@@ -138,9 +140,5 @@ export class DashboardComponent implements OnInit {
     }
 
     this.updateHeader();
-
-    this.props = {
-      class: 'primary dropdown-toggle'
-    };
   }
 }

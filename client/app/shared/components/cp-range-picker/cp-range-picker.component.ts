@@ -21,11 +21,6 @@ interface IDateChange {
   label: string;
 }
 
-interface IProps {
-  class: string;
-  isDropdown: boolean;
-}
-
 declare var $: any;
 import 'flatpickr';
 import * as moment from 'moment';
@@ -40,7 +35,8 @@ export class CPRangePickerComponent implements OnInit, AfterViewInit, OnDestroy 
   @ViewChild('calendarEl') calendarEl: ElementRef;
 
   @Input() dateRanges;
-  @Input() props: IProps;
+  @Input() icon: boolean;
+  @Input() class: string;
   @Output() dateChange: EventEmitter<IDateChange> = new EventEmitter();
 
   picker;

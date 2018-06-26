@@ -56,10 +56,8 @@ describe('CPRangePickerComponent', () => {
     comp.picker = $(comp.calendarEl.nativeElement).flatpickr(pickerOptions);
     comp.datePipe = new CPDatePipe(mockSession);
     comp.session = TestBed.get(CPSession);
-    comp.props = {
-      class: 'secondary',
-      isDropdown: true
-    };
+    comp.class = 'secondary';
+    comp.icon = true;
 
     spyOn(comp.dateChange, 'emit');
     spyOn(comp.picker, 'clear');

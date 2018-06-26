@@ -3,8 +3,8 @@
   <div class="row tile">
     <div class="col-12">
       <cp-range-picker
-        [props]="props"
         [state]="currentDate"
+        [class]="datePickerClass"
         [dateRanges]="dateRanges"
         (dateChange)="onDateChange($event)">
       </cp-range-picker>
