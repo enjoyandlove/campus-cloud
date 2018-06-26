@@ -2488,6 +2488,9 @@
   "t_shared_cancel": {
     "message": "Cancel"
   },
+  "t_shared_color": {
+    "message": "Color"
+  },
   "t_shared_delete": {
     "message": "Delete"
   },

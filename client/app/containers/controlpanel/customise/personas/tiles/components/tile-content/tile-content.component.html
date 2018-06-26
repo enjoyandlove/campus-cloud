@@ -8,7 +8,8 @@
         <img 
           [alt]="tile.name"
           class="img-fluid" 
-          [src]="tile.img_url">
+          [src]="tile.img_url"
+          *ngIf="tile.img_url">
       </div>
       <div class="tile__meta text-truncate">
         {{tile.name}}

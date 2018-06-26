@@ -9,6 +9,10 @@
       <div class="row">
         <cp-personas-tile-base 
           class="col-5">
+          <cp-personas-tile-content
+            [visible]=[true]
+            [tile]="tilePreview">
+          </cp-personas-tile-content>
         </cp-personas-tile-base>
         <div class="col-7">
           <div class="row">
@@ -21,14 +25,21 @@
             </div>
           </div>
     
-          <div class="row">
-            <div class="form-group col-12">
-              <label>{{'color' | cpI18n }}</label>
+          <div class="row form-group">
+            <div class="col">
+              <label>{{'t_shared_color' | cpI18n }}</label>
               <input
                 type="text"
                 cpColorPicker
                 class="form-control"
-                formControlName="name">
+                (changed)="onColorChanged($event)">
+            </div>
+            <div class="col">
+              <cp-upload-button
+                [buttonText]="uploadImageBtn"
+                buttonClass="cpbtn cpbtn--link"
+                (fileUpload)="onFileChanged($event)">
+              </cp-upload-button>
             </div>
           </div>
         </div>
