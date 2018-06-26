@@ -2455,11 +2455,20 @@
   "t_personas_section_button_add_section": {
     "message": "Add Section"
   },
+  "t_personas_tile_create_type_resource_external_link": {
+    "message": "External Link"
+  },
+  "t_personas_tile_create_type_resource_web_link": {
+    "message": "Web Link"
+  },
   "t_personas_tile_modal_create_appearance": {
     "message": "Appearance"
   },
   "t_personas_tile_modal_create_content": {
     "message": "Content"
+  },
+  "t_personas_tile_modal_create_label_resources": {
+    "message": "Resource Type"
   },
   "t_personas_tile_modal_create_label_type": {
     "message": "Type"

@@ -190,8 +190,6 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
           featureTiles: this.utils.getFeaturedTiles(data),
           categoryZero: this.utils.getCategoryZeroTiles(data)
         };
-
-        console.log(this.state);
       })
       .catch(() => this.router.navigate(['/customize/personas']));
   }

@@ -1,18 +1,17 @@
 [
   {
-    "id": "resource",
-    "label": "t_personas_tile_create_type_resource"
-  },
-  {
-    "id": "resource_list",
-    "label": "t_personas_tile_create_type_resource_list"
+    "id": null,
+    "etxra_field_type": null,
+    "label": "[NOTRANSLATE]---[NOTRANSLATE]"
   },
   {
     "id": "web_link",
+    "etxra_field_type": 1,
     "label": "t_personas_tile_create_type_resource_web_link"
   },
   {
     "id": "external_link",
+    "etxra_field_type": 1,
     "label": "t_personas_tile_create_type_resource_external_link"
   }
 ]

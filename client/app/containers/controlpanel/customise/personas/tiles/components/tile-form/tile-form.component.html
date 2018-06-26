@@ -1,1 +1,65 @@
-The Form
+<form [formGroup]="form">
+  <div class="row">
+    <div class="col-12 header">
+      <div class="row">
+        <div class="col-12">
+          <p class="title">{{ 't_personas_tile_modal_create_appearance' | cpI18n }}</p>
+        </div>
+      </div>
+      <div class="row">
+        <cp-personas-tile-base 
+          class="col-5">
+        </cp-personas-tile-base>
+        <div class="col-7">
+          <div class="row">
+            <div class="form-group col-12">
+              <label>{{'name' | cpI18n }}</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="name">
+            </div>
+          </div>
+    
+          <div class="row">
+            <div class="form-group col-12">
+              <label>{{'color' | cpI18n }}</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="name">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 footer">
+      <div class="row">
+        <div class="col-6">
+          <p class="title">{{ 't_personas_tile_modal_create_content' | cpI18n }}</p>
+    
+          <div class="row">
+            <div class="col-12">
+              <label>{{ 't_personas_tile_modal_create_label_type' | cpI18n }}</label>
+              <cp-dropdown 
+                [items]="contentTypes"
+                (selected)="onContentTypeChange($event)">
+              </cp-dropdown>
+            </div>
+          </div>
+    
+          <div class="row" *ngIf="extraFields">
+            <div class="col-12">
+              <label>
+                {{ 't_personas_tile_modal_create_label_resources' | cpI18n }}
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
