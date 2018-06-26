@@ -1,10 +1,14 @@
-import { HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CPSession } from './../../../../../../session/index';
-import { CPI18nService } from './../../../../../../shared/services/i18n.service';
-import { BaseComponent } from '../../../../../../base/base.component';
+
 import { EngagementService } from '../../engagement.service';
+import { CPSession } from './../../../../../../session/index';
+import { AssessUtilsService } from '../../../assess.utils.service';
+import { CPTrackingService } from '../../../../../../shared/services';
+import { BaseComponent } from '../../../../../../base/base.component';
+import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
+import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 
 const sortTypes = {
   0: 'engagements',
@@ -32,9 +36,11 @@ interface IState {
 export class EngagementServicesBoxComponent extends BaseComponent implements OnInit {
   @Input() props: Observable<any>;
 
+  filters;
   isDisable;
   isSorting;
   sortingBy;
+  eventProperties;
   loading = false;
   servicesRanking;
   state: IState = {
@@ -51,18 +57,31 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public service: EngagementService
+    public utils: AssessUtilsService,
+    public service: EngagementService,
+    public cpTracking: CPTrackingService
   ) {
     super();
   }
 
   onSortBy(sortBy) {
     this.isSorting = true;
+    this.trackAmplitudeEvent(sortBy.label);
     this.state = Object.assign({}, this.state, {
       sortBy: sortTypes[sortBy.action]
     });
 
     this.fetch();
+  }
+
+  trackAmplitudeEvent(sort_type) {
+    this.eventProperties = {
+      ...this.utils.getEventProperties(this.filters), sort_type
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.ASSESS_VIEWED_TOP_SERVICES,
+      this.eventProperties);
   }
 
   fetch() {
@@ -143,6 +162,7 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
 
   ngOnInit() {
     this.props.subscribe((res) => {
+      this.filters = res;
       this.isDisable = res.engagement.data.type === 'events';
 
       this.state = Object.assign({}, this.state, {

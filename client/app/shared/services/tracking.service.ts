@@ -21,40 +21,49 @@ declare var window: any;
 export class CPTrackingService {
   constructor(public router: Router) {}
 
-  loadAmplitude(session) {
-    let identify;
-    const user = session.get('user');
-    const school = session.get('school');
+  loadAmplitude(session = null) {
+    const user = session ? session.get('user') : null;
+    const school = session ? session.get('school') : null;
     const api_key = isProd
       ? '6c5441a7008b413b8d3d29f8130afae1'
       : 'be78bb81dd7f98c7cf8d1a7994e07c85';
 
     require('node_modules/amplitude-js/src/amplitude-snippet.js');
 
-    window.amplitude.getInstance().init(api_key, this.getSchoolUserID(user.id));
+    window.amplitude.getInstance().init(api_key, this.getSchoolUserID(user));
 
-    identify = new window.amplitude.Identify()
-      .set('school_name', school.name)
-      .set('is_oohlala', this.isOohlala(user.email))
-      .set('school_id', this.getSchoolUserID(school.id));
+    this.setIdentity(school, user);
+  }
 
-    window.amplitude.getInstance().identify(identify);
+  setIdentity(school, user) {
+    if (school && user) {
+      const identify = new window.amplitude.Identify()
+        .set('school_name', school.name)
+        .set('is_oohlala', this.isOohlala(user.email))
+        .set('school_id', this.getSchoolUserID(school.id));
+
+      window.amplitude.getInstance().identify(identify);
+    }
   }
 
   isOohlala(email) {
     return email.split('@').includes('oohlalamobile.com');
   }
 
-  getSchoolUserID(id) {
+  getSchoolUserID(user) {
+    if (!user) {
+      return;
+    }
+
     if (isCanada) {
-      return `CAN${id}`;
+      return `CAN${user.id}`;
     } else if (isSea) {
-      return `SEA${id}`;
+      return `SEA${user.id}`;
     } else if (isUsa) {
-      return `US${id}`;
+      return `US${user.id}`;
     } else {
       // default for dev
-      return `US${id}`;
+      return `US${user.id}`;
     }
   }
 
@@ -99,7 +108,7 @@ export class CPTrackingService {
 
   amplitudeEmitEvent(eventName: string, eventProperties?: {}) {
     if (!isProd && !isStaging) {
-      return;
+      // return;
     }
 
     window.amplitude.getInstance().logEvent(eventName, eventProperties);

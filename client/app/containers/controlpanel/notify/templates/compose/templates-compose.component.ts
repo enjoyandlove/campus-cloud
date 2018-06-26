@@ -13,12 +13,18 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
+
 import { CPSession } from './../../../../../session/index';
-import { CPI18nService, StoreService, CPTrackingService, ZendeskService } from './../../../../../shared/services';
-import { AnnouncementsService } from './../../announcements/announcements.service';
-import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 import { CP_PRIVILEGES_MAP, STATUS } from '../../../../../shared/constants';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { AnnouncementsService } from './../../announcements/announcements.service';
+import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
+import {
+  CPI18nService,
+  StoreService,
+  CPTrackingService,
+  ZendeskService
+} from './../../../../../shared/services';
 
 interface IState {
   isUrgent: boolean;
