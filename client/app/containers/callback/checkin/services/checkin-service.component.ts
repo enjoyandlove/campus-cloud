@@ -2,6 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { CPSession } from '../../../../session';
 import { CheckinService } from '../checkin.service';
 import { BaseComponent } from '../../../../base/base.component';
 import { amplitudeEvents } from '../../../../shared/constants/analytics';
@@ -31,6 +32,7 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
 
   constructor(
     public router: Router,
+    public session: CPSession,
     public route: ActivatedRoute,
     public cpI18n: CPI18nService,
     public errorService: ErrorService,
@@ -85,6 +87,10 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (!this.session.g.get('user')) {
+      this.cpTracking.loadAmplitude();
+    }
+
     this.trackAmplitudeEvent();
     this.search = new HttpParams()
       .set('service_id', this.serviceId)
