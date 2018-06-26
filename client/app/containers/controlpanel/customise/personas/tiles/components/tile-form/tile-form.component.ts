@@ -23,6 +23,12 @@ export class PersonasTileFormComponent implements OnInit {
 
   onContentTypeChange(selected) {
     console.log(selected);
+    this.extraFields = !!selected.extra_field_type;
+
+    // if (selected.extra_field_type) {
+    //   this.extraFields = true;
+    // }
+    // console.log(selected);
   }
 
   updateTilPreview(key, update) {
@@ -32,7 +38,7 @@ export class PersonasTileFormComponent implements OnInit {
     };
   }
 
-  onColorChanged(hexColor: string) {
+  onColorChange(hexColor: string) {
     const colorStr = hexColor.replace('#', '');
     this.form.controls['color'].setValue(colorStr);
 

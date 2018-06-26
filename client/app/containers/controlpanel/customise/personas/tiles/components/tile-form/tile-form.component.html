@@ -33,7 +33,7 @@
                 type="text"
                 cpColorPicker
                 class="form-control"
-                (changed)="onColorChanged($event)">
+                (changed)="onColorChange($event)">
             </div>
             <div class="col">
               <cp-upload-button
@@ -65,14 +65,12 @@
               </cp-dropdown>
             </div>
           </div>
-    
-          <div class="row" *ngIf="extraFields">
-            <div class="col-12">
-              <label>
-                {{ 't_personas_tile_modal_create_label_resources' | cpI18n }}
-              </label>
-            </div>
-          </div>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="extraFields">
+        <div class="col-12">
+          <cp-tile-type-text></cp-tile-type-text>
         </div>
       </div>
     </div>

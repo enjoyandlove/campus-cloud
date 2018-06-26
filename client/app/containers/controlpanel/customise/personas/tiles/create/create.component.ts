@@ -1,7 +1,7 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CPSession } from './../../../../../../session';
 import { CPI18nService } from './../../../../../../shared/services/i18n.service';
-import { TileVisibility } from './../tiles.status';
+import { TileVisibility, TileFeatureRank } from './../tiles.status';
 import { IPersona } from '../../persona.interface';
 import { Component, OnInit, Input } from '@angular/core';
 
@@ -12,9 +12,17 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class PersonasTileCreateComponent implements OnInit {
   @Input() persona: IPersona;
+  @Input() personaId: number;
+  @Input() categoryId: number;
 
   buttonData;
   form: FormGroup;
+  _lastRank: number;
+
+  @Input()
+  set lastRank(lastRank) {
+    this._lastRank = lastRank + 100;
+  }
 
   constructor(public cpI18n: CPI18nService, public fb: FormBuilder, public session: CPSession) {}
 
@@ -33,15 +41,15 @@ export class PersonasTileCreateComponent implements OnInit {
   buildForm() {
     this.form = this.fb.group({
       school_id: [this.session.g.get('school').id, Validators.required],
-      school_persona_id: [1, Validators.required],
+      school_persona_id: [this.personaId, Validators.required],
       name: [null, Validators.required],
-      rank: [1, Validators.required],
+      rank: [this._lastRank, Validators.required],
       img_url: [null, Validators.required],
       color: [null, Validators.required],
       extra_info: [null, Validators.required],
-      featured_rank: [null, Validators.required],
       visibility_status: [TileVisibility.visible],
-      tile_category_id: [null, Validators.required]
+      tile_category_id: [this.categoryId, Validators.required],
+      featured_rank: [TileFeatureRank.notFeatured, Validators.required]
     });
   }
 
