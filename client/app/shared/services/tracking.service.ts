@@ -108,7 +108,7 @@ export class CPTrackingService {
 
   amplitudeEmitEvent(eventName: string, eventProperties?: {}) {
     if (!isProd && !isStaging) {
-      // return;
+      return;
     }
 
     window.amplitude.getInstance().logEvent(eventName, eventProperties);
