@@ -14,8 +14,8 @@ export class BannerControlButtonsComponent implements OnInit {
   @Output() cancel: EventEmitter<null> = new EventEmitter();
 
   buttonData;
-  savedPhoto;
-  canceledPhoto;
+  savedPhoto = amplitudeEvents.CUSTOMIZE_SAVED_PHOTO;
+  canceledPhoto = amplitudeEvents.CUSTOMIZE_CANCELED_PHOTO;
 
   @Input()
   set loading(loading) {
@@ -32,9 +32,6 @@ export class BannerControlButtonsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.savedPhoto = amplitudeEvents.CUSTOMIZE_SAVED_PHOTO;
-    this.canceledPhoto = amplitudeEvents.CUSTOMIZE_CANCELED_PHOTO;
-
     this.buttonData = {
       class: 'primary',
       text: this.cpI18n.translate('save')
