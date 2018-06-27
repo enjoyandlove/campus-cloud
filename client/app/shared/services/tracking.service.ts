@@ -40,7 +40,7 @@ export class CPTrackingService {
       const identify = new window.amplitude.Identify()
         .set('school_name', school.name)
         .set('is_oohlala', this.isOohlala(user.email))
-        .set('school_id', this.getSchoolUserID(school.id));
+        .set('school_id', this.getSchoolUserID(school));
 
       window.amplitude.getInstance().identify(identify);
     }

@@ -135,11 +135,15 @@ export const amplitudeEvents = {
 
   NOTIFY_SAVED_TEMPLATE: 'Notify - Saved Template',
 
+  CUSTOMIZE_SAVED_PHOTO: 'Customize - Saved Photo',
+
   MANAGE_DOWNLOAD_DATA: 'Manage - Downloaded Data',
 
   MANAGE_LOADED_CHECKIN: 'Manage - Loaded Check-In',
 
   MANAGE_CLICKED_CHECKIN: 'Manage - Clicked Check-In',
+
+  CUSTOMIZE_CANCELED_PHOTO: 'Customize - Canceled Photo',
 
   ASSESS_VIEWED_TOP_EVENTS: 'Assess - Viewed Top Events',
 
