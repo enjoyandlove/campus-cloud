@@ -41,6 +41,8 @@ export const amplitudeEvents = {
 
   NO_ACCESS: 'No Access',
 
+  LOGGED_IN: 'Logged In',
+
   SAVED_AUDIENCE: 'Saved',
 
   ATTENDANCE: 'Attendance',
@@ -75,9 +77,13 @@ export const amplitudeEvents = {
 
   MENU_CUSTOMIZE: 'Customize',
 
+  SET_PASSWORD: 'Set Password',
+
   DYNAMIC_LIST: 'Dynamic List',
 
   CREATE_STORE: 'Create Store',
+
+  CAROSEL_WHEEL: 'Carosel Wheel',
 
   SELECT_ACCESS: 'Select Access',
 
@@ -88,6 +94,8 @@ export const amplitudeEvents = {
   UPLOADED_PHOTO: 'Uploaded Photo',
 
   CREATE_SERVICE: 'Create Service',
+
+  RESET_PASSWORD: 'Reset Password',
 
   ONE_ENGAGEMENT: 'One Engagement',
 
