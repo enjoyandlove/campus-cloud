@@ -21,6 +21,26 @@ interface IDateChange {
   label: string;
 }
 
+interface IRangePickerOptions {
+  utc: boolean;
+  inline: boolean;
+  mode: string;
+  altInput: boolean;
+  maxDate: string;
+  enableTime: boolean;
+  altFormat: string;
+}
+
+const rangeOptions: IRangePickerOptions = {
+  utc: true,
+  inline: true,
+  mode: 'range',
+  altInput: true,
+  maxDate: null,
+  enableTime: false,
+  altFormat: 'F j, Y'
+};
+
 declare var $: any;
 import 'flatpickr';
 import * as moment from 'moment';
@@ -37,13 +57,13 @@ export class CPRangePickerComponent implements OnInit, AfterViewInit, OnDestroy 
   @Input() dateRanges;
   @Input() icon: boolean;
   @Input() class: string;
+  @Input() pickerOptions: IRangePickerOptions = rangeOptions;
   @Output() dateChange: EventEmitter<IDateChange> = new EventEmitter();
 
   picker;
   datePipe;
   selected = null;
   dateFormat = FORMAT.SHORT;
-  pickerOptions;
 
   @Input()
   set state(state) {
@@ -115,18 +135,14 @@ export class CPRangePickerComponent implements OnInit, AfterViewInit, OnDestroy 
 
   ngOnInit() {
     this.datePipe = new CPDatePipe(this.session);
+    const maxDate = CPDate.now(this.session.tz)
+      .subtract(1, 'days')
+      .startOf('day')
+      .format();
 
     this.pickerOptions = {
-      utc: true,
-      inline: true,
-      mode: 'range',
-      altInput: true,
-      maxDate: CPDate.now(this.session.tz)
-        .subtract(1, 'days')
-        .startOf('day')
-        .format(),
-      enableTime: false,
-      altFormat: 'F j, Y'
+      ...this.pickerOptions,
+      maxDate: this.pickerOptions.maxDate ? this.pickerOptions.maxDate : maxDate,
     };
   }
 }
