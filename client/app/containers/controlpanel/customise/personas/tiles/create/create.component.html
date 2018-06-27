@@ -17,7 +17,12 @@
   <div class="cpmodal__body">
     <div class="row">
       <div class="col-12">
-        <cp-personas-tile-form [form]="form"></cp-personas-tile-form>
+        <cp-personas-tile-form 
+          [campusLinkForm]="campusLinkForm"
+          [campusGuideTileForm]="campusGuideTileForm"
+          (campusLinkFormChange)="onCampusLinkFormChange($event)"
+          (campusGuideTileFormChange)="onCampusGuideTileFormChange($event)">
+        </cp-personas-tile-form>
       </div>
     </div>
   </div>

@@ -1,0 +1,34 @@
+[
+  {
+    "id": null,
+    "extra_field_type": null,
+    "label": "[NOTRANSLATE]---[NOTRANSLATE]",
+    "meta": null
+  },
+  {
+    "id": "web_link",
+    "extra_field_type": 1,
+    "label": "t_personas_tile_create_type_resource_web_link",
+    "meta": {
+      "is_system": 1,
+      "link_params": {},
+      "open_in_browser": 0
+    }
+  },
+  {
+    "id": "external_link",
+    "extra_field_type": 1,
+    "label": "t_personas_tile_create_type_resource_external_link",
+    "meta": {
+      "is_system": 1,
+      "link_params": {},
+      "open_in_browser": 1
+    }
+  },
+  {
+    "id": "resource",
+    "extra_field_type": 2,
+    "label": "t_personas_tile_create_type_resource_resource",
+    "meta": null
+  }
+]

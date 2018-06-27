@@ -1,9 +1,10 @@
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TilesService } from './../tiles.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { CPSession } from './../../../../../../session';
 import { CPI18nService } from './../../../../../../shared/services/i18n.service';
-import { TileVisibility, TileFeatureRank } from './../tiles.status';
 import { IPersona } from '../../persona.interface';
-import { Component, OnInit, Input } from '@angular/core';
+import { TilesUtilsService } from '../tiles.utils.service';
 
 @Component({
   selector: 'cp-personas-tile-create',
@@ -16,41 +17,87 @@ export class PersonasTileCreateComponent implements OnInit {
   @Input() categoryId: number;
 
   buttonData;
-  form: FormGroup;
   _lastRank: number;
+  campusLinkForm: FormGroup;
+  campusGuideTileForm: FormGroup;
+
+  state = {
+    campusLinkFormValid: false,
+    campusGuideTileFormValid: false
+  };
 
   @Input()
   set lastRank(lastRank) {
     this._lastRank = lastRank + 100;
   }
 
-  constructor(public cpI18n: CPI18nService, public fb: FormBuilder, public session: CPSession) {}
+  constructor(
+    public cpI18n: CPI18nService,
+    public fb: FormBuilder,
+    public session: CPSession,
+    public utils: TilesUtilsService,
+    public service: TilesService
+  ) {}
 
   onSubmit() {
-    // console.log('YOOO');
-  }
+    // const createLink$ = this.service.createCampusLink(this.campusLinkForm.value);
+    // const createTile$ = this.service.createCampusTile(this.campusGuideTileForm.value);
 
-  onContentTypeChange() {
-    // console.log('selected ', {id});
+    // createLink$.pipe(switchMapTo(createTile$))
+    console.log(this.campusLinkForm.value);
+    console.log(this.campusGuideTileForm.value);
+
+    this.buttonData = {
+      ...this.buttonData,
+      disabled: false
+    };
   }
 
   onCategoryChange({ id }): void {
-    this.form.controls['tile_category_id'].setValue(id);
+    this.campusLinkForm.controls['tile_category_id'].setValue(id);
   }
 
   buildForm() {
-    this.form = this.fb.group({
-      school_id: [this.session.g.get('school').id, Validators.required],
-      school_persona_id: [this.personaId, Validators.required],
-      name: [null, Validators.required],
-      rank: [this._lastRank, Validators.required],
-      img_url: [null, Validators.required],
-      color: [null, Validators.required],
-      extra_info: [null, Validators.required],
-      visibility_status: [TileVisibility.visible],
-      tile_category_id: [this.categoryId, Validators.required],
-      featured_rank: [TileFeatureRank.notFeatured, Validators.required]
-    });
+    this.campusLinkForm = this.utils.campusLinkForm();
+    this.campusGuideTileForm = this.utils.campusGuideTileForm(
+      this.personaId,
+      this._lastRank,
+      this.categoryId
+    );
+  }
+
+  onCampusLinkFormChange(linkForm: FormGroup) {
+    this.state = {
+      ...this.state,
+      campusLinkFormValid: linkForm.valid
+    };
+
+    this.checkSubmitButtonStatus();
+  }
+
+  checkSubmitButtonStatus() {
+    this.buttonData = {
+      ...this.buttonData,
+      disabled: !this.state.campusGuideTileFormValid && !this.state.campusLinkFormValid
+    };
+  }
+
+  updateSharedValues(tileForm: FormGroup) {
+    const img_url = tileForm.get('img_url').value;
+    const name = tileForm.get('name').value;
+
+    this.campusLinkForm.controls['img_url'].setValue(img_url);
+    this.campusLinkForm.controls['name'].setValue(name);
+  }
+
+  onCampusGuideTileFormChange(tileForm: FormGroup) {
+    this.state = {
+      ...this.state,
+      campusGuideTileFormValid: tileForm.valid
+    };
+
+    this.updateSharedValues(tileForm);
+    this.checkSubmitButtonStatus();
   }
 
   ngOnInit(): void {

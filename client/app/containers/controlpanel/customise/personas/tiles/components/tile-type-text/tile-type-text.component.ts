@@ -22,7 +22,7 @@ export class PersonasTileTypeTextComponent implements OnInit, OnDestroy {
 
   @ViewChild('inputEl') inputEl: ElementRef;
 
-  @Output() change: EventEmitter<string> = new EventEmitter();
+  @Output() valueChange: EventEmitter<string> = new EventEmitter();
 
   isAlive = true;
 
@@ -30,11 +30,11 @@ export class PersonasTileTypeTextComponent implements OnInit, OnDestroy {
 
   listenForInputChanges() {
     const el = this.inputEl.nativeElement;
-    const stream$ = fromEvent(el, 'keydown');
+    const stream$ = fromEvent(el, 'keyup');
 
     stream$
       .pipe(takeWhile(() => this.isAlive), map((e: any) => e.target.value))
-      .subscribe((input) => console.log(input));
+      .subscribe((input) => this.valueChange.emit(input));
   }
 
   ngOnDestroy() {

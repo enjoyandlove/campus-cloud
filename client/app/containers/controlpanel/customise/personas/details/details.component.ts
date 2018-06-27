@@ -29,7 +29,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
   loading;
   personaId;
 
-  guideId = null;
+  guideId: null;
 
   state: IState = {
     working: false,

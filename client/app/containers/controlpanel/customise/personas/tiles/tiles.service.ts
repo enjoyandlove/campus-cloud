@@ -24,4 +24,16 @@ export class TilesService extends HTTPService {
 
     return super.delete(url, search);
   }
+
+  createCampusTile(body) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GUIDE_TILES}/`;
+
+    return super.post(url, body, null, true);
+  }
+
+  createCampusLink(body) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LINKS}/`;
+
+    return super.post(url, body, null, true);
+  }
 }

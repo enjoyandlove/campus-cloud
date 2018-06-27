@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-6">
+    <label>{{ 't_personas_tile_modal_create_label_type' | cpI18n }}</label>
+    <cp-dropdown 
+      [items]="contentTypes"
+      (selected)="onContentTypeChange($event)">
+    </cp-dropdown>
+  </div>
+</div>
+
+<div class="row" *ngIf="state.textInput">
+  <div class="col-12">
+    <cp-tile-type-text (valueChange)="onUrlChange($event)"></cp-tile-type-text>
+  </div>
+</div>

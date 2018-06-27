@@ -1,11 +1,19 @@
 [
   {
     "id": "user_attended_events",
-    "label": "t_personas_tile_create_resource_type_user_attended_events"
+    "label": "t_personas_tile_create_resource_type_user_attended_events",
+    "meta": {
+      "link_params": {},
+      "link_url": "oohlala://attended_event_list"
+    }
   },
   {
     "id": "scan_qr",
-    "label": "t_personas_tile_create_resource_type_scan_qr"
+    "label": "t_personas_tile_create_resource_type_scan_qr",
+    "meta": {
+      "link_params": {},
+      "link_url": "oohlala://camera_qr"
+    }
   },
   {
     "id": "advisor_list",
