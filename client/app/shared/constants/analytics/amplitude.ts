@@ -83,7 +83,7 @@ export const amplitudeEvents = {
 
   CREATE_STORE: 'Create Store',
 
-  CAROSEL_WHEEL: 'Carosel Wheel',
+  CAROUSEL_WHEEL: 'Carousel Wheel',
 
   SELECT_ACCESS: 'Select Access',
 

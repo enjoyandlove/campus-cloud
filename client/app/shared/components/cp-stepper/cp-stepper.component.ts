@@ -49,7 +49,7 @@ export class CPStepperComponent implements OnInit {
 
     this.adminService.updateAdmin(this.session.g.get('user').id, body).subscribe((response) => {
       this.session.g.set('user', response);
-      this.cpTracking.amplitudeEmitEvent(amplitudeEvents.CAROSEL_WHEEL);
+      this.cpTracking.amplitudeEmitEvent(amplitudeEvents.CAROUSEL_WHEEL);
       $('#openOnboardingModal').modal('hide');
     });
   }
