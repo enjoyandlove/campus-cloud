@@ -14,5 +14,53 @@
     "service_email": "demo@oohlala.com",
     "service_name": "Student Financial Support",
     "website": "http://www.oohlalamobile.com"
+  },
+  {
+    "admin_email": "admin@oohlalamobile.com",
+    "description": "A service to help students in need of financial support.",
+    "phone_number": "555-444-3322",
+    "service_email": "demo@oohlala.com",
+    "service_name": "Student Financial Support",
+    "website": "http://www.oohlalamobile.com"
+  },
+  {
+    "admin_email": "admin@oohlalamobile.com",
+    "description": "Another service to help students in need of financial support.",
+    "phone_number": "555-444-3322",
+    "service_email": "demo@oohlala.com",
+    "service_name": "Student Financial Support",
+    "website": "http://www.oohlalamobile.com"
+  },
+  {
+    "admin_email": "admin@oohlalamobile.com",
+    "description": "A service to help students in need of financial support.",
+    "phone_number": "555-444-3322",
+    "service_email": "demo@oohlala.com",
+    "service_name": "Student Financial Support",
+    "website": "http://www.oohlalamobile.com"
+  },
+  {
+    "admin_email": "admin@oohlalamobile.com",
+    "description": "Another service to help students in need of financial support.",
+    "phone_number": "555-444-3322",
+    "service_email": "demo@oohlala.com",
+    "service_name": "Student Financial Support",
+    "website": "http://www.oohlalamobile.com"
+  },
+  {
+    "admin_email": "admin@oohlalamobile.com",
+    "description": "A service to help students in need of financial support.",
+    "phone_number": "555-444-3322",
+    "service_email": "demo@oohlala.com",
+    "service_name": "Student Financial Support",
+    "website": "http://www.oohlalamobile.com"
+  },
+  {
+    "admin_email": "admin@oohlalamobile.com",
+    "description": "Another service to help students in need of financial support.",
+    "phone_number": "555-444-3322",
+    "service_email": "demo@oohlala.com",
+    "service_name": "Student Financial Support",
+    "website": "http://www.oohlalamobile.com"
   }
 ]
