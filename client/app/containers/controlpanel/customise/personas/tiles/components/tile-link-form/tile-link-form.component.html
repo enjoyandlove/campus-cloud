@@ -10,6 +10,8 @@
 
 <div class="row" *ngIf="state.textInput">
   <div class="col-12">
-    <cp-tile-type-text (valueChange)="onUrlChange($event)"></cp-tile-type-text>
+    <cp-personas-tile-form-type-text 
+      (valueChange)="onUrlChange($event)">
+    </cp-personas-tile-form-type-text>
   </div>
 </div>

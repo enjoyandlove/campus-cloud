@@ -10,7 +10,7 @@ import {
   PersonasTileFormComponent,
   PersonasTileGuideFormComponent,
   PersonasTileHoverComponent,
-  PersonasTileTypeTextComponent
+  PersonasTileFormTextComponent
 } from './components';
 import { PersonasTileCreateComponent } from './create';
 import { PersonasTileComponent } from './tile/tile.component';
@@ -22,7 +22,7 @@ import { PersonasTileLinkFormComponent } from './components/tile-link-form/tile-
   declarations: [
     PersonasTileLinkFormComponent,
     PersonasTileGuideFormComponent,
-    PersonasTileTypeTextComponent,
+    PersonasTileFormTextComponent,
     PseronasTileBaseComponent,
     PersonasTileCreateComponent,
     PersonasTileFormComponent,
@@ -35,7 +35,7 @@ import { PersonasTileLinkFormComponent } from './components/tile-link-form/tile-
   exports: [
     PersonasTileLinkFormComponent,
     PersonasTileGuideFormComponent,
-    PersonasTileTypeTextComponent,
+    PersonasTileFormTextComponent,
     PersonasTileContentComponent,
     PseronasTileBaseComponent,
     PersonasTileCreateComponent,
