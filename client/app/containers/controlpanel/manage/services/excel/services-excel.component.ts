@@ -1,3 +1,4 @@
+import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -42,7 +43,6 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
     super.isLoading().subscribe((res) => (this.loading = res));
 
     this.store.select('SERVICES_MODAL').subscribe((res) => {
-      // this.services = res;
       this.services = !isDev ? res : require('./mock.json');
       this.buildForm();
       this.buildHeader();
@@ -70,7 +70,11 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
     this.form = this.fb.group({
       services: this.fb.array([])
     });
-    this.buildGroup();
+
+    this.loadCategories().then((res) => {
+      this.categories = res;
+      this.buildGroup();
+    });
 
     this.form.valueChanges.subscribe((_) => {
       this.buttonData = Object.assign({}, this.buttonData, {
@@ -112,10 +116,7 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
       this.isChecked.push({ index, checked: false });
     });
 
-    this.loadCategories().then((res) => {
-      this.categories = res;
-      this.isFormReady = true;
-    });
+    this.isFormReady = true;
   }
 
   removeControl(index) {
@@ -214,12 +215,20 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
       parsedServices.push(Object.assign({}, _data[key], { category: _data[key].category.action }));
     });
 
-    this.servicesService.createService(parsedServices).subscribe(
-      (_) => this.router.navigate(['/manage/services']),
-      (err) => {
-        throw new Error(err);
+    this.servicesService
+      .createService(parsedServices)
+      .subscribe((_) => this.router.navigate(['/manage/services']), () => this.handleError());
+  }
+
+  handleError() {
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        class: 'danger',
+        sticky: true,
+        body: this.cpI18n.translate('something_went_wrong')
       }
-    );
+    });
   }
 
   ngOnDestroy() {
