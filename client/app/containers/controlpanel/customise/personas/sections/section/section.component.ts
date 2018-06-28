@@ -32,6 +32,7 @@ export class PersonasSectionComponent implements OnInit {
 
   modalId;
   lastRank;
+  showModal = false;
 
   constructor(
     public session: CPSession,
@@ -48,7 +49,6 @@ export class PersonasSectionComponent implements OnInit {
   }
 
   onTileCreated(newTile) {
-    console.log(newTile);
     this.guide = {
       ...this.guide,
       tiles: [...this.guide.tiles, newTile]
@@ -67,11 +67,19 @@ export class PersonasSectionComponent implements OnInit {
   }
 
   onTearDown() {
+    this.showModal = false;
     $(`#${this.modalId}`).modal('hide');
   }
 
   launchCreateTile() {
-    $(`#${this.modalId}`).modal();
+    this.showModal = true;
+    setTimeout(
+      () => {
+        $(`#${this.modalId}`).modal();
+      },
+
+      1
+    );
   }
 
   onMove(direction) {

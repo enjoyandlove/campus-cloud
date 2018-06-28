@@ -19,9 +19,9 @@ export class PersonasTileFormComponent implements OnInit {
   resources;
 
   constructor(
+    public fb: FormBuilder,
     public cpI18n: CPI18nService,
-    public fileService: FileUploadService,
-    public fb: FormBuilder
+    public fileService: FileUploadService
   ) {}
 
   populateDropdowns() {

@@ -51,7 +51,9 @@
   </section>
 </fieldset>
 
-<cp-modal [modalId]="modalId">
+<cp-modal 
+  *ngIf="showModal"
+  [modalId]="modalId">
   <cp-personas-tile-create 
     [lastRank]="lastRank"
     [categoryId]="guide.id"
