@@ -35,6 +35,7 @@ export class CPChartComponent implements OnInit {
   series;
   divider;
   labels;
+  highestNoInArray = 0;
   isChartDataReady = false;
 
   @Input() set chartData(data) {
@@ -126,6 +127,7 @@ export class CPChartComponent implements OnInit {
 
   buildSeries() {
     return this.series.map((serie, idx) => {
+      this.getHighestNoInArray(serie);
 
       return serie.map((item, index) => {
         return {
@@ -136,6 +138,12 @@ export class CPChartComponent implements OnInit {
     });
   }
 
+  getHighestNoInArray(serie) {
+    if (this.highestNoInArray < Math.max.apply(Math, serie)) {
+      this.highestNoInArray = Math.max.apply(Math, serie);
+    }
+  }
+
   drawChart() {
     const data = {
       labels: this.buildLabels(),
@@ -143,9 +151,7 @@ export class CPChartComponent implements OnInit {
       series: this.buildSeries()
     };
 
-    const highestNoInArray = Math.max.apply(Math, this.series[0]);
-
-    const high = highestNoInArray + 5 - (highestNoInArray + 5) % 5;
+    const high = this.highestNoInArray + 5 - (this.highestNoInArray + 5) % 5;
 
     const options = {
       low: 0,

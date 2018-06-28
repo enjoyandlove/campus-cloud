@@ -2,7 +2,6 @@ import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 
 import { CPSession } from './../../../session';
 import { CPChartComponent } from './cp-chart.component';
-import { SharedModule } from '../../shared.module';
 
 class MockCPSession {
   g = new Map();
@@ -12,17 +11,20 @@ class MockCPSession {
   }
 }
 
-fdescribe('CPChartComponent', () => {
+describe('CPChartComponent', () => {
   let comp: CPChartComponent;
   let fixture: ComponentFixture<CPChartComponent>;
 
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [SharedModule],
         declarations: [CPChartComponent],
         providers: [{ provide: CPSession, useClass: MockCPSession }]
-      }).compileComponents();
+      }).overrideComponent(CPChartComponent, {
+          set: {
+            template: '<div>No Template</div>'
+          }
+        }).compileComponents();
     })
   );
 
