@@ -1,7 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CPStepperComponent } from './cp-stepper.component';
+import { RouterTestingModule } from '@angular/router/testing';
+
 import { CPSession } from '../../../session';
-import { AdminService } from '../../services';
+import { CPStepperComponent } from './cp-stepper.component';
+import { AdminService, CPTrackingService } from '../../services';
 
 class MockAdminService {
   updateAdmin(_, body: any) {
@@ -33,7 +35,11 @@ describe('CPStepperComponent', () => {
     async(() => {
       TestBed.configureTestingModule({
         declarations: [CPStepperComponent],
-        providers: [CPSession, { provide: AdminService, useClass: MockAdminService }]
+        imports: [RouterTestingModule],
+        providers: [
+          CPSession,
+          CPTrackingService,
+          { provide: AdminService, useClass: MockAdminService }]
       })
         .overrideComponent(CPStepperComponent, {
           set: {

@@ -2,10 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
-import { ALERT_DEFAULT } from '../../../reducers/alert.reducer';
 import { AuthService } from '../auth.service';
-
-import { CPI18nService, ErrorService } from '../../../shared/services';
+import { ALERT_DEFAULT } from '../../../reducers/alert.reducer';
+import { CPI18nService, CPTrackingService, ErrorService } from '../../../shared/services';
+import { amplitudeEvents } from '../../../shared/constants/analytics';
 
 @Component({
   selector: 'cp-lost-password',
@@ -22,7 +22,8 @@ export class LostPasswordComponent implements OnInit, OnDestroy {
     private store: Store<any>,
     private error: ErrorService,
     private service: AuthService,
-    private cpI18n: CPI18nService
+    private cpI18n: CPI18nService,
+    private cpTracking: CPTrackingService
   ) {
     this.form = this.fb.group({
       request_password_reset: [1],
@@ -42,7 +43,10 @@ export class LostPasswordComponent implements OnInit, OnDestroy {
     this.email = data.email;
 
     this.service.submitPasswordReset(data).subscribe(
-      () => (this.isSubmitted = true),
+      () => {
+        this.isSubmitted = true;
+        this.cpTracking.amplitudeEmitEvent(amplitudeEvents.RESET_PASSWORD);
+      },
       () =>
         this.error.handleError({
           reason: this.cpI18n.translate('email_does_not_exist')
@@ -54,5 +58,7 @@ export class LostPasswordComponent implements OnInit, OnDestroy {
     this.store.dispatch({ type: ALERT_DEFAULT });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.cpTracking.loadAmplitude();
+  }
 }
