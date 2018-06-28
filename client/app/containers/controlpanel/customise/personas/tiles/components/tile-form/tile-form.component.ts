@@ -24,16 +24,5 @@ export class PersonasTileFormComponent implements OnInit {
     public fileService: FileUploadService
   ) {}
 
-  populateDropdowns() {
-    this.resources = require('./resources.json').map((resource) => {
-      return {
-        ...resource,
-        label: this.cpI18n.translate(resource.label)
-      };
-    });
-  }
-
-  ngOnInit(): void {
-    this.populateDropdowns();
-  }
+  ngOnInit(): void {}
 }

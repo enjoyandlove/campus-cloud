@@ -16,23 +16,39 @@ export class PersonasTileLinkFormComponent implements OnInit {
 
   state = {
     textInput: false,
-    searchSource: null,
-    resourceList: []
+    resourceList: false
   };
 
   constructor(public cpI18n: CPI18nService) {}
+
+  updateFormMetaValues(data) {
+    for (const key in data.meta) {
+      this.form.controls[key].setValue(data.meta[key]);
+    }
+  }
 
   onContentTypeChange(selected) {
     if (selected.extra_field_type === 1) {
       this.state = {
         ...this.state,
-        textInput: true
+        textInput: true,
+        resourceList: false
       };
 
-      for (const key in selected.meta) {
-        this.form.controls[key].setValue(selected.meta[key]);
-      }
+      this.updateFormMetaValues(selected);
     }
+
+    if (selected.extra_field_type === 2) {
+      this.state = {
+        ...this.state,
+        textInput: false,
+        resourceList: true
+      };
+    }
+  }
+
+  onResourceTypeSelected(resourceType) {
+    this.updateFormMetaValues(resourceType);
   }
 
   onUrlChange(url) {

@@ -546,7 +546,7 @@
     "message": "Nom d'audience"
   },
   "audience_dynamic_button_save_audience": {
-    "message": "Save Audience"
+    "message": "Enregistrer Audience"
   },
   "audience_edit_modal_label_name": {
     "message": "Editer audience"
@@ -2386,9 +2386,6 @@
   "t_personas_create_header_title": {
     "message": "Créer expérience"
   },
-  "t_personas_create_section_default_name": {
-    "message": "Untitled "
-  },
   "t_personas_create_submit_button": {
     "message": "Enregistrer les changements"
   },
@@ -2440,18 +2437,6 @@
   "t_personas_list_dropdown_web_experiences": {
     "message": "Web"
   },
-  "t_personas_tile_create_type_resource_external_link": {
-    "message": "External Link"
-  },
-  "t_personas_tile_create_type_resource_web_link": {
-    "message": "Web Link"
-  },
-  "t_personas_tile_modal_create_appearance": {
-    "message": "Appearance"
-  },
-  "t_personas_tile_modal_create_label_resources": {
-    "message": "Resource Type"
-  },
   "t_personas_tile_modal_create_label_type": {
     "message": "Type"
   },
@@ -2468,7 +2453,7 @@
     "message": "Notifier"
   },
   "t_shared_cancel": {
-    "message": "Cancel"
+    "message": "Annuler"
   },
   "t_shared_color": {
     "message": "Couleur"

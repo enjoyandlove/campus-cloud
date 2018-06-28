@@ -8,10 +8,20 @@
   </div>
 </div>
 
-<div class="row" *ngIf="state.textInput">
+<div class="row form-group" *ngIf="state.textInput">
   <div class="col-12">
+    <label>{{ 't_personas_tile_modal_create_link_url' | cpI18n }}</label>
     <cp-personas-tile-form-type-text 
       (valueChange)="onUrlChange($event)">
     </cp-personas-tile-form-type-text>
+  </div>
+</div>
+
+<div class="row form-group" *ngIf="state.resourceList">
+  <div class="col-12">
+    <label>{{ 't_personas_tile_modal_create_resource_type' | cpI18n }}</label>
+    <cp-personas-tile-form-resource-list 
+      (selected)="onResourceTypeSelected($event)">
+    </cp-personas-tile-form-resource-list>
   </div>
 </div>
