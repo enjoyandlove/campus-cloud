@@ -3,16 +3,16 @@
   <div class="col-12">
     <div 
       [class.backdrop]="!visible"
-      [ngStyle]="{'border-bottom': '2px solid #' + tile.color }">
+      [ngStyle]="{'border-bottom': '2px solid #' + color }">
       <div class="tile__image">
         <img 
-          [alt]="tile.name"
+          *ngIf="image"
+          [alt]="name"
           class="img-fluid" 
-          [src]="tile.img_url"
-          *ngIf="tile.img_url">
+          [src]="image">
       </div>
       <div class="tile__meta text-truncate">
-        {{tile.name}}
+        {{name}}
       </div>
     </div>
   </div>

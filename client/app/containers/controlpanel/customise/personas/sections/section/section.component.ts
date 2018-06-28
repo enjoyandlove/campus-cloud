@@ -16,19 +16,21 @@ import { CPI18nService } from '../../../../../../shared/services';
 export class PersonasSectionComponent implements OnInit {
   @Input() last: boolean;
   @Input() first: boolean;
+  @Input() personaId: number;
   @Input() addSection: boolean;
   @Input() guide: ICampusGuide;
   @Input() previousSection: ICampusGuide;
-  // @Input() nextSection: ICampusGuide;
 
   @Output() swap: EventEmitter<any> = new EventEmitter();
-  @Output() addTile: EventEmitter<null> = new EventEmitter();
   @Output() deleted: EventEmitter<number> = new EventEmitter();
   @Output() created: EventEmitter<ICampusGuide> = new EventEmitter();
 
   state = {
     working: false
   };
+
+  modalId;
+  lastRank;
 
   constructor(
     public session: CPSession,
@@ -44,13 +46,27 @@ export class PersonasSectionComponent implements OnInit {
     };
   }
 
+  onCreateError() {
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        class: 'danger',
+        body: this.cpI18n.translate('something_went_wrong'),
+        sticky: true
+      }
+    });
+  }
+
+  onTearDown() {
+    $(`#${this.modalId}`).modal('hide');
+  }
+
+  launchCreateTile() {
+    $(`#${this.modalId}`).modal();
+  }
+
   onMove(direction) {
     this.swap.emit(direction);
-    // if (direction === 'up') {
-    //   this.swap.emit({direction, guide: this.guide});
-    // } else {
-    //   this.moveDown();
-    // }
   }
 
   setWorkingState(working) {
@@ -133,5 +149,14 @@ export class PersonasSectionComponent implements OnInit {
     };
   }
 
-  ngOnInit(): void {}
+  getLastRankInGuide() {
+    const ranks = this.guide.tiles.map((tile) => tile.rank).sort();
+
+    this.lastRank = ranks.length ? ranks[ranks.length - 1] : 1;
+  }
+
+  ngOnInit(): void {
+    this.modalId = `createTileForGuide${this.guide.id}`;
+    this.getLastRankInGuide();
+  }
 }

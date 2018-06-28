@@ -25,7 +25,7 @@ export class TilesUtilsService {
       name: [null, Validators.required],
       rank: [lastRank, Validators.required],
       img_url: [null, Validators.required],
-      color: [null, Validators.required],
+      color: ['FFFFFF', Validators.required],
       extra_info: [null],
       visibility_status: [TileVisibility.visible],
       tile_category_id: [tileCategoryId, Validators.required],

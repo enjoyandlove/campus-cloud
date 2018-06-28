@@ -9,6 +9,7 @@ import { CPI18nService } from './../../../../../../../shared/services/i18n.servi
   styleUrls: ['./tile-form.component.scss']
 })
 export class PersonasTileFormComponent implements OnInit {
+  @Input() uploadButtonId;
   @Input() campusLinkForm: FormGroup;
   @Input() campusGuideTileForm: FormGroup;
 

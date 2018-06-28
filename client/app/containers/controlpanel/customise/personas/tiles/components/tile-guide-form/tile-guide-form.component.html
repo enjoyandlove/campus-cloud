@@ -4,7 +4,9 @@
       class="col-5">
       <cp-personas-tile-content
         [visible]=[true]
-        [tile]="tilePreview">
+        [name]="form.controls['name'].value"  
+        [color]="form.controls['color'].value"
+        [image]="form.controls['img_url'].value">
       </cp-personas-tile-content>
     </cp-personas-tile-base>
     <div class="col-7">
@@ -28,6 +30,7 @@
         </div>
         <div class="col">
           <cp-upload-button
+            [id]="uploadButtonId"
             [buttonText]="uploadImageBtn"
             buttonClass="cpbtn cpbtn--link"
             (fileUpload)="onFileChanged($event)">

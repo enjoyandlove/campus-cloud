@@ -44,9 +44,19 @@
       </cp-personas-tile>
       <div class="col-2">
         <cp-personas-tile-add-button
-          (buttonClick)="addTile.emit()">
+          (buttonClick)="launchCreateTile()">
         </cp-personas-tile-add-button>
       </div>
     </div>
   </section>
 </fieldset>
+
+<cp-modal [modalId]="modalId">
+  <cp-personas-tile-create 
+    [lastRank]="lastRank"
+    [categoryId]="guide.id"
+    [personaId]="personaId"
+    (error)="onCreateError($event)"
+    (teardown)="onTearDown(modalId)">
+  </cp-personas-tile-create>
+</cp-modal>

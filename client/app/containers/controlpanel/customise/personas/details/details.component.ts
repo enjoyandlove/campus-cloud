@@ -29,8 +29,6 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
   loading;
   personaId;
 
-  guideId: null;
-
   state: IState = {
     working: false,
     guides: [],
@@ -51,13 +49,6 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
     super.isLoading().subscribe((loading) => (this.loading = loading));
     this.personaId = this.route.snapshot.params['personaId'];
   }
-
-  onAddTileToGuideClick(guide) {
-    this.guideId = guide.id;
-    $('#tilesCreate').modal();
-  }
-
-  createCampusGuide() {}
 
   onAddSectionBefore(newGuide: ICampusGuide, guideId: number) {
     const nextGuide = (guide: ICampusGuide) => guide.id === guideId;
