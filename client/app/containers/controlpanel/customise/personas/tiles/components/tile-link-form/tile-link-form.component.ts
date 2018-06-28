@@ -36,13 +36,17 @@ export class PersonasTileLinkFormComponent implements OnInit {
       };
 
       this.updateFormMetaValues(selected);
-    }
-
-    if (selected.extra_field_type === 2) {
+    } else if (selected.extra_field_type === 2) {
       this.state = {
         ...this.state,
         textInput: false,
         resourceList: true
+      };
+    } else {
+      this.state = {
+        ...this.state,
+        textInput: false,
+        resourceList: false
       };
     }
   }

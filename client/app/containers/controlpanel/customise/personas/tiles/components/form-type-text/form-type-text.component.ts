@@ -17,9 +17,6 @@ import { map, takeWhile } from 'rxjs/operators';
   styleUrls: ['./form-type-text.component.scss']
 })
 export class PersonasTileFormTextComponent implements OnInit, OnDestroy {
-  @Input() label: string;
-  @Input() controlName: string;
-
   @ViewChild('inputEl') inputEl: ElementRef;
 
   @Output() valueChange: EventEmitter<string> = new EventEmitter();
