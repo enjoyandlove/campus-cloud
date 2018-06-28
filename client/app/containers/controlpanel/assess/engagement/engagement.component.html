@@ -17,7 +17,7 @@
           {{ 'students' | cpI18n }}
         </p>
         <cp-engagement-stats
-          [props]="chartData"
+          [props]="statsData"
           (download)="onDownload($event)"
           (doCompose)="onDoCompose($event)">
         </cp-engagement-stats>
@@ -26,9 +26,9 @@
         <p class="chart--title" i18n>
           {{ 'student_engagements' | cpI18n }}
         </p>
-        <cp-engagement-chart
-          [props]="chartData">
-        </cp-engagement-chart>
+        <cp-chart
+          [chartData]="chartData">
+        </cp-chart>
       </div>
     </div>
   </ng-container>

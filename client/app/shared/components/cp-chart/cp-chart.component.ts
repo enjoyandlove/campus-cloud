@@ -1,34 +1,47 @@
-/* tslint:disable: max-line-length */
-import { Input, OnInit, Component, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
+import {
+  Input,
+  OnInit,
+  Component,
+  ViewChild,
+  ElementRef,
+  ViewEncapsulation
+} from '@angular/core';
 
 const Chartist = require('chartist');
 require('chartist-plugin-tooltips');
 
 import * as moment from 'moment';
+import { CPDate } from '../../utils/date';
+import { CPSession } from './../../../session';
+import { CPI18nService } from '../../services/i18n.service';
 
-import { CPSession } from '../../../../../session';
-import { CPDate } from '../../../../../shared/utils';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { DivideBy } from './../dashboard-downloads-registration/dashboard-downloads-registration.component';
-import { CPStatsFormatterPipe } from '../../../assess/engagement/components/engagement-stats/pipes/stats-formatter.pipe';
+export enum DivideBy {
+  'daily' = 0,
+  'weekly' = 1,
+  'monthly' = 2,
+  'quarter' = 3
+}
 
 @Component({
-  selector: 'cp-dashboard-downloads-chart',
-  templateUrl: './dashboard-downloads-chart.component.html',
-  styleUrls: ['./dashboard-downloads-chart.component.scss'],
+  selector: 'cp-chart',
+  templateUrl: './cp-chart.component.html',
+  styleUrls: ['./cp-chart.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class DashboardDownloadsChartComponent implements OnInit {
-  @ViewChild('chartHost') chartHost: ElementRef;
+export class CPChartComponent implements OnInit {
+  @ViewChild('chart') chart: ElementRef;
+
   range;
   series;
   divider;
+  labels;
+  isChartDataReady = false;
 
-  @Input()
-  set data(data) {
+  @Input() set chartData(data) {
     this.range = data.range;
     this.series = data.series;
     this.divider = data.divider;
+    this.labels = data.tooltip_labels;
     this.drawChart();
   }
 
@@ -113,11 +126,10 @@ export class DashboardDownloadsChartComponent implements OnInit {
 
   buildSeries() {
     return this.series.map((serie, idx) => {
-      const chartName = idx === 0 ? 'Downloads ' : 'Registrations ';
 
       return serie.map((item, index) => {
         return {
-          meta: chartName + this.labelByDivider(index),
+          meta: `${this.labels[idx]}  ${this.labelByDivider(index)}`,
           value: item
         };
       });
@@ -131,12 +143,7 @@ export class DashboardDownloadsChartComponent implements OnInit {
       series: this.buildSeries()
     };
 
-    const highestDownload = Math.max.apply(Math, this.series[0]);
-
-    const highestRegistration = Math.max.apply(Math, this.series[1]);
-
-    const highestNoInArray =
-      highestDownload > highestRegistration ? highestDownload : highestRegistration;
+    const highestNoInArray = Math.max.apply(Math, this.series[0]);
 
     const high = highestNoInArray + 5 - (highestNoInArray + 5) % 5;
 
@@ -144,8 +151,6 @@ export class DashboardDownloadsChartComponent implements OnInit {
       low: 0,
 
       high: high,
-
-      fullWidth: true,
 
       chartPadding: {
         top: 5,
@@ -156,6 +161,10 @@ export class DashboardDownloadsChartComponent implements OnInit {
       plugins: [
         Chartist.plugins.tooltip({
           class: 'cp-dsh-downloads',
+
+          appendToBody: true,
+
+          anchorToPoint: true,
 
           pointClass: 'cp-dsh-point'
         })
@@ -173,11 +182,11 @@ export class DashboardDownloadsChartComponent implements OnInit {
         label: 'cp-label'
       },
 
+      fullWidth: true,
+
       axisY: {
         labelInterpolationFnc: function showLabelsOnlyForIntegers(value) {
-          const formatter = new CPStatsFormatterPipe();
-
-          return value % 1 === 0 ? formatter.transform(value) : null;
+          return value % 1 === 0 ? value : null;
         }
       },
 
@@ -191,7 +200,6 @@ export class DashboardDownloadsChartComponent implements OnInit {
         },
 
         labelInterpolationFnc: function skipLabels(value, index) {
-          // ignore last label
           if (index + 1 === this.series[0].length) {
             return null;
           }
@@ -217,7 +225,7 @@ export class DashboardDownloadsChartComponent implements OnInit {
       }
     };
 
-    const chart = new Chartist.Line(this.chartHost.nativeElement, data, options);
+    const chart = new Chartist.Line(this.chart.nativeElement, data, options);
 
     chart.on(
       'created',

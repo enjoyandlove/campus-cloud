@@ -48,7 +48,8 @@ import {
   CPWorkingComponent,
   SchoolSwitchComponent,
   CPSortingHeaderComponent,
-  CPRangePickerComponent
+  CPRangePickerComponent,
+  CPChartComponent
 } from './components';
 import { CPTabsComponent } from './components/cp-tabs/components/cp-tabs/cp-tabs.component';
 import { CPTrackerDirective } from './directives';
@@ -115,7 +116,8 @@ import { LocationsService } from '../containers/controlpanel/manage/locations/lo
     CPWorkingComponent,
     CPHeaderLinkComponent,
     CPSortingHeaderComponent,
-    CPRangePickerComponent
+    CPRangePickerComponent,
+    CPChartComponent
   ],
 
   imports: [CommonModule, RouterModule, ReactiveFormsModule, PopoverModule.forRoot()],
@@ -184,7 +186,8 @@ import { LocationsService } from '../containers/controlpanel/manage/locations/lo
     CPWorkingComponent,
     CPHeaderLinkComponent,
     CPSortingHeaderComponent,
-    CPRangePickerComponent
+    CPRangePickerComponent,
+    CPChartComponent
   ]
 })
 export class SharedModule {}

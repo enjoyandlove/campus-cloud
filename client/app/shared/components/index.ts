@@ -3,6 +3,7 @@ export * from './cp-maps';
 export * from './cp-tabs';
 export * from './cp-stars';
 export * from './cp-alert';
+export * from './cp-chart';
 export * from './cp-modal';
 export * from './cp-avatar';
 export * from './cp-topbar';

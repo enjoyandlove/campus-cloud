@@ -14,7 +14,6 @@ import {
   DashboardTopServicesComponent,
   DashboardIntegrationsComponent,
   DashboardSocialActivyComponent,
-  DashboardDownloadsChartComponent,
   DashboardSocialActivyChartComponent,
   DashboardGeneralInformationComponent,
   DashboardDownloadsRegistrationComponent
@@ -27,7 +26,6 @@ import { EngagementModule } from './../assess/engagement/engagement.module';
 @NgModule({
   declarations: [
     DashboardComponent,
-    DashboardDownloadsChartComponent,
     DashboardGeneralInformationComponent,
     DashboardTopEventsComponent,
     DashboardTopServicesComponent,

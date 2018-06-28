@@ -1,3 +1,4 @@
+/* tslint:disable: max-line-length */
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -14,6 +15,12 @@ import { SNACKBAR_SHOW } from './../../../../reducers/snackbar.reducer';
 import { amplitudeEvents } from '../../../../shared/constants/analytics';
 import { createSpreadSheet } from './../../../../shared/utils/csv/parser';
 import { CPI18nService } from './../../../../shared/services/i18n.service';
+import {
+  DivideBy,
+  groupByMonth,
+  groupByQuarter,
+  groupByWeek
+} from '../../dashboard/components/dashboard-downloads-registration/dashboard-downloads-registration.component';
 
 declare var $;
 
@@ -21,18 +28,29 @@ const ONE_ENGAGEMENT = 2;
 const ZERO_ENGAGEMENT = 3;
 const REPEAT_ENGAGEMENT = 1;
 
+const year = 365;
+const threeMonths = 90;
+const twoYears = year * 2;
+
 @Component({
   selector: 'cp-engagement',
   templateUrl: './engagement.component.html',
   styleUrls: ['./engagement.component.scss']
 })
 export class EngagementComponent extends BaseComponent implements OnInit {
+  statsData;
   chartData;
   loading;
   messageData;
   filterState;
   isComposeModal;
   eventProperties;
+  divider = DivideBy.daily;
+
+  range = {
+    start: null,
+    end: null
+  };
 
   filters$: BehaviorSubject<any> = new BehaviorSubject(null);
 
@@ -84,10 +102,52 @@ export class EngagementComponent extends BaseComponent implements OnInit {
     const search = this.buildSearchHeaders();
 
     super.fetchData(this.service.getChartData(search)).then((res) => {
-      this.chartData = {
+      this.statsData = {
         ...res.data,
         starts: this.filterState.range.payload.range.start,
         ends: this.filterState.range.payload.range.end
+      };
+
+      this.range = Object.assign({}, this.range, {
+        start: res.data.labels[0],
+        end: res.data.labels[res.data.labels.length - 1]
+      });
+
+      if (res.data.series.length >= twoYears) {
+        this.divider = DivideBy.quarter;
+
+        return Promise.all([
+          groupByQuarter(res.data.labels, res.data.series)
+        ]);
+      }
+
+      if (res.data.series.length >= year) {
+        this.divider = DivideBy.monthly;
+
+        return Promise.all([
+          groupByMonth(res.data.labels, res.data.series)
+        ]);
+      }
+
+      if (res.data.series.length >= threeMonths) {
+        this.divider = DivideBy.weekly;
+
+        return Promise.all([
+          groupByWeek(res.data.labels, res.data.series)
+        ]);
+      }
+
+      this.divider = DivideBy.daily;
+
+      return Promise.resolve([res.data.series]);
+    }).then((series: any) => {
+      this.chartData = {
+        series,
+        range: this.range,
+        divider: this.divider,
+        tooltip_labels: {
+          0: this.cpI18n.translate('t_assess_chart_tooltip_label_engagements')
+        }
       };
     });
   }

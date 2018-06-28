@@ -1,11 +1,11 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import * as moment from 'moment';
 
 import { BaseComponent } from '../../../../../base';
 import { CPSession } from './../../../../../session';
 import { DashboardService } from './../../dashboard.service';
-
-import * as moment from 'moment';
+import { CPI18nService } from '../../../../../shared/services';
 
 const year = 365;
 const threeMonths = 90;
@@ -92,7 +92,11 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
     this.fetch();
   }
 
-  constructor(private session: CPSession, private service: DashboardService) {
+  constructor(
+    private session: CPSession,
+    private cpi18n: CPI18nService,
+    private service: DashboardService
+) {
     super();
     super.isLoading().subscribe((loading) => {
       this.loading = loading;
@@ -156,7 +160,11 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
         this.chartData = {
           series,
           range: this.range,
-          divider: this.divider
+          divider: this.divider,
+          tooltip_labels: {
+            0: this.cpi18n.translate('t_dashboard_chart_tooltip_label_downloads'),
+            1: this.cpi18n.translate('t_dashboard_chart_tooltip_label_registrations')
+          }
         };
       });
   }
