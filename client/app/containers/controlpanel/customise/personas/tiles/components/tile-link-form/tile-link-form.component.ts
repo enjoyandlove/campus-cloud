@@ -1,6 +1,6 @@
-import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 
 @Component({
   selector: 'cp-personas-link-form',
@@ -9,6 +9,8 @@ import { FormGroup } from '@angular/forms';
 })
 export class PersonasTileLinkFormComponent implements OnInit {
   @Input() form: FormGroup;
+
+  @Output() change: EventEmitter<FormGroup> = new EventEmitter();
 
   contentTypes;
 
@@ -38,6 +40,8 @@ export class PersonasTileLinkFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.form.valueChanges.subscribe(() => this.change.emit(this.form));
+
     this.contentTypes = require('./content-types.json').map((content) => {
       return {
         ...content,
