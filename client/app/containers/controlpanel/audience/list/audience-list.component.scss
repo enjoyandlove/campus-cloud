@@ -11,18 +11,12 @@
   font-size: 2em;
 }
 
-.cp-form__header {
-  span.hover {
-    position: relative;
-
-    > span i {
-      top: 1px;
-      font-size: 17px;
-      position: absolute;
-      padding-left: 6px;
+.cp-form__item {
+    span i {
+      font-size: 18px;
+      vertical-align: -6px;
     }
   }
-}
 
 .audiences {
   padding: 0;

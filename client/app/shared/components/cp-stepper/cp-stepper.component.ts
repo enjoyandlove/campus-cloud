@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { CPSession } from '../../../session';
-import { AdminService } from '../../services';
+import { AdminService, CPTrackingService } from '../../services';
+import { amplitudeEvents } from '../../constants/analytics';
 
 @Component({
   selector: 'cp-stepper',
@@ -18,7 +19,11 @@ export class CPStepperComponent implements OnInit {
   start: number;
   totalSteps;
 
-  constructor(private session: CPSession, private adminService: AdminService) {}
+  constructor(
+    private session: CPSession,
+    private adminService: AdminService,
+    private cpTracking: CPTrackingService
+  ) {}
 
   backStep(step: number) {
     this.currentStep = --step;
@@ -44,6 +49,7 @@ export class CPStepperComponent implements OnInit {
 
     this.adminService.updateAdmin(this.session.g.get('user').id, body).subscribe((response) => {
       this.session.g.set('user', response);
+      this.cpTracking.amplitudeEmitEvent(amplitudeEvents.CAROUSEL_WHEEL);
       $('#openOnboardingModal').modal('hide');
     });
   }
