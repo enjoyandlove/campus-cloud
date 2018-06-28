@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
 import { CPSession } from './../../../../../../session';
 import { CPI18nService } from './../../../../../../shared/services/i18n.service';
+import { ITile } from './../tile.interface';
 import { TilesService } from './../tiles.service';
-import { ITile } from '../../persona.interface';
 import { TilesUtilsService } from '../tiles.utils.service';
 
 @Component({
@@ -44,6 +44,19 @@ export class PersonasTileCreateComponent implements OnInit {
   ) {}
 
   onSubmit() {
+    /**
+     * In order to create the tile for this persona only
+     * we need to override the original persona id to zero
+     * and create a tile first and then use that tile id to make
+     * an extra request to create the same tile for this persona only
+     */
+    const cloneGuideTileForm = { ...this.campusGuideTileForm.value };
+
+    const guideTilePersonaZero = {
+      ...this.campusGuideTileForm.value,
+      school_persona_id: 0
+    };
+
     const createLink$ = this.service.createCampusLink(this.campusLinkForm.value);
 
     createLink$
@@ -52,7 +65,17 @@ export class PersonasTileCreateComponent implements OnInit {
           const extra_info = { id };
 
           const data = {
-            ...this.campusGuideTileForm.value,
+            ...guideTilePersonaZero,
+            extra_info
+          };
+
+          return this.service.createCampusTile(data);
+        }),
+        switchMap(({ id }: any) => {
+          const extra_info = { id };
+
+          const data = {
+            ...cloneGuideTileForm,
             extra_info
           };
 
@@ -69,11 +92,6 @@ export class PersonasTileCreateComponent implements OnInit {
           this.error.emit(err);
         }
       );
-
-    this.buttonData = {
-      ...this.buttonData,
-      disabled: false
-    };
   }
 
   doReset() {

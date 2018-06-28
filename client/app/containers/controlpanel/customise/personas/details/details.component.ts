@@ -6,9 +6,11 @@ import { combineLatest } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
 import { ISnackbar } from './../../../../../reducers/snackbar.reducer';
-import { ICampusGuide, IPersona, ITile } from './../persona.interface';
+import { IPersona } from './../persona.interface';
 import { PersonasService } from './../personas.service';
 import { PersonasUtilsService } from './../personas.utils.service';
+import { ICampusGuide } from './../sections/section.interface';
+import { ITile } from './../tiles/tile.interface';
 import { BaseComponent } from '../../../../../base';
 import { CPSession } from '../../../../../session';
 import { CPI18nService } from '../../../../../shared/services';
@@ -195,6 +197,10 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
         heading: `[NOTRANSLATE]${personName}[NOTRANSLATE]`,
         subheading: null,
         em: null,
+        crumbs: {
+          url: 'personas',
+          label: 't_personas'
+        },
         children: []
       }
     });

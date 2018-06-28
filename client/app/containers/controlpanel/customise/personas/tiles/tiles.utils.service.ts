@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ITile } from './../persona.interface';
+import { ITile } from './tile.interface';
 import { TileFeatureRank, TileVisibility } from './tiles.status';
 import { CPSession } from '../../../../../session';
 

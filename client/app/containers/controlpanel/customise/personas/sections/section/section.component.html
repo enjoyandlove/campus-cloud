@@ -57,6 +57,7 @@
     [categoryId]="guide.id"
     [personaId]="personaId"
     (error)="onCreateError($event)"
-    (teardown)="onTearDown(modalId)">
+    (teardown)="onTearDown(modalId)"
+    (created)="onTileCreated($event)">
   </cp-personas-tile-create>
 </cp-modal>

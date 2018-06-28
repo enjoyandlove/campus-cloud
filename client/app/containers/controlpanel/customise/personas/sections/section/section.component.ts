@@ -2,7 +2,8 @@ import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { SNACKBAR_SHOW } from './../../../../../../reducers/snackbar.reducer';
-import { ICampusGuide, ITile } from './../../persona.interface';
+import { ITile } from './../../tiles/tile.interface';
+import { ICampusGuide } from './../section.interface';
 import { SectionsService } from './../sections.service';
 import { ISnackbar } from '../../../../../../reducers/snackbar.reducer';
 import { CPSession } from '../../../../../../session';
@@ -43,6 +44,14 @@ export class PersonasSectionComponent implements OnInit {
     this.guide = {
       ...this.guide,
       tiles: this.guide.tiles.map((tile: ITile) => (tile.id === editedTile.id ? editedTile : tile))
+    };
+  }
+
+  onTileCreated(newTile) {
+    console.log(newTile);
+    this.guide = {
+      ...this.guide,
+      tiles: [...this.guide.tiles, newTile]
     };
   }
 
