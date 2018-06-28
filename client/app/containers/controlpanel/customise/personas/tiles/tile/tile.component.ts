@@ -2,7 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { CPSession } from './../../../../../../session/index';
-import { ITile } from './../../persona.interface';
+import { ITile } from './../tile.interface';
 import { TilesService } from './../tiles.service';
 import { TileVisibility } from './../tiles.status';
 import { ISnackbar, SNACKBAR_SHOW } from '../../../../../../reducers/snackbar.reducer';

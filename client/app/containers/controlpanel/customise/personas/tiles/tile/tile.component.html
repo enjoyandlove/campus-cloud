@@ -16,7 +16,9 @@
         <div class="row" *ngIf="!hover">
           <div class="col-12">
             <cp-personas-tile-content 
-              [tile]="tile"
+              [name]="tile.name"
+              [color]="tile.color"
+              [image]="tile.img_url"
               [visible]="utils.isTileVisible(tile)">
             </cp-personas-tile-content>
           </div>

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { flatten, sortBy } from 'lodash';
 import { CPI18nService } from './../../../../shared/services/i18n.service';
-import { ICampusGuide, ITile } from './persona.interface';
 import { PersonasLoginRequired, PersonasType } from './personas.status';
+import { ICampusGuide } from './sections/section.interface';
+import { ITile } from './tiles/tile.interface';
 
 @Injectable()
 export class PersonasUtilsService {

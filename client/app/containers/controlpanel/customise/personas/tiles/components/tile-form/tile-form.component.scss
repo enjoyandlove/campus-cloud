@@ -1,0 +1,14 @@
+@import '~styles/core/typography';
+@import '~styles/components/form';
+@import '~styles/components/button';
+
+p.title {
+  @include font-24px();
+  @include font-bold();
+
+  margin-bottom: 15px;
+}
+
+.header {
+  margin-bottom: 20px;
+}

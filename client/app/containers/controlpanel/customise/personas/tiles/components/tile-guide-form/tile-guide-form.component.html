@@ -1,0 +1,42 @@
+<form [formGroup]="form">
+  <div class="row">
+    <cp-personas-tile-base 
+      class="col-5">
+      <cp-personas-tile-content
+        [visible]=[true]
+        [name]="form.controls['name'].value"  
+        [color]="form.controls['color'].value"
+        [image]="form.controls['img_url'].value">
+      </cp-personas-tile-content>
+    </cp-personas-tile-base>
+    <div class="col-7">
+      <div class="row">
+        <div class="form-group col-12">
+          <label>{{'name' | cpI18n }}</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="name">
+        </div>
+      </div>
+
+      <div class="row form-group">
+        <div class="col">
+          <input
+            type="text"
+            cpColorPicker
+            class="form-control"
+            (changed)="onColorChange($event)">
+        </div>
+        <div class="col">
+          <cp-upload-button
+            [id]="uploadButtonId"
+            [buttonText]="uploadImageBtn"
+            buttonClass="cpbtn cpbtn--link"
+            (fileUpload)="onFileChanged($event)">
+          </cp-upload-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

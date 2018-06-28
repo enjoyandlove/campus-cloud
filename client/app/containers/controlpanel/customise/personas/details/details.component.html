@@ -35,7 +35,7 @@
             [guide]="guide"
             [first]="first"
             [addSection]="!first"
-            (addTile)="onAddTileToGuideClick()"
+            [personaId]="personaId"
             (deleted)="onDeletedSection($event)"
             (swap)="onSwapSection($event, guide)"
             [previousSection]="getSectionByIndex(i - 1)"
@@ -44,9 +44,5 @@
         </div>
       </div>
     </div>
-
-    <cp-modal modalId="tilesCreate">
-      <cp-personas-tile-create></cp-personas-tile-create>
-    </cp-modal>
   </ng-container>
 </ng-container>

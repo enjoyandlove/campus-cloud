@@ -1,22 +1,28 @@
-import { TilesService } from './tiles.service';
-import { TilesUtilsService } from './tiles.utils.service';
-import { PersonasTileContentComponent } from './components/tile-content/tile-content.component';
-import { PseronasTileBaseComponent } from './components/tile-base/tile-base.component';
+/*tslint:disable:max-line-length */
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from './../../../../../shared/shared.module';
+import {
+  PseronasTileBaseComponent,
+  PersonasTileContentComponent,
+  PersonasTileAddButtonComponent,
+  PersonasTileFormComponent,
+  PersonasTileGuideFormComponent,
+  PersonasTileHoverComponent,
+  PersonasTileTypeTextComponent
+} from './components';
 import { PersonasTileCreateComponent } from './create';
 import { PersonasTileComponent } from './tile/tile.component';
-
-import {
-  PersonasTileHoverComponent,
-  PersonasTileAddButtonComponent,
-  PersonasTileFormComponent
-} from './components';
+import { TilesService } from './tiles.service';
+import { TilesUtilsService } from './tiles.utils.service';
+import { PersonasTileLinkFormComponent } from './components/tile-link-form/tile-link-form.component';
 
 @NgModule({
   declarations: [
+    PersonasTileLinkFormComponent,
+    PersonasTileGuideFormComponent,
+    PersonasTileTypeTextComponent,
     PseronasTileBaseComponent,
     PersonasTileCreateComponent,
     PersonasTileFormComponent,
@@ -27,6 +33,9 @@ import {
   ],
   imports: [CommonModule, SharedModule, ReactiveFormsModule],
   exports: [
+    PersonasTileLinkFormComponent,
+    PersonasTileGuideFormComponent,
+    PersonasTileTypeTextComponent,
     PersonasTileContentComponent,
     PseronasTileBaseComponent,
     PersonasTileCreateComponent,

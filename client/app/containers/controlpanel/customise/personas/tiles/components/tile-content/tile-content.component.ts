@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ITile } from './../../../persona.interface';
 
 @Component({
   selector: 'cp-personas-tile-content',
@@ -7,7 +6,9 @@ import { ITile } from './../../../persona.interface';
   styleUrls: ['./tile-content.component.scss']
 })
 export class PersonasTileContentComponent implements OnInit {
-  @Input() tile: ITile;
+  @Input() image: string;
+  @Input() name: string;
+  @Input() color: string;
   @Input() visible: boolean;
 
   constructor() {}

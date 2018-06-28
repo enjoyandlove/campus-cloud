@@ -6,9 +6,11 @@ import { combineLatest } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
 import { ISnackbar } from './../../../../../reducers/snackbar.reducer';
-import { ICampusGuide, IPersona, ITile } from './../persona.interface';
+import { IPersona } from './../persona.interface';
 import { PersonasService } from './../personas.service';
 import { PersonasUtilsService } from './../personas.utils.service';
+import { ICampusGuide } from './../sections/section.interface';
+import { ITile } from './../tiles/tile.interface';
 import { BaseComponent } from '../../../../../base';
 import { CPSession } from '../../../../../session';
 import { CPI18nService } from '../../../../../shared/services';
@@ -49,12 +51,6 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
     super.isLoading().subscribe((loading) => (this.loading = loading));
     this.personaId = this.route.snapshot.params['personaId'];
   }
-
-  onAddTileToGuideClick() {
-    $('#tilesCreate').modal();
-  }
-
-  createCampusGuide() {}
 
   onAddSectionBefore(newGuide: ICampusGuide, guideId: number) {
     const nextGuide = (guide: ICampusGuide) => guide.id === guideId;
@@ -190,8 +186,6 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
           featureTiles: this.utils.getFeaturedTiles(data),
           categoryZero: this.utils.getCategoryZeroTiles(data)
         };
-
-        console.log(this.state);
       })
       .catch(() => this.router.navigate(['/customize/personas']));
   }
@@ -203,6 +197,10 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
         heading: `[NOTRANSLATE]${personName}[NOTRANSLATE]`,
         subheading: null,
         em: null,
+        crumbs: {
+          url: 'personas',
+          label: 't_personas'
+        },
         children: []
       }
     });

@@ -2,7 +2,8 @@ import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { SNACKBAR_SHOW } from './../../../../../../reducers/snackbar.reducer';
-import { ICampusGuide, ITile } from './../../persona.interface';
+import { ITile } from './../../tiles/tile.interface';
+import { ICampusGuide } from './../section.interface';
 import { SectionsService } from './../sections.service';
 import { ISnackbar } from '../../../../../../reducers/snackbar.reducer';
 import { CPSession } from '../../../../../../session';
@@ -16,19 +17,22 @@ import { CPI18nService } from '../../../../../../shared/services';
 export class PersonasSectionComponent implements OnInit {
   @Input() last: boolean;
   @Input() first: boolean;
+  @Input() personaId: number;
   @Input() addSection: boolean;
   @Input() guide: ICampusGuide;
   @Input() previousSection: ICampusGuide;
-  // @Input() nextSection: ICampusGuide;
 
   @Output() swap: EventEmitter<any> = new EventEmitter();
-  @Output() addTile: EventEmitter<null> = new EventEmitter();
   @Output() deleted: EventEmitter<number> = new EventEmitter();
   @Output() created: EventEmitter<ICampusGuide> = new EventEmitter();
 
   state = {
     working: false
   };
+
+  modalId;
+  lastRank;
+  showModal = false;
 
   constructor(
     public session: CPSession,
@@ -44,13 +48,42 @@ export class PersonasSectionComponent implements OnInit {
     };
   }
 
+  onTileCreated(newTile) {
+    this.guide = {
+      ...this.guide,
+      tiles: [...this.guide.tiles, newTile]
+    };
+  }
+
+  onCreateError() {
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        class: 'danger',
+        body: this.cpI18n.translate('something_went_wrong'),
+        sticky: true
+      }
+    });
+  }
+
+  onTearDown() {
+    this.showModal = false;
+    $(`#${this.modalId}`).modal('hide');
+  }
+
+  launchCreateTile() {
+    this.showModal = true;
+    setTimeout(
+      () => {
+        $(`#${this.modalId}`).modal();
+      },
+
+      1
+    );
+  }
+
   onMove(direction) {
     this.swap.emit(direction);
-    // if (direction === 'up') {
-    //   this.swap.emit({direction, guide: this.guide});
-    // } else {
-    //   this.moveDown();
-    // }
   }
 
   setWorkingState(working) {
@@ -133,5 +166,14 @@ export class PersonasSectionComponent implements OnInit {
     };
   }
 
-  ngOnInit(): void {}
+  getLastRankInGuide() {
+    const ranks = this.guide.tiles.map((tile) => tile.rank).sort();
+
+    this.lastRank = ranks.length ? ranks[ranks.length - 1] : 1;
+  }
+
+  ngOnInit(): void {
+    this.modalId = `createTileForGuide${this.guide.id}`;
+    this.getLastRankInGuide();
+  }
 }
