@@ -5,6 +5,8 @@
     [isEvent]="isEvent"
     *ngSwitchCase="false"
     [data]="state.events"
+    [eventId]="eventId"
+    [isOrientation]="isOrientation"
     (send)="onSubmit($event)">
   </cp-base-checkin>
 </div>

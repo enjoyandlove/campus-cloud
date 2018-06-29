@@ -6,6 +6,8 @@ import { createSpreadSheet } from './../../../../../../../shared/utils/csv/parse
 import { CPDate } from './../../../../../../../shared/utils/date/date';
 import { BaseComponent } from '../../../../../../../base/base.component';
 import { STAR_SIZE } from '../../../../../../../shared/components/cp-stars';
+import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
+import { CPTrackingService } from '../../../../../../../shared/services';
 import { EventsService } from '../../../events.service';
 
 interface IState {
@@ -32,6 +34,7 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
 
   loading;
   attendees;
+  eventProperties;
   attendeeFeedback;
   state: IState = state;
   listStarSize = STAR_SIZE.DEFAULT;
@@ -40,7 +43,8 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
   constructor(
     public session: CPSession,
     private cpI18n: CPI18nService,
-    public service: EventsService
+    public service: EventsService,
+    public cpTracking: CPTrackingService
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -102,6 +106,8 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
       search
     );
 
+    this.trackAmplitudeEvent();
+
     stream$.toPromise().then((attendees: Array<any>) => {
       const columns = [
         this.cpI18n.translate('events_attendant'),
@@ -152,6 +158,14 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
 
       createSpreadSheet(attendees, columns);
     });
+  }
+
+  trackAmplitudeEvent() {
+    this.eventProperties = {
+      data_type: amplitudeEvents.EVENT
+    };
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_DOWNLOAD_DATA, this.eventProperties);
   }
 
   onViewFeedback(attendee): void {

@@ -38,6 +38,7 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
 
   loading;
   clubStatus;
+  sortingLabels;
   deleteClub = '';
   state: IState = state;
   ACTIVE_STATUS = ClubStatus.active;
@@ -161,5 +162,9 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
       type: HEADER_UPDATE,
       payload: this.headerService.filterByPrivileges()
     });
+
+    this.sortingLabels = {
+      name: this.cpI18n.translate('name')
+    };
   }
 }

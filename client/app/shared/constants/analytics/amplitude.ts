@@ -9,11 +9,25 @@ export const cpTrackAmplitude = {
 };
 
 export const amplitudeEvents = {
+  CLUB: 'Club',
+
+  USER: 'User',
+
+  LIST: 'List',
+
+  EVENT: 'Event',
+
   ACTIVE: 'Active',
+
+  REGULAR: 'Regular',
+
+  SERVICE: 'Service',
 
   PENDING: 'Pending',
 
   ENABLED: 'Enabled',
+
+  NEW_AUDIENCE: 'New',
 
   DISABLED: 'Disabled',
 
@@ -23,13 +37,29 @@ export const amplitudeEvents = {
 
   MENU_NOTIFY: 'Notify',
 
+  ATHLETICS: 'Athletics',
+
   NO_ACCESS: 'No Access',
+
+  LOGGED_IN: 'Logged In',
+
+  SAVED_AUDIENCE: 'Saved',
+
+  ATTENDANCE: 'Attendance',
 
   CREATE_JOB: 'Create Job',
 
   LOGGED_OUT: 'Logged Out',
 
+  ASSESSMENT: 'Assessment',
+
   MENU_AUDIENCE: 'Audience',
+
+  CAMPUS_WIDE: 'Campus Wide',
+
+  ORIENTATION: 'Orientation',
+
+  ONE_SERVICE: 'One Service',
 
   CREATE_CLUB: 'Create Club',
 
@@ -41,13 +71,23 @@ export const amplitudeEvents = {
 
   CREATE_LINK: 'Create link',
 
+  CUSTOM_LIST: 'Custom List',
+
   CREATE_EVENT: 'Create Event',
 
   MENU_CUSTOMIZE: 'Customize',
 
+  SET_PASSWORD: 'Set Password',
+
+  DYNAMIC_LIST: 'Dynamic List',
+
   CREATE_STORE: 'Create Store',
 
+  CAROUSEL_WHEEL: 'Carousel Wheel',
+
   SELECT_ACCESS: 'Select Access',
+
+  NO_ENGAGEMENT: 'No Engagement',
 
   CLICKED_CREATE: 'Clicked Create',
 
@@ -55,7 +95,15 @@ export const amplitudeEvents = {
 
   CREATE_SERVICE: 'Create Service',
 
+  RESET_PASSWORD: 'Reset Password',
+
+  ONE_ENGAGEMENT: 'One Engagement',
+
   CREATE_PROGRAM: 'Create Program',
+
+  SINGLE_STUDENT: 'Single Student',
+
+  ALL_ENGAGEMENT: 'All Engagement',
 
   CHANGED_SCHOOL: 'Changed School',
 
@@ -81,9 +129,37 @@ export const amplitudeEvents = {
 
   INVITED_TEAM_MEMBER: 'Invited Team Member',
 
+  MULTIPLE_ENGAGEMENT: 'Multiple Engagement',
+
   UPDATED_TEAM_MEMBER: 'Updated Team Member',
 
   DELETED_TEAM_MEMBER: 'Deleted Team Member',
 
-  CREATE_CALENDAR_ITEM: 'Create Calendar Item'
+  ASSESS_SENT_MESSAGE: 'Assess - Sent Message',
+
+  CREATE_CALENDAR_ITEM: 'Create Calendar Item',
+
+  ASSESS_DOWNLOAD_DATA: 'Assess Downloaded Data',
+
+  NOTIFY_SAVED_TEMPLATE: 'Notify - Saved Template',
+
+  CUSTOMIZE_SAVED_PHOTO: 'Customize - Saved Photo',
+
+  MANAGE_DOWNLOAD_DATA: 'Manage - Downloaded Data',
+
+  MANAGE_LOADED_CHECKIN: 'Manage - Loaded Check-In',
+
+  MANAGE_CLICKED_CHECKIN: 'Manage - Clicked Check-In',
+
+  CUSTOMIZE_CANCELED_PHOTO: 'Customize - Canceled Photo',
+
+  ASSESS_VIEWED_TOP_EVENTS: 'Assess - Viewed Top Events',
+
+  NOTIFY_SEND_ANNOUNCEMENT: 'Notify - Send Announcement',
+
+  MANAGE_DOWNLOADED_QR_CODE: 'Manage - Downloaded QR Code',
+
+  MANAGE_CHECKEDIN_MANUALLY: 'Manage - Checked In Manually',
+
+  ASSESS_VIEWED_TOP_SERVICES: 'Assess - Viewed Top Services'
 };

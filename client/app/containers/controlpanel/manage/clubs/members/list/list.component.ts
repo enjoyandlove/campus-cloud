@@ -2,13 +2,15 @@ import { HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { flatMap } from 'rxjs/operators';
-import { ClubsUtilsService } from './../../clubs.utils.service';
-import { BaseComponent } from '../../../../../../base/base.component';
-import { CPSession } from '../../../../../../session';
-import { isClubAthletic } from '../../clubs.athletics.labels';
+
 import { MemberType } from '../member.status';
 import { MembersService } from '../members.service';
+import { CPSession } from '../../../../../../session';
+import { isClubAthletic } from '../../clubs.athletics.labels';
 import { MembersUtilsService } from '../members.utils.service';
+import { ClubsUtilsService } from './../../clubs.utils.service';
+import { CPI18nService } from '../../../../../../shared/services';
+import { BaseComponent } from '../../../../../../base/base.component';
 
 declare var $: any;
 
@@ -43,6 +45,7 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
   isCreate;
   isDelete;
   query = null;
+  sortingLabels;
   hasSSO = false;
   executiveLeader;
   editMember = '';
@@ -54,6 +57,7 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
 
   constructor(
     private session: CPSession,
+    public cpI18n: CPI18nService,
     private route: ActivatedRoute,
     private utils: MembersUtilsService,
     public helper: ClubsUtilsService,
@@ -147,5 +151,9 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
 
     this.hasSSO = this.session.hasSSO;
     this.executiveLeader = this.utils.getMemberType(this.isOrientation);
+    this.sortingLabels = {
+      name: this.cpI18n.translate('name'),
+      member_type: this.cpI18n.translate('clubs_label_member_type')
+    };
   }
 }

@@ -1,16 +1,18 @@
-import { canSchoolWriteResource } from './../../../../../shared/utils/privileges/privileges';
 /* tslint:disable:max-line-length */
 import { Component, OnInit, OnDestroy, HostListener, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 
+import { canSchoolWriteResource } from './../../../../../shared/utils/privileges/privileges';
 import { CPSession } from './../../../../../session/index';
 import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants/privileges';
-import { CPI18nService, StoreService } from './../../../../../shared/services';
+import { CPI18nService, StoreService, ZendeskService } from './../../../../../shared/services';
 import { AnnouncementsService } from './../../announcements/announcements.service';
 import { TemplatesService } from './../templates.service';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 import { TemplatesComposeComponent } from '../compose/templates-compose.component';
+import { CPTrackingService } from '../../../../../shared/services';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 
 declare var $;
 
@@ -31,9 +33,10 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
     public cpI18n: CPI18nService,
     public storeService: StoreService,
     public service: AnnouncementsService,
+    public cpTracking: CPTrackingService,
     private childService: TemplatesService
   ) {
-    super(el, fb, session, cpI18n, storeService, service);
+    super(el, fb, session, cpI18n, storeService, cpTracking, service);
   }
 
   @HostListener('document:click', ['$event'])
@@ -46,6 +49,10 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
 
   onTypeChanged(type) {
     super.onTypeChanged(type);
+    this.amplitudeEventProperties = {
+      ...this.amplitudeEventProperties,
+      announcement_type: type.label
+    };
   }
 
   doUserSearch(query) {
@@ -98,6 +105,10 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
   doSubmit() {
     this.isError = false;
 
+    this.amplitudeEventProperties = {
+      ...this.amplitudeEventProperties,
+      audience_type: amplitudeEvents.CAMPUS_WIDE
+    };
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     let data = {
@@ -110,15 +121,27 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
     };
 
     if (this.state.isToUsers && !this.state.isCampusWide) {
+      this.amplitudeEventProperties = {
+        ...this.amplitudeEventProperties,
+        audience_type: amplitudeEvents.USER
+      };
       data = Object.assign({}, data, { user_ids: this.form.value.user_ids });
     }
 
     if (this.state.isToLists && !this.state.isCampusWide) {
+      this.amplitudeEventProperties = {
+        ...this.amplitudeEventProperties,
+        audience_type: amplitudeEvents.LIST
+      };
       data = Object.assign({}, data, { list_ids: this.form.value.list_ids });
     }
 
     this.childService.createTemplate(search, data).subscribe(
       () => {
+        this.cpTracking.amplitudeEmitEvent(
+          amplitudeEvents.NOTIFY_SAVED_TEMPLATE,
+          this.amplitudeEventProperties
+        );
         this.form.reset();
         this.created.emit(this.form.value);
         this.resetModal();
@@ -155,6 +178,11 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
   }
 
   ngOnInit() {
+    const host_type = this.session.defaultHost ? this.session.defaultHost.hostType : null;
+    this.amplitudeEventProperties = {
+      ...this.amplitudeEventProperties,
+      host_type
+    };
     const defaultHost = this.session.defaultHost ? this.session.defaultHost.value : null;
 
     this.sendAsName = this.session.defaultHost ? this.session.defaultHost.label : undefined;
@@ -163,9 +191,7 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
       content: this.cpI18n.translate('notify_announcement_template_to_tooltip'),
       link: {
         text: this.cpI18n.translate('lists_button_create'),
-        url:
-          'https://oohlalamobile.zendesk.com/hc/en-us/articles/' +
-          '115004330554-Create-a-List-of-Students'
+        url: `${ZendeskService.zdRoot()}/articles/115004330554-Create-a-List-of-Students`
       }
     });
 

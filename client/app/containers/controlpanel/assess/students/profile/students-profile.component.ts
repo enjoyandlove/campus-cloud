@@ -8,9 +8,11 @@ import { StudentsService } from './../students.service';
 import { CPSession } from './../../../../../session/index';
 import { CPDate } from './../../../../../shared/utils/date';
 import { FORMAT } from './../../../../../shared/pipes/date';
+import { CPTrackingService } from '../../../../../shared/services';
 import { BaseComponent } from './../../../../../base/base.component';
 import { HEADER_UPDATE } from './../../../../../reducers/header.reducer';
 import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { createSpreadSheet } from './../../../../../shared/utils/csv/parser';
 import { STAR_SIZE } from './../../../../../shared/components/cp-stars/cp-stars.component';
 
@@ -43,6 +45,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
   student;
   studentId;
   messageData;
+  eventProperties;
   engagementData = [];
   engagementsByDay = [];
   loadingEngagementData;
@@ -62,7 +65,8 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
     public session: CPSession,
     public route: ActivatedRoute,
     public cpI18n: CPI18nService,
-    public service: StudentsService
+    public service: StudentsService,
+    public cpTracking: CPTrackingService
   ) {
     super();
     super.isLoading().subscribe((loading) => (this.loadingEngagementData = loading));
@@ -186,6 +190,8 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
       service: this.cpI18n.translate('service')
     };
 
+    this.trackAmplitudeEvents();
+
     stream$.toPromise().then((data: any) => {
       data = data.map((item) => {
         return {
@@ -215,6 +221,16 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
 
       createSpreadSheet(data, columns, `${this.student.firstname} ${this.student.lastname}`);
     });
+  }
+
+  trackAmplitudeEvents() {
+    this.eventProperties = {
+      cohort_type: amplitudeEvents.SINGLE_STUDENT,
+      engagement_type: amplitudeEvents.SINGLE_STUDENT,
+      engagement_source: amplitudeEvents.ALL_ENGAGEMENT
+    };
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.ASSESS_DOWNLOAD_DATA, this.eventProperties);
   }
 
   onComposeTeardown() {

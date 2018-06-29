@@ -28,10 +28,11 @@ declare var $;
 export class EngagementComposeComponent implements OnInit {
   @Input() props: { name: string; userIds: Array<number> };
   @Output() teardown: EventEmitter<null> = new EventEmitter();
-  @Output() success: EventEmitter<null> = new EventEmitter();
+  @Output() success: EventEmitter<{ hostType: string; props: any }> = new EventEmitter();
 
   isError;
   stores$;
+  hostType;
   sendAsName;
   errorMessage;
   form: FormGroup;
@@ -60,7 +61,9 @@ export class EngagementComposeComponent implements OnInit {
   }
 
   doSubmit() {
+    const hostType = this.hostType;
     let data = this.form.value;
+    const props = this.props;
     this.isError = false;
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
@@ -78,7 +81,7 @@ export class EngagementComposeComponent implements OnInit {
           return;
         }
         this.resetModal();
-        this.success.emit();
+        this.success.emit({ hostType, props });
         $('#composeModal').modal('hide');
       },
       (_) => {
@@ -91,6 +94,7 @@ export class EngagementComposeComponent implements OnInit {
   onSelectedHost(host) {
     this.form.controls['store_id'].setValue(host.value);
     this.sendAsName = host.label;
+    this.hostType = host.hostType;
   }
 
   resetModal() {
@@ -100,6 +104,7 @@ export class EngagementComposeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.hostType = this.session.defaultHost ? this.session.defaultHost.hostType : null;
     const defaultHost = this.session.defaultHost ? this.session.defaultHost.value : null;
 
     this.form = this.fb.group({

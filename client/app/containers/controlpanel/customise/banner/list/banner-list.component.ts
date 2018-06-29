@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
 import { BannerService } from '../banner.service';
-import { CPTrackingService } from '../../../../../shared/services';
+import { CPTrackingService, ZendeskService } from '../../../../../shared/services';
 import { ISnackbar, SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
 import { CPI18nService, CPCroppieService } from '../../../../../shared/services/index';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
@@ -153,12 +153,12 @@ export class BannerListComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     this.updateHeader();
 
-    const zendesk = 'https://oohlalamobile.zendesk.com/hc/en-us/articles';
+    const zendesk = ZendeskService.zdRoot();
     this.loadImage();
     this.customizeBannerTooltip = {
       content: '',
       link: {
-        url: `${zendesk}/360001101794-What-size-images-should-I-use-in-Campus-Cloud-`,
+        url: `${zendesk}/articles/360001101794-What-size-images-should-I-use-in-Campus-Cloud`,
         text: this.cpI18n.translate('learn_more')
       }
     };

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 
 import { API } from '../../../config/api';
-import { CPI18nService } from '../../services';
+import { CPI18nService, ZendeskService } from '../../services';
 import { appStorage } from '../../../shared/utils';
 import { FileUploadService } from '../../../shared/services/file-upload.service';
 
@@ -23,6 +23,7 @@ export class CPImageUploadComponent implements OnInit {
   error;
   fileName;
   isLoading;
+  zdArticle;
   buttonText;
 
   constructor(public cpI18n: CPI18nService, private fileUploadService: FileUploadService) {}
@@ -80,6 +81,8 @@ export class CPImageUploadComponent implements OnInit {
   }
 
   ngOnInit() {
+    const root = ZendeskService.zdRoot();
+    this.zdArticle = `${root}/articles/360001101794-What-size-images-should-I-use-in-Campus-Cloud`;
     this.buttonText = this.cpI18n.translate('upload_picture');
 
     if (!this.description) {

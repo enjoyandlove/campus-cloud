@@ -26,6 +26,9 @@
         [state]="state"
         [events]="state.events"
         *ngIf="isUpcoming"
+        [isClub]="isClub"
+        [isService]="isService"
+        [isAthletic]="isAthletic"
         [isOrientation]="isOrientation"
         (sortList)="onSortList($event)"
         (deleteEvent)="onDeleteEvent($event)">

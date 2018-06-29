@@ -5,6 +5,7 @@ import { CPSession } from '../../../../session';
 import { EventAttendance } from './event.status';
 import { CPDate } from './../../../../shared/utils/date/date';
 import { CP_PRIVILEGES_MAP } from '../../../../shared/constants';
+import { amplitudeEvents } from '../../../../shared/constants/analytics';
 
 @Injectable()
 export class EventUtilService {
@@ -103,5 +104,28 @@ export class EventUtilService {
     }
 
     return '/cb/checkin/e/';
+  }
+
+  getCheckinSourcePage(
+    isAthletic: boolean,
+    isService: boolean,
+    isClub: boolean,
+    isOrientation: boolean
+  ) {
+    let sourcePage;
+
+    if (isAthletic) {
+      sourcePage = amplitudeEvents.ATHLETICS;
+    } else if (isService) {
+      sourcePage = amplitudeEvents.SERVICE;
+    } else if (isClub) {
+      sourcePage = amplitudeEvents.CLUB;
+    } else if (isOrientation) {
+      sourcePage = amplitudeEvents.ORIENTATION;
+    } else {
+      sourcePage = amplitudeEvents.EVENT;
+    }
+
+    return sourcePage;
   }
 }

@@ -3,13 +3,17 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs';
+
+import { CPSession } from './../../../../session/index';
+import { EngagementService } from './engagement.service';
+import { AssessUtilsService } from '../assess.utils.service';
+import { CPTrackingService } from '../../../../shared/services';
+import { BaseComponent } from '../../../../base/base.component';
 import { HEADER_UPDATE } from './../../../../reducers/header.reducer';
 import { SNACKBAR_SHOW } from './../../../../reducers/snackbar.reducer';
-import { CPSession } from './../../../../session/index';
-import { CPI18nService } from './../../../../shared/services/i18n.service';
+import { amplitudeEvents } from '../../../../shared/constants/analytics';
 import { createSpreadSheet } from './../../../../shared/utils/csv/parser';
-import { EngagementService } from './engagement.service';
-import { BaseComponent } from '../../../../base/base.component';
+import { CPI18nService } from './../../../../shared/services/i18n.service';
 
 declare var $;
 
@@ -28,6 +32,7 @@ export class EngagementComponent extends BaseComponent implements OnInit {
   messageData;
   filterState;
   isComposeModal;
+  eventProperties;
 
   filters$: BehaviorSubject<any> = new BehaviorSubject(null);
 
@@ -36,7 +41,9 @@ export class EngagementComponent extends BaseComponent implements OnInit {
     public store: Store<any>,
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public service: EngagementService
+    public utils: AssessUtilsService,
+    public service: EngagementService,
+    public cpTracking: CPTrackingService
   ) {
     super();
     super.isLoading().subscribe((loading) => (this.loading = loading));
@@ -96,6 +103,7 @@ export class EngagementComponent extends BaseComponent implements OnInit {
   }
 
   onDownload(cohort) {
+    let engagement_type = amplitudeEvents.ALL_ENGAGEMENT;
     let fileName = 'all_download_data';
     let search = this.buildSearchHeaders();
     search = search.append('download', '1');
@@ -106,12 +114,15 @@ export class EngagementComponent extends BaseComponent implements OnInit {
       switch (cohort) {
         case REPEAT_ENGAGEMENT:
           fileName = 'repeat_engagement';
+          engagement_type = amplitudeEvents.MULTIPLE_ENGAGEMENT;
           break;
         case ONE_ENGAGEMENT:
           fileName = 'one_engagement';
+          engagement_type = amplitudeEvents.ONE_ENGAGEMENT;
           break;
         case ZERO_ENGAGEMENT:
           fileName = 'zero_engagement';
+          engagement_type = amplitudeEvents.NO_ENGAGEMENT;
           break;
       }
     }
@@ -120,6 +131,8 @@ export class EngagementComponent extends BaseComponent implements OnInit {
       .getChartData(search)
       .toPromise()
       .then((data: any) => {
+        this.trackDownloadEvent(engagement_type);
+
         const columns = [
           this.cpI18n.translate('assess_student_name'),
           this.cpI18n.translate('assess_number_of_checkins'),
@@ -185,7 +198,8 @@ export class EngagementComponent extends BaseComponent implements OnInit {
     this.messageData = null;
   }
 
-  onFlashMessage() {
+  onFlashMessage(data) {
+    this.trackMessageEvent(data);
     this.store.dispatch({
       type: SNACKBAR_SHOW,
       payload: {
@@ -193,6 +207,23 @@ export class EngagementComponent extends BaseComponent implements OnInit {
         autoClose: true
       }
     });
+  }
+
+  trackMessageEvent(data) {
+    this.eventProperties = {
+      ...this.utils.getEventProperties(this.filterState),
+      host_type: data.hostType,
+      engagement_type: data.props.label
+    };
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.ASSESS_SENT_MESSAGE, this.eventProperties);
+  }
+
+  trackDownloadEvent(engagement_type) {
+    this.eventProperties = {
+      ...this.utils.getEventProperties(this.filterState),
+      engagement_type
+    };
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.ASSESS_DOWNLOAD_DATA, this.eventProperties);
   }
 
   ngOnInit() {

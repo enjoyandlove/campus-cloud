@@ -22,25 +22,16 @@
       <ul class="messages cp-form">
         <li class="cp-form__header col-12">
           <div class="row">
-            <span class="col-5" i18n>{{ 'recipient' | cpI18n }}</span>
-            <span class="col-3" i18n>{{ 'announcements_type' | cpI18n }}</span>
-            <span
-              class="col-3 hover"
-              (click)="doSort('sent_time')">
-              {{ 'sent' | cpI18n }}
-              <span *ngIf="state.sort_field === 'sent_time'">
-                <i
-                  class="material-icons"
-                  *ngIf="state.sort_direction === 'asc'">
-                  arrow_upward
-                </i>
-                <i
-                  class="material-icons"
-                  *ngIf="state.sort_direction === 'desc'">
-                  arrow_downward
-                </i>
-              </span>
-            </span>
+            <span class="col-5">{{ 'recipient' | cpI18n }}</span>
+            <span class="col-3">{{ 'announcements_type' | cpI18n }}</span>
+            <cp-sorting-header
+              class="col-3"
+              sortLabel="sent_time"
+              [label]="sortingLabels.sent"
+              (click)="doSort('sent_time')"
+              [sortField]="state.sort_field"
+              [sortDirection]="state.sort_direction">
+            </cp-sorting-header>
             <span class="col-1"></span>
           </div>
         </li>
@@ -64,7 +55,7 @@
               <span class="text-muted">{{ message.message }}</span>
             </span>
 
-            <span class="col-3" i18n>
+            <span class="col-3">
               {{ messageType[message.priority] }}
             </span>
 

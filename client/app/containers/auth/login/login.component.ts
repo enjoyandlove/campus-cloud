@@ -1,11 +1,19 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { ALERT_DEFAULT } from '../../../reducers/alert.reducer';
-import { CPI18nService, ErrorService, ZendeskService } from '../../../shared/services';
-import { appStorage } from '../../../shared/utils';
+
 import { AuthService } from '../auth.service';
+import { appStorage } from '../../../shared/utils';
+import { ALERT_DEFAULT } from '../../../reducers/alert.reducer';
+import {
+  CPI18nService,
+  CPTrackingService,
+  ErrorService,
+  ZendeskService
+} from '../../../shared/services';
+import { CPSession } from '../../../session';
+import { amplitudeEvents } from '../../../shared/constants/analytics';
 
 @Component({
   selector: 'cp-login',
@@ -22,10 +30,12 @@ export class LoginComponent implements OnInit, OnDestroy {
     private router: Router,
     private fb: FormBuilder,
     private store: Store<any>,
+    private session: CPSession,
     private error: ErrorService,
     private service: AuthService,
     private cpI18n: CPI18nService,
     private route: ActivatedRoute,
+    private cpTracking: CPTrackingService,
     public zendeskService: ZendeskService
   ) {
     this.goTo = this.route.snapshot.queryParams['goTo'];
@@ -46,6 +56,8 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.form.reset();
 
           appStorage.set(appStorage.keys.SESSION, res.id);
+
+          this.loadAndTrackAmplitudeEvent();
 
           if (this.goTo) {
             this.router.navigateByUrl(`/${decodeURIComponent(this.goTo)}`);
@@ -77,6 +89,11 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.store.dispatch({ type: ALERT_DEFAULT });
+  }
+
+  loadAndTrackAmplitudeEvent() {
+    this.cpTracking.loadAmplitude(this.session.g);
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.LOGGED_IN);
   }
 
   ngOnInit() {

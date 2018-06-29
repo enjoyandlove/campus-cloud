@@ -4,16 +4,17 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { of as observableOf } from 'rxjs';
 import { Router } from '@angular/router';
 
+import { reducers } from '../../../../reducers';
 import { CPSession } from './../../../../session';
 import { EngagementService } from './engagement.service';
 import { mockUser } from './../../../../session/mock/user';
-import { CPI18nService } from '../../../../shared/services';
 import { EngagementComponent } from './engagement.component';
 import { mockSchool } from './../../../../session/mock/school';
 import { STATUS } from './../../../../shared/constants/status';
-import { reducers } from '../../../../reducers';
 import { HEADER_UPDATE } from './../../../../reducers/header.reducer';
 import { SNACKBAR_SHOW } from './../../../../reducers/snackbar.reducer';
+import { CPI18nService, CPTrackingService } from '../../../../shared/services';
+import { AssessUtilsService } from '../assess.utils.service';
 
 const mockFilterState = {
   engagement: {
@@ -82,6 +83,8 @@ describe('EngagementComponent', () => {
       declarations: [EngagementComponent],
       providers: [
         CPI18nService,
+        CPTrackingService,
+        AssessUtilsService,
         { provide: Router, useClass: MockRouter },
         { provide: CPSession, useClass: MockSession },
         { provide: EngagementService, useClass: MockEngagementService }
@@ -117,7 +120,8 @@ describe('EngagementComponent', () => {
   });
 
   it('onFlashMessage', () => {
-    component.onFlashMessage();
+    spyOn(component, 'trackMessageEvent');
+    component.onFlashMessage(null);
 
     const expected = {
       type: SNACKBAR_SHOW,

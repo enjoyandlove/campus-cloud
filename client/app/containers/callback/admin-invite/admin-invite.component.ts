@@ -5,7 +5,8 @@ import { Store } from '@ngrx/store';
 
 import { AuthService } from '../../auth/auth.service';
 import { ALERT_DEFAULT } from '../../../reducers/alert.reducer';
-import { CPI18nService, ErrorService } from '../../../shared/services';
+import { amplitudeEvents } from '../../../shared/constants/analytics';
+import { CPI18nService, CPTrackingService, ErrorService } from '../../../shared/services';
 
 @Component({
   selector: 'cp-admin-invite',
@@ -24,7 +25,8 @@ export class AdminInviteComponent implements OnInit, OnDestroy {
     private error: ErrorService,
     public cpI18n: CPI18nService,
     private route: ActivatedRoute,
-    private authService: AuthService
+    private authService: AuthService,
+    private cpTracking: CPTrackingService
   ) {
     this.key = this.route.snapshot.params['key'];
   }
@@ -41,6 +43,7 @@ export class AdminInviteComponent implements OnInit, OnDestroy {
   }
 
   handleSuccess() {
+    this.trackAmplitudeEvent();
     this.isSubmitted = true;
     setTimeout(
       () => {
@@ -51,11 +54,17 @@ export class AdminInviteComponent implements OnInit, OnDestroy {
     );
   }
 
+  trackAmplitudeEvent() {
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.SET_PASSWORD);
+  }
+
   ngOnDestroy() {
     this.store.dispatch({ type: ALERT_DEFAULT });
   }
 
   ngOnInit() {
+    this.cpTracking.loadAmplitude();
+
     if (!this.key) {
       this.router.navigate(['/login']);
 

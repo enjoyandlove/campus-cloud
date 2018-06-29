@@ -3,9 +3,11 @@
     <div class="col-12">
       <label>
         {{ 'name' | cpI18n }}
-        <span class="float-right">
-          {{ form.controls.title.value ? form.controls.title.value.length : 0 }}/225
-        </span>
+        <cp-char-counter
+          class="float-right"
+          [limit]="225"
+          [charCount]="form.controls.title.value">
+        </cp-char-counter>
       </label>
       <input
         type="text"
@@ -29,9 +31,11 @@
     <div class="col-12">
       <label>
         {{ 'description' | cpI18n }}
-        <span class="float-right">
-          {{ form.controls.description.value ? form.controls.description.value.length : 0 }}/512
-        </span>
+        <cp-char-counter
+          class="float-right"
+          [limit]="512"
+          [charCount]="form.controls.description.value">
+        </cp-char-counter>
       </label>
       <textarea
         class="form-control"

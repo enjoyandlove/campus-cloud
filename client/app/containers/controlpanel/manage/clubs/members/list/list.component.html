@@ -16,26 +16,24 @@
       <ul class="members cp-form">
         <li class="cp-form__header col-12">
           <div class="row">
-            <span
+            <cp-sorting-header
+              class="col-3"
+              sortLabel="username"
+              [label]="sortingLabels.name"
               (click)="doSort('username')"
-              class="col-3 hover">
-                {{ 'name' | cpI18n }}
-                <span *ngIf="state.sort_field === 'username'">
-                  <i class="material-icons">
-                    {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
-                  </i>
-                </span>
-              </span>
-            <span
-              class="col-2 hover"
-              (click)="doSort('member_type')">
-              {{ 'clubs_label_member_type' | cpI18n }}
-              <span *ngIf="state.sort_field === 'member_type'">
-                <i class="material-icons">
-                  {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
-                </i>
-              </span>
-            </span>
+              [sortField]="state.sort_field"
+              [sortDirection]="state.sort_direction">
+            </cp-sorting-header>
+
+            <cp-sorting-header
+              class="col-2"
+              sortLabel="member_type"
+              (click)="doSort('member_type')"
+              [sortField]="state.sort_field"
+              [label]="sortingLabels.member_type"
+              [sortDirection]="state.sort_direction">
+            </cp-sorting-header>
+
             <span class="col-4" i18n>{{ 'email' | cpI18n }}</span>
             <span class="col-2" *ngIf="hasSSO">{{ 'student_id' | cpI18n }}</span>
             <span

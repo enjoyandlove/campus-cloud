@@ -32,6 +32,7 @@ export class StoreListComponent extends BaseComponent implements OnInit {
   loading;
   deleteStore;
   selectedStore;
+  sortingLabels;
   state: IState = state;
   launchEditModal = false;
   launchDeleteModal = false;
@@ -146,5 +147,9 @@ export class StoreListComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     this.fetch();
     this.buildHeader();
+
+    this.sortingLabels = {
+      name: this.cpI18n.translate('name')
+    };
   }
 }

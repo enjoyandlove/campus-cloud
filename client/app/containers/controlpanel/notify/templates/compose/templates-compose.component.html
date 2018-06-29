@@ -3,7 +3,7 @@
       <div class="cpmodal__header">
         <div class="row">
           <div class="col-12 text-center">
-            <span i18n><strong>{{ data.name }}</strong></span>
+            <span><strong>{{ data.name }}</strong></span>
 
             <span
               data-dismiss="modal"
@@ -22,8 +22,8 @@
               <div class="form-group campus-switch" [class.isActive]="state.isCampusWide">
                 <div class="row">
                   <div class="col-8">
-                    <p class="title" i18n>{{ 'campus_wide' | cpI18n }}</p>
-                    <p class="text-muted" i18n>{{ 'templates_create_label_all_students' | cpI18n }}</p>
+                    <p class="title">{{ 'campus_wide' | cpI18n }}</p>
+                    <p class="text-muted">{{ 'templates_create_label_all_students' | cpI18n }}</p>
                   </div>
                   <div class="col-4">
                     <div class="float-right">
@@ -38,7 +38,7 @@
               </div>
 
               <div class="form-group" *ngIf="!state.isCampusWide">
-                <label i18n>{{ 'recipient' | cpI18n }}
+                <label>{{ 'recipient' | cpI18n }}
                   <cp-tooltip
                     [toolTipContent]="toolTipContent">
                   </cp-tooltip>
@@ -58,7 +58,7 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-6">
-                    <label i18n>{{ 'announcements_type' | cpI18n }}</label>
+                    <label>{{ 'announcements_type' | cpI18n }}</label>
                     <div class="row">
                       <div class="col-12">
                         <cp-check-dropdown
@@ -74,7 +74,7 @@
                   <div class="col-6">
                     <div class="row">
                       <div class="col-12">
-                        <label i18n>{{ 'from' | cpI18n }}</label>
+                        <label>{{ 'from' | cpI18n }}</label>
                         <cp-dropdown
                           [items]="stores$ | async"
                           [reset]="resetCustomFields$"
@@ -88,11 +88,13 @@
               </div>
 
               <div class="form-group">
-                <label i18n>
+                <label>
                   {{ 'subject' | cpI18n }}
-                  <span class="float-right">
-                    {{ getSubjectLength() }}/128
-                  </span>
+                  <cp-char-counter
+                    class="float-right"
+                    [limit]="128"
+                    [charCount]="getSubjectLength()">
+                  </cp-char-counter>
                 </label>
                 <div class="cpInput subject-input">
                   <div class="row">
@@ -112,11 +114,13 @@
               </div>
 
               <div class="form-group">
-                <label i18n>
+                <label>
                   {{ 'message_noun' | cpI18n }}
-                  <span class="float-right">
-                    {{ form.controls.message.value ? form.controls.message.value.length : 0 }}/400
-                  </span>
+                  <cp-char-counter
+                    class="float-right"
+                    [limit]="400"
+                    [charCount]="form.controls.message.value">
+                  </cp-char-counter>
                 </label>
                 <textarea
                   class="form-control"
@@ -141,7 +145,7 @@
               type="button"
               data-dismiss="modal"
               (click)="resetModal()"
-              class="cpbtn cpbtn--cancel" i18n>
+              class="cpbtn cpbtn--cancel">
               {{ 'cancel' | cpI18n }}
             </button>
 
@@ -149,7 +153,7 @@
               type="button"
               (click)="doValidate()"
               [disabled]="!form.valid"
-              class="cpbtn cpbtn--primary" i18n>
+              class="cpbtn cpbtn--primary">
               {{ 'announce' | cpI18n }}
             </button>
           </div>

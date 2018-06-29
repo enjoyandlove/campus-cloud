@@ -17,6 +17,7 @@ import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
   styleUrls: ['./list.component.scss']
 })
 export class OrientationListComponent extends BaseComponent implements OnInit {
+  label;
   isOpen;
   loading;
   noDuration;
@@ -135,5 +136,8 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
     this.noDuration = ProgramDuration.disabled;
     this.buildHeader();
     this.fetch();
+    this.label = {
+      name: this.cpI18n.translate('name')
+    };
   }
 }
