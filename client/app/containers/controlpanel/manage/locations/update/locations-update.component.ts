@@ -59,14 +59,13 @@ export class LocationsUpdateComponent implements OnInit {
   doSubmit() {
     const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
-    this.service.updateLocation(this.form.value, this.location.id, search).subscribe((_) => {
-      $('#locationsUpdate').modal('hide');
-      this.locationUpdated.emit({
-        id: this.location.id,
-        data: this.form.value
+    this.service
+      .updateLocation(this.form.value, this.location.id, search)
+      .subscribe((editedLocation) => {
+        $('#locationsUpdate').modal('hide');
+        this.locationUpdated.emit(editedLocation);
+        this.resetModal();
       });
-      this.resetModal();
-    });
   }
 
   onMapSelection(data) {

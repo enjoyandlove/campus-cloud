@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SharedModule } from '../../../shared/shared.module';
 
 import { AssessComponent } from './assess.component';
-
+import { AssessUtilsService } from './assess.utils.service';
+import { SharedModule } from '../../../shared/shared.module';
 import { AssessRoutingModule } from './assess.routing.module';
 
 @NgModule({
@@ -11,6 +11,6 @@ import { AssessRoutingModule } from './assess.routing.module';
 
   imports: [CommonModule, SharedModule, AssessRoutingModule],
 
-  providers: []
+  providers: [AssessUtilsService]
 })
 export class AssessModule {}

@@ -14,31 +14,25 @@
             <div class="cp-table__header">
               <div class="row">
                 <div class="col-3">
-                  <span
-                    class="hover"
-                    (click)="doSort('provider_name')">
-                    {{ 'service_provider' | cpI18n }}
-                    <span *ngIf="state.sort_field === 'provider_name'">
-                      <i class="material-icons">
-                        {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
-                      </i>
-                    </span>
-                  </span>
+                  <cp-sorting-header
+                    sortLabel="provider_name"
+                    (click)="doSort('provider_name')"
+                    [sortField]="state.sort_field"
+                    [label]="sortingLabels.provider_name"
+                    [sortDirection]="state.sort_direction">
+                  </cp-sorting-header>
                 </div>
                 <div class="col-4" *ngIf="displayRatingColumn">
                   <span>{{ 'average_rating' | cpI18n }}</span>
                 </div>
                 <div class="col-1" *ngIf="displayRatingColumn">
-                  <span
-                    class="hover"
-                    (click)="doSort('num_ratings')">
-                    {{ 'rating' | cpI18n }}
-                    <span *ngIf="state.sort_field === 'num_ratings'">
-                      <i class="material-icons">
-                        {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
-                      </i>
-                    </span>
-                  </span>
+                  <cp-sorting-header
+                    sortLabel="num_ratings"
+                    (click)="doSort('num_ratings')"
+                    [sortField]="state.sort_field"
+                    [label]="sortingLabels.rating"
+                    [sortDirection]="state.sort_direction">
+                  </cp-sorting-header>
                 </div>
                 <div [class]="[displayRatingColumn ? 'col-1' : 'col-1 offset-5']">
                   <span>
@@ -54,7 +48,7 @@
 
             <div class="cp-table__item" *ngFor="let provider of state.providers">
               <div class="row">
-                <div 
+                <div
                   class="col-3 text-truncate">
                   <a [routerLink]="['provider/' + provider.id]">
                     <span>
@@ -79,6 +73,8 @@
                 </div>
                 <div class="col-2">
                   <a
+                    cpTracker
+                    [eventData]="trackCheckinEvent(provider.encrypted_campus_service_id)"
                     [routerLink]="['/cb/checkin/s/' + provider.encrypted_campus_service_id + '/' + provider.encrypted_id]"
                     class="startcheckin cpbtn cpbtn--no-border cpbtn--secondary" i18n>
                     {{ 'services_label_check_in_details' | cpI18n }}

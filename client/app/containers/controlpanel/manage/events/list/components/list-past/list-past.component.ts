@@ -8,6 +8,7 @@ import {
 import { FORMAT } from '../../../../../../../shared/pipes';
 import { CPSession } from './../../../../../../../session/index';
 import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
+import { CPI18nService } from '../../../../../../../shared/services';
 
 interface ISort {
   sort_field: string;
@@ -32,11 +33,14 @@ export class ListPastComponent implements OnInit {
   @Output() deleteEvent: EventEmitter<any> = new EventEmitter();
   @Output() sortList: EventEmitter<ISort> = new EventEmitter();
 
+  sortingLabels;
   sort: ISort = sort;
   canDelete = false;
   dateFormat = FORMAT.SHORT;
 
-  constructor(private session: CPSession) {}
+  constructor(
+    private session: CPSession,
+    private cpI18n: CPI18nService) {}
 
   onDelete(event) {
     this.deleteEvent.emit(event);
@@ -54,5 +58,10 @@ export class ListPastComponent implements OnInit {
     const scholAccess = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.events);
     const accountAccess = canAccountLevelReadResource(this.session.g, CP_PRIVILEGES_MAP.events);
     this.canDelete = scholAccess || accountAccess || this.isOrientation;
+
+    this.sortingLabels = {
+      name: this.cpI18n.translate('name'),
+      end_date: this.cpI18n.translate('end_date')
+    };
   }
 }

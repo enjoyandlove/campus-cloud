@@ -1676,7 +1676,7 @@
     "message": "Image"
   },
   "lists": {
-    "message": "Listes"
+    "message": "Audiences"
   },
   "lists_button_create": {
     "message": "Créer audience"
@@ -1812,7 +1812,7 @@
     "message": "Destinataires"
   },
   "notify_announcement_template_to_tooltip": {
-    "message": "Les notifications peuvent être envoyées aux utilisateurs de l'application que vous pouvez regrouper en listes. Pour plus d'info:"
+    "message": "Les notifications peuvent être envoyées aux utilisateurs de l'application que vous pouvez regrouper en audiences. Pour plus d'info:"
   },
   "no_admins_found": {
     "message": "Aucun administrateur trouvé"
@@ -2310,6 +2310,9 @@
   },
   "t_audience_dynamic_integration_disabled": {
     "message": "Pour activer cette fonctionalité, veuillez contacter votre consultant en engagement mobile."
+  },
+  "t_audience_save_modal_button_submit": {
+    "message": "Enregistrer"
   },
   "t_customise_personas": {
     "message": "Expériences d'application"

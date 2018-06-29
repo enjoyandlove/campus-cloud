@@ -1,3 +1,4 @@
+import { ISnackbar, SNACKBAR_SHOW } from './../../../../../../../reducers/snackbar.reducer';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -5,6 +6,7 @@ import { Observable } from 'rxjs';
 import { API } from '../../../../../../../config/api';
 import { appStorage } from '../../../../../../../shared/utils';
 import { FileUploadService, CPI18nService } from '../../../../../../../shared/services';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'cp-services-import-top-bar',
@@ -23,7 +25,22 @@ export class ServicesImportTopBarComponent implements OnInit {
   imageError;
   loading = true;
 
-  constructor(private fileUploadService: FileUploadService, public cpI18n: CPI18nService) {}
+  constructor(
+    private fileUploadService: FileUploadService,
+    public cpI18n: CPI18nService,
+    public store: Store<ISnackbar>
+  ) {}
+
+  errorHandler(body = this.cpI18n.translate('something_went_wrong')) {
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        body,
+        sticky: true,
+        class: 'danger'
+      }
+    });
+  }
 
   onFileUpload(file) {
     this.imageError = null;
@@ -31,6 +48,8 @@ export class ServicesImportTopBarComponent implements OnInit {
 
     if (!validate.valid) {
       this.imageError = validate.errors[0];
+
+      this.errorHandler(validate.errors[0]);
 
       return;
     }
@@ -42,12 +61,9 @@ export class ServicesImportTopBarComponent implements OnInit {
       Authorization: auth
     });
 
-    this.fileUploadService.uploadFile(file, url, headers).subscribe(
-      (res: any) => this.imageChange.emit(res.image_url),
-      (err) => {
-        throw new Error(err);
-      }
-    );
+    this.fileUploadService
+      .uploadFile(file, url, headers)
+      .subscribe((res: any) => this.imageChange.emit(res.image_url), (_) => this.errorHandler());
   }
 
   ngOnInit() {}

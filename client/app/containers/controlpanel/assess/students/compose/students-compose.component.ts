@@ -13,8 +13,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { CPSession } from '../../../../../session';
 import { StudentsService } from './../students.service';
-import { StoreService } from '../../../../../shared/services';
+import { CPTrackingService, StoreService } from '../../../../../shared/services';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 
 const THROTTLED_STATUS = 1;
 
@@ -32,9 +33,11 @@ export class StudentsComposeComponent implements OnInit {
 
   isError;
   stores$;
+  hostType;
   sendAsName;
   errorMessage;
   form: FormGroup;
+  eventProperties;
   resetStores$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
@@ -43,7 +46,8 @@ export class StudentsComposeComponent implements OnInit {
     private session: CPSession,
     private cpI18n: CPI18nService,
     private service: StudentsService,
-    private storeService: StoreService
+    private storeService: StoreService,
+    private cpTracking: CPTrackingService
   ) {
     const school = this.session.g.get('school');
     const search: HttpParams = new HttpParams().append('school_id', school.id.toString());
@@ -77,6 +81,7 @@ export class StudentsComposeComponent implements OnInit {
 
           return;
         }
+        this.trackAmplitudeEvents();
         this.resetModal();
         this.success.emit();
         $('#studentsComposeModal').modal('hide');
@@ -91,6 +96,7 @@ export class StudentsComposeComponent implements OnInit {
   onSelectedHost(host) {
     this.form.controls['store_id'].setValue(host.value);
     this.sendAsName = host.label;
+    this.hostType = host.hostType;
   }
 
   resetModal() {
@@ -99,7 +105,19 @@ export class StudentsComposeComponent implements OnInit {
     this.resetStores$.next(true);
   }
 
+  trackAmplitudeEvents() {
+    this.eventProperties = {
+      host_type: this.hostType,
+      cohort_type: amplitudeEvents.SINGLE_STUDENT,
+      engagement_type: amplitudeEvents.SINGLE_STUDENT,
+      engagement_source: amplitudeEvents.ALL_ENGAGEMENT,
+    };
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.ASSESS_SENT_MESSAGE, this.eventProperties);
+  }
+
   ngOnInit() {
+    this.hostType = this.session.defaultHost ? this.session.defaultHost.hostType : null;
     const defaultHost = this.session.defaultHost ? this.session.defaultHost.value : null;
 
     this.form = this.fb.group({

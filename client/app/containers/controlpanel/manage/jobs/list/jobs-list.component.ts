@@ -35,6 +35,7 @@ const state = {
 export class JobsListComponent extends BaseComponent implements OnInit {
   loading;
   deleteJob;
+  sortingLabels;
   state: IState = state;
   launchDeleteModal = false;
   dateFormat = FORMAT.SHORT;
@@ -124,5 +125,11 @@ export class JobsListComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     this.fetch();
     this.buildHeader();
+
+    this.sortingLabels = {
+      name: this.cpI18n.translate('name'),
+      employer_name: this.cpI18n.translate('employer_name'),
+      posting_start: this.cpI18n.translate('jobs_posting_start')
+    };
   }
 }

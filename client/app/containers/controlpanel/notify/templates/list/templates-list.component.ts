@@ -30,6 +30,7 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
   deleteTemplate;
   templateData;
 
+  sortingLabels;
   isTemplateDelete;
 
   isTemplateCreateModal = false;
@@ -207,5 +208,9 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
     if (this.templateId && this.schoolId) {
       this.loadTemplateFromId();
     }
+
+    this.sortingLabels = {
+      name: this.cpI18n.translate('name')
+    };
   }
 }

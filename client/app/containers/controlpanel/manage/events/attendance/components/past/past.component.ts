@@ -1,12 +1,15 @@
-import { HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
+
+import { EventsService } from '../../../events.service';
 import { CPSession } from './../../../../../../../session';
-import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
-import { createSpreadSheet } from './../../../../../../../shared/utils/csv/parser';
 import { CPDate } from './../../../../../../../shared/utils/date/date';
+import { CPTrackingService } from '../../../../../../../shared/services';
 import { BaseComponent } from '../../../../../../../base/base.component';
 import { STAR_SIZE } from '../../../../../../../shared/components/cp-stars';
-import { EventsService } from '../../../events.service';
+import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
+import { createSpreadSheet } from './../../../../../../../shared/utils/csv/parser';
+import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 
 interface IState {
   sort_field: string;
@@ -32,6 +35,7 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
 
   loading;
   attendees;
+  eventProperties;
   attendeeFeedback;
   state: IState = state;
   listStarSize = STAR_SIZE.DEFAULT;
@@ -40,7 +44,8 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
   constructor(
     public session: CPSession,
     private cpI18n: CPI18nService,
-    public service: EventsService
+    public service: EventsService,
+    public cpTracking: CPTrackingService
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -102,6 +107,8 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
       search
     );
 
+    this.trackAmplitudeEvent();
+
     stream$.toPromise().then((attendees: Array<any>) => {
       const columns = [
         this.cpI18n.translate('events_attendant'),
@@ -152,6 +159,16 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
 
       createSpreadSheet(attendees, columns);
     });
+  }
+
+  trackAmplitudeEvent() {
+    this.eventProperties = {
+      data_type: amplitudeEvents.EVENT
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_DOWNLOAD_DATA,
+      this.eventProperties);
   }
 
   onViewFeedback(attendee): void {

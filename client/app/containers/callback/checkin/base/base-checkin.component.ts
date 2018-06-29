@@ -2,6 +2,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+import { CPTrackingService } from '../../../../shared/services';
+import { amplitudeEvents } from '../../../../shared/constants/analytics';
+
 const jsPDF = require('jspdf');
 
 const LEFT_MARGIN = 30;
@@ -29,14 +32,20 @@ declare var $;
 })
 export class BaseCheckinComponent implements OnInit {
   @Input() data: any;
+  @Input() eventId: number;
+  @Input() serviceId: number;
   @Input() isEvent: boolean;
   @Input() isService: boolean;
+  @Input() isOrientation: boolean;
   @Output() send: EventEmitter<any> = new EventEmitter();
 
   isInternal;
   isDownload;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(
+    private route: ActivatedRoute,
+    private cpTracking: CPTrackingService
+  ) {
     this.isInternal = 'edit' in this.route.snapshot.queryParams;
     this.isDownload = 'download' in this.route.snapshot.queryParams;
 
@@ -75,6 +84,7 @@ export class BaseCheckinComponent implements OnInit {
       .toUpperCase();
 
     try {
+      this.trackDownloadQRCodeEvent();
       doc.addImage(decodeURIComponent(this.data.qr_img_base64), imageFormat, 60, 60, 90, 90);
     } catch (error) {
       throw new Error(error);
@@ -239,6 +249,43 @@ export class BaseCheckinComponent implements OnInit {
       .toLowerCase()
       .split(' ')
       .join('_');
+  }
+
+  trackDownloadQRCodeEvent() {
+    const eventProperties = this.getEventProperties(
+      this.isOrientation,
+      this.isService,
+      this.eventId,
+      this.serviceId);
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_DOWNLOADED_QR_CODE, eventProperties);
+  }
+
+  getEventProperties(
+    isOrientation: boolean,
+    isService: boolean,
+    eventId: number,
+    serviceId: number) {
+    let eventProperties;
+
+    if (isOrientation) {
+      eventProperties = {
+        event_id: eventId,
+        check_in_type: amplitudeEvents.ORIENTATION
+      };
+    } else if (isService) {
+      eventProperties = {
+        service_id: serviceId,
+        check_in_type: amplitudeEvents.SERVICE
+      };
+    } else {
+      eventProperties = {
+        event_id: eventId,
+        check_in_type: amplitudeEvents.EVENT
+      };
+    }
+
+    return eventProperties;
   }
 
   ngOnInit() {

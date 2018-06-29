@@ -5,10 +5,14 @@ import {
   canAccountLevelReadResource
 } from './../../../../../../../shared/utils/privileges/privileges';
 
+import { EventAttendance } from '../../../event.status';
 import { FORMAT } from '../../../../../../../shared/pipes';
 import { CPSession } from './../../../../../../../session/index';
-import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
 import { EventUtilService } from '../../../events.utils.service';
+import { CPI18nService } from '../../../../../../../shared/services';
+import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
+import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
+import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
 
 interface ISort {
   sort_field: string;
@@ -20,8 +24,6 @@ const sort = {
   sort_direction: 'asc' // asc, desc
 };
 
-import { EventAttendance } from '../../../event.status';
-
 @Component({
   selector: 'cp-list-upcoming',
   templateUrl: './list-upcoming.component.html',
@@ -30,6 +32,9 @@ import { EventAttendance } from '../../../event.status';
 export class ListUpcomingComponent implements OnInit {
   @Input() state: any;
   @Input() events: any;
+  @Input() isClub: boolean;
+  @Input() isService: boolean;
+  @Input() isAthletic: boolean;
   @Input() isOrientation: boolean;
 
   @Output() deleteEvent: EventEmitter<any> = new EventEmitter();
@@ -37,11 +42,15 @@ export class ListUpcomingComponent implements OnInit {
 
   sort: ISort = sort;
   canDelete;
+  sortingLabels;
   eventCheckinRoute;
   dateFormat = FORMAT.SHORT;
   attendanceEnabled = EventAttendance.enabled;
 
-  constructor(private session: CPSession, private utils: EventUtilService) {}
+  constructor(
+    private session: CPSession,
+    private cpI18n: CPI18nService,
+    private utils: EventUtilService) {}
 
   onDelete(event) {
     this.deleteEvent.emit(event);
@@ -55,10 +64,34 @@ export class ListUpcomingComponent implements OnInit {
     this.sortList.emit(this.sort);
   }
 
+  trackEvent(event_id) {
+    const source_page = this.utils.getCheckinSourcePage(
+      this.isAthletic,
+      this.isService,
+      this.isClub,
+      this.isOrientation);
+
+    const eventProperties = {
+      event_id,
+      source_page
+    };
+
+    return {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.MANAGE_CLICKED_CHECKIN,
+      eventProperties
+    };
+  }
+
   ngOnInit() {
     this.eventCheckinRoute = this.utils.getEventCheckInLink(this.isOrientation);
     const scholAccess = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.events);
     const accountAccess = canAccountLevelReadResource(this.session.g, CP_PRIVILEGES_MAP.events);
     this.canDelete = scholAccess || accountAccess || this.isOrientation;
+
+    this.sortingLabels = {
+      name: this.cpI18n.translate('name'),
+      start_date: this.cpI18n.translate('start_date')
+    };
   }
 }

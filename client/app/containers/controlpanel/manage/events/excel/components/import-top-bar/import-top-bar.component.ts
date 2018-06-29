@@ -1,10 +1,11 @@
+/*tslint:disable:max-line-length*/
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { HttpHeaders } from '@angular/common/http';
+import { Store } from '@ngrx/store';
 
-import { API } from '../../../../../../../config/api';
-import { EventsService } from '../../../events.service';
-import { appStorage } from '../../../../../../../shared/utils';
-import { FileUploadService } from '../../../../../../../shared/services';
+import { FileUploadService, CPI18nService } from '../../../../../../../shared/services';
+import { ISnackbar } from '../../../../../../../reducers/snackbar.reducer';
+import { SNACKBAR_SHOW } from './../../../../../../../reducers/snackbar.reducer';
+import { CPImageUploadComponent } from './../../../../../../../shared/components/cp-image-upload/cp-image-upload.component';
 
 @Component({
   selector: 'cp-import-top-bar',
@@ -26,34 +27,33 @@ export class EventsImportTopBarComponent implements OnInit {
   @Output() hostChange: EventEmitter<number> = new EventEmitter();
   @Output() imageChange: EventEmitter<string> = new EventEmitter();
 
+  buttonText;
   imageError;
 
-  constructor(private eventService: EventsService, private fileUploadService: FileUploadService) {}
+  constructor(
+    public store: Store<ISnackbar>,
+    private fileUploadService: FileUploadService,
+    public cpI18n: CPI18nService
+  ) {}
 
   onFileUpload(file) {
-    this.imageError = null;
-    const validate = this.fileUploadService.validImage(file);
+    const imageUpload = new CPImageUploadComponent(this.cpI18n, this.fileUploadService);
+    const promise = imageUpload.onFileUpload(file, true);
 
-    if (!validate.valid) {
-      this.imageError = validate.errors[0];
-
-      return;
-    }
-
-    const url = this.eventService.getUploadImageUrl();
-    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
-
-    const headers = new HttpHeaders({
-      Authorization: auth
-    });
-
-    this.fileUploadService.uploadFile(file, url, headers).subscribe(
-      (res: any) => this.imageChange.emit(res.image_url),
-      (err) => {
-        throw new Error(err);
-      }
+    promise.then((res: any) => this.imageChange.emit(res.image_url)).catch((err) =>
+      this.store.dispatch({
+        type: SNACKBAR_SHOW,
+        payload: {
+          class: 'danger',
+          autoClose: true,
+          sticky: true,
+          body: err ? err : this.cpI18n.translate('something_went_wrong')
+        }
+      })
     );
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.buttonText = this.cpI18n.translate('t_events_import_upload_picture');
+  }
 }

@@ -24,16 +24,14 @@
       <ul class="audiences cp-form">
         <li class="cp-form__header col-12">
           <div class="row">
-            <span
-              class="col-5 hover"
-              (click)="doSort('name')">
-              {{ 'name' | cpI18n }}
-              <span *ngIf="state.sort_field === 'name'">
-                <i class="material-icons">
-                  {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
-                </i>
-              </span>
-            </span>
+            <cp-sorting-header
+              class="col-5"
+              sortLabel="name"
+              (click)="doSort('name')"
+              [label]="sortingLabels.name"
+              [sortField]="state.sort_field"
+              [sortDirection]="state.sort_direction">
+            </cp-sorting-header>
             <span 
               class="col-2">
               {{ 'type' | cpI18n }}
@@ -52,8 +50,7 @@
             <span class="col-5 text-truncate">
               <button
                 class="cpbtn cpbtn--link-dark"
-                (click)="isAudienceEdit = true"
-                (click)="editAudience = audience"
+                (click)="isAudienceEdit = true; editAudience = audience"
                 data-toggle="modal" data-target="#audienceEdit">
                 <strong>{{ audience.name }}</strong>
               </button>
@@ -69,12 +66,12 @@
             </span>
 
             <span class="col-2 hover" (click)="downloadAudience(audience)">
+              <i class="material-icons">file_download</i>
               {{ audience.count }} {{ 'users' | cpI18n }}
             </span>
 
             <span
-              (click)="deleteAudience = audience;"
-              (click)="isAudienceDelete = true"
+              (click)="deleteAudience = audience; isAudienceDelete = true"
               data-toggle="modal" data-target="#audienceDeleteModal"
               class="col-1 offset-2 hover delete-list text-center">
               &times;
