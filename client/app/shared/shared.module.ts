@@ -183,7 +183,8 @@ import { LocationsService } from '../containers/controlpanel/manage/locations/lo
     CPCharCounterComponent,
     CPWorkingComponent,
     CPHeaderLinkComponent,
-    CPSortingHeaderComponent
+    CPSortingHeaderComponent,
+    CPColorPickerDirective
   ]
 })
 export class SharedModule {}

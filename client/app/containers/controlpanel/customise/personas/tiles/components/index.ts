@@ -6,4 +6,5 @@ export * from './tile-link-form';
 export * from './form-type-text';
 export * from './tile-add-button';
 export * from './tile-guide-form';
+export * from './form-stores-list';
 export * from './form-resource-list';
