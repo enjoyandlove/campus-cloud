@@ -7,11 +7,20 @@
   </div>
 </div>
 
-<div class="row" *ngIf="resourceSelection === 'store_list'">
+<div class="row form-group" *ngIf="resourceSelection === 'store_list'">
   <div class="col-12">
     <label>{{ t_personas_tile_create_label_store_list }}</label>
     <cp-personas-tile-form-stores-list 
       (storeListChange)="this.selected.emit($event);">
     </cp-personas-tile-form-stores-list>
+  </div>
+</div>
+
+<div class="row form-group">
+  <div class="col-12">
+    <label>{{ 't_personas_tile_modal_create_resource_type' | cpI18n }}</label>
+    <cp-personas-forms-type-search 
+      (selected)="onResourceTypeSelected($event)">
+    </cp-personas-forms-type-search>
   </div>
 </div>

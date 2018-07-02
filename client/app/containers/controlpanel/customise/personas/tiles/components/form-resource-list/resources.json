@@ -133,5 +133,15 @@
       "open_in_browser": 1,
       "link_url": "oohlala://store_list"
     }
+  },
+  {
+    "id": "store",
+    "label": "t_personas_tile_create_resource_type_store",
+    "meta": {
+      "is_system": 1,
+      "link_params": {},
+      "open_in_browser": 0,
+      "link_url": "oohlala://store"
+    }
   }
 ]

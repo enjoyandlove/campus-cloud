@@ -15,6 +15,8 @@ export class PersonasTileFormResourceListComponent implements OnInit {
   constructor(public cpI18n: CPI18nService) {}
 
   onResourceSelected(selection) {
+    console.log(selection);
+
     this.resourceSelection = selection.id;
 
     if (selection.id === 'store_list') {

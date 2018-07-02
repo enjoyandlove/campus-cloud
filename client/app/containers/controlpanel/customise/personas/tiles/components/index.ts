@@ -7,4 +7,5 @@ export * from './form-type-text';
 export * from './tile-add-button';
 export * from './tile-guide-form';
 export * from './form-stores-list';
+export * from './forms-type-search';
 export * from './form-resource-list';
