@@ -32,16 +32,9 @@ export class TilesService extends HTTPService {
     return super.get(url, headers, true).pipe(
       startWith([{ label: '---' }]),
       map((categories) => {
-        return categories.map((category: any, index) => {
-          if (index === 0) {
-            return {
-              label: '---',
-              value: null
-            };
-          }
-
+        return categories.map((category: any) => {
           return {
-            value: category.id,
+            action: category.id,
             label: category.name
           };
         });
