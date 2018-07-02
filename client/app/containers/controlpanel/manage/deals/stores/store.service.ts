@@ -6,11 +6,11 @@ import { API } from '../../../../../config/api';
 import { HTTPService } from '../../../../../base';
 
 @Injectable()
-export class StoreService extends HTTPService {
+export class DealsStoreService extends HTTPService {
   constructor(http: HttpClient, router: Router) {
     super(http, router);
 
-    Object.setPrototypeOf(this, StoreService.prototype);
+    Object.setPrototypeOf(this, DealsStoreService.prototype);
   }
 
   getStores(startRage: number, endRage: number, search: HttpParams) {

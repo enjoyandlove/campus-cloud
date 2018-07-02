@@ -1,3 +1,4 @@
+import { startWith, map } from 'rxjs/operators';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -17,6 +18,59 @@ export class TilesService extends HTTPService {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GUIDE_TILES}/${linkId}`;
 
     return super.update(url, body);
+  }
+
+  getSchoolCampaigns(headers) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SCHOOL_CAMPAIGN}/1;2000`;
+
+    return super.get(url, headers, true).pipe(startWith([{ label: '---' }]));
+  }
+
+  getSchoolServices(search) {
+    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}`;
+    const url = `${common}/1;2000`;
+
+    return super.get(url, search, true).pipe(
+      startWith([{ label: '---' }]),
+      map((services) => {
+        return services.map((service: any, index) => {
+          if (index === 0) {
+            return {
+              label: '---',
+              value: null
+            };
+          }
+
+          return {
+            value: service.id,
+            label: service.name
+          };
+        });
+      })
+    );
+  }
+
+  getSchoolCalendars(headers) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CALENDAR}/1;2000`;
+
+    return super.get(url, headers, true).pipe(
+      startWith([{ label: '---' }]),
+      map((calendars) => {
+        return calendars.map((calendar: any, index) => {
+          if (index === 0) {
+            return {
+              label: '---',
+              value: null
+            };
+          }
+
+          return {
+            value: calendar.id,
+            label: calendar.name
+          };
+        });
+      })
+    );
   }
 
   deleteTile(linkId, search: HttpParams) {

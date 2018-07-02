@@ -52,6 +52,7 @@ export class PersonasTileLinkFormComponent implements OnInit {
   }
 
   onResourceTypeSelected(resourceType) {
+    console.log('onResourceTypeSelected', resourceType);
     this.updateFormMetaValues(resourceType);
   }
 

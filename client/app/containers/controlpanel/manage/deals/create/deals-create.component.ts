@@ -8,7 +8,7 @@ import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 import { CPSession } from '../../../../../session';
 import { CPI18nService } from '../../../../../shared/services';
 import { DealsService } from '../deals.service';
-import { StoreService } from '../stores/store.service';
+import { DealsStoreService } from '../stores/store.service';
 
 @Component({
   selector: 'cp-deals-create',
@@ -31,7 +31,7 @@ export class DealsCreateComponent implements OnInit {
     public service: DealsService,
     public store: Store<IHeader>,
     public cpI18n: CPI18nService,
-    public storeService: StoreService
+    public storeService: DealsStoreService
   ) {}
 
   onSubmit() {
