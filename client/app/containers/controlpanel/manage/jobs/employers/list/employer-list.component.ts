@@ -30,6 +30,7 @@ const state = {
 })
 export class EmployerListComponent extends BaseComponent implements OnInit {
   loading;
+  sortingLabels;
   deleteEmployer;
   selectedEmployer;
   state: IState = state;
@@ -148,5 +149,9 @@ export class EmployerListComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     this.fetch();
     this.buildHeader();
+
+    this.sortingLabels = {
+      name: this.cpI18n.translate('name')
+    };
   }
 }

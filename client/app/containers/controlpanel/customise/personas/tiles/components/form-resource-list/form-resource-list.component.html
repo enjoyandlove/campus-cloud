@@ -2,7 +2,16 @@
   <div class="col-12">
     <cp-dropdown
       [items]="resources"
-      (selected)="selected.emit($event)">
+      (selected)="onResourceSelected($event)">
     </cp-dropdown>
+  </div>
+</div>
+
+<div class="row" *ngIf="resourceSelection === 'store_list'">
+  <div class="col-12">
+    <label>{{ t_personas_tile_create_label_store_list }}</label>
+    <cp-personas-tile-form-stores-list 
+      (storeListChange)="this.selected.emit($event);">
+    </cp-personas-tile-form-stores-list>
   </div>
 </div>

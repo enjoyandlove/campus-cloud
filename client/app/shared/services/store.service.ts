@@ -3,10 +3,12 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { combineLatest, of as observableOf } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+
+import { API } from '../../config/api';
 import { CPSession } from './../../session';
 import { CPI18nService } from './i18n.service';
 import { HTTPService } from '../../base/http.service';
-import { API } from '../../config/api';
+import { amplitudeEvents } from '../constants/analytics';
 import { isClubAthletic } from '../../containers/controlpanel/manage/clubs/clubs.athletics.labels';
 import { CP_PRIVILEGES_MAP } from '../constants';
 import { canAccountLevelReadResource, canSchoolReadResource } from '../utils/privileges';
@@ -45,7 +47,8 @@ export class StoreService extends HTTPService {
           return {
             label: store.name,
             value: store.store_id,
-            heading: false
+            heading: false,
+            hostType: amplitudeEvents.SERVICE
           };
         });
 
@@ -61,7 +64,7 @@ export class StoreService extends HTTPService {
   private getAthletics(search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CLUBS}/1;1000`;
 
-    search.append('category_id', isClubAthletic.athletic.toString());
+    search = search.append('category_id', isClubAthletic.athletic.toString());
 
     return super.get(url, search).pipe(
       startWith([
@@ -84,7 +87,8 @@ export class StoreService extends HTTPService {
           return {
             label: store.name,
             value: store.id,
-            heading: false
+            heading: false,
+            hostType: amplitudeEvents.ATHLETICS
           };
         });
 
@@ -126,7 +130,8 @@ export class StoreService extends HTTPService {
           return {
             label: store.name,
             value: store.id,
-            heading: false
+            heading: false,
+            hostType: amplitudeEvents.CLUB
           };
         });
 

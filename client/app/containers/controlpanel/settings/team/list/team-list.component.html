@@ -20,26 +20,24 @@
     <ul class="cp-form">
       <li class="cp-form__header col-12">
         <div class="row">
-          <span
-            class="col-5 hover"
-            (click)="doSort('firstname')">
-            {{ 'name' | cpI18n }}
-            <span *ngIf="state.sort_field === 'firstname'">
-              <i class="material-icons">
-                {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
-              </i>
-            </span>
-          </span>
-          <span
-            class="col-5 hover"
-            (click)="doSort('status')">
-            {{ 'status' | cpI18n }}
-            <span *ngIf="state.sort_field === 'status'">
-              <i class="material-icons">
-                {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
-              </i>
-            </span>
-          </span>
+          <cp-sorting-header
+            class="col-5"
+            sortLabel="firstname"
+            [label]="sortingLabels.name"
+            (click)="doSort('firstname')"
+            [sortField]="state.sort_field"
+            [sortDirection]="state.sort_direction">
+          </cp-sorting-header>
+
+          <cp-sorting-header
+            class="col-5"
+            sortLabel="status"
+            (click)="doSort('status')"
+            [label]="sortingLabels.status"
+            [sortField]="state.sort_field"
+            [sortDirection]="state.sort_direction">
+          </cp-sorting-header>
+
           <span class="col-2"></span>
         </div>
       </li>
@@ -50,7 +48,7 @@
             <strong>
               <a [routerLink]="[admin.id + '/edit']">
                 {{ admin.firstname }} {{ admin.lastname }}
-                <span *ngIf="admin.is_current_user" i18n>({{ 'you' | cpI18n }})</span>
+                <span *ngIf="admin.is_current_user">({{ 'you' | cpI18n }})</span>
               </a>
             </strong>
             <br>

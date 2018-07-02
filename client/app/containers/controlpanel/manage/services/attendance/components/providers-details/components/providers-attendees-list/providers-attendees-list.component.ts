@@ -6,7 +6,9 @@ import { CPSession } from './../../../../../../../../../session';
 import { ProvidersService } from '../../../../../providers.service';
 import { FORMAT } from '../../../../../../../../../shared/pipes/date';
 import { CPDate } from './../../../../../../../../../shared/utils/date/date';
+import { CPTrackingService } from '../../../../../../../../../shared/services';
 import { BaseComponent } from '../../../../../../../../../base/base.component';
+import { amplitudeEvents } from '../../../../../../../../../shared/constants/analytics';
 import { createSpreadSheet } from './../../../../../../../../../shared/utils/csv/parser';
 import { CPI18nService } from './../../../../../../../../../shared/services/i18n.service';
 
@@ -35,7 +37,9 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
 
   loading;
   assessments;
+  sortingLabels;
   checkinMethods;
+  eventProperties;
   state: IState = state;
   dateFormat = FORMAT.DATETIME;
   defaultImage = require('public/default/user.png');
@@ -43,6 +47,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
   constructor(
     public session: CPSession,
     private cpI18n: CPI18nService,
+    private cpTracking: CPTrackingService,
     private providersService: ProvidersService
   ) {
     super();
@@ -103,9 +108,18 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
     this.fetch();
   }
 
+  trackAmplitudeEvent() {
+    this.eventProperties = {
+      data_type: amplitudeEvents.ATTENDANCE
+    };
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_DOWNLOAD_DATA, this.eventProperties);
+  }
+
   ngOnInit() {
     this.download.subscribe((download) => {
       if (download && this.assessments.length) {
+        this.trackAmplitudeEvent();
         this.fetchAllRecords().then((assessments) => {
           const columns = [
             this.cpI18n.translate('services_label_attendee_name'),
@@ -168,6 +182,11 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
       '3': {
         label: 'App check-in'
       }
+    };
+
+    this.sortingLabels = {
+      checkin_time: this.cpI18n.translate('services_label_checkin_time'),
+      checkin_method: this.cpI18n.translate('services_label_all_checkin_methods')
     };
   }
 }

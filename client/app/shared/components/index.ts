@@ -32,6 +32,7 @@ export * from './cp-upload-modal';
 export * from './cp-top-ga-modal';
 export * from './cp-school-switch';
 export * from './cp-upload-button';
+export * from './cp-sorting-header';
 export * from './cp-check-dropdown';
 export * from './cp-resource-banner';
 export * from './cp-small-datepicker';

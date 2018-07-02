@@ -37,6 +37,7 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
   buttonText;
   headerText;
   messageType;
+  sortingLabels;
   isDeleteModal;
   suggestions = [];
   viewMoreRecipients = [];
@@ -164,6 +165,10 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
       0: this.cpI18n.translate('emergency'),
       1: this.cpI18n.translate('urgent'),
       2: this.cpI18n.translate('regular')
+    };
+
+    this.sortingLabels = {
+      sent: this.cpI18n.translate('sent')
     };
   }
 }

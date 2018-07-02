@@ -20,11 +20,11 @@
     </div>
   </div>
   <div class="col-8 wrapper__right-side">
-    <label class="no-margin dark" i18n>{{ description }}</label>
+    <label class="no-margin dark">{{ description }}</label>
     <a 
     target="_blank"
-    href="https://oohlalamobile.zendesk.com/hc/en-us/articles/360001101794-What-size-images-should-I-use-in-Campus-Cloud-">
-      <span class="text-muted" i18n>{{ 'component_cpimage_help' | cpI18n }}</span>
+    [attr.href]="zdArticle">
+      <span class="text-muted">{{ 'component_cpimage_help' | cpI18n }}</span>
     </a>
     <div class="row" *ngIf="error">
       <div class="col-12">

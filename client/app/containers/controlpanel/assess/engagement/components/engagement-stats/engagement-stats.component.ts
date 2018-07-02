@@ -22,7 +22,12 @@ interface IProps {
 export class EngagementStatsComponent implements OnInit {
   @Input() props: IProps;
   @Output() download: EventEmitter<number> = new EventEmitter();
-  @Output() doCompose: EventEmitter<{ name: string; userIds: Array<number> }> = new EventEmitter();
+  @Output()
+  doCompose: EventEmitter<{
+    name: string;
+    label: string;
+    userIds: Array<number>;
+  }> = new EventEmitter();
 
   loading;
   noEngagementPercentage;
@@ -37,11 +42,12 @@ export class EngagementStatsComponent implements OnInit {
 
   onCompose(listName, userIds) {
     const { starts, ends } = this.props;
+    const label = listName;
     const startDate = moment.unix(starts).format('DD/MM');
     const endDate = moment.unix(ends).format('DD/MM');
     const name = `${listName} ${startDate} - ${endDate}`;
 
-    this.doCompose.emit({ name, userIds });
+    this.doCompose.emit({ name, label, userIds });
   }
 
   getPercentage(key) {

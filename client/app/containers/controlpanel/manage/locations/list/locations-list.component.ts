@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { CPSession } from './../../../../../session';
 import { LocationsService } from '../locations.service';
+import { CPI18nService } from '../../../../../shared/services';
 import { BaseComponent } from '../../../../../base/base.component';
 
 declare var $: any;
@@ -28,12 +29,17 @@ const state: IState = {
 })
 export class LocationsListComponent extends BaseComponent implements OnInit {
   loading;
+  sortingLabels;
   isLocationsCreate;
   deleteLocation = '';
   updateLocation = '';
   state: IState = state;
 
-  constructor(private locationsService: LocationsService, public session: CPSession) {
+  constructor(
+    public session: CPSession,
+    public cpI18n: CPI18nService,
+    private locationsService: LocationsService
+  ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
 
@@ -101,31 +107,25 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
     });
   }
 
-  onLocationUpdated(location) {
-    const _state = Object.assign({}, this.state, {
-      locations: this.state.locations.map((_location) => {
-        if (_location.id === location.id) {
-          return (_location = location.data);
-        }
-
-        return _location;
-      })
-    });
-
-    this.state = Object.assign({}, this.state, _state);
+  onLocationUpdated(editedLocation) {
+    this.state = {
+      ...this.state,
+      locations: this.state.locations.map(
+        (location) => (location.id === editedLocation.id ? editedLocation : location)
+      )
+    };
   }
 
   onLocationDeleted(locationId) {
-    const _state = Object.assign({}, this.state);
-
-    _state.locations = _state.locations.filter((locations) => {
-      if (locations.id !== locationId) {
-        return locations;
-      }
-    });
-
-    this.state = Object.assign({}, this.state, { locations: _state.locations });
+    this.state = {
+      ...this.state,
+      locations: this.state.locations.filter((location) => location.id !== locationId)
+    };
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.sortingLabels = {
+      locations: this.cpI18n.translate('locations')
+    };
+  }
 }

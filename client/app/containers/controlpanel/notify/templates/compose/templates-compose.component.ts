@@ -13,11 +13,18 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
+
 import { CPSession } from './../../../../../session/index';
-import { CPI18nService, StoreService } from './../../../../../shared/services';
+import { CP_PRIVILEGES_MAP, STATUS } from '../../../../../shared/constants';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { AnnouncementsService } from './../../announcements/announcements.service';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
-import { CP_PRIVILEGES_MAP, STATUS } from '../../../../../shared/constants';
+import {
+  CPI18nService,
+  StoreService,
+  CPTrackingService,
+  ZendeskService
+} from './../../../../../shared/services';
 
 interface IState {
   isUrgent: boolean;
@@ -81,12 +88,19 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
 
   types;
 
+  amplitudeEventProperties = {
+    host_type: null,
+    audience_type: null,
+    announcement_type: amplitudeEvents.REGULAR
+  };
+
   constructor(
     public el: ElementRef,
     public fb: FormBuilder,
     public session: CPSession,
     public cpI18n: CPI18nService,
     public storeService: StoreService,
+    public cpTracking: CPTrackingService,
     public service: AnnouncementsService
   ) {
     const school = this.session.g.get('school');
@@ -162,14 +176,14 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
   }
 
   getSubjectLength() {
-    let length = 0;
+    let length = '';
 
     if (this.subject_prefix.label) {
-      length += this.subject_prefix.label.length;
+      length += this.subject_prefix.label;
     }
 
     if (this.form.controls['subject'].value) {
-      length += this.form.controls['subject'].value.length;
+      length += this.form.controls['subject'].value;
     }
 
     return length;
@@ -287,6 +301,10 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
   onSelectedStore(store) {
     this.sendAsName = store.label;
     this.form.controls['store_id'].setValue(store.value);
+    this.amplitudeEventProperties = {
+      ...this.amplitudeEventProperties,
+      host_type: store.hostType
+    };
   }
 
   doChipsSelected() {
@@ -319,6 +337,14 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
   doSubmit() {
     this.isError = false;
 
+    this.amplitudeEventProperties = {
+      ...this.amplitudeEventProperties,
+      announcement_type: this.selectedType.label
+    };
+    this.amplitudeEventProperties = {
+      ...this.amplitudeEventProperties,
+      audience_type: amplitudeEvents.CAMPUS_WIDE
+    };
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     const prefix = this.subject_prefix.label ? this.subject_prefix.label.toUpperCase() : '';
@@ -332,10 +358,18 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
     };
 
     if (this.state.isToUsers && !this.state.isCampusWide) {
+      this.amplitudeEventProperties = {
+        ...this.amplitudeEventProperties,
+        audience_type: amplitudeEvents.USER
+      };
       data = Object.assign({}, data, { user_ids: this.form.value.user_ids });
     }
 
     if (this.state.isToLists && !this.state.isCampusWide) {
+      this.amplitudeEventProperties = {
+        ...this.amplitudeEventProperties,
+        audience_type: amplitudeEvents.LIST
+      };
       data = Object.assign({}, data, { list_ids: this.form.value.list_ids });
     }
 
@@ -350,6 +384,10 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
 
           return;
         }
+        this.cpTracking.amplitudeEmitEvent(
+          amplitudeEvents.NOTIFY_SEND_ANNOUNCEMENT,
+          this.amplitudeEventProperties
+        );
         this.form.reset();
         this.created.emit(this.form.value);
         this.resetModal();
@@ -494,9 +532,7 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
       content: this.cpI18n.translate('notify_announcement_template_to_tooltip'),
       link: {
         text: this.cpI18n.translate('lists_button_create'),
-        url:
-          'https://oohlalamobile.zendesk.com/hc/en-us/articles/' +
-          '115004330554-Create-a-List-of-Students'
+        url: `${ZendeskService.zdRoot()}/articles/115004330554-Create-a-List-of-Students`
       }
     });
 

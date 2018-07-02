@@ -10,8 +10,18 @@ export class PersonasTileFormResourceListComponent implements OnInit {
   @Output() selected: EventEmitter<any> = new EventEmitter();
 
   resources;
+  resourceSelection = null;
 
   constructor(public cpI18n: CPI18nService) {}
+
+  onResourceSelected(selection) {
+    this.resourceSelection = selection.id;
+
+    if (selection.id === 'store_list') {
+    } else {
+      this.selected.emit(selection);
+    }
+  }
 
   populateDropdowns() {
     this.resources = require('./resources.json').map((resource) => {

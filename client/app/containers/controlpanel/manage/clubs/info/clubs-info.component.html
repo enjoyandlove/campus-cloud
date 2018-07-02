@@ -55,7 +55,7 @@
                     <span> / </span>
                     <span>
                       <cp-upload-button
-                        buttonText="Reupload"
+                        [buttonText]="buttonText"
                         buttonClass="cpbtn cpbtn--link"
                         (fileUpload)="onFileAdded($event)">
                       </cp-upload-button>

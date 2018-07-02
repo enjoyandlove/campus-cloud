@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from './../../../../../shared/shared.module';
 import {
+  PersonasTileFormStoreListComponent,
   PersonasTileFormResourceListComponent,
   PseronasTileBaseComponent,
   PersonasTileContentComponent,
@@ -21,6 +22,7 @@ import { PersonasTileLinkFormComponent } from './components/tile-link-form/tile-
 
 @NgModule({
   declarations: [
+    PersonasTileFormStoreListComponent,
     PersonasTileFormResourceListComponent,
     PersonasTileLinkFormComponent,
     PersonasTileGuideFormComponent,
@@ -35,6 +37,7 @@ import { PersonasTileLinkFormComponent } from './components/tile-link-form/tile-
   ],
   imports: [CommonModule, SharedModule, ReactiveFormsModule],
   exports: [
+    PersonasTileFormStoreListComponent,
     PersonasTileFormResourceListComponent,
     PersonasTileLinkFormComponent,
     PersonasTileGuideFormComponent,

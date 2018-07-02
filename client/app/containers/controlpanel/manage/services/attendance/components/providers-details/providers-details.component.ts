@@ -4,10 +4,12 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { CP_TRACK_TO } from './../../../../../../../shared/directives/tracking/tracking.directive';
 import { ServicesService } from './../../../services.service';
 import { BaseComponent } from '../../../../../../../base/base.component';
 import { HEADER_UPDATE, IHeader } from '../../../../../../../reducers/header.reducer';
 import { STAR_SIZE } from '../../../../../../../shared/components/cp-stars';
+import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
 import { ProvidersService } from '../../../providers.service';
 
 @Component({
@@ -75,6 +77,19 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
         children: []
       }
     });
+  }
+
+  trackCheckinEvent(service_id) {
+    const eventProperties = {
+      service_id,
+      source_page: amplitudeEvents.SERVICE
+    };
+
+    return {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.MANAGE_CLICKED_CHECKIN,
+      eventProperties
+    };
   }
 
   ngOnInit() {

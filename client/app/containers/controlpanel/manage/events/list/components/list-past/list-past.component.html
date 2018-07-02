@@ -1,28 +1,26 @@
 <ul class="events cp-form">
   <li class="cp-form__header">
     <div class="row">
-      <span
+      <cp-sorting-header
+        class="col-4"
+        [label]="sortingLabels.name"
+        sortLabel="title"
         (click)="doSort('title')"
-        class="col-4 hover" i18n>
-        {{ 'name' | cpI18n }}
-        <span *ngIf="state.sort_field === 'title'">
-          <i class="material-icons">
-            {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
-          </i>
-        </span>
-      </span>
-      <span
+        [sortField]="state.sort_field"
+        [sortDirection]="state.sort_direction">
+      </cp-sorting-header>
+
+      <cp-sorting-header
+        class="col-2"
+        [label]="sortingLabels.end_date"
+        sortLabel="end"
         (click)="doSort('end')"
-        class="col-2 hover" i18n>
-        {{ 'end_date' | cpI18n }}
-        <span *ngIf="state.sort_field === 'end'">
-          <i class="material-icons">
-            {{ state.sort_direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
-          </i>
-        </span>
-      </span>
-      <span class="col-2" i18n>{{ 'checkins' | cpI18n }}</span>
-      <span class="col-3" i18n>{{ 'average_rating' | cpI18n }}</span>
+        [sortField]="state.sort_field"
+        [sortDirection]="state.sort_direction">
+      </cp-sorting-header>
+
+      <span class="col-2">{{ 'checkins' | cpI18n }}</span>
+      <span class="col-3">{{ 'average_rating' | cpI18n }}</span>
       <span class="col-1"></span>
     </div>
   </li>
