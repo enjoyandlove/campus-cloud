@@ -14,6 +14,7 @@ import {
 import { CPSession } from './../../../session';
 import { CPDate } from './../../utils/date/date';
 import { FORMAT, CPDatePipe } from './../../pipes/date/date.pipe';
+import { CPRangePickerUtilsService } from './cp-range-picker.utils.service';
 
 interface IDateChange {
   end: number;
@@ -43,7 +44,6 @@ const rangeOptions: IRangePickerOptions = {
 
 declare var $: any;
 import 'flatpickr';
-import * as moment from 'moment';
 
 @Component({
   selector: 'cp-range-picker',
@@ -70,7 +70,10 @@ export class CPRangePickerComponent implements OnInit, AfterViewInit, OnDestroy 
     this.setLabel(state);
   }
 
-  constructor(public session: CPSession) {}
+  constructor(
+    public session: CPSession,
+    public utils: CPRangePickerUtilsService
+  ) {}
 
   onDateChanged(selectedDates) {
     if (selectedDates.length === 2) {
@@ -84,22 +87,14 @@ export class CPRangePickerComponent implements OnInit, AfterViewInit, OnDestroy 
       );
 
       const date = {
-        start: this.dayStart(selectedDates[0]),
-        end: this.dayEnd(selectedDates[1]),
+        start: this.utils.dayStart(selectedDates[0]),
+        end: this.utils.dayEnd(selectedDates[1]),
         label: `${formattedStart} - ${formattedEnd}`
       };
 
       this.setLabel(date);
       this.triggerChange();
     }
-  }
-
-  dayStart(date) {
-    return CPDate.toEpoch(moment(date).startOf('day'), this.session.tz);
-  }
-
-  dayEnd(date) {
-    return CPDate.toEpoch(moment(date).endOf('day'), this.session.tz);
   }
 
   resetCalendar() {
