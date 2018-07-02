@@ -35,6 +35,8 @@ export const API_ENDPOINTS = {
 
   LOCATIONS: 'location',
 
+  CALENDAR: 'user_calendar',
+
   GUIDE_TILES: 'guide_tile',
 
   PERSONAS: 'school_persona',
@@ -49,7 +51,6 @@ export const API_ENDPOINTS = {
 
   ANNOUNCEMENT: 'announcement',
 
-  // Assess Dashboard
   ASSESS_EVENT: 'assess_event',
 
   GROUP_COMMENT: 'group_comment',
@@ -65,6 +66,8 @@ export const API_ENDPOINTS = {
   FB_EVENTS: 'facebook_event_link',
 
   SERVICES_CATEGORY: 'org_category',
+
+  SCHOOL_CAMPAIGN: 'school_campaign',
 
   STUDENT_PROFILE: 'student_profile',
 

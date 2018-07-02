@@ -143,5 +143,35 @@
       "open_in_browser": 0,
       "link_url": "oohlala://store"
     }
+  },
+  {
+    "id": "subscribable_calendar",
+    "label": "t_personas_tile_create_resource_type_subscribable_calendar",
+    "meta": {
+      "is_system": 1,
+      "link_params": {},
+      "open_in_browser": 0,
+      "link_url": "oohlala://subscribable_calendar"
+    }
+  },
+  {
+    "id": "campus_service",
+    "label": "t_personas_tile_create_resource_type_campus_service",
+    "meta": {
+      "is_system": 1,
+      "link_params": {},
+      "open_in_browser": 0,
+      "link_url": "oohlala://campus_service"
+    }
+  },
+  {
+    "id": "school_campaign",
+    "label": "t_personas_tile_create_resource_type_school_campaign",
+    "meta": {
+      "is_system": 1,
+      "link_params": {},
+      "open_in_browser": 0,
+      "link_url": "oohlala://school_campaign"
+    }
   }
 ]

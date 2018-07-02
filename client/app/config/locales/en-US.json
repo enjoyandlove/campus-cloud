@@ -2470,6 +2470,9 @@
   "t_personas_tile_create_resource_type_campus_poi_list": {
     "message": "Campus Map"
   },
+  "t_personas_tile_create_resource_type_campus_service": {
+    "message": "Campus Service"
+  },
   "t_personas_tile_create_resource_type_campus_tour_list": {
     "message": "Campus Tour List"
   },
@@ -2482,8 +2485,17 @@
   "t_personas_tile_create_resource_type_in_app_feedback": {
     "message": "In App feedback"
   },
+  "t_personas_tile_create_resource_type_school_campaign": {
+    "message": "School Campaign"
+  },
+  "t_personas_tile_create_resource_type_store": {
+    "message": "Stores"
+  },
   "t_personas_tile_create_resource_type_store_list": {
     "message": "Stores List"
+  },
+  "t_personas_tile_create_resource_type_subscribable_calendar": {
+    "message": "Subscribable Calendar"
   },
   "t_personas_tile_create_resource_type_timetable": {
     "message": "Timetable"

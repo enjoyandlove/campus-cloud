@@ -11,7 +11,13 @@ export class PersonasTileFormResourceListComponent implements OnInit {
 
   resources;
   resourceSelection = null;
-  preventEmit = ['store', 'store_list'];
+  preventEmit = [
+    'store',
+    'store_list',
+    'campus_service',
+    'school_campaign',
+    'subscribable_calendar'
+  ];
 
   constructor(public cpI18n: CPI18nService) {}
 
