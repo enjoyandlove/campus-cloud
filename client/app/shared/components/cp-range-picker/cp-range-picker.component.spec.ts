@@ -4,6 +4,8 @@ import { CPRangePickerComponent } from '../';
 import { CPSession } from './../../../session';
 import { CPDate } from './../../utils/date/date';
 import { CPDatePipe } from './../../pipes/date/date.pipe';
+import { CPRangePickerUtilsService } from './cp-range-picker.utils.service';
+
 class MockCPSession extends CPSession {
   get tz() {
     return 'America/Toronto';
@@ -43,6 +45,7 @@ describe('CPRangePickerComponent', () => {
       TestBed.configureTestingModule({
         declarations: [CPRangePickerComponent],
         providers: [
+          CPRangePickerUtilsService,
           { provide: CPSession, useClass: MockCPSession }
           ]
       });
@@ -56,8 +59,9 @@ describe('CPRangePickerComponent', () => {
     comp.picker = $(comp.calendarEl.nativeElement).flatpickr(pickerOptions);
     comp.datePipe = new CPDatePipe(mockSession);
     comp.session = TestBed.get(CPSession);
+    comp.label = null;
     comp.class = 'secondary';
-    comp.icon = true;
+    comp.icon = 'keyboard_arrow_down';
 
     spyOn(comp.rangeChange, 'emit');
     spyOn(comp.picker, 'clear');
@@ -66,20 +70,20 @@ describe('CPRangePickerComponent', () => {
 
   it('setLabel', () => {
 
-    expect(comp.selected).toBeNull();
+    expect(comp.label).toBeNull();
 
     comp.setLabel(expected);
 
     fixture.detectChanges();
 
-    expect(comp.selected).toEqual(expected);
+    expect(comp.label).toEqual(expected.label);
   });
 
   it('triggerChange', () => {
 
     comp.setLabel(expected);
 
-    comp.triggerChange();
+    comp.triggerChange(expected);
 
     expect(comp.rangeChange.emit).toHaveBeenCalledWith(expected);
   });

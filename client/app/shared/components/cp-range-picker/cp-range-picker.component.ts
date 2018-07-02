@@ -63,7 +63,6 @@ export class CPRangePickerComponent implements OnInit, AfterViewInit, OnDestroy 
 
   picker;
   datePipe;
-  selected = null;
   dateFormat = FORMAT.SHORT;
 
   constructor(
