@@ -1,10 +1,10 @@
-import { catchError } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { CPSession } from './../../../../../../../session';
 import { TilesService } from './../../tiles.service';
 import { StoreService } from '../../../../../../../shared/services';
-import { of } from 'rxjs';
 
 @Component({
   selector: 'cp-personas-forms-type-search',
@@ -27,19 +27,6 @@ export class PersonasTileFormTypeSearchComponent implements OnInit {
     public tileService: TilesService
   ) {}
 
-  onSelected(id) {
-    this.selected.emit({
-      meta: {
-        is_system: 1,
-        link_params: {
-          id
-        },
-        open_in_browser: 0,
-        link_url: 'oohlala://store'
-      }
-    });
-  }
-
   loadItemsByResourceId(resourceId) {
     if (resourceId === 'school_campaign') {
       this.loadCampaigns();
@@ -58,28 +45,97 @@ export class PersonasTileFormTypeSearchComponent implements OnInit {
 
   loadServices() {
     const headers = new HttpParams().set('school_id', this.session.g.get('school').id);
-    this.items$ = this.tileService
-      .getSchoolServices(headers)
-      .pipe(catchError(() => this.handleError()));
+    this.items$ = this.tileService.getSchoolServices(headers).pipe(
+      map((services) => {
+        return services.map((service: any) => {
+          return service.value
+            ? {
+                ...service,
+                meta: {
+                  is_system: 1,
+                  link_params: {
+                    id: service.value
+                  },
+                  open_in_browser: 0,
+                  link_url: 'oohlala://campus_service'
+                }
+              }
+            : service;
+        });
+      }),
+      catchError(() => this.handleError())
+    );
   }
 
   loadCampaigns() {
     const headers = new HttpParams().set('school_id', this.session.g.get('school').id);
-    this.items$ = this.tileService
-      .getSchoolCampaigns(headers)
-      .pipe(catchError(() => this.handleError()));
+    this.items$ = this.tileService.getSchoolCampaigns(headers).pipe(
+      map((campaigns) => {
+        return campaigns.map((campaign: any) => {
+          return campaign.value
+            ? {
+                ...campaign,
+                meta: {
+                  is_system: 1,
+                  link_params: {
+                    id: campaign.value
+                  },
+                  open_in_browser: 0,
+                  link_url: 'oohlala://school_campaign'
+                }
+              }
+            : campaign;
+        });
+      }),
+      catchError(() => this.handleError())
+    );
   }
 
   loadCalendars() {
     const headers = new HttpParams().set('school_id', this.session.g.get('school').id);
-    this.items$ = this.tileService
-      .getSchoolCalendars(headers)
-      .pipe(catchError(() => this.handleError()));
+    this.items$ = this.tileService.getSchoolCalendars(headers).pipe(
+      map((calendars) => {
+        return calendars.map((calendar: any) => {
+          return calendar.value
+            ? {
+                ...calendar,
+                meta: {
+                  is_system: 1,
+                  link_params: {
+                    id: calendar.value
+                  },
+                  open_in_browser: 0,
+                  link_url: 'oohlala://subscribable_calendar'
+                }
+              }
+            : calendar;
+        });
+      }),
+      catchError(() => this.handleError())
+    );
   }
 
   loadStores() {
     const headers = new HttpParams().set('school_id', this.session.g.get('school').id);
-    this.items$ = this.storeService.getStores(headers);
+    this.items$ = this.storeService.getStores(headers).pipe(
+      map((stores) => {
+        return stores.map((store: any) => {
+          return store.value
+            ? {
+                ...store,
+                meta: {
+                  is_system: 1,
+                  link_params: {
+                    id: store.value
+                  },
+                  open_in_browser: 0,
+                  link_url: 'oohlala://store'
+                }
+              }
+            : store;
+        });
+      })
+    );
   }
 
   ngOnInit(): void {}
