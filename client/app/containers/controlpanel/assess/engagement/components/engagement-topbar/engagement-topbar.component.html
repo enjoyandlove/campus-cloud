@@ -39,9 +39,9 @@
             <div class="col-9">
               <cp-range-picker
                 [icon]="icon"
-                [state]="state.range"
                 [class]="datePickerClass"
                 [dateRanges]="dateFilter"
+                [label]="state.range.label"
                 (rangeChange)="onDateRangeChange($event)">
               </cp-range-picker>
             </div>

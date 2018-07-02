@@ -54,8 +54,9 @@ import 'flatpickr';
 export class CPRangePickerComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('calendarEl') calendarEl: ElementRef;
 
+  @Input() label;
   @Input() dateRanges;
-  @Input() icon: boolean;
+  @Input() icon: string;
   @Input() class: string;
   @Input() pickerOptions: IRangePickerOptions = rangeOptions;
   @Output() rangeChange: EventEmitter<IDateChange> = new EventEmitter();
@@ -64,11 +65,6 @@ export class CPRangePickerComponent implements OnInit, AfterViewInit, OnDestroy 
   datePipe;
   selected = null;
   dateFormat = FORMAT.SHORT;
-
-  @Input()
-  set state(state) {
-    this.setLabel(state);
-  }
 
   constructor(
     public session: CPSession,
@@ -93,7 +89,7 @@ export class CPRangePickerComponent implements OnInit, AfterViewInit, OnDestroy 
       };
 
       this.setLabel(date);
-      this.triggerChange();
+      this.triggerChange(date);
     }
   }
 
@@ -112,16 +108,16 @@ export class CPRangePickerComponent implements OnInit, AfterViewInit, OnDestroy 
 
   handleCustomDate(date) {
     this.setLabel(date);
-    this.triggerChange();
     this.resetCalendar();
+    this.triggerChange(date);
   }
 
-  triggerChange() {
-    this.rangeChange.emit(this.selected);
+  triggerChange(date) {
+    this.rangeChange.emit(date);
   }
 
   setLabel(date) {
-    this.selected = date;
+    this.label = date.label;
   }
 
   ngOnDestroy() {
