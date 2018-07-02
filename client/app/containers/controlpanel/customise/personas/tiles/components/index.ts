@@ -9,3 +9,4 @@ export * from './tile-guide-form';
 export * from './form-stores-list';
 export * from './forms-type-search';
 export * from './form-resource-list';
+export * from './form-service-by-category';

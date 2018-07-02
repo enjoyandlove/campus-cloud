@@ -14,18 +14,24 @@ import { StoreService } from '../../../../../../../shared/services';
 export class PersonasTileFormTypeSearchComponent implements OnInit {
   @Input()
   set resourceId(resourceId) {
+    this.doReset();
     this.loadItemsByResourceId(resourceId);
   }
 
   @Output() selected: EventEmitter<any> = new EventEmitter();
 
   items$;
+  dropdown = true;
 
   constructor(
     public storeService: StoreService,
     public session: CPSession,
     public tileService: TilesService
   ) {}
+
+  doReset() {
+    this.items$ = of([{ label: '---' }]);
+  }
 
   loadItemsByResourceId(resourceId) {
     if (resourceId === 'school_campaign') {

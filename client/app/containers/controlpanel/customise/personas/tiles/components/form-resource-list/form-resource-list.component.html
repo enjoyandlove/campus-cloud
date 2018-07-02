@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row form-group">
   <div class="col-12">
     <cp-dropdown
       [items]="resources"
@@ -16,12 +16,21 @@
   </div>
 </div>
 
-<div class="row form-group" *ngIf="preventEmit.includes(resourceSelection)">
+<div class="row form-group" *ngIf="typeSearchComponent.includes(resourceSelection)">
   <div class="col-12">
     <label>{{ 't_personas_tile_modal_create_resource_type' | cpI18n }}</label>
     <cp-personas-forms-type-search
       [resourceId]="resourceSelection"
       (selected)="selected.emit($event)">
     </cp-personas-forms-type-search>
+  </div>
+</div>
+
+<div class="row form-group" *ngIf="resourceSelection === 'service_by_category_id'">
+  <div class="col-12">
+    <label>{{ 't_personas_tile_modal_create_categories' | cpI18n }}</label>
+    <cp-personas-tile-form-service-by-category 
+      (selected)="selected.emit($event)">
+    </cp-personas-tile-form-service-by-category>
   </div>
 </div>

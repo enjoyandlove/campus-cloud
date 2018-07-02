@@ -2488,6 +2488,9 @@
   "t_personas_tile_create_resource_type_school_campaign": {
     "message": "School Campaign"
   },
+  "t_personas_tile_create_resource_type_service_by_category_id": {
+    "message": "Services by Category"
+  },
   "t_personas_tile_create_resource_type_store": {
     "message": "Stores"
   },
@@ -2524,8 +2527,17 @@
   "t_personas_tile_create_type_resource_web_link": {
     "message": "Web Link"
   },
+  "t_personas_tile_form_categories_excludes": {
+    "message": "Excludes"
+  },
+  "t_personas_tile_form_categories_includes": {
+    "message": "Includes"
+  },
   "t_personas_tile_modal_create_appearance": {
     "message": "Appearance"
+  },
+  "t_personas_tile_modal_create_categories": {
+    "message": "Categories"
   },
   "t_personas_tile_modal_create_content": {
     "message": "Content"
