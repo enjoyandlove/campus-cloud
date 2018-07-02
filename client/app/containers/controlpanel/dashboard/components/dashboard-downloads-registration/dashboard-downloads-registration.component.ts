@@ -1,70 +1,21 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import * as moment from 'moment';
 
 import { BaseComponent } from '../../../../../base';
 import { CPSession } from './../../../../../session';
 import { DashboardService } from './../../dashboard.service';
 import { CPI18nService } from '../../../../../shared/services';
+import {
+  DivideBy,
+  addGroup,
+  groupByQuarter,
+  groupByMonth,
+  groupByWeek
+} from '../../../../../shared/components/cp-line-chart/cp-line-chart.utils.service';
 
 const year = 365;
 const threeMonths = 90;
 const twoYears = year * 2;
-
-export const addGroup = (data) => {
-  return data.map((group: Number[]) => {
-    return group.reduce((prev: number, next: number) => prev + next);
-  });
-};
-
-export const aggregate = (data: Number[], serie: Number[]): Promise<Number[]> => {
-  const arr = [];
-
-  data.reduce(
-    (prev, current, index) => {
-      if (prev === current) {
-        arr[arr.length - 1] += serie[index];
-
-        return current;
-      }
-
-      arr.push(serie[index]);
-
-      return current;
-    },
-
-    0
-  );
-
-  return new Promise((resolve) => {
-    resolve(arr);
-  });
-};
-
-export const groupByWeek = (dates: any[], serie: Number[]) => {
-  const datesByWeek = dates.map((d) => moment(d).week());
-
-  return aggregate(datesByWeek, serie);
-};
-
-export const groupByMonth = (dates: any[], series: Number[]) => {
-  const datesByMonth = dates.map((d) => moment(d).month());
-
-  return aggregate(datesByMonth, series);
-};
-
-export const groupByQuarter = (dates: any[], series: Number[]) => {
-  const datesByQuarter = dates.map((d) => moment(d).quarter());
-
-  return aggregate(datesByQuarter, series);
-};
-
-export enum DivideBy {
-  'daily' = 0,
-  'weekly' = 1,
-  'monthly' = 2,
-  'quarter' = 3
-}
 
 @Component({
   selector: 'cp-dashboard-downloads-registration',

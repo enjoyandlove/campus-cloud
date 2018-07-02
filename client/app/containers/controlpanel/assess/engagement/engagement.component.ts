@@ -17,10 +17,10 @@ import { createSpreadSheet } from './../../../../shared/utils/csv/parser';
 import { CPI18nService } from './../../../../shared/services/i18n.service';
 import {
   DivideBy,
+  groupByWeek,
   groupByMonth,
   groupByQuarter,
-  groupByWeek
-} from '../../dashboard/components/dashboard-downloads-registration/dashboard-downloads-registration.component';
+} from '../../../../shared/components/cp-line-chart/cp-line-chart.utils.service';
 
 declare var $;
 

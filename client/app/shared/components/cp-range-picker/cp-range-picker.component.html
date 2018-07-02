@@ -6,7 +6,7 @@
     data-toggle="dropdown"
     [class]="'cpbtn cpbtn--' + class">
     {{ selected.label }}
-    <i class="material-icons" *ngIf="icon">keyboard_arrow_down</i>
+    <i class="material-icons" *ngIf="icon">{{ icon }}</i>
   </button>
   <div
     aria-labelledby="dropdownMenuButton"
@@ -21,7 +21,7 @@
       </div>
     </div>
 
-    <div class="row" *ngIf="dateRanges">
+    <div class="row" *ngIf="dateRanges && dateRanges.length">
       <div class="col-12">
         <div class="picker--controls">
           <button

@@ -10,25 +10,16 @@ import {
 const Chartist = require('chartist');
 require('chartist-plugin-tooltips');
 
-import * as moment from 'moment';
-import { CPDate } from '../../utils/date';
 import { CPSession } from './../../../session';
-import { CPI18nService } from '../../services/i18n.service';
-
-export enum DivideBy {
-  'daily' = 0,
-  'weekly' = 1,
-  'monthly' = 2,
-  'quarter' = 3
-}
+import { CPLineChartUtilsService, DivideBy } from './cp-line-chart.utils.service';
 
 @Component({
-  selector: 'cp-chart',
-  templateUrl: './cp-chart.component.html',
-  styleUrls: ['./cp-chart.component.scss'],
+  selector: 'cp-line-chart',
+  templateUrl: './cp-line-chart.component.html',
+  styleUrls: ['./cp-line-chart.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class CPChartComponent implements OnInit {
+export class CPLineChartComponent implements OnInit {
   @ViewChild('chart') chart: ElementRef;
 
   range;
@@ -46,73 +37,28 @@ export class CPChartComponent implements OnInit {
     this.drawChart();
   }
 
-  constructor(public session: CPSession) {}
-
-  dailyLabel(index) {
-    const date = CPDate.toEpoch(moment(this.range.start).add(index, 'days'), this.session.tz);
-
-    return moment
-      .unix(date)
-      .locale(CPI18nService.getLocale())
-      .format('MMM D');
-  }
-
-  weeklyLabel(index) {
-    const weekOne = moment(this.range.start).add(index, 'weeks');
-
-    const weekStart = CPDate.toEpoch(weekOne, this.session.tz);
-
-    const weekEnd = CPDate.toEpoch(weekOne.add(1, 'weeks'), this.session.tz);
-
-    return `${moment
-      .unix(weekStart)
-      .locale(CPI18nService.getLocale())
-      .format('MMM D')} - ${moment
-      .unix(weekEnd)
-      .locale(CPI18nService.getLocale())
-      .format('MMM D')}`;
-  }
-
-  monthlyLabel(index) {
-    const date = CPDate.toEpoch(moment(this.range.start).add(index, 'months'), this.session.tz);
-
-    return moment
-      .unix(date)
-      .locale(CPI18nService.getLocale())
-      .format('MMM YY');
-  }
-
-  quarterLabel(index) {
-    const date = CPDate.toEpoch(
-      moment(this.range.start)
-        .locale(CPI18nService.getLocale())
-        .add(index, 'quarters'),
-      this.session.tz
-    );
-
-    return moment
-      .unix(date)
-      .locale(CPI18nService.getLocale())
-      .format('MMM YY');
-  }
+  constructor(
+    public session: CPSession,
+    public utils: CPLineChartUtilsService
+  ) {}
 
   labelByDivider(index) {
     let label;
     switch (this.divider) {
       case DivideBy.daily:
-        label = this.dailyLabel(index);
+        label = this.utils.dailyLabel(this.range.start, index);
         break;
 
       case DivideBy.weekly:
-        label = this.weeklyLabel(index);
+        label = this.utils.weeklyLabel(this.range.start, index);
         break;
 
       case DivideBy.monthly:
-        label = this.monthlyLabel(index);
+        label = this.utils.monthlyLabel(this.range.start, index);
         break;
 
       case DivideBy.quarter:
-        label = this.quarterLabel(index);
+        label = this.utils.quarterLabel(this.range.start, index);
         break;
     }
 

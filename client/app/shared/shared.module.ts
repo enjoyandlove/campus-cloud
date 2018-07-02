@@ -49,16 +49,17 @@ import {
   SchoolSwitchComponent,
   CPSortingHeaderComponent,
   CPRangePickerComponent,
-  CPChartComponent
+  CPLineChartComponent
 } from './components';
-import { CPTabsComponent } from './components/cp-tabs/components/cp-tabs/cp-tabs.component';
 import { CPTrackerDirective } from './directives';
+import { CPMapsService } from './services/maps.service';
 import { CPDatePipe, CPFilterPipe, CPI18nPipe } from './pipes';
+import { CPTrackingService } from './services/tracking.service';
 import { CPFIlterByLength } from './pipes/array/filter-by-length.pipe';
 import { CPLocationsService, FileUploadService, StoreService } from './services';
-import { CPMapsService } from './services/maps.service';
-import { CPTrackingService } from './services/tracking.service';
+import { CPTabsComponent } from './components/cp-tabs/components/cp-tabs/cp-tabs.component';
 import { LocationsService } from '../containers/controlpanel/manage/locations/locations.service';
+import { CPLineChartUtilsService } from './components/cp-line-chart/cp-line-chart.utils.service';
 
 @NgModule({
   declarations: [
@@ -117,7 +118,7 @@ import { LocationsService } from '../containers/controlpanel/manage/locations/lo
     CPHeaderLinkComponent,
     CPSortingHeaderComponent,
     CPRangePickerComponent,
-    CPChartComponent
+    CPLineChartComponent
   ],
 
   imports: [CommonModule, RouterModule, ReactiveFormsModule, PopoverModule.forRoot()],
@@ -128,7 +129,8 @@ import { LocationsService } from '../containers/controlpanel/manage/locations/lo
     CPTrackingService,
     CPLocationsService,
     LocationsService,
-    CPMapsService
+    CPMapsService,
+    CPLineChartUtilsService
   ],
 
   exports: [
@@ -187,7 +189,7 @@ import { LocationsService } from '../containers/controlpanel/manage/locations/lo
     CPHeaderLinkComponent,
     CPSortingHeaderComponent,
     CPRangePickerComponent,
-    CPChartComponent
+    CPLineChartComponent
   ]
 })
 export class SharedModule {}

@@ -59,7 +59,7 @@ describe('CPRangePickerComponent', () => {
     comp.class = 'secondary';
     comp.icon = true;
 
-    spyOn(comp.dateChange, 'emit');
+    spyOn(comp.rangeChange, 'emit');
     spyOn(comp.picker, 'clear');
     spyOn(comp.session, 'tz').and.returnValue('America/Toronto');
   });
@@ -81,7 +81,7 @@ describe('CPRangePickerComponent', () => {
 
     comp.triggerChange();
 
-    expect(comp.dateChange.emit).toHaveBeenCalledWith(expected);
+    expect(comp.rangeChange.emit).toHaveBeenCalledWith(expected);
   });
 
   it('resetCalendar', () => {

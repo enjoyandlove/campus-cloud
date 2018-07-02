@@ -58,7 +58,7 @@ export class CPRangePickerComponent implements OnInit, AfterViewInit, OnDestroy 
   @Input() icon: boolean;
   @Input() class: string;
   @Input() pickerOptions: IRangePickerOptions = rangeOptions;
-  @Output() dateChange: EventEmitter<IDateChange> = new EventEmitter();
+  @Output() rangeChange: EventEmitter<IDateChange> = new EventEmitter();
 
   picker;
   datePipe;
@@ -122,7 +122,7 @@ export class CPRangePickerComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   triggerChange() {
-    this.dateChange.emit(this.selected);
+    this.rangeChange.emit(this.selected);
   }
 
   setLabel(date) {

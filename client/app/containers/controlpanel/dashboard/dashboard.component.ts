@@ -18,11 +18,11 @@ export class DashboardComponent implements OnInit {
   dateRanges;
   headerData;
   user: IUser;
-  datePickerClass;
   canAssess = false;
   currentDate = null;
   canViewClub = false;
   areAllTilesReady = false;
+  datePickerClass = 'primary dropdown-toggle';
 
   downloadsTile$ = new BehaviorSubject(false);
   generalInfoTile$ = new BehaviorSubject(false);
@@ -126,8 +126,6 @@ export class DashboardComponent implements OnInit {
     this.canViewClub = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.clubs);
 
     this.currentDate = this.helper.last30Days();
-
-    this.datePickerClass = 'primary dropdown-toggle';
 
     if (
       this.route.snapshot.queryParams['start'] &&

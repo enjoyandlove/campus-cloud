@@ -1,7 +1,8 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 
 import { CPSession } from './../../../session';
-import { CPChartComponent } from './cp-chart.component';
+import { CPLineChartComponent } from './cp-line-chart.component';
+import { CPLineChartUtilsService } from './cp-line-chart.utils.service';
 
 class MockCPSession {
   g = new Map();
@@ -11,16 +12,18 @@ class MockCPSession {
   }
 }
 
-describe('CPChartComponent', () => {
-  let comp: CPChartComponent;
-  let fixture: ComponentFixture<CPChartComponent>;
+describe('CPLineChartComponent', () => {
+  let comp: CPLineChartComponent;
+  let fixture: ComponentFixture<CPLineChartComponent>;
 
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        declarations: [CPChartComponent],
-        providers: [{ provide: CPSession, useClass: MockCPSession }]
-      }).overrideComponent(CPChartComponent, {
+        declarations: [CPLineChartComponent],
+        providers: [
+          CPLineChartUtilsService,
+          { provide: CPSession, useClass: MockCPSession }]
+      }).overrideComponent(CPLineChartComponent, {
           set: {
             template: '<div>No Template</div>'
           }
@@ -30,7 +33,7 @@ describe('CPChartComponent', () => {
 
   // synchronous beforeEach
   beforeEach(() => {
-    fixture = TestBed.createComponent(CPChartComponent);
+    fixture = TestBed.createComponent(CPLineChartComponent);
     comp = fixture.componentInstance;
 
     comp.range = {
@@ -48,25 +51,25 @@ describe('CPChartComponent', () => {
   it('dailyLabel', () => {
     const expected = 'Dec 17';
 
-    expect(comp.dailyLabel(1)).toEqual(expected);
+    expect(comp.utils.dailyLabel(comp.range.start, 1)).toEqual(expected);
   });
 
   it('weeklyLabel', () => {
     const expected = 'Dec 23 - Dec 30';
 
-    expect(comp.weeklyLabel(1)).toEqual(expected);
+    expect(comp.utils.weeklyLabel(comp.range.start, 1)).toEqual(expected);
   });
 
   it('monthlyLabel', () => {
     const expected = 'Jan 18';
 
-    expect(comp.monthlyLabel(1)).toEqual(expected);
+    expect(comp.utils.monthlyLabel(comp.range.start, 1)).toEqual(expected);
   });
 
   it('quarterLabel', () => {
     const expected = 'Mar 18';
 
-    expect(comp.quarterLabel(1)).toEqual(expected);
+    expect(comp.utils.quarterLabel(comp.range.start, 1)).toEqual(expected);
   });
 
   it('labelByDivider', () => {
