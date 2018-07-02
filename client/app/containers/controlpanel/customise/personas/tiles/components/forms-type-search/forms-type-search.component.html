@@ -1,11 +1,4 @@
 <cp-dropdown 
-  *ngIf="dropdown"
   [items]="items$ | async"
   (selected)="selected.emit($event)">
 </cp-dropdown>
-
-<cp-dropdown-multiselect 
-  *ngIf="!dropdown"
-  [items]="items$ | async"
-  (selection)="onMultiSelect($event)">
-</cp-dropdown-multiselect>

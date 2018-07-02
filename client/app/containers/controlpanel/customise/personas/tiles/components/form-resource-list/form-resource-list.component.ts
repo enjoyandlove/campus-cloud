@@ -20,6 +20,8 @@ export class PersonasTileFormResourceListComponent implements OnInit {
     'service_by_category_id'
   ];
 
+  typeSearchComponent = ['store', 'campus_service', 'school_campaign', 'subscribable_calendar'];
+
   constructor(public cpI18n: CPI18nService) {}
 
   onResourceSelected(selection) {

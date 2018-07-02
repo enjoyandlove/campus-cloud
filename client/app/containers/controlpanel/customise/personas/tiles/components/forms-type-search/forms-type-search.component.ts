@@ -16,7 +16,6 @@ export class PersonasTileFormTypeSearchComponent implements OnInit {
   set resourceId(resourceId) {
     this.doReset();
     this.loadItemsByResourceId(resourceId);
-    this.dropdown = resourceId !== 'service_by_category_id';
   }
 
   @Output() selected: EventEmitter<any> = new EventEmitter();
@@ -30,19 +29,6 @@ export class PersonasTileFormTypeSearchComponent implements OnInit {
     public tileService: TilesService
   ) {}
 
-  onMultiSelect(selection) {
-    this.selected.emit({
-      meta: {
-        is_system: 1,
-        link_params: {
-          category_ids: [...selection]
-        },
-        open_in_browser: 0,
-        link_url: 'oohlala://campus_service_list'
-      }
-    });
-  }
-
   doReset() {
     this.items$ = of([{ label: '---' }]);
   }
@@ -54,8 +40,6 @@ export class PersonasTileFormTypeSearchComponent implements OnInit {
       this.loadServices();
     } else if (resourceId === 'subscribable_calendar') {
       this.loadCalendars();
-    } else if (resourceId === 'service_by_category_id') {
-      this.loadCategories();
     } else {
       this.loadStores();
     }
@@ -63,11 +47,6 @@ export class PersonasTileFormTypeSearchComponent implements OnInit {
 
   handleError() {
     return (this.items$ = of([{ label: 'ERROR' }]));
-  }
-
-  loadCategories() {
-    const headers = new HttpParams().set('school_id', this.session.g.get('school').id);
-    this.items$ = this.tileService.getServiceCategories(headers);
   }
 
   loadServices() {
