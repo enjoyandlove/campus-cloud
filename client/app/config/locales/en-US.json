@@ -2461,6 +2461,9 @@
   "t_personas_tile_create_resource_type_advisor_list": {
     "message": "Advisor List"
   },
+  "t_personas_tile_create_resource_type_athletics_club": {
+    "message": "Athletic Clubs"
+  },
   "t_personas_tile_create_resource_type_camera_qr": {
     "message": "Scan QR"
   },
@@ -2479,6 +2482,9 @@
   "t_personas_tile_create_resource_type_in_app_feedback": {
     "message": "In App feedback"
   },
+  "t_personas_tile_create_resource_type_store_list": {
+    "message": "Stores List"
+  },
   "t_personas_tile_create_resource_type_timetable": {
     "message": "Timetable"
   },
@@ -2490,6 +2496,9 @@
   },
   "t_personas_tile_create_resource_type_user_school_course_material_list": {
     "message": "User school course material list"
+  },
+  "t_personas_tile_create_store_list_groups_and_clubs": {
+    "message": "Groups and Clubs"
   },
   "t_personas_tile_create_type_resource_external_link": {
     "message": "External Link"
