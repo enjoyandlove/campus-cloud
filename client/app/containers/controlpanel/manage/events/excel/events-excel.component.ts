@@ -84,16 +84,11 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
 
     const stores$ = this.storeService.getStores(search);
 
-    super
-      .fetchData(stores$)
-      .then((res) => {
-        this.buildForm();
-        this.buildHeader();
-        this.stores = res.data;
-      })
-      .catch((err) => {
-        throw new Error(err);
-      });
+    super.fetchData(stores$).then((res) => {
+      this.buildForm();
+      this.buildHeader();
+      this.stores = res.data;
+    });
   }
 
   private buildHeader() {
@@ -198,8 +193,10 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
 
   onBulkChange(actions) {
     const control = <FormArray>this.form.controls['events'];
-    // load all managers for all controls
-    this.updateManagersByStoreOrClubId(actions.store_id.value);
+    if ('store_id' in actions && !this.isOrientation) {
+      // load all managers for all controls
+      this.updateManagersByStoreOrClubId(actions.store_id.value);
+    }
 
     this.isSingleChecked.map((item) => {
       if (item.checked) {
