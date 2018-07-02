@@ -11,16 +11,14 @@ export class PersonasTileFormResourceListComponent implements OnInit {
 
   resources;
   resourceSelection = null;
+  preventEmit = ['store', 'store_list'];
 
   constructor(public cpI18n: CPI18nService) {}
 
   onResourceSelected(selection) {
-    console.log(selection);
-
     this.resourceSelection = selection.id;
 
-    if (selection.id === 'store_list') {
-    } else {
+    if (!this.preventEmit.includes(selection.id)) {
       this.selected.emit(selection);
     }
   }

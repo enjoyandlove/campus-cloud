@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CPSession } from './../../../../../../../session/index';
 import { StoreService } from '../../../../../../../shared/services';
 
@@ -9,12 +9,23 @@ import { StoreService } from '../../../../../../../shared/services';
   styleUrls: ['./forms-type-search.component.scss']
 })
 export class PersonasTileFormTypeSearchComponent implements OnInit {
+  @Output() selected: EventEmitter<any> = new EventEmitter();
+
   items$;
 
   constructor(public storeService: StoreService, public session: CPSession) {}
 
-  onSelected(selection) {
-    console.log(selection);
+  onSelected(id) {
+    this.selected.emit({
+      meta: {
+        is_system: 1,
+        link_params: {
+          id
+        },
+        open_in_browser: 0,
+        link_url: 'oohlala://store'
+      }
+    });
   }
 
   ngOnInit(): void {
