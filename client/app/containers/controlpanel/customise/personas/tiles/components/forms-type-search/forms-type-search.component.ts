@@ -14,6 +14,7 @@ import { StoreService } from '../../../../../../../shared/services';
 export class PersonasTileFormTypeSearchComponent implements OnInit {
   @Input()
   set resourceId(resourceId) {
+    this.doReset();
     this.loadItemsByResourceId(resourceId);
   }
 
@@ -27,6 +28,10 @@ export class PersonasTileFormTypeSearchComponent implements OnInit {
     public tileService: TilesService
   ) {}
 
+  doReset() {
+    this.items$ = of([{ label: '---' }]);
+  }
+
   loadItemsByResourceId(resourceId) {
     if (resourceId === 'school_campaign') {
       this.loadCampaigns();
@@ -34,6 +39,8 @@ export class PersonasTileFormTypeSearchComponent implements OnInit {
       this.loadServices();
     } else if (resourceId === 'subscribable_calendar') {
       this.loadCalendars();
+    } else if (resourceId === 'service_by_category_id') {
+      this.loadCategories();
     } else {
       this.loadStores();
     }
@@ -41,6 +48,30 @@ export class PersonasTileFormTypeSearchComponent implements OnInit {
 
   handleError() {
     return (this.items$ = of([{ label: 'ERROR' }]));
+  }
+
+  loadCategories() {
+    const headers = new HttpParams().set('school_id', this.session.g.get('school').id);
+    this.items$ = this.tileService.getServiceCategories(headers).pipe(
+      map((categories) => {
+        return categories.map((category: any) => {
+          return category.value
+            ? {
+                ...category,
+                meta: {
+                  is_system: 1,
+                  link_params: {
+                    category_ids: [category.value]
+                  },
+                  open_in_browser: 0,
+                  link_url: 'oohlala://campus_service_list'
+                }
+              }
+            : category;
+        });
+      }),
+      catchError(() => this.handleError())
+    );
   }
 
   loadServices() {

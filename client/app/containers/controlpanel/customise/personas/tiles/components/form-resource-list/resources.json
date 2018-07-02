@@ -173,5 +173,15 @@
       "open_in_browser": 0,
       "link_url": "oohlala://school_campaign"
     }
+  },
+  {
+    "id": "service_by_category_id",
+    "label": "t_personas_tile_create_resource_type_service_by_category_id",
+    "meta": {
+      "is_system": 1,
+      "link_params": {},
+      "open_in_browser": 0,
+      "link_url": "oohlala://campus_service_list"
+    }
   }
 ]

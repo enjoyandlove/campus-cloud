@@ -2488,6 +2488,9 @@
   "t_personas_tile_create_resource_type_school_campaign": {
     "message": "School Campaign"
   },
+  "t_personas_tile_create_resource_type_service_by_category_id": {
+    "message": "Services by Category"
+  },
   "t_personas_tile_create_resource_type_store": {
     "message": "Stores"
   },
