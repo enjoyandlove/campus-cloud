@@ -9,7 +9,7 @@ import { reducers } from '../../../../../../reducers';
 import { CPSession } from '../../../../../../session';
 import { mockSchool } from '../../../../../../session/mock/school';
 import { StoreModule as DealsStoreModule } from '../store.module';
-import { StoreService } from '../store.service';
+import { DealsStoreService } from '../store.service';
 
 class MockStoreService {
   dummy;
@@ -40,7 +40,11 @@ describe('DealsStoreListComponent', () => {
             SNACKBAR: reducers.SNACKBAR
           })
         ],
-        providers: [CPSession, CPI18nService, { provide: StoreService, useClass: MockStoreService }]
+        providers: [
+          CPSession,
+          CPI18nService,
+          { provide: DealsStoreService, useClass: MockStoreService }
+        ]
       })
         .compileComponents()
         .then(() => {

@@ -9,7 +9,7 @@ import { StoreCreateComponent } from './create';
 import { StoreFormComponent } from './components/store-form';
 import { StoreActionBoxComponent } from './list/components/action-box';
 
-import { StoreService } from './store.service';
+import { DealsStoreService } from './store.service';
 import { StoreRoutingModule } from './store.routing.module';
 import { SharedModule } from '../../../../../shared/shared.module';
 
@@ -24,6 +24,6 @@ import { SharedModule } from '../../../../../shared/shared.module';
   ],
   imports: [SharedModule, CommonModule, ReactiveFormsModule, StoreRoutingModule],
   exports: [StoreFormComponent],
-  providers: [StoreService]
+  providers: [DealsStoreService]
 })
 export class StoreModule {}
