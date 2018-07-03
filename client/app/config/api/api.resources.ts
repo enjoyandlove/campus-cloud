@@ -67,8 +67,6 @@ export const API_ENDPOINTS = {
 
   SERVICES_CATEGORY: 'org_category',
 
-  SCHOOL_CAMPAIGN: 'school_campaign',
-
   STUDENT_PROFILE: 'student_profile',
 
   TEMPLATE: 'announcement_template',

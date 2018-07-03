@@ -17,11 +17,20 @@
   </div>
 </div>
 
-<div class="row form-group" *ngIf="state.resourceList">
+<div class="row form-group" *ngIf="state.resource">
   <div class="col-12">
     <label>{{ 't_personas_tile_modal_create_resource_type' | cpI18n }}</label>
     <cp-personas-tile-form-resource-list 
       (selected)="onResourceTypeSelected($event)">
     </cp-personas-tile-form-resource-list>
+  </div>
+</div>
+
+<div class="row form-group" *ngIf="state.resourceList">
+  <div class="col-12">
+    <label>{{ 't_personas_tile_create_type_resource_resource_list' | cpI18n }}</label>
+    <cp-personas-tile-form-link-of-links
+      (selected)="onResourceTypeSelected($event)">
+    </cp-personas-tile-form-link-of-links>
   </div>
 </div>

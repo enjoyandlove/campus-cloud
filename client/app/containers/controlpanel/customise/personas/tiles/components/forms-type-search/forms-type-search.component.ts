@@ -34,9 +34,7 @@ export class PersonasTileFormTypeSearchComponent implements OnInit {
   }
 
   loadItemsByResourceId(resourceId) {
-    if (resourceId === 'school_campaign') {
-      this.loadCampaigns();
-    } else if (resourceId === 'campus_service') {
+    if (resourceId === 'campus_service') {
       this.loadServices();
     } else if (resourceId === 'subscribable_calendar') {
       this.loadCalendars();
@@ -67,30 +65,6 @@ export class PersonasTileFormTypeSearchComponent implements OnInit {
                 }
               }
             : service;
-        });
-      }),
-      catchError(() => this.handleError())
-    );
-  }
-
-  loadCampaigns() {
-    const headers = new HttpParams().set('school_id', this.session.g.get('school').id);
-    this.items$ = this.tileService.getSchoolCampaigns(headers).pipe(
-      map((campaigns) => {
-        return campaigns.map((campaign: any) => {
-          return campaign.value
-            ? {
-                ...campaign,
-                meta: {
-                  is_system: 1,
-                  link_params: {
-                    id: campaign.value
-                  },
-                  open_in_browser: 0,
-                  link_url: 'oohlala://school_campaign'
-                }
-              }
-            : campaign;
         });
       }),
       catchError(() => this.handleError())
