@@ -20,6 +20,22 @@ export class TilesService extends HTTPService {
     return super.update(url, body);
   }
 
+  getSchoolLinks(headers) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LINKS}/1;2000`;
+
+    return super.get(url, headers, true).pipe(
+      startWith([{ label: '---', action: null }]),
+      map((links) => {
+        return links.map((link: any) => {
+          return {
+            action: link.id,
+            label: link.name
+          };
+        });
+      })
+    );
+  }
+
   getServiceCategories(headers) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES_CATEGORY}/1;2000`;
 
