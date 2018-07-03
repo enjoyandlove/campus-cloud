@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { CPSession } from '../../../../../../../session';
-import { StoreService } from '../../../../../../../shared/services';
+import { TilesService } from '../../tiles.service';
 
 @Component({
   selector: 'cp-personas-tile-form-link-of-links',
@@ -12,9 +12,9 @@ import { StoreService } from '../../../../../../../shared/services';
 export class PersonasTileFormLinkOfLinksComponent implements OnInit {
   @Output() selected: EventEmitter<any> = new EventEmitter();
 
-  stores$;
+  links$;
 
-  constructor(public storeService: StoreService, public session: CPSession) {}
+  constructor(public tileServide: TilesService, public session: CPSession) {}
 
   onChanged(selection) {
     const link_params = {
@@ -31,16 +31,16 @@ export class PersonasTileFormLinkOfLinksComponent implements OnInit {
     this.selected.emit({ meta });
   }
 
-  loadStores() {
+  loadSchoolLinks() {
     const search = new HttpParams().set('school_id', this.session.g.get('school').id);
 
-    this.stores$ = this.storeService.getStores(search).pipe(
-      map((stores) => {
-        return stores.filter((store) => store.value).map((store: any) => {
+    this.links$ = this.tileServide.getSchoolLinks(search).pipe(
+      map((links) => {
+        return links.filter((link) => link.action).map((link: any) => {
           return {
             selected: false,
-            label: store.label,
-            action: store.value
+            label: link.label,
+            action: link.action
           };
         });
       })
@@ -48,6 +48,6 @@ export class PersonasTileFormLinkOfLinksComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadStores();
+    this.loadSchoolLinks();
   }
 }
