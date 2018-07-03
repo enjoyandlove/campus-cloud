@@ -15,6 +15,7 @@ export class PersonasTileLinkFormComponent implements OnInit {
   contentTypes;
 
   state = {
+    resource: false,
     textInput: false,
     resourceList: false
   };
@@ -31,6 +32,7 @@ export class PersonasTileLinkFormComponent implements OnInit {
     if (selected.extra_field_type === 1) {
       this.state = {
         ...this.state,
+        resource: false,
         textInput: true,
         resourceList: false
       };
@@ -39,12 +41,21 @@ export class PersonasTileLinkFormComponent implements OnInit {
     } else if (selected.extra_field_type === 2) {
       this.state = {
         ...this.state,
+        resource: true,
+        textInput: false,
+        resourceList: false
+      };
+    } else if (selected.extra_field_type === 3) {
+      this.state = {
+        ...this.state,
+        resource: false,
         textInput: false,
         resourceList: true
       };
     } else {
       this.state = {
         ...this.state,
+        resource: false,
         textInput: false,
         resourceList: false
       };
