@@ -1,3 +1,4 @@
+/* tslint:disable: max-line-length */
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -14,6 +15,13 @@ import { SNACKBAR_SHOW } from './../../../../reducers/snackbar.reducer';
 import { amplitudeEvents } from '../../../../shared/constants/analytics';
 import { createSpreadSheet } from './../../../../shared/utils/csv/parser';
 import { CPI18nService } from './../../../../shared/services/i18n.service';
+import {
+  DivideBy,
+  groupByWeek,
+  groupByMonth,
+  groupByQuarter,
+  CPLineChartUtilsService,
+} from '../../../../shared/components/cp-line-chart/cp-line-chart.utils.service';
 
 declare var $;
 
@@ -21,18 +29,31 @@ const ONE_ENGAGEMENT = 2;
 const ZERO_ENGAGEMENT = 3;
 const REPEAT_ENGAGEMENT = 1;
 
+const year = 365;
+const threeMonths = 90;
+const twoYears = year * 2;
+
 @Component({
   selector: 'cp-engagement',
   templateUrl: './engagement.component.html',
   styleUrls: ['./engagement.component.scss']
 })
 export class EngagementComponent extends BaseComponent implements OnInit {
-  chartData;
+  labels;
+  series;
+  statsData;
+  chartOptions;
   loading;
   messageData;
   filterState;
   isComposeModal;
   eventProperties;
+  divider = DivideBy.daily;
+
+  range = {
+    start: null,
+    end: null
+  };
 
   filters$: BehaviorSubject<any> = new BehaviorSubject(null);
 
@@ -43,7 +64,8 @@ export class EngagementComponent extends BaseComponent implements OnInit {
     public cpI18n: CPI18nService,
     public utils: AssessUtilsService,
     public service: EngagementService,
-    public cpTracking: CPTrackingService
+    public cpTracking: CPTrackingService,
+    public chartUtils: CPLineChartUtilsService
   ) {
     super();
     super.isLoading().subscribe((loading) => (this.loading = loading));
@@ -54,7 +76,9 @@ export class EngagementComponent extends BaseComponent implements OnInit {
       queryParams: {
         engagement: this.filterState.engagement.route_id,
         for: this.filterState.for.route_id,
-        range: this.filterState.range.route_id
+        range: this.filterState.range.route_id,
+        start: this.filterState.range.payload.range.start,
+        end: this.filterState.range.payload.range.end
       }
     });
   }
@@ -82,12 +106,55 @@ export class EngagementComponent extends BaseComponent implements OnInit {
     const search = this.buildSearchHeaders();
 
     super.fetchData(this.service.getChartData(search)).then((res) => {
-      this.chartData = {
+      this.statsData = {
         ...res.data,
         starts: this.filterState.range.payload.range.start,
         ends: this.filterState.range.payload.range.end
       };
+
+      this.range = Object.assign({}, this.range, {
+        start: res.data.labels[0],
+        end: res.data.labels[res.data.labels.length - 1]
+      });
+
+      if (res.data.series.length >= twoYears) {
+        this.divider = DivideBy.quarter;
+
+        return Promise.all([
+          groupByQuarter(res.data.labels, res.data.series)
+        ]);
+      }
+
+      if (res.data.series.length >= year) {
+        this.divider = DivideBy.monthly;
+
+        return Promise.all([
+          groupByMonth(res.data.labels, res.data.series)
+        ]);
+      }
+
+      if (res.data.series.length >= threeMonths) {
+        this.divider = DivideBy.weekly;
+
+        return Promise.all([
+          groupByWeek(res.data.labels, res.data.series)
+        ]);
+      }
+
+      this.divider = DivideBy.daily;
+
+      return Promise.resolve([res.data.series]);
+    }).then((series: any) => {
+      this.chartOptions = this.chartUtils.chartOptions(this.divider, series);
+      this.labels = this.chartUtils.buildLabels(this.divider, this.range, series);
+      this.series = this.chartUtils.buildSeries(this.divider, this.range, this.getTooltip(), series);
     });
+  }
+
+  getTooltip() {
+    return {
+      0: this.cpI18n.translate('t_assess_chart_tooltip_label_engagements')
+    };
   }
 
   onDoCompose(data): void {

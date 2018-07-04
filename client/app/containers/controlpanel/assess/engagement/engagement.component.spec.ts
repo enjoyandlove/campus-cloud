@@ -15,6 +15,7 @@ import { HEADER_UPDATE } from './../../../../reducers/header.reducer';
 import { SNACKBAR_SHOW } from './../../../../reducers/snackbar.reducer';
 import { CPI18nService, CPTrackingService } from '../../../../shared/services';
 import { AssessUtilsService } from '../assess.utils.service';
+import { CPLineChartUtilsService } from '../../../../shared/components/cp-line-chart/cp-line-chart.utils.service';
 
 const mockFilterState = {
   engagement: {
@@ -85,6 +86,7 @@ describe('EngagementComponent', () => {
         CPI18nService,
         CPTrackingService,
         AssessUtilsService,
+        CPLineChartUtilsService,
         { provide: Router, useClass: MockRouter },
         { provide: CPSession, useClass: MockSession },
         { provide: EngagementService, useClass: MockEngagementService }

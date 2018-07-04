@@ -50,6 +50,10 @@ export class EngagementTopBarComponent implements OnInit {
 
   commonEngageMentFilter;
 
+  datePickerClass = 'cancel';
+
+  icon = 'keyboard_arrow_down';
+
   dateFilter;
 
   state: IState;
@@ -63,7 +67,7 @@ export class EngagementTopBarComponent implements OnInit {
   ) {}
 
   onDateRangeChange(payload) {
-    this.updateState('range', payload);
+    this.updateState('range', this.setPayload(payload));
   }
 
   onScopeChange(payload) {
@@ -72,6 +76,18 @@ export class EngagementTopBarComponent implements OnInit {
 
   onStudentChange(payload) {
     this.updateState('for', payload);
+  }
+
+  setPayload(payload) {
+    if (!payload.hasOwnProperty('payload')) {
+       return {
+         payload: this.setDateRange(payload),
+         label: payload.label,
+         route_id: payload.route_id
+       };
+    }
+
+    return payload;
   }
 
   updateState(key, payload) {
@@ -113,11 +129,30 @@ export class EngagementTopBarComponent implements OnInit {
       },
 
       range: {
-        ...this.getFromArray(this.dateFilter, 'route_id', routeParams.range)
+        ...this.getRange(routeParams)
       }
     });
 
     this.doFilter.emit(this.state);
+  }
+
+  getRange(routeParams) {
+    const range = this.getFromArray(this.dateFilter, 'route_id', routeParams.range);
+
+    return range ? range : {
+      payload: this.setDateRange(routeParams),
+      label: routeParams.range,
+      route_id: routeParams.range
+    };
+  }
+
+  setDateRange(filter) {
+    return {
+      range: {
+        start: filter.start,
+        end: filter.end
+      }
+    };
   }
 
   ngOnInit() {

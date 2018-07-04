@@ -4,67 +4,19 @@ import { HttpParams } from '@angular/common/http';
 import { BaseComponent } from '../../../../../base';
 import { CPSession } from './../../../../../session';
 import { DashboardService } from './../../dashboard.service';
-
-import * as moment from 'moment';
+import { CPI18nService } from '../../../../../shared/services';
+import {
+  DivideBy,
+  addGroup,
+  groupByQuarter,
+  groupByMonth,
+  groupByWeek,
+  CPLineChartUtilsService
+} from '../../../../../shared/components/cp-line-chart/cp-line-chart.utils.service';
 
 const year = 365;
 const threeMonths = 90;
 const twoYears = year * 2;
-
-export const addGroup = (data) => {
-  return data.map((group: Number[]) => {
-    return group.reduce((prev: number, next: number) => prev + next);
-  });
-};
-
-export const aggregate = (data: Number[], serie: Number[]): Promise<Number[]> => {
-  const arr = [];
-
-  data.reduce(
-    (prev, current, index) => {
-      if (prev === current) {
-        arr[arr.length - 1] += serie[index];
-
-        return current;
-      }
-
-      arr.push(serie[index]);
-
-      return current;
-    },
-
-    0
-  );
-
-  return new Promise((resolve) => {
-    resolve(arr);
-  });
-};
-
-export const groupByWeek = (dates: any[], serie: Number[]) => {
-  const datesByWeek = dates.map((d) => moment(d).week());
-
-  return aggregate(datesByWeek, serie);
-};
-
-export const groupByMonth = (dates: any[], series: Number[]) => {
-  const datesByMonth = dates.map((d) => moment(d).month());
-
-  return aggregate(datesByMonth, series);
-};
-
-export const groupByQuarter = (dates: any[], series: Number[]) => {
-  const datesByQuarter = dates.map((d) => moment(d).quarter());
-
-  return aggregate(datesByQuarter, series);
-};
-
-export enum DivideBy {
-  'daily' = 0,
-  'weekly' = 1,
-  'monthly' = 2,
-  'quarter' = 3
-}
 
 @Component({
   selector: 'cp-dashboard-downloads-registration',
@@ -76,7 +28,9 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
 
   _dates;
   loading;
-  chartData;
+  series;
+  labels;
+  chartOptions;
   downloads = 0;
   registrations = 0;
   divider = DivideBy.daily;
@@ -92,7 +46,12 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
     this.fetch();
   }
 
-  constructor(private session: CPSession, private service: DashboardService) {
+  constructor(
+    private session: CPSession,
+    private cpi18n: CPI18nService,
+    private service: DashboardService,
+    private utils: CPLineChartUtilsService
+) {
     super();
     super.isLoading().subscribe((loading) => {
       this.loading = loading;
@@ -153,12 +112,17 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
         this.downloads = totals[0];
         this.registrations = totals[1];
 
-        this.chartData = {
-          series,
-          range: this.range,
-          divider: this.divider
-        };
+        this.chartOptions = this.utils.chartOptions(this.divider, series);
+        this.labels = this.utils.buildLabels(this.divider, this.range, series);
+        this.series = this.utils.buildSeries(this.divider, this.range, this.getTooltips(), series);
       });
+  }
+
+  getTooltips() {
+    return {
+      0: this.cpi18n.translate('t_dashboard_chart_tooltip_label_downloads'),
+      1: this.cpi18n.translate('t_dashboard_chart_tooltip_label_registrations')
+    };
   }
 
   ngOnInit() {}
