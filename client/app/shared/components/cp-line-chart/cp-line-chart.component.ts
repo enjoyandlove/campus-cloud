@@ -29,7 +29,8 @@ export class CPLineChartComponent implements OnInit {
   constructor() {}
 
   drawChart() {
-    let options;
+    let newOptions;
+    let defaultOptions;
 
     const data = {
       labels: this.labels,
@@ -37,7 +38,9 @@ export class CPLineChartComponent implements OnInit {
       series: this.series
     };
 
-    options = {
+    defaultOptions = {
+      high: 5,
+
       low: 0,
 
       fullWidth: true,
@@ -76,15 +79,25 @@ export class CPLineChartComponent implements OnInit {
         labelInterpolationFnc: function showLabelsOnlyForIntegers(value) {
           return value % 1 === 0 ? value : null;
         }
+      },
+
+      axisX: {
+        position: 'end',
+
+        showGrid: false,
       }
     };
 
-    options = {
-      ...options,
-      ...this.chartOptions
+    newOptions = {
+      ...defaultOptions,
+      ...this.chartOptions,
+      axisX: {
+        ...defaultOptions.axisX,
+        ...this.chartOptions.axisX
+      }
     };
 
-    const chart = new Chartist.Line(this.chart.nativeElement, data, options);
+    const chart = new Chartist.Line(this.chart.nativeElement, data, newOptions);
 
     chart.on(
       'created',

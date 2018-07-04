@@ -117,10 +117,6 @@ export class CPLineChartUtilsService {
       high: this.highestNoInArray(series),
 
       axisX: {
-        position: 'end',
-
-        showGrid: false,
-
         labelInterpolationFnc: function skipLabels(value, index) {
 
           if (index + 1 === series[0].length) {
