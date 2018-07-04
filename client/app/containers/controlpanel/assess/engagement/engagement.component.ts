@@ -20,6 +20,7 @@ import {
   groupByWeek,
   groupByMonth,
   groupByQuarter,
+  CPLineChartUtilsService,
 } from '../../../../shared/components/cp-line-chart/cp-line-chart.utils.service';
 
 declare var $;
@@ -38,8 +39,10 @@ const twoYears = year * 2;
   styleUrls: ['./engagement.component.scss']
 })
 export class EngagementComponent extends BaseComponent implements OnInit {
+  labels;
+  series;
   statsData;
-  chartData;
+  chartOptions;
   loading;
   messageData;
   filterState;
@@ -61,7 +64,8 @@ export class EngagementComponent extends BaseComponent implements OnInit {
     public cpI18n: CPI18nService,
     public utils: AssessUtilsService,
     public service: EngagementService,
-    public cpTracking: CPTrackingService
+    public cpTracking: CPTrackingService,
+    public chartUtils: CPLineChartUtilsService
   ) {
     super();
     super.isLoading().subscribe((loading) => (this.loading = loading));
@@ -141,15 +145,16 @@ export class EngagementComponent extends BaseComponent implements OnInit {
 
       return Promise.resolve([res.data.series]);
     }).then((series: any) => {
-      this.chartData = {
-        series,
-        range: this.range,
-        divider: this.divider,
-        tooltip_labels: {
-          0: this.cpI18n.translate('t_assess_chart_tooltip_label_engagements')
-        }
-      };
+      this.labels = this.chartUtils.buildLabels(this.divider, this.range, series);
+      this.chartOptions = this.chartUtils.axisXLabelInterpolation(this.divider, series);
+      this.series = this.chartUtils.buildSeries(this.divider, this.range, this.getTooltip(), series);
     });
+  }
+
+  getTooltip() {
+    return {
+      0: this.cpI18n.translate('t_assess_chart_tooltip_label_engagements')
+    };
   }
 
   onDoCompose(data): void {

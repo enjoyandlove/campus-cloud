@@ -10,7 +10,8 @@ import {
   addGroup,
   groupByQuarter,
   groupByMonth,
-  groupByWeek
+  groupByWeek,
+  CPLineChartUtilsService
 } from '../../../../../shared/components/cp-line-chart/cp-line-chart.utils.service';
 
 const year = 365;
@@ -27,7 +28,9 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
 
   _dates;
   loading;
-  chartData;
+  series;
+  labels;
+  chartOptions;
   downloads = 0;
   registrations = 0;
   divider = DivideBy.daily;
@@ -46,7 +49,8 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
   constructor(
     private session: CPSession,
     private cpi18n: CPI18nService,
-    private service: DashboardService
+    private service: DashboardService,
+    private utils: CPLineChartUtilsService
 ) {
     super();
     super.isLoading().subscribe((loading) => {
@@ -108,16 +112,17 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
         this.downloads = totals[0];
         this.registrations = totals[1];
 
-        this.chartData = {
-          series,
-          range: this.range,
-          divider: this.divider,
-          tooltip_labels: {
-            0: this.cpi18n.translate('t_dashboard_chart_tooltip_label_downloads'),
-            1: this.cpi18n.translate('t_dashboard_chart_tooltip_label_registrations')
-          }
-        };
+        this.labels = this.utils.buildLabels(this.divider, this.range, series);
+        this.chartOptions = this.utils.axisXLabelInterpolation(this.divider, series);
+        this.series = this.utils.buildSeries(this.divider, this.range, this.getTooltips(), series);
       });
+  }
+
+  getTooltips() {
+    return {
+      0: this.cpi18n.translate('t_dashboard_chart_tooltip_label_downloads'),
+      1: this.cpi18n.translate('t_dashboard_chart_tooltip_label_registrations')
+    };
   }
 
   ngOnInit() {}

@@ -27,7 +27,9 @@
           {{ 'student_engagements' | cpI18n }}
         </p>
         <cp-line-chart
-          [chartData]="chartData">
+          [series]="series"
+          [labels]="labels"
+          [chartOptions]="chartOptions">
         </cp-line-chart>
       </div>
     </div>

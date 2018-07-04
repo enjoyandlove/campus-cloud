@@ -10,9 +10,6 @@ import {
 const Chartist = require('chartist');
 require('chartist-plugin-tooltips');
 
-import { CPSession } from './../../../session';
-import { CPLineChartUtilsService, DivideBy } from './cp-line-chart.utils.service';
-
 @Component({
   selector: 'cp-line-chart',
   templateUrl: './cp-line-chart.component.html',
@@ -22,87 +19,45 @@ import { CPLineChartUtilsService, DivideBy } from './cp-line-chart.utils.service
 export class CPLineChartComponent implements OnInit {
   @ViewChild('chart') chart: ElementRef;
 
-  range;
-  series;
-  divider;
-  labels;
+  @Input() series;
+  @Input() labels;
+  @Input() chartOptions;
+
   highestNoInArray = 0;
   isChartDataReady = false;
 
-  @Input() set chartData(data) {
-    this.range = data.range;
-    this.series = data.series;
-    this.divider = data.divider;
-    this.labels = data.tooltip_labels;
-    this.drawChart();
-  }
+  constructor() {}
 
-  constructor(
-    public session: CPSession,
-    public utils: CPLineChartUtilsService
-  ) {}
-
-  labelByDivider(index) {
-    let label;
-    switch (this.divider) {
-      case DivideBy.daily:
-        label = this.utils.dailyLabel(this.range.start, index);
-        break;
-
-      case DivideBy.weekly:
-        label = this.utils.weeklyLabel(this.range.start, index);
-        break;
-
-      case DivideBy.monthly:
-        label = this.utils.monthlyLabel(this.range.start, index);
-        break;
-
-      case DivideBy.quarter:
-        label = this.utils.quarterLabel(this.range.start, index);
-        break;
-    }
-
-    return label;
-  }
-
-  buildLabels() {
-    return this.series[0].map((_, index) => {
-      return this.labelByDivider(index);
-    });
-  }
-
-  buildSeries() {
-    return this.series.map((serie, idx) => {
-      this.getHighestNoInArray(serie);
-
-      return serie.map((item, index) => {
-        return {
-          meta: `${this.labels[idx]}  ${this.labelByDivider(index)}`,
-          value: item
-        };
+  getHighestNoInArray() {
+    this.series.map((serie) => {
+      serie.map((item) => {
+        if (this.highestNoInArray < item.value) {
+          this.highestNoInArray = item.value;
+        }
       });
     });
   }
 
-  getHighestNoInArray(serie) {
-    if (this.highestNoInArray < Math.max.apply(Math, serie)) {
-      this.highestNoInArray = Math.max.apply(Math, serie);
-    }
-  }
-
   drawChart() {
-    const data = {
-      labels: this.buildLabels(),
+    let options;
+    this.getHighestNoInArray();
 
-      series: this.buildSeries()
+    const data = {
+      labels: this.labels,
+
+      series: this.series
     };
 
     const high = this.highestNoInArray + 5 - (this.highestNoInArray + 5) % 5;
 
-    const options = {
+    options = {
       low: 0,
 
       high: high,
+
+      fullWidth: true,
+
+      lineSmooth: false,
 
       chartPadding: {
         top: 5,
@@ -122,8 +77,6 @@ export class CPLineChartComponent implements OnInit {
         })
       ],
 
-      lineSmooth: false,
-
       classNames: {
         grid: 'cp-grid',
 
@@ -134,47 +87,26 @@ export class CPLineChartComponent implements OnInit {
         label: 'cp-label'
       },
 
-      fullWidth: true,
-
       axisY: {
         labelInterpolationFnc: function showLabelsOnlyForIntegers(value) {
           return value % 1 === 0 ? value : null;
         }
       },
 
-      axisX: {
+      /*axisX: {
         position: 'end',
 
         showGrid: false,
 
         labelOffset: {
           x: 0
-        },
+        }
+      }*/
+    };
 
-        labelInterpolationFnc: function skipLabels(value, index) {
-          if (index + 1 === this.series[0].length) {
-            return null;
-          }
-
-          if (this.divider === DivideBy.daily) {
-            if (this.series[0].length > 15) {
-              return index % 8 === 0 ? value : null;
-            }
-
-            return index % 3 === 0 ? value : null;
-          }
-
-          if (this.divider === DivideBy.weekly) {
-            if (this.series[0].length > 15) {
-              return index % 8 === 0 ? value : null;
-            }
-
-            return index % 4 === 0 ? value : null;
-          }
-
-          return value;
-        }.bind(this)
-      }
+    options = {
+      ...options,
+      ...this.chartOptions
     };
 
     const chart = new Chartist.Line(this.chart.nativeElement, data, options);
@@ -187,5 +119,7 @@ export class CPLineChartComponent implements OnInit {
     );
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.drawChart();
+  }
 }
