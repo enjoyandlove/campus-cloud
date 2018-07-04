@@ -145,8 +145,8 @@ export class EngagementComponent extends BaseComponent implements OnInit {
 
       return Promise.resolve([res.data.series]);
     }).then((series: any) => {
+      this.chartOptions = this.chartUtils.chartOptions(this.divider, series);
       this.labels = this.chartUtils.buildLabels(this.divider, this.range, series);
-      this.chartOptions = this.chartUtils.axisXLabelInterpolation(this.divider, series);
       this.series = this.chartUtils.buildSeries(this.divider, this.range, this.getTooltip(), series);
     });
   }

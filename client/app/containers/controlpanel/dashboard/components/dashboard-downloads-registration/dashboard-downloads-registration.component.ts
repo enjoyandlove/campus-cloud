@@ -112,8 +112,8 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
         this.downloads = totals[0];
         this.registrations = totals[1];
 
+        this.chartOptions = this.utils.chartOptions(this.divider, series);
         this.labels = this.utils.buildLabels(this.divider, this.range, series);
-        this.chartOptions = this.utils.axisXLabelInterpolation(this.divider, series);
         this.series = this.utils.buildSeries(this.divider, this.range, this.getTooltips(), series);
       });
   }

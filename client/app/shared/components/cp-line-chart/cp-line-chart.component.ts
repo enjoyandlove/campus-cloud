@@ -28,19 +28,8 @@ export class CPLineChartComponent implements OnInit {
 
   constructor() {}
 
-  getHighestNoInArray() {
-    this.series.map((serie) => {
-      serie.map((item) => {
-        if (this.highestNoInArray < item.value) {
-          this.highestNoInArray = item.value;
-        }
-      });
-    });
-  }
-
   drawChart() {
     let options;
-    this.getHighestNoInArray();
 
     const data = {
       labels: this.labels,
@@ -48,12 +37,8 @@ export class CPLineChartComponent implements OnInit {
       series: this.series
     };
 
-    const high = this.highestNoInArray + 5 - (this.highestNoInArray + 5) % 5;
-
     options = {
       low: 0,
-
-      high: high,
 
       fullWidth: true,
 

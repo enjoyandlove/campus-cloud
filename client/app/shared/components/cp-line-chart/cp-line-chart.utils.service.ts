@@ -62,8 +62,7 @@ export const groupByQuarter = (dates: any[], series: Number[]) => {
 
 @Injectable()
 export class CPLineChartUtilsService {
-  constructor(public session: CPSession) {
-  }
+  constructor(public session: CPSession) {}
 
   dailyLabel(range, index) {
     const date = CPDate.toEpoch(moment(range).add(index, 'days'), this.session.tz);
@@ -113,8 +112,10 @@ export class CPLineChartUtilsService {
       .format('MMM YY');
   }
 
-  axisXLabelInterpolation(divider, series) {
+  chartOptions(divider, series) {
     return {
+      high: this.highestNoInArray(series),
+
       axisX: {
         position: 'end',
 
@@ -186,5 +187,19 @@ export class CPLineChartUtilsService {
         };
       });
     });
+  }
+
+  highestNoInArray(series) {
+    let highestNoInArray = 0;
+
+    series.map((serie) => {
+      serie.map((item) => {
+        if (highestNoInArray < item) {
+          highestNoInArray = item;
+        }
+      });
+    });
+
+    return highestNoInArray + 5 - (highestNoInArray + 5) % 5;
   }
 }
