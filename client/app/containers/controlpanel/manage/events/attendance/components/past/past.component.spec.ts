@@ -1,13 +1,14 @@
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientModule, HttpParams } from '@angular/common/http';
-import { DebugElement } from '@angular/core';
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { of as observableOf } from 'rxjs';
-import { AttendancePastComponent } from './past.component';
-import { CPSession } from '../../../../../../../session';
-import { mockSchool } from '../../../../../../../session/mock/school';
-import { CPI18nService } from '../../../../../../../shared/services';
+
 import { EventsModule } from '../../../events.module';
 import { EventsService } from '../../../events.service';
+import { CPSession } from '../../../../../../../session';
+import { AttendancePastComponent } from './past.component';
+import { CPI18nService } from '../../../../../../../shared/services';
+import { mockSchool } from '../../../../../../../session/mock/school';
 
 class MockService {
   dummy;
@@ -25,24 +26,14 @@ describe('AttendancePastComponent', () => {
   let component: AttendancePastComponent;
   let fixture: ComponentFixture<AttendancePastComponent>;
 
-  const pastEvents = [
-    {
-      firstname: 'John',
-      feedback_time: 1523276904,
-      lastname: 'Paul',
-      student_identifier: '',
-      feedback_rating: 80,
-      check_in_time: 1523276757,
-      feedback_text: 'Good job man!',
-      check_in_method: 1,
-      email: 'jp@gmail.com'
-    }
-  ];
-
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientModule, EventsModule],
+        imports: [
+          RouterTestingModule,
+          HttpClientModule,
+          EventsModule
+        ],
         providers: [CPSession, CPI18nService, { provide: EventsService, useClass: MockService }]
       })
         .compileComponents()
@@ -62,29 +53,6 @@ describe('AttendancePastComponent', () => {
             .append('sort_direction', component.state.sort_direction)
             .append('search_text', component.state.search_text);
         });
-    })
-  );
-
-  it(
-    'should not have RSVP column for orientation events',
-    fakeAsync(() => {
-      spy = spyOn(component.service, 'getEventAttendanceByEventId').and.returnValue(
-        observableOf(pastEvents)
-      );
-
-      component.isOrientation = true;
-      component.orientationId = 1001;
-      search.set('school_id', component.session.g.get('school').id);
-      search.set('calendar_id', component.orientationId.toString());
-      component.fetch();
-      tick();
-
-      fixture.detectChanges();
-
-      const bannerDe: DebugElement = fixture.debugElement;
-      const bannerEl: HTMLElement = bannerDe.nativeElement;
-      const rsvp = bannerEl.querySelector('div.cp-table__header div.rsvp_column');
-      expect(rsvp).toBeNull();
     })
   );
 
