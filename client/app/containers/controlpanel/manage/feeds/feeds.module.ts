@@ -3,12 +3,12 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import { SharedModule } from '../../../../shared/shared.module';
-
-import { FeedsRoutingModule } from './feeds.routing.module';
-import { FeedsService } from './feeds.service';
 import { FeedsListComponent } from './list';
+import { FeedsService } from './feeds.service';
+import { FeedsUtilsService } from './feeds.utils.service';
+import { FeedsRoutingModule } from './feeds.routing.module';
 import { FeedsComponent } from './list/base/feeds.component';
+import { SharedModule } from '../../../../shared/shared.module';
 
 import {
   FeedApproveCommentModalComponent,
@@ -49,7 +49,7 @@ import {
 
   imports: [CommonModule, SharedModule, FeedsRoutingModule, RouterModule, ReactiveFormsModule],
 
-  providers: [FeedsService],
+  providers: [FeedsService, FeedsUtilsService],
 
   exports: [
     FeedsListComponent,
