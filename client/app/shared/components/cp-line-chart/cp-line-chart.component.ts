@@ -91,17 +91,7 @@ export class CPLineChartComponent implements OnInit {
         labelInterpolationFnc: function showLabelsOnlyForIntegers(value) {
           return value % 1 === 0 ? value : null;
         }
-      },
-
-      /*axisX: {
-        position: 'end',
-
-        showGrid: false,
-
-        labelOffset: {
-          x: 0
-        }
-      }*/
+      }
     };
 
     options = {
