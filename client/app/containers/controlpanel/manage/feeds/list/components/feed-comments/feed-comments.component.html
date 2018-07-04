@@ -6,6 +6,9 @@
       [last]="last"
       [comment]="comment"
       [replyView]="isReplyView"
+      [clubId]="clubId"
+      [athleticId]="athleticId"
+      [orientationId]="orientationId"
       (deleted)="onDeletedComment($event)"
       [isCampusWallView]="isCampusWallView"
       *ngFor="let comment of state.comments; let last = last">
