@@ -11,6 +11,16 @@
           </cp-personas-form>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-6">
+          <label>{{ 't_personas_create_label_campus_security' | cpI18n }}</label>
+          <cp-dropdown 
+            [items]="services$ | async"
+            (selected)="onSecurityServiceChanged($event)">
+          </cp-dropdown>
+        </div>
+      </div>
     </div>
   </div>
 </div>

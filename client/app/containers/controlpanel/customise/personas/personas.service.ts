@@ -1,4 +1,4 @@
-import { map } from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -20,6 +20,45 @@ export class PersonasService extends HTTPService {
     const url = `${common}/${startRange};${endRange}`;
 
     return super.get(url, search);
+  }
+
+  getServices(search) {
+    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}`;
+    const url = `${common}/1;3000`;
+
+    return super.get(url, search).pipe(
+      startWith([{ label: '---' }]),
+      map((services) => {
+        return services.map((service: any, index) => {
+          if (index === 0) {
+            return {
+              label: '---',
+              value: null
+            };
+          }
+
+          return {
+            label: service.name,
+            action: service.id,
+            meta: {
+              ...service
+            }
+          };
+        });
+      })
+    );
+  }
+
+  createCampusLink(body) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LINKS}/`;
+
+    return super.post(url, body);
+  }
+
+  createGuideTile(body) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GUIDE_TILES}/`;
+
+    return super.post(url, body);
   }
 
   updateSectionTileCategory(tileCategoryId: number, body) {

@@ -1,17 +1,20 @@
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpParams } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-
-import { CPSession } from '../../../../../session';
-import { CPDate } from '../../../../../shared/utils';
+import { get as _get } from 'lodash';
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
+import { PersonasFormComponent } from './../components/personas-form/personas-form.component';
 import { PersonasService } from './../personas.service';
-import { CPI18nService } from '../../../../../shared/services';
+import { PersonasLoginRequired, PersonasType, PersonaValidationErrors } from './../personas.status';
 import { PersonasUtilsService } from './../personas.utils.service';
 import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
-import { PersonasLoginRequired, PersonasType, PersonaValidationErrors } from './../personas.status';
-import { IHeader, HEADER_UPDATE } from './../../../../../reducers/header.reducer';
-import { PersonasFormComponent } from './../components/personas-form/personas-form.component';
+import { CPSession } from '../../../../../session';
+import { CPI18nService } from '../../../../../shared/services';
+import { CPDate } from '../../../../../shared/utils';
 
 @Component({
   selector: 'cp-personas-create',
@@ -21,8 +24,10 @@ import { PersonasFormComponent } from './../components/personas-form/personas-fo
 export class PersonasCreateComponent implements OnInit {
   @ViewChild('createForm') createForm: PersonasFormComponent;
 
+  services$;
   buttonData;
   form: FormGroup;
+  campusSecuritTile;
 
   constructor(
     public router: Router,
@@ -48,9 +53,73 @@ export class PersonasCreateComponent implements OnInit {
     });
   }
 
+  onSecurityServiceChanged(selection) {
+    const serviceMeta = _get(selection, 'meta', null);
+
+    this.campusSecuritTile = serviceMeta;
+  }
+
+  createCampusLink(): Observable<any> {
+    const service = this.campusSecuritTile;
+
+    const campusLinkForm = this.utils.getCampusLinkForm();
+
+    campusLinkForm.controls['name'].setValue(service.name);
+    campusLinkForm.controls['img_url'].setValue(service.img_url);
+
+    const link_params = <FormGroup>campusLinkForm.controls['link_params'];
+    link_params.controls['id'].setValue(service.id);
+
+    return this.service.createCampusLink(campusLinkForm.value);
+  }
+
+  createCampusTile(campusLinkId, personaId): Observable<any> {
+    const service = this.campusSecuritTile;
+
+    const guideTileForm = this.utils.getGuideTileForm();
+
+    guideTileForm.controls['name'].setValue(service.name);
+
+    const extra_info = <FormGroup>guideTileForm.controls['extra_info'];
+    extra_info.controls['id'].setValue(campusLinkId);
+
+    const guideTileFormPersonaZero = {
+      ...guideTileForm.value,
+      school_persona_id: 0
+    };
+
+    const guidePersonaZero$ = this.service.createGuideTile(guideTileFormPersonaZero);
+
+    return guidePersonaZero$.pipe(
+      switchMap((guide: any) => {
+        const body = {
+          ...guideTileFormPersonaZero,
+          school_persona_id: personaId,
+          extra_info: {
+            id: guide.id
+          }
+        };
+
+        return this.service.createGuideTile(body);
+      })
+    );
+  }
+
+  createSecurityTile(personaId): Observable<any> {
+    return this.createCampusLink().pipe(
+      switchMap((link) => this.createCampusTile(link.id, personaId))
+    );
+  }
+
   onSubmit() {
     const body = this.utils.parseLocalFormToApi(this.createForm.form.value);
-    this.service.createPersona(body).subscribe(
+    const createPersona$ = this.service.createPersona(body);
+
+    const stream$ = this.campusSecuritTile
+      ? createPersona$.pipe(switchMap(({ id }: any) => this.createSecurityTile(id)))
+      : createPersona$;
+
+    stream$.subscribe(
       () => this.router.navigate(['/customize/personas']),
       (err) => {
         this.buttonData = { ...this.buttonData, disabled: false };
@@ -93,9 +162,16 @@ export class PersonasCreateComponent implements OnInit {
     });
   }
 
+  loadServices() {
+    const search = new HttpParams().set('school_id', this.session.g.get('school').id);
+
+    this.services$ = this.service.getServices(search);
+  }
+
   ngOnInit(): void {
     this.buildForm();
     this.buildHeader();
+    this.loadServices();
 
     this.buttonData = {
       class: 'primary',
