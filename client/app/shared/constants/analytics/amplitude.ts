@@ -17,6 +17,8 @@ export const amplitudeEvents = {
 
   EVENT: 'Event',
 
+  CAMPUS: 'Campus',
+
   ACTIVE: 'Active',
 
   REGULAR: 'Regular',
@@ -121,7 +123,11 @@ export const amplitudeEvents = {
 
   CREATE_EMPLOYER: 'Create Employer',
 
+  WALL_MOVED_POST: 'Wall - Moved Post',
+
   VISITED_HELP_DESK: 'Visited Help Desk',
+
+  WALL_DELETED_POST: 'Wall - Deleted Post',
 
   CLICKED_SUB_MENU: 'Clicked Sub-Menu Item',
 
@@ -129,17 +135,27 @@ export const amplitudeEvents = {
 
   INVITED_TEAM_MEMBER: 'Invited Team Member',
 
+  WALL_APPROVED_POST: 'Wall - Approved Post',
+
   MULTIPLE_ENGAGEMENT: 'Multiple Engagement',
 
   UPDATED_TEAM_MEMBER: 'Updated Team Member',
 
   DELETED_TEAM_MEMBER: 'Deleted Team Member',
 
+  WALL_VIEWED_COMMENT: 'Wall - Viewed Comment',
+
   ASSESS_SENT_MESSAGE: 'Assess - Sent Message',
+
+  WALL_SUBMITTED_POST: 'Wall - Submitted Post',
 
   CREATE_CALENDAR_ITEM: 'Create Calendar Item',
 
+  WALL_DELETED_COMMENT: 'Wall - Deleted Comment',
+
   ASSESS_DOWNLOAD_DATA: 'Assess Downloaded Data',
+
+  WALL_UPDATED_SETTINGS: 'Wall - Updated Settings',
 
   NOTIFY_SAVED_TEMPLATE: 'Notify - Saved Template',
 
@@ -148,6 +164,8 @@ export const amplitudeEvents = {
   MANAGE_DOWNLOAD_DATA: 'Manage - Downloaded Data',
 
   MANAGE_LOADED_CHECKIN: 'Manage - Loaded Check-In',
+
+  WALL_SUBMITTED_COMMENT: 'Wall - Submitted Comment',
 
   MANAGE_CLICKED_CHECKIN: 'Manage - Clicked Check-In',
 
