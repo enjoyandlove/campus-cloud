@@ -1,13 +1,16 @@
-import { HttpClientModule, HttpParams } from '@angular/common/http';
-import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { HttpClientModule, HttpParams } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
+import { DebugElement } from '@angular/core';
 import { of as observableOf } from 'rxjs';
-import { AttendancePastComponent } from './past.component';
-import { CPSession } from '../../../../../../../session';
-import { mockSchool } from '../../../../../../../session/mock/school';
-import { CPI18nService } from '../../../../../../../shared/services';
+
 import { EventsModule } from '../../../events.module';
 import { EventsService } from '../../../events.service';
+import { CPSession } from '../../../../../../../session';
+import { AttendancePastComponent } from './past.component';
+import { mockUser } from '../../../../../../../session/mock/user';
+import { CPI18nService } from '../../../../../../../shared/services';
+import { mockSchool } from '../../../../../../../session/mock/school';
 
 class MockService {
   dummy;
@@ -42,7 +45,11 @@ describe('AttendancePastComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientModule, EventsModule],
+        imports: [
+          HttpClientModule,
+          RouterTestingModule,
+          EventsModule
+        ],
         providers: [CPSession, CPI18nService, { provide: EventsService, useClass: MockService }]
       })
         .compileComponents()
@@ -51,6 +58,7 @@ describe('AttendancePastComponent', () => {
 
           component = fixture.componentInstance;
           component.isLoading().subscribe((_) => (component.loading = false));
+          component.session.g.set('user', mockUser);
           component.session.g.set('school', mockSchool);
           component.event = {
             id: 5125
