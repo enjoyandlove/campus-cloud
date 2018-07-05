@@ -61,7 +61,7 @@
                 </div>
               </div>
 
-              <div class="row">
+              <div class="row" *ngIf="viewMap">
                 <div class="col-12 event__map">
                   <cp-maps
                     [center]="mapCenter"

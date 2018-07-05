@@ -59,14 +59,16 @@ export class EventsCreateComponent implements OnInit {
   attendance = false;
   enddatePickerOpts;
   startdatePickerOpts;
+  viewLocation = false;
   eventFeedbackEnabled;
   eventManagerToolTip;
   production = isProd;
   studentFeedbackToolTip;
   attendanceManagerToolTip;
   mapCenter: BehaviorSubject<any>;
-  newAddress = new BehaviorSubject(null);
   managers: Array<any> = [{ label: '---' }];
+  newAddress = new BehaviorSubject(null);
+  drawMarker = new BehaviorSubject(false);
 
   constructor(
     public router: Router,
@@ -159,6 +161,7 @@ export class EventsCreateComponent implements OnInit {
   }
 
   onResetMap() {
+    this.drawMarker.next(false);
     CPMap.setFormLocationData(this.form, CPMap.resetLocationFields(this.school));
     this.centerMap(this.school.latitude, this.school.longitude);
   }
@@ -185,6 +188,8 @@ export class EventsCreateComponent implements OnInit {
     if (!data) {
       return;
     }
+
+    this.drawMarker.next(true);
 
     if ('fromUsersLocations' in data) {
       this.updateWithUserLocation(data);
@@ -329,6 +334,22 @@ export class EventsCreateComponent implements OnInit {
     this.form.controls['is_all_day'].setValue(value);
   }
 
+  onLocationToggle(value) {
+    this.viewLocation = value;
+
+    if (!value) {
+      this.drawMarker.next(false);
+
+      this.mapCenter = new BehaviorSubject({
+        lat: this.school.latitude,
+        lng: this.school.longitude
+      });
+
+      this.form.controls['room_data'].setValue(null);
+      CPMap.setFormLocationData(this.form, CPMap.resetLocationFields(this.school));
+    }
+  }
+
   ngOnInit() {
     this.eventFeedbackEnabled = EventFeedback.enabled;
 
@@ -401,8 +422,8 @@ export class EventsCreateComponent implements OnInit {
       country: [null],
       address: [null],
       postal_code: [null],
-      latitude: [this.school.latitude],
-      longitude: [this.school.longitude],
+      latitude: [0],
+      longitude: [0],
       event_attendance: [EventAttendance.disabled],
       start: [null, Validators.required],
       poster_url: [null, Validators.required],

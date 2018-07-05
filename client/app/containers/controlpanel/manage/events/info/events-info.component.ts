@@ -34,6 +34,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   urlPrefix;
   dateFormat;
   isPastEvent;
+  viewMap = true;
   loading = true;
   eventId: number;
   draggable = false;
@@ -80,6 +81,8 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
         this.event.poster_url === '' ? this.event.store_logo_url : this.event.poster_url;
 
       this.buildHeader(this.event);
+
+      this.viewMap = event.data.latitude !== 0 && event.data.longitude !== 0;
 
       this.mapCenter = new BehaviorSubject({
         lat: event.data.latitude,
