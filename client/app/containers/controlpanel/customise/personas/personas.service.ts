@@ -29,22 +29,18 @@ export class PersonasService extends HTTPService {
     return super.get(url, search).pipe(
       startWith([{ label: '---' }]),
       map((services) => {
-        return services.map((service: any, index) => {
-          if (index === 0) {
+        return [
+          { label: '---', value: null },
+          ...services.map((service: any) => {
             return {
-              label: '---',
-              value: null
+              label: service.name,
+              action: service.id,
+              meta: {
+                ...service
+              }
             };
-          }
-
-          return {
-            label: service.name,
-            action: service.id,
-            meta: {
-              ...service
-            }
-          };
-        });
+          })
+        ];
       })
     );
   }
@@ -83,6 +79,12 @@ export class PersonasService extends HTTPService {
 
   deletePersonaById(personaId: number, search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.PERSONAS}/${personaId}`;
+
+    return super.delete(url, search, true);
+  }
+
+  deleteTileById(tileId, search: HttpParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GUIDE_TILES}/${tileId}`;
 
     return super.delete(url, search, true);
   }

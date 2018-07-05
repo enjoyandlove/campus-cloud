@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { flatten, sortBy } from 'lodash';
+import { flatten, sortBy, get as _get } from 'lodash';
 import { CPSession } from './../../../../session/index';
 import { CPI18nService } from './../../../../shared/services/i18n.service';
 import { PersonasLoginRequired, PersonasType } from './personas.status';
@@ -54,6 +54,10 @@ export class PersonasUtilsService {
       ),
       (i) => i.rank
     );
+  }
+
+  getCampusSecurityServiceId(campusSecurity) {
+    return _get(campusSecurity, ['related_link_data', 'link_params', 'id'], null);
   }
 
   filterTiles(guides: Array<ICampusGuide>) {

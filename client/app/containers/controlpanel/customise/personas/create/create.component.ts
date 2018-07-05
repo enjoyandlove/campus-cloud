@@ -27,7 +27,7 @@ export class PersonasCreateComponent implements OnInit {
   services$;
   buttonData;
   form: FormGroup;
-  campusSecuritTile;
+  campusSecurityTile;
 
   constructor(
     public router: Router,
@@ -56,11 +56,11 @@ export class PersonasCreateComponent implements OnInit {
   onSecurityServiceChanged(selection) {
     const serviceMeta = _get(selection, 'meta', null);
 
-    this.campusSecuritTile = serviceMeta;
+    this.campusSecurityTile = serviceMeta;
   }
 
   createCampusLink(): Observable<any> {
-    const service = this.campusSecuritTile;
+    const service = this.campusSecurityTile;
 
     const campusLinkForm = this.utils.getCampusLinkForm();
 
@@ -74,7 +74,7 @@ export class PersonasCreateComponent implements OnInit {
   }
 
   createCampusTile(campusLinkId, personaId): Observable<any> {
-    const service = this.campusSecuritTile;
+    const service = this.campusSecurityTile;
 
     const guideTileForm = this.utils.getGuideTileForm();
 
@@ -115,7 +115,7 @@ export class PersonasCreateComponent implements OnInit {
     const body = this.utils.parseLocalFormToApi(this.createForm.form.value);
     const createPersona$ = this.service.createPersona(body);
 
-    const stream$ = this.campusSecuritTile
+    const stream$ = this.campusSecurityTile
       ? createPersona$.pipe(switchMap(({ id }: any) => this.createSecurityTile(id)))
       : createPersona$;
 
