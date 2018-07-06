@@ -48,8 +48,6 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   @Input() isOrientation: boolean;
   @Input() toolTipContent: IToolTipContent;
 
-  lat;
-  lng;
   event;
   stores;
   urlPrefix;
@@ -75,9 +73,9 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   eventManagerToolTip;
   production = isProd;
   studentFeedbackToolTip;
-  canViewLocation = false;
   attendanceManagerToolTip;
   formMissingFields = false;
+  showLocationDetails = false;
   mapCenter: BehaviorSubject<any>;
   managers: Array<any> = [{ label: '---' }];
   newAddress = new BehaviorSubject(null);
@@ -363,15 +361,15 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
         this.stores = res.data[1];
         this.event = res.data[0];
         this.buildForm(res.data[0]);
-        this.lat = res.data[0].latitude;
-        this.lng = res.data[0].longitude;
+        const lat = res.data[0].latitude;
+        const lng = res.data[0].longitude;
 
         this.mapCenter = new BehaviorSubject(
-          CPMap.setDefaultMapCenter(this.lat, this.lng, this.school)
+          CPMap.setDefaultMapCenter(lat, lng, this.school)
         );
 
-        this.canViewLocation = CPMap.canViewLocation(this.lat, this.lng, this.school);
-        this.drawMarker.next(this.canViewLocation);
+        this.showLocationDetails = CPMap.canViewLocation(lat, lng, this.school);
+        this.drawMarker.next(this.showLocationDetails);
       })
       .catch((err) => this.errorService.handleError(err));
   }
@@ -462,7 +460,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   onLocationToggle(value) {
-    this.canViewLocation = value;
+    this.showLocationDetails = value;
 
     if (!value) {
       this.drawMarker.next(false);

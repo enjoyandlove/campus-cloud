@@ -59,12 +59,12 @@ export class EventsCreateComponent implements OnInit {
   attendance = false;
   enddatePickerOpts;
   startdatePickerOpts;
-  viewLocation = false;
   eventFeedbackEnabled;
   eventManagerToolTip;
   production = isProd;
   studentFeedbackToolTip;
   attendanceManagerToolTip;
+  showLocationDetails = false;
   mapCenter: BehaviorSubject<any>;
   managers: Array<any> = [{ label: '---' }];
   newAddress = new BehaviorSubject(null);
@@ -335,7 +335,7 @@ export class EventsCreateComponent implements OnInit {
   }
 
   onLocationToggle(value) {
-    this.viewLocation = value;
+    this.showLocationDetails = value;
 
     if (!value) {
       this.drawMarker.next(false);

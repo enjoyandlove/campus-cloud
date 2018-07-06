@@ -34,10 +34,10 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   urlPrefix;
   dateFormat;
   isPastEvent;
-  viewMap = true;
   loading = true;
   eventId: number;
   draggable = false;
+  showLocationDetails = true;
   mapCenter: BehaviorSubject<any>;
 
   defaultImage = require('public/default/image.png');
@@ -82,7 +82,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
 
       this.buildHeader(this.event);
 
-      this.viewMap = event.data.latitude !== 0 && event.data.longitude !== 0;
+      this.showLocationDetails = event.data.latitude !== 0 && event.data.longitude !== 0;
 
       this.mapCenter = new BehaviorSubject({
         lat: event.data.latitude,

@@ -20,10 +20,10 @@ export class AttendanceUpcomingComponent implements OnInit {
   banner;
   mapCenter;
   dateFormat;
-  viewMap = true;
   eventCheckinRoute;
   draggable = false;
   format = FORMAT.DATETIME;
+  showLocationDetails = true;
   attendanceEnabled = EventAttendance.enabled;
 
   constructor(public utils: EventUtilService) {}
@@ -31,7 +31,7 @@ export class AttendanceUpcomingComponent implements OnInit {
   ngOnInit() {
     this.eventCheckinRoute = this.utils.getEventCheckInLink(this.isOrientation);
     this.banner = this.event.poster_url === '' ? this.event.store_logo_url : this.event.poster_url;
-    this.viewMap = this.event.latitude !== 0 && this.event.longitude !== 0;
+    this.showLocationDetails = this.event.latitude !== 0 && this.event.longitude !== 0;
 
     this.dateFormat = FORMAT.DATETIME;
     this.mapCenter = new BehaviorSubject({
