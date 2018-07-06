@@ -2308,6 +2308,9 @@
   "type": {
     "message": "Type"
   },
+  "t_assess_chart_tooltip_label_engagements": {
+    "message": "Engagement(s)"
+  },
   "t_audience_dynamic_integration_disabled": {
     "message": "To enable this feature, please contact your Customer Success manager."
   },
@@ -2316,6 +2319,12 @@
   },
   "t_customise_personas": {
     "message": "App Experiences"
+  },
+  "t_dashboard_chart_tooltip_label_downloads": {
+    "message": "Downloads"
+  },
+  "t_dashboard_chart_tooltip_label_registrations": {
+    "message": "Registrations"
   },
   "t_deals_delete_modal_body": {
     "message": "Are you sure you want to delete %s?"
@@ -2375,7 +2384,7 @@
     "message": "Import Events"
   },
   "t_events_import_upload_picture": {
-    "message": "Upload Picture"
+    "message": "Upload Image"
   },
   "t_personas_button_list_create": {
     "message": "Create Persona"
@@ -2386,6 +2395,9 @@
   "t_personas_create_header_title": {
     "message": "Create Persona"
   },
+  "t_personas_create_section_default_name": {
+    "message": "Untitled "
+  },
   "t_personas_create_submit_button": {
     "message": "Save Changes"
   },
@@ -2393,10 +2405,10 @@
     "message": "A school must have at least one persona enabled"
   },
   "t_personas_delete_error_users_associated": {
-    "message": "Cannot delete persona which has users associated"
+    "message": "This experience has users associated, so you cannot delete it."
   },
   "t_personas_edit_error_users_associated": {
-    "message": "Cannot update Login Requirements for persona which has users associated"
+    "message": "This experience has users associated, so you cannot update its login requirements."
   },
   "t_personas_edit_message_on_save_ok": {
     "message": "Changes saved successfully"
@@ -2452,6 +2464,102 @@
   "t_personas_section_button_add_section": {
     "message": "Add Section"
   },
+  "t_personas_tile_create_resource_type_academic_calendar": {
+    "message": "Academic Calendar"
+  },
+  "t_personas_tile_create_resource_type_advisor_list": {
+    "message": "Advisor List"
+  },
+  "t_personas_tile_create_resource_type_athletics_club": {
+    "message": "Athletic Clubs"
+  },
+  "t_personas_tile_create_resource_type_camera_qr": {
+    "message": "Scan QR"
+  },
+  "t_personas_tile_create_resource_type_campus_poi_list": {
+    "message": "Campus Map"
+  },
+  "t_personas_tile_create_resource_type_campus_service": {
+    "message": "Campus Service"
+  },
+  "t_personas_tile_create_resource_type_campus_tour_list": {
+    "message": "Campus Tour List"
+  },
+  "t_personas_tile_create_resource_type_courses": {
+    "message": "Courses"
+  },
+  "t_personas_tile_create_resource_type_exams": {
+    "message": "Exams"
+  },
+  "t_personas_tile_create_resource_type_in_app_feedback": {
+    "message": "In App feedback"
+  },
+  "t_personas_tile_create_resource_type_service_by_category_id": {
+    "message": "Services by Category"
+  },
+  "t_personas_tile_create_resource_type_store": {
+    "message": "Stores"
+  },
+  "t_personas_tile_create_resource_type_store_list": {
+    "message": "Stores List"
+  },
+  "t_personas_tile_create_resource_type_subscribable_calendar": {
+    "message": "Subscribable Calendar"
+  },
+  "t_personas_tile_create_resource_type_timetable": {
+    "message": "Timetable"
+  },
+  "t_personas_tile_create_resource_type_user_attended_events": {
+    "message": "User Attended Events"
+  },
+  "t_personas_tile_create_resource_type_user_orientation_calendar_list": {
+    "message": "User subscribed orientation calendar"
+  },
+  "t_personas_tile_create_resource_type_user_school_course_material_list": {
+    "message": "User school course material list"
+  },
+  "t_personas_tile_create_store_list_groups_and_clubs": {
+    "message": "Groups and Clubs"
+  },
+  "t_personas_tile_create_type_resource_external_link": {
+    "message": "External Link"
+  },
+  "t_personas_tile_create_type_resource_resource": {
+    "message": "Resource"
+  },
+  "t_personas_tile_create_type_resource_resource_list": {
+    "message": "Resource List"
+  },
+  "t_personas_tile_create_type_resource_web_link": {
+    "message": "Web Link"
+  },
+  "t_personas_tile_form_categories_excludes": {
+    "message": "Excludes"
+  },
+  "t_personas_tile_form_categories_includes": {
+    "message": "Includes"
+  },
+  "t_personas_tile_modal_create_appearance": {
+    "message": "Appearance"
+  },
+  "t_personas_tile_modal_create_categories": {
+    "message": "Categories"
+  },
+  "t_personas_tile_modal_create_content": {
+    "message": "Content"
+  },
+  "t_personas_tile_modal_create_label_resources": {
+    "message": "Resource Type"
+  },
+  "t_personas_tile_modal_create_label_type": {
+    "message": "Type"
+  },
+  "t_personas_tile_modal_create_link_url": {
+    "message": "Link URL"
+  },
+  "t_personas_tile_modal_create_resource_type": {
+    "message": "Resource Type"
+  },
   "t_persona_create_cancel_button": {
     "message": "Cancel"
   },
@@ -2466,6 +2574,9 @@
   },
   "t_shared_cancel": {
     "message": "Cancel"
+  },
+  "t_shared_color": {
+    "message": "Color"
   },
   "t_shared_delete": {
     "message": "Delete"

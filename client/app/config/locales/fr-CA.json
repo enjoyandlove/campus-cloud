@@ -546,7 +546,7 @@
     "message": "Nom d'audience"
   },
   "audience_dynamic_button_save_audience": {
-    "message": "Save Audience"
+    "message": "Enregistrer Audience"
   },
   "audience_edit_modal_label_name": {
     "message": "Editer audience"
@@ -2371,6 +2371,12 @@
   "t_deals_list_grid_column_store": {
     "message": "Magasin"
   },
+  "t_events_import_import_events": {
+    "message": "Importer des événements"
+  },
+  "t_events_import_upload_picture": {
+    "message": "Téléverser image"
+  },
   "t_personas_button_list_create": {
     "message": "Créer expérience"
   },
@@ -2431,6 +2437,9 @@
   "t_personas_list_dropdown_web_experiences": {
     "message": "Web"
   },
+  "t_personas_tile_modal_create_label_type": {
+    "message": "Type"
+  },
   "t_persona_create_cancel_button": {
     "message": "Annuler"
   },
@@ -2444,7 +2453,10 @@
     "message": "Notifier"
   },
   "t_shared_cancel": {
-    "message": "Cancel"
+    "message": "Annuler"
+  },
+  "t_shared_color": {
+    "message": "Couleur"
   },
   "t_shared_delete": {
     "message": "Supprimer"
