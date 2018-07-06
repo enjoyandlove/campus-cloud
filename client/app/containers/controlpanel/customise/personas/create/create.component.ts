@@ -158,7 +158,7 @@ export class PersonasCreateComponent implements OnInit {
       login_requirement: [PersonasLoginRequired.optional],
       pretour_enabled: [false],
       cre_enabled: [false],
-      clone_tiles: [true]
+      clone_tiles: [false]
     });
   }
 
