@@ -5,36 +5,14 @@ import * as moment from 'moment';
 
 import { CPDate } from './../../../shared/utils/date/date';
 import { CPI18nService } from './../../../shared/services/i18n.service';
+import {
+  yesterdayEnd,
+  last30Days,
+  last90Days,
+  lastYear
+} from '../../../shared/components/cp-range-picker/cp-range-picker.utils.service';
 
 const cpI18n = new CPI18nService();
-
-const todayDate = moment().endOf('day');
-const yesterdayDate = todayDate.clone().subtract(1, 'days');
-const yesterdayEnd = (tz) => CPDate.toEpoch(yesterdayDate, tz);
-
-const last30Days = (tz) =>
-  CPDate.toEpoch(
-    moment(yesterdayDate)
-      .subtract(30, 'days')
-      .startOf('day'),
-    tz
-  );
-
-const last90Days = (tz) =>
-  CPDate.toEpoch(
-    moment(yesterdayDate)
-      .subtract(90, 'days')
-      .startOf('day'),
-    tz
-  );
-
-const lastYear = (tz) =>
-  CPDate.toEpoch(
-    moment(yesterdayDate)
-      .subtract(1, 'year')
-      .startOf('day'),
-    tz
-  );
 
 @Injectable()
 export class DashboardUtilsService {
