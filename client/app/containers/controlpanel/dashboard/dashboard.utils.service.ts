@@ -32,7 +32,7 @@ export class DashboardUtilsService {
   last30Days() {
     return {
       end: yesterdayEnd(this.session.tz),
-      start: last30Days(this.session.tz),
+      start: last30Days(this.session.tz, yesterdayEnd(this.session.tz)),
       label: cpI18n.translate('dashboard_last_30_days')
     };
   }
@@ -40,7 +40,7 @@ export class DashboardUtilsService {
   last90Days() {
     return {
       end: yesterdayEnd(this.session.tz),
-      start: last90Days(this.session.tz),
+      start: last90Days(this.session.tz, yesterdayEnd(this.session.tz)),
       label: cpI18n.translate('dashboard_last_90_days')
     };
   }
@@ -48,7 +48,7 @@ export class DashboardUtilsService {
   lastYear() {
     return {
       end: yesterdayEnd(this.session.tz),
-      start: lastYear(this.session.tz),
+      start: lastYear(this.session.tz, yesterdayEnd(this.session.tz)),
       label: cpI18n.translate('dashboard_last_year')
     };
   }

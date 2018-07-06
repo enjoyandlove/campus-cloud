@@ -5,10 +5,10 @@ import { ActivatedRoute } from '@angular/router';
 import { CPSession } from '../../../../../../session';
 import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 import {
+  now,
   lastYear,
   last30Days,
-  last90Days,
-  yesterdayEnd
+  last90Days
 } from '../../../../../../shared/components/cp-range-picker/cp-range-picker.utils.service';
 
 interface IState {
@@ -170,8 +170,8 @@ export class EngagementTopBarComponent implements OnInit {
         payload: {
           metric: 'weekly',
           range: {
-            end: yesterdayEnd(this.session.tz),
-            start: last30Days(this.session.tz)
+            end: now(this.session.tz),
+            start: last30Days(this.session.tz, now(this.session.tz))
           }
         }
       },
@@ -181,8 +181,8 @@ export class EngagementTopBarComponent implements OnInit {
         payload: {
           metric: 'monthly',
           range: {
-            end: yesterdayEnd(this.session.tz),
-            start: last90Days(this.session.tz)
+            end: now(this.session.tz),
+            start: last90Days(this.session.tz, now(this.session.tz))
           }
         }
       },
@@ -192,8 +192,8 @@ export class EngagementTopBarComponent implements OnInit {
         payload: {
           metric: 'monthly',
           range: {
-            end: yesterdayEnd(this.session.tz),
-            start: lastYear(this.session.tz)
+            end: now(this.session.tz),
+            start: lastYear(this.session.tz, now(this.session.tz))
           }
         }
       }

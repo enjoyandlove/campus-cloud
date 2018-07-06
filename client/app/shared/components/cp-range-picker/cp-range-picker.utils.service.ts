@@ -7,27 +7,29 @@ import { CPDate } from '../../utils/date/date';
 const todayDate = moment().endOf('day');
 const yesterdayDate = todayDate.clone().subtract(1, 'days');
 
+export const now = (tz) => CPDate.now(tz).unix();
+
 export const yesterdayEnd = (tz) => CPDate.toEpoch(yesterdayDate, tz);
 
-export const last30Days = (tz) =>
+export const last30Days = (tz, startDate) =>
   CPDate.toEpoch(
-    moment(yesterdayDate)
+    moment(startDate)
       .subtract(30, 'days')
       .startOf('day'),
     tz
   );
 
-export const last90Days = (tz) =>
+export const last90Days = (tz, startDate) =>
   CPDate.toEpoch(
-    moment(yesterdayDate)
+    moment(startDate)
       .subtract(90, 'days')
       .startOf('day'),
     tz
   );
 
-export const lastYear = (tz) =>
+export const lastYear = (tz, startDate) =>
   CPDate.toEpoch(
-    moment(yesterdayDate)
+    moment(startDate)
       .subtract(1, 'year')
       .startOf('day'),
     tz
