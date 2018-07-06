@@ -1,15 +1,20 @@
-import { HttpParams } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs';
+import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
+
+import { EventsService } from '../events.service';
 import { isProd } from './../../../../../config/env';
-import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { EventUtilService } from '../events.utils.service';
 import { CPSession, ISchool } from '../../../../../session';
-import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
+import { CPDate, CPMap } from '../../../../../shared/utils';
+import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { EventAttendance, EventFeedback, isAllDay } from '../event.status';
+import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 import {
   AdminService,
   CPI18nService,
@@ -17,10 +22,6 @@ import {
   ErrorService,
   StoreService
 } from '../../../../../shared/services';
-import { CPDate, CPMap } from '../../../../../shared/utils';
-import { EventAttendance, EventFeedback, isAllDay } from '../event.status';
-import { EventsService } from '../events.service';
-import { EventUtilService } from '../events.utils.service';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
 const FORMAT_WITHOUT_TIME = 'F j, Y';
