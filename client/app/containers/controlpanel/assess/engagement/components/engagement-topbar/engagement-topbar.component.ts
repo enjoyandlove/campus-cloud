@@ -10,6 +10,7 @@ import {
   last30Days,
   last90Days
 } from '../../../../../../shared/components/cp-range-picker/cp-range-picker.utils.service';
+import * as moment from 'moment';
 
 interface IState {
   engagement: {
@@ -163,6 +164,8 @@ export class EngagementTopBarComponent implements OnInit {
     const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
+    const todayDate = moment().endOf('day');
+
     this.dateFilter = [
       {
         route_id: 'last_30_days',
@@ -171,7 +174,7 @@ export class EngagementTopBarComponent implements OnInit {
           metric: 'weekly',
           range: {
             end: now(this.session.tz),
-            start: last30Days(this.session.tz, now(this.session.tz))
+            start: last30Days(this.session.tz, todayDate)
           }
         }
       },
@@ -182,7 +185,7 @@ export class EngagementTopBarComponent implements OnInit {
           metric: 'monthly',
           range: {
             end: now(this.session.tz),
-            start: last90Days(this.session.tz, now(this.session.tz))
+            start: last90Days(this.session.tz, todayDate)
           }
         }
       },
@@ -193,7 +196,7 @@ export class EngagementTopBarComponent implements OnInit {
           metric: 'monthly',
           range: {
             end: now(this.session.tz),
-            start: lastYear(this.session.tz, now(this.session.tz))
+            start: lastYear(this.session.tz, todayDate)
           }
         }
       }

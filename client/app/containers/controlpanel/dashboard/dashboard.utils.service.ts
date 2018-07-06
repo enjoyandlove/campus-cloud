@@ -13,6 +13,8 @@ import {
 } from '../../../shared/components/cp-range-picker/cp-range-picker.utils.service';
 
 const cpI18n = new CPI18nService();
+const todayDate = moment().endOf('day');
+const yesterdayDate = todayDate.clone().subtract(1, 'days');
 
 @Injectable()
 export class DashboardUtilsService {
@@ -32,7 +34,7 @@ export class DashboardUtilsService {
   last30Days() {
     return {
       end: yesterdayEnd(this.session.tz),
-      start: last30Days(this.session.tz, yesterdayEnd(this.session.tz)),
+      start: last30Days(this.session.tz, yesterdayDate),
       label: cpI18n.translate('dashboard_last_30_days')
     };
   }
@@ -40,7 +42,7 @@ export class DashboardUtilsService {
   last90Days() {
     return {
       end: yesterdayEnd(this.session.tz),
-      start: last90Days(this.session.tz, yesterdayEnd(this.session.tz)),
+      start: last90Days(this.session.tz, yesterdayDate),
       label: cpI18n.translate('dashboard_last_90_days')
     };
   }
@@ -48,7 +50,7 @@ export class DashboardUtilsService {
   lastYear() {
     return {
       end: yesterdayEnd(this.session.tz),
-      start: lastYear(this.session.tz, yesterdayEnd(this.session.tz)),
+      start: lastYear(this.session.tz, yesterdayDate),
       label: cpI18n.translate('dashboard_last_year')
     };
   }
