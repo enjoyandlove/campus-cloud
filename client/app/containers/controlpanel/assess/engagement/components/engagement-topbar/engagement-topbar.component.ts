@@ -5,7 +5,9 @@ import { ActivatedRoute } from '@angular/router';
 import { CPSession } from '../../../../../../session';
 import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 import {
-  last30Days, last90Days, lastYear,
+  lastYear,
+  last30Days,
+  last90Days,
   yesterdayEnd
 } from '../../../../../../shared/components/cp-range-picker/cp-range-picker.utils.service';
 

@@ -6,10 +6,10 @@ import * as moment from 'moment';
 import { CPDate } from './../../../shared/utils/date/date';
 import { CPI18nService } from './../../../shared/services/i18n.service';
 import {
-  yesterdayEnd,
-  last30Days,
+  lastYear,
   last90Days,
-  lastYear
+  last30Days,
+  yesterdayEnd
 } from '../../../shared/components/cp-range-picker/cp-range-picker.utils.service';
 
 const cpI18n = new CPI18nService();
