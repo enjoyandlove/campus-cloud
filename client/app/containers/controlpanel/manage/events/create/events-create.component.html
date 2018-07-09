@@ -70,47 +70,60 @@
                 <label>{{ 'events_event_description' | cpI18n }}</label>
                 <textarea formControlName="description"></textarea>
               </div>
-  
-              <div class="row">
+
+              <div class="row form-group">
                 <div class="col-12">
-                  <label>{{ 'location' | cpI18n }}</label>
-                  <div class="row form-group">
-                    <div class="col-12">
-                      <cp-place-autocomplete
-                        [newAddress]="newAddress"
-                        (backToDefault)="onResetMap()"
-                        (placeChange)="onPlaceChange($event)"
-                        [defaultValue]="form.controls.address.value">
-                      </cp-place-autocomplete>
+                  <cp-checkbox
+                    class="checkbox"
+                    (toggle)="onLocationToggle($event)"
+                    [label]="cpI18n.translate('t_shared_label_location_toggle')">
+                  </cp-checkbox>
+                </div>
+              </div>
+
+              <div *ngIf="showLocationDetails">
+                <div class="row">
+                  <div class="col-12">
+                    <label>{{ 'location' | cpI18n }}</label>
+                    <div class="row form-group">
+                      <div class="col-12">
+                        <cp-place-autocomplete
+                          [newAddress]="newAddress"
+                          (backToDefault)="onResetMap()"
+                          (placeChange)="onPlaceChange($event)"
+                          [defaultValue]="form.controls.address.value">
+                        </cp-place-autocomplete>
+                      </div>
                     </div>
-                  </div>
-                  <div class="row form-group">
-                    <div class="col-6">
-                      <label>{{ 'building' | cpI18n }}</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        formControlName="location">
-                    </div>
-  
-                    <div class="col-6">
-                      <label>{{ 'room' | cpI18n }}</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        formControlName="room_data">
+                    <div class="row form-group">
+                      <div class="col-6">
+                        <label>{{ 'building' | cpI18n }}</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="location">
+                      </div>
+
+                      <div class="col-6">
+                        <label>{{ 'room' | cpI18n }}</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="room_data">
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-  
-              <div class="row">
-                <div class="col-12">
-                  <div class="maps">
-                    <cp-maps
-                      [center]="mapCenter"
-                      (mapSelection)="onMapSelection($event)">
-                    </cp-maps>
+
+                <div class="row">
+                  <div class="col-12">
+                    <div class="maps">
+                      <cp-maps
+                        [center]="mapCenter"
+                        [drawMarker]="drawMarker"
+                        (mapSelection)="onMapSelection($event)">
+                      </cp-maps>
+                    </div>
                   </div>
                 </div>
               </div>
