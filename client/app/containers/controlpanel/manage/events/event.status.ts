@@ -26,6 +26,21 @@ export enum EventVerificationMethod {
   'QR' = 4
 }
 
+export enum Assessment {
+  'on' = 'On',
+  'off' = 'Off'
+}
+
+export enum Location {
+  'yes' = 'Yes',
+  'no' = 'No'
+}
+
+export enum Feedback {
+  'enabled' = 'Enabled',
+  'disabled' = 'Disabled'
+}
+
 export const isAllDay = {
   enabled: true,
   disabled: false

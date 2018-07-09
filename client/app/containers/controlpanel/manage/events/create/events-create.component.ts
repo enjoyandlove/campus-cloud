@@ -71,6 +71,16 @@ export class EventsCreateComponent implements OnInit {
   newAddress = new BehaviorSubject(null);
   drawMarker = new BehaviorSubject(false);
 
+  eventProperties = {
+    event_id: null,
+    host_type: null,
+    start_date: null,
+    end_date: null,
+    location: null,
+    assessment: null,
+    feedback: null
+  };
+
   constructor(
     public router: Router,
     public fb: FormBuilder,
@@ -104,6 +114,11 @@ export class EventsCreateComponent implements OnInit {
   }
 
   onSelectedHost(host): void {
+    this.eventProperties = {
+      ...this.eventProperties,
+      host_type: host.hostType
+    };
+
     this.fetchManagersBySelectedStore(host.value);
 
     this.form.controls['store_id'].setValue(host.value);
@@ -274,6 +289,20 @@ export class EventsCreateComponent implements OnInit {
 
     this.service.createEvent(this.form.value, search).subscribe(
       (res: any) => {
+        this.eventProperties = {
+          ...this.eventProperties,
+          event_id: res.id,
+          start_date: this.utils.getStartDate(CPDate.fromEpoch(res.start, this.session.tz)),
+          end_date: this.utils.getEndDate(CPDate.fromEpoch(res.end, this.session.tz)),
+          assessment: this.utils.getAssessment(res.event_attendance),
+          location: this.utils.getLocation(res.location),
+          feedback: this.utils.getFeedback(res.event_feedback)
+        };
+
+        this.cpTracking.amplitudeEmitEvent(
+          amplitudeEvents.MANAGE_CREATED_EVENT,
+          this.eventProperties);
+
         this.urlPrefix = this.getUrlPrefix(res.id);
         this.router.navigate([this.urlPrefix]);
       },
@@ -353,6 +382,13 @@ export class EventsCreateComponent implements OnInit {
   }
 
   ngOnInit() {
+    const host_type = this.session.defaultHost ? this.session.defaultHost.hostType : null;
+
+    this.eventProperties = {
+      ...this.eventProperties,
+      host_type
+    };
+
     this.eventFeedbackEnabled = EventFeedback.enabled;
 
     this.school = this.session.g.get('school');

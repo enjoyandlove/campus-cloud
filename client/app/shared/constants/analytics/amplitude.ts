@@ -153,6 +153,10 @@ export const amplitudeEvents = {
 
   WALL_DELETED_COMMENT: 'Wall - Deleted Comment',
 
+  MANAGE_UPDATED_EVENT: 'Manage - Updated Event',
+
+  MANAGE_CREATED_EVENT: 'Manage - Created Event',
+
   ASSESS_DOWNLOAD_DATA: 'Assess Downloaded Data',
 
   WALL_UPDATED_SETTINGS: 'Wall - Updated Settings',

@@ -1,11 +1,18 @@
 import IEvent from './event.interface';
+import moment = require('moment');
 
 import { Injectable } from '@angular/core';
 import { CPSession } from '../../../../session';
-import { EventAttendance } from './event.status';
 import { CPDate } from './../../../../shared/utils/date/date';
 import { CP_PRIVILEGES_MAP } from '../../../../shared/constants';
 import { amplitudeEvents } from '../../../../shared/constants/analytics';
+import {
+  Location,
+  Feedback,
+  Assessment,
+  EventFeedback,
+  EventAttendance
+} from './event.status';
 
 @Injectable()
 export class EventUtilService {
@@ -126,5 +133,25 @@ export class EventUtilService {
     }
 
     return sourcePage;
+  }
+
+  getStartDate(date) {
+    return moment(date).format('MMMM');
+  }
+
+  getEndDate(date) {
+    return moment(date).format('MMMM');
+  }
+
+  getLocation(location) {
+    return location ? Location.yes : Location.no;
+  }
+
+  getFeedback(feedback) {
+    return feedback === EventFeedback.enabled ? Feedback.enabled : Feedback.disabled;
+  }
+
+  getAssessment(assessment) {
+    return assessment === EventAttendance.enabled ? Assessment.on : Assessment.off;
   }
 }
