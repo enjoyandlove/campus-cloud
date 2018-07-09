@@ -32,7 +32,7 @@ export class CalendarsItemFormComponent implements OnInit {
   buttonData;
   enddatePickerOpts;
   startdatePickerOpts;
-  showLocationDetails = true;
+  showLocationDetails = false;
   drawMarker = new BehaviorSubject(false);
   newAddress = new BehaviorSubject(null);
 
@@ -157,11 +157,31 @@ export class CalendarsItemFormComponent implements OnInit {
     }
   }
 
+  onSubmit() {
+    this.formError = false;
+
+    const valid = this.utils.validate(this.form);
+    if (!valid) {
+      this.enableButton();
+      this.formError = true;
+
+      return;
+    }
+
+    if (this.form.controls['is_all_day'].value) {
+      this.updateTime();
+    }
+
+    this.submitted.emit(this.form.value);
+  }
+
   ngOnInit() {
     const _self = this;
     const lat = this.form.controls['latitude'].value;
     const lng = this.form.controls['longitude'].value;
 
+    this.showLocationDetails = CPMap.canViewLocation(lat, lng, this.session.g.get('school'));
+    this.drawMarker.next(this.showLocationDetails);
     this.mapCenter = new BehaviorSubject(
       CPMap.setDefaultMapCenter(lat, lng, this.session.g.get('school'))
     );
@@ -202,23 +222,5 @@ export class CalendarsItemFormComponent implements OnInit {
       class: 'primary',
       text: isEditForm ? submitEdit : submitCreate
     };
-  }
-
-  onSubmit() {
-    this.formError = false;
-
-    const valid = this.utils.validate(this.form);
-    if (!valid) {
-      this.enableButton();
-      this.formError = true;
-
-      return;
-    }
-
-    if (this.form.controls['is_all_day'].value) {
-      this.updateTime();
-    }
-
-    this.submitted.emit(this.form.value);
   }
 }
