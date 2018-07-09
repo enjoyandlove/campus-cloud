@@ -1,20 +1,22 @@
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-
-import { IPersona } from '../persona.interface';
-import { CPSession } from '../../../../../session';
-import { BaseComponent } from '../../../../../base';
+import { combineLatest, Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
+import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
+import { SNACKBAR_HIDE } from './../../../../../reducers/snackbar.reducer';
+import { PersonasFormComponent } from './../components/personas-form/personas-form.component';
 import { PersonasService } from './../personas.service';
 import { PersonaValidationErrors } from './../personas.status';
-import { CPI18nService } from '../../../../../shared/services';
 import { PersonasUtilsService } from './../personas.utils.service';
+import { BaseComponent } from '../../../../../base';
 import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
-import { SNACKBAR_HIDE } from './../../../../../reducers/snackbar.reducer';
-import { IHeader, HEADER_UPDATE } from './../../../../../reducers/header.reducer';
-import { PersonasFormComponent } from './../components/personas-form/personas-form.component';
+import { CPSession } from '../../../../../session';
+import { CPI18nService } from '../../../../../shared/services';
+import { IPersona } from '../persona.interface';
+import { ITile } from '../tiles/tile.interface';
 
 @Component({
   selector: 'cp-personas-edit',
@@ -24,11 +26,15 @@ import { PersonasFormComponent } from './../components/personas-form/personas-fo
 export class PersonasEditComponent extends BaseComponent implements OnInit, OnDestroy {
   @ViewChild('editForm') editForm: PersonasFormComponent;
 
+  services$;
   form: FormGroup;
   submitButtonData;
   loading: boolean;
   persona: IPersona;
   personaId: number;
+  securityTileChanged;
+  selectedSecurityService;
+  originalSecurityService;
 
   constructor(
     public router: Router,
@@ -59,12 +65,136 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
     });
   }
 
-  onSubmit() {
+  deleteCampusSecurityTile() {
+    const search = new HttpParams().set('school_id', this.session.g.get('school').id);
+
+    return this.service.deleteTileById(this.originalSecurityService.id, search).toPromise();
+  }
+
+  onSecurityServiceChanged(selection) {
+    const campusSecurityServiceId = this.utils.getCampusSecurityServiceId(
+      this.originalSecurityService
+    );
+
+    this.securityTileChanged = selection.action !== campusSecurityServiceId;
+
+    this.selectedSecurityService = selection;
+  }
+
+  createCampusLink(): Observable<any> {
+    const service = this.selectedSecurityService.meta;
+
+    const campusLinkForm = this.utils.getCampusLinkForm();
+
+    campusLinkForm.controls['name'].setValue(service.name);
+    campusLinkForm.controls['img_url'].setValue(service.img_url);
+
+    const link_params = <FormGroup>campusLinkForm.controls['link_params'];
+    link_params.controls['id'].setValue(service.id);
+
+    return this.service.createCampusLink(campusLinkForm.value);
+  }
+
+  createCampusTile(campusLinkId, personaId): Observable<any> {
+    const service = this.selectedSecurityService.meta;
+
+    const guideTileForm = this.utils.getGuideTileForm();
+
+    guideTileForm.controls['name'].setValue(service.name);
+
+    const extra_info = <FormGroup>guideTileForm.controls['extra_info'];
+    extra_info.controls['id'].setValue(campusLinkId);
+
+    const guideTileFormPersonaZero = {
+      ...guideTileForm.value,
+      school_persona_id: 0
+    };
+
+    const guidePersonaZero$ = this.service.createGuideTile(guideTileFormPersonaZero);
+
+    return guidePersonaZero$.pipe(
+      switchMap((guide: any) => {
+        const body = {
+          ...guideTileFormPersonaZero,
+          school_persona_id: personaId,
+          extra_info: {
+            id: guide.id
+          }
+        };
+
+        return this.service.createGuideTile(body);
+      })
+    );
+  }
+
+  createSecurityTile(personaId): Observable<any> {
+    return this.createCampusLink().pipe(
+      switchMap((link) => this.createCampusTile(link.id, personaId))
+    );
+  }
+
+  lookupExtraData(id, baseTiles: Array<any>) {
+    return baseTiles.filter((tile) => tile.id === id)[0].related_link_data;
+  }
+
+  isCampusSecurity(tile: ITile) {
+    return tile.related_link_data.link_url === 'oohlala://campus_security_service';
+  }
+
+  zipTiles(baseTiles: Array<any>, personaTiles: Array<any>): Array<any> {
+    return personaTiles.map((tile: ITile) => {
+      const relatedLinkDataEmpty = Object.keys(tile.related_link_data).length === 0;
+
+      return relatedLinkDataEmpty
+        ? {
+            ...tile,
+            related_link_data: this.lookupExtraData(tile.extra_info.id, baseTiles)
+          }
+        : tile;
+    });
+  }
+
+  async getCampusSecurity() {
+    const [baseTiles, personaTiles] = await this.getTiles();
+    const zipTiles = this.zipTiles(baseTiles, personaTiles);
+
+    return zipTiles.filter(this.isCampusSecurity)[0];
+  }
+
+  getTiles(): Promise<any> {
+    const searchPersonaZero = new HttpParams().set('school_id', this.session.g.get('school').id);
+
+    const searchPersonaId = new HttpParams()
+      .set('school_id', this.session.g.get('school').id)
+      .set('school_persona_id', this.personaId.toString());
+
+    const baseTiles$ = this.service.getTilesByPersona(searchPersonaZero);
+    const tilesByPersonaId$ = this.service.getTilesByPersona(searchPersonaId);
+
+    const stream$ = combineLatest(baseTiles$, tilesByPersonaId$);
+
+    return stream$.toPromise();
+  }
+
+  async onSubmit() {
     const search = new HttpParams().append('school_id', this.session.g.get('school').id);
-
     const body = this.utils.parseLocalFormToApi(this.editForm.form.value);
+    const shouldDeleteOldTile = this.securityTileChanged && this.originalSecurityService;
+    const updatePersona$ = this.service.updatePersona(this.personaId, search, body);
+    const shouldCreateSecurityTile =
+      this.securityTileChanged && this.selectedSecurityService.action;
 
-    this.service.updatePersona(this.personaId, search, body).subscribe(
+    if (shouldDeleteOldTile) {
+      await this.deleteCampusSecurityTile();
+    }
+
+    const updatePersonaAndLink$ = updatePersona$.pipe(
+      switchMap(() => this.createSecurityTile(this.personaId))
+    );
+
+    const stream$ = shouldCreateSecurityTile ? updatePersonaAndLink$ : updatePersona$;
+
+    stream$.subscribe(
       () => {
         this.submitButtonData = { ...this.submitButtonData, disabled: false };
 
@@ -79,7 +209,13 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
         });
       },
       (err) => {
-        const error = JSON.parse(err._body).error;
+        let error;
+        try {
+          error = JSON.parse(err._body).error;
+        } catch {
+          error = 'JSON_PARSE_ERROR';
+        }
+
         let message = this.cpI18n.translate('something_went_wrong');
         this.submitButtonData = { ...this.submitButtonData, disabled: false };
 
@@ -121,12 +257,19 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
 
     const stream$ = this.service.getPersonaById(this.personaId, search);
 
-    super.fetchData(stream$).then(({ data }) => {
-      this.persona = data;
+    this.getCampusSecurity()
+      .then((campusSecurity) => {
+        this.originalSecurityService = campusSecurity;
 
-      this.buildHeader();
-      this.buildForm(data);
-    });
+        return super.fetchData(stream$);
+      })
+      .then(({ data }: any) => {
+        this.persona = data;
+
+        this.buildHeader();
+        this.buildForm(data);
+        this.loadServices();
+      });
   }
 
   onDeleteError(message) {
@@ -138,6 +281,27 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
         body: message
       }
     });
+  }
+
+  loadServices() {
+    const search = new HttpParams().set('school_id', this.session.g.get('school').id);
+
+    this.services$ = this.service.getServices(search).pipe(
+      map((services) => {
+        if (this.originalSecurityService) {
+          const campusSecurityServiceId = this.utils.getCampusSecurityServiceId(
+            this.originalSecurityService
+          );
+          services.forEach((service: any) => {
+            if (service.action === campusSecurityServiceId) {
+              this.selectedSecurityService = service;
+            }
+          });
+        }
+
+        return services;
+      })
+    );
   }
 
   onDeleted() {
