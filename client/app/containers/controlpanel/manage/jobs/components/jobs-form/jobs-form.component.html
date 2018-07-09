@@ -83,10 +83,10 @@
                 <div class="col-4 jobs-study" *ngFor="let item of desiredStudy;">
                   <cp-checkbox
                     class="checkbox"
+                    [label]="item.label"
                     (toggle)="onJobTypeDesiredStudyToggle(item.name, $event)"
                     [isChecked]="form.controls[item.name].value">
                   </cp-checkbox>
-                  <span>{{ item.label }}</span>
                 </div>
               </div>
             </div>
@@ -97,10 +97,10 @@
                 <div class="col-4 jobs-study" *ngFor="let job of jobsType;">
                   <cp-checkbox
                     class="checkbox"
+                    [label]="job.label"
                     (toggle)="onJobTypeDesiredStudyToggle(job.name, $event)"
                     [isChecked]="form.controls[job.name].value">
                   </cp-checkbox>
-                  <span>{{ job.label }}</span>
                 </div>
               </div>
             </div>
