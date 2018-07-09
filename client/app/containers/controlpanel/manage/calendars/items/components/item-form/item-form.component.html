@@ -36,9 +36,9 @@
                 <cp-checkbox
                   class="checkbox"
                   (toggle)="onAllDayToggle($event)"
+                  [label]="cpI18n.translate('all_day')"
                   [isChecked]="form.controls['is_all_day'].value">
                 </cp-checkbox>
-                <label i18n class="checkbox__label">{{ 'all_day' | cpI18n }}</label>
               </div>
             </div>
 

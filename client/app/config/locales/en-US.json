@@ -377,6 +377,12 @@
   "assess_feedback_received": {
     "message": "Feedback Received"
   },
+  "assess_last_30_days": {
+    "message": "Last 30 Days"
+  },
+  "assess_last_90_days": {
+    "message": "Last 90 Days"
+  },
   "assess_last_engagement": {
     "message": "Last Engaged"
   },
@@ -391,6 +397,9 @@
   },
   "assess_last_three_months": {
     "message": "Last 3 Months"
+  },
+  "assess_last_year": {
+    "message": "Last Year"
   },
   "assess_message_student": {
     "message": "Message Student"

@@ -60,9 +60,9 @@
                 <div class="col-12">
                   <cp-checkbox
                     class="checkbox"
-                    (toggle)="onAllDayToggle($event)">
+                    (toggle)="onAllDayToggle($event)"
+                    [label]="cpI18n.translate('all_day')">
                   </cp-checkbox>
-                  <label>{{ 'all_day' | cpI18n }}</label>
                 </div>
               </div>
   
@@ -75,9 +75,9 @@
                 <div class="col-12">
                   <cp-checkbox
                     class="checkbox"
-                    (toggle)="onLocationToggle($event)">
+                    (toggle)="onLocationToggle($event)"
+                    [label]="cpI18n.translate('t_shared_label_location_toggle')">
                   </cp-checkbox>
-                  <label>{{ 't_shared_label_location_toggle' | cpI18n }}</label>
                 </div>
               </div>
 

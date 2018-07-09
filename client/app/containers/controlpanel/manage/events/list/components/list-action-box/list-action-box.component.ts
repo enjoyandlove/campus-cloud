@@ -1,29 +1,27 @@
+import { HttpParams } from '@angular/common/http';
 import {
-  OnInit,
-  Output,
-  Input,
   Component,
   ElementRef,
   EventEmitter,
-  HostListener
+  HostListener,
+  Input,
+  OnInit,
+  Output
 } from '@angular/core';
-
-import { HttpParams } from '@angular/common/http';
-
-import {
-  canSchoolWriteResource,
-  canAccountLevelWriteResource
-} from './../../../../../../../shared/utils/privileges/privileges';
-
 import { Observable } from 'rxjs';
-import { DATE_FILTER } from './events-filters';
-import { EventAttendance } from '../../../event.status';
-import { CPSession } from '../../../../../../../session';
-import { CPDate } from '../../../../../../../shared/utils/date';
 import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
+import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
+import {
+  canAccountLevelWriteResource,
+  canSchoolWriteResource
+} from './../../../../../../../shared/utils/privileges/privileges';
+import { DATE_FILTER } from './events-filters';
+import { CPSession } from '../../../../../../../session';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
-import { CPTrackingService, StoreService } from '../../../../../../../shared/services';
 import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
+import { CPTrackingService, StoreService } from '../../../../../../../shared/services';
+import { CPDate } from '../../../../../../../shared/utils/date';
+import { EventAttendance } from '../../../event.status';
 
 interface IState {
   end: number;
@@ -67,6 +65,7 @@ export class ListActionBoxComponent implements OnInit {
   constructor(
     private el: ElementRef,
     private session: CPSession,
+    public cpI18n: CPI18nService,
     private storeService: StoreService,
     private cpTracking: CPTrackingService
   ) {}

@@ -1,3 +1,4 @@
+import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { CPSession } from './../../../../../../../session/index';
@@ -34,6 +35,7 @@ export class ServicesListActionBoxComponent implements OnInit {
 
   constructor(
     private session: CPSession,
+    public cpI18n: CPI18nService,
     private cpTracking: CPTrackingService
   ) {}
 
@@ -55,7 +57,8 @@ export class ServicesListActionBoxComponent implements OnInit {
 
   trackEvent(eventName) {
     const eventProperties = {
-      ...this.cpTracking.getEventProperties(), create_page_name: amplitudeEvents.CREATE_SERVICE
+      ...this.cpTracking.getEventProperties(),
+      create_page_name: amplitudeEvents.CREATE_SERVICE
     };
 
     return {

@@ -47,17 +47,12 @@
           </div>
         </div>
         <div class="col-6">
-          <div class="row">
-            <div class="col-9 text-truncate text-right">
-              <label>{{ 'assessment' | cpI18n }}</label>
-            </div>
-            <div class="col-3 no-left-padding">
-              <cp-checkbox
-                (toggle)="onAttendanceToggle($event)"
-                class="checkbox">
-              </cp-checkbox>
-            </div>
-          </div>
+          <cp-checkbox
+            class="checkbox"
+            labelRight=false
+            (toggle)="onAttendanceToggle($event)"
+            [label]="cpI18n.translate('assessment')">
+          </cp-checkbox>
         </div>
       </div>
     </div>
