@@ -1,26 +1,35 @@
 @import '~styles/core/colors';
 
-.control {
-  font-size: 18px;
-  position: relative;
+:host {
+  width: 100%;
   display: block;
-  // margin-bottom: 15px;
-  padding-left: 30px;
+}
+
+.control {
+  display: block;
   cursor: pointer;
+  font-weight: 400;
+  position: relative;
+
+  &.labelRight {
+    .control__indicator {
+      float: left;
+      margin-right: 8px;
+    }
+  }
 
   input {
-    z-index: -1;
+    width: 0;
     opacity: 0;
+    z-index: -1;
     position: absolute;
   }
 
   &__indicator {
-    top: 2px;
-    left: 0;
     width: 20px;
     height: 20px;
+    float: right;
     border-radius: 4px;
-    position: absolute;
     background: $color-white;
     border: 1px solid $color-med-grey;
     transition: border 300ms ease-in-out;
