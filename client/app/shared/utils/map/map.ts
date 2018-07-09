@@ -125,15 +125,7 @@ const setFormLocationData = (form: FormGroup, location: ILocation) => {
 };
 
 const canViewLocation = (lat, lng, school) => {
-  if (lat !== 0
-    && lng !== 0
-    && lat !== school.latitude
-    && lng !== school.longitude) {
-
-    return true;
-  }
-
-  return false;
+  return lat !== 0 && lng !== 0 && lat !== school.latitude && lng !== school.longitude;
 };
 
 const setDefaultMapCenter = (lat, lng, school) => {
