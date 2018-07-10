@@ -199,7 +199,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
   onResetMap() {
     this.drawMarker.next(false);
     this.form.controls['room_info'].setValue('');
-    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields(this.school));
+    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
     this.centerMap(this.school.latitude, this.school.longitude);
   }
 
@@ -261,7 +261,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
       });
 
       this.form.controls['room_info'].setValue('');
-      CPMap.setFormLocationData(this.form, CPMap.resetLocationFields(this.school));
+      CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
     }
   }
 

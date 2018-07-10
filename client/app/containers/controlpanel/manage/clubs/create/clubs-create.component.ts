@@ -98,7 +98,7 @@ export class ClubsCreateComponent implements OnInit {
   onResetMap() {
     this.drawMarker.next(false);
     this.form.controls['room_info'].setValue(null);
-    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields(this.school));
+    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
     this.centerMap(this.school.latitude, this.school.longitude);
   }
 
@@ -155,12 +155,12 @@ export class ClubsCreateComponent implements OnInit {
       this.drawMarker.next(false);
 
       this.mapCenter = new BehaviorSubject({
-        lat: this.session.g.get('school').latitude,
-        lng: this.session.g.get('school').longitude
+        lat: this.school.latitude,
+        lng: this.school.longitude
       });
 
       this.form.controls['room_info'].setValue(null);
-      CPMap.setFormLocationData(this.form, CPMap.resetLocationFields(this.school));
+      CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
     }
   }
 

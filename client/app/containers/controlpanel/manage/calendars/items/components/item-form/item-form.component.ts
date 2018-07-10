@@ -83,7 +83,7 @@ export class CalendarsItemFormComponent implements OnInit {
 
     const school = this.session.g.get('school');
 
-    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields(school));
+    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
     this.centerMap(school.latitude, school.longitude);
   }
 
@@ -153,7 +153,7 @@ export class CalendarsItemFormComponent implements OnInit {
         lng: this.session.g.get('school').longitude
       });
 
-      CPMap.setFormLocationData(this.form, CPMap.resetLocationFields(this.session));
+      CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
     }
   }
 
