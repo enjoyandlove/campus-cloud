@@ -4,8 +4,8 @@
   <div class="row">
     <div class="col-12">
       <cp-personas-section-add-button
-        [disabled]="state.working"
-        (addSection)="onAddSection()">
+        (addSection)="onAddSection()"
+        [disabled]="state.working || utils.isTemporaryGuide(guide)">
       </cp-personas-section-add-button>
     </div>
   </div>
@@ -21,13 +21,15 @@
         </cp-personas-section-title>
       </div>
       <div class="col-4 text-right">
-        <cp-personas-section-controls
-          [disableUp]="first"
-          [disableDown]="last"
-          (moveUp)="onMove('up')"
-          (moveDown)="onMove('down')"
-          (deleteClick)="onDeleteSection()">
-        </cp-personas-section-controls>
+        <fieldset [disabled]="utils.isTemporaryGuide(guide)">
+          <cp-personas-section-controls
+            [disableUp]="first"
+            [disableDown]="last"
+            (moveUp)="onMove('up')"
+            (moveDown)="onMove('down')"
+            (deleteClick)="onDeleteSection()">
+          </cp-personas-section-controls>
+        </fieldset>
       </div>
     </div>
   </section>
@@ -60,6 +62,7 @@
     [personaId]="personaId"
     (error)="onCreateError($event)"
     (teardown)="onTearDown(modalId)"
-    (created)="onTileCreated($event)">
+    (created)="onTileCreated($event)"
+    (createdGuide)="onSavedGuide($event)">
   </cp-personas-tile-create>
 </cp-modal>

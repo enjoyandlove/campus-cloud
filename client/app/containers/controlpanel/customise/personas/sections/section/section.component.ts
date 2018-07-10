@@ -28,6 +28,7 @@ export class PersonasSectionComponent implements OnInit {
   @Output() swap: EventEmitter<any> = new EventEmitter();
   @Output() deleted: EventEmitter<number> = new EventEmitter();
   @Output() created: EventEmitter<ICampusGuide> = new EventEmitter();
+  @Output() removeSection: EventEmitter<number> = new EventEmitter();
 
   state = {
     working: false
@@ -44,6 +45,13 @@ export class PersonasSectionComponent implements OnInit {
     public service: SectionsService,
     public utils: SectionUtilsService
   ) {}
+
+  onSavedGuide(newGuide) {
+    this.guide = {
+      ...this.guide,
+      ...newGuide
+    };
+  }
 
   onEditedTile(editedTile: ITile) {
     this.guide = {
@@ -171,6 +179,10 @@ export class PersonasSectionComponent implements OnInit {
       ...this.guide,
       tiles: this.guide.tiles.filter((tile: ITile) => tile.id !== tileId)
     };
+
+    if (!this.guide.tiles.length) {
+      this.removeSection.emit(this.guide.id);
+    }
   }
 
   getLastRankInGuide() {

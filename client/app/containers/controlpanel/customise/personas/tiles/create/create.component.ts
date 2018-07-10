@@ -22,6 +22,7 @@ export class PersonasTileCreateComponent implements OnInit {
   @Output() error: EventEmitter<ITile> = new EventEmitter();
   @Output() created: EventEmitter<ITile> = new EventEmitter();
   @Output() teardown: EventEmitter<ITile> = new EventEmitter();
+  @Output() createdGuide: EventEmitter<ICampusGuide> = new EventEmitter();
 
   buttonData;
   _lastRank: number;
@@ -98,7 +99,13 @@ export class PersonasTileCreateComponent implements OnInit {
       delete body['id'];
 
       const createTileCategory = this.guideService.createSectionTileCategory(body);
-      stream$ = createTileCategory.pipe(switchMap(({ id }: any) => this.createGuideLink(id)));
+      stream$ = createTileCategory.pipe(
+        switchMap((newCategory: ICampusGuide) => {
+          this.createdGuide.emit(newCategory);
+
+          return this.createGuideLink(newCategory.id);
+        })
+      );
     }
 
     stream$.subscribe(

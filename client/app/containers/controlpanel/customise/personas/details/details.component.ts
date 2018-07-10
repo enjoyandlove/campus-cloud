@@ -59,6 +59,13 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
     this.state.guides.splice(nextGuideIndex, 0, newGuide);
   }
 
+  onRemoveSection(guideId) {
+    this.state = {
+      ...this.state,
+      guides: this.state.guides.filter((guide) => guide.id !== guideId)
+    };
+  }
+
   onDeletedSection(sectionId: number) {
     this.state.guides = this.state.guides.filter((guide: ICampusGuide) => guide.id !== sectionId);
   }
