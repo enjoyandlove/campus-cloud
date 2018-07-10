@@ -377,6 +377,12 @@
   "assess_feedback_received": {
     "message": "Feedback Received"
   },
+  "assess_last_30_days": {
+    "message": "Last 30 Days"
+  },
+  "assess_last_90_days": {
+    "message": "Last 90 Days"
+  },
   "assess_last_engagement": {
     "message": "Last Engaged"
   },
@@ -391,6 +397,9 @@
   },
   "assess_last_three_months": {
     "message": "Last 3 Months"
+  },
+  "assess_last_year": {
+    "message": "Last Year"
   },
   "assess_message_student": {
     "message": "Message Student"
@@ -2308,6 +2317,9 @@
   "type": {
     "message": "Type"
   },
+  "t_assess_chart_tooltip_label_engagements": {
+    "message": "Engagement(s)"
+  },
   "t_audience_dynamic_integration_disabled": {
     "message": "To enable this feature, please contact your Customer Success manager."
   },
@@ -2316,6 +2328,12 @@
   },
   "t_customise_personas": {
     "message": "App Experiences"
+  },
+  "t_dashboard_chart_tooltip_label_downloads": {
+    "message": "Downloads"
+  },
+  "t_dashboard_chart_tooltip_label_registrations": {
+    "message": "Registrations"
   },
   "t_deals_delete_modal_body": {
     "message": "Are you sure you want to delete %s?"
@@ -2397,6 +2415,9 @@
   },
   "t_personas_delete_error_users_associated": {
     "message": "This experience has users associated, so you cannot delete it."
+  },
+  "t_personas_delete_guide_error_non_empty_category": {
+    "message": "Can't delete a section with tiles, please delete all tiles from this section and try again"
   },
   "t_personas_edit_error_users_associated": {
     "message": "This experience has users associated, so you cannot update its login requirements."
@@ -2484,9 +2505,6 @@
   },
   "t_personas_tile_create_resource_type_in_app_feedback": {
     "message": "In App feedback"
-  },
-  "t_personas_tile_create_resource_type_school_campaign": {
-    "message": "School Campaign"
   },
   "t_personas_tile_create_resource_type_service_by_category_id": {
     "message": "Services by Category"
@@ -2580,6 +2598,9 @@
   },
   "t_shared_hide": {
     "message": "Hide"
+  },
+  "t_shared_label_location_toggle": {
+    "message": "Set Location"
   },
   "t_shared_show": {
     "message": "Show"

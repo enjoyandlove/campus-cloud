@@ -1,8 +1,11 @@
+import { SectionsService } from './../../sections/sections.service';
+import { SectionUtilsService } from './../../sections/section.utils.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
 import { CPSession } from './../../../../../../session';
 import { CPI18nService } from './../../../../../../shared/services/i18n.service';
+import { ICampusGuide } from './../../sections/section.interface';
 import { ITile } from './../tile.interface';
 import { TilesService } from './../tiles.service';
 import { TilesUtilsService } from '../tiles.utils.service';
@@ -14,7 +17,7 @@ import { TilesUtilsService } from '../tiles.utils.service';
 })
 export class PersonasTileCreateComponent implements OnInit {
   @Input() personaId: number;
-  @Input() categoryId: number;
+  @Input() guide: ICampusGuide;
 
   @Output() error: EventEmitter<ITile> = new EventEmitter();
   @Output() created: EventEmitter<ITile> = new EventEmitter();
@@ -40,58 +43,74 @@ export class PersonasTileCreateComponent implements OnInit {
     public fb: FormBuilder,
     public session: CPSession,
     public utils: TilesUtilsService,
-    public service: TilesService
+    public service: TilesService,
+    public guideService: SectionsService,
+    public guideUtils: SectionUtilsService
   ) {}
 
-  onSubmit() {
-    /**
-     * In order to create the tile for this persona only
-     * we need to override the original persona id to zero
-     * and create a tile first and then use that tile id to make
-     * an extra request to create the same tile for this persona only
-     */
-    const cloneGuideTileForm = { ...this.campusGuideTileForm.value };
+  createGuideLink(tileCategoryId = this.guide.id) {
+    const cloneGuideTileForm = {
+      ...this.campusGuideTileForm.value,
+      tile_category_id: tileCategoryId
+    };
 
     const guideTilePersonaZero = {
       ...this.campusGuideTileForm.value,
-      school_persona_id: 0
+      school_persona_id: 0,
+      tile_category_id: tileCategoryId
     };
 
     const createLink$ = this.service.createCampusLink(this.campusLinkForm.value);
 
-    createLink$
-      .pipe(
-        switchMap(({ id }: any) => {
-          const extra_info = { id };
+    return createLink$.pipe(
+      switchMap(({ id }: any) => {
+        const extra_info = { id };
 
-          const data = {
-            ...guideTilePersonaZero,
-            extra_info
-          };
+        const data = {
+          ...guideTilePersonaZero,
+          extra_info
+        };
 
-          return this.service.createCampusTile(data);
-        }),
-        switchMap(({ id }: any) => {
-          const extra_info = { id };
+        return this.service.createCampusTile(data);
+      }),
+      switchMap(({ id }: any) => {
+        const extra_info = { id };
 
-          const data = {
-            ...cloneGuideTileForm,
-            extra_info
-          };
+        const data = {
+          ...cloneGuideTileForm,
+          extra_info
+        };
 
-          return this.service.createCampusTile(data);
-        })
-      )
-      .subscribe(
-        (newGuide: ITile) => {
-          this.created.emit(newGuide);
-          this.doReset();
-        },
-        (err) => {
-          this.doReset();
-          this.error.emit(err);
-        }
-      );
+        return this.service.createCampusTile(data);
+      })
+    );
+  }
+
+  onSubmit() {
+    let stream$ = this.createGuideLink();
+
+    if (this.guideUtils.isTemporaryGuide(this.guide)) {
+      const body = {
+        ...this.guide,
+        school_id: this.session.g.get('school').id
+      };
+
+      delete body['id'];
+
+      const createTileCategory = this.guideService.createSectionTileCategory(body);
+      stream$ = createTileCategory.pipe(switchMap(({ id }: any) => this.createGuideLink(id)));
+    }
+
+    stream$.subscribe(
+      (newGuide: ITile) => {
+        this.created.emit(newGuide);
+        this.doReset();
+      },
+      (err) => {
+        this.doReset();
+        this.error.emit(err);
+      }
+    );
   }
 
   doReset() {
@@ -105,7 +124,7 @@ export class PersonasTileCreateComponent implements OnInit {
     this.campusGuideTileForm = this.utils.campusGuideTileForm(
       this.personaId,
       this._lastRank,
-      this.categoryId
+      this.guide.id
     );
   }
 

@@ -1,3 +1,5 @@
+import { SectionsService } from './../sections/sections.service';
+import { SectionUtilsService } from './../sections/section.utils.service';
 /*tslint:disable:max-line-length */
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -60,6 +62,6 @@ import { PersonasTileLinkFormComponent } from './components/tile-link-form/tile-
     PersonasTileHoverComponent,
     PersonasTileAddButtonComponent
   ],
-  providers: [TilesUtilsService, TilesService, StoreService]
+  providers: [TilesUtilsService, TilesService, StoreService, SectionUtilsService, SectionsService]
 })
 export class PersonasTilesModule {}

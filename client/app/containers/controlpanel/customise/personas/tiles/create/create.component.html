@@ -19,9 +19,9 @@
     <div class="row">
       <div class="col-12">
         <cp-personas-tile-form 
-          [uploadButtonId]="categoryId"
           [campusLinkForm]="campusLinkForm"
           [campusGuideTileForm]="campusGuideTileForm"
+          [uploadButtonId]="guide.id || 'temporary_tile'"
           (campusLinkFormChange)="onCampusLinkFormChange($event)"
           (campusGuideTileFormChange)="onCampusGuideTileFormChange($event)">
         </cp-personas-tile-form>

@@ -63,8 +63,8 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
     this.state.guides = this.state.guides.filter((guide: ICampusGuide) => guide.id !== sectionId);
   }
 
-  getSectionByIndex(index) {
-    return this.state.guides[index];
+  previousRank(index): number {
+    return index === 0 ? this.state.guides[index].rank - 1 : this.state.guides[index - 1].rank;
   }
 
   errorHanlder() {}
@@ -182,7 +182,9 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
       .then(({ data }) => {
         this.state = {
           ...this.state,
-          guides: this.utils.filterTiles(data),
+          guides: this.utils
+            .filterTiles(data)
+            .filter((guides: ICampusGuide) => guides.tiles.length),
           featureTiles: this.utils.getFeaturedTiles(data),
           categoryZero: this.utils.getCategoryZeroTiles(data)
         };

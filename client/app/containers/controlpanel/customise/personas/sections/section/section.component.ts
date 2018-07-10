@@ -1,13 +1,16 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { get as _get } from 'lodash';
 import { SNACKBAR_SHOW } from './../../../../../../reducers/snackbar.reducer';
 import { ITile } from './../../tiles/tile.interface';
 import { ICampusGuide } from './../section.interface';
+import { SectionUtilsService } from './../section.utils.service';
 import { SectionsService } from './../sections.service';
 import { ISnackbar } from '../../../../../../reducers/snackbar.reducer';
 import { CPSession } from '../../../../../../session';
 import { CPI18nService } from '../../../../../../shared/services';
+import { CategoryDeleteErrors } from '../section.status';
 
 @Component({
   selector: 'cp-personas-section',
@@ -18,9 +21,9 @@ export class PersonasSectionComponent implements OnInit {
   @Input() last: boolean;
   @Input() first: boolean;
   @Input() personaId: number;
-  @Input() addSection: boolean;
+  @Input() addSection = true;
   @Input() guide: ICampusGuide;
-  @Input() previousSection: ICampusGuide;
+  @Input() previousRank: number;
 
   @Output() swap: EventEmitter<any> = new EventEmitter();
   @Output() deleted: EventEmitter<number> = new EventEmitter();
@@ -36,9 +39,10 @@ export class PersonasSectionComponent implements OnInit {
 
   constructor(
     public session: CPSession,
-    public service: SectionsService,
+    public cpI18n: CPI18nService,
     public store: Store<ISnackbar>,
-    public cpI18n: CPI18nService
+    public service: SectionsService,
+    public utils: SectionUtilsService
   ) {}
 
   onEditedTile(editedTile: ITile) {
@@ -93,39 +97,42 @@ export class PersonasSectionComponent implements OnInit {
     };
   }
 
-  errorHandler() {
+  errorHandler(err) {
+    let snackBarClass = 'danger';
+    let body = _get(err, ['error', 'response'], this.cpI18n.translate('something_went_wrong'));
+
+    if (body === CategoryDeleteErrors.NON_EMPTY_CATEGORY) {
+      snackBarClass = 'warning';
+      body = this.cpI18n.translate('t_personas_delete_guide_error_non_empty_category');
+    }
+
     this.setWorkingState(false);
 
     this.store.dispatch({
       type: SNACKBAR_SHOW,
       payload: {
-        body: this.cpI18n.translate('something_went_wrong'),
-        class: 'danger',
+        body,
         sticky: true,
-        autoClose: true
+        autoClose: true,
+        class: snackBarClass
       }
     });
   }
 
   onAddSection() {
-    this.setWorkingState(true);
-
-    const body = {
-      rank: this.previousSection.rank + 1,
-      school_id: this.session.g.get('school').id,
-      name: this.cpI18n.translate('t_personas_create_section_default_name')
-    };
-
-    this.service.createSectionTileCategory(body).subscribe(
-      (createdSection: ICampusGuide) => {
-        this.setWorkingState(false);
-        this.created.emit(createdSection);
-      },
-      () => this.errorHandler()
-    );
+    this.created.emit(this.utils.temporaryGuide(this.previousRank + 1));
   }
 
-  onNameChange(name) {
+  onNameChange(name, updatedGuide: ICampusGuide) {
+    if (this.utils.isTemporaryGuide(updatedGuide)) {
+      updatedGuide = {
+        ...updatedGuide,
+        name
+      };
+
+      return;
+    }
+
     const body = {
       name,
       school_id: this.session.g.get('school').id
@@ -142,7 +149,7 @@ export class PersonasSectionComponent implements OnInit {
 
         this.setWorkingState(false);
       },
-      () => this.errorHandler()
+      (err) => this.errorHandler(err)
     );
   }
 
@@ -155,7 +162,7 @@ export class PersonasSectionComponent implements OnInit {
         this.deleted.emit(this.guide.id);
         this.setWorkingState(false);
       },
-      () => this.errorHandler()
+      (err) => this.errorHandler(err)
     );
   }
 

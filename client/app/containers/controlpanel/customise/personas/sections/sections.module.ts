@@ -1,18 +1,17 @@
-import { SectionsService } from './sections.service';
-/*tslint:disable:max-line-length */
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-
 import { SharedModule } from './../../../../../shared/shared.module';
-import { PersonasSectionComponent } from './section/section.component';
-
 import {
-  PersonasSectionTitleComponent,
+  PersonasSectionAddButtonComponent,
   PersonasSectionControlsComponent,
-  PersonasSectionAddButtonComponent
+  PersonasSectionTitleComponent
 } from './components/';
+import { SectionUtilsService } from './section.utils.service';
+import { PersonasSectionComponent } from './section/section.component';
+import { SectionsService } from './sections.service';
 import { PersonasTilesModule } from '../tiles/tiles.module';
+/*tslint:disable:max-line-length */
 
 @NgModule({
   declarations: [
@@ -28,6 +27,6 @@ import { PersonasTilesModule } from '../tiles/tiles.module';
     PersonasSectionAddButtonComponent,
     PersonasSectionTitleComponent
   ],
-  providers: [SectionsService]
+  providers: [SectionsService, SectionUtilsService]
 })
 export class PersonasSectionsModule {}

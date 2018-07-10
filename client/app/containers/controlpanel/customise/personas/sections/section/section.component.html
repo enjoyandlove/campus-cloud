@@ -17,7 +17,7 @@
       <div class="col-8">
         <cp-personas-section-title 
           [name]="guide.name"
-          (nameChanged)="onNameChange($event)">
+          (nameChanged)="onNameChange($event, guide)">
         </cp-personas-section-title>
       </div>
       <div class="col-4 text-right">
@@ -55,8 +55,8 @@
   *ngIf="showModal"
   [modalId]="modalId">
   <cp-personas-tile-create 
+    [guide]="guide"
     [lastRank]="lastRank"
-    [categoryId]="guide.id"
     [personaId]="personaId"
     (error)="onCreateError($event)"
     (teardown)="onTearDown(modalId)"

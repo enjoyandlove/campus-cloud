@@ -13,19 +13,17 @@
       </div>
     </div>
 
-    <div 
-      class="cp-card mb-4"
-      *ngIf="state.categoryZero.length">
-      <div class="row" [class.mb-4]="i % 5 === 0">
-        <cp-personas-tile 
-          [tile]="tile"
-          class="col-2" 
-          *ngFor="let tile of state.categoryZero; let i = index">
-        </cp-personas-tile>
-      </div>
-    </div>
-
     <div class="cp-card">
+      <div class="mb-4"
+        *ngIf="state.categoryZero.length">
+        <div class="row" [class.mb-4]="i % 5 === 0">
+          <cp-personas-tile 
+            [tile]="tile"
+            class="col-2" 
+            *ngFor="let tile of state.categoryZero; let i = index">
+          </cp-personas-tile>
+        </div>
+      </div>
       <div 
         class="row" 
         *ngFor="let guide of state.guides; let first = first; let last = last; let i = index">
@@ -34,11 +32,10 @@
             [last]="last"
             [guide]="guide"
             [first]="first"
-            [addSection]="!first"
             [personaId]="personaId"
+            [previousRank]="previousRank(i)"
             (deleted)="onDeletedSection($event)"
             (swap)="onSwapSection($event, guide)"
-            [previousSection]="getSectionByIndex(i - 1)"
             (created)="onAddSectionBefore($event, guide.id)">
           </cp-personas-section>
         </div>
