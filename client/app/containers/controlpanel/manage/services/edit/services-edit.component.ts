@@ -50,8 +50,10 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   formError = false;
   serviceId: number;
   attendance = false;
+  showLocationDetails = false;
   mapCenter: BehaviorSubject<any>;
   newAddress = new BehaviorSubject(null);
+  drawMarker = new BehaviorSubject(false);
 
   deletedItem: IServiceDeleteModal = {
     id: null,
@@ -114,6 +116,10 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     super.fetchData(stream$).then((res) => {
       const providers = res.data[1];
 
+      const lat = res.data[0].latitude;
+
+      const lng = res.data[0].longitude;
+
       this.service = res.data[0];
 
       this.hasFeedback = this.service.enable_feedback === FEEDBACK_ENABLED;
@@ -138,10 +144,10 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
         }
       ];
 
-      this.mapCenter = new BehaviorSubject({
-        lat: res.data[0].latitude,
-        lng: res.data[0].longitude
-      });
+      this.showLocationDetails = CPMap.canViewLocation(lat, lng, this.school);
+      this.drawMarker.next(this.showLocationDetails);
+
+      this.mapCenter = new BehaviorSubject(CPMap.setDefaultMapCenter(lat, lng, this.school));
 
       this.storeId = res.data[0].store_id;
 
@@ -155,6 +161,8 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   }
 
   onResetMap() {
+    this.drawMarker.next(false);
+    this.form.controls['room_data'].setValue('');
     CPMap.setFormLocationData(this.form, CPMap.resetLocationFields(this.school));
     this.centerMap(this.school.latitude, this.school.longitude);
   }
@@ -181,6 +189,8 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     if (!data) {
       return;
     }
+
+    this.drawMarker.next(true);
 
     if ('fromUsersLocations' in data) {
       this.updateWithUserLocation(data);
@@ -314,6 +324,22 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
 
   onCategoryUpdate(category) {
     this.form.controls['category'].setValue(category.action);
+  }
+
+  onLocationToggle(value) {
+    this.showLocationDetails = value;
+
+    if (!value) {
+      this.drawMarker.next(false);
+
+      this.mapCenter = new BehaviorSubject({
+        lat: this.school.latitude,
+        lng: this.school.longitude
+      });
+
+      this.form.controls['room_data'].setValue('');
+      CPMap.setFormLocationData(this.form, CPMap.resetLocationFields(this.school));
+    }
   }
 
   onSubmit() {
