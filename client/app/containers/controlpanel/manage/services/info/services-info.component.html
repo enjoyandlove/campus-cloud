@@ -23,7 +23,7 @@
 
         <div class="row">
           <div class="col-12">
-            <div class="cp-card services__details">
+            <div class="cp-card services__details" *ngIf="showLocationDetails || hasMetaData">
               <div class="row">
                 <div class="col-12">
                   <div class="row" *ngIf="service.contactphone">
@@ -61,7 +61,7 @@
                 </div>
               </div>
 
-              <div class="row">
+              <div class="row" *ngIf="showLocationDetails">
                 <div class="col-12 services__map">
                   <cp-maps
                     [center]="mapCenter"
