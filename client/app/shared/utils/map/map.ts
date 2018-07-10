@@ -95,8 +95,7 @@ function getBaseMapObject(data) {
   return obj;
 }
 
-// todo refactor resetLocationFields function wherever it used and remove param
-const resetLocationFields = (_) => {
+const resetLocationFields = () => {
   return {
     city: '',
     province: '',

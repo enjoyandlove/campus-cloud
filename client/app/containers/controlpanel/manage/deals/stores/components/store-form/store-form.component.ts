@@ -46,7 +46,7 @@ export class StoreFormComponent implements OnInit {
 
   onResetMap() {
     this.drawMarker.next(false);
-    CPMap.setFormLocationData(this.storeForm, CPMap.resetLocationFields(this.school));
+    CPMap.setFormLocationData(this.storeForm, CPMap.resetLocationFields());
     this.centerMap(this.school.latitude, this.school.longitude);
   }
 
@@ -103,7 +103,7 @@ export class StoreFormComponent implements OnInit {
         lng: this.school.longitude
       });
 
-      CPMap.setFormLocationData(this.storeForm, CPMap.resetLocationFields(this.school));
+      CPMap.setFormLocationData(this.storeForm, CPMap.resetLocationFields());
     }
   }
 
