@@ -1,15 +1,20 @@
-import { HttpParams } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs';
+import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
+
+import { EventsService } from '../events.service';
 import { isProd } from './../../../../../config/env';
-import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { EventUtilService } from '../events.utils.service';
 import { CPSession, ISchool } from '../../../../../session';
-import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
+import { CPDate, CPMap } from '../../../../../shared/utils';
+import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { EventAttendance, EventFeedback, isAllDay } from '../event.status';
+import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 import {
   AdminService,
   CPI18nService,
@@ -17,10 +22,6 @@ import {
   ErrorService,
   StoreService
 } from '../../../../../shared/services';
-import { CPDate, CPMap } from '../../../../../shared/utils';
-import { EventAttendance, EventFeedback, isAllDay } from '../event.status';
-import { EventsService } from '../events.service';
-import { EventUtilService } from '../events.utils.service';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
 const FORMAT_WITHOUT_TIME = 'F j, Y';
@@ -64,9 +65,11 @@ export class EventsCreateComponent implements OnInit {
   production = isProd;
   studentFeedbackToolTip;
   attendanceManagerToolTip;
+  showLocationDetails = false;
   mapCenter: BehaviorSubject<any>;
-  newAddress = new BehaviorSubject(null);
   managers: Array<any> = [{ label: '---' }];
+  newAddress = new BehaviorSubject(null);
+  drawMarker = new BehaviorSubject(false);
 
   constructor(
     public router: Router,
@@ -159,7 +162,9 @@ export class EventsCreateComponent implements OnInit {
   }
 
   onResetMap() {
-    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields(this.school));
+    this.drawMarker.next(false);
+    this.form.controls['room_data'].setValue(null);
+    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
     this.centerMap(this.school.latitude, this.school.longitude);
   }
 
@@ -185,6 +190,8 @@ export class EventsCreateComponent implements OnInit {
     if (!data) {
       return;
     }
+
+    this.drawMarker.next(true);
 
     if ('fromUsersLocations' in data) {
       this.updateWithUserLocation(data);
@@ -329,6 +336,22 @@ export class EventsCreateComponent implements OnInit {
     this.form.controls['is_all_day'].setValue(value);
   }
 
+  onLocationToggle(value) {
+    this.showLocationDetails = value;
+
+    if (!value) {
+      this.drawMarker.next(false);
+
+      this.mapCenter = new BehaviorSubject({
+        lat: this.school.latitude,
+        lng: this.school.longitude
+      });
+
+      this.form.controls['room_data'].setValue(null);
+      CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
+    }
+  }
+
   ngOnInit() {
     this.eventFeedbackEnabled = EventFeedback.enabled;
 
@@ -401,8 +424,8 @@ export class EventsCreateComponent implements OnInit {
       country: [null],
       address: [null],
       postal_code: [null],
-      latitude: [this.school.latitude],
-      longitude: [this.school.longitude],
+      latitude: [0],
+      longitude: [0],
       event_attendance: [EventAttendance.disabled],
       start: [null, Validators.required],
       poster_url: [null, Validators.required],

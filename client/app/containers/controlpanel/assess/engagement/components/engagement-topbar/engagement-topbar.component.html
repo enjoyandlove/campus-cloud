@@ -37,12 +37,13 @@
         <div class="topbar--filter col-4 no-left-padding">
           <div class="row">
             <div class="col-9">
-              <cp-dropdown
-                [items]="dateFilter"
-                class="topbar--dropdown"
-                [selectedItem]="state.range"
-                (selected)="onDateRangeChange($event)">
-              </cp-dropdown>
+              <cp-range-picker
+                [icon]="icon"
+                [class]="datePickerClass"
+                [dateRanges]="dateFilter"
+                [label]="state.range.label"
+                (rangeChange)="onDateRangeChange($event)">
+              </cp-range-picker>
             </div>
           </div>
         </div>

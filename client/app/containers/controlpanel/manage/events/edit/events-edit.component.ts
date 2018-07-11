@@ -1,28 +1,29 @@
-import { HttpParams } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { BehaviorSubject, combineLatest, of as observableOf } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpParams } from '@angular/common/http';
+import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
-import { isProd } from './../../../../../config/env';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { BaseComponent } from '../../../../../base/base.component';
-import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
-import { CPSession, ISchool } from '../../../../../session';
-import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { FORMAT } from '../../../../../shared/pipes/date';
-import {
-  AdminService,
-  CPTrackingService,
-  ErrorService,
-  StoreService
-} from '../../../../../shared/services';
-import { CPDate, CPMap } from '../../../../../shared/utils';
-import { EventAttendance, EventFeedback } from '../event.status';
+
 import { EventsService } from '../events.service';
+import { isProd } from './../../../../../config/env';
+import { FORMAT } from '../../../../../shared/pipes/date';
 import { EventUtilService } from '../events.utils.service';
+import { CPDate, CPMap } from '../../../../../shared/utils';
+import { CPSession, ISchool } from '../../../../../session';
+import { EventAttendance, EventFeedback } from '../event.status';
+import { BaseComponent } from '../../../../../base/base.component';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
+import {
+AdminService,
+CPTrackingService,
+ErrorService,
+StoreService
+} from '../../../../../shared/services';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
 const FORMAT_WITHOUT_TIME = 'F j, Y';
@@ -74,9 +75,11 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   studentFeedbackToolTip;
   attendanceManagerToolTip;
   formMissingFields = false;
+  showLocationDetails = false;
   mapCenter: BehaviorSubject<any>;
-  newAddress = new BehaviorSubject(null);
   managers: Array<any> = [{ label: '---' }];
+  newAddress = new BehaviorSubject(null);
+  drawMarker = new BehaviorSubject(false);
 
   constructor(
     public router: Router,
@@ -358,11 +361,15 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
         this.stores = res.data[1];
         this.event = res.data[0];
         this.buildForm(res.data[0]);
+        const lat = res.data[0].latitude;
+        const lng = res.data[0].longitude;
 
-        this.mapCenter = new BehaviorSubject({
-          lat: res.data[0].latitude,
-          lng: res.data[0].longitude
-        });
+        this.mapCenter = new BehaviorSubject(
+          CPMap.setDefaultMapCenter(lat, lng, this.school)
+        );
+
+        this.showLocationDetails = CPMap.canViewLocation(lat, lng, this.school);
+        this.drawMarker.next(this.showLocationDetails);
       })
       .catch((err) => this.errorService.handleError(err));
   }
@@ -396,7 +403,9 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   onResetMap() {
-    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields(this.school));
+    this.drawMarker.next(false);
+    this.form.controls['room_data'].setValue('');
+    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
     this.centerMap(this.school.latitude, this.school.longitude);
   }
 
@@ -423,6 +432,8 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
+    this.drawMarker.next(true);
+
     if ('fromUsersLocations' in data) {
       this.updateWithUserLocation(data);
 
@@ -446,6 +457,22 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
   onEventFeedbackChange(option) {
     this.form.controls['event_feedback'].setValue(option.action);
+  }
+
+  onLocationToggle(value) {
+    this.showLocationDetails = value;
+
+    if (!value) {
+      this.drawMarker.next(false);
+
+      this.mapCenter = new BehaviorSubject({
+        lat: this.school.latitude,
+        lng: this.school.longitude
+      });
+
+      this.form.controls['room_data'].setValue('');
+      CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
+    }
   }
 
   ngOnInit() {

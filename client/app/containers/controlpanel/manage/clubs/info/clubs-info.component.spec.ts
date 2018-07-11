@@ -3,15 +3,16 @@ import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
-import { CPSession } from './../../../../../session/index';
-import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants/privileges';
-import { FileUploadService } from './../../../../../shared/services/file-upload.service';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
+
 import { ClubsService } from './../clubs.service';
+import { CPSession } from './../../../../../session';
+import { ClubsInfoComponent } from './clubs-info.component';
 import { ClubsUtilsService } from './../clubs.utils.service';
 import { ClubsDetailsModule } from './../details/details.module';
-import { ClubsInfoComponent } from './clubs-info.component';
-import { isClubAthletic } from '../clubs.athletics.labels';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
+import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants/privileges';
+import { FileUploadService } from './../../../../../shared/services/file-upload.service';
 
 const mockClub = {
   name: 'mock name',
@@ -95,6 +96,7 @@ describe('ClubsInfoComponent', () => {
 
     comp.clubId = 1;
     comp.isAthletic = isClubAthletic.club;
+    comp.labels = clubAthleticLabels(comp.isAthletic);
     comp.session.g.set('user', mockUser);
     comp.session.g.set('school', mockSchool);
   });

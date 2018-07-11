@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'cp-checkbox',
@@ -13,19 +6,18 @@ import {
   styleUrls: ['./cp-checkbox.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CPCheckboxComponent implements OnInit {
+export class CPCheckboxComponent {
+  @Input() label: string;
+  @Input() labelRight = true;
   @Input() isChecked: boolean;
   @Input() isDisabled: boolean;
+
   @Output() toggle: EventEmitter<boolean> = new EventEmitter();
 
   constructor() {
     if (!this.isChecked) {
       this.isChecked = false;
     }
-  }
-
-  ngOnInit() {
-    // console.log('init check');
   }
 
   onChange(evt) {

@@ -1,8 +1,13 @@
-<label class="control control--checkbox">
-  <input
-    type="checkbox"
-    [checked]="isChecked"
-    [disabled]="isDisabled"
-    (change)="onChange($event)"/>
-  <div class="control__indicator"></div>
-</label>
+<div class="row">
+  <div class="col-12">
+    <label class="control control--checkbox" [class.labelRight]="labelRight">
+      <input
+        type="checkbox"
+        [checked]="isChecked"
+        [disabled]="isDisabled"
+        (change)="onChange($event)"/>
+      <div class="control__indicator"></div>
+      {{label}}
+    </label>
+  </div>
+</div>

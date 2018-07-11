@@ -35,6 +35,7 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
 
   loading;
   attendees;
+  sortingLabels;
   eventProperties;
   attendeeFeedback;
   state: IState = state;
@@ -113,7 +114,6 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
       const columns = [
         this.cpI18n.translate('events_attendant'),
         this.cpI18n.translate('events_attendee_email'),
-        this.cpI18n.translate('rsvp'),
         this.cpI18n.translate('events_checked_in_time'),
         this.cpI18n.translate('rating'),
         this.cpI18n.translate('events_user_feedback'),
@@ -126,18 +126,11 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
         3: 'QR Code'
       };
 
-      const rsvp = {
-        1: this.cpI18n.translate('yes'),
-        0: this.cpI18n.translate('no')
-      };
-
       attendees = attendees.map((item) => {
         return {
           [this.cpI18n.translate('events_attendant')]: `${item.firstname} ${item.lastname}`,
 
           [this.cpI18n.translate('events_attendee_email')]: item.email,
-
-          [this.cpI18n.translate('rsvp')]: rsvp[item.rsvp],
 
           [this.cpI18n.translate('events_checked_in_time')]: CPDate.fromEpoch(
             item.check_in_time,
@@ -197,5 +190,11 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.fetch();
+
+    this.sortingLabels = {
+      rating: this.cpI18n.translate('rating'),
+      name: this.cpI18n.translate('attendee'),
+      method: this.cpI18n.translate('events_checked_in_method')
+    };
   }
 }

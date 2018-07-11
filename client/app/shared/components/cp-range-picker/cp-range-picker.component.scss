@@ -3,6 +3,11 @@
 @import '~styles/components/button';
 
 .picker {
+  i {
+    font-size: 18px;
+    vertical-align: -4px;
+  }
+
   &--content {
     @include card-shadow();
 

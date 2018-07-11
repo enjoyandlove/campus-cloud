@@ -30,9 +30,11 @@ export class ClubsCreateComponent implements OnInit {
   buttonData;
   form: FormGroup;
   statusTypes = statusTypes;
+  showLocationDetails = false;
   mapCenter: BehaviorSubject<any>;
   membershipTypes = membershipTypes;
   newAddress = new BehaviorSubject(null);
+  drawMarker = new BehaviorSubject(false);
 
   constructor(
     private router: Router,
@@ -94,7 +96,9 @@ export class ClubsCreateComponent implements OnInit {
   }
 
   onResetMap() {
-    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields(this.school));
+    this.drawMarker.next(false);
+    this.form.controls['room_info'].setValue(null);
+    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
     this.centerMap(this.school.latitude, this.school.longitude);
   }
 
@@ -121,6 +125,8 @@ export class ClubsCreateComponent implements OnInit {
       return;
     }
 
+    this.drawMarker.next(true);
+
     if ('fromUsersLocations' in data) {
       this.updateWithUserLocation(data);
 
@@ -140,6 +146,22 @@ export class ClubsCreateComponent implements OnInit {
 
   centerMap(lat: number, lng: number) {
     return this.mapCenter.next({ lat, lng });
+  }
+
+  onLocationToggle(value) {
+    this.showLocationDetails = value;
+
+    if (!value) {
+      this.drawMarker.next(false);
+
+      this.mapCenter = new BehaviorSubject({
+        lat: this.school.latitude,
+        lng: this.school.longitude
+      });
+
+      this.form.controls['room_info'].setValue(null);
+      CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
+    }
   }
 
   ngOnInit() {
@@ -178,8 +200,8 @@ export class ClubsCreateComponent implements OnInit {
       country: [null],
       postal_code: [null],
       province: [null],
-      latitude: [this.session.g.get('school').latitude],
-      longitude: [this.session.g.get('school').longitude],
+      latitude: [0],
+      longitude: [0],
       room_info: [null],
       description: [null],
       website: [null],

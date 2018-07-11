@@ -47,6 +47,7 @@ const state: IState = {
 })
 export class FeedFiltersComponent implements OnInit {
   @Input() clubId: number;
+  @Input() athleticId: number;
   @Input() orientationId: number;
   @Input() selectedItem: any;
 

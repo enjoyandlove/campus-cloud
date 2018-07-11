@@ -7,7 +7,6 @@ import { EngagementComponent } from './engagement.component';
 
 import {
   EngagementStatsComponent,
-  EngagementChartComponent,
   EngagementTopBarComponent,
   EngagementComposeComponent,
   EngagementEventsBoxComponent,
@@ -23,7 +22,6 @@ import { EngagementRoutingModule } from './engagement.routing.module';
   declarations: [
     EngagementComponent,
     EngagementTopBarComponent,
-    EngagementChartComponent,
     EngagementStatsComponent,
     EngagementEventsBoxComponent,
     EngagementServicesBoxComponent,

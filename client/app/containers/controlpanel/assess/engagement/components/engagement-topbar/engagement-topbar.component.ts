@@ -2,10 +2,15 @@ import { OnInit, Output, Component, EventEmitter } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 
-import * as moment from 'moment';
 import { CPSession } from '../../../../../../session';
-import { CPDate } from '../../../../../../shared/utils/date';
 import { CPI18nService } from './../../../../../../shared/services/i18n.service';
+import {
+  now,
+  lastYear,
+  last30Days,
+  last90Days
+} from '../../../../../../shared/components/cp-range-picker/cp-range-picker.utils.service';
+import * as moment from 'moment';
 
 interface IState {
   engagement: {
@@ -50,6 +55,10 @@ export class EngagementTopBarComponent implements OnInit {
 
   commonEngageMentFilter;
 
+  datePickerClass = 'cancel';
+
+  icon = 'keyboard_arrow_down';
+
   dateFilter;
 
   state: IState;
@@ -63,7 +72,7 @@ export class EngagementTopBarComponent implements OnInit {
   ) {}
 
   onDateRangeChange(payload) {
-    this.updateState('range', payload);
+    this.updateState('range', this.setPayload(payload));
   }
 
   onScopeChange(payload) {
@@ -72,6 +81,18 @@ export class EngagementTopBarComponent implements OnInit {
 
   onStudentChange(payload) {
     this.updateState('for', payload);
+  }
+
+  setPayload(payload) {
+    if (!payload.hasOwnProperty('payload')) {
+       return {
+         payload: this.setDateRange(payload),
+         label: payload.label,
+         route_id: payload.route_id
+       };
+    }
+
+    return payload;
   }
 
   updateState(key, payload) {
@@ -113,93 +134,69 @@ export class EngagementTopBarComponent implements OnInit {
       },
 
       range: {
-        ...this.getFromArray(this.dateFilter, 'route_id', routeParams.range)
+        ...this.getRange(routeParams)
       }
     });
 
     this.doFilter.emit(this.state);
   }
 
+  getRange(routeParams) {
+    const range = this.getFromArray(this.dateFilter, 'route_id', routeParams.range);
+
+    return range ? range : {
+      payload: this.setDateRange(routeParams),
+      label: routeParams.range,
+      route_id: routeParams.range
+    };
+  }
+
+  setDateRange(filter) {
+    return {
+      range: {
+        start: filter.start,
+        end: filter.end
+      }
+    };
+  }
+
   ngOnInit() {
     const search = new HttpParams();
     search.append('school_id', this.session.g.get('school').id.toString());
 
-    const now = CPDate.now(this.session.tz).unix();
-    const lastWeek = CPDate.toEpoch(
-      moment()
-        .subtract(6, 'days')
-        .hours(0)
-        .minutes(0)
-        .seconds(0),
-      this.session.tz
-    );
-    const lastMonth = CPDate.toEpoch(
-      moment()
-        .subtract(1, 'months')
-        .hours(0)
-        .minutes(0)
-        .seconds(0),
-      this.session.tz
-    );
-    const sixWeeks = CPDate.toEpoch(
-      moment()
-        .subtract(6, 'weeks')
-        .hours(0)
-        .minutes(0)
-        .seconds(0),
-      this.session.tz
-    );
-    const threeMonths = CPDate.toEpoch(
-      moment()
-        .subtract(3, 'months')
-        .hours(0)
-        .minutes(0)
-        .seconds(0),
-      this.session.tz
-    );
+    const todayDate = moment().endOf('day');
 
     this.dateFilter = [
       {
-        route_id: 'last_week',
-        label: this.cpI18n.translate('assess_last_seven_days'),
-        payload: {
-          metric: 'daily',
-          range: {
-            end: now,
-            start: lastWeek
-          }
-        }
-      },
-      {
-        route_id: 'last_month',
-        label: this.cpI18n.translate('assess_last_month'),
-        payload: {
-          metric: 'daily',
-          range: {
-            end: now,
-            start: lastMonth
-          }
-        }
-      },
-      {
-        route_id: 'last_six_weeks',
-        label: this.cpI18n.translate('assess_last_six_weeks'),
+        route_id: 'last_30_days',
+        label: this.cpI18n.translate('assess_last_30_days'),
         payload: {
           metric: 'weekly',
           range: {
-            end: now,
-            start: sixWeeks
+            end: now(this.session.tz),
+            start: last30Days(this.session.tz, todayDate)
           }
         }
       },
       {
-        route_id: 'last_three_months',
-        label: this.cpI18n.translate('assess_last_three_months'),
+        route_id: 'last_90_days',
+        label: this.cpI18n.translate('assess_last_90_days'),
         payload: {
           metric: 'monthly',
           range: {
-            end: now,
-            start: threeMonths
+            end: now(this.session.tz),
+            start: last90Days(this.session.tz, todayDate)
+          }
+        }
+      },
+      {
+        route_id: 'last_year',
+        label: this.cpI18n.translate('assess_last_year'),
+        payload: {
+          metric: 'monthly',
+          range: {
+            end: now(this.session.tz),
+            start: lastYear(this.session.tz, todayDate)
           }
         }
       }

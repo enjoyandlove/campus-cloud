@@ -3,8 +3,8 @@ import { BehaviorSubject } from 'rxjs';
 
 import { CPMap } from '../../../../../../../shared/utils';
 import { CPSession, ISchool } from '../../../../../../../session';
-import { CPTrackingService } from '../../../../../../../shared/services';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
+import { CPI18nService, CPTrackingService } from '../../../../../../../shared/services';
 
 @Component({
   selector: 'cp-store-form',
@@ -15,10 +15,16 @@ export class StoreFormComponent implements OnInit {
   @Input() storeForm;
 
   school: ISchool;
+  showLocationDetails = false;
   mapCenter: BehaviorSubject<any>;
   newAddress = new BehaviorSubject(null);
+  drawMarker = new BehaviorSubject(false);
 
-  constructor(public session: CPSession, public cpTracking: CPTrackingService) {}
+  constructor(
+    public session: CPSession,
+    public cpI18n: CPI18nService,
+    public cpTracking: CPTrackingService
+  ) {}
 
   onUploadedImage(image) {
     this.storeForm.controls['logo_url'].setValue(image);
@@ -39,7 +45,8 @@ export class StoreFormComponent implements OnInit {
   }
 
   onResetMap() {
-    CPMap.setFormLocationData(this.storeForm, CPMap.resetLocationFields(this.school));
+    this.drawMarker.next(false);
+    CPMap.setFormLocationData(this.storeForm, CPMap.resetLocationFields());
     this.centerMap(this.school.latitude, this.school.longitude);
   }
 
@@ -66,6 +73,8 @@ export class StoreFormComponent implements OnInit {
       return;
     }
 
+    this.drawMarker.next(true);
+
     if ('fromUsersLocations' in data) {
       this.updateWithUserLocation(data);
 
@@ -83,10 +92,28 @@ export class StoreFormComponent implements OnInit {
     this.centerMap(coords.lat, coords.lng);
   }
 
+  onLocationToggle(value) {
+    this.showLocationDetails = value;
+
+    if (!value) {
+      this.drawMarker.next(false);
+
+      this.mapCenter = new BehaviorSubject({
+        lat: this.school.latitude,
+        lng: this.school.longitude
+      });
+
+      CPMap.setFormLocationData(this.storeForm, CPMap.resetLocationFields());
+    }
+  }
+
   ngOnInit() {
-    this.mapCenter = new BehaviorSubject({
-      lat: this.storeForm.controls.latitude.value,
-      lng: this.storeForm.controls.longitude.value
-    });
+    this.school = this.session.g.get('school');
+    const lat = this.storeForm.controls.latitude.value;
+    const lng = this.storeForm.controls.longitude.value;
+
+    this.showLocationDetails = CPMap.canViewLocation(lat, lng, this.school);
+    this.drawMarker.next(this.showLocationDetails);
+    this.mapCenter = new BehaviorSubject(CPMap.setDefaultMapCenter(lat, lng, this.school));
   }
 }

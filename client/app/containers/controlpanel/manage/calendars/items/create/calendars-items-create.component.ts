@@ -74,8 +74,8 @@ export class CalendarsItemCreateComponent implements OnInit {
       postal_code: [null],
       street_number: [null],
       province: [null],
-      latitude: [this.session.g.get('school').latitude, Validators.required],
-      longitude: [this.session.g.get('school').longitude, Validators.required]
+      latitude: [0, Validators.required],
+      longitude: [0, Validators.required]
     });
   }
 

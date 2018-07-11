@@ -1,10 +1,14 @@
-import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
-import { CPSession } from '../../../../../../../session';
+
 import { FeedsService } from '../../../feeds.service';
+import { CPSession } from '../../../../../../../session';
+import { FeedsUtilsService } from '../../../feeds.utils.service';
+import { CPTrackingService } from '../../../../../../../shared/services';
+import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
+import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 
 @Component({
   selector: 'cp-feed-settings-modal',
@@ -13,6 +17,7 @@ import { FeedsService } from '../../../feeds.service';
 })
 export class FeedSettingsComponent implements OnInit {
   @Input() clubId: number;
+  @Input() athleticId: number;
   @Input() orientationId: number;
 
   @Output() updateWallSettings: EventEmitter<null> = new EventEmitter();
@@ -23,11 +28,17 @@ export class FeedSettingsComponent implements OnInit {
   privileges;
   form: FormGroup;
 
+  eventProperties = {
+    wall_source: null,
+  };
+
   constructor(
     private fb: FormBuilder,
     private session: CPSession,
     private cpI18n: CPI18nService,
-    private feedsService: FeedsService
+    private utils: FeedsUtilsService,
+    private feedsService: FeedsService,
+    private cpTracking: CPTrackingService
   ) {
     this.feedsService.getSocialGroups();
   }
@@ -108,7 +119,10 @@ export class FeedSettingsComponent implements OnInit {
 
     this.feedsService
       .upodateSocialGroup(control.value.wall_id, control.value, search)
-      .subscribe((res: any) => this.updateWallSettings.emit(res));
+      .subscribe((res: any) => {
+        this.trackAmplitudeEvent();
+        this.updateWallSettings.emit(res);
+      });
   }
 
   getPrivilegeObj(privilege) {
@@ -121,6 +135,15 @@ export class FeedSettingsComponent implements OnInit {
     });
 
     return result;
+  }
+
+  trackAmplitudeEvent() {
+    this.eventProperties = {
+      ...this.eventProperties,
+      wall_source: this.utils.wallSource(this.athleticId, this.orientationId, this.clubId)
+    };
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.WALL_UPDATED_SETTINGS, this.eventProperties);
   }
 
   ngOnInit() {

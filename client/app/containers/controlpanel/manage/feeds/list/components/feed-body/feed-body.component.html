@@ -28,7 +28,8 @@
               *ngIf="!replyView"
               class="cpbtn cpbtn--link"
               (click)="isCommentsOpen = !isCommentsOpen"
-              (click)="toggleReplies.emit(isCommentsOpen)">
+              (click)="toggleReplies.emit(isCommentsOpen)"
+              (click)="trackEvent(isCommentsOpen)">
               <i class="material-icons">mode_comment</i>
               {{ 'reply_verb' | cpI18n }}
             </span>
@@ -43,7 +44,8 @@
             <button
               class="cpbtn cpbtn--link-dark"
               (click)="isCommentsOpen = !isCommentsOpen"
-              (click)="viewComments.emit(isCommentsOpen)">
+              (click)="viewComments.emit(isCommentsOpen)"
+              (click)="trackEvent(isCommentsOpen)">
               <i class="material-icons" *ngIf="!isCommentsOpen">chevron_right</i>
               <i class="material-icons" *ngIf="isCommentsOpen">expand_more</i>
               {{ isCommentsOpen ? cpI18n.translate('hide') : cpI18n.translate('show') }}

@@ -1,16 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { BehaviorSubject, Observable, throwError as observableThrowError } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { catchError, map, startWith } from 'rxjs/operators';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, Observable, throwError as observableThrowError } from 'rxjs';
-import { catchError, map, startWith } from 'rxjs/operators';
-import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
-import { CPSession, ISchool } from '../../../../../session';
-import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
+
 import { CPMap } from '../../../../../shared/utils';
 import { ServicesService } from '../services.service';
+import { CPSession, ISchool } from '../../../../../session';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
+import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 
 const ATTENDANCE_ENABLED = 1;
 const ATTENDANCE_DISABLED = 0;
@@ -34,9 +35,11 @@ export class ServicesCreateComponent implements OnInit {
   form: FormGroup;
   formError = false;
   attendance = false;
+  showLocationDetails = false;
   categories$: Observable<any>;
   mapCenter: BehaviorSubject<any>;
   newAddress = new BehaviorSubject(null);
+  drawMarker = new BehaviorSubject(false);
 
   feedbackOptions = [
     {
@@ -95,7 +98,9 @@ export class ServicesCreateComponent implements OnInit {
   }
 
   onResetMap() {
-    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields(this.school));
+    this.drawMarker.next(false);
+    this.form.controls['room_data'].setValue(null);
+    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
     this.centerMap(this.school.latitude, this.school.longitude);
   }
 
@@ -121,6 +126,8 @@ export class ServicesCreateComponent implements OnInit {
     if (!data) {
       return;
     }
+
+    this.drawMarker.next(true);
 
     if ('fromUsersLocations' in data) {
       this.updateWithUserLocation(data);
@@ -227,6 +234,22 @@ export class ServicesCreateComponent implements OnInit {
     );
   }
 
+  onLocationToggle(value) {
+    this.showLocationDetails = value;
+
+    if (!value) {
+      this.drawMarker.next(false);
+
+      this.mapCenter = new BehaviorSubject({
+        lat: this.school.latitude,
+        lng: this.school.longitude
+      });
+
+      this.form.controls['room_data'].setValue(null);
+      CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
+    }
+  }
+
   ngOnInit() {
     this.feedback = Object.assign({}, this.feedback, {
       content: this.cpI18n.translate('manage_create_service_feedback_tooltip')
@@ -266,8 +289,8 @@ export class ServicesCreateComponent implements OnInit {
       province: [null],
       country: [null],
       postal_code: [null],
-      latitude: [this.school.latitude],
-      longitude: [this.school.longitude],
+      latitude: [0],
+      longitude: [0],
       service_attendance: [null],
       rating_scale_maximum: [null],
       default_basic_feedback_label: [null],

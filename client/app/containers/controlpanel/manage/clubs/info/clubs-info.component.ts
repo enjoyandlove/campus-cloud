@@ -35,6 +35,7 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
   uploading = false;
   hasMetaData = false;
   limitedAdmin = true;
+  showLocationDetails = true;
   mapCenter: BehaviorSubject<any>;
 
   constructor(
@@ -59,6 +60,7 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
 
     super.fetchData(this.clubsService.getClubById(this.clubId, search)).then((res) => {
       this.club = res.data;
+      this.showLocationDetails = res.data.latitude !== 0 && res.data.longitude !== 0;
       this.mapCenter = new BehaviorSubject({
         lat: res.data.latitude,
         lng: res.data.longitude
