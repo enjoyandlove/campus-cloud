@@ -1,22 +1,23 @@
-import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
-import { HttpParams } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Store } from '@ngrx/store';
+import { HttpParams } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { ClubsUtilsService } from './../clubs.utils.service';
-import { advisorDataRequired } from './custom-validators.directive';
-import { BaseComponent } from '../../../../../base/base.component';
-import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-import { CPSession } from '../../../../../session';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { CPTrackingService } from '../../../../../shared/services';
-import { CPMap } from '../../../../../shared/utils';
-import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
+import { Store } from '@ngrx/store';
+
 import { ClubsService } from '../clubs.service';
+import { CPSession } from '../../../../../session';
+import { CPMap } from '../../../../../shared/utils';
+import { ClubsUtilsService } from './../clubs.utils.service';
+import { CPTrackingService } from '../../../../../shared/services';
+import { BaseComponent } from '../../../../../base/base.component';
+import { advisorDataRequired } from './custom-validators.directive';
 import { membershipTypes, statusTypes } from '../create/permissions';
+import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
 
 @Component({
   selector: 'cp-clubs-edit',
@@ -38,11 +39,13 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
   isSJSU: boolean;
   defaultMembership;
   isFormReady = false;
+  limitedAdmin = true;
   statusTypes = statusTypes;
+  showLocationDetails = false;
   mapCenter: BehaviorSubject<any>;
   membershipTypes = membershipTypes;
   newAddress = new BehaviorSubject(null);
-  limitedAdmin = true;
+  drawMarker = new BehaviorSubject(false);
 
   eventProperties = {
     phone: null,
@@ -89,6 +92,10 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
     super.fetchData(stream$).then((res) => {
       this.club = res.data;
 
+      const lat = res.data.latitude;
+
+      const lng = res.data.longitude;
+
       this.isSJSU = this.helper.isSJSU(this.club);
 
       this.buildForm();
@@ -97,10 +104,13 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
 
       this.defaultMembership = this.getDefaultMembership(this.club.has_membership);
 
-      this.mapCenter = new BehaviorSubject({
-        lat: res.data.latitude,
-        lng: res.data.longitude
-      });
+      this.showLocationDetails = CPMap.canViewLocation(lat, lng, this.school);
+
+      this.drawMarker.next(this.showLocationDetails);
+
+      this.mapCenter = new BehaviorSubject(
+        CPMap.setDefaultMapCenter(lat, lng, this.school)
+      );
 
       this.eventProperties = {
         ...this.eventProperties,
@@ -226,7 +236,9 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
   }
 
   onResetMap() {
-    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields(this.school));
+    this.drawMarker.next(false);
+    this.form.controls['room_info'].setValue('');
+    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
     this.centerMap(this.school.latitude, this.school.longitude);
   }
 
@@ -253,6 +265,8 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
+    this.drawMarker.next(true);
+
     if ('fromUsersLocations' in data) {
       this.updateWithUserLocation(data);
 
@@ -272,6 +286,22 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
 
   centerMap(lat: number, lng: number) {
     return this.mapCenter.next({ lat, lng });
+  }
+
+  onLocationToggle(value) {
+    this.showLocationDetails = value;
+
+    if (!value) {
+      this.drawMarker.next(false);
+
+      this.mapCenter = new BehaviorSubject({
+        lat: this.school.latitude,
+        lng: this.school.longitude
+      });
+
+      this.form.controls['room_info'].setValue('');
+      CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
+    }
   }
 
   ngOnInit() {

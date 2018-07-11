@@ -435,7 +435,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   onResetMap() {
     this.drawMarker.next(false);
     this.form.controls['room_data'].setValue('');
-    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields(this.school));
+    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
     this.centerMap(this.school.latitude, this.school.longitude);
   }
 
@@ -501,7 +501,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       });
 
       this.form.controls['room_data'].setValue('');
-      CPMap.setFormLocationData(this.form, CPMap.resetLocationFields(this.school));
+      CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
     }
   }
 

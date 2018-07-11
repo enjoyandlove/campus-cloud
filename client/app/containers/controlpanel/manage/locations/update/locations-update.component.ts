@@ -60,7 +60,7 @@ export class LocationsUpdateComponent implements OnInit {
   }
 
   onResetMap() {
-    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields(this.school));
+    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
     this.centerMap(this.school.latitude, this.school.longitude);
   }
 
