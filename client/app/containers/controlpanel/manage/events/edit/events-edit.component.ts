@@ -199,12 +199,8 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       (_) => {
         this.eventProperties = {
           ...this.eventProperties,
+          ...this.utils.setEventProperties(this.form.controls),
           event_id: this.eventId,
-          start_date: this.utils.getStartDate(CPDate.fromEpoch(data.start, this.session.tz)),
-          end_date: this.utils.getEndDate(CPDate.fromEpoch(data.end, this.session.tz)),
-          assessment: this.utils.getAssessment(data.event_attendance),
-          location: this.utils.getLocation(data.location),
-          feedback: this.utils.getFeedback(data.event_feedback)
         };
 
         this.cpTracking.amplitudeEmitEvent(

@@ -36,6 +36,11 @@ export enum Location {
   'no' = 'No'
 }
 
+export enum UploadedPhoto {
+  'yes' = 'Yes',
+  'no' = 'No'
+}
+
 export enum Feedback {
   'enabled' = 'Enabled',
   'disabled' = 'Disabled'

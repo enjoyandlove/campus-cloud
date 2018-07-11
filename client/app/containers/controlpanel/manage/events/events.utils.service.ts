@@ -10,6 +10,7 @@ import {
   Location,
   Feedback,
   Assessment,
+  UploadedPhoto,
   EventFeedback,
   EventAttendance
 } from './event.status';
@@ -135,16 +136,20 @@ export class EventUtilService {
     return sourcePage;
   }
 
-  getStartDate(date) {
+  getStartMonth(date) {
     return moment(date).format('MMMM');
   }
 
-  getEndDate(date) {
+  getEndMonth(date) {
     return moment(date).format('MMMM');
   }
 
   getLocation(location) {
     return location ? Location.yes : Location.no;
+  }
+
+  getUploadedPhoto(photo) {
+    return photo ? UploadedPhoto.yes : UploadedPhoto.no;
   }
 
   getFeedback(feedback) {
@@ -153,5 +158,23 @@ export class EventUtilService {
 
   getAssessment(assessment) {
     return assessment === EventAttendance.enabled ? Assessment.on : Assessment.off;
+  }
+
+  setEventProperties(data) {
+    const start_date = data['start'].value
+      ? this.getStartMonth(CPDate.fromEpoch(data['start'].value, this.session.tz))
+      : null;
+
+    const end_date = data['end'].value
+      ? this.getEndMonth(CPDate.fromEpoch(data['end'].value, this.session.tz))
+      : null;
+
+    return {
+      end_date,
+      start_date,
+      assessment: this.getAssessment(data['event_attendance'].value),
+      location: this.getLocation(data['location'].value),
+      feedback: this.getFeedback(data['event_feedback'].value)
+    };
   }
 }

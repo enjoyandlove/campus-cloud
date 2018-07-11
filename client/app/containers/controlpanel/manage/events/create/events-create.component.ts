@@ -12,6 +12,7 @@ import { EventUtilService } from '../events.utils.service';
 import { CPSession, ISchool } from '../../../../../session';
 import { CPDate, CPMap } from '../../../../../shared/utils';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { EventAttendance, EventFeedback, isAllDay } from '../event.status';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
@@ -78,7 +79,8 @@ export class EventsCreateComponent implements OnInit {
     end_date: null,
     location: null,
     assessment: null,
-    feedback: null
+    feedback: null,
+    uploaded_photo: null
   };
 
   constructor(
@@ -289,14 +291,11 @@ export class EventsCreateComponent implements OnInit {
 
     this.service.createEvent(this.form.value, search).subscribe(
       (res: any) => {
+
         this.eventProperties = {
           ...this.eventProperties,
-          event_id: res.id,
-          start_date: this.utils.getStartDate(CPDate.fromEpoch(res.start, this.session.tz)),
-          end_date: this.utils.getEndDate(CPDate.fromEpoch(res.end, this.session.tz)),
-          assessment: this.utils.getAssessment(res.event_attendance),
-          location: this.utils.getLocation(res.location),
-          feedback: this.utils.getFeedback(res.event_feedback)
+          ...this.utils.setEventProperties(this.form.controls),
+          event_id: res.id
         };
 
         this.cpTracking.amplitudeEmitEvent(
@@ -379,6 +378,20 @@ export class EventsCreateComponent implements OnInit {
       this.form.controls['room_data'].setValue(null);
       CPMap.setFormLocationData(this.form, CPMap.resetLocationFields(this.school));
     }
+  }
+
+  getEventProperties() {
+    this.eventProperties = {
+      ...this.eventProperties,
+      ...this.utils.setEventProperties(this.form.controls),
+      uploaded_photo: this.utils.getUploadedPhoto(this.form.controls['poster_url'].value)
+    };
+
+    return {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.MANAGE_CANCELED_EVENT,
+      eventProperties: this.eventProperties
+    };
   }
 
   ngOnInit() {

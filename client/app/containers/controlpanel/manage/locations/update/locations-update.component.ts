@@ -14,8 +14,10 @@ import { HttpParams } from '@angular/common/http';
 
 import { CPSession } from '../../../../../session';
 import { CPMap } from '../../../../../shared/utils';
-import { LocationsService } from '../locations.service';
+import { CPTrackingService } from '../../../../../shared/services';
+import { getAcronym, LocationsService } from '../locations.service';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 
 @Component({
   selector: 'cp-locations-update',
@@ -34,13 +36,19 @@ export class LocationsUpdateComponent implements OnInit {
   mapCenter: BehaviorSubject<any>;
   newAddress = new BehaviorSubject(null);
 
+  eventProperties = {
+    acronym: null,
+    location_id: null
+  };
+
   constructor(
     public el: ElementRef,
     private fb: FormBuilder,
     private session: CPSession,
     public cpI18n: CPI18nService,
     public cdRef: ChangeDetectorRef,
-    public service: LocationsService
+    public service: LocationsService,
+    public cpTracking: CPTrackingService
   ) {}
 
   @HostListener('document:click', ['$event'])
@@ -62,6 +70,7 @@ export class LocationsUpdateComponent implements OnInit {
     this.service
       .updateLocation(this.form.value, this.location.id, search)
       .subscribe((editedLocation) => {
+        this.trackEvent(editedLocation);
         $('#locationsUpdate').modal('hide');
         this.locationUpdated.emit(editedLocation);
         this.resetModal();
@@ -114,6 +123,18 @@ export class LocationsUpdateComponent implements OnInit {
 
   resetModal() {
     this.teardown.emit();
+  }
+
+  trackEvent(res) {
+    this.eventProperties = {
+      ...this.eventProperties,
+      location_id: res.id,
+      acronym: getAcronym(res.short_name)
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_UPDATED_LOCATION,
+      this.eventProperties);
   }
 
   ngOnInit() {

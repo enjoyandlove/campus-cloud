@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { get as _get } from 'lodash';
 
 import { IClub } from './club.interface';
-import { ClubStatus } from './club.status';
+import { ClubStatus, hasData } from './club.status';
 import { CP_PRIVILEGES_MAP } from './../../../../shared/constants/privileges';
 
 import {
@@ -23,6 +23,21 @@ export class ClubsUtilsService {
       !canStoreReadAndWriteResource(sessionG, storeId, CP_PRIVILEGES_MAP.clubs) &&
       !canSchoolWriteResource(sessionG, CP_PRIVILEGES_MAP.clubs)
     );
+  }
+
+  getData(data) {
+    return data ? hasData.yes : hasData.no;
+  }
+
+  setEventProperties(data, club_type) {
+    return {
+      club_type,
+      club_id: data.id,
+      phone: this.getData(data.phone),
+      email: this.getData(data.email),
+      website: this.getData(data.website),
+      location: this.getData(data.location)
+    };
   }
 
   getSubNavChildren(club: IClub, session) {

@@ -15,6 +15,7 @@ import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
+import { ClubsUtilsService } from '../clubs.utils.service';
 
 @Component({
   selector: 'cp-clubs-create',
@@ -34,12 +35,24 @@ export class ClubsCreateComponent implements OnInit {
   membershipTypes = membershipTypes;
   newAddress = new BehaviorSubject(null);
 
+  eventProperties = {
+    phone: null,
+    email: null,
+    website: null,
+    club_id: null,
+    location: null,
+    club_type: null,
+    club_status: null,
+    membership_status: null
+  };
+
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private store: Store<any>,
     private session: CPSession,
     private cpI18n: CPI18nService,
+    private utils: ClubsUtilsService,
     private clubsService: ClubsService,
     private cpTracking: CPTrackingService
   ) {}
@@ -60,6 +73,7 @@ export class ClubsCreateComponent implements OnInit {
 
     this.clubsService.createClub(this.form.value, search).subscribe(
       (res: any) => {
+        this.trackEvent(res);
         this.router.navigate(['/manage/' + this.labels.club_athletic + '/' + res.id + '/info']);
       },
       (err) => {
@@ -69,6 +83,17 @@ export class ClubsCreateComponent implements OnInit {
         throw new Error(err);
       }
     );
+  }
+
+  trackEvent(data) {
+    this.eventProperties = {
+      ...this.eventProperties,
+      ...this.utils.setEventProperties(
+        data,
+        this.labels.club_athletic)
+    };
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CREATED_CLUB, this.eventProperties);
   }
 
   onUploadedImage(image): void {
@@ -87,10 +112,20 @@ export class ClubsCreateComponent implements OnInit {
 
   onSelectedMembership(type): void {
     this.form.controls['has_membership'].setValue(type.action);
+
+    this.eventProperties = {
+      ...this.eventProperties,
+      membership_status: type.label
+    };
   }
 
   onSelectedStatus(type): void {
     this.form.controls['status'].setValue(type.action);
+
+    this.eventProperties = {
+      ...this.eventProperties,
+      club_status: type.label
+    };
   }
 
   onResetMap() {
@@ -143,6 +178,12 @@ export class ClubsCreateComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.eventProperties = {
+      ...this.eventProperties,
+      club_status: this.statusTypes[0].label,
+      membership_status: this.membershipTypes[0].label
+    };
+
     this.labels = clubAthleticLabels(this.isAthletic);
 
     this.school = this.session.g.get('school');

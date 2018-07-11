@@ -151,6 +151,14 @@ export const amplitudeEvents = {
 
   CREATE_CALENDAR_ITEM: 'Create Calendar Item',
 
+  MANAGE_CREATED_LINK: 'Manage - Created Link',
+
+  MANAGE_UPDATED_LINK: 'Manage - Updated Link',
+
+  MANAGE_CREATED_CLUB: 'Manage - Created Club',
+
+  MANAGE_UPDATED_CLUB: 'Manage - Updated Club',
+
   WALL_DELETED_COMMENT: 'Wall - Deleted Comment',
 
   MANAGE_UPDATED_EVENT: 'Manage - Updated Event',
@@ -169,9 +177,17 @@ export const amplitudeEvents = {
 
   MANAGE_LOADED_CHECKIN: 'Manage - Loaded Check-In',
 
+  MANAGE_CANCELED_EVENT: 'Manage - Cancelled Event',
+
   WALL_SUBMITTED_COMMENT: 'Wall - Submitted Comment',
 
   MANAGE_CLICKED_CHECKIN: 'Manage - Clicked Check-In',
+
+  MANAGE_CREATED_LOCATION: 'Manage - Created Location',
+
+  MANAGE_CREATED_CALENDAR: 'Manage - Created Calendar',
+
+  MANAGE_UPDATED_LOCATION: 'Manage - Updated Location',
 
   CUSTOMIZE_CANCELED_PHOTO: 'Customize - Canceled Photo',
 
@@ -183,5 +199,9 @@ export const amplitudeEvents = {
 
   MANAGE_CHECKEDIN_MANUALLY: 'Manage - Checked In Manually',
 
-  ASSESS_VIEWED_TOP_SERVICES: 'Assess - Viewed Top Services'
+  ASSESS_VIEWED_TOP_SERVICES: 'Assess - Viewed Top Services',
+
+  MANAGE_UPDATED_CALENDAR_EVENT: 'Manage - Updated Calendar Event',
+
+  MANAGE_CREATED_CALENDAR_EVENT: 'Manage - Created Calendar Event'
 };
