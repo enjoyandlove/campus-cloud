@@ -29,14 +29,18 @@ export class ClubsUtilsService {
     return data ? hasData.yes : hasData.no;
   }
 
+  capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   setEventProperties(data, club_type) {
     return {
-      club_type,
       club_id: data.id,
       phone: this.getData(data.phone),
       email: this.getData(data.email),
       website: this.getData(data.website),
-      location: this.getData(data.location)
+      location: this.getData(data.location),
+      club_type: this.capitalizeFirstLetter(club_type)
     };
   }
 
