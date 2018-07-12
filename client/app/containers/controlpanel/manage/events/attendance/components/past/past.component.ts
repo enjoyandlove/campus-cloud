@@ -3,6 +3,7 @@ import { HttpParams } from '@angular/common/http';
 
 import { EventsService } from '../../../events.service';
 import { CPSession } from './../../../../../../../session';
+import { EventUtilService } from '../../../events.utils.service';
 import { CPDate } from './../../../../../../../shared/utils/date/date';
 import { CPTrackingService } from '../../../../../../../shared/services';
 import { BaseComponent } from '../../../../../../../base/base.component';
@@ -36,16 +37,25 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
   loading;
   attendees;
   sortingLabels;
-  eventProperties;
   attendeeFeedback;
   state: IState = state;
+  downloadEentProperties;
   listStarSize = STAR_SIZE.DEFAULT;
   detailStarSize = STAR_SIZE.LARGE;
+
+  eventProperties = {
+    data_type: null,
+    event_id: null,
+    start_date: null,
+    end_date: null,
+    location: null
+  };
 
   constructor(
     public session: CPSession,
     private cpI18n: CPI18nService,
     public service: EventsService,
+    public utils: EventUtilService,
     public cpTracking: CPTrackingService
   ) {
     super();
@@ -155,21 +165,36 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
   }
 
   trackAmplitudeEvent() {
-    this.eventProperties = {
+    this.downloadEentProperties = {
       data_type: amplitudeEvents.EVENT
     };
 
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.MANAGE_DOWNLOAD_DATA,
-      this.eventProperties);
+      this.downloadEentProperties);
   }
 
   onViewFeedback(attendee): void {
+    this.trackFeedbackEvent();
     attendee = Object.assign({}, attendee, {
       maxRate: this.event.rating_scale_maximum
     });
 
     this.attendeeFeedback = attendee;
+  }
+
+  trackFeedbackEvent() {
+    this.eventProperties = {
+      ...this.eventProperties,
+      event_id: this.event.id,
+      location: this.utils.getLocation(this.event.location),
+      start_date: this.utils.getStartMonth(CPDate.fromEpoch(this.event.start, this.session.tz)),
+      end_date: this.utils.getStartMonth(CPDate.fromEpoch(this.event.end, this.session.tz))
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_CLICKED_FEEDBACK,
+      this.eventProperties);
   }
 
   doSearch(search_text): void {

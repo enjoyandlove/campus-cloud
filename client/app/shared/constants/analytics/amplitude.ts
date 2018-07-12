@@ -17,6 +17,8 @@ export const amplitudeEvents = {
 
   EVENT: 'Event',
 
+  MEMBER: 'Member',
+
   CAMPUS: 'Campus',
 
   ACTIVE: 'Active',
@@ -38,6 +40,8 @@ export const amplitudeEvents = {
   MENU_ASSESS: 'Assess',
 
   MENU_NOTIFY: 'Notify',
+
+  EXECUTIVE: 'Executive',
 
   ATHLETICS: 'Athletics',
 
@@ -183,13 +187,25 @@ export const amplitudeEvents = {
 
   WALL_SUBMITTED_COMMENT: 'Wall - Submitted Comment',
 
+  MANAGE_CREATED_SERVICE: 'Manage - Created Service',
+
+  MANAGE_UPDATED_SERVICE: 'Manage - Updated Service',
+
   MANAGE_CLICKED_CHECKIN: 'Manage - Clicked Check-In',
+
+  MANAGE_CLICKED_FEEDBACK: 'Manage - Clicked Feedback',
 
   MANAGE_CREATED_LOCATION: 'Manage - Created Location',
 
   MANAGE_CREATED_CALENDAR: 'Manage - Created Calendar',
 
   MANAGE_UPDATED_LOCATION: 'Manage - Updated Location',
+
+  MANAGE_ADDED_CLUB_MEMBER: 'Manage - Added Club Member',
+
+  MANAGE_UPDATED_CLUB_MEMBER: 'Manage - Updated Club Member',
+
+  MANAGE_DELETED_CLUB_MEMBER: 'Manage - Deleted Club Member',
 
   CUSTOMIZE_CANCELED_PHOTO: 'Customize - Canceled Photo',
 
@@ -205,5 +221,11 @@ export const amplitudeEvents = {
 
   MANAGE_UPDATED_CALENDAR_EVENT: 'Manage - Updated Calendar Event',
 
-  MANAGE_CREATED_CALENDAR_EVENT: 'Manage - Created Calendar Event'
+  MANAGE_CREATED_CALENDAR_EVENT: 'Manage - Created Calendar Event',
+
+  MANAGE_VIEWED_SERVICE_PROVIDER: 'Manage - Viewed Service Provider',
+
+  MANAGE_DELETED_SERVICE_PROVIDER: 'Manage - Deleted Service Provider',
+
+  MANAGE_CREATED_SERVICE_PROVIDER: 'Manage - Created Service Provider'
 };
