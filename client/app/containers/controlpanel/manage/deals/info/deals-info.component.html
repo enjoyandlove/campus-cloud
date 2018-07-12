@@ -61,7 +61,7 @@
                 </div>
               </div>
 
-              <div class="row">
+              <div class="row" *ngIf="showLocationDetails">
                 <div class="col-12 deals__map">
                   <cp-maps
                     [doubleClick]="false"
