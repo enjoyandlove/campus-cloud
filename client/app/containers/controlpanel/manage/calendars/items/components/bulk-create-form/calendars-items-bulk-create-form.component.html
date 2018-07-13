@@ -18,6 +18,7 @@
                   <div class="row">
                     <div class="col-12">
                       <cp-place-autocomplete
+                        (backToDefault)="onResetMap(i)"
                         (placeChange)="onPlaceChange($event, i)"
                         [defaultValue]="item.controls.location.value">
                       </cp-place-autocomplete>
