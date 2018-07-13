@@ -60,7 +60,7 @@ export abstract class HTTPService {
   clearNullValues(params: HttpParams): HttpParams {
     let cleanParams = new HttpParams();
     params.keys().forEach((key) => {
-      if (params.get(key)) {
+      if (params.get(key) !== null) {
         cleanParams = cleanParams.set(key, params.get(key));
       }
     });
