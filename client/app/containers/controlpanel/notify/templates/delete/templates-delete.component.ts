@@ -3,6 +3,9 @@ import { HttpParams } from '@angular/common/http';
 
 import { TemplatesService } from './../templates.service';
 import { CPSession } from './../../../../../session/index';
+import { NotifyUtilsService } from '../../notify.utils.service';
+import { CPTrackingService } from '../../../../../shared/services';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 declare var $;
@@ -21,10 +24,19 @@ export class TemplatesDeleteComponent implements OnInit {
   buttonData;
   errorMessage;
 
+  eventProperties = {
+    listing_type: null,
+    audience_type: null,
+    announcement_id: null,
+    announcement_type: null
+  };
+
   constructor(
     private session: CPSession,
     private cpI18n: CPI18nService,
-    private service: TemplatesService
+    private utils: NotifyUtilsService,
+    private service: TemplatesService,
+    private cpTracking: CPTrackingService
   ) {}
 
   doReset() {
@@ -38,6 +50,7 @@ export class TemplatesDeleteComponent implements OnInit {
 
     this.service.deleteTemplate(search, this.item.id).subscribe(
       (_) => {
+        this.trackDeleteEvent(this.item);
         this.teardown.emit();
         this.deleted.emit(this.item.id);
         $('#deleteTemplateModal').modal('hide');
@@ -53,6 +66,17 @@ export class TemplatesDeleteComponent implements OnInit {
         });
       }
     );
+  }
+
+  trackDeleteEvent(data) {
+    this.eventProperties = {
+      ...this.eventProperties,
+      ...this.utils.setEventProperties(data, amplitudeEvents.TEMPLATE)
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.NOTIFY_DELETED_LISTING,
+      this.eventProperties);
   }
 
   ngOnInit() {

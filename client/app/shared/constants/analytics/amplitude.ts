@@ -31,6 +31,8 @@ export const amplitudeEvents = {
 
   NEW_AUDIENCE: 'New',
 
+  TEMPLATE: 'Template',
+
   DISABLED: 'Disabled',
 
   MENU_MANAGE: 'Manage',
@@ -78,6 +80,8 @@ export const amplitudeEvents = {
   CREATE_EVENT: 'Create Event',
 
   MENU_CUSTOMIZE: 'Customize',
+
+  ANNOUNCEMENT: 'Announcement',
 
   SET_PASSWORD: 'Set Password',
 
@@ -161,7 +165,11 @@ export const amplitudeEvents = {
 
   CUSTOMIZE_SAVED_PHOTO: 'Customize - Saved Photo',
 
+  NOTIFY_VIEWED_LISTING: 'Notify - Viewed Listing',
+
   MANAGE_DOWNLOAD_DATA: 'Manage - Downloaded Data',
+
+  NOTIFY_DELETED_LISTING: 'Notify - Deleted Listing',
 
   MANAGE_LOADED_CHECKIN: 'Manage - Loaded Check-In',
 

@@ -1,12 +1,14 @@
-import { Store } from '@ngrx/store';
 import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
 import { Component, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { Store } from '@ngrx/store';
 
 import { CPSession } from '../../../../../session';
 import { FORMAT } from '../../../../../shared/pipes/date';
 import { AnnouncementsService } from '../announcements.service';
 import { BaseComponent } from '../../../../../base/base.component';
+import { CPTrackingService } from '../../../../../shared/services';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 interface IState {
@@ -45,11 +47,16 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
   deleteAnnouncement = null;
   dateFormat = FORMAT.DATETIME;
 
+  eventProperties = {
+    listing_type: null
+  };
+
   constructor(
     private session: CPSession,
     public store: Store<IHeader>,
     private cpI18n: CPI18nService,
-    private service: AnnouncementsService
+    private service: AnnouncementsService,
+    private cpTracking: CPTrackingService
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -98,6 +105,7 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
   }
 
   onViewMoreModal(recipients) {
+    this.trackViewMoreEvent();
     this.buttonText = 'done';
     this.headerText = `(${recipients.length})
       ${this.cpI18n.translate('notify_announcement_recipient')}`;
@@ -109,6 +117,17 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
 
       1
     );
+  }
+
+  trackViewMoreEvent() {
+    this.eventProperties = {
+      ...this.eventProperties,
+      listing_type: amplitudeEvents.ANNOUNCEMENT
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.NOTIFY_VIEWED_LISTING,
+      this.eventProperties);
   }
 
   onDeleted(id) {

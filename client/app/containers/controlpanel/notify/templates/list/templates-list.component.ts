@@ -2,12 +2,15 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
+
+import { TemplatesService } from './../templates.service';
+import { CPSession } from './../../../../../session/index';
+import { base64 } from './../../../../../shared/utils/encrypt';
+import { CPTrackingService } from '../../../../../shared/services';
 import { BaseComponent } from './../../../../../base/base.component';
 import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
-import { CPSession } from './../../../../../session/index';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { base64 } from './../../../../../shared/utils/encrypt';
-import { TemplatesService } from './../templates.service';
 
 interface IState {
   search_str: string;
@@ -23,16 +26,15 @@ interface IState {
 })
 export class TemplatesListComponent extends BaseComponent implements OnInit {
   loading;
-
   schoolId;
   templateId;
-
-  deleteTemplate;
+  buttonText;
+  headerText;
   templateData;
-
   sortingLabels;
+  deleteTemplate;
   isTemplateDelete;
-
+  viewMoreRecipients = [];
   isTemplateCreateModal = false;
   isTemplateComposeModal = false;
 
@@ -43,13 +45,18 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
     sort_direction: 'asc'
   };
 
+  eventProperties = {
+    listing_type: null
+  };
+
   constructor(
     private router: Router,
     private store: Store<any>,
     private session: CPSession,
     private route: ActivatedRoute,
     private cpI18n: CPI18nService,
-    private service: TemplatesService
+    private service: TemplatesService,
+    private cpTracking: CPTrackingService
   ) {
     super();
     super.isLoading().subscribe((loading) => (this.loading = loading));
@@ -122,6 +129,32 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
 
       1
     );
+  }
+
+  onViewMoreModal(recipients) {
+    this.trackViewMoreEvent();
+    this.buttonText = 'done';
+    this.headerText = `(${recipients.length})
+      ${this.cpI18n.translate('notify_announcement_recipient')}`;
+    this.viewMoreRecipients = recipients;
+    setTimeout(
+      () => {
+        $('#viewMoreModal').modal();
+      },
+
+      1
+    );
+  }
+
+  trackViewMoreEvent() {
+    this.eventProperties = {
+      ...this.eventProperties,
+      listing_type: amplitudeEvents.TEMPLATE
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.NOTIFY_VIEWED_LISTING,
+      this.eventProperties);
   }
 
   onComposed() {
