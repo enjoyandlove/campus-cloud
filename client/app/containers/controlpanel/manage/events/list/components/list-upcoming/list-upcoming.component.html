@@ -38,7 +38,8 @@
         <strong>
           <a
             class="event__title"
-            [routerLink]="[event.id]">
+            [routerLink]="[event.id]"
+            queryParamsHandling="merge">
             {{ event.title }}
           </a>
         </strong>

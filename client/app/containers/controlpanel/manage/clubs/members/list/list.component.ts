@@ -59,8 +59,8 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
     private session: CPSession,
     public cpI18n: CPI18nService,
     private route: ActivatedRoute,
-    private utils: MembersUtilsService,
     public helper: ClubsUtilsService,
+    private utils: MembersUtilsService,
     private membersService: MembersService
   ) {
     super();
