@@ -96,11 +96,15 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
       .append('sort_direction', this.state.sort_direction)
       .append('category_id', this.isAthletic.toString());
 
-    const groupSearch = new HttpParams()
-      .append('store_id', this.clubId)
-      .append('school_id', schoolId)
-      .append('calendar_id', calendar_id)
-      .append('category_id', this.isAthletic.toString());
+    let groupSearch = new HttpParams().append('school_id', schoolId);
+
+    if (this.isOrientation) {
+      groupSearch = groupSearch.append('calendar_id', calendar_id);
+    } else {
+      groupSearch = groupSearch
+        .append('category_id', this.isAthletic.toString())
+        .append('store_id', this.clubId);
+    }
 
     const socialGroupDetails$ = this.membersService.getSocialGroupDetails(groupSearch);
 
