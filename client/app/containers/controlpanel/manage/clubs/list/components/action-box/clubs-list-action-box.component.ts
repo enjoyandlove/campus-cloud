@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CPSession } from './../../../../../../../session/index';
+import { CPSession } from './../../../../../../../session';
 import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
 import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
 import { CPTrackingService } from '../../../../../../../shared/services';
-import { canSchoolWriteResource } from '../../../../../../../shared/utils/privileges/index';
+import { canSchoolWriteResource } from '../../../../../../../shared/utils/privileges';
 import { ClubStatus } from '../../../club.status';
 import { clubAthleticLabels, isClubAthletic } from '../../../clubs.athletics.labels';
 

@@ -43,8 +43,8 @@
             </a>
             <a
               class="event__title"
-              [routerLink]="[event.id + '/info']"
               queryParamsHandling="merge"
+              [routerLink]="[event.id + '/info']"
               *ngIf="event.event_attendance === 0">
               {{ event.title }}
             </a>
