@@ -100,9 +100,9 @@ export class CalendarsItemsBulkCreateComponent extends BaseComponent implements 
           description: [item.description],
           start: [CPDate.toEpoch(item.start_date, this.session.tz), Validators.required],
           end: [CPDate.toEpoch(item.end_date, this.session.tz), Validators.required],
-          location: [item.location],
-          latitude: [this.session.g.get('school').latitude, Validators.required],
-          longitude: [this.session.g.get('school').longitude, Validators.required]
+          location: [null],
+          latitude: [0],
+          longitude: [0]
         })
       );
     });

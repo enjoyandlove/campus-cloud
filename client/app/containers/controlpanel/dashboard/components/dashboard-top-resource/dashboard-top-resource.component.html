@@ -1,10 +1,10 @@
-<div class="row table">
+<div class="row dashboard-table">
   <div class="col-12">
     <ng-container *ngIf="!items.length">
-      <p class="table--no-results text-center">{{ 'dashboard_no_data_found' | cpI18n }}</p>
+      <p class="dashboard-table--no-results text-center">{{ 'dashboard_no_data_found' | cpI18n }}</p>
     </ng-container>
     <ng-container *ngIf="items.length">
-      <div class="row table--header">
+      <div class="row dashboard-table--header">
         <div class="col-1">
           <p>#</p>
         </div>
@@ -23,7 +23,7 @@
       </div>
       <div class="row" *ngFor="let item of items; index as index last as last">
         <div class="col-12">
-          <div class="table--item" [class.isLast]="last">
+          <div class="dashboard-table--item" [class.isLast]="last">
             <div class="row">
               <div class="col-1 no-right-padding">
                 <p class="ranking">{{ index + 1 }}</p>
