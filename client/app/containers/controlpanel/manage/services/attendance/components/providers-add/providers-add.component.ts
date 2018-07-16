@@ -58,7 +58,7 @@ export class ServicesProviderAddComponent implements OnInit {
       ...this.eventProperties,
       service_id: this.serviceId,
       service_provider_id: data.id,
-      feedback: this.getFeedback(data.custom_basic_feedback_label)
+      feedback: this.hasFeedback(data.custom_basic_feedback_label)
     };
 
     this.cpTracking.amplitudeEmitEvent(
@@ -66,7 +66,7 @@ export class ServicesProviderAddComponent implements OnInit {
      this.eventProperties);
   }
 
-  getFeedback(val) {
+  hasFeedback(val) {
     return val ? Feedback.enabled : Feedback.disabled;
   }
 

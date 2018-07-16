@@ -6,7 +6,7 @@ import { API } from '../../../../../config/api';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { appStorage } from '../../../../../shared/utils';
 import { ILink } from '../link.interface';
-import { getChangedURL, LinksService } from '../links.service';
+import { didUrlChange, LinksService } from '../links.service';
 import {
   CPTrackingService,
   FileUploadService,
@@ -109,7 +109,7 @@ export class LinksEditComponent implements OnInit, OnChanges {
     this.eventProperties = {
       ...this.eventProperties,
       link_id: res.id,
-      changed_url: getChangedURL(this.link.link_url, res.link_url)
+      changed_url: didUrlChange(this.link.link_url, res.link_url)
     };
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_UPDATED_LINK, this.eventProperties);

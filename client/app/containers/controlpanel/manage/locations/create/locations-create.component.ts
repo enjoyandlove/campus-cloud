@@ -13,9 +13,9 @@ import { HttpParams } from '@angular/common/http';
 
 import { CPMap } from '../../../../../shared/utils';
 import { CPSession, ISchool } from '../../../../../session';
-import { getAcronym, LocationsService } from '../locations.service';
-import { CPI18nService, CPTrackingService } from '../../../../../shared/services/index';
+import { hasAcronym, LocationsService } from '../locations.service';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
 
 declare var $: any;
 
@@ -126,7 +126,7 @@ export class LocationsCreateComponent implements OnInit {
     this.eventProperties = {
       ...this.eventProperties,
       location_id: res.id,
-      acronym: getAcronym(res.short_name)
+      acronym: hasAcronym(res.short_name)
     };
 
     this.cpTracking.amplitudeEmitEvent(

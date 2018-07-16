@@ -188,8 +188,8 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
       ...this.eventProperties,
       event_id: this.event.id,
       location: this.utils.getLocation(this.event.location),
-      start_date: this.utils.getStartMonth(CPDate.fromEpoch(this.event.start, this.session.tz)),
-      end_date: this.utils.getStartMonth(CPDate.fromEpoch(this.event.end, this.session.tz))
+      start_date: CPDate.getMonth(this.event.start, this.session.tz),
+      end_date: CPDate.getMonth(this.event.end, this.session.tz)
     };
 
     this.cpTracking.amplitudeEmitEvent(

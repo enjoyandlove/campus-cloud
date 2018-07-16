@@ -1,5 +1,4 @@
 import IEvent from './event.interface';
-import moment = require('moment');
 
 import { Injectable } from '@angular/core';
 import { CPSession } from '../../../../session';
@@ -136,14 +135,6 @@ export class EventUtilService {
     return sourcePage;
   }
 
-  getStartMonth(date) {
-    return moment(date).format('MMMM');
-  }
-
-  getEndMonth(date) {
-    return moment(date).format('MMMM');
-  }
-
   getLocation(location) {
     return location ? Location.yes : Location.no;
   }
@@ -162,11 +153,11 @@ export class EventUtilService {
 
   setEventProperties(data) {
     const start_date = data['start'].value
-      ? this.getStartMonth(CPDate.fromEpoch(data['start'].value, this.session.tz))
+      ? CPDate.getMonth(data['start'].value, this.session.tz)
       : null;
 
     const end_date = data['end'].value
-      ? this.getEndMonth(CPDate.fromEpoch(data['end'].value, this.session.tz))
+      ? CPDate.getMonth(data['end'].value, this.session.tz)
       : null;
 
     return {

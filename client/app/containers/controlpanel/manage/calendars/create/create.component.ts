@@ -10,8 +10,8 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 
+import { CPSession } from './../../../../../session';
 import { CalendarsService } from '../calendars.services';
-import { CPSession } from './../../../../../session/index';
 import { CPTrackingService } from '../../../../../shared/services';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 

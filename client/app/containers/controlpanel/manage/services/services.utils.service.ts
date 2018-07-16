@@ -11,34 +11,34 @@ import {
 @Injectable()
 export class ServicesUtilsService {
 
-  getData(data) {
+  hasData(data) {
     return data ? hasData.yes : hasData.no;
   }
 
-  getFeedback(feedback) {
+  getFeedbackStatus(feedback) {
     return feedback === ServiceFeedback.enabled ? Feedback.enabled : Feedback.disabled;
   }
 
-  getAssessment(assessment) {
+  getAssessmentStatus(assessment) {
     return assessment === ServiceAttendance.enabled ? Assessment.on : Assessment.off;
   }
 
   setEventProperties(data, service_id) {
     return {
       service_id,
-      email: this.getData(data.email),
-      phone: this.getData(data.contactphone),
-      website: this.getData(data.website),
-      location: this.getData(data.location),
-      feedback: this.getFeedback(data.enable_feedback),
-      assessment: this.getAssessment(data.service_attendance)
+      email: this.hasData(data.email),
+      phone: this.hasData(data.contactphone),
+      website: this.hasData(data.website),
+      location: this.hasData(data.location),
+      feedback: this.getFeedbackStatus(data.enable_feedback),
+      assessment: this.getAssessmentStatus(data.service_attendance)
     };
   }
 
   setServiceProviderEventProperties(data) {
     return {
-      visits: this.getData(data.total_visits),
-      ratings: this.getData(data.num_ratings),
+      visits: this.hasData(data.total_visits),
+      ratings: this.hasData(data.num_ratings),
       service_id: data.campus_service_id,
       service_provider_id: data.id
     };
