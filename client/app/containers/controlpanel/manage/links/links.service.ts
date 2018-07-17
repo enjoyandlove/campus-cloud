@@ -25,8 +25,6 @@ export class LinksService extends HTTPService {
   }
 
   getLinks(startRage: number, endRage: number, search?: HttpParams) {
-    search.append('is_system', '0');
-
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LINKS}/${startRage};${endRage}`;
 
     return super.get(url, search);
