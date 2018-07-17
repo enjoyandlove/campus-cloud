@@ -259,9 +259,11 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
     this.originalHost = this.getFromArray(this.stores, 'value', res.store_id);
 
+    const host_type = this.originalHost ? this.originalHost.hostType : null;
+
     this.eventProperties = {
       ...this.eventProperties,
-      host_type: this.originalHost.hostType
+      host_type
     };
 
     this.isFormReady = true;
