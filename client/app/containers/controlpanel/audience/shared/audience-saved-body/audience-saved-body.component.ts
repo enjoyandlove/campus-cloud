@@ -44,7 +44,8 @@ export class AudienceSavedBodyComponent implements OnInit {
         action: audience.id,
         label: audience.name,
         type: audience.type,
-        userCount: users
+        userCount: users,
+        isPersona: false
       };
     });
 
@@ -55,6 +56,31 @@ export class AudienceSavedBodyComponent implements OnInit {
     this.audiences = audiences;
 
     return audiences;
+  }
+
+  parsePersona(persona): Array<any> {
+    const heading = {
+      action: null,
+      heading: true,
+      label: this.cpI18n.translate('t_notify_announcement_audiences_my_experiences')
+    };
+
+    persona = persona.map((perso) => {
+
+      return {
+        action: perso.id,
+        label: perso.localized_name_map.en,
+        type: 0,
+        userCount: 5,
+        isPersona: true
+      };
+    });
+
+    if (persona.length) {
+      persona.unshift(heading);
+    }
+
+    return persona;
   }
 
   fetch() {
@@ -89,8 +115,14 @@ export class AudienceSavedBodyComponent implements OnInit {
       })
     );
 
-    this.audiences$ = combineLatest(audiences$, this.importedAudience$).pipe(
-      map(([audiences, importedAudienceId]: any) => {
+    const persona$ = this.service.getPersona(search, 1, 1000).pipe(
+      map((persona) => {
+        return this.parsePersona(persona);
+      })
+    );
+
+    this.audiences$ = combineLatest(audiences$, persona$, this.importedAudience$).pipe(
+      map(([audiences, persona, importedAudienceId]: any) => {
         if (importedAudienceId) {
           this.selectedItem = audiences.filter(
             (audience) => audience.action === importedAudienceId
@@ -107,7 +139,7 @@ export class AudienceSavedBodyComponent implements OnInit {
           });
         }
 
-        return audiences;
+        return [...audiences, ...persona];
       })
     );
   }
