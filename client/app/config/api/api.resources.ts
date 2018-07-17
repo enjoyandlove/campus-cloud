@@ -54,6 +54,8 @@ export const API_ENDPOINTS = {
 
   CALENDARS: 'academic_calendar',
 
+  SCHOOL_PERSONA: 'school_persona',
+
   CAMPUS_COMMENT: 'campus_comment',
 
   ASSESS_SERVICE: 'assess_service',

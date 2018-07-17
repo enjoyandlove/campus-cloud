@@ -32,6 +32,13 @@ export class EngagementService extends HTTPService {
     return super.get(url, search, true);
   }
 
+  getPersona(startRange = 1, endRange = 1000, search?: HttpParams) {
+    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SCHOOL_PERSONA}`;
+    const url = `${common}/${startRange};${endRange}`;
+
+    return super.get(url, search, true);
+  }
+
   getChartData(search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_ENGAGEMENT}/`;
 

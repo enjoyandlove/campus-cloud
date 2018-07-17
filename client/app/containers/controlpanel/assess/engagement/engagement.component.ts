@@ -94,12 +94,18 @@ export class EngagementComponent extends BaseComponent implements OnInit {
   }
 
   buildSearchHeaders(): HttpParams {
-    return new HttpParams()
-      .append('school_id', this.session.g.get('school').id.toString())
-      .append('user_list_id', this.filterState.for.listId)
+    let search =  new HttpParams();
+
+    search = search.append('school_id', this.session.g.get('school').id.toString())
       .append('start', `${this.filterState.range.payload.range.start}`)
       .append('end', `${this.filterState.range.payload.range.end}`)
       .append(this.filterState.engagement.data.queryParam, this.filterState.engagement.data.value);
+
+    search = this.filterState.for.listId
+      ? search.append('user_list_id', this.filterState.for.listId)
+      : search.append('persona_id', this.filterState.for.personaId);
+
+    return search;
   }
 
   fetchChartData() {
