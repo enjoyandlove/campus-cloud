@@ -135,19 +135,19 @@ export class EventUtilService {
     return sourcePage;
   }
 
-  getLocation(location) {
+  hasLocation(location) {
     return location ? Location.yes : Location.no;
   }
 
-  getUploadedPhoto(photo) {
+  didUploadPhoto(photo) {
     return photo ? UploadedPhoto.yes : UploadedPhoto.no;
   }
 
-  getFeedback(feedback) {
+  getFeedbackStatus(feedback) {
     return feedback === EventFeedback.enabled ? Feedback.enabled : Feedback.disabled;
   }
 
-  getAssessment(assessment) {
+  getAssessmentStatus(assessment) {
     return assessment === EventAttendance.enabled ? Assessment.on : Assessment.off;
   }
 
@@ -163,9 +163,9 @@ export class EventUtilService {
     return {
       end_date,
       start_date,
-      assessment: this.getAssessment(data['event_attendance'].value),
-      location: this.getLocation(data['location'].value),
-      feedback: this.getFeedback(data['event_feedback'].value)
+      assessment: this.getAssessmentStatus(data['event_attendance'].value),
+      location: this.hasLocation(data['location'].value),
+      feedback: this.getFeedbackStatus(data['event_feedback'].value)
     };
   }
 }

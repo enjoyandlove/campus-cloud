@@ -384,7 +384,7 @@ export class EventsCreateComponent implements OnInit {
     this.eventProperties = {
       ...this.eventProperties,
       ...this.utils.setEventProperties(this.form.controls),
-      uploaded_photo: this.utils.getUploadedPhoto(this.form.controls['poster_url'].value)
+      uploaded_photo: this.utils.didUploadPhoto(this.form.controls['poster_url'].value)
     };
 
     return {

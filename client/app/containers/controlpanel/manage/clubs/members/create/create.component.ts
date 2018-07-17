@@ -18,7 +18,7 @@ import { MembersService } from '../members.service';
 import { CPSession } from '../../../../../../session';
 import { MembersUtilsService } from '../members.utils.service';
 import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService } from '../../../../../../shared/services/index';
+import { CPI18nService, CPTrackingService } from '../../../../../../shared/services';
 
 declare var $: any;
 

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import moment = require('moment');
 
 import { CPSession } from '../../../../../session';
 import { CPDate } from './../../../../../shared/utils/date/date';
@@ -41,29 +40,21 @@ export class CalendarsItemsService {
     return valid;
   }
 
-  getAllDay(val) {
+  isAllDay(val) {
     return val ? AllDay.yes : AllDay.no;
   }
 
-  getLocation(location) {
+  hasLocation(location) {
     return location ? Location.yes : Location.no;
-  }
-
-  getStartMonth(date) {
-    return moment(date).format('MMMM');
-  }
-
-  getEndMonth(date) {
-    return moment(date).format('MMMM');
   }
 
   setEventProperties(data) {
     return {
-      end_date: this.getEndMonth(CPDate.fromEpoch(data.end, this.session.tz)),
-      start_date: this.getStartMonth(CPDate.fromEpoch(data.start, this.session.tz)),
-      all_day: this.getAllDay(data.is_all_day),
-      location: this.getLocation(data.location),
-      calendar_event_id: data.id
+      calendar_event_id: data.id,
+      all_day: this.isAllDay(data.is_all_day),
+      location: this.hasLocation(data.location),
+      end_date: CPDate.getMonth(data.end, this.session.tz),
+      start_date: CPDate.getMonth(data.start, this.session.tz)
     };
   }
 }

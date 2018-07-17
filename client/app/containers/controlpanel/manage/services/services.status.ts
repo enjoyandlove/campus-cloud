@@ -1,4 +1,4 @@
-export enum hasData {
+export enum HasData {
   'yes' = 'Yes',
   'no' = 'No'
 }

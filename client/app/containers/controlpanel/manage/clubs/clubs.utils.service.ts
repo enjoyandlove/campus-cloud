@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { get as _get } from 'lodash';
 
 import { IClub } from './club.interface';
-import { ClubStatus, hasData } from './club.status';
+import { ClubStatus, HasData } from './club.status';
 import { CP_PRIVILEGES_MAP } from './../../../../shared/constants/privileges';
 
 import {
@@ -25,8 +25,8 @@ export class ClubsUtilsService {
     );
   }
 
-  getData(data) {
-    return data ? hasData.yes : hasData.no;
+  hasData(data) {
+    return data ? HasData.yes : HasData.no;
   }
 
   capitalizeFirstLetter(string) {
@@ -36,10 +36,10 @@ export class ClubsUtilsService {
   setEventProperties(data, club_type) {
     return {
       club_id: data.id,
-      phone: this.getData(data.phone),
-      email: this.getData(data.email),
-      website: this.getData(data.website),
-      location: this.getData(data.location),
+      phone: this.hasData(data.phone),
+      email: this.hasData(data.email),
+      website: this.hasData(data.website),
+      location: this.hasData(data.location),
       club_type: this.capitalizeFirstLetter(club_type)
     };
   }

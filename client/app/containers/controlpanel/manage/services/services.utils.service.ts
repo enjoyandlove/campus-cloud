@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import {
-  hasData,
+  HasData,
   Feedback,
   Assessment,
   ServiceFeedback,
@@ -12,7 +12,7 @@ import {
 export class ServicesUtilsService {
 
   hasData(data) {
-    return data ? hasData.yes : hasData.no;
+    return data ? HasData.yes : HasData.no;
   }
 
   getFeedbackStatus(feedback) {

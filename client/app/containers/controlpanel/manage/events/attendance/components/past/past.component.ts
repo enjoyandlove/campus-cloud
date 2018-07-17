@@ -39,7 +39,7 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
   sortingLabels;
   attendeeFeedback;
   state: IState = state;
-  downloadEentProperties;
+  downloadEventProperties;
   listStarSize = STAR_SIZE.DEFAULT;
   detailStarSize = STAR_SIZE.LARGE;
 
@@ -165,13 +165,13 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
   }
 
   trackAmplitudeEvent() {
-    this.downloadEentProperties = {
+    this.downloadEventProperties = {
       data_type: amplitudeEvents.EVENT
     };
 
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.MANAGE_DOWNLOAD_DATA,
-      this.downloadEentProperties);
+      this.downloadEventProperties);
   }
 
   onViewFeedback(attendee): void {
@@ -187,7 +187,7 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
     this.eventProperties = {
       ...this.eventProperties,
       event_id: this.event.id,
-      location: this.utils.getLocation(this.event.location),
+      location: this.utils.hasLocation(this.event.location),
       start_date: CPDate.getMonth(this.event.start, this.session.tz),
       end_date: CPDate.getMonth(this.event.end, this.session.tz)
     };
