@@ -81,6 +81,16 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   newAddress = new BehaviorSubject(null);
   drawMarker = new BehaviorSubject(false);
 
+  eventProperties = {
+    event_id: null,
+    host_type: null,
+    start_date: null,
+    end_date: null,
+    location: null,
+    assessment: null,
+    feedback: null
+  };
+
   constructor(
     public router: Router,
     public fb: FormBuilder,
@@ -187,6 +197,16 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
     this.service.updateEvent(data, this.eventId, search).subscribe(
       (_) => {
+        this.eventProperties = {
+          ...this.eventProperties,
+          ...this.utils.setEventProperties(this.form.controls),
+          event_id: this.eventId,
+        };
+
+        this.cpTracking.amplitudeEmitEvent(
+          amplitudeEvents.MANAGE_UPDATED_EVENT,
+          this.eventProperties);
+
         this.router.navigate([this.urlPrefix]);
       },
       (_) => {
@@ -238,6 +258,11 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     );
 
     this.originalHost = this.getFromArray(this.stores, 'value', res.store_id);
+
+    this.eventProperties = {
+      ...this.eventProperties,
+      host_type: this.originalHost.hostType
+    };
 
     this.isFormReady = true;
   }
@@ -302,6 +327,11 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   onSelectedHost(host): void {
+    this.eventProperties = {
+      ...this.eventProperties,
+      host_type: host.hostType
+    };
+
     this.selectedManager = null;
     this.fetchManagersBySelectedStore(host.value);
     this.form.controls['store_id'].setValue(host.value);

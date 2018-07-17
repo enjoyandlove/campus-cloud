@@ -17,6 +17,8 @@ export const amplitudeEvents = {
 
   EVENT: 'Event',
 
+  MEMBER: 'Member',
+
   CAMPUS: 'Campus',
 
   ACTIVE: 'Active',
@@ -38,6 +40,8 @@ export const amplitudeEvents = {
   MENU_ASSESS: 'Assess',
 
   MENU_NOTIFY: 'Notify',
+
+  EXECUTIVE: 'Executive',
 
   ATHLETICS: 'Athletics',
 
@@ -151,7 +155,21 @@ export const amplitudeEvents = {
 
   CREATE_CALENDAR_ITEM: 'Create Calendar Item',
 
+  MANAGE_CREATED_LINK: 'Manage - Created Link',
+
+  MANAGE_UPDATED_LINK: 'Manage - Updated Link',
+
+  MANAGE_CREATED_CLUB: 'Manage - Created Club',
+
+  MANAGE_UPDATED_CLUB: 'Manage - Updated Club',
+
+  MANAGE_APPROVED_CLUB: 'Manage - Approved Club',
+
   WALL_DELETED_COMMENT: 'Wall - Deleted Comment',
+
+  MANAGE_UPDATED_EVENT: 'Manage - Updated Event',
+
+  MANAGE_CREATED_EVENT: 'Manage - Created Event',
 
   ASSESS_DOWNLOAD_DATA: 'Assess Downloaded Data',
 
@@ -165,9 +183,29 @@ export const amplitudeEvents = {
 
   MANAGE_LOADED_CHECKIN: 'Manage - Loaded Check-In',
 
+  MANAGE_CANCELED_EVENT: 'Manage - Cancelled Event',
+
   WALL_SUBMITTED_COMMENT: 'Wall - Submitted Comment',
 
+  MANAGE_CREATED_SERVICE: 'Manage - Created Service',
+
+  MANAGE_UPDATED_SERVICE: 'Manage - Updated Service',
+
   MANAGE_CLICKED_CHECKIN: 'Manage - Clicked Check-In',
+
+  MANAGE_CLICKED_FEEDBACK: 'Manage - Clicked Feedback',
+
+  MANAGE_CREATED_LOCATION: 'Manage - Created Location',
+
+  MANAGE_CREATED_CALENDAR: 'Manage - Created Calendar',
+
+  MANAGE_UPDATED_LOCATION: 'Manage - Updated Location',
+
+  MANAGE_ADDED_CLUB_MEMBER: 'Manage - Added Club Member',
+
+  MANAGE_UPDATED_CLUB_MEMBER: 'Manage - Updated Club Member',
+
+  MANAGE_DELETED_CLUB_MEMBER: 'Manage - Deleted Club Member',
 
   CUSTOMIZE_CANCELED_PHOTO: 'Customize - Canceled Photo',
 
@@ -179,5 +217,15 @@ export const amplitudeEvents = {
 
   MANAGE_CHECKEDIN_MANUALLY: 'Manage - Checked In Manually',
 
-  ASSESS_VIEWED_TOP_SERVICES: 'Assess - Viewed Top Services'
+  ASSESS_VIEWED_TOP_SERVICES: 'Assess - Viewed Top Services',
+
+  MANAGE_UPDATED_CALENDAR_EVENT: 'Manage - Updated Calendar Event',
+
+  MANAGE_CREATED_CALENDAR_EVENT: 'Manage - Created Calendar Event',
+
+  MANAGE_VIEWED_SERVICE_PROVIDER: 'Manage - Viewed Service Provider',
+
+  MANAGE_DELETED_SERVICE_PROVIDER: 'Manage - Deleted Service Provider',
+
+  MANAGE_CREATED_SERVICE_PROVIDER: 'Manage - Created Service Provider'
 };

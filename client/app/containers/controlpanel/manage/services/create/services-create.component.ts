@@ -8,6 +8,7 @@ import { Store } from '@ngrx/store';
 import { CPMap } from '../../../../../shared/utils';
 import { ServicesService } from '../services.service';
 import { CPSession, ISchool } from '../../../../../session';
+import { ServicesUtilsService } from '../services.utils.service';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
@@ -41,6 +42,17 @@ export class ServicesCreateComponent implements OnInit {
   newAddress = new BehaviorSubject(null);
   drawMarker = new BehaviorSubject(false);
 
+  eventProperties = {
+    phone: null,
+    email: null,
+    website: null,
+    feedback: null,
+    location: null,
+    service_id: null,
+    assessment: null,
+    category_name: null
+  };
+
   feedbackOptions = [
     {
       label: this.cpI18n.translate('service_enabled'),
@@ -58,6 +70,7 @@ export class ServicesCreateComponent implements OnInit {
     private session: CPSession,
     private store: Store<IHeader>,
     private cpI18n: CPI18nService,
+    private utils: ServicesUtilsService,
     private cpTracking: CPTrackingService,
     private servicesService: ServicesService
   ) {
@@ -210,6 +223,7 @@ export class ServicesCreateComponent implements OnInit {
       })
       .pipe(catchError((err) => observableThrowError(err)))
       .subscribe((service: any) => {
+        this.trackEvent(service, service.id);
         if (service.service_attendance) {
           this.router.navigate(['/manage/services/' + service.id]);
 
@@ -248,6 +262,26 @@ export class ServicesCreateComponent implements OnInit {
       this.form.controls['room_data'].setValue(null);
       CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
     }
+  }
+
+  onCategoryUpdate(category) {
+    this.form.controls['category'].setValue(category.action);
+
+    this.eventProperties = {
+      ...this.eventProperties,
+      category_name: category.label
+    };
+  }
+
+  trackEvent(data, serviceId) {
+    this.eventProperties = {
+      ...this.eventProperties,
+      ...this.utils.setEventProperties(data, serviceId)
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_CREATED_SERVICE,
+      this.eventProperties);
   }
 
   ngOnInit() {

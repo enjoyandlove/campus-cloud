@@ -12,6 +12,7 @@ import { EventUtilService } from '../events.utils.service';
 import { CPSession, ISchool } from '../../../../../session';
 import { CPDate, CPMap } from '../../../../../shared/utils';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { EventAttendance, EventFeedback, isAllDay } from '../event.status';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
@@ -71,6 +72,17 @@ export class EventsCreateComponent implements OnInit {
   newAddress = new BehaviorSubject(null);
   drawMarker = new BehaviorSubject(false);
 
+  eventProperties = {
+    event_id: null,
+    host_type: null,
+    start_date: null,
+    end_date: null,
+    location: null,
+    assessment: null,
+    feedback: null,
+    uploaded_photo: null
+  };
+
   constructor(
     public router: Router,
     public fb: FormBuilder,
@@ -104,6 +116,11 @@ export class EventsCreateComponent implements OnInit {
   }
 
   onSelectedHost(host): void {
+    this.eventProperties = {
+      ...this.eventProperties,
+      host_type: host.hostType
+    };
+
     this.fetchManagersBySelectedStore(host.value);
 
     this.form.controls['store_id'].setValue(host.value);
@@ -274,6 +291,17 @@ export class EventsCreateComponent implements OnInit {
 
     this.service.createEvent(this.form.value, search).subscribe(
       (res: any) => {
+
+        this.eventProperties = {
+          ...this.eventProperties,
+          ...this.utils.setEventProperties(this.form.controls),
+          event_id: res.id
+        };
+
+        this.cpTracking.amplitudeEmitEvent(
+          amplitudeEvents.MANAGE_CREATED_EVENT,
+          this.eventProperties);
+
         this.urlPrefix = this.getUrlPrefix(res.id);
         this.router.navigate([this.urlPrefix]);
       },
@@ -352,7 +380,28 @@ export class EventsCreateComponent implements OnInit {
     }
   }
 
+  getEventProperties() {
+    this.eventProperties = {
+      ...this.eventProperties,
+      ...this.utils.setEventProperties(this.form.controls),
+      uploaded_photo: this.utils.didUploadPhoto(this.form.controls['poster_url'].value)
+    };
+
+    return {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.MANAGE_CANCELED_EVENT,
+      eventProperties: this.eventProperties
+    };
+  }
+
   ngOnInit() {
+    const host_type = this.session.defaultHost ? this.session.defaultHost.hostType : null;
+
+    this.eventProperties = {
+      ...this.eventProperties,
+      host_type
+    };
+
     this.eventFeedbackEnabled = EventFeedback.enabled;
 
     this.school = this.session.g.get('school');
