@@ -2,16 +2,19 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+
+import { IClub } from '../club.interface';
+import { ClubsService } from '../clubs.service';
+import { CPSession } from '../../../../../session';
 import { ManageHeaderService } from './../../utils/header';
+import { ClubsUtilsService } from '../clubs.utils.service';
+import { ClubSocialGroup, ClubStatus } from '../club.status';
 import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
-import { CPSession } from '../../../../../session';
-import { CPI18nService } from '../../../../../shared/services';
-import { IClub } from '../club.interface';
-import { ClubSocialGroup, ClubStatus } from '../club.status';
-import { isClubAthletic } from '../clubs.athletics.labels';
-import { ClubsService } from '../clubs.service';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
+import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
 
 interface IState {
   clubs: IClub[];
@@ -37,6 +40,7 @@ const state: IState = {
 export class ClubsListComponent extends BaseComponent implements OnInit {
   @Input() isAthletic = isClubAthletic.club;
 
+  label;
   loading;
   clubStatus;
   sortingLabels;
@@ -47,13 +51,20 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
   disabledWall = ClubSocialGroup.disabled;
   defaultImage = require('public/default/user.png');
 
+  eventProperties = {
+    club_id: null,
+    club_type: null
+  };
+
   constructor(
     public router: Router,
     private store: Store<any>,
     private session: CPSession,
     public route: ActivatedRoute,
     private cpI18n: CPI18nService,
+    private utils: ClubsUtilsService,
     private clubsService: ClubsService,
+    private cpTracking: CPTrackingService,
     private headerService: ManageHeaderService
   ) {
     super();
@@ -85,14 +96,15 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
   }
 
   onApproveClub(clubId: number) {
-    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
+    let search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     if (this.isAthletic === isClubAthletic.athletic) {
-      search.append('category_id', isClubAthletic.athletic.toString());
+      search = search.append('category_id', isClubAthletic.athletic.toString());
     }
 
     this.clubsService.updateClub({ status: this.ACTIVE_STATUS }, clubId, search).subscribe(
       (updatedClub: any) => {
+        this.trackEvent(updatedClub);
         this.state = {
           ...this.state,
           clubs: this.state.clubs.map(
@@ -104,6 +116,16 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
         throw new Error(err);
       }
     );
+  }
+
+  trackEvent(res) {
+    this.eventProperties = {
+      ...this.eventProperties,
+      club_id: res.id,
+      club_type: this.utils.capitalizeFirstLetter(this.label.club_athletic)
+    };
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_APPROVED_CLUB, this.eventProperties);
   }
 
   doFilter(filter) {
@@ -160,6 +182,8 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.label = clubAthleticLabels(this.isAthletic);
+
     this.clubStatus = {
       [ClubStatus.inactive]: this.cpI18n.translate('clubs_inactive'),
       [ClubStatus.active]: this.cpI18n.translate('active'),
