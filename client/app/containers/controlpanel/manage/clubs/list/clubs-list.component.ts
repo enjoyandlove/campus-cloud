@@ -1,3 +1,4 @@
+import { Router, ActivatedRoute } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
@@ -56,8 +57,10 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
   };
 
   constructor(
+    public router: Router,
     private store: Store<any>,
     private session: CPSession,
+    public route: ActivatedRoute,
     private cpI18n: CPI18nService,
     private utils: ClubsUtilsService,
     private clubsService: ClubsService,
@@ -126,6 +129,13 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
   }
 
   doFilter(filter) {
+    this.router.navigate(['.'], {
+      relativeTo: this.route,
+      queryParams: {
+        type: filter.type
+      }
+    });
+
     this.state = Object.assign({}, this.state, {
       query: filter.query,
       type: filter.type
@@ -172,8 +182,6 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.fetch();
-
     this.label = clubAthleticLabels(this.isAthletic);
 
     this.clubStatus = {
@@ -190,5 +198,7 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
     this.sortingLabels = {
       name: this.cpI18n.translate('name')
     };
+
+    this.fetch();
   }
 }

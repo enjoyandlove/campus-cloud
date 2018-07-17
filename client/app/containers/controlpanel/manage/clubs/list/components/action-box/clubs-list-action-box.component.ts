@@ -1,14 +1,14 @@
-import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
-
-import { ClubStatus } from '../../../club.status';
-import { CPSession } from './../../../../../../../session/index';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { CPSession } from './../../../../../../../session';
 import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
-import { canSchoolWriteResource } from '../../../../../../../shared/utils/privileges/index';
-import { isClubAthletic, clubAthleticLabels } from '../../../clubs.athletics.labels';
-import { CPTrackingService } from '../../../../../../../shared/services';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
 import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
+import { CPTrackingService } from '../../../../../../../shared/services';
+import { canSchoolWriteResource } from '../../../../../../../shared/utils/privileges';
+import { ClubStatus } from '../../../club.status';
+import { clubAthleticLabels, isClubAthletic } from '../../../clubs.athletics.labels';
 
 interface IState {
   query: string;
@@ -33,11 +33,13 @@ export class ClubsListActionBoxComponent implements OnInit {
   clubFilter;
   canCreate;
   amplitudeEvents;
+  selectedItem = null;
   state: IState = state;
   isClubAthleticPrivilege;
 
   constructor(
     private session: CPSession,
+    public route: ActivatedRoute,
     private cpI18n: CPI18nService,
     private cpTracking: CPTrackingService
   ) {}
@@ -48,11 +50,14 @@ export class ClubsListActionBoxComponent implements OnInit {
   }
 
   trackEvent(eventName) {
-    const createClubAthletic = this.isAthletic === isClubAthletic.athletic
-      ? amplitudeEvents.CREATE_ATHLETIC : amplitudeEvents.CREATE_CLUB;
+    const createClubAthletic =
+      this.isAthletic === isClubAthletic.athletic
+        ? amplitudeEvents.CREATE_ATHLETIC
+        : amplitudeEvents.CREATE_CLUB;
 
     const eventProperties = {
-      ... this.cpTracking.getEventProperties(), create_page_name: createClubAthletic
+      ...this.cpTracking.getEventProperties(),
+      create_page_name: createClubAthletic
     };
 
     return {
@@ -60,6 +65,19 @@ export class ClubsListActionBoxComponent implements OnInit {
       eventName,
       eventProperties
     };
+  }
+
+  updateStateFromUrl() {
+    const type = this.route.snapshot.queryParams['type'];
+
+    this.state = {
+      ...this.state,
+      type
+    };
+
+    this.selectedItem = this.clubFilter.filter((c) => c.action === +type)[0];
+
+    this.filter.emit(this.state);
   }
 
   ngOnInit() {
@@ -93,5 +111,11 @@ export class ClubsListActionBoxComponent implements OnInit {
         action: ClubStatus.pending
       }
     ];
+
+    const hasTypeParam = this.route.snapshot.queryParamMap.get('type');
+
+    if (hasTypeParam) {
+      this.updateStateFromUrl();
+    }
   }
 }

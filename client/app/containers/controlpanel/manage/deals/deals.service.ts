@@ -9,6 +9,7 @@ import { CPSession } from '../../../../session';
 import { CPI18nService } from '../../../../shared/services';
 
 export enum DateStatus {
+  noDate = 0,
   forever = -1
 }
 

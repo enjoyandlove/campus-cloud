@@ -68,8 +68,8 @@ export class StoreCreateComponent implements OnInit {
       province: [null],
       country: [null],
       postal_code: [null],
-      latitude: [this.session.g.get('school').latitude],
-      longitude: [this.session.g.get('school').longitude]
+      latitude: [0],
+      longitude: [0]
     });
 
     this.buttonData = Object.assign({}, this.buttonData, {

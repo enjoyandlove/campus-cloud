@@ -24,6 +24,7 @@ export class DealsInfoComponent extends BaseComponent implements OnInit {
   loading;
   forever;
   dateFormat;
+  hasMetaData;
   draggable = false;
   showLocationDetails = true;
   mapCenter: BehaviorSubject<any>;
@@ -62,6 +63,10 @@ export class DealsInfoComponent extends BaseComponent implements OnInit {
         heading: this.deal.title,
         subheading: this.deal.store_name
       };
+
+      this.hasMetaData = this.deal.start
+      || this.deal.store_address
+      || this.deal.expiration !== this.forever;
     });
   }
 
