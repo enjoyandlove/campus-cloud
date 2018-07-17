@@ -58,27 +58,17 @@ export class AudienceSavedBodyComponent implements OnInit {
     return audiences;
   }
 
-  parsePersona(persona): Array<any> {
-    const heading = {
-      action: null,
-      heading: true,
-      label: this.cpI18n.translate('t_notify_announcement_audiences_my_experiences')
-    };
-
-    persona = persona.map((perso) => {
+  parsedPersona(persona): Array<any> {
+    persona = persona.map((p) => {
 
       return {
-        action: perso.id,
-        label: perso.localized_name_map.en,
+        action: p.id,
+        label: p.localized_name_map.en,
         type: 0,
         userCount: 5,
         isPersona: true
       };
     });
-
-    if (persona.length) {
-      persona.unshift(heading);
-    }
 
     return persona;
   }
@@ -116,8 +106,22 @@ export class AudienceSavedBodyComponent implements OnInit {
     );
 
     const persona$ = this.service.getPersona(search, 1, 1000).pipe(
+      startWith([
+        {
+          action: null,
+          heading: true,
+          label: this.cpI18n.translate('t_notify_announcement_audiences_my_experiences')
+        }
+      ]),
       map((persona) => {
-        return this.parsePersona(persona);
+        return [
+          {
+            action: null,
+            heading: true,
+            label: this.cpI18n.translate('t_notify_announcement_audiences_my_experiences')
+          },
+          ...this.parsedPersona(persona)
+        ];
       })
     );
 
