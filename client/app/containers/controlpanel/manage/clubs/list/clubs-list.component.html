@@ -49,7 +49,9 @@
                 class="rounded img-fit-cover" />
 
               <strong>
-                <a [routerLink]="[club.id + '/info']" queryParamsHandling="merge">
+                <a
+                  queryParamsHandling="merge"
+                  [routerLink]="[club.id + '/info']">
                   {{ club.name }}
                 </a>
               </strong>

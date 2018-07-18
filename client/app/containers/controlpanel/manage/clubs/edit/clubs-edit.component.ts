@@ -108,9 +108,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
 
       this.drawMarker.next(this.showLocationDetails);
 
-      this.mapCenter = new BehaviorSubject(
-        CPMap.setDefaultMapCenter(lat, lng, this.school)
-      );
+      this.mapCenter = new BehaviorSubject(CPMap.setDefaultMapCenter(lat, lng, this.school));
 
       this.eventProperties = {
         ...this.eventProperties,
@@ -173,7 +171,9 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
     this.clubsService.updateClub(this.form.value, this.clubId, search).subscribe(
       (res: any) => {
         this.trackEvent(res);
-        this.router.navigate(['/manage/' + this.labels.club_athletic + '/' + res.id + '/info']);
+        this.router.navigate(['/manage/' + this.labels.club_athletic + '/' + res.id + '/info'], {
+          queryParams: this.route.snapshot.queryParams
+        });
       },
       (_) => {
         this.buttonData = Object.assign({}, this.buttonData, {
@@ -195,9 +195,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
   trackEvent(data) {
     this.eventProperties = {
       ...this.eventProperties,
-      ...this.helper.setEventProperties(
-        data,
-        this.labels.club_athletic)
+      ...this.helper.setEventProperties(data, this.labels.club_athletic)
     };
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_UPDATED_CLUB, this.eventProperties);
