@@ -30,6 +30,10 @@ export class LinksCreateComponent implements OnInit {
   tooltipContent;
   form: FormGroup;
 
+  eventProperties = {
+    link_id: null
+  };
+
   constructor(
     private fb: FormBuilder,
     private session: CPSession,
@@ -85,6 +89,7 @@ export class LinksCreateComponent implements OnInit {
 
   doSubmit() {
     this.service.createLink(this.form.value).subscribe((res: any) => {
+      this.trackEvent(res);
       $('#linksCreate').modal('hide');
       this.createLink.emit(res);
       this.resetModal();
@@ -97,6 +102,15 @@ export class LinksCreateComponent implements OnInit {
 
   handleDeleteImage() {
     this.form.controls['img_url'].setValue(null);
+  }
+
+  trackEvent(res) {
+    this.eventProperties = {
+      ...this.eventProperties,
+      link_id: res.id
+    };
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CREATED_LINK, this.eventProperties);
   }
 
   ngOnInit() {

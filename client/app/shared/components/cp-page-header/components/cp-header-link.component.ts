@@ -16,12 +16,14 @@ export class CPHeaderLinkComponent {
   @Input() readyFeatures;
   @Input() extraChildren;
 
-  constructor(
-    public router: Router,
-    public cpTracking: CPTrackingService) {}
+  constructor(public router: Router, public cpTracking: CPTrackingService) {}
 
   isExtraMenuRoute() {
     return this.router.url === this.extraMenu.url;
+  }
+
+  setQueryParams(page) {
+    return page.clearParams ? null : 'merge';
   }
 
   trackSubMenu(subMenu) {

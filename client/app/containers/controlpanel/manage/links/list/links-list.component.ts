@@ -85,6 +85,7 @@ export class LinksListComponent extends BaseComponent implements OnInit {
     const search = new HttpParams()
       .set('search_str', this.state.search_str)
       .set('sort_field', this.state.sort_field)
+      .set('is_system', '0')
       .set('sort_direction', this.state.sort_direction)
       .set('school_id', this.session.g.get('school').id.toString());
 

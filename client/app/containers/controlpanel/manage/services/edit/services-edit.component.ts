@@ -1,20 +1,22 @@
-import { HttpParams } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { BehaviorSubject, combineLatest, throwError as observableThrowError } from 'rxjs';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { catchError, map, switchMap } from 'rxjs/operators';
-import { IServiceDeleteModal } from './components/service-edit-delete-modal';
-import { BaseComponent } from '../../../../../base/base.component';
-import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
-import { CPSession, ISchool } from '../../../../../session';
-import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
+import { Store } from '@ngrx/store';
+
 import { CPMap } from '../../../../../shared/utils';
-import { ProvidersService } from '../providers.service';
 import { ServicesService } from '../services.service';
+import { ProvidersService } from '../providers.service';
+import { CPSession, ISchool } from '../../../../../session';
+import { ServicesUtilsService } from '../services.utils.service';
+import { BaseComponent } from '../../../../../base/base.component';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { IServiceDeleteModal } from './components/service-edit-delete-modal';
+import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
+import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 
 declare var $: any;
 
@@ -62,6 +64,17 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     index: null
   };
 
+  eventProperties = {
+    phone: null,
+    email: null,
+    website: null,
+    feedback: null,
+    location: null,
+    service_id: null,
+    assessment: null,
+    category_name: null
+  };
+
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -69,6 +82,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     private store: Store<IHeader>,
     private cpI18n: CPI18nService,
     private route: ActivatedRoute,
+    private utils: ServicesUtilsService,
     private cpTracking: CPTrackingService,
     private servicesService: ServicesService,
     private providersService: ProvidersService
@@ -129,6 +143,11 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       this.categories.map((category) => {
         if (category.action === +this.service.category) {
           this.selectedCategory = category;
+
+          this.eventProperties = {
+            ...this.eventProperties,
+            category_name: category.label
+          };
         }
       });
 
@@ -324,6 +343,11 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
 
   onCategoryUpdate(category) {
     this.form.controls['category'].setValue(category.action);
+
+    this.eventProperties = {
+      ...this.eventProperties,
+      category_name: category.label
+    };
   }
 
   onLocationToggle(value) {
@@ -417,6 +441,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
         catchError((err) => observableThrowError(err))
       )
       .subscribe((_) => {
+        this.trackEvent(data);
         if (this.withAttendance) {
           this.router.navigate(['/manage/services/' + this.serviceId]);
 
@@ -425,6 +450,17 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
 
         this.router.navigate(['/manage/services/' + this.serviceId + '/info']);
       });
+  }
+
+  trackEvent(data) {
+    this.eventProperties = {
+      ...this.eventProperties,
+      ...this.utils.setEventProperties(data, this.serviceId)
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_UPDATED_SERVICE,
+      this.eventProperties);
   }
 
   ngOnInit() {

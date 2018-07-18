@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { isProd } from '../../../config/env';
 
@@ -28,7 +28,7 @@ export class CPPageHeaderComponent implements OnChanges {
   readyFeatures = [];
   extraChildren = [];
 
-  constructor(public router: Router) {}
+  constructor(public router: Router, public route: ActivatedRoute) {}
 
   getProductionReadyFeatures() {
     return this.data.children.filter((child) => !child.hasOwnProperty('hiddenInProd'));

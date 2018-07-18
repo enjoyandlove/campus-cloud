@@ -48,6 +48,7 @@ import {
 import { ServicesProvidersAttendeesListComponent } from './attendance/components/providers-details/components';
 
 import { EventsModule } from '../events/events.module';
+import { ServicesUtilsService } from './services.utils.service';
 
 @NgModule({
   declarations: [
@@ -86,6 +87,6 @@ import { EventsModule } from '../events/events.module';
     EventsModule
   ],
 
-  providers: [ServicesService, ProvidersService, AdminService]
+  providers: [ServicesService, ProvidersService, AdminService, ServicesUtilsService]
 })
 export class ServicesModule {}

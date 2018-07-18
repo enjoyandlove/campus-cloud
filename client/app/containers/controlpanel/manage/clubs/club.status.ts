@@ -11,3 +11,8 @@ export enum ClubStatus {
 export enum ClubSocialGroup {
   'disabled' = -1
 }
+
+export enum HasData {
+  'yes' = 'Yes',
+  'no' = 'No'
+}

@@ -6,10 +6,11 @@
           (query)="onUpdateState($event, 'query')"
           class="col-7">
         </cp-searchbox>
-    
+
         <div class="col-5">
           <cp-dropdown
             [items]="clubFilter"
+            [selectedItem]="selectedItem"
             (selected)="onUpdateState($event.action, 'type')">
           </cp-dropdown>
         </div>

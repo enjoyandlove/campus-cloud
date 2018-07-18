@@ -69,7 +69,7 @@ export class ClubsEventsComponent extends BaseComponent implements OnInit {
         url:
           this.router.url === `/manage/` + this.labels.club_athletic + `/${this.clubId}/events`
             ? this.labels.club_athletic
-            : this.labels.club_athletic + `/${this.clubId}`,
+            : this.labels.club_athletic,
         label: this.labels.club_athletic
       },
       em: null,
