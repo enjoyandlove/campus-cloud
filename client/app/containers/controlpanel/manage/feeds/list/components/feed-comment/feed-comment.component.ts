@@ -53,6 +53,5 @@ export class FeedCommentComponent implements OnInit {
 
   ngOnInit() {
     this.requiresApproval$.next(this.comment.dislikes > 0 && this.comment.flag !== 2);
-    // console.log(this);
   }
 }

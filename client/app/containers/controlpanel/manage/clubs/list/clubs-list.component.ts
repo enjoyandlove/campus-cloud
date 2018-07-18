@@ -91,7 +91,9 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
 
     super
       .fetchData(this.clubsService.getClubs(search, this.startRange, this.endRange))
-      .then((res) => (this.state = Object.assign({}, this.state, { clubs: res.data })))
+      .then((res) => {
+        this.state = Object.assign({}, this.state, { clubs: res.data });
+      })
       .catch((_) => null);
   }
 
@@ -199,6 +201,10 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
       name: this.cpI18n.translate('name')
     };
 
-    this.fetch();
+    const hasTypeParam = this.route.snapshot.queryParamMap.get('type');
+
+    if (!hasTypeParam) {
+      this.fetch();
+    }
   }
 }
