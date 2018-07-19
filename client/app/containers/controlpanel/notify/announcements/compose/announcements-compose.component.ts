@@ -166,8 +166,10 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
         isToFilters: false,
         isCampusWide: false,
         isToLists: audience.isList,
-        isToPersona: audience.isPersona
+        isToPersona: audience.isPersona,
+        validUserCount: audience.userCount > 0
       };
+
       this.form.controls['is_school_wide'].setValue(false);
       this.hideEmergencyType(true);
       this.updatePriority();

@@ -64,11 +64,13 @@ export class AudienceSavedBodyComponent implements OnInit {
     persona = persona.map((p) => {
 
       if (p.hasOwnProperty('localized_name_map')) {
+        const users = _get(p, 'user_count', null);
+
         _persona.push({
           action: p.id,
           type: 'persona',
           isPersona: true,
-          userCount: p.user_count,
+          userCount: users,
           label: this.getLocalizedLabel(p.localized_name_map)
         });
       }
