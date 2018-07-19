@@ -242,8 +242,8 @@ export class EngagementTopBarComponent implements OnInit {
 
     this.route.data.subscribe((res: { zendesk: string; data: Array<any> }) => {
       // @data [services, lists, persona]
-      const _persona = [];
-      const _lists = [...this.commonStudentFilter];
+      const _lists = [];
+      const _persona = [...this.commonStudentFilter];
       const _engagements = [...this.commonEngageMentFilter];
 
       if (res.data[0].length) {
@@ -308,7 +308,7 @@ export class EngagementTopBarComponent implements OnInit {
       });
 
       this.engageMentFilter = _engagements;
-      this.studentFilter = [..._lists, ..._persona];
+      this.studentFilter = [..._persona, ..._lists];
     });
 
     if (

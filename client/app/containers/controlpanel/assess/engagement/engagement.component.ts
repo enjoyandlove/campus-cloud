@@ -101,9 +101,13 @@ export class EngagementComponent extends BaseComponent implements OnInit {
       .append('end', `${this.filterState.range.payload.range.end}`)
       .append(this.filterState.engagement.data.queryParam, this.filterState.engagement.data.value);
 
-    search = this.filterState.for.personaId
-      ? search.append('persona_id', this.filterState.for.personaId)
-      : search.append('user_list_id', this.filterState.for.listId);
+    if (this.filterState.for.personaId) {
+      search = search.append('persona_id', this.filterState.for.personaId.toString());
+    }
+
+    if (this.filterState.for.listId) {
+      search = search.append('user_list_id', this.filterState.for.listId.toString());
+    }
 
     return search;
   }

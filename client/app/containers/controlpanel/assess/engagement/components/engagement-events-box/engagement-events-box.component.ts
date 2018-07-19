@@ -92,9 +92,6 @@ export class EngagementEventsBoxComponent extends BaseComponent implements OnIni
       this.loading = true;
     }
 
-    const list_id = this.state.list_id ? this.state.list_id.toString() : null;
-    const persona_id = this.state.persona_id ? this.state.persona_id.toString() : null;
-
     let search = new HttpParams()
       .set('sort_by', this.state.sortBy)
       .set('end', this.state.end.toString())
@@ -106,9 +103,13 @@ export class EngagementEventsBoxComponent extends BaseComponent implements OnIni
         ? search.append('scope', this.state.scope.value.toString())
         : search.append('service_id', this.state.scope.value.toString());
 
-    search = this.state.persona_id
-      ? search.append('persona_id', persona_id)
-      : search.append('user_list_id', list_id);
+    if (this.state.persona_id) {
+      search = search.append('persona_id', this.state.persona_id.toString());
+    }
+
+    if (this.state.list_id) {
+      search = search.append('user_list_id', this.state.list_id.toString());
+    }
 
     this.updateSortingLabel();
 
