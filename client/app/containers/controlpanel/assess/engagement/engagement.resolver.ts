@@ -28,7 +28,11 @@ export class EngagementResolver implements Resolve<any> {
       .getLists(undefined, undefined, search)
       .pipe(catchError((_) => observableOf([])));
 
-    const stream$ = combineLatest(servicesList$, listsList$);
+    const personaList$ = this.service
+      .getPersona(undefined, undefined, search)
+      .pipe(catchError((_) => observableOf([])));
+
+    const stream$ = combineLatest(servicesList$, listsList$, personaList$);
 
     return stream$;
   }

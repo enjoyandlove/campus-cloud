@@ -241,8 +241,9 @@ export class EngagementTopBarComponent implements OnInit {
     ];
 
     this.route.data.subscribe((res: { zendesk: string; data: Array<any> }) => {
-      // @data [services, lists]
-      const _lists = [...this.commonStudentFilter];
+      // @data [services, lists, persona]
+      const _lists = [];
+      const _persona = [...this.commonStudentFilter];
       const _engagements = [...this.commonEngageMentFilter];
 
       if (res.data[0].length) {
@@ -252,17 +253,6 @@ export class EngagementTopBarComponent implements OnInit {
           heading: true
         });
       }
-
-      res.data[1].forEach((list) => {
-        _lists.push({
-          route_id: list.name
-            .toLowerCase()
-            .split(' ')
-            .join('_'),
-          label: list.name,
-          listId: list.id
-        });
-      });
 
       res.data[0].forEach((service) => {
         _engagements.push({
@@ -279,8 +269,46 @@ export class EngagementTopBarComponent implements OnInit {
         });
       });
 
-      this.studentFilter = _lists;
+      if (res.data[1].length) {
+        _lists.push({
+          label: this.cpI18n.translate('audience_my_audiences'),
+          value: null,
+          heading: true
+        });
+      }
+
+      res.data[1].forEach((list) => {
+        _lists.push({
+          route_id: list.name
+            .toLowerCase()
+            .split(' ')
+            .join('_'),
+          label: list.name,
+          listId: list.id
+        });
+      });
+
+      if (res.data[2].length) {
+        _persona.push({
+          label: this.cpI18n.translate('t_notify_announcement_audiences_my_experiences'),
+          value: null,
+          heading: true
+        });
+      }
+
+      res.data[2].forEach((persona) => {
+        _persona.push({
+          route_id: persona.localized_name_map.en
+            .toLowerCase()
+            .split(' ')
+            .join('_'),
+          label: persona.localized_name_map.en,
+          personaId: persona.id
+        });
+      });
+
       this.engageMentFilter = _engagements;
+      this.studentFilter = [..._persona, ..._lists];
     });
 
     if (
