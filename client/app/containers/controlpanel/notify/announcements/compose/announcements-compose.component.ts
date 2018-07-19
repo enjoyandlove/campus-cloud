@@ -165,7 +165,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
         isToUsers: false,
         isToFilters: false,
         isCampusWide: false,
-        isToLists: !audience.isPersona,
+        isToLists: audience.isList,
         isToPersona: audience.isPersona
       };
       this.form.controls['is_school_wide'].setValue(false);
@@ -183,7 +183,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
         isToFilters: false
       };
       this.form.controls['list_ids'].setValue([]);
-      this.form.controls['persona_id'].setValue([]);
+      this.form.controls['persona_id'].setValue(null);
       this.form.controls['is_school_wide'].setValue(true);
       this.hideEmergencyType(false);
       this.updatePriority();
@@ -197,9 +197,9 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   setListPersonaId(val) {
     if (val.isPersona) {
       this.form.controls['list_ids'].setValue([]);
-      this.form.controls['persona_id'].setValue([val.action]);
+      this.form.controls['persona_id'].setValue(val.action);
     } else {
-      this.form.controls['persona_id'].setValue([]);
+      this.form.controls['persona_id'].setValue(null);
       this.form.controls['list_ids'].setValue([val.action]);
     }
   }
@@ -619,7 +619,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       user_ids: [[]],
       list_ids: [[]],
       filters: [[]],
-      persona_id: [[]],
+      persona_id: [null],
       is_school_wide: true,
       subject: [null, [Validators.required, Validators.maxLength(128)]],
       message: [null, [Validators.required, Validators.maxLength(400)]],

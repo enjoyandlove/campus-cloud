@@ -41,11 +41,11 @@ export class AudienceSavedBodyComponent implements OnInit {
       const users = _get(audience, 'count', null);
 
       return {
+        isList: true,
+        userCount: users,
         action: audience.id,
         label: audience.name,
-        type: audience.type,
-        userCount: users,
-        isPersona: false
+        type: audience.type
       };
     });
 
@@ -59,18 +59,30 @@ export class AudienceSavedBodyComponent implements OnInit {
   }
 
   parsedPersona(persona): Array<any> {
+    const _persona = [];
+
     persona = persona.map((p) => {
 
-      return {
-        action: p.id,
-        label: p.localized_name_map.en,
-        type: 0,
-        userCount: 5,
-        isPersona: true
-      };
+      if (p.hasOwnProperty('localized_name_map')) {
+        _persona.push({
+          action: p.id,
+          type: 'persona',
+          isPersona: true,
+          userCount: p.user_count,
+          label: this.getLocalizedLabel(p.localized_name_map)
+        });
+      }
     });
 
-    return persona;
+    return _persona;
+  }
+
+  getLocalizedLabel(label) {
+    const defaultLocale = 'en-US';
+
+    return CPI18nService.getLocale() === defaultLocale
+      ? label.en
+      : label.fr;
   }
 
   fetch() {
@@ -85,7 +97,10 @@ export class AudienceSavedBodyComponent implements OnInit {
       return;
     }
 
-    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
+    const with_user_count = 1;
+    const search = new HttpParams()
+      .append('school_id', this.session.g.get('school').id.toString())
+      .append('with_user_count', with_user_count.toString());
 
     const audiences$ = this.service.getAudiences(search, 1, 1000).pipe(
       startWith([
