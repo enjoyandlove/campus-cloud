@@ -20,14 +20,14 @@
                   </div>
                 </div>
               </div>
-  
+
               <div class="form-group club-details">
                 <div class="row">
                   <div class="col-12">
                     <p class="title">{{ labels.create_edit_details | cpI18n }}</p>
                   </div>
                 </div>
-  
+
                 <div class="row">
                   <div class="col-12">
                     <label>{{ labels.create_edit_name | cpI18n }}</label>
@@ -39,7 +39,7 @@
                   </div>
                 </div>
               </div>
-  
+
               <div class="row form-group">
                 <div class="col-12">
                   <label>{{ labels.create_edit_description | cpI18n }}</label>
@@ -49,7 +49,7 @@
                   </textarea>
                 </div>
               </div>
-  
+
               <div class="row form-group">
                 <div class="col-6">
                   <label>{{ labels.create_edit_status | cpI18n }}</label>
@@ -137,13 +137,13 @@
               </div>
             </div>
           </div>
-  
+
           <div class="col-6">
             <div class="cp-card contact">
               <div class="row form-group">
                 <div class="col-12">
                   <p class="title">{{ 'contact_details' | cpI18n }}</p>
-  
+
                   <div class="row form--group">
                     <div class="col-6">
                       <label>{{ 'website' | cpI18n }}</label>
@@ -152,7 +152,7 @@
                         class="form-control"
                         formControlName="website">
                     </div>
-  
+
                     <div class="col-6">
                       <label>{{ 'phone_number' | cpI18n  }}</label>
                       <input
@@ -161,7 +161,7 @@
                         formControlName="phone">
                     </div>
                   </div>
-  
+
                   <div class="row">
                     <div class="col-12">
                       <label>{{ 'email' | cpI18n  }}</label>
@@ -174,12 +174,12 @@
                 </div>
               </div>
             </div>
-  
+
             <div class="cp-card" *ngIf="isSJSU">
               <div class="row form-group">
                 <div class="col-12">
                   <p class="title">{{ 'clubs_label_advisor' | cpI18n }}</p>
-  
+
                   <div class="row form--group">
                     <div class="col-6">
                       <label>{{ 'first_name' | cpI18n }}</label>
@@ -189,7 +189,7 @@
                         formControlName="advisor_firstname"
                         [class.error]="formError && form.controls['advisor_firstname'].hasError('required')">
                     </div>
-  
+
                     <div class="col-6">
                       <label>{{ 'last_name' | cpI18n  }}</label>
                       <input
@@ -199,7 +199,7 @@
                         [class.error]="formError && form.controls['advisor_lastname'].hasError('required')">
                     </div>
                   </div>
-  
+
                   <div class="row">
                     <div class="col-12">
                       <label>{{ 'email' | cpI18n  }}</label>
@@ -214,7 +214,7 @@
               </div>
             </div>
           </div>
-  
+
           <div class="footer">
             <div class="cp-wrapper cp-wrapper--outer">
               <div class="col-12">
@@ -224,7 +224,9 @@
                       <label class="error" *ngIf="formError">
                           <span>&#x26A0;</span> {{ 'error_fill_out_marked_fields' | cpI18n }}
                       </label>
-                      <a [routerLink]="['../info']"
+                      <a
+                        [routerLink]="['../info']"
+                        queryParamsHandling="merge"
                         class="cpbtn cpbtn--cancel">
                         {{ 'cancel' | cpI18n }}
                       </a>

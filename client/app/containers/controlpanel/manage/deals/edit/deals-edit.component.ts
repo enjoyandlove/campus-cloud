@@ -117,8 +117,8 @@ export class DealsEditComponent extends BaseComponent implements OnInit {
       address: [null],
       logo_url: [null],
       description: [null],
-      latitude: [this.session.g.get('school').latitude],
-      longitude: [this.session.g.get('school').longitude]
+      latitude: [0],
+      longitude: [0]
     });
   }
 
