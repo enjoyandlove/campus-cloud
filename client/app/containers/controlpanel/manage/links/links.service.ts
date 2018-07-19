@@ -5,6 +5,13 @@ import { Router } from '@angular/router';
 import { API } from '../../../../config/api';
 import { HTTPService } from '../../../../base/http.service';
 
+export enum ChangedURL {
+  'yes' = 'Yes',
+  'no' = 'No'
+}
+
+export const didUrlChange = (oldURL, newURL) => oldURL === newURL ? ChangedURL.no : ChangedURL.yes;
+
 @Injectable()
 export class LinksService extends HTTPService {
   constructor(http: HttpClient, router: Router) {
@@ -18,8 +25,6 @@ export class LinksService extends HTTPService {
   }
 
   getLinks(startRage: number, endRage: number, search?: HttpParams) {
-    search.append('is_system', '0');
-
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LINKS}/${startRage};${endRage}`;
 
     return super.get(url, search);
