@@ -55,13 +55,13 @@ describe('AudienceSavedBodyComponent', () => {
   });
 
   it('parsedAudience', () => {
-    expect(comp.parsedAudience(mockAudiences).length).toBe(2);
-    expect(comp.parsedAudience(mockAudiences)[1]).toEqual({
+    expect(comp.utils.parsedAudience(mockAudiences).length).toBe(2);
+    expect(comp.utils.parsedAudience(mockAudiences)[1]).toEqual({
       action: 1,
       label: 'hello',
       userCount: 1
     });
 
-    expect(comp.parsedAudience([]).length).toBe(0);
+    expect(comp.utils.parsedAudience([]).length).toBe(0);
   });
 });

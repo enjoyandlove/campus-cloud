@@ -56,6 +56,13 @@ export class AudienceService extends HTTPService {
     return `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
   }
 
+  getPersona(search: HttpParams, startRange: number, endRange: number): Observable<any> {
+    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SCHOOL_PERSONA}`;
+    const url = `${common}/${startRange};${endRange}`;
+
+    return super.get(url, search);
+  }
+
   setModalServices(services: any[]): void {
     this.store.dispatch({
       type: SERVICES_MODAL_SET,

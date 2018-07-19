@@ -1,12 +1,14 @@
 /*tslint:disable:max-line-length */
-import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { get as _get } from 'lodash';
 import { combineLatest, Observable, of as observableOf } from 'rxjs';
+import { HttpParams } from '@angular/common/http';
 import { map, startWith } from 'rxjs/operators';
-import { AudienceService } from './../../../../../containers/controlpanel/audience/audience.service';
-import { CPI18nService } from './../../../../../shared/services';
+
+import { UserCount } from '../../audience.status';
 import { CPSession } from '../../../../../session';
+import { CPI18nService } from './../../../../../shared/services';
+import { AudienceUtilsService } from '../../audience.utils.service';
+import { AudienceService } from './../../../../../containers/controlpanel/audience/audience.service';
 
 @Component({
   selector: 'cp-audience-saved-body',
@@ -27,35 +29,9 @@ export class AudienceSavedBodyComponent implements OnInit {
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public service: AudienceService
+    public service: AudienceService,
+    public utils: AudienceUtilsService
   ) {}
-
-  parsedAudience(audiences): Array<any> {
-    const heading = {
-      action: null,
-      heading: true,
-      label: this.cpI18n.translate('audience_my_audiences')
-    };
-
-    audiences = audiences.map((audience) => {
-      const users = _get(audience, 'count', null);
-
-      return {
-        action: audience.id,
-        label: audience.name,
-        type: audience.type,
-        userCount: users
-      };
-    });
-
-    if (audiences.length) {
-      audiences.unshift(heading);
-    }
-
-    this.audiences = audiences;
-
-    return audiences;
-  }
 
   fetch() {
     if (!this.canReadAudience) {
@@ -69,28 +45,59 @@ export class AudienceSavedBodyComponent implements OnInit {
       return;
     }
 
-    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams()
+      .append('school_id', this.session.g.get('school').id.toString())
+      .append('with_user_count', UserCount.withUserCount.toString());
 
     const audiences$ = this.service.getAudiences(search, 1, 1000).pipe(
       startWith([
         {
           action: null,
-          label: this.cpI18n.translate('campus_wide')
+          heading: true,
+          label: this.cpI18n.translate('audience_my_audiences')
         }
       ]),
       map((audiences) => {
         return [
           {
             action: null,
-            label: this.cpI18n.translate('campus_wide')
+            heading: true,
+            label: this.cpI18n.translate('audience_my_audiences')
           },
-          ...this.parsedAudience(audiences)
+          ...this.utils.parsedAudience(audiences)
         ];
       })
     );
 
-    this.audiences$ = combineLatest(audiences$, this.importedAudience$).pipe(
-      map(([audiences, importedAudienceId]: any) => {
+    const persona$ = this.service.getPersona(search, 1, 1000).pipe(
+      startWith([
+        {
+          action: null,
+          label: this.cpI18n.translate('campus_wide')
+        }
+      ]),
+      map((persona, index) => {
+        let _personas = [];
+        const heading = [
+          {
+            action: null,
+            label: this.cpI18n.translate('campus_wide')
+          }
+        ];
+
+        if (index !== 0) {
+          _personas = persona;
+        }
+
+        return [
+          ...heading,
+          ...this.utils.parsedPersona(_personas)
+        ];
+      })
+    );
+
+    this.audiences$ = combineLatest(audiences$, persona$, this.importedAudience$).pipe(
+      map(([audiences, persona, importedAudienceId]: any) => {
         if (importedAudienceId) {
           this.selectedItem = audiences.filter(
             (audience) => audience.action === importedAudienceId
@@ -107,7 +114,7 @@ export class AudienceSavedBodyComponent implements OnInit {
           });
         }
 
-        return audiences;
+        return [...persona, ...audiences];
       })
     );
   }

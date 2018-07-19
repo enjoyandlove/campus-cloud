@@ -23,6 +23,7 @@ interface IState {
   isUrgent: boolean;
   isToLists: boolean;
   isToUsers: boolean;
+  isToPersona: boolean;
   isToFilters: boolean;
   isEmergency: boolean;
   isCampusWide: boolean;
@@ -33,6 +34,7 @@ const state: IState = {
   isUrgent: false,
   isToLists: false,
   isToUsers: false,
+  isToPersona: false,
   isToFilters: false,
   isEmergency: false,
   isCampusWide: true,
@@ -129,6 +131,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
         ...this.state,
         isToUsers: true,
         isToLists: false,
+        isToPersona: false,
         isToFilters: false,
         isCampusWide: false,
         validUserCount: false
@@ -144,6 +147,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
         isToUsers: false,
         isToLists: false,
         isToFilters: true,
+        isToPersona: false,
         isCampusWide: false,
         validUserCount: false
       };
@@ -159,25 +163,29 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       this.state = {
         ...this.state,
         isToUsers: false,
-        isToLists: true,
         isToFilters: false,
-        isCampusWide: false
+        isCampusWide: false,
+        isToLists: audience.isList,
+        isToPersona: audience.isPersona,
+        validUserCount: audience.userCount > 0
       };
-      this.form.controls['list_ids'].setValue([audience.action]);
-      this.form.controls['is_school_wide'].setValue(false);
 
+      this.form.controls['is_school_wide'].setValue(false);
       this.hideEmergencyType(true);
       this.updatePriority();
+      this.setListPersonaId(audience);
       this.getAudienceType(audience.type);
     } else {
       this.state = {
         ...this.state,
         isToUsers: false,
         isToLists: false,
+        isToPersona: false,
         isCampusWide: true,
         isToFilters: false
       };
       this.form.controls['list_ids'].setValue([]);
+      this.form.controls['persona_id'].setValue(null);
       this.form.controls['is_school_wide'].setValue(true);
       this.hideEmergencyType(false);
       this.updatePriority();
@@ -185,6 +193,16 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
         ...this.amplitudeEventProperties,
         audience_type: amplitudeEvents.CAMPUS_WIDE
       };
+    }
+  }
+
+  setListPersonaId(val) {
+    if (val.isPersona) {
+      this.form.controls['list_ids'].setValue([]);
+      this.form.controls['persona_id'].setValue(val.action);
+    } else {
+      this.form.controls['persona_id'].setValue(null);
+      this.form.controls['list_ids'].setValue([val.action]);
     }
   }
 
@@ -402,6 +420,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
       delete data['filters'];
       delete data['list_ids'];
+      delete data['persona_id'];
     }
 
     if (this.state.isToLists && !this.state.isCampusWide) {
@@ -409,6 +428,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
       delete data['filters'];
       delete data['user_ids'];
+      delete data['persona_id'];
     }
 
     if (this.state.isToFilters && !this.state.isCampusWide) {
@@ -418,6 +438,15 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       };
       data = Object.assign({}, data, { filters: this.form.value.filters });
 
+      delete data['list_ids'];
+      delete data['user_ids'];
+      delete data['persona_id'];
+    }
+
+    if (this.state.isToPersona && !this.state.isCampusWide) {
+      data = Object.assign({}, data, { persona_id: this.form.value.persona_id });
+
+      delete data['filters'];
       delete data['list_ids'];
       delete data['user_ids'];
     }
@@ -592,6 +621,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       user_ids: [[]],
       list_ids: [[]],
       filters: [[]],
+      persona_id: [null],
       is_school_wide: true,
       subject: [null, [Validators.required, Validators.maxLength(128)]],
       message: [null, [Validators.required, Validators.maxLength(400)]],
