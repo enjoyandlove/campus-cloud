@@ -1,4 +1,3 @@
-/*tslint:disable:max-line-length */
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -15,6 +14,7 @@ import { AudienceListActionBoxComponent } from './list/components';
 import { AudienceService } from './audience.service';
 import { AudienceRoutingModule } from './audience.routing.module';
 import { AudienceSharedModule } from './shared/audience.shared.module';
+import { AudienceUtilsService } from './audience.utils.service';
 
 @NgModule({
   declarations: [
@@ -37,6 +37,6 @@ import { AudienceSharedModule } from './shared/audience.shared.module';
 
   exports: [AudienceImportComponent],
 
-  providers: [AudienceService]
+  providers: [AudienceService, AudienceUtilsService]
 })
 export class AudienceModule {}

@@ -1,12 +1,14 @@
 /*tslint:disable:max-line-length */
-import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { get as _get } from 'lodash';
 import { combineLatest, Observable, of as observableOf } from 'rxjs';
+import { HttpParams } from '@angular/common/http';
 import { map, startWith } from 'rxjs/operators';
-import { AudienceService } from './../../../../../containers/controlpanel/audience/audience.service';
-import { CPI18nService } from './../../../../../shared/services';
+
+import { UserCount } from '../../audience.status';
 import { CPSession } from '../../../../../session';
+import { CPI18nService } from './../../../../../shared/services';
+import { AudienceUtilsService } from '../../audience.utils.service';
+import { AudienceService } from './../../../../../containers/controlpanel/audience/audience.service';
 
 @Component({
   selector: 'cp-audience-saved-body',
@@ -27,65 +29,9 @@ export class AudienceSavedBodyComponent implements OnInit {
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public service: AudienceService
+    public service: AudienceService,
+    public utils: AudienceUtilsService
   ) {}
-
-  parsedAudience(audiences): Array<any> {
-    const heading = {
-      action: null,
-      heading: true,
-      label: this.cpI18n.translate('audience_my_audiences')
-    };
-
-    audiences = audiences.map((audience) => {
-      const users = _get(audience, 'count', null);
-
-      return {
-        isList: true,
-        userCount: users,
-        action: audience.id,
-        label: audience.name,
-        type: audience.type
-      };
-    });
-
-    if (audiences.length) {
-      audiences.unshift(heading);
-    }
-
-    this.audiences = audiences;
-
-    return audiences;
-  }
-
-  parsedPersona(persona): Array<any> {
-    const _persona = [];
-
-    persona = persona.map((p) => {
-
-      if (p.hasOwnProperty('localized_name_map')) {
-        const users = _get(p, 'user_count', null);
-
-        _persona.push({
-          action: p.id,
-          type: 'persona',
-          isPersona: true,
-          userCount: users,
-          label: this.getLocalizedLabel(p.localized_name_map)
-        });
-      }
-    });
-
-    return _persona;
-  }
-
-  getLocalizedLabel(label) {
-    const defaultLocale = 'en-US';
-
-    return CPI18nService.getLocale() === defaultLocale
-      ? label.en
-      : label.fr;
-  }
 
   fetch() {
     if (!this.canReadAudience) {
@@ -99,25 +45,26 @@ export class AudienceSavedBodyComponent implements OnInit {
       return;
     }
 
-    const with_user_count = 1;
     const search = new HttpParams()
       .append('school_id', this.session.g.get('school').id.toString())
-      .append('with_user_count', with_user_count.toString());
+      .append('with_user_count', UserCount.withUserCount.toString());
 
     const audiences$ = this.service.getAudiences(search, 1, 1000).pipe(
       startWith([
         {
           action: null,
-          label: this.cpI18n.translate('campus_wide')
+          heading: true,
+          label: this.cpI18n.translate('audience_my_audiences')
         }
       ]),
       map((audiences) => {
         return [
           {
             action: null,
-            label: this.cpI18n.translate('campus_wide')
+            heading: true,
+            label: this.cpI18n.translate('audience_my_audiences')
           },
-          ...this.parsedAudience(audiences)
+          ...this.utils.parsedAudience(audiences)
         ];
       })
     );
@@ -126,18 +73,25 @@ export class AudienceSavedBodyComponent implements OnInit {
       startWith([
         {
           action: null,
-          heading: true,
-          label: this.cpI18n.translate('t_notify_announcement_audiences_my_experiences')
+          label: this.cpI18n.translate('campus_wide')
         }
       ]),
-      map((persona) => {
-        return [
+      map((persona, index) => {
+        let _personas = [];
+        const heading = [
           {
             action: null,
-            heading: true,
-            label: this.cpI18n.translate('t_notify_announcement_audiences_my_experiences')
-          },
-          ...this.parsedPersona(persona)
+            label: this.cpI18n.translate('campus_wide')
+          }
+        ];
+
+        if (index !== 0) {
+          _personas = persona;
+        }
+
+        return [
+          ...heading,
+          ...this.utils.parsedPersona(_personas)
         ];
       })
     );
@@ -160,7 +114,7 @@ export class AudienceSavedBodyComponent implements OnInit {
           });
         }
 
-        return [...audiences, ...persona];
+        return [...persona, ...audiences];
       })
     );
   }
