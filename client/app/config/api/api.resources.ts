@@ -45,6 +45,8 @@ export const API_ENDPOINTS = {
 
   ANNOUNCEMENT: 'announcement',
 
+  SCHOOL_PERSONA: 'school_persona',
+
   // Assess Dashboard
   ASSESS_EVENT: 'assess_event',
 
@@ -53,8 +55,6 @@ export const API_ENDPOINTS = {
   CAMPUS_THREAD: 'campus_thread',
 
   CALENDARS: 'academic_calendar',
-
-  SCHOOL_PERSONA: 'school_persona',
 
   CAMPUS_COMMENT: 'campus_comment',
 
