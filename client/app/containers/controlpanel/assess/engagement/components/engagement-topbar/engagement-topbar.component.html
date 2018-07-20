@@ -40,7 +40,7 @@
               <cp-range-picker
                 [icon]="icon"
                 [class]="datePickerClass"
-                [dateRanges]="dateFilter"
+                [dateRanges]="utils.dateFilter()"
                 [label]="state.range.label"
                 (rangeChange)="onDateRangeChange($event)">
               </cp-range-picker>
