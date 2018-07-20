@@ -41,6 +41,9 @@
   modalId="deleteFeedCommentModal">
   <cp-feed-delete-comment-modal
     [feed]="comment"
+    [clubId]="clubId"
+    [athleticId]="athleticId"
+    [orientationId]="orientationId"
     (deleted)="deleted.emit($event)"
     (teardown)="isDeleteModal = false"
     [isCampusWallView]="isCampusWallView">

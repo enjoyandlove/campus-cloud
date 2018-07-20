@@ -25,7 +25,5 @@ export class CPSwitchComponent implements OnInit {
     this.toggle.emit(this.isChecked);
   }
 
-  ngOnInit() {
-    // console.log(this);
-  }
+  ngOnInit() {}
 }

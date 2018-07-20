@@ -43,6 +43,7 @@ const state: IState = {
 })
 export class FeedsComponent extends BaseComponent implements OnInit {
   @Input() clubId: number;
+  @Input() athleticId: number;
   @Input() selectedItem: any;
   @Input() isClubsView: boolean;
   @Input() orientationId: number;

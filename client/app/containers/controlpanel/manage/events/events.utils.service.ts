@@ -2,10 +2,17 @@ import IEvent from './event.interface';
 
 import { Injectable } from '@angular/core';
 import { CPSession } from '../../../../session';
-import { EventAttendance } from './event.status';
 import { CPDate } from './../../../../shared/utils/date/date';
 import { CP_PRIVILEGES_MAP } from '../../../../shared/constants';
 import { amplitudeEvents } from '../../../../shared/constants/analytics';
+import {
+  Location,
+  Feedback,
+  Assessment,
+  UploadedPhoto,
+  EventFeedback,
+  EventAttendance
+} from './event.status';
 
 @Injectable()
 export class EventUtilService {
@@ -127,5 +134,37 @@ export class EventUtilService {
     }
 
     return sourcePage;
+  }
+
+  hasLocation(location) {
+    return location ? Location.yes : Location.no;
+  }
+
+  didUploadPhoto(photo) {
+    return photo ? UploadedPhoto.yes : UploadedPhoto.no;
+  }
+
+  getFeedbackStatus(feedback) {
+    return feedback === EventFeedback.enabled ? Feedback.enabled : Feedback.disabled;
+  }
+
+  getAssessmentStatus(assessment) {
+    return assessment === EventAttendance.enabled ? Assessment.on : Assessment.off;
+  }
+
+  setEventProperties(data) {
+    const start_date = data['start'].value
+      ? CPDate.getMonth(data['start'].value, this.session.tz)
+      : null;
+
+    const end_date = data['end'].value ? CPDate.getMonth(data['end'].value, this.session.tz) : null;
+
+    return {
+      end_date,
+      start_date,
+      assessment: this.getAssessmentStatus(data['event_attendance'].value),
+      location: this.hasLocation(data['location'].value),
+      feedback: this.getFeedbackStatus(data['event_feedback'].value)
+    };
   }
 }

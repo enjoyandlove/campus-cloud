@@ -4,11 +4,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
-import { IHeader, HEADER_UPDATE } from './../../../../../../reducers/header.reducer';
 import { BaseComponent } from '../../../../../../base';
-import { CPSession } from './../../../../../../session';
 import { ICalendar } from '../../calendars.interface';
+import { CPSession } from './../../../../../../session';
 import { CalendarsService } from '../../calendars.services';
+import { CalendarsItemsService } from '../item.utils.service';
+import { CPTrackingService } from '../../../../../../shared/services';
+import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
+import { IHeader, HEADER_UPDATE } from './../../../../../../reducers/header.reducer';
 
 @Component({
   selector: 'cp-calendars-items-edit',
@@ -25,13 +28,23 @@ export class CalendarsItemsEditComponent extends BaseComponent implements OnInit
   calendarId: number;
   calendar: ICalendar;
 
+  eventProperties = {
+    all_day: null,
+    location: null,
+    end_date: null,
+    start_date: null,
+    calendar_event_id: null
+  };
+
   constructor(
     public router: Router,
     public fb: FormBuilder,
     public session: CPSession,
     public route: ActivatedRoute,
     public store: Store<IHeader>,
-    public service: CalendarsService
+    public service: CalendarsService,
+    public utils: CalendarsItemsService,
+    public cpTracking: CPTrackingService
   ) {
     super();
     super.isLoading().subscribe((loading) => (this.loading = loading));
@@ -61,9 +74,22 @@ export class CalendarsItemsEditComponent extends BaseComponent implements OnInit
       .append('school_id', this.session.g.get('school').id)
       .append('academic_calendar_id', this.calendarId.toString());
 
-    this.service
-      .editItem(this.itemId, editedItem, search)
-      .subscribe((_) => this.router.navigate(['/manage/calendars/' + this.calendarId]));
+    this.service.editItem(this.itemId, editedItem, search).subscribe((res) => {
+      this.trackEvent(res);
+      this.router.navigate(['/manage/calendars/' + this.calendarId]);
+    });
+  }
+
+  trackEvent(data) {
+    this.eventProperties = {
+      ...this.eventProperties,
+      ...this.utils.setEventProperties(data)
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_UPDATED_CALENDAR_EVENT,
+      this.eventProperties
+    );
   }
 
   buildForm() {

@@ -32,6 +32,8 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
   school: ISchool;
   serviceId: number;
   draggable = false;
+  hasMetaData = false;
+  showLocationDetails = true;
   mapCenter: BehaviorSubject<any>;
 
   constructor(
@@ -75,6 +77,7 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
       this.admins = res.data[1];
       this.service = res.data[0];
       this.storeId = this.service.store_id;
+      this.showLocationDetails = res.data[0].latitude !== 0 && res.data[0].longitude !== 0;
 
       this.buildHeader();
 
@@ -87,6 +90,12 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
         image: this.service.logo_url,
         heading: this.service.name
       };
+
+      this.hasMetaData =
+        !!this.service.contactphone ||
+        !!this.service.email ||
+        !!this.service.website ||
+        !!this.service.address;
     });
   }
 

@@ -1,0 +1,195 @@
+[
+  {
+    "id": null,
+    "label": "[NOTRANSLATE]----[NOTRANSLATE]",
+    "meta": {}
+  },
+  {
+    "id": "web_link",
+    "label": "t_personas_tile_create_type_resource_web_link",
+    "meta": {
+      "is_system": 1,
+      "link_params": {},
+      "open_in_browser": 0
+    }
+  },
+  {
+    "id": "external_link",
+    "label": "t_personas_tile_create_type_resource_external_link",
+    "meta": {
+      "is_system": 1,
+      "link_params": {},
+      "open_in_browser": 1
+    }
+  },
+  {
+    "id": "academic_calendar",
+    "label": "t_personas_tile_create_resource_type_academic_calendar",
+    "meta": {
+      "is_system": 1,
+      "link_params": {},
+      "open_in_browser": 1,
+      "link_url": "oohlala://academic_calendar_list"
+    }
+  },
+  {
+    "id": "courses",
+    "label": "t_personas_tile_create_resource_type_courses",
+    "meta": {
+      "is_system": 1,
+      "link_params": {},
+      "open_in_browser": 1,
+      "link_url": "oohlala://course_search"
+    }
+  },
+  {
+    "id": "user_attended_events",
+    "label": "t_personas_tile_create_resource_type_user_attended_events",
+    "meta": {
+      "is_system": 1,
+      "link_params": {},
+      "open_in_browser": 1,
+      "link_url": "oohlala://attended_event_list"
+    }
+  },
+  {
+    "id": "camera_qr",
+    "label": "t_personas_tile_create_resource_type_camera_qr",
+    "meta": {
+      "is_system": 1,
+      "link_params": {},
+      "open_in_browser": 1,
+      "link_url": "oohlala://camera_qr"
+    }
+  },
+  {
+    "id": "exams",
+    "label": "t_personas_tile_create_resource_type_exams",
+    "meta": {
+      "is_system": 1,
+      "link_params": {},
+      "open_in_browser": 1,
+      "link_url": "oohlala://exam_search"
+    }
+  },
+  {
+    "id": "advisor_list",
+    "label": "t_personas_tile_create_resource_type_advisor_list",
+    "meta": {
+      "is_system": 1,
+      "link_params": {},
+      "open_in_browser": 1,
+      "link_url": "oohlala://advisor_list"
+    }
+  },
+  {
+    "id": "timetable",
+    "label": "t_personas_tile_create_resource_type_timetable",
+    "meta": {
+      "is_system": 1,
+      "link_params": {},
+      "open_in_browser": 1,
+      "link_url": "oohlala://timetable"
+    }
+  },
+  {
+    "id": "user_orientation_calendar_list",
+    "label": "t_personas_tile_create_resource_type_user_orientation_calendar_list",
+    "meta": {
+      "is_system": 1,
+      "link_params": {},
+      "open_in_browser": 1,
+      "link_url": "oohlala://user_orientation_calendar_list"
+    }
+  },
+  {
+    "id": "user_school_course_material_list",
+    "label": "t_personas_tile_create_resource_type_user_school_course_material_list",
+    "meta": {
+      "is_system": 1,
+      "link_params": {},
+      "open_in_browser": 1,
+      "link_url": "oohlala://user_school_course_material_list"
+    }
+  },
+  {
+    "id": "campus_poi_list",
+    "label": "t_personas_tile_create_resource_type_campus_poi_list",
+    "meta": {
+      "is_system": 1,
+      "link_params": {},
+      "open_in_browser": 1,
+      "link_url": "oohlala://campus_poi_list"
+    }
+  },
+  {
+    "id": "campus_tour_list",
+    "label": "t_personas_tile_create_resource_type_campus_tour_list",
+    "meta": {
+      "is_system": 1,
+      "link_params": {},
+      "open_in_browser": 1,
+      "link_url": "oohlala://campus_tour_list"
+    }
+  },
+  {
+    "id": "in_app_feedback",
+    "label": "t_personas_tile_create_resource_type_in_app_feedback",
+    "meta": {
+      "is_system": 1,
+      "link_params": {},
+      "open_in_browser": 1,
+      "link_url": "oohlala://in_app_feedback"
+    }
+  },
+  {
+    "id": "store_list",
+    "label": "t_personas_tile_create_resource_type_store_list",
+    "meta": {
+      "is_system": 1,
+      "link_params": {},
+      "open_in_browser": 1,
+      "link_url": "oohlala://store_list"
+    }
+  },
+  {
+    "id": "store",
+    "label": "t_personas_tile_create_resource_type_store",
+    "meta": {
+      "is_system": 1,
+      "link_params": {},
+      "open_in_browser": 0,
+      "link_url": "oohlala://store"
+    }
+  },
+  {
+    "id": "subscribable_calendar",
+    "label": "t_personas_tile_create_resource_type_subscribable_calendar",
+    "meta": {
+      "is_system": 1,
+      "link_params": {},
+      "open_in_browser": 0,
+      "link_url": "oohlala://subscribable_calendar"
+    }
+  },
+  {
+    "id": "campus_service",
+    "label": "t_personas_tile_create_resource_type_campus_service",
+    "meta": {
+      "is_system": 1,
+      "link_params": {},
+      "open_in_browser": 0,
+      "link_url": "oohlala://campus_service"
+    }
+  },
+  {
+    "id": "service_by_category_id",
+    "label": "t_personas_tile_create_resource_type_service_by_category_id",
+    "meta": {
+      "is_system": 1,
+      "link_params": {},
+      "open_in_browser": 0,
+      "link_url": "oohlala://campus_service_list"
+    }
+  }
+]

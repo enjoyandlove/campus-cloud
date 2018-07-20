@@ -10,6 +10,7 @@ import { IPersona } from './../persona.interface';
 import { PersonasService } from './../personas.service';
 import { PersonasUtilsService } from './../personas.utils.service';
 import { ICampusGuide } from './../sections/section.interface';
+import { SectionUtilsService } from './../sections/section.utils.service';
 import { ITile } from './../tiles/tile.interface';
 import { BaseComponent } from '../../../../../base';
 import { CPSession } from '../../../../../session';
@@ -45,6 +46,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
     public cpI18n: CPI18nService,
     public service: PersonasService,
     public utils: PersonasUtilsService,
+    public sectionUtils: SectionUtilsService,
     public store: Store<IHeader | ISnackbar>
   ) {
     super();
@@ -187,11 +189,17 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
     super
       .fetchData(stream$)
       .then(({ data }) => {
+        const filteredTiles = this.utils
+          .filterTiles(data)
+          .filter((g: ICampusGuide) => g.tiles.length);
+
+        const temporaryTile = [this.sectionUtils.temporaryGuide()];
+
+        const guides = filteredTiles.length ? filteredTiles : temporaryTile;
+
         this.state = {
           ...this.state,
-          guides: this.utils
-            .filterTiles(data)
-            .filter((guides: ICampusGuide) => guides.tiles.length),
+          guides,
           featureTiles: this.utils.getFeaturedTiles(data),
           categoryZero: this.utils.getCategoryZeroTiles(data)
         };

@@ -37,11 +37,13 @@
             <a
               class="event__title"
               [routerLink]="[event.id]"
+              queryParamsHandling="merge"
               *ngIf="event.event_attendance === 1">
               {{ event.title }}
             </a>
             <a
               class="event__title"
+              queryParamsHandling="merge"
               [routerLink]="[event.id + '/info']"
               *ngIf="event.event_attendance === 0">
               {{ event.title }}
@@ -56,7 +58,7 @@
       <span class="col-2 text-truncate">
         {{ event.verified_checkins }}
       </span>
-  
+
       <span class="col-3 text-truncate">
         <span *ngIf="event.rating_scale_maximum > -1">
           <cp-stars
@@ -65,7 +67,7 @@
           </cp-stars>
         </span>
       </span>
-  
+
       <span
         *ngIf="canDelete"
         (click)="onDelete(event)"

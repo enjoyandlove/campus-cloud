@@ -45,10 +45,10 @@
     box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.3);
 
     li {
-      padding: 10px;
       transition: all 200ms ease-in-out;
 
       p {
+        padding: 10px;
         margin-bottom: 0;
       }
 
@@ -58,13 +58,6 @@
       }
     }
   }
-}
-
-cp-checkbox {
-  top: -12px;
-  margin-right: 0px;
-  position: relative;
-  display: inline-block;
 }
 
 .dropdown-menu {

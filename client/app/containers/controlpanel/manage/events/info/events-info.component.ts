@@ -37,6 +37,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   loading = true;
   eventId: number;
   draggable = false;
+  showLocationDetails = true;
   mapCenter: BehaviorSubject<any>;
 
   defaultImage = require('public/default/image.png');
@@ -80,6 +81,8 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
         this.event.poster_url === '' ? this.event.store_logo_url : this.event.poster_url;
 
       this.buildHeader(this.event);
+
+      this.showLocationDetails = event.data.latitude !== 0 && event.data.longitude !== 0;
 
       this.mapCenter = new BehaviorSubject({
         lat: event.data.latitude,

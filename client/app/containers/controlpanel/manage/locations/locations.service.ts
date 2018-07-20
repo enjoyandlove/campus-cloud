@@ -5,6 +5,13 @@ import { Router } from '@angular/router';
 import { API } from '../../../../config/api';
 import { HTTPService } from '../../../../base/http.service';
 
+export enum Acronym {
+  'yes' = 'Yes',
+  'no' = 'No'
+}
+
+export const hasAcronym = (val) => (val ? Acronym.yes : Acronym.no);
+
 @Injectable()
 export class LocationsService extends HTTPService {
   constructor(http: HttpClient, router: Router) {

@@ -36,26 +36,40 @@
         formControlName="website">
     </div>
 
-    <div class="form-group">
-      <label>{{ 'location' | cpI18n }}</label>
-      <div class="row form-group">
-        <div class="col-12">
-          <cp-place-autocomplete
-            [newAddress]="newAddress"
-            (backToDefault)="onResetMap()"
-            (placeChange)="onPlaceChange($event)"
-            [defaultValue]="storeForm.controls['address'].value">
-          </cp-place-autocomplete>
-        </div>
+    <div class="row form-group">
+      <div class="col-12">
+        <cp-checkbox
+          class="checkbox"
+          [isChecked]="showLocationDetails"
+          (toggle)="onLocationToggle($event)"
+          [label]="cpI18n.translate('t_shared_label_location_toggle')">
+        </cp-checkbox>
       </div>
     </div>
 
-    <div class="form-group">
-      <div class="maps">
-        <cp-maps
-          [center]="mapCenter"
-          (mapSelection)="onMapSelection($event)">
-        </cp-maps>
+    <div *ngIf="showLocationDetails">
+      <div class="form-group">
+        <label>{{ 'location' | cpI18n }}</label>
+        <div class="row form-group">
+          <div class="col-12">
+            <cp-place-autocomplete
+              [newAddress]="newAddress"
+              (backToDefault)="onResetMap()"
+              (placeChange)="onPlaceChange($event)"
+              [defaultValue]="storeForm.controls['address'].value">
+            </cp-place-autocomplete>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="maps">
+          <cp-maps
+            [center]="mapCenter"
+            [drawMarker]="drawMarker"
+            (mapSelection)="onMapSelection($event)">
+          </cp-maps>
+        </div>
       </div>
     </div>
   </div>

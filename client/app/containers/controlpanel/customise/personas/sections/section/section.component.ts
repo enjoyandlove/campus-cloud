@@ -1,16 +1,16 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { get as _get } from 'lodash';
-import { SNACKBAR_SHOW } from './../../../../../../reducers/snackbar.reducer';
-import { ITile } from './../../tiles/tile.interface';
-import { ICampusGuide } from './../section.interface';
-import { SectionUtilsService } from './../section.utils.service';
-import { SectionsService } from './../sections.service';
-import { ISnackbar } from '../../../../../../reducers/snackbar.reducer';
+import { ISnackbar, SNACKBAR_SHOW } from '../../../../../../reducers/snackbar.reducer';
 import { CPSession } from '../../../../../../session';
 import { CPI18nService } from '../../../../../../shared/services';
+import { ITile } from '../../tiles/tile.interface';
+import { ICampusGuide } from '../section.interface';
 import { CategoryDeleteErrors } from '../section.status';
+import { SectionUtilsService } from '../section.utils.service';
+import { SectionsService } from '../sections.service';
 
 @Component({
   selector: 'cp-personas-section',
@@ -34,11 +34,10 @@ export class PersonasSectionComponent implements OnInit {
     working: false
   };
 
-  modalId;
   lastRank;
-  showModal = false;
 
   constructor(
+    public router: Router,
     public session: CPSession,
     public cpI18n: CPI18nService,
     public store: Store<ISnackbar>,
@@ -60,38 +59,9 @@ export class PersonasSectionComponent implements OnInit {
     };
   }
 
-  onTileCreated(newTile) {
-    this.guide = {
-      ...this.guide,
-      tiles: [...this.guide.tiles, newTile]
-    };
-  }
-
-  onCreateError() {
-    this.store.dispatch({
-      type: SNACKBAR_SHOW,
-      payload: {
-        class: 'danger',
-        body: this.cpI18n.translate('something_went_wrong'),
-        sticky: true
-      }
-    });
-  }
-
-  onTearDown() {
-    this.showModal = false;
-    $(`#${this.modalId}`).modal('hide');
-  }
-
-  launchCreateTile() {
-    this.showModal = true;
-    setTimeout(
-      () => {
-        $(`#${this.modalId}`).modal();
-      },
-
-      1
-    );
+  goToCreateTile() {
+    this.service.guide = this.guide;
+    this.router.navigate([`/customize/personas/${this.personaId}/tiles`]);
   }
 
   onMove(direction) {
@@ -133,10 +103,12 @@ export class PersonasSectionComponent implements OnInit {
 
   onNameChange(name, updatedGuide: ICampusGuide) {
     if (this.utils.isTemporaryGuide(updatedGuide)) {
-      updatedGuide = {
-        ...updatedGuide,
+      this.guide = {
+        ...this.guide,
         name
       };
+
+      this.service.guide = this.guide;
 
       return;
     }
@@ -185,14 +157,5 @@ export class PersonasSectionComponent implements OnInit {
     }
   }
 
-  getLastRankInGuide() {
-    const ranks = this.guide.tiles.map((tile) => tile.rank).sort();
-
-    this.lastRank = ranks.length ? ranks[ranks.length - 1] : 1;
-  }
-
-  ngOnInit(): void {
-    this.modalId = `createTileForGuide${this.guide.id}`;
-    this.getLastRankInGuide();
-  }
+  ngOnInit(): void {}
 }

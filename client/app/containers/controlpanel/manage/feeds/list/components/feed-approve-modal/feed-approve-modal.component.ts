@@ -2,7 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { FeedsService } from '../../../feeds.service';
-
+import { FeedsUtilsService } from '../../../feeds.utils.service';
+import { CPTrackingService } from '../../../../../../../shared/services';
+import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 
 declare var $: any;
@@ -14,14 +16,31 @@ declare var $: any;
 })
 export class FeedApproveModalComponent implements OnInit {
   @Input() feed: any;
+  @Input() clubId: any;
+  @Input() athleticId: any;
+  @Input() orientationId: any;
   @Input() isCampusWallView: Observable<number>;
+
   @Output() teardown: EventEmitter<null> = new EventEmitter();
   @Output() approved: EventEmitter<number> = new EventEmitter();
 
   buttonData;
   _isCampusWallView;
 
-  constructor(private cpI18n: CPI18nService, private feedsService: FeedsService) {}
+  eventProperties = {
+    post_id: null,
+    likes: null,
+    comments: null,
+    wall_source: null,
+    upload_image: null
+  };
+
+  constructor(
+    private cpI18n: CPI18nService,
+    private utils: FeedsUtilsService,
+    private feedsService: FeedsService,
+    private cpTracking: CPTrackingService
+  ) {}
 
   onSubmit() {
     const data = { flag: 2 };
@@ -33,11 +52,25 @@ export class FeedApproveModalComponent implements OnInit {
     const stream$ = this._isCampusWallView ? approveCampusWallThread$ : approveGroupWallThread$;
 
     stream$.subscribe((_) => {
+      this.trackAmplitudeEvent(this.feed);
       $('#approveFeedModal').modal('hide');
       this.buttonData = Object.assign({}, this.buttonData, { disabled: true });
       this.approved.emit(this.feed.id);
       this.teardown.emit();
     });
+  }
+
+  trackAmplitudeEvent(feed) {
+    this.eventProperties = {
+      ...this.eventProperties,
+      post_id: feed.id,
+      likes: this.utils.hasLikes(feed.likes),
+      upload_image: this.utils.hasImage(feed.has_image),
+      comments: this.utils.hasComments(feed.comment_count),
+      wall_source: this.utils.wallSource(this.athleticId, this.orientationId, this.clubId)
+    };
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.WALL_APPROVED_POST, this.eventProperties);
   }
 
   ngOnInit() {
