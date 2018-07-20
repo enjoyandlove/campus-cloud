@@ -16,6 +16,9 @@
     left: 20px;
     bottom: 20px;
     position: absolute;
+    overflow-y: hidden;
+    max-height: calc(100% - 40px);
+    max-width: calc(100% - 40px);
 
     p {
       @include font-16px();
