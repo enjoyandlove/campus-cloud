@@ -7,6 +7,7 @@ import { CPI18nService } from './../../../../../../shared/services/i18n.service'
 
 interface IState {
   engagement: {
+    route_id: string;
     label: string;
     data: {
       type: string;
@@ -15,11 +16,13 @@ interface IState {
   };
 
   for: {
+    route_id: string;
     label: string;
     listId: number;
   };
 
   range: {
+    route_id: string;
     label: string;
     payload: {
       metric: string;
@@ -43,7 +46,7 @@ export class EngagementTopBarComponent implements OnInit {
   hasRouteData;
   state: IState;
   studentFilter;
-  engageMentFilter;
+  engagementFilter;
   datePickerClass = 'cancel';
   icon = 'keyboard_arrow_down';
 
@@ -85,7 +88,8 @@ export class EngagementTopBarComponent implements OnInit {
   }
 
   initState() {
-    this.state = Object.assign({}, this.state, {
+    this.state = {
+      ...this.state,
       engagement: {
         ...this.utils.commonEngageMentFilter()[0]
       },
@@ -97,7 +101,7 @@ export class EngagementTopBarComponent implements OnInit {
       range: {
         ...this.utils.dateFilter()[0]
       }
-    });
+    };
   }
 
   getStateFromUrl() {
@@ -105,7 +109,7 @@ export class EngagementTopBarComponent implements OnInit {
 
     this.state = Object.assign({}, this.state, {
       engagement: {
-        ...this.utils.getFromArray(this.engageMentFilter, 'route_id', routeParams.engagement)
+        ...this.utils.getFromArray(this.engagementFilter, 'route_id', routeParams.engagement)
       },
 
       for: {
@@ -139,7 +143,7 @@ export class EngagementTopBarComponent implements OnInit {
         _persona = this.utils.parsedPersona(res.data[2]);
       }
 
-      this.engageMentFilter = [
+      this.engagementFilter = [
         ...this.utils.commonEngageMentFilter(),
         ..._services
       ];
