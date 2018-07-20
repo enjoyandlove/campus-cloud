@@ -1,3 +1,4 @@
+import { PersonasTileCreateComponent } from './tiles/create/create.component';
 import { PersonasDetailsComponent } from './details/details.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -24,6 +25,16 @@ const appRoutes: Routes = [
   },
   {
     path: ':personaId/edit',
+    data: { zendesk: 'personas' },
+    component: PersonasEditComponent
+  },
+  {
+    path: ':personaId/tiles',
+    data: { zendesk: 'personas' },
+    component: PersonasTileCreateComponent
+  },
+  {
+    path: ':personaId/tiles/:tileId',
     data: { zendesk: 'personas' },
     component: PersonasEditComponent
   }

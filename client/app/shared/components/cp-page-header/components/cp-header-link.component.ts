@@ -22,6 +22,10 @@ export class CPHeaderLinkComponent {
     return this.router.url === this.extraMenu.url;
   }
 
+  setQueryParams(page) {
+    return page.clearParams ? null : 'merge';
+  }
+
   trackSubMenu(subMenu) {
     const eventName = amplitudeEvents.CLICKED_SUB_MENU;
     const menuName = this.cpTracking.activatedRoute(this.router, RouteLevel.first);

@@ -8,7 +8,6 @@ declare var $;
 interface IProps {
   ends: number;
   starts: number;
-  series: Array<number>;
   zero_engagements: Array<number>;
   one_engagements: Array<number>;
   repeat_engagements: Array<number>;

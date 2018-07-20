@@ -1,16 +1,18 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { BehaviorSubject, Observable, throwError as observableThrowError } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { catchError, map, startWith } from 'rxjs/operators';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, Observable, throwError as observableThrowError } from 'rxjs';
-import { catchError, map, startWith } from 'rxjs/operators';
-import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
-import { CPSession, ISchool } from '../../../../../session';
-import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
+
 import { CPMap } from '../../../../../shared/utils';
 import { ServicesService } from '../services.service';
+import { CPSession, ISchool } from '../../../../../session';
+import { ServicesUtilsService } from '../services.utils.service';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
+import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 
 const ATTENDANCE_ENABLED = 1;
 const ATTENDANCE_DISABLED = 0;
@@ -34,9 +36,22 @@ export class ServicesCreateComponent implements OnInit {
   form: FormGroup;
   formError = false;
   attendance = false;
+  showLocationDetails = false;
   categories$: Observable<any>;
   mapCenter: BehaviorSubject<any>;
   newAddress = new BehaviorSubject(null);
+  drawMarker = new BehaviorSubject(false);
+
+  eventProperties = {
+    phone: null,
+    email: null,
+    website: null,
+    feedback: null,
+    location: null,
+    service_id: null,
+    assessment: null,
+    category_name: null
+  };
 
   feedbackOptions = [
     {
@@ -55,6 +70,7 @@ export class ServicesCreateComponent implements OnInit {
     private session: CPSession,
     private store: Store<IHeader>,
     private cpI18n: CPI18nService,
+    private utils: ServicesUtilsService,
     private cpTracking: CPTrackingService,
     private servicesService: ServicesService
   ) {
@@ -95,7 +111,9 @@ export class ServicesCreateComponent implements OnInit {
   }
 
   onResetMap() {
-    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields(this.school));
+    this.drawMarker.next(false);
+    this.form.controls['room_data'].setValue(null);
+    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
     this.centerMap(this.school.latitude, this.school.longitude);
   }
 
@@ -121,6 +139,8 @@ export class ServicesCreateComponent implements OnInit {
     if (!data) {
       return;
     }
+
+    this.drawMarker.next(true);
 
     if ('fromUsersLocations' in data) {
       this.updateWithUserLocation(data);
@@ -203,6 +223,7 @@ export class ServicesCreateComponent implements OnInit {
       })
       .pipe(catchError((err) => observableThrowError(err)))
       .subscribe((service: any) => {
+        this.trackEvent(service, service.id);
         if (service.service_attendance) {
           this.router.navigate(['/manage/services/' + service.id]);
 
@@ -224,6 +245,43 @@ export class ServicesCreateComponent implements OnInit {
 
     this.form.controls['service_attendance'].setValue(
       event ? ATTENDANCE_ENABLED : ATTENDANCE_DISABLED
+    );
+  }
+
+  onLocationToggle(value) {
+    this.showLocationDetails = value;
+
+    if (!value) {
+      this.drawMarker.next(false);
+
+      this.mapCenter = new BehaviorSubject({
+        lat: this.school.latitude,
+        lng: this.school.longitude
+      });
+
+      this.form.controls['room_data'].setValue(null);
+      CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
+    }
+  }
+
+  onCategoryUpdate(category) {
+    this.form.controls['category'].setValue(category.action);
+
+    this.eventProperties = {
+      ...this.eventProperties,
+      category_name: category.label
+    };
+  }
+
+  trackEvent(data, serviceId) {
+    this.eventProperties = {
+      ...this.eventProperties,
+      ...this.utils.setEventProperties(data, serviceId)
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_CREATED_SERVICE,
+      this.eventProperties
     );
   }
 
@@ -266,8 +324,8 @@ export class ServicesCreateComponent implements OnInit {
       province: [null],
       country: [null],
       postal_code: [null],
-      latitude: [this.school.latitude],
-      longitude: [this.school.longitude],
+      latitude: [0],
+      longitude: [0],
       service_attendance: [null],
       rating_scale_maximum: [null],
       default_basic_feedback_label: [null],

@@ -34,22 +34,27 @@
                   <div class="col-4 text-truncate">
                     <div class="row margin-top">
                       <div class="col-3 no-left-padding">
-                        <cp-checkbox
-                          class="checkbox float-left"
-                          [isChecked]="isChecked[i].checked"
-                          (toggle)="onSingleCheck($event, i)">
-                        </cp-checkbox>
-
-                        <div class="service__avatar">
-                          <div
-                            *ngIf="!service.controls.logo_url.value"
-                            class="placeholder placeholder--small text-center">
-                            <i class="material-icons">image</i>
+                        <div class="row">
+                          <div class="col-1">
+                            <cp-checkbox
+                              class="checkbox float-left"
+                              [isChecked]="isChecked[i].checked"
+                              (toggle)="onSingleCheck($event, i)">
+                            </cp-checkbox>
                           </div>
-                          <img
-                            *ngIf="service.controls.logo_url.value"
-                            class="img-fluid rounded"
-                            [src]="service.controls.logo_url.value">
+                          <div class="col-6">
+                            <div class="service__avatar">
+                              <div
+                                *ngIf="!service.controls.logo_url.value"
+                                class="placeholder placeholder--small text-center">
+                                <i class="material-icons">image</i>
+                              </div>
+                              <img
+                                *ngIf="service.controls.logo_url.value"
+                                class="img-fluid rounded"
+                                [src]="service.controls.logo_url.value">
+                            </div>
+                          </div>
                         </div>
                       </div>
 

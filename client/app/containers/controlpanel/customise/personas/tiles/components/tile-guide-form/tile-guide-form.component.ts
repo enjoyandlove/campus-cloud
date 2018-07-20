@@ -12,7 +12,7 @@ export class PersonasTileGuideFormComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() uploadButtonId: number;
 
-  @Output() changed: EventEmitter<FormGroup> = new EventEmitter();
+  @Output() formChange: EventEmitter<FormGroup> = new EventEmitter();
 
   uploadImageBtn;
 
@@ -41,7 +41,7 @@ export class PersonasTileGuideFormComponent implements OnInit {
     this.uploadImageBtn = this.cpI18n.translate('button_add_photo');
 
     this.form.valueChanges.subscribe(() => {
-      this.changed.emit(this.form);
+      this.formChange.emit(this.form);
     });
   }
 }

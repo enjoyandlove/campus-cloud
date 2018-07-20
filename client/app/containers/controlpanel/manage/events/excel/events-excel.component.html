@@ -38,30 +38,35 @@
                   <div [class]="[storeId || clubId || isOrientation ? 'col-5 text-truncate' : 'col-3 text-truncate']">
                     <div class="row margin-top">
                       <div [class]="[storeId || clubId || isOrientation ? 'col-3 no-left-padding' : 'col-4 no-left-padding']">
-                        <cp-checkbox
-                          class="checkbox float-left"
-                          [isChecked]="isSingleChecked[i].checked"
-                          (toggle)="onSingleCheck($event, i)">
-                        </cp-checkbox>
-
-                        <div class="event__thumbnail">
-                          <span
-                             class="deleteButton hover"
-                             (click)="onRemoveImage(i)"
-                             *ngIf="event.controls['poster_url'].value">
-                            &times;
-                          </span>
-                          <cp-upload-button
-                            theme="small"
-                            [isRequired]="formError && event.controls['poster_url'].hasError('required')"
-                            (fileUpload)="onImageUpload($event, i)"
-                            *ngIf="!event.controls['poster_url'].value"
-                            (click)="resetAllCheckboxes($event, i)">
-                          </cp-upload-button>
-                          <img
-                            class="rounded img-fit-cover"
-                            *ngIf="event.controls['poster_url'].value"
-                            [src]="event.controls['poster_url'].value">
+                        <div class="row">
+                          <div class="col-2">
+                            <cp-checkbox
+                              class="checkbox float-left"
+                              [isChecked]="isSingleChecked[i].checked"
+                              (toggle)="onSingleCheck($event, i)">
+                            </cp-checkbox>
+                          </div>
+                          <div class="col-8">
+                            <div class="event__thumbnail">
+                              <span
+                                  class="deleteButton hover"
+                                  (click)="onRemoveImage(i)"
+                                  *ngIf="event.controls['poster_url'].value">
+                                &times;
+                              </span>
+                              <cp-upload-button
+                                theme="small"
+                                [isRequired]="formError && event.controls['poster_url'].hasError('required')"
+                                (fileUpload)="onImageUpload($event, i)"
+                                *ngIf="!event.controls['poster_url'].value"
+                                (click)="resetAllCheckboxes($event, i)">
+                              </cp-upload-button>
+                              <img
+                                class="rounded img-fit-cover"
+                                *ngIf="event.controls['poster_url'].value"
+                                [src]="event.controls['poster_url'].value">
+                            </div>
+                          </div>
                         </div>
                         </div>
 

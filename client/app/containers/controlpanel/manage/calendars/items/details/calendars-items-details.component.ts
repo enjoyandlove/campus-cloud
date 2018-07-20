@@ -23,6 +23,7 @@ export class CalendarsItemsDetailsComponent extends BaseComponent implements OnI
   draggable = false;
   calendarId: number;
   calendar: ICalendar;
+  showLocationDetails = true;
   dateFormat = FORMAT.DATETIME;
 
   constructor(
@@ -79,6 +80,8 @@ export class CalendarsItemsDetailsComponent extends BaseComponent implements OnI
         lat: this.item.latitude,
         lng: this.item.longitude
       });
+
+      this.showLocationDetails = this.item.latitude !== 0 && this.item.longitude !== 0;
     });
   }
 

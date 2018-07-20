@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of as observableOf, throwError as observableThrowError } from 'rxjs';
 import { catchError, delay, flatMap, retryWhen } from 'rxjs/operators';
-import { API } from './../config/api/index';
+import { API } from '../config/api';
 import { appStorage, CPObj } from '../shared/utils';
 
 /**
@@ -60,7 +60,7 @@ export abstract class HTTPService {
   clearNullValues(params: HttpParams): HttpParams {
     let cleanParams = new HttpParams();
     params.keys().forEach((key) => {
-      if (params.get(key)) {
+      if (params.get(key) !== null && params.get(key) !== undefined) {
         cleanParams = cleanParams.set(key, params.get(key));
       }
     });

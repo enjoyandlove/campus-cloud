@@ -18,12 +18,17 @@
       class="hover"
       (click)="onToggle($event, opt)"
       *ngFor="let opt of items">
-      <p>
-        <cp-checkbox 
-          (toggle)="onToggle(null, opt)"
-          [isChecked]="opt.selected"></cp-checkbox>
-        {{opt.label}}
-      </p>
+      <div class="row">
+        <div class="col-12">
+          <p>
+            <cp-checkbox
+              [label]="opt.label"
+              (toggle)="onToggle(null, opt)"
+              [isChecked]="opt.selected">
+            </cp-checkbox>
+          </p>
+        </div>
+      </div>
     </li>
   </ul>
 </div>

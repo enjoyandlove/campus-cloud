@@ -1,2 +1,28 @@
-@import '~styles/components/modal';
+@import '~styles/core/colors';
+@import '~styles/core/typography';
+@import '~styles/components/card';
 @import '~styles/components/button';
+
+.title {
+  @include font-24px();
+  @include font-bold();
+}
+
+.margin-bottom {
+  // to account for the fixed footer
+  padding-bottom: 90px;
+}
+
+.footer {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  position: fixed;
+  padding: 15px 0;
+  background: $color-white;
+  border-top: 1px solid $border-color;
+
+  a {
+    margin-right: 5px;
+  }
+}

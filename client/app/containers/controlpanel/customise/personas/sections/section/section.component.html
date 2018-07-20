@@ -1,11 +1,11 @@
-<section 
+<section
   *ngIf="addSection"
   class="new-section">
   <div class="row">
     <div class="col-12">
       <cp-personas-section-add-button
-        [disabled]="state.working"
-        (addSection)="onAddSection()">
+        (addSection)="onAddSection()"
+        [disabled]="state.working || utils.isTemporaryGuide(guide)">
       </cp-personas-section-add-button>
     </div>
   </div>
@@ -15,28 +15,30 @@
   <section class="section-details">
     <div class="row">
       <div class="col-8">
-        <cp-personas-section-title 
+        <cp-personas-section-title
           [name]="guide.name"
           (nameChanged)="onNameChange($event, guide)">
         </cp-personas-section-title>
       </div>
       <div class="col-4 text-right">
-        <cp-personas-section-controls
-          [disableUp]="first"
-          [disableDown]="last"
-          (moveUp)="onMove('up')"
-          (moveDown)="onMove('down')"
-          (deleteClick)="onDeleteSection()">
-        </cp-personas-section-controls>
+        <fieldset [disabled]="utils.isTemporaryGuide(guide)">
+          <cp-personas-section-controls
+            [disableUp]="first"
+            [disableDown]="last"
+            (moveUp)="onMove('up')"
+            (moveDown)="onMove('down')"
+            (deleteClick)="onDeleteSection()">
+          </cp-personas-section-controls>
+        </fieldset>
       </div>
     </div>
   </section>
 
   <section class="section-tiles">
     <div class="row">
-      <cp-personas-tile 
+      <cp-personas-tile
         [tile]="tile"
-        class="col-2" 
+        class="col-2"
         (edited)="onEditedTile($event)"
         (deleted)="onDeletedTile($event)"
         [class.mb-4]="i % 5 === 0"
@@ -44,22 +46,23 @@
       </cp-personas-tile>
       <div class="col-2">
         <cp-personas-tile-add-button
-          (buttonClick)="launchCreateTile()">
+          (buttonClick)="goToCreateTile()">
         </cp-personas-tile-add-button>
       </div>
     </div>
   </section>
 </fieldset>
 
-<cp-modal 
+<!-- <cp-modal
   *ngIf="showModal"
   [modalId]="modalId">
-  <cp-personas-tile-create 
+  <cp-personas-tile-create
     [guide]="guide"
     [lastRank]="lastRank"
     [personaId]="personaId"
     (error)="onCreateError($event)"
     (teardown)="onTearDown(modalId)"
-    (created)="onTileCreated($event)">
+    (created)="onTileCreated($event)"
+    (createdGuide)="onSavedGuide($event)">
   </cp-personas-tile-create>
-</cp-modal>
+</cp-modal> -->

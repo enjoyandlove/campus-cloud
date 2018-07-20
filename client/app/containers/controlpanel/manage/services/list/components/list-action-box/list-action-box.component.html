@@ -7,10 +7,10 @@
           class="col-7">
         </cp-searchbox>
         <div class="col-5">
-          <label class="float-left" i18n>{{ 'assessment' | cpI18n }}</label>
           <cp-checkbox
-            (toggle)="onAttendanceToggle($event)"
-            class="checkbox">
+            class="checkbox"
+            [label]="cpI18n.translate('assessment')"
+            (toggle)="onAttendanceToggle($event)">
           </cp-checkbox>
         </div>
       </div>

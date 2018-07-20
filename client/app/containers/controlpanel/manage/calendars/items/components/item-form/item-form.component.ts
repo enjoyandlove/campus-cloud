@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
+
 import { CPSession } from './../../../../../../../session';
-import { CPI18nService } from '../../../../../../../shared/services';
-import { CPDate, CPMap } from '../../../../../../../shared/utils';
 import { CalendarsItemsService } from '../../item.utils.service';
+import { CPDate, CPMap } from '../../../../../../../shared/utils';
+import { CPI18nService } from '../../../../../../../shared/services';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
 const FORMAT_WITHOUT_TIME = 'F j, Y';
@@ -31,6 +32,8 @@ export class CalendarsItemFormComponent implements OnInit {
   buttonData;
   enddatePickerOpts;
   startdatePickerOpts;
+  showLocationDetails = false;
+  drawMarker = new BehaviorSubject(false);
   newAddress = new BehaviorSubject(null);
 
   constructor(
@@ -76,9 +79,11 @@ export class CalendarsItemFormComponent implements OnInit {
   }
 
   onResetMap() {
+    this.drawMarker.next(false);
+
     const school = this.session.g.get('school');
 
-    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields(school));
+    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
     this.centerMap(school.latitude, school.longitude);
   }
 
@@ -104,6 +109,8 @@ export class CalendarsItemFormComponent implements OnInit {
     if (!data) {
       return;
     }
+
+    this.drawMarker.next(true);
 
     if ('fromUsersLocations' in data) {
       this.updateWithUserLocation(data);
@@ -135,13 +142,49 @@ export class CalendarsItemFormComponent implements OnInit {
     this.buttonData = { ...this.buttonData, disabled: false };
   }
 
+  onLocationToggle(value) {
+    this.showLocationDetails = value;
+
+    if (!value) {
+      this.drawMarker.next(false);
+
+      this.mapCenter = new BehaviorSubject({
+        lat: this.session.g.get('school').latitude,
+        lng: this.session.g.get('school').longitude
+      });
+
+      CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
+    }
+  }
+
+  onSubmit() {
+    this.formError = false;
+
+    const valid = this.utils.validate(this.form);
+    if (!valid) {
+      this.enableButton();
+      this.formError = true;
+
+      return;
+    }
+
+    if (this.form.controls['is_all_day'].value) {
+      this.updateTime();
+    }
+
+    this.submitted.emit(this.form.value);
+  }
+
   ngOnInit() {
     const _self = this;
+    const lat = this.form.controls['latitude'].value;
+    const lng = this.form.controls['longitude'].value;
 
-    this.mapCenter = new BehaviorSubject({
-      lat: this.session.g.get('school').latitude,
-      lng: this.session.g.get('school').longitude
-    });
+    this.showLocationDetails = CPMap.canViewLocation(lat, lng, this.session.g.get('school'));
+    this.drawMarker.next(this.showLocationDetails);
+    this.mapCenter = new BehaviorSubject(
+      CPMap.setDefaultMapCenter(lat, lng, this.session.g.get('school'))
+    );
 
     this.startdatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
@@ -179,23 +222,5 @@ export class CalendarsItemFormComponent implements OnInit {
       class: 'primary',
       text: isEditForm ? submitEdit : submitCreate
     };
-  }
-
-  onSubmit() {
-    this.formError = false;
-
-    const valid = this.utils.validate(this.form);
-    if (!valid) {
-      this.enableButton();
-      this.formError = true;
-
-      return;
-    }
-
-    if (this.form.controls['is_all_day'].value) {
-      this.updateTime();
-    }
-
-    this.submitted.emit(this.form.value);
   }
 }

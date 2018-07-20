@@ -1,15 +1,21 @@
-import { HttpParams } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs';
+import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
+
+import { EventsService } from '../events.service';
 import { isProd } from './../../../../../config/env';
-import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { EventUtilService } from '../events.utils.service';
 import { CPSession, ISchool } from '../../../../../session';
-import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
+import { CPDate, CPMap } from '../../../../../shared/utils';
+import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { EventAttendance, EventFeedback, isAllDay } from '../event.status';
+import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 import {
   AdminService,
   CPI18nService,
@@ -17,10 +23,6 @@ import {
   ErrorService,
   StoreService
 } from '../../../../../shared/services';
-import { CPDate, CPMap } from '../../../../../shared/utils';
-import { EventAttendance, EventFeedback, isAllDay } from '../event.status';
-import { EventsService } from '../events.service';
-import { EventUtilService } from '../events.utils.service';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
 const FORMAT_WITHOUT_TIME = 'F j, Y';
@@ -64,9 +66,22 @@ export class EventsCreateComponent implements OnInit {
   production = isProd;
   studentFeedbackToolTip;
   attendanceManagerToolTip;
+  showLocationDetails = false;
   mapCenter: BehaviorSubject<any>;
-  newAddress = new BehaviorSubject(null);
   managers: Array<any> = [{ label: '---' }];
+  newAddress = new BehaviorSubject(null);
+  drawMarker = new BehaviorSubject(false);
+
+  eventProperties = {
+    event_id: null,
+    host_type: null,
+    start_date: null,
+    end_date: null,
+    location: null,
+    assessment: null,
+    feedback: null,
+    uploaded_photo: null
+  };
 
   constructor(
     public router: Router,
@@ -101,6 +116,11 @@ export class EventsCreateComponent implements OnInit {
   }
 
   onSelectedHost(host): void {
+    this.eventProperties = {
+      ...this.eventProperties,
+      host_type: host.hostType
+    };
+
     this.fetchManagersBySelectedStore(host.value);
 
     this.form.controls['store_id'].setValue(host.value);
@@ -159,7 +179,9 @@ export class EventsCreateComponent implements OnInit {
   }
 
   onResetMap() {
-    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields(this.school));
+    this.drawMarker.next(false);
+    this.form.controls['room_data'].setValue(null);
+    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
     this.centerMap(this.school.latitude, this.school.longitude);
   }
 
@@ -185,6 +207,8 @@ export class EventsCreateComponent implements OnInit {
     if (!data) {
       return;
     }
+
+    this.drawMarker.next(true);
 
     if ('fromUsersLocations' in data) {
       this.updateWithUserLocation(data);
@@ -267,6 +291,17 @@ export class EventsCreateComponent implements OnInit {
 
     this.service.createEvent(this.form.value, search).subscribe(
       (res: any) => {
+        this.eventProperties = {
+          ...this.eventProperties,
+          ...this.utils.setEventProperties(this.form.controls),
+          event_id: res.id
+        };
+
+        this.cpTracking.amplitudeEmitEvent(
+          amplitudeEvents.MANAGE_CREATED_EVENT,
+          this.eventProperties
+        );
+
         this.urlPrefix = this.getUrlPrefix(res.id);
         this.router.navigate([this.urlPrefix]);
       },
@@ -329,7 +364,44 @@ export class EventsCreateComponent implements OnInit {
     this.form.controls['is_all_day'].setValue(value);
   }
 
+  onLocationToggle(value) {
+    this.showLocationDetails = value;
+
+    if (!value) {
+      this.drawMarker.next(false);
+
+      this.mapCenter = new BehaviorSubject({
+        lat: this.school.latitude,
+        lng: this.school.longitude
+      });
+
+      this.form.controls['room_data'].setValue(null);
+      CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
+    }
+  }
+
+  getEventProperties() {
+    this.eventProperties = {
+      ...this.eventProperties,
+      ...this.utils.setEventProperties(this.form.controls),
+      uploaded_photo: this.utils.didUploadPhoto(this.form.controls['poster_url'].value)
+    };
+
+    return {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.MANAGE_CANCELED_EVENT,
+      eventProperties: this.eventProperties
+    };
+  }
+
   ngOnInit() {
+    const host_type = this.session.defaultHost ? this.session.defaultHost.hostType : null;
+
+    this.eventProperties = {
+      ...this.eventProperties,
+      host_type
+    };
+
     this.eventFeedbackEnabled = EventFeedback.enabled;
 
     this.school = this.session.g.get('school');
@@ -401,8 +473,8 @@ export class EventsCreateComponent implements OnInit {
       country: [null],
       address: [null],
       postal_code: [null],
-      latitude: [this.school.latitude],
-      longitude: [this.school.longitude],
+      latitude: [0],
+      longitude: [0],
       event_attendance: [EventAttendance.disabled],
       start: [null, Validators.required],
       poster_url: [null, Validators.required],

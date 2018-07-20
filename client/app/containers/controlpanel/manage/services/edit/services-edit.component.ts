@@ -1,20 +1,22 @@
-import { HttpParams } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { BehaviorSubject, combineLatest, throwError as observableThrowError } from 'rxjs';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { catchError, map, switchMap } from 'rxjs/operators';
-import { IServiceDeleteModal } from './components/service-edit-delete-modal';
-import { BaseComponent } from '../../../../../base/base.component';
-import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
-import { CPSession, ISchool } from '../../../../../session';
-import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
+import { Store } from '@ngrx/store';
+
 import { CPMap } from '../../../../../shared/utils';
-import { ProvidersService } from '../providers.service';
 import { ServicesService } from '../services.service';
+import { ProvidersService } from '../providers.service';
+import { CPSession, ISchool } from '../../../../../session';
+import { ServicesUtilsService } from '../services.utils.service';
+import { BaseComponent } from '../../../../../base/base.component';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { IServiceDeleteModal } from './components/service-edit-delete-modal';
+import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
+import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 
 declare var $: any;
 
@@ -50,14 +52,27 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   formError = false;
   serviceId: number;
   attendance = false;
+  showLocationDetails = false;
   mapCenter: BehaviorSubject<any>;
   newAddress = new BehaviorSubject(null);
+  drawMarker = new BehaviorSubject(false);
 
   deletedItem: IServiceDeleteModal = {
     id: null,
     name: null,
     type: null,
     index: null
+  };
+
+  eventProperties = {
+    phone: null,
+    email: null,
+    website: null,
+    feedback: null,
+    location: null,
+    service_id: null,
+    assessment: null,
+    category_name: null
   };
 
   constructor(
@@ -67,6 +82,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     private store: Store<IHeader>,
     private cpI18n: CPI18nService,
     private route: ActivatedRoute,
+    private utils: ServicesUtilsService,
     private cpTracking: CPTrackingService,
     private servicesService: ServicesService,
     private providersService: ProvidersService
@@ -114,6 +130,10 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     super.fetchData(stream$).then((res) => {
       const providers = res.data[1];
 
+      const lat = res.data[0].latitude;
+
+      const lng = res.data[0].longitude;
+
       this.service = res.data[0];
 
       this.hasFeedback = this.service.enable_feedback === FEEDBACK_ENABLED;
@@ -123,6 +143,11 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       this.categories.map((category) => {
         if (category.action === +this.service.category) {
           this.selectedCategory = category;
+
+          this.eventProperties = {
+            ...this.eventProperties,
+            category_name: category.label
+          };
         }
       });
 
@@ -138,10 +163,10 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
         }
       ];
 
-      this.mapCenter = new BehaviorSubject({
-        lat: res.data[0].latitude,
-        lng: res.data[0].longitude
-      });
+      this.showLocationDetails = CPMap.canViewLocation(lat, lng, this.school);
+      this.drawMarker.next(this.showLocationDetails);
+
+      this.mapCenter = new BehaviorSubject(CPMap.setDefaultMapCenter(lat, lng, this.school));
 
       this.storeId = res.data[0].store_id;
 
@@ -155,7 +180,9 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   }
 
   onResetMap() {
-    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields(this.school));
+    this.drawMarker.next(false);
+    this.form.controls['room_data'].setValue('');
+    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
     this.centerMap(this.school.latitude, this.school.longitude);
   }
 
@@ -181,6 +208,8 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     if (!data) {
       return;
     }
+
+    this.drawMarker.next(true);
 
     if ('fromUsersLocations' in data) {
       this.updateWithUserLocation(data);
@@ -314,6 +343,27 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
 
   onCategoryUpdate(category) {
     this.form.controls['category'].setValue(category.action);
+
+    this.eventProperties = {
+      ...this.eventProperties,
+      category_name: category.label
+    };
+  }
+
+  onLocationToggle(value) {
+    this.showLocationDetails = value;
+
+    if (!value) {
+      this.drawMarker.next(false);
+
+      this.mapCenter = new BehaviorSubject({
+        lat: this.school.latitude,
+        lng: this.school.longitude
+      });
+
+      this.form.controls['room_data'].setValue('');
+      CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
+    }
   }
 
   onSubmit() {
@@ -391,6 +441,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
         catchError((err) => observableThrowError(err))
       )
       .subscribe((_) => {
+        this.trackEvent(data);
         if (this.withAttendance) {
           this.router.navigate(['/manage/services/' + this.serviceId]);
 
@@ -399,6 +450,18 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
 
         this.router.navigate(['/manage/services/' + this.serviceId + '/info']);
       });
+  }
+
+  trackEvent(data) {
+    this.eventProperties = {
+      ...this.eventProperties,
+      ...this.utils.setEventProperties(data, this.serviceId)
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_UPDATED_SERVICE,
+      this.eventProperties
+    );
   }
 
   ngOnInit() {

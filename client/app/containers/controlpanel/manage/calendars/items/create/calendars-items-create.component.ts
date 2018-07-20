@@ -6,9 +6,11 @@ import { Store } from '@ngrx/store';
 
 import { ItemAllDay, IItem } from './../item.interface';
 import { CPSession } from './../../../../../../session';
-
-import { IHeader, HEADER_UPDATE } from './../../../../../../reducers/header.reducer';
 import { CalendarsService } from '../../calendars.services';
+import { CalendarsItemsService } from '../item.utils.service';
+import { CPTrackingService } from '../../../../../../shared/services';
+import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
+import { IHeader, HEADER_UPDATE } from './../../../../../../reducers/header.reducer';
 
 @Component({
   selector: 'cp-calendars-items-create',
@@ -21,13 +23,23 @@ export class CalendarsItemCreateComponent implements OnInit {
   form: FormGroup;
   calendarId: number;
 
+  eventProperties = {
+    all_day: null,
+    location: null,
+    end_date: null,
+    start_date: null,
+    calendar_event_id: null
+  };
+
   constructor(
     public router: Router,
     public fb: FormBuilder,
     public session: CPSession,
     public route: ActivatedRoute,
     public store: Store<IHeader>,
-    public service: CalendarsService
+    public service: CalendarsService,
+    public utils: CalendarsItemsService,
+    public cpTracking: CPTrackingService
   ) {
     this.calendarId = this.route.snapshot.params['calendarId'];
   }
@@ -53,9 +65,22 @@ export class CalendarsItemCreateComponent implements OnInit {
       .append('school_id', this.session.g.get('school').id)
       .append('academic_calendar_id', this.calendarId.toString());
 
-    this.service
-      .createItem(newItem, search)
-      .subscribe((_) => this.router.navigate(['/manage/calendars/' + this.calendarId]));
+    this.service.createItem(newItem, search).subscribe((res) => {
+      this.trackEvent(res);
+      this.router.navigate(['/manage/calendars/' + this.calendarId]);
+    });
+  }
+
+  trackEvent(data) {
+    this.eventProperties = {
+      ...this.eventProperties,
+      ...this.utils.setEventProperties(data)
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_CREATED_CALENDAR_EVENT,
+      this.eventProperties
+    );
   }
 
   buildForm() {
@@ -74,8 +99,8 @@ export class CalendarsItemCreateComponent implements OnInit {
       postal_code: [null],
       street_number: [null],
       province: [null],
-      latitude: [this.session.g.get('school').latitude, Validators.required],
-      longitude: [this.session.g.get('school').longitude, Validators.required]
+      latitude: [0, Validators.required],
+      longitude: [0, Validators.required]
     });
   }
 

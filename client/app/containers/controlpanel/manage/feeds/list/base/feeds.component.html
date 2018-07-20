@@ -3,6 +3,7 @@
     <div class="col-8">
       <cp-feed-filters
         [clubId]="clubId"
+        [athleticId]="athleticId"
         [orientationId]="orientationId"
         [selectedItem]="selectedItem"
         (doFilter)="onDoFilter($event)">
@@ -10,6 +11,7 @@
 
       <cp-feed-input-box
         [clubId]="clubId"
+        [athleticId]="athleticId"
         [orientationId]="orientationId"
         [isCampusWallView]="isCampusWallView$"
         [disablePost]="state.currentView ? state.currentView.postingMemberType === disablePost : false"
@@ -23,6 +25,7 @@
           [feed]="feed"
           (moved)="fetch()"
           [clubId]="clubId"
+          [athleticId]="athleticId"
           (deleted)="onDeleted($event)"
           [orientationId]="orientationId"
           *ngFor="let feed of state.feeds"

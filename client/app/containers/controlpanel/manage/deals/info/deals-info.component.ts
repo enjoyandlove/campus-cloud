@@ -24,7 +24,9 @@ export class DealsInfoComponent extends BaseComponent implements OnInit {
   loading;
   forever;
   dateFormat;
+  hasMetaData;
   draggable = false;
+  showLocationDetails = true;
   mapCenter: BehaviorSubject<any>;
   resourceBanner: IResourceBanner;
 
@@ -49,6 +51,8 @@ export class DealsInfoComponent extends BaseComponent implements OnInit {
 
       this.buildHeader(this.deal);
 
+      this.showLocationDetails = this.deal.store_latitude !== 0 && this.deal.store_longitude !== 0;
+
       this.mapCenter = new BehaviorSubject({
         lat: this.deal.store_latitude,
         lng: this.deal.store_longitude
@@ -59,6 +63,9 @@ export class DealsInfoComponent extends BaseComponent implements OnInit {
         heading: this.deal.title,
         subheading: this.deal.store_name
       };
+
+      this.hasMetaData =
+        this.deal.start || this.deal.store_address || this.deal.expiration !== this.forever;
     });
   }
 

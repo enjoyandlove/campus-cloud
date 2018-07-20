@@ -1,3 +1,4 @@
+import { ICampusGuide } from './section.interface';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -7,6 +8,16 @@ import { HTTPService } from '../../../../../base/http.service';
 
 @Injectable()
 export class SectionsService extends HTTPService {
+  _guide;
+
+  set guide(guide: ICampusGuide) {
+    this._guide = guide;
+  }
+
+  get guide(): ICampusGuide {
+    return this._guide;
+  }
+
   constructor(http: HttpClient, router: Router) {
     super(http, router);
 

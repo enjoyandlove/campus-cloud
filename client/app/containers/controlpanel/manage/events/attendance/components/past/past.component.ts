@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CPSession } from './../../../../../../../session';
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 import { createSpreadSheet } from './../../../../../../../shared/utils/csv/parser';
+import { EventUtilService } from '../../../events.utils.service';
 import { CPDate } from './../../../../../../../shared/utils/date/date';
 import { BaseComponent } from '../../../../../../../base/base.component';
 import { STAR_SIZE } from '../../../../../../../shared/components/cp-stars';
@@ -34,16 +35,26 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
 
   loading;
   attendees;
-  eventProperties;
+  sortingLabels;
   attendeeFeedback;
   state: IState = state;
+  downloadEventProperties;
   listStarSize = STAR_SIZE.DEFAULT;
   detailStarSize = STAR_SIZE.LARGE;
+
+  eventProperties = {
+    data_type: null,
+    event_id: null,
+    start_date: null,
+    end_date: null,
+    location: null
+  };
 
   constructor(
     public session: CPSession,
     private cpI18n: CPI18nService,
     public service: EventsService,
+    public utils: EventUtilService,
     public cpTracking: CPTrackingService
   ) {
     super();
@@ -112,7 +123,6 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
       const columns = [
         this.cpI18n.translate('events_attendant'),
         this.cpI18n.translate('events_attendee_email'),
-        this.cpI18n.translate('rsvp'),
         this.cpI18n.translate('events_checked_in_time'),
         this.cpI18n.translate('rating'),
         this.cpI18n.translate('events_user_feedback'),
@@ -125,18 +135,11 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
         3: 'QR Code'
       };
 
-      const rsvp = {
-        1: this.cpI18n.translate('yes'),
-        0: this.cpI18n.translate('no')
-      };
-
       attendees = attendees.map((item) => {
         return {
           [this.cpI18n.translate('events_attendant')]: `${item.firstname} ${item.lastname}`,
 
           [this.cpI18n.translate('events_attendee_email')]: item.email,
-
-          [this.cpI18n.translate('rsvp')]: rsvp[item.rsvp],
 
           [this.cpI18n.translate('events_checked_in_time')]: CPDate.fromEpoch(
             item.check_in_time,
@@ -161,19 +164,38 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
   }
 
   trackAmplitudeEvent() {
-    this.eventProperties = {
+    this.downloadEventProperties = {
       data_type: amplitudeEvents.EVENT
     };
 
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_DOWNLOAD_DATA, this.eventProperties);
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_DOWNLOAD_DATA,
+      this.downloadEventProperties
+    );
   }
 
   onViewFeedback(attendee): void {
+    this.trackFeedbackEvent();
     attendee = Object.assign({}, attendee, {
       maxRate: this.event.rating_scale_maximum
     });
 
     this.attendeeFeedback = attendee;
+  }
+
+  trackFeedbackEvent() {
+    this.eventProperties = {
+      ...this.eventProperties,
+      event_id: this.event.id,
+      location: this.utils.hasLocation(this.event.location),
+      start_date: CPDate.getMonth(this.event.start, this.session.tz),
+      end_date: CPDate.getMonth(this.event.end, this.session.tz)
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_CLICKED_FEEDBACK,
+      this.eventProperties
+    );
   }
 
   doSearch(search_text): void {
@@ -194,5 +216,11 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.fetch();
+
+    this.sortingLabels = {
+      rating: this.cpI18n.translate('rating'),
+      name: this.cpI18n.translate('attendee'),
+      method: this.cpI18n.translate('events_checked_in_method')
+    };
   }
 }
