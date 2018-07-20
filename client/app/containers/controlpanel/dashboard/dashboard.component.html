@@ -72,6 +72,13 @@
       </cp-dashboard-top-clubs>
     </div>
 
+    <div class="cp-card" *ngIf="canAssess">
+      <cp-dashboard-top-orientation
+        [dates]="currentDate"
+        (ready)="topOrientationTile$.next($event)">
+      </cp-dashboard-top-orientation>
+    </div>
+
     <div class="cp-card">
       <cp-dashboard-integrations
         (ready)="integrationsTile$.next($event)">

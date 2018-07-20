@@ -120,4 +120,22 @@ export class DashboardService extends HTTPService {
       })
     );
   }
+
+  getTopOrientation(search: HttpParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_ORIENTATION_EVENT}/`;
+
+    return super.get(url, search).pipe(
+      map((res: any) => {
+        /*const serviceAssessment = {
+          service_checkins: res.total_attendees,
+          service_feedback_rate: res.avg_feedbacks,
+          service_total_feedback: res.total_feedbacks
+        };
+
+        this.serviceAssessment.next(serviceAssessment);*/
+
+        return res;
+      })
+    );
+  }
 }

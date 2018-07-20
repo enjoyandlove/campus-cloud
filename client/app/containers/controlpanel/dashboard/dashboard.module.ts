@@ -14,6 +14,7 @@ import {
   DashboardTopServicesComponent,
   DashboardIntegrationsComponent,
   DashboardSocialActivyComponent,
+  DashboardTopOrientationComponent,
   DashboardSocialActivyChartComponent,
   DashboardGeneralInformationComponent,
   DashboardDownloadsRegistrationComponent
@@ -36,7 +37,8 @@ import { EngagementModule } from './../assess/engagement/engagement.module';
     DashboardTopClubsComponent,
     DashboardDownloadsRegistrationComponent,
     DashboardSocialActivyComponent,
-    DashboardSocialActivyChartComponent
+    DashboardSocialActivyChartComponent,
+    DashboardTopOrientationComponent
   ],
 
   imports: [CommonModule, SharedModule, DashboardRoutingModule, EngagementModule],

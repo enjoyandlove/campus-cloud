@@ -1,0 +1,8 @@
+<ng-container *ngIf="!isSuperAdmin && !canViewOrientation">
+  <p class="title text-truncate">{{ item.name }}</p>
+</ng-container>
+<ng-container *ngIf="isSuperAdmin">
+  <p class="title text-truncate hover" (click)="router.navigate(['/manage/' + resource + '/' + item.id])">{{ item.name }}</p>
+</ng-container>
+
+

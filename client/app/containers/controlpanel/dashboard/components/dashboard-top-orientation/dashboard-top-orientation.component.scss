@@ -1,0 +1,6 @@
+@import '~styles/core/typography';
+
+p {
+  @include font-24px();
+  @include font-bold();
+}

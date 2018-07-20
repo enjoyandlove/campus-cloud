@@ -1,0 +1,11 @@
+<ng-container [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <ng-container *ngSwitchCase="false">
+    <p>{{ 't_dashboard_top_orientation' | cpI18n }}</p>
+    <cp-dashboard-top-resource
+      [items]="items"
+      resource="orientation">
+    </cp-dashboard-top-resource>
+  </ng-container>
+</ng-container>
