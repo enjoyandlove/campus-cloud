@@ -17,6 +17,7 @@ import { CPStatsFormatterPipe } from './components/engagement-stats/pipes/stats-
 
 import { EngagementService } from './engagement.service';
 import { EngagementRoutingModule } from './engagement.routing.module';
+import { EngagementUtilsService } from './engagement.utils.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,7 @@ import { EngagementRoutingModule } from './engagement.routing.module';
 
   imports: [ReactiveFormsModule, CommonModule, SharedModule, EngagementRoutingModule],
 
-  providers: [EngagementService],
+  providers: [EngagementService, EngagementUtilsService],
 
   exports: [CPStatsFormatterPipe]
 })
