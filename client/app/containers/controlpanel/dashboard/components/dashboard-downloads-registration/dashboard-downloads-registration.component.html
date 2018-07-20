@@ -7,9 +7,11 @@
       </div>
     </div>
 
-    <cp-dashboard-downloads-chart
-      [data]="chartData">
-    </cp-dashboard-downloads-chart>
+    <cp-line-chart
+      [series]="series"
+      [labels]="labels"
+      [chartOptions]="chartOptions">
+    </cp-line-chart>
 
     <div class="row">
       <div class="col-12">

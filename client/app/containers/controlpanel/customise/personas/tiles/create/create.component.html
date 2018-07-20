@@ -1,51 +1,51 @@
-<div class="cpmodal">
-  <div class="cpmodal__header">
-    <div class="row">
-      <div class="col-12 text-center">
-        <span>
-          <strong>{{ 't_personas_create_tile_modal_title' | cpI18n }}</strong>
-        </span>
-        <span
-          (click)="doReset()"
-          data-dismiss="modal"
-          class="float-right hover cpmodal__header__close">
-          &times;
-        </span>
+<ng-container [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+  <ng-container *ngSwitchCase="false">
+    <div class="row margin-bottom">
+      <div class="col-6">
+        <div class="cp-card">
+          <p class="title">
+            {{ 't_personas_create_tile_heading_left' | cpI18n }}
+          </p>
+          <cp-personas-tile-guide-form
+            [form]="campusGuideTileForm"
+            uploadButtonId="tile_guide_upload_button"
+            (formChange)="onCampusGuideTileFormChange(campusGuideTileForm)">
+          </cp-personas-tile-guide-form>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="cp-card">
+          <p class="title">
+            {{ 't_personas_create_tile_heading_right' | cpI18n }}
+          </p>
+          <cp-personas-resource-form
+            [form]="campusLinkForm"
+            (formChange)="onCampusLinkFormChange(campusLinkForm)">
+          </cp-personas-resource-form>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="cpmodal__body">
-    <div class="row">
-      <div class="col-12">
-        <cp-personas-tile-form 
-          [campusLinkForm]="campusLinkForm"
-          [campusGuideTileForm]="campusGuideTileForm"
-          [uploadButtonId]="guide.id || 'temporary_tile'"
-          (campusLinkFormChange)="onCampusLinkFormChange($event)"
-          (campusGuideTileFormChange)="onCampusGuideTileFormChange($event)">
-        </cp-personas-tile-form>
+    <div class="footer">
+      <div class="cp-wrapper cp-wrapper--outer">
+        <div class="col-12">
+          <div class="row">
+            <div class="col-12">
+              <div class="text-right">
+                <a [routerLink]="['../']"
+                    class="cpbtn cpbtn--cancel">
+                  {{ 'cancel' | cpI18n }}
+                </a>
+                <cp-button
+                  [props]="buttonData"
+                  (buttonClick)="onSubmit()">
+                </cp-button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-
-  <div class="cpmodal__footer">
-    <div class="row justify-content-end">
-      <div class="col-6 text-right">
-        <button
-          type="button"
-          (click)="doReset()"
-          data-dismiss="modal"
-          class="cpbtn cpbtn--cancel">
-          {{ 'cancel' | cpI18n }}
-        </button>
-
-        <cp-button
-          [props]="buttonData"
-          (buttonClick)="onSubmit()">
-        </cp-button>
-      </div>
-    </div>
-  </div>
-</div>
-  
+  </ng-container>
+</ng-container>

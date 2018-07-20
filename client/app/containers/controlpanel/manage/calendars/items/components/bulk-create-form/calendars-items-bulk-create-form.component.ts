@@ -22,18 +22,31 @@ export class CalendarsItemsBulkCreateFormComponent implements OnInit {
     this.enableSubmitButton();
   }
 
-  resetToSchoolDefaults(index) {
+  onResetMap(index) {
     const controls = <FormArray>this.form.controls['items'];
     const control = <FormGroup>controls.controls[index];
 
     control.controls['location'].setValue('');
-    control.controls['latitude'].setValue(this.session.g.get('school').latitude);
-    control.controls['longitude'].setValue(this.session.g.get('school').longitude);
+    control.controls['latitude'].setValue(0);
+    control.controls['longitude'].setValue(0);
+  }
+
+  updateWithUserLocation(location, index) {
+    const controls = <FormArray>this.form.controls['items'];
+    const control = <FormGroup>controls.controls[index];
+
+    control.controls['location'].setValue(location.name);
+    control.controls['latitude'].setValue(location.latitude);
+    control.controls['longitude'].setValue(location.longitude);
   }
 
   onPlaceChange(placeData, index) {
     if (!placeData) {
-      this.resetToSchoolDefaults(index);
+      return;
+    }
+
+    if ('fromUsersLocations' in placeData) {
+      this.updateWithUserLocation(placeData, index);
 
       return;
     }

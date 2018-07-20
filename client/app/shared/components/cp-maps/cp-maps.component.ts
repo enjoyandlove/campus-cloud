@@ -9,7 +9,7 @@ import {
   ViewChild
 } from '@angular/core';
 
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { CPMapsService } from './../../services/maps.service';
 import { CPLocationsService } from '../../services/locations.service';
@@ -20,10 +20,13 @@ import { CPLocationsService } from '../../services/locations.service';
   styleUrls: ['./cp-maps.component.scss']
 })
 export class CPMapsComponent implements OnInit, AfterViewInit {
+  @ViewChild('hostEl') hostEl: ElementRef;
+
   @Input() doubleClick = true;
   @Input() draggable = true;
   @Input() center: Observable<any>;
-  @ViewChild('hostEl') hostEl: ElementRef;
+  @Input() drawMarker = new BehaviorSubject(true);
+
   @Output() mapSelection: EventEmitter<any> = new EventEmitter();
 
   map: google.maps.Map;
@@ -35,21 +38,26 @@ export class CPMapsComponent implements OnInit, AfterViewInit {
     this.center.subscribe((center) => {
       const el = this.hostEl.nativeElement;
       this.map = this.cpMapsService.init(el, center, this.draggable);
-      this.marker = this.cpMapsService.setMarker(this.map, center);
 
-      if (this.doubleClick) {
-        this.map.addListener('dblclick', (event) => {
-          this.locationService.geoCode(event.latLng.toJSON()).then((response) => {
-            const location = event.latLng;
+      this.drawMarker.subscribe((marker) => {
+        if (marker) {
+          this.marker = this.cpMapsService.setMarker(this.map, center);
 
-            response = { ...response, geometry: { location } };
+          if (this.doubleClick) {
+            this.map.addListener('dblclick', (event) => {
+              this.locationService.geoCode(event.latLng.toJSON()).then((response) => {
+                const location = event.latLng;
 
-            this.mapSelection.emit(response);
-          });
+                response = { ...response, geometry: { location } };
 
-          this.cpMapsService.setMarkerPosition(this.marker, event.latLng.toJSON());
-        });
-      }
+                this.mapSelection.emit(response);
+              });
+
+              this.cpMapsService.setMarkerPosition(this.marker, event.latLng.toJSON());
+            });
+          }
+        }
+      });
     });
   }
 

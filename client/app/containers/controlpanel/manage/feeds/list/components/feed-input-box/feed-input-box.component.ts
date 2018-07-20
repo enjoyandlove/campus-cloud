@@ -1,22 +1,23 @@
-/*tslint:disable:max-line-length */
-import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Store } from '@ngrx/store';
+import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { ISnackbar, SNACKBAR_SHOW } from './../../../../../../../reducers/snackbar.reducer';
-import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
-import { API } from '../../../../../../../config/api';
-import { CPSession, ISchool } from '../../../../../../../session';
-import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
+import { Store } from '@ngrx/store';
+
 import {
   CPTrackingService,
   FileUploadService,
   StoreService
 } from '../../../../../../../shared/services';
-import { appStorage } from '../../../../../../../shared/utils';
 import { FeedsService } from '../../../feeds.service';
+import { API } from '../../../../../../../config/api';
+import { appStorage } from '../../../../../../../shared/utils';
+import { FeedsUtilsService } from '../../../feeds.utils.service';
+import { CPSession, ISchool } from '../../../../../../../session';
+import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
+import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
+import { ISnackbar, SNACKBAR_SHOW } from './../../../../../../../reducers/snackbar.reducer';
 
 @Component({
   selector: 'cp-feed-input-box',
@@ -27,6 +28,7 @@ export class FeedInputBoxComponent implements OnInit {
   @Input() clubId: number;
   @Input() threadId: number;
   @Input() postType: number;
+  @Input() athleticId: number;
   @Input() replyView: boolean;
   @Input() orientationId: number;
   @Input() disablePost: boolean; // TODO REMOVE
@@ -46,11 +48,21 @@ export class FeedInputBoxComponent implements OnInit {
   reset$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   resetTextEditor$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
+  eventProperties = {
+    post_id: null,
+    host_type: null,
+    comment_id: null,
+    wall_source: null,
+    upload_image: null,
+    campus_wall_category: null
+  };
+
   constructor(
     private fb: FormBuilder,
     private session: CPSession,
     public cpI18n: CPI18nService,
     public store: Store<ISnackbar>,
+    public utils: FeedsUtilsService,
     private feedsService: FeedsService,
     private storeService: StoreService,
     public cpTracking: CPTrackingService,
@@ -149,6 +161,7 @@ export class FeedInputBoxComponent implements OnInit {
 
     submit
       .then((res) => {
+        this.trackAmplitudeEvents(res);
         this.buttonData = { ...this.buttonData, disabled: false };
 
         this.resetFormValues();
@@ -198,10 +211,20 @@ export class FeedInputBoxComponent implements OnInit {
 
   onSelectedHost(host): void {
     this.form.controls['store_id'].setValue(host.value);
+
+    this.eventProperties = {
+      ...this.eventProperties,
+      host_type: host.hostType
+    };
   }
 
   onSelectedChannel(channel): void {
     this.form.controls['post_type'].setValue(channel.action);
+
+    this.eventProperties = {
+      ...this.eventProperties,
+      campus_wall_category: channel.label
+    };
   }
 
   onFileUpload(file) {
@@ -234,6 +257,40 @@ export class FeedInputBoxComponent implements OnInit {
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
 
+  trackAmplitudeEvents(data) {
+    let eventName;
+
+    eventName = amplitudeEvents.WALL_SUBMITTED_POST;
+
+    this.eventProperties = {
+      ...this.eventProperties,
+      post_id: data.id,
+      upload_image: this.utils.hasImage(data.has_image),
+      wall_source: this.utils.wallSource(this.athleticId, this.orientationId, this.clubId)
+    };
+
+    if (this.replyView) {
+      eventName = amplitudeEvents.WALL_SUBMITTED_COMMENT;
+
+      this.eventProperties = {
+        ...this.eventProperties,
+        post_id: null,
+        comment_id: data.id
+      };
+    }
+
+    this.cpTracking.amplitudeEmitEvent(eventName, this.eventProperties);
+  }
+
+  setDefaultHostWallCategory(isCampusWallView) {
+    const host_type = this.session.defaultHost ? this.session.defaultHost.hostType : null;
+    this.eventProperties = {
+      ...this.eventProperties,
+      host_type: isCampusWallView ? null : host_type,
+      campus_wall_category: null
+    };
+  }
+
   ngOnInit() {
     this.buttonData = {
       class: 'primary',
@@ -264,6 +321,7 @@ export class FeedInputBoxComponent implements OnInit {
         this.form.controls['store_id'].setValue(res.group_id);
         this.form.removeControl('post_type');
         this._isCampusWallView = true;
+        this.setDefaultHostWallCategory(this._isCampusWallView);
 
         return;
       }
@@ -274,6 +332,7 @@ export class FeedInputBoxComponent implements OnInit {
       }
 
       this._isCampusWallView = false;
+      this.setDefaultHostWallCategory(this._isCampusWallView);
     });
   }
 }

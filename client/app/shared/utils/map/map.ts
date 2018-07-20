@@ -95,7 +95,7 @@ function getBaseMapObject(data) {
   return obj;
 }
 
-const resetLocationFields = (school) => {
+const resetLocationFields = () => {
   return {
     city: '',
     province: '',
@@ -103,8 +103,8 @@ const resetLocationFields = (school) => {
     address: '',
     location: '',
     postal_code: '',
-    latitude: school.latitude,
-    longitude: school.longitude
+    latitude: 0,
+    longitude: 0
   };
 };
 
@@ -123,10 +123,23 @@ const setFormLocationData = (form: FormGroup, location: ILocation) => {
   return form;
 };
 
+const canViewLocation = (lat, lng, school) => {
+  return lat !== 0 && lng !== 0 && lat !== school.latitude && lng !== school.longitude;
+};
+
+const setDefaultMapCenter = (lat, lng, school) => {
+  return {
+    lat: lat === 0 ? school.latitude : lat,
+    lng: lng === 0 ? school.longitude : lng
+  };
+};
+
 export const CPMap = {
+  canViewLocation,
   locationAsObject,
   getBaseMapObject,
   setFormLocationData,
+  setDefaultMapCenter,
   resetLocationFields,
   getValueFromAddressComponent
 };

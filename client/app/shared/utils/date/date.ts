@@ -14,8 +14,15 @@ function fromEpoch(timestamp, tz): moment.Moment {
   return moment.tz(timestamp * 1000, tz);
 }
 
+function getMonth(date, tz) {
+  const epochDate = fromEpoch(date, tz);
+
+  return moment(epochDate).format('MMMM');
+}
+
 export const CPDate = {
   now,
   toEpoch,
+  getMonth,
   fromEpoch
 };

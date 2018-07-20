@@ -15,6 +15,7 @@ import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
+import { ClubsUtilsService } from '../clubs.utils.service';
 
 @Component({
   selector: 'cp-clubs-create',
@@ -30,9 +31,22 @@ export class ClubsCreateComponent implements OnInit {
   buttonData;
   form: FormGroup;
   statusTypes = statusTypes;
+  showLocationDetails = false;
   mapCenter: BehaviorSubject<any>;
   membershipTypes = membershipTypes;
   newAddress = new BehaviorSubject(null);
+  drawMarker = new BehaviorSubject(false);
+
+  eventProperties = {
+    phone: null,
+    email: null,
+    website: null,
+    club_id: null,
+    location: null,
+    club_type: null,
+    club_status: null,
+    membership_status: null
+  };
 
   constructor(
     private router: Router,
@@ -40,6 +54,7 @@ export class ClubsCreateComponent implements OnInit {
     private store: Store<any>,
     private session: CPSession,
     private cpI18n: CPI18nService,
+    private utils: ClubsUtilsService,
     private clubsService: ClubsService,
     private cpTracking: CPTrackingService
   ) {}
@@ -60,6 +75,7 @@ export class ClubsCreateComponent implements OnInit {
 
     this.clubsService.createClub(this.form.value, search).subscribe(
       (res: any) => {
+        this.trackEvent(res);
         this.router.navigate(['/manage/' + this.labels.club_athletic + '/' + res.id + '/info']);
       },
       (err) => {
@@ -69,6 +85,15 @@ export class ClubsCreateComponent implements OnInit {
         throw new Error(err);
       }
     );
+  }
+
+  trackEvent(data) {
+    this.eventProperties = {
+      ...this.eventProperties,
+      ...this.utils.setEventProperties(data, this.labels.club_athletic)
+    };
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CREATED_CLUB, this.eventProperties);
   }
 
   onUploadedImage(image): void {
@@ -87,14 +112,26 @@ export class ClubsCreateComponent implements OnInit {
 
   onSelectedMembership(type): void {
     this.form.controls['has_membership'].setValue(type.action);
+
+    this.eventProperties = {
+      ...this.eventProperties,
+      membership_status: type.label
+    };
   }
 
   onSelectedStatus(type): void {
     this.form.controls['status'].setValue(type.action);
+
+    this.eventProperties = {
+      ...this.eventProperties,
+      club_status: type.label
+    };
   }
 
   onResetMap() {
-    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields(this.school));
+    this.drawMarker.next(false);
+    this.form.controls['room_info'].setValue(null);
+    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
     this.centerMap(this.school.latitude, this.school.longitude);
   }
 
@@ -121,6 +158,8 @@ export class ClubsCreateComponent implements OnInit {
       return;
     }
 
+    this.drawMarker.next(true);
+
     if ('fromUsersLocations' in data) {
       this.updateWithUserLocation(data);
 
@@ -142,7 +181,29 @@ export class ClubsCreateComponent implements OnInit {
     return this.mapCenter.next({ lat, lng });
   }
 
+  onLocationToggle(value) {
+    this.showLocationDetails = value;
+
+    if (!value) {
+      this.drawMarker.next(false);
+
+      this.mapCenter = new BehaviorSubject({
+        lat: this.school.latitude,
+        lng: this.school.longitude
+      });
+
+      this.form.controls['room_info'].setValue(null);
+      CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
+    }
+  }
+
   ngOnInit() {
+    this.eventProperties = {
+      ...this.eventProperties,
+      club_status: this.statusTypes[0].label,
+      membership_status: this.membershipTypes[0].label
+    };
+
     this.labels = clubAthleticLabels(this.isAthletic);
 
     this.school = this.session.g.get('school');
@@ -178,8 +239,8 @@ export class ClubsCreateComponent implements OnInit {
       country: [null],
       postal_code: [null],
       province: [null],
-      latitude: [this.session.g.get('school').latitude],
-      longitude: [this.session.g.get('school').longitude],
+      latitude: [0],
+      longitude: [0],
       room_info: [null],
       description: [null],
       website: [null],

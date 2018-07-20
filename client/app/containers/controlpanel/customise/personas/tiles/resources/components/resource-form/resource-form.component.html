@@ -1,0 +1,28 @@
+<div class="row form-group" *ngIf="!hideTypeSelector">
+  <div class="col-6">
+    <label>{{ 't_personas_tile_modal_create_label_type' | cpI18n }}</label>
+    <cp-dropdown
+      [items]="contentTypes"
+      (selected)="onContentTypeChange($event)">
+    </cp-dropdown>
+  </div>
+</div>
+
+<div class="row" *ngIf="state.resource">
+  <div class="col-12">
+    <label>{{ 't_personas_tile_modal_create_resource_type' | cpI18n }}</label>
+    <cp-personas-resource-types
+      (linkUrl)="onLinkUrlChange($event)"
+      (selected)="onResourceTypeSelected($event)">
+    </cp-personas-resource-types>
+  </div>
+</div>
+
+<div class="row" *ngIf="state.resourceList">
+  <div class="col-12">
+    <label>{{ 't_personas_tile_create_type_resource_resource_list' | cpI18n }}</label>
+    <cp-personas-resource-list-of-list
+      (resourceAdded)="onResourceTypeSelected($event)">
+    </cp-personas-resource-list-of-list>
+  </div>
+</div>

@@ -6,6 +6,8 @@ import { BehaviorSubject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { CP_TRACK_TO } from './../../../../../../../shared/directives/tracking/tracking.directive';
 import { ServicesService } from './../../../services.service';
+import { ServicesUtilsService } from '../../../services.utils.service';
+import { CPTrackingService } from '../../../../../../../shared/services';
 import { BaseComponent } from '../../../../../../../base/base.component';
 import { HEADER_UPDATE, IHeader } from '../../../../../../../reducers/header.reducer';
 import { STAR_SIZE } from '../../../../../../../shared/components/cp-stars';
@@ -29,9 +31,18 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
   query$: BehaviorSubject<string> = new BehaviorSubject(null);
   download$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
+  eventProperties = {
+    visits: null,
+    ratings: null,
+    service_id: null,
+    service_provider_id: null
+  };
+
   constructor(
     private route: ActivatedRoute,
     private store: Store<IHeader>,
+    private utils: ServicesUtilsService,
+    private cpTracking: CPTrackingService,
     private serviceService: ServicesService,
     private providersService: ProvidersService
   ) {
@@ -56,6 +67,7 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
     );
 
     super.fetchData(stream$).then((res) => {
+      this.trackEvent(res.data);
       this.provider = res.data;
       this.eventRating = (this.provider.avg_rating_percent * this.MAX_RATE / 100).toFixed(1);
 
@@ -90,6 +102,18 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
       eventName: amplitudeEvents.MANAGE_CLICKED_CHECKIN,
       eventProperties
     };
+  }
+
+  trackEvent(data) {
+    this.eventProperties = {
+      ...this.eventProperties,
+      ...this.utils.setServiceProviderEventProperties(data)
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_VIEWED_SERVICE_PROVIDER,
+      this.eventProperties
+    );
   }
 
   ngOnInit() {

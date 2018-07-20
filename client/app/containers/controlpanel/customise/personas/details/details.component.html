@@ -36,6 +36,7 @@
             [previousRank]="previousRank(i)"
             (deleted)="onDeletedSection($event)"
             (swap)="onSwapSection($event, guide)"
+            (removeSection)="onRemoveSection($event)"
             (created)="onAddSectionBefore($event, guide.id)">
           </cp-personas-section>
         </div>

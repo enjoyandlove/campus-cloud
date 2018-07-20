@@ -12,6 +12,7 @@ import { PersonasListActionBoxComponent } from './list/components';
 import { PersonasRoutingModule } from './personas.routing.module';
 import { PersonasService } from './personas.service';
 import { PersonasUtilsService } from './personas.utils.service';
+import { SectionUtilsService } from './sections/section.utils.service';
 import { PersonasSectionsModule } from './sections/sections.module';
 import { PersonasTilesModule } from './tiles/tiles.module';
 import { SharedModule } from '../../../../shared/shared.module';
@@ -37,6 +38,6 @@ import { SharedModule } from '../../../../shared/shared.module';
     PersonasTilesModule
   ],
 
-  providers: [PersonasService, PersonasUtilsService]
+  providers: [PersonasService, PersonasUtilsService, SectionUtilsService]
 })
 export class PersonasModule {}

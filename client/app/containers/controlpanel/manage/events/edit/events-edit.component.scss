@@ -59,26 +59,11 @@ form {
   }
 
   .checkbox {
-    margin: 0;
-    display: inline-block;
+    margin-top: 20px;
   }
 
   .isDisabled {
     opacity: 0.5;
-  }
-
-  .temporarily_disabled {
-    i {
-      font-size: 18px;
-    }
-
-    .temp-icon {
-      margin-left: -30px;
-    }
-
-    .temp-text {
-      margin-left: -15px;
-    }
   }
 }
 

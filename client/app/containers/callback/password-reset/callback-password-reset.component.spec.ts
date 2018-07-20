@@ -3,16 +3,14 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
 
-import { AuthService } from './../../auth/auth.service';
+import { AuthService } from '../../auth/auth.service';
 import { CPI18nService } from '../../../shared/services';
 import { FormsModule, FormBuilder } from '@angular/forms';
-import { ErrorService } from './../../../shared/services/error.service';
+import { ErrorService } from '../../../shared/services/error.service';
 import { CallbackPasswordResetComponent } from './callback-password-reset.component';
 
 class RouterMock {
-  navigate() {
-    // console.log('navigating');
-  }
+  navigate() {}
 }
 
 class MockAuthService {

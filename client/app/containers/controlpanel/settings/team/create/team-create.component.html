@@ -206,10 +206,10 @@
             [class.isDisabled]="!formData.content.feeds.active">
             <cp-checkbox
               class="cpcheckbox"
+              [label]="cpI18n.translate('feeds')"
               (toggle)="checkControl($event, CP_PRIVILEGES_MAP.moderation, formData.content.feeds)"
               [isDisabled]="!formData.content.feeds.active">
             </cp-checkbox>
-            <span>{{ 'feeds' | cpI18n }}</span>
           </div>
 
             <div
@@ -217,10 +217,10 @@
               [class.isDisabled]="!formData.content.calendars.active">
               <cp-checkbox
                 class="cpcheckbox"
+                [label]="cpI18n.translate('calendar')"
                 (toggle)="checkControl($event, CP_PRIVILEGES_MAP.calendar, formData.content.calendars)"
                 [isDisabled]="!formData.content.calendars.active">
               </cp-checkbox>
-              <span>{{ 'calendar' | cpI18n }}</span>
             </div>
 
             <div
@@ -228,10 +228,10 @@
               [class.isDisabled]="!formData.content.links.active">
               <cp-checkbox
                 class="cpcheckbox"
+                [label]="cpI18n.translate('links')"
                 (toggle)="checkControl($event, CP_PRIVILEGES_MAP.links, formData.content.links)"
                 [isDisabled]="!formData.content.links.active">
               </cp-checkbox>
-              <span>{{ 'links' | cpI18n }}</span>
             </div>
           </div>
 
@@ -241,10 +241,10 @@
               [class.isDisabled]="!formData.content.maps.active">
               <cp-checkbox
                 class="cpcheckbox"
+                [label]="cpI18n.translate('maps')"
                 (toggle)="checkControl($event, CP_PRIVILEGES_MAP.campus_maps, formData.content.maps)"
                 [isDisabled]="!formData.content.maps.active">
               </cp-checkbox>
-              <span>{{ 'maps' | cpI18n }}</span>
             </div>
 
             <div
@@ -252,10 +252,10 @@
               [class.isDisabled]="!formData.content.appCustomizaton.active">
               <cp-checkbox
                 class="cpcheckbox"
+                [label]="cpI18n.translate('customise')"
                 (toggle)="checkControl($event, CP_PRIVILEGES_MAP.app_customization, formData.content.appCustomizaton)"
                 [isDisabled]="!formData.content.appCustomizaton.active">
               </cp-checkbox>
-              <span>{{ 'customise' | cpI18n }}</span>
             </div>
 
              <div
@@ -263,10 +263,10 @@
               [class.isDisabled]="!formData.content.orientation.active">
               <cp-checkbox
                 class="cpcheckbox"
+                [label]="cpI18n.translate('orientation')"
                 (toggle)="checkControl($event, CP_PRIVILEGES_MAP.orientation, formData.content.orientation)"
                 [isDisabled]="!formData.content.orientation.active">
               </cp-checkbox>
-              <span>{{ 'orientation' | cpI18n }}</span>
             </div>
           </div>
 
@@ -276,10 +276,10 @@
               [class.isDisabled]="!formData.content.jobs.active">
               <cp-checkbox
                 class="cpcheckbox"
+                [label]="cpI18n.translate('jobs')"
                 (toggle)="checkControl($event, CP_PRIVILEGES_MAP.jobs, formData.content.jobs)"
                 [isDisabled]="!formData.content.jobs.active">
               </cp-checkbox>
-              <span>{{ 'jobs' | cpI18n }}</span>
             </div>
 
             <div
@@ -287,10 +287,10 @@
               [class.isDisabled]="!formData.content.deals.active">
               <cp-checkbox
                 class="cpcheckbox"
+                [label]="cpI18n.translate('deals')"
                 (toggle)="checkControl($event, CP_PRIVILEGES_MAP.deals, formData.content.deals)"
                 [isDisabled]="!formData.content.deals.active">
               </cp-checkbox>
-              <span>{{ 'deals' | cpI18n }}</span>
             </div>
           </div>
         </div>
@@ -314,22 +314,22 @@
                   [class.isDisabled]="!formData.notify.campus.active">
                   <cp-checkbox
                     class="cpcheckbox"
+                    [label]="cpI18n.translate('admin_campus_announcements')"
                     [isDisabled]="!formData.notify.campus.active"
                     [isChecked]="schoolPrivileges && schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements]"
                     (toggle)="checkControl($event, CP_PRIVILEGES_MAP.campus_announcements, formData.notify.campus)">
                   </cp-checkbox>
-                  <span>{{ 'admin_campus_announcements' | cpI18n }}</span>
                 </div>
                 <div
                   class="col-5"
                   [class.isDisabled]="!formData.notify.emergency.active">
                   <cp-checkbox
                     class="cpcheckbox"
+                    [label]="cpI18n.translate('admin_emergency_announcements')"
                     [isDisabled]="!formData.notify.emergency.active"
                     [isChecked]="schoolPrivileges && schoolPrivileges[CP_PRIVILEGES_MAP.emergency_announcement]"
                     (toggle)="checkControl($event, CP_PRIVILEGES_MAP.emergency_announcement, formData.notify.emergency)">
                   </cp-checkbox>
-                  <span>{{ 'admin_emergency_announcements' | cpI18n }}</span>
                 </div>
               </div>
             </div>
@@ -353,11 +353,11 @@
               [class.isDisabled]="!formData.assess.engagement.active">
               <cp-checkbox
                 class="cpcheckbox"
+                [label]="cpI18n.translate('admin_engagement_dashboard')"
                 [isDisabled]="!formData.assess.engagement.active"
                 [isChecked]="schoolPrivileges && schoolPrivileges[CP_PRIVILEGES_MAP.assessment]"
                 (toggle)="checkControl($event, CP_PRIVILEGES_MAP.assessment, formData.assess.engagement)">
               </cp-checkbox>
-              <span>{{ 'admin_engagement_dashboard' | cpI18n }}</span>
             </div>
           </div>
         </div>

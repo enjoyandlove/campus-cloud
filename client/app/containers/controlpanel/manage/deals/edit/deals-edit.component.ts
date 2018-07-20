@@ -1,15 +1,16 @@
-import { HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Store } from '@ngrx/store';
+import { HttpParams } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { switchMap } from 'rxjs/operators';
-import { BaseComponent } from '../../../../../base';
-import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+import { Store } from '@ngrx/store';
+
 import { CPSession } from '../../../../../session';
-import { CPI18nService } from '../../../../../shared/services';
-import { DealsService } from '../deals.service';
 import { DealsStoreService } from '../stores/store.service';
+import { BaseComponent } from '../../../../../base';
+import { DateStatus, DealsService } from '../deals.service';
+import { CPI18nService } from '../../../../../shared/services';
+import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 
 @Component({
   selector: 'cp-deals-edit',
@@ -116,8 +117,8 @@ export class DealsEditComponent extends BaseComponent implements OnInit {
       address: [null],
       logo_url: [null],
       description: [null],
-      latitude: [this.session.g.get('school').latitude],
-      longitude: [this.session.g.get('school').longitude]
+      latitude: [0],
+      longitude: [0]
     });
   }
 
@@ -132,6 +133,8 @@ export class DealsEditComponent extends BaseComponent implements OnInit {
   }
 
   buildDealsForm(data) {
+    const expiration = data.expiration !== DateStatus.forever ? data.expiration : DateStatus.noDate;
+
     this.form = this.fb.group({
       title: [data.title, [Validators.required, Validators.maxLength(120)]],
       store_id: [data.store_id, Validators.required],
@@ -139,7 +142,7 @@ export class DealsEditComponent extends BaseComponent implements OnInit {
       image_thumb_url: [data.image_thumb_url],
       description: [data.description],
       start: [data.start],
-      expiration: [data.expiration]
+      expiration: [expiration]
     });
   }
 

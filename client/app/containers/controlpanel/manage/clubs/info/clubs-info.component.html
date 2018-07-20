@@ -18,7 +18,10 @@
                   <p class="club__status">{{ clubStatus[club.status] }}</p>
                 </div>
                 <div class="col-4 text-right">
-                  <a routerLink="../edit"
+                  <a
+                    routerLink="../edit"
+                    queryParamsHandling="merge"
+                    query
                     class="cpbtn cpbtn--primary" i18n>
                     {{ labels.edit_button | cpI18n }}
                   </a>
@@ -133,7 +136,7 @@
       </div>
     </div>
 
-    <div class="row justify-content-center">
+    <div class="row justify-content-center" *ngIf="showLocationDetails">
       <div class="col-8">
         <div class="cp-card map">
           <cp-maps
@@ -144,13 +147,13 @@
         </div>
       </div>
     </div>
-    
+
     <div class="row club-notes" *ngIf="club.notes?.length && !limitedAdmin">
       <div class="col-8 offset-2">
         <div class="cp-card">
           <p class="club-notes__title">{{ 'club_info_notes' | cpI18n }}</p>
-          <div 
-            class="club-notes__item" 
+          <div
+            class="club-notes__item"
             *ngFor="let note of club.notes | cpNoteToText">
             <strong class="club-notes__question">{{note.question}}</strong>
             <ng-container *ngFor="let answer of note.answers">
