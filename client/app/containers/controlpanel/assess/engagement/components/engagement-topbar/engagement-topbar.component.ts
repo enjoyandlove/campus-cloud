@@ -91,7 +91,7 @@ export class EngagementTopBarComponent implements OnInit {
     this.state = {
       ...this.state,
       engagement: {
-        ...this.utils.commonEngageMentFilter()[0]
+        ...this.utils.commonEngagementFilter()[0]
       },
 
       for: {
@@ -144,7 +144,7 @@ export class EngagementTopBarComponent implements OnInit {
       }
 
       this.engagementFilter = [
-        ...this.utils.commonEngageMentFilter(),
+        ...this.utils.commonEngagementFilter(),
         ..._services
       ];
 
