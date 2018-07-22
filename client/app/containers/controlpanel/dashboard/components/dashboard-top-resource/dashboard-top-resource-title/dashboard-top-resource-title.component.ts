@@ -1,8 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { CPSession } from '../../../../../../session';
-import { DashboardUtilsService } from '../../../dashboard.utils.service';
 import { CP_PRIVILEGES_MAP } from '../../../../../../shared/constants';
+import { DashboardUtilsService } from '../../../dashboard.utils.service';
 import { canSchoolReadResource } from '../../../../../../shared/utils/privileges';
 
 @Component({
@@ -10,21 +11,23 @@ import { canSchoolReadResource } from '../../../../../../shared/utils/privileges
   templateUrl: './dashboard-top-resource-title.component.html',
   styleUrls: ['./dashboard-top-resource-title.component.scss']
 })
-export class DashboardTopResourceComponent implements OnInit {
-  @Input() isSuperAdmin;
+export class DashboardTopResourceTitleComponent implements OnInit {
+  @Input() item;
   @Input() resource: string;
 
+  isSuperAdmin;
+  isOrientation;
   canViewOrientation;
-  defaultImage = require('public/default/user.png');
 
   constructor(
+    public router: Router,
     public session: CPSession,
     public helper: DashboardUtilsService
   ) {}
 
   ngOnInit() {
+    this.isOrientation = this.resource === 'orientation';
     this.isSuperAdmin = this.helper.isSuperAdmin(this.session);
-
     this.canViewOrientation = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.orientation);
   }
 }

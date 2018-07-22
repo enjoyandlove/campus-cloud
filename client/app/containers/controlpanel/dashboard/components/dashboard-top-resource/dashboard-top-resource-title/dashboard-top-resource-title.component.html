@@ -1,8 +1,24 @@
-<ng-container *ngIf="!isSuperAdmin && !canViewOrientation">
-  <p class="title text-truncate">{{ item.name }}</p>
-</ng-container>
-<ng-container *ngIf="isSuperAdmin">
-  <p class="title text-truncate hover" (click)="router.navigate(['/manage/' + resource + '/' + item.id])">{{ item.name }}</p>
-</ng-container>
+<p
+  class="title text-truncate"
+  *ngIf="!isSuperAdmin && !isOrientation">
+  {{ item.name }}
+</p>
 
+<p
+  class="title text-truncate"
+  *ngIf="isOrientation && !canViewOrientation">
+  {{ item.name }}
+</p>
 
+<p
+  class="title text-truncate hover"
+  *ngIf="isSuperAdmin && !isOrientation"
+  (click)="router.navigate(['/manage/' + resource + '/' + item.id])">
+  {{ item.name }}
+</p>
+<p
+  class="title text-truncate hover"
+  *ngIf="isOrientation && canViewOrientation"
+  (click)="router.navigate(['/manage/' + resource + '/' + item.calendar_id + '/events/' + item.id])">
+  {{ item.name }}
+</p>

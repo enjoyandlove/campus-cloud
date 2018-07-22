@@ -17,7 +17,8 @@ import {
   DashboardTopOrientationComponent,
   DashboardSocialActivyChartComponent,
   DashboardGeneralInformationComponent,
-  DashboardDownloadsRegistrationComponent
+  DashboardDownloadsRegistrationComponent,
+  DashboardTopResourceTitleComponent
 } from './components';
 
 import { DashboardComponent } from './dashboard.component';
@@ -38,7 +39,8 @@ import { EngagementModule } from './../assess/engagement/engagement.module';
     DashboardDownloadsRegistrationComponent,
     DashboardSocialActivyComponent,
     DashboardSocialActivyChartComponent,
-    DashboardTopOrientationComponent
+    DashboardTopOrientationComponent,
+    DashboardTopResourceTitleComponent
   ],
 
   imports: [CommonModule, SharedModule, DashboardRoutingModule, EngagementModule],
