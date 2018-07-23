@@ -1,10 +1,10 @@
 <ng-container [ngSwitch]="loading">
-  <div class="cp-card events events--no-data" *ngSwitchCase="true">
+  <div class="cp-card orientation orientation--no-data" *ngSwitchCase="true">
     <div class="row">
       <div class="col-12">
-        <p class="events--heading">{{ 'events' | cpI18n }}</p>
+        <p class="orientation--heading">{{ 'orientation' | cpI18n }}</p>
 
-        <div class="events--no-data-wrapper text-center">
+        <div class="orientation--no-data-wrapper text-center">
           <cp-spinner *ngSwitchCase="true"></cp-spinner>
         </div>
       </div>
@@ -13,27 +13,27 @@
 
   <ng-container *ngSwitchCase="false">
     <ng-container [ngSwitch]="isDisable">
-      <div class="cp-card events events--no-data" *ngSwitchCase="true">
+      <div class="cp-card orientation orientation--no-data" *ngSwitchCase="true">
         <div class="row">
           <div class="col-12">
-            <p class="events--heading">{{ 'events' | cpI18n }}</p>
+            <p class="orientation--heading">{{ 'orientation' | cpI18n }}</p>
 
-            <div class="events--no-data-wrapper text-center">
-              <p class="heading">{{ 'assess_no_event_data' | cpI18n }}</p>
-              <p class="text-muted">{{ 'assess_no_event_data_help' | cpI18n }}</p>
+            <div class="orientation--no-data-wrapper text-center">
+              <p class="heading">{{ 't_assess_no_orientation_data' | cpI18n }}</p>
+              <p class="text-muted">{{ 't_assess_no_orientation_data_help' | cpI18n }}</p>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="cp-card events" *ngSwitchCase="false">
+      <div class="cp-card orientation" *ngSwitchCase="false">
         <cp-engagement-resource-stats
           [stats]="stats"
           [labels]="labels"
           [loading]="loading"
           [isSorting]="isSorting"
-          [items]="eventsRanking"
           [sortingBy]="sortingBy"
+          [items]="orientationRanking"
           (sortBy)="onSortBy($event)">
         </cp-engagement-resource-stats>
       </div>

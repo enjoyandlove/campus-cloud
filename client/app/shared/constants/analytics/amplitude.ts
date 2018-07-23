@@ -221,6 +221,8 @@ export const amplitudeEvents = {
 
   MANAGE_UPDATED_CALENDAR_EVENT: 'Manage - Updated Calendar Event',
 
+  ASSESS_VIEWED_TOP_ORIENTATIONS: 'Assess - Viewed Top Orientations',
+
   MANAGE_CREATED_CALENDAR_EVENT: 'Manage - Created Calendar Event',
 
   MANAGE_VIEWED_SERVICE_PROVIDER: 'Manage - Viewed Service Provider',

@@ -56,4 +56,10 @@ export class EngagementService extends HTTPService {
 
     return super.get(url, search);
   }
+
+  getOrientationData(search: HttpParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_ORIENTATION_EVENT}/`;
+
+    return super.get(url, search);
+  }
 }
