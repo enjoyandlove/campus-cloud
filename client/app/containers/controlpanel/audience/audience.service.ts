@@ -1,10 +1,13 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { HTTPService } from '../../../base/http.service';
+
 import { API } from '../../../config/api';
+import { PersonaPermission } from './audience.status';
+import { HTTPService } from '../../../base/http.service';
 import { SERVICES_MODAL_SET } from '../../../reducers/services-modal.reducer';
 
 @Injectable()
@@ -60,7 +63,9 @@ export class AudienceService extends HTTPService {
     const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SCHOOL_PERSONA}`;
     const url = `${common}/${startRange};${endRange}`;
 
-    return super.get(url, search);
+    return super.get(url, search, true).pipe(
+      map((res: any) => res.filter((p) => p.login_requirement !== PersonaPermission.forbidden))
+    );
   }
 
   setModalServices(services: any[]): void {
