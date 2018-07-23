@@ -1,10 +1,7 @@
-export enum AudienceType {
-  dynamic = 1,
-  custom = 0
-}
-
-export enum UserCount {
-  withUserCount = 1
+export enum AssessType {
+  Engagements = 0,
+  Services = 1,
+  Events = 2
 }
 
 export enum PersonaType {

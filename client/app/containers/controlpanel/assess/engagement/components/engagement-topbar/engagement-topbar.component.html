@@ -6,7 +6,7 @@
           <div class="row">
             <div class="col-9 no-right-padding">
               <cp-dropdown
-                [items]="engageMentFilter"
+                [items]="engagementFilter"
                 class="topbar--dropdown"
                 (selected)="onScopeChange($event)"
                 [selectedItem]="state.engagement">
@@ -40,7 +40,7 @@
               <cp-range-picker
                 [icon]="icon"
                 [class]="datePickerClass"
-                [dateRanges]="dateFilter"
+                [dateRanges]="utils.dateFilter()"
                 [label]="state.range.label"
                 (rangeChange)="onDateRangeChange($event)">
               </cp-range-picker>

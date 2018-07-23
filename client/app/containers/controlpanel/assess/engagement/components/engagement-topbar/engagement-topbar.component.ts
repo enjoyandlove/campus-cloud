@@ -1,19 +1,13 @@
 import { OnInit, Output, Component, EventEmitter } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 
 import { CPSession } from '../../../../../../session';
+import { EngagementUtilsService } from '../../engagement.utils.service';
 import { CPI18nService } from './../../../../../../shared/services/i18n.service';
-import {
-  now,
-  lastYear,
-  last30Days,
-  last90Days
-} from '../../../../../../shared/components/cp-range-picker/cp-range-picker.utils.service';
-import * as moment from 'moment';
 
 interface IState {
   engagement: {
+    route_id: string;
     label: string;
     data: {
       type: string;
@@ -22,11 +16,13 @@ interface IState {
   };
 
   for: {
+    route_id: string;
     label: string;
     listId: number;
   };
 
   range: {
+    route_id: string;
     label: string;
     payload: {
       metric: string;
@@ -47,28 +43,18 @@ export class EngagementTopBarComponent implements OnInit {
   @Output() doFilter: EventEmitter<IState> = new EventEmitter();
   @Output() download: EventEmitter<boolean> = new EventEmitter();
 
-  engageMentFilter;
-
   hasRouteData;
-
-  commonStudentFilter;
-
-  commonEngageMentFilter;
-
-  datePickerClass = 'cancel';
-
-  icon = 'keyboard_arrow_down';
-
-  dateFilter;
-
   state: IState;
-
   studentFilter;
+  engagementFilter;
+  datePickerClass = 'cancel';
+  icon = 'keyboard_arrow_down';
 
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private utils: EngagementUtilsService
   ) {}
 
   onDateRangeChange(payload) {
@@ -86,7 +72,7 @@ export class EngagementTopBarComponent implements OnInit {
   setPayload(payload) {
     if (!payload.hasOwnProperty('payload')) {
       return {
-        payload: this.setDateRange(payload),
+        payload: this.utils.setDateRange(payload),
         label: payload.label,
         route_id: payload.route_id
       };
@@ -103,22 +89,19 @@ export class EngagementTopBarComponent implements OnInit {
 
   initState() {
     this.state = {
+      ...this.state,
       engagement: {
-        ...this.commonEngageMentFilter[0]
+        ...this.utils.commonEngagementFilter()[0]
       },
 
       for: {
-        ...this.commonStudentFilter[0]
+        ...this.utils.commonStudentFilter()[0]
       },
 
       range: {
-        ...this.dateFilter[0]
+        ...this.utils.dateFilter()[0]
       }
     };
-  }
-
-  getFromArray(arr: Array<any>, key: string, val: number) {
-    return arr.filter((item) => item[key] === val)[0];
   }
 
   getStateFromUrl() {
@@ -126,163 +109,43 @@ export class EngagementTopBarComponent implements OnInit {
 
     this.state = Object.assign({}, this.state, {
       engagement: {
-        ...this.getFromArray(this.engageMentFilter, 'route_id', routeParams.engagement)
+        ...this.utils.getFromArray(this.engagementFilter, 'route_id', routeParams.engagement)
       },
 
       for: {
-        ...this.getFromArray(this.studentFilter, 'route_id', routeParams.for)
+        ...this.utils.getFromArray(this.studentFilter, 'route_id', routeParams.for)
       },
 
       range: {
-        ...this.getRange(routeParams)
+        ...this.utils.getRange(routeParams)
       }
     });
 
     this.doFilter.emit(this.state);
   }
 
-  getRange(routeParams) {
-    const range = this.getFromArray(this.dateFilter, 'route_id', routeParams.range);
-
-    return range
-      ? range
-      : {
-          payload: this.setDateRange(routeParams),
-          label: routeParams.range,
-          route_id: routeParams.range
-        };
-  }
-
-  setDateRange(filter) {
-    return {
-      range: {
-        start: filter.start,
-        end: filter.end
-      }
-    };
-  }
-
   ngOnInit() {
-    const search = new HttpParams();
-    search.append('school_id', this.session.g.get('school').id.toString());
-
-    const todayDate = moment().endOf('day');
-
-    this.dateFilter = [
-      {
-        route_id: 'last_30_days',
-        label: this.cpI18n.translate('assess_last_30_days'),
-        payload: {
-          metric: 'weekly',
-          range: {
-            end: now(this.session.tz),
-            start: last30Days(this.session.tz, todayDate)
-          }
-        }
-      },
-      {
-        route_id: 'last_90_days',
-        label: this.cpI18n.translate('assess_last_90_days'),
-        payload: {
-          metric: 'monthly',
-          range: {
-            end: now(this.session.tz),
-            start: last90Days(this.session.tz, todayDate)
-          }
-        }
-      },
-      {
-        route_id: 'last_year',
-        label: this.cpI18n.translate('assess_last_year'),
-        payload: {
-          metric: 'monthly',
-          range: {
-            end: now(this.session.tz),
-            start: lastYear(this.session.tz, todayDate)
-          }
-        }
-      }
-    ];
-
-    this.commonEngageMentFilter = [
-      {
-        route_id: 'all',
-        label: this.cpI18n.translate('assess_all_engagements'),
-        data: {
-          type: null,
-          value: 0,
-          queryParam: 'scope'
-        }
-      },
-      {
-        route_id: 'all_services',
-        label: this.cpI18n.translate('assess_all_services'),
-        data: {
-          type: 'services',
-          value: 1,
-          queryParam: 'scope'
-        }
-      },
-      {
-        route_id: 'all_events',
-        label: this.cpI18n.translate('assess_all_events'),
-        data: {
-          type: 'events',
-          value: 2,
-          queryParam: 'scope'
-        }
-      }
-    ];
-
-    this.commonStudentFilter = [
-      {
-        route_id: 'all_students',
-        label: this.cpI18n.translate('assess_all_students'),
-        listId: null
-      }
-    ];
-
     this.route.data.subscribe((res: { zendesk: string; data: Array<any> }) => {
-      // @data [services, lists]
-      const _lists = [...this.commonStudentFilter];
-      const _engagements = [...this.commonEngageMentFilter];
+      // @data [services, lists, persona]
+      let _persona = [];
+      let _services = [];
+      let _audiences = [];
 
       if (res.data[0].length) {
-        _engagements.push({
-          label: this.cpI18n.translate('services'),
-          value: null,
-          heading: true
-        });
+        _services = this.utils.parsedServices(res.data[0]);
       }
 
-      res.data[1].forEach((list) => {
-        _lists.push({
-          route_id: list.name
-            .toLowerCase()
-            .split(' ')
-            .join('_'),
-          label: list.name,
-          listId: list.id
-        });
-      });
+      if (res.data[1].length) {
+        _audiences = this.utils.parsedAudiences(res.data[1]);
+      }
 
-      res.data[0].forEach((service) => {
-        _engagements.push({
-          route_id: service.name
-            .toLowerCase()
-            .split(' ')
-            .join('_'),
-          label: service.name,
-          data: {
-            type: 'services',
-            value: service.id,
-            queryParam: 'service_id'
-          }
-        });
-      });
+      if (res.data[2].length) {
+        _persona = this.utils.parsedPersona(res.data[2]);
+      }
 
-      this.studentFilter = _lists;
-      this.engageMentFilter = _engagements;
+      this.engagementFilter = [...this.utils.commonEngagementFilter(), ..._services];
+
+      this.studentFilter = [...this.utils.commonStudentFilter(), ..._persona, ..._audiences];
     });
 
     if (

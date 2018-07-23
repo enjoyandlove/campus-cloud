@@ -341,11 +341,13 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   fetchManagersBySelectedStore(storeId) {
-    storeId = null;
-    const search: HttpParams = new HttpParams()
+    let search: HttpParams = new HttpParams()
       .append('school_id', this.school.id.toString())
-      .append('store_id', storeId)
       .append('privilege_type', this.utils.getPrivilegeType(this.isOrientation));
+
+    if (!this.isOrientation) {
+      search = search.append('store_id', storeId);
+    }
 
     this.adminService
       .getAdminByStoreId(search)
