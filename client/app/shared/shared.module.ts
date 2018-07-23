@@ -63,6 +63,17 @@ import {
   CPRangePickerComponent,
   CPLineChartComponent
 } from './components';
+import { CPTrackerDirective } from './directives';
+import { CPMapsService } from './services/maps.service';
+import { CPDatePipe, CPFilterPipe, CPI18nPipe } from './pipes';
+import { CPTrackingService } from './services/tracking.service';
+import { CPFIlterByLength } from './pipes/array/filter-by-length.pipe';
+import { CPLocationsService, FileUploadService, StoreService } from './services';
+import { CPTabsComponent } from './components/cp-tabs/components/cp-tabs/cp-tabs.component';
+import { LocationsService } from '../containers/controlpanel/manage/locations/locations.service';
+import { CPLineChartUtilsService } from './components/cp-line-chart/cp-line-chart.utils.service';
+
+import { CPRangePickerUtilsService } from './components/cp-range-picker/cp-range-picker.utils.service';
 
 @NgModule({
   declarations: [
@@ -193,7 +204,6 @@ import {
     CPWorkingComponent,
     CPHeaderLinkComponent,
     CPSortingHeaderComponent,
-    CPColorPickerDirective,
     CPRangePickerComponent,
     CPLineChartComponent
   ]

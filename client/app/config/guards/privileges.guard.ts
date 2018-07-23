@@ -101,7 +101,7 @@ export class PrivilegesGuard implements CanActivate, CanActivateChild {
 
       jobs: CP_PRIVILEGES_MAP.jobs,
 
-      deals: CP_PRIVILEGES_MAP.deals,
+      deals: CP_PRIVILEGES_MAP.deals
     };
 
     if (route) {

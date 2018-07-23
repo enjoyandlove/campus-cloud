@@ -1,8 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { CPSession } from './../../../../../../../session';
-import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
-import { createSpreadSheet } from './../../../../../../../shared/utils/csv/parser';
 import { EventUtilService } from '../../../events.utils.service';
 import { CPDate } from './../../../../../../../shared/utils/date/date';
 import { BaseComponent } from '../../../../../../../base/base.component';
