@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { get as _get } from 'lodash';
 
-import { PersonaPermission } from './audience.status';
 import { CPI18nService } from '../../../shared/services';
 
 @Injectable()
@@ -34,17 +33,15 @@ export class AudienceUtilsService {
     };
 
     persona.map((p) => {
-      if (p.login_requirement !== PersonaPermission.forbidden) {
-        const users = _get(p, 'user_count', null);
+      const users = _get(p, 'user_count', null);
 
-        _persona.push({
-          action: p.id,
-          type: 'persona',
-          isPersona: true,
-          userCount: users,
-          label: this.getLocalizedLabel(p.localized_name_map)
-        });
-      }
+      _persona.push({
+        action: p.id,
+        type: 'persona',
+        isPersona: true,
+        userCount: users,
+        label: this.getLocalizedLabel(p.localized_name_map)
+      });
     });
 
     if (_persona.length) {
