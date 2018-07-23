@@ -72,9 +72,10 @@ export class EngagementEventsBoxComponent extends BaseComponent implements OnIni
   onSortBy(sortBy) {
     this.trackAmplitudeEvent(sortBy.label);
     this.isSorting = true;
-    this.state = Object.assign({}, this.state, {
+    this.state = {
+      ...this.state,
       sortBy: sortTypes[sortBy.action]
-    });
+    };
 
     this.fetch();
   }
@@ -158,19 +159,15 @@ export class EngagementEventsBoxComponent extends BaseComponent implements OnIni
   }
 
   parseResponse(items) {
-    const _events = [];
-
-    items.map((item) => {
-      _events.push({
+    return items.map((item) => {
+      return {
         name: item.event_title,
         image: item.event_poster_thumb_url,
         attendees: item.num_of_attendees,
         feedbacks: item.num_of_feedbacks,
         avg_feedbacks: item.average_of_feedbacks
-      });
+      };
     });
-
-    return _events;
   }
 
   updateSortingLabel() {
@@ -198,13 +195,14 @@ export class EngagementEventsBoxComponent extends BaseComponent implements OnIni
       this.filters = res;
       this.isDisable = type === 'services' || type === 'orientations';
 
-      this.state = Object.assign({}, this.state, {
+      this.state = {
+        ...this.state,
         end: res.range.payload.range.end,
         scope: res.engagement.data,
         start: res.range.payload.range.start,
         list_id: res.for.listId,
         persona_id: res.for.personaId
-      });
+      };
 
       if (!this.isDisable) {
         this.fetch();

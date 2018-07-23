@@ -71,9 +71,10 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
   onSortBy(sortBy) {
     this.isSorting = true;
     this.trackAmplitudeEvent(sortBy.label);
-    this.state = Object.assign({}, this.state, {
+    this.state = {
+      ...this.state,
       sortBy: sortTypes[sortBy.action]
-    });
+    };
 
     this.fetch();
   }
@@ -158,19 +159,15 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
   }
 
   parseResponse(items) {
-    const _services = [];
-
-    items.map((item) => {
-      _services.push({
+    return items.map((item) => {
+      return {
         name: item.service_name,
         image: item.service_logo_url,
         attendees: item.num_of_attendees,
         feedbacks: item.num_of_feedbacks,
         avg_feedbacks: item.average_of_feedbacks
-      });
+      };
     });
-
-    return _services;
   }
 
   updateSortingLabel() {
@@ -198,13 +195,14 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
       this.filters = res;
       this.isDisable = type === 'events' || type === 'orientations';
 
-      this.state = Object.assign({}, this.state, {
+      this.state = {
+        ...this.state,
         end: res.range.payload.range.end,
         scope: res.engagement.data,
         start: res.range.payload.range.start,
         list_id: res.for.listId,
         persona_id: res.for.personaId
-      });
+      };
 
       if (!this.isDisable) {
         this.fetch();
