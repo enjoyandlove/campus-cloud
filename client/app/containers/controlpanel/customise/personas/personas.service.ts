@@ -15,6 +15,13 @@ export class PersonasService extends HTTPService {
     Object.setPrototypeOf(this, PersonasService.prototype);
   }
 
+  getCampusLinks(search: HttpParams) {
+    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LINKS}`;
+    const url = `${common}/1;3000`;
+
+    return super.get(url, search);
+  }
+
   getPersonas(startRange: number, endRange: number, search: HttpParams) {
     const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.PERSONAS}`;
     const url = `${common}/${startRange};${endRange}`;

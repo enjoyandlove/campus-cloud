@@ -2356,6 +2356,9 @@
   "t_dashboard_chart_tooltip_label_registrations": {
     "message": "Registrations"
   },
+  "t_dashboard_top_orientation": {
+    "message": "Top Orientations"
+  },
   "t_deals_delete_modal_body": {
     "message": "Are you sure you want to delete %s?"
   },
@@ -2643,6 +2646,9 @@
   },
   "t_tile_button_default": {
     "message": "Default"
+  },
+  "t_tile_button_locked": {
+    "message": "Locked"
   },
   "update": {
     "message": "Update",

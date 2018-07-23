@@ -156,21 +156,14 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
   }
 
   fetch() {
-    const personaSearch = new HttpParams().append('school_id', this.session.g.get('school').id);
+    const schoolIdSearch = new HttpParams().append('school_id', this.session.g.get('school').id);
 
-    const tilesSearch = new HttpParams()
-      .append('school_id', this.session.g.get('school').id)
-      .append('school_persona_id', this.personaId);
+    const tilesSearch = schoolIdSearch.append('school_persona_id', this.personaId);
 
-    const tileCategoriesSearch = new HttpParams().append(
-      'school_id',
-      this.session.g.get('school').id
-    );
-
-    const tiles$ = this.service.getTilesByPersona(tilesSearch);
-    const tileCategories$ = this.service.getTilesCategories(tileCategoriesSearch);
-
-    const persona$ = this.service.getPersonaById(this.personaId, personaSearch);
+    const tilesByPersona$ = this.service.getTilesByPersona(tilesSearch);
+    const tileCategories$ = this.service.getTilesCategories(schoolIdSearch);
+    const tilesByPersonaZero$ = this.service.getTilesByPersona(schoolIdSearch);
+    const persona$ = this.service.getPersonaById(this.personaId, schoolIdSearch);
 
     const request$ = persona$.pipe(
       switchMap((persona: IPersona) => {
@@ -178,13 +171,26 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
 
         this.updateHeader(persona.localized_name_map[key]);
 
-        return combineLatest([tiles$, tileCategories$]);
+        return combineLatest([tilesByPersona$, tileCategories$, tilesByPersonaZero$]);
       })
     );
     const groupTiles = (categories, tiles) =>
       this.utils.groupTilesWithTileCategories(categories, tiles);
 
-    const stream$ = request$.pipe(map(([tiles, categories]) => groupTiles(categories, tiles)));
+    const stream$ = request$.pipe(
+      map(([tiles, categories, tilesByPersonaZero]) => {
+        tiles = tiles.map((tile: ITile) => {
+          return {
+            ...tile,
+            related_link_data: tilesByPersonaZero
+              .filter((t: ITile) => t.id === tile.extra_info.id)
+              .map((t: ITile) => t.related_link_data)[0]
+          };
+        });
+
+        return groupTiles(categories, tiles);
+      })
+    );
 
     super
       .fetchData(stream$)
@@ -203,6 +209,8 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
           featureTiles: this.utils.getFeaturedTiles(data),
           categoryZero: this.utils.getCategoryZeroTiles(data)
         };
+
+        // console.log(2, this.state.guides);
       })
       .catch(() => this.router.navigate(['/customize/personas']));
   }
