@@ -155,6 +155,10 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
     }
   }
 
+  createFeatureTile() {}
+
+  createCategoryZeroTile() {}
+
   fetch() {
     const schoolIdSearch = new HttpParams().append('school_id', this.session.g.get('school').id);
 

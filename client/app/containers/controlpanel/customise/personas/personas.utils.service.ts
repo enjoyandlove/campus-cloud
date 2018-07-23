@@ -46,14 +46,10 @@ export class PersonasUtilsService {
   }
 
   getFeaturedTiles(guides: Array<ICampusGuide>) {
-    return sortBy(
-      flatten(
-        guides.map((guide: ICampusGuide) =>
-          guide.tiles.filter((tile: ITile) => tile.featured_rank > -1)
-        )
-      ),
-      (i) => i.rank
-    );
+    const isFeatured = (tile: ITile) => tile.featured_rank !== -1;
+    const featureTiles = guides.map((g: ICampusGuide) => g.tiles.filter(isFeatured));
+
+    return sortBy(flatten(featureTiles), (i) => i.rank);
   }
 
   getCampusSecurityServiceId(campusSecurity) {

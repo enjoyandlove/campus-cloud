@@ -99,10 +99,16 @@ export class TilesService extends HTTPService {
     );
   }
 
-  deleteTile(linkId, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GUIDE_TILES}/${linkId}`;
+  deleteTile(tileId, search: HttpParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GUIDE_TILES}/${tileId}`;
 
     return super.delete(url, search);
+  }
+
+  getTileById(tileId, search: HttpParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GUIDE_TILES}/${tileId}`;
+
+    return super.get(url, search);
   }
 
   createCampusTile(body) {
