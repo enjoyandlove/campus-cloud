@@ -90,10 +90,7 @@ export class AudienceSavedBodyComponent implements OnInit {
           _personas = persona;
         }
 
-        return [
-          ...heading,
-          ...this.utils.parsedPersona(_personas)
-        ];
+        return [...heading, ...this.utils.parsedPersona(_personas)];
       })
     );
 

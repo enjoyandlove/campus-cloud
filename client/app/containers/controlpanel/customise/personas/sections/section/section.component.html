@@ -39,6 +39,7 @@
       <cp-personas-tile
         [tile]="tile"
         class="col-2"
+        (edit)="onEditTile(tile)"
         (edited)="onEditedTile($event)"
         (deleted)="onDeletedTile($event)"
         [class.mb-4]="i % 5 === 0"
@@ -52,17 +53,3 @@
     </div>
   </section>
 </fieldset>
-
-<!-- <cp-modal
-  *ngIf="showModal"
-  [modalId]="modalId">
-  <cp-personas-tile-create
-    [guide]="guide"
-    [lastRank]="lastRank"
-    [personaId]="personaId"
-    (error)="onCreateError($event)"
-    (teardown)="onTearDown(modalId)"
-    (created)="onTileCreated($event)"
-    (createdGuide)="onSavedGuide($event)">
-  </cp-personas-tile-create>
-</cp-modal> -->

@@ -51,7 +51,6 @@ export const API_ENDPOINTS = {
 
   ANNOUNCEMENT: 'announcement',
 
-  // Assess Dashboard
   ASSESS_EVENT: 'assess_event',
 
   GROUP_COMMENT: 'group_comment',

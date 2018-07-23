@@ -94,9 +94,10 @@ export class EngagementComponent extends BaseComponent implements OnInit {
   }
 
   buildSearchHeaders(): HttpParams {
-    let search =  new HttpParams();
+    let search = new HttpParams();
 
-    search = search.append('school_id', this.session.g.get('school').id.toString())
+    search = search
+      .append('school_id', this.session.g.get('school').id.toString())
       .append('start', `${this.filterState.range.payload.range.start}`)
       .append('end', `${this.filterState.range.payload.range.end}`)
       .append(this.filterState.engagement.data.queryParam, this.filterState.engagement.data.value);

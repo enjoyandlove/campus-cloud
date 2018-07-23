@@ -20,6 +20,10 @@ export class TilesUtilsService {
     return tile.related_link_data.link_url === 'oohlala://school_campaign';
   }
 
+  isFeatured(tile: ITile) {
+    return tile.featured_rank !== -1;
+  }
+
   isTileVisible(tile: ITile) {
     return tile.visibility_status === TileVisibility.visible;
   }

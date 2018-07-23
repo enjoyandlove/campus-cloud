@@ -71,11 +71,11 @@ export class EngagementTopBarComponent implements OnInit {
 
   setPayload(payload) {
     if (!payload.hasOwnProperty('payload')) {
-       return {
-         payload: this.utils.setDateRange(payload),
-         label: payload.label,
-         route_id: payload.route_id
-       };
+      return {
+        payload: this.utils.setDateRange(payload),
+        label: payload.label,
+        route_id: payload.route_id
+      };
     }
 
     return payload;
@@ -132,7 +132,7 @@ export class EngagementTopBarComponent implements OnInit {
       let _audiences = [];
 
       if (res.data[0].length) {
-         _services = this.utils.parsedServices(res.data[0]);
+        _services = this.utils.parsedServices(res.data[0]);
       }
 
       if (res.data[1].length) {
@@ -143,16 +143,9 @@ export class EngagementTopBarComponent implements OnInit {
         _persona = this.utils.parsedPersona(res.data[2]);
       }
 
-      this.engagementFilter = [
-        ...this.utils.commonEngagementFilter(),
-        ..._services
-      ];
+      this.engagementFilter = [...this.utils.commonEngagementFilter(), ..._services];
 
-      this.studentFilter = [
-        ...this.utils.commonStudentFilter(),
-        ..._persona,
-        ..._audiences
-      ];
+      this.studentFilter = [...this.utils.commonStudentFilter(), ..._persona, ..._audiences];
     });
 
     if (

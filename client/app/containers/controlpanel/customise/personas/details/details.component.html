@@ -1,34 +1,40 @@
 <ng-container [ngSwitch]="loading || state.working">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
   <ng-container *ngSwitchCase="false">
-    <div 
-      class="cp-card mb-4"
-      *ngIf="state.featureTiles.length">
+
+    <div class="cp-card mb-4">
       <div class="row" [class.mb-4]="i % 5 === 0">
-        <cp-personas-tile 
+        <cp-personas-tile
           [tile]="tile"
-          class="col-2" 
+          class="col-3"
           *ngFor="let tile of state.featureTiles; let i = index">
         </cp-personas-tile>
+        <cp-personas-tile-add-button
+          class="col-3"
+          (buttonClick)="createFeatureTile()">
+        </cp-personas-tile-add-button>
       </div>
     </div>
 
     <div class="cp-card">
-      <div class="mb-4"
-        *ngIf="state.categoryZero.length">
+      <div class="mb-4">
         <div class="row" [class.mb-4]="i % 5 === 0">
-          <cp-personas-tile 
+          <cp-personas-tile
             [tile]="tile"
-            class="col-2" 
+            class="col-2"
             *ngFor="let tile of state.categoryZero; let i = index">
           </cp-personas-tile>
+          <cp-personas-tile-add-button
+            class="col-2"
+            (buttonClick)="createCategoryZeroTile()">
+          </cp-personas-tile-add-button>
         </div>
       </div>
-      <div 
-        class="row" 
+      <div
+        class="row"
         *ngFor="let guide of state.guides; let first = first; let last = last; let i = index">
         <div class="col-12">
-          <cp-personas-section 
+          <cp-personas-section
             [last]="last"
             [guide]="guide"
             [first]="first"

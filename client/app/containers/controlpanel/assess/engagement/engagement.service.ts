@@ -39,9 +39,11 @@ export class EngagementService extends HTTPService {
     const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SCHOOL_PERSONA}`;
     const url = `${common}/${startRange};${endRange}`;
 
-    return super.get(url, search, true).pipe(
-      map((res: any) => res.filter((p) => p.login_requirement !== PersonaPermission.forbidden))
-    );
+    return super
+      .get(url, search, true)
+      .pipe(
+        map((res: any) => res.filter((p) => p.login_requirement !== PersonaPermission.forbidden))
+      );
   }
 
   getChartData(search: HttpParams) {

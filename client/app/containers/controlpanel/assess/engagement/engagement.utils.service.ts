@@ -14,11 +14,7 @@ import { CPI18nService } from '../../../../shared/services';
 
 @Injectable()
 export class EngagementUtilsService {
-
-  constructor(
-    public session: CPSession,
-    public cpI18n: CPI18nService
-  ) {}
+  constructor(public session: CPSession, public cpI18n: CPI18nService) {}
 
   getFromArray(arr: Array<any>, key: string, val: number) {
     return arr.filter((item) => item[key] === val)[0];
@@ -31,11 +27,13 @@ export class EngagementUtilsService {
   getRange(routeParams) {
     const range = this.getFromArray(this.dateFilter(), 'route_id', routeParams.range);
 
-    return range ? range : {
-      payload: this.setDateRange(routeParams),
-      label: routeParams.range,
-      route_id: routeParams.range
-    };
+    return range
+      ? range
+      : {
+          payload: this.setDateRange(routeParams),
+          label: routeParams.range,
+          route_id: routeParams.range
+        };
   }
 
   setDateRange(filter) {
@@ -50,11 +48,13 @@ export class EngagementUtilsService {
   parsedServices(services) {
     const _services = [];
 
-    const heading = [{
-      label: this.cpI18n.translate('services'),
-      value: null,
-      heading: true
-    }];
+    const heading = [
+      {
+        label: this.cpI18n.translate('services'),
+        value: null,
+        heading: true
+      }
+    ];
 
     services.forEach((service) => {
       _services.push({
@@ -77,11 +77,13 @@ export class EngagementUtilsService {
   parsedAudiences(audiences) {
     const _audiences = [];
 
-    const heading = [{
-      label: this.cpI18n.translate('audience_my_audiences'),
-      value: null,
-      heading: true
-    }];
+    const heading = [
+      {
+        label: this.cpI18n.translate('audience_my_audiences'),
+        value: null,
+        heading: true
+      }
+    ];
 
     audiences.forEach((audience) => {
       _audiences.push({
@@ -100,11 +102,13 @@ export class EngagementUtilsService {
   parsedPersona(personas) {
     const _persona = [];
 
-    const heading = [{
-      label: this.cpI18n.translate('t_notify_announcement_audiences_my_experiences'),
-      value: null,
-      heading: true
-    }];
+    const heading = [
+      {
+        label: this.cpI18n.translate('t_notify_announcement_audiences_my_experiences'),
+        value: null,
+        heading: true
+      }
+    ];
 
     personas.forEach((persona) => {
       _persona.push({
