@@ -11,3 +11,7 @@ export enum PersonaType {
   app = 0,
   web = 1
 }
+
+export enum PersonaPermission {
+  forbidden = -1
+}

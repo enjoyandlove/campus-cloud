@@ -9,7 +9,7 @@ import {
 } from '../../../../shared/components/cp-range-picker/cp-range-picker.utils.service';
 
 import { CPSession } from '../../../../session';
-import { AssessType } from './engagement.status';
+import { AssessType, PersonaPermission } from './engagement.status';
 import { CPI18nService } from '../../../../shared/services';
 
 @Injectable()
@@ -107,14 +107,16 @@ export class EngagementUtilsService {
     }];
 
     personas.forEach((persona) => {
-      _persona.push({
-        route_id: this.getLocalizedLabel(persona.localized_name_map)
-          .toLowerCase()
-          .split(' ')
-          .join('_'),
-        label: this.getLocalizedLabel(persona.localized_name_map),
-        personaId: persona.id
-      });
+      if (persona.login_requirement !== PersonaPermission.forbidden) {
+        _persona.push({
+          route_id: this.getLocalizedLabel(persona.localized_name_map)
+            .toLowerCase()
+            .split(' ')
+            .join('_'),
+          label: this.getLocalizedLabel(persona.localized_name_map),
+          personaId: persona.id
+        });
+      }
     });
 
     return [...heading, ..._persona];
