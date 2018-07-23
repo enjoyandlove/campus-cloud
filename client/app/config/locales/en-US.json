@@ -1204,7 +1204,7 @@
     "message": "Events"
   },
   "events_attendance_feedback": {
-    "message": "Attendance Feedback"
+    "message": "Feedback"
   },
   "events_attendance_manager": {
     "message": "Att. Manager"
@@ -1261,7 +1261,7 @@
     "message": "The event's end time must be later than its start time."
   },
   "events_event_attendance": {
-    "message": "Event Attendance"
+    "message": "Assessment"
   },
   "events_event_banner": {
     "message": "Event Banner"
@@ -2317,8 +2317,29 @@
   "type": {
     "message": "Type"
   },
+  "t_assess_all_orientations": {
+    "message": "All Orientations"
+  },
   "t_assess_chart_tooltip_label_engagements": {
     "message": "Engagement(s)"
+  },
+  "t_assess_no_orientation_data": {
+    "message": "No Orientation Data"
+  },
+  "t_assess_no_orientation_data_help": {
+    "message": "To see Orientations data use the Engagement filter"
+  },
+  "t_assess_orientation_programs": {
+    "message": "Orientation Programs"
+  },
+  "t_assess_top_orientation_programs": {
+    "message": "Top Programs"
+  },
+  "t_assess_total_orientation_programs": {
+    "message": "Total Programs"
+  },
+  "t_assess_total_orientation_programs_assessed": {
+    "message": "Programs Assessed"
   },
   "t_audience_dynamic_integration_disabled": {
     "message": "To enable this feature, please contact your Customer Success manager."
@@ -2334,6 +2355,9 @@
   },
   "t_dashboard_chart_tooltip_label_registrations": {
     "message": "Registrations"
+  },
+  "t_dashboard_top_orientation": {
+    "message": "Top Orientations"
   },
   "t_deals_delete_modal_body": {
     "message": "Are you sure you want to delete %s?"
@@ -2622,6 +2646,9 @@
   },
   "t_tile_button_default": {
     "message": "Default"
+  },
+  "t_tile_button_locked": {
+    "message": "Locked"
   },
   "update": {
     "message": "Update",

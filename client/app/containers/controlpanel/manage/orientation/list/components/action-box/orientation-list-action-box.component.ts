@@ -27,7 +27,8 @@ export class OrientationListActionBoxComponent implements OnInit {
 
   trackEvent(eventName) {
     const eventProperties = {
-      ...this.cpTracking.getEventProperties(), create_page_name: amplitudeEvents.CREATE_PROGRAM
+      ...this.cpTracking.getEventProperties(),
+      create_page_name: amplitudeEvents.CREATE_PROGRAM
     };
 
     return {

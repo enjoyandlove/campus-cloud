@@ -118,7 +118,6 @@ export class CPLineChartUtilsService {
 
       axisX: {
         labelInterpolationFnc: function skipLabels(value, index) {
-
           if (index + 1 === series[0].length) {
             return null;
           }

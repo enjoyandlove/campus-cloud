@@ -1,0 +1,24 @@
+<div class="cp-card">
+  <div class="row justify-content-between">
+    <div class="col-5 float-left">
+      <div class="row">
+        <div class="col-6">
+          <cp-searchbox (query)="onSearch($event)"></cp-searchbox>
+        </div>
+        <div class="col-6">
+          <cp-dropdown 
+            [items]="dropdownItems"
+            (selected)="onSelectedFilter($event)">
+          </cp-dropdown>
+        </div>
+      </div>
+    </div>
+    <div class="col-3 float-right">
+      <a 
+        routerLink="create"
+        class="cpbtn cpbtn--primary float-right">
+        {{ 't_personas_button_list_create' | cpI18n }}
+    </a>
+    </div>
+  </div>
+</div>

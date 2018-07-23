@@ -7,7 +7,7 @@ import { StoreDeleteComponent } from './store-delete.component';
 import { CPSession } from '../../../../../../session';
 import { mockSchool } from '../../../../../../session/mock/school';
 import { StoreModule } from '../store.module';
-import { StoreService } from '../store.service';
+import { DealsStoreService } from '../store.service';
 
 class MockService {
   dummy;
@@ -28,7 +28,7 @@ describe('DealsStoreDeleteComponent', () => {
     async(() => {
       TestBed.configureTestingModule({
         imports: [StoreModule, RouterTestingModule],
-        providers: [CPSession, CPI18nService, { provide: StoreService, useClass: MockService }]
+        providers: [CPSession, CPI18nService, { provide: DealsStoreService, useClass: MockService }]
       })
         .compileComponents()
         .then(() => {

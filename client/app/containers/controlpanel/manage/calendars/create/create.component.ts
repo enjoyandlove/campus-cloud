@@ -74,7 +74,8 @@ export class CalendarsCreateComponent implements OnInit {
 
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.MANAGE_CREATED_CALENDAR,
-      this.eventProperties);
+      this.eventProperties
+    );
   }
 
   ngOnInit() {

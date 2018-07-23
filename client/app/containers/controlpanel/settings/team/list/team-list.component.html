@@ -48,7 +48,7 @@
             <strong>
               <a [routerLink]="[admin.id + '/edit']">
                 {{ admin.firstname }} {{ admin.lastname }}
-                <span *ngIf="admin.is_current_user" i18n>({{ 'you' | cpI18n }})</span>
+                <span *ngIf="admin.is_current_user">({{ 'you' | cpI18n }})</span>
               </a>
             </strong>
             <br>

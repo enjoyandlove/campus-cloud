@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
-import { StoreService } from '../store.service';
+import { DealsStoreService } from '../store.service';
 import { CPSession } from '../../../../../../session';
 import { CPI18nService } from '../../../../../../shared/services/i18n.service';
 
@@ -21,7 +21,7 @@ export class StoreDeleteComponent implements OnInit {
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public service: StoreService
+    public service: DealsStoreService
   ) {}
 
   onDelete() {

@@ -1,0 +1,18 @@
+@import '~node_modules/pickr-widget/dist/pickr.min.css';
+
+.pickr {
+  .pcr-app {
+    @include font_family();
+
+    z-index: 9;
+    max-width: 220px;
+
+    .pcr-save {
+      @include font-14px();
+
+      border-radius: 4px;
+      letter-spacing: none;
+      background: $color-brand;
+    }
+  }
+}

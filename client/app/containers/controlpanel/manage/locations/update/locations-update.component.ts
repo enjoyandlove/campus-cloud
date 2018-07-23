@@ -134,7 +134,8 @@ export class LocationsUpdateComponent implements OnInit {
 
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.MANAGE_UPDATED_LOCATION,
-      this.eventProperties);
+      this.eventProperties
+    );
   }
 
   ngOnInit() {

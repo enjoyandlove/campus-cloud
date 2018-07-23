@@ -10,7 +10,7 @@ import { mockSchool } from '../../../../../session/mock/school';
 import { CPI18nService } from '../../../../../shared/services';
 import { DealsModule } from '../deals.module';
 import { DealsService } from '../deals.service';
-import { StoreService } from '../stores/store.service';
+import { DealsStoreService } from '../stores/store.service';
 
 class MockDealsService {
   dummy;
@@ -53,7 +53,7 @@ describe('DealsCreateComponent', () => {
         providers: [
           CPSession,
           CPI18nService,
-          { provide: StoreService, useClass: MockStoreService },
+          { provide: DealsStoreService, useClass: MockStoreService },
           { provide: DealsService, useClass: MockDealsService }
         ]
       })

@@ -1,0 +1,23 @@
+@import '~styles/core/colors';
+@import '~styles/core/typography';
+
+button {
+  @include font-24px();
+
+  border: none;
+  width: 100%;
+  height: 100%;
+  padding: 30px;
+  cursor: pointer;
+  box-shadow: none;
+  background: transparent;
+  color: $color-light-grey;
+  text-transform: uppercase;
+
+  i {
+    @include font-36px();
+
+    display: block;
+    line-height: 1;
+  }
+}

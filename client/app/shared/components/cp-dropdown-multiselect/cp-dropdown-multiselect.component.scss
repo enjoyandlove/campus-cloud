@@ -36,6 +36,8 @@
     display: none;
     padding-left: 0;
     list-style: none;
+    max-height: 197px;
+    overflow-y: scroll;
     position: absolute;
     border-radius: 4px;
     background: $color-white;

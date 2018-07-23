@@ -27,7 +27,8 @@ export class CalendarsListActionBoxComponent implements OnInit {
 
   trackEvent(eventName) {
     const eventProperties = {
-      ...this.cpTracking.getEventProperties(), create_page_name: amplitudeEvents.CREATE_CALENDAR
+      ...this.cpTracking.getEventProperties(),
+      create_page_name: amplitudeEvents.CREATE_CALENDAR
     };
 
     return {
