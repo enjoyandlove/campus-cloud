@@ -179,14 +179,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
 
     const stream$ = request$.pipe(
       map(([tiles, categories, tilesByPersonaZero]) => {
-        tiles = tiles.map((tile: ITile) => {
-          return {
-            ...tile,
-            related_link_data: tilesByPersonaZero
-              .filter((t: ITile) => t.id === tile.extra_info.id)
-              .map((t: ITile) => t.related_link_data)[0]
-          };
-        });
+        tiles = this.utils.mergeRelatedLinkData(tiles, tilesByPersonaZero);
 
         return groupTiles(categories, tiles);
       })
@@ -209,8 +202,6 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
           featureTiles: this.utils.getFeaturedTiles(data),
           categoryZero: this.utils.getCategoryZeroTiles(data)
         };
-
-        // console.log(2, this.state.guides);
       })
       .catch(() => this.router.navigate(['/customize/personas']));
   }
