@@ -39,6 +39,7 @@
       <cp-personas-tile
         [tile]="tile"
         class="col-2"
+        (edit)="onEditTile(tile)"
         (edited)="onEditedTile($event)"
         (deleted)="onDeletedTile($event)"
         [class.mb-4]="i % 5 === 0"

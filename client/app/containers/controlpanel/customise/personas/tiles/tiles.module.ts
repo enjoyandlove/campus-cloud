@@ -10,6 +10,7 @@ import {
   PseronasTileBaseComponent
 } from './components';
 import { PersonasTileCreateComponent } from './create';
+import { PersonasTileEditComponent } from './edit/edit.component';
 import { PersonasResourceModule } from './resources/resources.module';
 import { PersonasTileComponent } from './tile/tile.component';
 import { TilesService } from './tiles.service';
@@ -19,10 +20,10 @@ import { SharedModule } from '../../../../../shared/shared.module';
 import { PersonasService } from '../personas.service';
 import { SectionUtilsService } from '../sections/section.utils.service';
 import { SectionsService } from '../sections/sections.service';
-/*tslint:disable:max-line-length */
 
 @NgModule({
   declarations: [
+    PersonasTileEditComponent,
     PersonasTileGuideFormComponent,
     PseronasTileBaseComponent,
     PersonasTileCreateComponent,
@@ -33,6 +34,7 @@ import { SectionsService } from '../sections/sections.service';
   ],
   imports: [CommonModule, SharedModule, ReactiveFormsModule, RouterModule, PersonasResourceModule],
   exports: [
+    PersonasTileEditComponent,
     PersonasTileGuideFormComponent,
     PersonasTileContentComponent,
     PseronasTileBaseComponent,
