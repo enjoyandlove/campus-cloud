@@ -51,6 +51,12 @@
       </cp-dashboard-campus-tile>
     </div>
 
+    <div class="cp-card">
+      <cp-dashboard-integrations
+        (ready)="integrationsTile$.next($event)">
+      </cp-dashboard-integrations>
+    </div>
+
     <div class="cp-card" *ngIf="canAssess">
       <cp-dashboard-top-services
         [dates]="currentDate"
@@ -77,12 +83,6 @@
         [dates]="currentDate"
         (ready)="topOrientationTile$.next($event)">
       </cp-dashboard-top-orientation>
-    </div>
-
-    <div class="cp-card">
-      <cp-dashboard-integrations
-        (ready)="integrationsTile$.next($event)">
-      </cp-dashboard-integrations>
     </div>
   </div>
 </div>

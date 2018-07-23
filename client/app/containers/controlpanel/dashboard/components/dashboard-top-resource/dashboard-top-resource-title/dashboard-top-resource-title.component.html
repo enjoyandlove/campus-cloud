@@ -1,12 +1,6 @@
 <p
   class="title text-truncate"
-  *ngIf="!isSuperAdmin && !isOrientation">
-  {{ item.name }}
-</p>
-
-<p
-  class="title text-truncate"
-  *ngIf="isOrientation && !canViewOrientation">
+  *ngIf="!isSuperAdmin && !isOrientation || isOrientation && !canViewOrientation">
   {{ item.name }}
 </p>
 
