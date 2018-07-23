@@ -126,6 +126,17 @@ export class PersonasUtilsService {
     ];
   }
 
+  mergeRelatedLinkData(tilesByPersonaId: ITile[], tilesByPersonaZero: ITile[]) {
+    return tilesByPersonaId.map((tile: ITile) => {
+      return {
+        ...tile,
+        related_link_data: tilesByPersonaZero
+          .filter((t: ITile) => t.id === tile.extra_info.id)
+          .map((t: ITile) => t.related_link_data)[0]
+      };
+    });
+  }
+
   parseLocalFormToApi(data) {
     data = {
       ...data,

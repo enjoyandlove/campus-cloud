@@ -217,7 +217,6 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
 
   ngOnInit(): void {
     this.guide = this.guideService.guide;
-    console.log('Tile Create OnInit', this.guide);
 
     if (!this.guide) {
       this.router.navigate(['/customize/personas/', this.personaId]);

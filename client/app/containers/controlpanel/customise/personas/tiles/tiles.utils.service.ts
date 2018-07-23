@@ -16,6 +16,10 @@ export class TilesUtilsService {
     return this.defaultTileCategoryIds.includes(tile.tile_category_id);
   }
 
+  isCampaignTile(tile: ITile) {
+    return tile.related_link_data.link_url === 'oohlala://school_campaign';
+  }
+
   isTileVisible(tile: ITile) {
     return tile.visibility_status === TileVisibility.visible;
   }

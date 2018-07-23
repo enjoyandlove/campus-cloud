@@ -45,6 +45,13 @@ export class PersonasSectionComponent implements OnInit {
     public utils: SectionUtilsService
   ) {}
 
+  onSavedGuide(newGuide) {
+    this.guide = {
+      ...this.guide,
+      ...newGuide
+    };
+  }
+
   onEditedTile(editedTile: ITile) {
     this.guide = {
       ...this.guide,
