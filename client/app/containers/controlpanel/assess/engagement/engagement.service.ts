@@ -36,7 +36,7 @@ export class EngagementService extends HTTPService {
   }
 
   getPersona(startRange = 1, endRange = 1000, search?: HttpParams) {
-    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SCHOOL_PERSONA}`;
+    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.PERSONAS}`;
     const url = `${common}/${startRange};${endRange}`;
 
     return super
