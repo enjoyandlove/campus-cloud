@@ -64,9 +64,8 @@ export class DealsInfoComponent extends BaseComponent implements OnInit {
         subheading: this.deal.store_name
       };
 
-      this.hasMetaData = this.deal.start
-      || this.deal.store_address
-      || this.deal.expiration !== this.forever;
+      this.hasMetaData =
+        this.deal.start || this.deal.store_address || this.deal.expiration !== this.forever;
     });
   }
 

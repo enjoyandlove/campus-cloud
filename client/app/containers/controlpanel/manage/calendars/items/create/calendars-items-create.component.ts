@@ -65,12 +65,10 @@ export class CalendarsItemCreateComponent implements OnInit {
       .append('school_id', this.session.g.get('school').id)
       .append('academic_calendar_id', this.calendarId.toString());
 
-    this.service
-      .createItem(newItem, search)
-      .subscribe((res) => {
-        this.trackEvent(res);
-        this.router.navigate(['/manage/calendars/' + this.calendarId]);
-      });
+    this.service.createItem(newItem, search).subscribe((res) => {
+      this.trackEvent(res);
+      this.router.navigate(['/manage/calendars/' + this.calendarId]);
+    });
   }
 
   trackEvent(data) {
@@ -81,7 +79,8 @@ export class CalendarsItemCreateComponent implements OnInit {
 
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.MANAGE_CREATED_CALENDAR_EVENT,
-      this.eventProperties);
+      this.eventProperties
+    );
   }
 
   buildForm() {

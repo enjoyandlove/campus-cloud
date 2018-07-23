@@ -1,16 +1,15 @@
-import { Component, Input, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-
-import { EventsService } from '../../../events.service';
+import { Component, Input, OnInit } from '@angular/core';
 import { CPSession } from './../../../../../../../session';
-import { EventUtilService } from '../../../events.utils.service';
+import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
+import { createSpreadSheet } from './../../../../../../../shared/utils/csv/parser';
 import { CPDate } from './../../../../../../../shared/utils/date/date';
-import { CPTrackingService } from '../../../../../../../shared/services';
 import { BaseComponent } from '../../../../../../../base/base.component';
 import { STAR_SIZE } from '../../../../../../../shared/components/cp-stars';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
-import { createSpreadSheet } from './../../../../../../../shared/utils/csv/parser';
-import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
+import { CPTrackingService } from '../../../../../../../shared/services';
+import { EventsService } from '../../../events.service';
+import { EventUtilService } from '../../../events.utils.service';
 
 interface IState {
   sort_field: string;
@@ -171,7 +170,8 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
 
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.MANAGE_DOWNLOAD_DATA,
-      this.downloadEventProperties);
+      this.downloadEventProperties
+    );
   }
 
   onViewFeedback(attendee): void {
@@ -194,7 +194,8 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
 
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.MANAGE_CLICKED_FEEDBACK,
-      this.eventProperties);
+      this.eventProperties
+    );
   }
 
   doSearch(search_text): void {

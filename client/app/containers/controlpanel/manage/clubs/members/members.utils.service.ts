@@ -13,9 +13,6 @@ export class MembersUtilsService {
   }
 
   getMemberTypeLabel(type) {
-    return type === MemberType.member
-      ? amplitudeEvents.MEMBER
-      : amplitudeEvents.EXECUTIVE;
-
+    return type === MemberType.member ? amplitudeEvents.MEMBER : amplitudeEvents.EXECUTIVE;
   }
 }

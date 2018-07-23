@@ -1,3 +1,4 @@
+export * from './maps.service';
 export * from './i18n.service';
 export * from './error.service';
 export * from './store.service';

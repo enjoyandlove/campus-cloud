@@ -110,7 +110,7 @@ export class StudentsComposeComponent implements OnInit {
       host_type: this.hostType,
       cohort_type: amplitudeEvents.SINGLE_STUDENT,
       engagement_type: amplitudeEvents.SINGLE_STUDENT,
-      engagement_source: amplitudeEvents.ALL_ENGAGEMENT,
+      engagement_source: amplitudeEvents.ALL_ENGAGEMENT
     };
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.ASSESS_SENT_MESSAGE, this.eventProperties);

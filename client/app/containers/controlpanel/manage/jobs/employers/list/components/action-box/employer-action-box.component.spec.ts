@@ -11,17 +11,21 @@ describe('EmployerActionBoxComponent', () => {
   let component: EmployerActionBoxComponent;
   let fixture: ComponentFixture<EmployerActionBoxComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [EmployerModule, RouterTestingModule],
-      providers: [CPI18nService]
-    }).compileComponents().then(() => {
-      fixture = TestBed.createComponent(EmployerActionBoxComponent);
-      component = fixture.componentInstance;
-      spyOn(component.cpTracking, 'getEventProperties');
-      fixture.detectChanges();
-    });
-  }));
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        imports: [EmployerModule, RouterTestingModule],
+        providers: [CPI18nService]
+      })
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(EmployerActionBoxComponent);
+          component = fixture.componentInstance;
+          spyOn(component.cpTracking, 'getEventProperties');
+          fixture.detectChanges();
+        });
+    })
+  );
 
   it('onSearch', () => {
     spyOn(component.search, 'emit');
@@ -41,5 +45,4 @@ describe('EmployerActionBoxComponent', () => {
     expect(spy).toHaveBeenCalled();
     expect(spy).toHaveBeenCalledTimes(1);
   });
-
 });

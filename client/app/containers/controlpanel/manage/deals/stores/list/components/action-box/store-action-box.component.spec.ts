@@ -11,17 +11,21 @@ describe('DealsStoreActionBoxComponent', () => {
   let component: StoreActionBoxComponent;
   let fixture: ComponentFixture<StoreActionBoxComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [StoreModule, RouterTestingModule],
-      providers: [CPI18nService]
-    }).compileComponents().then(() => {
-      fixture = TestBed.createComponent(StoreActionBoxComponent);
-      component = fixture.componentInstance;
-      spyOn(component.cpTracking, 'getEventProperties');
-      fixture.detectChanges();
-    });
-  }));
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        imports: [StoreModule, RouterTestingModule],
+        providers: [CPI18nService]
+      })
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(StoreActionBoxComponent);
+          component = fixture.componentInstance;
+          spyOn(component.cpTracking, 'getEventProperties');
+          fixture.detectChanges();
+        });
+    })
+  );
 
   it('onSearch', () => {
     spyOn(component.search, 'emit');
@@ -41,5 +45,4 @@ describe('DealsStoreActionBoxComponent', () => {
     expect(spy).toHaveBeenCalled();
     expect(spy).toHaveBeenCalledTimes(1);
   });
-
 });

@@ -33,7 +33,8 @@ export class CPTopBarComponent implements OnInit {
     public el: ElementRef,
     public session: CPSession,
     public router: Router,
-    public cpTracking: CPTrackingService) {}
+    public cpTracking: CPTrackingService
+  ) {}
 
   getManageHomePage() {
     if (canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.events)) {
@@ -113,7 +114,7 @@ export class CPTopBarComponent implements OnInit {
       menu_notify: amplitudeEvents.MENU_NOTIFY,
       menu_assess: amplitudeEvents.MENU_ASSESS,
       menu_customize: amplitudeEvents.MENU_CUSTOMIZE,
-      menu_audience: amplitudeEvents.MENU_AUDIENCE,
+      menu_audience: amplitudeEvents.MENU_AUDIENCE
     };
   }
 }

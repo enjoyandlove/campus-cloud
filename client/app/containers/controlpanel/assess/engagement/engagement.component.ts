@@ -20,7 +20,7 @@ import {
   groupByWeek,
   groupByMonth,
   groupByQuarter,
-  CPLineChartUtilsService,
+  CPLineChartUtilsService
 } from '../../../../shared/components/cp-line-chart/cp-line-chart.utils.service';
 
 declare var $;
@@ -115,50 +115,52 @@ export class EngagementComponent extends BaseComponent implements OnInit {
   fetchChartData() {
     const search = this.buildSearchHeaders();
 
-    super.fetchData(this.service.getChartData(search)).then((res) => {
-      this.statsData = {
-        ...res.data,
-        starts: this.filterState.range.payload.range.start,
-        ends: this.filterState.range.payload.range.end
-      };
+    super
+      .fetchData(this.service.getChartData(search))
+      .then((res) => {
+        this.statsData = {
+          ...res.data,
+          starts: this.filterState.range.payload.range.start,
+          ends: this.filterState.range.payload.range.end
+        };
 
-      this.range = Object.assign({}, this.range, {
-        start: res.data.labels[0],
-        end: res.data.labels[res.data.labels.length - 1]
+        this.range = Object.assign({}, this.range, {
+          start: res.data.labels[0],
+          end: res.data.labels[res.data.labels.length - 1]
+        });
+
+        if (res.data.series.length >= twoYears) {
+          this.divider = DivideBy.quarter;
+
+          return Promise.all([groupByQuarter(res.data.labels, res.data.series)]);
+        }
+
+        if (res.data.series.length >= year) {
+          this.divider = DivideBy.monthly;
+
+          return Promise.all([groupByMonth(res.data.labels, res.data.series)]);
+        }
+
+        if (res.data.series.length >= threeMonths) {
+          this.divider = DivideBy.weekly;
+
+          return Promise.all([groupByWeek(res.data.labels, res.data.series)]);
+        }
+
+        this.divider = DivideBy.daily;
+
+        return Promise.resolve([res.data.series]);
+      })
+      .then((series: any) => {
+        this.chartOptions = this.chartUtils.chartOptions(this.divider, series);
+        this.labels = this.chartUtils.buildLabels(this.divider, this.range, series);
+        this.series = this.chartUtils.buildSeries(
+          this.divider,
+          this.range,
+          this.getTooltip(),
+          series
+        );
       });
-
-      if (res.data.series.length >= twoYears) {
-        this.divider = DivideBy.quarter;
-
-        return Promise.all([
-          groupByQuarter(res.data.labels, res.data.series)
-        ]);
-      }
-
-      if (res.data.series.length >= year) {
-        this.divider = DivideBy.monthly;
-
-        return Promise.all([
-          groupByMonth(res.data.labels, res.data.series)
-        ]);
-      }
-
-      if (res.data.series.length >= threeMonths) {
-        this.divider = DivideBy.weekly;
-
-        return Promise.all([
-          groupByWeek(res.data.labels, res.data.series)
-        ]);
-      }
-
-      this.divider = DivideBy.daily;
-
-      return Promise.resolve([res.data.series]);
-    }).then((series: any) => {
-      this.chartOptions = this.chartUtils.chartOptions(this.divider, series);
-      this.labels = this.chartUtils.buildLabels(this.divider, this.range, series);
-      this.series = this.chartUtils.buildSeries(this.divider, this.range, this.getTooltip(), series);
-    });
   }
 
   getTooltip() {
@@ -290,11 +292,9 @@ export class EngagementComponent extends BaseComponent implements OnInit {
     this.eventProperties = {
       ...this.utils.getEventProperties(this.filterState),
       host_type: data.hostType,
-      engagement_type: data.props.label,
+      engagement_type: data.props.label
     };
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.ASSESS_SENT_MESSAGE,
-      this.eventProperties);
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.ASSESS_SENT_MESSAGE, this.eventProperties);
   }
 
   trackDownloadEvent(engagement_type) {
@@ -302,9 +302,7 @@ export class EngagementComponent extends BaseComponent implements OnInit {
       ...this.utils.getEventProperties(this.filterState),
       engagement_type
     };
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.ASSESS_DOWNLOAD_DATA,
-      this.eventProperties);
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.ASSESS_DOWNLOAD_DATA, this.eventProperties);
   }
 
   ngOnInit() {

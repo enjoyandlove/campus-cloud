@@ -42,7 +42,6 @@ export class CalendarsItemsBulkCreateFormComponent implements OnInit {
 
   onPlaceChange(placeData, index) {
     if (!placeData) {
-
       return;
     }
 

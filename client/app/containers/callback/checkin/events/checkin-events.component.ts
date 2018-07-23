@@ -46,15 +46,13 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
   }
 
   onSubmit(data) {
-    this.checkinService
-      .doEventCheckin(data, this.search)
-      .subscribe(
-        (_) => {
-          this.updateAttendeesList(data);
-          this.trackAmplitudeEvent(true);
-          },
-        (_) => this.errorService.handleError(this.cpI18n.translate('something_went_wrong'))
-      );
+    this.checkinService.doEventCheckin(data, this.search).subscribe(
+      (_) => {
+        this.updateAttendeesList(data);
+        this.trackAmplitudeEvent(true);
+      },
+      (_) => this.errorService.handleError(this.cpI18n.translate('something_went_wrong'))
+    );
   }
 
   updateAttendeesList(data) {
@@ -75,9 +73,7 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
   }
 
   trackAmplitudeEvent(checkedin = false) {
-    const check_in_type = this.isOrientation
-      ? amplitudeEvents.ORIENTATION
-      : amplitudeEvents.EVENT;
+    const check_in_type = this.isOrientation ? amplitudeEvents.ORIENTATION : amplitudeEvents.EVENT;
 
     const eventName = checkedin
       ? amplitudeEvents.MANAGE_CHECKEDIN_MANUALLY

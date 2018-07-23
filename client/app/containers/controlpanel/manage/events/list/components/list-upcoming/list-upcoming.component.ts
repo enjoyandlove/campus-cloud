@@ -50,7 +50,8 @@ export class ListUpcomingComponent implements OnInit {
   constructor(
     private session: CPSession,
     private cpI18n: CPI18nService,
-    private utils: EventUtilService) {}
+    private utils: EventUtilService
+  ) {}
 
   onDelete(event) {
     this.deleteEvent.emit(event);
@@ -69,7 +70,8 @@ export class ListUpcomingComponent implements OnInit {
       this.isAthletic,
       this.isService,
       this.isClub,
-      this.isOrientation);
+      this.isOrientation
+    );
 
     const eventProperties = {
       event_id,

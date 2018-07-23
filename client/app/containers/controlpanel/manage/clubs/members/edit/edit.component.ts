@@ -108,7 +108,8 @@ export class ClubsMembersEditComponent implements OnInit {
 
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.MANAGE_UPDATED_CLUB_MEMBER,
-      this.eventProperties);
+      this.eventProperties
+    );
   }
 
   ngOnInit() {

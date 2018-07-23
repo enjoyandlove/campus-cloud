@@ -32,7 +32,7 @@ export class FeedBodyComponent implements OnInit {
     public cpI18n: CPI18nService,
     public utils: FeedsUtilsService,
     public cpTracking: CPTrackingService
-    ) {}
+  ) {}
 
   trackEvent(isCommentsOpen) {
     if (isCommentsOpen) {

@@ -10,7 +10,6 @@ import {
 
 @Injectable()
 export class ServicesUtilsService {
-
   hasData(data) {
     return data ? HasData.yes : HasData.no;
   }

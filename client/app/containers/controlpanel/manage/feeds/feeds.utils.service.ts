@@ -15,12 +15,7 @@ export class FeedsUtilsService {
     return image ? hasData.yes : hasData.no;
   }
 
-  wallSource(
-    athleticId: number,
-    orientationId: number,
-    clubId: number,
-  ) {
-
+  wallSource(athleticId: number, orientationId: number, clubId: number) {
     if (athleticId) {
       return amplitudeEvents.ATHLETICS;
     } else if (orientationId) {

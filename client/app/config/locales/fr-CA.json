@@ -1204,7 +1204,7 @@
     "message": "Événements"
   },
   "events_attendance_feedback": {
-    "message": "Retour des participants"
+    "message": "Retours"
   },
   "events_attendance_manager": {
     "message": "Gest. prés."
@@ -1261,7 +1261,7 @@
     "message": "L'heure de fin de l'événement doit être plus tard que son heure de début."
   },
   "events_event_attendance": {
-    "message": "Présence aux événement"
+    "message": "Évaluation"
   },
   "events_event_banner": {
     "message": "Bannière de l'événement"
@@ -2394,6 +2394,9 @@
   },
   "t_events_import_upload_picture": {
     "message": "Téléverser image"
+  },
+  "t_notify_announcement_audiences_my_experiences": {
+    "message": "Mes expériences"
   },
   "t_personas_button_list_create": {
     "message": "Créer expérience"

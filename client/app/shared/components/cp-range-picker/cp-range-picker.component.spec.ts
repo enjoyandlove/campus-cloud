@@ -44,10 +44,7 @@ describe('CPRangePickerComponent', () => {
     async(() => {
       TestBed.configureTestingModule({
         declarations: [CPRangePickerComponent],
-        providers: [
-          CPRangePickerUtilsService,
-          { provide: CPSession, useClass: MockCPSession }
-          ]
+        providers: [CPRangePickerUtilsService, { provide: CPSession, useClass: MockCPSession }]
       });
     })
   );
@@ -69,7 +66,6 @@ describe('CPRangePickerComponent', () => {
   });
 
   it('setLabel', () => {
-
     expect(comp.label).toBeNull();
 
     comp.setLabel(expected);
@@ -80,7 +76,6 @@ describe('CPRangePickerComponent', () => {
   });
 
   it('triggerChange', () => {
-
     comp.setLabel(expected);
 
     comp.triggerChange(expected);
