@@ -6,16 +6,14 @@ import { DashboardModule } from './../../dashboard.module';
 import { DashboardService } from './../../dashboard.service';
 import { CPI18nService } from '../../../../../shared/services';
 
-import {
-DashboardDownloadsRegistrationComponent
-} from './dashboard-downloads-registration.component';
+import { DashboardDownloadsRegistrationComponent } from './dashboard-downloads-registration.component';
 
 import {
-addGroup,
-aggregate,
-groupByWeek,
-groupByMonth,
-groupByQuarter
+  addGroup,
+  aggregate,
+  groupByWeek,
+  groupByMonth,
+  groupByQuarter
 } from '../../../../../shared/components/cp-line-chart/cp-line-chart.utils.service';
 
 class MockDashboardService {
@@ -46,7 +44,8 @@ describe('DashboardDownloadsRegistrationComponent', () => {
         providers: [
           CPSession,
           CPI18nService,
-          { provide: DashboardService, useClass: MockDashboardService }]
+          { provide: DashboardService, useClass: MockDashboardService }
+        ]
       });
     })
   );

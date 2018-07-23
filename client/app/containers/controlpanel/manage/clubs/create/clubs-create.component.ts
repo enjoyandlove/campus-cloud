@@ -90,9 +90,7 @@ export class ClubsCreateComponent implements OnInit {
   trackEvent(data) {
     this.eventProperties = {
       ...this.eventProperties,
-      ...this.utils.setEventProperties(
-        data,
-        this.labels.club_athletic)
+      ...this.utils.setEventProperties(data, this.labels.club_athletic)
     };
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CREATED_CLUB, this.eventProperties);

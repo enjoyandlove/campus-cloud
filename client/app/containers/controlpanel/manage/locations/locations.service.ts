@@ -10,7 +10,7 @@ export enum Acronym {
   'no' = 'No'
 }
 
-export const hasAcronym = (val) => val ? Acronym.yes : Acronym.no;
+export const hasAcronym = (val) => (val ? Acronym.yes : Acronym.no);
 
 @Injectable()
 export class LocationsService extends HTTPService {

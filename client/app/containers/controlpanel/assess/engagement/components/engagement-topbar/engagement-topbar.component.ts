@@ -85,11 +85,11 @@ export class EngagementTopBarComponent implements OnInit {
 
   setPayload(payload) {
     if (!payload.hasOwnProperty('payload')) {
-       return {
-         payload: this.setDateRange(payload),
-         label: payload.label,
-         route_id: payload.route_id
-       };
+      return {
+        payload: this.setDateRange(payload),
+        label: payload.label,
+        route_id: payload.route_id
+      };
     }
 
     return payload;
@@ -144,11 +144,13 @@ export class EngagementTopBarComponent implements OnInit {
   getRange(routeParams) {
     const range = this.getFromArray(this.dateFilter, 'route_id', routeParams.range);
 
-    return range ? range : {
-      payload: this.setDateRange(routeParams),
-      label: routeParams.range,
-      route_id: routeParams.range
-    };
+    return range
+      ? range
+      : {
+          payload: this.setDateRange(routeParams),
+          label: routeParams.range,
+          route_id: routeParams.range
+        };
   }
 
   setDateRange(filter) {

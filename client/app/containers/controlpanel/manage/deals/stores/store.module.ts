@@ -22,12 +22,7 @@ import { SharedModule } from '../../../../../shared/shared.module';
     StoreCreateComponent,
     StoreActionBoxComponent
   ],
-  imports: [
-    SharedModule,
-    CommonModule,
-    ReactiveFormsModule,
-    StoreRoutingModule
-  ],
+  imports: [SharedModule, CommonModule, ReactiveFormsModule, StoreRoutingModule],
   exports: [StoreFormComponent],
   providers: [StoreService]
 })

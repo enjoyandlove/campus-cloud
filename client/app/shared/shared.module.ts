@@ -61,9 +61,7 @@ import { CPTabsComponent } from './components/cp-tabs/components/cp-tabs/cp-tabs
 import { LocationsService } from '../containers/controlpanel/manage/locations/locations.service';
 import { CPLineChartUtilsService } from './components/cp-line-chart/cp-line-chart.utils.service';
 
-import {
-  CPRangePickerUtilsService
-} from './components/cp-range-picker/cp-range-picker.utils.service';
+import { CPRangePickerUtilsService } from './components/cp-range-picker/cp-range-picker.utils.service';
 
 @NgModule({
   declarations: [

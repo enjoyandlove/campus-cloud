@@ -47,7 +47,8 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
   constructor(
     private cpI18n: CPI18nService,
     private cpTracking: CPTrackingService,
-    private providersService: ProvidersService) {
+    private providersService: ProvidersService
+  ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
   }
@@ -98,9 +99,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
       data_type: amplitudeEvents.ASSESSMENT
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_DOWNLOAD_DATA,
-      this.eventProperties);
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_DOWNLOAD_DATA, this.eventProperties);
   }
 
   trackCheckinEvent(service_id) {

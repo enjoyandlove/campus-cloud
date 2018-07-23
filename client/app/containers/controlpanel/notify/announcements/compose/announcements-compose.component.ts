@@ -14,7 +14,12 @@ import { canSchoolReadResource } from './../../../../../shared/utils/privileges/
 import { CPSession } from '../../../../../session';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 import { CP_PRIVILEGES_MAP, STATUS } from '../../../../../shared/constants';
-import { CPI18nService, StoreService, CPTrackingService, ZendeskService } from '../../../../../shared/services';
+import {
+  CPI18nService,
+  StoreService,
+  CPTrackingService,
+  ZendeskService
+} from '../../../../../shared/services';
 import { AnnouncementsService } from '../announcements.service';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { AudienceType } from '../../../audience/audience.status';
@@ -78,7 +83,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     audience_status: null,
     host_type: null,
     audience_type: null,
-    announcement_type: amplitudeEvents.REGULAR,
+    announcement_type: amplitudeEvents.REGULAR
   };
 
   types;
@@ -190,9 +195,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
   getAudienceType(type) {
     const audience_type =
-      type === AudienceType.dynamic
-        ? amplitudeEvents.DYNAMIC_LIST
-        : amplitudeEvents.CUSTOM_LIST;
+      type === AudienceType.dynamic ? amplitudeEvents.DYNAMIC_LIST : amplitudeEvents.CUSTOM_LIST;
 
     this.amplitudeEventProperties = {
       ...this.amplitudeEventProperties,
@@ -436,7 +439,8 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
         this.cpTracking.amplitudeEmitEvent(
           amplitudeEvents.NOTIFY_SEND_ANNOUNCEMENT,
-          this.amplitudeEventProperties);
+          this.amplitudeEventProperties
+        );
         this.router.navigate(['/notify/announcements']);
       },
       (_) => {
@@ -555,7 +559,8 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     };
     const host_type = this.session.defaultHost ? this.session.defaultHost.hostType : null;
     this.amplitudeEventProperties = {
-      ...this.amplitudeEventProperties, host_type
+      ...this.amplitudeEventProperties,
+      host_type
     };
     const defaultHost = this.session.defaultHost ? this.session.defaultHost.value : null;
 

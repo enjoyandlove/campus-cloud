@@ -140,7 +140,8 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
       () => {
         this.cpTracking.amplitudeEmitEvent(
           amplitudeEvents.NOTIFY_SAVED_TEMPLATE,
-          this.amplitudeEventProperties);
+          this.amplitudeEventProperties
+        );
         this.form.reset();
         this.created.emit(this.form.value);
         this.resetModal();
@@ -177,9 +178,10 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
   }
 
   ngOnInit() {
-    const host_type =  this.session.defaultHost ? this.session.defaultHost.hostType : null;
+    const host_type = this.session.defaultHost ? this.session.defaultHost.hostType : null;
     this.amplitudeEventProperties = {
-      ...this.amplitudeEventProperties, host_type
+      ...this.amplitudeEventProperties,
+      host_type
     };
     const defaultHost = this.session.defaultHost ? this.session.defaultHost.value : null;
 

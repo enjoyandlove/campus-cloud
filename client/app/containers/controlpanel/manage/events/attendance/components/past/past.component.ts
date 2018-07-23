@@ -171,7 +171,8 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
 
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.MANAGE_DOWNLOAD_DATA,
-      this.downloadEventProperties);
+      this.downloadEventProperties
+    );
   }
 
   onViewFeedback(attendee): void {
@@ -194,7 +195,8 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
 
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.MANAGE_CLICKED_FEEDBACK,
-      this.eventProperties);
+      this.eventProperties
+    );
   }
 
   doSearch(search_text): void {

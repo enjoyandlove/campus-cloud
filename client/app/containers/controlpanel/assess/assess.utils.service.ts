@@ -4,12 +4,11 @@ import { amplitudeEvents } from '../../../shared/constants/analytics';
 
 @Injectable()
 export class AssessUtilsService {
-
   getEventProperties(filterState) {
     return {
       interval: filterState.range.label,
       cohort_type: this.getCohortType(filterState.for),
-      engagement_source: this.getEngagementType(filterState.engagement),
+      engagement_source: this.getEngagementType(filterState.engagement)
     };
   }
 

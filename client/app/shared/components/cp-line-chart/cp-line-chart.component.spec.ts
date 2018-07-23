@@ -19,15 +19,14 @@ describe('CPLineChartComponent', () => {
     async(() => {
       TestBed.configureTestingModule({
         declarations: [CPLineChartComponent],
-        providers: [
-          CPSession,
-          CPLineChartUtilsService
-        ]
-      }).overrideComponent(CPLineChartComponent, {
+        providers: [CPSession, CPLineChartUtilsService]
+      })
+        .overrideComponent(CPLineChartComponent, {
           set: {
             template: '<div>No Template</div>'
           }
-        }).compileComponents();
+        })
+        .compileComponents();
     })
   );
 

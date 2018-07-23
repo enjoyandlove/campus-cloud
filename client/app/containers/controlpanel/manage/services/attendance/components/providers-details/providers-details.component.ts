@@ -113,7 +113,8 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
 
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.MANAGE_VIEWED_SERVICE_PROVIDER,
-      this.eventProperties);
+      this.eventProperties
+    );
   }
 
   ngOnInit() {

@@ -21,7 +21,8 @@ export class TeamDeleteComponent implements OnInit {
   constructor(
     public cpI18n: CPI18nService,
     public adminService: AdminService,
-    public cpTracking: CPTrackingService) {}
+    public cpTracking: CPTrackingService
+  ) {}
 
   onDelete() {
     const eventProperties = {
