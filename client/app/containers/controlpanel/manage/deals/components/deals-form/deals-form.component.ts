@@ -20,16 +20,16 @@ const COMMON_DATE_PICKER_OPTIONS = {
   templateUrl: './deals-form.component.html',
   styleUrls: ['./deals-form.component.scss']
 })
-
 export class DealsFormComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() storeForm: FormGroup;
 
-  @Output() formData: EventEmitter<{
+  @Output()
+  formData: EventEmitter<{
     deal: IDeal;
-    dealFormValid: boolean
+    dealFormValid: boolean;
     store: IStore;
-    storeFormValid: boolean
+    storeFormValid: boolean;
   }> = new EventEmitter();
 
   postingStartDatePickerOptions;
@@ -62,7 +62,7 @@ export class DealsFormComponent implements OnInit {
         deal: this.form.value,
         dealFormValid: this.form.valid,
         store: this.storeForm.value,
-        storeFormValid: this.storeForm.valid,
+        storeFormValid: this.storeForm.valid
       });
     });
 
@@ -82,9 +82,7 @@ export class DealsFormComponent implements OnInit {
 
     this.postingEndDatePickerOptions = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: posting_end
-        ? CPDate.fromEpoch(posting_end, _self.session.tz).format()
-        : null,
+      defaultDate: posting_end ? CPDate.fromEpoch(posting_end, _self.session.tz).format() : null,
       onChange: function(_, dataStr) {
         _self.form.controls['expiration'].setValue(CPDate.toEpoch(dataStr, _self.session.tz));
       }

@@ -1,9 +1,9 @@
-import { canSchoolWriteResource } from './../../../../../shared/utils/privileges/privileges';
 /* tslint:disable:max-line-length */
 import { Component, OnInit, OnDestroy, HostListener, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 
+import { canSchoolWriteResource } from './../../../../../shared/utils/privileges/privileges';
 import { CPSession } from './../../../../../session/index';
 import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants/privileges';
 import { CPI18nService, StoreService, ZendeskService } from './../../../../../shared/services';
@@ -140,7 +140,8 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
       () => {
         this.cpTracking.amplitudeEmitEvent(
           amplitudeEvents.NOTIFY_SAVED_TEMPLATE,
-          this.amplitudeEventProperties);
+          this.amplitudeEventProperties
+        );
         this.form.reset();
         this.created.emit(this.form.value);
         this.resetModal();
@@ -177,9 +178,10 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
   }
 
   ngOnInit() {
-    const host_type =  this.session.defaultHost ? this.session.defaultHost.hostType : null;
+    const host_type = this.session.defaultHost ? this.session.defaultHost.hostType : null;
     this.amplitudeEventProperties = {
-      ...this.amplitudeEventProperties, host_type
+      ...this.amplitudeEventProperties,
+      host_type
     };
     const defaultHost = this.session.defaultHost ? this.session.defaultHost.value : null;
 

@@ -27,7 +27,8 @@ export class LinksListActionBoxComponent implements OnInit {
 
   trackEvent(eventName) {
     const eventProperties = {
-      ...this.cpTracking.getEventProperties(), create_page_name: amplitudeEvents.CREATE_LINK
+      ...this.cpTracking.getEventProperties(),
+      create_page_name: amplitudeEvents.CREATE_LINK
     };
 
     return {

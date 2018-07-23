@@ -1,19 +1,18 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
-import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
-
-import { ProvidersService } from '../../../providers.service';
+import { BehaviorSubject } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { CP_TRACK_TO } from './../../../../../../../shared/directives/tracking/tracking.directive';
 import { ServicesService } from './../../../services.service';
 import { ServicesUtilsService } from '../../../services.utils.service';
 import { CPTrackingService } from '../../../../../../../shared/services';
 import { BaseComponent } from '../../../../../../../base/base.component';
-import { STAR_SIZE } from '../../../../../../../shared/components/cp-stars';
-import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
-import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
 import { HEADER_UPDATE, IHeader } from '../../../../../../../reducers/header.reducer';
+import { STAR_SIZE } from '../../../../../../../shared/components/cp-stars';
+import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
+import { ProvidersService } from '../../../providers.service';
 
 @Component({
   selector: 'cp-providers-details',
@@ -113,7 +112,8 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
 
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.MANAGE_VIEWED_SERVICE_PROVIDER,
-      this.eventProperties);
+      this.eventProperties
+    );
   }
 
   ngOnInit() {

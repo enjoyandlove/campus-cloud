@@ -27,6 +27,7 @@ export class CPDropdownComponent implements OnInit {
   @Input() selectedItem: any;
   @Input() isRequiredError: boolean;
   @Input() reset: Observable<boolean>;
+
   @Output() selected: EventEmitter<{ label: string; event: string }> = new EventEmitter();
 
   query = null;

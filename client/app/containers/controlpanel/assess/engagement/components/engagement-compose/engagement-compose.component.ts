@@ -28,7 +28,7 @@ declare var $;
 export class EngagementComposeComponent implements OnInit {
   @Input() props: { name: string; userIds: Array<number> };
   @Output() teardown: EventEmitter<null> = new EventEmitter();
-  @Output() success: EventEmitter<{hostType: string, props: any}> = new EventEmitter();
+  @Output() success: EventEmitter<{ hostType: string; props: any }> = new EventEmitter();
 
   isError;
   stores$;
@@ -81,7 +81,7 @@ export class EngagementComposeComponent implements OnInit {
           return;
         }
         this.resetModal();
-        this.success.emit({ hostType, props});
+        this.success.emit({ hostType, props });
         $('#composeModal').modal('hide');
       },
       (_) => {

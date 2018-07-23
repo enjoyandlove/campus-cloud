@@ -35,6 +35,12 @@ export const API_ENDPOINTS = {
 
   LOCATIONS: 'location',
 
+  CALENDAR: 'user_calendar',
+
+  GUIDE_TILES: 'guide_tile',
+
+  PERSONAS: 'school_persona',
+
   DEALS_STORE: 'deals_store',
 
   COVER_PHOTO: 'cover_photo',
@@ -44,8 +50,6 @@ export const API_ENDPOINTS = {
   GROUP_THREAD: 'group_thread',
 
   ANNOUNCEMENT: 'announcement',
-
-  SCHOOL_PERSONA: 'school_persona',
 
   // Assess Dashboard
   ASSESS_EVENT: 'assess_event',
@@ -87,6 +91,8 @@ export const API_ENDPOINTS = {
   SERVICE_ASSESSMENT: 'service_assessment',
 
   DASHBOARD_TOP_CLUBS: 'analytics/club_data',
+
+  GUIDE_TILE_CATEGORY: 'guide_tile_category',
 
   SOCIAL_POST_CATEGORY: 'social_post_category',
 

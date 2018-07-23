@@ -40,7 +40,7 @@ export class FeedApproveModalComponent implements OnInit {
     private utils: FeedsUtilsService,
     private feedsService: FeedsService,
     private cpTracking: CPTrackingService
-    ) {}
+  ) {}
 
   onSubmit() {
     const data = { flag: 2 };

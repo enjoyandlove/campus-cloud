@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { isProd } from './config/env/index';
 import { LoginComponent, LogoutComponent, LostPasswordComponent } from './containers/auth';
 
 const routes: Routes = [
@@ -35,7 +36,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes, {
       useHash: true,
       onSameUrlNavigation: 'reload',
-      preloadingStrategy: PreloadAllModules
+      preloadingStrategy: isProd ? PreloadAllModules : null
     })
   ],
   exports: [RouterModule]

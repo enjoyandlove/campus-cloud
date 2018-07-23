@@ -91,7 +91,7 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
   amplitudeEventProperties = {
     host_type: null,
     audience_type: null,
-    announcement_type: amplitudeEvents.REGULAR,
+    announcement_type: amplitudeEvents.REGULAR
   };
 
   constructor(
@@ -386,7 +386,8 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
         }
         this.cpTracking.amplitudeEmitEvent(
           amplitudeEvents.NOTIFY_SEND_ANNOUNCEMENT,
-          this.amplitudeEventProperties);
+          this.amplitudeEventProperties
+        );
         this.form.reset();
         this.created.emit(this.form.value);
         this.resetModal();

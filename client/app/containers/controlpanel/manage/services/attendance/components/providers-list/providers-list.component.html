@@ -40,7 +40,7 @@
                   </span>
                 </div>
                 <div class="col-2">
-                  <span i18n>{{ 'assessment' | cpI18n }}</span>
+                  <span>{{ 'assessment' | cpI18n }}</span>
                 </div>
                 <div class="col-1"></div>
               </div>
@@ -76,7 +76,7 @@
                     cpTracker
                     [eventData]="trackCheckinEvent(provider.encrypted_campus_service_id)"
                     [routerLink]="['/cb/checkin/s/' + provider.encrypted_campus_service_id + '/' + provider.encrypted_id]"
-                    class="startcheckin cpbtn cpbtn--no-border cpbtn--secondary" i18n>
+                    class="startcheckin cpbtn cpbtn--no-border cpbtn--secondary">
                     {{ 'services_label_check_in_details' | cpI18n }}
                   </a>
                 </div>

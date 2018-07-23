@@ -48,7 +48,8 @@ export class AnnouncementsListActionBoxComponent implements OnInit {
 
   trackEvent(eventName) {
     const eventProperties = {
-      ...this.cpTracking.getEventProperties(), create_page_name: amplitudeEvents.CREATE_ANNOUNCEMENT
+      ...this.cpTracking.getEventProperties(),
+      create_page_name: amplitudeEvents.CREATE_ANNOUNCEMENT
     };
 
     return {

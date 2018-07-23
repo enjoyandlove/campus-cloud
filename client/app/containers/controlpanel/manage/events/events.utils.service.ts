@@ -117,7 +117,8 @@ export class EventUtilService {
     isAthletic: boolean,
     isService: boolean,
     isClub: boolean,
-    isOrientation: boolean) {
+    isOrientation: boolean
+  ) {
     let sourcePage;
 
     if (isAthletic) {
@@ -156,9 +157,7 @@ export class EventUtilService {
       ? CPDate.getMonth(data['start'].value, this.session.tz)
       : null;
 
-    const end_date = data['end'].value
-      ? CPDate.getMonth(data['end'].value, this.session.tz)
-      : null;
+    const end_date = data['end'].value ? CPDate.getMonth(data['end'].value, this.session.tz) : null;
 
     return {
       end_date,

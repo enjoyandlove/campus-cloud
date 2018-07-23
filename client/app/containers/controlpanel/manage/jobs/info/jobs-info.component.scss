@@ -16,7 +16,8 @@ p.no-margin-bottom {
   margin-bottom: 0;
 }
 
-.job, .employer {
+.job,
+.employer {
   &__title {
     @include font-bold();
     @include font-24px();

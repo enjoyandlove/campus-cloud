@@ -6,9 +6,9 @@ import { map, startWith } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
 import {
-CPTrackingService,
-FileUploadService,
-StoreService
+  CPTrackingService,
+  FileUploadService,
+  StoreService
 } from '../../../../../../../shared/services';
 import { FeedsService } from '../../../feeds.service';
 import { API } from '../../../../../../../config/api';
@@ -286,7 +286,7 @@ export class FeedInputBoxComponent implements OnInit {
     const host_type = this.session.defaultHost ? this.session.defaultHost.hostType : null;
     this.eventProperties = {
       ...this.eventProperties,
-      host_type : isCampusWallView ? null : host_type,
+      host_type: isCampusWallView ? null : host_type,
       campus_wall_category: null
     };
   }

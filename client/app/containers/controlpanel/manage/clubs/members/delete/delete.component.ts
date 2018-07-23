@@ -69,7 +69,8 @@ export class ClubsMembersDeleteComponent implements OnInit {
 
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.MANAGE_DELETED_CLUB_MEMBER,
-      this.eventProperties);
+      this.eventProperties
+    );
   }
 
   ngOnInit() {

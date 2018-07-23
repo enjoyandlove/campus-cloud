@@ -291,7 +291,6 @@ export class EventsCreateComponent implements OnInit {
 
     this.service.createEvent(this.form.value, search).subscribe(
       (res: any) => {
-
         this.eventProperties = {
           ...this.eventProperties,
           ...this.utils.setEventProperties(this.form.controls),
@@ -300,7 +299,8 @@ export class EventsCreateComponent implements OnInit {
 
         this.cpTracking.amplitudeEmitEvent(
           amplitudeEvents.MANAGE_CREATED_EVENT,
-          this.eventProperties);
+          this.eventProperties
+        );
 
         this.urlPrefix = this.getUrlPrefix(res.id);
         this.router.navigate([this.urlPrefix]);

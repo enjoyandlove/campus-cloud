@@ -38,7 +38,7 @@ export class FeedDeleteCommentModalComponent implements OnInit {
     private utils: FeedsUtilsService,
     private feedsService: FeedsService,
     private cpTracking: CPTrackingService
-    ) {}
+  ) {}
 
   onDelete() {
     const deleteCampusComment$ = this.feedsService.deleteCampusWallCommentByThreadId(this.feed.id);

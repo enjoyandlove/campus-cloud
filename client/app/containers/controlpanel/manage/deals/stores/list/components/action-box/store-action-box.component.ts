@@ -31,7 +31,8 @@ export class StoreActionBoxComponent {
 
   trackEvent(eventName) {
     const eventProperties = {
-      ...this.cpTracking.getEventProperties(), create_page_name: amplitudeEvents.CREATE_STORE
+      ...this.cpTracking.getEventProperties(),
+      create_page_name: amplitudeEvents.CREATE_STORE
     };
 
     return {
