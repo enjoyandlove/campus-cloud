@@ -4,8 +4,8 @@ import { combineLatest, Observable, of as observableOf } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { map, startWith } from 'rxjs/operators';
 
-import { UserCount } from '../../audience.status';
 import { CPSession } from '../../../../../session';
+import { PersonaType, UserCount } from '../../audience.status';
 import { CPI18nService } from './../../../../../shared/services';
 import { AudienceUtilsService } from '../../audience.utils.service';
 import { AudienceService } from './../../../../../containers/controlpanel/audience/audience.service';
@@ -47,7 +47,8 @@ export class AudienceSavedBodyComponent implements OnInit {
 
     const search = new HttpParams()
       .append('school_id', this.session.g.get('school').id.toString())
-      .append('with_user_count', UserCount.withUserCount.toString());
+      .append('with_user_count', UserCount.withUserCount.toString())
+      .append('platform', PersonaType.app.toString());
 
     const audiences$ = this.service.getAudiences(search, 1, 1000).pipe(
       startWith([
