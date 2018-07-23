@@ -24,7 +24,7 @@
                 <div class="col-6">
                   <div class="row">
                     <div class="col-12">
-                      <label i18n>{{ 'from' | cpI18n }}</label>
+                      <label>{{ 'from' | cpI18n }}</label>
                       <cp-dropdown
                         [items]="stores$ | async"
                         [reset]="resetCustomFields$"
@@ -35,7 +35,7 @@
                   </div>
                 </div>
                 <div class="col-6">
-                  <label i18n>{{ 'announcements_type' | cpI18n }}</label>
+                  <label>{{ 'announcements_type' | cpI18n }}</label>
                   <div class="row">
                     <div class="col-12">
                       <cp-check-dropdown
@@ -52,7 +52,7 @@
             </div>
 
             <div class="form-group">
-              <label i18n>
+              <label>
                 {{ 'subject' | cpI18n }}
                 <cp-char-counter
                   class="float-right"
@@ -79,7 +79,7 @@
             </div>
 
             <div class="form-group">
-              <label i18n>
+              <label>
                 {{ 'message_noun' | cpI18n }}
                 <cp-char-counter
                   class="float-right"
@@ -105,12 +105,12 @@
         <div class="row">
           <div class="col-12">
             <div class="text-right">
-              <label class="error" *ngIf="formError" i18n>
+              <label class="error" *ngIf="formError">
                 <span>&#x26A0;</span>
                 {{ isDateError ? dateErrorMessage : cpI18n.translate('error_fill_out_marked_fields') }}
               </label>
               <a [routerLink]="['../']"
-                  class="cpbtn cpbtn--cancel" i18n>
+                  class="cpbtn cpbtn--cancel">
                 {{ 'cancel' | cpI18n }}
               </a>
               <cp-button

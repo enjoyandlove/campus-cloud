@@ -1,9 +1,9 @@
-import { canSchoolWriteResource } from './../../../../../shared/utils/privileges/privileges';
 /* tslint:disable:max-line-length */
 import { Component, OnInit, OnDestroy, HostListener, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 
+import { canSchoolWriteResource } from './../../../../../shared/utils/privileges/privileges';
 import { CPSession } from './../../../../../session/index';
 import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants/privileges';
 import { CPI18nService, StoreService, ZendeskService } from './../../../../../shared/services';

@@ -36,7 +36,7 @@ export class DealsEditComponent extends BaseComponent implements OnInit {
     public store: Store<IHeader>,
     public cpI18n: CPI18nService,
     public route: ActivatedRoute,
-    public storeService: StoreService
+    public storeService: DealsStoreService
   ) {
     super();
     this.dealId = this.route.snapshot.params['dealId'];

@@ -8,10 +8,10 @@ import { API } from '../../config/api';
 import { CPSession } from './../../session';
 import { CPI18nService } from './i18n.service';
 import { HTTPService } from '../../base/http.service';
-import { CP_PRIVILEGES_MAP } from '../constants';
 import { amplitudeEvents } from '../constants/analytics';
-import { canAccountLevelReadResource, canSchoolReadResource } from '../utils/privileges';
 import { isClubAthletic } from '../../containers/controlpanel/manage/clubs/clubs.athletics.labels';
+import { CP_PRIVILEGES_MAP } from '../constants';
+import { canAccountLevelReadResource, canSchoolReadResource } from '../utils/privileges';
 
 const cpI18n = new CPI18nService();
 

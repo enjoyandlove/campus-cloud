@@ -8,7 +8,7 @@ import { StoreCreateComponent } from './store-create.component';
 import { mockSchool } from '../../../../../../session/mock/school';
 import { CPI18nService } from '../../../../../../shared/services/i18n.service';
 import { StoreModule } from '../store.module';
-import { StoreService } from '../store.service';
+import { DealsStoreService } from '../store.service';
 
 class MockStoreService {
   dummy;
@@ -40,7 +40,7 @@ describe('DealsStoreCreateComponent', () => {
           CPSession,
           FormBuilder,
           CPI18nService,
-          { provide: StoreService, useClass: MockStoreService }
+          { provide: DealsStoreService, useClass: MockStoreService }
         ]
       })
         .compileComponents()

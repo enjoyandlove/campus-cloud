@@ -1,14 +1,13 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-
-import { ProvidersService } from '../../../providers.service';
-import { BaseComponent } from '../../../../../../../base/base.component';
-import { CPTrackingService } from '../../../../../../../shared/services';
-import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
-import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
+import { CP_TRACK_TO } from './../../../../../../../shared/directives/tracking/tracking.directive';
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
+import { CPTrackingService } from './../../../../../../../shared/services/tracking.service';
 import { createSpreadSheet } from './../../../../../../../shared/utils/csv/parser';
+import { BaseComponent } from '../../../../../../../base/base.component';
+import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
+import { ProvidersService } from '../../../providers.service';
 
 interface IState {
   search_text: string;

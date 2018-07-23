@@ -1,3 +1,4 @@
+import { HEADER_UPDATE } from './../../../../../reducers/header.reducer';
 import { Component, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
@@ -136,6 +137,13 @@ export class BannerListComponent extends BaseComponent implements OnInit {
       });
   }
 
+  updateHeader() {
+    this.store.dispatch({
+      type: HEADER_UPDATE,
+      payload: require('../../customise.header.json')
+    });
+  }
+
   trackUploadImageEvent() {
     const properties = this.cpTracking.getEventProperties();
 
@@ -143,6 +151,8 @@ export class BannerListComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.updateHeader();
+
     const zendesk = ZendeskService.zdRoot();
     this.loadImage();
     this.customizeBannerTooltip = {

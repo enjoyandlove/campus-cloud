@@ -13,6 +13,11 @@ const appRoutes: Routes = [
     canActivateChild: [PrivilegesGuard],
     children: [
       {
+        path: 'personas',
+        data: { zendesk: 'customize' },
+        loadChildren: './personas/personas.module#PersonasModule'
+      },
+      {
         path: 'banner',
         data: { zendesk: 'customize' },
         loadChildren: './banner/banner.module#BannerModule'

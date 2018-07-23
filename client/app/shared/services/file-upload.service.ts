@@ -1,6 +1,7 @@
+import { appStorage } from './../utils/storage/storage';
+import { API } from './../../config/api/index';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
 import { CPI18nService } from './index';
 
 @Injectable()
@@ -13,6 +14,8 @@ export class FileUploadService {
     'application/msword', // .doc
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document' // .docx
   ];
+
+  imageUploadUrl = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
 
   validImageTypes = ['image/jpeg', 'image/jpg', 'image/png'];
 
@@ -83,11 +86,17 @@ export class FileUploadService {
     return validTypes.includes(media.type);
   }
 
-  uploadFile(media: File, url: string, headers?: HttpHeaders) {
+  uploadFile(media: File, url: string = this.imageUploadUrl, customHeaders?: HttpHeaders) {
+    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
+
+    const headers = new HttpHeaders({
+      Authorization: auth
+    });
+
     const formData: FormData = new FormData();
 
     formData.append('file', media, media.name);
 
-    return this.http.post(url, formData, { headers }).pipe(map((res) => res));
+    return this.http.post(url, formData, { headers: customHeaders ? customHeaders : headers });
   }
 }
