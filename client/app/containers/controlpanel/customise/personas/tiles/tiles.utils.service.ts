@@ -34,30 +34,55 @@ export class TilesUtilsService {
     return CPI18nService.getLocale().startsWith('fr') ? name.fr : name.en;
   }
 
-  campusGuideTileForm(personaId, lastRank, tileCategoryId) {
+  campusGuideTileForm(personaId, lastRank, tileCategoryId, guide = null) {
+    const _guide = guide
+      ? { ...guide }
+      : {
+          name: null,
+          rank: lastRank,
+          img_url: null,
+          color: 'FFFFFF',
+          extra_info: null,
+          visibility_status: TileVisibility.visible,
+          tile_category_id: tileCategoryId,
+          featured_rank: TileFeatureRank.notFeatured
+        };
+
     return this.fb.group({
       school_id: [this.session.g.get('school').id, Validators.required],
       school_persona_id: [personaId, Validators.required],
-      name: [null, Validators.required],
-      rank: [lastRank, Validators.required],
-      img_url: [null, Validators.required],
-      color: ['FFFFFF', Validators.required],
-      extra_info: [null],
-      visibility_status: [TileVisibility.visible],
-      tile_category_id: [tileCategoryId, Validators.required],
-      featured_rank: [TileFeatureRank.notFeatured, Validators.required]
+      name: [_guide.name, Validators.required],
+      rank: [_guide.rank, Validators.required],
+      img_url: [_guide.img_url, Validators.required],
+      color: [_guide.color, Validators.required],
+      extra_info: [_guide.extra_info],
+      visibility_status: [_guide.visibility_status],
+      tile_category_id: [_guide.tile_category_id, Validators.required],
+      featured_rank: [_guide.featured_rank, Validators.required]
     });
   }
 
-  campusLinkForm(nameRequired = true, imageRequired = true) {
+  campusLinkForm(nameRequired = true, imageRequired = true, link = null) {
+    const _link = link
+      ? { ...link }
+      : {
+          name: null,
+          link_url: null,
+          link_params: null,
+          img_url: null,
+          open_in_browser: 0,
+          is_system: 1,
+          school_id: this.session.g.get('school').id
+        };
+
     return this.fb.group({
-      name: [null, nameRequired ? Validators.required : null],
-      link_url: [null, Validators.required],
-      link_params: [null],
-      img_url: [null, imageRequired ? Validators.required : null],
-      open_in_browser: [0],
-      is_system: [1],
-      school_id: [this.session.g.get('school').id, Validators.required]
+      name: [_link.name, nameRequired ? Validators.required : null],
+      link_url: [_link.link_url, Validators.required],
+      link_params: [_link.link_params],
+      img_url: [_link.img_url, imageRequired ? Validators.required : null],
+      open_in_browser: [_link.open_in_browser],
+      is_system: [_link.is_system],
+      school_id: [_link.school_id, Validators.required]
     });
   }
 }

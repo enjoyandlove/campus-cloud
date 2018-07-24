@@ -5,7 +5,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { sortBy } from 'lodash';
 import { switchMap } from 'rxjs/operators';
+import { isDev } from './../../../../../../config/env/index';
 import { SNACKBAR_HIDE } from './../../../../../../reducers/snackbar.reducer';
+import mockGuide from './mock';
 import { BaseComponent } from '../../../../../../base';
 import { HEADER_UPDATE, IHeader } from '../../../../../../reducers/header.reducer';
 import { ISnackbar, SNACKBAR_SHOW } from '../../../../../../reducers/snackbar.reducer';
@@ -25,6 +27,7 @@ import { TilesUtilsService } from '../tiles.utils.service';
   styleUrls: ['./edit.component.scss']
 })
 export class PersonasTileEditComponent extends BaseComponent implements OnInit, OnDestroy {
+  tileId;
   loading;
   buttonData;
   personaId: number;
@@ -47,6 +50,7 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
     public sectionUtils: SectionUtilsService
   ) {
     super();
+    this.tileId = this.route.snapshot.params['tileId'];
     this.personaId = this.route.snapshot.params['personaId'];
     super.isLoading().subscribe((loading) => (this.loading = loading));
   }
@@ -142,15 +146,16 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
   }
 
   buildForm() {
-    const temporaryTile = this.sectionUtils.isTemporaryGuide(this.guide);
-    const lastRank = temporaryTile
-      ? 1
-      : sortBy(this.guide.tiles, (t: ITile) => -t.rank)[0].rank + 100;
-    this.campusLinkForm = this.utils.campusLinkForm(false, false);
+    const tileId = this.route.snapshot.params['tileId'];
+    const guideTile = this.guide.tiles.filter((i) => i.id === +tileId)[0];
+    const lastRank = sortBy(this.guide.tiles, (t: ITile) => -t.rank)[0].rank + 100;
+    this.campusLinkForm = this.utils.campusLinkForm(false, false, guideTile.related_link_data);
+
     this.campusGuideTileForm = this.utils.campusGuideTileForm(
       this.personaId,
       lastRank,
-      this.guide.id
+      this.guide.id,
+      guideTile
     );
   }
 
@@ -158,7 +163,7 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        heading: this.cpI18n.translate('t_personas_tile_create_header'),
+        heading: this.cpI18n.translate('t_personas_tile_update_header'),
         subheading: null,
         em: null,
         crumbs: {
@@ -204,19 +209,29 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
   fetch() {
     const search = new HttpParams().set('school_id', this.session.g.get('school').id);
 
-    // const guide = this.
     const personas$ = this.personaService.getPersonaById(this.personaId, search);
 
     super
       .fetchData(personas$)
-      .then(({ data }: any) => {
+      .then(({ data }) => {
+        const persona = data;
+
         this.buildForm();
-        this.buildHeader(this.utils.getPersonaNameByLocale(data));
+
+        this.buildHeader(this.utils.getPersonaNameByLocale(persona));
       })
       .catch(() => this.erroHandler());
   }
 
   ngOnInit(): void {
+    this.guide = isDev ? mockGuide : this.guideService.guide;
+
+    if (!this.guide) {
+      this.router.navigate(['/customize/personas/', this.personaId]);
+
+      return;
+    }
+
     this.buttonData = {
       class: 'primary',
       disabled: true,
