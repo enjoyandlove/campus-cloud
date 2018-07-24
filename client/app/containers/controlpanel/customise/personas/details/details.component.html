@@ -6,11 +6,11 @@
       <div class="row" [class.mb-4]="i % 5 === 0">
         <cp-personas-tile
           [tile]="tile"
-          class="col-3"
+          class="col-4"
           *ngFor="let tile of state.featureTiles; let i = index">
         </cp-personas-tile>
         <cp-personas-tile-add-button
-          class="col-3"
+          class="col-4"
           (buttonClick)="createFeatureTile()">
         </cp-personas-tile-add-button>
       </div>
