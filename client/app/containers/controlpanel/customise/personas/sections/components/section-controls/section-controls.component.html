@@ -1,6 +1,6 @@
 <div class="row controls">
   <div class="col-12">
-    <button 
+    <button
       type="button"
       [disabled]="disableUp"
       (click)="moveUp.emit()"
@@ -8,7 +8,7 @@
       <i class="material-icons">keyboard_arrow_up</i>
     </button>
 
-    <button 
+    <button
       type="button"
       [disabled]="disableDown"
       class="cpbtn cpbtn--link"
@@ -16,15 +16,7 @@
       <i class="material-icons">keyboard_arrow_down</i>
     </button>
 
-    <button 
-      type="button"
-      class="cpbtn cpbtn--link"
-      (click)="editClick.emit()">
-      <i class="material-icons">edit</i>
-      <span>{{ 't_shared_edit' | cpI18n }}</span>
-    </button>
-
-    <button 
+    <button
       type="button"
       class="cpbtn cpbtn--link"
       (click)="deleteClick.emit()">

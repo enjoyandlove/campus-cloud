@@ -60,12 +60,14 @@ export class AudienceService extends HTTPService {
   }
 
   getPersona(search: HttpParams, startRange: number, endRange: number): Observable<any> {
-    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SCHOOL_PERSONA}`;
+    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.PERSONAS}`;
     const url = `${common}/${startRange};${endRange}`;
 
-    return super.get(url, search, true).pipe(
-      map((res: any) => res.filter((p) => p.login_requirement !== PersonaPermission.forbidden))
-    );
+    return super
+      .get(url, search, true)
+      .pipe(
+        map((res: any) => res.filter((p) => p.login_requirement !== PersonaPermission.forbidden))
+      );
   }
 
   setModalServices(services: any[]): void {

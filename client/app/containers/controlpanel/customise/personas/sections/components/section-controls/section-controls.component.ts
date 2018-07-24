@@ -12,7 +12,6 @@ export class PersonasSectionControlsComponent implements OnInit {
 
   @Output() moveUp: EventEmitter<null> = new EventEmitter();
   @Output() moveDown: EventEmitter<null> = new EventEmitter();
-  @Output() editClick: EventEmitter<null> = new EventEmitter();
   @Output() deleteClick: EventEmitter<null> = new EventEmitter();
 
   constructor() {}

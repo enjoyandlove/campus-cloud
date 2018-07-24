@@ -1,0 +1,51 @@
+<!-- <ng-container [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+  <ng-container *ngSwitchCase="false">
+    <div class="row margin-bottom">
+      <div class="col-6">
+        <div class="cp-card">
+          <p class="title">
+            {{ 't_personas_create_tile_heading_left' | cpI18n }}
+          </p>
+          <cp-personas-tile-guide-form
+            [form]="campusGuideTileForm"
+            uploadButtonId="tile_guide_upload_button"
+            (formChange)="onCampusGuideTileFormChange(campusGuideTileForm)">
+          </cp-personas-tile-guide-form>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="cp-card">
+          <p class="title">
+            {{ 't_personas_create_tile_heading_right' | cpI18n }}
+          </p>
+          <cp-personas-resource-form
+            [form]="campusLinkForm"
+            (formChange)="onCampusLinkFormChange(campusLinkForm)">
+          </cp-personas-resource-form>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="cp-wrapper cp-wrapper--outer">
+        <div class="col-12">
+          <div class="row">
+            <div class="col-12">
+              <div class="text-right">
+                <a [routerLink]="['../']"
+                    class="cpbtn cpbtn--cancel">
+                  {{ 'cancel' | cpI18n }}
+                </a>
+                <cp-button
+                  [props]="buttonData"
+                  (buttonClick)="onSubmit()">
+                </cp-button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-container> -->

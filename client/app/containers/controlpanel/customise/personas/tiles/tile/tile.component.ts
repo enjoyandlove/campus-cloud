@@ -17,6 +17,7 @@ import { TilesUtilsService } from '../tiles.utils.service';
 export class PersonasTileComponent implements OnInit {
   @Input() tile: ITile;
 
+  @Output() edit: EventEmitter<ITile> = new EventEmitter();
   @Output() edited: EventEmitter<ITile> = new EventEmitter();
   @Output() deleted: EventEmitter<number> = new EventEmitter();
 
@@ -50,8 +51,6 @@ export class PersonasTileComponent implements OnInit {
       }
     });
   }
-
-  onEditTile() {}
 
   onDeleteTile() {
     this.state = {

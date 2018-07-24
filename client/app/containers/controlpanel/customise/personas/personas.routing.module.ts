@@ -1,11 +1,11 @@
-import { PersonasTileCreateComponent } from './tiles/create/create.component';
-import { PersonasDetailsComponent } from './details/details.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
-import { PersonasListComponent } from './list';
-import { PersonasEditComponent } from './edit';
 import { PersonasCreateComponent } from './create';
+import { PersonasDetailsComponent } from './details/details.component';
+import { PersonasEditComponent } from './edit';
+import { PersonasListComponent } from './list';
+import { PersonasTileCreateComponent } from './tiles/create/create.component';
+import { PersonasTileEditComponent } from './tiles/edit/edit.component';
 
 const appRoutes: Routes = [
   {
@@ -32,6 +32,11 @@ const appRoutes: Routes = [
     path: ':personaId/tiles',
     data: { zendesk: 'personas' },
     component: PersonasTileCreateComponent
+  },
+  {
+    path: ':personaId/tiles/:tileId/edit',
+    data: { zendesk: 'personas' },
+    component: PersonasTileEditComponent
   },
   {
     path: ':personaId/tiles/:tileId',
