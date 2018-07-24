@@ -1,18 +1,11 @@
 <p
   class="title text-truncate"
-  *ngIf="!isSuperAdmin && !isOrientation || isOrientation && !canViewOrientation">
-  {{ item.name }}
-</p>
-
-<p
-  class="title text-truncate hover"
-  *ngIf="isSuperAdmin && !isOrientation"
-  (click)="router.navigate(['/manage/' + resource + '/' + item.id])">
+  *ngIf="!hasPrivilege">
   {{ item.name }}
 </p>
 <p
+  *ngIf="hasPrivilege"
   class="title text-truncate hover"
-  *ngIf="isOrientation && canViewOrientation"
-  (click)="router.navigate(['/manage/' + resource + '/' + item.calendar_id + '/events/' + item.id])">
+  (click)="router.navigate([resourceURL])">
   {{ item.name }}
 </p>
