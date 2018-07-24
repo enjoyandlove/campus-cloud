@@ -22,8 +22,8 @@
       <ul class="messages cp-form">
         <li class="cp-form__header col-12">
           <div class="row">
-            <span class="col-5" i18n>{{ 'recipient' | cpI18n }}</span>
-            <span class="col-3" i18n>{{ 'announcements_type' | cpI18n }}</span>
+            <span class="col-5">{{ 'recipient' | cpI18n }}</span>
+            <span class="col-3">{{ 'announcements_type' | cpI18n }}</span>
             <cp-sorting-header
               class="col-3"
               sortLabel="sent_time"
@@ -55,7 +55,7 @@
               <span class="text-muted">{{ message.message }}</span>
             </span>
 
-            <span class="col-3" i18n>
+            <span class="col-3">
               {{ messageType[message.priority] }}
             </span>
 

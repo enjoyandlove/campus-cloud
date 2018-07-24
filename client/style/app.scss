@@ -2,8 +2,11 @@
 @import './core/colors';
 @import './core/common';
 @import './core/maps';
+@import './core/layout';
 @import './components/popover';
 @import './core/typography';
 @import './components/scrollbar';
+
+@import './components/color-picker';
 
 @import '~node_modules/croppie/croppie.css';

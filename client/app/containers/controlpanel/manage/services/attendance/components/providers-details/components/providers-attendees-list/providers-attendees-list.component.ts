@@ -113,9 +113,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
       data_type: amplitudeEvents.ATTENDANCE
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_DOWNLOAD_DATA,
-      this.eventProperties);
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_DOWNLOAD_DATA, this.eventProperties);
   }
 
   ngOnInit() {

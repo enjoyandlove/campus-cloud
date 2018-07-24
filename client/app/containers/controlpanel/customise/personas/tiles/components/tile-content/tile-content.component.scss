@@ -1,0 +1,34 @@
+@import '~styles/core/typography';
+
+.tile {
+  &__image {
+    height: 120px;
+    text-align: center;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__meta {
+    @include font-14px();
+
+    padding: 8px;
+    height: 37px;
+  }
+
+  .backdrop {
+    &:before {
+      top: 0;
+      left: 15px;
+      z-index: 1;
+      content: '';
+      width: calc(100% - 30px);
+      height: 100%;
+      position: absolute;
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+  }
+}

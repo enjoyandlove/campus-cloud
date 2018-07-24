@@ -38,8 +38,8 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
-    private locationsService: LocationsService,
-    ) {
+    private locationsService: LocationsService
+  ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
 

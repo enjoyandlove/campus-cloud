@@ -39,7 +39,7 @@
 
       <li class="cp-form__item col-12" *ngFor="let service of state.services">
         <div class="row">
-          <span class="col-4 text-truncate" i18n>
+          <span class="col-4 text-truncate">
             <div class="row">
               <div class="col-2 services__thumbnail">
                 <img class="rounded img-fit-cover" [src]="service.logo_url">
@@ -47,9 +47,9 @@
               <div class="col-9 text-truncate no-left-padding"><strong><a [routerLink]="[service.service_attendance ? service.id : service.id + '/info']">{{ service.name }}</a></strong><br>{{ service.description }}</div>
             </div>
           </span>
-          <span class="col-2" i18n>{{ service.total_visits }}</span>
-          <span class="col-2" i18n>{{ service.num_ratings }}</span>
-          <span class="col-3" i18n>
+          <span class="col-2">{{ service.total_visits }}</span>
+          <span class="col-2">{{ service.num_ratings }}</span>
+          <span class="col-3">
             <cp-stars
               *ngIf="service.enable_feedback === 1"
               [maxRate]="service.rating_scale_maximum"

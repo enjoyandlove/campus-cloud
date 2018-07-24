@@ -227,7 +227,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
     this.eventProperties = {
       cohort_type: amplitudeEvents.SINGLE_STUDENT,
       engagement_type: amplitudeEvents.SINGLE_STUDENT,
-      engagement_source: amplitudeEvents.ALL_ENGAGEMENT,
+      engagement_source: amplitudeEvents.ALL_ENGAGEMENT
     };
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.ASSESS_DOWNLOAD_DATA, this.eventProperties);

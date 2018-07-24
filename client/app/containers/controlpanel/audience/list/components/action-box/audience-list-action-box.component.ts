@@ -19,10 +19,7 @@ export class AudienceListActionBoxComponent implements OnInit {
   listTypes;
   amplitudeEvents;
 
-  constructor(
-    public cpI18n: CPI18nService,
-    public cpTracking: CPTrackingService
-  ) {}
+  constructor(public cpI18n: CPI18nService, public cpTracking: CPTrackingService) {}
 
   onListSelected(selected) {
     this.filterBy.emit(selected.action);
@@ -30,7 +27,8 @@ export class AudienceListActionBoxComponent implements OnInit {
 
   trackEvent(eventName) {
     const eventProperties = {
-      ...this.cpTracking.getEventProperties(), create_page_name: amplitudeEvents.CREATE_LIST
+      ...this.cpTracking.getEventProperties(),
+      create_page_name: amplitudeEvents.CREATE_LIST
     };
 
     return {

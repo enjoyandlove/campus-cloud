@@ -1,0 +1,52 @@
+<cp-personas-tile-base>
+    <div class="content">
+      <div class="row">
+        <div class="col-12 text-center">
+          <div class="content__wrapper">
+              <button
+                type="button"
+                (click)="toggleVisibility.emit()">
+                <i class="material-icons">
+                  {{ visible ? 'visibility_off' : 'visibility' }}
+                </i>
+                <span>
+                  {{visible ? ['t_shared_hide' | cpI18n] : 't_shared_show' | cpI18n}}
+                </span>
+              </button>
+
+              <button
+                type="button"
+                *ngIf="!noEdit"
+                (click)="editClick.emit()">
+                <i class="material-icons">edit</i>
+                <span>{{'t_shared_edit' | cpI18n}}</span>
+              </button>
+
+              <button
+                disabled
+                type="button"
+                *ngIf="noEdit">
+                <i class="material-icons">lock</i>
+                <span>{{'t_tile_button_locked' | cpI18n}}</span>
+              </button>
+
+              <button
+                type="button"
+                *ngIf="!defaultTile"
+                (click)="deleteClick.emit()">
+                <i class="material-icons">delete</i>
+                <span>{{'t_shared_delete' | cpI18n}}</span>
+              </button>
+
+              <button
+                disabled
+                type="button"
+                *ngIf="defaultTile">
+                <i class="material-icons">lock</i>
+                <span>{{'t_tile_button_default' | cpI18n}}</span>
+              </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </cp-personas-tile-base>

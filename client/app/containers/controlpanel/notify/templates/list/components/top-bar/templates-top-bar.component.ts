@@ -19,7 +19,8 @@ export class TemplatesTopBarComponent implements OnInit {
 
   trackEvent(eventName) {
     const eventProperties = {
-      ...this.cpTracking.getEventProperties(), create_page_name: amplitudeEvents.CREATE_TEMPLATE
+      ...this.cpTracking.getEventProperties(),
+      create_page_name: amplitudeEvents.CREATE_TEMPLATE
     };
 
     return {

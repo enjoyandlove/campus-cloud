@@ -40,6 +40,13 @@
       "url": "/manage/services"
     },
     {
+      "privilege": 17,
+      "clearParams": true,
+      "label": "orientation",
+      "amplitude": "Orientation",
+      "url": "/manage/orientation"
+    },
+    {
       "privilege": 21,
       "clearParams": true,
       "label": "locations",
@@ -59,13 +66,6 @@
       "label": "calendars",
       "amplitude": "Calendars",
       "url": "/manage/calendars"
-    },
-    {
-      "privilege": 17,
-      "clearParams": true,
-      "label": "orientation",
-      "amplitude": "Orientation",
-      "url": "/manage/orientation"
     },
     {
       "privilege": 25,

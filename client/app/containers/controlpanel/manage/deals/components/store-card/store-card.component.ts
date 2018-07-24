@@ -10,25 +10,23 @@ import { CPI18nService } from '../../../../../../shared/services';
   templateUrl: './store-card.component.html',
   styleUrls: ['./store-card.component.scss']
 })
-
 export class StoreCardComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() storeForm: FormGroup;
 
   @Output() isNewStore: EventEmitter<boolean> = new EventEmitter();
-  @Output() formData: EventEmitter<{
+  @Output()
+  formData: EventEmitter<{
     deal: IDeal;
-    dealFormValid: boolean
+    dealFormValid: boolean;
     store: IStore;
-    storeFormValid: boolean
+    storeFormValid: boolean;
   }> = new EventEmitter();
 
   newStoreTitle;
   existingStoreTitle;
 
-  constructor(
-    public cpI18n: CPI18nService
-  ) {}
+  constructor(public cpI18n: CPI18nService) {}
 
   onTabClick({ id }) {
     if (id === 'existing') {
@@ -52,9 +50,10 @@ export class StoreCardComponent implements OnInit {
   setRequiredField(value) {
     const name = this.storeForm.controls['name'].value;
     const logo = this.storeForm.controls['logo_url'].value;
-    this.storeForm.setControl('name', new FormControl(name, value
-      ? [Validators.required, Validators.maxLength(120)]
-      : null));
+    this.storeForm.setControl(
+      'name',
+      new FormControl(name, value ? [Validators.required, Validators.maxLength(120)] : null)
+    );
 
     this.storeForm.setControl(
       'logo_url',
@@ -71,7 +70,7 @@ export class StoreCardComponent implements OnInit {
         deal: this.form.value,
         dealFormValid: this.form.valid,
         store: this.storeForm.value,
-        storeFormValid: this.storeForm.valid,
+        storeFormValid: this.storeForm.valid
       });
     });
   }

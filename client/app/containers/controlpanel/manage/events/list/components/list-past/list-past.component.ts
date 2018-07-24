@@ -38,9 +38,7 @@ export class ListPastComponent implements OnInit {
   canDelete = false;
   dateFormat = FORMAT.SHORT;
 
-  constructor(
-    private session: CPSession,
-    private cpI18n: CPI18nService) {}
+  constructor(private session: CPSession, private cpI18n: CPI18nService) {}
 
   onDelete(event) {
     this.deleteEvent.emit(event);

@@ -19,10 +19,10 @@ import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 import {
-AdminService,
-CPTrackingService,
-ErrorService,
-StoreService
+  AdminService,
+  CPTrackingService,
+  ErrorService,
+  StoreService
 } from '../../../../../shared/services';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
@@ -200,12 +200,13 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
         this.eventProperties = {
           ...this.eventProperties,
           ...this.utils.setEventProperties(this.form.controls),
-          event_id: this.eventId,
+          event_id: this.eventId
         };
 
         this.cpTracking.amplitudeEmitEvent(
           amplitudeEvents.MANAGE_UPDATED_EVENT,
-          this.eventProperties);
+          this.eventProperties
+        );
 
         this.router.navigate([this.urlPrefix]);
       },
@@ -220,7 +221,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
   public buildForm(res) {
     const poster_url = res.poster_url ? res.poster_url : res.store_logo_url;
-    const thumb_url =  res.poster_thumb_url ? res.poster_thumb_url : res.store_logo_url;
+    const thumb_url = res.poster_thumb_url ? res.poster_thumb_url : res.store_logo_url;
 
     this.form = this.fb.group({
       title: [res.title, Validators.required],
@@ -340,11 +341,13 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   fetchManagersBySelectedStore(storeId) {
-    storeId = null;
-    const search: HttpParams = new HttpParams()
+    let search: HttpParams = new HttpParams()
       .append('school_id', this.school.id.toString())
-      .append('store_id', storeId)
       .append('privilege_type', this.utils.getPrivilegeType(this.isOrientation));
+
+    if (!this.isOrientation) {
+      search = search.append('store_id', storeId);
+    }
 
     this.adminService
       .getAdminByStoreId(search)
@@ -396,9 +399,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
         const lat = res.data[0].latitude;
         const lng = res.data[0].longitude;
 
-        this.mapCenter = new BehaviorSubject(
-          CPMap.setDefaultMapCenter(lat, lng, this.school)
-        );
+        this.mapCenter = new BehaviorSubject(CPMap.setDefaultMapCenter(lat, lng, this.school));
 
         this.showLocationDetails = CPMap.canViewLocation(lat, lng, this.school);
         this.drawMarker.next(this.showLocationDetails);

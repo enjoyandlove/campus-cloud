@@ -29,7 +29,7 @@ export class ServicesProviderDeleteComponent {
     private utils: ServicesUtilsService,
     private cpTracking: CPTrackingService,
     private providersService: ProvidersService
-    ) {}
+  ) {}
 
   onDelete() {
     const search = new HttpParams().append('service_id', this.serviceId.toString());
@@ -49,6 +49,7 @@ export class ServicesProviderDeleteComponent {
 
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.MANAGE_DELETED_SERVICE_PROVIDER,
-      this.eventProperties);
+      this.eventProperties
+    );
   }
 }

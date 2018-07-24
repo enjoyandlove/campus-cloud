@@ -9,16 +9,15 @@ import { IStore } from '../../stores/store.interface';
   templateUrl: './deals-card.component.html',
   styleUrls: ['./deals-card.component.scss']
 })
-
 export class DealsCardComponent {
   @Input() form: FormGroup;
   @Input() storeForm: FormGroup;
 
-  @Output() formData: EventEmitter<{
+  @Output()
+  formData: EventEmitter<{
     deal: IDeal;
-    dealFormValid: boolean
+    dealFormValid: boolean;
     store: IStore;
-    storeFormValid: boolean
+    storeFormValid: boolean;
   }> = new EventEmitter();
-
 }

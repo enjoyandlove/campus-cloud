@@ -1,0 +1,20 @@
+[
+  {
+    "id": null,
+    "extra_field_type": null,
+    "label": "[NOTRANSLATE]---[NOTRANSLATE]",
+    "meta": null
+  },
+  {
+    "id": "resource",
+    "extra_field_type": 2,
+    "label": "t_personas_tile_create_type_resource_resource",
+    "meta": null
+  },
+  {
+    "id": "resource_list",
+    "extra_field_type": 3,
+    "label": "t_personas_tile_create_type_resource_resource_list",
+    "meta": null
+  }
+]

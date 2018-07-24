@@ -1,14 +1,13 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-
-import { ProvidersService } from '../../../providers.service';
-import { BaseComponent } from '../../../../../../../base/base.component';
-import { CPTrackingService } from '../../../../../../../shared/services';
-import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
-import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
+import { CP_TRACK_TO } from './../../../../../../../shared/directives/tracking/tracking.directive';
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
+import { CPTrackingService } from './../../../../../../../shared/services/tracking.service';
 import { createSpreadSheet } from './../../../../../../../shared/utils/csv/parser';
+import { BaseComponent } from '../../../../../../../base/base.component';
+import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
+import { ProvidersService } from '../../../providers.service';
 
 interface IState {
   search_text: string;
@@ -47,7 +46,8 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
   constructor(
     private cpI18n: CPI18nService,
     private cpTracking: CPTrackingService,
-    private providersService: ProvidersService) {
+    private providersService: ProvidersService
+  ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
   }
@@ -98,9 +98,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
       data_type: amplitudeEvents.ASSESSMENT
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_DOWNLOAD_DATA,
-      this.eventProperties);
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_DOWNLOAD_DATA, this.eventProperties);
   }
 
   trackCheckinEvent(service_id) {

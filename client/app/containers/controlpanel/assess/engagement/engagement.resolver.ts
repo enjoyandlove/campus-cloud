@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 
 import { CPSession } from './../../../../session';
+import { PersonaType } from './engagement.status';
 import { EngagementService } from './engagement.service';
 
 const SERVICE_WITH_ATTENDANCE = '1';
@@ -20,6 +21,10 @@ export class EngagementResolver implements Resolve<any> {
       .append('attendance_only', SERVICE_WITH_ATTENDANCE)
       .append('school_id', this.session.g.get('school').id.toString());
 
+    const personaSearch = new HttpParams()
+      .append('platform', PersonaType.app.toString())
+      .append('school_id', this.session.g.get('school').id.toString());
+
     const servicesList$ = this.service
       .getServices(undefined, undefined, serviceSearch)
       .pipe(catchError((_) => observableOf([])));
@@ -28,7 +33,11 @@ export class EngagementResolver implements Resolve<any> {
       .getLists(undefined, undefined, search)
       .pipe(catchError((_) => observableOf([])));
 
-    const stream$ = combineLatest(servicesList$, listsList$);
+    const personaList$ = this.service
+      .getPersona(undefined, undefined, personaSearch)
+      .pipe(catchError((_) => observableOf([])));
+
+    const stream$ = combineLatest(servicesList$, listsList$, personaList$);
 
     return stream$;
   }

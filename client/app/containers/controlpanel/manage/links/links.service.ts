@@ -10,7 +10,8 @@ export enum ChangedURL {
   'no' = 'No'
 }
 
-export const didUrlChange = (oldURL, newURL) => oldURL === newURL ? ChangedURL.no : ChangedURL.yes;
+export const didUrlChange = (oldURL, newURL) =>
+  oldURL === newURL ? ChangedURL.no : ChangedURL.yes;
 
 @Injectable()
 export class LinksService extends HTTPService {

@@ -460,7 +460,8 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
 
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.MANAGE_UPDATED_SERVICE,
-      this.eventProperties);
+      this.eventProperties
+    );
   }
 
   ngOnInit() {

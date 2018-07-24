@@ -19,7 +19,8 @@ export class LocationsListTopBarComponent implements OnInit {
 
   trackEvent(eventName) {
     const eventProperties = {
-      ...this.cpTracking.getEventProperties(), create_page_name: amplitudeEvents.CREATE_LOCATION
+      ...this.cpTracking.getEventProperties(),
+      create_page_name: amplitudeEvents.CREATE_LOCATION
     };
 
     return {
@@ -38,5 +39,4 @@ export class LocationsListTopBarComponent implements OnInit {
       clicked_create: amplitudeEvents.CLICKED_CREATE
     };
   }
-
 }

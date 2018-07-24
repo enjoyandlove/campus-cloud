@@ -21,6 +21,7 @@ interface IState {
   list_id: number;
   start: number;
   end: number;
+  persona_id: number;
   scope: {
     queryParam: string;
     type: string;
@@ -49,7 +50,8 @@ export class EngagementEventsBoxComponent extends BaseComponent implements OnIni
     list_id: null,
     start: null,
     end: null,
-    scope: null
+    scope: null,
+    persona_id: null
   };
 
   defaultImage = require('public/default/user.png');
@@ -77,12 +79,14 @@ export class EngagementEventsBoxComponent extends BaseComponent implements OnIni
 
   trackAmplitudeEvent(sort_type) {
     this.eventProperties = {
-      ...this.utils.getEventProperties(this.filters), sort_type
+      ...this.utils.getEventProperties(this.filters),
+      sort_type
     };
 
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.ASSESS_VIEWED_TOP_EVENTS,
-      this.eventProperties);
+      this.eventProperties
+    );
   }
 
   fetch() {
@@ -90,19 +94,24 @@ export class EngagementEventsBoxComponent extends BaseComponent implements OnIni
       this.loading = true;
     }
 
-    const list_id = this.state.list_id ? this.state.list_id.toString() : null;
-
     let search = new HttpParams()
       .set('sort_by', this.state.sortBy)
       .set('end', this.state.end.toString())
       .set('start', this.state.start.toString())
-      .set('user_list_id', list_id)
       .set('school_id', this.session.g.get('school').id.toString());
 
     search =
       this.state.scope.queryParam === 'scope'
         ? search.append('scope', this.state.scope.value.toString())
         : search.append('service_id', this.state.scope.value.toString());
+
+    if (this.state.persona_id) {
+      search = search.append('persona_id', this.state.persona_id.toString());
+    }
+
+    if (this.state.list_id) {
+      search = search.append('user_list_id', this.state.list_id.toString());
+    }
 
     this.updateSortingLabel();
 
@@ -169,7 +178,8 @@ export class EngagementEventsBoxComponent extends BaseComponent implements OnIni
         end: res.range.payload.range.end,
         scope: res.engagement.data,
         start: res.range.payload.range.start,
-        list_id: res.for.listId
+        list_id: res.for.listId,
+        persona_id: res.for.personaId
       });
 
       if (!this.isDisable) {
