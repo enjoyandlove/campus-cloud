@@ -102,13 +102,11 @@ export class EngagementUtilsService {
   parsedPersona(personas) {
     const _persona = [];
 
-    const heading = [
-      {
+    const heading = {
         label: this.cpI18n.translate('t_notify_announcement_audiences_my_experiences'),
         value: null,
         heading: true
-      }
-    ];
+      };
 
     personas.forEach((persona) => {
       _persona.push({
@@ -121,7 +119,11 @@ export class EngagementUtilsService {
       });
     });
 
-    return [...heading, ..._persona];
+    if (_persona.length) {
+      _persona.unshift(heading);
+    }
+
+    return _persona;
   }
 
   dateFilter() {
