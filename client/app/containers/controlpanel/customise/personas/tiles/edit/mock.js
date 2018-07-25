@@ -217,20 +217,20 @@ export default {
     {
       related_link_data: {
         link_params: {
-          id: 43777
+          id: 228964
         },
         description: '',
         open_in_browser: false,
-        link_url: 'oohlala://store',
+        link_url: 'oohlala://subscribable_calendar',
         is_system: true,
         school_id: 157,
         img_url:
           'https://s3.amazonaws.com/campus-cloud-image-use/alt43qezz6g20altyagowhelse9055vt79obqgz6xiiwbrrqil.jpg',
         id: 8052,
         link_type: 3,
-        name: 'Stores ##100'
+        name: 'Academic Calendar AC 2016/17'
       },
-      name: 'Stores ##100',
+      name: 'Academic Calendar AC 2016/17',
       color: '77F7B1',
       type: 8,
       rank: 701,
@@ -242,6 +242,37 @@ export default {
       img_url:
         'https://s3.amazonaws.com/campus-cloud-image-use/alt43qezz6g20altyagowhelse9055vt79obqgz6xiiwbrrqil.jpg',
       id: 12952,
+      featured_rank: -1,
+      description: ''
+    },
+    {
+      related_link_data: {
+        link_params: {
+          category_ids: [100, 101]
+        },
+        description: '',
+        open_in_browser: false,
+        link_url: 'oohlala://campus_service_list',
+        is_system: true,
+        school_id: 157,
+        img_url:
+          'https://s3.amazonaws.com/campus-cloud-image-use/dnzpkfyiliyweoh8otk7r9ffn39wqczhnqp3tgsck9x9oqkrms.jpg',
+        id: 8053,
+        link_type: 3,
+        name: 'Service By Category Includes'
+      },
+      name: 'Service By Category Includes',
+      color: '5789D9',
+      type: 8,
+      rank: 801,
+      visibility_status: 1,
+      tile_category_id: 155,
+      extra_info: {
+        id: 12953
+      },
+      img_url:
+        'https://s3.amazonaws.com/campus-cloud-image-use/dnzpkfyiliyweoh8otk7r9ffn39wqczhnqp3tgsck9x9oqkrms.jpg',
+      id: 12954,
       featured_rank: -1,
       description: ''
     }

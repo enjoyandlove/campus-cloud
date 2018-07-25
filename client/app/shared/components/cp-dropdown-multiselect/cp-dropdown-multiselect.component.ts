@@ -39,7 +39,7 @@ export class CPDropdownMultiSelectComponent implements OnInit, OnChanges {
   }
 
   updateLabel(selected) {
-    this.state = { ...this.state, label: selected.map((item) => item.label).join(', ') };
+    this.state = { ...this.state, label: this.buildLabel(selected) };
   }
 
   onToggle(event: Event, option) {
