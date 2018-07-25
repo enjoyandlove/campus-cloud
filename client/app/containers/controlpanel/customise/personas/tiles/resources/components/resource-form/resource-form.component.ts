@@ -65,7 +65,6 @@ export class PersonasResourceFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.form.value);
     this.form.valueChanges.subscribe(() => {
       this.formChange.emit(this.form);
     });
