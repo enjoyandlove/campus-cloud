@@ -7,7 +7,7 @@ export default {
       related_link_data: {
         link_params: {},
         description: '',
-        open_in_browser: true,
+        open_in_browser: false,
         link_url: 'oohlala://academic_calendar_list',
         is_system: true,
         school_id: 157,
@@ -21,7 +21,7 @@ export default {
       color: 'CFF551',
       type: 8,
       rank: 1,
-      visibility_status: -1,
+      visibility_status: 1,
       tile_category_id: 155,
       extra_info: {
         id: 12921
@@ -66,7 +66,7 @@ export default {
     {
       related_link_data: {
         link_params: {
-          id: 244669
+          id: 246382
         },
         description: '',
         open_in_browser: false,
@@ -80,7 +80,7 @@ export default {
         name: 'Orientation Calendar'
       },
       name: 'Orientation Calendar',
-      color: 'F235D0',
+      color: 'EDF763',
       type: 8,
       rank: 201,
       visibility_status: 1,
@@ -120,6 +120,35 @@ export default {
       },
       img_url: '',
       id: 12942,
+      featured_rank: -1,
+      description: ''
+    },
+    {
+      related_link_data: {
+        link_params: {},
+        description: '',
+        open_in_browser: false,
+        link_url: 'https://google.com',
+        is_system: true,
+        school_id: 157,
+        img_url:
+          'https://s3.amazonaws.com/campus-cloud-image-use/d2f5pew4jl453vmmkpbce1br6lx92bxc5jxftb7cqyo0u3vds3.jpg',
+        id: 8049,
+        link_type: 0,
+        name: 'Web Link'
+      },
+      name: 'Web Link',
+      color: '7641D1',
+      type: 8,
+      rank: 401,
+      visibility_status: 1,
+      tile_category_id: 155,
+      extra_info: {
+        id: 12945
+      },
+      img_url:
+        'https://s3.amazonaws.com/campus-cloud-image-use/d2f5pew4jl453vmmkpbce1br6lx92bxc5jxftb7cqyo0u3vds3.jpg',
+      id: 12946,
       featured_rank: -1,
       description: ''
     }

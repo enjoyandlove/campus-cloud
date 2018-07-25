@@ -78,7 +78,7 @@ export class TilesUtilsService {
     return this.fb.group({
       name: [_link.name, nameRequired ? Validators.required : null],
       link_url: [_link.link_url, Validators.required],
-      link_params: [_link.link_params],
+      link_params: [_link.link_params, Validators.required],
       img_url: [_link.img_url, imageRequired ? Validators.required : null],
       open_in_browser: [_link.open_in_browser],
       is_system: [_link.is_system],

@@ -2,6 +2,7 @@
   <div class="col-12">
     <cp-dropdown
       [items]="resources"
+      [selectedItem]="selectedItem"
       (selected)="onResourceSelected($event)">
     </cp-dropdown>
   </div>
@@ -22,6 +23,7 @@
   <div class="col-12">
     <label>{{ 't_personas_tile_modal_create_link_url' | cpI18n }}</label>
     <cp-personas-resource-type-url
+      [value]="resource.link_url"
       (valueChange)="onUrlChange($event)">
     </cp-personas-resource-type-url>
   </div>
@@ -33,6 +35,7 @@
   <div class="col-12">
     <label>{{ 't_personas_tile_modal_create_resource_type' | cpI18n }}</label>
     <cp-personas-resource-type-search
+      [resource]="resource"
       [resourceId]="resourceSelection"
       (selected)="selected.emit($event)">
     </cp-personas-resource-type-search>

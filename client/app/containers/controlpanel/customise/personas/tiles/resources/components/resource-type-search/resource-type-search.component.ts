@@ -12,6 +12,8 @@ import { StoreService } from '../../../../../../../../shared/services';
   styleUrls: ['./resource-type-search.component.scss']
 })
 export class PersonasResourceTypeSearchComponent implements OnInit {
+  @Input() resource;
+
   @Input()
   set resourceId(resourceId) {
     this.doReset();
@@ -22,6 +24,7 @@ export class PersonasResourceTypeSearchComponent implements OnInit {
 
   items$;
   dropdown = true;
+  selectedItem = null;
 
   constructor(
     public storeService: StoreService,
@@ -67,8 +70,18 @@ export class PersonasResourceTypeSearchComponent implements OnInit {
             : service;
         });
       }),
+      map(this.updateSelectedItem.bind(this)),
       catchError(() => this.handleError())
     );
+  }
+
+  updateSelectedItem(items) {
+    if (this.resource) {
+      const resourceId = this.resource.link_params.id;
+      this.selectedItem = items.filter((c) => c.value === resourceId)[0];
+    }
+
+    return items;
   }
 
   loadCalendars() {
@@ -91,6 +104,7 @@ export class PersonasResourceTypeSearchComponent implements OnInit {
             : calendar;
         });
       }),
+      map(this.updateSelectedItem.bind(this)),
       catchError(() => this.handleError())
     );
   }
@@ -114,7 +128,9 @@ export class PersonasResourceTypeSearchComponent implements OnInit {
               }
             : store;
         });
-      })
+      }),
+      map(this.updateSelectedItem.bind(this)),
+      catchError(() => this.handleError())
     );
   }
 

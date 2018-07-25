@@ -3,6 +3,7 @@
     <label>{{ 't_personas_tile_modal_create_label_type' | cpI18n }}</label>
     <cp-dropdown
       [items]="contentTypes"
+      [selectedItem]="selectedItem"
       (selected)="onContentTypeChange($event)">
     </cp-dropdown>
   </div>
@@ -12,6 +13,7 @@
   <div class="col-12">
     <label>{{ 't_personas_tile_modal_create_resource_type' | cpI18n }}</label>
     <cp-personas-resource-types
+      [resource]="form.value"
       (linkUrl)="onLinkUrlChange($event)"
       (selected)="onResourceTypeSelected($event)">
     </cp-personas-resource-types>
@@ -22,7 +24,8 @@
   <div class="col-12">
     <label>{{ 't_personas_tile_create_type_resource_resource_list' | cpI18n }}</label>
     <cp-personas-resource-list-of-list
-      (resourceAdded)="onResourceTypeSelected($event)">
+      (resourceAdded)="onResourceTypeSelected($event)"
+      [selectedIds]="form.controls['link_params'].value ? form.controls['link_params'].value.ids : null">
     </cp-personas-resource-list-of-list>
   </div>
 </div>

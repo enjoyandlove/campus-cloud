@@ -122,4 +122,16 @@ export class TilesService extends HTTPService {
 
     return super.post(url, body, null, true);
   }
+
+  updateCampusTile(tileId, body) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GUIDE_TILES}/${tileId}`;
+
+    return super.update(url, body, null, true);
+  }
+
+  updateCampusLink(linkId, body) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LINKS}/${linkId}`;
+
+    return super.update(url, body, null, true);
+  }
 }

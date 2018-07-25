@@ -30,6 +30,7 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
   tileId;
   loading;
   buttonData;
+  campusLinkId;
   personaId: number;
   guide: ICampusGuide;
   campusLinkForm: FormGroup;
@@ -55,7 +56,7 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
     super.isLoading().subscribe((loading) => (this.loading = loading));
   }
 
-  createGuideLink(tileCategoryId = this.guide.id) {
+  updateGuideTile(tileCategoryId = this.guide.id) {
     const cloneGuideTileForm = {
       ...this.campusGuideTileForm.value,
       tile_category_id: tileCategoryId
@@ -67,9 +68,9 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
       tile_category_id: tileCategoryId
     };
 
-    const createLink$ = this.service.createCampusLink(this.campusLinkForm.value);
+    const updateLink$ = this.service.updateCampusLink(this.campusLinkId, this.campusLinkForm.value);
 
-    return createLink$.pipe(
+    return updateLink$.pipe(
       switchMap(({ id }: any) => {
         const extra_info = { id };
 
@@ -78,7 +79,7 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
           extra_info
         };
 
-        return this.service.createCampusTile(data);
+        return this.service.updateCampusTile(this.tileId, data);
       }),
       switchMap(({ id }: any) => {
         const extra_info = { id };
@@ -88,7 +89,7 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
           extra_info
         };
 
-        return this.service.createCampusTile(data);
+        return this.service.updateCampusTile(this.tileId, data);
       })
     );
   }
@@ -105,21 +106,7 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
   }
 
   onSubmit() {
-    let stream$ = this.createGuideLink();
-
-    if (this.guideUtils.isTemporaryGuide(this.guide)) {
-      const body = {
-        ...this.guide,
-        school_id: this.session.g.get('school').id
-      };
-
-      delete body['id'];
-
-      const createTileCategory = this.guideService.createSectionTileCategory(body);
-      stream$ = createTileCategory.pipe(
-        switchMap((newCategory: ICampusGuide) => this.createGuideLink(newCategory.id))
-      );
-    }
+    const stream$ = this.updateGuideTile();
 
     stream$.subscribe(
       () => {
@@ -148,8 +135,10 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
   buildForm() {
     const tileId = this.route.snapshot.params['tileId'];
     const guideTile = this.guide.tiles.filter((i) => i.id === +tileId)[0];
+
     const lastRank = sortBy(this.guide.tiles, (t: ITile) => -t.rank)[0].rank + 100;
     this.campusLinkForm = this.utils.campusLinkForm(false, false, guideTile.related_link_data);
+    this.campusLinkId = guideTile.related_link_data.id;
 
     this.campusGuideTileForm = this.utils.campusGuideTileForm(
       this.personaId,
@@ -200,12 +189,6 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
     this.store.dispatch({ type: SNACKBAR_HIDE });
   }
 
-  getPersona() {
-    const search = new HttpParams().set('school_id', this.session.g.get('school').id);
-
-    this.personaService.getPersonaById(this.personaId, search);
-  }
-
   fetch() {
     const search = new HttpParams().set('school_id', this.session.g.get('school').id);
 
@@ -224,7 +207,7 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
   }
 
   ngOnInit(): void {
-    this.guide = isDev ? mockGuide : this.guideService.guide;
+    this.guide = !isDev ? mockGuide : this.guideService.guide;
 
     if (!this.guide) {
       this.router.navigate(['/customize/personas/', this.personaId]);
@@ -234,7 +217,7 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
 
     this.buttonData = {
       class: 'primary',
-      disabled: true,
+      disabled: false,
       text: this.cpI18n.translate('t_personas_create_submit_button')
     };
 

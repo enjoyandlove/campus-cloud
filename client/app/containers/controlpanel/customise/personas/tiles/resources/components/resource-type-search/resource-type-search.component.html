@@ -1,4 +1,5 @@
-<cp-dropdown 
+<cp-dropdown
   [items]="items$ | async"
+  [selectedItem]="selectedItem"
   (selected)="selected.emit($event)">
 </cp-dropdown>

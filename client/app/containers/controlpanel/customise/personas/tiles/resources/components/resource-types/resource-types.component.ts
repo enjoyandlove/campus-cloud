@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { sortBy } from 'lodash';
 import { CPI18nService } from '../../../../../../../../shared/services/i18n.service';
 
@@ -8,10 +8,13 @@ import { CPI18nService } from '../../../../../../../../shared/services/i18n.serv
   styleUrls: ['./resource-types.component.scss']
 })
 export class PersonasResourceTypesComponent implements OnInit {
+  @Input() resource;
+
   @Output() selected: EventEmitter<any> = new EventEmitter();
   @Output() linkUrl: EventEmitter<string> = new EventEmitter();
 
   resources;
+  selectedItem = null;
   resourceSelection = null;
   preventEmit = [
     'store',
@@ -50,6 +53,25 @@ export class PersonasResourceTypesComponent implements OnInit {
         label: this.cpI18n.translate(resource.label)
       };
     });
+
+    if (this.resource.link_url) {
+      const isURLType = Object.keys(this.resource.link_params).length === 0;
+
+      if (isURLType) {
+        this.selectedItem = this.resources.filter((r) => {
+          if (this.resource.open_in_browser) {
+            return r.id === 'external_link';
+          }
+
+          return r.id === 'web_link';
+        })[0];
+      } else {
+        this.selectedItem = this.resources.filter(
+          (r) => r.meta.link_url === this.resource.link_url
+        )[0];
+      }
+      this.resourceSelection = this.selectedItem.id;
+    }
   }
 
   ngOnInit(): void {

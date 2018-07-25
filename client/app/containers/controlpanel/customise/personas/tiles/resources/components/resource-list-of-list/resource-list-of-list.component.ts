@@ -1,6 +1,13 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { SNACKBAR_SHOW } from './../../../../../../../../reducers/snackbar.reducer';
+import { HttpParams } from '@angular/common/http';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ResourceService } from './../../resource.service';
 import { CPSession } from '../../../../../../../../session';
 import { TilesService } from '../../../tiles.service';
+import { combineLatest } from '../../../../../../../../../../node_modules/rxjs';
+import { ISnackbar } from '../../../../../../../../reducers/snackbar.reducer';
+import { Store } from '../../../../../../../../../../node_modules/@ngrx/store';
+import { CPI18nService } from '../../../../../../../../shared/services';
 
 @Component({
   selector: 'cp-personas-resource-list-of-list',
@@ -8,6 +15,8 @@ import { TilesService } from '../../../tiles.service';
   styleUrls: ['./resource-list-of-list.component.scss']
 })
 export class PersonasResourceListOfListComponent implements OnInit {
+  @Input() selectedIds: Number[];
+
   @Output() resourceAdded: EventEmitter<any> = new EventEmitter();
 
   links$;
@@ -26,7 +35,13 @@ export class PersonasResourceListOfListComponent implements OnInit {
     showModal: false
   };
 
-  constructor(public tileService: TilesService, public session: CPSession) {}
+  constructor(
+    public session: CPSession,
+    public cpI18n: CPI18nService,
+    public store: Store<ISnackbar>,
+    public service: ResourceService,
+    public tileService: TilesService
+  ) {}
 
   onShowModal() {
     this.state = {
@@ -43,7 +58,16 @@ export class PersonasResourceListOfListComponent implements OnInit {
     );
   }
 
-  // onError(error) {}
+  errorHandler() {
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        sticky: true,
+        class: 'danger',
+        body: this.cpI18n.translate('something_went_wrong')
+      }
+    });
+  }
 
   onTearDown() {
     this.state = {
@@ -60,15 +84,48 @@ export class PersonasResourceListOfListComponent implements OnInit {
       resources: [newResource, ...this.state.resources]
     };
 
+    this.udpateMetaAndEmit();
+  }
+
+  udpateMetaAndEmit() {
+    const ids = this.state.resources.map((r) => r.id);
+
     this.meta = {
       ...this.meta,
-      link_params: {
-        ids: this.state.resources.map((r) => r.id)
-      }
+      link_params: ids.length ? { ids } : null
     };
 
     this.resourceAdded.emit({ meta: this.meta });
   }
 
-  ngOnInit(): void {}
+  fetchLinks() {
+    const search = new HttpParams().set('school_id', this.session.g.get('school').id);
+    const getLink = (id) => this.service.getCampusLinkById(id, search);
+    const stream$ = combineLatest(this.selectedIds.map(getLink));
+
+    stream$.subscribe(
+      (resources) => {
+        this.state = {
+          ...this.state,
+          resources: [...resources]
+        };
+      },
+      () => this.errorHandler()
+    );
+  }
+
+  onDelete(resource) {
+    this.state = {
+      ...this.state,
+      resources: this.state.resources.filter((r) => r.id !== resource.id)
+    };
+
+    this.udpateMetaAndEmit();
+  }
+
+  ngOnInit(): void {
+    if (this.selectedIds) {
+      this.fetchLinks();
+    }
+  }
 }
