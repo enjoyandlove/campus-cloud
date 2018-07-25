@@ -76,7 +76,7 @@ export class PersonasResourceTypeSearchComponent implements OnInit {
   }
 
   updateSelectedItem(items) {
-    if (this.resource) {
+    if (this.resource.link_url) {
       const resourceId = this.resource.link_params.id;
       this.selectedItem = items.filter((c) => c.value === resourceId)[0];
     }
