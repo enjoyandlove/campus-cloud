@@ -12,7 +12,8 @@
   <div class="col-12">
     <label>{{ t_personas_tile_create_label_store_list }}</label>
     <cp-personas-resource-stores-list
-      (storeListChange)="selected.emit($event)">
+      (storeListChange)="selected.emit($event)"
+      [category]="resource.link_params.category_ids">
     </cp-personas-resource-stores-list>
   </div>
 </div>
