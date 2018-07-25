@@ -186,7 +186,7 @@ export default {
     {
       related_link_data: {
         link_params: {
-          category_ids: [-1]
+          category_ids: [16]
         },
         description: '',
         open_in_browser: false,
@@ -197,9 +197,9 @@ export default {
           'https://s3.amazonaws.com/campus-cloud-image-use/zqn0vw5gprzcmikr6qpl68cvu3b9s34gxoiyjm4bu3o1jbeyy5.jpg',
         id: 8051,
         link_type: 3,
-        name: 'Stores List Group'
+        name: 'Stores List Athletic Club'
       },
-      name: 'Stores List Group',
+      name: 'Stores List Athletic Club',
       color: '8FECFF',
       type: 8,
       rank: 601,
@@ -211,6 +211,37 @@ export default {
       img_url:
         'https://s3.amazonaws.com/campus-cloud-image-use/zqn0vw5gprzcmikr6qpl68cvu3b9s34gxoiyjm4bu3o1jbeyy5.jpg',
       id: 12950,
+      featured_rank: -1,
+      description: ''
+    },
+    {
+      related_link_data: {
+        link_params: {
+          id: 43777
+        },
+        description: '',
+        open_in_browser: false,
+        link_url: 'oohlala://store',
+        is_system: true,
+        school_id: 157,
+        img_url:
+          'https://s3.amazonaws.com/campus-cloud-image-use/alt43qezz6g20altyagowhelse9055vt79obqgz6xiiwbrrqil.jpg',
+        id: 8052,
+        link_type: 3,
+        name: 'Stores ##100'
+      },
+      name: 'Stores ##100',
+      color: '77F7B1',
+      type: 8,
+      rank: 701,
+      visibility_status: 1,
+      tile_category_id: 155,
+      extra_info: {
+        id: 12951
+      },
+      img_url:
+        'https://s3.amazonaws.com/campus-cloud-image-use/alt43qezz6g20altyagowhelse9055vt79obqgz6xiiwbrrqil.jpg',
+      id: 12952,
       featured_rank: -1,
       description: ''
     }
