@@ -135,6 +135,7 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
   buildForm() {
     const tileId = this.route.snapshot.params['tileId'];
     const guideTile = this.guide.tiles.filter((i) => i.id === +tileId)[0];
+
     const lastRank = sortBy(this.guide.tiles, (t: ITile) => -t.rank)[0].rank + 100;
     this.campusLinkForm = this.utils.campusLinkForm(false, false, guideTile.related_link_data);
     this.campusLinkId = guideTile.related_link_data.id;

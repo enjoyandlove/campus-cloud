@@ -7,7 +7,7 @@ export default {
       related_link_data: {
         link_params: {},
         description: '',
-        open_in_browser: true,
+        open_in_browser: false,
         link_url: 'oohlala://academic_calendar_list',
         is_system: true,
         school_id: 157,
@@ -21,7 +21,7 @@ export default {
       color: 'CFF551',
       type: 8,
       rank: 1,
-      visibility_status: -1,
+      visibility_status: 1,
       tile_category_id: 155,
       extra_info: {
         id: 12921
@@ -77,10 +77,10 @@ export default {
           'https://s3.amazonaws.com/campus-cloud-image-use/vk5aagvfusyl9l3h0kb9uv4t7745j9j3zwfkbtox76zmtjnuox.jpg',
         id: 8045,
         link_type: 3,
-        name: 'Orientation Calendar'
+        name: 'Orientation Calendar edited'
       },
-      name: 'Orientation Calendar',
-      color: 'F235D0',
+      name: 'Orientation Calendar edited',
+      color: 'EDF763',
       type: 8,
       rank: 201,
       visibility_status: 1,
