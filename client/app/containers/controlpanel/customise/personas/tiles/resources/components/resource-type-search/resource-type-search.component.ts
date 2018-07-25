@@ -23,8 +23,8 @@ export class PersonasResourceTypeSearchComponent implements OnInit {
   @Output() selected: EventEmitter<any> = new EventEmitter();
 
   items$;
-  selectedItem;
   dropdown = true;
+  selectedItem = null;
 
   constructor(
     public storeService: StoreService,

@@ -14,7 +14,7 @@ export class PersonasResourceTypesComponent implements OnInit {
   @Output() linkUrl: EventEmitter<string> = new EventEmitter();
 
   resources;
-  selectedItem;
+  selectedItem = null;
   resourceSelection = null;
   preventEmit = [
     'store',
@@ -54,8 +54,24 @@ export class PersonasResourceTypesComponent implements OnInit {
       };
     });
 
-    this.selectedItem = this.resources.filter((r) => r.meta.link_url === this.resource.link_url)[0];
-    this.resourceSelection = this.selectedItem.id;
+    if (this.resource.link_url) {
+      const isURLType = Object.keys(this.resource.link_params).length === 0;
+
+      if (isURLType) {
+        this.selectedItem = this.resources.filter((r) => {
+          if (this.resource.open_in_browser) {
+            return r.id === 'external_link';
+          }
+
+          return r.id === 'web_link';
+        })[0];
+      } else {
+        this.selectedItem = this.resources.filter(
+          (r) => r.meta.link_url === this.resource.link_url
+        )[0];
+      }
+      this.resourceSelection = this.selectedItem.id;
+    }
   }
 
   ngOnInit(): void {

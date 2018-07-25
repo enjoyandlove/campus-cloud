@@ -14,8 +14,8 @@ export class PersonasResourceFormComponent implements OnInit {
 
   @Output() formChange: EventEmitter<FormGroup> = new EventEmitter();
 
-  selectedItem;
   contentTypes;
+  selectedItem = null;
 
   state = {
     resource: false,

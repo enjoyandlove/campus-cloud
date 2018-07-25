@@ -207,7 +207,7 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
   }
 
   ngOnInit(): void {
-    this.guide = isDev ? mockGuide : this.guideService.guide;
+    this.guide = !isDev ? mockGuide : this.guideService.guide;
 
     if (!this.guide) {
       this.router.navigate(['/customize/personas/', this.personaId]);
