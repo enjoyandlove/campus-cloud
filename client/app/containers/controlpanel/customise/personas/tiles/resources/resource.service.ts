@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -11,6 +11,12 @@ export class ResourceService extends HTTPService {
     super(http, router);
 
     Object.setPrototypeOf(this, ResourceService.prototype);
+  }
+
+  getCampusLinkById(linkId, search: HttpParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LINKS}/${linkId}`;
+
+    return super.get(url, search, true);
   }
 
   createCampusLink(body) {

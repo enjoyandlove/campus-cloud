@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { ResourcesUtilsService } from './../../resources.utils.service';
 import { CPI18nService } from '../../../../../../../../shared/services/i18n.service';
 
 @Component({
@@ -13,6 +14,7 @@ export class PersonasResourceFormComponent implements OnInit {
 
   @Output() formChange: EventEmitter<FormGroup> = new EventEmitter();
 
+  selectedItem;
   contentTypes;
 
   state = {
@@ -20,7 +22,7 @@ export class PersonasResourceFormComponent implements OnInit {
     resourceList: false
   };
 
-  constructor(public cpI18n: CPI18nService) {}
+  constructor(public cpI18n: CPI18nService, public utils: ResourcesUtilsService) {}
 
   updateFormMetaValues(data) {
     for (const key in data.meta) {
@@ -50,6 +52,18 @@ export class PersonasResourceFormComponent implements OnInit {
     this.updateFormMetaValues(resourceType);
   }
 
+  updateState() {
+    this.state = {
+      ...this.state,
+      resource: !this.utils.isListOfLists(this.form.value),
+      resourceList: this.utils.isListOfLists(this.form.value)
+    };
+
+    const selectedType = this.state.resource ? 'resource' : 'resource_list';
+
+    this.selectedItem = this.contentTypes.filter((i) => i.id === selectedType)[0];
+  }
+
   ngOnInit(): void {
     console.log(this.form.value);
     this.form.valueChanges.subscribe(() => {
@@ -70,5 +84,9 @@ export class PersonasResourceFormComponent implements OnInit {
         label: this.cpI18n.translate(content.label)
       };
     });
+
+    if (this.form.value.name) {
+      this.updateState();
+    }
   }
 }
