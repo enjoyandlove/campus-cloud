@@ -2455,6 +2455,9 @@
   "t_personas_delete_guide_error_non_empty_category": {
     "message": "This section has tiles associated, so you cannot delete it. Delete all tiles from the section, and try again."
   },
+  "t_personas_details_feature": {
+    "message": "Featured"
+  },
   "t_personas_edit_error_users_associated": {
     "message": "This experience has users associated, so you cannot update its login requirements."
   },

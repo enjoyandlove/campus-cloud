@@ -3,6 +3,11 @@
   <ng-container *ngSwitchCase="false">
 
     <div class="cp-card mb-4">
+      <div class="row">
+        <div class="col-12">
+          <span class="title">{{ 't_personas_details_feature' | cpI18n }}</span>
+        </div>
+      </div>
       <div class="row" [class.mb-4]="i % 5 === 0">
         <cp-personas-tile
           [tile]="tile"

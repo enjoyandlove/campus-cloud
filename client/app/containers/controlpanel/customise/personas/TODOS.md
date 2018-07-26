@@ -4,3 +4,5 @@
 * [ ] Create Feature Tiles
 * [ ] Create Category Zero Tiles
 * [ ] Check Tile Edit
+
+- [ ] Create new Persona, Create Tile in new Section, delete tile, no way of creating a new section
