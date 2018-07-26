@@ -961,7 +961,7 @@
     "message": "Téléverser fichier CSV"
   },
   "customise": {
-    "message": "Personnaliser"
+    "message": "Studio"
   },
   "customise_banner": {
     "message": "Bannière"
@@ -2431,8 +2431,14 @@
   "t_personas_edit_error_users_associated": {
     "message": "Cette expérience a des utilisateurs associés, donc vous ne pouvez pas modifier ses exigences de connexion."
   },
+  "t_personas_edit_header_title": {
+    "message": "Éditer expérience"
+  },
   "t_personas_edit_message_on_save_ok": {
     "message": "Changements enregistrés."
+  },
+  "t_personas_edit_submit_button": {
+    "message": "Enregistrer les changements"
   },
   "t_personas_form_delete_button": {
     "message": "Supprimer expérience"
@@ -2584,6 +2590,9 @@
   "t_persona_create_cancel_button": {
     "message": "Annuler"
   },
+  "t_persona_edit_cancel_button": {
+    "message": "Annuler"
+  },
   "t_persona_list_button_customize": {
     "message": "Personnaliser"
   },
@@ -2616,6 +2625,9 @@
   },
   "t_shared_preview": {
     "message": "Aperçu"
+  },
+  "t_shared_save": {
+    "message": "Terminé"
   },
   "t_shared_show": {
     "message": "Montrer"
@@ -2672,5 +2684,11 @@
   },
   "zero_quantity": {
     "message": "Aucune"
+  },
+  "_t_persona_delete_modal_body_": {
+    "message": "Êtes-vous sûr de vouloir supprimer %s ?"
+  },
+  "_t_persona_delete_modal_title_": {
+    "message": "Supprimer expérience"
   }
 }
