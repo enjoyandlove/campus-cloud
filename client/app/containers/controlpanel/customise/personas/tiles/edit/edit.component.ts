@@ -5,9 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { sortBy } from 'lodash';
 import { switchMap } from 'rxjs/operators';
-import { isDev } from './../../../../../../config/env/index';
 import { SNACKBAR_HIDE } from './../../../../../../reducers/snackbar.reducer';
-import mockGuide from './mock';
 import { BaseComponent } from '../../../../../../base';
 import { HEADER_UPDATE, IHeader } from '../../../../../../reducers/header.reducer';
 import { ISnackbar, SNACKBAR_SHOW } from '../../../../../../reducers/snackbar.reducer';
@@ -207,7 +205,7 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
   }
 
   ngOnInit(): void {
-    this.guide = isDev ? mockGuide : this.guideService.guide;
+    this.guide = this.guideService.guide;
 
     if (!this.guide) {
       this.router.navigate(['/customize/personas/', this.personaId]);
