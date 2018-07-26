@@ -16,8 +16,8 @@ export class DashboardTopServicesComponent extends BaseComponent implements OnIn
 
   _dates;
   loading;
-  canNavigate;
   items = [];
+  isSuperAdmin;
 
   @Input()
   set dates(dates) {
@@ -52,7 +52,7 @@ export class DashboardTopServicesComponent extends BaseComponent implements OnIn
   }
 
   ngOnInit() {
-    this.canNavigate = this.utils.isSuperAdmin(this.session);
+    this.isSuperAdmin = this.utils.isSuperAdmin(this.session);
 
     this.fetch();
   }

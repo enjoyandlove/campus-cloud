@@ -16,7 +16,7 @@ export class DashboardTopEventsComponent extends BaseComponent implements OnInit
 
   _dates;
   loading;
-  canNavigate;
+  isSuperAdmin;
   items = [];
 
   @Input()
@@ -52,7 +52,7 @@ export class DashboardTopEventsComponent extends BaseComponent implements OnInit
   }
 
   ngOnInit() {
-    this.canNavigate = this.utils.isSuperAdmin(this.session);
+    this.isSuperAdmin = this.utils.isSuperAdmin(this.session);
 
     this.fetch();
   }

@@ -18,8 +18,8 @@ export class DashboardTopOrientationComponent extends BaseComponent implements O
 
   _dates;
   loading;
-  canNavigate;
   items = [];
+  canViewOrientation;
 
   @Input()
   set dates(dates) {
@@ -54,7 +54,7 @@ export class DashboardTopOrientationComponent extends BaseComponent implements O
   }
 
   ngOnInit() {
-    this.canNavigate = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.orientation);
+    this.canViewOrientation = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.orientation);
 
     this.fetch();
   }
