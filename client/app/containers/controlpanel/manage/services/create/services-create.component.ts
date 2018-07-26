@@ -281,7 +281,8 @@ export class ServicesCreateComponent implements OnInit {
 
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.MANAGE_CREATED_SERVICE,
-      this.eventProperties);
+      this.eventProperties
+    );
   }
 
   ngOnInit() {

@@ -170,7 +170,8 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
 
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.MANAGE_ADDED_CLUB_MEMBER,
-      this.eventProperties);
+      this.eventProperties
+    );
   }
 
   ngOnInit() {

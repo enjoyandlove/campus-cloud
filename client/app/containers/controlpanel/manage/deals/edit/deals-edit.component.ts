@@ -7,8 +7,8 @@ import { Store } from '@ngrx/store';
 
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
-import { StoreService } from '../stores/store.service';
 import { DateStatus, DealsService } from '../deals.service';
+import { DealsStoreService } from './../stores/store.service';
 import { CPI18nService } from '../../../../../shared/services';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 
@@ -36,7 +36,7 @@ export class DealsEditComponent extends BaseComponent implements OnInit {
     public store: Store<IHeader>,
     public cpI18n: CPI18nService,
     public route: ActivatedRoute,
-    public storeService: StoreService
+    public storeService: DealsStoreService
   ) {
     super();
     this.dealId = this.route.snapshot.params['dealId'];

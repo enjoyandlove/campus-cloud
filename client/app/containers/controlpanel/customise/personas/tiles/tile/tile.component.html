@@ -1,0 +1,41 @@
+<cp-personas-tile-base>
+  <ng-container [ngSwitch]="state.working">
+    <ng-container *ngSwitchCase="true">
+      <div class="row h-100">
+        <div class="col-12 d-flex align-items-center justify-content-center">
+          <cp-working></cp-working>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="false">
+      <div
+        class="wrapper"
+        (mouseenter)="hover = true"
+        (mouseleave)="hover = false">
+        <div class="row" *ngIf="!hover">
+          <div class="col-12">
+            <cp-personas-tile-content
+              [name]="tile.name"
+              [color]="tile.color"
+              [image]="tile.img_url"
+              [visible]="utils.isTileVisible(tile)">
+            </cp-personas-tile-content>
+          </div>
+        </div>
+        <div class="row" *ngIf="hover">
+          <div class="col-12">
+            <cp-personas-tile-hover
+              (editClick)="edit.emit()"
+              (deleteClick)="onDeleteTile()"
+              (toggleVisibility)="onToggleTile()"
+              [visible]="utils.isTileVisible(tile)"
+              [noEdit]="utils.isCampaignTile(tile)"
+              [defaultTile]="utils.isTileDefault(tile)">
+            </cp-personas-tile-hover>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</cp-personas-tile-base>

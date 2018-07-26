@@ -21,10 +21,12 @@ interface IProps {
 export class EngagementStatsComponent implements OnInit {
   @Input() props: IProps;
   @Output() download: EventEmitter<number> = new EventEmitter();
-  @Output() doCompose: EventEmitter<{
+  @Output()
+  doCompose: EventEmitter<{
     name: string;
-    label: string,
-    userIds: Array<number> }> = new EventEmitter();
+    label: string;
+    userIds: Array<number>;
+  }> = new EventEmitter();
 
   loading;
   noEngagementPercentage;

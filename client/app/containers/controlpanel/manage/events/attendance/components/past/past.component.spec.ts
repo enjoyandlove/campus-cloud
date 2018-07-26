@@ -29,11 +29,7 @@ describe('AttendancePastComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [
-          RouterTestingModule,
-          HttpClientModule,
-          EventsModule
-        ],
+        imports: [RouterTestingModule, HttpClientModule, EventsModule],
         providers: [CPSession, CPI18nService, { provide: EventsService, useClass: MockService }]
       })
         .compileComponents()

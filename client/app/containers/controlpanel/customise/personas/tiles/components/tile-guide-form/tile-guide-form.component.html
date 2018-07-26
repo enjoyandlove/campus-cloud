@@ -1,0 +1,47 @@
+<form [formGroup]="form">
+  <div class="row form__row">
+    <div class="col-6">
+      <label>{{'name' | cpI18n }}</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="name">
+    </div>
+    <div class="col-3">
+      <label>{{'t_shared_color' | cpI18n }}</label>
+      <input
+        type="text"
+        cpColorPicker
+        class="form-control"
+        (changed)="onColorChange($event)"
+        [defaultColor]="form.controls['color'].value">
+    </div>
+
+    <div class="col-3">
+      <label>{{'t_shared_image' | cpI18n }}</label>
+      <cp-upload-button
+        [id]="uploadButtonId"
+        [buttonText]="uploadImageBtn"
+        buttonClass="cpbtn cpbtn--link"
+        (fileUpload)="onFileChanged($event)">
+      </cp-upload-button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <label>{{ 't_shared_preview' | cpI18n }}</label>
+    </div>
+  </div>
+
+  <div class="row form__row">
+    <cp-personas-tile-base class="col-5">
+      <cp-personas-tile-content
+        [visible]=[true]
+        [name]="form.controls['name'].value"
+        [color]="form.controls['color'].value"
+        [image]="form.controls['img_url'].value">
+      </cp-personas-tile-content>
+    </cp-personas-tile-base>
+  </div>
+</form>

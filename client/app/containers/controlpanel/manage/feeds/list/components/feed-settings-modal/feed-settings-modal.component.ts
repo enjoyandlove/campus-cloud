@@ -29,7 +29,7 @@ export class FeedSettingsComponent implements OnInit {
   form: FormGroup;
 
   eventProperties = {
-    wall_source: null,
+    wall_source: null
   };
 
   constructor(

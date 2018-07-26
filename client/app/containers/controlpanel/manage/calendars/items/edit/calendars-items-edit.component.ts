@@ -74,12 +74,10 @@ export class CalendarsItemsEditComponent extends BaseComponent implements OnInit
       .append('school_id', this.session.g.get('school').id)
       .append('academic_calendar_id', this.calendarId.toString());
 
-    this.service
-      .editItem(this.itemId, editedItem, search)
-      .subscribe((res) => {
-        this.trackEvent(res);
-        this.router.navigate(['/manage/calendars/' + this.calendarId]);
-      });
+    this.service.editItem(this.itemId, editedItem, search).subscribe((res) => {
+      this.trackEvent(res);
+      this.router.navigate(['/manage/calendars/' + this.calendarId]);
+    });
   }
 
   trackEvent(data) {
@@ -90,7 +88,8 @@ export class CalendarsItemsEditComponent extends BaseComponent implements OnInit
 
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.MANAGE_UPDATED_CALENDAR_EVENT,
-      this.eventProperties);
+      this.eventProperties
+    );
   }
 
   buildForm() {

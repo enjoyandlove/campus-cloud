@@ -10,3 +10,12 @@ export enum FilterType {
   feedback = 1,
   rating = 2
 }
+
+export enum PersonaType {
+  app = 0,
+  web = 1
+}
+
+export enum PersonaPermission {
+  forbidden = -1
+}

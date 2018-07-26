@@ -31,7 +31,8 @@ export class EmployerActionBoxComponent {
 
   trackEvent(eventName) {
     const eventProperties = {
-      ...this.cpTracking.getEventProperties(), create_page_name: amplitudeEvents.CREATE_EMPLOYER
+      ...this.cpTracking.getEventProperties(),
+      create_page_name: amplitudeEvents.CREATE_EMPLOYER
     };
 
     return {

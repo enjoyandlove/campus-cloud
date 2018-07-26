@@ -131,7 +131,8 @@ export class LocationsCreateComponent implements OnInit {
 
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.MANAGE_CREATED_LOCATION,
-      this.eventProperties);
+      this.eventProperties
+    );
   }
 
   ngOnInit() {

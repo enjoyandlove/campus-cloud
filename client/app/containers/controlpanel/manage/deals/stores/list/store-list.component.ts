@@ -3,7 +3,7 @@ import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
 import { IStore } from '../store.interface';
-import { StoreService } from '../store.service';
+import { DealsStoreService } from '../store.service';
 import { CPSession } from '../../../../../../session';
 import { BaseComponent } from '../../../../../../base';
 import { CPI18nService } from '../../../../../../shared/services';
@@ -41,8 +41,8 @@ export class StoreListComponent extends BaseComponent implements OnInit {
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public service: StoreService,
-    public store: Store<IHeader>
+    public store: Store<IHeader>,
+    public service: DealsStoreService
   ) {
     super();
     super.isLoading().subscribe((loading) => (this.loading = loading));

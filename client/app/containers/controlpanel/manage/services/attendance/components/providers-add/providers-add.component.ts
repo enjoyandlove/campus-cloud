@@ -62,8 +62,9 @@ export class ServicesProviderAddComponent implements OnInit {
     };
 
     this.cpTracking.amplitudeEmitEvent(
-     amplitudeEvents.MANAGE_CREATED_SERVICE_PROVIDER,
-     this.eventProperties);
+      amplitudeEvents.MANAGE_CREATED_SERVICE_PROVIDER,
+      this.eventProperties
+    );
   }
 
   getFeedbackStatus(val) {

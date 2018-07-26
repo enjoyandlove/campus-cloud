@@ -51,7 +51,7 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
     private cpi18n: CPI18nService,
     private service: DashboardService,
     private utils: CPLineChartUtilsService
-) {
+  ) {
     super();
     super.isLoading().subscribe((loading) => {
       this.loading = loading;

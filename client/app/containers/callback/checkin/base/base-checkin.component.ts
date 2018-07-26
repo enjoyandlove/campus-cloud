@@ -42,10 +42,7 @@ export class BaseCheckinComponent implements OnInit {
   isInternal;
   isDownload;
 
-  constructor(
-    private route: ActivatedRoute,
-    private cpTracking: CPTrackingService
-  ) {
+  constructor(private route: ActivatedRoute, private cpTracking: CPTrackingService) {
     this.isInternal = 'edit' in this.route.snapshot.queryParams;
     this.isDownload = 'download' in this.route.snapshot.queryParams;
 
@@ -256,7 +253,8 @@ export class BaseCheckinComponent implements OnInit {
       this.isOrientation,
       this.isService,
       this.eventId,
-      this.serviceId);
+      this.serviceId
+    );
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_DOWNLOADED_QR_CODE, eventProperties);
   }
@@ -265,7 +263,8 @@ export class BaseCheckinComponent implements OnInit {
     isOrientation: boolean,
     isService: boolean,
     eventId: number,
-    serviceId: number) {
+    serviceId: number
+  ) {
     let eventProperties;
 
     if (isOrientation) {
