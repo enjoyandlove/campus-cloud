@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CPSession } from '../../../../../../session';
 import { CPI18nService } from '../../../../../../shared/services/i18n.service';
 import { IStore } from '../store.interface';
-import { StoreService } from '../store.service';
+import { DealsStoreService } from '../store.service';
 
 @Component({
   selector: 'cp-store-create',
@@ -25,7 +25,7 @@ export class StoreCreateComponent implements OnInit {
     public fb: FormBuilder,
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public service: StoreService
+    public service: DealsStoreService
   ) {}
 
   @HostListener('document:click', ['$event'])
@@ -68,8 +68,8 @@ export class StoreCreateComponent implements OnInit {
       province: [null],
       country: [null],
       postal_code: [null],
-      latitude: [this.session.g.get('school').latitude],
-      longitude: [this.session.g.get('school').longitude]
+      latitude: [0],
+      longitude: [0]
     });
 
     this.buttonData = Object.assign({}, this.buttonData, {

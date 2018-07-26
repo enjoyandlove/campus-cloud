@@ -1,4 +1,3 @@
-import { CPSession } from './../../../../../session/index';
 import {
   Component,
   OnInit,
@@ -11,7 +10,10 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 
+import { CPSession } from './../../../../../session';
 import { CalendarsService } from '../calendars.services';
+import { CPTrackingService } from '../../../../../shared/services';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 
 @Component({
   selector: 'cp-calendars-create',
@@ -29,11 +31,16 @@ export class CalendarsCreateComponent implements OnInit {
 
   form: FormGroup;
 
+  eventProperties = {
+    calendar_id: null
+  };
+
   constructor(
     public el: ElementRef,
     public fb: FormBuilder,
     public session: CPSession,
-    public service: CalendarsService
+    public service: CalendarsService,
+    public cpTracking: CPTrackingService
   ) {}
 
   @HostListener('document:click', ['$event'])
@@ -53,9 +60,22 @@ export class CalendarsCreateComponent implements OnInit {
     const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     this.service.createCalendar(this.form.value, search).subscribe((createdCalendar: any) => {
+      this.trackEvent(createdCalendar);
       this.created.emit(createdCalendar);
       this.resetModal();
     });
+  }
+
+  trackEvent(res) {
+    this.eventProperties = {
+      ...this.eventProperties,
+      calendar_id: res.id
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_CREATED_CALENDAR,
+      this.eventProperties
+    );
   }
 
   ngOnInit() {

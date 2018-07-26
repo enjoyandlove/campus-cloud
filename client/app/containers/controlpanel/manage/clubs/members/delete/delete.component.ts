@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { MembersService } from '../members.service';
-
+import { MembersUtilsService } from '../members.utils.service';
+import { CPTrackingService } from '../../../../../../shared/services';
+import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 
 declare var $: any;
@@ -19,7 +21,17 @@ export class ClubsMembersDeleteComponent implements OnInit {
 
   buttonData;
 
-  constructor(private cpI18n: CPI18nService, private service: MembersService) {}
+  eventProperties = {
+    member_id: null,
+    member_type: null
+  };
+
+  constructor(
+    private cpI18n: CPI18nService,
+    private service: MembersService,
+    private utils: MembersUtilsService,
+    private cpTracking: CPTrackingService
+  ) {}
 
   onDelete() {
     this.service
@@ -32,6 +44,7 @@ export class ClubsMembersDeleteComponent implements OnInit {
       )
       .subscribe(
         (_) => {
+          this.trackEvent(this.member);
           this.deleted.emit(this.member.id);
           $('#membersDelete').modal('hide');
           this.buttonData = Object.assign({}, this.buttonData, {
@@ -45,6 +58,19 @@ export class ClubsMembersDeleteComponent implements OnInit {
           throw new Error(err);
         }
       );
+  }
+
+  trackEvent(res) {
+    this.eventProperties = {
+      ...this.eventProperties,
+      member_id: res.id,
+      member_type: this.utils.getMemberTypeLabel(res.member_type)
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_DELETED_CLUB_MEMBER,
+      this.eventProperties
+    );
   }
 
   ngOnInit() {

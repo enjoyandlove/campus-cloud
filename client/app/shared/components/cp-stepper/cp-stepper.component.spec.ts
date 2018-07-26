@@ -39,7 +39,8 @@ describe('CPStepperComponent', () => {
         providers: [
           CPSession,
           CPTrackingService,
-          { provide: AdminService, useClass: MockAdminService }]
+          { provide: AdminService, useClass: MockAdminService }
+        ]
       })
         .overrideComponent(CPStepperComponent, {
           set: {

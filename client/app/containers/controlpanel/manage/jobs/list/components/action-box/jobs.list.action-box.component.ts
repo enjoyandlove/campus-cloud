@@ -57,7 +57,8 @@ export class JobsListActionBoxComponent implements OnInit {
 
   trackEvent(eventName) {
     const eventProperties = {
-      ...this.cpTracking.getEventProperties(), create_page_name: amplitudeEvents.CREATE_JOB
+      ...this.cpTracking.getEventProperties(),
+      create_page_name: amplitudeEvents.CREATE_JOB
     };
 
     return {

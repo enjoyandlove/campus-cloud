@@ -6,23 +6,28 @@
     {
       "privilege": 18,
       "label": "events",
+      "clearParams": true,
       "amplitude": "Events",
       "url": "/manage/events"
     },
     {
       "privilege": 15,
       "label": "feeds",
+      "clearParams": true,
       "amplitude": "Walls",
       "url": "/manage/feeds"
     },
     {
       "privilege": 22,
+      "hasParams": true,
+      "clearParams": true,
+      "url": "/manage/clubs",
       "label": "clubs_and_groups",
-      "amplitude": "Clubs & Groups",
-      "url": "/manage/clubs"
+      "amplitude": "Clubs & Groups"
     },
     {
       "privilege": 28,
+      "clearParams": true,
       "label": "athletics",
       "amplitude": "Athletics",
       "url": "/manage/athletics"
@@ -30,11 +35,20 @@
     {
       "privilege": 24,
       "label": "services",
+      "clearParams": true,
       "amplitude": "Services",
       "url": "/manage/services"
     },
     {
+      "privilege": 17,
+      "clearParams": true,
+      "label": "orientation",
+      "amplitude": "Orientation",
+      "url": "/manage/orientation"
+    },
+    {
       "privilege": 21,
+      "clearParams": true,
       "label": "locations",
       "amplitude": "Locations",
       "url": "/manage/locations"
@@ -42,30 +56,28 @@
     {
       "privilege": 23,
       "label": "links",
+      "clearParams": true,
       "amplitude": "Links",
       "url": "/manage/links"
     },
     {
       "privilege": 16,
+      "clearParams": true,
       "label": "calendars",
       "amplitude": "Calendars",
       "url": "/manage/calendars"
     },
     {
-      "privilege": 17,
-      "label": "orientation",
-      "amplitude": "Orientation",
-      "url": "/manage/orientation"
-    },
-    {
       "privilege": 25,
       "label": "jobs",
+      "clearParams": true,
       "amplitude": "Jobs",
       "url": "/manage/jobs"
     },
     {
       "privilege": 26,
       "label": "deals",
+      "clearParams": true,
       "amplitude": "Deals",
       "url": "/manage/deals"
     }

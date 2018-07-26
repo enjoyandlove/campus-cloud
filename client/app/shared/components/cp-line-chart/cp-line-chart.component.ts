@@ -1,11 +1,4 @@
-import {
-  Input,
-  OnInit,
-  Component,
-  ViewChild,
-  ElementRef,
-  ViewEncapsulation
-} from '@angular/core';
+import { Input, OnInit, Component, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
 
 const Chartist = require('chartist');
 require('chartist-plugin-tooltips');
@@ -84,7 +77,7 @@ export class CPLineChartComponent implements OnInit {
       axisX: {
         position: 'end',
 
-        showGrid: false,
+        showGrid: false
       }
     };
 

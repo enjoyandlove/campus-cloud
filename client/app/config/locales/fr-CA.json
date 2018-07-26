@@ -961,7 +961,7 @@
     "message": "Téléverser fichier CSV"
   },
   "customise": {
-    "message": "Personnaliser"
+    "message": "Studio"
   },
   "customise_banner": {
     "message": "Bannière"
@@ -1204,7 +1204,7 @@
     "message": "Événements"
   },
   "events_attendance_feedback": {
-    "message": "Retour des participants"
+    "message": "Retours"
   },
   "events_attendance_manager": {
     "message": "Gest. prés."
@@ -1261,7 +1261,7 @@
     "message": "L'heure de fin de l'événement doit être plus tard que son heure de début."
   },
   "events_event_attendance": {
-    "message": "Présence aux événement"
+    "message": "Évaluation"
   },
   "events_event_banner": {
     "message": "Bannière de l'événement"
@@ -2317,6 +2317,9 @@
   "type": {
     "message": "Type"
   },
+  "t_assess_chart_tooltip_label_engagements": {
+    "message": "Implication(s)"
+  },
   "t_audience_dynamic_integration_disabled": {
     "message": "Pour activer cette fonctionalité, veuillez contacter votre consultant en engagement mobile."
   },
@@ -2325,6 +2328,12 @@
   },
   "t_customise_personas": {
     "message": "Expériences d'application"
+  },
+  "t_dashboard_chart_tooltip_label_downloads": {
+    "message": "Téléchargements"
+  },
+  "t_dashboard_chart_tooltip_label_registrations": {
+    "message": "Inscriptions"
   },
   "t_deals_delete_modal_body": {
     "message": "Êtes-vous sûr de vouloir supprimer %s?"
@@ -2386,6 +2395,9 @@
   "t_events_import_upload_picture": {
     "message": "Téléverser image"
   },
+  "t_notify_announcement_audiences_my_experiences": {
+    "message": "Mes expériences"
+  },
   "t_personas_button_list_create": {
     "message": "Créer expérience"
   },
@@ -2395,7 +2407,37 @@
   "t_personas_create_header_title": {
     "message": "Créer expérience"
   },
+  "t_personas_create_section_default_name": {
+    "message": "Sans titre"
+  },
   "t_personas_create_submit_button": {
+    "message": "Enregistrer les changements"
+  },
+  "t_personas_create_tile_heading_left": {
+    "message": "Apparence"
+  },
+  "t_personas_create_tile_heading_right": {
+    "message": "Contenu"
+  },
+  "t_personas_delete_error_last_persona": {
+    "message": "Une école doit avoir au moins une expérience d'activée."
+  },
+  "t_personas_delete_error_users_associated": {
+    "message": "Cette expérience a des utilisateurs associés, donc vous ne pouvez pas la supprimer."
+  },
+  "t_personas_delete_guide_error_non_empty_category": {
+    "message": "Cette section a des tuiles associées, donc vous ne pouvez pas la supprimer. Supprimez toutes les tuiles de la section, et essayez de nouveau."
+  },
+  "t_personas_edit_error_users_associated": {
+    "message": "Cette expérience a des utilisateurs associés, donc vous ne pouvez pas modifier ses exigences de connexion."
+  },
+  "t_personas_edit_header_title": {
+    "message": "Éditer expérience"
+  },
+  "t_personas_edit_message_on_save_ok": {
+    "message": "Changements enregistrés."
+  },
+  "t_personas_edit_submit_button": {
     "message": "Enregistrer les changements"
   },
   "t_personas_form_delete_button": {
@@ -2446,10 +2488,109 @@
   "t_personas_list_dropdown_web_experiences": {
     "message": "Web"
   },
+  "t_personas_section_button_add_section": {
+    "message": "Ajouter section"
+  },
+  "t_personas_tile_create_resource_type_academic_calendar": {
+    "message": "Calendrier académique"
+  },
+  "t_personas_tile_create_resource_type_advisor_list": {
+    "message": "Liste de conseillers"
+  },
+  "t_personas_tile_create_resource_type_athletics_club": {
+    "message": "Club sportif"
+  },
+  "t_personas_tile_create_resource_type_camera_qr": {
+    "message": "Scanner QR"
+  },
+  "t_personas_tile_create_resource_type_campus_poi_list": {
+    "message": "Carte du campus"
+  },
+  "t_personas_tile_create_resource_type_campus_service": {
+    "message": "Service du campus"
+  },
+  "t_personas_tile_create_resource_type_campus_tour_list": {
+    "message": "Liste des tours du campus"
+  },
+  "t_personas_tile_create_resource_type_courses": {
+    "message": "Cours"
+  },
+  "t_personas_tile_create_resource_type_exams": {
+    "message": "Examens"
+  },
+  "t_personas_tile_create_resource_type_in_app_feedback": {
+    "message": "Retour dans l'application"
+  },
+  "t_personas_tile_create_resource_type_service_by_category_id": {
+    "message": "Services par catégories"
+  },
+  "t_personas_tile_create_resource_type_store": {
+    "message": "Magasins"
+  },
+  "t_personas_tile_create_resource_type_store_list": {
+    "message": "Liste de magasins"
+  },
+  "t_personas_tile_create_resource_type_subscribable_calendar": {
+    "message": "Calendrier avec souscription"
+  },
+  "t_personas_tile_create_resource_type_timetable": {
+    "message": "Emploi du temps"
+  },
+  "t_personas_tile_create_resource_type_user_attended_events": {
+    "message": "Événements de l'utilisateur avec confirmation de présence"
+  },
+  "t_personas_tile_create_resource_type_user_orientation_calendar_list": {
+    "message": "Calendriers d'orientation souscrits par l'utilisateur"
+  },
+  "t_personas_tile_create_resource_type_user_school_course_material_list": {
+    "message": "Liste des supports de cours de l'utilisateur"
+  },
+  "t_personas_tile_create_store_list_groups_and_clubs": {
+    "message": "Groupes et clubs"
+  },
+  "t_personas_tile_create_type_resource_external_link": {
+    "message": "Lien externe"
+  },
+  "t_personas_tile_create_type_resource_resource": {
+    "message": "Ressource"
+  },
+  "t_personas_tile_create_type_resource_resource_list": {
+    "message": "Liste des ressources"
+  },
+  "t_personas_tile_create_type_resource_web_link": {
+    "message": "Lien web"
+  },
+  "t_personas_tile_form_categories_excludes": {
+    "message": "Exclut"
+  },
+  "t_personas_tile_form_categories_includes": {
+    "message": "Inclut"
+  },
+  "t_personas_tile_modal_create_appearance": {
+    "message": "Apparence"
+  },
+  "t_personas_tile_modal_create_categories": {
+    "message": "Catégories"
+  },
+  "t_personas_tile_modal_create_content": {
+    "message": "Contenu"
+  },
+  "t_personas_tile_modal_create_label_resources": {
+    "message": "Type de resource"
+  },
   "t_personas_tile_modal_create_label_type": {
     "message": "Type"
   },
+  "t_personas_tile_modal_create_link_url": {
+    "message": "URL du lien"
+  },
+  "t_personas_tile_modal_create_resource_type": {
+    "message": "Type de ressource"
+  },
   "t_persona_create_cancel_button": {
+    "message": "Annuler"
+  },
+  "t_persona_edit_cancel_button": {
     "message": "Annuler"
   },
   "t_persona_list_button_customize": {
@@ -2475,6 +2616,18 @@
   },
   "t_shared_hide": {
     "message": "Cacher"
+  },
+  "t_shared_image": {
+    "message": "Image"
+  },
+  "t_shared_label_location_toggle": {
+    "message": "Ajouter un lieu"
+  },
+  "t_shared_preview": {
+    "message": "Aperçu"
+  },
+  "t_shared_save": {
+    "message": "Terminé"
   },
   "t_shared_show": {
     "message": "Montrer"
@@ -2531,5 +2684,11 @@
   },
   "zero_quantity": {
     "message": "Aucune"
+  },
+  "_t_persona_delete_modal_body_": {
+    "message": "Êtes-vous sûr de vouloir supprimer %s ?"
+  },
+  "_t_persona_delete_modal_title_": {
+    "message": "Supprimer expérience"
   }
 }

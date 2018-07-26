@@ -37,7 +37,7 @@
                     </label>
                     <cp-dropdown
                       [items]="categories$ | async"
-                      (selected)="form.controls['category'].setValue($event.action)"
+                      (selected)="onCategoryUpdate($event)"
                       [isRequiredError]="formError && form.controls['category'].hasError('required')">
                     </cp-dropdown>
                   </div>

@@ -12,9 +12,10 @@ import { BehaviorSubject } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 
 import { CPMap } from '../../../../../shared/utils';
-import { LocationsService } from '../locations.service';
 import { CPSession, ISchool } from '../../../../../session';
-import { CPI18nService } from '../../../../../shared/services/index';
+import { hasAcronym, LocationsService } from '../locations.service';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
 
 declare var $: any;
 
@@ -33,13 +34,19 @@ export class LocationsCreateComponent implements OnInit {
   mapCenter: BehaviorSubject<any>;
   newAddress = new BehaviorSubject(null);
 
+  eventProperties = {
+    acronym: null,
+    location_id: null
+  };
+
   constructor(
     public el: ElementRef,
     private fb: FormBuilder,
     private session: CPSession,
     public cpI18n: CPI18nService,
     public cdRef: ChangeDetectorRef,
-    public service: LocationsService
+    public service: LocationsService,
+    public cpTracking: CPTrackingService
   ) {}
 
   @HostListener('document:click', ['$event'])
@@ -103,6 +110,7 @@ export class LocationsCreateComponent implements OnInit {
     const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     this.service.createLocation(this.form.value, search).subscribe((newLocation) => {
+      this.trackEvent(newLocation);
       $('#locationsUpdate').modal('hide');
       this.locationCreated.emit(newLocation);
       $('#locationsCreate').modal('hide');
@@ -112,6 +120,19 @@ export class LocationsCreateComponent implements OnInit {
 
   resetModal() {
     this.teardown.emit();
+  }
+
+  trackEvent(res) {
+    this.eventProperties = {
+      ...this.eventProperties,
+      location_id: res.id,
+      acronym: hasAcronym(res.short_name)
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_CREATED_LOCATION,
+      this.eventProperties
+    );
   }
 
   ngOnInit() {

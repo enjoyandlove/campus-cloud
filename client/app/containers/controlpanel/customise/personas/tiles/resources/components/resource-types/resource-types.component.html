@@ -1,0 +1,54 @@
+<div class="row form-group">
+  <div class="col-12">
+    <cp-dropdown
+      [items]="resources"
+      [selectedItem]="selectedItem"
+      (selected)="onResourceSelected($event)">
+    </cp-dropdown>
+  </div>
+</div>
+
+<div class="row form-group" *ngIf="resourceSelection === 'store_list'">
+  <div class="col-12">
+    <label>{{ t_personas_tile_create_label_store_list }}</label>
+    <cp-personas-resource-stores-list
+      (storeListChange)="selected.emit($event)"
+      [category]="resource.link_params.category_ids">
+    </cp-personas-resource-stores-list>
+  </div>
+</div>
+
+<div
+  class="row form-group"
+  *ngIf="textInputComponent.includes(resourceSelection)">
+  <div class="col-12">
+    <label>{{ 't_personas_tile_modal_create_link_url' | cpI18n }}</label>
+    <cp-personas-resource-type-url
+      [value]="resource.link_url"
+      (valueChange)="onUrlChange($event)">
+    </cp-personas-resource-type-url>
+  </div>
+</div>
+
+<div
+  class="row form-group"
+  *ngIf="typeSearchComponent.includes(resourceSelection)">
+  <div class="col-12">
+    <label>{{ 't_personas_tile_modal_create_resource_type' | cpI18n }}</label>
+    <cp-personas-resource-type-search
+      [resource]="resource"
+      [resourceId]="resourceSelection"
+      (selected)="selected.emit($event)">
+    </cp-personas-resource-type-search>
+  </div>
+</div>
+
+<div class="row" *ngIf="resourceSelection === 'service_by_category_id'">
+  <div class="col-12">
+    <label>{{ 't_personas_tile_modal_create_categories' | cpI18n }}</label>
+    <cp-personas-resource-service-by-category
+      [params]="resource.link_params"
+      (selected)="selected.emit($event)">
+    </cp-personas-resource-service-by-category>
+  </div>
+</div>

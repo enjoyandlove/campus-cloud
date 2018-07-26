@@ -1,0 +1,75 @@
+<ng-container [ngSwitch]="loading">
+  
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+  
+  <ng-container *ngSwitchCase="false">
+    <div class="row margin-bottom">
+      <div class="col-6 offset-3">
+        <div class="cp-card persona">
+          <div class="row">
+            <div class="col-12">
+              <p class="title">{{'t_personas_edit_form_title' | cpI18n}}</p>
+              <cp-personas-form 
+                #editForm
+                [form]="form"
+                (valueChanges)="onFormValueChanges($event)">
+              </cp-personas-form>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-6">
+              <label>{{ 't_personas_edit_label_campus_security' | cpI18n }}</label>
+              <cp-dropdown 
+                [items]="services$ | async"
+                [selectedItem]="selectedSecurityService"
+                (selected)="onSecurityServiceChanged($event)">
+              </cp-dropdown>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-6">
+              <button 
+                type="button" 
+                data-toggle="modal" 
+                class="cpbtn cpbtn--danger"
+                data-target="#personaDeleteModal">
+                {{'t_personas_edit_delete_button' | cpI18n}}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer">
+      <div class="cp-wrapper cp-wrapper--outer">
+        <div class="col-12">
+          <div class="row">
+            <div class="col-12">
+              <div class="text-right">
+                <a [routerLink]="['/customize/personas']"
+                    class="cpbtn cpbtn--cancel">
+                  {{ 't_persona_edit_cancel_button' | cpI18n }}
+                </a>
+                <cp-button
+                  [props]="submitButtonData"
+                  (buttonClick)="onSubmit()">
+                </cp-button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <cp-modal modalId="personaDeleteModal">
+      <cp-personas-delete
+        [persona]="persona"
+        (deleted)="onDeleted()"
+        (errorEvent)="onDeleteError()">
+      </cp-personas-delete>
+    </cp-modal>
+  </ng-container>
+</ng-container>

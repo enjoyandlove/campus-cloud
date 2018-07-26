@@ -21,7 +21,7 @@
         [sortDirection]="state.sort_direction">
       </cp-sorting-header>
 
-      <span class="col-3" i18n>{{ 'assessment' | cpI18n }}</span>
+      <span class="col-3">{{ 'assessment' | cpI18n }}</span>
       <span class="col-1"></span>
     </div>
   </li>
@@ -38,7 +38,8 @@
         <strong>
           <a
             class="event__title"
-            [routerLink]="[event.id]">
+            [routerLink]="[event.id]"
+            queryParamsHandling="merge">
             {{ event.title }}
           </a>
         </strong>

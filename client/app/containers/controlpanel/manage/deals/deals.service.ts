@@ -2,13 +2,14 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { map, startWith } from 'rxjs/operators';
-import { StoreService } from './stores/store.service';
+import { DealsStoreService } from './stores/store.service';
 import { HTTPService } from '../../../../base';
 import { API } from '../../../../config/api';
 import { CPSession } from '../../../../session';
 import { CPI18nService } from '../../../../shared/services';
 
 export enum DateStatus {
+  noDate = 0,
   forever = -1
 }
 
@@ -19,7 +20,7 @@ export class DealsService extends HTTPService {
     http: HttpClient,
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public storeService: StoreService
+    public storeService: DealsStoreService
   ) {
     super(http, router);
 

@@ -1,0 +1,10 @@
+@import '~styles/components/card';
+@import '~styles/core/typography';
+
+span.title {
+  @include font-16px();
+
+  display: block;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}

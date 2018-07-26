@@ -65,10 +65,7 @@ export class CPRangePickerComponent implements OnInit, AfterViewInit, OnDestroy 
   datePipe;
   dateFormat = FORMAT.SHORT;
 
-  constructor(
-    public session: CPSession,
-    public utils: CPRangePickerUtilsService
-  ) {}
+  constructor(public session: CPSession, public utils: CPRangePickerUtilsService) {}
 
   onDateChanged(selectedDates) {
     if (selectedDates.length === 2) {
@@ -132,7 +129,7 @@ export class CPRangePickerComponent implements OnInit, AfterViewInit, OnDestroy 
 
     this.pickerOptions = {
       ...this.pickerOptions,
-      maxDate: this.pickerOptions.maxDate ? this.pickerOptions.maxDate : maxDate,
+      maxDate: this.pickerOptions.maxDate ? this.pickerOptions.maxDate : maxDate
     };
   }
 }

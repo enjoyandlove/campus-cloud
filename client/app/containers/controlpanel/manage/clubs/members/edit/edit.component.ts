@@ -13,6 +13,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MemberType } from '../member.status';
 import { MembersService } from '../members.service';
 import { MembersUtilsService } from '../members.utils.service';
+import { CPTrackingService } from '../../../../../../shared/services';
+import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 
 declare var $: any;
@@ -38,11 +40,17 @@ export class ClubsMembersEditComponent implements OnInit {
   form: FormGroup;
   isExecutiveLeader = MemberType.executive_leader;
 
+  eventProperties = {
+    member_id: null,
+    member_type: null
+  };
+
   constructor(
     private fb: FormBuilder,
     private cpI18n: CPI18nService,
     private service: MembersService,
-    private utils: MembersUtilsService
+    private utils: MembersUtilsService,
+    private cpTracking: CPTrackingService
   ) {}
 
   onMemberSelected(member) {
@@ -79,6 +87,7 @@ export class ClubsMembersEditComponent implements OnInit {
 
     this.service.addMember({ member_type, group_id, member_position }, this.member.id).subscribe(
       (member) => {
+        this.trackEvent(member);
         this.edited.emit(member);
         $('#membersEdit').modal('hide');
         this.form.reset();
@@ -87,6 +96,19 @@ export class ClubsMembersEditComponent implements OnInit {
       (err) => {
         throw new Error(err);
       }
+    );
+  }
+
+  trackEvent(res) {
+    this.eventProperties = {
+      ...this.eventProperties,
+      member_id: res.id,
+      member_type: this.utils.getMemberTypeLabel(res.member_type)
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_UPDATED_CLUB_MEMBER,
+      this.eventProperties
     );
   }
 

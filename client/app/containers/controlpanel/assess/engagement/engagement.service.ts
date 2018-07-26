@@ -1,8 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HTTPService } from '../../../../base/http.service';
+
 import { API } from '../../../../config/api';
+import { PersonaPermission } from './engagement.status';
+import { HTTPService } from '../../../../base/http.service';
 
 @Injectable()
 export class EngagementService extends HTTPService {
@@ -30,6 +33,17 @@ export class EngagementService extends HTTPService {
     const url = `${common}/${startRange};${endRange}`;
 
     return super.get(url, search, true);
+  }
+
+  getPersona(startRange = 1, endRange = 1000, search?: HttpParams) {
+    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.PERSONAS}`;
+    const url = `${common}/${startRange};${endRange}`;
+
+    return super
+      .get(url, search, true)
+      .pipe(
+        map((res: any) => res.filter((p) => p.login_requirement !== PersonaPermission.forbidden))
+      );
   }
 
   getChartData(search: HttpParams) {

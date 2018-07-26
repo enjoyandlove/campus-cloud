@@ -12,11 +12,13 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject, fromEvent, of as observableOf } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
-import { CPSession } from '../../../../../../session';
-import { CPI18nService } from '../../../../../../shared/services/index';
+
 import { MemberType } from '../member.status';
 import { MembersService } from '../members.service';
+import { CPSession } from '../../../../../../session';
 import { MembersUtilsService } from '../members.utils.service';
+import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
+import { CPI18nService, CPTrackingService } from '../../../../../../shared/services';
 
 declare var $: any;
 
@@ -40,12 +42,18 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
   isExecutiveLeader = MemberType.executive_leader;
   reset$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
+  eventProperties = {
+    member_id: null,
+    member_type: null
+  };
+
   constructor(
     private fb: FormBuilder,
     private session: CPSession,
     private cpI18n: CPI18nService,
     private service: MembersService,
-    private utils: MembersUtilsService
+    private utils: MembersUtilsService,
+    private cpTracking: CPTrackingService
   ) {}
 
   ngAfterViewInit() {
@@ -135,6 +143,7 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
       .addMember({ member_type, group_id, member_position }, this.form.value.member)
       .subscribe(
         (member) => {
+          this.trackEvent(member);
           this.added.emit(member);
           $('#membersCreate').modal('hide');
           this.doReset();
@@ -150,6 +159,19 @@ export class ClubsMembersCreateComponent implements OnInit, AfterViewInit {
           throw new Error(err);
         }
       );
+  }
+
+  trackEvent(res) {
+    this.eventProperties = {
+      ...this.eventProperties,
+      member_id: res.id,
+      member_type: this.utils.getMemberTypeLabel(res.member_type)
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_ADDED_CLUB_MEMBER,
+      this.eventProperties
+    );
   }
 
   ngOnInit() {

@@ -8,7 +8,7 @@ import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 import { CPSession } from '../../../../../session';
 import { CPI18nService } from '../../../../../shared/services';
 import { DealsService } from '../deals.service';
-import { StoreService } from '../stores/store.service';
+import { DealsStoreService } from '../stores/store.service';
 
 @Component({
   selector: 'cp-deals-create',
@@ -31,7 +31,7 @@ export class DealsCreateComponent implements OnInit {
     public service: DealsService,
     public store: Store<IHeader>,
     public cpI18n: CPI18nService,
-    public storeService: StoreService
+    public storeService: DealsStoreService
   ) {}
 
   onSubmit() {
@@ -100,8 +100,8 @@ export class DealsCreateComponent implements OnInit {
       address: [null],
       logo_url: [null],
       description: [null],
-      latitude: [this.session.g.get('school').latitude],
-      longitude: [this.session.g.get('school').longitude]
+      latitude: [0],
+      longitude: [0]
     });
   }
 

@@ -4,8 +4,9 @@
       <div class="col-12">
         <div class="header__breadcrumb" *ngIf="data.crumbs.url">
           <a
+            class="text-muted"
             [routerLink]="data.crumbs.url"
-            class="text-muted">
+            [queryParams]="route.snapshot.queryParams">
             <i class="material-icons">arrow_back</i>
             {{ data.crumbs.label | cpI18n }}
           </a>

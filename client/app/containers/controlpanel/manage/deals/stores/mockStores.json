@@ -23,6 +23,7 @@
     "postal_code": "",
     "latitude": "",
     "longitude": "",
-    "logo_url": "https://s3.amazonaws.com/campus-cloud-image-use/en1u363z8mxexvwfuemt252aiyh3qk24e4jud2j9s67h8lmhj0.jpg"
+    "logo_url":
+      "https://s3.amazonaws.com/campus-cloud-image-use/en1u363z8mxexvwfuemt252aiyh3qk24e4jud2j9s67h8lmhj0.jpg"
   }
 ]

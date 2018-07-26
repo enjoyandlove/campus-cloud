@@ -34,18 +34,29 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
   loading;
   formError;
   buttonData;
-  statusTypes;
   defaultStatus;
-  membershipTypes;
   form: FormGroup;
   isSJSU: boolean;
   defaultMembership;
   isFormReady = false;
   limitedAdmin = true;
+  statusTypes = statusTypes;
   showLocationDetails = false;
   mapCenter: BehaviorSubject<any>;
+  membershipTypes = membershipTypes;
   newAddress = new BehaviorSubject(null);
   drawMarker = new BehaviorSubject(false);
+
+  eventProperties = {
+    phone: null,
+    email: null,
+    website: null,
+    club_id: null,
+    location: null,
+    club_type: null,
+    club_status: null,
+    membership_status: null
+  };
 
   constructor(
     public router: Router,
@@ -97,9 +108,13 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
 
       this.drawMarker.next(this.showLocationDetails);
 
-      this.mapCenter = new BehaviorSubject(
-        CPMap.setDefaultMapCenter(lat, lng, this.school)
-      );
+      this.mapCenter = new BehaviorSubject(CPMap.setDefaultMapCenter(lat, lng, this.school));
+
+      this.eventProperties = {
+        ...this.eventProperties,
+        club_status: this.defaultStatus.label,
+        membership_status: this.defaultMembership.label
+      };
     });
   }
 
@@ -155,7 +170,10 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
 
     this.clubsService.updateClub(this.form.value, this.clubId, search).subscribe(
       (res: any) => {
-        this.router.navigate(['/manage/' + this.labels.club_athletic + '/' + res.id + '/info']);
+        this.trackEvent(res);
+        this.router.navigate(['/manage/' + this.labels.club_athletic + '/' + res.id + '/info'], {
+          queryParams: this.route.snapshot.queryParams
+        });
       },
       (_) => {
         this.buttonData = Object.assign({}, this.buttonData, {
@@ -174,6 +192,15 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
     );
   }
 
+  trackEvent(data) {
+    this.eventProperties = {
+      ...this.eventProperties,
+      ...this.helper.setEventProperties(data, this.labels.club_athletic)
+    };
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_UPDATED_CLUB, this.eventProperties);
+  }
+
   onUploadedImage(image): void {
     this.form.controls['logo_url'].setValue(image);
 
@@ -190,10 +217,20 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
 
   onSelectedMembership(type) {
     this.form.controls['has_membership'].setValue(type.action);
+
+    this.eventProperties = {
+      ...this.eventProperties,
+      membership_status: type.label
+    };
   }
 
   onSelectedStatus(type) {
     this.form.controls['status'].setValue(type.action);
+
+    this.eventProperties = {
+      ...this.eventProperties,
+      club_status: type.label
+    };
   }
 
   onResetMap() {
@@ -289,8 +326,5 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
         children: []
       }
     });
-
-    this.statusTypes = statusTypes;
-    this.membershipTypes = membershipTypes;
   }
 }
