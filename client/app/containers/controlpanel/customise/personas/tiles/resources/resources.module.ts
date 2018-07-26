@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { TilesUtilsService } from '../tiles.utils.service';
 import {
   PersonasResourceFormComponent,
   PersonasResourceListOfListComponent,
@@ -13,7 +12,9 @@ import {
 } from './components';
 import { PersonaResourceCreateComponent } from './create/create.component';
 import { ResourceService } from './resource.service';
+import { ResourcesUtilsService } from './resources.utils.service';
 import { SharedModule } from '../../../../../../shared/shared.module';
+import { TilesUtilsService } from '../tiles.utils.service';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,7 @@ import { SharedModule } from '../../../../../../shared/shared.module';
     PersonasResourceServiceByCategoryComponent
   ],
   imports: [CommonModule, SharedModule, ReactiveFormsModule],
-  providers: [TilesUtilsService, ResourceService],
+  providers: [TilesUtilsService, ResourceService, ResourcesUtilsService],
   exports: [
     PersonasResourceFormComponent,
     PersonaResourceCreateComponent,

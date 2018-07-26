@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { CPI18nService } from '../../../../../../../../shared/services';
 
 @Component({
@@ -7,9 +7,12 @@ import { CPI18nService } from '../../../../../../../../shared/services';
   styleUrls: ['./resource-stores-list.component.scss']
 })
 export class PersonasResourceStoresListComponent implements OnInit {
+  @Input() category: number;
+
   @Output() storeListChange = new EventEmitter();
 
   storeLists;
+  selectedItem;
 
   constructor(public cpI18n: CPI18nService) {}
 
@@ -20,6 +23,18 @@ export class PersonasResourceStoresListComponent implements OnInit {
         label: this.cpI18n.translate(resource.label)
       };
     });
+
+    if (this.updateState) {
+      this.updateState();
+    }
+  }
+
+  updateState() {
+    this.selectedItem = this.storeLists.filter((s) => s.id).filter((s) => {
+      const categoryIds = s.meta.link_params.category_ids;
+
+      return categoryIds.includes(this.category[0]) ? s : null;
+    })[0];
   }
 
   ngOnInit(): void {

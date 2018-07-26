@@ -60,6 +60,7 @@ export class PersonasSectionComponent implements OnInit {
   }
 
   onEditTile(tile: ITile) {
+    this.service.guide = this.guide;
     this.router.navigate([`/customize/personas/${this.personaId}/tiles/${tile.id}/edit`]);
   }
 
