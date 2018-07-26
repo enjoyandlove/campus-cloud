@@ -1,11 +1,11 @@
 <p
   class="title text-truncate"
-  *ngIf="!hasPrivilege">
+  *ngIf="!canNavigate">
   {{ item.name }}
 </p>
 <p
-  *ngIf="hasPrivilege"
+  *ngIf="canNavigate"
   class="title text-truncate hover"
-  (click)="router.navigate([resourceURL])">
+  (click)="router.navigate([item.resourceUrl])">
   {{ item.name }}
 </p>

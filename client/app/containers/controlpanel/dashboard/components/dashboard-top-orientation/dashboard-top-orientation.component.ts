@@ -4,6 +4,9 @@ import { HttpParams } from '@angular/common/http';
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
 import { DashboardService } from './../../dashboard.service';
+import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
+import { DashboardUtilsService } from '../../dashboard.utils.service';
+import { canSchoolReadResource } from '../../../../../shared/utils/privileges';
 
 @Component({
   selector: 'cp-dashboard-top-orientation',
@@ -15,6 +18,7 @@ export class DashboardTopOrientationComponent extends BaseComponent implements O
 
   _dates;
   loading;
+  canNavigate;
   items = [];
 
   @Input()
@@ -23,29 +27,14 @@ export class DashboardTopOrientationComponent extends BaseComponent implements O
     this.fetch();
   }
 
-  constructor(private session: CPSession, private service: DashboardService) {
+  constructor(
+    private session: CPSession,
+    private service: DashboardService,
+    private utils: DashboardUtilsService) {
     super();
     super.isLoading().subscribe((loading) => {
       this.loading = loading;
       this.ready.emit(!this.loading);
-    });
-  }
-
-  parseResponse(items: Array<any>) {
-    return new Promise((resolve) => {
-      resolve(
-        items.map((item) => {
-          return {
-            id: item.user_event_id,
-            name: item.event_title,
-            calendar_id: item.calendar_id,
-            feedback: item.num_of_feedbacks,
-            attendees: item.num_of_attendees,
-            image: item.event_image_thumb_url,
-            rating: item.average_of_feedbacks
-          };
-        })
-      );
     });
   }
 
@@ -60,11 +49,13 @@ export class DashboardTopOrientationComponent extends BaseComponent implements O
 
     super
       .fetchData(stream$)
-      .then((res) => this.parseResponse(res.data.top_events))
+      .then((res) => this.utils.parseOrientationResponse(res.data.top_events))
       .then((res: any) => (this.items = res));
   }
 
   ngOnInit() {
+    this.canNavigate = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.orientation);
+
     this.fetch();
   }
 }

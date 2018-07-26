@@ -8,8 +8,7 @@ import { Router } from '@angular/router';
 })
 export class DashboardTopResourceTitleComponent implements OnInit {
   @Input() item;
-  @Input() hasPrivilege;
-  @Input() resourceURL: string;
+  @Input() canNavigate;
 
   constructor(public router: Router) {}
 

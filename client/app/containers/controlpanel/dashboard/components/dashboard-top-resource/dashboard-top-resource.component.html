@@ -34,8 +34,7 @@
                   [src]="item.image === '' ? defaultImage : item.image">
                 <cp-dashboard-top-resource-title
                   [item]="item"
-                  [hasPrivilege]="hasPrivilege"
-                  [resourceURL]="getResourceURL(item)">
+                  [canNavigate]="canNavigate">
                 </cp-dashboard-top-resource-title>
               </div>
               <div class="col-2 no-left-padding">

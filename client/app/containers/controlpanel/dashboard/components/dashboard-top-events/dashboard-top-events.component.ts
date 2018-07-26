@@ -4,6 +4,7 @@ import { HttpParams } from '@angular/common/http';
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
 import { DashboardService } from './../../dashboard.service';
+import { DashboardUtilsService } from '../../dashboard.utils.service';
 
 @Component({
   selector: 'cp-dashboard-top-events',
@@ -15,6 +16,7 @@ export class DashboardTopEventsComponent extends BaseComponent implements OnInit
 
   _dates;
   loading;
+  canNavigate;
   items = [];
 
   @Input()
@@ -23,28 +25,14 @@ export class DashboardTopEventsComponent extends BaseComponent implements OnInit
     this.fetch();
   }
 
-  constructor(private session: CPSession, private service: DashboardService) {
+  constructor(
+    private session: CPSession,
+    private service: DashboardService,
+    private utils: DashboardUtilsService) {
     super();
     super.isLoading().subscribe((loading) => {
       this.loading = loading;
       this.ready.emit(!this.loading);
-    });
-  }
-
-  parseResponse(items: Array<any>) {
-    return new Promise((resolve) => {
-      resolve(
-        items.map((item) => {
-          return {
-            id: item.event_id,
-            name: item.event_title,
-            image: item.event_poster_thumb_url,
-            attendees: item.num_of_attendees,
-            feedback: item.num_of_feedbacks,
-            rating: item.average_of_feedbacks
-          };
-        })
-      );
     });
   }
 
@@ -59,11 +47,13 @@ export class DashboardTopEventsComponent extends BaseComponent implements OnInit
 
     super
       .fetchData(stream$)
-      .then((res) => this.parseResponse(res.data.top_events))
+      .then((res) => this.utils.parseEventsResponse(res.data.top_events))
       .then((res: any) => (this.items = res));
   }
 
   ngOnInit() {
+    this.canNavigate = this.utils.isSuperAdmin(this.session);
+
     this.fetch();
   }
 }
