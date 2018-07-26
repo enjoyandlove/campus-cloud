@@ -29,6 +29,8 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
   buttonData;
   personaId: number;
   guide: ICampusGuide;
+  isFeatured: boolean;
+  isCategoryZero: boolean;
   campusLinkForm: FormGroup;
   campusGuideTileForm: FormGroup;
 
@@ -52,16 +54,44 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
   }
 
   createGuideLink(tileCategoryId = this.guide.id) {
-    const cloneGuideTileForm = {
+    let cloneGuideTileForm = {
       ...this.campusGuideTileForm.value,
       tile_category_id: tileCategoryId
     };
 
-    const guideTilePersonaZero = {
+    let guideTilePersonaZero = {
       ...this.campusGuideTileForm.value,
       school_persona_id: 0,
       tile_category_id: tileCategoryId
     };
+
+    if (this.isFeatured) {
+      cloneGuideTileForm = {
+        ...cloneGuideTileForm,
+        rank: -1,
+        featured_rank: 0
+      };
+
+      guideTilePersonaZero = {
+        ...guideTilePersonaZero,
+        rank: -1,
+        featured_rank: 0
+      };
+    }
+
+    if (this.isCategoryZero) {
+      cloneGuideTileForm = {
+        ...cloneGuideTileForm,
+        rank: -1,
+        tile_category_id: 0
+      };
+
+      guideTilePersonaZero = {
+        ...guideTilePersonaZero,
+        rank: -1,
+        tile_category_id: 0
+      };
+    }
 
     const createLink$ = this.service.createCampusLink(this.campusLinkForm.value);
 
@@ -102,8 +132,10 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
 
   onSubmit() {
     let stream$ = this.createGuideLink();
+    const emptySection =
+      this.guideUtils.isTemporaryGuide(this.guide) && !this.isCategoryZero && !this.isFeatured;
 
-    if (this.guideUtils.isTemporaryGuide(this.guide)) {
+    if (emptySection) {
       const body = {
         ...this.guide,
         school_id: this.session.g.get('school').id
@@ -219,13 +251,14 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
   ngOnInit(): void {
     this.guide = this.guideService.guide;
 
-    // console.log(this.guide);
-
     if (!this.guide) {
       this.router.navigate(['/customize/personas/', this.personaId]);
 
       return;
     }
+
+    this.isFeatured = this.guide.featureTile;
+    this.isCategoryZero = this.guide.categoryZero;
 
     this.buttonData = {
       class: 'primary',
