@@ -28,7 +28,7 @@
     "meta": {
       "is_system": 1,
       "link_params": {},
-      "open_in_browser": 1,
+      "open_in_browser": 0,
       "link_url": "oohlala://academic_calendar_list"
     }
   },
@@ -38,7 +38,7 @@
     "meta": {
       "is_system": 1,
       "link_params": {},
-      "open_in_browser": 1,
+      "open_in_browser": 0,
       "link_url": "oohlala://course_search"
     }
   },
@@ -48,7 +48,7 @@
     "meta": {
       "is_system": 1,
       "link_params": {},
-      "open_in_browser": 1,
+      "open_in_browser": 0,
       "link_url": "oohlala://attended_event_list"
     }
   },
@@ -58,7 +58,7 @@
     "meta": {
       "is_system": 1,
       "link_params": {},
-      "open_in_browser": 1,
+      "open_in_browser": 0,
       "link_url": "oohlala://camera_qr"
     }
   },
@@ -68,7 +68,7 @@
     "meta": {
       "is_system": 1,
       "link_params": {},
-      "open_in_browser": 1,
+      "open_in_browser": 0,
       "link_url": "oohlala://exam_search"
     }
   },
@@ -78,7 +78,7 @@
     "meta": {
       "is_system": 1,
       "link_params": {},
-      "open_in_browser": 1,
+      "open_in_browser": 0,
       "link_url": "oohlala://advisor_list"
     }
   },
@@ -88,7 +88,7 @@
     "meta": {
       "is_system": 1,
       "link_params": {},
-      "open_in_browser": 1,
+      "open_in_browser": 0,
       "link_url": "oohlala://timetable"
     }
   },
@@ -98,7 +98,7 @@
     "meta": {
       "is_system": 1,
       "link_params": {},
-      "open_in_browser": 1,
+      "open_in_browser": 0,
       "link_url": "oohlala://user_orientation_calendar_list"
     }
   },
@@ -108,7 +108,7 @@
     "meta": {
       "is_system": 1,
       "link_params": {},
-      "open_in_browser": 1,
+      "open_in_browser": 0,
       "link_url": "oohlala://user_school_course_material_list"
     }
   },
@@ -118,7 +118,7 @@
     "meta": {
       "is_system": 1,
       "link_params": {},
-      "open_in_browser": 1,
+      "open_in_browser": 0,
       "link_url": "oohlala://campus_poi_list"
     }
   },
@@ -128,7 +128,7 @@
     "meta": {
       "is_system": 1,
       "link_params": {},
-      "open_in_browser": 1,
+      "open_in_browser": 0,
       "link_url": "oohlala://campus_tour_list"
     }
   },
@@ -138,7 +138,7 @@
     "meta": {
       "is_system": 1,
       "link_params": {},
-      "open_in_browser": 1,
+      "open_in_browser": 0,
       "link_url": "oohlala://in_app_feedback"
     }
   },
@@ -148,7 +148,7 @@
     "meta": {
       "is_system": 1,
       "link_params": {},
-      "open_in_browser": 1,
+      "open_in_browser": 0,
       "link_url": "oohlala://store_list"
     }
   },

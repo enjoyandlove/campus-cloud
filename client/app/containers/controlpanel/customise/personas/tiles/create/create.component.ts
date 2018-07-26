@@ -170,11 +170,15 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
     });
   }
 
-  onCampusGuideTileFormChange() {
+  updateSubmitState() {
     this.buttonData = {
       ...this.buttonData,
       disabled: !(this.campusGuideTileForm.valid && this.campusLinkForm.valid)
     };
+  }
+
+  onCampusGuideTileFormChange() {
+    this.updateSubmitState();
 
     const name = this.campusGuideTileForm.controls['name'].value;
     const img_url = this.campusGuideTileForm.controls['img_url'].value;
@@ -184,10 +188,7 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
   }
 
   onCampusLinkFormChange() {
-    this.buttonData = {
-      ...this.buttonData,
-      disabled: !(this.campusGuideTileForm.valid && this.campusLinkForm.valid)
-    };
+    this.updateSubmitState();
   }
 
   ngOnDestroy() {
