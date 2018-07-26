@@ -161,8 +161,8 @@ export class EngagementOrientationsBoxComponent extends BaseComponent implements
   parseResponse(items) {
     return items.map((item) => {
       return {
-        name: item.event_title,
-        image: item.event_image_thumb_url,
+        image: '',
+        name: item.calendar_name,
         attendees: item.num_of_attendees,
         feedbacks: item.num_of_feedbacks,
         avg_feedbacks: item.average_of_feedbacks
