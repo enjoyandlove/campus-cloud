@@ -1,4 +1,3 @@
-import { ILink } from './../../../../../../manage/links/link.interface';
 import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { sortBy } from 'lodash';
 import { CPI18nService } from '../../../../../../../../shared/services/i18n.service';
