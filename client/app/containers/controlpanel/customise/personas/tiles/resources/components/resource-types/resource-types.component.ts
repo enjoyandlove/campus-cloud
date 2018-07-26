@@ -1,3 +1,4 @@
+import { ILink } from './../../../../../../manage/links/link.interface';
 import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { sortBy } from 'lodash';
 import { CPI18nService } from '../../../../../../../../shared/services/i18n.service';
@@ -42,6 +43,10 @@ export class PersonasResourceTypesComponent implements OnInit {
     }
   }
 
+  // isUrlType(resource: ILink) {
+  //   return resource.link_url ==
+  // }
+
   populateDropdowns() {
     const resources = require('./resources.json');
     const sortedResources = sortBy(resources.slice(1, resources.length), (r: any) => r.id);
@@ -53,7 +58,7 @@ export class PersonasResourceTypesComponent implements OnInit {
         label: this.cpI18n.translate(resource.label)
       };
     });
-
+    console.log(this.resource);
     if (this.resource.link_url) {
       const isURLType = Object.keys(this.resource.link_params).length === 0;
 
