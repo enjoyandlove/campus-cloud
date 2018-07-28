@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-import { CPI18nService, ErrorService } from '../../../../../shared/services';
-
 import { LinksService } from '../links.service';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { CPI18nService, CPTrackingService, ErrorService } from '../../../../../shared/services';
 
 declare var $: any;
 
@@ -17,16 +17,20 @@ export class LinksDeleteComponent implements OnInit {
   @Output() resetDeleteModal: EventEmitter<null> = new EventEmitter();
 
   buttonData;
+  eventProperties;
 
   constructor(
     private service: LinksService,
     private cpI18n: CPI18nService,
-    private errorService: ErrorService
+    private errorService: ErrorService,
+    private cpTracking: CPTrackingService
   ) {}
 
   onDelete() {
     this.service.deleteLink(this.link.id).subscribe(
       () => {
+        this.trackEvent();
+
         $('#linksDelete').modal('hide');
 
         this.deleteLink.emit(this.link.id);
@@ -47,6 +51,17 @@ export class LinksDeleteComponent implements OnInit {
     this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
 
     this.resetDeleteModal.emit();
+  }
+
+  trackEvent() {
+    this.eventProperties = {
+      ...this.eventProperties,
+      ...this.cpTracking.getEventProperties()
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.DELETED_ITEM,
+      this.eventProperties);
   }
 
   ngOnInit() {

@@ -175,8 +175,7 @@ export class ListActionBoxComponent implements OnInit {
 
   trackEvent(eventName) {
     const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
-      create_page_name: amplitudeEvents.CREATE_EVENT
+      ...this.cpTracking.getEventProperties()
     };
 
     return {
@@ -204,7 +203,7 @@ export class ListActionBoxComponent implements OnInit {
     };
 
     this.amplitudeEvents = {
-      clicked_create: amplitudeEvents.CLICKED_CREATE
+      clicked_create: amplitudeEvents.CLICKED_CREATE_ITEM
     };
 
     this.listAction.emit(this.state);

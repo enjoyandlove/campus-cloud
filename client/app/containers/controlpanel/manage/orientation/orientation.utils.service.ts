@@ -35,6 +35,8 @@ export class OrientationUtilsService {
 
     subNav.forEach((nav) => {
       menu.children.push({
+        isSubMenuItem: true,
+        amplitude: nav.label,
         label: nav.label.toLocaleLowerCase(),
         url: `/manage/orientation/${program.id}/${nav.link}`
       });

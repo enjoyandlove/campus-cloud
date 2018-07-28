@@ -12,8 +12,10 @@
 
     <div class="col-7 float-right text-right">
       <a
+        cpTracker
         [routerLink]="['employers']"
-        class="cpbtn cpbtn--cancel margin-right">
+        class="cpbtn cpbtn--cancel margin-right"
+        [eventData]="trackEvent(amplitudeEvents.clicked_page_item, amplitudeEvents.page_type)">
         {{ 'jobs_manage_employer' | cpI18n }}
       </a>
       <a

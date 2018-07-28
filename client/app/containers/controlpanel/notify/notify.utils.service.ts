@@ -5,18 +5,6 @@ import { amplitudeEvents } from '../../../shared/constants/analytics';
 
 @Injectable()
 export class NotifyUtilsService {
-  eventProperties;
-
-  setEventProperties(data, listing_type) {
-    return {
-      ...this.eventProperties,
-      listing_type,
-      announcement_id: data.id,
-      audience_type: this.getAudienceType(data),
-      announcement_type: this.getAnnouncementType(data)
-    };
-  }
-
   getAudienceType(data) {
     if (data.list_details && data.list_details.length) {
       return amplitudeEvents.LIST;

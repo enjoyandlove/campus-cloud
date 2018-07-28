@@ -16,6 +16,7 @@ import { IResourceBanner } from '../../../../../shared/components/cp-resource-ba
 import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 import { AdminService } from '../../../../../shared/services';
 import { ServicesService } from '../services.service';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 
 @Component({
   selector: 'cp-services-info',
@@ -103,6 +104,8 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
     let children = [
       {
         label: 'info',
+        isSubMenuItem: true,
+        amplitude: amplitudeEvents.INFO,
         url: `/manage/services/${this.serviceId}/info`
       }
     ];
@@ -116,6 +119,8 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
     if (eventsSchoolLevel || eventsAccountLevel) {
       const events = {
         label: 'events',
+        isSubMenuItem: true,
+        amplitude: amplitudeEvents.EVENTS,
         url: `/manage/services/${this.serviceId}/events`
       };
 
@@ -125,6 +130,8 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
     if (this.service.service_attendance) {
       const attendance = {
         label: 'assessment',
+        isSubMenuItem: true,
+        amplitude: amplitudeEvents.ASSESSMENT,
         url: `/manage/services/${this.serviceId}`
       };
 

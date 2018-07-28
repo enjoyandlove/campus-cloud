@@ -38,15 +38,13 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
   showLocationDetails = true;
   mapCenter: BehaviorSubject<any>;
 
-  constructor(
-    public session: CPSession,
-    public route: ActivatedRoute,
-    public cpI18n: CPI18nService,
-    public store: Store<ISnackbar>,
-    public clubsService: ClubsService,
-    public helper: ClubsUtilsService,
-    public fileService: FileUploadService
-  ) {
+  constructor(public session: CPSession,
+              public route: ActivatedRoute,
+              public cpI18n: CPI18nService,
+              public store: Store<ISnackbar>,
+              public clubsService: ClubsService,
+              public helper: ClubsUtilsService,
+              public fileService: FileUploadService) {
     super();
     this.clubId = this.route.parent.snapshot.params['clubId'];
 
@@ -162,6 +160,8 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
 
     links.forEach((link) => {
       menu.children.push({
+        amplitude: link,
+        isSubMenuItem: true,
         label: link.toLocaleLowerCase(),
         url: `/manage/` + this.labels.club_athletic + `/${this.clubId}/${link.toLocaleLowerCase()}`
       });

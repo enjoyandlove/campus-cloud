@@ -2,12 +2,14 @@ import { HttpParams } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of as observableOf } from 'rxjs';
-import { CPI18nService } from './../../../../../../shared/services/i18n.service';
-import { EmployerDeleteComponent } from './employer-delete.component';
-import { CPSession } from '../../../../../../session';
-import { mockSchool } from '../../../../../../session/mock/school';
+
 import { EmployerModule } from '../employer.module';
+import { CPSession } from '../../../../../../session';
 import { EmployerService } from '../employer.service';
+import { mockSchool } from '../../../../../../session/mock/school';
+import { CPTrackingService } from '../../../../../../shared/services';
+import { EmployerDeleteComponent } from './employer-delete.component';
+import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 
 class MockEmployerService {
   dummy;
@@ -31,6 +33,7 @@ describe('EmployerDeleteComponent', () => {
         providers: [
           CPSession,
           CPI18nService,
+          CPTrackingService,
           { provide: EmployerService, useClass: MockEmployerService }
         ]
       })

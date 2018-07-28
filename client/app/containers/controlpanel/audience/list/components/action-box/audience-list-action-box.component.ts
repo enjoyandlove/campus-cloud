@@ -27,8 +27,7 @@ export class AudienceListActionBoxComponent implements OnInit {
 
   trackEvent(eventName) {
     const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
-      create_page_name: amplitudeEvents.CREATE_LIST
+      ...this.cpTracking.getEventProperties()
     };
 
     return {
@@ -40,7 +39,7 @@ export class AudienceListActionBoxComponent implements OnInit {
 
   ngOnInit() {
     this.amplitudeEvents = {
-      clicked_create: amplitudeEvents.CLICKED_CREATE
+      clicked_create: amplitudeEvents.CLICKED_CREATE_ITEM
     };
 
     this.listTypes = [

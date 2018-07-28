@@ -12,7 +12,8 @@ import { isCanada, isProd, isSea, isUsa, isStaging } from './../../config/env/in
 export enum RouteLevel {
   'first' = 0,
   'second' = 1,
-  'third' = 2
+  'third' = 2,
+  'fourth' = 3
 }
 
 declare var window: any;
@@ -69,13 +70,13 @@ export class CPTrackingService {
 
   getEventProperties() {
     return {
-      menu_name: this.activatedRoute(this.router, RouteLevel.first),
-      sub_menu_name: this.activatedRoute(this.router, RouteLevel.second)
+      menu_name: this.activatedRoute(RouteLevel.first),
+      sub_menu_name: this.activatedRoute(RouteLevel.second)
     };
   }
 
-  activatedRoute(router, level) {
-    const tree = router.parseUrl(router.url);
+  activatedRoute(level) {
+    const tree = this.router.parseUrl(this.router.url);
     const children = tree.root.children[PRIMARY_OUTLET];
     const segments = children.segments;
 

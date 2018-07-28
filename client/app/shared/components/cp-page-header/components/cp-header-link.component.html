@@ -8,7 +8,7 @@
       cpTracker
       *ngIf="page.amplitude"
       [routerLink]="[page.url]"
-      [eventData]="trackSubMenu(page.amplitude)"
+      [eventData]="trackSubMenu(page.amplitude, page.isSubMenuItem)"
       [queryParamsHandling]="setQueryParams(page)">
       {{ page.label | cpI18n }}
     </a>
@@ -40,7 +40,7 @@
           *ngIf="page.amplitude"
           (click)="extraMenu = page"
           [routerLink]="[page.url]"
-          [eventData]="trackSubMenu(page.amplitude)">
+          [eventData]="trackSubMenu(page.amplitude, page.isSubMenuItem)">
           {{ page.label | cpI18n }}
         </a>
         <a

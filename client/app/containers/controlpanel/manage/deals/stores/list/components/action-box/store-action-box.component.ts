@@ -17,7 +17,7 @@ export class StoreActionBoxComponent {
 
   constructor(public cpTracking: CPTrackingService) {
     this.amplitudeEvents = {
-      clicked_create: amplitudeEvents.CLICKED_CREATE
+      clicked_create: amplitudeEvents.CLICKED_CREATE_ITEM
     };
   }
 
@@ -32,7 +32,7 @@ export class StoreActionBoxComponent {
   trackEvent(eventName) {
     const eventProperties = {
       ...this.cpTracking.getEventProperties(),
-      create_page_name: amplitudeEvents.CREATE_STORE
+      page_type: amplitudeEvents.STORE
     };
 
     return {

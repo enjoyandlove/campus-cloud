@@ -26,18 +26,29 @@ export class CPHeaderLinkComponent {
     return page.clearParams ? null : 'merge';
   }
 
-  trackSubMenu(subMenu) {
-    const eventName = amplitudeEvents.CLICKED_SUB_MENU;
-    const menuName = this.cpTracking.activatedRoute(this.router, RouteLevel.first);
-    const eventProperties = {
-      menu_name: menuName,
-      sub_menu_name: subMenu
-    };
+  trackSubMenu(subMenu, isSubMenuItem) {
+    const eventName = isSubMenuItem
+      ? amplitudeEvents.CLICKED_PAGE_ITEM
+      : amplitudeEvents.CLICKED_SUB_MENU;
 
     return {
       type: CP_TRACK_TO.AMPLITUDE,
-      eventName: eventName,
-      eventProperties: eventProperties
+      eventName,
+      eventProperties : this.setEventProperties(subMenu, isSubMenuItem)
     };
+  }
+
+  setEventProperties(subMenu, isSubMenuItem) {
+    const subMenuProperties = {
+      menu_name: this.cpTracking.activatedRoute(RouteLevel.first),
+      sub_menu_name: subMenu
+    };
+
+    const subMenuItemProperties = {
+      ...this.cpTracking.getEventProperties(),
+      page_name: subMenu
+    };
+
+    return isSubMenuItem ? subMenuItemProperties : subMenuProperties;
   }
 }

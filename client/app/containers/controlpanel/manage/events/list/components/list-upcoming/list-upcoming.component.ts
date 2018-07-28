@@ -9,10 +9,10 @@ import { EventAttendance } from '../../../event.status';
 import { FORMAT } from '../../../../../../../shared/pipes';
 import { CPSession } from './../../../../../../../session/index';
 import { EventUtilService } from '../../../events.utils.service';
-import { CPI18nService } from '../../../../../../../shared/services';
 import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
 import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
+import { CPI18nService, CPTrackingService, RouteLevel } from '../../../../../../../shared/services';
 
 interface ISort {
   sort_field: string;
@@ -50,11 +50,13 @@ export class ListUpcomingComponent implements OnInit {
   constructor(
     private session: CPSession,
     private cpI18n: CPI18nService,
-    private utils: EventUtilService
+    private utils: EventUtilService,
+    private cpTracking: CPTrackingService
   ) {}
 
   onDelete(event) {
     this.deleteEvent.emit(event);
+    this.trackDeleteEvent();
   }
 
   doSort(sort_field) {
@@ -63,6 +65,18 @@ export class ListUpcomingComponent implements OnInit {
     this.sort = Object.assign({}, this.sort, { sort_field, sort_direction });
 
     this.sortList.emit(this.sort);
+  }
+
+  trackDeleteEvent() {
+    const eventProperties = {
+      ...this.cpTracking.getEventProperties(),
+      page_name: this.cpTracking.activatedRoute(RouteLevel.fourth),
+      page_type: amplitudeEvents.UPCOMING_EVENT
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.DELETED_ITEM,
+      eventProperties);
   }
 
   trackEvent(event_id) {

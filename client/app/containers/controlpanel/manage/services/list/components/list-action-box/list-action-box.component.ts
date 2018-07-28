@@ -57,8 +57,7 @@ export class ServicesListActionBoxComponent implements OnInit {
 
   trackEvent(eventName) {
     const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
-      create_page_name: amplitudeEvents.CREATE_SERVICE
+      ...this.cpTracking.getEventProperties()
     };
 
     return {
@@ -70,7 +69,7 @@ export class ServicesListActionBoxComponent implements OnInit {
 
   ngOnInit() {
     this.amplitudeEvents = {
-      clicked_create: amplitudeEvents.CLICKED_CREATE
+      clicked_create: amplitudeEvents.CLICKED_CREATE_ITEM
     };
 
     this.canWriteSchoolWide = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.services);

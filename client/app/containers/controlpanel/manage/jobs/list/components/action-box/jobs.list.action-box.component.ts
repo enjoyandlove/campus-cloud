@@ -55,10 +55,10 @@ export class JobsListActionBoxComponent implements OnInit {
     this.listAction.emit(this.state);
   }
 
-  trackEvent(eventName) {
+  trackEvent(eventName, page_type) {
     const eventProperties = {
       ...this.cpTracking.getEventProperties(),
-      create_page_name: amplitudeEvents.CREATE_JOB
+      page_type
     };
 
     return {
@@ -72,7 +72,9 @@ export class JobsListActionBoxComponent implements OnInit {
     this.employers$ = this.jobsService.getEmployers('all');
 
     this.amplitudeEvents = {
-      clicked_create: amplitudeEvents.CLICKED_CREATE
+      page_type: amplitudeEvents.EMPLOYER,
+      clicked_create: amplitudeEvents.CLICKED_CREATE_ITEM,
+      clicked_page_item: amplitudeEvents.CLICKED_PAGE_ITEM
     };
   }
 }

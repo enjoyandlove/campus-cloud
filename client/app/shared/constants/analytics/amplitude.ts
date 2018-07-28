@@ -11,11 +11,17 @@ export const cpTrackAmplitude = {
 export const amplitudeEvents = {
   CLUB: 'Club',
 
+  INFO: 'Info',
+
   USER: 'User',
 
   LIST: 'List',
 
+  STORE: 'Store',
+
   EVENT: 'Event',
+
+  EVENTS: 'Events',
 
   MEMBER: 'Member',
 
@@ -32,6 +38,8 @@ export const amplitudeEvents = {
   ENABLED: 'Enabled',
 
   NEW_AUDIENCE: 'New',
+
+  EMPLOYER: 'Employer',
 
   TEMPLATE: 'Template',
 
@@ -55,7 +63,7 @@ export const amplitudeEvents = {
 
   ATTENDANCE: 'Attendance',
 
-  CREATE_JOB: 'Create Job',
+  PAST_EVENT: 'Past Event',
 
   LOGGED_OUT: 'Logged Out',
 
@@ -69,21 +77,13 @@ export const amplitudeEvents = {
 
   ONE_SERVICE: 'One Service',
 
-  CREATE_CLUB: 'Create Club',
-
-  CREATE_DEAL: 'Create Deal',
-
   FULL_ACCESS: 'Full Access',
-
-  CREATE_LIST: 'Create List',
-
-  CREATE_LINK: 'Create link',
 
   CUSTOM_LIST: 'Custom List',
 
-  CREATE_EVENT: 'Create Event',
-
   MENU_CUSTOMIZE: 'Customize',
+
+  DELETED_ITEM: 'Deleted Item',
 
   ANNOUNCEMENT: 'Announcement',
 
@@ -91,25 +91,21 @@ export const amplitudeEvents = {
 
   DYNAMIC_LIST: 'Dynamic List',
 
-  CREATE_STORE: 'Create Store',
-
   CAROUSEL_WHEEL: 'Carousel Wheel',
 
   SELECT_ACCESS: 'Select Access',
 
   NO_ENGAGEMENT: 'No Engagement',
 
-  CLICKED_CREATE: 'Clicked Create',
-
   UPLOADED_PHOTO: 'Uploaded Photo',
 
-  CREATE_SERVICE: 'Create Service',
+  UPCOMING_EVENT: 'Upcomping Event',
+
+  CALENDAR_EVENTS: 'Calendar Events',
 
   RESET_PASSWORD: 'Reset Password',
 
   ONE_ENGAGEMENT: 'One Engagement',
-
-  CREATE_PROGRAM: 'Create Program',
 
   SINGLE_STUDENT: 'Single Student',
 
@@ -117,29 +113,21 @@ export const amplitudeEvents = {
 
   CHANGED_SCHOOL: 'Changed School',
 
-  CREATE_TEMPLATE: 'Create Template',
-
   CLICKED_MENU: 'Clicked Menu Item',
 
   CHANGE_PASSWORD: 'Changed Password',
 
-  CREATE_ATHLETIC: 'Create Athletic',
-
-  CREATE_LOCATION: 'Create Location',
-
-  CREATE_CALENDAR: 'Create Calendar',
-
-  CREATE_EMPLOYER: 'Create Employer',
-
   WALL_MOVED_POST: 'Wall - Moved Post',
+
+  CLICKED_PAGE_ITEM: 'Clicked Page Item',
 
   VISITED_HELP_DESK: 'Visited Help Desk',
 
   WALL_DELETED_POST: 'Wall - Deleted Post',
 
-  CLICKED_SUB_MENU: 'Clicked Sub-Menu Item',
+  CLICKED_CREATE_ITEM: 'Clicked Create Item',
 
-  CREATE_ANNOUNCEMENT: 'Create Announcement',
+  CLICKED_SUB_MENU: 'Clicked Sub-Menu Item',
 
   INVITED_TEAM_MEMBER: 'Invited Team Member',
 
@@ -156,8 +144,6 @@ export const amplitudeEvents = {
   ASSESS_SENT_MESSAGE: 'Assess - Sent Message',
 
   WALL_SUBMITTED_POST: 'Wall - Submitted Post',
-
-  CREATE_CALENDAR_ITEM: 'Create Calendar Item',
 
   MANAGE_CREATED_LINK: 'Manage - Created Link',
 
@@ -187,8 +173,6 @@ export const amplitudeEvents = {
 
   MANAGE_DOWNLOAD_DATA: 'Manage - Downloaded Data',
 
-  NOTIFY_DELETED_LISTING: 'Notify - Deleted Listing',
-
   MANAGE_LOADED_CHECKIN: 'Manage - Loaded Check-In',
 
   MANAGE_CANCELED_EVENT: 'Manage - Cancelled Event',
@@ -213,8 +197,6 @@ export const amplitudeEvents = {
 
   MANAGE_UPDATED_CLUB_MEMBER: 'Manage - Updated Club Member',
 
-  MANAGE_DELETED_CLUB_MEMBER: 'Manage - Deleted Club Member',
-
   CUSTOMIZE_CANCELED_PHOTO: 'Customize - Canceled Photo',
 
   ASSESS_VIEWED_TOP_EVENTS: 'Assess - Viewed Top Events',
@@ -232,8 +214,6 @@ export const amplitudeEvents = {
   MANAGE_CREATED_CALENDAR_EVENT: 'Manage - Created Calendar Event',
 
   MANAGE_VIEWED_SERVICE_PROVIDER: 'Manage - Viewed Service Provider',
-
-  MANAGE_DELETED_SERVICE_PROVIDER: 'Manage - Deleted Service Provider',
 
   MANAGE_CREATED_SERVICE_PROVIDER: 'Manage - Created Service Provider'
 };

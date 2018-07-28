@@ -47,10 +47,10 @@ export class DealsListActionBoxComponent implements OnInit {
     this.search.emit(query);
   }
 
-  trackEvent(eventName) {
+  trackEvent(eventName, page_type) {
     const eventProperties = {
       ...this.cpTracking.getEventProperties(),
-      create_page_name: amplitudeEvents.CREATE_DEAL
+      page_type
     };
 
     return {
@@ -64,7 +64,9 @@ export class DealsListActionBoxComponent implements OnInit {
     this.stores$ = this.dealsService.getDealStores();
 
     this.amplitudeEvents = {
-      clicked_create: amplitudeEvents.CLICKED_CREATE
+      page_type: amplitudeEvents.STORE,
+      clicked_create: amplitudeEvents.CLICKED_CREATE_ITEM,
+      clicked_page_item: amplitudeEvents.CLICKED_PAGE_ITEM
     };
   }
 }

@@ -50,14 +50,8 @@ export class ClubsListActionBoxComponent implements OnInit {
   }
 
   trackEvent(eventName) {
-    const createClubAthletic =
-      this.isAthletic === isClubAthletic.athletic
-        ? amplitudeEvents.CREATE_ATHLETIC
-        : amplitudeEvents.CREATE_CLUB;
-
     const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
-      create_page_name: createClubAthletic
+      ...this.cpTracking.getEventProperties()
     };
 
     return {
@@ -90,7 +84,7 @@ export class ClubsListActionBoxComponent implements OnInit {
     this.labels = clubAthleticLabels(this.isAthletic);
 
     this.amplitudeEvents = {
-      clicked_create: amplitudeEvents.CLICKED_CREATE
+      clicked_create: amplitudeEvents.CLICKED_CREATE_ITEM
     };
 
     this.clubFilter = [

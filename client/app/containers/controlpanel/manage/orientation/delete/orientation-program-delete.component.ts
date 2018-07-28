@@ -3,7 +3,9 @@ import { OrientationService } from './../orientation.services';
 import { HttpParams } from '@angular/common/http';
 
 import { CPSession } from './../../../../../session';
+import { CPTrackingService } from '../../../../../shared/services';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 
 @Component({
   selector: 'cp-orientation-program-delete',
@@ -16,17 +18,20 @@ export class OrientationProgramDeleteComponent implements OnInit {
   @Output() resetDeleteModal: EventEmitter<null> = new EventEmitter();
 
   buttonData;
+  eventProperties;
 
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public service: OrientationService
+    public service: OrientationService,
+    public cpTracking: CPTrackingService
   ) {}
 
   onDelete() {
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     this.service.deleteProgram(this.orientationProgram.id, search).subscribe(() => {
+      this.trackEvent();
       this.deleted.emit(this.orientationProgram.id);
       this.resetDeleteModal.emit();
       $('#programDelete').modal('hide');
@@ -35,6 +40,17 @@ export class OrientationProgramDeleteComponent implements OnInit {
         disabled: false
       });
     });
+  }
+
+  trackEvent() {
+    this.eventProperties = {
+      ...this.eventProperties,
+      ...this.cpTracking.getEventProperties()
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.DELETED_ITEM,
+      this.eventProperties);
   }
 
   ngOnInit() {
