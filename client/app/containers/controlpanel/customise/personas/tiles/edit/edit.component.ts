@@ -213,8 +213,6 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
       return;
     }
 
-    console.log(this.guide.tiles.map((t) => t.related_link_data));
-
     this.buttonData = {
       class: 'primary',
       disabled: false,
