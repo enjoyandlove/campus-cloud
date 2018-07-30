@@ -13,6 +13,7 @@
   <div class="col-12">
     <label>{{ 't_personas_tile_modal_create_resource_type' | cpI18n }}</label>
     <cp-personas-resource-types
+      [editView]="editView"
       [resource]="form.value"
       (linkUrl)="onLinkUrlChange($event)"
       (selected)="onResourceTypeSelected($event)">

@@ -1,10 +1,13 @@
-import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { of } from 'rxjs';
+import { HttpParams } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { CPSession } from './../../../../../../../../session';
+import { Store } from '@ngrx/store';
+import { of } from 'rxjs';
+import { ISnackbar, SNACKBAR_SHOW } from './../../../../../../../../reducers/snackbar.reducer';
 import { TilesService } from './../../../tiles.service';
+import { CPSession } from './../../../../../../../../session';
 import { StoreService } from '../../../../../../../../shared/services';
+import { CPI18nService } from './../../../../../../../../shared/services/i18n.service';
 
 @Component({
   selector: 'cp-personas-resource-type-search',
@@ -25,11 +28,21 @@ export class PersonasResourceTypeSearchComponent implements OnInit {
   items$;
   dropdown = true;
   selectedItem = null;
+  emptySelection = {
+    label: null,
+    value: null,
+    meta: {
+      link_url: null,
+      link_params: {}
+    }
+  };
 
   constructor(
-    public storeService: StoreService,
     public session: CPSession,
-    public tileService: TilesService
+    public cpI18n: CPI18nService,
+    public store: Store<ISnackbar>,
+    public tileService: TilesService,
+    public storeService: StoreService
   ) {}
 
   doReset() {
@@ -76,12 +89,29 @@ export class PersonasResourceTypeSearchComponent implements OnInit {
   }
 
   updateSelectedItem(items) {
-    if (this.resource.link_url) {
+    if (items.length > 1) {
       const resourceId = this.resource.link_params.id;
       this.selectedItem = items.filter((c) => c.value === resourceId)[0];
+
+      if (!this.selectedItem) {
+        this.handleMissingResource();
+      }
     }
 
     return items;
+  }
+
+  handleMissingResource() {
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        autoClose: true,
+        class: 'warning',
+        body: this.cpI18n.translate('t_personas_edit_missing_resource')
+      }
+    });
+
+    this.selected.emit(this.emptySelection);
   }
 
   loadCalendars() {

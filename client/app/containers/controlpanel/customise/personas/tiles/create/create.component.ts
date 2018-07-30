@@ -194,7 +194,7 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
     this.store.dispatch({
       type: HEADER_UPDATE,
       payload: {
-        heading: this.cpI18n.translate('t_personas_tile_create_header'),
+        heading: 't_personas_tile_create_header',
         subheading: null,
         em: null,
         crumbs: {

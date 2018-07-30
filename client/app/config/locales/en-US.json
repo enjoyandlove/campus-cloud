@@ -2473,6 +2473,9 @@
   "t_personas_edit_message_on_save_ok": {
     "message": "Changes saved."
   },
+  "t_personas_edit_missing_resource": {
+    "message": "The resource associated with this tile was not found."
+  },
   "t_personas_edit_submit_button": {
     "message": "Save Changes"
   },
@@ -2628,6 +2631,9 @@
   },
   "t_personas_tile_modal_create_resource_type": {
     "message": "Resource Type"
+  },
+  "t_personas_tile_update_header": {
+    "message": "Edit Tile"
   },
   "t_persona_create_cancel_button": {
     "message": "Cancel"
