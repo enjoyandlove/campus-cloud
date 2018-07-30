@@ -93,7 +93,7 @@ export class PersonasResourceTypeSearchComponent implements OnInit {
       const resourceId = this.resource.link_params.id;
       this.selectedItem = items.filter((c) => c.value === resourceId)[0];
 
-      if (!this.selectedItem) {
+      if (!this.selectedItem && this.resource.link_params.id) {
         this.handleMissingResource();
       }
     }
