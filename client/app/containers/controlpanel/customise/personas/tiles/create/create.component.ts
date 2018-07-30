@@ -69,13 +69,15 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
       cloneGuideTileForm = {
         ...cloneGuideTileForm,
         rank: -1,
-        featured_rank: 0
+        featured_rank: 0,
+        tile_category_id: 0
       };
 
       guideTilePersonaZero = {
         ...guideTilePersonaZero,
         rank: -1,
-        featured_rank: 0
+        featured_rank: 0,
+        tile_category_id: 0
       };
     }
 
@@ -83,12 +85,14 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
       cloneGuideTileForm = {
         ...cloneGuideTileForm,
         rank: -1,
+        featured_rank: -1,
         tile_category_id: 0
       };
 
       guideTilePersonaZero = {
         ...guideTilePersonaZero,
         rank: -1,
+        featured_rank: -1,
         tile_category_id: 0
       };
     }

@@ -57,7 +57,7 @@ export class PersonasResourceTypesComponent implements OnInit {
         label: this.cpI18n.translate(resource.label)
       };
     });
-    console.log(this.resource);
+
     if (this.resource.link_url) {
       const isURLType = Object.keys(this.resource.link_params).length === 0;
 

@@ -35,13 +35,17 @@ export class PersonasUtilsService {
   }
 
   getCategoryZeroTiles(tiles: ITile[]) {
-    const categoryZeroTiles = tiles.filter((tile: ITile) => tile.tile_category_id === 0);
+    const categoryZeroTiles = tiles.filter(
+      (tile: ITile) => tile.tile_category_id === 0 && tile.featured_rank === -1
+    );
 
     return sortBy(flatten(categoryZeroTiles), (i) => i.rank);
   }
 
   getFeatureTiles(tiles: ITile[]) {
-    const featureTiles = tiles.filter((tile: ITile) => tile.featured_rank !== -1);
+    const featureTiles = tiles.filter(
+      (tile: ITile) => tile.tile_category_id === 0 && tile.featured_rank > -1
+    );
 
     return sortBy(flatten(featureTiles), (i) => i.rank);
   }
