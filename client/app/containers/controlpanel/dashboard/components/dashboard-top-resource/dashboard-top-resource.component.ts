@@ -4,9 +4,6 @@
  */
 import { Component, OnInit, Input } from '@angular/core';
 
-import { CPSession } from '../../../../../session';
-import { DashboardUtilsService } from '../../dashboard.utils.service';
-
 @Component({
   selector: 'cp-dashboard-top-resource',
   templateUrl: './dashboard-top-resource.component.html',
@@ -18,10 +15,7 @@ export class DashboardTopResourceComponent implements OnInit {
 
   defaultImage = require('public/default/user.png');
 
-  constructor(
-    public session: CPSession,
-    public helper: DashboardUtilsService
-  ) {}
+  constructor() {}
 
   ngOnInit() {}
 }
