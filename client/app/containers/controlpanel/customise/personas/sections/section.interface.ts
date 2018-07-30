@@ -5,4 +5,6 @@ export interface ICampusGuide {
   name: string;
   rank: number;
   tiles?: Array<ITile>;
+  featureTile?: boolean;
+  categoryZero?: boolean;
 }

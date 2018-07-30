@@ -26,7 +26,9 @@ export class CPColorPickerDirective implements OnInit {
       default: `#${this.defaultColor}`,
       components: {
         hue: true,
-        output: true
+        output: {
+          input: true
+        }
       },
 
       onSave(hsva) {
