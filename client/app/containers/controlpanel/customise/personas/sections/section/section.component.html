@@ -45,7 +45,7 @@
         (edited)="onEditedTile($event)"
         (deleted)="onDeletedTile($event)"
         *ngFor="let tile of guide.tiles; let i = index"
-        [class.mb-4]="guide.tiles.length > (12 / +tileWidth)">
+        [class.mb-4]="guide.tiles.length >= (12 / +tileWidth)">
       </cp-personas-tile>
       <div [ngClass]="['col-' + tileWidth]">
         <cp-personas-tile-add-button
