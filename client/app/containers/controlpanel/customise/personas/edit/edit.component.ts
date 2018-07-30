@@ -195,19 +195,7 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
     const stream$ = shouldCreateSecurityTile ? updatePersonaAndLink$ : updatePersona$;
 
     stream$.subscribe(
-      () => {
-        this.submitButtonData = { ...this.submitButtonData, disabled: false };
-
-        this.store.dispatch({
-          type: SNACKBAR_SHOW,
-          payload: {
-            sticky: true,
-            autoClose: true,
-            class: 'success',
-            body: this.cpI18n.translate('t_personas_edit_message_on_save_ok')
-          }
-        });
-      },
+      (persona) => this.router.navigate([`/customize/personas/${persona.id}`]),
       (err) => {
         let error;
         try {
