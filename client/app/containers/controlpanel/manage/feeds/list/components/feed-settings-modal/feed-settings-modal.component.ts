@@ -29,6 +29,7 @@ export class FeedSettingsComponent implements OnInit {
   form: FormGroup;
 
   eventProperties = {
+    wall_page: null,
     wall_source: null
   };
 
@@ -140,6 +141,7 @@ export class FeedSettingsComponent implements OnInit {
   trackAmplitudeEvent() {
     this.eventProperties = {
       ...this.eventProperties,
+      wall_page: this.utils.isWallPage(this.clubId, this.athleticId, this.orientationId),
       wall_source: this.utils.wallSource(this.athleticId, this.orientationId, this.clubId)
     };
 

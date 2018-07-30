@@ -55,7 +55,7 @@ export class AdminInviteComponent implements OnInit, OnDestroy {
   }
 
   trackAmplitudeEvent() {
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.SET_PASSWORD);
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.CREATED_ACCOUNT);
   }
 
   ngOnDestroy() {
@@ -70,6 +70,8 @@ export class AdminInviteComponent implements OnInit, OnDestroy {
 
       return;
     }
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.CREATE_ACCOUNT_PAGE);
 
     this.form = this.fb.group({
       admin_invite_key: [this.key, Validators.required],

@@ -29,6 +29,7 @@ export class FeedDeleteCommentModalComponent implements OnInit {
   eventProperties = {
     comment_id: null,
     likes: null,
+    wall_page: null,
     wall_source: null,
     upload_image: null
   };
@@ -60,6 +61,7 @@ export class FeedDeleteCommentModalComponent implements OnInit {
       comment_id: comment.id,
       likes: this.utils.hasLikes(comment.likes),
       upload_image: this.utils.hasImage(comment.has_image),
+      wall_page: this.utils.isWallPage(this.clubId, this.athleticId, this.orientationId),
       wall_source: this.utils.wallSource(this.athleticId, this.orientationId, this.clubId)
     };
 

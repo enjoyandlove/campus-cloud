@@ -50,6 +50,7 @@ export class FeedInputBoxComponent implements OnInit {
 
   eventProperties = {
     post_id: null,
+    wall_page: null,
     host_type: null,
     comment_id: null,
     wall_source: null,
@@ -295,6 +296,11 @@ export class FeedInputBoxComponent implements OnInit {
     this.buttonData = {
       class: 'primary',
       text: this.cpI18n.translate('walls_button_create_post')
+    };
+
+    this.eventProperties = {
+      ...this.eventProperties,
+      wall_page: this.utils.isWallPage(this.clubId, this.athleticId, this.orientationId)
     };
 
     const defaultHost = this.session.defaultHost ? this.session.defaultHost.value : null;

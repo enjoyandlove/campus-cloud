@@ -7,6 +7,11 @@ enum hasData {
   no = 'No'
 }
 
+export enum WallPage {
+  yes = 'Yes',
+  no = 'No'
+}
+
 @Injectable()
 export class FeedsUtilsService {
   constructor() {}
@@ -33,5 +38,11 @@ export class FeedsUtilsService {
 
   hasComments(comments) {
     return comments > 0 ? hasData.yes : hasData.no;
+  }
+
+  isWallPage(club, athletic, orientation) {
+    const wall = !club && !athletic && !orientation;
+
+    return wall ? WallPage.yes : WallPage.no;
   }
 }

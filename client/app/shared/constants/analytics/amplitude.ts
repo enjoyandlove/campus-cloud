@@ -93,8 +93,6 @@ export const amplitudeEvents = {
 
   ANNOUNCEMENT: 'Announcement',
 
-  SET_PASSWORD: 'Set Password',
-
   DYNAMIC_LIST: 'Dynamic List',
 
   CAROUSEL_WHEEL: 'Carousel Wheel',
@@ -104,6 +102,8 @@ export const amplitudeEvents = {
   NO_ENGAGEMENT: 'No Engagement',
 
   UPLOADED_PHOTO: 'Uploaded Photo',
+
+  CREATED_ACCOUNT: 'Created Account',
 
   UPCOMING_EVENT: 'Upcomping Event',
 
@@ -132,6 +132,8 @@ export const amplitudeEvents = {
   WALL_DELETED_POST: 'Wall - Deleted Post',
 
   CLICKED_CREATE_ITEM: 'Clicked Create Item',
+
+  CREATE_ACCOUNT_PAGE: 'Create Account Page',
 
   CLICKED_SUB_MENU: 'Clicked Sub-Menu Item',
 
